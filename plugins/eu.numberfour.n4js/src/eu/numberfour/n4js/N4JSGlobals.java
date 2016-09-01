@@ -16,6 +16,10 @@ import static java.util.Collections.unmodifiableCollection;
 
 import java.util.Collection;
 
+import org.eclipse.emf.ecore.EReference;
+
+import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
+
 /**
  * Global hook for static information about the current setup.
  *
@@ -52,6 +56,13 @@ public final class N4JSGlobals {
 			N4JS_FILE_EXTENSION,
 			N4JSD_FILE_EXTENSION,
 			JS_FILE_EXTENSION)));
+
+	/**
+	 * Subtrees of the AST below these containment references will *not* be validated.
+	 */
+	public static final EReference[] AST_CONTAINMENT_REFERENCES_WITHOUT_VALIDATION = {
+			TypeRefsPackage.eINSTANCE.getComposedTypeRef_CachedComposedMembers()
+	};
 
 	private N4JSGlobals() {
 		// private to prevent inheritance & instantiation.

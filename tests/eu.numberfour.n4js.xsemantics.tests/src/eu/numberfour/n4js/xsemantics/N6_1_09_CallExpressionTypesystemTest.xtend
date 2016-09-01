@@ -10,13 +10,13 @@
  */
 package eu.numberfour.n4js.xsemantics
 
-import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.utils.Log
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 /**
  * N4JS Spec Test: 6.1.9. Function Calls
@@ -24,7 +24,7 @@ import org.junit.runner.RunWith
  * @see IDE-346
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 @Log
 class N6_1_09_CallExpressionTypesystemTest extends AbstractCallExpressionTypesystemTest {
 
@@ -32,8 +32,11 @@ class N6_1_09_CallExpressionTypesystemTest extends AbstractCallExpressionTypesys
 	def prepareScript() {
 		assembler.setScriptPrefix(
 			'''
-				class A{} class B extends A{} class C extends B{}
-				class D{} class E{}
+				interface A{} 
+				interface B extends A{} 
+				interface C extends B{}
+				interface D{} 
+				interface E{}
 			''')
 	}
 

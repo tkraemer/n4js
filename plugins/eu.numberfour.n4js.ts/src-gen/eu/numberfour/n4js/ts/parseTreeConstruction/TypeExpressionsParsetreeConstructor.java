@@ -4034,11 +4034,11 @@ protected class TAnonymousFormalParameterList_FparsAssignment_1_1 extends Assign
  * / **
  *  * Used in type expressions, name is optional.
  *  * / TAnonymousFormalParameter:
- * 	variadic?='...'? (=> name=TIdentifier ':')? typeRef=TypeRef;
+ * 	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef;
  *
  **/
 
-// variadic?='...'? (=> name=TIdentifier ':')? typeRef=TypeRef
+// variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef
 protected class TAnonymousFormalParameter_Group extends GroupToken {
 	
 	public TAnonymousFormalParameter_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4100,7 +4100,7 @@ protected class TAnonymousFormalParameter_VariadicAssignment_0 extends Assignmen
 
 }
 
-// (=> name=TIdentifier ':')?
+// (=> name=BindingIdentifier<Yield=false> ':')?
 protected class TAnonymousFormalParameter_Group_1 extends GroupToken {
 	
 	public TAnonymousFormalParameter_Group_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4122,7 +4122,7 @@ protected class TAnonymousFormalParameter_Group_1 extends GroupToken {
 
 }
 
-// => name=TIdentifier
+// => name=BindingIdentifier<Yield=false>
 protected class TAnonymousFormalParameter_NameAssignment_1_0 extends AssignmentToken  {
 	
 	public TAnonymousFormalParameter_NameAssignment_1_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4146,9 +4146,9 @@ protected class TAnonymousFormalParameter_NameAssignment_1_0 extends AssignmentT
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("name",false)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTAnonymousFormalParameterAccess().getNameTIdentifierParserRuleCall_1_0_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTAnonymousFormalParameterAccess().getNameBindingIdentifierParserRuleCall_1_0_0(), value, null)) {
 			type = AssignmentType.DATATYPE_RULE_CALL;
-			element = grammarAccess.getTAnonymousFormalParameterAccess().getNameTIdentifierParserRuleCall_1_0_0();
+			element = grammarAccess.getTAnonymousFormalParameterAccess().getNameBindingIdentifierParserRuleCall_1_0_0();
 			return obj;
 		}
 		return null;
@@ -4235,11 +4235,11 @@ protected class TAnonymousFormalParameter_TypeRefAssignment_2 extends Assignment
  * / **
  *  * Used in Types language only.
  *  * / TFormalParameter:
- * 	variadic?='...'? name=TIdentifier ':' typeRef=TypeRef;
+ * 	variadic?='...'? name=BindingIdentifier<Yield=false> ':' typeRef=TypeRef;
  *
  **/
 
-// variadic?='...'? name=TIdentifier ':' typeRef=TypeRef
+// variadic?='...'? name=BindingIdentifier<Yield=false> ':' typeRef=TypeRef
 protected class TFormalParameter_Group extends GroupToken {
 	
 	public TFormalParameter_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4301,7 +4301,7 @@ protected class TFormalParameter_VariadicAssignment_0 extends AssignmentToken  {
 
 }
 
-// name=TIdentifier
+// name=BindingIdentifier<Yield=false>
 protected class TFormalParameter_NameAssignment_1 extends AssignmentToken  {
 	
 	public TFormalParameter_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4325,9 +4325,9 @@ protected class TFormalParameter_NameAssignment_1 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTFormalParameterAccess().getNameTIdentifierParserRuleCall_1_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTFormalParameterAccess().getNameBindingIdentifierParserRuleCall_1_0(), value, null)) {
 			type = AssignmentType.DATATYPE_RULE_CALL;
-			element = grammarAccess.getTFormalParameterAccess().getNameTIdentifierParserRuleCall_1_0();
+			element = grammarAccess.getTFormalParameterAccess().getNameBindingIdentifierParserRuleCall_1_0();
 			return obj;
 		}
 		return null;
@@ -6241,11 +6241,11 @@ protected class TStructMember_TStructFieldParserRuleCall_3 extends RuleCallToken
  * TStructMethod:
  * 	=>
  * 	({TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
- * 	name=TypesIdentifier '(') TAnonymousFormalParameterList ')' (':' returnTypeRef=TypeRef)?;
+ * 	name=IdentifierName '(') TAnonymousFormalParameterList ')' (':' returnTypeRef=TypeRef)?;
  *
  **/
 
-// => ({TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? name=TypesIdentifier '(')
+// => ({TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? name=IdentifierName '(')
 // TAnonymousFormalParameterList ')' (':' returnTypeRef=TypeRef)?
 protected class TStructMethod_Group extends GroupToken {
 	
@@ -6276,7 +6276,7 @@ protected class TStructMethod_Group extends GroupToken {
 
 }
 
-// => ({TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? name=TypesIdentifier '(')
+// => ({TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? name=IdentifierName '(')
 protected class TStructMethod_Group_0 extends GroupToken {
 	
 	public TStructMethod_Group_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -6298,7 +6298,7 @@ protected class TStructMethod_Group_0 extends GroupToken {
 
 }
 
-// ({TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? name=TypesIdentifier '(')
+// ({TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? name=IdentifierName '(')
 protected class TStructMethod_Group_0_0 extends GroupToken {
 	
 	public TStructMethod_Group_0_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -6552,7 +6552,7 @@ protected class TStructMethod_GreaterThanSignKeyword_0_0_1_3 extends KeywordToke
 }
 
 
-// name=TypesIdentifier
+// name=IdentifierName
 protected class TStructMethod_NameAssignment_0_0_2 extends AssignmentToken  {
 	
 	public TStructMethod_NameAssignment_0_0_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -6577,9 +6577,9 @@ protected class TStructMethod_NameAssignment_0_0_2 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTStructMethodAccess().getNameTypesIdentifierParserRuleCall_0_0_2_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTStructMethodAccess().getNameIdentifierNameParserRuleCall_0_0_2_0(), value, null)) {
 			type = AssignmentType.DATATYPE_RULE_CALL;
-			element = grammarAccess.getTStructMethodAccess().getNameTypesIdentifierParserRuleCall_0_0_2_0();
+			element = grammarAccess.getTStructMethodAccess().getNameIdentifierNameParserRuleCall_0_0_2_0();
 			return obj;
 		}
 		return null;
@@ -6766,11 +6766,11 @@ protected class TStructMethod_ReturnTypeRefAssignment_3_1 extends AssignmentToke
 /************ begin Rule TStructField ****************
  *
  * TStructField:
- * 	name=TypesIdentifier (':' typeRef=TypeRef)?;
+ * 	name=IdentifierName (':' typeRef=TypeRef)?;
  *
  **/
 
-// name=TypesIdentifier (':' typeRef=TypeRef)?
+// name=IdentifierName (':' typeRef=TypeRef)?
 protected class TStructField_Group extends GroupToken {
 	
 	public TStructField_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -6800,7 +6800,7 @@ protected class TStructField_Group extends GroupToken {
 
 }
 
-// name=TypesIdentifier
+// name=IdentifierName
 protected class TStructField_NameAssignment_0 extends AssignmentToken  {
 	
 	public TStructField_NameAssignment_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -6823,9 +6823,9 @@ protected class TStructField_NameAssignment_0 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTStructFieldAccess().getNameTypesIdentifierParserRuleCall_0_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTStructFieldAccess().getNameIdentifierNameParserRuleCall_0_0(), value, null)) {
 			type = AssignmentType.DATATYPE_RULE_CALL;
-			element = grammarAccess.getTStructFieldAccess().getNameTypesIdentifierParserRuleCall_0_0();
+			element = grammarAccess.getTStructFieldAccess().getNameIdentifierNameParserRuleCall_0_0();
 			return obj;
 		}
 		return null;
@@ -6933,12 +6933,12 @@ protected class TStructField_TypeRefAssignment_1_1 extends AssignmentToken  {
  * TStructGetter:
  * 	=> ({TStructGetter}
  * 	'get'
- * 	name=TypesIdentifier)
+ * 	name=IdentifierName)
  * 	'(' ')' (':' declaredTypeRef=TypeRef)?;
  *
  **/
 
-// => ({TStructGetter} 'get' name=TypesIdentifier) '(' ')' (':' declaredTypeRef=TypeRef)?
+// => ({TStructGetter} 'get' name=IdentifierName) '(' ')' (':' declaredTypeRef=TypeRef)?
 protected class TStructGetter_Group extends GroupToken {
 	
 	public TStructGetter_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -6968,7 +6968,7 @@ protected class TStructGetter_Group extends GroupToken {
 
 }
 
-// => ({TStructGetter} 'get' name=TypesIdentifier)
+// => ({TStructGetter} 'get' name=IdentifierName)
 protected class TStructGetter_Group_0 extends GroupToken {
 	
 	public TStructGetter_Group_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -6990,7 +6990,7 @@ protected class TStructGetter_Group_0 extends GroupToken {
 
 }
 
-// ({TStructGetter} 'get' name=TypesIdentifier)
+// ({TStructGetter} 'get' name=IdentifierName)
 protected class TStructGetter_Group_0_0 extends GroupToken {
 	
 	public TStructGetter_Group_0_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -7060,7 +7060,7 @@ protected class TStructGetter_GetKeyword_0_0_1 extends KeywordToken  {
 
 }
 
-// name=TypesIdentifier
+// name=IdentifierName
 protected class TStructGetter_NameAssignment_0_0_2 extends AssignmentToken  {
 	
 	public TStructGetter_NameAssignment_0_0_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -7084,9 +7084,9 @@ protected class TStructGetter_NameAssignment_0_0_2 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTStructGetterAccess().getNameTypesIdentifierParserRuleCall_0_0_2_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTStructGetterAccess().getNameIdentifierNameParserRuleCall_0_0_2_0(), value, null)) {
 			type = AssignmentType.DATATYPE_RULE_CALL;
-			element = grammarAccess.getTStructGetterAccess().getNameTypesIdentifierParserRuleCall_0_0_2_0();
+			element = grammarAccess.getTStructGetterAccess().getNameIdentifierNameParserRuleCall_0_0_2_0();
 			return obj;
 		}
 		return null;
@@ -7240,12 +7240,12 @@ protected class TStructGetter_DeclaredTypeRefAssignment_3_1 extends AssignmentTo
  * TStructSetter:
  * 	=> ({TStructSetter}
  * 	'set'
- * 	name=TypesIdentifier)
+ * 	name=IdentifierName)
  * 	'(' fpar=TAnonymousFormalParameter ')';
  *
  **/
 
-// => ({TStructSetter} 'set' name=TypesIdentifier) '(' fpar=TAnonymousFormalParameter ')'
+// => ({TStructSetter} 'set' name=IdentifierName) '(' fpar=TAnonymousFormalParameter ')'
 protected class TStructSetter_Group extends GroupToken {
 	
 	public TStructSetter_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -7274,7 +7274,7 @@ protected class TStructSetter_Group extends GroupToken {
 
 }
 
-// => ({TStructSetter} 'set' name=TypesIdentifier)
+// => ({TStructSetter} 'set' name=IdentifierName)
 protected class TStructSetter_Group_0 extends GroupToken {
 	
 	public TStructSetter_Group_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -7296,7 +7296,7 @@ protected class TStructSetter_Group_0 extends GroupToken {
 
 }
 
-// ({TStructSetter} 'set' name=TypesIdentifier)
+// ({TStructSetter} 'set' name=IdentifierName)
 protected class TStructSetter_Group_0_0 extends GroupToken {
 	
 	public TStructSetter_Group_0_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -7366,7 +7366,7 @@ protected class TStructSetter_SetKeyword_0_0_1 extends KeywordToken  {
 
 }
 
-// name=TypesIdentifier
+// name=IdentifierName
 protected class TStructSetter_NameAssignment_0_0_2 extends AssignmentToken  {
 	
 	public TStructSetter_NameAssignment_0_0_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -7390,9 +7390,9 @@ protected class TStructSetter_NameAssignment_0_0_2 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTStructSetterAccess().getNameTypesIdentifierParserRuleCall_0_0_2_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTStructSetterAccess().getNameIdentifierNameParserRuleCall_0_0_2_0(), value, null)) {
 			type = AssignmentType.DATATYPE_RULE_CALL;
-			element = grammarAccess.getTStructSetterAccess().getNameTypesIdentifierParserRuleCall_0_0_2_0();
+			element = grammarAccess.getTStructSetterAccess().getNameIdentifierNameParserRuleCall_0_0_2_0();
 			return obj;
 		}
 		return null;
@@ -9219,6 +9219,8 @@ protected class TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_
 
 
 /************ end Rule TypeVariableWithDefSiteVariance ****************/
+
+
 
 
 

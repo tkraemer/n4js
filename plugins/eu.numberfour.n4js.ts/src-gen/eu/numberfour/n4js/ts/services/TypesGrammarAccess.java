@@ -318,7 +318,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cPrimitiveKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameTypesIdentifierParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final RuleCall cNameVoidOrBindingIdentifierParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cLessThanSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cTypeVarsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
@@ -342,14 +342,14 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//PrimitiveType:
-		//	'primitive' name=TypesIdentifier ('<' typeVars+=TypeVariable '>')? ('indexed'
+		//	'primitive' name=VoidOrBindingIdentifier ('<' typeVars+=TypeVariable '>')? ('indexed'
 		//	declaredElementType=ParameterizedTypeRefNominal)?
 		//	'{' ('autoboxedType' autoboxedType=[TClassifier|TypeReferenceName])? ('assignmnentCompatible'
 		//	assignmentCompatible=[PrimitiveType|TypeReferenceName])?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'primitive' name=TypesIdentifier ('<' typeVars+=TypeVariable '>')? ('indexed'
+		//'primitive' name=VoidOrBindingIdentifier ('<' typeVars+=TypeVariable '>')? ('indexed'
 		//declaredElementType=ParameterizedTypeRefNominal)? '{' ('autoboxedType' autoboxedType=[TClassifier|TypeReferenceName])?
 		//('assignmnentCompatible' assignmentCompatible=[PrimitiveType|TypeReferenceName])? '}'
 		public Group getGroup() { return cGroup; }
@@ -357,11 +357,11 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//'primitive'
 		public Keyword getPrimitiveKeyword_0() { return cPrimitiveKeyword_0; }
 
-		//name=TypesIdentifier
+		//name=VoidOrBindingIdentifier
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
-		//TypesIdentifier
-		public RuleCall getNameTypesIdentifierParserRuleCall_1_0() { return cNameTypesIdentifierParserRuleCall_1_0; }
+		//VoidOrBindingIdentifier
+		public RuleCall getNameVoidOrBindingIdentifierParserRuleCall_1_0() { return cNameVoidOrBindingIdentifierParserRuleCall_1_0; }
 
 		//('<' typeVars+=TypeVariable '>')?
 		public Group getGroup_2() { return cGroup_2; }
@@ -611,122 +611,110 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	public class TypesIdentifierElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.Types.TypesIdentifier");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cIDENTIFIERTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final Keyword cGetKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
-		private final Keyword cSetKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
-		private final Keyword cAbstractKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
-		private final Keyword cAnyKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
-		private final Keyword cProjectKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
-		private final Keyword cUnionKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
-		private final Keyword cIntersectionKeyword_7 = (Keyword)cAlternatives.eContents().get(7);
-		private final Keyword cAsKeyword_8 = (Keyword)cAlternatives.eContents().get(8);
-		private final Keyword cFromKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
-		private final Keyword cTypeKeyword_10 = (Keyword)cAlternatives.eContents().get(10);
-		private final Keyword cVoidKeyword_11 = (Keyword)cAlternatives.eContents().get(11);
-		private final Keyword cNullKeyword_12 = (Keyword)cAlternatives.eContents().get(12);
-		private final Keyword cUndefinedKeyword_13 = (Keyword)cAlternatives.eContents().get(13);
-		private final Keyword cConstructorKeyword_14 = (Keyword)cAlternatives.eContents().get(14);
-		private final Keyword cObjectKeyword_15 = (Keyword)cAlternatives.eContents().get(15);
-		private final Keyword cVirtualBaseKeyword_16 = (Keyword)cAlternatives.eContents().get(16);
-		private final Keyword cPrimitiveKeyword_17 = (Keyword)cAlternatives.eContents().get(17);
-		private final Keyword cAutoboxedTypeKeyword_18 = (Keyword)cAlternatives.eContents().get(18);
-		private final Keyword cAssignmnentCompatibleKeyword_19 = (Keyword)cAlternatives.eContents().get(19);
+		private final RuleCall cTypesSpecificKeywordsParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cIdentifierNameParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//TypesIdentifier:
-		//	IDENTIFIER
-		//	// no ECMAScript keywords, only in certain contexts
-		//	| 'get'
-		//	| 'set'
-		//	// Types keywords
-		//	| 'abstract'
-		//	| 'any'
-		//	| 'project'
-		//	| 'union'
-		//	| 'intersection'
-		//	// no ECMAScript keywords, used in certain [ECM13] and N4JS contexts (import x as y from)
-		//	| 'as'
-		//	| 'from'
-		//	| 'type'
-		//	| 'void'
-		//	| 'null'
-		//	| 'undefined'
-		//	| 'constructor'
-		//	// no ECMAScript nor N4JS keyword, used in types only
-		//	| 'object'
-		//	| 'virtualBase'
-		//	| 'primitive'
-		//	| 'autoboxedType'
-		//	| 'assignmnentCompatible'
-		//	// must not be used: 'notnull'|'nullable'
+		//	TypesSpecificKeywords | IdentifierName;
+		@Override public ParserRule getRule() { return rule; }
+
+		//TypesSpecificKeywords | IdentifierName
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//TypesSpecificKeywords
+		public RuleCall getTypesSpecificKeywordsParserRuleCall_0() { return cTypesSpecificKeywordsParserRuleCall_0; }
+
+		//IdentifierName
+		public RuleCall getIdentifierNameParserRuleCall_1() { return cIdentifierNameParserRuleCall_1; }
+	}
+
+	public class BindingTypesIdentifierElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.Types.BindingTypesIdentifier");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cTypesSpecificKeywordsParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cBindingIdentifierParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//BindingTypesIdentifier:
+		//	TypesSpecificKeywords | BindingIdentifier<Yield=false>;
+		@Override public ParserRule getRule() { return rule; }
+
+		//TypesSpecificKeywords | BindingIdentifier<Yield=false>
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//TypesSpecificKeywords
+		public RuleCall getTypesSpecificKeywordsParserRuleCall_0() { return cTypesSpecificKeywordsParserRuleCall_0; }
+
+		//BindingIdentifier<Yield=false>
+		public RuleCall getBindingIdentifierParserRuleCall_1() { return cBindingIdentifierParserRuleCall_1; }
+	}
+
+	public class VoidOrBindingIdentifierElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.Types.VoidOrBindingIdentifier");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cVoidKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final RuleCall cBindingTypesIdentifierParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//// Also allows void as identifier although it is a reserved keyword as of [ECM15]
+		//VoidOrBindingIdentifier:
+		//	'void' | BindingTypesIdentifier;
+		@Override public ParserRule getRule() { return rule; }
+
+		//'void' | BindingTypesIdentifier
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//'void'
+		public Keyword getVoidKeyword_0() { return cVoidKeyword_0; }
+
+		//BindingTypesIdentifier
+		public RuleCall getBindingTypesIdentifierParserRuleCall_1() { return cBindingTypesIdentifierParserRuleCall_1; }
+	}
+
+	public class TypesSpecificKeywordsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.Types.TypesSpecificKeywords");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cAnyKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cUndefinedKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cObjectKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final Keyword cVirtualBaseKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		private final Keyword cPrimitiveKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
+		private final Keyword cAutoboxedTypeKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
+		private final Keyword cAssignmnentCompatibleKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
+		
+		//// These keywords are specific to the types language when comparing with N4JS
+		//TypesSpecificKeywords: // Types keywords
+		//	'any' // no ECMAScript keywords, used in certain [ECM13] and N4JS contexts
+		//	| 'undefined' // no ECMAScript nor N4JS keyword, used in types only
+		//	| 'object' | 'virtualBase' | 'primitive' | 'autoboxedType' | 'assignmnentCompatible' // must not be used: 'notnull'|'nullable'
 		//;
 		@Override public ParserRule getRule() { return rule; }
 
-		//IDENTIFIER // no ECMAScript keywords, only in certain contexts
-		//| 'get' | 'set' // Types keywords
-		//| 'abstract' | 'any' | 'project' | 'union' | 'intersection' // no ECMAScript keywords, used in certain [ECM13] and N4JS contexts (import x as y from)
-		//| 'as' | 'from' | 'type' | 'void' | 'null' | 'undefined' | 'constructor' // no ECMAScript nor N4JS keyword, used in types only
+		//// Types keywords
+		//'any' // no ECMAScript keywords, used in certain [ECM13] and N4JS contexts
+		//| 'undefined' // no ECMAScript nor N4JS keyword, used in types only
 		//| 'object' | 'virtualBase' | 'primitive' | 'autoboxedType' | 'assignmnentCompatible'
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//IDENTIFIER
-		public RuleCall getIDENTIFIERTerminalRuleCall_0() { return cIDENTIFIERTerminalRuleCall_0; }
-
-		//'get'
-		public Keyword getGetKeyword_1() { return cGetKeyword_1; }
-
-		//'set'
-		public Keyword getSetKeyword_2() { return cSetKeyword_2; }
-
-		//'abstract'
-		public Keyword getAbstractKeyword_3() { return cAbstractKeyword_3; }
-
+		//// Types keywords
 		//'any'
-		public Keyword getAnyKeyword_4() { return cAnyKeyword_4; }
-
-		//'project'
-		public Keyword getProjectKeyword_5() { return cProjectKeyword_5; }
-
-		//'union'
-		public Keyword getUnionKeyword_6() { return cUnionKeyword_6; }
-
-		//'intersection'
-		public Keyword getIntersectionKeyword_7() { return cIntersectionKeyword_7; }
-
-		//'as'
-		public Keyword getAsKeyword_8() { return cAsKeyword_8; }
-
-		//'from'
-		public Keyword getFromKeyword_9() { return cFromKeyword_9; }
-
-		//'type'
-		public Keyword getTypeKeyword_10() { return cTypeKeyword_10; }
-
-		//'void'
-		public Keyword getVoidKeyword_11() { return cVoidKeyword_11; }
-
-		//'null'
-		public Keyword getNullKeyword_12() { return cNullKeyword_12; }
+		public Keyword getAnyKeyword_0() { return cAnyKeyword_0; }
 
 		//'undefined'
-		public Keyword getUndefinedKeyword_13() { return cUndefinedKeyword_13; }
-
-		//'constructor'
-		public Keyword getConstructorKeyword_14() { return cConstructorKeyword_14; }
+		public Keyword getUndefinedKeyword_1() { return cUndefinedKeyword_1; }
 
 		//'object'
-		public Keyword getObjectKeyword_15() { return cObjectKeyword_15; }
+		public Keyword getObjectKeyword_2() { return cObjectKeyword_2; }
 
 		//'virtualBase'
-		public Keyword getVirtualBaseKeyword_16() { return cVirtualBaseKeyword_16; }
+		public Keyword getVirtualBaseKeyword_3() { return cVirtualBaseKeyword_3; }
 
 		//'primitive'
-		public Keyword getPrimitiveKeyword_17() { return cPrimitiveKeyword_17; }
+		public Keyword getPrimitiveKeyword_4() { return cPrimitiveKeyword_4; }
 
 		//'autoboxedType'
-		public Keyword getAutoboxedTypeKeyword_18() { return cAutoboxedTypeKeyword_18; }
+		public Keyword getAutoboxedTypeKeyword_5() { return cAutoboxedTypeKeyword_5; }
 
 		//'assignmnentCompatible'
-		public Keyword getAssignmnentCompatibleKeyword_19() { return cAssignmnentCompatibleKeyword_19; }
+		public Keyword getAssignmnentCompatibleKeyword_6() { return cAssignmnentCompatibleKeyword_6; }
 	}
 
 	public class TypesComputedPropertyNameElements extends AbstractParserRuleElementFinder {
@@ -809,7 +797,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cDeclaredFinalFinalKeyword_2_0 = (Keyword)cDeclaredFinalAssignment_2.eContents().get(0);
 		private final Keyword cObjectKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cNameTypesIdentifierParserRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
+		private final RuleCall cNameBindingTypesIdentifierParserRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
 		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
 		private final Keyword cLessThanSignKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
 		private final Assignment cTypeVarsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
@@ -843,7 +831,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//	declaredTypeAccessModifier=TypeAccessModifier
 		//	declaredProvidedByRuntime?='providedByRuntime'?
 		//	declaredFinal?='final'?
-		//	'object' name=TypesIdentifier ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? ('extends'
+		//	'object' name=BindingTypesIdentifier ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? ('extends'
 		//	superType=ParameterizedTypeRefNominal)? ('indexed' declaredElementType=ParameterizedTypeRefNominal)?
 		//	annotations+=TAnnotation*
 		//	'{'
@@ -853,7 +841,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		@Override public ParserRule getRule() { return rule; }
 
 		//declaredTypeAccessModifier=TypeAccessModifier declaredProvidedByRuntime?='providedByRuntime'? declaredFinal?='final'?
-		//'object' name=TypesIdentifier ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? ('extends'
+		//'object' name=BindingTypesIdentifier ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? ('extends'
 		//superType=ParameterizedTypeRefNominal)? ('indexed' declaredElementType=ParameterizedTypeRefNominal)?
 		//annotations+=TAnnotation* '{' ownedMembers+=TMember* (callableCtor=CallableCtor ownedMembers+=TMember*)? '}'
 		public Group getGroup() { return cGroup; }
@@ -879,11 +867,11 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//'object'
 		public Keyword getObjectKeyword_3() { return cObjectKeyword_3; }
 
-		//name=TypesIdentifier
+		//name=BindingTypesIdentifier
 		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
 
-		//TypesIdentifier
-		public RuleCall getNameTypesIdentifierParserRuleCall_4_0() { return cNameTypesIdentifierParserRuleCall_4_0; }
+		//BindingTypesIdentifier
+		public RuleCall getNameBindingTypesIdentifierParserRuleCall_4_0() { return cNameBindingTypesIdentifierParserRuleCall_4_0; }
 
 		//('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
 		public Group getGroup_5() { return cGroup_5; }
@@ -976,7 +964,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final Action cVirtualBaseTypeAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cVirtualBaseKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameTypesIdentifierParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final RuleCall cNameBindingTypesIdentifierParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cOwnedMembersAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cOwnedMembersTMemberParserRuleCall_4_0 = (RuleCall)cOwnedMembersAssignment_4.eContents().get(0);
@@ -987,12 +975,12 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		// * Used to define common super types, e.g. for all enumerations.
 		// * / VirtualBaseType:
 		//	{VirtualBaseType}
-		//	'virtualBase' name=TypesIdentifier '{'
+		//	'virtualBase' name=BindingTypesIdentifier '{'
 		//	ownedMembers+=TMember*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//{VirtualBaseType} 'virtualBase' name=TypesIdentifier '{' ownedMembers+=TMember* '}'
+		//{VirtualBaseType} 'virtualBase' name=BindingTypesIdentifier '{' ownedMembers+=TMember* '}'
 		public Group getGroup() { return cGroup; }
 
 		//{VirtualBaseType}
@@ -1001,11 +989,11 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//'virtualBase'
 		public Keyword getVirtualBaseKeyword_1() { return cVirtualBaseKeyword_1; }
 
-		//name=TypesIdentifier
+		//name=BindingTypesIdentifier
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
-		//TypesIdentifier
-		public RuleCall getNameTypesIdentifierParserRuleCall_2_0() { return cNameTypesIdentifierParserRuleCall_2_0; }
+		//BindingTypesIdentifier
+		public RuleCall getNameBindingTypesIdentifierParserRuleCall_2_0() { return cNameBindingTypesIdentifierParserRuleCall_2_0; }
 
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
@@ -1035,7 +1023,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTypingStrategyAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cTypingStrategyTypingStrategyDefSiteOperatorParserRuleCall_5_0 = (RuleCall)cTypingStrategyAssignment_5.eContents().get(0);
 		private final Assignment cNameAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cNameTypesIdentifierParserRuleCall_6_0 = (RuleCall)cNameAssignment_6.eContents().get(0);
+		private final RuleCall cNameBindingTypesIdentifierParserRuleCall_6_0 = (RuleCall)cNameAssignment_6.eContents().get(0);
 		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
 		private final Keyword cLessThanSignKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
 		private final Assignment cTypeVarsAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
@@ -1074,7 +1062,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//	declaredProvidedByRuntime?='providedByRuntime'?
 		//	declaredAbstract?='abstract'?
 		//	declaredFinal?='final'?
-		//	'class' typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier ('<'
+		//	'class' typingStrategy=TypingStrategyDefSiteOperator? name=BindingTypesIdentifier ('<'
 		//	typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>')? ('extends'
 		//	superClassRef=ParameterizedTypeRefNominal)? ('implements' implementedInterfaceRefs+=ParameterizedTypeRefNominal (','
 		//	implementedInterfaceRefs+=ParameterizedTypeRefNominal)*)?
@@ -1087,8 +1075,8 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 
 		//declaredTypeAccessModifier=TypeAccessModifier declaredProvidedByRuntime?='providedByRuntime'?
 		//declaredAbstract?='abstract'? declaredFinal?='final'? 'class' typingStrategy=TypingStrategyDefSiteOperator?
-		//name=TypesIdentifier ('<' typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)*
-		//'>')? ('extends' superClassRef=ParameterizedTypeRefNominal)? ('implements'
+		//name=BindingTypesIdentifier ('<' typeVars+=TypeVariableWithDefSiteVariance (','
+		//typeVars+=TypeVariableWithDefSiteVariance)* '>')? ('extends' superClassRef=ParameterizedTypeRefNominal)? ('implements'
 		//implementedInterfaceRefs+=ParameterizedTypeRefNominal (',' implementedInterfaceRefs+=ParameterizedTypeRefNominal)*)?
 		//annotations+=TAnnotation* '{' ownedMembers+=TMember* (callableCtor=CallableCtor ownedMembers+=TMember*)? '}'
 		public Group getGroup() { return cGroup; }
@@ -1126,11 +1114,11 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//TypingStrategyDefSiteOperator
 		public RuleCall getTypingStrategyTypingStrategyDefSiteOperatorParserRuleCall_5_0() { return cTypingStrategyTypingStrategyDefSiteOperatorParserRuleCall_5_0; }
 
-		//name=TypesIdentifier
+		//name=BindingTypesIdentifier
 		public Assignment getNameAssignment_6() { return cNameAssignment_6; }
 
-		//TypesIdentifier
-		public RuleCall getNameTypesIdentifierParserRuleCall_6_0() { return cNameTypesIdentifierParserRuleCall_6_0; }
+		//BindingTypesIdentifier
+		public RuleCall getNameBindingTypesIdentifierParserRuleCall_6_0() { return cNameBindingTypesIdentifierParserRuleCall_6_0; }
 
 		//('<' typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>')?
 		public Group getGroup_7() { return cGroup_7; }
@@ -1241,7 +1229,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTypingStrategyAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cTypingStrategyTypingStrategyDefSiteOperatorParserRuleCall_3_0 = (RuleCall)cTypingStrategyAssignment_3.eContents().get(0);
 		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cNameTypesIdentifierParserRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
+		private final RuleCall cNameBindingTypesIdentifierParserRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
 		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
 		private final Keyword cLessThanSignKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
 		private final Assignment cTypeVarsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
@@ -1269,7 +1257,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//TInterface:
 		//	declaredTypeAccessModifier=TypeAccessModifier
 		//	declaredProvidedByRuntime?='providedByRuntime'?
-		//	'interface' typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier ('<'
+		//	'interface' typingStrategy=TypingStrategyDefSiteOperator? name=BindingTypesIdentifier ('<'
 		//	typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>')? ('extends'
 		//	superInterfaceRefs+=ParameterizedTypeRefNominal (',' superInterfaceRefs+=ParameterizedTypeRefNominal)*)?
 		//	annotations+=TAnnotation*
@@ -1277,9 +1265,10 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		@Override public ParserRule getRule() { return rule; }
 
 		//declaredTypeAccessModifier=TypeAccessModifier declaredProvidedByRuntime?='providedByRuntime'? 'interface'
-		//typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier ('<' typeVars+=TypeVariableWithDefSiteVariance (','
-		//typeVars+=TypeVariableWithDefSiteVariance)* '>')? ('extends' superInterfaceRefs+=ParameterizedTypeRefNominal (','
-		//superInterfaceRefs+=ParameterizedTypeRefNominal)*)? annotations+=TAnnotation* '{' ownedMembers+=TMember* '}'
+		//typingStrategy=TypingStrategyDefSiteOperator? name=BindingTypesIdentifier ('<'
+		//typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>')? ('extends'
+		//superInterfaceRefs+=ParameterizedTypeRefNominal (',' superInterfaceRefs+=ParameterizedTypeRefNominal)*)?
+		//annotations+=TAnnotation* '{' ownedMembers+=TMember* '}'
 		public Group getGroup() { return cGroup; }
 
 		//declaredTypeAccessModifier=TypeAccessModifier
@@ -1303,11 +1292,11 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//TypingStrategyDefSiteOperator
 		public RuleCall getTypingStrategyTypingStrategyDefSiteOperatorParserRuleCall_3_0() { return cTypingStrategyTypingStrategyDefSiteOperatorParserRuleCall_3_0; }
 
-		//name=TypesIdentifier
+		//name=BindingTypesIdentifier
 		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
 
-		//TypesIdentifier
-		public RuleCall getNameTypesIdentifierParserRuleCall_4_0() { return cNameTypesIdentifierParserRuleCall_4_0; }
+		//BindingTypesIdentifier
+		public RuleCall getNameBindingTypesIdentifierParserRuleCall_4_0() { return cNameBindingTypesIdentifierParserRuleCall_4_0; }
 
 		//('<' typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>')?
 		public Group getGroup_5() { return cGroup_5; }
@@ -1953,7 +1942,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTypeVarsTypeVariableParserRuleCall_3_2_1_0 = (RuleCall)cTypeVarsAssignment_3_2_1.eContents().get(0);
 		private final Keyword cGreaterThanSignKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
 		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cNameTIdentifierParserRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
+		private final RuleCall cNameBindingTypesIdentifierParserRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
 		private final Assignment cFparsAssignment_6_0 = (Assignment)cGroup_6.eContents().get(0);
@@ -1971,14 +1960,14 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//	declaredTypeAccessModifier=TypeAccessModifier
 		//	declaredProvidedByRuntime?='providedByRuntime'?
 		//	'function' ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
-		//	name=TIdentifier
+		//	name=BindingTypesIdentifier
 		//	'(' (fpars+=TFormalParameter (',' fpars+=TFormalParameter)*)? ')'
 		//	':' returnTypeRef=TypeRef;
 		@Override public ParserRule getRule() { return rule; }
 
 		//declaredTypeAccessModifier=TypeAccessModifier declaredProvidedByRuntime?='providedByRuntime'? 'function' ('<'
-		//typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? name=TIdentifier '(' (fpars+=TFormalParameter (','
-		//fpars+=TFormalParameter)*)? ')' ':' returnTypeRef=TypeRef
+		//typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? name=BindingTypesIdentifier '(' (fpars+=TFormalParameter
+		//(',' fpars+=TFormalParameter)*)? ')' ':' returnTypeRef=TypeRef
 		public Group getGroup() { return cGroup; }
 
 		//declaredTypeAccessModifier=TypeAccessModifier
@@ -2023,11 +2012,11 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//'>'
 		public Keyword getGreaterThanSignKeyword_3_3() { return cGreaterThanSignKeyword_3_3; }
 
-		//name=TIdentifier
+		//name=BindingTypesIdentifier
 		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
 
-		//TIdentifier
-		public RuleCall getNameTIdentifierParserRuleCall_4_0() { return cNameTIdentifierParserRuleCall_4_0; }
+		//BindingTypesIdentifier
+		public RuleCall getNameBindingTypesIdentifierParserRuleCall_4_0() { return cNameBindingTypesIdentifierParserRuleCall_4_0; }
 
 		//'('
 		public Keyword getLeftParenthesisKeyword_5() { return cLeftParenthesisKeyword_5; }
@@ -2075,7 +2064,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cDeclaredProvidedByRuntimeProvidedByRuntimeKeyword_1_0 = (Keyword)cDeclaredProvidedByRuntimeAssignment_1.eContents().get(0);
 		private final Keyword cEnumKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cNameTypesIdentifierParserRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
+		private final RuleCall cNameBindingTypesIdentifierParserRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		private final Assignment cLiteralsAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cLiteralsTEnumLiteralParserRuleCall_5_0 = (RuleCall)cLiteralsAssignment_5.eContents().get(0);
@@ -2088,12 +2077,12 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//TEnum:
 		//	declaredTypeAccessModifier=TypeAccessModifier
 		//	declaredProvidedByRuntime?='providedByRuntime'?
-		//	'enum' name=TypesIdentifier
+		//	'enum' name=BindingTypesIdentifier
 		//	'{' literals+=TEnumLiteral (',' literals+=TEnumLiteral)* '}';
 		@Override public ParserRule getRule() { return rule; }
 
 		//declaredTypeAccessModifier=TypeAccessModifier declaredProvidedByRuntime?='providedByRuntime'? 'enum'
-		//name=TypesIdentifier '{' literals+=TEnumLiteral (',' literals+=TEnumLiteral)* '}'
+		//name=BindingTypesIdentifier '{' literals+=TEnumLiteral (',' literals+=TEnumLiteral)* '}'
 		public Group getGroup() { return cGroup; }
 
 		//declaredTypeAccessModifier=TypeAccessModifier
@@ -2111,11 +2100,11 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//'enum'
 		public Keyword getEnumKeyword_2() { return cEnumKeyword_2; }
 
-		//name=TypesIdentifier
+		//name=BindingTypesIdentifier
 		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
 
-		//TypesIdentifier
-		public RuleCall getNameTypesIdentifierParserRuleCall_3_0() { return cNameTypesIdentifierParserRuleCall_3_0; }
+		//BindingTypesIdentifier
+		public RuleCall getNameBindingTypesIdentifierParserRuleCall_3_0() { return cNameBindingTypesIdentifierParserRuleCall_3_0; }
 
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_4() { return cLeftCurlyBracketKeyword_4; }
@@ -2275,6 +2264,9 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	private final UndefinedTypeElements pUndefinedType;
 	private final NullTypeElements pNullType;
 	private final TypesIdentifierElements pTypesIdentifier;
+	private final BindingTypesIdentifierElements pBindingTypesIdentifier;
+	private final VoidOrBindingIdentifierElements pVoidOrBindingIdentifier;
+	private final TypesSpecificKeywordsElements pTypesSpecificKeywords;
 	private final TypesComputedPropertyNameElements pTypesComputedPropertyName;
 	private final TypesSymbolLiteralComputedNameElements pTypesSymbolLiteralComputedName;
 	private final TypesStringLiteralComputedNameElements pTypesStringLiteralComputedName;
@@ -2325,6 +2317,9 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		this.pUndefinedType = new UndefinedTypeElements();
 		this.pNullType = new NullTypeElements();
 		this.pTypesIdentifier = new TypesIdentifierElements();
+		this.pBindingTypesIdentifier = new BindingTypesIdentifierElements();
+		this.pVoidOrBindingIdentifier = new VoidOrBindingIdentifierElements();
+		this.pTypesSpecificKeywords = new TypesSpecificKeywordsElements();
 		this.pTypesComputedPropertyName = new TypesComputedPropertyNameElements();
 		this.pTypesSymbolLiteralComputedName = new TypesSymbolLiteralComputedNameElements();
 		this.pTypesStringLiteralComputedName = new TypesStringLiteralComputedNameElements();
@@ -2518,7 +2513,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PrimitiveType:
-	//	'primitive' name=TypesIdentifier ('<' typeVars+=TypeVariable '>')? ('indexed'
+	//	'primitive' name=VoidOrBindingIdentifier ('<' typeVars+=TypeVariable '>')? ('indexed'
 	//	declaredElementType=ParameterizedTypeRefNominal)?
 	//	'{' ('autoboxedType' autoboxedType=[TClassifier|TypeReferenceName])? ('assignmnentCompatible'
 	//	assignmentCompatible=[PrimitiveType|TypeReferenceName])?
@@ -2583,38 +2578,48 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TypesIdentifier:
-	//	IDENTIFIER
-	//	// no ECMAScript keywords, only in certain contexts
-	//	| 'get'
-	//	| 'set'
-	//	// Types keywords
-	//	| 'abstract'
-	//	| 'any'
-	//	| 'project'
-	//	| 'union'
-	//	| 'intersection'
-	//	// no ECMAScript keywords, used in certain [ECM13] and N4JS contexts (import x as y from)
-	//	| 'as'
-	//	| 'from'
-	//	| 'type'
-	//	| 'void'
-	//	| 'null'
-	//	| 'undefined'
-	//	| 'constructor'
-	//	// no ECMAScript nor N4JS keyword, used in types only
-	//	| 'object'
-	//	| 'virtualBase'
-	//	| 'primitive'
-	//	| 'autoboxedType'
-	//	| 'assignmnentCompatible'
-	//	// must not be used: 'notnull'|'nullable'
-	//;
+	//	TypesSpecificKeywords | IdentifierName;
 	public TypesIdentifierElements getTypesIdentifierAccess() {
 		return pTypesIdentifier;
 	}
 	
 	public ParserRule getTypesIdentifierRule() {
 		return getTypesIdentifierAccess().getRule();
+	}
+
+	//BindingTypesIdentifier:
+	//	TypesSpecificKeywords | BindingIdentifier<Yield=false>;
+	public BindingTypesIdentifierElements getBindingTypesIdentifierAccess() {
+		return pBindingTypesIdentifier;
+	}
+	
+	public ParserRule getBindingTypesIdentifierRule() {
+		return getBindingTypesIdentifierAccess().getRule();
+	}
+
+	//// Also allows void as identifier although it is a reserved keyword as of [ECM15]
+	//VoidOrBindingIdentifier:
+	//	'void' | BindingTypesIdentifier;
+	public VoidOrBindingIdentifierElements getVoidOrBindingIdentifierAccess() {
+		return pVoidOrBindingIdentifier;
+	}
+	
+	public ParserRule getVoidOrBindingIdentifierRule() {
+		return getVoidOrBindingIdentifierAccess().getRule();
+	}
+
+	//// These keywords are specific to the types language when comparing with N4JS
+	//TypesSpecificKeywords: // Types keywords
+	//	'any' // no ECMAScript keywords, used in certain [ECM13] and N4JS contexts
+	//	| 'undefined' // no ECMAScript nor N4JS keyword, used in types only
+	//	| 'object' | 'virtualBase' | 'primitive' | 'autoboxedType' | 'assignmnentCompatible' // must not be used: 'notnull'|'nullable'
+	//;
+	public TypesSpecificKeywordsElements getTypesSpecificKeywordsAccess() {
+		return pTypesSpecificKeywords;
+	}
+	
+	public ParserRule getTypesSpecificKeywordsRule() {
+		return getTypesSpecificKeywordsAccess().getRule();
 	}
 
 	//// see rule "ComputedPropertyName" in ECMAScript 6 specification (e.g. Section 12.2.5)
@@ -2652,7 +2657,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//	declaredTypeAccessModifier=TypeAccessModifier
 	//	declaredProvidedByRuntime?='providedByRuntime'?
 	//	declaredFinal?='final'?
-	//	'object' name=TypesIdentifier ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? ('extends'
+	//	'object' name=BindingTypesIdentifier ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')? ('extends'
 	//	superType=ParameterizedTypeRefNominal)? ('indexed' declaredElementType=ParameterizedTypeRefNominal)?
 	//	annotations+=TAnnotation*
 	//	'{'
@@ -2672,7 +2677,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	// * Used to define common super types, e.g. for all enumerations.
 	// * / VirtualBaseType:
 	//	{VirtualBaseType}
-	//	'virtualBase' name=TypesIdentifier '{'
+	//	'virtualBase' name=BindingTypesIdentifier '{'
 	//	ownedMembers+=TMember*
 	//	'}';
 	public VirtualBaseTypeElements getVirtualBaseTypeAccess() {
@@ -2688,7 +2693,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//	declaredProvidedByRuntime?='providedByRuntime'?
 	//	declaredAbstract?='abstract'?
 	//	declaredFinal?='final'?
-	//	'class' typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier ('<'
+	//	'class' typingStrategy=TypingStrategyDefSiteOperator? name=BindingTypesIdentifier ('<'
 	//	typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>')? ('extends'
 	//	superClassRef=ParameterizedTypeRefNominal)? ('implements' implementedInterfaceRefs+=ParameterizedTypeRefNominal (','
 	//	implementedInterfaceRefs+=ParameterizedTypeRefNominal)*)?
@@ -2708,7 +2713,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//TInterface:
 	//	declaredTypeAccessModifier=TypeAccessModifier
 	//	declaredProvidedByRuntime?='providedByRuntime'?
-	//	'interface' typingStrategy=TypingStrategyDefSiteOperator? name=TypesIdentifier ('<'
+	//	'interface' typingStrategy=TypingStrategyDefSiteOperator? name=BindingTypesIdentifier ('<'
 	//	typeVars+=TypeVariableWithDefSiteVariance (',' typeVars+=TypeVariableWithDefSiteVariance)* '>')? ('extends'
 	//	superInterfaceRefs+=ParameterizedTypeRefNominal (',' superInterfaceRefs+=ParameterizedTypeRefNominal)*)?
 	//	annotations+=TAnnotation*
@@ -2801,7 +2806,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//	declaredTypeAccessModifier=TypeAccessModifier
 	//	declaredProvidedByRuntime?='providedByRuntime'?
 	//	'function' ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
-	//	name=TIdentifier
+	//	name=BindingTypesIdentifier
 	//	'(' (fpars+=TFormalParameter (',' fpars+=TFormalParameter)*)? ')'
 	//	':' returnTypeRef=TypeRef;
 	public TFunctionElements getTFunctionAccess() {
@@ -2815,7 +2820,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//TEnum:
 	//	declaredTypeAccessModifier=TypeAccessModifier
 	//	declaredProvidedByRuntime?='providedByRuntime'?
-	//	'enum' name=TypesIdentifier
+	//	'enum' name=BindingTypesIdentifier
 	//	'{' literals+=TEnumLiteral (',' literals+=TEnumLiteral)* '}';
 	public TEnumElements getTEnumAccess() {
 		return pTEnum;
@@ -3016,7 +3021,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	/// **
 	// * Used in type expressions, name is optional.
 	// * / TAnonymousFormalParameter:
-	//	variadic?='...'? (=> name=TIdentifier ':')? typeRef=super::TypeRef;
+	//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=super::TypeRef;
 	public TypeExpressionsGrammarAccess.TAnonymousFormalParameterElements getTAnonymousFormalParameterAccess() {
 		return gaTypeExpressions.getTAnonymousFormalParameterAccess();
 	}
@@ -3028,7 +3033,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	/// **
 	// * Used in Types language only.
 	// * / TFormalParameter:
-	//	variadic?='...'? name=TIdentifier ':' typeRef=super::TypeRef;
+	//	variadic?='...'? name=BindingIdentifier<Yield=false> ':' typeRef=super::TypeRef;
 	public TypeExpressionsGrammarAccess.TFormalParameterElements getTFormalParameterAccess() {
 		return gaTypeExpressions.getTFormalParameterAccess();
 	}
@@ -3131,7 +3136,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//TStructMethod:
 	//	=>
 	//	({TStructMethod} ('<' typeVars+=TypeVariable (',' typeVars+=TypeVariable)* '>')?
-	//	name=super::TypesIdentifier '(') TAnonymousFormalParameterList ')' (':' returnTypeRef=super::TypeRef)?;
+	//	name=IdentifierName '(') TAnonymousFormalParameterList ')' (':' returnTypeRef=super::TypeRef)?;
 	public TypeExpressionsGrammarAccess.TStructMethodElements getTStructMethodAccess() {
 		return gaTypeExpressions.getTStructMethodAccess();
 	}
@@ -3141,7 +3146,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TStructField:
-	//	name=super::TypesIdentifier (':' typeRef=super::TypeRef)?;
+	//	name=IdentifierName (':' typeRef=super::TypeRef)?;
 	public TypeExpressionsGrammarAccess.TStructFieldElements getTStructFieldAccess() {
 		return gaTypeExpressions.getTStructFieldAccess();
 	}
@@ -3153,7 +3158,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//TStructGetter:
 	//	=> ({TStructGetter}
 	//	'get'
-	//	name=super::TypesIdentifier)
+	//	name=IdentifierName)
 	//	'(' ')' (':' declaredTypeRef=super::TypeRef)?;
 	public TypeExpressionsGrammarAccess.TStructGetterElements getTStructGetterAccess() {
 		return gaTypeExpressions.getTStructGetterAccess();
@@ -3166,7 +3171,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//TStructSetter:
 	//	=> ({TStructSetter}
 	//	'set'
-	//	name=super::TypesIdentifier)
+	//	name=IdentifierName)
 	//	'(' fpar=TAnonymousFormalParameter ')';
 	public TypeExpressionsGrammarAccess.TStructSetterElements getTStructSetterAccess() {
 		return gaTypeExpressions.getTStructSetterAccess();
@@ -3277,28 +3282,72 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypeVariableWithDefSiteVarianceAccess().getRule();
 	}
 
-	//// GH-203
-	//TIdentifier:
-	//	super::TypesIdentifier
-	//	// 7.6.1.2: future reserved words, may not be used only in strict mode:
-	//	| 'implements'
-	//	| 'interface'
-	//	//	| 'let'
-	//	//	| 'package'
-	//	| 'private'
-	//	| 'protected'
-	//	| 'public'
-	//	| 'static'
-	//	//	| 'yield'
-	//	// Types keywords which are no valid TypesIdentifier
-	//	//	| 'undefined'
-	//;
-	public TypeExpressionsGrammarAccess.TIdentifierElements getTIdentifierAccess() {
-		return gaTypeExpressions.getTIdentifierAccess();
+	/// *
+	// * [ECM11] (7.6, pp. 17)
+	// * Identifier :: IdentifierName but not ReservedWord
+	// * ReservedWord :: Keyword | FutureReservedWord | NullLiteral | BooleanLiteral
+	// * / BindingIdentifier <Yield>:
+	//	IDENTIFIER
+	//	// yield as identifier as of [ECM15] (11.6.2, pp. 165) 
+	//	| <!Yield> 'yield'
+	//	| N4Keyword;
+	public TypeExpressionsGrammarAccess.BindingIdentifierElements getBindingIdentifierAccess() {
+		return gaTypeExpressions.getBindingIdentifierAccess();
 	}
 	
-	public ParserRule getTIdentifierRule() {
-		return getTIdentifierAccess().getRule();
+	public ParserRule getBindingIdentifierRule() {
+		return getBindingIdentifierAccess().getRule();
+	}
+
+	//IdentifierName:
+	//	IDENTIFIER | ReservedWord | N4Keyword;
+	public TypeExpressionsGrammarAccess.IdentifierNameElements getIdentifierNameAccess() {
+		return gaTypeExpressions.getIdentifierNameAccess();
+	}
+	
+	public ParserRule getIdentifierNameRule() {
+		return getIdentifierNameAccess().getRule();
+	}
+
+	//ReservedWord: // Keywords as of [ECM15] (11.6.2, pp. 165)
+	//	'break' | 'case' | 'catch' | 'class' | 'const' | 'continue' | 'debugger' | 'default' | 'delete' | 'do' | 'else' |
+	//	'export' | 'extends' | 'finally' | 'for' | 'function' | 'if' | 'import' | 'in' | 'instanceof' | 'new' | 'return' |
+	//	'super' | 'switch' | 'this' | 'throw' | 'try' | 'typeof' | 'var' | 'void' | 'while' | 'with' | 'yield' // null literal
+	//	| 'null' // boolean literal
+	//	| 'true' | 'false' // Future Reserved Word as of [ECM15] (11.6.2.2, pp. 166)
+	//	// | 'await' / * reserved word only if parse goal is module - compromise: allow as identifier and validate * /
+	//	| 'enum';
+	public TypeExpressionsGrammarAccess.ReservedWordElements getReservedWordAccess() {
+		return gaTypeExpressions.getReservedWordAccess();
+	}
+	
+	public ParserRule getReservedWordRule() {
+		return getReservedWordAccess().getRule();
+	}
+
+	//N4Keyword:
+	//	'get' | 'set'
+	//	| 'let'
+	//	| 'project'
+	//	| 'external' | 'abstract' | 'static'
+	//	| 'as' | 'from' | 'constructor' | 'of' | 'target'
+	//	| 'type' | 'union' | 'intersection'
+	//	| 'This' | 'Promisify'
+	//	// future reserved keyword in [ECM15] only in modules, we add additional validation
+	//	| 'await'
+	//	// async is not a reserved keyword, i.e. it can be used as a variable name
+	//	| 'async'
+	//	// future reserved keywords in [ECM15], restricted via static semantic in [ECM15]
+	//	| 'implements' | 'interface'
+	//	| 'private' | 'protected' | 'public' // package not used in N4JS
+	//	// definition-site variance
+	//	| 'out';
+	public TypeExpressionsGrammarAccess.N4KeywordElements getN4KeywordAccess() {
+		return gaTypeExpressions.getN4KeywordAccess();
+	}
+	
+	public ParserRule getN4KeywordRule() {
+		return getN4KeywordAccess().getRule();
 	}
 
 	//terminal IDENTIFIER:

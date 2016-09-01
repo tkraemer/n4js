@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.xsemantics.caching
 
 import eu.numberfour.n4js.N4JSInjectorProvider
-import eu.numberfour.n4js.xsemantics.caching.AbstractTypesystemForPerformanceTest
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Test

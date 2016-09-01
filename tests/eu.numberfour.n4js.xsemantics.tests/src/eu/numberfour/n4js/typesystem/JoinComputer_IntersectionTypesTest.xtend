@@ -10,18 +10,19 @@
  */
 package eu.numberfour.n4js.typesystem
 
-import eu.numberfour.n4js.N4JSInjectorProvider
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.Before
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
+import eu.numberfour.n4js.validation.IssueCodes
 
 /*
  * Tests for {@link TypeSystemHelper#join(RuleEnvironment, TypeRef...)} method with union types.
  */
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 class JoinComputer_IntersectionTypesTest extends AbstractTypeSystemHelperTests {
 
 	@Before
@@ -44,27 +45,27 @@ class JoinComputer_IntersectionTypesTest extends AbstractTypeSystemHelperTests {
 
 	@Test
 	def void testJoinIntersectionWithElementFromIntersection() {
-		assertJoin("A", "A", "intersection{A,B}");
-		assertJoin("B", "B", "intersection{A,B}");
-		assertJoin("D", "D", "intersection{A,D}");
-		assertJoin("N4Object", "D", "intersection{A,D}", "A");
-		assertJoin("A", "B", "intersection{A,B}", "A");
+		assertJoin(#[IssueCodes.INTER_REDUNDANT_SUPERTYPE], "A", "A", "intersection{A,B}");
+		assertJoin(#[IssueCodes.INTER_REDUNDANT_SUPERTYPE], "B", "B", "intersection{A,B}");
+		assertJoin("R1", "R1", "intersection{A,R1}");
+		assertJoin("N4Object", "D", "intersection{A,R1}", "A");
+		assertJoin(#[IssueCodes.INTER_REDUNDANT_SUPERTYPE], "A", "B", "intersection{A,B}", "A");
 	}
 
 	@Test
 	def void testJoinWithIntersections() {
-		assertJoin("intersection{A,D}", "intersection{A,D}", "intersection{A,D}");
-		assertJoin("intersection{A,D}", "intersection{A,D,E}", "intersection{A,D}");
-		assertJoin("intersection{A,D}", "intersection{A,D}", "intersection{B,D}");
-		assertJoin("B", "intersection{A,B}", "intersection{A,B}");
+		assertJoin("intersection{I1,R1}", "intersection{I1,R1}", "intersection{I1,R1}");
+		assertJoin("intersection{I1,R1}", "intersection{I1,R1,Q1}", "intersection{I1,R1}");
+		assertJoin("intersection{A,R1}", "intersection{A,R1}", "intersection{B,R1}");
+		assertJoin(#[IssueCodes.INTER_REDUNDANT_SUPERTYPE,IssueCodes.INTER_REDUNDANT_SUPERTYPE], "B", "intersection{A,B}", "intersection{A,B}");
 
 	}
 
 	@Test
 	def void testJoinWithIntersectionAndGenerics() {
-		assertJoin("G<A>", "G<A>", "intersection{G<A>,B}");
-		assertJoin("intersection{A,G<A>}", "intersection{G<A>,A}", "intersection{G<A>,B}");
-		assertJoin("G<A>", "intersection{G<A>,D}", "intersection{G<A>,B}");
+		assertJoin("G<I1>", "G<I1>", "intersection{G<I1>,I2}");
+		assertJoin("intersection{G<I1>,I1}", "intersection{G<I1>,I1}", "intersection{G<I1>,I2}");
+		assertJoin("G<I1>", "intersection{G<I1>,R1}", "intersection{G<I1>,I2}");
 
 	}
 

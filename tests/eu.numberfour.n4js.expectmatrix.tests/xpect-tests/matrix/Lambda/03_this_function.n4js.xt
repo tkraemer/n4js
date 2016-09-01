@@ -1,0 +1,27 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+///////////////////////////////
+// This keyword & annotation //
+// in function declarations  //
+///////////////////////////////
+
+// IDE-2313
+@This(~Object with {m: number;})
+function fun(n : number) {
+	// this is bound to outer context (all well) XPECT noerrors -->
+	(() => { this.m = n })();
+}
+
+function noFun(n : number) {
+	// this is bound to outer context (no outer this) XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'm'." at "m"
+	(() => { this.m = n })();
+}
+
+// IDE-2313
+@This(~Object with {m: number;})
+function evenLessFun(n : number) {
+	var f = @This(~Object with {g: number;}) function () {
+		// nested functions with this XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'm'." at "m"
+		(() => { this.m = n })();
+	};
+}

@@ -20,7 +20,6 @@ import org.xpect.expectation.CommaSeparatedValuesExpectation;
 import org.xpect.expectation.ICommaSeparatedValuesExpectation;
 import org.xpect.parameter.ParameterParser;
 import org.xpect.runner.Xpect;
-import org.xpect.xtext.lib.setup.ThisOffset;
 import org.xpect.xtext.lib.tests.ScopingTest;
 import org.xpect.xtext.lib.util.XtextOffsetAdapter.ICrossEReferenceAndEObject;
 
@@ -50,7 +49,7 @@ public class ScopeXpectMethod extends ScopingTest {
 	@ParameterParser(syntax = "('at' arg1=OFFSET)?")
 	public void scopeWithPosition( //
 			@N4JSCommaSeparatedValuesExpectation IN4JSCommaSeparatedValuesExpectation expectation, //
-			@ThisOffset ICrossEReferenceAndEObject arg1 //
+			ICrossEReferenceAndEObject arg1 //
 	) {
 		EObject eobj = arg1.getEObject();
 		IScope scope = scopeProvider.getScope(eobj, arg1.getCrossEReference());
@@ -70,7 +69,7 @@ public class ScopeXpectMethod extends ScopingTest {
 	@ParameterParser(syntax = "('at' arg1=OFFSET)?")
 	public void scopeWithResource( //
 			@N4JSCommaSeparatedValuesExpectation IN4JSCommaSeparatedValuesExpectation expectation, //
-			@ThisOffset ICrossEReferenceAndEObject arg1 //
+			ICrossEReferenceAndEObject arg1 //
 	) {
 		EObject eobj = arg1.getEObject();
 		IScope scope = scopeProvider.getScope(eobj, arg1.getCrossEReference());
@@ -88,7 +87,7 @@ public class ScopeXpectMethod extends ScopingTest {
 	@ParameterParser(syntax = "('at' arg1=OFFSET)?")
 	public void scope( //
 			@CommaSeparatedValuesExpectation ICommaSeparatedValuesExpectation expectation, //
-			@ThisOffset ICrossEReferenceAndEObject arg1 //
+			ICrossEReferenceAndEObject arg1 //
 	) {
 		EObject eobj = arg1.getEObject();
 		IScope scope = scopeProvider.getScope(eobj, arg1.getCrossEReference());
@@ -108,7 +107,7 @@ public class ScopeXpectMethod extends ScopingTest {
 	@ParameterParser(syntax = "('at' arg1=OFFSET)?")
 	public void binding( //
 			@CommaSeparatedValuesExpectation ICommaSeparatedValuesExpectation expectation, //
-			@ThisOffset ICrossEReferenceAndEObject arg1 //
+			ICrossEReferenceAndEObject arg1 //
 	) {
 		EObject eobj = arg1.getEObject();
 		ParameterizedPropertyAccessExpression ppae = EcoreUtil2.getContainerOfType(eobj,

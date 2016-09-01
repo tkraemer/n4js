@@ -11,7 +11,7 @@ class A1 {
 	_s_a : String;
 
 	get a() : String { return this._s_a; }
-	// OK XPECT errors -->
+	// OK XPECT noerrors
 	set a(s : String) { this._s_a = s; }
 }
 
@@ -99,22 +99,22 @@ class C implements R, X {}
 class F implements R {}
 // XPECT errors --> "string is not a subtype of String." at ""hallo""
 new F().meth01("hallo");
-// OK XPECT errors -->
+// OK XPECT noerrors
 new F().meth02("hallo");
 
 // XPECT errors --> "string is not a subtype of String." at "E.e1.value"
 new F().meth01(E.e1.value);
-// OK, enum-literal's string XPECT errors -->
+// OK, enum-literal's string XPECT noerrors
 new F().meth02(E.e1.value);
 
 // XPECT errors --> "string is not a subtype of String." at "E.e1.name"
 new F().meth01(E.e1.name);
-// OK, enum-literal's string XPECT errors -->
+// OK, enum-literal's string XPECT noerrors
 new F().meth02(E.e1.name);
 
 // XPECT errors --> "string is not a subtype of String." at "E.e1.toString()"
 new F().meth01(E.e1.toString());
-// OK, enum-literal's string XPECT errors -->
+// OK, enum-literal's string XPECT noerrors
 new F().meth02(E.e1.toString());
 
 

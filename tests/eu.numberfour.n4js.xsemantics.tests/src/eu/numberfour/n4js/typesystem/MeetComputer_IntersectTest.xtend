@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.typesystem
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import org.eclipse.xtext.junit4.InjectWith
@@ -21,13 +20,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 /*
  * Tests for {@link TypeSystemHelper#intersect(RuleEnvironment, TypeRef...)} method.
  */
 // TODO to be enhanced, see IDE-142/IDE-385
 @RunWith(XtextRunner)
-@InjectWith(N4JSInjectorProvider)
+@InjectWith(N4JSInjectorProviderWithIssueSuppression)
 class MeetComputer_IntersectTest extends AbstractTypeSystemHelperTests {
 
 	@Inject MeetComputer meetComputer
@@ -70,11 +70,11 @@ class MeetComputer_IntersectTest extends AbstractTypeSystemHelperTests {
 
 	@Test
 	def void testIntersectReleaxedWithIntersections() {
-		assertIntersectRelaxed("intersection{A,D}", "intersection{A,D}", "intersection{A,D}");
-		assertIntersectRelaxed("intersection{A,D}", "intersection{A,D}", "A");
-		assertIntersectRelaxed("intersection{A,D}", "intersection{A,D}", "D");
-		assertIntersectRelaxed("intersection{B,D}", "intersection{A,D}", "B");
-		assertIntersectRelaxed("intersection{B,D}", "intersection{B,D}", "A");
+		assertIntersectRelaxed("intersection{I1,R1}", "intersection{I1,R1}", "intersection{I1,R1}");
+		assertIntersectRelaxed("intersection{I1,R1}", "intersection{I1,R1}", "I1");
+		assertIntersectRelaxed("intersection{I1,R1}", "intersection{I1,R1}", "R1");
+		assertIntersectRelaxed("intersection{B,R1}", "intersection{A,R1}", "B");
+		assertIntersectRelaxed("intersection{B,R1}", "intersection{B,R1}", "A");
 	}
 
 }

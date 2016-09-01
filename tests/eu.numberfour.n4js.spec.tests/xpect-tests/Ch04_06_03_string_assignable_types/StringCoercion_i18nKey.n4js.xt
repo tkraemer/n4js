@@ -1,13 +1,13 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
-// OK assignment XPECT errors -->
+// OK assignment XPECT noerrors
 var aKey : i18nKey = "key";
 
-// OK autoboxing to String XPECT errors -->
+// OK autoboxing to String XPECT noerrors
 var l : number = aKey.length
 
-// OK assignment-compatability XPECT errors -->
+// OK assignment-compatability XPECT noerrors
 var sAKey : string = aKey;
 
-// OK assignment-compatibility XPECT errors -->
+// OK assignment-compatibility XPECT noerrors
 var sndKey : i18nKey = sAKey;

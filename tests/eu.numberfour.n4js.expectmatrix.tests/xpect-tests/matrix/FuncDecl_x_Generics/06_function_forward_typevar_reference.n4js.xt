@@ -1,0 +1,9 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+
+// Use of forward reference in typeVar
+// OK - NOT "T is not a subtype of S."
+// XPECT noerrors
+function <T extends S,S > FA07a(p1 : T, p2 : S) : T  { var t : T; var s : S; s = t; return null; }
+
+

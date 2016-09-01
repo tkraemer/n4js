@@ -21,7 +21,7 @@ var res2 = fives.forEach(v => { console.log(v); if (v % 5 === 0) fives.push(v); 
 // XPECT noerrors ---> "no explicit return required, as expected block of statements typed as void."
 fives.map(v => v + 1); 
 
-// XPECT type of 'res3' ---> Array<any>
+// XPECT type of 'res3' --> Array<any>
 var res3 = fives.map(v => v + 1); 
 
 

@@ -1,9 +1,0 @@
-/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
-
-// Symbol
-
-// can create Symbols XPECT noerrors -->
-var sym1 = Symbol("hello");
-
-// can access Symbol.iterator XPECT noerrors -->
-var sym2 : symbol = Symbol.iterator;

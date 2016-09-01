@@ -3,9 +3,10 @@
 
 
 class A{}
-class B extends A{}
+class B{}
 class C{}
-class D extends A{}
+class D extends F{}
+class F{}
 class G<T> { field : T; }
 
 var ga : G<A>, gb : G<B>;

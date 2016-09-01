@@ -18,20 +18,20 @@ var c = new C();
 
 // XPECT noerrors --> "objct (literal) is a subtype of Object."
 for (var x in ol) {
-	// XPECT type at "x" --> string
+	// XPECT type of 'x' --> string
 	x;
 }
 
 
 // XPECT noerrors --> "array is a subtype of Object."
 for (var y in al) {
-	// XPECT type at "y" --> string
+	// XPECT type of 'y' --> string
 	y;
 }
 
 // XPECT noerrors --> "class instance is a subtype of Object."
 for (var z in c) {
-	// XPECT type at "z" --> string
+	// XPECT type of 'z' --> string
 	z
 }
 

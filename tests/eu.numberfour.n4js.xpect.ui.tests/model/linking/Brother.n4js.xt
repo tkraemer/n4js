@@ -25,8 +25,8 @@ export class Brother {
 // XPECT linkedFragment at SisterObject --> Sister.n4js#/1/@topLevelTypes.0
 // XPECT linkedName at SisterObject --> linking.Sister.Sister
 	project getSister() : SisterObject { return null; }
-// XPECT linkedFragment at Child --> Child.n4js#/1/@topLevelTypes.0
-// XPECT linkedName at Child --> linking.Child.Child
+// XPECT linkedFragment at ': |Child' --> Child.n4js#/1/@topLevelTypes.0
+// XPECT linkedName at ': |Child' --> linking.Child.Child
 	project getChild() : Child { return null; }
 } 
 var brother : Brother = new Brother();

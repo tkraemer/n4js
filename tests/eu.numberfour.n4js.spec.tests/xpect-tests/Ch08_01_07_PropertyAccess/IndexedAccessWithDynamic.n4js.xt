@@ -1,0 +1,70 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+class Foo {
+	public vvv = "vvv";
+}
+
+let objN: Foo = new Foo();
+let objD: Foo+ = new Foo();
+let objDS: ~Foo+ = new Foo();
+
+const cvx = "vvv";
+var zzz = "zzz";
+
+function f(): string {return ""}
+
+
+// nominal
+// XPECT noerrors
+objN.vvv;
+// XPECT noerrors
+objN["vvv"];
+// XPECT errors --> "Indexed access is not allowed for class instances." at "objN[cvx]"
+objN[cvx];
+
+// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'zzz'." at "zzz"
+objN.zzz = "zzz";
+// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'zzz'." at "zzz"
+objN.zzz;
+// XPECT errors --> "Member [zzz] not found." at "objN["zzz"]" 
+objN["zzz"];
+// XPECT errors --> "Indexed access is not allowed for class instances." at "objN[zzz]"
+objN[zzz];
+// XPECT errors --> "Indexed access is not allowed for class instances." at "objN[f()]"
+objN[f()];
+
+// dynamic
+// XPECT noerrors
+objD.vvv;
+// XPECT noerrors
+objD["vvv"];
+// XPECT noerrors
+objD[cvx];
+
+objD.zzz = "zzz";
+// XPECT noerrors
+objD.zzz;
+// XPECT noerrors
+objD["zzz"];
+// XPECT noerrors
+objD[zzz];
+// XPECT noerrors
+objD[f()];
+
+// dynamic and structural
+// XPECT noerrors
+objDS.vvv;
+// XPECT noerrors
+objDS["vvv"];
+// XPECT noerrors
+objDS[cvx];
+
+objDS.zzz = "zzz";
+// XPECT noerrors
+objDS.zzz;
+// XPECT noerrors
+objDS["zzz"];
+// XPECT noerrors
+objDS[zzz];
+// XPECT noerrors
+objDS[f()];

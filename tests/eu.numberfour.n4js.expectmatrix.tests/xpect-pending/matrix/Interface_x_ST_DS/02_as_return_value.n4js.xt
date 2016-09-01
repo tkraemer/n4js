@@ -36,15 +36,15 @@ class C2 {
 	// return value must be ~I, missing foo field XPECT errors --> "~Object with { x: ~Object with { i: int } } is not a structural subtype of ~I<A>: missing method foo; x failed: ~Object with { i: int } is not equal to A." at "{x: {i: 3}}"
 	public f2a () : ~I<A> { return {x: {i: 3}}; };
 	
-	// ATTENTION return value must be ~I, all well XPECT FIXME noerrors -->
+	// GH-250 ATTENTION return value must be ~I, all well XPECT FIXME noerrors -->
 	// ~Object with { ~Object with { int i; } x; {function():void} foo; } is not a subtype of ~I<A>.
 	public f2b () : ~I<A> { return {x: {i: 3}, foo: this.f}; };
 	
-	// ATTENTION return value must be ~~I, all well XPECT FIXME noerrors -->
+	// GH-250 ATTENTION return value must be ~~I, all well XPECT FIXME noerrors -->
 	// ~Object with { ~Object with { int i; } x; {function():void} foo; } is not a subtype of ~~I<A>.
 	public f3 () : ~~I<A> { return {x: {i: 3}, foo: this.f}; };
 	
-	// ATTENTION return value must be ~~I, all well XPECT FIXME noerrors -->
+	// GH-250 ATTENTION return value must be ~~I, all well XPECT FIXME noerrors -->
 	// ~Object with { ~Object with { int i; } x; } is not a subtype of ~~I<A>.
 	public f4 () : ~~I<A> { return {x: {i: 3}}; };
 }

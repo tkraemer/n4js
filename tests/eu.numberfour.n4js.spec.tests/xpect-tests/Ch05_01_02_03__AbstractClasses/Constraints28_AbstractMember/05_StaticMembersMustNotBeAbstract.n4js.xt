@@ -13,28 +13,28 @@ abstract class A {
 	// --------------------------------------------------------------------------
 	// static method must not be abstract
 	
-	// XPECT errors -->
+	// XPECT !errors -->
 	public abstract static string m();
 	
 	
 	// --------------------------------------------------------------------------
 	// static getter must not be abstract
 	
-	// XPECT errors -->
+	// XPECT !errors -->
 	public abstract static string get g();
 	
 	
 	// --------------------------------------------------------------------------
 	// static setter must not be abstract
 	
-	// XPECT errors -->
+	// XPECT !errors -->
 	public abstract static set s(number i);
 	
 	
 	// --------------------------------------------------------------------------
 	// static field must not be abstract
 	
-	// XPECT errors -->
+	// XPECT !errors -->
 	public abstract static string f;
 	
 }
