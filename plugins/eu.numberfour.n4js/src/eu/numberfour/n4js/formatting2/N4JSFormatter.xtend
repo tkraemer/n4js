@@ -116,7 +116,6 @@ import org.eclipse.xtext.xtext.generator.parser.antlr.splitting.simpleExpression
 import static eu.numberfour.n4js.formatting2.N4JSFormatterPreferenceKeys.*
 import static eu.numberfour.n4js.formatting2.N4JSGenericFormatter.*
 import eu.numberfour.n4js.n4JS.ThrowStatement
-import org.eclipse.xtext.formatting2.internal.TextReplacerContext
 
 class N4JSFormatter extends TypeExpressionsFormatter {
 	
