@@ -41,6 +41,7 @@ import org.eclipse.xtext.ui.editor.contentassist.PrefixMatcher;
 import org.eclipse.xtext.ui.editor.contentassist.antlr.IContentAssistParser;
 import org.eclipse.xtext.ui.editor.contentassist.antlr.ParserBasedContentAssistContextFactory;
 import org.eclipse.xtext.ui.editor.doubleClicking.DoubleClickStrategyProvider;
+import org.eclipse.xtext.ui.editor.formatting2.ContentFormatter;
 import org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider;
 import org.eclipse.xtext.ui.editor.model.DocumentTokenSource;
 import org.eclipse.xtext.ui.editor.model.IResourceForEditorInputFactory;
@@ -97,6 +98,7 @@ import eu.numberfour.n4js.ui.editor.syntaxcoloring.TemplateAwarePartitionTokenSc
 import eu.numberfour.n4js.ui.editor.syntaxcoloring.TemplateAwareTokenScanner;
 import eu.numberfour.n4js.ui.editor.syntaxcoloring.TokenToAttributeIdMapper;
 import eu.numberfour.n4js.ui.editor.syntaxcoloring.TokenTypeToPartitionMapper;
+import eu.numberfour.n4js.ui.formatting2.FixedContentFormatter;
 import eu.numberfour.n4js.ui.internal.ConsoleOutputStreamProvider;
 import eu.numberfour.n4js.ui.internal.EclipseBasedN4JSWorkspace;
 import eu.numberfour.n4js.ui.labeling.N4JSContentAssistLabelProvider;
@@ -528,5 +530,10 @@ public class N4JSUiModule extends eu.numberfour.n4js.ui.AbstractN4JSUiModule {
 	/** Generating markers. */
 	public Class<? extends IGeneratorMarkerSupport> bindIGeneratorMarkerSupport() {
 		return GeneratorMarkerSupport.class;
+	}
+
+	/** Performance workaround, see https://github.com/NumberFour/n4js/issues/246 */
+	public Class<? extends ContentFormatter> bindContentFormatter() {
+		return FixedContentFormatter.class;
 	}
 }

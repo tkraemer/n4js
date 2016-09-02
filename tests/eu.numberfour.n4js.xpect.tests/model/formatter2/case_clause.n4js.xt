@@ -6,7 +6,9 @@
    
    END_SETUP
  */
- 
+
+// refer to GH-251
+
 enum E {
 	A,
 	B,

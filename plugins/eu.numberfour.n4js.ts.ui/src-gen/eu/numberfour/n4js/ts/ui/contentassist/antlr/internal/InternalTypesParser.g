@@ -83,9 +83,8 @@ import eu.numberfour.n4js.ts.services.TypesGrammarAccess;
 		tokenNameToValue.put("Type", "'type'");
 		tokenNameToValue.put("Void", "'void'");
 		tokenNameToValue.put("With", "'with'");
-		tokenNameToValue.put("Await", "'Await'");
 		tokenNameToValue.put("Async", "'async'");
-		tokenNameToValue.put("Await_1", "'await'");
+		tokenNameToValue.put("Await", "'await'");
 		tokenNameToValue.put("Break", "'break'");
 		tokenNameToValue.put("Catch", "'catch'");
 		tokenNameToValue.put("Class", "'class'");
@@ -3767,83 +3766,75 @@ rule__N4Keyword__Alternatives
 )
 
     |(
-{ before(grammarAccess.getN4KeywordAccess().getAwaitKeyword_16()); }
-
-	Await 
-
-{ after(grammarAccess.getN4KeywordAccess().getAwaitKeyword_16()); }
-)
-
-    |(
-{ before(grammarAccess.getN4KeywordAccess().getPromisifyKeyword_17()); }
+{ before(grammarAccess.getN4KeywordAccess().getPromisifyKeyword_16()); }
 
 	Promisify 
 
-{ after(grammarAccess.getN4KeywordAccess().getPromisifyKeyword_17()); }
+{ after(grammarAccess.getN4KeywordAccess().getPromisifyKeyword_16()); }
 )
 
     |(
-{ before(grammarAccess.getN4KeywordAccess().getAwaitKeyword_18()); }
+{ before(grammarAccess.getN4KeywordAccess().getAwaitKeyword_17()); }
 
-	Await_1 
+	Await 
 
-{ after(grammarAccess.getN4KeywordAccess().getAwaitKeyword_18()); }
+{ after(grammarAccess.getN4KeywordAccess().getAwaitKeyword_17()); }
 )
 
     |(
-{ before(grammarAccess.getN4KeywordAccess().getAsyncKeyword_19()); }
+{ before(grammarAccess.getN4KeywordAccess().getAsyncKeyword_18()); }
 
 	Async 
 
-{ after(grammarAccess.getN4KeywordAccess().getAsyncKeyword_19()); }
+{ after(grammarAccess.getN4KeywordAccess().getAsyncKeyword_18()); }
 )
 
     |(
-{ before(grammarAccess.getN4KeywordAccess().getImplementsKeyword_20()); }
+{ before(grammarAccess.getN4KeywordAccess().getImplementsKeyword_19()); }
 
 	Implements 
 
-{ after(grammarAccess.getN4KeywordAccess().getImplementsKeyword_20()); }
+{ after(grammarAccess.getN4KeywordAccess().getImplementsKeyword_19()); }
 )
 
     |(
-{ before(grammarAccess.getN4KeywordAccess().getInterfaceKeyword_21()); }
+{ before(grammarAccess.getN4KeywordAccess().getInterfaceKeyword_20()); }
 
 	Interface 
 
-{ after(grammarAccess.getN4KeywordAccess().getInterfaceKeyword_21()); }
+{ after(grammarAccess.getN4KeywordAccess().getInterfaceKeyword_20()); }
 )
 
     |(
-{ before(grammarAccess.getN4KeywordAccess().getPrivateKeyword_22()); }
+{ before(grammarAccess.getN4KeywordAccess().getPrivateKeyword_21()); }
 
 	Private 
 
-{ after(grammarAccess.getN4KeywordAccess().getPrivateKeyword_22()); }
+{ after(grammarAccess.getN4KeywordAccess().getPrivateKeyword_21()); }
 )
 
     |(
-{ before(grammarAccess.getN4KeywordAccess().getProtectedKeyword_23()); }
+{ before(grammarAccess.getN4KeywordAccess().getProtectedKeyword_22()); }
 
 	Protected 
 
-{ after(grammarAccess.getN4KeywordAccess().getProtectedKeyword_23()); }
+{ after(grammarAccess.getN4KeywordAccess().getProtectedKeyword_22()); }
 )
 
     |(
-{ before(grammarAccess.getN4KeywordAccess().getPublicKeyword_24()); }
+{ before(grammarAccess.getN4KeywordAccess().getPublicKeyword_23()); }
 
 	Public 
 
-{ after(grammarAccess.getN4KeywordAccess().getPublicKeyword_24()); }
+{ after(grammarAccess.getN4KeywordAccess().getPublicKeyword_23()); }
 )
 
     |(
-{ before(grammarAccess.getN4KeywordAccess().getOutKeyword_25()); }
+{ before(grammarAccess.getN4KeywordAccess().getOutKeyword_24()); }
 
 	Out 
 
-{ after(grammarAccess.getN4KeywordAccess().getOutKeyword_25()); }
+{ after(grammarAccess.getN4KeywordAccess().getOutKeyword_24()); }
 )
 
 ;

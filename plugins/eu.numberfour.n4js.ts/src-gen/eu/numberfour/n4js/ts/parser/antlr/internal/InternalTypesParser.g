@@ -7009,73 +7009,66 @@ ruleN4Keyword returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
     }
 
     |
-	kw=Await 
-    {
-        $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getAwaitKeyword_16()); 
-    }
-
-    |
 	kw=Promisify 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getPromisifyKeyword_17()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getPromisifyKeyword_16()); 
     }
 
     |
-	kw=Await_1 
+	kw=Await 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getAwaitKeyword_18()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getAwaitKeyword_17()); 
     }
 
     |
 	kw=Async 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getAsyncKeyword_19()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getAsyncKeyword_18()); 
     }
 
     |
 	kw=Implements 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getImplementsKeyword_20()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getImplementsKeyword_19()); 
     }
 
     |
 	kw=Interface 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getInterfaceKeyword_21()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getInterfaceKeyword_20()); 
     }
 
     |
 	kw=Private 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getPrivateKeyword_22()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getPrivateKeyword_21()); 
     }
 
     |
 	kw=Protected 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getProtectedKeyword_23()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getProtectedKeyword_22()); 
     }
 
     |
 	kw=Public 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getPublicKeyword_24()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getPublicKeyword_23()); 
     }
 
     |
 	kw=Out 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getOutKeyword_25()); 
+        newLeafNode(kw, grammarAccess.getN4KeywordAccess().getOutKeyword_24()); 
     }
 )
     ;
