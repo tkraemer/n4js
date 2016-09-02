@@ -1,0 +1,6 @@
+import { A } from "A"
+
+class B extends A {
+	@Override
+	private field;
+}
