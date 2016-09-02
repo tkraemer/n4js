@@ -294,7 +294,7 @@ public class MemberMatrix {
 
 	/**
 	 * Returns all actually inherited and actually consumed in members. The latter requires them to be set before. Owned
-	 * memebrs are always actual members (and usually handled elsewhere by caller).
+	 * members are always actual members (and usually handled elsewhere by caller).
 	 */
 	public ActuallyInheritedAndConsumedMembersIterator actuallyInheritedAndMixedMembers() {
 		return new ActuallyInheritedAndConsumedMembersIterator();

@@ -48,7 +48,7 @@ public class MemberCube {
 	}
 
 	/**
-	 * constructors (in case of non-polyfills) are filtered out
+	 * constructors (in case of non-polyfills) are filtered out FIXME comment obsolete
 	 */
 	private void addMembers(int source, List<TMember> members) {
 		for (TMember member : members) {
