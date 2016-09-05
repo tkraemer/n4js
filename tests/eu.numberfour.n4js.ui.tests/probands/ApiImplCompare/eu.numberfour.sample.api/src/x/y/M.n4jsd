@@ -43,6 +43,13 @@ export external public enum Color {
 	@ProvidesDefaultImplementation public methodMissingDefaultImpl()
 }
 
+export external public class TypeVariableTest1<T1, T2> {}
+
+export external public class TypeVariableTest2<T1 extends Clazz, T2> {}
+export external public class TypeVariableTest21<T1 extends Clazz, T2> {}
+
+export external public class TypeVariableTest3<T1 extends Clazz & I, T2 extends Clazz> {}
+
 // test inheritance hierarchy:
 
 

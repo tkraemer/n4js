@@ -80,28 +80,30 @@ import eu.numberfour.n4js.utils.ResourceType;
  * Entry for headless compilation.
  *
  * This class has three ways of operation which all map down to a single algorithm implemented in
- * {@link #compileProjects(List, List, List)}. All other compileXXXX methods call this algorithm providing the correct
- * content of the arguments.
+ * {@link #compileProjects(List, List, List, IssueAcceptor)}. All other compileXXXX methods call this algorithm
+ * providing the correct content of the arguments.
  *
  * <ol>
  * <li>compile "single file" takes a (list of) source-file(s) to compile and just compiles these if possible
- * {@link #compileSingleFile(File)}, {@link #compileSingleFiles(List)}, {@link #compileSingleFiles(List, List)}
- * <li>compile "projects" takes a list of porject-location and compiles exactly them. {@link #compileProjects(List)},
- * {@link #compileProjects(List, List)}
+ * {@link #compileSingleFile(File)}, {@link #compileSingleFiles(List, IssueAcceptor)},
+ * {@link #compileSingleFiles(List, List, IssueAcceptor)}
+ * <li>compile "projects" takes a list of project-location and compiles exactly them.
+ * {@link #compileProjects(List, IssueAcceptor)}, {@link #compileProjects(List, List, IssueAcceptor)}
  * <li>compile "all project" takes a list of folders and compiles each project found as direct content of one of the
- * folders. {@link #compileAllProjects(List)}
+ * folders. {@link #compileAllProjects(List, IssueAcceptor)}
  * </ol>
  *
- * The way how the compiler behaves can be configures through flags like {@link #keepOnCompiling},
+ * The way how the compiler behaves can be configured through flags like {@link #keepOnCompiling},
  * {@link #processTestCode}, {@link #compileSourceCode}
  */
 public class N4HeadlessCompiler {
 
 	/** The Generator to compile with */
 	private final CompositeGenerator compositeGenerator;
-	/** Abstraction to the filesystem, used by the Generator */
 
+	/** Abstraction to the filesystem, used by the Generator */
 	private final JavaIoFileSystemAccess fsa;
+
 	/** N4JS-Implementation of a workspace without OSGI */
 	@Inject
 	private FileBasedWorkspace fbWorkspace;
@@ -141,6 +143,9 @@ public class N4HeadlessCompiler {
 	/** if set to true prints out processed files to standard out */
 	private boolean verbose = false;
 
+	/** if set to true suppresses all output to standard out */
+	private boolean suppressOutput = false;
+
 	/** if set to true prints to standard out inform about what is currently processed. */
 	private boolean createDebugOutput = false;
 
@@ -166,7 +171,26 @@ public class N4HeadlessCompiler {
 	public static void doMain(File modelFile, Properties properties) throws N4JSCompileException {
 
 		N4HeadlessCompiler hlc = injectAndSetup(properties);
-		hlc.compileSingleFile(modelFile);
+		hlc.compileSingleFile(modelFile, new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Compiles a single n4js/js file
+	 *
+	 * @param modelFile
+	 *            source to compile
+	 * @param properties
+	 *            optional Project-Settings loaded into Properties.
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 * @throws N4JSCompileException
+	 *             in compile errors
+	 */
+	public static void doMain(File modelFile, Properties properties, IssueAcceptor issueAcceptor)
+			throws N4JSCompileException {
+
+		N4HeadlessCompiler hlc = injectAndSetup(properties);
+		hlc.compileSingleFile(modelFile, issueAcceptor);
 	}
 
 	/**
@@ -207,7 +231,21 @@ public class N4HeadlessCompiler {
 	 *             due to compile errors
 	 */
 	public void compileSingleFile(File modelFile) throws N4JSCompileException {
-		compileSingleFiles(Arrays.asList(modelFile));
+		compileSingleFile(modelFile, new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Compile a single File
+	 *
+	 * @param modelFile
+	 *            the source file to compile.
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 * @throws N4JSCompileException
+	 *             due to compile errors
+	 */
+	public void compileSingleFile(File modelFile, IssueAcceptor issueAcceptor) throws N4JSCompileException {
+		compileSingleFiles(Arrays.asList(modelFile), issueAcceptor);
 	}
 
 	/**
@@ -219,7 +257,21 @@ public class N4HeadlessCompiler {
 	 *             due to compile errors.
 	 */
 	public void compileSingleFiles(List<File> modelFiles) throws N4JSCompileException {
-		compileSingleFiles(Collections.emptyList(), modelFiles);
+		compileSingleFiles(modelFiles, new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Compile multiple Files
+	 *
+	 * @param modelFiles
+	 *            the source files to compile.
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 * @throws N4JSCompileException
+	 *             due to compile errors.
+	 */
+	public void compileSingleFiles(List<File> modelFiles, IssueAcceptor issueAcceptor) throws N4JSCompileException {
+		compileSingleFiles(Collections.emptyList(), modelFiles, issueAcceptor);
 	}
 
 	/**
@@ -232,8 +284,26 @@ public class N4HeadlessCompiler {
 	 * @throws N4JSCompileException
 	 *             due to compile errors.
 	 */
-	public void compileSingleFiles(List<File> projectRoots, List<File> modelFiles) throws N4JSCompileException {
-		compileProjects(projectRoots, Collections.emptyList(), modelFiles);
+	public void compileSingleFiles(List<File> projectRoots, List<File> modelFiles)
+			throws N4JSCompileException {
+		compileSingleFiles(projectRoots, modelFiles, new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Compile multiple Files
+	 *
+	 * @param modelFiles
+	 *            the source files to compile.
+	 * @param projectRoots
+	 *            where to find dependencies.
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 * @throws N4JSCompileException
+	 *             due to compile errors.
+	 */
+	public void compileSingleFiles(List<File> projectRoots, List<File> modelFiles, IssueAcceptor issueAcceptor)
+			throws N4JSCompileException {
+		compileProjects(projectRoots, Collections.emptyList(), modelFiles, issueAcceptor);
 	}
 
 	/**
@@ -245,13 +315,27 @@ public class N4HeadlessCompiler {
 	 *             in case of errros.
 	 */
 	public void compileAllProjects(List<File> pProjectRoots) throws N4JSCompileException {
-		// make absolute, since downstream URI conversion doesn't work if relative dir only.
+		compileAllProjects(pProjectRoots, new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Starting from the ProjectRoot all Available sub directories denoting a N4js-Project should be compiled together.
+	 *
+	 * @param pProjectRoots
+	 *            base folders containing project at level 1
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 * @throws N4JSCompileException
+	 *             in case of errors.
+	 */
+	public void compileAllProjects(List<File> pProjectRoots, IssueAcceptor issueAcceptor) throws N4JSCompileException {
+		// make absolute, since downstream URI conversion doesn't work if relative directory only.
 		List<File> absProjectRoots = HeadlessHelper.toAbsoluteFileList(pProjectRoots);
 
 		// Collect all Projects in first Level
 		ArrayList<File> pDir = HeadlessHelper.collectAllProjectPaths(absProjectRoots);
 
-		compileProjects(pProjectRoots, pDir, Collections.emptyList());
+		compileProjects(pProjectRoots, pDir, Collections.emptyList(), issueAcceptor);
 	}
 
 	/**
@@ -266,7 +350,25 @@ public class N4HeadlessCompiler {
 	 */
 	public void compileProjects(List<File> pProjectRoots, List<File> projectLocationsToCompile)
 			throws N4JSCompileException {
-		compileProjects(pProjectRoots, projectLocationsToCompile, Collections.emptyList());
+		compileProjects(pProjectRoots, projectLocationsToCompile, new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Compile a list of projects.
+	 *
+	 * @param pProjectRoots
+	 *            common workspaces for all projects to compile
+	 * @param projectLocationsToCompile
+	 *            the projects to compile. usually the base folder of each project is provided.
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 * @throws N4JSCompileException
+	 *             signals Compile-errors
+	 */
+	public void compileProjects(List<File> pProjectRoots, List<File> projectLocationsToCompile,
+			IssueAcceptor issueAcceptor)
+			throws N4JSCompileException {
+		compileProjects(pProjectRoots, projectLocationsToCompile, Collections.emptyList(), issueAcceptor);
 	}
 
 	/**
@@ -280,15 +382,35 @@ public class N4HeadlessCompiler {
 	 *            if non-empty limit compilation to the sources files listed here
 	 *
 	 */
-	@SuppressWarnings({ "unused" })
 	public void compileProjects(List<File> projectLocations, List<File> projectLocationsToCompile,
 			List<File> singleSourcesToCompile)
 			throws N4JSCompileException {
+		compileProjects(projectLocations, projectLocationsToCompile, singleSourcesToCompile,
+				new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Compile a list of projects. Main algorithm.
+	 *
+	 * @param projectLocations
+	 *            where to search for dependent projects.
+	 * @param projectLocationsToCompile
+	 *            the projects to compile. the base folder of each project must be provided.
+	 * @param singleSourcesToCompile
+	 *            if non-empty limit compilation to the sources files listed here
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 *
+	 */
+	@SuppressWarnings({ "unused" })
+	public void compileProjects(List<File> projectLocations, List<File> projectLocationsToCompile,
+			List<File> singleSourcesToCompile, IssueAcceptor issueAcceptor)
+			throws N4JSCompileException {
 		if (createDebugOutput) {
-			System.out.println("### compileProjects(List,List,List) ");
-			System.out.println("  # projectRoots = " + Joiner.on(", ").join(projectLocations));
-			System.out.println("  # projects     = " + Joiner.on(", ").join(projectLocationsToCompile));
-			System.out.println("  # sources      = " + Joiner.on(", ").join(singleSourcesToCompile));
+			println("### compileProjects(List,List,List) ");
+			println("  # projectRoots = " + Joiner.on(", ").join(projectLocations));
+			println("  # projects     = " + Joiner.on(", ").join(projectLocationsToCompile));
+			println("  # sources      = " + Joiner.on(", ").join(singleSourcesToCompile));
 		}
 
 		// / ----- / ----- / ----- / ----- / ----- / ----- / ----- / ----- / ----- / ----- / ----- / ----- / ----- /
@@ -389,7 +511,7 @@ public class N4HeadlessCompiler {
 				configureFSA(mp.project);
 				try {
 					// load
-					doLoad(mp, resourceSet, rec);
+					doLoad(mp, resourceSet, rec, issueAcceptor);
 					loadedProjects.add(mp);
 					// compile only if it has itself as marker and non-external
 					if (mp.hasMarker(mp.project) && !mp.project.isExternal()) {
@@ -510,7 +632,7 @@ public class N4HeadlessCompiler {
 	private void configureFSA(IN4JSProject in4jsProject) {
 		File userdir = new File(".");
 		File prjdir = new File(in4jsProject.getLocation().toFileString());
-		// compute relative path, if project is not in a subdir of userdir an absolute
+		// compute relative path, if project is not in a sub directory of user directory an absolute
 		// path is computed.
 		java.net.URI relativize = userdir.toURI().relativize(prjdir.toURI());
 		final String relativePrjReference = relativize.getPath();
@@ -518,7 +640,7 @@ public class N4HeadlessCompiler {
 			// same directory, NTD
 			return;
 		}
-		// set different outputconfiguration.
+		// set different output configuration.
 		fsa.setOutputConfigurations(transformedOutputConfiguration(relativePrjReference));
 	}
 
@@ -542,7 +664,7 @@ public class N4HeadlessCompiler {
 	}
 
 	/**
-	 * Reset outputconfiguration to initial settings stored in {@link #outputs}.
+	 * Reset output configuration to initial settings stored in {@link #outputs}.
 	 *
 	 * @see #configureFSA(IN4JSProject) how to set to specific project.
 	 */
@@ -561,15 +683,18 @@ public class N4HeadlessCompiler {
 	 *            outer resource set
 	 * @param rec
 	 *            failure-recording
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
 	 * @throws N4JSCompileErrorException
 	 *             in case of compile-problems.
 	 */
-	private void doLoad(MarkedProject markedProject, ResourceSet resSet, N4ProgressStateRecorder rec)
+	private void doLoad(MarkedProject markedProject, ResourceSet resSet, N4ProgressStateRecorder rec,
+			IssueAcceptor issueAcceptor)
 			throws N4JSCompileErrorException {
 
 		rec.markStartLoading(markedProject);
 		if (createDebugOutput) {
-			System.out.println("# loading " + markedProject.project);
+			println("# loading " + markedProject.project);
 		}
 
 		// load all files into a resource set
@@ -586,7 +711,7 @@ public class N4HeadlessCompiler {
 					Resource resource = resSet.createResource(uri);
 					if (resource != null) {
 						if (createDebugOutput) {
-							System.out.println("Collecting resources from source container: " + resource.getURI());
+							println("Collecting resources from source container: " + resource.getURI());
 						}
 						resources.add(resource);
 						if (container.isExternal())
@@ -653,6 +778,7 @@ public class N4HeadlessCompiler {
 					rec.markResourceIssues(resource, issues);
 					for (Issue issue : issues) {
 						allErrorsAndWarnings.add(issue);
+						issueAcceptor.accept(issue);
 					}
 				}
 			}
@@ -714,7 +840,7 @@ public class N4HeadlessCompiler {
 					.getResourceDescription(resource);
 			if (resourceDescription != null) {
 				if (createDebugOutput) {
-					System.out.println("Adding resource description for resource '" + uri + "' to index.");
+					println("Adding resource description for resource '" + uri + "' to index.");
 				}
 				index.addDescription(uri, resourceDescription);
 			}
@@ -767,7 +893,7 @@ public class N4HeadlessCompiler {
 		rec.markStartCompiling(markedProject);
 
 		if (createDebugOutput) {
-			System.out.println("# compiling " + markedProject.project);
+			println("# compiling " + markedProject.project);
 		}
 
 		boolean unlimitedCompilation = compileFilter.isEmpty();
@@ -829,7 +955,7 @@ public class N4HeadlessCompiler {
 	private void doUnload(MarkedProject markedProject, N4ProgressStateRecorder rec)
 			throws N4JSCompileErrorException {
 		if (createDebugOutput) {
-			System.out.println("# unloading " + markedProject.project);
+			println("# unloading " + markedProject.project);
 		}
 		rec.markStartUnloading(markedProject);
 		// Clean resourceSet ?
@@ -862,7 +988,7 @@ public class N4HeadlessCompiler {
 			allErrorsAndWarnings
 					.stream()
 					.filter(e -> e.getSeverity() != Severity.ERROR)
-					.forEach(i -> System.out.println(issueLine(i)));
+					.forEach(i -> println(issueLine(i)));
 			String msg = "ERROR: cannot compile project " + projectId + " due to " + errors.size() + " errors.";
 			for (Issue err : errors) {
 				msg = msg + "\n  " + err;
@@ -878,7 +1004,7 @@ public class N4HeadlessCompiler {
 	 */
 	private void dumpAllIssues(ArrayList<Issue> allErrorsAndWarnings) {
 		for (Issue issue : allErrorsAndWarnings) {
-			System.out.println(issueLine(issue));
+			println(issueLine(issue));
 		}
 
 	}
@@ -894,7 +1020,7 @@ public class N4HeadlessCompiler {
 	 *            warning
 	 */
 	private void warn(String message) {
-		System.out.println("WARN:  " + message);
+		println("WARN:  " + message);
 	}
 
 	/**
@@ -905,7 +1031,7 @@ public class N4HeadlessCompiler {
 	 */
 	private void info(String message) {
 		if (verbose) {
-			System.out.println(message);
+			println(message);
 		}
 	}
 
@@ -916,9 +1042,12 @@ public class N4HeadlessCompiler {
 	 *            error
 	 */
 	private void error(String message) {
+		println("ERROR: " + message);
+	}
 
-		System.out.println("ERROR: " + message);
-
+	private void println(String message) {
+		if (!suppressOutput)
+			System.out.println(message);
 	}
 
 	/**
@@ -935,7 +1064,7 @@ public class N4HeadlessCompiler {
 		int i = 1;
 		for (MarkedProject mp : sortedProjects) {
 			boolean build = mp.hasMarkers();
-			System.out.println(" " + (build ? i : "-") + ". Project " + mp.project + " used by ["
+			println(" " + (build ? i : "-") + ". Project " + mp.project + " used by ["
 					+ Joiner.on(", ").join(mp.markers)
 					+ "] ");
 			if (build) {
@@ -1094,7 +1223,23 @@ public class N4HeadlessCompiler {
 	public void compileProjects(List<File> projects) throws N4JSCompileException {
 
 		// use user.dir of caller as projects-root.
-		compileProjects(Arrays.asList(new File(".")), projects, Collections.emptyList());
+		compileProjects(Arrays.asList(new File(".")), projects, Collections.emptyList(), new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Compile a list of projects.
+	 *
+	 * @param projects
+	 *            the projects to compile. usually the base folder of the project is provided.
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 * @throws N4JSCompileException
+	 *             in case of compile problems
+	 */
+	public void compileProjects(List<File> projects, IssueAcceptor issueAcceptor) throws N4JSCompileException {
+
+		// use user.dir of caller as projects-root.
+		compileProjects(Arrays.asList(new File(".")), projects, Collections.emptyList(), issueAcceptor);
 	}
 
 	/**
@@ -1237,6 +1382,25 @@ public class N4HeadlessCompiler {
 	 */
 	public void setCreateDebugOutput(boolean createDebugOutput) {
 		this.createDebugOutput = createDebugOutput;
+	}
+
+	/**
+	 * Indicates whether all output to standard out is suppressed.
+	 *
+	 * @return <code>true</code> if output to standard out is suppressed and <code>false</code> otherwise
+	 */
+	public boolean isOutputSuppressed() {
+		return suppressOutput;
+	}
+
+	/**
+	 * Set whether or not to suppress all output to standard out.
+	 *
+	 * @param suppressOutput
+	 *            whether or not to suppress the output
+	 */
+	public void setOutputSuppressed(boolean suppressOutput) {
+		this.suppressOutput = suppressOutput;
 	}
 
 	/**
