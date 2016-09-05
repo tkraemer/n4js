@@ -1045,9 +1045,16 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	}
 
 	private Result<Boolean> isSubTypeResult(TMember left, TMember right) {
-		return isSubTypeResult(left, right.isConstructor() ? right.getContainingType() : null, right);
+		final Type rightThisContext = right.isConstructor() && !isPolyfill(left) ? right.getContainingType() : null;
+		return isSubTypeResult(left, rightThisContext, right);
 	}
 
+	/**
+	 *
+	 * @param rightThisContextType
+	 *            the type to use as context for the "this binding" of the right-hand-side member or <code>null</code>
+	 *            to use the default, i.e. the {@link #getCurrentTypeContext() current type context}.
+	 */
 	private Result<Boolean> isSubTypeResult(TMember left, Type rightThisContextType, TMember right) {
 		// will return type of value for fields, function type for methods, type of return value for getters, type of
 		// parameter for setters
