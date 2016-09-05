@@ -823,7 +823,21 @@ abstract class TClassifier extends ContainerType<TMember>, SyntaxRelatedTElement
 	 * Convenience method, returns all super classes and implemented or extended interfaces as classifiers.
 	 */
 	op IterableOfTClassifier getSuperClassifiers() {
-		return this.superClassifierRefs.filterNull.map[declaredType].filter(TClassifier);
+		// following code causes weird Xtend/Xcore bug
+		//return this.superClassifierRefs.filterNull.map[declaredType].filter(TClassifier);
+		// so let's do it the old-school way:
+		val List<TClassifier> result = <TClassifier>newArrayList;
+		val Object _superClassifierRefs = this.getSuperClassifierRefs();
+		for(Object superClassifierRef : (_superClassifierRefs as Iterable<?>)) {
+			if(superClassifierRef!==null) {
+				val Type declType = (superClassifierRef as TypeRef).getDeclaredType();
+				if(declType instanceof TClassifier) {
+					result.add(declType);
+				}
+			}
+		}
+		return result;
+//		return <TClassifier>emptyList;
 	}
 
 	/**

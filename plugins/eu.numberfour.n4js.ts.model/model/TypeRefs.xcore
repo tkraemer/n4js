@@ -881,7 +881,7 @@ class Wildcard extends TypeArgument {
 	 * See {@link TypeRef#getTypeRefAsString()}
 	 */
 	op String getTypeRefAsString() {
-		return WildcardAsStringUtils.getTypeRefAsString(this);
+		return WildcardAsStringUtils.getTypeRefAsString_workaround(this);
 	}
 }
 

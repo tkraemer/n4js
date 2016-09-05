@@ -37,6 +37,11 @@ public final class WildcardAsStringUtils {
 	private static final Set<Thread> threadsCurrentlyConvertingWildcardsWithImplicitUpperBounds = ConcurrentHashMap
 			.newKeySet();
 
+	/** workaround for Xtend/Xcore bug. Delegates to {@link #getTypeRefAsString(Wildcard)}. */
+	public static final String getTypeRefAsString_workaround(Object wildcard) {
+		return getTypeRefAsString((Wildcard) wildcard);
+	}
+
 	/**
 	 * Method {@link Wildcard#getTypeRefAsString()} delegates here. Should not be called by any other code!
 	 */

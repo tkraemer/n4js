@@ -7,9 +7,8 @@
  */
 package eu.numberfour.n4js.ts.types.impl;
 
-import com.google.common.collect.Iterables;
-
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
+import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement;
 import eu.numberfour.n4js.ts.types.TClassifier;
@@ -20,6 +19,8 @@ import eu.numberfour.n4js.ts.types.TypesPackage;
 import java.lang.Iterable;
 
 import java.lang.reflect.InvocationTargetException;
+
+import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -32,10 +33,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 /**
  * <!-- begin-user-doc -->
@@ -175,15 +172,17 @@ public abstract class TClassifierImpl extends ContainerTypeImpl<TMember> impleme
 	 * @generated
 	 */
 	public Iterable<? extends TClassifier> getSuperClassifiers() {
-		Iterable<ParameterizedTypeRef> _superClassifierRefs = this.getSuperClassifierRefs();
-		Iterable<ParameterizedTypeRef> _filterNull = IterableExtensions.<ParameterizedTypeRef>filterNull(_superClassifierRefs);
-		final Function1<ParameterizedTypeRef, Type> _function = new Function1<ParameterizedTypeRef, Type>() {
-			public Type apply(final ParameterizedTypeRef it) {
-				return it.getDeclaredType();
+		final List<TClassifier> result = CollectionLiterals.<TClassifier>newArrayList();
+		final Object _superClassifierRefs = this.getSuperClassifierRefs();
+		for (final Object superClassifierRef : ((Iterable<?>) _superClassifierRefs)) {
+			if ((superClassifierRef != null)) {
+				final Type declType = ((TypeRef) superClassifierRef).getDeclaredType();
+				if ((declType instanceof TClassifier)) {
+					result.add(((TClassifier)declType));
+				}
 			}
-		};
-		Iterable<Type> _map = IterableExtensions.<ParameterizedTypeRef, Type>map(_filterNull, _function);
-		return Iterables.<TClassifier>filter(_map, TClassifier.class);
+		}
+		return result;
 	}
 
 	/**
