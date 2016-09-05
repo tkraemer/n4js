@@ -1,5 +1,8 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
+// This test file was modified as part of IDE-2228. Field accessor related test cases might have reduced relevance.
+// As a part of this modification some tests were removed.
+// See 192980b3133a5a7fce70630c70d577a8fd410002, c74c82650408278a26d1d3433b780122e7a63ce5, 9732be951c73ac638d7a12c5d6767fb5e5d4f7cd, cd24fa1498702f9a6fd731916b3caa413f0fabc6.
 
 class A {
 	_x : string;
@@ -9,10 +12,14 @@ class A {
 class B extends A {
 	// XPECT noerrors --> "getter is not overriding setter" at "x"
 	get x() : string { return this._x}
+	@Override set x(s : string) { super.x = s; }
 }
 
 class C extends A {
-	// XPECT errors --> "The getter x must override or implement a getter from a super class or interface." at "x"
+	/* XPECT errors ---
+		"The getter x must override or implement a getter from a super class or interface." at "x"
+		"Getter C.x cannot be overridden without overriding the corresponding setter." at "x"
+	--- */
 	@Override get x() : string { return this._x}
 }
 
@@ -26,9 +33,13 @@ class D {
 class E extends D {
 	// XPECT noerrors --> "setter is not overriding getter" at "x"
 	set x(s : string) { this._x = s}
+	@Override get x() : string { return super.x; }
 }
 
 class F extends D {
-	// XPECT errors --> "The setter x must override or implement a setter from a super class or interface." at "x"
+	/* XPECT errors ---
+		"The setter x must override or implement a setter from a super class or interface." at "x"
+		"Setter F.x cannot be overridden without overriding the corresponding getter." at "x"
+	--- */ 
 	@Override set x(s : string) { this._x = s}
 }

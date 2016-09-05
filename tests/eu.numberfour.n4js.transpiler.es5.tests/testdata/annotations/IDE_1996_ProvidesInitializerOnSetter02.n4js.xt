@@ -30,6 +30,8 @@ class C2 extends C1 {
     @ProvidesInitializer
     @Override
     public set y(y : int) { this._y = y; }
+    
+    @Override public get y() { return super.y; }
 
 }
 

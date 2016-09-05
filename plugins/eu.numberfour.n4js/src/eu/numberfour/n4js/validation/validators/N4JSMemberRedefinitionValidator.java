@@ -32,6 +32,8 @@ import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_MEMBER_TYPE
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_METHOD_TYPE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_NON_ACCESSIBLE;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_REDEFINED_TYPE_NOT_SAME_TYPE;
+import static eu.numberfour.n4js.validation.IssueCodes.CLF_UNMATCHED_ACCESSOR_OVERRIDE;
+import static eu.numberfour.n4js.validation.IssueCodes.CLF_UNMATCHED_ACCESSOR_OVERRIDE_JS;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_CONSUMED_FIELD_ACCESSOR_PAIR_INCOMPLETE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_CONSUMED_INHERITED_MEMBER_UNSOLVABLE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_CONSUMED_MEMBER_SOLVABLE_CONFLICT;
@@ -54,6 +56,8 @@ import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINE
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_METHOD_TYPE_CONFLICT;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_NON_ACCESSIBLE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_REDEFINED_TYPE_NOT_SAME_TYPE;
+import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_UNMATCHED_ACCESSOR_OVERRIDE;
+import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_UNMATCHED_ACCESSOR_OVERRIDE_JS;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -81,6 +85,7 @@ import com.google.common.collect.Iterators;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4JS.MethodDeclaration;
+import eu.numberfour.n4js.n4JS.N4ClassDefinition;
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition;
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
@@ -90,7 +95,9 @@ import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.ContainerType;
+import eu.numberfour.n4js.ts.types.FieldAccessor;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
+import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TField;
@@ -98,6 +105,7 @@ import eu.numberfour.n4js.ts.types.TInterface;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.TModule;
+import eu.numberfour.n4js.ts.types.TSetter;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.util.AccessModifiers;
 import eu.numberfour.n4js.ts.types.util.MemberList;
@@ -203,6 +211,9 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			constraints_42_45_46_AbstractMember(mm, nonAccessibleAbstractMembersBySuperTypeRef);
 			unusedGenericTypeVariable(mm);
 
+			checkUnpairedAccessorConsumption(mm, n4ClassifierDefinition);
+			checkUnpairedAccessorFilling(mm, n4ClassifierDefinition);
+
 			messageMissingOverrideAnnotation(mm, membersMissingOverrideAnnotation);
 		}
 
@@ -247,6 +258,68 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Checks if any accessor has been consumed for which the counterpart accessor is only inherited.
+	 */
+	private void checkUnpairedAccessorConsumption(MemberMatrix mm, N4ClassifierDefinition definition) {
+		// validate conflicts between inherited and consumed accessor members only
+		if (!mm.hasOwned() && mm.hasInherited() && mm.hasImplemented()) {
+			// Collect whether getter and setter were consumed as well as the consumed member
+			boolean getterConsumed = false;
+			boolean setterConsumed = false;
+			TMember consumedAccessor = null;
+
+			for (TMember implementedMember : mm.implemented()) {
+				if (implementedMember.isAccessor() && mm.isConsumed(implementedMember)) {
+					if (implementedMember.getMemberType() == MemberType.GETTER) {
+						getterConsumed = true;
+					} else {
+						setterConsumed = true;
+					}
+					consumedAccessor = implementedMember;
+				}
+			}
+			// Issue error if getter/setter has been consumed and the counterpart is inherited.
+			if ((getterConsumed != setterConsumed) && mm.hasAccessorPair() && null != consumedAccessor) {
+				messageMissingOwnedAccessorCorrespondingConsumedAccessor((FieldAccessor) consumedAccessor,
+						definition);
+			}
+		}
+	}
+
+	private void checkUnpairedAccessorFilling(MemberMatrix mm, N4ClassifierDefinition definition) {
+		if (definition.getDefinedType().isStaticPolyfill() && mm.hasMixedAccessorPair()) {
+			FieldAccessor ownedAccessor = (FieldAccessor) Iterables.getFirst(mm.owned(), null);
+
+			if (null == ownedAccessor) {
+				// Should not happen, a mixed accessor pair implies at least one owned member
+				return;
+			}
+			if (!(definition instanceof N4ClassDefinition)) {
+				// Non-class static polyfills aren't allowed. Validated somewhere else.
+				return;
+			}
+
+			TClass filledClass = MemberRedefinitionUtils.getFilledClass((N4ClassDefinition) definition);
+			if (null == filledClass) {
+				// Invalid static polyfill class. Validated somewhere else.
+				return;
+			}
+
+			// Iterate over all inherited members
+			SourceAwareIterator memberIterator = mm.actuallyInheritedAndMixedMembers();
+			while (memberIterator.hasNext()) {
+				TMember next = memberIterator.next();
+				ContainerType<?> containingType = next.getContainingType();
+
+				// Issue an error if the member isn't owned by the filled class
+				if (containingType != filledClass) {
+					messageMissingOwnedAccessor(ownedAccessor);
+				}
+			}
+		}
 	}
 
 	/**
@@ -309,10 +382,18 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 							continue; // avoid consequential errors
 						}
 					}
+
 					// 4. declared overridden
 					if (!m.isDeclaredOverride()) {
 						membersMissingOverrideAnnotation.add(m);
 					}
+				}
+			}
+			// 5. don't allow incomplete accessor overrides / declarations (for classes that aren't annotated as
+			// StaticPolyfill)
+			if (m.isAccessor() && mm.hasMixedAccessorPair()) {
+				if (!m.getContainingType().isStaticPolyfill()) {
+					messageMissingOwnedAccessor((FieldAccessor) m);
 				}
 			}
 		}
@@ -818,6 +899,11 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				if (overriding.isConstructor()) {
 					continue;
 				}
+				// skip non-n4js variant members
+				if (JavaScriptVariant.getVariant(overriding).equals(JavaScriptVariant.strict) ||
+						JavaScriptVariant.getVariant(overriding).equals(JavaScriptVariant.unrestricted)) {
+					continue;
+				}
 				/*
 				 * Filter overridden members to only contain metatype compatible members to prevent the generation of
 				 * confusing error message
@@ -1008,6 +1094,49 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 				missingAccessor,
 				validatorMessageHelper.descriptions(conflictingMembers));
 		addIssue(message, CLF_CONSUMED_FIELD_ACCESSOR_PAIR_INCOMPLETE);
+	}
+
+	private void messageMissingOwnedAccessor(FieldAccessor accessor) {
+		String accessorDescription = org.eclipse.xtext.util.Strings
+				.toFirstUpper(validatorMessageHelper.description(accessor));
+
+		String verb = accessor.getContainingType().isStaticPolyfill() ? "filled" : "declared";
+		verb = accessor.isDeclaredOverride() ? "overridden" : verb;
+
+		String counterpartDescription = accessor instanceof TSetter ? "getter" : "setter";
+
+		if (JavaScriptVariant.getVariant(accessor) == JavaScriptVariant.n4js
+				|| JavaScriptVariant.getVariant(accessor) == JavaScriptVariant.external) {
+			messageMissingOwnedAccessorN4JS(accessorDescription, verb, counterpartDescription, accessor);
+		} else {
+			messageMissingOwnedAccessorJS(accessorDescription, verb, counterpartDescription, accessor);
+		}
+	}
+
+	private void messageMissingOwnedAccessorN4JS(String accessorDescription, String verb, String counterpartDescription,
+			FieldAccessor accessor) {
+		String message = getMessageForCLF_UNMATCHED_ACCESSOR_OVERRIDE(accessorDescription, verb,
+				counterpartDescription);
+		addIssue(message, accessor.getAstElement(),
+				N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_UNMATCHED_ACCESSOR_OVERRIDE);
+	}
+
+	private void messageMissingOwnedAccessorJS(String accessorDescription, String verb, String counterpartDescription,
+			FieldAccessor accessor) {
+		String message = getMessageForCLF_UNMATCHED_ACCESSOR_OVERRIDE_JS(accessorDescription, verb,
+				counterpartDescription);
+		addIssue(message, accessor.getAstElement(),
+				N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_UNMATCHED_ACCESSOR_OVERRIDE_JS);
+	}
+
+	private void messageMissingOwnedAccessorCorrespondingConsumedAccessor(FieldAccessor accessor,
+			N4ClassifierDefinition definition) {
+		String message = getMessageForCLF_UNMATCHED_ACCESSOR_OVERRIDE(
+				org.eclipse.xtext.util.Strings.toFirstUpper(validatorMessageHelper.description(accessor)),
+				"consumed",
+				accessor instanceof TSetter ? "getter" : "setter");
+		addIssue(message, definition,
+				N4JSPackage.Literals.N4_TYPE_DECLARATION__NAME, CLF_UNMATCHED_ACCESSOR_OVERRIDE);
 	}
 
 	private void addIssueToMemberOrInterfaceReference(RedefinitionType redefinitionType, TMember overriding,
