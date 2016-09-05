@@ -358,7 +358,7 @@ public class N4jsc {
 			if (debug) {
 				printDebugLines();
 			} else {
-				// Reconfigure Logging to be quite:
+				// Reconfigure Logging to be quiet:
 				Logger.getRootLogger().removeAllAppenders();
 				Logger.getRootLogger().addAppender(new NullAppender());
 			}
