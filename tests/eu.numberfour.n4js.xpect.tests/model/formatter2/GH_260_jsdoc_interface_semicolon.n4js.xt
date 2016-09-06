@@ -1,0 +1,37 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   
+   END_SETUP
+ */
+
+/* XPECT formattedLines 6 ---
+interface I {
+	/\** A *\/
+	m1(): void
+	/\** B *\/
+	m2(): void
+}
+--- */
+interface I {
+  /** A */
+  m1(): void
+  /** B */
+  m2(): void
+}
+
+
+
+/* XPECT formattedLines 19 ---
+interface I2 {
+	/\** A *\/
+	m1(): void;
+	/\** B *\/
+	m2(): void;
+}
+--- */
+interface I2 {
+  /** A */
+  m1(): void;
+  /** B */
+  m2(): void;
+}
+
