@@ -14,6 +14,9 @@ import com.google.common.collect.LinkedHashMultimap
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
 import eu.numberfour.n4js.documentation.N4JSDocumentationProvider
+import eu.numberfour.n4js.formatting2.N4JSFormatterPreferenceKeys
+import eu.numberfour.n4js.formatting2.N4JSSimpleFormattingPreferenceProvider
+import eu.numberfour.n4js.n4JS.DefaultImportSpecifier
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.ImportDeclaration
 import eu.numberfour.n4js.n4JS.ImportSpecifier
@@ -22,6 +25,7 @@ import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.NamedImportSpecifier
 import eu.numberfour.n4js.n4JS.NamespaceImportSpecifier
 import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4js.organize.imports.ImportProvidedElement
 import eu.numberfour.n4js.organize.imports.ImportStateCalculator
 import eu.numberfour.n4js.parser.InternalSemicolonInjectingParser
 import eu.numberfour.n4js.scoping.N4JSScopeProvider
@@ -71,8 +75,6 @@ import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.EXPORT_
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
 import static extension eu.numberfour.n4js.organize.imports.RefNameUtil.*
 import static extension org.eclipse.xtext.nodemodel.util.NodeModelUtils.*
-import eu.numberfour.n4js.organize.imports.ImportProvidedElement
-import eu.numberfour.n4js.n4JS.DefaultImportSpecifier
 
 /**
  */
@@ -98,6 +100,9 @@ public class N4JSOrganizeImports {
 	
 	@Inject
 	private TypeExpressionsGrammarAccess typeExpressionGrammmarAccess;
+	
+	@Inject
+	private N4JSSimpleFormattingPreferenceProvider formattingPreferenceProvider
 	
 	/**
 	 * Calculate destination region in Document for imports. If the offset is not 0,
@@ -380,7 +385,7 @@ public class N4JSOrganizeImports {
 
 		// Add to output.
 		resultingImports.forEach [
-			val text = extractPureText;
+			val text = extractPureText(xtextResource);
 			sb.append(text).append(lineEnding);
 		]
 
@@ -657,11 +662,18 @@ public class N4JSOrganizeImports {
 		(o1.module.qualifiedName ?: "").compareTo(o2.module.qualifiedName ?: "")
 	}
 
-	private def String extractPureText(ImportDeclaration declaration) {
+	/** Extracts the token text for existing import-declaration or creates new textual representation for 
+	 * a new generated import declaration.
+	 */
+	private def String extractPureText(ImportDeclaration declaration, XtextResource resource) {
 		if (declaration.eAdapters.contains(nodelessMarker)) {
 			// wrap importSpecifiers in new ArrayList, to support sorting (GH-48)
 			val impSpec = new ArrayList( declaration.importSpecifiers ); 
 			val module = declaration.module.moduleSpecifier;
+			
+			// formatting decision: curly braces with whitespace
+			val prefValues = formattingPreferenceProvider.getPreferenceValues(resource) 
+			val spacer = if( Boolean.valueOf( prefValues.getPreference( N4JSFormatterPreferenceKeys.FORMAT_SURROUND_IMPORT_LIST_WITH_SPACE ) ) ) " " else "";
 			
 			if (impSpec.size === 1) {
 
@@ -671,8 +683,8 @@ public class N4JSOrganizeImports {
 					'''import «namedSpec.importedElement.name» from "«module»";'''
 									
 				} else {
-					'''import { «namedSpec.importedElement.name»«
-						IF (namedSpec.alias !== null)» as «namedSpec.alias»«ENDIF» } from "«module»";'''
+					'''import {«spacer»«namedSpec.importedElement.name»«
+						IF (namedSpec.alias !== null)» as «namedSpec.alias»«ENDIF»«spacer»} from "«module»";'''
 				}
 			} else {
 				// more then one, sort them:
@@ -680,11 +692,11 @@ public class N4JSOrganizeImports {
 				val defImp = impSpec.filter(DefaultImportSpecifier).head; // only one is possible
 				val defaultImport = if(defImp === null) "" else '''«defImp.importedElement.name», ''';
 				
-				'''import «defaultImport»{ «
+				'''import «defaultImport»{«spacer»«
 					FOR a : impSpec SEPARATOR ', '»«(a as NamedImportSpecifier).importedElement.name»«
 						IF ((a as NamedImportSpecifier).alias !== null)» as « (a as NamedImportSpecifier).alias »«
 						ENDIF»«
-					ENDFOR» } from "«module»";'''
+					ENDFOR»«spacer»} from "«module»";'''
 			}
 		} else {
 			val importNode = findActualNodeFor(declaration);

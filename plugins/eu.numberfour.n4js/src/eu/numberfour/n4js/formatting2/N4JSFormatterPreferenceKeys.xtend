@@ -23,6 +23,9 @@ class N4JSFormatterPreferenceKeys extends FormatterPreferenceKeys {
 	public static val IntegerKey FORMAT_MAX_CONSECUTIVE_NEWLINES = new IntegerKey("format.max_consecutive_newlines",2);
 	public static val BooleanKey FORMAT_SWITCH_CASES_HAVE_SPACE_IN_FRONT_OF_COLON = new BooleanKey("format.switch_cases_have_space_in_front_of_colon", false);
 	public static val BooleanKey FORMAT_AUTO_WRAP_IN_FRONT_OF_LOGICAL_OPERATOR= new BooleanKey("format.auto_wrap_in_front_of_logical_operator", true);
+	/** Considering the code <code>import a, {b,c,d} from "xy";</code> a value of <code>true</code> will render an additional space after "{" and one before the closing bracket "}" 
+	 * Default value is <code>false</code> and the line will be rendered as above.*/
+	public static val BooleanKey FORMAT_SURROUND_IMPORT_LIST_WITH_SPACE = new BooleanKey("format.surround_import_list_with_space", false);
 	
 	
 }
