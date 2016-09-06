@@ -245,13 +245,15 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	}
 
 	private boolean checkSpecConstructorOverrideCompatibility(TClassifier tClassifier, TMethod inheritedConstructor) {
-		final Result<Boolean> subtypeResult = isSubTypeResult(inheritedConstructor,
-				inheritedConstructor.getContainingType(), inheritedConstructor);
+		final Type rightThisContext = MemberRedefinitionUtils.findThisContextForConstructor(tClassifier,
+				inheritedConstructor);
+		final Result<Boolean> subtypeResult = isSubTypeResult(inheritedConstructor, rightThisContext,
+				inheritedConstructor);
 		if (subtypeResult.failed()) {
 			final String msg = getMessageForCLF_PSEUDO_REDEFINED_SPEC_CTOR_INCOMPATIBLE(
 					validatorMessageHelper.description(inheritedConstructor),
 					validatorMessageHelper.description(tClassifier),
-					validatorMessageHelper.description(inheritedConstructor.getContainingType()));
+					validatorMessageHelper.description(rightThisContext));
 			final EObject astNode = tClassifier.getAstElement(); // ok, because tClassifier is coming from AST
 			addIssue(msg, astNode, N4JSPackage.eINSTANCE.getN4TypeDeclaration_Name(),
 					CLF_PSEUDO_REDEFINED_SPEC_CTOR_INCOMPATIBLE);
@@ -1174,12 +1176,13 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	}
 
 	private Result<Boolean> isSubTypeResult(TMember left, TMember right) {
-		final Type rightThisContext = right.isConstructor() && !isPolyfill(left) ? right.getContainingType() : null;
+		final Type rightThisContext = left.isConstructor() && right.isConstructor() && !isPolyfill(left)
+				? MemberRedefinitionUtils.findThisContextForConstructor(left.getContainingType(), (TMethod) right)
+				: null; // null means: use default context
 		return isSubTypeResult(left, rightThisContext, right);
 	}
 
 	/**
-	 *
 	 * @param rightThisContextType
 	 *            the type to use as context for the "this binding" of the right-hand-side member or <code>null</code>
 	 *            to use the default, i.e. the {@link #getCurrentTypeContext() current type context}.
