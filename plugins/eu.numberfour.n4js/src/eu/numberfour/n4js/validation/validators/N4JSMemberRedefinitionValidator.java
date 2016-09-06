@@ -206,7 +206,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 					constraints_69_Implementation(mm, membersMissingOverrideAnnotation);
 				}
 			}
-			constraint_FIXME_CovariantSpecConstructor(tClassifier, mm);
+			constraints_60_InheritedConsumedCovariantSpecConstructor(tClassifier, mm);
 			constraints_66_NonOverride(mm);
 			constraints_42_45_46_AbstractMember(mm, nonAccessibleAbstractMembersBySuperTypeRef);
 			unusedGenericTypeVariable(mm);
@@ -227,7 +227,22 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 		}
 	}
 
-	private boolean constraint_FIXME_CovariantSpecConstructor(TClassifier tClassifier, MemberMatrix mm) {
+	/**
+	 * Checks a certain special case of Constraints 60 related to &#64;Spec constructors: if the classifier being
+	 * validated does *not* have an owned constructor, normally nothing would be checked; in case of &#64;Spec
+	 * constructors, however, we have to check that the inherited/consumed constructor (if any) is compatible to itself
+	 * within the classifier being validated:
+	 *
+	 * <pre>
+	 * class C {
+	 *     &#64;CovariantConstructor constructor(&#64;Spec spec: ~i~this) {}
+	 * }
+	 * class D { // &lt;-- must show error here, because inherited &#64;Spec constructor not compatible to itself
+	 *     public badField;
+	 * }
+	 * </pre>
+	 */
+	private boolean constraints_60_InheritedConsumedCovariantSpecConstructor(TClassifier tClassifier, MemberMatrix mm) {
 		boolean isValid = true;
 		if (!mm.hasOwned()) {
 			final TMember firstInherited = mm.hasInherited() ? mm.inherited().iterator().next() : null;
@@ -1239,7 +1254,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	private FunctionTypeExpression changeReturnTypeToVoid(RuleEnvironment G, FunctionTypeExprOrRef typeRef) {
 		final RuleEnvironment G_empty = RuleEnvironmentExtensions.newRuleEnvironment(G);
 		final FunctionTypeExpression result = tsh.createSubstitutionOfFunctionTypeExprOrRef(G_empty, typeRef);
-		result.setReturnTypeRef(null); // FIXME use RuleEnvironmentExtensions.voidTypeRef(G) here!
+		result.setReturnTypeRef(null); // TODO use RuleEnvironmentExtensions.voidTypeRef(G) here
 		return result;
 	}
 }

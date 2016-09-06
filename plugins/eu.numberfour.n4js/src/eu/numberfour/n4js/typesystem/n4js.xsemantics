@@ -2356,10 +2356,7 @@ from {
 	val typeArg = ct.typeArg;
 	if(typeArg instanceof BoundThisTypeRef) {
 		val typeArgNew = TypeUtils.createResolvedThisTypeRef(typeArg);
-		val ctNew = TypeRefsFactory.eINSTANCE.createTypeTypeRef();
-		ctNew.setTypeArg(typeArgNew);
-		ctNew.setConstructorRef(ct.isConstructorRef);
-		T = ctNew;
+		T = TypeUtils.createTypeTypeRef(typeArgNew, ct.isConstructorRef);
 	} else {
 		T = ct;
 	}

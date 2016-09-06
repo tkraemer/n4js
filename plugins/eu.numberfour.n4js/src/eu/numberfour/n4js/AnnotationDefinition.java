@@ -114,7 +114,9 @@ public final class AnnotationDefinition {
 			.targets(N4_CLASS_DECLARATION, N4_MEMBER_DECLARATION)
 			.targetsWithCustomError(N4_INTERFACE_DECLARATION).end();
 
-	// FIXME spec update
+	/**
+	 * 5.2.2.3. Covariant Constructors
+	 */
 	public final static AnnotationDefinition COVARIANT_CONSTRUCTOR = define("CovariantConstructor")
 			.targets(N4_CLASS_DECLARATION, N4_INTERFACE_DECLARATION, N4_MEMBER_DECLARATION).end();
 
@@ -168,7 +170,7 @@ public final class AnnotationDefinition {
 	public final static AnnotationDefinition OVERRIDE = define("Override").targets(N4_MEMBER_DECLARATION).end();
 
 	/**
-	 * 7.1.1. The this Keyword FIXME spec update!
+	 * 7.1.1. The this Keyword, Constraints 91 (Valid Target and Argument of This Annotation)
 	 */
 	public final static AnnotationDefinition THIS = define("This")
 			.targets(FUNCTION_DEFINITION /* includes method! */, N4_FIELD_ACCESSOR).args(TYPE_REF).end();

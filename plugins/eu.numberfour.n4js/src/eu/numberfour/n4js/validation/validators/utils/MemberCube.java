@@ -47,9 +47,6 @@ public class MemberCube {
 		addMembers(MemberMatrix.IMPLEMENTED, memberCollector.membersOfImplementedInterfaces(tClassifier));
 	}
 
-	/**
-	 * constructors (in case of non-polyfills) are filtered out FIXME comment obsolete
-	 */
 	private void addMembers(int source, List<TMember> members) {
 		for (TMember member : members) {
 			NameStaticPair nsp = NameStaticPair.of(member);
@@ -83,5 +80,4 @@ public class MemberCube {
 		}
 		return strb.toString();
 	}
-
 }

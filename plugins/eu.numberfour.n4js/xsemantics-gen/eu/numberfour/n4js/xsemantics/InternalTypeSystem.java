@@ -6327,11 +6327,9 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     final TypeArgument typeArg = ct.getTypeArg();
     if ((typeArg instanceof BoundThisTypeRef)) {
       final ParameterizedTypeRef typeArgNew = TypeUtils.createResolvedThisTypeRef(((BoundThisTypeRef)typeArg));
-      final TypeTypeRef ctNew = TypeRefsFactory.eINSTANCE.createTypeTypeRef();
-      ctNew.setTypeArg(typeArgNew);
       boolean _isConstructorRef = ct.isConstructorRef();
-      ctNew.setConstructorRef(_isConstructorRef);
-      T = ctNew;
+      TypeTypeRef _createTypeTypeRef = TypeUtils.createTypeTypeRef(typeArgNew, _isConstructorRef);
+      T = _createTypeTypeRef;
     } else {
       T = ct;
     }

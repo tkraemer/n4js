@@ -292,7 +292,9 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
-	// FIXME spec update!
+	/**
+	 * Constraints 91 (Valid Target and Argument for &#64;This Annotation)
+	 */
 	private def internalCheckThis(Annotation annotation) {
 		val element = annotation.annotatedElement;
 		if (element === null) {

@@ -568,8 +568,6 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return;
 		}
 
-		// FIXME clean up, improve messages
-
 		val isCtor = classifierTypeRef.isConstructorRef;
 		val isConcreteOrCovariant =
 			!(typeArg instanceof Wildcard || typeArg instanceof ExistentialTypeRef || typeArg instanceof ThisTypeRef)

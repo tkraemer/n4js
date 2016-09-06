@@ -457,7 +457,6 @@ public class TypeUtils {
 		if (actualThisTypeRef == null) {
 			throw new NullPointerException("Actual this type must not be null!");
 		}
-		TypeTypeRef constructorBoundThisTypeRef = TypeRefsFactory.eINSTANCE.createTypeTypeRef(); // FIXME
 		TypeArgument typeArg = actualThisTypeRef.getTypeArg();
 		final BoundThisTypeRef boundThisTypeRef;
 		if (typeArg instanceof ParameterizedTypeRef) {
@@ -469,10 +468,9 @@ public class TypeUtils {
 			throw new IllegalArgumentException(
 					"Cannot turn unbound type{this} into type{this[X]}, must be called with type{X}!");
 		}
-		constructorBoundThisTypeRef.setTypeArg(boundThisTypeRef);
-		constructorBoundThisTypeRef.setConstructorRef(false);
+		TypeTypeRef classifierBoundThisTypeRef = createTypeTypeRef(boundThisTypeRef, false);
 		// TODO is there anything else to copy ?
-		return constructorBoundThisTypeRef;
+		return classifierBoundThisTypeRef;
 	}
 
 	/**

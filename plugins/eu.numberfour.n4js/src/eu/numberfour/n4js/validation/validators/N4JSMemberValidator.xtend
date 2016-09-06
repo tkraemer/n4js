@@ -49,6 +49,7 @@ import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 
 /**
  * Validation of rules that apply to individual members of a classifier.<p>
@@ -244,7 +245,7 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	/**
-	 * N4JS spec constraints 51.4 FIXME spec update!!!
+	 * Constraints 56 (Defining and Calling Constructors), #5.a
 	 */
 	private def boolean holdsConstructorInInterfaceDoesNotHaveBody(TMethod constructor) {
 		if (constructor.containingType instanceof TInterface && !constructor.hasNoBody) {
@@ -255,10 +256,12 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 		return true;
 	}
 
-	// FIXME spec update!
+	/**
+	 * Constraints 56 (Defining and Calling Constructors), #5.b
+	 */
 	private def boolean holdsConstructorInInterfaceRequiresCovarianceAnnotation(TMethod constructor) {
 		val container = constructor.containingType;
-		if (container instanceof TInterface && !(container as TInterface).declaredCovariantConstructor) {
+		if (container instanceof TInterface && !N4JSLanguageUtils.hasCovariantConstructor(container as TInterface)) {
 			addIssue(getMessageForITF_CONSTRUCTOR_COVARIANCE, constructor.astElement,
 				PROPERTY_NAME_OWNER__DECLARED_NAME, ITF_CONSTRUCTOR_COVARIANCE);
 			return false;
