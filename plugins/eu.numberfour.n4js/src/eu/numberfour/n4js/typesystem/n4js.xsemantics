@@ -1714,7 +1714,7 @@ from {
 	(
 		right.declaredType === G.functionType
 		&&
-		typeSystemHelper.isFunction(G, left)
+		left.isConstructorRef
 	)
 }
 

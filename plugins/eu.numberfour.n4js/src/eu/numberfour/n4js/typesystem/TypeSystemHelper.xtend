@@ -306,7 +306,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	 * Checks if a value of type <code>typeRef</code> is "callable", i.e. if it can be directly invoked using a call
 	 * expression.
 	 */
-	def boolean isCallable(RuleEnvironment G, TypeRef typeRef) {
+	def public boolean isCallable(RuleEnvironment G, TypeRef typeRef) {
 		if(isClassConstructorFunction(G, typeRef)) {
 			// don't allow direct invocation of class constructors
 			if(getCallableClassConstructorFunction(G, typeRef)!==null)
@@ -388,51 +388,16 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	}
 
 	/**
-	 * Tells whether all valid values of the given constructor type are guaranteed to be functions.
-	 */
-	def public boolean isFunction(RuleEnvironment G, TypeTypeRef ctorTypeRef) {
-		return ctorTypeRef.isConstructorRef;
-// FIXME remove:
-//		if (ctorTypeRef.isConstructorRef) {
-//			return true;
-//		}
-//		val typeArg = ctorTypeRef.typeArg;
-//		if(typeArg instanceof Wildcard) { // FIXME what about ExistentialTypeRef, here?
-//			val typeToCheck = getStaticType(G, ctorTypeRef);
-//			if(typeToCheck instanceof TypeVariable) {
-//				val ubs = typeToCheck.declaredUpperBounds;
-//				return !ubs.empty && ubs.forall[ub|isTypeThatHasOnlyClassesAsSubtypes(G, ub.declaredType)];
-//			} else {
-//				return isTypeThatHasOnlyClassesAsSubtypes(G, typeToCheck);
-//			}
-//		} else if((typeArg as TypeRef).declaredType instanceof TypeVariable) {
-//			// case: constructor{T} but not constructor{? extends T} (with T being a type variable)
-//			// -> we don't need to check the declared upper bounds as above, because even if T is bound to some
-//			// interface I, the constructor type constructor{I} will also always be a function (see next case)
-//			return true;
-//		} else {
-//			// case: constructor{C} (with C being a class), constructor{I} (with I being an interface), etc.
-//			// -> true even if I points to an interface, because the object representing interface I has a type of
-//			// constructor{? extends I} which is not assignable to constructor{I}.
-//			// FIXME this might no longer be true if support for @CovariantConstructor is added to interfaces!
-//			return true;
-//		}
-//	}
-//	def private boolean isTypeThatHasOnlyClassesAsSubtypes(RuleEnvironment G, Type type) {
-//		return type instanceof TClass && type!==G.n4ObjectType;
-	}
-
-	/**
 	 * Creates a parameterized type ref to the wrapped static type of a TypeTypeRef, configured with the given
 	 * TypeArguments. Returns UnknownTypeRef if the static type could not be retrieved (e.g. unbound This-Type).
 	 */
 	def public TypeRef createTypeRefFromStaticType(RuleEnvironment G, TypeTypeRef ctr, TypeArgument ... typeArgs) {
 		 val type = getStaticType(G, ctr);
-		 if( type !== null ) {
+		 return if( type !== null ) {
 		 	 TypeExtensions.ref(type,typeArgs)
 		 } else {
 		 	 TypeRefsFactory.eINSTANCE.createUnknownTypeRef
-		 }
+		 };
 	 }
 
 	/**

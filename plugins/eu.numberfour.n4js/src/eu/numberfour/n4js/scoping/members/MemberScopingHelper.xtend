@@ -239,7 +239,7 @@ class MemberScopingHelper {
 		// in addition, we need instance members of either Function (in case of constructor{T}) or Object (for type{T})
 		val MemberScopeRequest instanceRequest = request.enforceInstance;
 		val builtInScope = BuiltInTypeScope.get(getResourceSet(ttr, request.context));
-		val functionType = if (tsh.isFunction(G, ttr)) builtInScope.functionType else builtInScope.objectType;
+		val functionType = if (ttr.isConstructorRef) builtInScope.functionType else builtInScope.objectType;
 		val IScope ftypeScope = membersOfType(functionType, instanceRequest);
 
 		// order matters (shadowing!)

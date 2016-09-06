@@ -4734,12 +4734,12 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<Boolean> applyRuleSubtypeTypeTypeRef__ParameterizedTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final TypeTypeRef left, final ParameterizedTypeRef right) throws RuleFailedException {
-    /* right.declaredType === G.anyType || right.declaredType === G.objectType || ( right.declaredType === G.functionType && typeSystemHelper.isFunction(G, left) ) */
+    /* right.declaredType === G.anyType || right.declaredType === G.objectType || ( right.declaredType === G.functionType && left.isConstructorRef ) */
     if (!(((right.getDeclaredType() == RuleEnvironmentExtensions.anyType(G)) || 
       (right.getDeclaredType() == RuleEnvironmentExtensions.objectType(G))) || 
       ((right.getDeclaredType() == RuleEnvironmentExtensions.functionType(G)) && 
-        this.typeSystemHelper.isFunction(G, left)))) {
-      sneakyThrowRuleFailedException("right.declaredType === G.anyType || right.declaredType === G.objectType || ( right.declaredType === G.functionType && typeSystemHelper.isFunction(G, left) )");
+        left.isConstructorRef()))) {
+      sneakyThrowRuleFailedException("right.declaredType === G.anyType || right.declaredType === G.objectType || ( right.declaredType === G.functionType && left.isConstructorRef )");
     }
     return new Result<Boolean>(true);
   }
