@@ -650,8 +650,8 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 			val memberScope = memberScopingHelper.createMemberScopeFor(TypeUtils.createTypeRef(ctorClassifier),
 				expression, false, false); // always non-static
-			val scope = new TypingStrategyAwareMemberScope(
-				new VisibilityAwareCtorScope(memberScope, memberVisibilityChecker, ref, staticType, expression), ref);
+			val vacs = new VisibilityAwareCtorScope(memberScope, memberVisibilityChecker, ref, staticType, expression);
+			val scope = new TypingStrategyAwareMemberScope(vacs, ref, expression);
 
 			val ele = scope.getSingleElement(usedCtor)
 			if (IEObjectDescriptionWithError.isErrorDescription(ele)) {
@@ -660,7 +660,6 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 					errDescr.issueCode)
 			}
 		}
-
 	}
 
 	/**
