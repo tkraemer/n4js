@@ -4698,16 +4698,10 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
           checkAssignableTo(result_7.getFirst(), TypeRef.class);
           lowerBoundRight = (TypeRef) result_7.getFirst();
           
-          if (((left.getTypeArg() instanceof BoundThisTypeRef) && (upperBoundRight instanceof BoundThisTypeRef))) {
-            /* G |- left.typeArg <: upperBoundRight */
-            TypeArgument _typeArg_9 = left.getTypeArg();
-            subtypeInternal(G, _trace_, _typeArg_9, upperBoundRight);
-          } else {
-            /* G |- upperBoundLeft <: upperBoundRight */
-            subtypeInternal(G, _trace_, upperBoundLeft, upperBoundRight);
-            /* G |- lowerBoundRight <: lowerBoundLeft */
-            subtypeInternal(G, _trace_, lowerBoundRight, lowerBoundLeft);
-          }
+          /* G |- upperBoundLeft <: upperBoundRight */
+          subtypeInternal(G, _trace_, upperBoundLeft, upperBoundRight);
+          /* G |- lowerBoundRight <: lowerBoundLeft */
+          subtypeInternal(G, _trace_, lowerBoundRight, lowerBoundLeft);
         }
       }
     }
