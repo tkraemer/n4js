@@ -1371,8 +1371,10 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 					document.interior(nsr, psr , init);
 				} else {
 					// former error-case:
-					// there is no interior --> apply to next or don't do anything?
-					document.set(nsr.nextHiddenRegion,init);
+					// there is no interior --> don't do anything!
+					// 
+					// applying to the next HiddenRegion is a bad idea, 
+					// since it could wrongly indent a multiline-comment (c.f. GH-260)
 				}
 			}
 		}
