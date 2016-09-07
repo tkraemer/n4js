@@ -75,6 +75,11 @@ import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.EXPORT_
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
 import static extension eu.numberfour.n4js.organize.imports.RefNameUtil.*
 import static extension org.eclipse.xtext.nodemodel.util.NodeModelUtils.*
+import org.eclipse.xtext.nodemodel.impl.LeafNodeWithSyntaxError
+import org.eclipse.xtext.nodemodel.SyntaxErrorMessage
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils
+import org.eclipse.xtext.nodemodel.ICompositeNode
+import org.eclipse.xtext.nodemodel.impl.HiddenLeafNode
 
 /**
  */
@@ -195,7 +200,25 @@ public class N4JSOrganizeImports {
 				
 				if( !docuNodes.isEmpty ) {
 					// documentation found
-					begin = docuNodes.get(0).totalOffset;
+					val docuNode = docuNodes.get(0);
+					var INode previousNode = docuNode;
+					var INode lastEOL = null;
+					var continue = true;
+					while ( continue && previousNode.hasPreviousSibling && previousNode.previousSibling instanceof HiddenLeafNode) 
+					{
+						val grammar = previousNode.previousSibling.grammarElement 
+						if(  grammar == typeExpressionGrammmarAccess.WSRule ) {
+							previousNode = previousNode.previousSibling;
+						} else if ( grammar == typeExpressionGrammmarAccess.EOLRule) {
+							previousNode = previousNode.previousSibling;
+							lastEOL = previousNode;
+						} 
+						else {
+							continue=false;
+						} 
+					}
+					
+					begin = if( lastEOL !== null ) lastEOL.endOffset else docuNode.totalOffset;
 					insertionPoint.isBeforeJsdocDocumentation = true;
 					
 				} else {
@@ -210,16 +233,17 @@ public class N4JSOrganizeImports {
 						var ILeafNode afterFirstEOL;
 						var ILeafNode lastNode;
 						var boolean sawComment = false;
+						var ILeafNode lastComment;
 						// got to first non-hidden:
 						while( iterLeaves.hasNext && ( (curr = iterLeaves.next).isHidden) ) {  
 							if( curr.grammarElement instanceof TerminalRule ){
 								if( curr.grammarElement == typeExpressionGrammmarAccess.ML_COMMENTRule )
 								{
 									// reset EOLs
-									firstEOL = null; afterFirstEOL = null; sawComment = true;
+									firstEOL = null; afterFirstEOL = null; sawComment = true; lastComment = curr;
 								} else if( 	curr.grammarElement == typeExpressionGrammmarAccess.SL_COMMENTRule 	) {
 									// reset EOLs
-									firstEOL = null;afterFirstEOL = null; sawComment = true;
+									firstEOL = null;afterFirstEOL = null; sawComment = true; lastComment = curr;
 								} else if( 	curr.grammarElement == typeExpressionGrammmarAccess.EOLRule 	) {
 									if( firstEOL === null ) {
 										// store 
@@ -252,7 +276,13 @@ public class N4JSOrganizeImports {
 								0; // all the imports before will be removed, so put at the beginning.
 							} else {
 								// make the comments above the import.
-								curr.totalOffset;
+								if( sawComment ) {
+									lastComment.endOffset;
+								} else {
+									// do not use 'curr.totalOffset;' since it would insert the import directly before the statement.
+									// we'd rather want to keep is above the whitespace, so use the first in the list:
+									listLeafNodes.head.totalOffset;
+								}
 							}
 						}
 						begin = Math.max(begin,begin2);
@@ -666,14 +696,16 @@ public class N4JSOrganizeImports {
 	 * a new generated import declaration.
 	 */
 	private def String extractPureText(ImportDeclaration declaration, XtextResource resource) {
+		
+		// formatting decision: curly braces with whitespace
+		val prefValues = formattingPreferenceProvider.getPreferenceValues(resource) 
+		val spacer = if( Boolean.valueOf( prefValues.getPreference( N4JSFormatterPreferenceKeys.FORMAT_SURROUND_IMPORT_LIST_WITH_SPACE ) ) ) " " else "";
+		
 		if (declaration.eAdapters.contains(nodelessMarker)) {
 			// wrap importSpecifiers in new ArrayList, to support sorting (GH-48)
 			val impSpec = new ArrayList( declaration.importSpecifiers ); 
 			val module = declaration.module.moduleSpecifier;
 			
-			// formatting decision: curly braces with whitespace
-			val prefValues = formattingPreferenceProvider.getPreferenceValues(resource) 
-			val spacer = if( Boolean.valueOf( prefValues.getPreference( N4JSFormatterPreferenceKeys.FORMAT_SURROUND_IMPORT_LIST_WITH_SPACE ) ) ) " " else "";
 			
 			if (impSpec.size === 1) {
 
@@ -700,9 +732,67 @@ public class N4JSOrganizeImports {
 			}
 		} else {
 			val importNode = findActualNodeFor(declaration);
-			return UtilN4.getTokenText(importNode, SEMICOLON_INSERTED);
+			return eu.numberfour.n4js.ui.organize.imports.N4JSOrganizeImports.rewriteTokenText( importNode, spacer, SEMICOLON_INSERTED );
 		}
 	}
+	
+	/**
+	 * Rewrites the node-content without comments. 
+	 *  
+	 * Inspired by {@link NodeModelUtils#getTokenText(INode)} but can treat any {@link LeafNodeWithSyntaxError syntax error}
+	 * nodes as a hidden one and reformats White-space after opening and before closing curly brace according to spacer-policy
+	 * 
+	 * @param node the node to reformat.
+	 * @param spacer append after "{" and prepend before "}" can be empty string, then no white-space is inserted after
+	 * @param ignoredSyntaxErrorIssues - nodes of type LeafNodeWithSyntaxError having one of this issues are treated as ignored/hidden leafs
+	 * @returns modified textual form.  
+	 */
+	private static def String rewriteTokenText( ICompositeNode node, String spacer, String... ignoredSyntaxErrorIssues) {
+			
+		val StringBuilder builder = new StringBuilder(Math.max(node.getTotalLength(), 1));
+		
+		var boolean hiddenSeen = false;
+		var boolean openingCurlySeen = false;
+		for ( ILeafNode leaf : node.getLeafNodes()) {
+			if (!isHiddenOrIgnoredSyntaxError(leaf, ignoredSyntaxErrorIssues)) {
+				val text=leaf.getText();
+				if( builder.length() > 0 ) { // do not insert space before any content.
+					if( openingCurlySeen ) {
+						// last real text was "{"  
+						builder.append( spacer );
+					} else if( "}" == text ) {
+						// this text is "}"
+						builder.append( spacer );
+					} else {
+						// standard-ws handling. 
+						if (hiddenSeen) {
+							builder.append(' ');
+						}
+					} 
+				}
+				// recored state of opening curly 
+				openingCurlySeen = "{" == text;
+				builder.append(text);
+				hiddenSeen = false;
+			} else {
+				hiddenSeen = true;
+			}
+		}
+		return builder.toString();
+	}
+	
+	/**
+	 * Returns with {@code true} if the leaf node argument is either hidden, or represents a
+	 * {@link LeafNodeWithSyntaxError syntax error} where the {@link SyntaxErrorMessage#getIssueCode() issue code} of
+	 * the syntax error matches with any of the given ignored syntax error issue codes. Otherwise returns with
+	 * {@code false}.
+	 */
+	private static def boolean isHiddenOrIgnoredSyntaxError(ILeafNode leaf,
+			String... ignoredSyntaxErrorIssues) {
+
+		return leaf.isHidden() || UtilN4.isIgnoredSyntaxErrorNode(leaf, ignoredSyntaxErrorIssues);
+	}
+	
 
 	/**
 	 * Compute all cleanup changes (removal of imports)

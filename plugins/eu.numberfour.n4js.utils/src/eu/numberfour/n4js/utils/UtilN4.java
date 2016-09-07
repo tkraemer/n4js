@@ -26,11 +26,9 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.SyntaxErrorMessage;
 import org.eclipse.xtext.nodemodel.impl.LeafNodeWithSyntaxError;
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.util.Pair;
 import org.osgi.framework.Bundle;
 
@@ -224,31 +222,6 @@ public class UtilN4 {
 	}
 
 	/**
-	 * Same as {@link NodeModelUtils#getTokenText(INode)} but can treat any {@link LeafNodeWithSyntaxError syntax error}
-	 * nodes as a hidden one.
-	 */
-	public static String getTokenText(final INode node, final String... ignoredSyntaxErrorIssues) {
-		if (node instanceof ILeafNode) {
-			return ((ILeafNode) node).getText();
-		} else {
-			final StringBuilder builder = new StringBuilder(Math.max(node.getTotalLength(), 1));
-			boolean hiddenSeen = false;
-			for (final ILeafNode leaf : node.getLeafNodes()) {
-				if (!isHiddenOrIgnoredSyntaxError(leaf, ignoredSyntaxErrorIssues)) {
-					if (hiddenSeen && builder.length() > 0) {
-						builder.append(' ');
-					}
-					builder.append(leaf.getText());
-					hiddenSeen = false;
-				} else {
-					hiddenSeen = true;
-				}
-			}
-			return builder.toString();
-		}
-	}
-
-	/**
 	 * {@code true} if the leaf node argument is an instance of {@link LeafNodeWithSyntaxError} and the issue code of
 	 * the syntax error message matches with any of the ignored syntax error issue codes argument. Otherwise, returns
 	 * with {@code false}.
@@ -261,18 +234,6 @@ public class UtilN4 {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * Returns with {@code true} if the leaf node argument is either hidden, or represents a
-	 * {@link LeafNodeWithSyntaxError syntax error} where the {@link SyntaxErrorMessage#getIssueCode() issue code} of
-	 * the syntax error matches with any of the given ignored syntax error issue codes. Otherwise returns with
-	 * {@code false}.
-	 */
-	private static boolean isHiddenOrIgnoredSyntaxError(final ILeafNode leaf,
-			final String... ignoredSyntaxErrorIssues) {
-
-		return leaf.isHidden() || isIgnoredSyntaxErrorNode(leaf, ignoredSyntaxErrorIssues);
 	}
 
 	/**
