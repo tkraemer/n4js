@@ -747,6 +747,7 @@ public class N4JSOrganizeImports {
 
 				var boolean hiddenSeen = false;
 				var boolean openingCurlySeen = false;
+				
 				for (ILeafNode leaf : node.getLeafNodes()) {
 					if (!isHiddenOrIgnoredSyntaxError(leaf, ignoredSyntaxErrorIssues)) {
 						val text = leaf.getText();
@@ -757,8 +758,10 @@ public class N4JSOrganizeImports {
 							} else if ("}" == text) {
 								// this text is "}"
 								builder.append(spacer);
+							} else if ("," == text ) {
+								// drop WS in front of commas.	
 							} else {
-								// standard-ws handling. 
+								// standard-WS handling. 
 								if (hiddenSeen) {
 									builder.append(' ');
 								}
