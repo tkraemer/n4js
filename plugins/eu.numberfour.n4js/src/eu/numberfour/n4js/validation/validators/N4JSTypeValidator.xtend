@@ -30,15 +30,14 @@ import eu.numberfour.n4js.scoping.N4JSScopeProvider
 import eu.numberfour.n4js.scoping.utils.AbstractDescriptionWithError
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.typeRefs.Wildcard
@@ -156,8 +155,10 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		if (declaredType === null || declaredType.eIsProxy) {
 			return;
 		}
-		if (paramTypeRef.eContainer instanceof ClassifierTypeRef) {
-			internalCheckValidTypeInClassifierTypeRef(paramTypeRef);
+		if (paramTypeRef.eContainer instanceof TypeTypeRef || (paramTypeRef.eContainer instanceof Wildcard
+			&& paramTypeRef.eContainer.eContainer instanceof TypeTypeRef)) {
+
+			internalCheckValidTypeInTypeTypeRef(paramTypeRef);
 			return;
 		}
 
@@ -166,7 +167,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		internalCheckDynamic(paramTypeRef);
 	}
 
-	def internalCheckValidTypeInClassifierTypeRef(ParameterizedTypeRef paramTypeRef) {
+	def private void internalCheckValidTypeInTypeTypeRef(ParameterizedTypeRef paramTypeRef) {
 		// IDE-785 uses ParamterizedTypeRefs in ClassifierTypeRefs. Currently Type Arguments are not supported in ClassifierTypeRefs, so
 		// we actively forbid them here. Will be loosened for IDE-1310
 		if( ! paramTypeRef.typeArgs.isEmpty ) {
@@ -344,7 +345,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 			return; // broken AST
 		val G = newRuleEnvironment(classifierDecl);
 		G.recordInconsistentSubstitutions;
-		tClassifier.superClassifiers.forEach[tsh.addSubstitutions(G, it)];
+		tClassifier.superClassifierRefs.forEach[tsh.addSubstitutions(G, it)];
 		for(tv : G.getTypeMappingKeys()) {
 			if(!tv.declaredCovariant && !tv.declaredContravariant) {
 				val subst = ts.substTypeVariables(G, TypeUtils.createTypeRef(tv)).value;
@@ -480,19 +481,6 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 //		}
 //
 //	}
-
-	/**
-	 * @see <a href="https://github.com/NumberFour/n4js/issues/221">#221</a>
-	 */
-	@Check
-	def checkClassifierType(ClassifierTypeRef classifierTypeRef) {
-		if (! (classifierTypeRef instanceof ConstructorTypeRef)) { // type{X}, not ctor{X}
-			if (classifierTypeRef.typeArg instanceof Wildcard) {
-				addIssue(IssueCodes.getMessageForTYS_WILDCARD_IN_TYPETYPE, classifierTypeRef.typeArg, TYS_WILDCARD_IN_TYPETYPE);
-			}
-		}
-	}
-
 
 
 	def boolean createError(Result<?> result, EObject source) {

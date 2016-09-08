@@ -422,8 +422,7 @@ ruleTypeRefWithoutModifiers :
 	) ( (
 	'+'
 	) => '+' )? |
-	ruleConstructorTypeRef |
-	ruleClassifierTypeRef |
+	ruleTypeTypeRef |
 	ruleFunctionTypeExpressionOLD |
 	ruleUnionTypeExpressionOLD |
 	ruleIntersectionTypeExpressionOLD
@@ -433,14 +432,13 @@ ruleTypeRefWithoutModifiers :
 ruleTypeRefFunctionTypeExpression :
 	ruleParameterizedTypeRef |
 	ruleArrayTypeRef |
-	ruleConstructorTypeRef |
-	ruleClassifierTypeRef |
+	ruleTypeTypeRef |
 	ruleUnionTypeExpressionOLD |
 	ruleIntersectionTypeExpressionOLD
 ;
 
-// Rule TypeRefInClassifierType
-ruleTypeRefInClassifierType :
+// Rule TypeArgInTypeTypeRef
+ruleTypeArgInTypeTypeRef :
 	ruleParameterizedTypeRefNominal |
 	ruleThisTypeRefNominal |
 	( (
@@ -643,14 +641,12 @@ ruleTypingStrategyDefSiteOperator :
 	'~'
 ;
 
-// Rule ConstructorTypeRef
-ruleConstructorTypeRef :
-	'constructor' '{' ruleTypeRefInClassifierType '}'
-;
-
-// Rule ClassifierTypeRef
-ruleClassifierTypeRef :
-	'type' '{' ruleTypeRefInClassifierType '}'
+// Rule TypeTypeRef
+ruleTypeTypeRef :
+	(
+		'type' |
+		'constructor'
+	) '{' ruleTypeArgInTypeTypeRef '}'
 ;
 
 // Rule TypeArgument

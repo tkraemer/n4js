@@ -49,6 +49,7 @@ package class N4JSClassDeclarationTypesBuilder {
 		tclass.setProvidedByRuntime(n4Class, preLinkingPhase);
 		tclass.declaredStaticPolyfill = n4Class.isStaticPolyfill;
 		tclass.declaredPolyfill = n4Class.isPolyfill || tclass.declaredStaticPolyfill;
+		tclass.declaredCovariantConstructor = n4Class.isDeclaredCovariantConstructor;
 		tclass.addTypeParameters(n4Class, preLinkingPhase);
 
 		// super types etc

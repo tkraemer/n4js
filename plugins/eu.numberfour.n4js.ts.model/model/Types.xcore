@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
 
 type CollectionOfTypeRef wraps Collection<? extends TypeRef>
+type IterableOfTClassifier wraps Iterable<? extends TClassifier>
 type Variance wraps Variance
 
 /*
@@ -648,6 +649,13 @@ abstract class ContainerType<MT extends TMember> extends Type {
 	 */
 	contains TypeVariable[] typeVars
 
+	/**
+	 * Convenience method returning the owned constructor or <code>null</code> if not available.
+	 */
+	op TMethod getOwnedCtor() {
+		return ownedMembers.filter(TMethod).findFirst[isConstructor]
+	}
+
 	/*
 	 * Convenience method, similar to {code findMember(name, false)}.
 	 * That is, this method returns fields, methods, and getters rather then setters.
@@ -801,14 +809,41 @@ class TStructuralType extends ContainerType<TStructMember>, SyntaxRelatedTElemen
  */
 abstract class TClassifier extends ContainerType<TMember>, SyntaxRelatedTElement {
 
+	/*
+	 * Tells if this classifier is itself annotated with <code>@CovariantConstructor</code> or if it has an owned
+	 * constructor annotated with <code>@CovariantConstructor</code>.
+	 */
+	boolean declaredCovariantConstructor
+
 	op boolean isAbstract() {
 		return false
 	}
 
 	/**
-	 * Convenience method, returns all super classes and implemented or extended interfaces
+	 * Convenience method, returns all super classes and implemented or extended interfaces as classifiers.
 	 */
-	op ParameterizedTypeRefIterable getSuperClassifiers() {
+	op IterableOfTClassifier getSuperClassifiers() {
+		// following code causes weird Xtend/Xcore bug
+		//return this.superClassifierRefs.filterNull.map[declaredType].filter(TClassifier);
+		// so let's do it the old-school way:
+		val List<TClassifier> result = <TClassifier>newArrayList;
+		val Object _superClassifierRefs = this.getSuperClassifierRefs();
+		for(Object superClassifierRef : (_superClassifierRefs as Iterable<?>)) {
+			if(superClassifierRef!==null) {
+				val Type declType = (superClassifierRef as TypeRef).getDeclaredType();
+				if(declType instanceof TClassifier) {
+					result.add(declType);
+				}
+			}
+		}
+		return result;
+//		return <TClassifier>emptyList;
+	}
+
+	/**
+	 * Convenience method, returns all super classes and implemented or extended interfaces as type references.
+	 */
+	op ParameterizedTypeRefIterable getSuperClassifierRefs() {
 		return <ParameterizedTypeRef>emptyList();
 	}
 
@@ -891,9 +926,17 @@ class TClass extends TN4Classifier {
 		return declaredAbstract
 	}
 	/**
+	 * Convenience method, return the explicitly declared super class casted to a {@link TClass} or <code>null</code> if
+	 * not possible, not available. Ignores implicit super types!
+	 */
+	op TClass getSuperClass() {
+		val superType = superClassRef?.declaredType;
+		return if(superType instanceof TClass) superType else null;
+	}
+	/**
 	 * Convenience method, returns all super classes, consumed roles and implemented or extend interfaces
 	 */
-	op ParameterizedTypeRefIterable getSuperClassifiers() {
+	op ParameterizedTypeRefIterable getSuperClassifierRefs() {
 		if (getSuperClassRef !== null) {
 			return Iterables.concat(Collections.singleton(getSuperClassRef), implementedInterfaceRefs)
 		}
@@ -905,10 +948,6 @@ class TClass extends TN4Classifier {
 	 */
 	op ParameterizedTypeRefIterable getImplementedOrExtendedInterfaceRefs() {
 		return implementedInterfaceRefs;
-	}
-
-	op TMethod getOwnedCtor() {
-		return ownedMembers.filter(TMethod).findFirst[name=='constructor']
 	}
 
 	/**
@@ -943,7 +982,7 @@ class TInterface extends TN4Classifier {
 	/**
 	 * Convenience method, returns all super classes, consumed roles and implemented or extend interfaces
 	 */
-	op ParameterizedTypeRefIterable getSuperClassifiers() {
+	op ParameterizedTypeRefIterable getSuperClassifierRefs() {
 		return superInterfaceRefs;
 	}
 	/**
@@ -1021,6 +1060,9 @@ abstract class TMember extends IdentifiableElement, TAnnotableElement, SyntaxRel
 	 */
 	op boolean isMethod() {
 		return memberType == MemberType.METHOD
+	}
+	op boolean isConstructor() {
+		false
 	}
 	op boolean isOptional() {
 		false
@@ -1164,6 +1206,9 @@ class TMethod extends TFunction, TMemberWithAccessModifier {
 	op MemberType getMemberType() {
 		return MemberType.METHOD
 	}
+	op boolean isConstructor() {
+		return name == 'constructor' && !isStatic;
+	}
 	/**
 	 * Returns string representation of this function similar according to the N4JS syntax.
 	 * This includes formal parameters and return type (if declared), but excludes annotations.
@@ -1300,6 +1345,8 @@ class TStructField extends TField, TStructMember {
  */
 abstract class FieldAccessor extends TMemberWithAccessModifier {
 	boolean declaredAbstract
+	contains TypeRef declaredThisType
+
 	op TypeRef getDeclaredTypeRef() {
 		return null;
 	}

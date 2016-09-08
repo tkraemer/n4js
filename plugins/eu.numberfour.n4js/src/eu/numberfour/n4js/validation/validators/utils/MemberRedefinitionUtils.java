@@ -10,21 +10,32 @@
  */
 package eu.numberfour.n4js.validation.validators.utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import org.eclipse.emf.ecore.resource.Resource;
 
 import com.google.common.collect.Iterables;
 
 import eu.numberfour.n4js.n4JS.N4ClassDefinition;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
+import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TInterface;
 import eu.numberfour.n4js.ts.types.TMember;
+import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypesPackage;
+import eu.numberfour.n4js.ts.types.util.ExtendedClassesIterable;
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
+import eu.numberfour.n4js.utils.N4JSLanguageUtils;
+import it.xsemantics.runtime.RuleEnvironment;
 
 /**
  * A util class for member redefinition validation.
@@ -116,7 +127,7 @@ public class MemberRedefinitionUtils {
 		}
 
 		ParameterizedTypeRef superClassTypeRef = Iterables
-				.getFirst(classifier.getSuperClassifiers(), null);
+				.getFirst(classifier.getSuperClassifierRefs(), null);
 		if (null == superClassTypeRef) {
 			return null;
 		}
@@ -128,6 +139,68 @@ public class MemberRedefinitionUtils {
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * Returns the context type to be used as this binding (see
+	 * {@link N4JSTypeSystem#createRuleEnvironmentForContext(TypeRef, TypeRef, Resource) here} and
+	 * {@link RuleEnvironmentExtensions#addThisType(RuleEnvironment, TypeRef)} here) for checking constructor
+	 * compatibility.
+	 *
+	 * For example, given the following code
+	 *
+	 * <pre>
+	 * class C1 {
+	 *     constructor(@Spec spec: ~i~this) {}
+	 * }
+	 *
+	 * class C2 extends C1 {
+	 *     public field2;
+	 * }
+	 *
+	 * &#64;CovariantConstructor
+	 * class C3 extends C2 {
+	 *     public field3;
+	 * }
+	 *
+	 * class C4 extends C3 {
+	 *     // XPECT noerrors -->
+	 *     constructor(@Spec spec: ~i~this) { super(spec); }
+	 * }
+	 * </pre>
+	 *
+	 * When checking constructor compatibility in C4, we have to use class C3 as the 'this' context on right-hand side,
+	 * not class C1, because the addition of fields <code>field2</code> and <code>field3</code> does not break the
+	 * contract of the &#64;CovariantConstructor annotation. Therefore, we cannot simply use the containing type of the
+	 * right-hand side constructor as 'this' context. In the above example, we would call this method with C4 as
+	 * <code>baseContext</code> and C1's constructor as <code>ctor</code> and it would return C3 as the 'this' context
+	 * to use.
+	 */
+	public static final Type findThisContextForConstructor(Type baseContext, TMethod ctor) {
+		final Type ctorContainer = ctor.getContainingType();
+		if (!(baseContext instanceof TClass) || !(ctorContainer instanceof TClass)) {
+			return ctorContainer;
+		}
+		final TClass ctorContainerCasted = (TClass) ctorContainer;
+		final TClass baseContextCasted = (TClass) baseContext;
+		if (N4JSLanguageUtils.hasCovariantConstructor(ctorContainerCasted)) {
+			return ctorContainerCasted;
+		}
+		final List<TClass> superClassesUpToCtorContainer = new ArrayList<>();
+		for (TClass superClass : new ExtendedClassesIterable(baseContextCasted)) {
+			if (superClass != ctorContainerCasted) {
+				superClassesUpToCtorContainer.add(superClass);
+			} else {
+				break;
+			}
+		}
+		for (int i = superClassesUpToCtorContainer.size() - 1; i >= 0; i--) {
+			final TClass superClass = superClassesUpToCtorContainer.get(i);
+			if (N4JSLanguageUtils.hasCovariantConstructor(superClass)) {
+				return superClass;
+			}
+		}
+		return baseContext;
 	}
 
 	/* Non-instantiable util class. */

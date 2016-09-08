@@ -63,8 +63,7 @@ public class TypeCompareUtils {
 	 * but whenever the TypeRef is referring to a Type, object identity is required.
 	 */
 	public static boolean isEqual(TypeArgument t1, TypeArgument t2) {
-		return TypeCompareLogic.compare(null, t1, t2) == 0; // note: no fqnProvider required for equality
-															// check!
+		return TypeCompareLogic.compare(null, t1, t2) == 0; // note: no fqnProvider required for equality check!
 	}
 
 	/**

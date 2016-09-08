@@ -115,6 +115,12 @@ public final class AnnotationDefinition {
 			.targetsWithCustomError(N4_INTERFACE_DECLARATION).end();
 
 	/**
+	 * 5.2.2.3. Covariant Constructors
+	 */
+	public final static AnnotationDefinition COVARIANT_CONSTRUCTOR = define("CovariantConstructor")
+			.targets(N4_CLASS_DECLARATION, N4_INTERFACE_DECLARATION, N4_MEMBER_DECLARATION).end();
+
+	/**
 	 * @TODO IDE-1661 cf. ECMA 2015 6.1.7.1 Property Attributes
 	 */
 	public final static AnnotationDefinition WRITABLE = define("Writable")
@@ -164,9 +170,10 @@ public final class AnnotationDefinition {
 	public final static AnnotationDefinition OVERRIDE = define("Override").targets(N4_MEMBER_DECLARATION).end();
 
 	/**
-	 * 7.1.1. The this Keyword
+	 * 7.1.1. The this Keyword, Constraints 91 (Valid Target and Argument of This Annotation)
 	 */
-	public final static AnnotationDefinition THIS = define("This").targets(FUNCTION_DEFINITION).args(TYPE_REF).end();
+	public final static AnnotationDefinition THIS = define("This")
+			.targets(FUNCTION_DEFINITION /* includes method! */, N4_FIELD_ACCESSOR).args(TYPE_REF).end();
 
 	/**
 	 * 11.1.1. Declaring externals

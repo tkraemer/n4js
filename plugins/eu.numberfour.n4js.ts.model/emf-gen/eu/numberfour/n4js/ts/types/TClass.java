@@ -276,13 +276,27 @@ public interface TClass extends TN4Classifier {
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
+	 * Convenience method, return the explicitly declared super class casted to a {@link TClass} or <code>null</code> if
+	 * not possible, not available. Ignores implicit super types!
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%> _superClassRef = this.getSuperClassRef();\n<%eu.numberfour.n4js.ts.types.Type%> _declaredType = null;\nif (_superClassRef!=null)\n{\n\t_declaredType=_superClassRef.getDeclaredType();\n}\nfinal <%eu.numberfour.n4js.ts.types.Type%> superType = _declaredType;\n<%eu.numberfour.n4js.ts.types.TClass%> _xifexpression = null;\nif ((superType instanceof <%eu.numberfour.n4js.ts.types.TClass%>))\n{\n\t_xifexpression = ((<%eu.numberfour.n4js.ts.types.TClass%>)superType);\n}\nelse\n{\n\t_xifexpression = null;\n}\nreturn _xifexpression;'"
+	 * @generated
+	 */
+	TClass getSuperClass();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * *
 	 * Convenience method, returns all super classes, consumed roles and implemented or extend interfaces
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" dataType="eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefIterable" unique="false"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%> _superClassRef = this.getSuperClassRef();\nboolean _tripleNotEquals = (_superClassRef != null);\nif (_tripleNotEquals)\n{\n\t<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%> _superClassRef_1 = this.getSuperClassRef();\n\t<%java.util.Set%><<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>> _singleton = <%java.util.Collections%>.<<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>>singleton(_superClassRef_1);\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>> _implementedInterfaceRefs = this.getImplementedInterfaceRefs();\n\treturn <%com.google.common.collect.Iterables%>.<<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>>concat(_singleton, _implementedInterfaceRefs);\n}\n<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>> _implementedInterfaceRefs_1 = this.getImplementedInterfaceRefs();\nreturn <%com.google.common.collect.Iterables%>.<<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>>concat(_implementedInterfaceRefs_1);'"
 	 * @generated
 	 */
-	Iterable<ParameterizedTypeRef> getSuperClassifiers();
+	Iterable<ParameterizedTypeRef> getSuperClassifierRefs();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -296,15 +310,6 @@ public interface TClass extends TN4Classifier {
 	 * @generated
 	 */
 	Iterable<ParameterizedTypeRef> getImplementedOrExtendedInterfaceRefs();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TMember%>> _ownedMembers = this.getOwnedMembers();\n<%java.lang.Iterable%><<%eu.numberfour.n4js.ts.types.TMethod%>> _filter = <%com.google.common.collect.Iterables%>.<<%eu.numberfour.n4js.ts.types.TMethod%>>filter(_ownedMembers, <%eu.numberfour.n4js.ts.types.TMethod%>.class);\nfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TMethod%>, <%java.lang.Boolean%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.types.TMethod%>, <%java.lang.Boolean%>>()\n{\n\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.ts.types.TMethod%> it)\n\t{\n\t\t<%java.lang.String%> _name = it.getName();\n\t\treturn <%java.lang.Boolean%>.valueOf(<%com.google.common.base.Objects%>.equal(_name, \"constructor\"));\n\t}\n};\nreturn <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.<<%eu.numberfour.n4js.ts.types.TMethod%>>findFirst(_filter, _function);'"
-	 * @generated
-	 */
-	TMethod getOwnedCtor();
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -198,13 +198,7 @@ public class N4JSTypeSystem {
 	public TypeRef tau(TypableElement element, TypeRef context) {
 		final RuleEnvironment G = createRuleEnvironmentForContext(context,
 				element != null ? element.eResource() : null);
-		final Result<TypeRef> result = type(G, element);
-		final TypeRef value = result.getValue();
-		if (value != null) {
-			final TypeRef substValue = substTypeVariablesInTypeRef(G, value);
-			return substValue;
-		}
-		return null;
+		return tau(element, G);
 	}
 
 	/**
@@ -224,20 +218,56 @@ public class N4JSTypeSystem {
 	}
 
 	/**
-	 * Creates a rule environment for the given context, i.e. it will be populated with type variable substitutions,
-	 * this-bindings, etc. For details about the context argument see {@link #tau(TypableElement,TypeRef)}.
-	 * <p>
-	 * Returns an empty rule environment without any bindings if context is <code>null</code>. For consistency with
-	 * {@link RuleEnvironmentExtensions#newRuleEnvironment(EObject)} this will throw an exception if resourceSet is
-	 * <code>null</code>.
+	 * Same as {@link #type(RuleEnvironment, TypableElement)}, but performs a type variable substitution on the result
+	 * based on the type variable bindings defined in the given rule environment, and returns a {@link TypeRef} (or
+	 * <code>null</code> in case of an error) instead of a {@link Result}.
+	 */
+	public TypeRef tau(TypableElement element, RuleEnvironment G) {
+		final Result<TypeRef> result = type(G, element);
+		final TypeRef value = result.getValue();
+		if (value != null) {
+			final TypeRef substValue = substTypeVariablesInTypeRef(G, value);
+			return substValue;
+		}
+		return null;
+	}
+
+	/**
+	 * Same as {@link #createRuleEnvironmentForContext(TypeRef, TypeRef, Resource)}, but uses the same context for type
+	 * variable bindings and this binding.
 	 */
 	public RuleEnvironment createRuleEnvironmentForContext(TypeRef context, Resource resource) {
+		return createRuleEnvironmentForContext(context, context, resource);
+	}
+
+	/**
+	 * Creates a rule environment for the given context, i.e. it will be populated with type variable substitutions and
+	 * a this-binding (if applicable). For details about the context argument see {@link #tau(TypableElement,TypeRef)}.
+	 * <p>
+	 * Returns an empty rule environment without any bindings if the two contexts are <code>null</code>. For consistency
+	 * with {@link RuleEnvironmentExtensions#newRuleEnvironment(EObject)} this will throw an exception if resourceSet is
+	 * <code>null</code>.
+	 * <p>
+	 * Client could should usually use the same context for type variable bindings and the this binding an should thus
+	 * prefer method {@link #createRuleEnvironmentForContext(TypeRef, Resource)}.
+	 *
+	 * @param contextTypeVariableBindings
+	 *            the context used to derive type variable bindings. See {@link #tau(TypableElement,TypeRef)} for an
+	 *            example. May be <code>null</code>.
+	 * @param contextThisBinding
+	 *            the context used to derive a this binding. May be <code>null</code>.
+	 * @param resource
+	 *            containing resource. <b>Must not be <code>null</code></b>.
+	 */
+	public RuleEnvironment createRuleEnvironmentForContext(TypeRef contextTypeVariableBindings,
+			TypeRef contextThisBinding, Resource resource) {
 		final RuleEnvironment G = RuleEnvironmentExtensions.newRuleEnvironment(resource);
-		if (context != null) {
-			tsh.addSubstitutions(G, context);
-			if (context instanceof ParameterizedTypeRef) {
-				if (context.getDeclaredType() instanceof TClassifier)
-					RuleEnvironmentExtensions.addThisType(G, context);
+		if (contextTypeVariableBindings != null) {
+			tsh.addSubstitutions(G, contextTypeVariableBindings);
+		}
+		if (contextThisBinding instanceof ParameterizedTypeRef) {
+			if (contextThisBinding.getDeclaredType() instanceof TClassifier) {
+				RuleEnvironmentExtensions.addThisType(G, contextThisBinding);
 			}
 		}
 		return G;

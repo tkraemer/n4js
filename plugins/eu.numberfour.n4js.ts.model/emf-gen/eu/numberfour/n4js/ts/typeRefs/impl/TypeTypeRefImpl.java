@@ -7,14 +7,10 @@
  */
 package eu.numberfour.n4js.ts.typeRefs.impl;
 
-import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
-
-import eu.numberfour.n4js.ts.types.Type;
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -30,18 +26,19 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Classifier Type Ref</b></em>'.
+ * An implementation of the model object '<em><b>Type Type Ref</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ClassifierTypeRefImpl#getTypeArg <em>Type Arg</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.TypeTypeRefImpl#getTypeArg <em>Type Arg</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.TypeTypeRefImpl#isConstructorRef <em>Constructor Ref</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements ClassifierTypeRef {
+public class TypeTypeRefImpl extends BaseTypeRefImpl implements TypeTypeRef {
 	/**
 	 * The cached value of the '{@link #getTypeArg() <em>Type Arg</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -53,11 +50,31 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	protected TypeArgument typeArg;
 
 	/**
+	 * The default value of the '{@link #isConstructorRef() <em>Constructor Ref</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isConstructorRef()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean CONSTRUCTOR_REF_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isConstructorRef() <em>Constructor Ref</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isConstructorRef()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean constructorRef = CONSTRUCTOR_REF_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ClassifierTypeRefImpl() {
+	protected TypeTypeRefImpl() {
 		super();
 	}
 
@@ -68,7 +85,7 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return TypeRefsPackage.Literals.CLASSIFIER_TYPE_REF;
+		return TypeRefsPackage.Literals.TYPE_TYPE_REF;
 	}
 
 	/**
@@ -89,7 +106,7 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 		TypeArgument oldTypeArg = typeArg;
 		typeArg = newTypeArg;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG, oldTypeArg, newTypeArg);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG, oldTypeArg, newTypeArg);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -104,14 +121,35 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 		if (newTypeArg != typeArg) {
 			NotificationChain msgs = null;
 			if (typeArg != null)
-				msgs = ((InternalEObject)typeArg).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG, null, msgs);
+				msgs = ((InternalEObject)typeArg).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG, null, msgs);
 			if (newTypeArg != null)
-				msgs = ((InternalEObject)newTypeArg).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG, null, msgs);
+				msgs = ((InternalEObject)newTypeArg).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG, null, msgs);
 			msgs = basicSetTypeArg(newTypeArg, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG, newTypeArg, newTypeArg));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG, newTypeArg, newTypeArg));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isConstructorRef() {
+		return constructorRef;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setConstructorRef(boolean newConstructorRef) {
+		boolean oldConstructorRef = constructorRef;
+		constructorRef = newConstructorRef;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.TYPE_TYPE_REF__CONSTRUCTOR_REF, oldConstructorRef, constructorRef));
 	}
 
 	/**
@@ -120,46 +158,28 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	 * @generated
 	 */
 	public String getTypeRefAsString() {
-		TypeArgument _typeArg = this.getTypeArg();
-		String _typeRefAsString = null;
-		if (_typeArg!=null) {
-			_typeRefAsString=_typeArg.getTypeRefAsString();
+		String _xifexpression = null;
+		boolean _isConstructorRef = this.isConstructorRef();
+		if (_isConstructorRef) {
+			_xifexpression = "constructor";
 		}
-		final String refName = _typeRefAsString;
-		String _modifiersAsString = this.getModifiersAsString();
-		return ((("type{" + refName) + "}") + _modifiersAsString);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Type staticType() {
-		Type _switchResult = null;
+		else {
+			_xifexpression = "type";
+		}
+		final String kwd = _xifexpression;
+		String _xifexpression_1 = null;
 		TypeArgument _typeArg = this.getTypeArg();
-		boolean _matched = false;
-		if (_typeArg instanceof ParameterizedTypeRef) {
-			_matched=true;
+		boolean _tripleEquals = (null == _typeArg);
+		if (_tripleEquals) {
+			_xifexpression_1 = "";
+		}
+		else {
 			TypeArgument _typeArg_1 = this.getTypeArg();
-			_switchResult = ((ParameterizedTypeRef) _typeArg_1).getDeclaredType();
+			_xifexpression_1 = _typeArg_1.getTypeRefAsString();
 		}
-		if (!_matched) {
-			if (_typeArg instanceof BoundThisTypeRef) {
-				_matched=true;
-				TypeArgument _typeArg_1 = this.getTypeArg();
-				ParameterizedTypeRef _actualThisTypeRef = ((BoundThisTypeRef) _typeArg_1).getActualThisTypeRef();
-				Type _declaredType = null;
-				if (_actualThisTypeRef!=null) {
-					_declaredType=_actualThisTypeRef.getDeclaredType();
-				}
-				_switchResult = _declaredType;
-			}
-		}
-		if (!_matched) {
-			_switchResult = null;
-		}
-		return _switchResult;
+		final String refName = _xifexpression_1;
+		String _modifiersAsString = this.getModifiersAsString();
+		return ((((kwd + "{") + refName) + "}") + _modifiersAsString);
 	}
 
 	/**
@@ -170,7 +190,7 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG:
+			case TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG:
 				return basicSetTypeArg(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -184,8 +204,10 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG:
+			case TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG:
 				return getTypeArg();
+			case TypeRefsPackage.TYPE_TYPE_REF__CONSTRUCTOR_REF:
+				return isConstructorRef();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -198,8 +220,11 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG:
+			case TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG:
 				setTypeArg((TypeArgument)newValue);
+				return;
+			case TypeRefsPackage.TYPE_TYPE_REF__CONSTRUCTOR_REF:
+				setConstructorRef((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -213,8 +238,11 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG:
+			case TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG:
 				setTypeArg((TypeArgument)null);
+				return;
+			case TypeRefsPackage.TYPE_TYPE_REF__CONSTRUCTOR_REF:
+				setConstructorRef(CONSTRUCTOR_REF_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -228,8 +256,10 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TypeRefsPackage.CLASSIFIER_TYPE_REF__TYPE_ARG:
+			case TypeRefsPackage.TYPE_TYPE_REF__TYPE_ARG:
 				return typeArg != null;
+			case TypeRefsPackage.TYPE_TYPE_REF__CONSTRUCTOR_REF:
+				return constructorRef != CONSTRUCTOR_REF_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -243,13 +273,13 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
 		if (baseClass == TypeArgument.class) {
 			switch (baseOperationID) {
-				case TypeRefsPackage.TYPE_ARGUMENT___GET_TYPE_REF_AS_STRING: return TypeRefsPackage.CLASSIFIER_TYPE_REF___GET_TYPE_REF_AS_STRING;
+				case TypeRefsPackage.TYPE_ARGUMENT___GET_TYPE_REF_AS_STRING: return TypeRefsPackage.TYPE_TYPE_REF___GET_TYPE_REF_AS_STRING;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
 		if (baseClass == TypeRef.class) {
 			switch (baseOperationID) {
-				case TypeRefsPackage.TYPE_REF___GET_TYPE_REF_AS_STRING: return TypeRefsPackage.CLASSIFIER_TYPE_REF___GET_TYPE_REF_AS_STRING;
+				case TypeRefsPackage.TYPE_REF___GET_TYPE_REF_AS_STRING: return TypeRefsPackage.TYPE_TYPE_REF___GET_TYPE_REF_AS_STRING;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -264,12 +294,26 @@ public class ClassifierTypeRefImpl extends BaseTypeRefImpl implements Classifier
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case TypeRefsPackage.CLASSIFIER_TYPE_REF___GET_TYPE_REF_AS_STRING:
+			case TypeRefsPackage.TYPE_TYPE_REF___GET_TYPE_REF_AS_STRING:
 				return getTypeRefAsString();
-			case TypeRefsPackage.CLASSIFIER_TYPE_REF___STATIC_TYPE:
-				return staticType();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
 
-} //ClassifierTypeRefImpl
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (constructorRef: ");
+		result.append(constructorRef);
+		result.append(')');
+		return result.toString();
+	}
+
+} //TypeTypeRefImpl

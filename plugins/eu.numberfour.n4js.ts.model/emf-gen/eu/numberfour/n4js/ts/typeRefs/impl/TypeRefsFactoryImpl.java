@@ -74,8 +74,7 @@ public class TypeRefsFactoryImpl extends EFactoryImpl implements TypeRefsFactory
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF_STRUCTURAL: return createParameterizedTypeRefStructural();
 			case TypeRefsPackage.EXISTENTIAL_TYPE_REF: return createExistentialTypeRef();
 			case TypeRefsPackage.UNKNOWN_TYPE_REF: return createUnknownTypeRef();
-			case TypeRefsPackage.CONSTRUCTOR_TYPE_REF: return createConstructorTypeRef();
-			case TypeRefsPackage.CLASSIFIER_TYPE_REF: return createClassifierTypeRef();
+			case TypeRefsPackage.TYPE_TYPE_REF: return createTypeTypeRef();
 			case TypeRefsPackage.ENUM_TYPE_REF: return createEnumTypeRef();
 			case TypeRefsPackage.WILDCARD: return createWildcard();
 			case TypeRefsPackage.FUNCTION_TYPE_REF: return createFunctionTypeRef();
@@ -222,19 +221,9 @@ public class TypeRefsFactoryImpl extends EFactoryImpl implements TypeRefsFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ConstructorTypeRef createConstructorTypeRef() {
-		ConstructorTypeRefImpl constructorTypeRef = new ConstructorTypeRefImpl();
-		return constructorTypeRef;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ClassifierTypeRef createClassifierTypeRef() {
-		ClassifierTypeRefImpl classifierTypeRef = new ClassifierTypeRefImpl();
-		return classifierTypeRef;
+	public TypeTypeRef createTypeTypeRef() {
+		TypeTypeRefImpl typeTypeRef = new TypeTypeRefImpl();
+		return typeTypeRef;
 	}
 
 	/**

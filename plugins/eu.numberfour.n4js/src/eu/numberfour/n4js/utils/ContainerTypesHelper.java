@@ -204,7 +204,7 @@ public class ContainerTypesHelper {
 		 */
 		public ContainerType<?> directSuperTypeBequestingMember(TClassifier classifier, TMember inheritedMember) {
 			ContainerType<?> containingType = inheritedMember.getContainingType();
-			for (ParameterizedTypeRef superTypeRef : classifier.getSuperClassifiers()) {
+			for (ParameterizedTypeRef superTypeRef : classifier.getSuperClassifierRefs()) {
 				if (superTypeRef.getDeclaredType() instanceof ContainerType<?>) {
 					ContainerType<?> superType = (ContainerType<?>) superTypeRef.getDeclaredType();
 					if (containingType == superType) { // <-- short cut
@@ -753,7 +753,7 @@ public class ContainerTypesHelper {
 					return qn.equals(qualifiedNameProvider.getFullyQualifiedName(containerType));
 				}
 				if (containerType instanceof TN4Classifier) {
-					return Iterables.any(((TN4Classifier) containerType).getSuperClassifiers(),
+					return Iterables.any(((TN4Classifier) containerType).getSuperClassifierRefs(),
 							ref -> qn.equals(qualifiedNameProvider.getFullyQualifiedName(ref.getDeclaredType())));
 
 				}

@@ -1,0 +1,24 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+interface R0 {
+	// XPECT errors --> "Constructors in interfaces must not have a body." at "constructor"
+	public constructor() {}
+}
+
+interface R1 {
+	// XPECT errors --> "Constructors in interfaces must be annotated with @CovariantConstructor." at "constructor"
+	public constructor()
+}
+
+interface R2 {
+	// XPECT noerrors -->
+	@CovariantConstructor public constructor()
+}
+
+@CovariantConstructor
+interface R3 {
+	// XPECT noerrors -->
+	public constructor()
+}
+

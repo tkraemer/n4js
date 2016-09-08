@@ -279,7 +279,7 @@ public class WildcardImpl extends TypeArgumentImpl implements Wildcard {
 	 * @generated
 	 */
 	public String getTypeRefAsString() {
-		return WildcardAsStringUtils.getTypeRefAsString(this);
+		return WildcardAsStringUtils.getTypeRefAsString_workaround(this);
 	}
 
 	/**

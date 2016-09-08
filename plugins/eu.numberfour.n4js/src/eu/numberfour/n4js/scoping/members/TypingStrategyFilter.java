@@ -25,7 +25,6 @@ import eu.numberfour.n4js.ts.types.TGetter;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.TSetter;
-import eu.numberfour.n4js.ts.types.TStructMember;
 import eu.numberfour.n4js.ts.types.TypingStrategy;
 
 /**
@@ -77,8 +76,7 @@ class TypingStrategyFilter implements Predicate<IEObjectDescription> {
 			case STRUCTURAL_FIELD_INITIALIZER:
 				return false;
 			case STRUCTURAL:
-				boolean hasMethod = !"constructor".equals(member.getName()) || member instanceof TStructMember;
-				return hasMethod;
+				return true; // including constructors
 			}
 		}
 

@@ -8,6 +8,8 @@
 package eu.numberfour.n4js.n4JS.impl;
 
 import eu.numberfour.n4js.n4JS.Block;
+import eu.numberfour.n4js.n4JS.FieldAccessor;
+import eu.numberfour.n4js.n4JS.FunctionDefinition;
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor;
 import eu.numberfour.n4js.n4JS.LocalArgumentsVariable;
 import eu.numberfour.n4js.n4JS.N4JSFactory;
@@ -15,6 +17,7 @@ import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.ThisArgProvider;
 import eu.numberfour.n4js.n4JS.VariableEnvironmentElement;
 
+import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.TypableElement;
 
 import eu.numberfour.n4js.utils.EcoreUtilN4;
@@ -27,6 +30,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -219,6 +223,28 @@ public abstract class FunctionOrFieldAccessorImpl extends AnnotableElementImpl i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public IdentifiableElement getDefinedFunctionOrAccessor() {
+		final FunctionOrFieldAccessor _this = this;
+		EObject _switchResult = null;
+		boolean _matched = false;
+		if (_this instanceof FunctionDefinition) {
+			_matched=true;
+			_switchResult = ((FunctionDefinition)_this).getDefinedType();
+		}
+		if (!_matched) {
+			if (_this instanceof FieldAccessor) {
+				_matched=true;
+				_switchResult = ((FieldAccessor)_this).getDefinedAccessor();
+			}
+		}
+		return ((IdentifiableElement)_switchResult);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean appliesOnlyToBlockScopedElements() {
 		return false;
 	}
@@ -347,6 +373,8 @@ public abstract class FunctionOrFieldAccessorImpl extends AnnotableElementImpl i
 				return getLocalArgumentsVariable();
 			case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC:
 				return isAsync();
+			case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR:
+				return getDefinedFunctionOrAccessor();
 			case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS:
 				return appliesOnlyToBlockScopedElements();
 		}

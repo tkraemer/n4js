@@ -6,8 +6,8 @@ export external public interface I {
 	// XPECT errors --> "Callable constructors may only be used in classes (not in interfaces)." at "()"
 	()
 	
-	// XPECT errors --> "Constructors aren't allowed in interfaces." at "constructor"
-	constructor()
+	// XPECT noerrors -->
+	@CovariantConstructor constructor()
 }
 
 
@@ -16,6 +16,7 @@ export external public class C {
 	// XPECT noerrors -->
 	()
 	
+	// XPECT noerrors -->
 	constructor()
 }
 

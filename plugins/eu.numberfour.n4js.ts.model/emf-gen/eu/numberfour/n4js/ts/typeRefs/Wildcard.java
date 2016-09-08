@@ -168,7 +168,7 @@ public interface Wildcard extends TypeArgument {
 	 * See {@link TypeRef#getTypeRefAsString()}
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%eu.numberfour.n4js.ts.types.internal.WildcardAsStringUtils%>.getTypeRefAsString(this);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%eu.numberfour.n4js.ts.types.internal.WildcardAsStringUtils%>.getTypeRefAsString_workaround(this);'"
 	 * @generated
 	 */
 	String getTypeRefAsString();

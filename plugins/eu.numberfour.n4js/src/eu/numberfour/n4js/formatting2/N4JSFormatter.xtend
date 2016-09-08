@@ -74,6 +74,7 @@ import eu.numberfour.n4js.n4JS.TaggedTemplateString
 import eu.numberfour.n4js.n4JS.TemplateLiteral
 import eu.numberfour.n4js.n4JS.TemplateSegment
 import eu.numberfour.n4js.n4JS.ThisLiteral
+import eu.numberfour.n4js.n4JS.ThrowStatement
 import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
 import eu.numberfour.n4js.n4JS.VariableBinding
@@ -115,7 +116,6 @@ import org.eclipse.xtext.xtext.generator.parser.antlr.splitting.simpleExpression
 
 import static eu.numberfour.n4js.formatting2.N4JSFormatterPreferenceKeys.*
 import static eu.numberfour.n4js.formatting2.N4JSGenericFormatter.*
-import eu.numberfour.n4js.n4JS.ThrowStatement
 
 class N4JSFormatter extends TypeExpressionsFormatter {
 	

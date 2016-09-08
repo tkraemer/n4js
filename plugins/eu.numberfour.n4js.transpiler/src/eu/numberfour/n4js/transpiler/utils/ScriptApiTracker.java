@@ -533,7 +533,7 @@ public class ScriptApiTracker {
 	 */
 	private <T extends TClassifier> void includeAdditionsSuperInterfaces2(LinkedHashSet<T> acceptor,
 			LinkedHashSet<T> exclude, T pivot, Class<T> castGuard) {
-		for (ParameterizedTypeRef superApiClassifier : pivot.getSuperClassifiers()) {
+		for (ParameterizedTypeRef superApiClassifier : pivot.getSuperClassifierRefs()) {
 			Type superApiDeclaredType = superApiClassifier.getDeclaredType();
 			if (castGuard.isAssignableFrom(superApiDeclaredType.getClass())) {
 				@SuppressWarnings("unchecked")
@@ -824,7 +824,6 @@ public class ScriptApiTracker {
 				(/) (x) --> all fine
 				(/) (m) --> need to create virtual accessor tuple with setter only
 				(/) (/) --> all fine nothing to be done.
-
 			 */
 
 			List<ProjectComparisonEntry> getSetList;

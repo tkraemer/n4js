@@ -18,6 +18,7 @@ import java.util.Spliterators;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TClassifier;
+import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.utils.RecursionGuard;
 
 /**
@@ -42,13 +43,16 @@ public class ExtendedClassesIterable implements Iterable<TClass> {
 		}
 
 		private TClass retrieveNext(TClass currentClass) {
-			ParameterizedTypeRef superType = currentClass.getSuperClassRef();
-			if (superType == null) {
+			ParameterizedTypeRef superTypeRef = currentClass.getSuperClassRef();
+			if (superTypeRef == null) {
 				return null;
 			}
-			TClass tsuper = (TClass) superType.getDeclaredType();
-			if (guard.tryNext(tsuper)) {
-				return tsuper;
+			final Type superType = superTypeRef.getDeclaredType();
+			if (superType instanceof TClass) { // if someone extends Object explicitly, we get a TObjectPrototype here!
+				final TClass superClass = (TClass) superType;
+				if (guard.tryNext(superClass)) {
+					return superClass;
+				}
 			}
 			return null;
 		}

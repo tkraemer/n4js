@@ -9,8 +9,11 @@ class A {
 	s : string;
 	n : number;
 	
-	@This(~Object with {m: number;})
+	@This(B)
 	// multiple @This XPECT errors --> "Duplicate annotation of non-repeatable type @This." at "This"
-	@This(~Object with {m: number;})
+	@This(B)
 	f() : number { return this.m + 7; }
+}
+class B extends A {
+	m : number;
 }

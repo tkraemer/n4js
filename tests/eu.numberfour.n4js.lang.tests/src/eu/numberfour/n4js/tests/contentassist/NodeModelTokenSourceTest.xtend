@@ -309,8 +309,7 @@ class NodeModelTokenSourceTest implements Procedures.Procedure1<Integer> {
 
 		Assert.assertTrue(curlies.remove(grammarAccess.unionTypeExpressionOLDAccess.rightCurlyBracketKeyword_5))
 		Assert.assertTrue(curlies.remove(grammarAccess.intersectionTypeExpressionOLDAccess.rightCurlyBracketKeyword_5))
-		Assert.assertTrue(curlies.remove(grammarAccess.constructorTypeRefAccess.rightCurlyBracketKeyword_4))
-		Assert.assertTrue(curlies.remove(grammarAccess.classifierTypeRefAccess.rightCurlyBracketKeyword_4))
+		Assert.assertTrue(curlies.remove(grammarAccess.typeTypeRefAccess.rightCurlyBracketKeyword_4))
 		
 		for (c : curlies) {
 			println(new GrammarElementTitleSwitch().showRule.showAssignments.showQualified.apply(c))

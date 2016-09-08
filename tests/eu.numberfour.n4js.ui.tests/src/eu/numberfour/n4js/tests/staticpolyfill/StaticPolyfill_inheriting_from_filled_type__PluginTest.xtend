@@ -29,11 +29,11 @@ class StaticPolyfill_inheriting_from_filled_type__PluginTest extends AbstractSta
 		val cFilling = createTestFile(src2AB, "A", specStyle_Filling);
 		addSrc2ToSources
 
+		// warning: the following list of error messages is out-dated (tested on Aug 12, 2016 on master)
 		// line 4: Couldn't resolve reference to Type 'A'.
 		// line 13: Couldn't resolve reference to IdentifiableElement 'a'.
 		// line 9: The method constructor must override or implement a method from a super class or interface.
-		// line 10: Incorrect number of arguments: expected 0, got 1.
-		assertMarkers("filling file should have X errors", cFilling, 4);
+		assertMarkers("filling file should have X errors", cFilling, 3);
 
 		val cFilled = createTestFile(srcAB, "A", specStyle_Filled);
 

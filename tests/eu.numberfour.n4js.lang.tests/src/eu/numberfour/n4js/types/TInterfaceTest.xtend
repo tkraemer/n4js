@@ -153,7 +153,7 @@ class TInterfaceTest extends AbstractContainerTypesTest<TInterface> {
 		val G = c.newRuleEnvironment
 
 		assertSame(
-			G.objectType.findOwnedMember("constructor"),
+			G.n4ObjectType.findOwnedMember("constructor"),
 			containerTypesHelper.fromContext(c).findConstructor(c));
 	}
 }

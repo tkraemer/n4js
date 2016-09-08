@@ -20,12 +20,44 @@ import java.lang.Iterable;
  * Base class for N4 specific classifiers, i.e., class, interface, or role.
  * <!-- end-model-doc -->
  *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TClassifier#isDeclaredCovariantConstructor <em>Declared Covariant Constructor</em>}</li>
+ * </ul>
  *
  * @see eu.numberfour.n4js.ts.types.TypesPackage#getTClassifier()
  * @model abstract="true"
  * @generated
  */
 public interface TClassifier extends ContainerType<TMember>, SyntaxRelatedTElement {
+	/**
+	 * Returns the value of the '<em><b>Declared Covariant Constructor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Tells if this classifier is itself annotated with <code>@CovariantConstructor</code> or if it has an owned
+	 * constructor annotated with <code>@CovariantConstructor</code>.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Declared Covariant Constructor</em>' attribute.
+	 * @see #setDeclaredCovariantConstructor(boolean)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTClassifier_DeclaredCovariantConstructor()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isDeclaredCovariantConstructor();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TClassifier#isDeclaredCovariantConstructor <em>Declared Covariant Constructor</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Declared Covariant Constructor</em>' attribute.
+	 * @see #isDeclaredCovariantConstructor()
+	 * @generated
+	 */
+	void setDeclaredCovariantConstructor(boolean value);
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -40,13 +72,26 @@ public interface TClassifier extends ContainerType<TMember>, SyntaxRelatedTEleme
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
-	 * Convenience method, returns all super classes and implemented or extended interfaces
+	 * Convenience method, returns all super classes and implemented or extended interfaces as classifiers.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" dataType="eu.numberfour.n4js.ts.types.IterableOfTClassifier" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%java.util.List%><<%eu.numberfour.n4js.ts.types.TClassifier%>> result = <%org.eclipse.xtext.xbase.lib.CollectionLiterals%>.<<%eu.numberfour.n4js.ts.types.TClassifier%>>newArrayList();\nfinal <%java.lang.Object%> _superClassifierRefs = this.getSuperClassifierRefs();\nfor (final <%java.lang.Object%> superClassifierRef : ((<%java.lang.Iterable%><?>) _superClassifierRefs))\n{\n\tif ((superClassifierRef != null))\n\t{\n\t\tfinal <%eu.numberfour.n4js.ts.types.Type%> declType = ((<%eu.numberfour.n4js.ts.typeRefs.TypeRef%>) superClassifierRef).getDeclaredType();\n\t\tif ((declType instanceof <%eu.numberfour.n4js.ts.types.TClassifier%>))\n\t\t{\n\t\t\tresult.add(((<%eu.numberfour.n4js.ts.types.TClassifier%>)declType));\n\t\t}\n\t}\n}\nreturn result;'"
+	 * @generated
+	 */
+	Iterable<? extends TClassifier> getSuperClassifiers();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * *
+	 * Convenience method, returns all super classes and implemented or extended interfaces as type references.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" dataType="eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefIterable" unique="false"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%org.eclipse.xtext.xbase.lib.CollectionLiterals%>.<<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>>emptyList();'"
 	 * @generated
 	 */
-	Iterable<ParameterizedTypeRef> getSuperClassifiers();
+	Iterable<ParameterizedTypeRef> getSuperClassifierRefs();
 
 	/**
 	 * <!-- begin-user-doc -->

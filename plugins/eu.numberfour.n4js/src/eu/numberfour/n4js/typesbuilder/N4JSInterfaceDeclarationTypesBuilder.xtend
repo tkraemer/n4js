@@ -46,6 +46,7 @@ package class N4JSInterfaceDeclarationTypesBuilder {
 			})
 
 		interfaceType.setProvidedByRuntime(n4Interface, preLinkingPhase)
+		interfaceType.declaredCovariantConstructor = n4Interface.isDeclaredCovariantConstructor;
 		interfaceType.addTypeParameters(n4Interface, preLinkingPhase)
 		interfaceType.addExtendedInterfaces(n4Interface, preLinkingPhase)
 

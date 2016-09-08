@@ -93,7 +93,7 @@ public interface TInterface extends TN4Classifier {
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return this.getSuperInterfaceRefs();'"
 	 * @generated
 	 */
-	Iterable<ParameterizedTypeRef> getSuperClassifiers();
+	Iterable<ParameterizedTypeRef> getSuperClassifierRefs();
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -97,8 +97,16 @@ class TypeSystemHelper_SimplifyUnionTypesTest extends AbstractTypeSystemHelperTe
 			"union{type{A},type{D}}"
 		);
 		assertSimplify(
+			"union{constructor{? extends A},constructor{? extends D}}", // must not be simplified to "type{A}" (note: D is not a subtype of A)
+			"union{constructor{? extends A},constructor{? extends D}}"
+		);
+		assertSimplify(
 			"union{Array<type{A}>,Array<type{D}>}", // must not be simplified to "Array<type{A}>"
 			"union{Array<type{A}>,Array<type{D}>}"
+		);
+		assertSimplify(
+			"union{Array<constructor{? extends A}>,Array<constructor{? extends D}>}", // must not be simplified to "Array<type{A}>"
+			"union{Array<constructor{? extends A}>,Array<constructor{? extends D}>}"
 		);
 		// this was already working correctly before the bug fix:
 		assertSimplify(

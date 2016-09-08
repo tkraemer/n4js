@@ -22,9 +22,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Pair;
 
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression;
@@ -32,6 +30,7 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.Wildcard;
 import eu.numberfour.n4js.ts.types.ContainerType;
@@ -349,8 +348,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 			return reduceComposedTypeRef(left, (ComposedTypeRef) right, variance);
 		}
 
-		if (left instanceof ClassifierTypeRef && right instanceof ClassifierTypeRef) {
-			return reduceClassifierTypeRef((ClassifierTypeRef) left, (ClassifierTypeRef) right, variance);
+		if (left instanceof TypeTypeRef && right instanceof TypeTypeRef) {
+			return reduceTypeTypeRef((TypeTypeRef) left, (TypeTypeRef) right, variance);
 		} else if (left instanceof FunctionTypeExprOrRef && right instanceof FunctionTypeExprOrRef) {
 			return reduceFunctionTypeExprOrRef((FunctionTypeExprOrRef) left, (FunctionTypeExprOrRef) right, variance);
 		} else if (left instanceof ParameterizedTypeRef && right instanceof ParameterizedTypeRef) {
@@ -458,14 +457,14 @@ import it.xsemantics.runtime.RuleEnvironment;
 		throw new IllegalStateException("unreachable"); // actually unreachable, each case above returns or throws
 	}
 
-	private boolean reduceClassifierTypeRef(ClassifierTypeRef left, ClassifierTypeRef right, Variance variance) {
+	private boolean reduceTypeTypeRef(TypeTypeRef left, TypeTypeRef right, Variance variance) {
 		final TypeArgument leftStatic = TypeUtils.copy(left.getTypeArg());
 		final TypeArgument rightStatic = TypeUtils.copy(right.getTypeArg());
-		if (!(left instanceof ConstructorTypeRef) && !(right instanceof ConstructorTypeRef)) {
-			// both sides are plain ClassifierTypeRefs
+		if (!left.isConstructorRef() && !right.isConstructorRef()) {
+			// both sides are plain TypeTypeRefs
 			return reduce(leftStatic, rightStatic, variance);
 		} else {
-			// at least one side is ConstructorTypeRef
+			// at least one side is constructor{...}
 			return reduce(leftStatic, rightStatic, INV); // TODO this is wrong
 			// instead:
 			// ⟨ constructor{D} <: constructor{C} ⟩ implies ⟨ D <: C ⟩ (as above) and ⟨ D#constructor <: C#constructor ⟩

@@ -16,6 +16,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.AccessibleTypeElement;
 import eu.numberfour.n4js.ts.types.ArrayLike;
+import eu.numberfour.n4js.ts.types.ContainerType;
 import eu.numberfour.n4js.ts.types.DeclaredTypeWithAccessModifier;
 import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.ts.types.TMember;
@@ -546,6 +547,12 @@ public class TObjectPrototypeImpl extends TClassifierImpl implements TObjectProt
 				case TypesPackage.TYPE___IS_PROVIDED_BY_RUNTIME: return TypesPackage.TOBJECT_PROTOTYPE___IS_PROVIDED_BY_RUNTIME;
 				case TypesPackage.TYPE___IS_FINAL: return TypesPackage.TOBJECT_PROTOTYPE___IS_FINAL;
 				case TypesPackage.TYPE___GET_TYPE_ACCESS_MODIFIER: return TypesPackage.TOBJECT_PROTOTYPE___GET_TYPE_ACCESS_MODIFIER;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		if (baseClass == ContainerType.class) {
+			switch (baseOperationID) {
+				case TypesPackage.CONTAINER_TYPE___GET_OWNED_CTOR: return TypesPackage.TOBJECT_PROTOTYPE___GET_OWNED_CTOR;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}

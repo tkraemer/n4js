@@ -7,6 +7,8 @@
  */
 package eu.numberfour.n4js.ts.types.impl;
 
+import com.google.common.collect.Iterables;
+
 import eu.numberfour.n4js.ts.types.ContainerType;
 import eu.numberfour.n4js.ts.types.NameAndAccess;
 import eu.numberfour.n4js.ts.types.TMember;
@@ -17,6 +19,8 @@ import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.ts.types.internal.MemberByNameAndAccessMap;
 
 import eu.numberfour.n4js.utils.EcoreUtilN4;
+
+import java.lang.Iterable;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -37,6 +41,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure0;
 
@@ -202,6 +210,22 @@ public abstract class ContainerTypeImpl<MT extends TMember> extends TypeImpl imp
 			typeVars = new EObjectContainmentEList<TypeVariable>(TypeVariable.class, this, TypesPackage.CONTAINER_TYPE__TYPE_VARS);
 		}
 		return typeVars;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TMethod getOwnedCtor() {
+		EList<MT> _ownedMembers = this.getOwnedMembers();
+		Iterable<TMethod> _filter = Iterables.<TMethod>filter(_ownedMembers, TMethod.class);
+		final Function1<TMethod, Boolean> _function = new Function1<TMethod, Boolean>() {
+			public Boolean apply(final TMethod it) {
+				return Boolean.valueOf(it.isConstructor());
+			}
+		};
+		return IterableExtensions.<TMethod>findFirst(_filter, _function);
 	}
 
 	/**
@@ -403,6 +427,8 @@ public abstract class ContainerTypeImpl<MT extends TMember> extends TypeImpl imp
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
+			case TypesPackage.CONTAINER_TYPE___GET_OWNED_CTOR:
+				return getOwnedCtor();
 			case TypesPackage.CONTAINER_TYPE___FIND_OWNED_MEMBER__STRING:
 				return findOwnedMember((String)arguments.get(0));
 			case TypesPackage.CONTAINER_TYPE___FIND_OWNED_MEMBER__STRING_BOOLEAN_BOOLEAN:

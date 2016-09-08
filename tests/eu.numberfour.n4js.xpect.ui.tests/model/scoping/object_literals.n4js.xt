@@ -31,14 +31,14 @@ any, boolean, console, i18nKey, number, int, pathSelector, string, symbol, typeN
 	any name: "o",
 	complex: function() {
 /* XPECT scope at 'this.|name' ---
-complex, constructor, hasOwnProperty, isPrototypeOf, name,
+complex, __proto__, constructor, hasOwnProperty, isPrototypeOf, name,
 propertyIsEnumerable, toLocaleString, toString, valueOf
 --- */
 		var name = "complex" + this.name;
 	}
 }
 /* XPECT scope at 'myObjectLiteral.|name' ---
-complex, constructor, hasOwnProperty, isPrototypeOf, name,
+complex, __proto__, constructor, hasOwnProperty, isPrototypeOf, name,
 propertyIsEnumerable, toLocaleString, toString, valueOf
 --- */
 myObjectLiteral.name

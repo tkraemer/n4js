@@ -143,7 +143,7 @@ public class TInterfaceImpl extends TN4ClassifierImpl implements TInterface {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Iterable<ParameterizedTypeRef> getSuperClassifiers() {
+	public Iterable<ParameterizedTypeRef> getSuperClassifierRefs() {
 		return this.getSuperInterfaceRefs();
 	}
 
@@ -250,7 +250,7 @@ public class TInterfaceImpl extends TN4ClassifierImpl implements TInterface {
 		if (baseClass == TClassifier.class) {
 			switch (baseOperationID) {
 				case TypesPackage.TCLASSIFIER___IS_ABSTRACT: return TypesPackage.TINTERFACE___IS_ABSTRACT;
-				case TypesPackage.TCLASSIFIER___GET_SUPER_CLASSIFIERS: return TypesPackage.TINTERFACE___GET_SUPER_CLASSIFIERS;
+				case TypesPackage.TCLASSIFIER___GET_SUPER_CLASSIFIER_REFS: return TypesPackage.TINTERFACE___GET_SUPER_CLASSIFIER_REFS;
 				case TypesPackage.TCLASSIFIER___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS: return TypesPackage.TINTERFACE___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
@@ -268,8 +268,8 @@ public class TInterfaceImpl extends TN4ClassifierImpl implements TInterface {
 		switch (operationID) {
 			case TypesPackage.TINTERFACE___IS_ABSTRACT:
 				return isAbstract();
-			case TypesPackage.TINTERFACE___GET_SUPER_CLASSIFIERS:
-				return getSuperClassifiers();
+			case TypesPackage.TINTERFACE___GET_SUPER_CLASSIFIER_REFS:
+				return getSuperClassifierRefs();
 			case TypesPackage.TINTERFACE___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS:
 				return getImplementedOrExtendedInterfaceRefs();
 		}
