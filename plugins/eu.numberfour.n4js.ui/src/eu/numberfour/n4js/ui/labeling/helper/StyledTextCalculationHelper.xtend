@@ -16,13 +16,13 @@ import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4GetterDeclaration
 import eu.numberfour.n4js.n4JS.N4SetterDeclaration
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
+import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TypeVariable
@@ -30,7 +30,6 @@ import eu.numberfour.n4js.ui.labeling.N4JSLabelProvider
 import java.util.List
 import org.eclipse.jface.viewers.StyledString
 import org.eclipse.xtext.ui.label.AbstractLabelProvider
-import eu.numberfour.n4js.ts.typeRefs.Wildcard
 
 /**
  * This helper class serves as replacement for the polymorphic dispatch done
@@ -237,19 +236,19 @@ class StyledTextCalculationHelper {
 		styledString.append(returnTypeString);
 	}
 	
-	// produces type{typeName}
-	def dispatch private void dispatchGetTypeRefDescription(ClassifierTypeRef ref, StyledString styledString) {
+	// produces type{typeName} or constructor{typeName}
+	def dispatch private void dispatchGetTypeRefDescription(TypeTypeRef ref, StyledString styledString) {
 		val typeName = switch ref.typeArg {
 			ThisTypeRef:
 				"this"
 			default:
 				ref.nominalTypeNameOrWildCard
 		}
-		styledString.append('''type{«typeName»}''');
-	}
-	// produces constructor{typeName} 
-	def dispatch private void dispatchGetTypeRefDescription(ConstructorTypeRef ref, StyledString styledString) {
-		styledString.append('''constructor{«ref.nominalTypeNameOrWildCard»}''');
+		if(ref.isConstructorRef) {
+			styledString.append('''constructor{«typeName»}''')
+		} else {
+			styledString.append('''type{«typeName»}''')
+		}
 	}
 	
 	// produces union{type1, type2, ...} or intersection{type1, type2, ...} 
@@ -295,7 +294,7 @@ class StyledTextCalculationHelper {
 		return string.string;
 	}
 	
-	def private String nominalTypeNameOrWildCard(ClassifierTypeRef ref) {
+	def private String nominalTypeNameOrWildCard(TypeTypeRef ref) {
 		switch (ref.typeArg) {
 			TypeRef: (ref.typeArg as TypeRef).declaredType?.name
 			Wildcard: getWildcardDescription(ref.typeArg as Wildcard)

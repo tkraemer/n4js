@@ -119,6 +119,9 @@ public abstract class N4JSLanguageConstants {
 	/** Name of built-in function 'eval'. */
 	public static final String EVAL_NAME = "eval";
 
+	/** Name of the built-in ES2015 property '__proto__'. */
+	public static final String PROPERTY__PROTO__NAME = "__proto__";
+
 	/**
 	 * Suffix used in method compilation for the local function name as reported in error stack traces. Value:
 	 * {@code "___n4"}

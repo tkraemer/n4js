@@ -29,7 +29,7 @@
 		}
 		VarDef "objectMembers" {
 			StringList { 
-				s="constructor" s="hasOwnProperty" s="isPrototypeOf" s="propertyIsEnumerable" s="toLocaleString" s="toString" s="valueOf" 
+				s="__proto__" s="constructor" s="hasOwnProperty" s="isPrototypeOf" s="propertyIsEnumerable" s="toLocaleString" s="toString" s="valueOf" 
 			}
 		}
 	}

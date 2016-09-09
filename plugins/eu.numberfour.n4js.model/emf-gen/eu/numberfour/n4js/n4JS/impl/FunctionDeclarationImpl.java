@@ -10,6 +10,7 @@ package eu.numberfour.n4js.n4JS.impl;
 import eu.numberfour.n4js.n4JS.Block;
 import eu.numberfour.n4js.n4JS.ExportDeclaration;
 import eu.numberfour.n4js.n4JS.ExportableElement;
+import eu.numberfour.n4js.n4JS.FieldAccessor;
 import eu.numberfour.n4js.n4JS.FormalParameter;
 import eu.numberfour.n4js.n4JS.FunctionDeclaration;
 import eu.numberfour.n4js.n4JS.FunctionDefinition;
@@ -607,6 +608,28 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public IdentifiableElement getDefinedFunctionOrAccessor() {
+		final FunctionOrFieldAccessor _this = this;
+		EObject _switchResult = null;
+		boolean _matched = false;
+		if (_this instanceof FunctionDefinition) {
+			_matched=true;
+			_switchResult = ((FunctionDefinition)_this).getDefinedType();
+		}
+		if (!_matched) {
+			if (_this instanceof FieldAccessor) {
+				_matched=true;
+				_switchResult = ((FieldAccessor)_this).getDefinedAccessor();
+			}
+		}
+		return ((IdentifiableElement)_switchResult);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean appliesOnlyToBlockScopedElements() {
 		return false;
 	}
@@ -972,6 +995,7 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_NAME: return N4JSPackage.FUNCTION_DECLARATION___GET_NAME;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE: return N4JSPackage.FUNCTION_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC: return N4JSPackage.FUNCTION_DECLARATION___IS_ASYNC;
+				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR: return N4JSPackage.FUNCTION_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 				default: return -1;
 			}
 		}
@@ -1031,6 +1055,8 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 				return isAsync();
 			case N4JSPackage.FUNCTION_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE:
 				return getLocalArgumentsVariable();
+			case N4JSPackage.FUNCTION_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR:
+				return getDefinedFunctionOrAccessor();
 			case N4JSPackage.FUNCTION_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS:
 				return appliesOnlyToBlockScopedElements();
 		}

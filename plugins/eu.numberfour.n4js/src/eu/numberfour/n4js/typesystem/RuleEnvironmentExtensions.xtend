@@ -20,7 +20,6 @@ import eu.numberfour.n4js.scoping.builtin.GlobalObjectScope
 import eu.numberfour.n4js.scoping.builtin.VirtualBaseTypeScope
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
 import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
@@ -31,6 +30,7 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.AnyType
 import eu.numberfour.n4js.ts.types.IdentifiableElement
@@ -47,7 +47,6 @@ import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.types.UndefinedType
 import eu.numberfour.n4js.ts.types.VoidType
-import eu.numberfour.n4js.ts.utils.TypeExtensions
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.utils.RecursionGuard
 import it.xsemantics.runtime.RuleEnvironment
@@ -198,10 +197,10 @@ class RuleEnvironmentExtensions {
 	 */
 	def static void addThisType(RuleEnvironment G, TypeRef actualThisTypeRef) {
 		switch (actualThisTypeRef) {
-			ClassifierTypeRef: // IDE-785 decompose
-			  if (actualThisTypeRef.getTypeArg instanceof TypeRef) {
-			  	addThisType(G,actualThisTypeRef.getTypeArg as TypeRef)
-			  } 
+			TypeTypeRef: // IDE-785 decompose
+				if (actualThisTypeRef.getTypeArg instanceof TypeRef) {
+					addThisType(G,actualThisTypeRef.getTypeArg as TypeRef)
+				}
 			ParameterizedTypeRef:
 				G.add(KEY__THIS_BINDING, TypeUtils.createBoundThisTypeRef(actualThisTypeRef))
 			BoundThisTypeRef:
@@ -542,6 +541,11 @@ class RuleEnvironmentExtensions {
 	/* Returns built-in type {@code N4Enum} */
 	public def static n4EnumType(RuleEnvironment G) {
 		G.getPredefinedTypes().builtInTypeScope.n4EnumType
+	}
+
+	/* 	Returns newly created reference to built-in type {@code N4Enum} */
+	public def static n4EnumTypeRef(RuleEnvironment G) {
+		G.n4EnumType.createTypeRef
 	}
 
 	/* Returns built-in type {@code N4StringBasedEnum} */
@@ -975,18 +979,5 @@ class RuleEnvironmentExtensions {
 		if( ! container.isStatic ) return false;
 		val isInBody = EcoreUtil2.isAncestor(container.body,locationToCheck)
 		return isInBody;
-	}
-
-	/**
-	 * Creates a parameterized type ref to the wrapped static type of a ClassifierTyperRef, configured with the given TypeArguments.
-	 * Returns UnknownTypeRef if the static type could not be retrieved (e.g. unbound This-Type)
-	 */
-	public static def TypeRef createTypeRefFromStaticType(ClassifierTypeRef ctr, TypeArgument ... typeArgs) {
-		 val type = ctr.staticType()
-		 if( type !== null ) {
-		 	 TypeExtensions.ref(type,typeArgs)
-		 } else {
-		 	 TypeRefsFactory.eINSTANCE.createUnknownTypeRef
-		 }
 	}
 }

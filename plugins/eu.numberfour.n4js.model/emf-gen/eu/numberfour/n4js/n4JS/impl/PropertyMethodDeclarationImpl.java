@@ -12,6 +12,7 @@ import com.google.common.collect.Iterators;
 import eu.numberfour.n4js.n4JS.Block;
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.ExpressionStatement;
+import eu.numberfour.n4js.n4JS.FieldAccessor;
 import eu.numberfour.n4js.n4JS.FormalParameter;
 import eu.numberfour.n4js.n4JS.FunctionDefinition;
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor;
@@ -32,6 +33,7 @@ import eu.numberfour.n4js.n4JS.TypedElement;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
+import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TStructMethod;
 import eu.numberfour.n4js.ts.types.Type;
@@ -51,6 +53,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -701,6 +704,28 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public IdentifiableElement getDefinedFunctionOrAccessor() {
+		final FunctionOrFieldAccessor _this = this;
+		EObject _switchResult = null;
+		boolean _matched = false;
+		if (_this instanceof FunctionDefinition) {
+			_matched=true;
+			_switchResult = ((FunctionDefinition)_this).getDefinedType();
+		}
+		if (!_matched) {
+			if (_this instanceof FieldAccessor) {
+				_matched=true;
+				_switchResult = ((FieldAccessor)_this).getDefinedAccessor();
+			}
+		}
+		return ((IdentifiableElement)_switchResult);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -1028,6 +1053,7 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_NAME: return N4JSPackage.PROPERTY_METHOD_DECLARATION___GET_NAME;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE: return N4JSPackage.PROPERTY_METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC: return N4JSPackage.PROPERTY_METHOD_DECLARATION___IS_ASYNC;
+				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR: return N4JSPackage.PROPERTY_METHOD_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 				default: return -1;
 			}
 		}
@@ -1089,6 +1115,8 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 				return isAsync();
 			case N4JSPackage.PROPERTY_METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE:
 				return getLocalArgumentsVariable();
+			case N4JSPackage.PROPERTY_METHOD_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR:
+				return getDefinedFunctionOrAccessor();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

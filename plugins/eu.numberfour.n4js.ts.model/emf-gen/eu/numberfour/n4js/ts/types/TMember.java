@@ -218,6 +218,15 @@ public interface TMember extends IdentifiableElement, TAnnotableElement, SyntaxR
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return false;'"
 	 * @generated
 	 */
+	boolean isConstructor();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return false;'"
+	 * @generated
+	 */
 	boolean isOptional();
 
 	/**

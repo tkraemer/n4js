@@ -28,7 +28,7 @@ function getWasted(beverageClass : constructor{AbstractSoda}) {
 // XPECT errors --> "constructor{Champagne} is not a subtype of constructor{AbstractSoda}." at "Champagne"
 getWasted(Champagne);
 
-// XPECT type of 'abstractSoda'--> type{AbstractSod a}
+// XPECT type of 'abstractSoda'--> type{AbstractSoda}
 var abstractSoda = AbstractSoda;
 // XPECT type of 'beer' --> constructor{Beer}
 var beer = Beer;

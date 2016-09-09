@@ -1,0 +1,38 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+abstract class A {
+
+	static m() {
+		// XPECT type of 'typeThis' --> type{this[A]}
+		let typeThis = this;
+
+		let typeA: type{A};
+		let typeExtA: type{? extends A};
+
+		// XPECT noerrors -->
+		typeA = typeThis;
+		// XPECT noerrors -->
+		typeExtA = typeThis;
+
+		// XPECT errors --> "Cannot instantiate abstract class A." at "typeThis"
+		new typeThis();
+	}
+}
+
+
+
+class B {
+
+	// note below: 'this' in a static method of a class B must be inferred to type{this[B]} (instead of
+	// constructor{this[B]}) even if B isn't abstract, because there might always be abstract subclasses!
+
+	static m() {
+		// XPECT type of 'typeThis' --> type{this[B]}
+		let typeThis = this;
+
+		// XPECT errors --> "Cannot instantiate this[B]." at "typeThis"
+		new typeThis();
+	}
+}
+

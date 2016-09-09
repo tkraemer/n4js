@@ -43,6 +43,7 @@ package class N4JSSetterTypesBuilder {
 
 		setterType.setMemberAccessModifier(n4Setter)
 		setterType.addFormalParameters(n4Setter, builtInTypeScope, preLinkingPhase)
+		setterType.setDeclaredThisTypeFromAnnotation(n4Setter, preLinkingPhase)
 
 		setterType.copyAnnotations(n4Setter, preLinkingPhase)
 

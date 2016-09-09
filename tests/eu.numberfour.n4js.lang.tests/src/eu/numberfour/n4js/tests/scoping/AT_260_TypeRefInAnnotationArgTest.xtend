@@ -93,7 +93,7 @@ class AT_260_TypeRefInAnnotationArgTest {
 	@Test
 	def void test_04() {
 		val script = '''
-			class Y { y: Y; }
+			class Y extends X { y: Y; }
 			class X {
 				@This(Y)
 				m(): any {

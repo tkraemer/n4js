@@ -113,6 +113,15 @@ public interface TMethod extends TFunction, TMemberWithAccessModifier {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (<%com.google.common.base.Objects%>.equal(this.getName(), \"constructor\") && (!this.isStatic()));'"
+	 * @generated
+	 */
+	boolean isConstructor();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
 	 * Returns string representation of this function similar according to the N4JS syntax.

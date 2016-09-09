@@ -11,6 +11,7 @@ import com.google.common.base.Objects;
 
 import eu.numberfour.n4js.n4JS.Annotation;
 import eu.numberfour.n4js.n4JS.Block;
+import eu.numberfour.n4js.n4JS.FunctionDefinition;
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor;
 import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.LocalArgumentsVariable;
@@ -30,6 +31,7 @@ import eu.numberfour.n4js.n4JS.VariableEnvironmentElement;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.FieldAccessor;
+import eu.numberfour.n4js.ts.types.IdentifiableElement;
 
 import eu.numberfour.n4js.utils.EcoreUtilN4;
 
@@ -41,6 +43,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -361,6 +364,28 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public IdentifiableElement getDefinedFunctionOrAccessor() {
+		final FunctionOrFieldAccessor _this = this;
+		EObject _switchResult = null;
+		boolean _matched = false;
+		if (_this instanceof FunctionDefinition) {
+			_matched=true;
+			_switchResult = ((FunctionDefinition)_this).getDefinedType();
+		}
+		if (!_matched) {
+			if (_this instanceof eu.numberfour.n4js.n4JS.FieldAccessor) {
+				_matched=true;
+				_switchResult = ((eu.numberfour.n4js.n4JS.FieldAccessor)_this).getDefinedAccessor();
+			}
+		}
+		return ((IdentifiableElement)_switchResult);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean appliesOnlyToBlockScopedElements() {
 		return false;
 	}
@@ -579,6 +604,7 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_NAME: return N4JSPackage.N4_FIELD_ACCESSOR___GET_NAME;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE: return N4JSPackage.N4_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC: return N4JSPackage.N4_FIELD_ACCESSOR___IS_ASYNC;
+				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR: return N4JSPackage.N4_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 				default: return -1;
 			}
 		}
@@ -621,6 +647,8 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 				return getLocalArgumentsVariable();
 			case N4JSPackage.N4_FIELD_ACCESSOR___IS_ASYNC:
 				return isAsync();
+			case N4JSPackage.N4_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR:
+				return getDefinedFunctionOrAccessor();
 			case N4JSPackage.N4_FIELD_ACCESSOR___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS:
 				return appliesOnlyToBlockScopedElements();
 		}

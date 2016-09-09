@@ -21,7 +21,7 @@ class A {
 			let bigNumber = 10;
 			return new String(bigNumber);
 		} catch(exc) { // Catch any internal xx.js errors!
-			throw new Error("Big Error: " + (exc as Error).message, exc as Error);
+			throw new Error("Big Error: " + (exc as Error).message);
 		}
 	}
 }
@@ -35,7 +35,7 @@ class A {
             return new String(bigNumber);
         } 
         catch(exc) {//Catch any internal xx.js errors!
-            throw new Error("Big Error: " + (exc as Error).message, exc as Error);
+            throw new Error("Big Error: " + (exc as Error).message);
         }
     }
 }
@@ -47,7 +47,7 @@ try {
 	let bigNumber = 10;
 	new String(bigNumber);
 } catch(exc) { // Catch any internal xx.js errors!
-	throw new Error("Big Error: " + (exc as Error).message, exc as Error);
+	throw new Error("Big Error: " + (exc as Error).message);
 } finally {
 	console.log("abc");
 }
@@ -59,7 +59,7 @@ try {
 } 
 catch(exc) 
 {//Catch any internal xx.js errors!
-    throw new Error("Big Error: " + (exc as Error).message, exc as Error);
+    throw new Error("Big Error: " + (exc as Error).message);
 }
 finally
 {

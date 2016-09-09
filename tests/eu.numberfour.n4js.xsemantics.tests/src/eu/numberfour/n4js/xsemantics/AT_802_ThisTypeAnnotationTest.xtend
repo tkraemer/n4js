@@ -170,7 +170,7 @@ class AT_802_ThisTypeAnnotationTest extends AbstractTypesystemTest {
 	@Test
 	def void test_04() {
 		val script = createScript(JavaScriptVariant.n4js,'''
-			class Y { y: Y; }
+			class Y extends X { y: Y; }
 			class X {
 				@This(Y)
 				m(): any {

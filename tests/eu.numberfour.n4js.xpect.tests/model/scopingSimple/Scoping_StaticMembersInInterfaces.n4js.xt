@@ -29,25 +29,30 @@ class C implements I {
 
 // XPECT scope at 'I.|propI' ---
 // f, g, s, m, propI,
-// create, defineProperties, defineProperty, freeze, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf,
-// is, isExtensible, isFrozen, isSealed, keys, n4type, preventExtensions, prototype, seal
+// __proto__, constructor, create, defineProperties,
+// defineProperty, freeze, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf,
+// hasOwnProperty, is, isExtensible, isFrozen, isPrototypeOf, isSealed, keys, n4type,
+// preventExtensions, propertyIsEnumerable, prototype, seal, toLocaleString, toString, valueOf
 // ---
 I.propI;
 
 
 // XPECT scope at 'I2.|propI2' ---
 // propI2,
-// create, defineProperties, defineProperty, freeze, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf,
-// is, isExtensible, isFrozen, isSealed, keys, n4type, preventExtensions, prototype, seal
+// __proto__, constructor, create, defineProperties,
+// defineProperty, freeze, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf,
+// hasOwnProperty, is, isExtensible, isFrozen, isPrototypeOf, isSealed, keys, n4type,
+// preventExtensions, propertyIsEnumerable, prototype, seal, toLocaleString, toString, valueOf
 // ---
 I2.propI2;
 
 
 // XPECT scope at 'C.|propC' ---
-// apply, arguments, bind, call, constructor, create, defineProperties,
+// propC,
+// __proto__, apply, arguments, bind, call, constructor, create, defineProperties,
 // defineProperty, freeze, getOwnPropertyDescriptor, getOwnPropertyNames, getPrototypeOf,
 // hasOwnProperty, is, isExtensible, isFrozen, isPrototypeOf, isSealed, keys, length, n4type,
-// preventExtensions, propC, propertyIsEnumerable, prototype, prototype, seal, toLocaleString,
+// preventExtensions, propertyIsEnumerable, prototype, prototype, seal, toLocaleString,
 // toString, valueOf
 // ---
 C.propC;

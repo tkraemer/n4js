@@ -74,7 +74,7 @@ class TypeAssistant extends TransformationAssistant {
 				return superClassSTE;
 			}
 		}
-		return getSymbolTableEntryOriginal(state.G.objectType, true) // note: don't use N4Object here!
+		return getSymbolTableEntryOriginal(state.G.n4ObjectType, true);
 	}
 
 	/**

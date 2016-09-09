@@ -137,6 +137,8 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 				return createMemberTypeFromString(eDataType, initialValue);
 			case TypesPackage.COLLECTION_OF_TYPE_REF:
 				return createCollectionOfTypeRefFromString(eDataType, initialValue);
+			case TypesPackage.ITERABLE_OF_TCLASSIFIER:
+				return createIterableOfTClassifierFromString(eDataType, initialValue);
 			case TypesPackage.VARIANCE:
 				return createVarianceFromString(eDataType, initialValue);
 			case TypesPackage.NAME_AND_ACCESS:
@@ -172,6 +174,8 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 				return convertMemberTypeToString(eDataType, instanceValue);
 			case TypesPackage.COLLECTION_OF_TYPE_REF:
 				return convertCollectionOfTypeRefToString(eDataType, instanceValue);
+			case TypesPackage.ITERABLE_OF_TCLASSIFIER:
+				return convertIterableOfTClassifierToString(eDataType, instanceValue);
 			case TypesPackage.VARIANCE:
 				return convertVarianceToString(eDataType, instanceValue);
 			case TypesPackage.NAME_AND_ACCESS:
@@ -711,6 +715,25 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 	 * @generated
 	 */
 	public String convertCollectionOfTypeRefToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	public Iterable<? extends TClassifier> createIterableOfTClassifierFromString(EDataType eDataType, String initialValue) {
+		return (Iterable<? extends TClassifier>)super.createFromString(initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertIterableOfTClassifierToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(instanceValue);
 	}
 

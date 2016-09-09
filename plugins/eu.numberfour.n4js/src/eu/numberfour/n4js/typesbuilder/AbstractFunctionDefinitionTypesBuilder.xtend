@@ -15,13 +15,12 @@ import eu.numberfour.n4js.n4JS.ArrowFunction
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.GenericDeclaration
 import eu.numberfour.n4js.n4JS.N4GetterDeclaration
-import eu.numberfour.n4js.n4JS.TypeRefAnnotationArgument
-import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TGetter
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 
 /**
  * Base class for functions and methods
@@ -121,14 +120,4 @@ package class AbstractFunctionDefinitionTypesBuilder {
 			builtInTypeScope.voidTypeRef
 		}
 	}
-
-	/** Handle optional "@This" annotation and link it to TypeElement. */
-	def linkThisTypeAnnotation( TFunction functionType, FunctionDefinition functionDef, boolean preLinkingPhase) {
-				// optional this-type annotation
-		if( functionDef.annotations.exists[name=="This"] ) {
-			val declaredThisType = functionDef.annotations.findFirst[name=="This"]?.args?.filter(TypeRefAnnotationArgument)?.head?.typeRef
-			setCopyOfReference( [TypeRef typeRef | functionType.declaredThisType = typeRef], declaredThisType, preLinkingPhase )
-		}
-	}
-
 }

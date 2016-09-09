@@ -45,6 +45,7 @@ package class N4JSGetterTypesBuilder extends AbstractFunctionDefinitionTypesBuil
 
 		getterType.setMemberAccessModifier(n4Getter)
 		getterType.setReturnTypeConsideringThis(n4Getter, builtInTypeScope, preLinkingPhase)
+		getterType.setDeclaredThisTypeFromAnnotation(n4Getter, preLinkingPhase)
 
 		getterType.copyAnnotations(n4Getter, preLinkingPhase)
 

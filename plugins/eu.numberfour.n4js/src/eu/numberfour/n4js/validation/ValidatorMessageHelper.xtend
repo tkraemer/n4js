@@ -18,6 +18,7 @@ import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TClassifier
+import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
@@ -29,7 +30,6 @@ import it.xsemantics.runtime.Result
 import javax.inject.Singleton
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
-import eu.numberfour.n4js.ts.types.TField
 
 /**
  */
@@ -56,11 +56,11 @@ class ValidatorMessageHelper {
 				val node = NodeModelUtils::getNode(ast);
 				if (node !== null) {
 					val memberLine = node.startLine
-					return '''«member.prefixedKeyword» «member.shortQualifiedName» (line «memberLine»)'''
+					return '''«member.description» (line «memberLine»)'''
 				}
 			}
 		}
-		return '''«member.prefixedKeyword» «member.shortQualifiedName»''';
+		return member.description;
 	}
 
 	/**
@@ -114,7 +114,12 @@ class ValidatorMessageHelper {
 	 * Returns type of member and short qualified name.
 	 */
 	public def String description(TMember member) {
-		'''«member.prefixedKeyword» «member.shortQualifiedName»'''
+		if(member.isConstructor) {
+			val container = member.containingType;
+			val preposition = if(container instanceof TInterface) "in" else "of";
+			return '''«member.keyword» «preposition» «container?.description»''';
+		}
+		return '''«member.prefixedKeyword» «member.shortQualifiedName»''';
 	}
 
 	/**

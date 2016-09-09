@@ -361,7 +361,7 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 			}
 			else {
 				// general case:
-				it.superClassifiers.map[declaredType].filter(TClassifier)
+				it.superClassifierRefs.map[declaredType].filter(TClassifier)
 			}
 		]);
 	}

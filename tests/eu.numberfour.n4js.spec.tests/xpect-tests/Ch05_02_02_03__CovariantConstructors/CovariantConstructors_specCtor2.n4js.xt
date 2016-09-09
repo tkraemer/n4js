@@ -1,0 +1,44 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+// class annotated with @CovariantConstructor != container of @Spec constructor
+
+
+class C1 {
+	public field1;
+}
+
+class C2 extends C1 {
+	public field2;
+	constructor(@Spec spec: ~i~this) {}
+}
+
+class C3 extends C2 {
+	public field3;
+}
+
+@CovariantConstructor
+class C4 extends C3 {
+	public field4;
+}
+
+// XPECT noerrors -->
+class C5 extends C4 {
+}
+
+// XPECT errors --> "Inherited constructor of class C2 in context of class C6a not compatible to itself in context of class C4." at "C6a"
+class C6a extends C5 {
+	public field6;
+}
+
+class C6b extends C5 {
+	// XPECT noerrors -->
+	constructor(@Spec spec: ~i~this) { super(spec); }
+}
+
+class C6c extends C5 {
+	public field6;
+	// XPECT errors --> "Signature of constructor of class C6c does not conform to overridden constructor of class C2: {function(~i~this[C6c])} is not a subtype of {function(~i~this[C4])}." at "constructor"
+	constructor(@Spec spec: ~i~this) { super(spec); }
+}
+

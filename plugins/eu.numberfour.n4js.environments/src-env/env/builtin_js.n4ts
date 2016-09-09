@@ -26,6 +26,12 @@ public providedByRuntime object Object @Global {
 	(...args: any): Object
 
 	/**
+	 * The built-in ES5 property "__proto__", here modeled as a read-only property (i.e. no setter provided), because
+	 * changing an object's prototype after creation is strongly discouraged in todays Javascript engines.
+	 */
+	public get __proto__(): Object
+
+	/**
 	 * The initial value of Object.prototype is the standard built-in Object prototype object (15.2.4).
 	 * 
 	 * Remark: Modeled as getter to emulate const and to allow for overriding.
@@ -119,7 +125,7 @@ public providedByRuntime object Object @Global {
 	 * Standard built-in Object-constructor.
 	 * @see ES5, 15.2.4.1
 	 */
-	public constructor(): void
+	public constructor(value: any?): void
 	/**
 	 * Returns either "[object undefined]", "[object null]" or "[object " + class + and "]"
 	 * 
@@ -1234,7 +1240,7 @@ public providedByRuntime final object Date extends Object @Global {
      *
      * @see ES5, 15.9.5.1
      */
-    public constructor(numberOrStringOrYear: union { string, number}, month: number?, date: number?, hours: number?, minutes: number?, seconds: number?, ms: number?): void
+    public constructor(numberOrStringOrYear: union{string, number}?, month: number?, date: number?, hours: number?, minutes: number?, seconds: number?, ms: number?): void
 	/**
 	 * This  function  returns  a  String  value.  The  contents  of  the  String  are  implementation-dependent,  but  are
      * intended to represent the Date in the current time zone in a convenient, human-readable form.

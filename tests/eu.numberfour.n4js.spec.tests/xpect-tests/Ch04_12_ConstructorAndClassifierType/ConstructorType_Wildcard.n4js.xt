@@ -30,9 +30,9 @@ _ctor = _dtor;
 // XPECT errors --> "constructor{? extends C} is not a subtype of constructor{? extends D}." at "_ctor"
 _dtor = _ctor;
 
-// XPECT errors --> "No wildcards allowed in classifier type." at "?"
+// XPECT noerrors -->
 let t: type{?}
-// XPECT errors --> "No wildcards allowed in classifier type." at "? extends C"
+// XPECT noerrors -->
 let t2: type{? extends C}
 
 // XPECT noerrors -->
@@ -68,7 +68,7 @@ ctor = Y;
 
 // XPECT noerrors -->
 new ctor("");
-// XPECT errors --> "Cannot instantiate ? extends C." at "_ctor"
+// XPECT errors --> "Cannot instantiate ? extends C, because C does not have a @CovariantConstructor." at "_ctor"
 new _ctor();
 // XPECT errors --> "Cannot instantiate ?." at "_xtor"
 new _xtor();

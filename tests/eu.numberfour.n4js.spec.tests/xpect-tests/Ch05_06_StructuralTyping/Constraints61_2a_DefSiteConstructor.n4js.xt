@@ -1,10 +1,11 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
-// cf. GH-219
+
 
 var t : ~Object with { x: string};
-// XPECT errors --> "method constructor is not available for structurally referenced type ~Object with { x: string }." at "constructor"
+// XPECT noerrors -->
 t.constructor;
 
 var t2: ~Object with { constructor: string};
 // XPECT noerrors --> 
 t2.constructor;
+

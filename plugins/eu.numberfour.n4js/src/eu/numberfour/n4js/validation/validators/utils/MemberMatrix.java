@@ -285,6 +285,30 @@ public class MemberMatrix {
 	}
 
 	/**
+	 * Returns true if the matrix contains a mixed accessor pair. That is that getter and setter have different origins
+	 * (inherited, owned). This method doesn't consider consumed members.
+	 */
+	public boolean hasMixedAccessorPair() {
+		boolean hasOwnedGetter = !members(OWNED, GETTER).isEmpty();
+		boolean hasOwnedSetter = !members(OWNED, SETTER).isEmpty();
+		boolean hasInheritedGetter = !members(INHERITED, GETTER).isEmpty();
+		boolean hasInheritedSetter = !members(INHERITED, SETTER).isEmpty();
+
+		return (!hasOwnedGetter && hasInheritedGetter && hasOwnedSetter) ||
+				(hasOwnedGetter && hasInheritedSetter && !hasOwnedSetter);
+	}
+
+	/**
+	 * Returns {@code true} if the matrix contains a getter as well as a setter.
+	 */
+	public boolean hasAccessorPair() {
+		return (!members(OWNED, GETTER).isEmpty() || !members(INHERITED, GETTER).isEmpty()
+				|| !members(IMPLEMENTED, GETTER).isEmpty()) &&
+				(!members(OWNED, SETTER).isEmpty() || !members(INHERITED, SETTER).isEmpty()
+						|| !members(IMPLEMENTED, SETTER).isEmpty());
+	}
+
+	/**
 	 * Returns all owned, inherited and implemented members (but not consumed members, since they are already contained
 	 * in "implemented").
 	 */
@@ -294,7 +318,7 @@ public class MemberMatrix {
 
 	/**
 	 * Returns all actually inherited and actually consumed in members. The latter requires them to be set before. Owned
-	 * memebrs are always actual members (and usually handled elsewhere by caller).
+	 * members are always actual members (and usually handled elsewhere by caller).
 	 */
 	public ActuallyInheritedAndConsumedMembersIterator actuallyInheritedAndMixedMembers() {
 		return new ActuallyInheritedAndConsumedMembersIterator();

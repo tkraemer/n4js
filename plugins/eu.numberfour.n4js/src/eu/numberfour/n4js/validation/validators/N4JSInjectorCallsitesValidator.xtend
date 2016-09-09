@@ -16,8 +16,8 @@ import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.naming.QualifiedNameComputer
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.types.NullType
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TMethod
@@ -194,7 +194,7 @@ class N4JSInjectorCallsitesValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	private def TClass holdsDenotesDICConstructor(Expression ctorOfDICArg) {
 		val ctorOfDICTypeRef = ts.tau(ctorOfDICArg)
-		if (ctorOfDICTypeRef instanceof ClassifierTypeRef) {
+		if (ctorOfDICTypeRef instanceof TypeTypeRef) {
 			if (ctorOfDICTypeRef.getTypeArg instanceof TypeRef) {
 				val dicTClass = dicTClassOf(ctorOfDICTypeRef.getTypeArg as TypeRef)
 				if (null !== dicTClass) {
@@ -230,7 +230,7 @@ class N4JSInjectorCallsitesValidator extends AbstractN4JSDeclarativeValidator {
 	private def void internalCheckInjectorCreateCallsite(ParameterizedCallExpression callExpression) {
 		val ctorArg = callExpression.arguments.head?.expression
 		val ctorArgTypeRef = ts.tau(ctorArg)
-		if (ctorArgTypeRef instanceof ClassifierTypeRef) {
+		if (ctorArgTypeRef instanceof TypeTypeRef) {
 			if(N4JSDependencyInjectionValidator.isInjectableType(ctorArgTypeRef.getTypeArg)) {
 				return
 			}

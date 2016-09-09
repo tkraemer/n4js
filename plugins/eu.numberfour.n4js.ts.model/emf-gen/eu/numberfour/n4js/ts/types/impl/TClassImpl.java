@@ -7,16 +7,12 @@
  */
 package eu.numberfour.n4js.ts.types.impl;
 
-import com.google.common.base.Objects;
-
 import com.google.common.collect.Iterables;
 
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TClassifier;
-import eu.numberfour.n4js.ts.types.TMember;
-import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
@@ -40,10 +36,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 /**
  * <!-- begin-user-doc -->
@@ -462,7 +454,29 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Iterable<ParameterizedTypeRef> getSuperClassifiers() {
+	public TClass getSuperClass() {
+		ParameterizedTypeRef _superClassRef = this.getSuperClassRef();
+		Type _declaredType = null;
+		if (_superClassRef!=null) {
+			_declaredType=_superClassRef.getDeclaredType();
+		}
+		final Type superType = _declaredType;
+		TClass _xifexpression = null;
+		if ((superType instanceof TClass)) {
+			_xifexpression = ((TClass)superType);
+		}
+		else {
+			_xifexpression = null;
+		}
+		return _xifexpression;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Iterable<ParameterizedTypeRef> getSuperClassifierRefs() {
 		ParameterizedTypeRef _superClassRef = this.getSuperClassRef();
 		boolean _tripleNotEquals = (_superClassRef != null);
 		if (_tripleNotEquals) {
@@ -482,23 +496,6 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 	 */
 	public Iterable<ParameterizedTypeRef> getImplementedOrExtendedInterfaceRefs() {
 		return this.getImplementedInterfaceRefs();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TMethod getOwnedCtor() {
-		EList<TMember> _ownedMembers = this.getOwnedMembers();
-		Iterable<TMethod> _filter = Iterables.<TMethod>filter(_ownedMembers, TMethod.class);
-		final Function1<TMethod, Boolean> _function = new Function1<TMethod, Boolean>() {
-			public Boolean apply(final TMethod it) {
-				String _name = it.getName();
-				return Boolean.valueOf(Objects.equal(_name, "constructor"));
-			}
-		};
-		return IterableExtensions.<TMethod>findFirst(_filter, _function);
 	}
 
 	/**
@@ -702,7 +699,7 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 		if (baseClass == TClassifier.class) {
 			switch (baseOperationID) {
 				case TypesPackage.TCLASSIFIER___IS_ABSTRACT: return TypesPackage.TCLASS___IS_ABSTRACT;
-				case TypesPackage.TCLASSIFIER___GET_SUPER_CLASSIFIERS: return TypesPackage.TCLASS___GET_SUPER_CLASSIFIERS;
+				case TypesPackage.TCLASSIFIER___GET_SUPER_CLASSIFIER_REFS: return TypesPackage.TCLASS___GET_SUPER_CLASSIFIER_REFS;
 				case TypesPackage.TCLASSIFIER___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS: return TypesPackage.TCLASS___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS;
 				case TypesPackage.TCLASSIFIER___IS_FINAL: return TypesPackage.TCLASS___IS_FINAL;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
@@ -721,12 +718,12 @@ public class TClassImpl extends TN4ClassifierImpl implements TClass {
 		switch (operationID) {
 			case TypesPackage.TCLASS___IS_ABSTRACT:
 				return isAbstract();
-			case TypesPackage.TCLASS___GET_SUPER_CLASSIFIERS:
-				return getSuperClassifiers();
+			case TypesPackage.TCLASS___GET_SUPER_CLASS:
+				return getSuperClass();
+			case TypesPackage.TCLASS___GET_SUPER_CLASSIFIER_REFS:
+				return getSuperClassifierRefs();
 			case TypesPackage.TCLASS___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS:
 				return getImplementedOrExtendedInterfaceRefs();
-			case TypesPackage.TCLASS___GET_OWNED_CTOR:
-				return getOwnedCtor();
 			case TypesPackage.TCLASS___IS_POLYFILL:
 				return isPolyfill();
 			case TypesPackage.TCLASS___IS_STATIC_POLYFILL:

@@ -32,7 +32,7 @@ public interface N4MethodDeclaration extends AnnotableN4MemberDeclaration, Metho
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (<%com.google.common.base.Objects%>.equal(\"constructor\", this.getName()) && (!this.isStatic()));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (<%com.google.common.base.Objects%>.equal(this.getName(), \"constructor\") && (!this.isStatic()));'"
 	 * @generated
 	 */
 	boolean isConstructor();

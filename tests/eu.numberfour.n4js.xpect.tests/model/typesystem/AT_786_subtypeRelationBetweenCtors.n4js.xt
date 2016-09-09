@@ -26,7 +26,7 @@ function getWasted(beverageClass : constructor{AbstractSoda}) {
     beverage.drinkEm();
 }
 
-// XPECT type of 'abstractSoda'--> type{AbstractSod a}
+// XPECT type of 'abstractSoda'--> type{AbstractSoda}
 var abstractSoda = AbstractSoda;
 // XPECT type of 'beer' --> constructor{Beer}
 var beer = Beer;

@@ -67,7 +67,7 @@ package class N4JSMethodTypesBuilder extends AbstractFunctionDefinitionTypesBuil
 		methodType.addTypeVariables(methodDecl, preLinkingPhase)
 		methodType.addFormalParameters(methodDecl, builtInTypeScope, preLinkingPhase)
 		methodType.setReturnTypeConsideringThis(methodDecl, builtInTypeScope, preLinkingPhase)
-		methodType.linkThisTypeAnnotation(methodDecl, preLinkingPhase)
+		methodType.setDeclaredThisTypeFromAnnotation(methodDecl, preLinkingPhase)
 
 		methodType.copyAnnotations(methodDecl, preLinkingPhase)
 
