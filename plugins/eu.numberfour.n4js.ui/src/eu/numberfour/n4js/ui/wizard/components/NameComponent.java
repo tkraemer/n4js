@@ -55,9 +55,11 @@ public class NameComponent extends WizardComponent {
 	}
 
 	private void setupBindings() {
-		IObservableValue nameValue = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<String> nameValue = BeanProperties
 				.value(NamedModel.class, N4JSClassifierWizardModel.NAME_PROPERTY).observe(model);
-		IObservableValue nameUI = WidgetProperties.text(SWT.Modify).observe(nameText);
+		@SuppressWarnings("unchecked")
+		IObservableValue<String> nameUI = WidgetProperties.text(SWT.Modify).observe(nameText);
 		getDataBindingContext().bindValue(nameValue, nameUI);
 	}
 

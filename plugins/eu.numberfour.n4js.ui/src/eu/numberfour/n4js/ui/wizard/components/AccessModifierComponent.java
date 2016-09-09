@@ -87,29 +87,35 @@ public class AccessModifierComponent extends WizardComponent {
 
 	private void setupBindings() {
 		// Access modifier property binding
-		IObservableValue publicButtonSelection = WidgetProperties.selection()
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> publicButtonSelection = WidgetProperties.selection()
 				.observe(publicAccessModifierBox);
-		IObservableValue projectButtonSelection = WidgetProperties.selection()
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> projectButtonSelection = WidgetProperties.selection()
 				.observe(projectAccessModifierBox);
-		IObservableValue privateButtonSelection = WidgetProperties.selection()
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> privateButtonSelection = WidgetProperties.selection()
 				.observe(privateAccessModifierBox);
 
-		SelectObservableValue accessModifierSelectObservable = new SelectObservableValue();
+		SelectObservableValue<AccessModifier> accessModifierSelectObservable = new SelectObservableValue<>();
 		accessModifierSelectObservable.addOption(AccessModifier.PUBLIC, publicButtonSelection);
 		accessModifierSelectObservable.addOption(AccessModifier.PROJECT, projectButtonSelection);
 		accessModifierSelectObservable.addOption(AccessModifier.PRIVATE, privateButtonSelection);
 
-		IObservableValue accessModifierProperty = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<AccessModifier> accessModifierProperty = BeanProperties
 				.value(AccessModifiableModel.class, N4JSClassifierWizardModel.ACCESS_MODIFIER_PROPERTY).observe(model);
 
 		dataBindingContext.bindValue(accessModifierSelectObservable, accessModifierProperty);
 
 		// Internal property binding
 
-		IObservableValue internalValue = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> internalValue = BeanProperties
 				.value(AccessModifiableModel.class, N4JSClassifierWizardModel.INTERNAL_PROPERTY)
 				.observe(model);
-		IObservableValue internalUI = WidgetProperties.selection().observe(getInternalAnnotationBox());
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> internalUI = WidgetProperties.selection().observe(getInternalAnnotationBox());
 		dataBindingContext.bindValue(internalUI, internalValue);
 	}
 

@@ -24,7 +24,6 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  eu.numberfour.n4js.utils,
  eu.numberfour.n4js.n4mf.ui.tests.helper,
  eu.numberfour.n4js.regex.ui,
- org.eclipse.core.runtime.compatibility;bundle-version="3.2.200",
  eu.numberfour.n4js.ui.tests.helper
 Import-Package: eu.numberfour.n4js.xpect.validation,
  org.apache.log4j,

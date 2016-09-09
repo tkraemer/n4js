@@ -62,10 +62,12 @@ public class FileTypeComponent extends WizardComponent {
 	private void setupBindings() {
 		// Definition file property binding (definition file)
 
-		IObservableValue externalValue = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> externalValue = BeanProperties
 				.value(DefinitionFileModel.class, N4JSClassifierWizardModel.DEFINITION_FILE_PROPERTY)
 				.observe(model);
-		IObservableValue externalUI = WidgetProperties.selection().observe(definitionFileBox);
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> externalUI = WidgetProperties.selection().observe(definitionFileBox);
 		getDataBindingContext().bindValue(externalUI, externalValue);
 	}
 

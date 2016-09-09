@@ -57,6 +57,7 @@ public class N4MFWizardTestedProjectPage extends WizardPage {
 		this.setMessage("Select projects to be tested in your new test project");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void createControl(Composite parent) {
 		Composite listComposite = new Composite(parent, NONE);
