@@ -1,0 +1,26 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+class A {}
+class B extends A {}
+
+@CovariantConstructor
+class Cls {
+	constructor(p: B) {}
+}
+class Cls2 extends Cls {
+	constructor(p: A) { // it's legal to generalize the type of parameter 'p'
+		super(null);
+	}
+}
+
+function <T extends Cls> createAnother(value: T, p: B): T {
+	let ctor = value.constructor;
+	return new ctor(p);
+}
+
+let x = new Cls2(new A());
+let y: Cls2;
+
+y = createAnother(x, new B());
+

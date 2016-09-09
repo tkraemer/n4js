@@ -563,7 +563,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		val G = newExpression.newRuleEnvironment;
 		val TypeTypeRef classifierTypeRef = typeRef as TypeTypeRef;
 		val typeArg = classifierTypeRef.typeArg;
-		val staticType = tsh.getStaticType(G, classifierTypeRef);
+		val staticType = tsh.getStaticType(G, classifierTypeRef).changeToCovariantUpperBoundIfTypeVar;
 		if (staticType !== null && staticType.eIsProxy) {
 			return;
 		}
@@ -616,6 +616,22 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		internalCheckTypeArguments(staticType.typeVars, newExpression.typeArgs, false, staticType, newExpression,
 			N4JSPackage.eINSTANCE.newExpression_Callee);
 		internalCheckNewParameters(newExpression, staticType as TClassifier);
+	}
+
+	private def changeToCovariantUpperBoundIfTypeVar(Type type) {
+		if(type instanceof TypeVariable) {
+			val ub = TypeUtils.getDeclaredUpperBound(type);
+			if(ub instanceof ParameterizedTypeRef) {
+				val declType = ub.declaredType;
+				if(declType instanceof TClassifier) {
+					// but only if declType has a covariant constructor:
+					if(N4JSLanguageUtils.hasCovariantConstructor(declType)) {
+						return declType;
+					}
+				}
+			}
+		};
+		return type;
 	}
 
 	/** Helper to issue the error case of having a new-expression on a non-constructor element */
