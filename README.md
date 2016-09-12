@@ -13,7 +13,8 @@ N4JS is based on ECMAScript Version 5 and ECMAScript 2015 is supported to a grea
 
 ## Contribute
 
-Eclipse developers who want to develop N4JS itself should use the Oomph Eclipse installer. This installs the correct Eclipse version, creates a new workspace and clones all projects into it.
+Eclipse developers who want to develop N4JS itself should use the [Oomph Eclipse installer](https://www.eclipse.org/downloads/). The N4JS project is listed under "Advanced/Github Projects/N4JS" 
+This setup installs the correct Eclipse version, creates a new workspace and clones all projects into it (for details see below).
 
 ### Eclipse Installer
 
@@ -23,21 +24,16 @@ This installer is to be downloaded from https://wiki.eclipse.org/Eclipse_Install
 Run the installer and apply the following steps:
 
 1. change to "Advance Mode" via the menu (upper-right corner) (no need to move the installer)
-2. select a product, e.g. "Eclipse Platform" with product version "Latest(Neon)" 
-4. on the next page, drag'n'drop the following URI on the "github" label:
- 
-    https://raw.githubusercontent.com/NumberFour/n4js/master/releng/eu.numberfour.n4js.targetplatform/N4JS.setup
-    
-   If this does not work, create a new github project via the "+" button and put the URL there.
-5. double-click the entry github/&lt;users>/N4JS so that it is shown in the catalog view below
-6. on the next page, configure paths accordingly. You only have to configure the installation and workspace folder.
-7. start installation
+2. select a product, e.g. "Eclipse IDE for Eclipse Committers" with product version "Latest(Neon)"  
+3. double-click the entry Github/N4JS so that it is shown in the catalog view below
+4. on the next page, configure paths accordingly. You only have to configure the installation and workspace folder.
+5. start installation
  
 The installer will then guide you through the rest of the installation. All plug-ins are downloaded and configured automatically, so is the workspace including downloading the git repository and setting up the workspace.
 
 ### Manual IDE Configuration
 
-For a manual install, clone the code and import all top-level projects from the docs, features, plugins, releng, testhelpers, and tests folders. Activate the targetplatform contained in the ```releng/eu.numberfour.ide.targetplatform``` project.
+For a manual install, clone the code and import all top-level projects from the docs, features, plugins, releng, testhelpers, and tests folders. Activate the targetplatform contained in the ```releng/eu.numberfour.n4js.targetplatform/``` project.
 
 The N4JS IDE is developed with Eclipse Neon 4.6 or better since the system is based on Eclipse anyway. 
 It is almost impossible to use another IDE to develop Eclipse plugins. The list of required plugins includes:
@@ -45,7 +41,7 @@ It is almost impossible to use another IDE to develop Eclipse plugins. The list 
 - Xtext/Xtend 2.10.0
 - Xcore 1.4.0 
 - Xsemantics 1.10.0
-- XpectN4 0.1
+- Xpect 0.1
 
 It is important to use the latest version of Xtext and the corresponding service release of Xcore. You will find the latest version numbers and plugins used in the target platform definition at
 https://github.com/NumberFour/n4js/blob/master/releng/eu.numberfour.n4js.targetplatform/eu.numberfour.n4js.targetplatform.target
@@ -68,7 +64,7 @@ https://github.com/NumberFour/n4js/blob/master/releng/eu.numberfour.n4js.targetp
 Ensure you have 
 
 - Java 8
-- Maven 3 and
+- Maven 3.2.x and
 - Node.js 6
 
 installed on your system.
