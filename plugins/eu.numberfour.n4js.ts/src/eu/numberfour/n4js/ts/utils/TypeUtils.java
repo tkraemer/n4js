@@ -36,9 +36,7 @@ import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope;
 import eu.numberfour.n4js.ts.scoping.builtin.N4Scheme;
 import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef;
@@ -55,6 +53,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeVariableMapping;
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.Wildcard;
@@ -134,12 +133,12 @@ public class TypeUtils {
 		} else if (type instanceof TClass) {
 			final TClass declaredTypeCasted = (TClass) type;
 			if (declaredTypeCasted.isAbstract()) {
-				return createClassifierTypeRef(declaredTypeCasted, typeArgs);
+				return createTypeTypeRef(createTypeRef(declaredTypeCasted, typeArgs), false);
 			} else {
 				return createConstructorTypeRef(declaredTypeCasted, typeArgs);
 			}
 		} else if (type instanceof TInterface) {
-			return createClassifierTypeRef(type, typeArgs);
+			return createTypeTypeRef(createTypeRef(type, typeArgs), false);
 		} else if (type instanceof TObjectPrototype) {
 			return createConstructorTypeRef(type, typeArgs);
 		} else {
@@ -162,11 +161,21 @@ public class TypeUtils {
 	 * in case parameter <code>useSiteTypingStrategy</code> is set to a different value than
 	 * {@link TypingStrategy#DEFAULT DEFAULT}.
 	 */
+	public static ParameterizedTypeRef createTypeRef(Type declaredType, TypingStrategy typingStrategy,
+			TypeArgument... typeArgs) {
+		// TODO default for 'autoCreateTypeArgs' should probably be 'true'
+		return createTypeRef(declaredType, typingStrategy, false, typeArgs);
+	}
+
+	/**
+	 * Same as {@link #createTypeRef(Type, TypingStrategy, TypeArgument...)}, but will create unbounded wildcards as
+	 * type arguments if fewer type arguments are provided than the number of type parameters of the given declared.
+	 */
 	// TODO after java update bring back nullness analysis
 	// public static ParameterizedTypeRef createTypeRef(@Nonnull Type declaredType,
 	// @Nonnull TypingStrategy useSiteTypingStrategy, @Nonnull TypeArgument... typeArgs) {
 	public static ParameterizedTypeRef createTypeRef(Type declaredType,
-			TypingStrategy typingStrategy, TypeArgument... typeArgs) {
+			TypingStrategy typingStrategy, boolean autoCreateTypeArgs, TypeArgument... typeArgs) {
 		final ParameterizedTypeRef ref;
 		if (declaredType instanceof TFunction) {
 			ref = TypeRefsFactory.eINSTANCE.createFunctionTypeRef();
@@ -179,8 +188,15 @@ public class TypeUtils {
 		}
 		ref.setDefinedTypingStrategy(typingStrategy);
 		ref.setDeclaredType(declaredType);
+		final EList<TypeArgument> refTypeArgs = ref.getTypeArgs();
 		for (TypeArgument typeArg : typeArgs) {
-			ref.getTypeArgs().add(TypeUtils.copyIfContained(typeArg));
+			refTypeArgs.add(TypeUtils.copyIfContained(typeArg));
+		}
+		if (autoCreateTypeArgs) {
+			final int l = declaredType.getTypeVars().size();
+			for (int i = refTypeArgs.size(); i < l; i++) {
+				refTypeArgs.add(createWildcard());
+			}
 		}
 		return ref;
 	}
@@ -215,33 +231,18 @@ public class TypeUtils {
 	}
 
 	/**
-	 * Creates new type reference for classifier. if the declared type is TFunction a FunctionTypeRef is created. If
-	 * declared type is TClassifier than ClassifierTypeRef is created (i.e. <code>type{A}</code> in N4JS code)
+	 * Creates new {@link TypeTypeRef} with the given type argument.
 	 */
-	// TODO after java update bring back nullness analysis
-	// public static TypeRef createClassifierTypeRef(@Nonnull Type declaredType, @Nonnull TypeArgument... typeArgs) {
-	public static TypeRef createClassifierTypeRef(Type declaredType, TypeArgument... typeArgs) {
-		TypeRef typeRef = null;
-		if (declaredType instanceof TFunction) {
-			// TODO is this correct
-			FunctionTypeRef ref = TypeRefsFactory.eINSTANCE.createFunctionTypeRef();
-			ref.setDeclaredType(declaredType);
-			for (TypeArgument typeArg : typeArgs) {
-				ref.getTypeArgs().add(TypeUtils.copyIfContained(typeArg));
-			}
-			typeRef = ref;
-		} else if (declaredType instanceof TClassifier) {
-			TClassifier tClassifier = (TClassifier) declaredType;
-			ClassifierTypeRef ref = TypeRefsFactory.eINSTANCE.createClassifierTypeRef();
-			ref.setTypeArg(createTypeRef(tClassifier, typeArgs));
-			typeRef = ref;
-		}
-		return typeRef;
+	public static TypeTypeRef createTypeTypeRef(TypeArgument typeArg, boolean isConstructorRef) {
+		TypeTypeRef ctorTypeRef = TypeRefsFactory.eINSTANCE.createTypeTypeRef();
+		ctorTypeRef.setTypeArg(typeArg);
+		ctorTypeRef.setConstructorRef(isConstructorRef);
+		return ctorTypeRef;
 	}
 
 	/**
-	 * Creates new type reference for constructor. if the declared type is TFunction a FunctionTypeRedf is created. If
-	 * declared type is TClassifier than ConstructorTypeRef is created (i.e. <code>constructor{A}</code> in N4JS code)
+	 * Creates new type reference for constructor. if the declared type is TFunction a FunctionTypeRef is created. If
+	 * declared type is TClassifier than TypeTypeRef is created (i.e. <code>constructor{A}</code> in N4JS code)
 	 */
 	// TODO after java update bring back nullness analysis
 	// public static TypeRef createConstructorTypeRef(@Nonnull Type declaredType, @Nonnull TypeArgument... typeArgs) {
@@ -257,14 +258,10 @@ public class TypeUtils {
 			typeRef = ref;
 		} else if (declaredType instanceof TClassifier) {
 			TClassifier tClassifier = (TClassifier) declaredType;
-			ConstructorTypeRef ref = TypeRefsFactory.eINSTANCE.createConstructorTypeRef();
-			ref.setTypeArg(createTypeRef(tClassifier, typeArgs));
-			typeRef = ref;
+			typeRef = createTypeTypeRef(createTypeRef(tClassifier, typeArgs), true);
 		} else if (declaredType instanceof TypeVariable) {
 			TypeVariable tTypeVar = (TypeVariable) declaredType;
-			ConstructorTypeRef ref = TypeRefsFactory.eINSTANCE.createConstructorTypeRef();
-			ref.setTypeArg(createTypeRef(tTypeVar));
-			typeRef = ref;
+			typeRef = createTypeTypeRef(createTypeRef(tTypeVar), true);
 		}
 		return typeRef;
 	}
@@ -342,6 +339,31 @@ public class TypeUtils {
 		etr.setWildcard(wildcard);
 		etr.setBoundTypeVariable(typeVar);
 		return etr;
+	}
+
+	/**
+	 * Creates a new unbounded wildcard.
+	 */
+	public static Wildcard createWildcard() {
+		return TypeRefsFactory.eINSTANCE.createWildcard();
+	}
+
+	/**
+	 * Creates a new wildcard with the given upper bound.
+	 */
+	public static Wildcard createWildcardExtends(TypeRef upperBound) {
+		final Wildcard wc = createWildcard();
+		wc.setDeclaredUpperBound(upperBound);
+		return wc;
+	}
+
+	/**
+	 * Creates a new wildcard with the given lower bound.
+	 */
+	public static Wildcard createWildcardSuper(TypeRef lowerBound) {
+		final Wildcard wc = createWildcard();
+		wc.setDeclaredLowerBound(lowerBound);
+		return wc;
 	}
 
 	/**
@@ -431,11 +453,10 @@ public class TypeUtils {
 	 * @param actualThisTypeRef
 	 *            must not be null, must not contain a this unbound-this-type-ref.
 	 */
-	public static ClassifierTypeRef createClassifierBoundThisTypeRef(ClassifierTypeRef actualThisTypeRef) {
+	public static TypeTypeRef createClassifierBoundThisTypeRef(TypeTypeRef actualThisTypeRef) {
 		if (actualThisTypeRef == null) {
 			throw new NullPointerException("Actual this type must not be null!");
 		}
-		ClassifierTypeRef classifierBoundThisTypeRef = TypeRefsFactory.eINSTANCE.createClassifierTypeRef();
 		TypeArgument typeArg = actualThisTypeRef.getTypeArg();
 		final BoundThisTypeRef boundThisTypeRef;
 		if (typeArg instanceof ParameterizedTypeRef) {
@@ -447,7 +468,7 @@ public class TypeUtils {
 			throw new IllegalArgumentException(
 					"Cannot turn unbound type{this} into type{this[X]}, must be called with type{X}!");
 		}
-		classifierBoundThisTypeRef.setTypeArg(boundThisTypeRef);
+		TypeTypeRef classifierBoundThisTypeRef = createTypeTypeRef(boundThisTypeRef, false);
 		// TODO is there anything else to copy ?
 		return classifierBoundThisTypeRef;
 	}
@@ -479,23 +500,6 @@ public class TypeUtils {
 		// copy other properties
 		copyTypeModifiers(resolvedTypeRef, boundThisTypeRef);
 		return resolvedTypeRef;
-	}
-
-	/**
-	 * @param ct
-	 *            referencing a BoundThisTypeRef
-	 * @return copy with staticTypeRef pointing to the upper bound of the former ct.staticTypeRef
-	 */
-	public static ClassifierTypeRef createResolvedClassifierTypeRef(ClassifierTypeRef ct) {
-		// as part of IDE-785
-		TypeArgument replacement = ct.getTypeArg();
-		if (ct.getTypeArg() instanceof BoundThisTypeRef) {
-			replacement = createResolvedThisTypeRef((BoundThisTypeRef) ct.getTypeArg());
-		}
-
-		ClassifierTypeRef resolved = TypeRefsFactory.eINSTANCE.createClassifierTypeRef();
-		resolved.setTypeArg(replacement);
-		return resolved;
 	}
 
 	/**

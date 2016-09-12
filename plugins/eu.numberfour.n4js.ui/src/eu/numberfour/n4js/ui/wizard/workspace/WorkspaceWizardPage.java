@@ -197,30 +197,37 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 		WorkspaceWizardModelValidator<M> validator = getValidator();
 
 		// Project property binding
-		IObservableValue projectModelValue = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<IPath> projectModelValue = BeanProperties
 				.value(WorkspaceWizardModel.class, WorkspaceWizardModel.PROJECT_PROPERTY)
 				.observe(model);
-		IObservableValue projectUI = WidgetProperties.text(SWT.Modify).observe(wizardForm.getProjectText());
+		@SuppressWarnings("unchecked")
+		IObservableValue<String> projectUI = WidgetProperties.text(SWT.Modify).observe(wizardForm.getProjectText());
 
 		// Note: No model to UI conversation here as IPath is castable to String (default behavior)
 		databindingContext.bindValue(projectUI, projectModelValue, new StringToPathConverter().updatingValueStrategy(),
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE));
 
 		// Source folder property binding
-		IObservableValue sourceFolderModelValue = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<IPath> sourceFolderModelValue = BeanProperties
 				.value(WorkspaceWizardModel.class, WorkspaceWizardModel.SOURCE_FOLDER_PROPERTY)
 				.observe(model);
-		IObservableValue sourceFolderUI = WidgetProperties.text(SWT.Modify).observe(wizardForm.getSourceFolderText());
+		@SuppressWarnings("unchecked")
+		IObservableValue<String> sourceFolderUI = WidgetProperties.text(SWT.Modify)
+				.observe(wizardForm.getSourceFolderText());
 
 		// Note: No model to UI conversation (see above)
 		databindingContext.bindValue(sourceFolderUI, sourceFolderModelValue,
 				new StringToPathConverter().updatingValueStrategy(),
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE));
 
-		IObservableValue projectValidModelValue = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> projectValidModelValue = BeanProperties
 				.value(WorkspaceWizardModelValidator.class, WorkspaceWizardModelValidator.PROJECT_PROPERTY_VALID)
 				.observe(validator);
-		IObservableValue sourceFolderBrowseEnabled = WidgetProperties.enabled()
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> sourceFolderBrowseEnabled = WidgetProperties.enabled()
 				.observe(wizardForm.getSourceFolderBrowseButton());
 
 		databindingContext.bindValue(sourceFolderBrowseEnabled, projectValidModelValue,
@@ -228,20 +235,25 @@ public abstract class WorkspaceWizardPage<M extends WorkspaceWizardModel> extend
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE));
 
 		// Module specifier property binding
-		IObservableValue moduleSpecifierModelValue = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<String> moduleSpecifierModelValue = BeanProperties
 				.value(WorkspaceWizardModel.class, WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY)
 				.observe(model);
-		IObservableValue moduleSpecifierUI = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<String> moduleSpecifierUI = BeanProperties
 				.value(SuffixText.class, SuffixText.TEXT_PROPERTY)
 				.observe(wizardForm.getModuleSpecifierText());
 		databindingContext.bindValue(moduleSpecifierUI, moduleSpecifierModelValue);
 
 		// Conditional activation of the browse buttons according to the precedent input fields validity
-		IObservableValue moduleSpecifierBrowseEnabled = WidgetProperties.enabled()
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> moduleSpecifierBrowseEnabled = WidgetProperties.enabled()
 				.observe(wizardForm.getModuleSpecifierBrowseButton());
-		IObservableValue sourceFolderValidValue = BeanProperties.value(WorkspaceWizardModelValidator.class,
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> sourceFolderValidValue = BeanProperties.value(WorkspaceWizardModelValidator.class,
 				WorkspaceWizardModelValidator.SOURCE_FOLDER_PROPERTY_VALID).observe(validator);
-		IObservableValue projectValidValue = BeanProperties.value(WorkspaceWizardModelValidator.class,
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> projectValidValue = BeanProperties.value(WorkspaceWizardModelValidator.class,
 				WorkspaceWizardModelValidator.PROJECT_PROPERTY_VALID).observe(validator);
 
 		ConditionalConverter moduleSpecifierBrowseableConverter = new ConditionalConverter() {

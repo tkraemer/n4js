@@ -41,17 +41,17 @@ scoping.Sister.Sister, string, symbol, typeName, void
 
 var brother : Brother = new Brother();
 /* XPECT scope at getSister ---
-constructor, getChild, getSister, hasOwnProperty, isPrototypeOf,
+__proto__, constructor, getChild, getSister, hasOwnProperty, isPrototypeOf,
 propertyIsEnumerable, toLocaleString, toString, valueOf
 --- */
 /* XPECT scope at getBrother ---
-constructor, getBrother, getChild, hasOwnProperty, isPrototypeOf,
+__proto__, constructor, getBrother, getChild, hasOwnProperty, isPrototypeOf,
 propertyIsEnumerable, toLocaleString, toString, valueOf
 --- */
 brother = brother.getSister().getBrother();
 var sister : SisterObject = new SisterObject();
 /* XPECT scope at getBrother ---
-constructor, getBrother, getChild, hasOwnProperty, isPrototypeOf,
+__proto__, constructor, getBrother, getChild, hasOwnProperty, isPrototypeOf,
 propertyIsEnumerable, toLocaleString, toString, valueOf
 --- */
 brother = sister.getBrother();

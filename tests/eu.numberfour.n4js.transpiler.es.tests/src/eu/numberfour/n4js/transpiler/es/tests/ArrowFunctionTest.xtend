@@ -144,7 +144,7 @@ class ArrowFunctionTest extends AbstractTranspilerTest {
 				return {
 					setters: [],
 					execute: function() {
-						$makeClass(C, Object, [], {
+						$makeClass(C, N4Object, [], {
 							notifyListeners: {
 								value: function notifyListeners___n4() {}
 							},

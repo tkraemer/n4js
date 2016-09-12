@@ -1,0 +1,12 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+class A {
+	get a() { return 1; }
+	set a(v) {}
+}
+class B extends A {
+	/* XPECT warnings ---
+	   "Setter B.a should not be declared without overriding the corresponding getter." at "a"
+	--- 
+	 */
+	set a(v) {}
+}

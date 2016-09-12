@@ -359,6 +359,15 @@ public abstract class TMemberImpl extends IdentifiableElementImpl implements TMe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isConstructor() {
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isOptional() {
 		return false;
 	}
@@ -613,6 +622,8 @@ public abstract class TMemberImpl extends IdentifiableElementImpl implements TMe
 				return isAccessor();
 			case TypesPackage.TMEMBER___IS_METHOD:
 				return isMethod();
+			case TypesPackage.TMEMBER___IS_CONSTRUCTOR:
+				return isConstructor();
 			case TypesPackage.TMEMBER___IS_OPTIONAL:
 				return isOptional();
 			case TypesPackage.TMEMBER___IS_ABSTRACT:

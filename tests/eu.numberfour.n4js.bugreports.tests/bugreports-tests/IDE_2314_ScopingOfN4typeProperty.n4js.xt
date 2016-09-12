@@ -1,0 +1,13 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportPendingTest END_SETUP  */
+
+
+// scoping issue fixed alongside IDE-2314 ...
+
+
+function foo(testClass: constructor{? extends N4Object}) {
+	let ann: N4Annotation;
+	
+	// XPECT noerrors --> "any is not a subtype of N4Annotation." at "testClass.n4type.allAnnotations("Ignore")[0]"
+	ann = testClass.n4type.allAnnotations("Ignore")[0];
+}
+

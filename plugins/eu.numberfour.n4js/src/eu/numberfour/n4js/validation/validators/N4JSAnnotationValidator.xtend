@@ -25,16 +25,23 @@ import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
+import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.VariableDeclaration
+import eu.numberfour.n4js.n4mf.ProjectType
 import eu.numberfour.n4js.projectModel.IN4JSCore
+import eu.numberfour.n4js.ts.scoping.N4TSQualifiedNameProvider
+import eu.numberfour.n4js.ts.types.FieldAccessor
+import eu.numberfour.n4js.ts.types.TInterface
+import eu.numberfour.n4js.ts.types.TMethod
+import eu.numberfour.n4js.ts.types.TypesPackage
+import eu.numberfour.n4js.ts.types.TypingStrategy
+import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.utils.PromisifyHelper
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.n4mf.ProjectType
-import eu.numberfour.n4js.ts.scoping.N4TSQualifiedNameProvider
-import eu.numberfour.n4js.ts.types.TypesPackage
 import java.util.HashSet
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
@@ -48,6 +55,8 @@ import static eu.numberfour.n4js.AnnotationDefinition.*
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 import static eu.numberfour.n4js.validation.JavaScriptVariant.*
+
+import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 
 /**
@@ -62,6 +71,9 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject ResourceDescriptionsProvider indexAccess
 
 	@Inject private PromisifyHelper promisifyHelper;
+
+	@Inject
+	private N4JSTypeSystem ts;
 
 	/**
 	 * NEEEDED
@@ -145,6 +157,8 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 			switch (annotation.name) {
 				// no special checks for uncommented:
 				// case THIS.NAME:
+				case THIS.name:
+					internalCheckThis(annotation)
 				case PROVIDED_BY_RUNTIME.name:
 					internalCheckProvidedByRuntime(annotation)
 				case IGNORE_IMPLEMENTATION.name:
@@ -275,6 +289,45 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 			Script: SCRIPT__ANNOTATIONS
 			VariableDeclaration: VARIABLE_DECLARATION__ANNOTATIONS
 			default: null
+		}
+	}
+
+	/**
+	 * Constraints 91 (Valid Target and Argument for &#64;This Annotation)
+	 */
+	private def internalCheckThis(Annotation annotation) {
+		val element = annotation.annotatedElement;
+		if (element === null) {
+			return;
+		}
+		if (element instanceof N4MemberDeclaration) {
+			val tMember = element.definedTypeElement;
+			val containingType = tMember?.containingType;
+			if (tMember === null || containingType === null) {
+				return; // invalid types model
+			}
+			// constraint #1: @This not allowed on static members of interfaces
+			if (tMember.static && containingType instanceof TInterface) {
+				val msg = getMessageForANN_THIS_DISALLOWED_ON_STATIC_MEMBER_OF_INTERFACE();
+				addIssue(msg, annotation, ANNOTATION__NAME, ANN_THIS_DISALLOWED_ON_STATIC_MEMBER_OF_INTERFACE);
+				return;
+			}
+			// constraint #2: declared this type must be subtype of the containing type
+			val declThisTypeRef = switch(tMember) {
+				TMethod: tMember.declaredThisType
+				FieldAccessor: tMember.declaredThisType
+			};
+			val containingTypeRef = if(tMember.static) {
+				TypeUtils.createTypeTypeRef(TypeUtils.createTypeRef(containingType), false)
+			} else {
+				TypeUtils.createTypeRef(containingType, TypingStrategy.DEFAULT, true)
+			};
+			val G = element.newRuleEnvironment;
+			if (!ts.subtypeSucceeded(G, declThisTypeRef, containingTypeRef)) {
+				val msg = getMessageForANN_THIS_NOT_SUBTYPE_OF_CONTAINING_TYPE(tMember.description,
+					containingType.description, containingTypeRef.typeRefAsString);
+				addIssue(msg, annotation, ANNOTATION__ARGS, ANN_THIS_NOT_SUBTYPE_OF_CONTAINING_TYPE);
+			}
 		}
 	}
 
@@ -441,6 +494,4 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 			}
 		};
 	}
-
-
 }

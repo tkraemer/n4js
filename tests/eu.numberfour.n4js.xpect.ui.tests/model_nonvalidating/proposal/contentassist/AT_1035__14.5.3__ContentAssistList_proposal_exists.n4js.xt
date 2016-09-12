@@ -30,10 +30,10 @@ var a : A = new A();
 // X!PECT testFailureDiff ....
 // This test must fail since methodA matches also methodB X!PECT contentAssistList at 'a.<|>methodA' proposals --> methodA, methodA2
 
-// Single line. Correct Methods. Defaults to 'exactly' & 'unordered' XPECT contentAssistList at 'a.<|>methodA' proposals --> "methodA", "methodA2","constructor","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","toLocaleString","toString","valueOf"
+// Single line. Correct Methods. Defaults to 'exactly' & 'unordered' XPECT contentAssistList at 'a.<|>methodA' proposals --> "methodA","methodA2","__proto__","constructor","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","toLocaleString","toString","valueOf"
 /* Multiline.   Correct Methods. Defaults to 'exactly' & 'unordered' XPECT contentAssistList at 'a.<|>methodA' proposals --- 
 "methodA", "methodA2",
-"constructor","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","toLocaleString","toString","valueOf"
+"__proto__", "constructor","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","toLocaleString","toString","valueOf"
 ---
 */
 a.methodA

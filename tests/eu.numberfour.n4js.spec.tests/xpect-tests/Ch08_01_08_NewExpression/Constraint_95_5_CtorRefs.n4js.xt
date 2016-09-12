@@ -44,7 +44,7 @@ g.m(A);
 g.m(B);
 
 function h(ctor: constructor{? extends A}) {
-	// concrete type could have arbitrary constructor function signature XPECT errors --> "Cannot instantiate ? extends A." at "ctor"
+	// concrete type could have arbitrary constructor function signature XPECT errors --> "Cannot instantiate ? extends A, because A does not have a @CovariantConstructor." at "ctor"
 	new ctor();
 }
 

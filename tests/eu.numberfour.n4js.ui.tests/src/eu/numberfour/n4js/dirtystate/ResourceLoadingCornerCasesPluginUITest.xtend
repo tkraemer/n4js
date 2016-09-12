@@ -28,7 +28,7 @@ class ResourceLoadingCornerCasesPluginUITest extends AbstractBuilderParticipantT
 	 * {@link N4JSResource#doResolveProxy(InternalEObject, EObject)}.
 	 * <p>
 	 * NOTE: as of GH-141, in order to make this test fail, you also have to undo a bug fix in
-	 * Xsemantics rule 'subtypeConstructorTypeRef'. Replace this code:
+	 * Xsemantics rule 'subtypeTypeTypeRef'. Replace this code:
 	 * <pre>
 	 * // we need the type of the two constructors (i.e. their signature)
 	 * // DO NOT USE "var leftCtorRef = TypeUtils.createTypeRef(leftCtor)", because this would by-pass the handling

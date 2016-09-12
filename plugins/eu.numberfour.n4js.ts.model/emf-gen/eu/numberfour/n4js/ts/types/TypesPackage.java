@@ -2146,13 +2146,13 @@ public interface TypesPackage extends EPackage {
 	int CONTAINER_TYPE___GET_TYPE_AS_STRING = TYPE___GET_TYPE_AS_STRING;
 
 	/**
-	 * The operation id for the '<em>Find Owned Member</em>' operation.
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER_TYPE___FIND_OWNED_MEMBER__STRING = TYPE_OPERATION_COUNT + 0;
+	int CONTAINER_TYPE___GET_OWNED_CTOR = TYPE_OPERATION_COUNT + 0;
 
 	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
@@ -2161,7 +2161,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER_TYPE___FIND_OWNED_MEMBER__STRING_BOOLEAN_BOOLEAN = TYPE_OPERATION_COUNT + 1;
+	int CONTAINER_TYPE___FIND_OWNED_MEMBER__STRING = TYPE_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Find Owned Member</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINER_TYPE___FIND_OWNED_MEMBER__STRING_BOOLEAN_BOOLEAN = TYPE_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Or Create Owned Members By Name And Access</em>' operation.
@@ -2170,7 +2179,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = TYPE_OPERATION_COUNT + 2;
+	int CONTAINER_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = TYPE_OPERATION_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Container Type</em>' class.
@@ -2179,7 +2188,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER_TYPE_OPERATION_COUNT = TYPE_OPERATION_COUNT + 3;
+	int CONTAINER_TYPE_OPERATION_COUNT = TYPE_OPERATION_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.VirtualBaseTypeImpl <em>Virtual Base Type</em>}' class.
@@ -2406,6 +2415,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int VIRTUAL_BASE_TYPE___GET_TYPE_AS_STRING = CONTAINER_TYPE___GET_TYPE_AS_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIRTUAL_BASE_TYPE___GET_OWNED_CTOR = CONTAINER_TYPE___GET_OWNED_CTOR;
 
 	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
@@ -2894,6 +2912,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int PRIMITIVE_TYPE___GET_TYPE_AS_STRING = CONTAINER_TYPE___GET_TYPE_AS_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMITIVE_TYPE___GET_OWNED_CTOR = CONTAINER_TYPE___GET_OWNED_CTOR;
 
 	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
@@ -4108,6 +4135,15 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCTURAL_TYPE___GET_TYPE_AS_STRING = CONTAINER_TYPE___GET_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCTURAL_TYPE___GET_OWNED_CTOR = CONTAINER_TYPE___GET_OWNED_CTOR;
+
+	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4235,13 +4271,22 @@ public interface TypesPackage extends EPackage {
 	int TCLASSIFIER__AST_ELEMENT = CONTAINER_TYPE_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Declared Covariant Constructor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR = CONTAINER_TYPE_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>TClassifier</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASSIFIER_FEATURE_COUNT = CONTAINER_TYPE_FEATURE_COUNT + 1;
+	int TCLASSIFIER_FEATURE_COUNT = CONTAINER_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -4370,6 +4415,15 @@ public interface TypesPackage extends EPackage {
 	int TCLASSIFIER___GET_TYPE_AS_STRING = CONTAINER_TYPE___GET_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASSIFIER___GET_OWNED_CTOR = CONTAINER_TYPE___GET_OWNED_CTOR;
+
+	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4415,13 +4469,22 @@ public interface TypesPackage extends EPackage {
 	int TCLASSIFIER___GET_SUPER_CLASSIFIERS = CONTAINER_TYPE_OPERATION_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASSIFIER___GET_SUPER_CLASSIFIER_REFS = CONTAINER_TYPE_OPERATION_COUNT + 2;
+
+	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASSIFIER___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = CONTAINER_TYPE_OPERATION_COUNT + 2;
+	int TCLASSIFIER___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = CONTAINER_TYPE_OPERATION_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Is Final</em>' operation.
@@ -4430,7 +4493,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASSIFIER___IS_FINAL = CONTAINER_TYPE_OPERATION_COUNT + 3;
+	int TCLASSIFIER___IS_FINAL = CONTAINER_TYPE_OPERATION_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>TClassifier</em>' class.
@@ -4439,7 +4502,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASSIFIER_OPERATION_COUNT = CONTAINER_TYPE_OPERATION_COUNT + 4;
+	int TCLASSIFIER_OPERATION_COUNT = CONTAINER_TYPE_OPERATION_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TObjectPrototypeImpl <em>TObject Prototype</em>}' class.
@@ -4522,6 +4585,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TOBJECT_PROTOTYPE__AST_ELEMENT = TCLASSIFIER__AST_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Declared Covariant Constructor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOBJECT_PROTOTYPE__DECLARED_COVARIANT_CONSTRUCTOR = TCLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type Access Modifier</b></em>' attribute.
@@ -4711,6 +4783,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TOBJECT_PROTOTYPE___GET_SUPER_CLASSIFIERS = TCLASSIFIER___GET_SUPER_CLASSIFIERS;
+
+	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOBJECT_PROTOTYPE___GET_SUPER_CLASSIFIER_REFS = TCLASSIFIER___GET_SUPER_CLASSIFIER_REFS;
 
 	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
@@ -4913,6 +4994,15 @@ public interface TypesPackage extends EPackage {
 	int TN4_CLASSIFIER__AST_ELEMENT = TCLASSIFIER__AST_ELEMENT;
 
 	/**
+	 * The feature id for the '<em><b>Declared Covariant Constructor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TN4_CLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR = TCLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR;
+
+	/**
 	 * The feature id for the '<em><b>Declared Type Access Modifier</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5057,6 +5147,15 @@ public interface TypesPackage extends EPackage {
 	int TN4_CLASSIFIER___GET_TYPE_AS_STRING = TCLASSIFIER___GET_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TN4_CLASSIFIER___GET_OWNED_CTOR = TCLASSIFIER___GET_OWNED_CTOR;
+
+	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5100,6 +5199,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TN4_CLASSIFIER___GET_SUPER_CLASSIFIERS = TCLASSIFIER___GET_SUPER_CLASSIFIERS;
+
+	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TN4_CLASSIFIER___GET_SUPER_CLASSIFIER_REFS = TCLASSIFIER___GET_SUPER_CLASSIFIER_REFS;
 
 	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
@@ -5236,6 +5344,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TCLASS__AST_ELEMENT = TN4_CLASSIFIER__AST_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Declared Covariant Constructor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASS__DECLARED_COVARIANT_CONSTRUCTOR = TN4_CLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type Access Modifier</b></em>' attribute.
@@ -5445,6 +5562,15 @@ public interface TypesPackage extends EPackage {
 	int TCLASS___GET_TYPE_AS_STRING = TN4_CLASSIFIER___GET_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASS___GET_OWNED_CTOR = TN4_CLASSIFIER___GET_OWNED_CTOR;
+
+	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5470,6 +5596,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TCLASS___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = TN4_CLASSIFIER___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS;
+
+	/**
+	 * The operation id for the '<em>Get Super Classifiers</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASS___GET_SUPER_CLASSIFIERS = TN4_CLASSIFIER___GET_SUPER_CLASSIFIERS;
 
 	/**
 	 * The operation id for the '<em>Is Provided By Runtime</em>' operation.
@@ -5508,13 +5643,22 @@ public interface TypesPackage extends EPackage {
 	int TCLASS___IS_ABSTRACT = TN4_CLASSIFIER_OPERATION_COUNT + 0;
 
 	/**
-	 * The operation id for the '<em>Get Super Classifiers</em>' operation.
+	 * The operation id for the '<em>Get Super Class</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS___GET_SUPER_CLASSIFIERS = TN4_CLASSIFIER_OPERATION_COUNT + 1;
+	int TCLASS___GET_SUPER_CLASS = TN4_CLASSIFIER_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASS___GET_SUPER_CLASSIFIER_REFS = TN4_CLASSIFIER_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
@@ -5523,16 +5667,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TCLASS___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = TN4_CLASSIFIER_OPERATION_COUNT + 2;
-
-	/**
-	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TCLASS___GET_OWNED_CTOR = TN4_CLASSIFIER_OPERATION_COUNT + 3;
+	int TCLASS___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = TN4_CLASSIFIER_OPERATION_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Is Polyfill</em>' operation.
@@ -5651,6 +5786,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TINTERFACE__AST_ELEMENT = TN4_CLASSIFIER__AST_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Declared Covariant Constructor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TINTERFACE__DECLARED_COVARIANT_CONSTRUCTOR = TN4_CLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type Access Modifier</b></em>' attribute.
@@ -5815,6 +5959,15 @@ public interface TypesPackage extends EPackage {
 	int TINTERFACE___GET_TYPE_AS_STRING = TN4_CLASSIFIER___GET_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Owned Ctor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TINTERFACE___GET_OWNED_CTOR = TN4_CLASSIFIER___GET_OWNED_CTOR;
+
+	/**
 	 * The operation id for the '<em>Find Owned Member</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5840,6 +5993,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TINTERFACE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = TN4_CLASSIFIER___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS;
+
+	/**
+	 * The operation id for the '<em>Get Super Classifiers</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TINTERFACE___GET_SUPER_CLASSIFIERS = TN4_CLASSIFIER___GET_SUPER_CLASSIFIERS;
 
 	/**
 	 * The operation id for the '<em>Is Final</em>' operation.
@@ -5887,13 +6049,13 @@ public interface TypesPackage extends EPackage {
 	int TINTERFACE___IS_ABSTRACT = TN4_CLASSIFIER_OPERATION_COUNT + 0;
 
 	/**
-	 * The operation id for the '<em>Get Super Classifiers</em>' operation.
+	 * The operation id for the '<em>Get Super Classifier Refs</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TINTERFACE___GET_SUPER_CLASSIFIERS = TN4_CLASSIFIER_OPERATION_COUNT + 1;
+	int TINTERFACE___GET_SUPER_CLASSIFIER_REFS = TN4_CLASSIFIER_OPERATION_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Implemented Or Extended Interface Refs</em>' operation.
@@ -6068,13 +6230,22 @@ public interface TypesPackage extends EPackage {
 	int TMEMBER___IS_METHOD = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 7;
 
 	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMEMBER___IS_CONSTRUCTOR = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 8;
+
+	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___IS_OPTIONAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 8;
+	int TMEMBER___IS_OPTIONAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
@@ -6083,7 +6254,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___IS_ABSTRACT = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 9;
+	int TMEMBER___IS_ABSTRACT = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 10;
 
 	/**
 	 * The operation id for the '<em>Is Readable</em>' operation.
@@ -6092,7 +6263,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___IS_READABLE = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 10;
+	int TMEMBER___IS_READABLE = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 11;
 
 	/**
 	 * The operation id for the '<em>Is Writeable</em>' operation.
@@ -6101,7 +6272,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___IS_WRITEABLE = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 11;
+	int TMEMBER___IS_WRITEABLE = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 12;
 
 	/**
 	 * The operation id for the '<em>Get Member As String</em>' operation.
@@ -6110,7 +6281,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___GET_MEMBER_AS_STRING = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 12;
+	int TMEMBER___GET_MEMBER_AS_STRING = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 13;
 
 	/**
 	 * The operation id for the '<em>Is Final</em>' operation.
@@ -6119,7 +6290,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___IS_FINAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 13;
+	int TMEMBER___IS_FINAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 14;
 
 	/**
 	 * The operation id for the '<em>Is Static</em>' operation.
@@ -6128,7 +6299,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___IS_STATIC = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 14;
+	int TMEMBER___IS_STATIC = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 15;
 
 	/**
 	 * The operation id for the '<em>Is Polyfilled</em>' operation.
@@ -6137,7 +6308,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER___IS_POLYFILLED = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 15;
+	int TMEMBER___IS_POLYFILLED = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 16;
 
 	/**
 	 * The number of operations of the '<em>TMember</em>' class.
@@ -6146,7 +6317,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER_OPERATION_COUNT = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 16;
+	int TMEMBER_OPERATION_COUNT = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 17;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TMemberWithAccessModifierImpl <em>TMember With Access Modifier</em>}' class.
@@ -6310,6 +6481,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TMEMBER_WITH_ACCESS_MODIFIER___IS_METHOD = TMEMBER___IS_METHOD;
+
+	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMEMBER_WITH_ACCESS_MODIFIER___IS_CONSTRUCTOR = TMEMBER___IS_CONSTRUCTOR;
 
 	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
@@ -6554,6 +6734,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_MEMBER___IS_METHOD = TMEMBER___IS_METHOD;
+
+	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_MEMBER___IS_CONSTRUCTOR = TMEMBER___IS_CONSTRUCTOR;
 
 	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
@@ -7058,7 +7247,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___IS_OPTIONAL = TFUNCTION_OPERATION_COUNT + 8;
+	int TMETHOD___IS_OPTIONAL = TFUNCTION_OPERATION_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Is Readable</em>' operation.
@@ -7067,7 +7256,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___IS_READABLE = TFUNCTION_OPERATION_COUNT + 10;
+	int TMETHOD___IS_READABLE = TFUNCTION_OPERATION_COUNT + 11;
 
 	/**
 	 * The operation id for the '<em>Is Writeable</em>' operation.
@@ -7076,7 +7265,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___IS_WRITEABLE = TFUNCTION_OPERATION_COUNT + 11;
+	int TMETHOD___IS_WRITEABLE = TFUNCTION_OPERATION_COUNT + 12;
 
 	/**
 	 * The operation id for the '<em>Is Final</em>' operation.
@@ -7085,7 +7274,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___IS_FINAL = TFUNCTION_OPERATION_COUNT + 13;
+	int TMETHOD___IS_FINAL = TFUNCTION_OPERATION_COUNT + 14;
 
 	/**
 	 * The operation id for the '<em>Is Static</em>' operation.
@@ -7094,7 +7283,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___IS_STATIC = TFUNCTION_OPERATION_COUNT + 14;
+	int TMETHOD___IS_STATIC = TFUNCTION_OPERATION_COUNT + 15;
 
 	/**
 	 * The operation id for the '<em>Is Polyfilled</em>' operation.
@@ -7103,7 +7292,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___IS_POLYFILLED = TFUNCTION_OPERATION_COUNT + 15;
+	int TMETHOD___IS_POLYFILLED = TFUNCTION_OPERATION_COUNT + 16;
 
 	/**
 	 * The operation id for the '<em>Get Member Access Modifier</em>' operation.
@@ -7112,7 +7301,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___GET_MEMBER_ACCESS_MODIFIER = TFUNCTION_OPERATION_COUNT + 16;
+	int TMETHOD___GET_MEMBER_ACCESS_MODIFIER = TFUNCTION_OPERATION_COUNT + 17;
 
 	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
@@ -7121,7 +7310,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___IS_ABSTRACT = TFUNCTION_OPERATION_COUNT + 17;
+	int TMETHOD___IS_ABSTRACT = TFUNCTION_OPERATION_COUNT + 18;
 
 	/**
 	 * The operation id for the '<em>Get Member Type</em>' operation.
@@ -7130,7 +7319,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___GET_MEMBER_TYPE = TFUNCTION_OPERATION_COUNT + 18;
+	int TMETHOD___GET_MEMBER_TYPE = TFUNCTION_OPERATION_COUNT + 19;
+
+	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMETHOD___IS_CONSTRUCTOR = TFUNCTION_OPERATION_COUNT + 20;
 
 	/**
 	 * The operation id for the '<em>Get Function As String</em>' operation.
@@ -7139,7 +7337,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___GET_FUNCTION_AS_STRING = TFUNCTION_OPERATION_COUNT + 19;
+	int TMETHOD___GET_FUNCTION_AS_STRING = TFUNCTION_OPERATION_COUNT + 21;
 
 	/**
 	 * The operation id for the '<em>Get Member As String</em>' operation.
@@ -7148,7 +7346,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD___GET_MEMBER_AS_STRING = TFUNCTION_OPERATION_COUNT + 20;
+	int TMETHOD___GET_MEMBER_AS_STRING = TFUNCTION_OPERATION_COUNT + 22;
 
 	/**
 	 * The number of operations of the '<em>TMethod</em>' class.
@@ -7157,7 +7355,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD_OPERATION_COUNT = TFUNCTION_OPERATION_COUNT + 21;
+	int TMETHOD_OPERATION_COUNT = TFUNCTION_OPERATION_COUNT + 23;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TStructMethodImpl <em>TStruct Method</em>}' class.
@@ -7627,6 +7825,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_METHOD___GET_MEMBER_TYPE = TMETHOD___GET_MEMBER_TYPE;
+
+	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_METHOD___IS_CONSTRUCTOR = TMETHOD___IS_CONSTRUCTOR;
 
 	/**
 	 * The operation id for the '<em>Get Function As String</em>' operation.
@@ -8100,6 +8307,15 @@ public interface TypesPackage extends EPackage {
 	int TFIELD___IS_METHOD = TMEMBER_WITH_ACCESS_MODIFIER___IS_METHOD;
 
 	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFIELD___IS_CONSTRUCTOR = TMEMBER_WITH_ACCESS_MODIFIER___IS_CONSTRUCTOR;
+
+	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8389,6 +8605,15 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCT_FIELD___IS_METHOD = TFIELD___IS_METHOD;
 
 	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_FIELD___IS_CONSTRUCTOR = TFIELD___IS_CONSTRUCTOR;
+
+	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8588,13 +8813,22 @@ public interface TypesPackage extends EPackage {
 	int FIELD_ACCESSOR__DECLARED_ABSTRACT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Declared This Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD_ACCESSOR__DECLARED_THIS_TYPE = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Field Accessor</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_ACCESSOR_FEATURE_COUNT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 1;
+	int FIELD_ACCESSOR_FEATURE_COUNT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -8667,6 +8901,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int FIELD_ACCESSOR___IS_METHOD = TMEMBER_WITH_ACCESS_MODIFIER___IS_METHOD;
+
+	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD_ACCESSOR___IS_CONSTRUCTOR = TMEMBER_WITH_ACCESS_MODIFIER___IS_CONSTRUCTOR;
 
 	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
@@ -8859,6 +9102,15 @@ public interface TypesPackage extends EPackage {
 	int TGETTER__DECLARED_ABSTRACT = FIELD_ACCESSOR__DECLARED_ABSTRACT;
 
 	/**
+	 * The feature id for the '<em><b>Declared This Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGETTER__DECLARED_THIS_TYPE = FIELD_ACCESSOR__DECLARED_THIS_TYPE;
+
+	/**
 	 * The feature id for the '<em><b>Declared Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8938,6 +9190,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TGETTER___IS_METHOD = FIELD_ACCESSOR___IS_METHOD;
+
+	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGETTER___IS_CONSTRUCTOR = FIELD_ACCESSOR___IS_CONSTRUCTOR;
 
 	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
@@ -9139,6 +9400,15 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCT_GETTER__DECLARED_ABSTRACT = TGETTER__DECLARED_ABSTRACT;
 
 	/**
+	 * The feature id for the '<em><b>Declared This Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_GETTER__DECLARED_THIS_TYPE = TGETTER__DECLARED_THIS_TYPE;
+
+	/**
 	 * The feature id for the '<em><b>Declared Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9227,6 +9497,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_GETTER___IS_METHOD = TGETTER___IS_METHOD;
+
+	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_GETTER___IS_CONSTRUCTOR = TGETTER___IS_CONSTRUCTOR;
 
 	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
@@ -9437,6 +9716,15 @@ public interface TypesPackage extends EPackage {
 	int TSETTER__DECLARED_ABSTRACT = FIELD_ACCESSOR__DECLARED_ABSTRACT;
 
 	/**
+	 * The feature id for the '<em><b>Declared This Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSETTER__DECLARED_THIS_TYPE = FIELD_ACCESSOR__DECLARED_THIS_TYPE;
+
+	/**
 	 * The feature id for the '<em><b>Fpar</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9516,6 +9804,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSETTER___IS_METHOD = FIELD_ACCESSOR___IS_METHOD;
+
+	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSETTER___IS_CONSTRUCTOR = FIELD_ACCESSOR___IS_CONSTRUCTOR;
 
 	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
@@ -9717,6 +10014,15 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCT_SETTER__DECLARED_ABSTRACT = TSETTER__DECLARED_ABSTRACT;
 
 	/**
+	 * The feature id for the '<em><b>Declared This Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_SETTER__DECLARED_THIS_TYPE = TSETTER__DECLARED_THIS_TYPE;
+
+	/**
 	 * The feature id for the '<em><b>Fpar</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9805,6 +10111,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_SETTER___IS_METHOD = TSETTER___IS_METHOD;
+
+	/**
+	 * The operation id for the '<em>Is Constructor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_SETTER___IS_CONSTRUCTOR = TSETTER___IS_CONSTRUCTOR;
 
 	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
@@ -10447,6 +10762,16 @@ public interface TypesPackage extends EPackage {
 	int COLLECTION_OF_TYPE_REF = 56;
 
 	/**
+	 * The meta object id for the '<em>Iterable Of TClassifier</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.lang.Iterable
+	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getIterableOfTClassifier()
+	 * @generated
+	 */
+	int ITERABLE_OF_TCLASSIFIER = 57;
+
+	/**
 	 * The meta object id for the '<em>Variance</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10454,7 +10779,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getVariance()
 	 * @generated
 	 */
-	int VARIANCE = 57;
+	int VARIANCE = 58;
 
 	/**
 	 * The meta object id for the '<em>Name And Access</em>' data type.
@@ -10464,7 +10789,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNameAndAccess()
 	 * @generated
 	 */
-	int NAME_AND_ACCESS = 58;
+	int NAME_AND_ACCESS = 59;
 
 	/**
 	 * The meta object id for the '<em>Member List</em>' data type.
@@ -10474,7 +10799,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberList()
 	 * @generated
 	 */
-	int MEMBER_LIST = 59;
+	int MEMBER_LIST = 60;
 
 	/**
 	 * The meta object id for the '<em>TClassifier Iterable</em>' data type.
@@ -10484,7 +10809,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTClassifierIterable()
 	 * @generated
 	 */
-	int TCLASSIFIER_ITERABLE = 60;
+	int TCLASSIFIER_ITERABLE = 61;
 
 
 	/**
@@ -11375,6 +11700,16 @@ public interface TypesPackage extends EPackage {
 	EReference getContainerType_TypeVars();
 
 	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.ContainerType#getOwnedCtor() <em>Get Owned Ctor</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Owned Ctor</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.ContainerType#getOwnedCtor()
+	 * @generated
+	 */
+	EOperation getContainerType__GetOwnedCtor();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.ContainerType#findOwnedMember(java.lang.String) <em>Find Owned Member</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11600,6 +11935,17 @@ public interface TypesPackage extends EPackage {
 	EClass getTClassifier();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TClassifier#isDeclaredCovariantConstructor <em>Declared Covariant Constructor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Declared Covariant Constructor</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TClassifier#isDeclaredCovariantConstructor()
+	 * @see #getTClassifier()
+	 * @generated
+	 */
+	EAttribute getTClassifier_DeclaredCovariantConstructor();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClassifier#isAbstract() <em>Is Abstract</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11618,6 +11964,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTClassifier__GetSuperClassifiers();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClassifier#getSuperClassifierRefs() <em>Get Super Classifier Refs</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Super Classifier Refs</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TClassifier#getSuperClassifierRefs()
+	 * @generated
+	 */
+	EOperation getTClassifier__GetSuperClassifierRefs();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClassifier#getImplementedOrExtendedInterfaceRefs() <em>Get Implemented Or Extended Interface Refs</em>}' operation.
@@ -11874,14 +12230,24 @@ public interface TypesPackage extends EPackage {
 	EOperation getTClass__IsAbstract();
 
 	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClass#getSuperClassifiers() <em>Get Super Classifiers</em>}' operation.
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClass#getSuperClass() <em>Get Super Class</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Super Classifiers</em>' operation.
-	 * @see eu.numberfour.n4js.ts.types.TClass#getSuperClassifiers()
+	 * @return the meta object for the '<em>Get Super Class</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TClass#getSuperClass()
 	 * @generated
 	 */
-	EOperation getTClass__GetSuperClassifiers();
+	EOperation getTClass__GetSuperClass();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClass#getSuperClassifierRefs() <em>Get Super Classifier Refs</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Super Classifier Refs</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TClass#getSuperClassifierRefs()
+	 * @generated
+	 */
+	EOperation getTClass__GetSuperClassifierRefs();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClass#getImplementedOrExtendedInterfaceRefs() <em>Get Implemented Or Extended Interface Refs</em>}' operation.
@@ -11892,16 +12258,6 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTClass__GetImplementedOrExtendedInterfaceRefs();
-
-	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClass#getOwnedCtor() <em>Get Owned Ctor</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Owned Ctor</em>' operation.
-	 * @see eu.numberfour.n4js.ts.types.TClass#getOwnedCtor()
-	 * @generated
-	 */
-	EOperation getTClass__GetOwnedCtor();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TClass#isPolyfill() <em>Is Polyfill</em>}' operation.
@@ -11976,14 +12332,14 @@ public interface TypesPackage extends EPackage {
 	EOperation getTInterface__IsAbstract();
 
 	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TInterface#getSuperClassifiers() <em>Get Super Classifiers</em>}' operation.
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TInterface#getSuperClassifierRefs() <em>Get Super Classifier Refs</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Super Classifiers</em>' operation.
-	 * @see eu.numberfour.n4js.ts.types.TInterface#getSuperClassifiers()
+	 * @return the meta object for the '<em>Get Super Classifier Refs</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TInterface#getSuperClassifierRefs()
 	 * @generated
 	 */
-	EOperation getTInterface__GetSuperClassifiers();
+	EOperation getTInterface__GetSuperClassifierRefs();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TInterface#getImplementedOrExtendedInterfaceRefs() <em>Get Implemented Or Extended Interface Refs</em>}' operation.
@@ -12117,6 +12473,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTMember__IsMethod();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TMember#isConstructor() <em>Is Constructor</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Constructor</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TMember#isConstructor()
+	 * @generated
+	 */
+	EOperation getTMember__IsConstructor();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TMember#isOptional() <em>Is Optional</em>}' operation.
@@ -12342,6 +12708,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTMethod__GetMemberType();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TMethod#isConstructor() <em>Is Constructor</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Constructor</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TMethod#isConstructor()
+	 * @generated
+	 */
+	EOperation getTMethod__IsConstructor();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TMethod#getFunctionAsString() <em>Get Function As String</em>}' operation.
@@ -12598,6 +12974,17 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getFieldAccessor_DeclaredAbstract();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.types.FieldAccessor#getDeclaredThisType <em>Declared This Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Declared This Type</em>'.
+	 * @see eu.numberfour.n4js.ts.types.FieldAccessor#getDeclaredThisType()
+	 * @see #getFieldAccessor()
+	 * @generated
+	 */
+	EReference getFieldAccessor_DeclaredThisType();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.FieldAccessor#getDeclaredTypeRef() <em>Get Declared Type Ref</em>}' operation.
@@ -12968,6 +13355,17 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getCollectionOfTypeRef();
+
+	/**
+	 * Returns the meta object for data type '{@link java.lang.Iterable <em>Iterable Of TClassifier</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Iterable Of TClassifier</em>'.
+	 * @see java.lang.Iterable
+	 * @model instanceClass="java.lang.Iterable<? extends eu.numberfour.n4js.ts.types.TClassifier>"
+	 * @generated
+	 */
+	EDataType getIterableOfTClassifier();
 
 	/**
 	 * Returns the meta object for data type '{@link eu.numberfour.n4js.ts.types.util.Variance <em>Variance</em>}'.
@@ -13751,6 +14149,14 @@ public interface TypesPackage extends EPackage {
 		EReference CONTAINER_TYPE__TYPE_VARS = eINSTANCE.getContainerType_TypeVars();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Owned Ctor</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CONTAINER_TYPE___GET_OWNED_CTOR = eINSTANCE.getContainerType__GetOwnedCtor();
+
+		/**
 		 * The meta object literal for the '<em><b>Find Owned Member</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -13947,6 +14353,14 @@ public interface TypesPackage extends EPackage {
 		EClass TCLASSIFIER = eINSTANCE.getTClassifier();
 
 		/**
+		 * The meta object literal for the '<em><b>Declared Covariant Constructor</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TCLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR = eINSTANCE.getTClassifier_DeclaredCovariantConstructor();
+
+		/**
 		 * The meta object literal for the '<em><b>Is Abstract</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -13961,6 +14375,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TCLASSIFIER___GET_SUPER_CLASSIFIERS = eINSTANCE.getTClassifier__GetSuperClassifiers();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Super Classifier Refs</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TCLASSIFIER___GET_SUPER_CLASSIFIER_REFS = eINSTANCE.getTClassifier__GetSuperClassifierRefs();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Implemented Or Extended Interface Refs</b></em>' operation.
@@ -14163,12 +14585,20 @@ public interface TypesPackage extends EPackage {
 		EOperation TCLASS___IS_ABSTRACT = eINSTANCE.getTClass__IsAbstract();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Super Classifiers</b></em>' operation.
+		 * The meta object literal for the '<em><b>Get Super Class</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TCLASS___GET_SUPER_CLASSIFIERS = eINSTANCE.getTClass__GetSuperClassifiers();
+		EOperation TCLASS___GET_SUPER_CLASS = eINSTANCE.getTClass__GetSuperClass();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Super Classifier Refs</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TCLASS___GET_SUPER_CLASSIFIER_REFS = eINSTANCE.getTClass__GetSuperClassifierRefs();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Implemented Or Extended Interface Refs</b></em>' operation.
@@ -14177,14 +14607,6 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TCLASS___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS = eINSTANCE.getTClass__GetImplementedOrExtendedInterfaceRefs();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Owned Ctor</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation TCLASS___GET_OWNED_CTOR = eINSTANCE.getTClass__GetOwnedCtor();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Polyfill</b></em>' operation.
@@ -14245,12 +14667,12 @@ public interface TypesPackage extends EPackage {
 		EOperation TINTERFACE___IS_ABSTRACT = eINSTANCE.getTInterface__IsAbstract();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Super Classifiers</b></em>' operation.
+		 * The meta object literal for the '<em><b>Get Super Classifier Refs</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TINTERFACE___GET_SUPER_CLASSIFIERS = eINSTANCE.getTInterface__GetSuperClassifiers();
+		EOperation TINTERFACE___GET_SUPER_CLASSIFIER_REFS = eINSTANCE.getTInterface__GetSuperClassifierRefs();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Implemented Or Extended Interface Refs</b></em>' operation.
@@ -14357,6 +14779,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TMEMBER___IS_METHOD = eINSTANCE.getTMember__IsMethod();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Constructor</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TMEMBER___IS_CONSTRUCTOR = eINSTANCE.getTMember__IsConstructor();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Optional</b></em>' operation.
@@ -14539,6 +14969,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TMETHOD___GET_MEMBER_TYPE = eINSTANCE.getTMethod__GetMemberType();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Constructor</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TMETHOD___IS_CONSTRUCTOR = eINSTANCE.getTMethod__IsConstructor();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Function As String</b></em>' operation.
@@ -14751,6 +15189,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute FIELD_ACCESSOR__DECLARED_ABSTRACT = eINSTANCE.getFieldAccessor_DeclaredAbstract();
+
+		/**
+		 * The meta object literal for the '<em><b>Declared This Type</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FIELD_ACCESSOR__DECLARED_THIS_TYPE = eINSTANCE.getFieldAccessor_DeclaredThisType();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Declared Type Ref</b></em>' operation.
@@ -15069,6 +15515,16 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType COLLECTION_OF_TYPE_REF = eINSTANCE.getCollectionOfTypeRef();
+
+		/**
+		 * The meta object literal for the '<em>Iterable Of TClassifier</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.lang.Iterable
+		 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getIterableOfTClassifier()
+		 * @generated
+		 */
+		EDataType ITERABLE_OF_TCLASSIFIER = eINSTANCE.getIterableOfTClassifier();
 
 		/**
 		 * The meta object literal for the '<em>Variance</em>' data type.

@@ -9,7 +9,7 @@ class C {
 	async bar() {
 		// XPECT nowarnings
 	    var s = await (this.foo());
-	    // XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await (7 + 2)"
+	    // XPECT warnings --> "await should only be used on expressions of type Promise<?,?> since otherwise it has no effect." at "await (7 + 2)"
 	    var i = await (7 + 2);
 	    return "Hello " + i;
 	}
@@ -22,7 +22,7 @@ class C {
 		return null;
 	}
 	async nfT() {
-		// XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await this.nf1("", null)"
+		// XPECT warnings --> "await should only be used on expressions of type Promise<?,?> since otherwise it has no effect." at "await this.nf1("", null)"
 		await this.nf1("", null);
 		// XPECT nowarnings
 		await this.nf2("", null);
@@ -37,7 +37,7 @@ class C {
 	}
 	g2: G<string>;
 	async f2() {
-		// XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await this.g2.m()"
+		// XPECT warnings --> "await should only be used on expressions of type Promise<?,?> since otherwise it has no effect." at "await this.g2.m()"
 		await this.g2.m();
 	}
 	
@@ -50,7 +50,7 @@ class C {
 	pf2(path : string, cb : {function(Error,string)}) {
 	}
 	async pfT() {
-		// XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await this.pf1("", null)"
+		// XPECT warnings --> "await should only be used on expressions of type Promise<?,?> since otherwise it has no effect." at "await this.pf1("", null)"
 		await this.pf1("", null);
 		await @Promisify this.pf2("");
 	}
@@ -70,7 +70,7 @@ class H1 extends G<Promise<?,?>> {
 }
 class H2 extends G<string> {
 	async m2() {
-		// XPECT warnings --> "Keyword await should only be used on expressions of type Promise<?,?>." at "await this.m()"
+		// XPECT warnings --> "await should only be used on expressions of type Promise<?,?> since otherwise it has no effect." at "await this.m()"
 		await this.m();
 	}
 }

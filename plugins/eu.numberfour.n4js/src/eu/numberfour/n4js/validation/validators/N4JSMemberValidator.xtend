@@ -24,6 +24,7 @@ import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.N4SetterDeclaration
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.types.FieldAccessor
@@ -41,6 +42,10 @@ import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.utils.ContainerTypesHelper
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4js.validation.IssueCodes
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import java.util.List
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.util.Tuples
@@ -50,6 +55,9 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static eu.numberfour.n4js.AnnotationDefinition.*
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
+
+import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 
 /**
  * Validation of rules that apply to individual members of a classifier.<p>
@@ -219,7 +227,10 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 
 	def private boolean holdsConstructorConstraints(TMethod method) {
 		if (method.constructor) {
-			if (!holdsConstructorNotInInterface(method)) {
+			if (!holdsConstructorInInterfaceDoesNotHaveBody(method)) {
+				return false;
+			}
+			if (!holdsConstructorInInterfaceRequiresCovarianceAnnotation(method)) {
 				return false;
 			}
 			if (!holdsConstructorNoReturnType(method)) {
@@ -235,8 +246,10 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 	 * N4JS spec constraints 51.1
 	 */
 	private def holdsConstructorModifiers(TMethod constructor) {
-		if (constructor.abstract || constructor.static || constructor.final ||
-			constructor.hasIllegalOverride ) {
+		if ((constructor.abstract && !(constructor.containingType instanceof TInterface)) // ctor in interface may be abstract (actually it *must* be abstract)
+			|| constructor.static
+			|| constructor.final
+			|| constructor.hasIllegalOverride ) {
 			val message = getMessageForCLF_CTOR_ILLEGAL_MODIFIER
 			addIssue(message, constructor.astElement, PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_CTOR_ILLEGAL_MODIFIER)
 			return false;
@@ -251,12 +264,25 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	/**
-	 * N4JS spec constraints 51.4
+	 * Constraints 56 (Defining and Calling Constructors), #5.a
 	 */
-	private def boolean holdsConstructorNotInInterface(TMethod constructor) {
-		if (constructor.containingType instanceof TInterface) {
-			addIssue(getMessageForITF_NO_CONSTRUCTOR, constructor.astElement, PROPERTY_NAME_OWNER__DECLARED_NAME,
-				ITF_NO_CONSTRUCTOR);
+	private def boolean holdsConstructorInInterfaceDoesNotHaveBody(TMethod constructor) {
+		if (constructor.containingType instanceof TInterface && !constructor.hasNoBody) {
+			addIssue(getMessageForITF_CONSTRUCTOR_BODY, constructor.astElement, PROPERTY_NAME_OWNER__DECLARED_NAME,
+				ITF_CONSTRUCTOR_BODY);
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Constraints 56 (Defining and Calling Constructors), #5.b
+	 */
+	private def boolean holdsConstructorInInterfaceRequiresCovarianceAnnotation(TMethod constructor) {
+		val container = constructor.containingType;
+		if (container instanceof TInterface && !N4JSLanguageUtils.hasCovariantConstructor(container as TInterface)) {
+			addIssue(getMessageForITF_CONSTRUCTOR_COVARIANCE, constructor.astElement,
+				PROPERTY_NAME_OWNER__DECLARED_NAME, ITF_CONSTRUCTOR_COVARIANCE);
 			return false;
 		}
 		return true;
@@ -278,10 +304,10 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 		if ((constructor.astElement as N4MemberDeclaration).body !== null) { // otherwise another validation will complain
 			val type = constructor.eContainer;
 			if (type instanceof TClass) { // otherwise another validation will complain
-				val G = RuleEnvironmentExtensions.newRuleEnvironment(constructor);
-				val superClass = RuleEnvironmentExtensions.getDeclaredOrImplicitSuperType(G, type)
+				val G = constructor.newRuleEnvironment;
+				val superClass = G.getDeclaredOrImplicitSuperType(type);
 				val ctor = containerTypesHelper.fromContext(constructor).findConstructor(superClass);
-				if (ctor !== null) {
+				if (ctor !== null && ctor !== G.objectType.ownedCtor) {
 					if (ctor.fpars.size > 0) {
 						val existsSuperCall = (constructor.astElement as N4MethodDeclaration).existsExplicitSuperCall();
 						if (! existsSuperCall) {

@@ -6,15 +6,18 @@
 
 // IDE-2313
 interface A {
-	// cannot use @This with getters XPECT errors --> "The annotation @This is disallowed for this location." at "This"
-	@This(~Object with { s: string; })
-	get s() : string  {
+	// XPECT noerrors -->
+	@This(B)
+	get acc() : string  {
 		if (this.s) {
 			return this.s;
 		}
 		return "";
 	}
-	// cannot use @This with setters XPECT errors --> "The annotation @This is disallowed for this location." at "This"
-	@This(~Object with { s: string; })
-	set s (n : string) { this.s = n; }
+	// XPECT noerrors -->
+	@This(B)
+	set acc(n : string) { this.s = n; }
+}
+interface B extends A {
+	public s: string;
 }

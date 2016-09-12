@@ -18,5 +18,6 @@ Require-Bundle: com.google.inject,
  eu.numberfour.n4js,
  eu.numberfour.n4js.ts,
  eu.numberfour.n4js.n4mf.model,
- eu.numberfour.n4js.utils
+ eu.numberfour.n4js.utils,
+ eu.numberfour.n4js.tests.helper
 

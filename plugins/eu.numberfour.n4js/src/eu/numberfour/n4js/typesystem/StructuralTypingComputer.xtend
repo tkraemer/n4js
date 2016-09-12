@@ -29,9 +29,9 @@ import eu.numberfour.n4js.typesystem.constraints.TypeConstraint
 import eu.numberfour.n4js.utils.StructuralMembersTriple
 import eu.numberfour.n4js.utils.StructuralTypesHelper
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
-import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleEnvironment
+import java.util.Collection
 import java.util.List
 import org.eclipse.emf.ecore.util.EcoreUtil.EqualityHelper
 import org.eclipse.xtend.lib.annotations.Data
@@ -415,15 +415,27 @@ class StructuralTypingComputer extends TypeSystemHelperStrategy {
 			for (entry : next.entrySet) {
 				val key = entry.key;
 				if (key instanceof TypeVariable) {
-					val value = entry.value as TypeRef;
-					if (value instanceof ExistentialTypeRef) {
-						addHere.add(value);
-					} else {
-						addHere.addAll(EcoreUtil2.getAllContentsOfType(value,ExistentialTypeRef));
+					val value = entry.value;
+					if (value instanceof Collection<?>) {
+						for(currValue : value) {
+							if (currValue instanceof TypeRef) {
+								collectExistentialTypeRefs(currValue, addHere);
+							}
+						}
+					} else if (value instanceof TypeRef) {
+						collectExistentialTypeRefs(value, addHere);
 					}
 				}
 			}
 			next = G.next;
+		}
+	}
+
+	def private void collectExistentialTypeRefs(TypeRef typeRef, List<? super ExistentialTypeRef> addHere) {
+		if (typeRef instanceof ExistentialTypeRef) {
+			addHere.add(typeRef);
+		} else {
+			addHere.addAll(EcoreUtil2.getAllContentsOfType(typeRef, ExistentialTypeRef));
 		}
 	}
 

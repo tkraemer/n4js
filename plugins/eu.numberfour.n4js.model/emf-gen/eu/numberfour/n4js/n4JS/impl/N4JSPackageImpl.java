@@ -2220,6 +2220,15 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getFunctionOrFieldAccessor__GetDefinedFunctionOrAccessor() {
+		return functionOrFieldAccessorEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getFunctionDefinition() {
 		return functionDefinitionEClass;
 	}
@@ -6123,6 +6132,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEOperation(functionOrFieldAccessorEClass, FUNCTION_OR_FIELD_ACCESSOR___GET_NAME);
 		createEOperation(functionOrFieldAccessorEClass, FUNCTION_OR_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE);
 		createEOperation(functionOrFieldAccessorEClass, FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC);
+		createEOperation(functionOrFieldAccessorEClass, FUNCTION_OR_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR);
 
 		functionDefinitionEClass = createEClass(FUNCTION_DEFINITION);
 		createEReference(functionDefinitionEClass, FUNCTION_DEFINITION__FPARS);
@@ -7066,6 +7076,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEOperation(getFunctionOrFieldAccessor__GetLocalArgumentsVariable(), this.getLocalArgumentsVariable(), "getLocalArgumentsVariable", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getFunctionOrFieldAccessor__IsAsync(), theEcorePackage.getEBoolean(), "isAsync", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getFunctionOrFieldAccessor__GetDefinedFunctionOrAccessor(), theTypesPackage.getIdentifiableElement(), "getDefinedFunctionOrAccessor", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(functionDefinitionEClass, FunctionDefinition.class, "FunctionDefinition", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFunctionDefinition_Fpars(), this.getFormalParameter(), null, "fpars", null, 0, -1, FunctionDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

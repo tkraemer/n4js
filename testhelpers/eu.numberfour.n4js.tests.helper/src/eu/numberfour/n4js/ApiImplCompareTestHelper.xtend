@@ -68,6 +68,23 @@ class ApiImplCompareTestHelper {
 			currChildEntry.assertDiff(expectedStatus, expectedDescription);
 		}
 	}
+	
+	public def assertCorrectTypeEntry(
+		ProjectComparison comparision,
+		String fqnOfModule,
+		Pair<Pair<String,Status>,String>... expectedTypeStatusDescriptions
+	) {
+		for (var idx=0;idx<expectedTypeStatusDescriptions.size;idx++) {
+			val elementName = expectedTypeStatusDescriptions.get(idx).key.key
+			val elementStatus = expectedTypeStatusDescriptions.get(idx).key.value;
+			val elementDescription = expectedTypeStatusDescriptions.get(idx).value;
+			
+			val fqnOfType = fqnOfModule + N4JSQualifiedNameConverter.DELIMITER + elementName;
+			val entryForType = comparision.findEntryForType(fqnOfType);
+			
+			entryForType.assertDiff(elementStatus, elementDescription);
+		}
+	}
 
 	private def void assertDiff(ProjectComparisonEntry entry, Status status, String description) {
 		assertNotNull(entry);

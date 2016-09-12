@@ -1,0 +1,27 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest  
+	ResourceSet {
+		ThisFile {}
+		File "input.n4js" {  }
+	}
+
+	Preference "format.surround_import_list_with_space" "true" {}
+	
+   END_SETUP
+*/
+
+
+/* XPECT formattedLines 6 ---
+import { Ce } from "formatter2/input";
+
+/\**
+ * Error to notify a cancelation.
+ *\/
+export public class CanceledError extends Ce<Error> {}
+
+--- */
+import {Ce} from "formatter2/input"
+
+/**
+ * Error to notify a cancelation.
+ */
+export public class CanceledError extends Ce<Error> {} 

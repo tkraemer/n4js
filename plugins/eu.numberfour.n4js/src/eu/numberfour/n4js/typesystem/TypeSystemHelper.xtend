@@ -19,9 +19,9 @@ import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ReturnStatement
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
+import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
@@ -29,14 +29,21 @@ import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
+import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.ContainerType
+import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TFunction
+import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.TObjectPrototype
+import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.ts.utils.TypeExtensions
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.utils.Log
@@ -46,7 +53,6 @@ import java.util.Arrays
 import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.Resource
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
@@ -237,13 +243,21 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		return typeRef;
 	}
 
-	/** Return any explicitly given  this type.
-	 * @param type either subtype of TFunction or subtypes of FunctionTypeExprOrRef can have a declared this type ("@This")
+	/**
+	 * Returns the explicitly declared this type, or <code>null</code>.
+	 * @param type either subtype of TFunction, of FieldAccessor, or of FunctionTypeExprOrRef can have a declared this
+	 *             type ("@This")
 	 * @return declaredThisType if any, null in other cases.
 	 */
-	public static def TypeRef declaredThisType(Type type) {
+	public static def TypeRef declaredThisType(IdentifiableElement type) {
 		return switch ( type ) {
 			TFunction: {
+				type.declaredThisType
+			}
+			TGetter: {
+				type.declaredThisType
+			}
+			TSetter: {
 				type.declaredThisType
 			}
 			FunctionTypeExprOrRef: {
@@ -292,10 +306,10 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	 * Checks if a value of type <code>typeRef</code> is "callable", i.e. if it can be directly invoked using a call
 	 * expression.
 	 */
-	def boolean isCallable(TypeRef typeRef, Resource resource) {
-		if(isClassConstructorFunction(typeRef)) {
+	def public boolean isCallable(RuleEnvironment G, TypeRef typeRef) {
+		if(isClassConstructorFunction(G, typeRef)) {
 			// don't allow direct invocation of class constructors
-			if(getCallableClassConstructorFunction(typeRef)!==null)
+			if(getCallableClassConstructorFunction(G, typeRef)!==null)
 				return true; // exception: this is a class that provides a callable constructor function
 			return false;
 		}
@@ -303,19 +317,16 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 			return true;
 		if(typeRef instanceof FunctionTypeExprOrRef)
 			return true;
-		if(resource!==null) {
-			val RuleEnvironment G = RuleEnvironmentExtensions.newRuleEnvironment(resource);
-			if(ts.subtypeSucceeded(G, typeRef, G.functionTypeRef))
-				return true;
-			if(typeRef.dynamic && ts.subtypeSucceeded(G, G.functionTypeRef, typeRef))
-				return true;
-		}
+		if(ts.subtypeSucceeded(G, typeRef, G.functionTypeRef))
+			return true;
+		if(typeRef.dynamic && ts.subtypeSucceeded(G, G.functionTypeRef, typeRef))
+			return true;
 		return false;
 	}
 	/**
 	 * Checks if a value of type <code>typeRef</code> is a class constructor function.
 	 */
-	def boolean isClassConstructorFunction(TypeRef typeRef) {
+	def public boolean isClassConstructorFunction(RuleEnvironment G, TypeRef typeRef) {
 		val declaredType = typeRef.declaredType;
 		if(declaredType instanceof TMethod) {
 			if(declaredType.isConstructor)
@@ -328,14 +339,14 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 					return true;
 			}
 		}
-		if(typeRef instanceof ConstructorTypeRef) {
-			val cls = typeRef.staticType;
+		if(typeRef instanceof TypeTypeRef) {
+			val cls = getStaticType(G, typeRef);
 			if(cls instanceof TClass || cls instanceof TObjectPrototype)
 				return true;
 		}
 		return false;
 	}
-	def public TMethod getCallableClassConstructorFunction(TypeRef typeRef) {
+	def public TMethod getCallableClassConstructorFunction(RuleEnvironment G, TypeRef typeRef) {
 		var Type type = null;
 		val declaredType = typeRef.declaredType;
 		if(declaredType instanceof TMethod) {
@@ -349,8 +360,8 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 					type = ft.containingType;
 			}
 		}
-		if(typeRef instanceof ClassifierTypeRef) {
-			val cls = typeRef.staticType;
+		if(typeRef instanceof TypeTypeRef) {
+			val cls = getStaticType(G, typeRef);
 			if(cls instanceof TClass || cls instanceof TObjectPrototype)
 				type = cls;
 		}
@@ -359,8 +370,36 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		}
 		return null;
 	}
-	
-	
+
+	/**
+	 * Returns the so-called "static type" of the given {@link TypeTypeRef} or <code>null</code> if not
+	 * available.
+	 * <p>
+	 * Formerly, this was a utility operation in {@code TypeRefs.xcore} but since the introduction of wildcards in
+	 * {@code TypeTypeRef}s the 'upperBound' judgment (and thus a RuleEnvironment) is required to compute this
+	 * and hence it was moved here.
+	 */
+	def public Type getStaticType(RuleEnvironment G, TypeTypeRef ctorTypeRef) {
+		var typeArg = ctorTypeRef.typeArg;
+		while(typeArg instanceof Wildcard || typeArg instanceof ExistentialTypeRef || typeArg instanceof BoundThisTypeRef) {
+			typeArg = ts.upperBound(G, typeArg).value;
+		}
+		return (typeArg as TypeRef)?.declaredType; // will return null if 'typeArg' is not of type ParameterizedTypeRef
+	}
+
+	/**
+	 * Creates a parameterized type ref to the wrapped static type of a TypeTypeRef, configured with the given
+	 * TypeArguments. Returns UnknownTypeRef if the static type could not be retrieved (e.g. unbound This-Type).
+	 */
+	def public TypeRef createTypeRefFromStaticType(RuleEnvironment G, TypeTypeRef ctr, TypeArgument ... typeArgs) {
+		 val type = getStaticType(G, ctr);
+		 return if( type !== null ) {
+		 	 TypeExtensions.ref(type,typeArgs)
+		 } else {
+		 	 TypeRefsFactory.eINSTANCE.createUnknownTypeRef
+		 };
+	 }
+
 	/**
 	 * This method computes the set of all subtypes in the set of TypeRefs.
 	 * It does not copy the TypeRefs!
@@ -377,10 +416,9 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		
 		return intersectTRs
 	}
-	
-	
+
 	/**
-	 * This method computes the set of all supertypes in the set of TypeRefs.
+	 * This method computes the set of all super types in the set of TypeRefs.
 	 * It does not copy the TypeRefs!
 	 */
 	def List<TypeRef> getSuperTypesOnly(RuleEnvironment G, TypeRef... typeRefs) {

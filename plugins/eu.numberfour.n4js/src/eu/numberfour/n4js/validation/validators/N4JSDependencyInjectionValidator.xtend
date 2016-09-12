@@ -25,10 +25,10 @@ import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.TypeRefAnnotationArgument
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.types.BuiltInType
 import eu.numberfour.n4js.ts.types.ContainerType
@@ -49,6 +49,7 @@ import eu.numberfour.n4js.ts.types.util.AllSuperTypesCollector
 import eu.numberfour.n4js.ts.types.util.SuperInterfacesIterable
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError
@@ -79,6 +80,8 @@ class N4JSDependencyInjectionValidator extends AbstractN4JSDeclarativeValidator 
 
 	@Inject
 	private N4JSTypeSystem ts;
+	@Inject
+	private TypeSystemHelper tsh;
 
 	@Inject
 	private extension ContainerTypesHelper;
@@ -126,7 +129,8 @@ class N4JSDependencyInjectionValidator extends AbstractN4JSDeclarativeValidator 
 		if (typeRef instanceof UnknownTypeRef)
 			return; // suppress error message in case of UnknownTypeRef
 
-		val staticType = if (typeRef instanceof ClassifierTypeRef) typeRef.staticType else null;
+		val G = newExpression.newRuleEnvironment;
+		val staticType = if (typeRef instanceof TypeTypeRef) tsh.getStaticType(G, typeRef) else null;
 		if (staticType === null || staticType.eIsProxy)
 			return;
 		if (!(staticType instanceof TClass)) {

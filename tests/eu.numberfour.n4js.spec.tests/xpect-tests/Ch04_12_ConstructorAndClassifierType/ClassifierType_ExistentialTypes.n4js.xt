@@ -29,4 +29,4 @@ class D extends C {}
  	meta_c.x = 2;
  	// XPECT errors --> "Write access to the static member x defined in C must use C directly." at "x"
  	meta_d.x = 3;
- }
+}

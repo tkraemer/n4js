@@ -43,7 +43,7 @@ var p2 = {
 // XPECT scope at 'p2.|o' --> simpleInt, o, ...
 p2.o(); // must be bound correctly to getter
 /* XPECT scope at 'p2.internalO.|nested' ---
-constructor, hasOwnProperty, isPrototypeOf, nested, propertyIsEnumerable,
+__proto__, constructor, hasOwnProperty, isPrototypeOf, nested, propertyIsEnumerable,
 toLocaleString, toString, valueOf 
 --- */
 p2.internalO.nested;

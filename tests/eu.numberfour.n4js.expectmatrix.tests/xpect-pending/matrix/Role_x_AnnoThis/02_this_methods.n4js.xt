@@ -8,19 +8,19 @@ interface A {
 	s : string;
 	n : number;
 
-	@This(~Object with {m: number;})
+	@This(B)
 	// this is an Object with m now XPECT noerrors -->
 	f() : number { return this.m + 7; }
 
-	@This(~Object with {m: number;})
-	// this is not A (with n) anymore XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'n'." at "n"
+	@This(B)
+	// this is still A (with n) XPECT noerrors -->
 	g() : number { return this.n + 7; }
 }
+interface B extends A {
+	m : number;
+}
 
-class B implements A {}
+var b: B;
 
-var b = new B();
-
-// IDE-1010, IDE-2313
-// returns a number XPECT FIXME errors --> "Receiver b has no member m" at "b"
+// returns a number XPECT noerrors -->
 var n1 : number = b.f();

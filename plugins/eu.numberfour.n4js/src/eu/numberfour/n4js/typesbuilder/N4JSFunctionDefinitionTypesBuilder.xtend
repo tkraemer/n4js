@@ -15,7 +15,6 @@ import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionExpression
-import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.TFunction
@@ -23,6 +22,7 @@ import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.ts.types.TypeAccessModifier
 import eu.numberfour.n4js.ts.types.TypesFactory
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 
 /**
  * Type builder for function declaration or expression builder.
@@ -58,6 +58,7 @@ public class N4JSFunctionDefinitionTypesBuilder extends AbstractFunctionDefiniti
 		functionType.setProvidedByRuntime(functionDecl, preLinkingPhase)
 		functionType.setReturnType(functionDecl, builtInTypeScope, preLinkingPhase)
 		functionType.addTypeVariables(functionDecl, preLinkingPhase)
+		functionType.setDeclaredThisTypeFromAnnotation(functionDecl, preLinkingPhase)
 		functionType.copyAnnotations(functionDecl, preLinkingPhase)
 		functionType.declaredAsync = functionDecl.async // TODO change to declaredAsync one the annotation is gone
 
@@ -100,6 +101,7 @@ public class N4JSFunctionDefinitionTypesBuilder extends AbstractFunctionDefiniti
 		functionType.addFormalParametersWithInferredType(functionExpr, builtInTypeScope, preLinkingPhase)
 		functionType.setReturnTypeWithInferredType(functionExpr, builtInTypeScope, preLinkingPhase)
 		functionType.addTypeVariables(functionExpr, preLinkingPhase)
+		functionType.setDeclaredThisTypeFromAnnotation(functionExpr, preLinkingPhase)
 
 		functionType.copyAnnotations(functionExpr, preLinkingPhase)
 
@@ -149,8 +151,6 @@ public class N4JSFunctionDefinitionTypesBuilder extends AbstractFunctionDefiniti
 		}
 		functionType.name = functionDef.name; // maybe null in case of function expression
 		functionType.declaredAsync = functionDef.isAsync // TODO change to declaredAsync when annotation is removed
-
-		functionType.linkThisTypeAnnotation(functionDef,preLinkingPhase)
 
 		// link
 		functionType.astElement = functionDef

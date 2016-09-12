@@ -19,11 +19,11 @@ import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.scoping.members.MemberScope
-import eu.numberfour.n4js.ts.typeRefs.ClassifierTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ConstructorTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.validation.IssueCodes
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
@@ -52,6 +52,7 @@ class StaticScopingTest {
 	@Inject extension ParseHelper<Script>
 	@Inject extension ValidationTestHelper
 	@Inject extension N4JSTypeSystem ts
+	@Inject TypeSystemHelper tsh
 	@Inject extension IScopeProvider scopeProvider
 
 	@Test
@@ -115,9 +116,9 @@ class StaticScopingTest {
 		val thisInMethod1 = script.eAllContents.filter(ThisLiteral).head
 		val G = script.newRuleEnvironment
 		val thisType1 = ts.upperBound(G, ts.type(G, thisInMethod1).value).value
-		Assert.assertTrue("expected type{A} but was " + thisType1.class, thisType1 instanceof ClassifierTypeRef)
-		val classifierTypeRef1 = thisType1 as ClassifierTypeRef
-		val typeName1 = classifierTypeRef1.staticType.name
+		Assert.assertTrue("expected type{A} but was " + thisType1.class, thisType1 instanceof TypeTypeRef)
+		val classifierTypeRef1 = thisType1 as TypeTypeRef
+		val typeName1 = tsh.getStaticType(G, classifierTypeRef1).name
 		Assert.assertEquals("A", typeName1)
 
 		val thisInMethod2 = script.eAllContents.filter(ThisLiteral).last
@@ -135,18 +136,20 @@ class StaticScopingTest {
 			var x = C
 			var c: C;
 			var y = c.constructor
-			var z1 = new y()
+			//var z1 = new y() // would raise error: "Cannot instantiate constructor{? extends C}."
 			var z2 = new C()
 		'''.parse
 
 		val issues = validate(script).filter[it.code != IssueCodes.AST_LOCAL_VAR_UNUSED];
 		Assert.assertEquals(issues.join(", "), 0, issues.size)
 
+		val G = script.newRuleEnvironment;
+
 		val varX = script.eAllContents.filter(VariableDeclaration).filter[name == "x"].head
 		val varXType = varX.tau
-		Assert.assertTrue("type{C}", varXType instanceof ConstructorTypeRef)
-		val varXConstructorTypeRef = varXType as ConstructorTypeRef
-		val varXTypeName = varXConstructorTypeRef.staticType.name
+		Assert.assertTrue("type{C}", varXType instanceof TypeTypeRef)
+		val varXConstructorTypeRef = varXType as TypeTypeRef
+		val varXTypeName = tsh.getStaticType(G, varXConstructorTypeRef).name
 		Assert.assertEquals("C", varXTypeName)
 
 		val varC = script.eAllContents.filter(VariableDeclaration).filter[name == "c"].head
@@ -159,8 +162,8 @@ class StaticScopingTest {
 		val newCExpression = script.eAllContents.filter(NewExpression).last
 		val identifierRefType = newCExpression.callee.tau
 		Assert.assertTrue("ConstructorTypeRef expected but was " + identifierRefType.class,
-			identifierRefType instanceof ConstructorTypeRef)
-		val identifierConstructorTypeName = (identifierRefType as ConstructorTypeRef).staticType?.name
+			identifierRefType instanceof TypeTypeRef)
+		val identifierConstructorTypeName = tsh.getStaticType(G, identifierRefType as TypeTypeRef)?.name
 		Assert.assertEquals("C", identifierConstructorTypeName)
 
 		val varZ2 = script.eAllContents.filter(VariableDeclaration).filter[name == "z2"].head

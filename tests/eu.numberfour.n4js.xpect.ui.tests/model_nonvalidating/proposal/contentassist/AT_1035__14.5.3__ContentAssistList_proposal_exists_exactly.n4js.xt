@@ -14,7 +14,7 @@ var a : A = new A();
 // Exactly is default case, Order defaults to 'unordered'
 /* XPECT contentAssistList at 'a.<|>methodA' proposals exactly ---
 "methodA", "methodA2",
-"constructor","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","toLocaleString","toString","valueOf"
+"__proto__", "constructor","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","toLocaleString","toString","valueOf"
 ---
 */
 a.methodA

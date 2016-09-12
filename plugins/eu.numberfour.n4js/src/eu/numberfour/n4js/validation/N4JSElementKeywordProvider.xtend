@@ -70,7 +70,7 @@ class N4JSElementKeywordProvider extends TypesKeywordProvider {
 	}
 
 	def dispatch String keyword(N4MethodDeclaration n4MethodDeclaration) {
-		"method"
+		if(n4MethodDeclaration.isConstructor) "constructor" else "method"
 	}
 
 	def dispatch String keyword(N4GetterDeclaration n4GetterDeclaration) {

@@ -1,6 +1,6 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
-class B { public x : number; }
+class B extends A { public x : number; }
 
 class A {
 	

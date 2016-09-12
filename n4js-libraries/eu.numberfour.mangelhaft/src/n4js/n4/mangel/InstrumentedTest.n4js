@@ -44,7 +44,7 @@ export public class InstrumentedTest implements IInstrumentedTest{
         })
     }
 
-    public constructor(testClass: constructor{? extends N4Object}?, info: TestInfo?, testObject: N4Object?, 
+    public constructor(testClass: constructor{? extends N4Object}?, info: TestInfo?, testObject: N4Object?,
         parameterizedName: string?, parameterizedTests: Array<? extends IInstrumentedTest>?
     ) {
         if (testClass) {
@@ -74,7 +74,7 @@ export public class InstrumentedTest implements IInstrumentedTest{
 
     private static getParameterizedInstrumentedTests(testClass:constructor{N4Object}, info: TestInfo,
         testInjector:N4Injector, parameterGroups:Array<Array<any>>, nameTemplate: string): Array<InstrumentedTest> {
-        
+
         nameTemplate = nameTemplate || "{index}";
         let tests: Array<InstrumentedTest> = [];
         let parameterizedFields = this.getParameterizedFields(testClass);
@@ -124,7 +124,7 @@ export public class InstrumentedTest implements IInstrumentedTest{
         }
         return new InstrumentedTest(testClass, info, testInjector.create(testClass), null, parameterizedTests)
     }
-    
+
 
     public getTestMethodDescriptors(meths: Array<? extends N4Method>, tftype: TestFunctionType): Array<TestMethodDescriptor> {
         return meths.map( (methodDescriptor: N4Method) => {
@@ -162,7 +162,6 @@ export public class InstrumentedTest implements IInstrumentedTest{
         return this;
     }
 
-    @IDEBUG(2140, "any is not a subtype of N4Annotation.")
     @Override public load(testClass: constructor{? extends N4Object}, info: TestInfo?): this {
         let that = this
           , props = getAllPropertyNames(testClass).keys()

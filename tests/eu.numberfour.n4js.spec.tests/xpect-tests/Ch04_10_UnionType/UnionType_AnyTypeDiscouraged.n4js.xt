@@ -38,3 +38,7 @@ var c2 : union{union{A, B}, any};
 
 // XPECT warnings --> "The use of the any type in a union type is discouraged." at "any"
 var d1 : intersection{A, union{B, any}};
+
+
+// XPECT nowarnings
+var e1 : union{any,void};

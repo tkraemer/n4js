@@ -7,6 +7,7 @@
  */
 package eu.numberfour.n4js.n4JS;
 
+import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.TypableElement;
 
 /**
@@ -114,5 +115,14 @@ public interface FunctionOrFieldAccessor extends AnnotableElement, VariableEnvir
 	 * @generated
 	 */
 	boolean isAsync();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor%> _this = this;\n<%org.eclipse.emf.ecore.EObject%> _switchResult = null;\nboolean _matched = false;\nif (_this instanceof <%eu.numberfour.n4js.n4JS.FunctionDefinition%>)\n{\n\t_matched=true;\n\t_switchResult = ((<%eu.numberfour.n4js.n4JS.FunctionDefinition%>)_this).getDefinedType();\n}\nif (!_matched)\n{\n\tif (_this instanceof <%eu.numberfour.n4js.n4JS.FieldAccessor%>)\n\t{\n\t\t_matched=true;\n\t\t_switchResult = ((<%eu.numberfour.n4js.n4JS.FieldAccessor%>)_this).getDefinedAccessor();\n\t}\n}\nreturn ((<%eu.numberfour.n4js.ts.types.IdentifiableElement%>)_switchResult);'"
+	 * @generated
+	 */
+	IdentifiableElement getDefinedFunctionOrAccessor();
 
 } // FunctionOrFieldAccessor

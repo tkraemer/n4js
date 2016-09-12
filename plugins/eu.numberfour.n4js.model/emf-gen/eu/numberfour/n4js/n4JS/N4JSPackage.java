@@ -1636,13 +1636,22 @@ public interface N4JSPackage extends EPackage {
 	int FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC = ANNOTABLE_ELEMENT_OPERATION_COUNT + 3;
 
 	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_OR_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR = ANNOTABLE_ELEMENT_OPERATION_COUNT + 4;
+
+	/**
 	 * The number of operations of the '<em>Function Or Field Accessor</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_OR_FIELD_ACCESSOR_OPERATION_COUNT = ANNOTABLE_ELEMENT_OPERATION_COUNT + 4;
+	int FUNCTION_OR_FIELD_ACCESSOR_OPERATION_COUNT = ANNOTABLE_ELEMENT_OPERATION_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.FunctionDefinitionImpl <em>Function Definition</em>}' class.
@@ -1763,6 +1772,15 @@ public interface N4JSPackage extends EPackage {
 	int FUNCTION_DEFINITION___GET_LOCAL_ARGUMENTS_VARIABLE = FUNCTION_OR_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE;
 
 	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_DEFINITION___GET_DEFINED_FUNCTION_OR_ACCESSOR = FUNCTION_OR_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR;
+
+	/**
 	 * The operation id for the '<em>Is Async</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1861,6 +1879,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int FIELD_ACCESSOR___IS_ASYNC = FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC;
+
+	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR = FUNCTION_OR_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -2053,13 +2080,22 @@ public interface N4JSPackage extends EPackage {
 	int FUNCTION_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 4;
+
+	/**
 	 * The operation id for the '<em>Is Async</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION___IS_ASYNC = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 4;
+	int FUNCTION_DECLARATION___IS_ASYNC = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Is Exported</em>' operation.
@@ -2068,7 +2104,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION___IS_EXPORTED = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 5;
+	int FUNCTION_DECLARATION___IS_EXPORTED = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Is Exported As Default</em>' operation.
@@ -2077,7 +2113,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION___IS_EXPORTED_AS_DEFAULT = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 6;
+	int FUNCTION_DECLARATION___IS_EXPORTED_AS_DEFAULT = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 7;
 
 	/**
 	 * The operation id for the '<em>Get Exported Name</em>' operation.
@@ -2086,7 +2122,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION___GET_EXPORTED_NAME = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 7;
+	int FUNCTION_DECLARATION___GET_EXPORTED_NAME = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Is Toplevel</em>' operation.
@@ -2095,7 +2131,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION___IS_TOPLEVEL = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 8;
+	int FUNCTION_DECLARATION___IS_TOPLEVEL = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -2104,7 +2140,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION___GET_NAME = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 9;
+	int FUNCTION_DECLARATION___GET_NAME = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 10;
 
 	/**
 	 * The operation id for the '<em>Is External</em>' operation.
@@ -2113,7 +2149,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION___IS_EXTERNAL = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 10;
+	int FUNCTION_DECLARATION___IS_EXTERNAL = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 11;
 
 	/**
 	 * The number of operations of the '<em>Function Declaration</em>' class.
@@ -2122,7 +2158,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_DECLARATION_OPERATION_COUNT = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 11;
+	int FUNCTION_DECLARATION_OPERATION_COUNT = ANNOTABLE_SCRIPT_ELEMENT_OPERATION_COUNT + 12;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.FunctionExpressionImpl <em>Function Expression</em>}' class.
@@ -2250,6 +2286,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int FUNCTION_EXPRESSION___GET_LOCAL_ARGUMENTS_VARIABLE = FUNCTION_DEFINITION___GET_LOCAL_ARGUMENTS_VARIABLE;
+
+	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_EXPRESSION___GET_DEFINED_FUNCTION_OR_ACCESSOR = FUNCTION_DEFINITION___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 
 	/**
 	 * The operation id for the '<em>Is Async</em>' operation.
@@ -2440,6 +2485,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int ARROW_FUNCTION___GET_LOCAL_ARGUMENTS_VARIABLE = FUNCTION_EXPRESSION___GET_LOCAL_ARGUMENTS_VARIABLE;
+
+	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARROW_FUNCTION___GET_DEFINED_FUNCTION_OR_ACCESSOR = FUNCTION_EXPRESSION___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 
 	/**
 	 * The operation id for the '<em>Is Async</em>' operation.
@@ -6087,13 +6141,22 @@ public interface N4JSPackage extends EPackage {
 	int PROPERTY_METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_METHOD_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 3;
+
+	/**
 	 * The operation id for the '<em>Is Async</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_METHOD_DECLARATION___IS_ASYNC = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 3;
+	int PROPERTY_METHOD_DECLARATION___IS_ASYNC = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Get Declared Type Ref</em>' operation.
@@ -6102,7 +6165,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_METHOD_DECLARATION___GET_DECLARED_TYPE_REF = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 4;
+	int PROPERTY_METHOD_DECLARATION___GET_DECLARED_TYPE_REF = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Exists Explicit Super Call</em>' operation.
@@ -6111,7 +6174,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_METHOD_DECLARATION___EXISTS_EXPLICIT_SUPER_CALL = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 5;
+	int PROPERTY_METHOD_DECLARATION___EXISTS_EXPLICIT_SUPER_CALL = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Get Defined Type Element</em>' operation.
@@ -6120,7 +6183,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_METHOD_DECLARATION___GET_DEFINED_TYPE_ELEMENT = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 6;
+	int PROPERTY_METHOD_DECLARATION___GET_DEFINED_TYPE_ELEMENT = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 7;
 
 	/**
 	 * The operation id for the '<em>Is Static</em>' operation.
@@ -6129,7 +6192,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_METHOD_DECLARATION___IS_STATIC = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 7;
+	int PROPERTY_METHOD_DECLARATION___IS_STATIC = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Get Defined Member</em>' operation.
@@ -6138,7 +6201,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_METHOD_DECLARATION___GET_DEFINED_MEMBER = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 8;
+	int PROPERTY_METHOD_DECLARATION___GET_DEFINED_MEMBER = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 9;
 
 	/**
 	 * The number of operations of the '<em>Property Method Declaration</em>' class.
@@ -6147,7 +6210,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_METHOD_DECLARATION_OPERATION_COUNT = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 9;
+	int PROPERTY_METHOD_DECLARATION_OPERATION_COUNT = ANNOTABLE_PROPERTY_ASSIGNMENT_OPERATION_COUNT + 10;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.GetterDeclarationImpl <em>Getter Declaration</em>}' class.
@@ -6257,6 +6320,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int GETTER_DECLARATION___IS_ASYNC = FIELD_ACCESSOR___IS_ASYNC;
+
+	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GETTER_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR = FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -6402,6 +6474,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int SETTER_DECLARATION___IS_ASYNC = FIELD_ACCESSOR___IS_ASYNC;
+
+	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SETTER_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR = FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -6556,6 +6637,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY_GETTER_DECLARATION___IS_ASYNC = GETTER_DECLARATION___IS_ASYNC;
+
+	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_GETTER_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR = GETTER_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -6728,6 +6818,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY_SETTER_DECLARATION___IS_ASYNC = SETTER_DECLARATION___IS_ASYNC;
+
+	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_SETTER_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR = SETTER_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -11900,6 +11999,15 @@ public interface N4JSPackage extends EPackage {
 	int METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE = FUNCTION_DEFINITION___GET_LOCAL_ARGUMENTS_VARIABLE;
 
 	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR = FUNCTION_DEFINITION___GET_DEFINED_FUNCTION_OR_ACCESSOR;
+
+	/**
 	 * The operation id for the '<em>Is Async</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12180,13 +12288,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 2;
 
 	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_METHOD_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 4;
+
+	/**
 	 * The operation id for the '<em>Is Async</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_ASYNC = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 4;
+	int N4_METHOD_DECLARATION___IS_ASYNC = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -12195,7 +12312,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___GET_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 5;
+	int N4_METHOD_DECLARATION___GET_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Exists Explicit Super Call</em>' operation.
@@ -12204,7 +12321,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___EXISTS_EXPLICIT_SUPER_CALL = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 7;
+	int N4_METHOD_DECLARATION___EXISTS_EXPLICIT_SUPER_CALL = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Get Defined Type Element</em>' operation.
@@ -12213,7 +12330,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___GET_DEFINED_TYPE_ELEMENT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 8;
+	int N4_METHOD_DECLARATION___GET_DEFINED_TYPE_ELEMENT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
@@ -12222,7 +12339,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_ABSTRACT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 10;
+	int N4_METHOD_DECLARATION___IS_ABSTRACT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 11;
 
 	/**
 	 * The operation id for the '<em>Is Constructor</em>' operation.
@@ -12231,7 +12348,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_CONSTRUCTOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 11;
+	int N4_METHOD_DECLARATION___IS_CONSTRUCTOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 12;
 
 	/**
 	 * The operation id for the '<em>Is Callable Constructor</em>' operation.
@@ -12240,7 +12357,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_CALLABLE_CONSTRUCTOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 12;
+	int N4_METHOD_DECLARATION___IS_CALLABLE_CONSTRUCTOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 13;
 
 	/**
 	 * The operation id for the '<em>Is Static</em>' operation.
@@ -12249,7 +12366,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_STATIC = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 13;
+	int N4_METHOD_DECLARATION___IS_STATIC = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 14;
 
 	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
@@ -12258,7 +12375,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_VALID_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 14;
+	int N4_METHOD_DECLARATION___IS_VALID_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 15;
 
 	/**
 	 * The number of operations of the '<em>N4 Method Declaration</em>' class.
@@ -12267,7 +12384,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION_OPERATION_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 15;
+	int N4_METHOD_DECLARATION_OPERATION_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 16;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.N4FieldAccessorImpl <em>N4 Field Accessor</em>}' class.
@@ -12442,13 +12559,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_FIELD_ACCESSOR___IS_ASYNC = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 3;
 
 	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 4;
+
+	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_ACCESSOR___GET_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 4;
+	int N4_FIELD_ACCESSOR___GET_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Get Declared Type Ref</em>' operation.
@@ -12457,7 +12583,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_ACCESSOR___GET_DECLARED_TYPE_REF = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 6;
+	int N4_FIELD_ACCESSOR___GET_DECLARED_TYPE_REF = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 7;
 
 	/**
 	 * The operation id for the '<em>Get Defined Accessor</em>' operation.
@@ -12466,7 +12592,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_ACCESSOR___GET_DEFINED_ACCESSOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 7;
+	int N4_FIELD_ACCESSOR___GET_DEFINED_ACCESSOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
@@ -12475,7 +12601,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_ACCESSOR___IS_ABSTRACT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 8;
+	int N4_FIELD_ACCESSOR___IS_ABSTRACT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
@@ -12484,7 +12610,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_ACCESSOR___IS_VALID_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 9;
+	int N4_FIELD_ACCESSOR___IS_VALID_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 10;
 
 	/**
 	 * The number of operations of the '<em>N4 Field Accessor</em>' class.
@@ -12493,7 +12619,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_ACCESSOR_OPERATION_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 10;
+	int N4_FIELD_ACCESSOR_OPERATION_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 11;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.N4GetterDeclarationImpl <em>N4 Getter Declaration</em>}' class.
@@ -12621,6 +12747,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int N4_GETTER_DECLARATION___IS_ASYNC = GETTER_DECLARATION___IS_ASYNC;
+
+	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_GETTER_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR = GETTER_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -12865,6 +13000,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int N4_SETTER_DECLARATION___IS_ASYNC = SETTER_DECLARATION___IS_ASYNC;
+
+	/**
+	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_SETTER_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR = SETTER_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -14269,6 +14413,16 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getFunctionOrFieldAccessor__IsAsync();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor#getDefinedFunctionOrAccessor() <em>Get Defined Function Or Accessor</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Defined Function Or Accessor</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor#getDefinedFunctionOrAccessor()
+	 * @generated
+	 */
+	EOperation getFunctionOrFieldAccessor__GetDefinedFunctionOrAccessor();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.n4JS.FunctionDefinition <em>Function Definition</em>}'.
@@ -19354,6 +19508,14 @@ public interface N4JSPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC = eINSTANCE.getFunctionOrFieldAccessor__IsAsync();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Defined Function Or Accessor</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation FUNCTION_OR_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR = eINSTANCE.getFunctionOrFieldAccessor__GetDefinedFunctionOrAccessor();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.n4JS.impl.FunctionDefinitionImpl <em>Function Definition</em>}' class.
