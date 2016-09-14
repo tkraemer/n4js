@@ -6955,17 +6955,16 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     if ((_declaredType instanceof TypeVariable)) {
       Type _declaredType_1 = typeRef.getDeclaredType();
       final TypeVariable typeVar = ((TypeVariable) _declaredType_1);
-      /* { var temp = env(G, typeVar, TypeRef) if (typeRef instanceof ParameterizedTypeRefStructural) { temp = TypeUtils.createParameterizedTypeRefStructural(temp.declaredType, typeRef.definedTypingStrategy); TypeUtils.copyStructuralTypingInfo(temp as StructuralTypeRef, typeRef); } val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } TypeUtils.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } result = if(typeVar.declaredCovariant) { typeSystemHelper.createIntersectionType(G,l) } else if(typeVar.declaredContravariant) { typeSystemHelper.createUnionType(G,l) } else { G.addInconsistentSubstitutions(typeVar, l); TypeRefsFactory.eINSTANCE.createUnknownTypeRef }; TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
+      /* { var temp = env(G, typeVar, TypeRef) if (typeRef instanceof ParameterizedTypeRefStructural) { var ptrs = TypeUtils.copyToParameterizedTypeRefStructural(temp); ptrs.setTypingStrategy(typeRef.getTypingStrategy()); temp = ptrs; } val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } TypeUtils.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } result = if(typeVar.declaredCovariant) { typeSystemHelper.createIntersectionType(G,l) } else if(typeVar.declaredContravariant) { typeSystemHelper.createUnionType(G,l) } else { G.addInconsistentSubstitutions(typeVar, l); TypeRefsFactory.eINSTANCE.createUnknownTypeRef }; TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
       {
         RuleFailedException previousFailure = null;
         try {
           TypeRef temp = this.<TypeRef>env(G, typeVar, TypeRef.class);
           if ((typeRef instanceof ParameterizedTypeRefStructural)) {
-            Type _declaredType_2 = temp.getDeclaredType();
-            TypingStrategy _definedTypingStrategy = ((ParameterizedTypeRefStructural)typeRef).getDefinedTypingStrategy();
-            ParameterizedTypeRefStructural _createParameterizedTypeRefStructural = TypeUtils.createParameterizedTypeRefStructural(_declaredType_2, _definedTypingStrategy);
-            temp = _createParameterizedTypeRefStructural;
-            TypeUtils.copyStructuralTypingInfo(((StructuralTypeRef) temp), ((StructuralTypeRef)typeRef));
+            ParameterizedTypeRefStructural ptrs = TypeUtils.<TypeRef>copyToParameterizedTypeRefStructural(temp);
+            TypingStrategy _typingStrategy = ((ParameterizedTypeRefStructural)typeRef).getTypingStrategy();
+            ptrs.setTypingStrategy(_typingStrategy);
+            temp = ptrs;
           }
           final Type tempDeclaredType = temp.getDeclaredType();
           if ((((typeVar != tempDeclaredType) && (TypeUtils.isOrContainsRefToTypeVar(temp) || ((tempDeclaredType != null) && tempDeclaredType.isGeneric()))) && (G.get(Pair.<String, TypeRef>of(RuleEnvironmentExtensions.GUARD_SUBST_TYPE_VARS, temp)) == null))) {
@@ -7055,16 +7054,16 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
       }
     }
     boolean _and = false;
-    Type _declaredType_3 = null;
+    Type _declaredType_2 = null;
     if (typeRef!=null) {
-      _declaredType_3=typeRef.getDeclaredType();
+      _declaredType_2=typeRef.getDeclaredType();
     }
-    boolean _tripleNotEquals = (_declaredType_3 != null);
+    boolean _tripleNotEquals = (_declaredType_2 != null);
     if (!_tripleNotEquals) {
       _and = false;
     } else {
-      Type _declaredType_4 = typeRef.getDeclaredType();
-      boolean _isGeneric = _declaredType_4.isGeneric();
+      Type _declaredType_3 = typeRef.getDeclaredType();
+      boolean _isGeneric = _declaredType_3.isGeneric();
       _and = _isGeneric;
     }
     if (_and) {

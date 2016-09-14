@@ -40,3 +40,20 @@ cb.acc;
 cb.method({name:"x"});
 // XPECT type of cb.method(null) --> ~B
 cb.method(null);
+
+
+class M<T> {
+    public prop: T;
+}
+class G<T> {
+    field: ~r~T;
+}
+
+let g: G<M<string>>;
+
+// XPECT type of 'g.field' --> ~r~M<string>
+var m = g.field;
+m.prop;
+
+// XPECT noerrors
+g.field = { prop: "hello" };

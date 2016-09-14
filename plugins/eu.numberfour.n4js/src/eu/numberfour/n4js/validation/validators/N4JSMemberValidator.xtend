@@ -24,7 +24,6 @@ import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.N4SetterDeclaration
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.types.FieldAccessor
@@ -37,12 +36,8 @@ import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.VoidType
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.utils.ContainerTypesHelper
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.IssueCodes
-import eu.numberfour.n4js.validation.JavaScriptVariant
-import eu.numberfour.n4js.utils.ContainerTypesHelper
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.validation.JavaScriptVariant
@@ -57,7 +52,6 @@ import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.utils.N4JSLanguageUtils
 
 /**
  * Validation of rules that apply to individual members of a classifier.<p>
@@ -181,9 +175,9 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 		if (!(ptrs.declaredType instanceof TypeVariable))
 			return;
 		
-		for (sm : ptrs.structuralMembers) {
+		for (sm : ptrs.astStructuralMembers) {
 			val message = IssueCodes.getMessageForTYS_ADDITIONAL_STRUCTURAL_MEMBERS_ON_TYPE_VARS()
-			addIssue(message, sm.astElement, TYS_ADDITIONAL_STRUCTURAL_MEMBERS_ON_TYPE_VARS)
+			addIssue(message, sm, TYS_ADDITIONAL_STRUCTURAL_MEMBERS_ON_TYPE_VARS)
 		}
 	}
 

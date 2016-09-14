@@ -2574,8 +2574,9 @@ from {
 			// do we have a substitution?
 			var temp = env(G, typeVar, TypeRef)
 			if (typeRef instanceof ParameterizedTypeRefStructural) {
-				temp = TypeUtils.createParameterizedTypeRefStructural(temp.declaredType, typeRef.definedTypingStrategy);
-				TypeUtils.copyStructuralTypingInfo(temp as StructuralTypeRef, typeRef);
+				var ptrs = TypeUtils.copyToParameterizedTypeRefStructural(temp);
+				ptrs.setTypingStrategy(typeRef.getTypingStrategy());
+				temp = ptrs;
 			}
 			
 			val tempDeclaredType = temp.declaredType
