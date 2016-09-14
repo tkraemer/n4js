@@ -34,7 +34,7 @@ class A {
 
 		// Exactly is default case, Order defaults to 'unordered'
 		/* XPECT contentAssistList at 'this.<|>actualField' proposals exactly ---
-		"actualField", "bactualField", "constructor", "hasOwnProperty", "isPrototypeOf", 
+		"__proto__", "actualField", "bactualField", "constructor", "hasOwnProperty", "isPrototypeOf", 
 		"method", "propertyIsEnumerable", "toLocaleString", "toString", "valueOf"
 		---	*/
 		this.actualField;
@@ -51,14 +51,14 @@ export public class Duh {
 	public fu() {
 
 		// Erroneous proposal: 		"Function", "fungus - proposal/contentassist/GH_60_CA_in_this_context", "fu"
-		/* XPECT FIXME contentAssistList at 'this.fu<|>' proposals exactly ---
+		/* XPECT contentAssistList at 'this.fu<|>' proposals exactly ---
 		"fu"		   
 		---	*/
 		this.fu;
 
         // If CA is triggered right after the dot, then no bogus information shows up.
 		/* XPECT contentAssistList at 'this.<|>fu' proposals exactly ---
-		"fu", "constructor", "hasOwnProperty", "isPrototypeOf", 
+		"__proto__", "fu", "constructor", "hasOwnProperty", "isPrototypeOf", 
 		"propertyIsEnumerable", "toLocaleString", "toString", "valueOf"
 		---	*/
 		this.fu;
