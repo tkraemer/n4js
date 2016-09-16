@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js;
 
-import org.eclipse.xtext.service.AbstractGenericModule;
-
 import eu.numberfour.n4js.internal.InternalN4JSWorkspace;
 import eu.numberfour.n4js.internal.N4JSModel;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
@@ -28,7 +26,7 @@ public class N4JSInjectorProviderWithMockProject extends N4JSInjectorProvider {
 	/**
 	 * Configure the IN4JSCore instance to use the implementation that is backed by {@link java.io.File files}.
 	 */
-	public static class MockProjectModule extends AbstractGenericModule {
+	public static class MockProjectModule extends BaseTestModule {
 		/** */
 		public Class<? extends IN4JSCore> bindN4JSCore() {
 			return N4JSRuntimeCoreWithMockProject.class;
