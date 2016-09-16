@@ -81,7 +81,6 @@ import eu.numberfour.n4js.scoping.members.MemberScopingHelper;
 import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression;
@@ -331,10 +330,6 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   public final static String SUBTYPEUNKNOWNTYPEREF_LEFT = "eu.numberfour.n4js.xsemantics.SubtypeUnknownTypeRef_Left";
   
   public final static String SUBTYPEUNKNOWNTYPEREF_RIGHT = "eu.numberfour.n4js.xsemantics.SubtypeUnknownTypeRef_Right";
-  
-  public final static String SUBTYPEENUMTYPEREFN4ENUM = "eu.numberfour.n4js.xsemantics.SubtypeEnumTypeRefN4Enum";
-  
-  public final static String SUBTYPEENUMTYPEREF = "eu.numberfour.n4js.xsemantics.SubtypeEnumTypeRef";
   
   public final static String SUBTYPEPARAMETERIZEDTYPEREF = "eu.numberfour.n4js.xsemantics.SubtypeParameterizedTypeRef";
   
@@ -3692,68 +3687,6 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     /* true */
     if (!true) {
       sneakyThrowRuleFailedException("true");
-    }
-    return new Result<Boolean>(true);
-  }
-  
-  protected Result<Boolean> subtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EnumTypeRef etr, final TypeTypeRef ctr) throws RuleFailedException {
-    try {
-    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRuleSubtypeEnumTypeRefN4Enum(G, _subtrace_, etr, ctr);
-    	addToTrace(_trace_, new Provider<Object>() {
-    		public Object get() {
-    			return ruleName("subtypeEnumTypeRefN4Enum") + stringRepForEnv(G) + " |- " + stringRep(etr) + " <: " + stringRep(ctr);
-    		}
-    	});
-    	addAsSubtrace(_trace_, _subtrace_);
-    	return _result_;
-    } catch (Exception e_applyRuleSubtypeEnumTypeRefN4Enum) {
-    	subtypeThrowException(ruleName("subtypeEnumTypeRefN4Enum") + stringRepForEnv(G) + " |- " + stringRep(etr) + " <: " + stringRep(ctr),
-    		SUBTYPEENUMTYPEREFN4ENUM,
-    		e_applyRuleSubtypeEnumTypeRefN4Enum, etr, ctr, new ErrorInformation[] {new ErrorInformation(etr), new ErrorInformation(ctr)});
-    	return null;
-    }
-  }
-  
-  protected Result<Boolean> applyRuleSubtypeEnumTypeRefN4Enum(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EnumTypeRef etr, final TypeTypeRef ctr) throws RuleFailedException {
-    final Type staticType = this.typeSystemHelper.getStaticType(G, ctr);
-    /* staticType === G.n4EnumType && !TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticType === G.n4StringBasedEnumType && TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticType === G.stringType && TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticType === etr.enumType */
-    if (!(((((staticType == RuleEnvironmentExtensions.n4EnumType(G)) && (!TypeSystemHelper.isStringBasedEnumeration(etr.getEnumType()))) || 
-      ((staticType == RuleEnvironmentExtensions.n4StringBasedEnumType(G)) && TypeSystemHelper.isStringBasedEnumeration(etr.getEnumType()))) || 
-      ((staticType == RuleEnvironmentExtensions.stringType(G)) && TypeSystemHelper.isStringBasedEnumeration(etr.getEnumType()))) || 
-      (staticType == etr.getEnumType()))) {
-      sneakyThrowRuleFailedException("staticType === G.n4EnumType && !TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticType === G.n4StringBasedEnumType && TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticType === G.stringType && TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticType === etr.enumType");
-    }
-    return new Result<Boolean>(true);
-  }
-  
-  protected Result<Boolean> subtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EnumTypeRef etr, final EnumTypeRef etr2) throws RuleFailedException {
-    try {
-    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRuleSubtypeEnumTypeRef(G, _subtrace_, etr, etr2);
-    	addToTrace(_trace_, new Provider<Object>() {
-    		public Object get() {
-    			return ruleName("subtypeEnumTypeRef") + stringRepForEnv(G) + " |- " + stringRep(etr) + " <: " + stringRep(etr2);
-    		}
-    	});
-    	addAsSubtrace(_trace_, _subtrace_);
-    	return _result_;
-    } catch (Exception e_applyRuleSubtypeEnumTypeRef) {
-    	subtypeThrowException(ruleName("subtypeEnumTypeRef") + stringRepForEnv(G) + " |- " + stringRep(etr) + " <: " + stringRep(etr2),
-    		SUBTYPEENUMTYPEREF,
-    		e_applyRuleSubtypeEnumTypeRef, etr, etr2, new ErrorInformation[] {new ErrorInformation(etr), new ErrorInformation(etr2)});
-    	return null;
-    }
-  }
-  
-  protected Result<Boolean> applyRuleSubtypeEnumTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EnumTypeRef etr, final EnumTypeRef etr2) throws RuleFailedException {
-    TEnum _enumType = etr.getEnumType();
-    TEnum _replacement = RuleEnvironmentExtensions.<TEnum>getReplacement(G, _enumType);
-    TEnum _enumType_1 = etr2.getEnumType();
-    TEnum _replacement_1 = RuleEnvironmentExtensions.<TEnum>getReplacement(G, _enumType_1);
-    /* G.getReplacement(etr.enumType) === G.getReplacement(etr2.enumType) */
-    if (!(_replacement == _replacement_1)) {
-      sneakyThrowRuleFailedException("G.getReplacement(etr.enumType) === G.getReplacement(etr2.enumType)");
     }
     return new Result<Boolean>(true);
   }
