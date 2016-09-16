@@ -32,7 +32,7 @@ public class N4JSResourceExtensionSorter extends ResourceExtensionSorter {
 	private WorkingSetManagerBroker workingSetManagerBroker;
 
 	@Override
-	@SuppressWarnings({ "deprecation", "unchecked" })
+	@SuppressWarnings({ "deprecation" })
 	protected int compareClass(Object e1, Object e2) {
 		if (e1 instanceof ResourceNode && e2 instanceof ResourceNode) {
 			final File f1 = ((ResourceNode) e1).getResource();

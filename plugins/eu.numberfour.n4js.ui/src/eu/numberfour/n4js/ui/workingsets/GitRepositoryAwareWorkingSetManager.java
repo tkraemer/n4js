@@ -63,9 +63,12 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 		repositoryCache = Activator.getDefault().getRepositoryCache();
 		repositoryChangeListener = new IPreferenceChangeListener() {
 
+			@SuppressWarnings("deprecation")
+			// keep deprecated RepositoryUtil.PREFS_DIRECTORIES for backward-compatibility
 			@Override
 			public void preferenceChange(final PreferenceChangeEvent event) {
-				if (!RepositoryUtil.PREFS_DIRECTORIES.equals(event.getKey())) {
+				if (!RepositoryUtil.PREFS_DIRECTORIES_REL.equals(event.getKey())
+						&& !RepositoryUtil.PREFS_DIRECTORIES.equals(event.getKey())) {
 					return;
 				}
 

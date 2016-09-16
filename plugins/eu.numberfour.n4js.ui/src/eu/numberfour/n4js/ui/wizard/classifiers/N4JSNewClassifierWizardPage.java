@@ -115,10 +115,12 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 
 		DataBindingContext dataBindingContext = this.getDataBindingContext();
 
-		IObservableValue moduleSpecifierValue = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<String> moduleSpecifierValue = BeanProperties
 				.value(WorkspaceWizardModel.class, WorkspaceWizardModel.MODULE_SPECIFIER_PROPERTY).observe(getModel());
 
-		IObservableValue suffixVisibilityValue = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> suffixVisibilityValue = BeanProperties
 				.value(SuffixText.class, SuffixText.SUFFIX_VISIBILITY_PROPERTY)
 				.observe(workspaceWizardControl.getModuleSpecifierText());
 
@@ -131,29 +133,35 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 				}));
 
 		//// interface name to module specifier suffix binding
-		IObservableValue interfaceNameModelValue = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<String> interfaceNameModelValue = BeanProperties
 				.value(N4JSInterfaceWizardModel.class, N4JSClassifierWizardModel.NAME_PROPERTY).observe(getModel());
-		IObservableValue greySuffixValue = BeanProperties.value(SuffixText.class, SuffixText.SUFFIX_PROPERTY)
+		@SuppressWarnings("unchecked")
+		IObservableValue<String> greySuffixValue = BeanProperties.value(SuffixText.class, SuffixText.SUFFIX_PROPERTY)
 				.observe(workspaceWizardControl.getModuleSpecifierText());
 		dataBindingContext.bindValue(greySuffixValue,
 				interfaceNameModelValue, noUpdateValueStrategy(),
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE));
 
 		//// Enable n4js <-> Definition value(external) is selected
-		IObservableValue externalValue = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> externalValue = BeanProperties
 				.value(DefinitionFileModel.class, N4JSClassifierWizardModel.DEFINITION_FILE_PROPERTY)
 				.observe(getModel());
 
-		IObservableValue n4jsEnabled = WidgetProperties.enabled()
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> n4jsEnabled = WidgetProperties.enabled()
 				.observe(otherClassifierModifiersComponent.getN4jsAnnotationBox());
 		dataBindingContext.bindValue(n4jsEnabled, externalValue, noUpdateValueStrategy(),
 				WizardComponentDataConverters.strategyForPredicate(input -> getModel().isDefinitionFile()
 						&& AccessModifier.PRIVATE != getModel().getAccessModifier()));
 
 		// One way binding of the access modifiers to the enabled state of internal checkbox
-		IObservableValue internalEnabledValue = WidgetProperties.enabled()
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> internalEnabledValue = WidgetProperties.enabled()
 				.observe(accessModifierComponent.getInternalAnnotationBox());
-		IObservableValue accessModifierSelectObservable = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<AccessModifier> accessModifierSelectObservable = BeanProperties
 				.value(N4JSInterfaceWizardModel.class, N4JSClassifierWizardModel.ACCESS_MODIFIER_PROPERTY)
 				.observe(getModel());
 
@@ -166,7 +174,8 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 				}));
 
 		// N4JS annotation checkbox disabled when access modifier is private
-		IObservableValue n4jsEnabledValue = WidgetProperties.enabled()
+		@SuppressWarnings("unchecked")
+		IObservableValue<Boolean> n4jsEnabledValue = WidgetProperties.enabled()
 				.observe(otherClassifierModifiersComponent.getN4jsAnnotationBox());
 		dataBindingContext.bindValue(n4jsEnabledValue, accessModifierSelectObservable, noUpdateValueStrategy(),
 				WizardComponentDataConverters.strategyForPredicate(object -> {
@@ -177,16 +186,15 @@ public abstract class N4JSNewClassifierWizardPage<M extends N4JSClassifierWizard
 				}));
 
 		// Refresh wizard state on validation change
-		IObservableValue observableValidationValue = BeanProperties
+		@SuppressWarnings("unchecked")
+		IObservableValue<ValidationResult> observableValidationValue = BeanProperties
 				.value(WorkspaceWizardModelValidator.VALIDATION_RESULT)
 				.observe(getValidator());
-		observableValidationValue.addValueChangeListener(new IValueChangeListener() {
-
+		observableValidationValue.addValueChangeListener(new IValueChangeListener<ValidationResult>() {
 			@Override
-			public void handleValueChange(ValueChangeEvent event) {
-				onValidationChange((ValidationResult) event.diff.getNewValue());
+			public void handleValueChange(ValueChangeEvent<? extends ValidationResult> event) {
+				onValidationChange(event.diff.getNewValue());
 			}
-
 		});
 
 	}

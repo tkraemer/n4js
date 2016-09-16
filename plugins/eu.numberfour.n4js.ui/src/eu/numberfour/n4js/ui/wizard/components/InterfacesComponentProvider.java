@@ -77,10 +77,10 @@ public class InterfacesComponentProvider {
 	}
 
 	/**
-	 * This component provides a list with buttons to add and remove interfaces. The component also provides inline cell
-	 * editing.
+	 * This component provides a list with buttons to add and remove interfaces. The component also provides in-line
+	 * cell editing.
 	 *
-	 * When clicking into empty space of the list, a new inline interface cell editor can be activated.
+	 * When clicking into empty space of the list, a new in-line interface cell editor can be activated.
 	 *
 	 */
 	public class InterfacesComponent extends WizardComponent {
@@ -281,21 +281,22 @@ public class InterfacesComponentProvider {
 			if (interfacesTable == null || interfacesAddButton == null || interfacesRemoveButton == null) {
 				return;
 			}
-			IObservableList interfacesValue = BeanProperties
+			@SuppressWarnings("unchecked")
+			IObservableList<ClassifierReference> interfacesValue = BeanProperties
 					.list(InterfacesContainingModel.class, N4JSClassifierWizardModel.INTERFACES_PROPERTY)
 					.observe(model);
 
 			// Update SWT Table on model interfaces list update
-			interfacesValue.addListChangeListener(new IListChangeListener() {
+			interfacesValue.addListChangeListener(new IListChangeListener<ClassifierReference>() {
 
 				@Override
-				public void handleListChange(ListChangeEvent event) {
+				public void handleListChange(ListChangeEvent<? extends ClassifierReference> event) {
 					int itemCount = event.getObservableList().size();
 					interfacesTable.setItemCount(itemCount);
 
 					// Find the minimum index to refresh from, to update the Table
 					int minIndex = itemCount - 1;
-					for (ListDiffEntry entry : event.diff.getDifferences()) {
+					for (ListDiffEntry<? extends ClassifierReference> entry : event.diff.getDifferences()) {
 						if (minIndex > entry.getPosition()) {
 							minIndex = entry.getPosition();
 						}
@@ -304,7 +305,7 @@ public class InterfacesComponentProvider {
 						interfacesTable.clear(minIndex, itemCount - 1);
 					}
 
-					for (ListDiffEntry diff : event.diff.getDifferences()) {
+					for (ListDiffEntry<? extends ClassifierReference> diff : event.diff.getDifferences()) {
 						interfacesTable.clear(diff.getPosition(), itemCount - 1);
 					}
 					// If no interfaces are contained disable the remove button
@@ -338,7 +339,7 @@ public class InterfacesComponentProvider {
 			editor.grabHorizontal = true;
 			editor.minimumWidth = 50;
 
-			// register listern to enable inline table editing
+			// register listener to enable in-line table editing
 			interfacesTable.addMouseListener(new InterfacesTableMouseListener(editor));
 
 			// Enable remove button when the user has selected a table element

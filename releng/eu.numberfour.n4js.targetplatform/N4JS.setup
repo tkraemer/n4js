@@ -5,14 +5,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0"
     xmlns:jdt="http://www.eclipse.org/oomph/setup/jdt/1.0"
-    xmlns:pde="http://www.eclipse.org/oomph/setup/pde/1.0"
     xmlns:predicates="http://www.eclipse.org/oomph/predicates/1.0"
-    xmlns:projects="http://www.eclipse.org/oomph/setup/projects/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
     xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
     xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/pde/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/PDE.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore"
     name="n4js"
     label="N4JS">
   <annotation
@@ -29,13 +27,6 @@
   <setupTask
       xsi:type="setup:CompoundTask"
       name="User Preferences">
-    <annotation
-        source="http://www.eclipse.org/oomph/setup/UserPreferences">
-      <detail
-          key="/instance/org.eclipse.egit.core/core_autoIgnoreDerivedResources">
-        <value>record</value>
-      </detail>
-    </annotation>
     <setupTask
         xsi:type="setup:CompoundTask"
         name="org.eclipse.core.resources">
@@ -118,7 +109,7 @@
       <setupTask
           xsi:type="setup:PreferenceTask"
           key="/instance/org.eclipse.jdt.ui/spelling_user_dictionary"
-          value="${git.clone.location/releng/eu.numberfour.n4js.targetplatform/n4js.dict}"/>
+          value="${git.clone.n4js.location/releng/eu.numberfour.n4js.targetplatform/n4js.dict}"/>
       <setupTask
           xsi:type="setup:PreferenceTask"
           key="/instance/org.eclipse.jdt.ui/spelling_user_dictionary_encoding"
@@ -164,8 +155,8 @@
   </setupTask>
   <setupTask
       xsi:type="setup:EclipseIniTask"
-      option="-Doomph.redirection.numberfour"
-      value="=https://raw.githubusercontent.com/NumberFour/n4js/master/releng/eu.numberfour.n4js.targetplatform/N4JS.setup->${git.clone.location|uri}/releng/eu.numberfour.n4js.targetplatform/N4JS.setup"
+      option="-Doomph.redirection.n4js"
+      value="=https://raw.githubusercontent.com/NumberFour/n4js/master/releng/eu.numberfour.n4js.targetplatform/N4JS.setup->${git.clone.n4js.location|uri}/releng/eu.numberfour.n4js.targetplatform/N4JS.setup"
       vm="true">
     <description></description>
   </setupTask>
@@ -187,11 +178,12 @@
       name="n4js.target.platform"
       storageURI="scope://Workspace">
     <choice
-        value="N4JS_Mars"
-        label="N4JS_Mars"/>
+        value="N4JS_Neon"
+        label="N4JS_Neon"/>
   </setupTask>
   <setupTask
-      xsi:type="setup.p2:P2Task">
+      xsi:type="setup.p2:P2Task"
+      label="Platform">
     <requirement
         name="org.eclipse.platform.feature.group"/>
     <requirement
@@ -202,7 +194,8 @@
         name="org.eclipse.pde.feature.group"/>
   </setupTask>
   <setupTask
-      xsi:type="setup.p2:P2Task">
+      xsi:type="setup.p2:P2Task"
+      label="Xcore">
     <requirement
         name="org.eclipse.emf.ecore.xcore.sdk.feature.group"
         versionRange="[1.4.0,1.4.1)"/>
@@ -211,7 +204,8 @@
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
-      xsi:type="setup.p2:P2Task">
+      xsi:type="setup.p2:P2Task"
+      label="Xtext/Xtend">
     <requirement
         name="org.eclipse.xtend.sdk.feature.group"
         versionRange="[2.10.0,2.10.1)"/>
@@ -223,7 +217,8 @@
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
-      xsi:type="setup.p2:P2Task">
+      xsi:type="setup.p2:P2Task"
+      label="XSemantics">
     <requirement
         name="it.xsemantics.sdk.feature.group"
         versionRange="[1.10.0,1.10.1)"/>
@@ -231,7 +226,8 @@
         url="https://dl.bintray.com/lorenzobettini/xsemantics/updates/1.10/"/>
   </setupTask>
   <setupTask
-      xsi:type="setup.p2:P2Task">
+      xsi:type="setup.p2:P2Task"
+      label="ANTLR">
     <requirement
         name="de.itemis.xtext.antlr.sdk.feature.group"
         versionRange="[2.1.1,2.1.2)"/>
@@ -239,7 +235,8 @@
         url="http://download.itemis.com/updates/releases/2.1.1"/>
   </setupTask>
   <setupTask
-      xsi:type="setup.p2:P2Task">
+      xsi:type="setup.p2:P2Task"
+      label="MWE">
     <requirement
         name="org.eclipse.emf.mwe2.language.sdk.feature.group"
         versionRange="[2.9.0,2.9.1)"/>
@@ -247,7 +244,8 @@
         url="http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.9.0"/>
   </setupTask>
   <setupTask
-      xsi:type="setup.p2:P2Task">
+      xsi:type="setup.p2:P2Task"
+      label="JUnit Runners">
     <requirement
         name="org.eclipse.jdt.junit.runners.feature.feature.group"
         versionRange="[0.1.0,0.1.1)"/>
@@ -255,7 +253,8 @@
         url="https://meysholdt.github.io/eclipse_jdt_junit_runners/updatesite"/>
   </setupTask>
   <setupTask
-      xsi:type="setup.p2:P2Task">
+      xsi:type="setup.p2:P2Task"
+      label="XPect">
     <requirement
         name="org.xpect.sdk.feature.group"
         versionRange="[0.1.0,0.1.1)"/>
@@ -263,7 +262,8 @@
         url="http://www.xpect-tests.org/updatesite/nightly/"/>
   </setupTask>
   <setupTask
-      xsi:type="setup.p2:P2Task">
+      xsi:type="setup.p2:P2Task"
+      label="Stateful Lexer">
     <requirement
         name="de.itemis.statefullexer.feature.group"
         versionRange="[1.0.0,1.0.1)"/>
@@ -271,42 +271,48 @@
         url="http://meysholdt.github.io/xtext_stateful_lexer/updatesite"/>
   </setupTask>
   <setupTask
-      xsi:type="setup.p2:P2Task">
+      xsi:type="setup.p2:P2Task"
+      label="SWTBot">
     <requirement
         name="org.eclipse.swtbot.ide.feature.group"/>
     <repository
         url="http://download.eclipse.org/technology/swtbot/releases/2.4.0"/>
   </setupTask>
   <setupTask
-      xsi:type="setup.p2:P2Task">
+      xsi:type="setup.p2:P2Task"
+      label="M2E">
     <requirement
         name="org.eclipse.m2e.feature.feature.group"/>
     <repository
         url="http://download.eclipse.org/technology/m2e/releases"/>
   </setupTask>
   <setupTask
-      xsi:type="setup.p2:P2Task">
+      xsi:type="setup.p2:P2Task"
+      label="AnyEdit">
     <requirement
         name="AnyEditTools.feature.group"/>
     <repository
         url="http://andrei.gmxhome.de/eclipse/"/>
   </setupTask>
   <setupTask
-      xsi:type="setup.p2:P2Task">
+      xsi:type="setup.p2:P2Task"
+      label="Grep Console">
     <requirement
         name="name.schedenig.eclipse.grepconsole.feature.group"/>
     <repository
         url="http://eclipse.schedenig.name"/>
   </setupTask>
   <setupTask
-      xsi:type="setup.p2:P2Task">
+      xsi:type="setup.p2:P2Task"
+      label="Path Tools">
     <requirement
         name="PathToolsFeature.feature.group"/>
     <repository
         url="http://cdn.rawgit.com/sandipchitale/pathtools/1.0.64/PathToolsUpdateSite/"/>
   </setupTask>
   <setupTask
-      xsi:type="setup.p2:P2Task">
+      xsi:type="setup.p2:P2Task"
+      label="Eclipse Launcher">
     <requirement
         name="net.resheim.eclipse.launcher.feature.group"
         filter="(&amp;(osgi.arch=x86_64)(osgi.os=macosx)(osgi.ws=cocoa))"/>
@@ -315,8 +321,23 @@
   </setupTask>
   <setupTask
       xsi:type="git:GitCloneTask"
-      id="git.clone"
-      remoteURI="https://github.com/NumberFour/n4js.git">
+      id="git.clone.n4js"
+      remoteURI="NumberFour/n4js">
+    <annotation
+        source="http://www.eclipse.org/oomph/setup/InducedChoices">
+      <detail
+          key="inherit">
+        <value>github.remoteURIs</value>
+      </detail>
+      <detail
+          key="label">
+        <value>${scope.project.label} Github repository</value>
+      </detail>
+      <detail
+          key="target">
+        <value>remoteURI</value>
+      </detail>
+    </annotation>
     <configSections
         name="core">
       <properties
@@ -326,399 +347,98 @@
     <description>${scope.project.label}</description>
   </setupTask>
   <setupTask
-      xsi:type="projects:ProjectsImportTask">
-    <sourceLocator
-        rootFolder="${git.clone.location/builds}"/>
-    <sourceLocator
-        rootFolder="${git.clone.location/docs}"/>
-    <sourceLocator
-        rootFolder="${git.clone.location/features}"/>
-    <sourceLocator
-        rootFolder="${git.clone.location/plugins}"/>
-    <sourceLocator
-        rootFolder="${git.clone.location/releng}"/>
-    <sourceLocator
-        rootFolder="${git.clone.location/testhelpers}"/>
-    <sourceLocator
-        rootFolder="${git.clone.location/tests}"/>
-    <sourceLocator
-        rootFolder="${git.clone.location/tools}"/>
-    <sourceLocator
-        rootFolder="${git.clone.location/n4js-libraries}"/>
-  </setupTask>
-  <setupTask
       xsi:type="setup.targlets:TargletTask"
       locale="en"
       vmArguments="-Xmx4g&#xA;-Xmx4g">
     <targlet
-        name="N4JS-N4Target Platform"
+        name="N4JS"
         activeRepositoryList="${n4js.target.platform}">
-      <requirement
-          name="com.google.guava"
-          versionRange="[15.0.0,15.0.1)"/>
-      <requirement
-          name="com.google.guava.source"
-          versionRange="[15.0.0,15.0.1)"/>
-      <requirement
-          name="com.google.inject"
-          versionRange="[3.0.0,3.0.1)"/>
-      <requirement
-          name="com.google.inject.source"
-          versionRange="[3.0.0,3.0.1)"/>
-      <requirement
-          name="de.itemis.statefullexer.feature.group"
-          versionRange="[1.0.0,1.0.1)"/>
-      <requirement
-          name="de.itemis.xtext.antlr.feature.feature.group"
-          versionRange="[2.1.1,2.1.2)"/>
-      <requirement
-          name="de.itemis.xtext.antlr.sdk.feature.group"
-          versionRange="[2.1.1,2.1.2)"/>
-      <requirement
-          name="it.xsemantics.runtime.feature.feature.group"
-          versionRange="[1.10.0,1.10.1)"/>
-      <requirement
-          name="it.xsemantics.runtime.feature.source.feature.group"
-          versionRange="[1.10.0,1.10.1)"/>
-      <requirement
-          name="javaewah"
-          versionRange="[0.7.9,0.7.10)"/>
-      <requirement
-          name="javaewah.source"
-          versionRange="[0.7.9,0.7.10)"/>
-      <requirement
-          name="jsonedit-feature.feature.group"
-          versionRange="[1.0.0,1.0.1)"/>
-      <requirement
-          name="org.antlr.runtime"
-          versionRange="[3.2.0,3.2.1)"/>
-      <requirement
-          name="org.antlr.runtime.source"
-          versionRange="[3.2.0,3.2.1)"/>
-      <requirement
-          name="org.apache.commons.cli"
-          versionRange="[1.2.0,1.2.1)"/>
-      <requirement
-          name="org.apache.commons.cli.source"
-          versionRange="[1.2.0,1.2.1)"/>
-      <requirement
-          name="org.apache.commons.compress"
-          versionRange="[1.6.0,1.6.1)"/>
-      <requirement
-          name="org.apache.commons.compress.source"
-          versionRange="[1.6.0,1.6.1)"/>
-      <requirement
-          name="org.codehaus.jackson.core"
-          versionRange="[1.6.0,1.6.1)"/>
-      <requirement
-          name="org.codehaus.jackson.core.source"
-          versionRange="[1.6.0,1.6.1)"/>
-      <requirement
-          name="org.codehaus.jackson.mapper"
-          versionRange="[1.6.0,1.6.1)"/>
-      <requirement
-          name="org.codehaus.jackson.mapper.source"
-          versionRange="[1.6.0,1.6.1)"/>
-      <requirement
-          name="org.eclipse.draw2d"
-          versionRange="[3.10.1,3.10.2)"/>
-      <requirement
-          name="org.eclipse.ecf"
-          versionRange="[3.7.0,3.7.1)"/>
-      <requirement
-          name="org.eclipse.ecf.core.feature.feature.group"
-          versionRange="[1.2.0,1.2.1)"/>
-      <requirement
-          name="org.eclipse.ecf.core.ssl.feature.feature.group"
-          versionRange="[1.1.0,1.1.1)"/>
-      <requirement
-          name="org.eclipse.ecf.filetransfer"
-          versionRange="[5.0.0,5.0.1)"/>
-      <requirement
-          name="org.eclipse.ecf.filetransfer.feature.feature.group"
-          versionRange="[3.12.0,3.12.1)"/>
-      <requirement
-          name="org.eclipse.ecf.filetransfer.httpclient4.feature.feature.group"
-          versionRange="[3.12.0,3.12.1)"/>
-      <requirement
-          name="org.eclipse.ecf.filetransfer.httpclient4.ssl.feature.feature.group"
-          versionRange="[1.1.0,1.1.1)"/>
-      <requirement
-          name="org.eclipse.ecf.filetransfer.source"
-          versionRange="[5.0.0,5.0.1)"/>
-      <requirement
-          name="org.eclipse.ecf.filetransfer.ssl.feature.feature.group"
-          versionRange="[1.1.0,1.1.1)"/>
-      <requirement
-          name="org.eclipse.ecf.identity"
-          versionRange="[3.6.0,3.6.1)"/>
-      <requirement
-          name="org.eclipse.ecf.identity.source"
-          versionRange="[3.6.0,3.6.1)"/>
-      <requirement
-          name="org.eclipse.ecf.provider.filetransfer"
-          versionRange="[3.2.200,3.2.201)"/>
-      <requirement
-          name="org.eclipse.ecf.provider.filetransfer.source"
-          versionRange="[3.2.200,3.2.201)"/>
-      <requirement
-          name="org.eclipse.ecf.source"
-          versionRange="[3.7.0,3.7.1)"/>
-      <requirement
-          name="org.eclipse.egit.feature.group"
-          versionRange="[4.2.0,4.2.1)"/>
-      <requirement
-          name="org.eclipse.egit.source.feature.group"
-          versionRange="[4.2.0,4.2.1)"/>
-      <requirement
-          name="org.eclipse.emf.ecore.xcore.sdk.feature.group"
-          versionRange="[1.3.2,1.3.3)"/>
-      <requirement
-          name="org.eclipse.emf.mwe.core"
-          versionRange="[1.3.13,1.3.14)"/>
-      <requirement
-          name="org.eclipse.emf.mwe.core.source"
-          versionRange="[1.3.13,1.3.14)"/>
-      <requirement
-          name="org.eclipse.emf.mwe.utils"
-          versionRange="[1.3.13,1.3.14)"/>
-      <requirement
-          name="org.eclipse.emf.mwe.utils.source"
-          versionRange="[1.3.13,1.3.14)"/>
-      <requirement
-          name="org.eclipse.emf.mwe2.language.sdk.feature.group"
-          versionRange="[2.8.3,2.8.4)"/>
-      <requirement
-          name="org.eclipse.emf.mwe2.runtime.sdk.feature.group"
-          versionRange="[2.8.3,2.8.4)"/>
-      <requirement
-          name="org.eclipse.emf.sdk.feature.group"
-          versionRange="[2.11.2,2.11.3)"/>
-      <requirement
-          name="org.eclipse.equinox.concurrent"
-          versionRange="[1.1.0,1.1.1)"/>
-      <requirement
-          name="org.eclipse.equinox.executable.feature.group"
-          versionRange="[3.6.200,3.6.201)"/>
-      <requirement
-          name="org.eclipse.equinox.p2.core.feature.feature.group"
-          versionRange="[1.3.100,1.3.101)"/>
-      <requirement
-          name="org.eclipse.equinox.p2.extras.feature.feature.group"
-          versionRange="[1.2.101,1.2.102)"/>
-      <requirement
-          name="org.eclipse.equinox.p2.rcp.feature.feature.group"
-          versionRange="[1.2.101,1.2.102)"/>
-      <requirement
-          name="org.eclipse.equinox.p2.user.ui.feature.group"
-          versionRange="[2.2.102,2.2.103)"/>
-      <requirement
-          name="org.eclipse.equinox.sdk.feature.group"
-          versionRange="[3.11.2,3.11.3)"/>
-      <requirement
-          name="org.eclipse.gef"
-          versionRange="[3.10.1,3.10.2)"/>
-      <requirement
-          name="org.eclipse.help.feature.group"
-          versionRange="[2.1.2,2.1.3)"/>
-      <requirement
-          name="org.eclipse.jdt.feature.group"
-          versionRange="[3.11.2,3.11.3)"/>
-      <requirement
-          name="org.eclipse.jdt.junit.runners.feature.feature.group"
-          versionRange="[0.1.0,0.1.1)"/>
-      <requirement
-          name="org.eclipse.jetty.http.source"
-          versionRange="[9.2.13,9.2.14)"/>
-      <requirement
-          name="org.eclipse.jetty.io.source"
-          versionRange="[9.2.13,9.2.14)"/>
-      <requirement
-          name="org.eclipse.jetty.security"
-          versionRange="[9.2.13,9.2.14)"/>
-      <requirement
-          name="org.eclipse.jetty.security.source"
-          versionRange="[9.2.13,9.2.14)"/>
-      <requirement
-          name="org.eclipse.jetty.server"
-          versionRange="[9.2.13,9.2.14)"/>
-      <requirement
-          name="org.eclipse.jetty.server.source"
-          versionRange="[9.2.13,9.2.14)"/>
-      <requirement
-          name="org.eclipse.jetty.servlet"
-          versionRange="[9.2.13,9.2.14)"/>
-      <requirement
-          name="org.eclipse.jetty.servlet.source"
-          versionRange="[9.2.13,9.2.14)"/>
-      <requirement
-          name="org.eclipse.jetty.util"
-          versionRange="[9.2.13,9.2.14)"/>
-      <requirement
-          name="org.eclipse.jetty.util.ajax"
-          versionRange="[9.2.13,9.2.14)"/>
-      <requirement
-          name="org.eclipse.jetty.util.source"
-          versionRange="[9.2.13,9.2.14)"/>
-      <requirement
-          name="org.eclipse.jgit.feature.group"
-          versionRange="[4.2.0,4.2.1)"/>
-      <requirement
-          name="org.eclipse.jgit.source.feature.group"
-          versionRange="[4.2.0,4.2.1)"/>
-      <requirement
-          name="org.eclipse.license.feature.group"
-          versionRange="[1.0.1,1.0.2)"/>
-      <requirement
-          name="org.eclipse.pde.feature.group"
-          versionRange="[3.11.2,3.11.3)"/>
-      <requirement
-          name="org.eclipse.platform.feature.group"
-          versionRange="[4.5.2,4.5.3)"/>
-      <requirement
-          name="org.eclipse.rcp.feature.group"
-          versionRange="[4.5.2,4.5.3)"/>
-      <requirement
-          name="org.eclipse.sdk.feature.group"
-          versionRange="[4.5.2,4.5.3)"/>
-      <requirement
-          name="org.eclipse.swtbot.eclipse.feature.group"
-          versionRange="[2.3.0,2.3.1)"/>
-      <requirement
-          name="org.eclipse.swtbot.eclipse.gef.feature.group"
-          versionRange="[2.3.0,2.3.1)"/>
-      <requirement
-          name="org.eclipse.swtbot.eclipse.test.junit.feature.group"
-          versionRange="[2.3.0,2.3.1)"/>
-      <requirement
-          name="org.eclipse.swtbot.feature.group"
-          versionRange="[2.3.0,2.3.1)"/>
-      <requirement
-          name="org.eclipse.swtbot.forms.feature.group"
-          versionRange="[2.3.0,2.3.1)"/>
-      <requirement
-          name="org.eclipse.swtbot.generator.feature.feature.group"
-          versionRange="[2.3.0,2.3.1)"/>
-      <requirement
-          name="org.eclipse.swtbot.ide.feature.group"
-          versionRange="[2.3.0,2.3.1)"/>
-      <requirement
-          name="org.eclipse.wst.web_ui.feature.feature.group"
-          versionRange="[3.7.1,3.7.2)"/>
-      <requirement
-          name="org.eclipse.wst.xml_ui.feature.feature.group"
-          versionRange="[3.7.2,3.7.3)"/>
-      <requirement
-          name="org.eclipse.xpand"
-          versionRange="[2.1.0,2.1.1)"/>
-      <requirement
-          name="org.eclipse.xpand.source"
-          versionRange="[2.1.0,2.1.1)"/>
-      <requirement
-          name="org.eclipse.xtend"
-          versionRange="[2.1.0,2.1.1)"/>
-      <requirement
-          name="org.eclipse.xtend.sdk.feature.group"
-          versionRange="[2.10.0,2.10.1)"/>
-      <requirement
-          name="org.eclipse.xtend.source"
-          versionRange="[2.1.0,2.1.1)"/>
-      <requirement
-          name="org.eclipse.xtend.typesystem.emf"
-          versionRange="[2.1.0,2.1.1)"/>
-      <requirement
-          name="org.eclipse.xtend.typesystem.emf.source"
-          versionRange="[2.1.0,2.1.1)"/>
-      <requirement
-          name="org.eclipse.xtext.sdk.feature.group"
-          versionRange="[2.10.0,2.10.1)"/>
-      <requirement
-          name="org.hamcrest.library"
-          versionRange="[1.3.0,1.3.1)"/>
-      <requirement
-          name="org.hamcrest.library.source"
-          versionRange="[1.3.0,1.3.1)"/>
-      <requirement
-          name="org.junit"
-          versionRange="[4.12.0,4.12.1)"/>
-      <requirement
-          name="org.junit.source"
-          versionRange="[4.12.0,4.12.1)"/>
-      <requirement
-          name="org.kohsuke.args4j"
-          versionRange="[2.0.21,2.0.22)"/>
-      <requirement
-          name="org.kohsuke.args4j.source"
-          versionRange="[2.0.21,2.0.22)"/>
-      <requirement
-          name="org.objectweb.asm"
-          versionRange="[5.0.1,5.0.2)"/>
-      <requirement
-          name="org.objectweb.asm.source"
-          versionRange="[5.0.1,5.0.2)"/>
-      <requirement
-          name="org.xpect.sdk.feature.group"
-          versionRange="[0.1.0,0.1.1)"/>
-      <requirement
-          name="org.eclipse.rse.feature.group"
-          versionRange="[3.7.0,3.7.1)"/>
-      <requirement
-          name="PathToolsFeature.feature.group"
-          versionRange="[1.0.67,1.0.68)"/>
+      <annotation
+          source="http:/www.eclipse.org/oomph/targlets/TargetDefinitionGenerator">
+        <detail
+            key="location">
+          <value>${git.clone.n4js.location/releng/eu.numberfour.n4js.targetplatform/eu.numberfour.n4js.targetplatform.target}</value>
+        </detail>
+        <detail
+            key="extraUnits">
+          <value>org.eclipse.equinox.executable.feature.group</value>
+        </detail>
+        <detail
+            key="singleLocation">
+          <value>false</value>
+        </detail>
+        <detail
+            key="includeAllPlatforms">
+          <value>false</value>
+        </detail>
+        <detail
+            key="includeSource">
+          <value>true</value>
+        </detail>
+        <detail
+            key="name">
+          <value>Generated target-platform ${scope.project.label}:${n4js.target.platform}</value>
+        </detail>
+        <detail
+            key="generateVersions">
+          <value>true</value>
+        </detail>
+      </annotation>
+      <requirement
+          name="*"/>
+      <sourceLocator
+          rootFolder="${git.clone.n4js.location}"
+          locateNestedProjects="true">
+        <predicate
+            xsi:type="predicates:NotPredicate">
+          <operand
+              xsi:type="predicates:OrPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="TestPrj"/>
+          </operand>
+        </predicate>
+      </sourceLocator>
       <repositoryList
-          name="N4JS_Mars">
+          name="N4JS_Neon">
         <repository
-            url="http://download.eclipse.org/cbi/updates/license/1.0.1.v20140414-1359"/>
+            url="http://download.eclipse.org/eclipse/updates/4.6/R-4.6-201606061100"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/4.5/R-4.5.2-201602121500"/>
-        <repository
-            url="http://download.eclipse.org/egit/updates-4.2"/>
+            url="http://download.eclipse.org/egit/updates-4.4"/>
         <repository
             url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.2.13.v20150730"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/emf/updates/2.11.x"/>
+            url="http://download.eclipse.org/modeling/emf/emf/updates/2.12"/>
         <repository
-            url="http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.8.3"/>
+            url="http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.9.0"/>
         <repository
             url="http://download.eclipse.org/modeling/m2t/xpand/updates/releases/R201505260349"/>
         <repository
             url="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.10.0"/>
         <repository
-            url="http://download.eclipse.org/releases/mars/201602261000"/>
+            url="http://download.eclipse.org/technology/swtbot/releases/2.4.0"/>
         <repository
-            url="http://download.eclipse.org/technology/swtbot/releases/2.3.0"/>
-        <repository
-            url="http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository"/>
-        <repository
-            url="http://download.itemis.com/updates/releases/2.1.1"/>
-        <repository
-            url="http://meysholdt.github.io/xtext_stateful_lexer/updatesite"/>
+            url="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository"/>
         <repository
             url="http://cdn.rawgit.com/sandipchitale/pathtools/1.0.64/PathToolsUpdateSite"/>
         <repository
             url="http://boothen.github.io/Json-Eclipse-Plugin"/>
         <repository
-            url="https://dl.bintray.com/lorenzobettini/xsemantics/updates/1.10/"/>
+            url="https://dl.bintray.com/lorenzobettini/xsemantics/updates/1.10"/>
         <repository
             url="https://meysholdt.github.io/eclipse_jdt_junit_runners/updatesite"/>
         <repository
             url="http://www.xpect-tests.org/updatesite/nightly/"/>
+        <repository
+            url="http://download.eclipse.org/cbi/updates/license/1.0.1.v20140414-1359"/>
+        <repository
+            url="http://download.eclipse.org/webtools/downloads/drops/R3.8.0/R-3.8.0-20160608130753/repository"/>
+        <repository
+            url="http://download.eclipse.org/tm/updates/4.0/GA"/>
+        <repository
+            url="http://download.eclipse.org/tools/gef/updates/legacy/releases/4.0.0_gef-master_1952"/>
       </repositoryList>
     </targlet>
-  </setupTask>
-  <setupTask
-      xsi:type="pde:TargetPlatformTask"
-      disabled="true"
-      name="${numberfour.target.platform}"/>
-  <setupTask
-      xsi:type="setup:VariableTask"
-      name="numberfour.target.platform"
-      storageURI="scope://Workspace"
-      label="Target Platform">
-    <choice
-        value="N4JS - Eclipse 4.5.2, Xtext/Xtend 2.10.0  +(Xcore 1.3.2) , Xsemantics 1.10, XpectN4"
-        label="N4JS"/>
-    <description>The NumberFour target platform choice</description>
   </setupTask>
   <setupTask
       xsi:type="setup.workingsets:WorkingSetTask">
@@ -833,23 +553,7 @@
     <description>The dynamic working sets for ${scope.project.label}</description>
   </setupTask>
   <stream name="master"
-      label="Master">
-    <setupTask
-        xsi:type="setup:CompoundTask"
-        name="User Preferences">
-      <annotation
-          source="http://www.eclipse.org/oomph/setup/UserPreferences">
-        <detail
-            key="/instance/org.eclipse.ui.workbench/org.eclipse.ui.commands">
-          <value>record</value>
-        </detail>
-        <detail
-            key="/instance/org.eclipse.oomph.setup.ui/showToolBarContributions">
-          <value>record</value>
-        </detail>
-      </annotation>
-    </setupTask>
-  </stream>
+      label="Master"/>
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"
       href="index:/org.eclipse.setup#//@projectCatalogs[name='com.github']"/>

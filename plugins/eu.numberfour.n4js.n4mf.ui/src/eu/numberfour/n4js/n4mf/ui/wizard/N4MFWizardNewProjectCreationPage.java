@@ -164,6 +164,7 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		setControl(control);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void createVendorIdControls(DataBindingContext dbc, Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NULL);
 		composite.setLayout(GridLayoutFactory.swtDefaults().numColumns(2).create());
@@ -346,6 +347,7 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private void initDefaultCreateGreeterBindings(DataBindingContext dbc, Button createGreeterFileButton) {
 		// Bind the "create greeter file"-checkbox
 		dbc.bindValue(WidgetProperties.selection().observe(createGreeterFileButton),
@@ -353,6 +355,7 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 						.observe(projectInfo));
 	}
 
+	@SuppressWarnings("unchecked")
 	private void initTestProjectBinding(DataBindingContext dbc, Button addNormalSourceFolderButton,
 			Button createTestGreeterFileButton) {
 		// Bind the "normal source folder"-checkbox
@@ -366,16 +369,19 @@ public class N4MFWizardNewProjectCreationPage extends WizardNewProjectCreationPa
 						.observe(projectInfo));
 	}
 
+	@SuppressWarnings("unchecked")
 	private void initProjectTypeBinding(final DataBindingContext dbc, final ComboViewer projectType) {
 		dbc.bindValue(observeSingleSelection(projectType),
 				PojoProperties.value(N4MFProjectInfo.class, PROJECT_TYPE_PROP_NAME).observe(projectInfo));
 	}
 
+	@SuppressWarnings("unchecked")
 	private void initImplementationIdBinding(final DataBindingContext dbc, final Text text) {
 		dbc.bindValue(WidgetProperties.text(Modify).observe(text),
 				PojoProperties.value(N4MFProjectInfo.class, IMPLEMENTATION_ID_PROP_NAME).observe(projectInfo));
 	}
 
+	@SuppressWarnings("unchecked")
 	private void initApiViewerBinding(DataBindingContext dbc, ListViewer apiViewer) {
 		dbc.bindList(
 				ViewersObservables.observeMultiSelection(apiViewer),

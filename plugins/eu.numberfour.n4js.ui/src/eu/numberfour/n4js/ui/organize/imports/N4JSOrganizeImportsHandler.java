@@ -37,7 +37,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -160,13 +160,14 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 				@Override
 				public void run(IProgressMonitor mon) throws InvocationTargetException, InterruptedException {
 					int totalWork = filesAsList.size();
-					mon.beginTask("Organize imports.", totalWork);
-					for (int i = 0; !mon.isCanceled() && i < filesAsList.size(); i++) {
+					SubMonitor subMon = SubMonitor.convert(mon, "Organize imports.", totalWork);
+					for (int i = 0; !subMon.isCanceled() && i < filesAsList.size(); i++) {
 						IFile currentFile = filesAsList.get(i);
-						mon.setTaskName("Organize imports." + " - File (" + (i + 1) + " of " + totalWork + ")");
+						subMon.setTaskName("Organize imports." + " - File (" + (i + 1) + " of " + totalWork + ")");
 						try {
-							mon.subTask(currentFile.getName());
-							doOrganizeImports(currentFile, new SubProgressMonitor(mon, 1));
+							SubMonitor subSubMon = subMon.split(1, SubMonitor.SUPPRESS_NONE);
+							subSubMon.setTaskName(currentFile.getName());
+							doOrganizeImports(currentFile, subSubMon);
 
 						} catch (CoreException | RuntimeException e) {
 							String msg = "Exception in file " + currentFile.getFullPath().toString() + ".";
@@ -178,7 +179,7 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 							}
 						}
 					}
-					if (mon.isCanceled()) {
+					if (subMon.isCanceled()) {
 						throw new InterruptedException();
 					}
 				}
@@ -278,7 +279,7 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 
 	private void doOrganizeImports(IFile file, IProgressMonitor mon) throws CoreException {
 
-		mon.beginTask("Organizing " + file.getName(), IProgressMonitor.UNKNOWN);
+		SubMonitor subMon = SubMonitor.convert(mon, "Organizing " + file.getName(), IProgressMonitor.UNKNOWN);
 
 		FileEditorInput fei = new FileEditorInput(file);
 
@@ -289,14 +290,12 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 
 		doOrganizeImports(document, Interaction.breakBuild);
 
-		mon.subTask("Saving " + file.getName());
-
-		docProvider.saveDocument(new SubProgressMonitor(mon, 0), fei, document, true);
+		subMon.setTaskName("Saving " + file.getName());
+		docProvider.saveDocument(subMon.split(0), fei, document, true);
 
 		docProvider.changed(fei);
 		docProvider.disconnect(fei);
 
-		mon.done();
 	}
 
 	/**

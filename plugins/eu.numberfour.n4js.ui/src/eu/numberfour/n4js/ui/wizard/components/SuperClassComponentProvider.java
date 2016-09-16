@@ -89,9 +89,11 @@ public class SuperClassComponentProvider {
 		private void setupBindings() {
 			// super class property binding
 
-			IObservableValue superClassValue = BeanProperties
+			@SuppressWarnings("unchecked")
+			IObservableValue<ClassifierReference> superClassValue = BeanProperties
 					.value(N4JSClassWizardModel.class, N4JSClassWizardModel.SUPER_CLASS_PROPERTY).observe(model);
-			IObservableValue superClassUI = WidgetProperties.text(SWT.Modify).observe(text);
+			@SuppressWarnings("unchecked")
+			IObservableValue<String> superClassUI = WidgetProperties.text(SWT.Modify).observe(text);
 
 			getDataBindingContext().bindValue(superClassUI, superClassValue,
 					new WizardComponentDataConverters.StringToClassifierReferenceConverter().updatingValueStrategy(),
