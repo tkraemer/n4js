@@ -19,7 +19,7 @@ var v6 : Object = E.L;
 
 // The following errors should be clear, but for enums it is always a little but confusing:
 
-// XPECT errors --> "type{E} is not a subtype of Object." at "E"
+// XPECT noerrors --> "type{E} is a subtype of Object."
 var v7 : Object = E;
 // XPECT errors --> "type{E} is not a subtype of N4Enum." at "E"
 var v8 : N4Enum = E;

@@ -21,7 +21,6 @@ import eu.numberfour.n4js.scoping.builtin.VirtualBaseTypeScope
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
-import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
@@ -205,8 +204,6 @@ class RuleEnvironmentExtensions {
 				G.add(KEY__THIS_BINDING, TypeUtils.createBoundThisTypeRef(actualThisTypeRef))
 			BoundThisTypeRef:
 				G.add(KEY__THIS_BINDING, actualThisTypeRef)
-			EnumTypeRef:	// IDEBUG-330
-				G.add(KEY__THIS_BINDING, TypeUtils.createBoundThisTypeRef(actualThisTypeRef))
 		}
 	}
 
@@ -311,20 +308,10 @@ class RuleEnvironmentExtensions {
 					return cpy;
 				}
 			}
-		}
-		else if(typeRef instanceof EnumTypeRef) {
-			val type = typeRef.enumType;
-			val replacement = getReplacement(G,type);
-			if(replacement!==type) { // identity compare is ok here
-				val cpy = TypeUtils.copyWithProxies(typeRef); // do not resolve proxies
-				cpy.enumType = replacement;
-				return cpy;
-			}
-		}
-		else {
-			// no replacement required for other kinds of TypeRef (e.g. ClassifierTypeRef, UnionTypeExpression),
+		} else {
+			// no replacement required for other kinds of TypeRef (e.g. TypeTypeRef, UnionTypeExpression),
 			// because in those cases the subtype check - and replacement is supposed to only affect subtype
-			// checking - will boil down to nested subtype checks of ParameterizedTypeRef or EnumTypeRef
+			// checking - will boil down to nested subtype checks of ParameterizedTypeRef
 		}
 		return typeRef;
 	}
