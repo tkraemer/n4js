@@ -16,14 +16,17 @@ import static java.util.Collections.singletonList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -525,7 +528,7 @@ public class TypeUtils {
 	 * <p>
 	 * See {@link StructuralTypeRef} for details on the special handling of property 'astStructuralMembers'.
 	 */
-	private static void copyStructuralTypingInfo(StructuralTypeRef dest, StructuralTypeRef src) {
+	public static void copyStructuralTypingInfo(StructuralTypeRef dest, StructuralTypeRef src) {
 		dest.setTypingStrategy(src.getTypingStrategy());
 		dest.getAstStructuralMembers().clear(); // need not copy those (if 'src' is an AST node, it will have a
 		// TStructuralType containing the same members!)
@@ -1026,7 +1029,7 @@ public class TypeUtils {
 	 * method instead of the standard EMF method if the source object might be or might contain a Type or TypeRef.
 	 */
 	public static final <T extends EObject> T copy(T source) {
-		return copy(source, true, false);
+		return copy(source, true, false, null);
 	}
 
 	/**
@@ -1034,7 +1037,7 @@ public class TypeUtils {
 	 * {@link #copy(EObject)}.
 	 */
 	public static final <T extends EObject> T copyIfContained(T source) {
-		return copy(source, true, true);
+		return copy(source, true, true, null);
 	}
 
 	/**
@@ -1042,23 +1045,38 @@ public class TypeUtils {
 	 * {@link #copy(EObject)}.
 	 */
 	public static final <T extends EObject> T copyWithProxies(T source) {
-		return copy(source, false, false);
+		return copy(source, false, false, null);
+	}
+
+	/**
+	 * Same as {@link EcoreUtil2#cloneWithProxies(EObject)}, but takes care of special copy semantics for TypeRefs. See
+	 * {@link #copy(EObject)}.
+	 */
+	public static final ParameterizedTypeRefStructural copyToParameterizedTypeRefStructural(
+			ParameterizedTypeRef source) {
+		EClass ptrsEClass = TypeRefsPackage.eINSTANCE.getParameterizedTypeRefStructural();
+		return (ParameterizedTypeRefStructural) copy(source, false, false, ptrsEClass);
 	}
 
 	/**
 	 * Same as {@link EcoreUtil2#cloneWithProxies(EObject)}, but does not copy the given references.
 	 */
 	public static final <T extends EObject> T copyPartial(T source, EReference... eRefsToIgnore) {
-		return copy(source, true, false, eRefsToIgnore);
+		return copy(source, true, false, null, eRefsToIgnore);
 	}
 
 	private static final <T extends EObject> T copy(T source, boolean resolveProxies, boolean onlyIfContained,
-			EReference... eRefsToIgnore) {
+			EClass eclass, EReference... eRefsToIgnore) {
+
 		if (source == null)
+			return null;
+		if (eclass != null && !source.eClass().isSuperTypeOf(eclass))
 			return null;
 		if (onlyIfContained && !(source.eContainer() != null || source.eResource() != null))
 			return source;
+
 		final TypeCopier copier = new TypeCopier(resolveProxies, eRefsToIgnore);
+		copier.changeType(source, eclass);
 		@SuppressWarnings("unchecked")
 		final T result = (T) copier.copy(source);
 		copier.copyReferences();
@@ -1083,10 +1101,17 @@ public class TypeUtils {
 				.getWildcard_DeclaredUpperBound();
 
 		private final EReference[] eRefsToIgnore;
+		private final Map<EObject, EClass> changeTypeMap = new HashMap<>();
 
 		public TypeCopier(boolean resolveProxies, EReference... eRefsToIgnore) {
 			super(resolveProxies);
 			this.eRefsToIgnore = eRefsToIgnore;
+		}
+
+		void changeType(EObject eObject, EClass eClass) {
+			if (eObject == null || eClass == null)
+				return;
+			changeTypeMap.put(eObject, eClass);
 		}
 
 		@Override
@@ -1119,6 +1144,13 @@ public class TypeUtils {
 			if (org.eclipse.xtext.util.Arrays.contains(eRefsToIgnore, eReference))
 				return; // do not copy ignored references
 			super.copyReference(eReference, eObject, copyEObject);
+		}
+
+		@Override
+		protected EClass getTarget(EObject eObject) {
+			if (changeTypeMap.containsKey(eObject))
+				return changeTypeMap.get(eObject);
+			return super.getTarget(eObject);
 		}
 	}
 
