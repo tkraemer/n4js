@@ -91,5 +91,5 @@ class C3<T,P,R> {
 var c3b1_struct : ~C3<B1,B1,B1>;
 
 var c3b2ac : C3<B2,A,C>; // note: the type of c2b2ac is nominal (only the type arguments are structural)
-// depends on IDEBUG-225 XPECT FIXME noerrors -->
+// depends on IDEBUG-225, GH-12/GH-250 XPECT noerrors -->
 c3b1_struct = c3b2ac;
