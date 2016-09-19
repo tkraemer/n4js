@@ -1052,8 +1052,8 @@ public class TypeUtils {
 	 * Same as {@link EcoreUtil2#cloneWithProxies(EObject)}, but takes care of special copy semantics for TypeRefs. See
 	 * {@link #copy(EObject)}.
 	 */
-	public static final <T extends TypeRef> ParameterizedTypeRefStructural copyToParameterizedTypeRefStructural(
-			T source) {
+	public static final ParameterizedTypeRefStructural copyToParameterizedTypeRefStructural(
+			ParameterizedTypeRef source) {
 		EClass ptrsEClass = TypeRefsPackage.eINSTANCE.getParameterizedTypeRefStructural();
 		return (ParameterizedTypeRefStructural) copy(source, false, false, ptrsEClass);
 	}
@@ -1067,7 +1067,10 @@ public class TypeUtils {
 
 	private static final <T extends EObject> T copy(T source, boolean resolveProxies, boolean onlyIfContained,
 			EClass eclass, EReference... eRefsToIgnore) {
+
 		if (source == null)
+			return null;
+		if (eclass != null && !source.eClass().isSuperTypeOf(eclass))
 			return null;
 		if (onlyIfContained && !(source.eContainer() != null || source.eResource() != null))
 			return source;

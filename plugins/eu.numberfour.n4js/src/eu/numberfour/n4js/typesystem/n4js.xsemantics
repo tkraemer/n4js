@@ -2574,7 +2574,7 @@ from {
 			// do we have a substitution?
 			var temp = env(G, typeVar, TypeRef)
 			if (typeRef instanceof ParameterizedTypeRefStructural) {
-				var ptrs = TypeUtils.copyToParameterizedTypeRefStructural(temp);
+				var ptrs = TypeUtils.copyToParameterizedTypeRefStructural(temp as ParameterizedTypeRef);
 				ptrs.setTypingStrategy(typeRef.getTypingStrategy());
 				temp = ptrs;
 			}
