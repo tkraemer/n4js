@@ -103,8 +103,6 @@ package class N4JSTypesBuilderHelper {
 	 * @param preLinkingPhase if true, cross reference is not set (only set in the linking phase)
 	 * @param <T> cross reference type, e.g., ParameterizedTypeRef
 	 */
-	 //TODO after java update bring back nullness analysis
-//	def package <T extends EObject> setCopyOfReference((T) => void typeAssignment, @Nullable T typeToAssign, boolean preLinkingPhase) {
 	def package <T extends EObject> setCopyOfReference((T) => void typeAssignment, T typeToAssign, boolean preLinkingPhase) {
 		if (!preLinkingPhase) {
 			if (typeToAssign===null) {

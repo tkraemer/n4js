@@ -41,9 +41,6 @@ public class TypeHelper {
 	 * @return ordered list of super types, using a depth first search, starting with classes, then roles, and eventually interfaces.
 	 */
 	// TODO functions and other type expressions are not supported yet!
-	//TODO after java update bring back nullness analysis
-//	@Nonnull
-//	public def SuperTypesList<TypeRef> collectAllDeclaredSuperTypesTypeargsIgnored(@Nonnull TypeRef ref, boolean reflexive) {
 	public def SuperTypesList<TypeRef> collectAllDeclaredSuperTypesTypeargsIgnored(TypeRef ref, boolean reflexive) {
 		val allDeclaredSuperTypes = newSuperTypesList(typeRefComparator);
 
@@ -67,9 +64,6 @@ public class TypeHelper {
 	 * @return ordered list of super types, using a depth first search, starting with classes, then roles, and eventually interfaces.
 	 */
 	// TODO functions and other type expressions are not supported yet!
-	//TODO after java update bring back nullness analysis
-//	@Nonnull
-//	public def SuperTypesList<TypeRef> collectAllDeclaredSuperTypesWithTypeargs(@Nonnull TypeRef ref, boolean reflexive) {
 	public def SuperTypesList<TypeRef> collectAllDeclaredSuperTypesWithTypeargs(TypeRef ref, boolean reflexive) {
 		val allDeclaredSuperTypes = newSuperTypesList(typeRefComparator);
 
@@ -84,9 +78,6 @@ public class TypeHelper {
 		return allDeclaredSuperTypes;
 	}
 
-	//TODO after java update bring back nullness analysis
-//	@Nonnull
-//	public def SuperTypesList<Type> collectAllDeclaredSuperTypes(@Nonnull Type type, boolean reflexive) {
 	public def SuperTypesList<Type> collectAllDeclaredSuperTypes(Type type, boolean reflexive) {
 		val allDeclaredSuperTypes = newSuperTypesList(typeComparator);
 
@@ -111,11 +102,7 @@ public class TypeHelper {
 	 * 				qualified name
 	 * @param allDeclaredSuperTypesOrdered ordered list of super types, using a depth first search, starting with classes, then roles, and eventually interfaces.
 	 */
-	 //TODO after java update bring back nullness analysis
-//	public def void collectAllDeclaredSuperTypesTypeargsIgnored(@Nullable TypeRef ref,
-//		@Nonnull SuperTypesList<TypeRef> allDeclaredSuperTypes) {
-	public def void collectAllDeclaredSuperTypesTypeargsIgnored(TypeRef ref,
-		SuperTypesList<TypeRef> allDeclaredSuperTypes) {
+	public def void collectAllDeclaredSuperTypesTypeargsIgnored(TypeRef ref, SuperTypesList<TypeRef> allDeclaredSuperTypes) {
 		if (ref !== null && ref.declaredType !== null) {
 			for (superTypeRef : ref.declaredType.declaredSuperTypes) {
 				if (allDeclaredSuperTypes.add(superTypeRef)) {
@@ -125,11 +112,7 @@ public class TypeHelper {
 		}
 	}
 
-	//TODO after java update bring back nullness analysis
-//	public def void collectAllDeclaredSuperTypes(@Nullable Type type,
-//		@Nonnull SuperTypesList<Type> allDeclaredSuperTypes) {
-	public def void collectAllDeclaredSuperTypes(Type type,
-		SuperTypesList<Type> allDeclaredSuperTypes) {
+	public def void collectAllDeclaredSuperTypes(Type type, SuperTypesList<Type> allDeclaredSuperTypes) {
 		if (type !== null) {
 			for (superType : type.declaredSuperTypes.map[declaredType]) {
 				if (allDeclaredSuperTypes.add(superType)) {
@@ -144,8 +127,6 @@ public class TypeHelper {
 	 * {@link TypeCompareHelper#getTypeRefComparator()}. The iterator of the iterable needs to support the {@link Iterator#remove()} operation.
 	 * @return true if type has been found, false otherwise
 	 */
-	 //TODO after java update bring back nullness analysis
-//	public def boolean removeTypeRef(@Nonnull Iterable<TypeRef> typeRefs, @Nonnull TypeRef toBeRemoved) {
 	public def boolean removeTypeRef(Iterable<TypeRef> typeRefs, TypeRef toBeRemoved) {
 		val Iterator<TypeRef> iter = typeRefs.iterator;
 		while (iter.hasNext()) {
@@ -164,8 +145,6 @@ public class TypeHelper {
 	 * assumes that all types in orderedRefs are ordered as returned by collecAllDeclaredSuperTypes().
 	 * The iterator returned by typeRefs must support the {@link Iterator#remove()} operation.
 	 */
-	 //TODO after java update bring back nullness analysis
-//	public def void retainAllTypeRefs(@Nonnull Iterable<TypeRef> typeRefs, @Nonnull SuperTypesList<TypeRef> typesToBeRetained) {
 	public def void retainAllTypeRefs(Iterable<TypeRef> typeRefs, SuperTypesList<TypeRef> typesToBeRetained) {
 		val iter = typeRefs.iterator
 		while (iter.hasNext) {

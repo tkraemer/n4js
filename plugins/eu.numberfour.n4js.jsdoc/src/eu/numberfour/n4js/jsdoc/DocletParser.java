@@ -46,9 +46,6 @@ public class DocletParser extends AbstractJSDocParser {
 	 * @param inlineDict
 	 *            Dictionary of inline tags used in main description of JSDoc
 	 */
-	// TODO after java update bring back nullness analysis
-	// public DocletParser(@Nonnull TagDictionary<AbstractLineTagDefinition> dict,
-	// @Nonnull TagDictionary<AbstractInlineTagDefinition> inlineDict) {
 	public DocletParser(TagDictionary<AbstractLineTagDefinition> dict,
 			TagDictionary<AbstractInlineTagDefinition> inlineDict) {
 		lineTagDictionary = dict;
