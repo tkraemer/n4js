@@ -4523,32 +4523,29 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   protected Result<Boolean> applyRuleSubtypeTypeTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final TypeTypeRef left, final TypeTypeRef right) throws RuleFailedException {
+    final TypeArgument leftTypeArg = left.getTypeArg();
+    final TypeArgument rightTypeArg = right.getTypeArg();
     final boolean leftIsCtorRef = left.isConstructorRef();
     final boolean rightIsCtorRef = right.isConstructorRef();
-    TypeArgument _typeArg = right.getTypeArg();
-    final boolean rightHasTypeRef = (_typeArg instanceof TypeRef);
+    final boolean rightHasTypeRef = (rightTypeArg instanceof TypeRef);
     if (((!leftIsCtorRef) && rightIsCtorRef)) {
       /* fail */
       throwForExplicitFail();
     } else {
       if ((rightHasTypeRef && (!rightIsCtorRef))) {
-        /* G |- left.getTypeArg <: right.getTypeArg */
-        TypeArgument _typeArg_1 = left.getTypeArg();
-        TypeArgument _typeArg_2 = right.getTypeArg();
-        subtypeInternal(G, _trace_, _typeArg_1, _typeArg_2);
+        /* G |- leftTypeArg <: rightTypeArg */
+        subtypeInternal(G, _trace_, leftTypeArg, rightTypeArg);
       } else {
         if ((rightHasTypeRef && rightIsCtorRef)) {
           final Type left_staticType = this.typeSystemHelper.getStaticType(G, left);
           final Type right_staticType = this.typeSystemHelper.getStaticType(G, right);
           final boolean leftHasCovariantConstructor = ((left_staticType instanceof TClassifier) && N4JSLanguageUtils.hasCovariantConstructor(((TClassifier) left_staticType)));
-          /* !(left.typeArg instanceof Wildcard || left.typeArg instanceof ThisTypeRef) || leftHasCovariantConstructor */
-          if (!((!((left.getTypeArg() instanceof Wildcard) || (left.getTypeArg() instanceof ThisTypeRef))) || leftHasCovariantConstructor)) {
-            sneakyThrowRuleFailedException("!(left.typeArg instanceof Wildcard || left.typeArg instanceof ThisTypeRef) || leftHasCovariantConstructor");
+          /* !(leftTypeArg instanceof Wildcard || leftTypeArg instanceof ExistentialTypeRef || leftTypeArg instanceof ThisTypeRef) || leftHasCovariantConstructor */
+          if (!((!(((leftTypeArg instanceof Wildcard) || (leftTypeArg instanceof ExistentialTypeRef)) || (leftTypeArg instanceof ThisTypeRef))) || leftHasCovariantConstructor)) {
+            sneakyThrowRuleFailedException("!(leftTypeArg instanceof Wildcard || leftTypeArg instanceof ExistentialTypeRef || leftTypeArg instanceof ThisTypeRef) || leftHasCovariantConstructor");
           }
-          /* G |- left.getTypeArg <: right.getTypeArg */
-          TypeArgument _typeArg_3 = left.getTypeArg();
-          TypeArgument _typeArg_4 = right.getTypeArg();
-          subtypeInternal(G, _trace_, _typeArg_3, _typeArg_4);
+          /* G |- leftTypeArg <: rightTypeArg */
+          subtypeInternal(G, _trace_, leftTypeArg, rightTypeArg);
           if (((left_staticType instanceof TypeVariable) || (right_staticType instanceof TypeVariable))) {
             /* left_staticType === right_staticType */
             if (!(left_staticType == right_staticType)) {
@@ -4603,31 +4600,27 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
             subtypeInternal(G, _trace_, leftCtorRefSubst, rightCtorRefSubst);
           }
         } else {
-          /* G |~ left.typeArg /\ var TypeRef upperBoundLeft */
-          TypeArgument _typeArg_5 = left.getTypeArg();
+          /* G |~ leftTypeArg /\ var TypeRef upperBoundLeft */
           TypeRef upperBoundLeft = null;
-          Result<TypeRef> result_4 = upperBoundInternal(G, _trace_, _typeArg_5);
+          Result<TypeRef> result_4 = upperBoundInternal(G, _trace_, leftTypeArg);
           checkAssignableTo(result_4.getFirst(), TypeRef.class);
           upperBoundLeft = (TypeRef) result_4.getFirst();
           
-          /* G |~ left.typeArg \/ var TypeRef lowerBoundLeft */
-          TypeArgument _typeArg_6 = left.getTypeArg();
+          /* G |~ leftTypeArg \/ var TypeRef lowerBoundLeft */
           TypeRef lowerBoundLeft = null;
-          Result<TypeRef> result_5 = lowerBoundInternal(G, _trace_, _typeArg_6);
+          Result<TypeRef> result_5 = lowerBoundInternal(G, _trace_, leftTypeArg);
           checkAssignableTo(result_5.getFirst(), TypeRef.class);
           lowerBoundLeft = (TypeRef) result_5.getFirst();
           
-          /* G |~ right.typeArg /\ var TypeRef upperBoundRight */
-          TypeArgument _typeArg_7 = right.getTypeArg();
+          /* G |~ rightTypeArg /\ var TypeRef upperBoundRight */
           TypeRef upperBoundRight = null;
-          Result<TypeRef> result_6 = upperBoundInternal(G, _trace_, _typeArg_7);
+          Result<TypeRef> result_6 = upperBoundInternal(G, _trace_, rightTypeArg);
           checkAssignableTo(result_6.getFirst(), TypeRef.class);
           upperBoundRight = (TypeRef) result_6.getFirst();
           
-          /* G |~ right.typeArg \/ var TypeRef lowerBoundRight */
-          TypeArgument _typeArg_8 = right.getTypeArg();
+          /* G |~ rightTypeArg \/ var TypeRef lowerBoundRight */
           TypeRef lowerBoundRight = null;
-          Result<TypeRef> result_7 = lowerBoundInternal(G, _trace_, _typeArg_8);
+          Result<TypeRef> result_7 = lowerBoundInternal(G, _trace_, rightTypeArg);
           checkAssignableTo(result_7.getFirst(), TypeRef.class);
           lowerBoundRight = (TypeRef) result_7.getFirst();
           
