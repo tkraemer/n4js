@@ -19,15 +19,12 @@ import static eu.numberfour.n4js.tester.domain.TestStatus.ERROR;
 import static eu.numberfour.n4js.tester.domain.TestStatus.FAILED;
 import static eu.numberfour.n4js.tester.domain.TestStatus.PASSED;
 import static eu.numberfour.n4js.tester.domain.TestStatus.SKIPPED;
-import static eu.numberfour.n4js.tester.server.HttpServerManager.CONTEXT_ROOT;
 import static eu.numberfour.n4js.tester.server.resources.ContentType.END_SESSION;
 import static eu.numberfour.n4js.tester.server.resources.ContentType.END_TEST;
 import static eu.numberfour.n4js.tester.server.resources.ContentType.PING_TEST;
 import static eu.numberfour.n4js.tester.server.resources.ContentType.START_SESSION;
 import static eu.numberfour.n4js.tester.server.resources.ContentType.START_TEST;
 import static eu.numberfour.n4js.tester.server.resources.HttpMethod.POST;
-import static eu.numberfour.n4js.tester.server.resources.ResourceRouterServlet.CONTEXT_PATH;
-import static eu.numberfour.n4js.tester.tests.TesterConstants.PORT;
 import static java.lang.Integer.highestOneBit;
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
@@ -77,6 +74,7 @@ import eu.numberfour.n4js.tester.server.resources.ContentType;
 import eu.numberfour.n4js.tester.server.resources.HttpMethod;
 import eu.numberfour.n4js.tester.tests.InjectedModules;
 import eu.numberfour.n4js.tester.tests.JUnitGuiceClassRunner;
+import eu.numberfour.n4js.tester.tests.TesterConstants;
 
 /**
  * Test for a mock test session.
@@ -90,7 +88,7 @@ public class MockTest {
 
 	private static final int SERIAL_TEST_CASE_COUNT_FACTOR = 100;
 	private static final int PARALLEL_TEST_CASE_COUNT_FACTOR = 100;
-	private static final String URL = "http://localhost:" + PORT + CONTEXT_ROOT + CONTEXT_PATH;
+	// private static final String URL = "http://localhost:" + /* PORT */"8080" + CONTEXT_ROOT + CONTEXT_PATH;
 
 	@Inject
 	private TesterFacade facade;
@@ -101,6 +99,8 @@ public class MockTest {
 	@Inject
 	private ObjectMapper mapper;
 
+	int actualPort = -1;
+
 	/***/
 	@BeforeClass
 	public static void beforeClass() {
@@ -108,18 +108,23 @@ public class MockTest {
 			getRootLogger().removeAllAppenders();
 			getRootLogger().addAppender(new NullAppender());
 		}
+
 	}
 
 	/***/
 	@Before
 	public void before() {
-		serverManager.stopServer(PORT);
+		if (actualPort != -1) {
+			serverManager.stopServer(actualPort);
+		}
 	}
 
 	/***/
 	@After
 	public void after() {
-		serverManager.stopServer(PORT);
+		if (actualPort != -1) {
+			serverManager.stopServer(actualPort);
+		}
 	}
 
 	/**
@@ -141,12 +146,16 @@ public class MockTest {
 	private void testMock(final boolean parallel, int testCaseCountFactor) {
 		final String sessionId = valueOf(randomUUID());
 		final TestTree testTree = createNewTestTree(sessionId, testCaseCountFactor);
-		facade.prepareTestSession(testTree);
+		actualPort = facade.prepareTestSession(testTree);
 		testMock(testTree, parallel);
 	}
 
 	private Stream<TestCase> getTestCaseStream(final TestTree tree, final boolean parallel) {
 		return stream(tree.spliterator(), parallel);
+	}
+
+	private String URL() {
+		return "http://localhost:" + /* PORT */actualPort + TesterConstants.CONTEXT_ROOT + TesterConstants.CONTEXT_PATH;
 	}
 
 	/**
@@ -164,7 +173,7 @@ public class MockTest {
 
 		final String mode = parallel ? "parallel" : "synchronous";
 		log("Starting " + mode + " mock test session.");
-		server(URL + sessionId + "/start/", START_SESSION, POST, null);
+		server(URL() + sessionId + "/start/", START_SESSION, POST, null);
 
 		final AtomicInteger i = new AtomicInteger();
 		final AtomicInteger percentage = new AtomicInteger();
@@ -186,17 +195,17 @@ public class MockTest {
 						}
 					}
 				}
-				server(URL + sessionId + "/tests/" + testId + "/start/", START_TEST, POST, createTimeoutBody(5_000L));
+				server(URL() + sessionId + "/tests/" + testId + "/start/", START_TEST, POST, createTimeoutBody(5_000L));
 				final long timeout = getMockTestExecutionTime(i.get());
-				server(URL + sessionId + "/tests/" + testId + "/ping/", PING_TEST, POST,
+				server(URL() + sessionId + "/tests/" + testId + "/ping/", PING_TEST, POST,
 						createTimeoutBody(timeout + 5_000L));
-				server(URL + sessionId + "/tests/" + testId + "/end/", END_TEST, POST,
+				server(URL() + sessionId + "/tests/" + testId + "/end/", END_TEST, POST,
 						createTestResult(timeout, i.incrementAndGet()));
 			}
 		});
 
 		log("Ending " + mode + " mock test session.");
-		server(URL + sessionId + "/end/", END_SESSION, POST, null);
+		server(URL() + sessionId + "/end/", END_SESSION, POST, null);
 	}
 
 	private void log(String msg) {
@@ -332,14 +341,14 @@ public class MockTest {
 					final TestSuite suite = new TestSuite(suiteName);
 					create(closed(1, testCaseCountFactor), integers()).forEach(
 							j -> {
-						final String testCaseId = getTestCaseId(i, j);
-						suite.add(new TestCase(
-								new ID(testCaseId),
-								"origin." + suiteName + "." + testCaseId + ".0.0.1",
-								suiteName + "." + testCaseId,
-								testCaseId,
-								testCaseId, URI.createURI("testURI_" + testCaseId)));
-					});
+								final String testCaseId = getTestCaseId(i, j);
+								suite.add(new TestCase(
+										new ID(testCaseId),
+										"origin." + suiteName + "." + testCaseId + ".0.0.1",
+										suiteName + "." + testCaseId,
+										testCaseId,
+										testCaseId, URI.createURI("testURI_" + testCaseId)));
+							});
 					testSuites.add(suite);
 				});
 		return new TestTree(new ID(sessionId), testSuites);

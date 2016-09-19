@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.tester.tests.server;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static eu.numberfour.n4js.tester.tests.TesterConstants.PORT;
 
 import org.junit.After;
 import org.junit.Before;
@@ -42,28 +41,30 @@ public class TesterFacadeTest {
 	@Inject
 	private TesterFacade testerFacade;
 
+	private int actualPort = -1;
+
 	/***/
 	@Before
 	public void before() {
-		serverManager.stopServer(PORT);
+		if (actualPort != -1)
+			serverManager.stopServer(actualPort);
 	}
 
 	/***/
 	@After
 	public void after() {
-		serverManager.stopServer(PORT);
+		serverManager.stopServer(actualPort);
 	}
 
 	/***/
 	@Test
 	public void testEnsureServerIsRunningPrepareSession() {
-		testerFacade.prepareTestSession(new TestTree(new ID("sessionId"), newArrayList()));
+		actualPort = testerFacade.prepareTestSession(new TestTree(new ID("sessionId"), newArrayList()));
 	}
 
 	/***/
 	@Test
 	public void testPrepareSessionWithoutRunningServer() {
-		serverManager.stopServer(PORT);
-		testerFacade.prepareTestSession(new TestTree(new ID("sessionId"), newArrayList()));
+		actualPort = testerFacade.prepareTestSession(new TestTree(new ID("sessionId"), newArrayList()));
 	}
 }

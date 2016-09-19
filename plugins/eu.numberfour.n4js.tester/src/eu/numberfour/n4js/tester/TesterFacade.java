@@ -22,8 +22,9 @@ public interface TesterFacade {
 	 *
 	 * @param tree
 	 *            the test tree for the test session.
+	 * @return port number used
 	 */
-	void prepareTestSession(final TestTree tree);
+	int prepareTestSession(final TestTree tree);
 
 	/**
 	 * Shuts down the test framework, currently this only entails shutting down the HTTP server used for gathering test

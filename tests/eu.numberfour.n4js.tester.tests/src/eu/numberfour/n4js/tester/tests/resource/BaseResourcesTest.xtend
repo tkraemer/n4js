@@ -39,10 +39,10 @@ import static com.google.common.collect.Multimaps.synchronizedMultimap
 import static com.jayway.restassured.RestAssured.*
 import static eu.numberfour.n4js.tester.domain.TestStatus.*
 import static eu.numberfour.n4js.tester.server.resources.ContentType.*
-import static eu.numberfour.n4js.tester.tests.TesterConstants.*
 import static java.util.Collections.*
 import static java.util.UUID.randomUUID
 import org.eclipse.emf.common.util.URI
+import eu.numberfour.n4js.tester.tests.TesterTestsConfiguration
 
 /**
  * Base class of all classes testing the behavior of the tester RESTful API.
@@ -57,9 +57,14 @@ abstract class BaseResourcesTest {
 
 	@Inject
 	private HttpServerManager serverManager;
+	
+	@Inject 
+	public extension TesterTestsConfiguration ttConfig;
+
 
 	@Before
 	public def void before() {
+		computePortAndValidConfig();
 		serverManager.startServer(VALID_CONFIG);
 		if (null !== queue) {
 			queue.dispose();
@@ -67,12 +72,20 @@ abstract class BaseResourcesTest {
 		queue = provider.get();
 		events = synchronizedMultimap(create);
 	}
+	
 
 	@After
 	public def void after() {
 		queue?.dispose();
-		serverManager.stopServer(PORT);
+		serverManager.stopServer(port);
 	}
+	
+
+
+	
+
+	
+	
 
 	protected def newTestResult() {
 		new TestResult(PASSED) => [
@@ -109,7 +122,7 @@ abstract class BaseResourcesTest {
 		spec.contentType('''«type»''');
 	}
 
-		protected def endSession(Object sessionId) {
+	protected def endSession(Object sessionId) {
 		given.contentType(END_SESSION).post('''«URL»«sessionId»/end''');
 		events.put('''«sessionId»''', '''«new SessionEndedEvent('''«sessionId»''')»''');
 	}

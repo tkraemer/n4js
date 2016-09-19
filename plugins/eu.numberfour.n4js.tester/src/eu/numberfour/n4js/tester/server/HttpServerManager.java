@@ -26,12 +26,18 @@ public interface HttpServerManager {
 	String HTTP_PORT = "http.port";
 
 	/**
+	 * Constant accessing the local-host server name
+	 */
+	String LOCALHOST = "localhost";
+
+	/**
 	 * Starts the server with the given configuration.
 	 *
 	 * @param config
 	 *            the configuration for the server setup. Such as host, port.
+	 * @return actual port number of the started server
 	 */
-	void startServer(final Map<String, Object> config);
+	int startServer(final Map<String, Object> config);
 
 	/**
 	 * Stops the HTTP server specified with the port argument. If the port is {@code -1}, then all the running HTTP
