@@ -18,10 +18,10 @@
 <div class="content">
 <div class="paragraph">
 <div class="title">N4JS Tutorial</div>
-<p><strong>The flexibility of JavaScript with the type-safety of Java.</strong></p>
+<p><strong>The flexibility of JavaScript with the type safety of Java</strong></p>
 </div>
 <div class="paragraph">
-<p>N4JS is a language and IDE designed for developers who need to build scalable projects whose code is
+<p>N4JS is a language and IDE designed for developers who need to build scalable projects whose code should be
 modular, reusable and easily maintainable over time. N4JS bridges the strengths of ECMAScript
 (also known as JavaScript) and Java. The result is a typed JavaScript superset that is dynamic,
 flexible and type-safe.</p>
@@ -30,11 +30,11 @@ flexible and type-safe.</p>
 <p><strong>Experience with JavaScript or Java?</strong></p>
 </div>
 <div class="paragraph">
-<p>Developers who are experienced with JavaScript can easily apply their knowledge in N4JS. As N4JS is a
+<p>Developers with Java who are experienced with JavaScript can easily apply their knowledge in N4JS. As N4JS is a
 typed superset of ECMAScript, it is possible to use plain ECMAScript in N4JS. Most of the important
 features from ECMAScript 2015 are supported, such as <strong>modules</strong> with import and export,
 <strong>classes</strong>, <strong>iterables</strong> and <strong>destructuring</strong> of arrays
-and objects. Developers who have experience using Java will be familiar with features from Java 8
+and objects. Developers with Java experience will be familiar with features from Java 8
 such as <strong>nominal typing</strong>, <strong>interfaces</strong> and <strong>generic classes
 and methods</strong>; even dependency injection and testing look similar.</p>
 </div>
@@ -49,8 +49,8 @@ to N4JS. The benefit of type safety means that errors in code are noticed while 
 IDE, allowing for problem-solving before code is ever deployed.</p>
 </div>
 <div class="paragraph">
-<p>Developers who have previous experience using Eclipse will be familiar with many common UI features
-such as the Editor, Project Outline, Project Explorer and Console views. The arrangement of views
+<p>Developers who have previous experience using Eclipse will be familiar with most of the common UI features
+such as Editor, Project Outline, Project Explorer and Console views. The arrangement of views
 can be easily selected using the perspectives icons as highlighted in the upper-right of the window.</p>
 </div>
 </div>
@@ -76,9 +76,9 @@ increment in order to demonstrate some of the strengths of the language and IDE 
 simple practical model.</p>
 </div>
 <div class="paragraph">
-<p>Before we dive in and start creating our example, it&#8217;s worth briefly describing the architecture
+<p>Before we dive in and start creating our example, it is worth briefly describing the architecture
 of our application in order to have a considered approach to the concept.  In this particular
-example, we can think of a multitiered client-server structure. The idea here is that when we
+example, we can think of a multi-tiered client-server structure. The idea here is that when we
 have the application separated, each tier can be reused for different purposes.</p>
 </div>
 <div class="imageblock">
@@ -90,7 +90,7 @@ have the application separated, each tier can be reused for different purposes.<
 <p>We will start with modeling and implementing the domain model before implementing a first
 version of the storage tier which will enable our first tests. The controller is then built
 using a test-driven approach. We later improve the storage tier using a real database
-before adding a REST API with express and, finally, a simple Web UI.</p>
+before adding a REST API with <a href="http://expressjs.com/">Express</a> and, finally, a simple Web UI.</p>
 </div>
 </div>
 </div>
@@ -148,7 +148,7 @@ We will begin by defining Task which is extended by Appointment and Todo.</p>
 <h3 id="creating-new-classes-and-modules"><a class="anchor" href="#creating-new-classes-and-modules"></a>Creating new classes and modules</h3>
 <div class="paragraph">
 <p>In our new N4JS project, we can begin creating our entities. The easiest way to
-complete this is to utilize the New N4JS Class wizard, accessed at <span class="menuseq"><span class="menu">File</span>&#160;&#9656; <span class="submenu">New</span>&#160;&#9656; <span class="menuitem">N4JS Class</span></span></p>
+do this is to utilize the New N4JS Class wizard, accessed via <span class="menuseq"><span class="menu">File</span>&#160;&#9656; <span class="submenu">New</span>&#160;&#9656; <span class="menuitem">N4JS Class</span></span></p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -204,7 +204,7 @@ which we have annotated with types. The N4JS transpiler will later remove these 
 </div>
 <div class="paragraph">
 <p>The type annotations declare the type of the data field. The type checker will issue
-errors if we later assign values of non-compatible type to the variables. The question
+errors if we later assign values of a non-compatible type to the variables. The question
 mark ? is a <strong>type modifier</strong> declaring the value as optional. That means that a new Task
 may or may not have values assigned for their id and label.</p>
 </div>
@@ -237,7 +237,7 @@ of elements, that is, they restrict from where an element can be accessed.</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">/** An appointment. */ <i class="conum" data-value="1"></i><b>(1)</b>
 export class Appointment extends Task {   <i class="conum" data-value="2"></i><b>(2)</b>
-  public time: Date?;     <i class="conum" data-value="3"></i><b>(3)</b>
+  public time: Date;     <i class="conum" data-value="3"></i><b>(3)</b>
   public place: string;   <i class="conum" data-value="3"></i><b>(3)</b>
 }
 
@@ -251,8 +251,8 @@ export class Todo extends Task {  
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Appointment is prefaced with a <strong>JSDoc</strong> annotation (a comment beginning with /****
-and closed with */ which documents that it is a single Todo task. JSDoc comments are
+<td>Appointment is prefaced with a <strong>JSDoc</strong> annotation (a comment beginning with /**
+and closed with */ which documents that it is a single Appointment task. JSDoc comments are
 used to provide markup annotation of your code. The content of these comments is displayed when
 you hover over a reference to that element.</td>
 </tr>
@@ -266,7 +266,7 @@ id and label with types from Task.</td>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>We add the members time and place with <strong>type annotations</strong>. The
-type annotations of the members in Appointment are more strict then before, since
+type annotations of the members in Appointment are more strict than before, since
 the optional modifier (denoted by the question mark) is missing. We will see the effects
 of these different modifiers later on.</td>
 </tr>
@@ -313,7 +313,7 @@ at compile-time so we may limit it to these constants. N4JS provides two kinds o
 enumerations: "ordinary" and "string-based". The former
 will be translated to objects, enabling extended reflection (for example to get the type of
 the enumeration or get all literals). The latter will be translated to strings. Literals of
-string-based enumerations are, in fact, represented as plain string in the JavaScript
+string-based enumerations are, in fact, represented as plain strings in the JavaScript
 output code. As a result, they offer less reflection capabilities.</p>
 </div>
 </div>
@@ -339,19 +339,6 @@ which can be used for testing. Later on, we will add a proper persistence layer 
 <p>We can create the storage module with the New Class wizard.
 We call it "Storage.n4js", following Java&#8217;s convention of naming the module similar
 to the contained class or interface. We will manually edit the file as follows:</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-An interface wizard will be available soon. For the moment, either create
-an empty file with extension n4js or use the class wizard and manually change the file name.
-</td>
-</tr>
-</table>
 </div>
 <div class="listingblock">
 <div class="title">Storage.n4js</div>
@@ -384,8 +371,8 @@ are similar to classes, but they cannot be instantiated. In N4JS it is
 however possible to use the "instanceof" operator with interfaces. Usually
 interfaces contain abstract methods, but they can contain data fields,
 getters and setters as well. Similar to Java 8, interface methods can
-provide a default implementation. We use this here for the method isEmpty.
-Classes implementing the interface can either rely on this default
+provide a default implementation. Here, we provide a default implementation for the method isEmpty.
+Classes implementing the interface can either rely on the default
 implementation or provide a more efficient one. As in Java, a class
 can implement multiple interfaces, and also interfaces can extend multiple interfaces.</p>
 </div>
@@ -465,7 +452,7 @@ first look at the other parts of the above class declaration in more detail.</p>
 <div class="paragraph">
 <p>We use a data field tasks to store all the tasks in a map. The type Map stems from
 ECMAScript 2015. It is a generic type similar to Array, which the observant reader may
-have already seen in the Storage interface. N4JS support for generic types and methods
+have already seen in the Storage interface. N4JS provides support for generic types and methods
 is similar to Java 8.</p>
 </div>
 </div>
@@ -615,7 +602,7 @@ are also treated as optional in the field structural types.</p>
 <div class="paragraph">
 <p>For the concrete class <code>Todo</code>, the <code>~i~</code>-type is not required to contain any property since all
 its fields are either optional or have an initializer. It contains the optional fields <code>id</code>,
-<code>label</code>, <code>dueDate</code> and <code>done</code>. <code>~i~Appointment</code> contains the required properties <code>time</code> and
+<code>label</code>, <code>dueDate</code>, <code>priority</code> and <code>done</code>. <code>~i~Appointment</code> contains the required properties <code>time</code> and
 <code>place</code>, and the optional fields <code>id</code> and <code>label</code>.</p>
 </div>
 <div class="paragraph">
@@ -687,14 +674,14 @@ sim.storeTask(todo);</code></pre>
 functionality that is actually useful for the user of the application.</p>
 </div>
 <div class="paragraph">
-<p>Since we eventually want to implement a REST API (and use a real data base), we need to introduce
+<p>Since we eventually want to implement a REST API (and use a real database), we need to introduce
 asynchronous functions. So before we actually implement any controller class, we have to adjust our storage
 tier to support asynchronous functions.</p>
 </div>
 <div class="sect2">
 <h3 id="make-the-storage-asynchronous"><a class="anchor" href="#make-the-storage-asynchronous"></a>Make the Storage Asynchronous</h3>
 <div class="paragraph">
-<p>If we would like to use a real data base, all calls to the data base will be asynchronous. Asynchronous
+<p>If we would like to use a real database, all calls to the data base will be asynchronous. Asynchronous
 programming is a typical task in ECMAScript and there are several solutions to do this.</p>
 </div>
 <div class="paragraph">
@@ -1006,7 +993,7 @@ export class StorageMongoDB implements Storage {
 </div>
 </div>
 <div class="paragraph">
-<p>In the above section of code, we are implementing StorageMongoDB from the Storage interface and then calling
+<p>In the above code section, we are implementing StorageMongoDB from the Storage interface and then calling
 some of the standard MongoDB collection methods.</p>
 </div>
 <div class="paragraph">
@@ -1064,7 +1051,7 @@ binding and are less verbose than traditional function expressions.</td>
 </table>
 </div>
 <div class="paragraph">
-<p>Above code uses two helper functions, <code>toData()</code> and <code>fromData()</code>. Those illustrate two techniques available
+<p>The above code uses two helper functions, <code>toData()</code> and <code>fromData()</code>. Those illustrate two techniques available
 in N4JS: reflection and so-called <code>@Spec</code> constructors, respectively. Reflection is known from many
 languages and allows for retrieving information of a type and its members at runtime. It is used in
 <code>fromData()</code> as follows:</p>
@@ -1087,7 +1074,7 @@ languages and allows for retrieving information of a type and its members at run
 </div>
 </div>
 <div class="paragraph">
-<p>Conversely, <code>@Spec</code> constructors are special constructors that allow to create a new instance of a class and
+<p>Conversely, <code>@Spec</code> constructors are special constructors that allow us to create a new instance of a class and
 initialize it with values provided by a plain data object in properties that correspond to the type&#8217;s fields.</p>
 </div>
 <div class="listingblock">
@@ -1110,7 +1097,8 @@ const typeToCtor = new Map&lt;string,constructor{Task}&gt;([
 </div>
 </div>
 <div class="paragraph">
-<p>By using the above two helper functions, we avoid sending our data model instances directly to the MongoDB
+<p>Note that both functions <code>toData</code> and <code>fromData</code> should be declared outside of the <code>StorageMongoDB</code> class but in the same file <code>StorageMongoDB.n4js</code>.
+By using the above two helper functions, we avoid sending our data model instances directly to the MongoDB
 driver. Note that the entire implementation is intended for illustration purposes and in a real-world
 systems many details would be handled differently, depending on the actual requirements.</p>
 </div>
@@ -1233,8 +1221,8 @@ StorageInMemory.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The final step in building functionality into our model is to create a simple web user interface using
-express as a dependency to create a web server. We will then pass our tasks from MongoDB into a small
-amount of HTML to read the results. We will create the web server using <a href="http://expressjs.com/">Express</a>.</p>
+<a href="http://expressjs.com/">Express</a> as a dependency to create a web server. We will then pass our tasks from MongoDB into a small
+ HTML page to display the results. We will create the web server using <a href="http://expressjs.com/">Express</a>.</p>
 </div>
 <div class="paragraph">
 <p>In order to use Express, we need the appropriate npm module. Adding this npm and making it available in
@@ -1247,13 +1235,17 @@ dependencies):</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-n4js" data-lang="n4js">ProjectDependencies {
   mongodb,
-  express
+  express,
+  n4js.lang
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The quickfix will automatically download all required npm packages, that is, express and all its
-dependencies. We can now use express in our N4JS code (for more details, esp. N4JS definition files, see
+<p>The dependency <code>n4js.lang</code> contains <code>N4Injector</code> which is needed later, so make sure it is declared as a dependency.</p>
+</div>
+<div class="paragraph">
+<p>The quickfix will automatically download all required npm packages, that is, Express and all its
+dependencies. We can now use Express in our N4JS code (for more details, esp. N4JS definition files, see
 above description on MongoDB).</p>
 </div>
 <div class="listingblock">
@@ -1287,7 +1279,7 @@ export class WebUI {
 </div>
 <div class="paragraph">
 <p>Express is a web framework that provides (among other things) HTTP helpers for web routing. In the above
-example, we are importing the classes <code>Application</code> and <code>Response</code> from express and creating a home page
+example, we are importing the classes <code>Application</code> and <code>Response</code> from Express and creating a home page
 that we can render some HTML to. Next we will add a method for creating new tasks:</p>
 </div>
 <div class="listingblock">
@@ -1308,7 +1300,7 @@ that we can render some HTML to. Next we will add a method for creating new task
 </div>
 </div>
 <div class="paragraph">
-<p>Have express listen on port 4000 at localhost:</p>
+<p>Have Express listen on port 4000 at localhost:</p>
 </div>
 <div class="listingblock">
 <div class="title">WebUI.n4js</div>
@@ -1318,7 +1310,7 @@ that we can render some HTML to. Next we will add a method for creating new task
 // ... code shown above ...
 
   this.app.listen(4000, '0.0.0.0', 511, function() {
-    console.log("HTML server listening on http://localhost:4000/");
+    console.log("HTTP server listening on http://localhost:4000/");
   });
 }</code></pre>
 </div>
@@ -1342,9 +1334,9 @@ that we can render some HTML to. Next we will add a method for creating new task
         Your to-do's:
         &lt;ul&gt;
           ${
-            tasks.length === 0 ? '&lt;li&gt;&lt;em&gt;none&lt;/em&gt;&lt;/li&gt;\n'
-            : tasks.map((task) =&gt;
-            '&lt;li&gt;'+task.label+' &lt;small&gt;(id: '+ task.id +')&lt;/small&gt;&lt;/li&gt;'
+            todos.length === 0 ? '&lt;li&gt;&lt;em&gt;none&lt;/em&gt;&lt;/li&gt;\n'
+            : todos.map((todo) =&gt;
+            '&lt;li&gt;'+todo.label+' &lt;small&gt;(id: '+ todo.id +')&lt;/small&gt;&lt;/li&gt;'
             ).join('\n')
           }
         &lt;/ul&gt;
@@ -1371,7 +1363,7 @@ function redirect(res: Response, url: string) {
 <div class="paragraph">
 <p>At this point, we have to launch our web server. For this purpose, we create a small launch script that
 configures the dependency injection (as shown in the section on dependency injection, above), creates an
-intance of class <code>WebUI</code>, and invokes method <code>start()</code>:</p>
+instance of class <code>WebUI</code>, and invokes method <code>start()</code>:</p>
 </div>
 <div class="listingblock">
 <div class="title">launch.n4js</div>
@@ -1393,8 +1385,8 @@ N4Injector.of(Root).create(WebUI).start();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You can now use the HTML interface by going to <a href="http://localhost:4000/">http://localhost:4000/</a>,
-allowing you to interact with all of the logic we have built so far in order to read Tasks, create new Tasks
+<p>You can now use the HTML page by going to <a href="http://localhost:4000/">http://localhost:4000/</a>,
+allowing you to interact with all of the logic we have built so far in order to read Todos, create new Todos
 and clear the storage.</p>
 </div>
 <div class="paragraph">
@@ -1469,7 +1461,7 @@ module, for example</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">$ npm install -g n4js.example.tasks
 $ node -r n4js.example.tasks/launch
-HTML server listening on http://localhost:4000/</code></pre>
+HTTP server listening on http://localhost:4000/</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1492,7 +1484,7 @@ HTML server listening on http://localhost:4000/</code></pre>
 <p>So far we&#8217;ve been loading all code via node&#8217;s <code>require()</code> function.
 In case you want to load your modules via <a href="https://github.com/systemjs/systemjs">SystemJS</a>,
 which has more support to resolve cyclic dependencies across modules, you could use a handy starter
-executable called <code>n4js</code>. The <code>n4js</code> starter is part of the <code>n4js-node</code> runtime environmentnpm (a default
+executable called <code>n4js</code>. The <code>n4js</code> starter is part of the <code>n4js-node</code> runtime environment npm (a default
 dependency of any exported npm) and is therefore already installed:</p>
 </div>
 <div class="listingblock">
@@ -1503,7 +1495,7 @@ n4js.example.tasks@0.0.1 /Users/me/prj/n4js.example.tasks
 ├─┬ express@4.13.4
 ...
 $ ./node_modules/.bin/n4js n4js.example.tasks/launch
-HTML server listening on http://localhost:4000/</code></pre>
+HTTP server listening on http://localhost:4000/</code></pre>
 </div>
 </div>
 </div>
@@ -1511,7 +1503,7 @@ HTML server listening on http://localhost:4000/</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-28 18:54:49 +02:00
+Last updated 2016-09-20 13:41:15 +02:00
 </div>
 </div>
 <link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">
