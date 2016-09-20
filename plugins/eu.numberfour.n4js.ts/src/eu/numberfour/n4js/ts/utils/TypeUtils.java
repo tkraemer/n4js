@@ -742,6 +742,37 @@ public class TypeUtils {
 	}
 
 	/**
+	 * If the given type reference points to a type variable that has a declared upper bound, this method will return
+	 * the upper bound; in all other cases, the given type reference is returned.
+	 */
+	public static TypeRef resolveTypeVariable(TypeRef typeRef) {
+		final Type declType = typeRef != null ? typeRef.getDeclaredType() : null;
+		if (declType instanceof TypeVariable) {
+			final TypeRef ub = getDeclaredUpperBound((TypeVariable) declType);
+			if (ub != null) {
+				return ub;
+			}
+		}
+		return typeRef;
+	}
+
+	/**
+	 * Convenience method that returns the declared upper bounds of a TypeVariable as returned by
+	 * {@link TypeVariable#getDeclaredUpperBounds()} as a single TypeRef. If there is more than one upper bound, then an
+	 * intersection type is created. Returns <code>null</code> if no upper bounds were declared.
+	 */
+	public static TypeRef getDeclaredUpperBound(TypeVariable tv) {
+		final EList<ParameterizedTypeRef> ubs = tv.getDeclaredUpperBounds();
+		final int count = ubs.size();
+		if (count == 1) {
+			return ubs.get(0);
+		} else if (count >= 2) {
+			return createNonSimplifiedIntersectionType(ubs);
+		}
+		return null; // no declared upper bounds
+	}
+
+	/**
 	 * Convenience method that returns the declared or implicit upper bounds of a Wildcard as returned by
 	 * {@link Wildcard#getDeclaredOrImplicitUpperBounds()} as a single TypeRef. If there is more than one upper bound
 	 * (occurs only in the case of implicit upper bounds), then an intersection type is created.
