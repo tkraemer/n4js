@@ -373,7 +373,7 @@ public class TypeUtils {
 	 * If the given type argument is a {@link Wildcard}, then a new {@link ExistentialTypeRef} will be created and
 	 * returned; otherwise the given type argument will be returned without change.
 	 */
-	public static TypeRef resolveWildcard(TypeVariable typeVar, TypeArgument typeArg) {
+	public static TypeRef captureWildcard(TypeVariable typeVar, TypeArgument typeArg) {
 		if (typeArg instanceof Wildcard)
 			return createExistentialTypeRef(typeVar, (Wildcard) typeArg);
 		else
