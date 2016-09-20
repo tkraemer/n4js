@@ -2572,11 +2572,15 @@ from {
 		{
 			// ---- NOTE: this code was copied in rule 'substTypeVariablesInClassifierTypeRef' above (keep in sync!) ----
 			// do we have a substitution?
+			
+			// this might be changed when working on GH-12
 			var temp = env(G, typeVar, TypeRef)
 			if (typeRef instanceof ParameterizedTypeRefStructural) {
-				var ptrs = TypeUtils.copyToParameterizedTypeRefStructural(temp as ParameterizedTypeRef);
-				ptrs.setTypingStrategy(typeRef.getTypingStrategy());
-				temp = ptrs;
+				if (temp instanceof ParameterizedTypeRef) {
+					var ptrs = TypeUtils.copyToParameterizedTypeRefStructural(temp);
+					ptrs.setTypingStrategy(typeRef.getTypingStrategy());
+					temp = ptrs;
+				}
 			}
 			
 			val tempDeclaredType = temp.declaredType
