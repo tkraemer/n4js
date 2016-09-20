@@ -236,7 +236,7 @@ small { font-size: 60%; line-height: inherit; }
 code { font-family: Fira Mono, Consolas, "Liberation Mono", Courier, monospace; font-weight: bold; color: #7f0a0c; }
 
 /* Lists */
-ul, ol, dl { font-size: 1.1em; line-height: 1.6; list-style-position: inside; font-family: "ITC Officina Sans W01"; padding-left: 0rem; }
+ul, ol, dl { font-size: 1.1em; line-height: 1.6; list-style-position: outside; font-family: "ITC Officina Sans W01"; padding-left: 0rem; }
 
 
 /*
@@ -422,8 +422,8 @@ max-width: 25%;
 #footer {  background-color: rgb(15,26,54); padding: 1.25em; padding-bottom: 0rem; margin-right: -2rem; margin-left: -2rem; margin-top: 2rem;}
 div.social  { background-color: rgb(15,26,54); padding: 1.25em; padding-top: 0rem; margin-right: -2rem; margin-left: -2rem; text-align: right;/* -webkit-flex-basis: 100%; -ms-flex-preferred-size: 100%; flex-basis: 100%; */  }
 div.social > ul li { padding-right: 4rem;  color: #dddddd; line-height: 1.44; font-size: 1.2em; font-weight: 800; font-style: bold position: relative; list-style: none; list-style-type: none; display: inline; text-decoration: none; }
-div.social > ul a:hover { color: #F7D425; }
-
+div.social > ul a:visited { color: #244D82; }
+div.social > ul a:hover { color: #F7D425; } 
 
 
 
