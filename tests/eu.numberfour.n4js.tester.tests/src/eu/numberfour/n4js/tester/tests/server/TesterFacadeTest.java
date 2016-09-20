@@ -46,8 +46,9 @@ public class TesterFacadeTest {
 	/***/
 	@Before
 	public void before() {
-		if (actualPort != -1)
+		if (actualPort != -1) {
 			serverManager.stopServer(actualPort);
+		}
 	}
 
 	/***/

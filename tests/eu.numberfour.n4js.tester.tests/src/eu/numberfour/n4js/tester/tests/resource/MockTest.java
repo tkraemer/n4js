@@ -88,7 +88,6 @@ public class MockTest {
 
 	private static final int SERIAL_TEST_CASE_COUNT_FACTOR = 100;
 	private static final int PARALLEL_TEST_CASE_COUNT_FACTOR = 100;
-	// private static final String URL = "http://localhost:" + /* PORT */"8080" + CONTEXT_ROOT + CONTEXT_PATH;
 
 	@Inject
 	private TesterFacade facade;
@@ -108,7 +107,6 @@ public class MockTest {
 			getRootLogger().removeAllAppenders();
 			getRootLogger().addAppender(new NullAppender());
 		}
-
 	}
 
 	/***/

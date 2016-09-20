@@ -20,21 +20,12 @@ public abstract class TesterConstants {
 
 	/** The host for the server. */
 	public static final String HOST = "localhost";
-	/** The port for the server. */
-	// public static final int PORT = 8080;
-	/** The URL for the jetty instance. */
-	// public static final String HOST_AND_PORT = "http://" + HOST + ":" + PORT;
+	/** The default port for the server. */
+	public static final int DEFAULT_PORT = 8080;
 	/** Context root for the RESTful web service. */
 	public static final String CONTEXT_ROOT = HttpServerManager.CONTEXT_ROOT;
 	/** Context path for the resource router servlet. */
 	public static final String CONTEXT_PATH = ResourceRouterServlet.CONTEXT_PATH;
-	/** URL for the resources. */
-	// public static final String URL = HOST_AND_PORT + CONTEXT_ROOT + CONTEXT_PATH;
-
-	/** A valid configuration for the server. */
-	// public static final Map<String, Object> VALID_CONFIG = ImmutableMap.<String, Object> builder()
-	// .put(HTTP_PORT, PORT)
-	// .build();
 
 	private TesterConstants() {
 	}

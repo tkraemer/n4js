@@ -79,13 +79,6 @@ abstract class BaseResourcesTest {
 		queue?.dispose();
 		serverManager.stopServer(port);
 	}
-	
-
-
-	
-
-	
-	
 
 	protected def newTestResult() {
 		new TestResult(PASSED) => [

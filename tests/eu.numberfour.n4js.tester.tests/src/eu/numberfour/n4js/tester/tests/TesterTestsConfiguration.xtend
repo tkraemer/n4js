@@ -18,7 +18,9 @@ import com.google.common.collect.ImmutableMap
 
 import static eu.numberfour.n4js.tester.server.HttpServerManager.HTTP_PORT;
 import static eu.numberfour.n4js.tester.tests.TesterConstants.*
+
 /**
+ * Tester test configuration to be used with injections & complemented by TesterConstants
  *
  */
 class TesterTestsConfiguration {
@@ -32,7 +34,7 @@ class TesterTestsConfiguration {
 	
 	/** computes available port and stores the value into #port, also create a minimal valid map for tests -stored in valid_config */
 	public def Map<String,Object> computePortAndValidConfig() {
-		port = (serverManager as JettyManager).ensurePortIsAvailable(8080);
+		port = (serverManager as JettyManager).ensurePortIsAvailable(DEFAULT_PORT);
 		/** A valid configuration for the server. */
 		valid_config = ImmutableMap.<String, Object> builder()
 			.put(HTTP_PORT, port)
