@@ -157,7 +157,7 @@ We now manually add two classes to the same file:
 ----
 /** An appointment. */ // <1>
 export class Appointment extends Task {   // <2>
-  public time: Date?;     // <3>
+  public time: Date;     // <3>
   public place: string;   // <3>
 }
 
@@ -338,7 +338,7 @@ first look at the other parts of the above class declaration in more detail.
 
 We use a data field +tasks+ to store all the tasks in a map. The type Map stems from
 ECMAScript 2015. It is a generic type similar to Array, which the observant reader may
-have already seen in the Storage interface. N4JS support for generic types and methods
+have already seen in the Storage interface. N4JS provides support for generic types and methods
 is similar to Java 8.
 
 === Edit the Manifest
@@ -463,7 +463,7 @@ are also treated as optional in the field structural types.
 
 For the concrete class `Todo`, the `pass:[~i~]`-type is not required to contain any property since all
 its fields are either optional or have an initializer. It contains the optional fields `id`,
-`label`, `dueDate` and `done`. `pass:[~i~Appointment]` contains the required properties `time` and
+`label`, `dueDate`, `priority` and `done`. `pass:[~i~Appointment]` contains the required properties `time` and
 `place`, and the optional fields `id` and `label`.
 
 In most cases, we need this information in the constructor to set the fields accordingly.
@@ -509,13 +509,13 @@ We can now proceed to implement a Task Manager.
 We will now create the controller tier. This tier uses the entity and storage classes to provide
 functionality that is actually useful for the user of the application.
 
-Since we eventually want to implement a REST API (and use a real data base), we need to introduce
+Since we eventually want to implement a REST API (and use a real database), we need to introduce
 asynchronous functions. So before we actually implement any controller class, we have to adjust our storage
 tier to support asynchronous functions.
 
 === Make the Storage Asynchronous
 
-If we would like to use a real data base, all calls to the data base will be asynchronous. Asynchronous
+If we would like to use a real database, all calls to the database will be asynchronous. Asynchronous
 programming is a typical task in ECMAScript and there are several solutions to do this.
 
 ECMAScript 2015 introduced a new class Promise which is supposed to be used with in these cases. Its methods
@@ -764,7 +764,7 @@ export class StorageMongoDB implements Storage {
 }
 ----
 
-In the above section of code, we are implementing StorageMongoDB from the Storage interface and then calling
+In the above code section, we are implementing StorageMongoDB from the Storage interface and then calling
 some of the standard MongoDB collection methods.
 
 The next step is to retrieve the information about our Tasks and to store them in our MongoDB database. In
@@ -814,7 +814,7 @@ export class StorageMongoDB implements Storage {
 <1> The use of the `=&gt;` arrow function, derived from ES6. Arrow functions have implicit lexical
 binding and are less verbose than traditional function expressions.
 
-Above code uses two helper functions, `toData()` and `fromData()`. Those illustrate two techniques available
+The above code uses two helper functions, `toData()` and `fromData()`. Those illustrate two techniques available
 in N4JS: reflection and so-called `@Spec` constructors, respectively. Reflection is known from many
 languages and allows for retrieving information of a type and its members at runtime. It is used in
 `fromData()` as follows:
@@ -836,7 +836,7 @@ function toData(task: Task): ~~Task {
 }
 ----
 
-Conversely, `@Spec` constructors are special constructors that allow to create a new instance of a class and
+Conversely, `@Spec` constructors are special constructors that allow us to create a new instance of a class and
 initialize it with values provided by a plain data object in properties that correspond to the type's fields.
 
 [source,n4js]
@@ -858,6 +858,7 @@ const typeToCtor = new Map<string,constructor{Task}>([
 ]);
 ----
 
+Note that both functions `toData` and `fromData` should be declared outside of the `StorageMongoDB` class but in the same file `StorageMongoDB.n4js`.
 By using the above two helper functions, we avoid sending our data model instances directly to the MongoDB
 driver. Note that the entire implementation is intended for illustration purposes and in a real-world
 systems many details would be handled differently, depending on the actual requirements.
@@ -954,8 +955,8 @@ StorageInMemory.
 == Web UI module
 
 The final step in building functionality into our model is to create a simple web user interface using
-express as a dependency to create a web server. We will then pass our tasks from MongoDB into a small
-amount of HTML to read the results. We will create the web server using http://expressjs.com/[Express].
+http://expressjs.com/[Express] as a dependency to create a web server. We will then pass our tasks from MongoDB into a small
+ HTML page to display the results. We will create the web server using http://expressjs.com/[Express].
 
 In order to use Express, we need the appropriate npm module. Adding this npm and making it available in
 N4JS is as simple as adding any project dependency, as already shown for MongoDB, above. We have to open the
@@ -967,12 +968,15 @@ dependencies):
 ----
 ProjectDependencies {
   mongodb,
-  express
+  express,
+  n4js.lang
 }
 ----
 
-The quickfix will automatically download all required npm packages, that is, express and all its
-dependencies. We can now use express in our N4JS code (for more details, esp. N4JS definition files, see
+The dependency `n4js.lang` contains `N4Injector` which is needed later, so make sure it is declared as a dependency.
+
+The quickfix will automatically download all required npm packages, that is, Express and all its
+dependencies. We can now use Express in our N4JS code (for more details, esp. N4JS definition files, see
 above description on MongoDB).
 
 [source,n4js]
@@ -1005,7 +1009,7 @@ export class WebUI {
 ----
 
 Express is a web framework that provides (among other things) HTTP helpers for web routing. In the above
-example, we are importing the classes `Application` and `Response` from express and creating a home page
+example, we are importing the classes `Application` and `Response` from Express and creating a home page
 that we can render some HTML to. Next we will add a method for creating new tasks:
 
 [source,n4js]
@@ -1025,7 +1029,7 @@ public start() {
 }
 ----
 
-Have express listen on port 4000 at localhost:
+Have Express listen on port 4000 at localhost:
 
 [source,n4js]
 .WebUI.n4js
@@ -1035,7 +1039,7 @@ public start() {
 // ... code shown above ...
 
   this.app.listen(4000, '0.0.0.0', 511, function() {
-    console.log("HTML server listening on http://localhost:4000/");
+    console.log("HTTP server listening on http://localhost:4000/");
   });
 }
 ----
@@ -1058,9 +1062,9 @@ export class WebUI {
         Your to-do's:
         <ul>
           ${
-            tasks.length === 0 ? '<li><em>none</em></li>\n'
-            : tasks.map((task) =>
-            '<li>'+task.label+' <small>(id: '+ task.id +')</small></li>'
+            todos.length === 0 ? '<li><em>none</em></li>\n'
+            : todos.map((todo) =>
+            '<li>'+todo.label+' <small>(id: '+ todo.id +')</small></li>'
             ).join('\n')
           }
         </ul>
@@ -1086,7 +1090,7 @@ function redirect(res: Response, url: string) {
 
 At this point, we have to launch our web server. For this purpose, we create a small launch script that
 configures the dependency injection (as shown in the section on dependency injection, above), creates an
-intance of class `WebUI`, and invokes method `start()`:
+instance of class `WebUI`, and invokes method `start()`:
 
 [source,n4js]
 .launch.n4js
@@ -1107,8 +1111,8 @@ class Root { }
 N4Injector.of(Root).create(WebUI).start();
 ----
 
-You can now use the HTML interface by going to http://localhost:4000/[http://localhost:4000/],
-allowing you to interact with all of the logic we have built so far in order to read Tasks, create new Tasks
+You can now use the HTML page by going to http://localhost:4000/[http://localhost:4000/],
+allowing you to interact with all of the logic we have built so far in order to read Todos, create new Todos
 and clear the storage.
 
 All of the fundamental elements of our model are completed and we have a functioning Task Manager with a
@@ -1281,7 +1285,7 @@ module, for example
 ----
 $ npm install -g n4js.example.tasks
 $ node -r n4js.example.tasks/launch
-HTML server listening on http://localhost:4000/
+HTTP server listening on http://localhost:4000/
 ----
 
 In case you want to install dependencies and run it right away in the exported npm folder, you have to
@@ -1302,7 +1306,7 @@ HTML server listening on http://localhost:4000/
 So far we've been loading all code via node's `require()` function.
 In case you want to load your modules via https://github.com/systemjs/systemjs[SystemJS],
 which has more support to resolve cyclic dependencies across modules, you could use a handy starter
-executable called `n4js`. The `n4js` starter is part of the `n4js-node` runtime environmentnpm (a default
+executable called `n4js`. The `n4js` starter is part of the `n4js-node` runtime environment npm (a default
 dependency of any exported npm) and is therefore already installed:
 
 [source,bash]
@@ -1313,5 +1317,5 @@ n4js.example.tasks@0.0.1 /Users/me/prj/n4js.example.tasks
 ├─┬ express@4.13.4
 ...
 $ ./node_modules/.bin/n4js n4js.example.tasks/launch
-HTML server listening on http://localhost:4000/
+HTTP server listening on http://localhost:4000/
 ----
