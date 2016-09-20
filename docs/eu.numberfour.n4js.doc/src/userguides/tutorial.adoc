@@ -16,7 +16,7 @@ flexible and type-safe.
 *Experience with JavaScript or Java?*
 
 
-Developers with Java who are experienced with JavaScript can easily apply their knowledge in N4JS. As N4JS is a
+Developers who are experienced with JavaScript can easily apply their knowledge in N4JS. As N4JS is a
 typed superset of ECMAScript, it is possible to use plain ECMAScript in N4JS. Most of the important
 features from ECMAScript 2015 are supported, such as *modules* with import and export,
 *classes*, *iterables* and *destructuring* of arrays
