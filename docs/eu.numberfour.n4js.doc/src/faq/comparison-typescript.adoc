@@ -6,7 +6,7 @@
 N4JS and TypeScript are both supersets of ECMAScript. They both introduce type annotations and a
 static type checker. However, in their relation to JavaScript, they follow different approaches.
 
-image::ts_n4js.svg[]
+image::images/ts_n4js.svg[]
 
 TypeScript tries to make ECMAScript type-safe without invalidating existing ECMAScript code. It's
 type system is optional and the TypeScript transpiler aims to accept plain ECMAScript as far as possible.

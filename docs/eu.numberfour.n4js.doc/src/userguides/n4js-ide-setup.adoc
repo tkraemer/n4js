@@ -46,7 +46,7 @@ In order to run or test code from the IDE, https://nodejs.org/en/[node.js 5] (or
 
 == Launching the IDE
 
-image::startupprefs.png[]
+image::images/startupprefs.png[]
 
 When launching the N4JS IDE, a dialog box allows to specify a workspace which is used to
 organize related projects in a single folder.
@@ -59,7 +59,7 @@ navigate to menu:Preferences[Startup and Shutdown,Workspaces]
 
 *N4JS IDE Overview*
 
-image::ide.png[]
+image::images/ide.png[]
 
 Developers who have previous experience using Eclipse will be familiar with many common UI
 features such as the Editor, Project Outline, Project Explorer and Console views.
@@ -74,7 +74,7 @@ Project wizard which is accessed at menu:File[New,N4JS Project] (Or using the ke
 kbd:[{commandkey}+ Option + N] for Mac,
 kbd:[Alt-Shift-N] on Windows)
 
-image::newproject.png[]
+image::images/newproject.png[]
 
 In this case, we name the project "hello.world" and select kbd:[Finish] to create a project in the
 default location (our current workspace).
@@ -91,7 +91,7 @@ projects and resources.
 
 The Project Explorer view will display the structure of our new project:
 
-image::projectexplorer.png[]
+image::images/projectexplorer.png[]
 
 In the Project Explorer view, our project "hello.world" contains three folders with our resources:
 
@@ -109,7 +109,7 @@ or kbd:[{commandkey} + Option + n])
 to create a new class called "HelloWorld":
 
 
-image::helloworldclass.png[]
+image::images/helloworldclass.png[]
 
 
 Let's have a look at what a simple *HelloWorld!* example looks like in N4JS:
@@ -169,7 +169,7 @@ We can run this module named "HelloCaller" and invoke the methods from our Hello
 The Outline View is a useful tool that provides a quick overview of the structure of our applications.
 If we look at the Outline View while we are editing our HelloWorld examples, we can see the following:
 
-image::outlineview.png[]
+image::images/outlineview.png[]
 
 The Outline View displays the structure of our very basic class with only one method. As
 projects become more populated
@@ -185,7 +185,7 @@ easily search for fields, methods and classes.
 To run this file, right-click inside the editor view and select *Run as | Launch in Node.js*:
 
 ifdef::backend-html5[]
-image::runhello.gif[]
+image::images/runhello.gif[]
 
 
 The Console View will display the result of our +console.log+ command, and our Hello World!
