@@ -127,7 +127,7 @@ class GenericsComputer extends TypeSystemHelperStrategy {
 
 		// resolve wildcards
 		if(actualTypeArg instanceof Wildcard)
-			actualTypeArg = TypeUtils.resolveWildcard(typeVar, actualTypeArg);
+			actualTypeArg = TypeUtils.captureWildcard(typeVar, actualTypeArg);
 
 		// (note: actualTypeArg must be a TypeRef now, because Wildcard was the only other option below TypeArgument)
 

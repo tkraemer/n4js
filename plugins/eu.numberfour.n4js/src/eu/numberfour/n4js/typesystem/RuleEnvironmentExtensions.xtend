@@ -707,7 +707,7 @@ class RuleEnvironmentExtensions {
 			return;
 
 		// resolve wildcards
-		val actualValue = TypeUtils.resolveWildcard(key, value);  // TODO resolve before calling #isValidMapping() and return FALSE from isValidMapping() for Wildcard!!!!
+		val actualValue = TypeUtils.captureWildcard(key, value);  // TODO capture before calling #isValidMapping() and return FALSE from isValidMapping() for Wildcard!!!!
 
 		G.add(key, actualValue);
 	}
