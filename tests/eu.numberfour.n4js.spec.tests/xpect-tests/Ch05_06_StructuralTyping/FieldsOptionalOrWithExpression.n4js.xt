@@ -56,3 +56,39 @@ var olb : ~Object with { prop : string?; } = { };
 ola = olb;
 
 console.log(ola.prop); // oops!
+
+
+class M<T> {
+	// XPECT errors --> "No additional structural members allowed on type variables, since they can cause collisions." at "prop : int"
+	df : ~T with {prop : int};
+	// XPECT errors --> "No additional structural members allowed on type variables, since they can cause collisions." at "prop : int"
+	set af(t : ~T with {prop : int}) {}
+	// XPECT errors --> "No additional structural members allowed on type variables, since they can cause collisions." at "prop : int"
+	get af() : ~T with {prop : int} { return null; }
+	/* XPECT errors ---
+	 "No additional structural members allowed on type variables, since they can cause collisions." at "prop1 : int"
+	 "No additional structural members allowed on type variables, since they can cause collisions." at "prop2 : int"
+	 * ---
+	 */
+	foo(t : ~T with {prop1 : int}) : ~T with {prop2 : int} {
+		return null;
+	}
+}
+
+
+interface N<T> {
+	// XPECT errors --> "No additional structural members allowed on type variables, since they can cause collisions." at "prop : int"
+	df : ~T with {prop : int};
+	// XPECT errors --> "No additional structural members allowed on type variables, since they can cause collisions." at "prop : int"
+	set af(t : ~T with {prop : int}) {}
+	// XPECT errors --> "No additional structural members allowed on type variables, since they can cause collisions." at "prop : int"
+	get af() : ~T with {prop : int} { return null; }
+	/* XPECT errors ---
+	 "No additional structural members allowed on type variables, since they can cause collisions." at "prop : int"
+	 "No additional structural members allowed on type variables, since they can cause collisions." at "prop : int"
+	 * ---
+	 */
+	foo(t : ~T with {prop : int}) : ~T with {prop : int} {
+		return null;
+	}
+}

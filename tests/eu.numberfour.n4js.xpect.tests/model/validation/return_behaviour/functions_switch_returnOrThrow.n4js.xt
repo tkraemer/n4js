@@ -1,6 +1,4 @@
-/* XPECT_SETUP  eu.numberfour.n4js.tests.N4JSXpectTest
-   END_SETUP
- */
+/* XPECT_SETUP  eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
  
  
 // test containsReturnOrThrow with:
@@ -24,8 +22,8 @@ function c() {
 	var d = "hallo"
 }
 
-// found during IDE-1852: XPECT FIXME noerrors
 ///////// Simple Switch statements
+// XPECT noerrors -->
 // XPECT returnOrThrow at '|function' --> returnsMode
 function f0(a : number) : number {
 	switch(a) {
@@ -40,8 +38,7 @@ function f0(a : number) : number {
 }
 
 
-// found during IDE-1852: XPECT FIXME noerrors
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT errors --> "Missing return or throw statement (all control flows must terminate with an return value or be aborted)." at "f1"
 // XPECT returnOrThrow --> noReturnsMode
 function f1(a : number) : number {
 	switch(a) {
@@ -55,7 +52,7 @@ function f1(a : number) : number {
 	}
 }
 
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT errors --> "Missing return or throw statement (all control flows must terminate with an return value or be aborted)." at "f2"
 // XPECT returnOrThrow --> noReturnsMode
 function f2(a : number) : number {
 	switch(a) {
@@ -69,7 +66,7 @@ function f2(a : number) : number {
 	}
 }
 
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT errors --> "Missing return or throw statement (all control flows must terminate with an return value or be aborted)." at "f3"
 // XPECT returnOrThrow --> noReturnsMode
 function f3(a : number) : number {
 	switch(a) {
@@ -83,7 +80,7 @@ function f3(a : number) : number {
 	}
 }
 
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT noerrors -->
 // XPECT returnOrThrow --> returnsMode
 function f4(a : number) : number {
 	switch(a) {
@@ -101,7 +98,7 @@ function f4(a : number) : number {
 }
 
 
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT errors --> "Missing return or throw statement (all control flows must terminate with an return value or be aborted)." at "f5"
 // XPECT returnOrThrow --> noReturnsMode
 function f5(a : number) : number {
 	switch(a) {
@@ -119,7 +116,7 @@ function f5(a : number) : number {
 }
 
 
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT noerrors -->
 // XPECT returnOrThrow --> throwsMode
 function f6(a : number) : number {
     // XPECT returnOrThrow --> throwsMode
@@ -135,8 +132,8 @@ function f6(a : number) : number {
 }
 
 
-// found during IDE-1852: XPECT FIXME noerrors
 //// labeled breaks
+// XPECT noerrors -->
 // XPECT returnOrThrow --> returnsMode
 function f10(a : number) : number {
 	l1: switch(a) {
@@ -150,7 +147,7 @@ function f10(a : number) : number {
 	}
 }
 
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT errors --> "Missing return or throw statement (all control flows must terminate with an return value or be aborted)." at "f11"
 // XPECT returnOrThrow --> noReturnsMode
 function f11(a : number) : number {
 	l2: switch(a) {
@@ -164,7 +161,7 @@ function f11(a : number) : number {
 	}
 }
 
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT noerrors -->
 // XPECT returnOrThrow --> returnsMode
 function f12(a : number) : number {
 	l2: switch(a) {
@@ -184,7 +181,7 @@ function f12(a : number) : number {
 	}
 }
 
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT errors --> "Missing return or throw statement (all control flows must terminate with an return value or be aborted)." at "f13"
 // XPECT returnOrThrow --> noReturnsMode
 function f13(a : number) : number {
 	l2: switch(a) {
@@ -204,7 +201,7 @@ function f13(a : number) : number {
 	}
 }
 
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT errors --> "Missing return or throw statement (all control flows must terminate with an return value or be aborted)." at "f14"
 // XPECT returnOrThrow --> noReturnsMode
 function f14(a : number) : number {
 	l1: {
@@ -227,8 +224,8 @@ function f14(a : number) : number {
 	}	
 }
 
-// found during IDE-1852: XPECT FIXME noerrors
 ////// subswitch statements:
+// XPECT noerrors -->
 // XPECT returnOrThrow --> returnsMode
 function f20(a : number) : number {
 	switch(a) {
@@ -251,7 +248,7 @@ function f20(a : number) : number {
 	}
 }
 
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT noerrors -->
 // XPECT returnOrThrow --> returnsMode
 function f21(a : number) : number {
 	switch(a) {
@@ -275,7 +272,7 @@ function f21(a : number) : number {
 	}
 }
 
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT errors --> "Missing return or throw statement (all control flows must terminate with an return value or be aborted)." at "f22"
 // XPECT returnOrThrow --> noReturnsMode
 function f22(a : number) : number {
 	switch(a) {
@@ -300,7 +297,7 @@ function f22(a : number) : number {
 	}
 }
 
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT noerrors -->
 // X-PECT returnOrThrow --> throwsMode
 // Sloppy Situation, it really should be throwsMode.
 // XPECT returnOrThrow --> returnsMode
@@ -327,7 +324,7 @@ function f23(a : number) : number {
 }
 
 
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT noerrors -->
 // XPECT returnOrThrow --> throwsMode
 function f24(a : number) : number {
 	switch(a) {
@@ -353,8 +350,8 @@ function f24(a : number) : number {
 
 
 
-// found during IDE-1852: XPECT FIXME noerrors
 ////// try-catch in subswitch
+// XPECT noerrors -->
 // XPECT returnOrThrow --> returnsMode
 function f25(a : number) : number {
 	switch(a) {
@@ -383,7 +380,7 @@ function f25(a : number) : number {
 }
 
 
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT noerrors -->
 // XPECT returnOrThrow --> returnsMode
 function f26(a : number) : number {
 	switch(a) {
@@ -412,9 +409,9 @@ function f26(a : number) : number {
 }
 
 
-// found during IDE-1852: XPECT FIXME noerrors
+// XPECT errors --> "Missing return or throw statement (all control flows must terminate with an return value or be aborted)." at "f27"
 // XPECT returnOrThrow --> noReturnsMode
-function f26(a : number) : number {
+function f27(a : number) : number {
 	l1: switch(a) {
 		case 1: ;
 		case 2: ;

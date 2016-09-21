@@ -131,6 +131,7 @@ import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural
 import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
@@ -609,6 +610,7 @@ from {
 	{
 		G |- expr.target : var TypeRef targetTypeRef
 		G |~ targetTypeRef /\ targetTypeRef // take upper bound, e.g. to resolve this
+		targetTypeRef = TypeUtils.resolveTypeVariable(targetTypeRef);
 
 		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(expr.index);
 		val elementType = targetTypeRef.declaredType?.elementType
@@ -2545,7 +2547,17 @@ from {
 		{
 			// ---- NOTE: this code was copied in rule 'substTypeVariablesInClassifierTypeRef' above (keep in sync!) ----
 			// do we have a substitution?
+			
+			// this might be changed when working on GH-12
 			var temp = env(G, typeVar, TypeRef)
+			if (typeRef instanceof ParameterizedTypeRefStructural) {
+				if (temp instanceof ParameterizedTypeRef) {
+					var ptrs = TypeUtils.copyToParameterizedTypeRefStructural(temp);
+					ptrs.setTypingStrategy(typeRef.getTypingStrategy());
+					temp = ptrs;
+				}
+			}
+			
 			val tempDeclaredType = temp.declaredType
 			if (typeVar !== tempDeclaredType
 					&& (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic))
