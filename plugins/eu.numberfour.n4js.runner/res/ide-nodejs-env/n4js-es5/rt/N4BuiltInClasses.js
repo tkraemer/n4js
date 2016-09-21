@@ -273,9 +273,8 @@
         }
     }, {
         of: {
-            value: function
-            of(n4object) {
-                return n4object.constructor.n4type;
+            value: function of(n4object) {
+                return n4object ? n4object.n4type || n4object.constructor.n4type : undefined;
             }
         }
     });

@@ -82,7 +82,13 @@ export public abstract class N4Type extends N4NamedElement {
 	 * to get reflective information of the consumer.
 	 */
 	public static /*N4Class*/ any of(N4Object n4object) {
-		return n4object.constructor.n4type
+		if(n4object) {
+			var result = n4object.n4type || n4object.constructor.n4type;
+			if(result) {
+				return result;
+			}
+		}
+		return undefined;
 	}
 
 	/**
