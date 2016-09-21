@@ -51,4 +51,4 @@ fi
 
 # Building HTML into generated-docs/html folder retaining directory structure
 ME="$0"
-find . -name '*.adoc' ! -name 'config.adoc' -exec "${ME}" --rundoc {}  \;
+find . -name '*.adoc' ! -name 'epub.adoc' -exec "${ME}" --rundoc {}  \;
