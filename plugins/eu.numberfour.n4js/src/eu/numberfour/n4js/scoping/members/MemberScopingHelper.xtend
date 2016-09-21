@@ -325,7 +325,8 @@ class MemberScopingHelper {
 	 * corresponding object type which then, transparently to the user, provide members.
 	 */
 	private def dispatch IScope membersOfType(PrimitiveType prim, MemberScopeRequest request) {
-		return membersOfType(prim.autoboxedType, request);
+		val boxedType = prim.autoboxedType;
+		return if(boxedType!==null) membersOfType(boxedType, request) else IScope.NULLSCOPE;
 	}
 
 	/**
