@@ -611,6 +611,7 @@ from {
 	{
 		G |- expr.target : var TypeRef targetTypeRef
 		G |~ targetTypeRef /\ targetTypeRef // take upper bound, e.g. to resolve this
+		targetTypeRef = TypeUtils.resolveTypeVariable(targetTypeRef);
 
 		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(expr.index);
 		val elementType = targetTypeRef.declaredType?.elementType

@@ -1343,10 +1343,11 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return; // avoid duplicate error messages
 		}
 		val G = indexedAccess.newRuleEnvironment;
-		val receiverTypeRef = ts.type(G, indexedAccess.target).value;
-		if (receiverTypeRef === null || receiverTypeRef instanceof UnknownTypeRef) {
+		val receiverTypeRefRaw = ts.type(G, indexedAccess.target).value;
+		if (receiverTypeRefRaw === null || receiverTypeRefRaw instanceof UnknownTypeRef) {
 			return; // error otherwise or corrupt AST
 		}
+		val receiverTypeRef = TypeUtils.resolveTypeVariable(ts.upperBound(G, receiverTypeRefRaw).value);
 		val isComputedName = (indexedAccess.index instanceof StringLiteral)
 		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(indexedAccess.index);
 		if (accessedBuiltInSymbol !== null && (
