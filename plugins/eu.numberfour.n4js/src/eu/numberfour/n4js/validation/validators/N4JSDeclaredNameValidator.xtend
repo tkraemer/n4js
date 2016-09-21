@@ -428,8 +428,9 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 									return;
 								}
 
-								if (innerScopeObject instanceof FormalParameter &&
-									outerScopeObject instanceof FunctionDefinition) {
+								if (innerScopeObject instanceof FormalParameter
+									&& outerScopeObject instanceof FunctionDefinition
+									&& innerScopeObject.eContainer === outerScopeObject) {
 
 									// formal parameters hides containing function name
 									addIssue(

@@ -57,7 +57,6 @@ import eu.numberfour.n4js.ts.conversions.ComputedPropertyNameValueConverter
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
@@ -165,6 +164,11 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		if (containerFunDef === null || containerFunDef.isAsync() === false) {
 			val message = IssueCodes.getMessageForEXP_MISPLACED_AWAIT_EXPRESSION("await", "async");
 			addIssue(message, awaitExpression, IssueCodes.EXP_MISPLACED_AWAIT_EXPRESSION);
+		}
+		
+		if( awaitExpression.getExpression() === null ){
+			// broken AST.
+			return;
 		}
 
 		internalCheckAwaitingAPromise(awaitExpression);
@@ -550,12 +554,6 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 		// use classifier type ref in order to improve error messages	
 		if (! (typeRef instanceof TypeTypeRef)) {
-			if (typeRef instanceof EnumTypeRef) {
-				val message = IssueCodes.getMessageForEXP_NEW_CANNOT_INSTANTIATE("enum", typeRef.enumType?.name);
-				addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
-					IssueCodes.EXP_NEW_CANNOT_INSTANTIATE);
-				return;
-			}
 			issueNotACtor(typeRef, newExpression);
 			return;
 		}
@@ -596,6 +594,12 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			val message = IssueCodes.getMessageForEXP_NEW_WILDCARD_NO_COVARIANT_CTOR(typeArg.typeRefAsString, staticType.typeAsString);
 			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
 				IssueCodes.EXP_NEW_WILDCARD_NO_COVARIANT_CTOR);
+			return;
+		} else if (staticType instanceof TEnum) {
+			// error case #5: trying to instantiate an enum
+			val message = IssueCodes.getMessageForEXP_NEW_CANNOT_INSTANTIATE("enum", staticType.name);
+			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
+				IssueCodes.EXP_NEW_CANNOT_INSTANTIATE);
 			return;
 		} else if (staticType === null || staticType instanceof TypeVariable || !isCtor || !isConcreteOrCovariant) {
 			// remaining cases
@@ -1343,12 +1347,14 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return; // avoid duplicate error messages
 		}
 		val G = indexedAccess.newRuleEnvironment;
-		val receiverTypeRef = ts.type(G, indexedAccess.target).value;
-		if (receiverTypeRef === null || receiverTypeRef instanceof UnknownTypeRef) {
+		val receiverTypeRefRaw = ts.type(G, indexedAccess.target).value;
+		if (receiverTypeRefRaw === null || receiverTypeRefRaw instanceof UnknownTypeRef) {
 			return; // error otherwise or corrupt AST
 		}
+		val receiverTypeRef = TypeUtils.resolveTypeVariable(ts.upperBound(G, receiverTypeRefRaw).value);
 		val isComputedName = (indexedAccess.index instanceof StringLiteral)
 		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(indexedAccess.index);
+		val accessedStaticType = if(receiverTypeRef instanceof TypeTypeRef) tsh.getStaticType(G, receiverTypeRef);
 		if (accessedBuiltInSymbol !== null && (
 receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef instanceof ThisTypeRef)) {
 			// we have something like: myObj[Symbol.iterator]
@@ -1366,7 +1372,7 @@ receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef inst
 				}
 			}
 			return
-		} else if (receiverTypeRef instanceof EnumTypeRef) { // Constraints 69.2
+		} else if (accessedStaticType instanceof TEnum) { // Constraints 69.2
 			addIssue(messageForEXP_INDEXED_ACCESS_ENUM, indexedAccess, EXP_INDEXED_ACCESS_ENUM);
 		} else if (receiverTypeRef.dynamic) {
 			// allowed: indexing into dynamic receiver

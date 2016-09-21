@@ -126,15 +126,6 @@ public interface TypeRefsFactory extends EFactory {
 	TypeTypeRef createTypeTypeRef();
 
 	/**
-	 * Returns a new object of class '<em>Enum Type Ref</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Enum Type Ref</em>'.
-	 * @generated
-	 */
-	EnumTypeRef createEnumTypeRef();
-
-	/**
 	 * Returns a new object of class '<em>Wildcard</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

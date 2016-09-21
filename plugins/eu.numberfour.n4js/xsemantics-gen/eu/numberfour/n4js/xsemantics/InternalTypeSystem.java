@@ -81,7 +81,6 @@ import eu.numberfour.n4js.scoping.members.MemberScopingHelper;
 import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression;
@@ -331,10 +330,6 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   public final static String SUBTYPEUNKNOWNTYPEREF_LEFT = "eu.numberfour.n4js.xsemantics.SubtypeUnknownTypeRef_Left";
   
   public final static String SUBTYPEUNKNOWNTYPEREF_RIGHT = "eu.numberfour.n4js.xsemantics.SubtypeUnknownTypeRef_Right";
-  
-  public final static String SUBTYPEENUMTYPEREFN4ENUM = "eu.numberfour.n4js.xsemantics.SubtypeEnumTypeRefN4Enum";
-  
-  public final static String SUBTYPEENUMTYPEREF = "eu.numberfour.n4js.xsemantics.SubtypeEnumTypeRef";
   
   public final static String SUBTYPEPARAMETERIZEDTYPEREF = "eu.numberfour.n4js.xsemantics.SubtypeParameterizedTypeRef";
   
@@ -2074,7 +2069,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleTypeIndexedAccessExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final IndexedAccessExpression expr) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    /* { expr.target instanceof SuperLiteral T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } or { G |- expr.target : var TypeRef targetTypeRef G |~ targetTypeRef /\ targetTypeRef val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(expr.index); val elementType = targetTypeRef.declaredType?.elementType if (accessedBuiltInSymbol!==null) { val declType = targetTypeRef.declaredType; if(declType instanceof ContainerType<?>) { val memberName = '#' + accessedBuiltInSymbol.name; val member = containerTypesHelper.fromContext(expr).findMember(declType,memberName,false,false); if(member!==null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else { T = G.anyTypeRef } } else if (elementType !== null) { val declaredType = targetTypeRef.declaredType if (declaredType.generic && targetTypeRef.typeArgs.isEmpty) { T = G.anyTypeRef } else { val G2 = G.wrap typeSystemHelper.addSubstitutions(G2, targetTypeRef) G2.addThisType(targetTypeRef) G2 |- elementType ~> T } } else if (expr.index instanceof StringLiteral) { val staticAccess = (targetTypeRef instanceof TypeTypeRef) val checkVisibility = false val scope = memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess) val memberName = (expr.index as StringLiteral).value; val member = memberScopingHelper.findUniqueMemberForName(scope, memberName, staticAccess) if(member != null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else if (targetTypeRef.dynamic) { T = G.anyTypeRefDynamic } else { T = G.anyTypeRef } } */
+    /* { expr.target instanceof SuperLiteral T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } or { G |- expr.target : var TypeRef targetTypeRef G |~ targetTypeRef /\ targetTypeRef targetTypeRef = TypeUtils.resolveTypeVariable(targetTypeRef); val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(expr.index); val elementType = targetTypeRef.declaredType?.elementType if (accessedBuiltInSymbol!==null) { val declType = targetTypeRef.declaredType; if(declType instanceof ContainerType<?>) { val memberName = '#' + accessedBuiltInSymbol.name; val member = containerTypesHelper.fromContext(expr).findMember(declType,memberName,false,false); if(member!==null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else { T = G.anyTypeRef } } else if (elementType !== null) { val declaredType = targetTypeRef.declaredType if (declaredType.generic && targetTypeRef.typeArgs.isEmpty) { T = G.anyTypeRef } else { val G2 = G.wrap typeSystemHelper.addSubstitutions(G2, targetTypeRef) G2.addThisType(targetTypeRef) G2 |- elementType ~> T } } else if (expr.index instanceof StringLiteral) { val staticAccess = (targetTypeRef instanceof TypeTypeRef) val checkVisibility = false val scope = memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess) val memberName = (expr.index as StringLiteral).value; val member = memberScopingHelper.findUniqueMemberForName(scope, memberName, staticAccess) if(member != null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else if (targetTypeRef.dynamic) { T = G.anyTypeRefDynamic } else { T = G.anyTypeRef } } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -2099,6 +2094,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         checkAssignableTo(result_1.getFirst(), TypeRef.class);
         targetTypeRef = (TypeRef) result_1.getFirst();
         
+        TypeRef _resolveTypeVariable = TypeUtils.resolveTypeVariable(targetTypeRef);
+        targetTypeRef = _resolveTypeVariable;
         Expression _index = expr.getIndex();
         final TField accessedBuiltInSymbol = RuleEnvironmentExtensions.getAccessedBuiltInSymbol(G, _index);
         Type _declaredType = targetTypeRef.getDeclaredType();
@@ -3692,68 +3689,6 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     /* true */
     if (!true) {
       sneakyThrowRuleFailedException("true");
-    }
-    return new Result<Boolean>(true);
-  }
-  
-  protected Result<Boolean> subtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EnumTypeRef etr, final TypeTypeRef ctr) throws RuleFailedException {
-    try {
-    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRuleSubtypeEnumTypeRefN4Enum(G, _subtrace_, etr, ctr);
-    	addToTrace(_trace_, new Provider<Object>() {
-    		public Object get() {
-    			return ruleName("subtypeEnumTypeRefN4Enum") + stringRepForEnv(G) + " |- " + stringRep(etr) + " <: " + stringRep(ctr);
-    		}
-    	});
-    	addAsSubtrace(_trace_, _subtrace_);
-    	return _result_;
-    } catch (Exception e_applyRuleSubtypeEnumTypeRefN4Enum) {
-    	subtypeThrowException(ruleName("subtypeEnumTypeRefN4Enum") + stringRepForEnv(G) + " |- " + stringRep(etr) + " <: " + stringRep(ctr),
-    		SUBTYPEENUMTYPEREFN4ENUM,
-    		e_applyRuleSubtypeEnumTypeRefN4Enum, etr, ctr, new ErrorInformation[] {new ErrorInformation(etr), new ErrorInformation(ctr)});
-    	return null;
-    }
-  }
-  
-  protected Result<Boolean> applyRuleSubtypeEnumTypeRefN4Enum(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EnumTypeRef etr, final TypeTypeRef ctr) throws RuleFailedException {
-    final Type staticType = this.typeSystemHelper.getStaticType(G, ctr);
-    /* staticType === G.n4EnumType && !TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticType === G.n4StringBasedEnumType && TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticType === G.stringType && TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticType === etr.enumType */
-    if (!(((((staticType == RuleEnvironmentExtensions.n4EnumType(G)) && (!TypeSystemHelper.isStringBasedEnumeration(etr.getEnumType()))) || 
-      ((staticType == RuleEnvironmentExtensions.n4StringBasedEnumType(G)) && TypeSystemHelper.isStringBasedEnumeration(etr.getEnumType()))) || 
-      ((staticType == RuleEnvironmentExtensions.stringType(G)) && TypeSystemHelper.isStringBasedEnumeration(etr.getEnumType()))) || 
-      (staticType == etr.getEnumType()))) {
-      sneakyThrowRuleFailedException("staticType === G.n4EnumType && !TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticType === G.n4StringBasedEnumType && TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticType === G.stringType && TypeSystemHelper.isStringBasedEnumeration(etr.enumType) || staticType === etr.enumType");
-    }
-    return new Result<Boolean>(true);
-  }
-  
-  protected Result<Boolean> subtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EnumTypeRef etr, final EnumTypeRef etr2) throws RuleFailedException {
-    try {
-    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<Boolean> _result_ = applyRuleSubtypeEnumTypeRef(G, _subtrace_, etr, etr2);
-    	addToTrace(_trace_, new Provider<Object>() {
-    		public Object get() {
-    			return ruleName("subtypeEnumTypeRef") + stringRepForEnv(G) + " |- " + stringRep(etr) + " <: " + stringRep(etr2);
-    		}
-    	});
-    	addAsSubtrace(_trace_, _subtrace_);
-    	return _result_;
-    } catch (Exception e_applyRuleSubtypeEnumTypeRef) {
-    	subtypeThrowException(ruleName("subtypeEnumTypeRef") + stringRepForEnv(G) + " |- " + stringRep(etr) + " <: " + stringRep(etr2),
-    		SUBTYPEENUMTYPEREF,
-    		e_applyRuleSubtypeEnumTypeRef, etr, etr2, new ErrorInformation[] {new ErrorInformation(etr), new ErrorInformation(etr2)});
-    	return null;
-    }
-  }
-  
-  protected Result<Boolean> applyRuleSubtypeEnumTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EnumTypeRef etr, final EnumTypeRef etr2) throws RuleFailedException {
-    TEnum _enumType = etr.getEnumType();
-    TEnum _replacement = RuleEnvironmentExtensions.<TEnum>getReplacement(G, _enumType);
-    TEnum _enumType_1 = etr2.getEnumType();
-    TEnum _replacement_1 = RuleEnvironmentExtensions.<TEnum>getReplacement(G, _enumType_1);
-    /* G.getReplacement(etr.enumType) === G.getReplacement(etr2.enumType) */
-    if (!(_replacement == _replacement_1)) {
-      sneakyThrowRuleFailedException("G.getReplacement(etr.enumType) === G.getReplacement(etr2.enumType)");
     }
     return new Result<Boolean>(true);
   }
@@ -6955,16 +6890,18 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     if ((_declaredType instanceof TypeVariable)) {
       Type _declaredType_1 = typeRef.getDeclaredType();
       final TypeVariable typeVar = ((TypeVariable) _declaredType_1);
-      /* { var temp = env(G, typeVar, TypeRef) if (typeRef instanceof ParameterizedTypeRefStructural) { var ptrs = TypeUtils.copyToParameterizedTypeRefStructural(temp as ParameterizedTypeRef); ptrs.setTypingStrategy(typeRef.getTypingStrategy()); temp = ptrs; } val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } TypeUtils.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } result = if(typeVar.declaredCovariant) { typeSystemHelper.createIntersectionType(G,l) } else if(typeVar.declaredContravariant) { typeSystemHelper.createUnionType(G,l) } else { G.addInconsistentSubstitutions(typeVar, l); TypeRefsFactory.eINSTANCE.createUnknownTypeRef }; TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
+      /* { var temp = env(G, typeVar, TypeRef) if (typeRef instanceof ParameterizedTypeRefStructural) { if (temp instanceof ParameterizedTypeRef) { var ptrs = TypeUtils.copyToParameterizedTypeRefStructural(temp); ptrs.setTypingStrategy(typeRef.getTypingStrategy()); temp = ptrs; } } val tempDeclaredType = temp.declaredType if (typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> result result = TypeUtils.copy(result); } else { result = TypeUtils.copy(temp); } TypeUtils.copyTypeModifiers(result, typeRef) } or { val List<TypeRef> l_raw = env(G, typeVar, List) val l = newArrayList; for(var i=0;i<l_raw.size;i++) { val temp = l_raw.get(i); val tempDeclaredType = temp.declaredType; if(typeVar !== tempDeclaredType && (TypeUtils.isOrContainsRefToTypeVar(temp) || (tempDeclaredType !== null && tempDeclaredType.generic)) && G.get(GUARD_SUBST_TYPE_VARS -> temp) === null) { val G2 = G.wrap; G2.add(GUARD_SUBST_TYPE_VARS -> temp, Boolean.TRUE) G2 |- temp ~> var TypeRef tempResult tempResult = TypeUtils.copy(tempResult); l += tempResult; } else { l += TypeUtils.copy(temp); } } result = if(typeVar.declaredCovariant) { typeSystemHelper.createIntersectionType(G,l) } else if(typeVar.declaredContravariant) { typeSystemHelper.createUnionType(G,l) } else { G.addInconsistentSubstitutions(typeVar, l); TypeRefsFactory.eINSTANCE.createUnknownTypeRef }; TypeUtils.copyTypeModifiers(result, typeRef) } or { } */
       {
         RuleFailedException previousFailure = null;
         try {
           TypeRef temp = this.<TypeRef>env(G, typeVar, TypeRef.class);
           if ((typeRef instanceof ParameterizedTypeRefStructural)) {
-            ParameterizedTypeRefStructural ptrs = TypeUtils.copyToParameterizedTypeRefStructural(((ParameterizedTypeRef) temp));
-            TypingStrategy _typingStrategy = ((ParameterizedTypeRefStructural)typeRef).getTypingStrategy();
-            ptrs.setTypingStrategy(_typingStrategy);
-            temp = ptrs;
+            if ((temp instanceof ParameterizedTypeRef)) {
+              ParameterizedTypeRefStructural ptrs = TypeUtils.copyToParameterizedTypeRefStructural(((ParameterizedTypeRef)temp));
+              TypingStrategy _typingStrategy = ((ParameterizedTypeRefStructural)typeRef).getTypingStrategy();
+              ptrs.setTypingStrategy(_typingStrategy);
+              temp = ptrs;
+            }
           }
           final Type tempDeclaredType = temp.getDeclaredType();
           if ((((typeVar != tempDeclaredType) && (TypeUtils.isOrContainsRefToTypeVar(temp) || ((tempDeclaredType != null) && tempDeclaredType.isGeneric()))) && (G.get(Pair.<String, TypeRef>of(RuleEnvironmentExtensions.GUARD_SUBST_TYPE_VARS, temp)) == null))) {

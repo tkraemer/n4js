@@ -11,7 +11,6 @@ import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression;
@@ -168,13 +167,6 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * @generated
 	 */
 	private EClass typeTypeRefEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass enumTypeRefEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1212,33 +1204,6 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getEnumTypeRef() {
-		return enumTypeRefEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getEnumTypeRef_EnumType() {
-		return (EReference)enumTypeRefEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getEnumTypeRef__GetTypeRefAsString() {
-		return enumTypeRefEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getTypeArgument() {
 		return typeArgumentEClass;
 	}
@@ -1784,10 +1749,6 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		createEAttribute(typeTypeRefEClass, TYPE_TYPE_REF__CONSTRUCTOR_REF);
 		createEOperation(typeTypeRefEClass, TYPE_TYPE_REF___GET_TYPE_REF_AS_STRING);
 
-		enumTypeRefEClass = createEClass(ENUM_TYPE_REF);
-		createEReference(enumTypeRefEClass, ENUM_TYPE_REF__ENUM_TYPE);
-		createEOperation(enumTypeRefEClass, ENUM_TYPE_REF___GET_TYPE_REF_AS_STRING);
-
 		typeArgumentEClass = createEClass(TYPE_ARGUMENT);
 		createEOperation(typeArgumentEClass, TYPE_ARGUMENT___GET_TYPE_REF_AS_STRING);
 		createEOperation(typeArgumentEClass, TYPE_ARGUMENT___CONTAINS_WILDCARDS);
@@ -1893,7 +1854,6 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		existentialTypeRefEClass.getESuperTypes().add(this.getTypeRef());
 		unknownTypeRefEClass.getESuperTypes().add(this.getTypeRef());
 		typeTypeRefEClass.getESuperTypes().add(this.getBaseTypeRef());
-		enumTypeRefEClass.getESuperTypes().add(this.getBaseTypeRef());
 		wildcardEClass.getESuperTypes().add(this.getTypeArgument());
 		functionTypeExprOrRefEClass.getESuperTypes().add(this.getStaticBaseTypeRef());
 		functionTypeRefEClass.getESuperTypes().add(this.getParameterizedTypeRef());
@@ -2087,11 +2047,6 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		initEAttribute(getTypeTypeRef_ConstructorRef(), theEcorePackage.getEBoolean(), "constructorRef", null, 0, 1, TypeTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTypeTypeRef__GetTypeRefAsString(), theEcorePackage.getEString(), "getTypeRefAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-		initEClass(enumTypeRefEClass, EnumTypeRef.class, "EnumTypeRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getEnumTypeRef_EnumType(), theTypesPackage.getTEnum(), null, "enumType", null, 0, 1, EnumTypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEOperation(getEnumTypeRef__GetTypeRefAsString(), theEcorePackage.getEString(), "getTypeRefAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(typeArgumentEClass, TypeArgument.class, "TypeArgument", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

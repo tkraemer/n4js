@@ -18,7 +18,6 @@ import eu.numberfour.n4js.scoping.accessModifiers.VisibilityAwareMemberScope
 import eu.numberfour.n4js.scoping.utils.CompositeScope
 import eu.numberfour.n4js.scoping.utils.DynamicPseudoScope
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
-import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
@@ -172,17 +171,6 @@ class MemberScopingHelper {
 		return new DynamicPseudoScope()
 	}
 
-	private def dispatch IScope members(EnumTypeRef etr, MemberScopeRequest request) {
-		val builtInScope = BuiltInTypeScope.get(getResourceSet(etr, request.context));
-		// IDE-1221 select builtin-scope upon whether this enumeration is tagged string-based
-		val enumType = if (TypeSystemHelper.isStringBasedEnumeration(etr.enumType))
-				builtInScope.n4StringBasedEnumType
-			else
-				builtInScope.getN4EnumType()
-		val IScope staticEnumScope = memberScopeFactory.create(enumType, request.context, true);
-		return Scopes.scopeFor(etr.enumType.literals, staticEnumScope).decorate(request, etr)
-	}
-
 	private def dispatch IScope members(ParameterizedTypeRef ptr, MemberScopeRequest request) {
 		val IScope result = membersOfType(ptr.declaredType, request);
 		if (ptr.dynamic && !(result instanceof DynamicPseudoScope)) {
@@ -233,6 +221,10 @@ class MemberScopingHelper {
 		val G = RuleEnvironmentExtensions.newRuleEnvironment(request.context);
 		val ctrStaticType = tsh.getStaticType(G, ttr);
 		var IScope staticMembers = membersOfType(ctrStaticType, staticRequest) // staticAccess is always true in this case
+		if (ctrStaticType instanceof TEnum) {
+			// enums have their literals as static members
+			staticMembers = Scopes.scopeFor(ctrStaticType.literals, staticMembers).decorate(request, ttr);
+		}
 		if (ttr.dynamic && !(staticMembers instanceof DynamicPseudoScope)) {
 			staticMembers = new DynamicPseudoScope(staticMembers.decorate(staticRequest, ttr))
 		}
@@ -361,13 +353,14 @@ class MemberScopingHelper {
 	 */
 	private def dispatch IScope membersOfType(TEnum enumeration, MemberScopeRequest request) {
 		val builtInTypeScope = BuiltInTypeScope.get(getResourceSet(enumeration, request.context));
-		// IDE-1221 select builtin-scope upon whether this enumration is tagged stringbased
-		val TObjectPrototype specificEnumType = (if (TypeSystemHelper::isStringBasedEnumeration(enumeration))
+		// IDE-1221 select built-in type depending on whether this enumeration is tagged string-based
+		val TObjectPrototype specificEnumType = if (TypeSystemHelper.isStringBasedEnumeration(enumeration)) {
 				builtInTypeScope.n4StringBasedEnumType
-			else
-				builtInTypeScope.n4EnumType);
-		val instanceEnumScope = memberScopeFactory.create(specificEnumType, request.context, false);
-		return instanceEnumScope;
+			} else {
+				builtInTypeScope.n4EnumType
+			};
+		val enumScope = memberScopeFactory.create(specificEnumType, request.context, request.staticAccess);
+		return enumScope;
 	}
 
 // TODO type variable can specify multiple upper bounds!

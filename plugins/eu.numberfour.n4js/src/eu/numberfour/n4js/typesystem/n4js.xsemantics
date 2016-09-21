@@ -125,7 +125,6 @@ import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.scoping.members.MemberScopingHelper
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
@@ -611,6 +610,7 @@ from {
 	{
 		G |- expr.target : var TypeRef targetTypeRef
 		G |~ targetTypeRef /\ targetTypeRef // take upper bound, e.g. to resolve this
+		targetTypeRef = TypeUtils.resolveTypeVariable(targetTypeRef);
 
 		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(expr.index);
 		val elementType = targetTypeRef.declaredType?.elementType
@@ -1196,37 +1196,6 @@ rule subtypeUnknownTypeRef_Right
 	G |- TypeRef left <: UnknownTypeRef right
 from {
 	true
-}
-
-/*
- * All enumeration types are subtypes of N4Enum.
- * @see [N4JS] 4.15. Enums
- * - except enumerations types annotated with @StringBased.
- *   those are of type  N4StringBasedEnumType. which is a subtype of string.
- *
- *
- */
-rule subtypeEnumTypeRefN4Enum G |- EnumTypeRef etr <: TypeTypeRef ctr
-from {
-	val staticType = typeSystemHelper.getStaticType(G, ctr);
-	// staticTypeRef is either ThisTypeRefNominal OR ParemterizedTypeRef:
-	staticType === G.n4EnumType && !TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
-	||
-	staticType === G.n4StringBasedEnumType && TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
-	||
-	staticType === G.stringType && TypeSystemHelper.isStringBasedEnumeration(etr.enumType)
-	||
-	staticType === etr.enumType
-}
-
-/*
- * Enumeration types are only subtypes of N4Enum or themselves. The user usually defines that via type{..}, which makes
- * the it a classifier type
- * @see [N4JS] 4.15. Enums
- */
-rule subtypeEnumTypeRef G |- EnumTypeRef etr <: EnumTypeRef etr2
-from {
-	G.getReplacement(etr.enumType) === G.getReplacement(etr2.enumType)
 }
 
 /*
@@ -2572,11 +2541,15 @@ from {
 		{
 			// ---- NOTE: this code was copied in rule 'substTypeVariablesInClassifierTypeRef' above (keep in sync!) ----
 			// do we have a substitution?
+			
+			// this might be changed when working on GH-12
 			var temp = env(G, typeVar, TypeRef)
 			if (typeRef instanceof ParameterizedTypeRefStructural) {
-				var ptrs = TypeUtils.copyToParameterizedTypeRefStructural(temp as ParameterizedTypeRef);
-				ptrs.setTypingStrategy(typeRef.getTypingStrategy());
-				temp = ptrs;
+				if (temp instanceof ParameterizedTypeRef) {
+					var ptrs = TypeUtils.copyToParameterizedTypeRefStructural(temp);
+					ptrs.setTypingStrategy(typeRef.getTypingStrategy());
+					temp = ptrs;
+				}
 			}
 			
 			val tempDeclaredType = temp.declaredType

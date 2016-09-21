@@ -41,7 +41,6 @@ import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.EnumTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression;
@@ -122,7 +121,7 @@ public class TypeUtils {
 
 	/**
 	 * Creates a type reference by delegating to one of the specific <code>#createXYZTypeRef()</code> methods, depending
-	 * on the given type. For example, if given a {@link TEnum}, an {@link EnumTypeRef} will be created. By default, a
+	 * on the given type. For example, if given a {@link TEnum}, an {@link TypeTypeRef} will be created. By default, a
 	 * {@link ParameterizedTypeRef} will be created.
 	 * <p>
 	 * Note that this method does not cover all special cases, e.g. creating union or intersection types or creating
@@ -130,9 +129,9 @@ public class TypeUtils {
 	 */
 	public static TypeRef wrapTypeInTypeRef(Type type, TypeArgument... typeArgs) {
 		if (type instanceof TEnum) {
-			return createEnumTypeRef((TEnum) type);
+			return createTypeTypeRef(type, false);
 		} else if (type instanceof TEnumLiteral) {
-			return createEnumTypeRef((TEnum) type.eContainer());
+			return createTypeTypeRef((TEnum) type.eContainer(), false);
 		} else if (type instanceof TClass) {
 			final TClass declaredTypeCasted = (TClass) type;
 			if (declaredTypeCasted.isAbstract()) {
@@ -234,13 +233,23 @@ public class TypeUtils {
 	}
 
 	/**
+	 * Creates new {@link TypeTypeRef} for the given type.
+	 */
+	public static TypeTypeRef createTypeTypeRef(Type type, boolean isConstructorRef) {
+		final TypeTypeRef typeTypeRef = TypeRefsFactory.eINSTANCE.createTypeTypeRef();
+		typeTypeRef.setTypeArg(createTypeRef(type));
+		typeTypeRef.setConstructorRef(isConstructorRef);
+		return typeTypeRef;
+	}
+
+	/**
 	 * Creates new {@link TypeTypeRef} with the given type argument.
 	 */
 	public static TypeTypeRef createTypeTypeRef(TypeArgument typeArg, boolean isConstructorRef) {
-		TypeTypeRef ctorTypeRef = TypeRefsFactory.eINSTANCE.createTypeTypeRef();
-		ctorTypeRef.setTypeArg(typeArg);
-		ctorTypeRef.setConstructorRef(isConstructorRef);
-		return ctorTypeRef;
+		final TypeTypeRef typeTypeRef = TypeRefsFactory.eINSTANCE.createTypeTypeRef();
+		typeTypeRef.setTypeArg(typeArg);
+		typeTypeRef.setConstructorRef(isConstructorRef);
+		return typeTypeRef;
 	}
 
 	/**
@@ -266,20 +275,6 @@ public class TypeUtils {
 			TypeVariable tTypeVar = (TypeVariable) declaredType;
 			typeRef = createTypeTypeRef(createTypeRef(tTypeVar), true);
 		}
-		return typeRef;
-	}
-
-	/**
-	 * Creates EnumTypeRef
-	 */
-	// TODO after java update bring back nullness analysis
-	// public static TypeRef createEnumTypeRef(@Nonnull TEnum enumType) {
-	public static TypeRef createEnumTypeRef(TEnum enumType) {
-		if (enumType == null) {
-			throw new NullPointerException("enumType");
-		}
-		EnumTypeRef typeRef = TypeRefsFactory.eINSTANCE.createEnumTypeRef();
-		typeRef.setEnumType(enumType);
 		return typeRef;
 	}
 
@@ -373,7 +368,7 @@ public class TypeUtils {
 	 * If the given type argument is a {@link Wildcard}, then a new {@link ExistentialTypeRef} will be created and
 	 * returned; otherwise the given type argument will be returned without change.
 	 */
-	public static TypeRef resolveWildcard(TypeVariable typeVar, TypeArgument typeArg) {
+	public static TypeRef captureWildcard(TypeVariable typeVar, TypeArgument typeArg) {
 		if (typeArg instanceof Wildcard)
 			return createExistentialTypeRef(typeVar, (Wildcard) typeArg);
 		else
@@ -409,25 +404,6 @@ public class TypeUtils {
 			((ParameterizedTypeRefStructural) clonedActualThisType).setStructuralType(null);
 			((ParameterizedTypeRefStructural) clonedActualThisType).setDefinedTypingStrategy(TypingStrategy.NOMINAL);
 		}
-
-		return boundThisTypeRef;
-	}
-
-	/**
-	 * Introducing a bound this-typeref for an enumTypeRef
-	 *
-	 * @param actualThisTypeRef
-	 *            the EnumTypeRef
-	 * @return a bound type ref version
-	 */
-	public static BoundThisTypeRef createBoundThisTypeRef(EnumTypeRef actualThisTypeRef) { // added with IDEBUG-330
-		if (actualThisTypeRef == null) {
-			throw new NullPointerException("Actual this type must not be null!");
-		}
-		BoundThisTypeRef boundThisTypeRef = TypeRefsFactory.eINSTANCE.createBoundThisTypeRef();
-		ParameterizedTypeRef parameterizedEnumTypeRef = createTypeRef(actualThisTypeRef.getEnumType());
-		boundThisTypeRef.setActualThisTypeRef(parameterizedEnumTypeRef);
-		boundThisTypeRef.setDefinedTypingStrategy(TypingStrategy.NOMINAL);
 
 		return boundThisTypeRef;
 	}
@@ -739,6 +715,37 @@ public class TypeUtils {
 		if (type == null)
 			return false;
 		return isRawSuperType(type.getDeclaredType(), superTypeCandidate, guard);
+	}
+
+	/**
+	 * If the given type reference points to a type variable that has a declared upper bound, this method will return
+	 * the upper bound; in all other cases, the given type reference is returned.
+	 */
+	public static TypeRef resolveTypeVariable(TypeRef typeRef) {
+		final Type declType = typeRef != null ? typeRef.getDeclaredType() : null;
+		if (declType instanceof TypeVariable) {
+			final TypeRef ub = getDeclaredUpperBound((TypeVariable) declType);
+			if (ub != null) {
+				return ub;
+			}
+		}
+		return typeRef;
+	}
+
+	/**
+	 * Convenience method that returns the declared upper bounds of a TypeVariable as returned by
+	 * {@link TypeVariable#getDeclaredUpperBounds()} as a single TypeRef. If there is more than one upper bound, then an
+	 * intersection type is created. Returns <code>null</code> if no upper bounds were declared.
+	 */
+	public static TypeRef getDeclaredUpperBound(TypeVariable tv) {
+		final EList<ParameterizedTypeRef> ubs = tv.getDeclaredUpperBounds();
+		final int count = ubs.size();
+		if (count == 1) {
+			return ubs.get(0);
+		} else if (count >= 2) {
+			return createNonSimplifiedIntersectionType(ubs);
+		}
+		return null; // no declared upper bounds
 	}
 
 	/**

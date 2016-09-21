@@ -40,7 +40,7 @@ public class N4JSStandaloneSetup implements ISetup {
 	}
 
 	/**
-	 * Performs the setup and populates the EMF registers in the standalone environment.
+	 * Performs the setup and populates the EMF registers in the stand-alone environment.
 	 *
 	 * @see #createInjectorAndDoEMFRegistration()
 	 */

@@ -12,7 +12,6 @@ package eu.numberfour.n4js.tests.parser;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
-import org.eclipse.xtext.service.AbstractGenericModule;
 
 import eu.numberfour.n4js.N4JSInjectorProvider;
 import eu.numberfour.n4js.validation.ASTStructureValidator;
@@ -29,10 +28,17 @@ public class N4JSInjectorProviderWithoutStructureValidation extends N4JSInjector
 	}
 
 	/** Runtime module to disable the {@link ASTStructureValidator} */
-	public static class NullASTStructurValidatorModule extends AbstractGenericModule {
+	public static class NullASTStructurValidatorModule extends BaseTestModule {
+
 		/** */
 		public Class<? extends ASTStructureValidator> bindASTStructureValidator() {
 			return NullASTStructureValidator.class;
+		}
+
+		/** IMPORTANT, this re-binding is required since we are not in the same bundle as our base class. */
+		@Override
+		public java.lang.ClassLoader bindClassLoaderToInstance() {
+			return getClass().getClassLoader();
 		}
 	}
 
