@@ -1,9 +1,8 @@
 :doctype: book
 :toc: right
-:toc-title: Jump to topic:
+:toc-title: Table Of Contents:
 
-
-.N4JS Tutorial
+[discrete]
 = N4JS Tutorial
 
 *The flexibility of JavaScript with the type safety of Java*
@@ -47,76 +46,6 @@ the most important views of the IDE:
 
 image::images/ide.png[N4JS IDE, title="N4JS IDE"]
 
-In order to illustrate some of the features of N4JS, we shall look at building a Node.js-based
-server of a Task Manager which serves as a reminder or to-do list application. As we build this
-basic example, we shall add improvements step-by-step, introducing new features with each
-increment in order to demonstrate some of the strengths of the language and IDE through a
-simple practical model.
-
-Before we dive in and start creating our example, it is worth briefly describing the architecture
-of our application in order to have a considered approach to the concept.  In this particular
-example, we can think of a multi-tiered client-server structure. The idea here is that when we
-have the application separated, each tier can be reused for different purposes.
-
-image::images/architecture.svg[Architecture]
-
-We will start with modeling and implementing the domain model before implementing a first
-version of the storage tier which will enable our first tests. The controller is then built
-using a test-driven approach. We later improve the storage tier using a real database
-before adding a REST API with http://expressjs.com/[Express] and, finally, a simple Web UI.
-
-== Creating a new N4JS Project
-
-Let's begin by creating a new N4JS Project that contains our whole application. In case of
-larger applications, we might want to create projects for each component (or tier) of the
-application. In order to keep this example small, we will use only one project.
-
-The "New N4JS Project" wizard can be accessed at menu:File[New, N4JS Project] (Or using the
-keyboard shortcuts kbd:[{commandkey} + n] for Mac, kbd:[Alt+Shift+n] on Windows)
-
-image::images/newprojectwizard.png[New Project Wizard, 700]
-
-When we select kbd:[Finish], a new project folder is created with the following content:
-
-* folder *src*: contains the .n4js source files for the project.
-* folder *src-gen*: contains the transpiled JavaScript that is generated after compiling n4js
-files. The IDE automatically transpiles n4js files on save.
-* *manifest.n4mf*: project description file, containing description of dependencies.
-
-=== The Domain Model
-
-Before we start implementing the domain model, we shall take a look at a UML diagram of it:
-
-image::images/domainmodel.svg[]
-
-The UML diagram illustrates how the entities of our domain model are related
-and which features the classes of the model will have.
-We will begin by defining Task which is extended by Appointment and Todo.
-
-=== Creating new classes and modules
-
-In our new N4JS project, we can begin creating our entities. The easiest way to
-do this is to utilize the New N4JS Class wizard, accessed via menu:File[New,N4JS Class]
-
-image::images/newclasswizard.png[, 700]
-
-N4JS supports modules introduced by ECMAScript 2015. A module contains functions,
-classes and other declarations and code. The declared elements can be exported
-and imported by other modules. We will use a single module for all classes of our
-domain model. In larger projects, one might follow the Java convention to create
-a single file per class.
-
-The module specifier is the full path name of the module file, relative to the source
-folder. We use Unix-like path separators, that is forward slashes "/". In the Class
-Wizard (and later in import statements) we will omit the file extension.
-
-In the above figure, we are creating a new class named Task which will be saved in
-the module *model* in the project source folder.
-
-==== Implement the entity classes
-
-The class wizard has already created a file and the empty class "Task". We will
-manually enhance this class as follows:
 
 [source, n4js]
 ----
@@ -192,8 +121,8 @@ As the project grows, the benefits of having individual, reusable *modules* beco
 more and more useful in that they can be imported into other modules or even other projects.
 
 
-Add an Enumeration
-^^^^^^^^^^^^^^^^^^
+Add an Enumeration: ::
+
 
 We also want to add a priority field to the +Todo+ class. We will modify the
  +Todo+ class and add a new type +Priority+ as follows:
