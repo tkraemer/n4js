@@ -36,8 +36,8 @@ import static org.eclipse.jetty.servlets.CrossOriginFilter.ALLOW_CREDENTIALS_PAR
 import static org.eclipse.jetty.servlets.CrossOriginFilter.PREFLIGHT_MAX_AGE_PARAM;
 
 import java.io.IOException;
-import java.net.DatagramSocket;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -70,7 +70,7 @@ public class JettyManager implements HttpServerManager {
 
 	private static final Logger LOGGER = getLogger(JettyManager.class);
 
-	/** The number of seconds that preflight requests can be cached by the client. */
+	/** The number of seconds that pre-flight requests can be cached by the client. */
 	private static final String PREFLIGHT_MAX_AGE_VALUE = "728000";
 	private static final String CONTENT_TYPE = "Content-Type";
 	private static final String X_PING_OTHER = "X-PINGOTHER";
@@ -150,14 +150,14 @@ public class JettyManager implements HttpServerManager {
 	});
 
 	@Override
-	public void startServer(final Map<String, Object> config) {
+	public int startServer(final Map<String, Object> config) {
 		final Optional<Integer> port = getPort(config);
 		if (port.isPresent()) {
 			try {
 
 				if (!isValidPort(port.get())) {
-					LOGGER.info("Cannot instantiate Jetty instance. Reason: invalid port number: " + port.get());
-					return;
+					throw new RuntimeException(
+							"Cannot instantiate Jetty instance. Reason: invalid port number: " + port.get());
 				}
 
 				Server server = serverCache.getIfPresent(port.get());
@@ -171,12 +171,14 @@ public class JettyManager implements HttpServerManager {
 					}
 					server = serverCache.get(checkedPort);
 					LOGGER.info("Jetty instance has successfully started on '" + checkedPort + "'.");
+					return checkedPort;
 				} else {
 					LOGGER.info("Jetty instance is already running on '" + port.get() + "'.");
+					return port.get();
 				}
 			} catch (final Exception e) {
 				LOGGER.error("Error while starting Jetty server on '" + port.get() + "'.", e);
-				Throwables.propagate(e);
+				throw Throwables.propagate(e);
 			}
 		} else {
 			LOGGER.error("Due to missing HTTP port properties Jetty cannot be started.");
@@ -226,9 +228,24 @@ public class JettyManager implements HttpServerManager {
 	}
 
 	private boolean isPortInUse(final int port) {
-		try (final ServerSocket ss = new ServerSocket(port); final DatagramSocket ds = new DatagramSocket(port)) {
+		// Plain socket, try to connect to some existing server.
+		// If we succeed, we definitely know that there is
+		// something running and should report "port is used":
+		try (final Socket so = new Socket(LOCALHOST, port);) {
+			so.setReuseAddress(true);
+			so.close();
+			// Succeeded, means in use !
+			return true;
+		} catch (final IOException e) {
+			// positive case, we are looking for an unused port.
+			// The Exception here signals, that it is unused.
+		}
+
+		// Server-socket is for creating our own server here:
+		try (final ServerSocket ss = new ServerSocket(port);) {
 			ss.setReuseAddress(true);
-			ds.setReuseAddress(true);
+			ss.close();
+			// Succeeded, means we can create our own server here, the port is not in use.
 			return false;
 		} catch (final IOException e) {
 			return true;
@@ -239,8 +256,14 @@ public class JettyManager implements HttpServerManager {
 		return 0 < port && 65535 >= port;
 	}
 
-	// Very naive implementation to check if a port is in use or not before starting Jetty server.
-	private int ensurePortIsAvailable(final Integer port) {
+	/**
+	 * Very naive implementation to check if a port is in use or not before starting Jetty server.
+	 *
+	 * @param port
+	 *            designated port (e.g. 8080)
+	 * @return actual free port.
+	 */
+	public int ensurePortIsAvailable(final Integer port) {
 		if (null == port) {
 			final int nextPort = getNextAvailablePort();
 			LOGGER.warn("Port was null. Trying to use next available port: " + nextPort + ".");

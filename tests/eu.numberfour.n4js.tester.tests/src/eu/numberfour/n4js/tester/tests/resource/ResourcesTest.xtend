@@ -21,7 +21,6 @@ import static com.google.common.collect.ImmutableMap.*
 import static com.jayway.restassured.RestAssured.*
 import static eu.numberfour.n4js.tester.server.HttpConstants.*
 import static eu.numberfour.n4js.tester.server.resources.ContentType.*
-import static eu.numberfour.n4js.tester.tests.TesterConstants.*
 import static java.util.Collections.*
 import static java.util.UUID.randomUUID
 import static javax.servlet.http.HttpServletResponse.*

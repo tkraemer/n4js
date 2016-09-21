@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js.tester.tests.server;
 
-import static eu.numberfour.n4js.tester.tests.TesterConstants.PORT;
-import static eu.numberfour.n4js.tester.tests.TesterConstants.VALID_CONFIG;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -29,6 +27,7 @@ import eu.numberfour.n4js.tester.server.HttpServerManager;
 import eu.numberfour.n4js.tester.tests.InjectedModules;
 import eu.numberfour.n4js.tester.tests.JUnitGuiceClassRunner;
 import eu.numberfour.n4js.tester.tests.MockTesterModule;
+import eu.numberfour.n4js.tester.tests.TesterTestsConfiguration;
 
 /**
  * Test for checking the runtime behavior of the {@link HttpServerManager HTTP server manager}.
@@ -40,14 +39,20 @@ public class HttpServerManagerTest {
 	@Inject
 	private HttpServerManager manager;
 
+	@Inject
+	private TesterTestsConfiguration ttConfig;
+
 	/***/
 	@Test
 	public void testStartServer() {
-		assertFalse(isRunning(PORT));
-		manager.startServer(VALID_CONFIG);
-		assertTrue(isRunning(PORT));
-		manager.stopServer(PORT);
-		assertFalse(isRunning(PORT));
+		// first init the configuration:
+		ttConfig.computePortAndValidConfig();
+
+		assertFalse(isRunning(ttConfig.getPORT()));
+		manager.startServer(ttConfig.getVALID_CONFIG());
+		assertTrue(isRunning(ttConfig.getPORT()));
+		manager.stopServer(ttConfig.getPORT());
+		assertFalse(isRunning(ttConfig.getPORT()));
 	}
 
 	private boolean isRunning(final int port) {

@@ -22,6 +22,7 @@ import eu.numberfour.n4js.tester.TesterFacade;
 import eu.numberfour.n4js.tester.domain.TestTree;
 import eu.numberfour.n4js.tester.fsm.TestFsmRegistry;
 import eu.numberfour.n4js.tester.server.HttpServerManager;
+import eu.numberfour.n4js.tester.server.JettyManager;
 
 /**
  * Facade implementation for setting up the infrastructure for a test session.
@@ -33,6 +34,7 @@ public class TesterFacadeImpl implements TesterFacade {
 	private final HttpServerManager serverManager;
 	private final InternalTestTreeRegistry treeRegistry;
 	private final int port;
+	private int actualPort = -1;
 
 	@Inject
 	TesterFacadeImpl(final TestFsmRegistry fsmRegistry, final HttpServerManager serverManager,
@@ -42,21 +44,24 @@ public class TesterFacadeImpl implements TesterFacade {
 		this.serverManager = serverManager;
 		this.treeRegistry = treeRegistry;
 		this.port = port;
+		this.actualPort = port; // try with default.
 	}
 
 	@Override
-	public void prepareTestSession(final TestTree tree) {
-		if (!serverManager.isRunning(port)) {
-			serverManager.startServer(singletonMap(HTTP_PORT, port));
+	public int prepareTestSession(final TestTree tree) {
+		if (!serverManager.isRunning(actualPort)) {
+			actualPort = ((JettyManager) serverManager).ensurePortIsAvailable(port);
+			serverManager.startServer(singletonMap(HTTP_PORT, actualPort));
 		}
 
 		final String sessionId = tree.getSessionId().getValue();
 		fsmRegistry.registerFsm(sessionId);
 		treeRegistry.registerTestTree(tree);
+		return actualPort;
 	}
 
 	@Override
 	public void shutdownFramework() {
-		serverManager.stopServer(port);
+		serverManager.stopServer(actualPort);
 	}
 }

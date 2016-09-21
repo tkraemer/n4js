@@ -138,3 +138,5 @@ javadoc
 guice
 json
 jackson
+localhost
+jetty
