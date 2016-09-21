@@ -3,11 +3,21 @@
 
 /* export */ function f(x,y) {}
 // XPECT noerrors --> "Parameter f shadows function f." at "f"
-function f2( f:int ){}
+function f2(f: int) {}
 
 
 export public class A {
     // XPECT noerrors --> "Parameter f shadows function f." at "f"
-    method(f:int) {}
+    method(f: int) {}
+}
+
+
+// but in this case we want to see the error:
+
+function f3(
+	// XPECT errors --> "Parameter f3 shadows function f3." at "f3"
+	f3: int
+) {
+	// ...
 }
 
