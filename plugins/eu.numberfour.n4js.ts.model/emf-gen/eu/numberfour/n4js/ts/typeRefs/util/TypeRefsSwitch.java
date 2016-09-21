@@ -223,16 +223,6 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case TypeRefsPackage.ENUM_TYPE_REF: {
-				EnumTypeRef enumTypeRef = (EnumTypeRef)theEObject;
-				T result = caseEnumTypeRef(enumTypeRef);
-				if (result == null) result = caseBaseTypeRef(enumTypeRef);
-				if (result == null) result = caseStaticBaseTypeRef(enumTypeRef);
-				if (result == null) result = caseTypeRef(enumTypeRef);
-				if (result == null) result = caseTypeArgument(enumTypeRef);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case TypeRefsPackage.TYPE_ARGUMENT: {
 				TypeArgument typeArgument = (TypeArgument)theEObject;
 				T result = caseTypeArgument(typeArgument);
@@ -532,21 +522,6 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTypeTypeRef(TypeTypeRef object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Enum Type Ref</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Enum Type Ref</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseEnumTypeRef(EnumTypeRef object) {
 		return null;
 	}
 
