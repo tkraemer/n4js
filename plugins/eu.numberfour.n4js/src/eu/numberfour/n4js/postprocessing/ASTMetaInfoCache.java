@@ -50,13 +50,15 @@ public final class ASTMetaInfoCache {
 	// (add new properties here; getters should be public, setters should have package visibility)
 
 	private final N4JSResource resource;
+	private final boolean hasBrokenAST;
 	private final Map<TypableElement, Result<TypeRef>> actualTypes = new HashMap<>();
 	private final Map<ParameterizedCallExpression, List<TypeRef>> inferredTypeArgs = new HashMap<>();
 
 	private final Map<VariableDeclaration, List<EObject>> localVariableReferences = new HashMap<>();
 
-	ASTMetaInfoCache(N4JSResource resource) {
+	ASTMetaInfoCache(N4JSResource resource, boolean hasBrokenAST) {
 		this.resource = resource;
+		this.hasBrokenAST = hasBrokenAST;
 	}
 
 	/**
@@ -64,6 +66,13 @@ public final class ASTMetaInfoCache {
 	 */
 	public N4JSResource getResource() {
 		return resource;
+	}
+
+	/**
+	 * Tells if the resource of this cache has a broken AST.
+	 */
+	public boolean hasBrokenAST() {
+		return hasBrokenAST;
 	}
 
 	/**

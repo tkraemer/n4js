@@ -141,7 +141,7 @@ public class ASTProcessor extends AbstractProcessor {
 	 * @param node  the root of the subtree to process; must be an AST node.
 	 */
 	def package void processSubtree(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
-		assertTrueIfRigid("argument 'node' must be an AST node", node.isASTNode);
+		assertTrueIfRigid(cache, "argument 'node' must be an AST node", node.isASTNode);
 
 		log(indentLevel, "processing: " + node.objectInfo);
 
@@ -219,16 +219,16 @@ public class ASTProcessor extends AbstractProcessor {
 	 * @return <code>true</code> iff the forward processing is legal, <code>false</code> otherwise.
 	 */
 	def package boolean processSubtree_forwardReference(RuleEnvironment G, TypableElement node, ASTMetaInfoCache cache) {
-		assertTrueIfRigid("argument 'node' must be an AST node", node.isASTNode);
+		assertTrueIfRigid(cache, "argument 'node' must be an AST node", node.isASTNode);
 		val subtree = node.isIdentifiableSubtree
 		if (!subtree) {
 			val resource = node.eResource as XtextResource
 			if (resource !== null) {
-				assertTrueIfRigid(
+				assertTrueIfRigid(cache,
 					"forward reference only allowed to identifiable subtrees; but was: " + node + " in\n" +
 						resource.parseResult.rootNode.text, subtree)
 			} else {
-				assertTrueIfRigid("forward reference only allowed to identifiable subtrees; but was: " + node, subtree)
+				assertTrueIfRigid(cache, "forward reference only allowed to identifiable subtrees; but was: " + node, subtree);
 			}
 		}
 
@@ -290,7 +290,7 @@ public class ASTProcessor extends AbstractProcessor {
 	 */
 	def private void processNode_preChildren(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
 
-		typeDeferredProcessor.handleDeferredTypeRefs_preChildren(G, node);
+		typeDeferredProcessor.handleDeferredTypeRefs_preChildren(G, node, cache);
 	}
 
 	/**
@@ -298,7 +298,7 @@ public class ASTProcessor extends AbstractProcessor {
 	 */
 	def private void processNode_postChildren(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
 
-		typeDeferredProcessor.handleDeferredTypeRefs_postChildren(G, node);
+		typeDeferredProcessor.handleDeferredTypeRefs_postChildren(G, node, cache);
 
 		typeProcessor.typeNode(G, node, cache, indentLevel);
 

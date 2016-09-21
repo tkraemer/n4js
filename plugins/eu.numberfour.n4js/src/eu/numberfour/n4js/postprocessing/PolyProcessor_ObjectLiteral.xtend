@@ -36,9 +36,9 @@ import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import it.xsemantics.runtime.RuleEnvironment
+import java.util.List
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import java.util.List
 
 /**
  * {@link PolyProcessor} delegates here for processing array literals.
@@ -91,7 +91,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 						tMembers += tMember;
 						if (!(tMember instanceof TMethod)) {
 							val originalMemberType = tMember.typeOfMember;
-							assertTrueIfRigid("type of " + pa.eClass.name + " in TModule should be a DeferredTypeRef",
+							assertTrueIfRigid(cache, "type of " + pa.eClass.name + " in TModule should be a DeferredTypeRef",
 								originalMemberType instanceof DeferredTypeRef);
 							if (originalMemberType instanceof DeferredTypeRef) {
 								if(!quickMode) {
