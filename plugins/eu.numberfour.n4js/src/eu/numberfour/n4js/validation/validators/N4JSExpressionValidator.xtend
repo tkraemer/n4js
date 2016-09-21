@@ -165,6 +165,11 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			val message = IssueCodes.getMessageForEXP_MISPLACED_AWAIT_EXPRESSION("await", "async");
 			addIssue(message, awaitExpression, IssueCodes.EXP_MISPLACED_AWAIT_EXPRESSION);
 		}
+		
+		if( awaitExpression.getExpression() === null ){
+			// broken AST.
+			return;
+		}
 
 		internalCheckAwaitingAPromise(awaitExpression);
 	}

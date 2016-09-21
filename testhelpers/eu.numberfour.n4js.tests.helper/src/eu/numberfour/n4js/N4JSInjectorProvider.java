@@ -39,7 +39,7 @@ public class N4JSInjectorProvider implements IInjectorProvider, IRegistryConfigu
 	/***/
 	protected Injector injector;
 
-	private Module runtimeModule = new N4JSRuntimeModule();
+	private final Module runtimeModule;
 
 	static {
 		GlobalRegistries.initializeDefaults();
@@ -54,7 +54,7 @@ public class N4JSInjectorProvider implements IInjectorProvider, IRegistryConfigu
 	 * Creates a new injector combining all of the given runtime modules
 	 */
 	public N4JSInjectorProvider(Module... modules) {
-		this.runtimeModule = Modules.override(runtimeModule).with(Arrays.asList(modules));
+		this.runtimeModule = Modules.override(new N4JSRuntimeModule()).with(Arrays.asList(modules));
 	}
 
 	@Override
@@ -88,8 +88,22 @@ public class N4JSInjectorProvider implements IInjectorProvider, IRegistryConfigu
 		stateAfterInjectorCreation.restoreGlobalState();
 	}
 
-	/***/
-	public static class DefaultTestModule extends AbstractGenericModule {
+	/**
+	 * Common Guice module for overriding bindings of the N4JSRuntimeModule. Most importantly this class re-binds the
+	 * ClassLoader to the one of this package.
+	 */
+	public static class BaseTestModule extends AbstractGenericModule {
+		/**
+		 * We need to bind the class loader here in order to override the default binding: REBIND: contributed by
+		 * org.eclipse.xtext.generator.grammarAccess.GrammarAccessFragment
+		 */
+		public java.lang.ClassLoader bindClassLoaderToInstance() {
+			return getClass().getClassLoader();
+		}
+	}
+
+	/** */
+	public static class DefaultTestModule extends BaseTestModule {
 		/** */
 		public Class<? extends IDiagnosticConverter> bindDiagnosticConverter() {
 			return ExceptionAwareDiagnosticConverter.class;
@@ -110,5 +124,7 @@ public class N4JSInjectorProvider implements IInjectorProvider, IRegistryConfigu
 		public Class<? extends ParseHelper<Script>> bindParseHelperScript() {
 			return SmokeTestWriter.class;
 		}
+
 	}
+
 }
