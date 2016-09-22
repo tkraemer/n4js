@@ -353,7 +353,7 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
 
 
 
-#toc { border-bottom: 1px solid #dddddd; padding-bottom: 0.5em; position: absolute;}
+#toc { border-bottom: 1px solid #dddddd; padding-bottom: 0.5em; position: relative;}
 #toc > ul { margin-left: 0.125em; padding-left: 1em; }
 #toc ul.sectlevel0 > li > a { font-style: italic; }
 #toc ul.sectlevel0 ul.sectlevel1 { margin: 0.5em 0; }
