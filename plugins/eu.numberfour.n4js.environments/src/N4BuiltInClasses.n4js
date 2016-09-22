@@ -77,18 +77,12 @@ export public abstract class N4Type extends N4NamedElement {
 	public string fqn;
 	
 	/**
-	 * Returns the N4Class instance for a given n4object. This is similar to 
-	 * {@code n4object.constructor.n4type}, however it can also be used in roles
-	 * to get reflective information of the consumer.
+	 * Given an instance of <code>N4Object</code> or a value of type <code>type{N4Object}</code>
+	 * (e.g. the constructor of an N4JS class), this method returns its <code>N4Type</code> meta
+	 * object. For any other argument <code>undefined</code> is returned.
 	 */
 	public static /*N4Class*/ any of(N4Object n4object) {
-		if(n4object) {
-			var result = n4object.n4type || n4object.constructor.n4type;
-			if(result) {
-				return result;
-			}
-		}
-		return undefined;
+		return n4object ? n4object.n4type || n4object.constructor.n4type : undefined;
 	}
 
 	/**
