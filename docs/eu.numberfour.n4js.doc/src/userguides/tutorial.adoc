@@ -1,8 +1,7 @@
-:doctype: book
 :toc: right
 :toc-title: Jump to topic:
 
-
+[discrete]
 .N4JS Tutorial
 = N4JS Tutorial
 

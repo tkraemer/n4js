@@ -23,7 +23,7 @@ local pos="${1%%/}" ref="${2%%/}" down=''
 while :; do
 test "$pos" = '/' && break
 case "$ref" in $pos/*) break;; esac
-    down="$down"
+    down="../$down"
     pos=${pos%/*}
 done
 
@@ -37,10 +37,10 @@ current="${fullpath:2}"
 filename="${curent::-4}"
 echo AsciiDoctor - Converting to HTML: "$current"
 asciidoctor -D generated-docs/"$(dirname "$current")" "$current" \
--a stylesdir="$(relpath "$2" ./../styles)" -a stylesheet=n4js-adoc.css \
--a docinfodir="$(relpath "$2" ./../_headers)" -a docinfo1=true \
--a highlightjsdir="$(relpath "$2" ./../scripts)" -a highlightjs-theme=n4jshighlighter \
--a sectnums=true -a sectanchors=true -a sectlinks=true -a icons=font \
+-a stylesdir="$(relpath "$fullpath" ./src/styles)" -a stylesheet=n4js-adoc.css \
+-a docinfodir="$(relpath "$2" ./src/_headers)" -a docinfo1=true -a doctype=book \
+-a highlightjsdir="$(relpath "$2" ./src/scripts)" -a highlightjs-theme=n4jshighlighter \
+-a sectnums=true -a sectanchors=true -a sectlinks=true -a icons=font -a experimental=true \
 -a idseparator=-
 exit 0
 fi
