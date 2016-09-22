@@ -55,7 +55,8 @@ public class DocCommentLookup {
 	 * @throws InstantiationException
 	 *             if comment on element is malformatted.
 	 */
-	public CommentCandidate findJSDocComment(EObject eObject, boolean considerDoubleStar) throws InstantiationException {
+	public CommentCandidate findJSDocComment(EObject eObject, boolean considerDoubleStar)
+			throws InstantiationException {
 		if (eObject == null) {
 			return null;
 		}
@@ -80,8 +81,6 @@ public class DocCommentLookup {
 	 *            on which we look for multiline comment
 	 * @return list of nodes with comment, can be empty if no comments
 	 */
-	// TODO after java update bring back nullness analysis
-	// protected List<INode> findMultiLineComments(@Nonnull EObject eObject) {
 	protected List<INode> findMultiLineComments(EObject eObject) {
 		// get node
 		INode elementNode = NodeModelUtils.findActualNodeFor(eObject);

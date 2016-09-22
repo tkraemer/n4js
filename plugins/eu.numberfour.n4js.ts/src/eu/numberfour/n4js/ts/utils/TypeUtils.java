@@ -173,11 +173,8 @@ public class TypeUtils {
 	 * Same as {@link #createTypeRef(Type, TypingStrategy, TypeArgument...)}, but will create unbounded wildcards as
 	 * type arguments if fewer type arguments are provided than the number of type parameters of the given declared.
 	 */
-	// TODO after java update bring back nullness analysis
-	// public static ParameterizedTypeRef createTypeRef(@Nonnull Type declaredType,
-	// @Nonnull TypingStrategy useSiteTypingStrategy, @Nonnull TypeArgument... typeArgs) {
-	public static ParameterizedTypeRef createTypeRef(Type declaredType,
-			TypingStrategy typingStrategy, boolean autoCreateTypeArgs, TypeArgument... typeArgs) {
+	public static ParameterizedTypeRef createTypeRef(Type declaredType, TypingStrategy typingStrategy,
+			boolean autoCreateTypeArgs, TypeArgument... typeArgs) {
 		final ParameterizedTypeRef ref;
 		if (declaredType instanceof TFunction) {
 			ref = TypeRefsFactory.eINSTANCE.createFunctionTypeRef();
@@ -256,8 +253,6 @@ public class TypeUtils {
 	 * Creates new type reference for constructor. if the declared type is TFunction a FunctionTypeRef is created. If
 	 * declared type is TClassifier than TypeTypeRef is created (i.e. <code>constructor{A}</code> in N4JS code)
 	 */
-	// TODO after java update bring back nullness analysis
-	// public static TypeRef createConstructorTypeRef(@Nonnull Type declaredType, @Nonnull TypeArgument... typeArgs) {
 	public static TypeRef createConstructorTypeRef(Type declaredType, TypeArgument... typeArgs) {
 		TypeRef typeRef = null;
 		if (declaredType instanceof TFunction) {
@@ -611,9 +606,6 @@ public class TypeUtils {
 	 * empty list but never null. Order is always super class, super roles, super interfaces. For all non-classifiers
 	 * this method returns an empty list.
 	 */
-	// TODO after java update bring back nullness analysis
-	// @Nonnull
-	// public static Iterable<ParameterizedTypeRef> declaredSuperTypes(@Nullable final Type type) {
 	@SuppressWarnings("unchecked")
 	public static Iterable<? extends ParameterizedTypeRef> declaredSuperTypes(final Type type) {
 		if (type instanceof TClass) {

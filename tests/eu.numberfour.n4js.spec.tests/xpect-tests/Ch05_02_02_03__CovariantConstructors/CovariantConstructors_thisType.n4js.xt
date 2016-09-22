@@ -15,7 +15,7 @@ abstract class A {
 		// XPECT noerrors -->
 		typeExtA = typeThis;
 
-		// XPECT errors --> "Cannot instantiate abstract class A." at "typeThis"
+		// XPECT errors --> "Cannot instantiate type{this[A]}." at "typeThis"
 		new typeThis();
 	}
 }
@@ -31,7 +31,7 @@ class B {
 		// XPECT type of 'typeThis' --> type{this[B]}
 		let typeThis = this;
 
-		// XPECT errors --> "Cannot instantiate this[B]." at "typeThis"
+		// XPECT errors --> "Cannot instantiate type{this[B]}." at "typeThis"
 		new typeThis();
 	}
 }

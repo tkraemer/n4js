@@ -25,7 +25,7 @@ class D<T extends C> {
         
         var ctor_T = t.constructor;
         
-         // XPECT errors --> "Cannot instantiate ? extends T." at "ctor_T"
+         // XPECT errors --> "Cannot instantiate type variable T." at "ctor_T"
         new ctor_T();
         
         var ctor_CW: constructor{? extends C};

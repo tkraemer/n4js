@@ -564,8 +564,6 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	 *
 	 * @return list of unloaded slots, will be only one element as now all types are aggregated under TModule.
 	 */
-	// TODO after java update bring back nullness analysis
-	// @Nonnull
 	protected List<EObject> discardStateFromDescription() {
 		ModuleAwareContentsList theContents = (ModuleAwareContentsList) contents;
 		if (contents != null && !theContents.isEmpty()) {

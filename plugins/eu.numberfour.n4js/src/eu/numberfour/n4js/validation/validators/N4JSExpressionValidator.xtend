@@ -546,27 +546,29 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 		if (newExpression?.callee === null)
 			return; // invalid AST
-		val typeRef = ts.tau(newExpression.callee)
+		val callee = newExpression.callee;
+		val typeRef = ts.tau(callee);
 		if (typeRef === null)
 			return; // invalid AST
 		if (typeRef instanceof UnknownTypeRef)
 			return; // suppress error message in case of UnknownTypeRef
 
-		// use classifier type ref in order to improve error messages	
+		// not even a TypeTypeRef?
 		if (! (typeRef instanceof TypeTypeRef)) {
 			issueNotACtor(typeRef, newExpression);
 			return;
 		}
-
+		// at least we have a TypeTypeRef, but there are still many cases in which
+		// 'new' is not allowed --> check for those error cases now, showing more specific error messages ...
 		val G = newExpression.newRuleEnvironment;
 		val TypeTypeRef classifierTypeRef = typeRef as TypeTypeRef;
 		val typeArg = classifierTypeRef.typeArg;
-		val staticType = tsh.getStaticType(G, classifierTypeRef);
+		val staticType = tsh.getStaticType(G, classifierTypeRef).changeToCovariantUpperBoundIfTypeVar;
 		if (staticType !== null && staticType.eIsProxy) {
 			return;
 		}
-
 		val isCtor = classifierTypeRef.isConstructorRef;
+		val isDirectRef = callee instanceof IdentifierRef && (callee as IdentifierRef).id === staticType;
 		val isConcreteOrCovariant =
 			!(typeArg instanceof Wildcard || typeArg instanceof ExistentialTypeRef || typeArg instanceof ThisTypeRef)
 			|| (staticType instanceof TClassifier && N4JSLanguageUtils.hasCovariantConstructor(staticType as TClassifier));
@@ -576,14 +578,14 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
 				IssueCodes.BIT_SYMBOL_NOT_A_CTOR);
 			return;
-		} else if (!isCtor && staticType instanceof TInterface) {
+		} else if (!isCtor && staticType instanceof TInterface && isDirectRef) {
 			// error case #2: trying to instantiate an interface
 			val message = IssueCodes.
 				getMessageForEXP_NEW_CANNOT_INSTANTIATE(staticType.keyword, staticType.name);
 			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
 				IssueCodes.EXP_NEW_CANNOT_INSTANTIATE);
 			return;
-		} else if (!isCtor && staticType instanceof TClass && (staticType as TClass).abstract) {
+		} else if (!isCtor && staticType instanceof TClass && (staticType as TClass).abstract && isDirectRef) {
 			// error case #3: trying to instantiate an abstract class
 			val message = IssueCodes.getMessageForEXP_NEW_CANNOT_INSTANTIATE("abstract class", staticType.name);
 			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
@@ -601,13 +603,15 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
 				IssueCodes.EXP_NEW_CANNOT_INSTANTIATE);
 			return;
-		} else if (staticType === null || staticType instanceof TypeVariable || !isCtor || !isConcreteOrCovariant) {
+		} else if (staticType instanceof TypeVariable ) {
+			// error case #6: trying to instantiate a type variable
+			val message = IssueCodes.getMessageForEXP_NEW_CANNOT_INSTANTIATE("type variable", staticType.name);
+			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
+				IssueCodes.EXP_NEW_CANNOT_INSTANTIATE);
+			return;
+		} else if (staticType === null || !isCtor || !isConcreteOrCovariant) {
 			// remaining cases
-			val name = if (classifierTypeRef.typeArg !== null) {
-					classifierTypeRef.typeArg.typeRefAsString
-				} else {
-					"undefined type"
-				};
+			val name = classifierTypeRef.typeRefAsString;
 			val message = IssueCodes.getMessageForEXP_NEW_WILDCARD_OR_TYPEVAR(name);
 			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
 				IssueCodes.EXP_NEW_WILDCARD_OR_TYPEVAR);
@@ -620,6 +624,22 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		internalCheckTypeArguments(staticType.typeVars, newExpression.typeArgs, false, staticType, newExpression,
 			N4JSPackage.eINSTANCE.newExpression_Callee);
 		internalCheckNewParameters(newExpression, staticType as TClassifier);
+	}
+
+	private def changeToCovariantUpperBoundIfTypeVar(Type type) {
+		if(type instanceof TypeVariable) {
+			val ub = TypeUtils.getDeclaredUpperBound(type);
+			if(ub instanceof ParameterizedTypeRef) {
+				val declType = ub.declaredType;
+				if(declType instanceof TClassifier) {
+					// but only if declType has a covariant constructor:
+					if(N4JSLanguageUtils.hasCovariantConstructor(declType)) {
+						return declType;
+					}
+				}
+			}
+		};
+		return type;
 	}
 
 	/** Helper to issue the error case of having a new-expression on a non-constructor element */

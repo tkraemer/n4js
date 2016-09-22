@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest END_SETUP */
+
+
+@CovariantConstructor
+interface I {
+	constructor(p: number)
+}
+
+class C implements I {
+	// no constructor required!
+}
+
+class D extends C {
+	// XPECT errors --> "Signature of constructor of class D does not conform to overridden constructor of class N4Object: {function(number)} is not a subtype of {function()}." at "constructor"
+	constructor(p: number) {}
+}
+

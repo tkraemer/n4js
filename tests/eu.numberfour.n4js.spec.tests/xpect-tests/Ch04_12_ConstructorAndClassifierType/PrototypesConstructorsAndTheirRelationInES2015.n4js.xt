@@ -24,7 +24,7 @@ let objectCtor = Object;
 let aProto = A.prototype;
 // XPECT type of 'bProto' --> Object
 let bProto = B.prototype;
-// XPECT FIXME type of 'functionProto' --> Object
+// XPECT type of 'functionProto' --> Function
 let functionProto = Function.prototype;
 // XPECT type of 'objectProto' --> Object
 let objectProto = Object.prototype;
