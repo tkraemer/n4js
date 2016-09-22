@@ -1,5 +1,4 @@
-:doctype: book
-
+[discrete]
 .Node.js Support
 = Node.js Support
 

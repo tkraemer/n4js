@@ -1,5 +1,4 @@
-:doctype: book
-
+[discrete]
 .Testing
 = Testing
 

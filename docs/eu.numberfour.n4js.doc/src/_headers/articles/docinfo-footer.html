@@ -1,11 +1,11 @@
 <div class="social">
 	<ul>
     	<li><a href="http://www.numberfour.eu" target="_blank"></i>NumberFour AG</a> </li>· <li> <a href="https://twitter.com/n4jsdev" target="_blank"></i>N4JS Twitter</a> </li>
-		<li><a href="../index.html#getting-started" class="Link--action"><i class="fa-li fa fa-download"></i>Get the N4JS IDE now!</a></li>
+		<li><a href="../index.html#getting-started" class="Link--action"></i>Get the N4JS IDE now!</a></li>
 	</ul>
 </div>
 <script>
-// Toggle the table of contents
+// Toggle the table of contents (See http://api.jqueryui.com/toggle/)
 $( "button#tocbutton" ).click(function() {
   $( "#toc.toc2" ).toggle( "slide",{ direction: 'right', mode: 'show' }, 1000 );
 });
@@ -13,7 +13,7 @@ $( "button#tocbutton" ).click(function() {
 <script type="text/javascript">
 // Create a back to top button
 $('body').prepend('<a href="#" class="back-to-top">Back to Top</a>');
-var amountScrolled = 300;
+var amountScrolled = 500;
 $(window).scroll(function() {
 if ( $(window).scrollTop() > amountScrolled ) {
 	$('a.back-to-top').fadeIn('slow');
