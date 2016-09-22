@@ -10,7 +10,7 @@ var s1 : string = us.value;
 var s2 : string = red.name;
 var s3 : string = Country.DE.value;
 
-// XPECT errors --> "N4Class is not a subtype of number." at "N4Type.of(us)"
+// XPECT errors --> "N4Type is not a subtype of number." at "N4Type.of(us)"
 var n1 : number = N4Type.of(us);
 // XPECT errors --> "string is not a subtype of number." at "us.toString()"
 var n2 : number = us.toString();
