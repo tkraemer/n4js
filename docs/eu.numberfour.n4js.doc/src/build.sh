@@ -4,7 +4,7 @@
 if [ ! -d "./generated-docs/" ]; then
   # Control will enter here if generated-docs folder doesn't exist.
   mkdir generated-docs
-  cp -r articles faq features images releases scripts styles userguides generated-docs/
+  cp -r ./articles ./faq ./features ./images ./releases ./scripts ./styles ./userguides generated-docs/
   rm -v generated-docs/**/*.adoc
   # Index remains as-is
   cp index.html generated-docs/index.html
