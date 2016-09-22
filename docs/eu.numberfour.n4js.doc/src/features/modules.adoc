@@ -1,5 +1,4 @@
-:doctype: book
-
+[discrete]
 .Modules
 = Modules
 

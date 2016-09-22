@@ -1,6 +1,9 @@
 :doctype: book
 :toc: right
 :toc-title: Jump to topic:
+:commandkey: &#8984;
+
+[discrete]
 .N4JS IDE Setup
 = N4JS IDE Setup
 

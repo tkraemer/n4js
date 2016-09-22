@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Copy Resources (Images, Styles, Scripts)
-if [ ! -d "generated-docs" ]; then
+if [ ! -d "./generated-docs/" ]; then
   # Control will enter here if generated-docs folder doesn't exist.
   mkdir generated-docs
-  cp -r articles faq features images releases scripts styles userguides generated-docs/
+  cp -r ./articles ./faq ./features ./images ./releases ./scripts ./styles ./userguides generated-docs/
   rm -v generated-docs/**/*.adoc
   # Index remains as-is
   cp index.html generated-docs/index.html
@@ -37,10 +37,10 @@ current="${fullpath:2}"
 filename="${curent::-4}"
 echo AsciiDoctor - Converting to HTML: "$current"
 asciidoctor -D generated-docs/"$(dirname "$current")" "$current" \
--a stylesdir="$(relpath "$fullpath" ./src/styles)" -a stylesheet=n4js-adoc.css \
--a docinfodir="$(relpath "$2" ./src/_headers)" -a docinfo1=true -a doctype=book \
--a highlightjsdir="$(relpath "$2" ./src/scripts)" -a highlightjs-theme=n4jshighlighter \
--a sectnums=true -a sectanchors=true -a sectlinks=true -a icons=font -a experimental=true \
+-a stylesdir="$(relpath "$2" ./src/styles)" -a stylesheet=n4js-adoc.css \
+-a docinfodir="$(relpath "$2" ./src/_headers)"/$(dirname "$current")/ -a docinfo1=true -a doctype=book -a linkcss=true \
+-a source-highlighter=highlightjs -a highlightjsdir="$(relpath "$2" ./scripts)" -a highlightjs-theme=n4jshighlighter \
+-a sectlinks=true -a icons=font -a experimental=true \
 -a idseparator=-
 exit 0
 fi
@@ -48,3 +48,7 @@ fi
 # Building HTML into generated-docs/html folder retaining directory structure, exclude epub
 ME="$0"
 find . -name '*.adoc' ! -name 'epub.adoc' -exec "${ME}" --rundoc {}  \;
+
+# TODO: clean up copy resources loop (lines 3-11) so this is not necessary
+rm -r generated-docs/generated-docs/
+rm -r src/

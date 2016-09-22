@@ -1,0 +1,36 @@
+a.back-to-top {
+	display: none;
+	width: 35px;
+	height: 35px;
+	text-indent: -9999px;
+	position: fixed;
+	z-index: 999;
+	right: 300px;
+	bottom: 20px;
+	background: #032c52 url("up-arrow.png") no-repeat center 43%;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}
+a:hover.back-to-top {
+	background-color: #e3f2ff ;
+}
+
+#tocbutton {
+	display: inline;
+	width: 35px;
+	height: 35px;
+	text-indent: -9999px;
+	position: fixed;
+	z-index: 1000;
+	border: none;
+	right: 300px;
+	top: 60px;
+	background: #032c52 url("right-arrow.png") no-repeat center 43%;
+	webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}
+#tocbutton:hover {
+	background-color: #e3f2ff ;
+}

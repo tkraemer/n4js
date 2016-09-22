@@ -1,5 +1,4 @@
-:doctype: book
-
+[discrete]
 .Nominal And Structural Typing
 = Nominal And Structural Typing
 
