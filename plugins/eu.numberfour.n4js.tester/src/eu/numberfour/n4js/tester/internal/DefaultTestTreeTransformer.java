@@ -53,7 +53,7 @@ public class DefaultTestTreeTransformer implements TestTreeTransformer {
 
 	@Override
 	public Object apply(final TestTree tree) {
-		return apply(tree, singletonMap(MTestTree.PORT_KEY, httpServerPort));
+		return apply(tree, singletonMap(MTestTree.PORT_KEY, getHttpServerPort()));
 	}
 
 	@Override
@@ -128,6 +128,21 @@ public class DefaultTestTreeTransformer implements TestTreeTransformer {
 			LOGGER.error("Error while trying to parse port number: " + portValue, e);
 			return MTestTree.ILLEGAL_PORT_NUMBER;
 		}
+	}
+
+	/** Query httpSeverPort, first injected but may overridden */
+	public String getHttpServerPort() {
+		return httpServerPort;
+	}
+
+	/**
+	 * Override the server port used in the "endpoint" flag
+	 * 
+	 * @param httpServerPort
+	 *            a valid tcp port.
+	 */
+	public void setHttpServerPort(String httpServerPort) {
+		this.httpServerPort = httpServerPort;
 	}
 
 	/**

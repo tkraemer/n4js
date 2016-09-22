@@ -35,25 +35,43 @@ import eu.numberfour.n4js.tester.server.HttpServerManager;
 public class TesterActivator implements BundleActivator {
 
 	private static BundleContext context;
+	private static TesterActivator instance;
 
 	/* default */static BundleContext getContext() {
 		return context;
 	}
+
+	/** Reference to the started bundle-instance */
+	public static TesterActivator getInstance() {
+		return instance;
+	}
+
+	/** effective server port after starting up. */
+	private int serverPort = -1;
 
 	@Override
 	public void start(final BundleContext bundleContext) throws Exception {
 		TesterActivator.context = bundleContext;
 		final HttpServerManager serverManager = getServerManager();
 		final int port = getPort();
-		serverManager.startServer(singletonMap(HTTP_PORT, port));
+		final int usedPort = serverManager.startServer(singletonMap(HTTP_PORT, port));
+		this.serverPort = usedPort;
+		instance = this;
 	}
 
 	@Override
 	public void stop(final BundleContext bundleContext) throws Exception {
+		instance = null;
 		TesterActivator.context = null;
+		this.serverPort = -1;
 		final HttpServerManager serverManager = getServerManager();
 		// -1 to make sure all servers all stopped
 		serverManager.stopServer(-1);
+	}
+
+	/** Effectively used port */
+	public int getServerPort() {
+		return serverPort;
 	}
 
 	private HttpServerManager getServerManager() {

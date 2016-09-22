@@ -26,6 +26,7 @@ import eu.numberfour.n4js.tester.domain.TestTree;
 import eu.numberfour.n4js.tester.extension.ITesterDescriptor;
 import eu.numberfour.n4js.tester.extension.TesterRegistry;
 import eu.numberfour.n4js.tester.internal.DefaultTestTreeTransformer;
+import eu.numberfour.n4js.tester.internal.TesterActivator;
 
 /**
  */
@@ -130,6 +131,11 @@ public class TesterFrontEnd {
 
 		// B.2) pass test tree as execution data
 		try {
+			// Read out port of running IDE-server and pass it to end-point-computation in tree-transformer
+			int port = TesterActivator.getInstance().getServerPort();
+			config.setResultReportingPort(port);
+			testTreeTransformer.setHttpServerPort(Integer.toString(port));
+
 			final String testTreeAsJSON = objectMapper.writeValueAsString(testTreeTransformer.apply(testTree));
 			config.setExecutionData(TestConfiguration.EXEC_DATA_KEY__TEST_TREE, testTreeAsJSON);
 		} catch (IOException e) {
@@ -162,7 +168,8 @@ public class TesterFrontEnd {
 		final TestTree testTree = config.getTestTree();
 
 		// prepare HTTP server for receiving test results
-		testerFacade.prepareTestSession(testTree);
+		int port = testerFacade.prepareTestSession(testTree);
+		config.setResultReportingPort(port);
 
 		// actually launch the test
 		ITester tester = testerRegistry.getTester(config);
