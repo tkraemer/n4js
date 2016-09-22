@@ -606,11 +606,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return;
 		} else if (staticType === null || !isCtor || !isConcreteOrCovariant) {
 			// remaining cases
-			val name = if (classifierTypeRef.typeArg !== null) {
-					classifierTypeRef.typeRefAsString
-				} else {
-					"undefined type"
-				};
+			val name = classifierTypeRef.typeRefAsString;
 			val message = IssueCodes.getMessageForEXP_NEW_WILDCARD_OR_TYPEVAR(name);
 			addIssue(message, newExpression, N4JSPackage.eINSTANCE.newExpression_Callee,
 				IssueCodes.EXP_NEW_WILDCARD_OR_TYPEVAR);
