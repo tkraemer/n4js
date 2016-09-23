@@ -82,7 +82,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 				result1.fpars += TypeUtils.copy(fparT); // use the TFormalParameter created by the types builder as a basis
 			} else {
 				// undeclared type
-				assertTrueIfRigid("type of formal parameter in TModule should be a DeferredTypeRef",
+				assertTrueIfRigid(cache, "type of formal parameter in TModule should be a DeferredTypeRef",
 					fparT?.typeRef instanceof DeferredTypeRef);
 				val fparResult = TypeUtils.copy(fparT); // <-- will have a DeferredTypeRef as type
 				val iv = infCtx.newInferenceVariable;
@@ -99,7 +99,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 		} else {
 			// undeclared return type
 			// -> create infVar for return type IFF funExpr contains return statements OR is single expr arrow function; otherwise use VOID as return type
-			assertTrueIfRigid("return type of TFunction in TModule should be a DeferredTypeRef",
+			assertTrueIfRigid(cache, "return type of TFunction in TModule should be a DeferredTypeRef",
 				fun.returnTypeRef instanceof DeferredTypeRef);
 
 			if (funExpr.isReturningValue) {

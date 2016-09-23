@@ -185,16 +185,19 @@ package abstract class AbstractProcessor {
 		return th;
 	}
 
-	def protected static void assertTrueIfRigid(String message, BooleanSupplier check) {
+	def protected static void assertTrueIfRigid(ASTMetaInfoCache cache, String message, BooleanSupplier check) {
 		if (isDEBUG_RIGID) {
-			assertTrueIfRigid(message, check.asBoolean)
+			assertTrueIfRigid(cache, message, check.asBoolean);
 		}
 	}
 
-	def protected static void assertTrueIfRigid(String message, boolean actual) {
+	def protected static void assertTrueIfRigid(ASTMetaInfoCache cache, String message, boolean actual) {
 		if (isDEBUG_RIGID && !actual) {
 			val e = new Error(message);
-			UtilN4.reportError(e); // make sure we see this exception on the console, even if it gets caught somewhere
+			if(!cache.hasBrokenAST) {
+				// make sure we see this exception on the console, even if it gets caught somewhere
+				UtilN4.reportError(e);
+			}
 			Throwables.propagate(e);
 		}
 	}

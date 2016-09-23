@@ -1,0 +1,32 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+class X {}
+let x = new X();
+
+
+// worked before:
+
+// XPECT type of 't1' --> X
+let t1 = a;
+
+var a = x;
+
+
+// worked before:
+
+// XPECT type of 't2' --> X
+let t2 = b;
+
+for(var b = x;;) {}
+
+
+
+// did not work before:
+
+// XPECT noerrors -->
+// XPECT type of 't3' --> X
+let t3 = c;
+
+for(var c of [x]) {}
+
