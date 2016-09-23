@@ -1,0 +1,9 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+let i: int = 1337;
+let n: number;
+
+// XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'x'." at "x"
+n = i.x;
+
