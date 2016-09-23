@@ -33,14 +33,14 @@ class C {
 	@This(type{X}) static m11() {}
 	// XPECT noerrors -->
 	@This(type{C}) static m12() {
-		// XPECT errors --> "Cannot instantiate C." at "this"
+		// XPECT errors --> "Cannot instantiate type{C}." at "this"
 		new this(42);
 	}
 	// XPECT noerrors -->
 	@This(type{CC}) static m13() {
 		// XPECT noerrors -->
 		this.smcc();
-		// XPECT errors --> "Cannot instantiate CC." at "this"
+		// XPECT errors --> "Cannot instantiate type{CC}." at "this"
 		new this(42);
 	}
 	// XPECT noerrors -->

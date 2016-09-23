@@ -1,0 +1,61 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+interface I {}
+class C {}
+class CI implements I {}
+enum Color { R, G, B }
+
+let c = new C();
+let ci = new CI();
+
+
+// XPECT type of 'N4Type.of(null)' --> N4Type
+N4Type.of(null);
+
+
+console.log( N4Type.of(I)         === I.n4type );
+console.log( N4Type.of(C)         === C.n4type );
+console.log( N4Type.of(c)         === C.n4type );
+console.log( N4Type.of(ci)        === CI.n4type );
+console.log( N4Type.of(Color)     === Color.n4type );
+console.log( N4Type.of(Color.R)   === Color.n4type );
+
+console.log();
+
+console.log( N4Type.of(I.n4type)      === N4Interface.n4type );
+console.log( N4Type.of(C.n4type)      === N4Class.n4type );
+console.log( N4Type.of(Color.n4type)  === N4EnumType.n4type );
+
+console.log();
+
+console.log( N4Type.of(undefined) === undefined );
+console.log( N4Type.of(null)      === undefined );
+console.log( N4Type.of(42)        === undefined );
+console.log( N4Type.of('yo')      === undefined );
+console.log( N4Type.of(String)    === undefined );
+
+
+/* XPECT output --- 
+<==
+stdout:
+true
+true
+true
+true
+true
+true
+
+true
+true
+true
+
+true
+true
+true
+true
+true
+stderr:
+==>
+--- */
+

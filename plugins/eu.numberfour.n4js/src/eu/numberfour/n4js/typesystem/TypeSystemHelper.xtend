@@ -145,9 +145,6 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	 * Convenience method calling {@link join(RuleEnvironment, Iterable<TypeRef>)} with
 	 * type references inside an array.
 	 */
-	 //TODO after java update bring back nullness analysis
-//	@Nonnull
-//	def TypeRef join(@Nonnull RuleEnvironment G, TypeRef... typeRefs) {
 	def TypeRef join(RuleEnvironment G, TypeRef... typeRefs) {
 		joinComputer.join(G, Arrays.asList(typeRefs))
 	}
@@ -157,9 +154,6 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	 * of the given types.
 	 * @see JoinComputer#join(RuleEnvironment, Iterable<? extends TypeRef>)
 	 */
-	 //TODO after java update bring back nullness analysis
-//	@Nonnull
-//	def TypeRef join(@Nonnull RuleEnvironment G, Iterable<? extends TypeRef> typeRefsToJoin) {
 	def TypeRef join(RuleEnvironment G, Iterable<? extends TypeRef> typeRefsToJoin) {
 		joinComputer.join(G, typeRefsToJoin)
 	}
@@ -168,9 +162,6 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	 * Convenience method calling {@link meet(RuleEnvironment, Iterable<TypeRef>)} with
 	 * type references inside an array.
 	 */
-	 //TODO after java update bring back nullness analysis
-//	@Nonnull
-//	def TypeRef meet(@Nonnull RuleEnvironment G, TypeRef... typeRefs) {
 	def TypeRef meet(RuleEnvironment G, TypeRef... typeRefs) {
 		meetComputer.meet(G, Arrays.asList(typeRefs))
 	}

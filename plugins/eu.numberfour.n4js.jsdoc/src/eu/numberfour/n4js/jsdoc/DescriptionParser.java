@@ -86,11 +86,7 @@ public class DescriptionParser extends AbstractJSDocParser {
 	 * InlineTags are identified based on dictionary provided with method call.
 	 *
 	 */
-	// TODO after java update bring back nullness analysis
-	// public ContentNode parse(JSDocCharScanner scanner,
-	// @Nonnull TagDictionary<AbstractInlineTagDefinition> inlineTagsDictinary) {
-	public ContentNode parse(JSDocCharScanner scanner,
-			TagDictionary<AbstractInlineTagDefinition> inlineTagsDictinary) {
+	public ContentNode parse(JSDocCharScanner scanner, TagDictionary<AbstractInlineTagDefinition> inlineTagsDictinary) {
 		ComposedContent description = DomFactory.eINSTANCE.createComposedContent();
 
 		if (!scanner.hasNext()) {

@@ -10,5 +10,5 @@ class C<T> {
 let c: C<A|B>;
 
 
-// XPECT errors --> "Cannot instantiate union{A,B}." at "c.ctor"
+// XPECT errors --> "Cannot instantiate constructor{union{A,B}}." at "c.ctor"
 new c.ctor();

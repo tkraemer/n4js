@@ -26,6 +26,7 @@ primitive number {
 	autoboxedType Number
 }
 primitive int {
+	autoboxedType Number
 }
 // see [ECMA6] Section 4.3.25
 primitive symbol {

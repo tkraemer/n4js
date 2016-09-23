@@ -1593,9 +1593,11 @@ from {
 rule subtypeTypeTypeRef
 	G |- TypeTypeRef left <: TypeTypeRef right
 from {
+	val leftTypeArg = left.typeArg;
+	val rightTypeArg = right.typeArg;
 	val leftIsCtorRef = left.isConstructorRef;
 	val rightIsCtorRef = right.isConstructorRef;
-	val rightHasTypeRef = right.typeArg instanceof TypeRef;
+	val rightHasTypeRef = rightTypeArg instanceof TypeRef;
 
 	if(!leftIsCtorRef && rightIsCtorRef) { // type{} <: constructor{}
 
@@ -1604,7 +1606,7 @@ from {
 	} else if(rightHasTypeRef && !rightIsCtorRef) { // type|constructor{} <: type{} AND right doesn't contain wildcard
 
 		// check type arguments
-		G |- left.getTypeArg <: right.getTypeArg
+		G |- leftTypeArg <: rightTypeArg
 
 	} else if (rightHasTypeRef && rightIsCtorRef) { // constructor{} <: constructor{} AND right doesn't contain wildcard
 
@@ -1614,11 +1616,15 @@ from {
 		val leftHasCovariantConstructor = left_staticType instanceof TClassifier
 				&& N4JSLanguageUtils.hasCovariantConstructor(left_staticType as TClassifier);
 
-		// left must not contain a wildcard
-		( !(left.typeArg instanceof Wildcard || left.typeArg instanceof ThisTypeRef) || leftHasCovariantConstructor )
+		// left must not contain a wildcard, (closed) existential type, this type
+		// (except we have a @CovariantConstructor)
+		(
+			!(leftTypeArg instanceof Wildcard || leftTypeArg instanceof ExistentialTypeRef || leftTypeArg instanceof ThisTypeRef)
+			|| leftHasCovariantConstructor
+		)
 
 		// check type arguments
-		G |- left.getTypeArg <: right.getTypeArg
+		G |- leftTypeArg <: rightTypeArg
 
 		// check constructors
 		if( left_staticType instanceof TypeVariable || right_staticType instanceof TypeVariable) {
@@ -1656,10 +1662,10 @@ from {
 
 	} else { // any combination except type{} <: constructor{} AND right contains wildcard
 
-		G |~ left.typeArg /\ var TypeRef upperBoundLeft
-		G |~ left.typeArg \/ var TypeRef lowerBoundLeft
-		G |~ right.typeArg /\ var TypeRef upperBoundRight
-		G |~ right.typeArg \/ var TypeRef lowerBoundRight
+		G |~ leftTypeArg /\ var TypeRef upperBoundLeft
+		G |~ leftTypeArg \/ var TypeRef lowerBoundLeft
+		G |~ rightTypeArg /\ var TypeRef upperBoundRight
+		G |~ rightTypeArg \/ var TypeRef lowerBoundRight
 
 		G |- upperBoundLeft <: upperBoundRight
 		G |- lowerBoundRight <: lowerBoundLeft 

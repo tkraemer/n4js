@@ -29,7 +29,7 @@ f(D);
 class G<T extends A> {
 	
 	m(ctor: constructor{T}){
-		// T could have arbitrary constructor function signature XPECT errors --> "Cannot instantiate T." at "ctor"
+		// T could have arbitrary constructor function signature XPECT errors --> "Cannot instantiate type variable T." at "ctor"
 		new ctor();
 	}	
 }

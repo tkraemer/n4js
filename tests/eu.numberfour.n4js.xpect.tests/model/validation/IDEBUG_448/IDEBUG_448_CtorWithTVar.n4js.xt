@@ -24,7 +24,7 @@ export public class B extends A {
 
 function <T extends N4Object> me (ctor : constructor{T}) : T {
  
- 	// XPECT errors --> "Cannot instantiate T." at "ctor"
+ 	// XPECT errors --> "Cannot instantiate type variable T." at "ctor"
  	var x = new ctor();
  	
  	return x;

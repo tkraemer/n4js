@@ -94,9 +94,6 @@ class JoinComputer extends TypeSystemHelperStrategy {
 	 *
 	 * @return the join, may be a contained reference. Thus clients may need to create a copy!
 	 */
-	 //TODO after java update bring back nullness analysis
-//	@Nonnull
-//	def TypeRef join(@Nonnull RuleEnvironment G, Iterable<? extends TypeRef> typeRefsToJoin) {
 	def TypeRef join(RuleEnvironment G, Iterable<? extends TypeRef> typeRefsToJoin) {
 
 		if (typeRefsToJoin === null) { // quick return
@@ -127,9 +124,6 @@ class JoinComputer extends TypeSystemHelperStrategy {
 	 *  @see [N4JS Spec], 4.12 Union Type
 	 * @param unionTypeRefs cannot be empty, called only from method above where it is checked
 	 */
-	 //TODO after java update bring back nullness analysis
-//	private def TypeRef joinNonUnionTypeWithUniontypes(RuleEnvironment G, @Nullable TypeRef nonUnionJoin,
-//		@Nonnull Iterable<UnionTypeExpression> unionTypeRefs) {
 	private def TypeRef joinNonUnionTypeWithUniontypes(RuleEnvironment G, TypeRef nonUnionJoin,
 		Iterable<UnionTypeExpression> unionTypeRefs) {
 
@@ -149,9 +143,6 @@ class JoinComputer extends TypeSystemHelperStrategy {
 	 * Called internally to compute the join of non-union types only.
 	 * @param nonUnionTypeRefs type references, must not contain UnionTypeExpressions
 	 */
-	 //TODO after java update bring back nullness analysis
-//	@Nullable
-//	private def TypeRef joinNonUnionTypes(@Nonnull RuleEnvironment G, Iterable<? extends TypeRef> nonUnionTypeRefs) {
 	private def TypeRef joinNonUnionTypes(RuleEnvironment G, Iterable<? extends TypeRef> nonUnionTypeRefs) {
 		if (nonUnionTypeRefs.empty) { // quick return
 			return null;
@@ -405,10 +396,6 @@ class JoinComputer extends TypeSystemHelperStrategy {
 	 * @param refs 		collection of type references, size > 1
 	 * @param rawSuperTypeRef a raw super type, which is a common super type of all types in refs
 	 */
-	 //TODO after java update bring back nullness analysis
-//	@Nonnull
-//	private def Set<TypeRef> collectParameterizedSuperType(@Nonnull Iterable<? extends TypeRef> refs,
-//		@Nonnull Type rawSuperType, RuleEnvironment G) {
 	private def Set<TypeRef> collectParameterizedSuperType(Iterable<? extends TypeRef> refs,
 		Type rawSuperType, RuleEnvironment G) {
 
@@ -564,8 +551,6 @@ class JoinComputer extends TypeSystemHelperStrategy {
 	 * Returns path from super type to current ref, including the super type and the initial type.
 	 * @return path, or null if the raw super type has not been found (which probably is an illegal result, except in combination with intersection types)
 	 */
-	 //TODO after java update bring back nullness analysis
-//	@Nullable
 	private def dispatch List<TypeRef> computePathFromSuperTypeReflexive(TypeRef ref, Type rawSuperType,
 		Set<Type> processedTypes) {
 		if (ref.declaredType == rawSuperType) {
