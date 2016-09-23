@@ -12,12 +12,38 @@ a.back-to-top {
 	-moz-border-radius: 30px;
 	border-radius: 30px;
 }
+
 a:hover.back-to-top {
 	background-color: #e3f2ff ;
 }
-
 #tocbutton {
 	visibility: hidden;
+}
+
+#tocbuttonbars.fa.fa-bars {
+	z-index: 1000;
+	right: 0;
+}
+
+#tocbutton:hover {
+	background: url("yellowbars.png") no-repeat center 50%;
+}
+
+/* Reposition buttons when Table of Contents is set to toc2 (right) */
+
+body.toc2.toc-right a.back-to-top {
+	display: none;
+	width: 25px;
+	height: 25px;
+	text-indent: -9999px;
+	position: fixed;
+	z-index: 1001;
+	right: 15px;
+	bottom: 20px;
+	background: #032c52 url("up-arrow.png") no-repeat center 43%;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
 }
 
 body.toc2.toc-right #tocbutton {
@@ -26,17 +52,22 @@ body.toc2.toc-right #tocbutton {
 	height: 25px;
 	text-indent: -9999px;
 	position: fixed;
-	z-index: -998;
+	z-index: 998;
 	border: none;
 	right: 215px;
 	top: 5px;
 	background: url("bars.png") no-repeat center 50%;
 }
 
-#tocbuttonbars.fa.fa-bars {
-	z-index: 1000;
-	right: 0;
-}
-#tocbutton:hover {
-	background: url("yellowbars.png") no-repeat center 50%;
+/* 
+Add condition when page less than 1535 so 
+
+body.toc2.toc-right #tocbutton {
+	visibility: hidden;
+	(or collapsed) 
+*/
+
+@media only screen and (max-width: 1535px) {
+	body.toc2.toc-right #tocbutton {
+	visibility: hidden;
 }
