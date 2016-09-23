@@ -5,10 +5,18 @@
 	</ul>
 </div>
 <script>
-// Toggle the table of contents (See http://api.jqueryui.com/toggle/)
+<script>
+// Toggle the table of contents
 $( "button#tocbutton" ).click(function() {
-  $( "#toc.toc2" ).toggle( "slide",{ direction: 'right', mode: 'show' }, 1000 );
+  $( "#toc.toc2" ).toggle( "slide",{ direction: 'right', mode: 'show' }, 500 );
+  if ($("#tocbutton").css('right') == '5px') {
+    $( "#tocbutton" ).animate({right: '215px'},"slow");
+}
+  else {   
+    $( "#tocbutton" ).animate({right: '5px'},"slow");
+}
 });
+</script>
 </script>
 <script type="text/javascript">
 // Create a back to top button
