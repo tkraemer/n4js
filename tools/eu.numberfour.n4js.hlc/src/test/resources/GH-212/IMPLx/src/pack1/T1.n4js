@@ -1,0 +1,11 @@
+export public interface IC {
+    public get fetched(): boolean {
+        return false;
+    }
+}
+
+export public interface ID extends IC {}
+
+ 
+export public abstract class C {} // NOTE: does *not* implement IC!
+export public abstract class D extends C implements ID {}
