@@ -17,6 +17,11 @@ a:hover.back-to-top {
 }
 
 #tocbutton {
+	visibility: hidden;
+}
+
+body.toc2.toc-right #tocbutton {
+	visibility: visible;
 	width: 25px;
 	height: 25px;
 	text-indent: -9999px;
