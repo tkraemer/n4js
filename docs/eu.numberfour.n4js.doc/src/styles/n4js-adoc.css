@@ -137,9 +137,9 @@ meta.foundation-mq-large { font-family: "only screen and (min-width:1440px)"; wi
 
 *, *:before, *:after { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
-html, body { font-size: 100%; background-color:#527AA3; }
+html, body {  background-color:#527AA3; }
 
-body {  background: white; color: #222222;   padding: ; margin: 0; font-family: "ITC Officina Serif W01", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; font-weight: 400; font-style: normal; line-height: 1; position: relative; cursor: auto; padding-left: 2rem; padding-right: 2rem;}
+body {  background: white; color: #222222;   padding: ; margin: 0; font-family: "ITC Officina Serif W01", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; font-weight: 400; font-style: normal; position: relative; cursor: auto; padding-left: 2rem; padding-right: 2rem;}
 
 a:hover { cursor: pointer; }
 
@@ -243,7 +243,7 @@ small { font-size: 60%; line-height: inherit; }
 code { font-family: Fira Mono, Consolas, "Liberation Mono", Courier, monospace; font-weight: bold; color: #7f0a0c; }
 
 /* Lists */
-ul, ol, dl {  list-style-position: outside; font-family: "ITC Officina Sans W01"; padding-left: 0rem; }
+ul, ol, dl {  list-style-position: outside; font-family: "ITC Officina Sans W01"; padding-left: 0rem; list-style-type: none}
 
 ul, ol { margin-left: 0em;  }
 ul.no-bullet, ol.no-bullet { margin-left: 1.5em;  margin-bottom: 0;}
@@ -253,7 +253,7 @@ ul li ul, ul li ol { margin-left: 1.25em; margin-bottom: 0; font-size: 1em; /* O
 ul.square li ul, ul.circle li ul, ul.disc li ul { list-style: inherit; }
 ul.square { list-style-type: square; }
 ul.circle { list-style-type: circle; }
-ul.disc { list-style-type: disc; }
+ul.disc { list-style-type: none; }
 ul.no-bullet { list-style: none; }
 
 /* Ordered Lists */
@@ -363,10 +363,25 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
 #toc a:active { text-decoration: underline; }
 
 #toc ul li:before {
-    content: "";
+    content: "›";
     margin-left: -.75em;
     margin-right: .4em;
     color: #244d82
+}
+
+
+
+div.ulist li:before {
+    content: "›";
+    position: absolute;
+    margin-top: .2rem;
+    font-size: x-large;
+    margin-left: -.75em;
+    margin-bottom: -.75em;
+    margin-right: 0;
+    line-height: 1rem;
+    color: #244d82
+
 }
 
 
@@ -384,8 +399,19 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
 	font-size: 25px;
 	font-weight: 600;
 	margin-top: -1rem;
-
 }
+
+div#faq li:before {
+    content: "›";
+    position: absolute;
+    font-size: x-large;
+    margin-left: -.75em;
+    margin-bottom: -.75em;
+    margin-right: 0;
+    line-height: 1rem;
+    color: #244d82
+}
+
 
 @media only screen and (min-width: 1434px) { #toctitle { font-size: 1.375em; }
   body.toc2 { padding-left: 2em; padding-right: 1em; }
@@ -762,6 +788,8 @@ b.conum * { color: inherit !important; }
 .conum:not([data-value]):empty { display: none; }
 
 .literalblock pre, .listingblock pre { background: #eeeeee; }
+
+
 
 /* ========================================================================== AsciiSpec ======================================================================= */
 .requirement {
