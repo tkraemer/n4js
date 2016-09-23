@@ -22,7 +22,7 @@ import eu.numberfour.n4js.runner.SystemLoaderInfo;
 /**
  * Run options for node. Unlike configuration that is stored, this is just group of runtime options that are passed to
  * single node execution (as command line parameters or environmental variables). These are not persisted, but usually
- * are created from data in stored configurations and runtime data provided by user (eg file selection).
+ * are created from data in stored configurations and runtime data provided by user (e.g. file selection).
  */
 public class NodeRunOptions {
 

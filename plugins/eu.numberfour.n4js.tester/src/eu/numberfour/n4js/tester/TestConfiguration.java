@@ -35,6 +35,8 @@ public class TestConfiguration extends RunConfiguration {
 
 	private TestTree testTree;
 
+	private int resultReportingPort; // volatile
+
 	/**
 	 * Identifier of the tester to use.
 	 */
@@ -71,4 +73,20 @@ public class TestConfiguration extends RunConfiguration {
 		super.writePersistentValues(map);
 		this.testerId = RunConfiguration.getString(map, TESTER_ID, false);
 	}
+
+	/**
+	 * @param port
+	 *            actual port number of the server listening for test results.
+	 */
+	public void setResultReportingPort(int port) {
+		this.resultReportingPort = port;
+	}
+
+	/**
+	 * @return TCP-port of the result listening server
+	 */
+	public int getResultReportingPort() {
+		return this.resultReportingPort;
+	}
+
 }
