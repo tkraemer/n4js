@@ -70,8 +70,19 @@ body.toc2.toc-right a:hover.back-to-top {
 
 @media only screen and (max-width: 1535px) {
 	body.toc2.toc-right #tocbutton {
+	background: url("yellowbars.png") no-repeat center 50%;
+	/* visibility: hidden; */
+	left: 98%;
+	z-index: 100000;
+}
+@media only screen and (max-width: 1434px) {
+	body.toc2.toc-right #tocbutton {
 	visibility: hidden;
 }
+
+@media only screen and (min-width: ) 
+
+
 @media only screen and (max-width: 1462px) {
 	a.back-to-top {
 	left: 90%;

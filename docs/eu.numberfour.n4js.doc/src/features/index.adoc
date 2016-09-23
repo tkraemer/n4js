@@ -6,6 +6,7 @@ The following table gives an overview of features implemented by N4JS.
 
 == Remarks
 
+[#remarks]
 * The parser fully supports ECMAScript 2015 syntax including unicode escape sequences, regular expressions and automatic semicolon insertion. Not all constructs are fully supported by the type-checker yet.
 * The transpiler translates N4JS to V8-compatible JavaScript. ES2015 constructs not supported by latest V8 are rejected by N4JS.
 * Except ``project`` (as an access modifier, will be removed in future versions as it is the default), N4JS does not introduce any new keywords to ECMAScript 2015/ES.next.

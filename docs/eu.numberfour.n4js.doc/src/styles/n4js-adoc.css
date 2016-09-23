@@ -393,6 +393,7 @@ div.ulist li:before {
 	top: 8rem;
 	margin-bottom: 20px;
 	position:absolute;z-index:1;padding-left:2rem;border-left:1px solid #d3d3d3
+
 }
 
 #faq h2 {
@@ -412,8 +413,39 @@ div#faq li:before {
     color: #244d82
 }
 
+#features-nav {
+	position: absolute;
+	right: 1rem;
+	top: 8rem;
+	margin-bottom: 20px;
+	position:absolute;z-index:1;padding-left:2rem;border-left:1px solid #d3d3d3
+}
 
-@media only screen and (min-width: 1434px) { #toctitle { font-size: 1.375em; }
+#features-nav h2 {
+	font-size: 25px;
+	font-weight: 600;
+	margin-top: -1rem;
+}
+#features-nav li {
+	margin-top: .3rem;
+}
+
+div#features-nav li:before {
+    content: "›";
+    position: absolute;
+    font-size: x-large;
+    margin-left: -.75em;
+    margin-bottom: -.75em;
+    margin-right: 0;
+    line-height: 1rem;
+    color: #244d82
+}
+
+div#ide-setup.paragraph {
+	max-width: 66%;
+}
+
+@media only screen and (min-width: 1434px) { #toctitle { padding-top: 1.5rem; font-size: 1.375em; }
   body.toc2 { padding-left: 2em; padding-right: 1em; }
   #toc.toc2 { margin-top: 0 !important; background-color: #f2f2f2; position: fixed; width: 12em; left: 0; top: 0; border-right: 1px solid #dddddd; border-top-width: 0 !important; border-bottom-width: 0 !important; z-index: 1000; padding: 1.25em 0.25em 0em 0.25em; height: 100%; overflow: auto; }
   #toc.toc2 #toctitle { margin-top: 0; margin-bottom: 0.8rem; font-size: 1.2em; padding-left: 1em;}
@@ -422,7 +454,9 @@ div#faq li:before {
   #toc.toc2 ul.sectlevel0 ul.sectlevel1 { padding-left: 0; margin-top: 0.5em; margin-bottom: 0.5em; }
   body.toc2.toc-right { padding-left: 2em; padding-right: 2em; }
   body.toc2.toc-right #toc.toc2 { border-right-width: 0; border-left: 1px solid #dddddd; left: auto; right: 0; } }
-@media only screen and (min-width: 1530px) { body.toc2 { padding-left: 2em; padding-right: 2em; }
+@media only screen and (min-width: 1535px) { 
+  body.toc2 { padding-left: 2em; padding-right: 2em; }
+  #toctitle { padding-top: 0rem; font-size: 1.375em; }
   #toc.toc2 { width: 13em; }
   #toc.toc2 #toctitle { font-size: 1.375em; }
   #toc.toc2 > ul { font-size: 0.95em; }
@@ -789,6 +823,9 @@ b.conum * { color: inherit !important; }
 
 .literalblock pre, .listingblock pre { background: #eeeeee; }
 
+div#remarks.ulist {
+	max-width: 70%;
+}
 
 
 /* ========================================================================== AsciiSpec ======================================================================= */

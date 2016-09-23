@@ -1,4 +1,6 @@
-﻿[discrete]
+﻿:toc: right
+
+[discrete]
 .N4JS Documentation
 = N4JS Userguides
 
@@ -9,6 +11,7 @@
 
 **[[ide-setup]]IDE Setup & HelloWorld!**
 
+[#ide-setup]
 This short introduction covers the basics of getting up and running with the
 N4JS IDE. From installation to running HelloWorld!, quickly learn about new features
 of the N4JS IDE, how to create a new project, manage workspaces and begin development!
