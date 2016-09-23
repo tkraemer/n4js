@@ -1,4 +1,4 @@
-:toc: right
+:toc: left
 :toc-title: Jump to topic:
 :commandkey: &#8984;
 

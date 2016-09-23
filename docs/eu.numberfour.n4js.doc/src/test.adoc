@@ -1,6 +1,6 @@
 :doctype: book
-:toc: right
 :toc-title: Table Of Contents:
+:!last-update-label:
 
 [discrete]
 = N4JS Tutorial

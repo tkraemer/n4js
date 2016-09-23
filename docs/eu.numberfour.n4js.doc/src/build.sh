@@ -37,13 +37,15 @@ current="${fullpath:2}"
 filename="${curent::-4}"
 echo AsciiDoctor - Converting to HTML: "$current"
 asciidoctor -D generated-docs/"$(dirname "$current")" "$current" \
--a stylesdir="$(relpath "$2" ./src/styles)" -a stylesheet=n4js-adoc.css \
+-a !stylesheet \
 -a docinfodir="$(relpath "$2" ./src/_headers)"/$(dirname "$current")/ -a docinfo1=true -a doctype=book -a linkcss=true \
 -a source-highlighter=highlightjs -a highlightjsdir="$(relpath "$2" ./scripts)" -a highlightjs-theme=n4jshighlighter \
--a sectlinks=true -a icons=font -a experimental=true \
+-a sectlinks=true -a icons=font -a experimental=true -a !last-update-label \
 -a idseparator=-
 exit 0
 fi
+
+# -a stylesdir="$(relpath "$2" ./src/styles)" -a stylesheet=n4js-adoc.css \
 
 # Building HTML into generated-docs/html folder retaining directory structure, exclude epub
 ME="$0"
