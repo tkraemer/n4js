@@ -1,15 +1,22 @@
 .banner {
+  height: 1rem;
   padding-right: 2rem;
   max-height: 1rem;  
-  padding: .7rem;
   max-width: 50%;
   vertical-align: middle;
 
   @media (max-width: 800px) {
     flex-basis: 66.666%%;
     max-width: 25%;
+    margin: 1rem;
 
   }
+}
+
+#logo {
+  max-height: 40px;
+  margin-left: 40px;
+  margin-top: 1rem;
 }
 
 #menubar ul { margin: 0; padding: 0; white-space:nowrap;}
@@ -17,7 +24,7 @@
 #menubar a { margin: 0; padding: 0;}
 #menubar ul {list-style: none; text-align: right;}
 #menubar a {text-decoration: none;}
-#menubar {height: 70px; background-color: rgb(15,26,54); /* box-shadow: 0px 2px 3px rgba(0,0,0,.4); */ position: relative; padding-right: 2rem; margin-left: -2rem;  margin-right: -2rem; }
+#menubar {height: 70px; background-color: #132445; /* box-shadow: 0px 2px 3px rgba(0,0,0,.4); */ position: relative; padding-right: 2rem; margin-left: -2rem;  margin-right: -2rem;  color: white; font-size: 1.9rem;}
 
 
 #menubar > ul > li {
@@ -34,11 +41,10 @@
 #menubar > ul > li > a {
     color: #FFFFFF;
     font-family: ITC Officina Sans W01, sans-serif, Verdana, Arial, Helvetica, sans-serif;
-    font-size: 19px;
-    height: auto;
-    font-weight: 800;
-    line-height: 19px;
-    padding-top: 2rem;
+    font-size:  1.3rem;
+    font-weight: 700;
+    line-height: 19px; 
+    /* padding-top: 2rem; */
 -webkit-transition: color .15s;
    -moz-transition: color .15s;
      -o-transition: color .15s;
