@@ -363,12 +363,11 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
 #toc a:active { text-decoration: underline; }
 
 #toc ul li:before {
-    content: "›";
+    content: "";
     margin-left: -.75em;
     margin-right: .4em;
     color: #244d82
 }
-
 
 
 #toctitle { color: #244d82; font-size: 1.2em; padding-left: 1em; }
