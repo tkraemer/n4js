@@ -1,5 +1,6 @@
 :doctype: book
 
+[discrete]
 .N4JS and TypeScript
 = N4JS and TypeScript
 

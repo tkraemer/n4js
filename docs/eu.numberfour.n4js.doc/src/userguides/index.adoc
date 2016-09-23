@@ -1,6 +1,4 @@
-﻿:doctype: book
-
-[discrete]
+﻿[discrete]
 .N4JS Documentation
 = N4JS Userguides
 

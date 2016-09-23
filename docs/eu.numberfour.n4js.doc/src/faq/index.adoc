@@ -1,4 +1,6 @@
 :doctype: book
+
+[discrete]
 .FAQ
 = FAQ
 
