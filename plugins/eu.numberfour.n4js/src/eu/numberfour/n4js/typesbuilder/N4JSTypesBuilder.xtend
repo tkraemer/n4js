@@ -43,6 +43,7 @@ import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.resource.DerivedStateAwareResource
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
+import eu.numberfour.n4js.validation.JavaScriptVariant
 
 /**
  * This class with its {@link N4JSTypesBuilder#createTModuleFromSource(DerivedStateAwareResource,boolean) createTModuleFromSource()}
@@ -120,6 +121,8 @@ public class N4JSTypesBuilder {
 			result.copyAnnotations(script, preLinkingPhase);
 
 			script.buildNamespacesTypesFromModuleImports(result,preLinkingPhase);
+
+			result.n4jsdModule = JavaScriptVariant.getVariant(script) === JavaScriptVariant.external;
 
 			// Setting Polyfill property.
 			result.staticPolyfillModule = result.isContainedInStaticPolyfillModule;

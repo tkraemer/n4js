@@ -26,6 +26,7 @@ import static eu.numberfour.n4js.validation.IssueCodes.CLF_POLYFILL_EXTEND_MISSI
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_POLYFILL_FILLED_NOT_PROVIDEDBYRUNTIME;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_POLYFILL_NOT_PROVIDEDBYRUNTIME;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_POLYFILL_NO_IMPLEMENTS_OR_CONSUMES;
+import static eu.numberfour.n4js.validation.IssueCodes.CLF_POLYFILL_STATIC_DIFFERENT_VARIANT;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_POLYFILL_STATIC_FILLED_TYPE_NOT_AWARE;
 import static eu.numberfour.n4js.validation.IssueCodes.CLF_POLYFILL_TYPEPARS_DIFFER_TYPEARGS;
 import static eu.numberfour.n4js.validation.IssueCodes.POLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES;
@@ -38,6 +39,7 @@ import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_POLYFILL
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_POLYFILL_FILLED_NOT_PROVIDEDBYRUNTIME;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_POLYFILL_NOT_PROVIDEDBYRUNTIME;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_POLYFILL_NO_IMPLEMENTS_OR_CONSUMES;
+import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_POLYFILL_STATIC_DIFFERENT_VARIANT;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_POLYFILL_STATIC_FILLED_TYPE_NOT_AWARE;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForCLF_POLYFILL_TYPEPARS_DIFFER_TYPEARGS;
 import static eu.numberfour.n4js.validation.IssueCodes.getMessageForPOLY_STATIC_POLYFILL_MODULE_ONLY_FILLING_CLASSES;
@@ -61,6 +63,7 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.inject.Inject;
 
+import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.ts.scoping.N4TSQualifiedNameProvider;
@@ -157,7 +160,8 @@ public class PolyfillValidatorFragment {
 				if (!(holdPolyfillName(state) //
 						// && holdsProvidedByRuntime(state) //
 						// && holdsNoImplementsOrConsumes(state) //
-						&& holdsFilledClassIsStaticPolyfillAware(state)
+						&& holdsFilledClassIsStaticPolyfillAware(state) //
+						&& holdsSameJavascriptVariant(state) //
 						&& holdsEqualModifiers(state) //
 						&& holdsEqualTypeVariables(state) //
 						&& holdsSinglePolyfillSource(state))) //
@@ -190,6 +194,23 @@ public class PolyfillValidatorFragment {
 			return false;
 		}
 
+		return true;
+	}
+
+	/**
+	 * Constraint 155 (static polyfill layout), no. 4
+	 */
+	private boolean holdsSameJavascriptVariant(PolyfillValidationState state) {
+		final TModule fillerModule = state.polyType.getContainingModule();
+		final TModule filledModule = state.filledType.getContainingModule();
+		if (fillerModule != null && filledModule != null
+				&& fillerModule.isN4jsdModule() != filledModule.isN4jsdModule()) {
+			final String fileExt = fillerModule.isN4jsdModule() ? N4JSGlobals.N4JSD_FILE_EXTENSION
+					: N4JSGlobals.N4JS_FILE_EXTENSION;
+			final String msg = getMessageForCLF_POLYFILL_STATIC_DIFFERENT_VARIANT(state.name, "." + fileExt);
+			addIssue(state, msg, CLF_POLYFILL_STATIC_DIFFERENT_VARIANT);
+			return false;
+		}
 		return true;
 	}
 
