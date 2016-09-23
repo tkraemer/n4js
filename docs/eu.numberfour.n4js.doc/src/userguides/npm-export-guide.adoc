@@ -1,5 +1,5 @@
-:toc: left
-:toc-title: Jump to topic:
+:toc: right
+:toc-title: Jump to section:
 
 [discrete]
 .N4JS npm Export Guide

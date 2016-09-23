@@ -371,7 +371,7 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
   #toc.toc2 > ul { font-size: 0.9em; margin-bottom: 0; }
   #toc.toc2 ul ul { margin-left: 1em; padding-left: .3em; }
   #toc.toc2 ul.sectlevel0 ul.sectlevel1 { padding-left: 0; margin-top: 0.5em; margin-bottom: 0.5em; }
-  body.toc2.toc-right { padding-left: 1em; padding-right: 2em; }
+  body.toc2.toc-right { padding-left: 2em; padding-right: 2em; }
   body.toc2.toc-right #toc.toc2 { border-right-width: 0; border-left: 1px solid #dddddd; left: auto; right: 0; } }
 @media only screen and (min-width: 1530px) { body.toc2 { padding-left: 2em; padding-right: 2em; }
   #toc.toc2 { width: 13em; }
