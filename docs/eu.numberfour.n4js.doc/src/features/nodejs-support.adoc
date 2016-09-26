@@ -1,4 +1,5 @@
-[discrete]
+:notitle:
+
 .Node.js Support
 = Node.js Support
 

@@ -305,7 +305,7 @@ table.done, tr.done.alt, table.done tr:nth-of-type(even) {
 	padding-top: 0;
 	padding-bottom: 0;
 	border: none;
-	margin-bottom: 0em;
+	margin-bottom: -1px;
 }
 
 table.most, tr.most.alt, table.most tr:nth-of-type(even) {
@@ -313,7 +313,7 @@ table.most, tr.most.alt, table.most tr:nth-of-type(even) {
 	padding-top: 0;
 	padding-bottom: 0;
 	border: none;
-	margin-bottom: 0em;
+	margin-bottom: -1px;
 }
 
 table.tbc, tr.tbc.alt, table.tbc tr:nth-of-type(even) {
@@ -321,7 +321,7 @@ table.tbc, tr.tbc.alt, table.tbc tr:nth-of-type(even) {
 	padding-top: 0;
 	padding-bottom: 0;
 	border: none;
-	margin-bottom: 0em;
+	margin-bottom: -1px;
 }
 
 table.tbd, tr.tbd.alt, table.tbd tr:nth-of-type(even) {
@@ -329,7 +329,7 @@ table.tbd, tr.tbd.alt, table.tbd tr:nth-of-type(even) {
 	padding-top: 0;
 	padding-bottom: 0;
 	border: none;
-	margin-bottom: 0em;
+	margin-bottom: -1px;
 }
 
 table.done thead tr th, table.done tfoot tr th, table.done tfoot tr td, table.done.sect2, table.most thead tr th, table.most tfoot tr th, table.most tfoot tr td, table.most.sect2, table.tbc thead tr th, table.tbc tfoot tr th, table.tbc tfoot tr td, table.tbc.sect2, table.tbd thead tr th, table.tbd tfoot tr th, table.tbd tfoot tr td, table.tbd.sect2 {background: white; font-size: 1.9rem; color: #417dcb; }
@@ -461,7 +461,7 @@ div#faq li:before {
 #features-nav {
 	position: absolute;
 	right: 1rem;
-	top: 8rem;
+	top: 2rem;
 	margin-bottom: 20px;
 	position:absolute;z-index:1;padding-left:2rem;border-left:1px solid #d3d3d3
 }

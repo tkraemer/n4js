@@ -1,6 +1,6 @@
 :doctype: book
+:notitle:
 
-[discrete]
 .Dependency Injection in N4JS
 = Dependency Injection in N4JS
 

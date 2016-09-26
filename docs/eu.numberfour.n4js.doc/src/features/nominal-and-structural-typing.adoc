@@ -1,4 +1,5 @@
-[discrete]
+:notitle:
+
 .Nominal And Structural Typing
 = Nominal And Structural Typing
 

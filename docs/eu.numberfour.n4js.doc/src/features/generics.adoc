@@ -1,5 +1,6 @@
+:notitle:
+
 .Generics
-[discrete]
 = Generics
 
 Generics in N4JS are a language feature that allows for generic programming. They enable
