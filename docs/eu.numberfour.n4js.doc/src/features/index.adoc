@@ -20,7 +20,7 @@ There are no user-defined annotations supported at the moment (this is why we do
 |===
 3+h| [[statements]] Statements and expressions
 
-s| Feature s| Similar to h| Description
+s| Feature s| Similar to s| Description
 s| ECMAScript 5 | ES5 | ES5 expressions, statements and declarations are fully supported (except scoping in with-statement) including type constraints and inference.
 |===
 
