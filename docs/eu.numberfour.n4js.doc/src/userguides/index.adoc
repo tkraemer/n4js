@@ -1,6 +1,5 @@
-﻿:toc: right
+﻿:notitle:
 
-[discrete]
 .N4JS Documentation
 = N4JS Userguides
 
