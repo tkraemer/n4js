@@ -298,6 +298,51 @@ table tr th, table tr td { padding: 0.5625em 0.625em; font-size: inherit; color:
 table tr.even, table tr.alt, table tr:nth-of-type(even) { background: #f9f9f9; }
 table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td { display: table-cell; line-height: 1.4; }
 
+/* FEATURE TABLE */
+
+table.done, tr.done.alt, table.done tr:nth-of-type(even) {
+	background: #efe;
+	padding-top: 0;
+	padding-bottom: 0;
+	border: none;
+	margin-bottom: 0em;
+}
+
+table.most, tr.most.alt, table.most tr:nth-of-type(even) {
+	background: #ffd;
+	padding-top: 0;
+	padding-bottom: 0;
+	border: none;
+	margin-bottom: 0em;
+}
+
+table.tbc, tr.tbc.alt, table.tbc tr:nth-of-type(even) {
+	background: #fff6de;
+	padding-top: 0;
+	padding-bottom: 0;
+	border: none;
+	margin-bottom: 0em;
+}
+
+table.tbd, tr.tbd.alt, table.tbd tr:nth-of-type(even) {
+	background: #fee;
+	padding-top: 0;
+	padding-bottom: 0;
+	border: none;
+	margin-bottom: 0em;
+}
+
+table.done thead tr th, table.done tfoot tr th, table.done tfoot tr td, table.done.sect2, table.most thead tr th, table.most tfoot tr th, table.most tfoot tr td, table.most.sect2, table.tbc thead tr th, table.tbc tfoot tr th, table.tbc tfoot tr td, table.tbc.sect2, table.tbd thead tr th, table.tbd tfoot tr th, table.tbd tfoot tr td, table.tbd.sect2 {background: white; font-size: 1.9rem; color: #417dcb; }
+
+
+
+/* 
+green "done" = #efe
+yellow "most" = #ffd
+orange "tbc" = #fff6de
+red "tbd" = #fee
+ */
+
 
 
 body { tab-size: 4; max-width: 1050px; margin-right: auto; margin-left: auto; position: relative; margin-top: 0rem; margin-bottom: 0rem; padding-top: 0rem; /*  Fixes tables, breaks headers */}
