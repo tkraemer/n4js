@@ -40,7 +40,7 @@ asciidoctor -D generated-docs/"$(dirname "$current")" "$current" \
 -a !stylesheet \
 -a docinfodir="$(relpath "$2" ./src/_headers)"/$(dirname "$current")/ -a docinfo1=true -a doctype=book -a linkcss=true \
 -a source-highlighter=highlightjs -a highlightjsdir="$(relpath "$2" ./scripts)" -a highlightjs-theme=n4jshighlighter \
--a sectlinks=true -a icons=font -a experimental=true -a !last-update-label \
+-a sectlinks=true -a icons=font -a experimental=true -a !last-update-label -a index=true \
 -a idseparator=-
 exit 0
 fi

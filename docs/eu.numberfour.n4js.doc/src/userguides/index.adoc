@@ -5,7 +5,7 @@
 
 .All the resources you need to begin type safe development with the N4JS IDE
 
-[discrete]
+
 == Index
 
 **[[ide-setup]]IDE Setup & HelloWorld!**
