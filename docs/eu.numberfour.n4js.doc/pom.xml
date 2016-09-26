@@ -127,8 +127,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <stylesheet>foundation.css</stylesheet>
                                 <highlightjsdir>../scripts</highlightjsdir>
                                 <highlightjs-theme>n4jshighlighter</highlightjs-theme>
-                                <eclipse>true</eclipse>
-                                <website>false</website>
                                 <experimental>true</experimental>
                                 <commandkey>&#8984;</commandkey>
                                 <icons>font</icons>
@@ -138,6 +136,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <doctype>book</doctype>
                                 <linkcss>true</linkcss>
                                 <docinfodir>${basedir}/src/_eclipseheader</docinfodir>
+                                <imagesdir></imagesdir>
                                 <docinfo1>true</docinfo1>
                             </attributes>
                         </configuration>

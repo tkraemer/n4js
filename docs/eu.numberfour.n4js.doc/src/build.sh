@@ -54,9 +54,3 @@ find . -name '*.adoc' ! -name 'epub.adoc' -exec "${ME}" --rundoc {}  \;
 # TODO: clean up copy resources loop (lines 3-11) so this is not necessary
 rm -r generated-docs/generated-docs/
 rm -r src/
-
-# Uncomment For Minification
-# cat styles/n4js-adoc.css | sed -e "s|/\*\(\\\\\)\?\*/|/~\1~/|g" -e "s|/\*[^*]*\*\+\([^/][^*]*\*\+\)*/||g" \
-# -e "s|\([^:/]\)//.*$|\1|" -e "s|^//.*$||" | tr '\n' ' ' | \
-# sed -e "s|/\*[^*]*\*\+\([^/][^*]*\*\+\)*/||g" -e "s|/\~\(\\\\\)\?\~/|/*\1*/|g" \
-# -e "s|\s\+| |g" -e "s| \([{;:,]\)|\1|g" -e "s|\([{;:,]\) |\1|g" > generated-docs/styles/n4js-adoc.css
