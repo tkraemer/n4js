@@ -42,6 +42,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.emf.common.EMFPlugin;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
@@ -343,10 +344,19 @@ public class WorkingSetManagerBrokerImpl implements WorkingSetManagerBroker {
 
 	private void asyncRefreshCommonViewer(final ProjectExplorer explorer, final boolean resetInput) {
 		final CommonViewer viewer = explorer.getCommonViewer();
-		if (resetInput) {
-			getDisplay().asyncExec(() -> viewer.setInput(viewer.getInput()));
-		} else {
-			getDisplay().asyncExec(() -> viewer.refresh(true));
+		final Display d = getDisplay();
+		if (!d.isDisposed()) {
+			if (resetInput) {
+				d.asyncExec(() -> {
+					if (!viewer.getTree().isDisposed())
+						viewer.setInput(viewer.getInput());
+				});
+			} else {
+				d.asyncExec(() -> {
+					if (!viewer.getTree().isDisposed())
+						viewer.refresh(true);
+				});
+			}
 		}
 	}
 

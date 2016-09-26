@@ -15,12 +15,14 @@ import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.Block
 import eu.numberfour.n4js.n4JS.CatchBlock
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
+import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ForStatement
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4GetterDeclaration
+import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.N4SetterDeclaration
 import eu.numberfour.n4js.n4JS.NamedImportSpecifier
 import eu.numberfour.n4js.n4JS.PropertyGetterDeclaration
@@ -34,6 +36,7 @@ import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.ArrayList
 import java.util.List
@@ -141,7 +144,7 @@ public class ASTProcessor extends AbstractProcessor {
 	 * @param node  the root of the subtree to process; must be an AST node.
 	 */
 	def package void processSubtree(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
-		assertTrueIfRigid("argument 'node' must be an AST node", node.isASTNode);
+		assertTrueIfRigid(cache, "argument 'node' must be an AST node", node.isASTNode);
 
 		log(indentLevel, "processing: " + node.objectInfo);
 
@@ -219,16 +222,18 @@ public class ASTProcessor extends AbstractProcessor {
 	 * @return <code>true</code> iff the forward processing is legal, <code>false</code> otherwise.
 	 */
 	def package boolean processSubtree_forwardReference(RuleEnvironment G, TypableElement node, ASTMetaInfoCache cache) {
-		assertTrueIfRigid("argument 'node' must be an AST node", node.isASTNode);
-		val subtree = node.isIdentifiableSubtree
-		if (!subtree) {
+		assertTrueIfRigid(cache, "argument 'node' must be an AST node", node.isASTNode);
+
+		// is node a valid target for a forward reference (i.e. an identifiable subtree)?
+		val valid = node.isIdentifiableSubtree || node.isExceptionCaseOfForwardReferencableSubtree;
+		if (!valid) {
 			val resource = node.eResource as XtextResource
 			if (resource !== null) {
-				assertTrueIfRigid(
+				assertTrueIfRigid(cache,
 					"forward reference only allowed to identifiable subtrees; but was: " + node + " in\n" +
-						resource.parseResult.rootNode.text, subtree)
+						resource.parseResult.rootNode.text, valid)
 			} else {
-				assertTrueIfRigid("forward reference only allowed to identifiable subtrees; but was: " + node, subtree)
+				assertTrueIfRigid(cache, "forward reference only allowed to identifiable subtrees; but was: " + node, valid);
 			}
 		}
 
@@ -290,7 +295,7 @@ public class ASTProcessor extends AbstractProcessor {
 	 */
 	def private void processNode_preChildren(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
 
-		typeDeferredProcessor.handleDeferredTypeRefs_preChildren(G, node);
+		typeDeferredProcessor.handleDeferredTypeRefs_preChildren(G, node, cache);
 	}
 
 	/**
@@ -298,7 +303,7 @@ public class ASTProcessor extends AbstractProcessor {
 	 */
 	def private void processNode_postChildren(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
 
-		typeDeferredProcessor.handleDeferredTypeRefs_postChildren(G, node);
+		typeDeferredProcessor.handleDeferredTypeRefs_postChildren(G, node, cache);
 
 		typeProcessor.typeNode(G, node, cache, indentLevel);
 
@@ -343,6 +348,20 @@ public class ASTProcessor extends AbstractProcessor {
 
 	// ---------------------------------------------------------------------------------------------------------------
 
+
+	/**
+	 * Normally, forward references are allowed only to {@link N4JSLanguageUtils#isIdentifiableSubtree(EObject)
+	 * identifiable subtrees}. However, there are exception cases that are also allowed and this method returns
+	 * <code>true</code> for those cases.
+	 */
+	def private static boolean isExceptionCaseOfForwardReferencableSubtree(EObject astNode) {
+		isExpressionInForOf(astNode)
+	}
+	def private static boolean isExpressionInForOf(EObject astNode) {
+		astNode instanceof Expression && astNode.eContainer instanceof ForStatement
+			&& (astNode.eContainer as ForStatement).isForOf
+			&& astNode.eContainingFeature===N4JSPackage.eINSTANCE.iterationStatement_Expression;
+	}
 
 	/**
 	 * Returns true if we have a semi-cyclic reference to a variable declaration in a for in/of loop.

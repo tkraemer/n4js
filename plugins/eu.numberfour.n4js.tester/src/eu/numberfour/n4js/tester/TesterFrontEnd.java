@@ -26,11 +26,14 @@ import eu.numberfour.n4js.tester.domain.TestTree;
 import eu.numberfour.n4js.tester.extension.ITesterDescriptor;
 import eu.numberfour.n4js.tester.extension.TesterRegistry;
 import eu.numberfour.n4js.tester.internal.DefaultTestTreeTransformer;
+import eu.numberfour.n4js.tester.internal.TesterActivator;
 
 /**
  */
 @Singleton
 public class TesterFrontEnd {
+
+	private static final int PORT_PLACEHOLDER_MAGIC_NUMBER = 919191919;
 
 	@Inject
 	private RunnerFrontEnd runnerFrontEnd;
@@ -130,6 +133,12 @@ public class TesterFrontEnd {
 
 		// B.2) pass test tree as execution data
 		try {
+			// Read out port of running IDE-server and pass it to end-point-computation in tree-transformer
+			TesterActivator testerActivator = TesterActivator.getInstance();
+			int port = testerActivator != null ? testerActivator.getServerPort() : PORT_PLACEHOLDER_MAGIC_NUMBER;
+			config.setResultReportingPort(port);
+			testTreeTransformer.setHttpServerPort(Integer.toString(port));
+
 			final String testTreeAsJSON = objectMapper.writeValueAsString(testTreeTransformer.apply(testTree));
 			config.setExecutionData(TestConfiguration.EXEC_DATA_KEY__TEST_TREE, testTreeAsJSON);
 		} catch (IOException e) {
@@ -162,11 +171,38 @@ public class TesterFrontEnd {
 		final TestTree testTree = config.getTestTree();
 
 		// prepare HTTP server for receiving test results
-		testerFacade.prepareTestSession(testTree);
+		int port = testerFacade.prepareTestSession(testTree);
+		updateTestTreeDescription(config, port);
 
 		// actually launch the test
 		ITester tester = testerRegistry.getTester(config);
 		return tester.test(config, executor, runnerFrontEnd);
+	}
+
+	/**
+	 * Update the configuration to the real port values. If the configuration was created before the server was started,
+	 * then the {@link #PORT_PLACEHOLDER_MAGIC_NUMBER} is inserted as a placeholder.
+	 *
+	 * Exchanges this placeholder with the passed in port value under the
+	 * {@link TestConfiguration#EXEC_DATA_KEY__TEST_TREE} key.
+	 *
+	 * Sets the {@link TestConfiguration#setResultReportingPort(int)} to port.
+	 *
+	 * @param config
+	 *            to be updated
+	 * @param port
+	 *            effective port
+	 */
+	private static void updateTestTreeDescription(TestConfiguration config, int port) {
+		if (config.getResultReportingPort() == PORT_PLACEHOLDER_MAGIC_NUMBER) {
+			// probably running in a non-UI variant, update the magic number with real port:
+			Map<String, Object> execData = config.getExecutionData();
+			String testTreeJsonEncoded = (String) execData.get(TestConfiguration.EXEC_DATA_KEY__TEST_TREE);
+			String updatedTestTreeJsonEncoded = testTreeJsonEncoded
+					.replaceFirst(Integer.toString(PORT_PLACEHOLDER_MAGIC_NUMBER), Integer.toString(port));
+			execData.put(TestConfiguration.EXEC_DATA_KEY__TEST_TREE, updatedTestTreeJsonEncoded);
+		}
+		config.setResultReportingPort(port);
 	}
 
 	/**
