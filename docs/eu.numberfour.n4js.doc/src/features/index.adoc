@@ -1,4 +1,4 @@
-[discrete]
+
 .N4JS Language and IDE Features
 = N4JS Language and IDE Features
 

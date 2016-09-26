@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>N4JS Tutorial</title>
+<title>Using N4JS to Implement a Node.js Application</title>
 <link rel="stylesheet" href="../styles/foundation.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
@@ -13,11 +13,10 @@
 <div id="header">
 </div>
 <div id="content">
-<h1 id="n4js-tutorial" class="sect0"><a class="anchor" href="#n4js-tutorial"></a>N4JS Tutorial</h1>
-<div class="openblock partintro">
-<div class="content">
+<div id="preamble">
+<div class="sectionbody">
+<h1 id="n4js-tutorial" class="discrete">N4JS Tutorial</h1>
 <div class="paragraph">
-<div class="title">N4JS Tutorial</div>
 <p><strong>The flexibility of JavaScript with the type safety of Java</strong></p>
 </div>
 <div class="paragraph">
@@ -30,7 +29,7 @@ flexible and type-safe.</p>
 <p><strong>Experience with JavaScript or Java?</strong></p>
 </div>
 <div class="paragraph">
-<p>Developers with Java who are experienced with JavaScript can easily apply their knowledge in N4JS. As N4JS is a
+<p>Developers who are experienced with JavaScript can easily apply their knowledge in N4JS. As N4JS is a
 typed superset of ECMAScript, it is possible to use plain ECMAScript in N4JS. Most of the important
 features from ECMAScript 2015 are supported, such as <strong>modules</strong> with import and export,
 <strong>classes</strong>, <strong>iterables</strong> and <strong>destructuring</strong> of arrays
@@ -64,7 +63,7 @@ the most important views of the IDE:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/ide.png" alt="N4JS IDE">
+<img src="images/images/ide.png" alt="N4JS IDE">
 </div>
 <div class="title">Figure 1. N4JS IDE</div>
 </div>
@@ -83,7 +82,7 @@ have the application separated, each tier can be reused for different purposes.<
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/architecture.svg" alt="Architecture">
+<img src="images/images/architecture.svg" alt="Architecture">
 </div>
 </div>
 <div class="paragraph">
@@ -108,7 +107,7 @@ keyboard shortcuts <span class="keyseq"><kbd>⌘</kbd>+<kbd>n</kbd></span> for M
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/newprojectwizard.png" alt="New Project Wizard" width="700">
+<img src="images/images/newprojectwizard.png" alt="New Project Wizard" width="700">
 </div>
 </div>
 <div class="paragraph">
@@ -135,7 +134,7 @@ files. The IDE automatically transpiles n4js files on save.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/domainmodel.svg" alt="domainmodel">
+<img src="images/images/domainmodel.svg" alt="domainmodel">
 </div>
 </div>
 <div class="paragraph">
@@ -152,7 +151,7 @@ do this is to utilize the New N4JS Class wizard, accessed via <span class="menus
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/newclasswizard.png" alt="newclasswizard" width="700">
+<img src="images/images/newclasswizard.png" alt="newclasswizard" width="700">
 </div>
 </div>
 <div class="paragraph">
@@ -325,7 +324,7 @@ output code. As a result, they offer less reflection capabilities.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/storage.svg" alt="storage">
+<img src="images/images/storage.svg" alt="storage">
 </div>
 </div>
 <div class="paragraph">
@@ -534,7 +533,7 @@ following screenshot:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/firstlaunch.png" alt="firstlaunch">
+<img src="images/images/firstlaunch.png" alt="firstlaunch">
 </div>
 </div>
 <div class="paragraph">
@@ -543,7 +542,7 @@ view, for example</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/firstlaunchconsole.png" alt="firstlaunchconsole">
+<img src="images/images/firstlaunchconsole.png" alt="firstlaunchconsole">
 </div>
 </div>
 </div>
@@ -681,7 +680,7 @@ tier to support asynchronous functions.</p>
 <div class="sect2">
 <h3 id="make-the-storage-asynchronous"><a class="anchor" href="#make-the-storage-asynchronous"></a>Make the Storage Asynchronous</h3>
 <div class="paragraph">
-<p>If we would like to use a real database, all calls to the data base will be asynchronous. Asynchronous
+<p>If we would like to use a real database, all calls to the database will be asynchronous. Asynchronous
 programming is a typical task in ECMAScript and there are several solutions to do this.</p>
 </div>
 <div class="paragraph">
@@ -727,7 +726,7 @@ warning in method <code>isEmpty</code> similar to the following:</td>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/awaitwarning.png" alt="awaitwarning">
+<img src="images/images/awaitwarning.png" alt="awaitwarning">
 </div>
 </div>
 <div class="paragraph">
@@ -735,7 +734,7 @@ warning in method <code>isEmpty</code> similar to the following:</td>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/asyncerrors.png" alt="asyncerrors">
+<img src="images/images/asyncerrors.png" alt="asyncerrors">
 </div>
 </div>
 <div class="paragraph">
@@ -797,7 +796,7 @@ appropriate tests:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/controllertest.svg" alt="controllertest">
+<img src="images/images/controllertest.svg" alt="controllertest">
 </div>
 </div>
 </div>
@@ -809,7 +808,7 @@ project wizard</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/createtestproject.png" alt="createtestproject">
+<img src="images/images/createtestproject.png" alt="createtestproject">
 </div>
 </div>
 <div class="paragraph">
@@ -891,7 +890,7 @@ menu:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/testinnodejs.png" alt="testinnodejs">
+<img src="images/images/testinnodejs.png" alt="testinnodejs">
 </div>
 </div>
 <div class="paragraph">
@@ -899,7 +898,7 @@ menu:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/firsttestresults.png" alt="firsttestresults">
+<img src="images/images/firsttestresults.png" alt="firsttestresults">
 </div>
 </div>
 </div>
@@ -932,7 +931,7 @@ We have to open the manifest editor (of the tasks project) and add the following
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/quickfixnpminstall.png" alt="quickfixnpminstall">
+<img src="images/images/quickfixnpminstall.png" alt="quickfixnpminstall">
 </div>
 </div>
 <div class="paragraph">
@@ -1193,7 +1192,7 @@ it needs to be injected itself. The IDE warns us in the TaskManagerTest class:</
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/injectionwarning.png" alt="injectionwarning">
+<img src="images/images/injectionwarning.png" alt="injectionwarning">
 </div>
 </div>
 <div class="paragraph">
@@ -1444,7 +1443,7 @@ are not covered by the N4JS export wizard.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/npmexport.png" alt="npmexport">
+<img src="images/images/npmexport.png" alt="npmexport">
 </div>
 </div>
 </div>
@@ -1503,7 +1502,7 @@ HTTP server listening on http://localhost:4000/</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-20 13:41:15 +02:00
+Last updated 2016-09-26 10:08:04 +02:00
 </div>
 </div>
 <link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">

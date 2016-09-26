@@ -135,76 +135,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                                 <sectanchors>true</sectanchors>
                                 <idprefix/>
                                 <idseparator>-</idseparator>
+                                <doctype>book</doctype>
                                 <linkcss>true</linkcss>
                                 <docinfodir>${basedir}/src/_eclipseheader</docinfodir>
                                 <docinfo1>true</docinfo1>
                             </attributes>
                         </configuration>
                     </execution>
-
-                    <!-- Convert ADOC to HTML (website) -->
-                    <execution>
-                        <id>asciidoc-to-website-html</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                            <sourceDirectory>src/</sourceDirectory>
-                            <sourceHighlighter>highlightjs</sourceHighlighter>
-                            <preserveDirectories>true</preserveDirectories>
-                            <outputDirectory>${project.build.directory}/${website.html}</outputDirectory>
-                            <backend>html5</backend>
-                            <showtitle>false</showtitle>
-                            <attributes>
-                                <!-- Individual attributes per conversion execution -->
-                                <icons>font</icons>
-                                <linkcss>true</linkcss>
-                                <stylesdir>${basedir}/src/styles</stylesdir>
-                                <stylesheet>n4js-adoc.css</stylesheet>
-                                <highlightjsdir>/scripts</highlightjsdir>
-                                <highlightjs-theme>n4jshighlighter</highlightjs-theme>
-                                <doctype>book</doctype>
-                                <experimental>true</experimental>
-                                <commandkey>&#8984;</commandkey>
-                                <eclipse>false</eclipse>
-                                <website>true</website>
-                                <sectanchors>true</sectanchors>
-                                <idprefix/>
-                                <idseparator>-</idseparator>
-                                <docinfodir>${basedir}/src/_headers</docinfodir>
-                                <docinfo1>true</docinfo1>
-                            </attributes>
-                        </configuration>
-                    </execution>
-                   <!--  Begin EPUB Generation of User Guides -->
-                    <execution>
-                        <id>asciidoc-to-epub</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                            <skip>true</skip>  <!-- Execution skipped! -->
-                            <sourceDirectory>src/_epub</sourceDirectory>
-                            <outputDirectory>${epub.target.dir}</outputDirectory>
-                            <preserveDirectories>true</preserveDirectories>
-                            <docsdir>${docs.src.dir}/userguides/</docsdir>
-                            <backend>epub3</backend>
-                            <attributes>
-                                <sourceHighlighter>highlightjs</sourceHighlighter>
-                                <highlightjsdir>/scripts</highlightjsdir>
-                                <highlightjs-theme>n4jshighlighter</highlightjs-theme>
-                                <doctype>book</doctype>
-                                <icons>font</icons>
-                                <sectanchors>true</sectanchors>
-                                <idprefix/>
-                                <idseparator>-</idseparator>
-                                <docinfo1>false</docinfo1>
-                            </attributes>
-                        </configuration>
-                    </execution>
-
 
                     <!-- PDF Generation of User Guides -->
                     <execution>
@@ -267,7 +204,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         <configuration>
                             <target>
                                 <echo>Running directory listing dir=${eclipseHelpDir}</echo>
-                                <fileset id="eclipsehelp.articles.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="index.html,userguides/*.html,_headers/*.html,_eclipseheader/*.html"/>
+                                <fileset id="eclipsehelp.articles.pages" dir="${eclipseHelpDir}" includes="**/*.html" excludes="index.html,userguides/*.html,_headers/**/*.html"/>
                                 <pathconvert pathsep="${line.separator}" property="prop.dist.contents" refid="eclipsehelp.articles.pages">
                                     <map from="${project.build.directory}" to="${dist}" />
                                 </pathconvert>
