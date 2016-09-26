@@ -1371,7 +1371,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		if (receiverTypeRefRaw === null || receiverTypeRefRaw instanceof UnknownTypeRef) {
 			return; // error otherwise or corrupt AST
 		}
-		val receiverTypeRef = TypeUtils.resolveTypeVariable(ts.upperBound(G, receiverTypeRefRaw).value);
+		val receiverTypeRef = ts.resolveType(G, receiverTypeRefRaw);
 		val isComputedName = (indexedAccess.index instanceof StringLiteral)
 		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(indexedAccess.index);
 		val accessedStaticType = if(receiverTypeRef instanceof TypeTypeRef) tsh.getStaticType(G, receiverTypeRef);

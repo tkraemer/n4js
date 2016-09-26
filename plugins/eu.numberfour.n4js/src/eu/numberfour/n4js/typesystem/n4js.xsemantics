@@ -230,7 +230,7 @@ judgments {
 	lowerBound |~ TypeArgument typeArgument \/ output TypeRef
 
 	/*
-	 * Substitutes type variables (that is, replaces type parameters with actual values taken from
+	 * Substitutes type variables (that is, replaces type variables with actual type arguments taken from
 	 * the rule environment).
 	 * <p>
 	 * The given typeArg will never be changed, instead a copy will be created to reflect the substitution.
@@ -609,8 +609,7 @@ from {
 	or
 	{
 		G |- expr.target : var TypeRef targetTypeRef
-		G |~ targetTypeRef /\ targetTypeRef // take upper bound, e.g. to resolve this
-		targetTypeRef = TypeUtils.resolveTypeVariable(targetTypeRef);
+		targetTypeRef = typeSystemHelper.resolveType(G, targetTypeRef);
 
 		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(expr.index);
 		val elementType = targetTypeRef.declaredType?.elementType
