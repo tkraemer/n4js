@@ -69,7 +69,10 @@ public final class ASTMetaInfoCacheHelper {
 	 */
 	public ASTMetaInfoCache getOrCreate(N4JSResource res) {
 		return resourceScopeCacheHelper.get(ASTMetaInfoCache.class, res, () -> {
-			final ASTMetaInfoCache newCache = new ASTMetaInfoCache(res);
+			// at the time the cache is created (i.e. quite early), we can assume that all errors are syntax errors
+			// created by the parser or the ASTStructureValidator
+			final boolean hasBrokenAST = !res.getErrors().isEmpty();
+			final ASTMetaInfoCache newCache = new ASTMetaInfoCache(res, hasBrokenAST);
 
 			// DEBUG: use the following code to track cache creation/deletion
 			if (DEBUG_TRACK_CACHE_CREATION_DELETION) {

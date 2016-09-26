@@ -92,7 +92,7 @@ public class TypeProcessor extends AbstractProcessor {
 					polyProcessor.inferType(G, node as Expression, cache);
 					// in this case, the polyComputer will store the type in the cache;
 					// also, the poly computer is responsible for replacing all DeferredTypeRefs
-					assertTrueIfRigid("poly computer did not replace DeferredTypeRef", [
+					assertTrueIfRigid(cache, "poly computer did not replace DeferredTypeRef", [
 						val typeModelElem = node.definedTypeModelElement;
 						return typeModelElem === null || typeModelElem.eAllContents.filter(DeferredTypeRef).empty
 					]);
@@ -243,7 +243,7 @@ public class TypeProcessor extends AbstractProcessor {
 
 	/** @see TypeProcessor#getType(RuleEnvironment,RuleApplicationTrace,TypableElement) */
 	def private Result<TypeRef> getTypeOfForwardReference(RuleEnvironment G, TypableElement node, ASTMetaInfoCache cache) {
-		assertTrueIfRigid("argument 'node' must be an AST node", node.isASTNode);
+		assertTrueIfRigid(cache, "argument 'node' must be an AST node", node.isASTNode);
 
 		// TODO improve handling of destructuring patterns in ASTProcessor/TypeProcessor
 		// (this is a temporary hack to avoid many illegal forward references within destructuring patterns)

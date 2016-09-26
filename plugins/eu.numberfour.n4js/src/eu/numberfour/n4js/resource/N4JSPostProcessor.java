@@ -56,13 +56,18 @@ public class N4JSPostProcessor implements PostProcessor {
 
 	@Override
 	public void performPostProcessing(PostProcessingAwareResource resource, CancelIndicator cancelIndicator) {
+		final boolean hasBrokenAST = !resource.getErrors().isEmpty();
 		try {
 			doPerformPostProcessing(resource, cancelIndicator);
 		} catch (Throwable th) {
-			// make sure this error is being reported, even if exception will be suppressed up by calling code!
-			throw UtilN4.reportError(
-					// use Error instead of RuntimeException to ensure smoke tests will fail
-					new RuntimeException("exception while post-processing resource " + resource.getURI(), th));
+			if (hasBrokenAST) {
+				// swallow exception, AST is broken due to parse error anyway
+			} else {
+				// make sure this error is being reported, even if exception will be suppressed by calling code!
+				throw UtilN4.reportError(
+						// use Error instead of RuntimeException to ensure smoke tests will fail
+						new RuntimeException("exception while post-processing resource " + resource.getURI(), th));
+			}
 		}
 	}
 
@@ -72,14 +77,7 @@ public class N4JSPostProcessor implements PostProcessor {
 		astProcessor.processAST(resCasted, cancelIndicator);
 		// step 2: expose internal types visible from outside
 		// (i.e. if they are referenced from a type that is visible form the outside)
-		try {
-			exposeReferencedInternalTypes(resCasted);
-		} catch (Throwable ex) {
-			if (resource.getErrors().isEmpty()) {
-				throw ex;
-			}
-			// swallow exception, AST is broken due to parse error anyway
-		}
+		exposeReferencedInternalTypes(resCasted);
 		// step 3: resolve remaining proxies in TModule
 		// (the TModule was created programmatically, so it usually does not contain proxies; however, in case of
 		// explicitly declared types, the types builder copies type references from the AST to the corresponding
