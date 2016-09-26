@@ -1,4 +1,4 @@
-
+[discrete]
 .N4JS Language and IDE Features
 = N4JS Language and IDE Features
 
@@ -18,7 +18,7 @@ There are no user-defined annotations supported at the moment (this is why we do
 
 [role=done,cols="^2,^1,<4"]
 |===
-3+h| [[statements]] Statements and expressions
+3+h| [[_statements-and-expressions]] Statements and expressions
 
 h| Feature h| Similar to h| Description
 s| ECMAScript 5 | ES5 | ES5 expressions, statements and declarations are fully supported (except scoping in with-statement) including type constraints and inference.
@@ -31,7 +31,7 @@ s| Import, Export | ES2015 | import statement fully supported, exporting declara
 
 [role=done,cols="^2,^1,<4"]
 |===
-3+h| [[scoping]] Scoping and access restrictions
+3+h| [[_scoping-and-access-restrictions]] Scoping and access restrictions
 
 s| for..of loops | ES2015 | Fully supported including destructuring.
 s| Function scoping | ES5 | ES5-like function scoping with ``var``
@@ -48,7 +48,7 @@ s|String templates | ES2015 | ES2015-like string templates with validation (of e
 
 [role=done,cols="^2,^1,<4"]
 |===
-3+h| [[functions]] Functions
+3+h| [[_functions]] Functions
 
 s| Function objects | ES | Function (and method) expressions and declarations are modeled as function objects (with function type)
 s| Function subtyping | Java+ES | Override compatibility (similar to Java) with notion of ECMAScript semantics (superfluous or variadic parameters)
@@ -73,7 +73,7 @@ s| Generators | ES2015 | Syntax supported but not supported by language (type ch
 
 [role=done,cols="^2,^1,<4"]
 |===
-3+h| [[declared-types]]  Declared types
+3+h| [[_declared-types]]  Declared types
 
 s| Classes | ES2015/Java  | Class declarations as in ES2015 (or Java) with single inheritance but implementation of multiple interfaces as in Java)
 s| Interfaces | Java  | Interface declarations with default methods (as in Java 8) and data fields (treated as default implementation, can be implemented with field accessors). ``instanceof`` operator can be used with interfaces as well.
@@ -96,7 +96,7 @@ s| Class modifiers | Java  | As in Java, classes can be declared abstract or fin
 
 [role=tbc,cols="^2,^1,<4"]
 |===
-3+h| [[types]]  Types
+3+h| [[_types]]  Types
 
 s| Type annotation | ES4 | Type annotations using colon syntax similar to ECMAScript 4 proposal or TS, some special types use different syntax (will probably be adjusted to be compatible with TS)
 |===
@@ -127,7 +127,7 @@ s| Type cast | *&tilde; TS* | Expressions can be explicitly casted to a type via
 
 [role=done,cols="^2,^1,<4"]
 |===
-3+h| [[Generics]] Generics
+3+h| [[_generics]] Generics
 
 s| Generic types | Java  | Generic class and interface declarations, parameterized type references (raw type usage not allowed)
 s| Generic functions and methods | Java  | Generic functions (and methods)
@@ -138,7 +138,7 @@ s| Type variable inference | Java  | Type variables are inferred if not explicit
 
 [role=done,cols="^2,^1,<4"]
 |===
-3+h| [[special-types]]  Type Constructors and Special Types
+3+h| [[_type-constructors-and-special-types]]  Type Constructors and Special Types
 
 s| Union type | *&tilde; TS* | An union type defines that a variable (of that type) is subtype of (at least) one type defined in the union. Without further type checks, only members available in all types of the union are available. In case of methods, formal parameter types are merged by means of intersection types (and return types by means of union types)
 |===
@@ -159,7 +159,7 @@ s| Static polyfills |  | In larger projects, often classes are automatically gen
 
 [role=done,cols="^2,^1,<4"]
 |===
-3+h| [[async]]  Asynchronous Programming
+3+h| [[_asynchronous-programming]]  Asynchronous Programming
 
 s| Promise | ES2015 | Object type Promise as defined in ECMAScript 2015 defined as ES2015 API type
 s| Async/await | ES.next | async and await keywords for implicit promises, syntax and semantics closely follow https://tc39.github.io/ecmascript-asyncawait/[ES proposal]; transpiled to generator functions; validation checks correct usage of async await, async functions will implicitly return Promises. async can be used with function or method declarations, function and arrow expressions
@@ -168,7 +168,7 @@ s| Promisifiable |  | Via annotations ``@Promisifiable`` ES5-conform functions f
 
 [role=done,cols="^2,^1,<4"]
 |===
-3+h| [[modules]]  Components and Modules
+3+h| [[_components-and-modules]]  Components and Modules
 
 s| Components |  | N4JS and the N4JS IDE use the notion of components (or projects). An N4JS component is described with a manifest, in which the component and its dependencies are defined. N4JS introduces different component types: Runtime libraries and runtime environments define capabilities of specific JavaScript engines and execution environments (such as node.js vs. browser); test components have extended access to the tested components
 s| Modules | ES2015 | N4JS defines modules similar to ES2015, these modules are transpiled to V8-compatible JavaScript
@@ -179,7 +179,7 @@ s| Dependency Injection | Java  | Dependency injection is supported using annota
 
 [role=done,cols="^2,^1,<4"]
 |===
-3+h| [[api]] API
+3+h| [[_api]] API
 
 s| ES5 object types | ES | All ECMAScript 5 object types are available in N4JS, type annotations are built-in
 |===
@@ -193,7 +193,7 @@ s| Reflection |  | Besides ECMAScript reflection mechanisms, N4JS provides addit
 
 [role=done,cols="^2,^1,<4"]
 |===
-3+h| [[testing]] Testing
+3+h| [[_testing]] Testing
 
 s| JUnit-like annotations | Java  | Tests can be annotated similar to http://junit.org/[JUnit], i.e. tests methods with ``@Test``, setup code with`` @Before``/``@BeforeAll`` etc.
 s| Built-in Test Framework |  | An xUnit-like test framework "mangelhaft" using test annotations is provided with the IDE
@@ -203,7 +203,7 @@ s| Test Execution |  | Tests can be started from the IDE using node.js. It is po
 
 [role=done,cols="^2,^1,<4"]
 |===
-3+h| [[node-js]] node.js Support
+3+h| [[_node-js-support]] node.js Support
 
 s| Dynamic Import |  | In order to use projects without type annotations, the dynamic module import can be used to make the module dynamic (so that arbitrary properties can be accessed)
 |===
@@ -219,7 +219,7 @@ s| npm Export |  | Components an be exported to the file system, package.json is
 
 [role=done,cols="^2,^1,<4"]
 |===
-3+h| [[n4js-ide]] N4JS IDE Features
+3+h| [[_n4js-ide-features]] N4JS IDE Features
 
 s| Syntax highlighting |  | Syntax highlighting with special highlighting of type annotations, can be used for editing n4js, n4jsd or plain js files
 s| Immediate validation |  | Code is validated as you type
@@ -256,7 +256,7 @@ s| Eclipse-powered |  | Since the IDE is based on Eclipse, additional features s
 
 [role=most,cols="^2,^1,<4"]
 |===
-3+h| [[headless-compiler]]  N4JS Headless Compiler
+3+h| [[_n4js-headless-compiler]]  N4JS Headless Compiler
 
 s| n4jsc |  | The headless compiler is workspace aware, i.e. it can compile all projects with a single command.
 This makes it very easy to set up CI jobs. At the moment, the headless compiler is made available as a jar-file.
