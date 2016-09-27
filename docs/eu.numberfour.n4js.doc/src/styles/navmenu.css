@@ -47,8 +47,10 @@
 }
 
 #menubar > ul > li:last-of-type::after {
-  content: "";
-  padding-right: -2rem;
+  content: none;
+}
+#menubar > ul > li:last-of-type {
+  padding-right: -1rem;
 }
 
 #menubar > ul > li > a {
@@ -67,10 +69,6 @@
     padding-top: 0.1em;
     padding-left: 0.7rem;
     padding-right: 0.7rem;
-}
-
-#menubar > ul > li > a:last-of-type {
-  padding-right: -1rem;
 }
 
 #menubar > ul > li > a:hover {color: #F7D425; }
