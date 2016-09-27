@@ -17,7 +17,7 @@
 #logo {
   max-height: 40px;
   margin-left: 40px;
-  margin-top: 1rem;
+  margin-top: 17px;
 }
 
 #menubar ul { margin: 0; padding: 0; white-space:nowrap; padding-left: 10px; padding-right: 10px;}
@@ -44,9 +44,7 @@
 
 #menubar > ul > li > a {
     color: #FFFFFF;
-    font-family: ITC Officina Sans W01, sans-serif, Verdana, Arial, Helvetica, sans-serif;
     font-size:  1.3rem;
-    font-weight: 700;
     line-height: 19px; 
     /* padding-top: 2rem; */
 -webkit-transition: color .15s;
