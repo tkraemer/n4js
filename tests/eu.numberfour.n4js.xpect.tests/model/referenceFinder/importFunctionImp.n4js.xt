@@ -1,0 +1,12 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+
+
+
+
+// start at line after last line in 'importFunctionExp'
+
+import {foo} from "referenceFinder/importFunctionExp";
+
+// IDE-1662, IDE-1699 XPECT references at foo --> foo - 3, foo - 7, foo - 9, foo - 12
+foo();

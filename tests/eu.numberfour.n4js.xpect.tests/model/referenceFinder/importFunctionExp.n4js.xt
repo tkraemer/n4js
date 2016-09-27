@@ -1,0 +1,7 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+export function foo() {}
+
+
+// IDE-1662, IDE-1699 XPECT references at foo --> foo - 3, foo - 7, foo - 9, foo - 12
+foo();

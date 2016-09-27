@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+class T {
+// XPECT references at a -->  a - 5, a - 14, a - 16
+	a : T;
+	i : int;
+// XPECT references at foo -->  foo - 7, foo - 23
+	foo(){};
+}
+
+
+var t : ~T;
+// XPECT references at a -->  a - 5, a - 14, a - 16
+t.a;
+
+t.a;
+
+// XPECT references at T -->  T - 3, T - 5, T - 19
+T;
+
+
+// XPECT references at foo -->  foo - 7, foo - 23
+t.foo();

@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+
+// XPECT references at f --> f - 5, f - 8, f - 13
+function f () : void {}
+
+// XPECT references at f --> f - 5, f - 8, f - 13
+f();
+
+class C {
+	constructor() {
+// XPECT references at f --> f - 5, f - 8, f - 13
+		f();
+	}
+	
+	f : {function():void} = function () {return;};
+}
