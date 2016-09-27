@@ -795,6 +795,7 @@ from {
 	if (targetTypeRef instanceof FunctionTypeExprOrRef)
 	{
 		val F = targetTypeRef
+		val tFunction = F.functionType;
 		{
 			// avoid loops in type inference
 			val inferring = env(G, GUARD_TYPE_CALL_EXPRESSION -> expr, TypeRef)
@@ -807,17 +808,26 @@ from {
 		}
 		or
 		{
-			(F.returnTypeRef===null);
-			T = G.anyTypeRef;
-		}
-		or
-		{
 			// record that we are inferring the type of expr
 			val G2 = G.wrap;
 			G2.add(GUARD_TYPE_CALL_EXPRESSION -> expr, F.returnTypeRef)
 
+			// get the return type of F
+			if(expr.eContainer instanceof AwaitExpression
+				&& expr.eContainmentFeature === N4JSPackage.eINSTANCE.getAwaitExpression_Expression()
+				&& tFunction!==null
+				&& AnnotationDefinition.PROMISIFIABLE.hasAnnotation(tFunction)) {
+				// special case: automatic @Promisify
+				// given a @Promisifiable function foo(), the following two should be equivalent:
+				// await foo() <=> await @Promisify foo()
+				T = promisifyHelper.extractPromisifiedReturnType(expr);
+			} else {
+				// standard case:
+				T = F.returnTypeRef ?: G.anyTypeRef;
+			}
+
 			typeSystemHelper.addSubstitutions(G2, expr, targetTypeRef);
-			G2 |- F.returnTypeRef ~> T
+			G2 |- T ~> T
 
 			if (T instanceof BoundThisTypeRef && !(expr.receiver instanceof ThisLiteral || expr.receiver instanceof SuperLiteral)) {
 				// we've got something like "this[C]" as return type of a call expression of the form
