@@ -44,15 +44,15 @@
 
 #menubar > ul > li > a {
     color: #FFFFFF;
-    font-size:  1.3rem;
+    font-size:  1.1rem;
     line-height: 19px; 
     /* padding-top: 2rem; */
--webkit-transition: color .15s;
-   -moz-transition: color .15s;
-     -o-transition: color .15s;
-        transition: color .15s;
+    webkit-transition: color .15s;
+    -moz-transition: color .15s;
+    -o-transition: color .15s;
+    transition: color .15s;
     white-space:nowrap; 
-
+    -webkit-font-smoothing: auto;
 }
 
 #menubar > ul > li > a:hover {color: #F7D425; }
