@@ -27,6 +27,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link eu.numberfour.n4js.ts.types.TModule#getProjectId <em>Project Id</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TModule#getVendorID <em>Vendor ID</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TModule#getModuleLoader <em>Module Loader</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TModule#isN4jsdModule <em>N4jsd Module</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TModule#isStaticPolyfillModule <em>Static Polyfill Module</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TModule#isStaticPolyfillAware <em>Static Polyfill Aware</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TModule#isMainModule <em>Main Module</em>}</li>
@@ -147,6 +148,32 @@ public interface TModule extends SyntaxRelatedTElement, TAnnotableElement {
 	 * @generated
 	 */
 	void setModuleLoader(String value);
+
+	/**
+	 * Returns the value of the '<em><b>N4jsd Module</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * *
+	 * Flag indicating a module defined in an <code>.n4jsd</code> file.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>N4jsd Module</em>' attribute.
+	 * @see #setN4jsdModule(boolean)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTModule_N4jsdModule()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isN4jsdModule();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TModule#isN4jsdModule <em>N4jsd Module</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>N4jsd Module</em>' attribute.
+	 * @see #isN4jsdModule()
+	 * @generated
+	 */
+	void setN4jsdModule(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Static Polyfill Module</b></em>' attribute.
