@@ -20,7 +20,7 @@
   margin-top: 17px;
 }
 
-#menubar ul { margin: 0; padding: 0; white-space:nowrap; padding-left: 10px; padding-right: 10px;}
+#menubar ul { margin: 0; padding: 0; white-space:nowrap; padding-left: 10px; padding-right: 10px; line-height: 2rem;}
 #menubar li { margin: 0; padding: 0;   }
 #menubar a { margin: 0; padding: 0;}
 #menubar ul {list-style: none; text-align: right;}
@@ -43,8 +43,8 @@
 
 #menubar > ul > li > a {
     color: #FFFFFF;
-    font-size:  1.3rem;
-    line-height: 19px; 
+    font-size:  1.2rem;
+    line-height: 50px; 
     font-weight: 400;
     /* padding-top: 2rem; */
     webkit-transition: color .15s;
@@ -54,6 +54,7 @@
     white-space:nowrap; 
     -webkit-font-smoothing: auto;
     letter-spacing: -.01em;
+    padding: 0.1em;
 }
 
 #menubar > ul > li > a:hover {color: #F7D425; }
