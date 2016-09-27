@@ -23,7 +23,7 @@ local pos="${1%%/}" ref="${2%%/}" down=''
 while :; do
 test "$pos" = '/' && break
 case "$ref" in $pos/*) break;; esac
-    down="../$down"
+    down="$down"
     pos=${pos%/*}
 done
 
@@ -37,20 +37,16 @@ current="${fullpath:2}"
 filename="${curent::-4}"
 echo AsciiDoctor - Converting to HTML: "$current"
 asciidoctor -D generated-docs/"$(dirname "$current")" "$current" \
--a !stylesheet \
--a docinfodir="$(relpath "$2" ./src/_headers)"/$(dirname "$current")/ -a docinfo1=true -a doctype=book -a linkcss=true \
--a source-highlighter=highlightjs -a highlightjsdir="$(relpath "$2" ./scripts)" -a highlightjs-theme=n4jshighlighter \
+-a docinfodir="../$(relpath "$2" ./_headers)"/$(dirname "$current")/ -a linkcss=true \
+-a highlightjsdir="../$(relpath "$2" ./scripts/)" -a source-highlighter=highlightjs -a highlightjs-theme=n4jshighlighter \
 -a sectlinks=true -a icons=font -a experimental=true -a !last-update-label -a index=true \
--a idseparator=-
+-a docinfo1=true -a doctype=book \
+-a !stylesheet -a idseparator=-
 exit 0
 fi
-
-# -a stylesdir="$(relpath "$2" ./src/styles)" -a stylesheet=n4js-adoc.css \
 
 # Building HTML into generated-docs/html folder retaining directory structure, exclude epub
 ME="$0"
 find . -name '*.adoc' ! -name 'epub.adoc' -exec "${ME}" --rundoc {}  \;
 
-# TODO: clean up copy resources loop (lines 3-11) so this is not necessary
-rm -r generated-docs/generated-docs/
-rm -r src/
+echo AsciiDoctor HTML conversion finished.
