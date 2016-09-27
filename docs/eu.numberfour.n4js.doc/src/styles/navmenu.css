@@ -43,7 +43,9 @@
 #menubar > ul > li::after {
     content: " · ";
     position: fixed;
-    top: 29px;
+    top: 28px;
+    padding-left: 3px;
+    font-weight: 400;
 }
 
 #menubar > ul > li:last-of-type::after {
