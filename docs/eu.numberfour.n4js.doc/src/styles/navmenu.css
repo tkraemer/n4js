@@ -39,13 +39,13 @@
     font-weight: 700;
     font-size: 1.4rem;
 
-
 }
 
 #menubar > ul > li > a {
     color: #FFFFFF;
-    font-size:  1.1rem;
+    font-size:  1.3rem;
     line-height: 19px; 
+    font-weight: 400;
     /* padding-top: 2rem; */
     webkit-transition: color .15s;
     -moz-transition: color .15s;
@@ -53,6 +53,7 @@
     transition: color .15s;
     white-space:nowrap; 
     -webkit-font-smoothing: auto;
+    letter-spacing: -.01em;
 }
 
 #menubar > ul > li > a:hover {color: #F7D425; }
