@@ -40,6 +40,7 @@ import java.util.stream.Stream
 import static eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*
 
 import static extension eu.numberfour.n4js.transpiler.utils.ScriptApiTracker.firstProjectComparisonAdapter
+import eu.numberfour.n4js.transpiler.es.assistants.DelegationAssistant
 
 /**
  * Generation of code for missing implementations in projects implementing a specific API.
@@ -47,6 +48,7 @@ import static extension eu.numberfour.n4js.transpiler.utils.ScriptApiTracker.fir
 @RequiresBefore(MemberPatchingTransformation)
 class ApiImplStubGenerationTransformation extends Transformation {
 
+	@Inject private DelegationAssistant delegationAssistant;
 	@Inject private TypeAssistant typeAssistant;
 	@Inject private ScriptApiTracker scriptApiTracker;
 	@Inject private ContainerTypesHelper containerTypesHelper;
@@ -93,6 +95,26 @@ class ApiImplStubGenerationTransformation extends Transformation {
 				classifierDecl.ownedMembersRaw += member;
 			}
 		}
+		
+		
+		// add delegates to inherited fields/getters/setters shadowed by an owned setter XOR getter
+		// NOTE: Partial shadowing in general is disallowed by validation. However, in incomplete
+		// API-impl situation we still support this feature here to propagate generated stubs for 
+		// test reporting-purposes. 
+		for(accTuple : mamft.missingApiAccessorTuples) {
+			if(accTuple.inheritedGetter!==null && accTuple.getter===null && accTuple.setter!==null) {
+				// an owned setter is shadowing an inherited getter -> delegate to the inherited getter
+				val delegator = delegationAssistant.createDelegatingMember(type, accTuple.inheritedGetter);
+				classifierDecl.ownedMembersRaw += delegator;
+			}
+			if(accTuple.inheritedSetter!==null && accTuple.getter!==null && accTuple.setter===null) {
+				// an owned getter is shadowing an inherited setter -> delegate to the inherited setter
+				val delegator = delegationAssistant.createDelegatingMember(type, accTuple.inheritedSetter);
+				classifierDecl.ownedMembersRaw += delegator;
+			}
+		}
+		
+		
 	}
 
 	def private void addMissingTopLevelElements() {

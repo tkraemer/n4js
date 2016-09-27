@@ -109,22 +109,5 @@ class MemberPatchingTransformation extends Transformation {
 			state.info.setOriginalDefinedMember(member, field);
 			state.info.markAsConsumedFromInterface(member);
 		}
-		
-		// add delegates to inherited fields/getters/setters shadowed by an owned setter XOR getter
-		// NOTE: Partial shadowing in general is disallowed by validation. However, in incomplete
-		// API-impl situation we still support this feature here to propagate generated stubs for 
-		// test reporting-purposes. 
-		for(accTuple : cmoft.concreteAccessorTuples) {
-			if(accTuple.inheritedGetter!==null && accTuple.getter===null && accTuple.setter!==null) {
-				// an owned setter is shadowing an inherited getter -> delegate to the inherited getter
-				val delegator = delegationAssistant.createDelegatingMember(tClass, accTuple.inheritedGetter);
-				classDecl.ownedMembersRaw += delegator;
-			}
-			if(accTuple.inheritedSetter!==null && accTuple.getter!==null && accTuple.setter===null) {
-				// an owned getter is shadowing an inherited setter -> delegate to the inherited setter
-				val delegator = delegationAssistant.createDelegatingMember(tClass, accTuple.inheritedSetter);
-				classDecl.ownedMembersRaw += delegator;
-			}
-		}
 	}
 }
