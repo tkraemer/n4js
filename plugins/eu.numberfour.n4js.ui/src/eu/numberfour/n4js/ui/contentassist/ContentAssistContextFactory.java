@@ -45,7 +45,8 @@ public class ContentAssistContextFactory extends ParserBasedContentAssistContext
 	}
 
 	@Override
-	protected void createContextsForLastCompleteNode(EObject previousModel, boolean strict) throws BadLocationException {
+	protected void createContextsForLastCompleteNode(EObject previousModel, boolean strict)
+			throws BadLocationException {
 		String currentNodePrefix = getPrefix(currentNode);
 		if (!Strings.isEmpty(currentNodePrefix) && !currentNode.getText().equals(currentNodePrefix)) {
 			lexer.setCharStream(new ANTLRStringStream(currentNodePrefix));
@@ -68,7 +69,7 @@ public class ContentAssistContextFactory extends ParserBasedContentAssistContext
 	protected void handleLastCompleteNodeAsPartOfDatatypeNode() throws BadLocationException {
 		String prefix = getPrefix(datatypeNode);
 		Collection<FollowElement> followElements = getParser().getFollowElements(rootNode, 0, datatypeNode.getOffset(),
-				false);
+				true);
 		INode lastCompleteNodeBeforeDatatype = getLastCompleteNodeByOffset(rootNode, datatypeNode.getTotalOffset());
 		doCreateContexts(lastCompleteNodeBeforeDatatype, datatypeNode, prefix, currentModel, followElements);
 	}
@@ -80,7 +81,7 @@ public class ContentAssistContextFactory extends ParserBasedContentAssistContext
 		EObject previousModel = previousNode.getSemanticElement();
 		INode currentDatatypeNode = getContainingDatatypeRuleNode(currentNode);
 		Collection<FollowElement> followElements = getParser().getFollowElements(rootNode, 0,
-				lastCompleteNode.getOffset(), false);
+				lastCompleteNode.getOffset(), true);
 		int prevSize = contextBuilders.size();
 		doCreateContexts(previousNode, currentDatatypeNode, prefix, previousModel, followElements);
 
