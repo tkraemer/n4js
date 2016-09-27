@@ -37,8 +37,18 @@
     z-index: 10000;
     flex-basis: 66.666%%;
     font-weight: 700;
-    font-size: 1.4rem;
 
+}
+
+#menubar > ul > li::after {
+    content: " · ";
+    position: fixed;
+    top: 29px;
+}
+
+#menubar > ul > li:last-of-type::after {
+  content: "";
+  padding-right: -2rem;
 }
 
 #menubar > ul > li > a {
@@ -54,7 +64,13 @@
     white-space:nowrap; 
     -webkit-font-smoothing: auto;
     letter-spacing: -.01em;
-    padding: 0.1em;
+    padding-top: 0.1em;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+}
+
+#menubar > ul > li > a:last-of-type {
+  padding-right: -1rem;
 }
 
 #menubar > ul > li > a:hover {color: #F7D425; }
