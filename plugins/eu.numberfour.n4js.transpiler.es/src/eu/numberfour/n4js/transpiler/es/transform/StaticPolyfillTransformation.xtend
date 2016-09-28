@@ -154,7 +154,7 @@ class StaticPolyfillTransformation extends Transformation {
 
 		// obtain module from which we import importedElement
 		val remoteModule = if(isNamespace) {
-			// warning: in case of name-spaces, importedElement resides in the TModule of the fillingResource!
+			// warning: in case of namespaces, importedElement resides in the TModule of the fillingResource!
 			// -> so we cannot just get the containing TModule in this case
 			(importedElement as ModuleNamespaceVirtualType).module
 		} else {
