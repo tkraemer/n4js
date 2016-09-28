@@ -40,6 +40,12 @@
 
 }
 
+@media only screen and (max-width: 828px) {
+  #menubar > ul > li {
+    visibility: hidden;
+  }
+}
+
 #menubar > ul > li::after {
     content: " · ";
     position: fixed;

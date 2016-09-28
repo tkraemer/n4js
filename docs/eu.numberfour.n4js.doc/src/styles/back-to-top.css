@@ -54,7 +54,7 @@ body.toc2.toc-right #tocbutton {
 	position: fixed;
 	z-index: 998;
 	border: none;
-	right: 215px;
+	right: 25px;
 	top: 5px;
 	background: url("bars.png") no-repeat center 50%;
 }

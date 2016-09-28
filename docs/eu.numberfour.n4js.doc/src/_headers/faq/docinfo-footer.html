@@ -7,12 +7,13 @@
 <script>
 // Toggle the table of contents
 $( "button#tocbutton" ).click(function() {
-  $( "#toc.toc2" ).toggle( "slide",{ direction: 'right', mode: 'show' }, 500 );
   if ($("#tocbutton").css('right') == '25px') {
     $( "#tocbutton" ).animate({right: '215px'},"slow");
+    $( "#toc.toc2" ).animate({right: '0'},"slow");
 }
-  else {   
+  else {
     $( "#tocbutton" ).animate({right: '25px'},"slow");
+    $( "#toc.toc2" ).animate({right: '-13rem'},"slow");
 }
 });
 </script>
