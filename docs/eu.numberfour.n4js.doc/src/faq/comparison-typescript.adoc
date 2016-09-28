@@ -14,9 +14,9 @@ type system is optional and the TypeScript transpiler aims to accept plain ECMAS
 
 Although N4JS is a superset of ECMAScript in terms of syntax and features, it does not
 try to be compatible with ECMAScript at all cost.
-One way of looking at the N4JS approach is beginning with ECMAScript, adding Java's strict
-and rigorous type system then making this amalgamation as flexible as possible, fulfilling the expectations
-of JavaScript programmers while keeping the type system sound.
+One way of looking at the N4JS approach is to begin with ECMAScript, add Java's strict
+and rigorous type system and then to make this amalgamation as flexible as possible.
+The idea is that this fulfills the expectations of JavaScript programmers while keeping the type system sound.
 
 == Differences
 
@@ -39,10 +39,8 @@ function f(p: any) {
     p.foo(); // error in N4JS, no error in TypeScript
 }
 
-
 N4JS will issue an error: `Couldn't resolve reference to IdentifiableElement 'foo'`, because in N4JS, the type `any`
 has no properties.
-
 
 Furthermore, in N4JS `any` is the top type: every type is a subtype of `any`. In TypeScript it is treated as a bottom
 type similar to `undefined` (or `null`): `any` is a subtype of every other type. The effect of these different semantics is shown in the following example:
@@ -82,10 +80,7 @@ function f(p: any, d: any+) {
     d.foo(); // no error in N4JS, as d is "dynamic"
 }
 
-
-
 While `any+` resembles TypeScript's behavior of `any`, it is still more restrictive: `any+` will never be used as a default, it has to be declared explicitly; and a value of type `any+` still cannot be assigned to variables of other types except `any`.
-
 
 |===
 2+| h| access anything h| assign to everything h| used as default
@@ -97,7 +92,7 @@ h| TypeScript h| any | ✓  | ✓ |  •
 === Type Errors Are Show-Stoppers in N4JS
 
 N4JS has two general levels of issues reported by the compiler: ** warning**  and **error**.
-Serious issues like type errors are treated as errors in N4JS and all errors will prevent the transpiler to emit any JavaScript code in order to avoid producing code that might break at runtime.
+Serious issues like type errors are treated as errors in N4JS and all errors will prevent the transpiler to emit any JavaScript code in order to avoid producing code that might cause exceptions at runtime.
 For TypeScript, on the other hand, it is a main concern to never impede the developer, the transpiler will thus produce JavaScript output code even in the case of compile errors.
 Given the example from the beginning
 
@@ -107,7 +102,7 @@ str = 42;  // both N4JS and TypeScript show an error here
 str.charAt(2);
 
 The N4JS transpiler will reject the compilation of that code, while TypeScript will create a JavaScript output file
-that breaks at runtime in the last line.
+that causes exceptions at runtime in the last line.
 
 ==== Parameter Contra-variance vs. Bivariance
 
@@ -303,7 +298,6 @@ Thus, structural types have to be explicitly annotated as being structural, usin
 
 //~
 
-
 [source,n4js]
 ----
 export public interface ~Point {
@@ -340,9 +334,7 @@ interface Point {
   p3d = p; // error
 ----
 
-
 NOTE: N4JS is using different defaults for access modifiers, e.g. `public` is not the default. For that reason, the interfaces have to be marked as public (and exported).
-
 
 In both languages, an error will be issued on the last line:
 
@@ -351,9 +343,7 @@ In both languages, an error will be issued on the last line:
 
 The difference between structural and nominal typing is described in further detail in the <<features/nominal-vs-structural-typing.html#nominal_vs_structural_typing,nominal vs. structural subtyping feature>>.
 
-
 === Using Existing JavaScript Libraries
-
 
 An important aspect of being an ECMAScript superset is to enable developers to use existing JavaScript libraries. N4JS and
 TypeScript support type definitions for existing code. For TypeScript, there is a great project called
