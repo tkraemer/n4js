@@ -1,6 +1,6 @@
 :doctype: book
 :notitle:
-
+:toc: right
 
 .N4JS and Java
 = N4JS and Java
