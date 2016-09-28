@@ -30,6 +30,7 @@ import org.eclipse.xtext.ui.editor.model.IXtextDocument
 import org.eclipse.xtext.ui.editor.outline.IOutlineNode
 import org.eclipse.xtext.ui.editor.outline.impl.BackgroundOutlineTreeProvider
 import org.eclipse.xtext.util.CancelIndicator
+import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode
 
 /**
  * Customization of the default outline structure.
@@ -74,6 +75,11 @@ class N4JSOutlineTreeProvider extends BackgroundOutlineTreeProvider  {
 		if (modelElement !== null && parentNode.hasChildren()) {
 			createChildren_(parentNode,modelElement);
 		}
+	}
+	
+	def dispatch void createChildren_(DocumentRootNode parentNode, EObject modelElement) {
+		// First entry should not dispatch but specifically create the root node 
+		super.createChildren(parentNode, modelElement)	
 	}
 	
 	def dispatch void createChildren_(IOutlineNode parentNode, EObject modelElement) {
