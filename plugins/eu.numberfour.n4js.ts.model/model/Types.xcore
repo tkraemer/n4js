@@ -73,6 +73,10 @@ class TModule extends SyntaxRelatedTElement, TAnnotableElement {
 	 */
 	String moduleLoader
 	/**
+	 * Flag indicating a module defined in an <code>.n4jsd</code> file.
+	 */
+	boolean n4jsdModule
+	/**
 	 * Flag indicating a static-polyfilling (not a standalone) module.
 	 */
 	boolean staticPolyfillModule

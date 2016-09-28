@@ -1,0 +1,30 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest 
+   
+	Workspace {
+		Project "Test" {
+			Folder "src" {
+				File "C.n4js" { from="../src/C.n4js" }
+			}
+			Folder "src_filler" {
+				ThisFile {}
+			}
+			File "manifest.n4mf" { from="../manifest.n4mf" }
+		}
+	}
+   
+   END_SETUP
+*/
+
+@@StaticPolyfillModule
+
+
+@N4JS @StaticPolyfill
+// XPECT errors --> "Since static polyfill C is declared in an .n4jsd file, the filled type must also be declared in an .n4jsd file." at "C"
+export external public class C extends C {
+	
+	@Override
+	method(): B
+	
+	methodFilled(): A
+}
+
