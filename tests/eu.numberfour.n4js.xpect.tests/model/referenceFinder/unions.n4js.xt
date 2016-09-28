@@ -1,16 +1,15 @@
 /* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
 
 export public class A {
-// IDE-1662 XPECT references at a --> a - 5, a - 23
+// IDE-1662 XPECT findReferences at a --> a - 5, a - 22, a - 26
 	a : A;
 	i : int;
-	s : String;
 	foo(){};
 }
 
 interface I {
 	a : A;
-// XPECT references at i --> i - 14, i - 26
+// XPECT findReferences at i --> i - 14, i - 26
 	i : int;
 	s : String;
 }
@@ -19,17 +18,16 @@ class AI extends A implements I {}
 
 
 var union : A | I;
-// IDE-1662 XPECT references at a --> a - 22, a - 5, a - 12, a - 31
 union.a;
-
-// IDE-1662 XPECT references at i --> a, a.a, aub.a
 union.i;
-
+union.foo();
 
 var b : A;
-// XPECT references at a --> a - 31, a - 5
 b.a;
+b.i;
+b.foo();
 
 var j : I;
-// XPECT references at i --> i - 35, i - 6
+j.a;
 j.i;
+j.foo();
