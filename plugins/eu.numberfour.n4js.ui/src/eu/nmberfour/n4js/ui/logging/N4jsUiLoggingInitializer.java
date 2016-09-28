@@ -48,7 +48,11 @@ public class N4jsUiLoggingInitializer {
 		eclipseAppenderLogger.setAdditivity(false);
 		eclipseAppenderLogger.setLevel(Level.WARN);
 		Appender defaultAppender = eclipseAppenderLogger.getAppender("default");
-		eclipseAppenderLogger.removeAllAppenders();
-		eclipseAppenderLogger.addAppender(defaultAppender);
+		if (eclipseAppenderLogger.getAllAppenders().hasMoreElements()) {
+			eclipseAppenderLogger.removeAllAppenders();
+		}
+		if (defaultAppender != null) {
+			eclipseAppenderLogger.addAppender(defaultAppender);
+		}
 	}
 }
