@@ -24,6 +24,7 @@ import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TMethod
 
 import static eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*
+import eu.numberfour.n4js.utils.Log
 
 /**
  * Handles some special cases where code has to be emitted for non-owned members, e.g. for members consumed by an
@@ -33,6 +34,7 @@ import static eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*
  * This transformation will add new "full" members or {@link DelegatingMember}s to the <code>ownedMembersRaw</code>
  * property of {@link ContainerType}s in the intermediate model.
  */
+@Log 
 class MemberPatchingTransformation extends Transformation {
 	@Inject private DelegationAssistant delegationAssistant;
 	@Inject private TypeAssistant typeAssistant;
@@ -108,6 +110,26 @@ class MemberPatchingTransformation extends Transformation {
 			classDecl.ownedMembersRaw += member;
 			state.info.setOriginalDefinedMember(member, field);
 			state.info.markAsConsumedFromInterface(member);
+		}
+		
+		
+		// add delegates to inherited fields/getters/setters shadowed by an owned setter XOR getter
+		// NOTE: Partial shadowing in general is disallowed by validation. However, in incomplete
+		// API-impl situation we still support this feature here to propagate generated stubs for 
+		// test reporting-purposes. 
+		// MOVED: the actual implementation moved to the {@link eu.numberfour.n4js.transpiler.es.transform.ApiImplStubGenerationTransformation} class
+		// the following code will issue errors if such a 'forbidden' case is still encountered:
+		for(accTuple : cmoft.concreteAccessorTuples) {
+			if(accTuple.inheritedGetter!==null && accTuple.getter===null && accTuple.setter!==null) {
+				// an owned setter is shadowing an inherited getter -> delegate to the inherited getter
+				logger.error("Encountered an invalid getter shadowing. Setter "+accTuple.setter.name+
+					" of classifier "+accTuple.setter.containingType+"", new IllegalStateException("Invalid shadowing of inherited getter. Getter should be implemented explicitly."))
+			}
+			if(accTuple.inheritedSetter!==null && accTuple.getter!==null && accTuple.setter===null) {
+				// an owned getter is shadowing an inherited setter -> delegate to the inherited setter
+				logger.error("Encountered an invalid inherited setter shadowing. Getter "+accTuple.getter.name+
+					" of classifier "+accTuple.getter.containingType+"", new IllegalStateException("Invalid shadowing of inherited setter. Setter should be implemented explicitly."))
+			}
 		}
 	}
 }
