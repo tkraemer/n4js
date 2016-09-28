@@ -1,6 +1,6 @@
 :doctype: book
+:notitle:
 
-[discrete]
 .Reporting Bugs
 = Reporting Bugs
 

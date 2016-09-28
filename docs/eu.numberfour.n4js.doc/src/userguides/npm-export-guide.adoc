@@ -1,8 +1,9 @@
 :toc: right
 :toc-title: Jump to section:
 :commandkey: &#8984;
+:notitle:
 
-[discrete]
+
 .N4JS npm Export Guide
 = N4JS npm Export Guide
 

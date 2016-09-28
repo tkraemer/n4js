@@ -1,6 +1,7 @@
 :doctype: book
+:notitle:
 
-[discrete]
+
 .N4JS and Java
 = N4JS and Java
 

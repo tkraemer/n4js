@@ -2,8 +2,9 @@
 :toc: right
 :toc-title: Jump to topic:
 :commandkey: &#8984;
+:notitle:
 
-[discrete]
+
 .N4JS IDE Setup
 = N4JS IDE Setup
 
