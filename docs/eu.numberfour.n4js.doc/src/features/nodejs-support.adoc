@@ -1,4 +1,4 @@
-:notitle:
+:toc: right
 
 .Node.js Support
 = Node.js Support

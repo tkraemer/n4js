@@ -1,6 +1,5 @@
-:notitle:
 :doctype: book
-
+:toc: right
 
 .Async/Await
 = Async/Await

@@ -1,5 +1,5 @@
 :doctype: book
-:notitle:
+:toc: right
 
 .Dependency Injection in N4JS
 = Dependency Injection in N4JS

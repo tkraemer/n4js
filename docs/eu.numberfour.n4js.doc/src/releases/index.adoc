@@ -1,6 +1,4 @@
 :doctype: book
-:notitle:
-
 
 .Releases
 = Releases
