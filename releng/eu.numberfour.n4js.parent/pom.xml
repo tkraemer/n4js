@@ -262,7 +262,9 @@ Contributors:
 							<execution>
 								<id>default-install</id>
 								<!-- rebind to none -->
+								<!-- IDE-2368 enable install again, TODO limit selectively to required bundles.
 								<phase />
+								 -->
 							</execution>
 						</executions>
 				</plugin>
