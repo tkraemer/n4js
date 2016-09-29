@@ -77,12 +77,12 @@ class N4JSOutlineTreeProvider extends BackgroundOutlineTreeProvider  {
 		}
 	}
 	
-	def dispatch void createChildren_(DocumentRootNode parentNode, EObject modelElement) {
+	def dispatch protected void createChildren_(DocumentRootNode parentNode, EObject modelElement) {
 		// First entry should not dispatch but specifically create the root node 
 		super.createChildren(parentNode, modelElement)	
 	}
 	
-	def dispatch void createChildren_(IOutlineNode parentNode, EObject modelElement) {
+	def dispatch protected void createChildren_(IOutlineNode parentNode, EObject modelElement) {
 		// TODO maybe we do not want create arbitrary nodes here, 
 		// then we should remove the following line:
 		super.createChildren(parentNode, modelElement);
@@ -92,7 +92,7 @@ class N4JSOutlineTreeProvider extends BackgroundOutlineTreeProvider  {
 	// isInstanceOfExpectedScriptChildren - so not exported functions
 	// and not exported variables won't appear in the outline
 	// for variable statements with one element only create one node
-	def dispatch void createChildren_(IOutlineNode parentNode, Script script) {
+	def dispatch protected void createChildren_(IOutlineNode parentNode, Script script) {
 
 		for (child : script.scriptElements.filterNull) {
 			if (child instanceof ExportDeclaration) {
@@ -113,7 +113,7 @@ class N4JSOutlineTreeProvider extends BackgroundOutlineTreeProvider  {
 	}
 
 	// only create nodes for members (methods, fields) and field accessors (getter, setter)
-	def dispatch void createChildren_(IOutlineNode parentNode, N4ClassifierDefinition classifierDefinition) {
+	def dispatch protected void createChildren_(IOutlineNode parentNode, N4ClassifierDefinition classifierDefinition) {
 		for (child : classifierDefinition.eContents.filterNull) {
 			if (isInstanceOfExpectedClassifierChildren(child)) {
 				parentNode.createNode(child)
@@ -122,7 +122,7 @@ class N4JSOutlineTreeProvider extends BackgroundOutlineTreeProvider  {
 	}
 	
 	// create nodes for literals
-	def dispatch void createChildren_(IOutlineNode parentNode, N4EnumDeclaration ed) {
+	def dispatch protected void createChildren_(IOutlineNode parentNode, N4EnumDeclaration ed) {
 		for (literal : ed.literals.filterNull) {
 			parentNode.createNode(literal)
 		}
@@ -156,45 +156,45 @@ class N4JSOutlineTreeProvider extends BackgroundOutlineTreeProvider  {
 		classes.exists[it.isAssignableFrom(eObject.class)]
 	}
 
-	/** Overridden to delegate to dispatch methods ending in underscore: {@code #isLeaf(...)} */
-	def dispatch protected boolean isLeaf( EObject modelElement) {
+	/** Overridden to enable the dispatch-method mechanism of Xtend */
+	def dispatch protected boolean isLeaf(EObject modelElement) {
 		// route through to default implementation. 
 		return super.isLeaf(modelElement);
 	}	
 
-	def dispatch boolean isLeaf(Void _null) {
+	def dispatch protected boolean isLeaf(Void _null) {
 		return true;
 	}
 
 	// suppress + symbol in outline when N4JS file is empty
-	def dispatch boolean isLeaf(Script script) {
+	def dispatch protected boolean isLeaf(Script script) {
 		!script.eContents.exists[isInstanceOfExpectedScriptChildren]
 	}
 
 	// suppress + symbol in outline when classifier has no members
 	// or we have a broken AST and the defined type of the classifier is not available yet
-	def dispatch boolean isLeaf(N4ClassifierDefinition it) {
+	def dispatch protected boolean isLeaf(N4ClassifierDefinition it) {
 		null === definedType || !eContents.exists[isInstanceOfExpectedClassifierChildren]
 	}
 
 	// fields should have never children
-	def dispatch boolean isLeaf(N4FieldDeclaration md) {
+	def dispatch protected boolean isLeaf(N4FieldDeclaration md) {
 		true
 	}
 
 	// functions and methods should have never children
-	def dispatch boolean isLeaf(FunctionOrFieldAccessor fa) {
+	def dispatch protected boolean isLeaf(FunctionOrFieldAccessor fa) {
 		true
 	}
 
 	// variables should have never children
-	def dispatch boolean isLeaf(ExportedVariableDeclaration vd) {
+	def dispatch protected boolean isLeaf(ExportedVariableDeclaration vd) {
 		true
 	}
 
 	// import declarations with one element (respectively wildcard import) should have no
 	// children as label provider makes the one child part of the import declaration node
-	def dispatch boolean isLeaf(ImportDeclaration id) {
+	def dispatch protected boolean isLeaf(ImportDeclaration id) {
 		id.importSpecifiers.size == 1
 	}
 }
