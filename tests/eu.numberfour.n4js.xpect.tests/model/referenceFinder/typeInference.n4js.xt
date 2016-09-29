@@ -11,10 +11,10 @@ class MyClassOne  {
 }
 
 class MyClassTwo {
-// IDE-1662, IDE-373 XPECT findReferences at myAttributeTwo --> myAttributeTwo - 9, myAttributeTwo - 15
+// IDE-1662, IDE-373 XPECT findReferences at myAttributeTwo --> myAttributeTwo - 15, two.myAttributeTwo - 9
     myAttributeTwo : {function (param:string) : MyInterfaceFour};
 
-// IDE-1662, IDE-373 XPECT findReferences at myMethodTwo --> myMethodTwo - 8, myMethodTwo - 18
+// IDE-1662, IDE-373 XPECT findReferences at myMethodTwo --> myMethodTwo - 18, two.myMethodTwo - 8
     myMethodTwo() : MyRoleLikeInterface<MyInterfaceFour> {
         return null;
     }
@@ -23,13 +23,16 @@ class MyClassTwo {
 interface MyRoleLikeInterface<T extends MyInterfaceFour> {
     element : T;
 
-// IDE-1662, IDE-373 XPECT findReferences at getElement --> getElement - 8, getElement - 27
+// IDE-1662, IDE-373 XPECT findReferences at getElement --> getElement - 27, two.myMethodTwo().getElement - 8
     getElement() : T {
         return this.element;
     }
 }
 
 interface MyInterfaceFour {
-// IDE-1662, IDE-373 XPECT findReferences at myMethodFour --> myMethodFour - 8, myMethodFour - 9, myMethodFour - 33
+/* IDE-1662, IDE-373 XPECT findReferences at myMethodFour ---
+ myMethodFour - 37, two.myAttributeTwo("test").myMethodFour - 9,
+ two.myMethodTwo().getElement().myMethodFour - 8
+--- */
 	myMethodFour() : void
 }

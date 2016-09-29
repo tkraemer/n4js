@@ -1,17 +1,17 @@
 /* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
 
 class T {
-// XPECT findReferences at a -->  a - 5, a - 19
+// XPECT findReferences at a --> a  - 5, this.a - 18
 	a : T;
-// XPECT findReferences at a -->  i - 7, i - 21
+// XPECT findReferences at i --> i  - 7, this.i - 20
 	i : int;
-// XPECT findReferences at foo -->  foo - 9, foo - 15, foo - 17
+// XPECT findReferences at foo --> foo - 9, super.foo - 16
 	foo(){};
 }
 
 class S extends T {
 	@Override
-// XPECT findReferences at foo -->  foo - 9, foo - 15, foo - 17
+// XPECT findReferences at foo --> foo - 15
 	foo() {
 		super.foo();
 		

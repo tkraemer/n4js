@@ -7,6 +7,6 @@
 
 // start at line after last line in 'importFunctionExp'
 
-import {foo} from "referenceFinder/importFunctionExp";
+import {zzz} from "referenceFinder/importFunctionExp";
 
-foo();
+zzz();

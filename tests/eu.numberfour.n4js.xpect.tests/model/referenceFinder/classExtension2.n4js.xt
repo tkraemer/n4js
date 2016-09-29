@@ -2,21 +2,21 @@
 
 
 export public class A {
-// XPECT findReferences at a --> a - 6, a - 26, a - 31
+// XPECT findReferences at a --> a - 6, b.a - 31, bj.a - 26
 	a : A;
-// XPECT findReferences at i --> i - 8, i - 27, i - 32
+// XPECT findReferences at i --> b.i - 32, bj.i - 27, i - 8
 	i : int;
-// XPECT findReferences at foo --> foo - 10, foo - 28, foo - 33
+// XPECT findReferences at foo --> b.foo - 33, bj.foo - 28, foo - 10
 	foo(){};
 }
 
 interface I {
-// XPECT findReferences at a --> a - 6, a - 26, a - 36
+// XPECT findReferences at a --> a - 15, j.a - 36
 	a : A;
-// XPECT findReferences at i --> i - 8, i - 27, i - 37
+// XPECT findReferences at i --> i - 17, j.i - 37
 	i : int;
-// XPECT findReferences at foo --> foo - 10, foo - 28, foo - 38
-	s : String;
+// XPECT findReferences at foo --> foo - 19, j.foo - 38, foo - 19
+	foo(){};
 }
 
 class AI extends A implements I {}

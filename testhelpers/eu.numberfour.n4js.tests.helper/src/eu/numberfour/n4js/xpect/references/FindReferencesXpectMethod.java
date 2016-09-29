@@ -14,7 +14,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.findReferences.IReferenceFinder;
+import org.eclipse.xtext.findReferences.TargetURICollector;
 import org.eclipse.xtext.findReferences.TargetURIs;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.resource.IReferenceDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider;
@@ -30,8 +33,11 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
+import eu.numberfour.n4js.n4JS.GenericDeclaration;
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
+import eu.numberfour.n4js.n4JS.PropertyNameOwner;
 import eu.numberfour.n4js.ts.findReferences.SimpleResourceAccess;
-import eu.numberfour.n4js.ts.types.IdentifiableElement;
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.xpect.scoping.IN4JSCommaSeparatedValuesExpectation;
 import eu.numberfour.n4js.xpect.scoping.N4JSCommaSeparatedValuesExpectation;
 
@@ -47,6 +53,9 @@ public class FindReferencesXpectMethod {
 	private IReferenceFinder referenceFinder;
 
 	@Inject
+	private TargetURICollector collector;
+
+	@Inject
 	private ResourceDescriptionsProvider resourceDescriptionsProvider;
 
 	/**
@@ -54,31 +63,39 @@ public class FindReferencesXpectMethod {
 	 */
 	@Xpect
 	@ParameterParser(syntax = "('at' arg1=OFFSET)?")
-	public void findReferences( //
+	public void findReferences(
 			@N4JSCommaSeparatedValuesExpectation IN4JSCommaSeparatedValuesExpectation expectation,
 			EObject arg1) {
-		Resource eResource = arg1.eResource();
+
+		EObject eObj = arg1;
+		if (arg1 instanceof ParameterizedTypeRef)
+			eObj = arg1.eContainer();
+		if (arg1 instanceof LiteralOrComputedPropertyName)
+			eObj = arg1.eContainer();
+
+		Resource eResource = eObj.eResource();
 		TargetURIs targets = targetURISetProvider.get();
+		collector.add(eObj, targets);
 		IResourceDescriptions index = resourceDescriptionsProvider.getResourceDescriptions(eResource);
 
-		final IdentifiableElement targetElem;
-		// if (arg1.getEObject() instanceof ParameterizedPropertyAccessExpression
-		// && arg1.getCrossEReference() == N4JSPackage.eINSTANCE
-		// .getParameterizedPropertyAccessExpression_Property()) {
-		// targetElem = ((ParameterizedPropertyAccessExpression) arg1.getEObject()).getProperty();
-		// } else if (arg1.getEObject() instanceof IdentifierRef
-		// && arg1.getCrossEReference() == N4JSPackage.eINSTANCE.getIdentifierRef_Id()) {
-		// targetElem = ((IdentifierRef) arg1.getEObject()).getId();
-		// // TODO more cases
-		// } else {
-		// // error, unsupported region
-		// }
-
-		ArrayList<EObject> result = Lists.newArrayList();
+		ArrayList<String> result = Lists.newArrayList();
 		IReferenceFinder.Acceptor acceptor = new IReferenceFinder.Acceptor() {
 			@Override
 			public void accept(EObject src, URI srcURI, EReference eRef, int idx, EObject tgtOrProxy, URI tgtURI) {
-				result.add(src);
+				if (src instanceof PropertyNameOwner)
+					src = ((PropertyNameOwner) src).getDeclaredName();
+
+				ICompositeNode srcNode = NodeModelUtils.getNode(src);
+				if (srcNode == null)
+					return;
+
+				int line = srcNode.getStartLine();
+
+				String text = NodeModelUtils.getTokenText(srcNode);
+				if (src instanceof GenericDeclaration)
+					text = ((GenericDeclaration) src).getDefinedType().getName();
+
+				result.add(text + " - " + line);
 			}
 
 			@Override
@@ -90,6 +107,21 @@ public class FindReferencesXpectMethod {
 		SimpleResourceAccess resourceAccess = new SimpleResourceAccess(eResource.getResourceSet());
 		referenceFinder.findAllReferences(targets, resourceAccess, index, acceptor, null);
 
+		expectation.assertEquals(result);
 	}
+
+	// ICompositeNode srcNode = NodeModelUtils.getNode(src);
+	// ICompositeNode tgtNode = NodeModelUtils.getNode(tgtOrProxy);
+	//
+	// System.out.println(NodeModelUtils.compactDump(srcNode, true));
+	// String string = src.eClass().getName() + "." + eRef.getName();
+	// if (srcNode == null)
+	// result.add(srcURI.fragment() + " " + string);
+	// else {
+	// int line = srcNode.getStartLine();
+	// List<INode> feature = NodeModelUtils.findNodesForFeature(src, eRef);
+	// String text = feature.isEmpty() ? "" : feature.get(0).getText();
+	// result.add(text + " - " + srcURI.fragment() + " " + string + " at line " + line);
+	// }
 
 }

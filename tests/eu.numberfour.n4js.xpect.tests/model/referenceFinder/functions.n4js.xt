@@ -1,15 +1,15 @@
 /* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
 
 
-// XPECT findReferences at f --> f - 5, f - 7, f - 11
-function f () : void {}
+// XPECT findReferences at x --> x - 5, x - 7, x - 11
+function x () : void {}
 
-f();
+x();
 
 class C {
 	constructor() {
-		f();
+		x();
 	}
 	
-	f : {function():void} = function () {return;};
+	x : {function():void} = function () {return;};
 }
