@@ -254,7 +254,7 @@ public class WildcardImpl extends TypeArgumentImpl implements Wildcard {
 						}
 						final TypeVariable typeVar = _xifexpression;
 						if ((typeVar != null)) {
-							final EList<ParameterizedTypeRef> implicitUBs = typeVar.getDeclaredUpperBounds();
+							final EList<TypeRef> implicitUBs = typeVar.getDeclaredUpperBounds();
 							return XcoreCollectionLiterals.<TypeRef>newImmutableEList(((TypeRef[])org.eclipse.xtext.xbase.lib.Conversions.unwrapArray(implicitUBs, TypeRef.class)));
 						}
 					}

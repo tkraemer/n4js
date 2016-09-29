@@ -621,9 +621,6 @@ public class TypeUtils {
 			final TInterface r = (TInterface) type;
 			return r.getSuperInterfaceRefs();
 		}
-		if (type instanceof TypeVariable) {
-			return ((TypeVariable) type).getDeclaredUpperBounds();
-		}
 		if (type instanceof PrimitiveType) {
 			PrimitiveType assignmentCompatible = ((PrimitiveType) type).getAssignmentCompatible();
 			if (assignmentCompatible != null) {
@@ -730,7 +727,7 @@ public class TypeUtils {
 	 * intersection type is created. Returns <code>null</code> if no upper bounds were declared.
 	 */
 	public static TypeRef getDeclaredUpperBound(TypeVariable tv) {
-		final EList<ParameterizedTypeRef> ubs = tv.getDeclaredUpperBounds();
+		final EList<TypeRef> ubs = tv.getDeclaredUpperBounds();
 		final int count = ubs.size();
 		if (count == 1) {
 			return ubs.get(0);

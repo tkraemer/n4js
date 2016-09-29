@@ -48293,7 +48293,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:16826:1: ( rule__TypeVariable__Group_1__0__Impl rule__TypeVariable__Group_1__1 )
             // InternalTypesParser.g:16827:2: rule__TypeVariable__Group_1__0__Impl rule__TypeVariable__Group_1__1
             {
-            pushFollow(FOLLOW_88);
+            pushFollow(FOLLOW_9);
             rule__TypeVariable__Group_1__0__Impl();
 
             state._fsp--;
@@ -48363,22 +48363,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariable__Group_1__1"
-    // InternalTypesParser.g:16853:1: rule__TypeVariable__Group_1__1 : rule__TypeVariable__Group_1__1__Impl rule__TypeVariable__Group_1__2 ;
+    // InternalTypesParser.g:16853:1: rule__TypeVariable__Group_1__1 : rule__TypeVariable__Group_1__1__Impl ;
     public final void rule__TypeVariable__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:16857:1: ( rule__TypeVariable__Group_1__1__Impl rule__TypeVariable__Group_1__2 )
-            // InternalTypesParser.g:16858:2: rule__TypeVariable__Group_1__1__Impl rule__TypeVariable__Group_1__2
+            // InternalTypesParser.g:16857:1: ( rule__TypeVariable__Group_1__1__Impl )
+            // InternalTypesParser.g:16858:2: rule__TypeVariable__Group_1__1__Impl
             {
-            pushFollow(FOLLOW_57);
-            rule__TypeVariable__Group_1__1__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__TypeVariable__Group_1__2();
+            rule__TypeVariable__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -48401,23 +48396,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariable__Group_1__1__Impl"
-    // InternalTypesParser.g:16865:1: rule__TypeVariable__Group_1__1__Impl : ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 ) ) ;
+    // InternalTypesParser.g:16864:1: rule__TypeVariable__Group_1__1__Impl : ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 ) ) ;
     public final void rule__TypeVariable__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:16869:1: ( ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 ) ) )
-            // InternalTypesParser.g:16870:1: ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 ) )
+            // InternalTypesParser.g:16868:1: ( ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 ) ) )
+            // InternalTypesParser.g:16869:1: ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 ) )
             {
-            // InternalTypesParser.g:16870:1: ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 ) )
-            // InternalTypesParser.g:16871:1: ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 )
+            // InternalTypesParser.g:16869:1: ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 ) )
+            // InternalTypesParser.g:16870:1: ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_1_1()); 
             }
-            // InternalTypesParser.g:16872:1: ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 )
-            // InternalTypesParser.g:16872:2: rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1
+            // InternalTypesParser.g:16871:1: ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 )
+            // InternalTypesParser.g:16871:2: rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1
             {
             pushFollow(FOLLOW_2);
             rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1();
@@ -48451,280 +48446,15 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TypeVariable__Group_1__1__Impl"
 
 
-    // $ANTLR start "rule__TypeVariable__Group_1__2"
-    // InternalTypesParser.g:16882:1: rule__TypeVariable__Group_1__2 : rule__TypeVariable__Group_1__2__Impl ;
-    public final void rule__TypeVariable__Group_1__2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalTypesParser.g:16886:1: ( rule__TypeVariable__Group_1__2__Impl )
-            // InternalTypesParser.g:16887:2: rule__TypeVariable__Group_1__2__Impl
-            {
-            pushFollow(FOLLOW_2);
-            rule__TypeVariable__Group_1__2__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeVariable__Group_1__2"
-
-
-    // $ANTLR start "rule__TypeVariable__Group_1__2__Impl"
-    // InternalTypesParser.g:16893:1: rule__TypeVariable__Group_1__2__Impl : ( ( rule__TypeVariable__Group_1_2__0 )* ) ;
-    public final void rule__TypeVariable__Group_1__2__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalTypesParser.g:16897:1: ( ( ( rule__TypeVariable__Group_1_2__0 )* ) )
-            // InternalTypesParser.g:16898:1: ( ( rule__TypeVariable__Group_1_2__0 )* )
-            {
-            // InternalTypesParser.g:16898:1: ( ( rule__TypeVariable__Group_1_2__0 )* )
-            // InternalTypesParser.g:16899:1: ( rule__TypeVariable__Group_1_2__0 )*
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeVariableAccess().getGroup_1_2()); 
-            }
-            // InternalTypesParser.g:16900:1: ( rule__TypeVariable__Group_1_2__0 )*
-            loop137:
-            do {
-                int alt137=2;
-                int LA137_0 = input.LA(1);
-
-                if ( (LA137_0==Ampersand) ) {
-                    alt137=1;
-                }
-
-
-                switch (alt137) {
-            	case 1 :
-            	    // InternalTypesParser.g:16900:2: rule__TypeVariable__Group_1_2__0
-            	    {
-            	    pushFollow(FOLLOW_58);
-            	    rule__TypeVariable__Group_1_2__0();
-
-            	    state._fsp--;
-            	    if (state.failed) return ;
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop137;
-                }
-            } while (true);
-
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeVariableAccess().getGroup_1_2()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeVariable__Group_1__2__Impl"
-
-
-    // $ANTLR start "rule__TypeVariable__Group_1_2__0"
-    // InternalTypesParser.g:16916:1: rule__TypeVariable__Group_1_2__0 : rule__TypeVariable__Group_1_2__0__Impl rule__TypeVariable__Group_1_2__1 ;
-    public final void rule__TypeVariable__Group_1_2__0() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalTypesParser.g:16920:1: ( rule__TypeVariable__Group_1_2__0__Impl rule__TypeVariable__Group_1_2__1 )
-            // InternalTypesParser.g:16921:2: rule__TypeVariable__Group_1_2__0__Impl rule__TypeVariable__Group_1_2__1
-            {
-            pushFollow(FOLLOW_88);
-            rule__TypeVariable__Group_1_2__0__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-            pushFollow(FOLLOW_2);
-            rule__TypeVariable__Group_1_2__1();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeVariable__Group_1_2__0"
-
-
-    // $ANTLR start "rule__TypeVariable__Group_1_2__0__Impl"
-    // InternalTypesParser.g:16928:1: rule__TypeVariable__Group_1_2__0__Impl : ( Ampersand ) ;
-    public final void rule__TypeVariable__Group_1_2__0__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalTypesParser.g:16932:1: ( ( Ampersand ) )
-            // InternalTypesParser.g:16933:1: ( Ampersand )
-            {
-            // InternalTypesParser.g:16933:1: ( Ampersand )
-            // InternalTypesParser.g:16934:1: Ampersand
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeVariableAccess().getAmpersandKeyword_1_2_0()); 
-            }
-            match(input,Ampersand,FOLLOW_2); if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeVariableAccess().getAmpersandKeyword_1_2_0()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeVariable__Group_1_2__0__Impl"
-
-
-    // $ANTLR start "rule__TypeVariable__Group_1_2__1"
-    // InternalTypesParser.g:16947:1: rule__TypeVariable__Group_1_2__1 : rule__TypeVariable__Group_1_2__1__Impl ;
-    public final void rule__TypeVariable__Group_1_2__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalTypesParser.g:16951:1: ( rule__TypeVariable__Group_1_2__1__Impl )
-            // InternalTypesParser.g:16952:2: rule__TypeVariable__Group_1_2__1__Impl
-            {
-            pushFollow(FOLLOW_2);
-            rule__TypeVariable__Group_1_2__1__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeVariable__Group_1_2__1"
-
-
-    // $ANTLR start "rule__TypeVariable__Group_1_2__1__Impl"
-    // InternalTypesParser.g:16958:1: rule__TypeVariable__Group_1_2__1__Impl : ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_2_1 ) ) ;
-    public final void rule__TypeVariable__Group_1_2__1__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalTypesParser.g:16962:1: ( ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_2_1 ) ) )
-            // InternalTypesParser.g:16963:1: ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_2_1 ) )
-            {
-            // InternalTypesParser.g:16963:1: ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_2_1 ) )
-            // InternalTypesParser.g:16964:1: ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_2_1 )
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_1_2_1()); 
-            }
-            // InternalTypesParser.g:16965:1: ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_2_1 )
-            // InternalTypesParser.g:16965:2: rule__TypeVariable__DeclaredUpperBoundsAssignment_1_2_1
-            {
-            pushFollow(FOLLOW_2);
-            rule__TypeVariable__DeclaredUpperBoundsAssignment_1_2_1();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_1_2_1()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeVariable__Group_1_2__1__Impl"
-
-
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group__0"
-    // InternalTypesParser.g:16979:1: rule__TypeVariableWithDefSiteVariance__Group__0 : rule__TypeVariableWithDefSiteVariance__Group__0__Impl rule__TypeVariableWithDefSiteVariance__Group__1 ;
+    // InternalTypesParser.g:16885:1: rule__TypeVariableWithDefSiteVariance__Group__0 : rule__TypeVariableWithDefSiteVariance__Group__0__Impl rule__TypeVariableWithDefSiteVariance__Group__1 ;
     public final void rule__TypeVariableWithDefSiteVariance__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:16983:1: ( rule__TypeVariableWithDefSiteVariance__Group__0__Impl rule__TypeVariableWithDefSiteVariance__Group__1 )
-            // InternalTypesParser.g:16984:2: rule__TypeVariableWithDefSiteVariance__Group__0__Impl rule__TypeVariableWithDefSiteVariance__Group__1
+            // InternalTypesParser.g:16889:1: ( rule__TypeVariableWithDefSiteVariance__Group__0__Impl rule__TypeVariableWithDefSiteVariance__Group__1 )
+            // InternalTypesParser.g:16890:2: rule__TypeVariableWithDefSiteVariance__Group__0__Impl rule__TypeVariableWithDefSiteVariance__Group__1
             {
             pushFollow(FOLLOW_40);
             rule__TypeVariableWithDefSiteVariance__Group__0__Impl();
@@ -48755,31 +48485,31 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group__0__Impl"
-    // InternalTypesParser.g:16991:1: rule__TypeVariableWithDefSiteVariance__Group__0__Impl : ( ( rule__TypeVariableWithDefSiteVariance__Alternatives_0 )? ) ;
+    // InternalTypesParser.g:16897:1: rule__TypeVariableWithDefSiteVariance__Group__0__Impl : ( ( rule__TypeVariableWithDefSiteVariance__Alternatives_0 )? ) ;
     public final void rule__TypeVariableWithDefSiteVariance__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:16995:1: ( ( ( rule__TypeVariableWithDefSiteVariance__Alternatives_0 )? ) )
-            // InternalTypesParser.g:16996:1: ( ( rule__TypeVariableWithDefSiteVariance__Alternatives_0 )? )
+            // InternalTypesParser.g:16901:1: ( ( ( rule__TypeVariableWithDefSiteVariance__Alternatives_0 )? ) )
+            // InternalTypesParser.g:16902:1: ( ( rule__TypeVariableWithDefSiteVariance__Alternatives_0 )? )
             {
-            // InternalTypesParser.g:16996:1: ( ( rule__TypeVariableWithDefSiteVariance__Alternatives_0 )? )
-            // InternalTypesParser.g:16997:1: ( rule__TypeVariableWithDefSiteVariance__Alternatives_0 )?
+            // InternalTypesParser.g:16902:1: ( ( rule__TypeVariableWithDefSiteVariance__Alternatives_0 )? )
+            // InternalTypesParser.g:16903:1: ( rule__TypeVariableWithDefSiteVariance__Alternatives_0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getAlternatives_0()); 
             }
-            // InternalTypesParser.g:16998:1: ( rule__TypeVariableWithDefSiteVariance__Alternatives_0 )?
-            int alt138=2;
-            int LA138_0 = input.LA(1);
+            // InternalTypesParser.g:16904:1: ( rule__TypeVariableWithDefSiteVariance__Alternatives_0 )?
+            int alt137=2;
+            int LA137_0 = input.LA(1);
 
-            if ( (LA138_0==Out||LA138_0==In) ) {
-                alt138=1;
+            if ( (LA137_0==Out||LA137_0==In) ) {
+                alt137=1;
             }
-            switch (alt138) {
+            switch (alt137) {
                 case 1 :
-                    // InternalTypesParser.g:16998:2: rule__TypeVariableWithDefSiteVariance__Alternatives_0
+                    // InternalTypesParser.g:16904:2: rule__TypeVariableWithDefSiteVariance__Alternatives_0
                     {
                     pushFollow(FOLLOW_2);
                     rule__TypeVariableWithDefSiteVariance__Alternatives_0();
@@ -48817,14 +48547,14 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group__1"
-    // InternalTypesParser.g:17008:1: rule__TypeVariableWithDefSiteVariance__Group__1 : rule__TypeVariableWithDefSiteVariance__Group__1__Impl rule__TypeVariableWithDefSiteVariance__Group__2 ;
+    // InternalTypesParser.g:16914:1: rule__TypeVariableWithDefSiteVariance__Group__1 : rule__TypeVariableWithDefSiteVariance__Group__1__Impl rule__TypeVariableWithDefSiteVariance__Group__2 ;
     public final void rule__TypeVariableWithDefSiteVariance__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17012:1: ( rule__TypeVariableWithDefSiteVariance__Group__1__Impl rule__TypeVariableWithDefSiteVariance__Group__2 )
-            // InternalTypesParser.g:17013:2: rule__TypeVariableWithDefSiteVariance__Group__1__Impl rule__TypeVariableWithDefSiteVariance__Group__2
+            // InternalTypesParser.g:16918:1: ( rule__TypeVariableWithDefSiteVariance__Group__1__Impl rule__TypeVariableWithDefSiteVariance__Group__2 )
+            // InternalTypesParser.g:16919:2: rule__TypeVariableWithDefSiteVariance__Group__1__Impl rule__TypeVariableWithDefSiteVariance__Group__2
             {
             pushFollow(FOLLOW_87);
             rule__TypeVariableWithDefSiteVariance__Group__1__Impl();
@@ -48855,23 +48585,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group__1__Impl"
-    // InternalTypesParser.g:17020:1: rule__TypeVariableWithDefSiteVariance__Group__1__Impl : ( ( rule__TypeVariableWithDefSiteVariance__NameAssignment_1 ) ) ;
+    // InternalTypesParser.g:16926:1: rule__TypeVariableWithDefSiteVariance__Group__1__Impl : ( ( rule__TypeVariableWithDefSiteVariance__NameAssignment_1 ) ) ;
     public final void rule__TypeVariableWithDefSiteVariance__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17024:1: ( ( ( rule__TypeVariableWithDefSiteVariance__NameAssignment_1 ) ) )
-            // InternalTypesParser.g:17025:1: ( ( rule__TypeVariableWithDefSiteVariance__NameAssignment_1 ) )
+            // InternalTypesParser.g:16930:1: ( ( ( rule__TypeVariableWithDefSiteVariance__NameAssignment_1 ) ) )
+            // InternalTypesParser.g:16931:1: ( ( rule__TypeVariableWithDefSiteVariance__NameAssignment_1 ) )
             {
-            // InternalTypesParser.g:17025:1: ( ( rule__TypeVariableWithDefSiteVariance__NameAssignment_1 ) )
-            // InternalTypesParser.g:17026:1: ( rule__TypeVariableWithDefSiteVariance__NameAssignment_1 )
+            // InternalTypesParser.g:16931:1: ( ( rule__TypeVariableWithDefSiteVariance__NameAssignment_1 ) )
+            // InternalTypesParser.g:16932:1: ( rule__TypeVariableWithDefSiteVariance__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getNameAssignment_1()); 
             }
-            // InternalTypesParser.g:17027:1: ( rule__TypeVariableWithDefSiteVariance__NameAssignment_1 )
-            // InternalTypesParser.g:17027:2: rule__TypeVariableWithDefSiteVariance__NameAssignment_1
+            // InternalTypesParser.g:16933:1: ( rule__TypeVariableWithDefSiteVariance__NameAssignment_1 )
+            // InternalTypesParser.g:16933:2: rule__TypeVariableWithDefSiteVariance__NameAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__TypeVariableWithDefSiteVariance__NameAssignment_1();
@@ -48906,14 +48636,14 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group__2"
-    // InternalTypesParser.g:17037:1: rule__TypeVariableWithDefSiteVariance__Group__2 : rule__TypeVariableWithDefSiteVariance__Group__2__Impl ;
+    // InternalTypesParser.g:16943:1: rule__TypeVariableWithDefSiteVariance__Group__2 : rule__TypeVariableWithDefSiteVariance__Group__2__Impl ;
     public final void rule__TypeVariableWithDefSiteVariance__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17041:1: ( rule__TypeVariableWithDefSiteVariance__Group__2__Impl )
-            // InternalTypesParser.g:17042:2: rule__TypeVariableWithDefSiteVariance__Group__2__Impl
+            // InternalTypesParser.g:16947:1: ( rule__TypeVariableWithDefSiteVariance__Group__2__Impl )
+            // InternalTypesParser.g:16948:2: rule__TypeVariableWithDefSiteVariance__Group__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__TypeVariableWithDefSiteVariance__Group__2__Impl();
@@ -48939,31 +48669,31 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group__2__Impl"
-    // InternalTypesParser.g:17048:1: rule__TypeVariableWithDefSiteVariance__Group__2__Impl : ( ( rule__TypeVariableWithDefSiteVariance__Group_2__0 )? ) ;
+    // InternalTypesParser.g:16954:1: rule__TypeVariableWithDefSiteVariance__Group__2__Impl : ( ( rule__TypeVariableWithDefSiteVariance__Group_2__0 )? ) ;
     public final void rule__TypeVariableWithDefSiteVariance__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17052:1: ( ( ( rule__TypeVariableWithDefSiteVariance__Group_2__0 )? ) )
-            // InternalTypesParser.g:17053:1: ( ( rule__TypeVariableWithDefSiteVariance__Group_2__0 )? )
+            // InternalTypesParser.g:16958:1: ( ( ( rule__TypeVariableWithDefSiteVariance__Group_2__0 )? ) )
+            // InternalTypesParser.g:16959:1: ( ( rule__TypeVariableWithDefSiteVariance__Group_2__0 )? )
             {
-            // InternalTypesParser.g:17053:1: ( ( rule__TypeVariableWithDefSiteVariance__Group_2__0 )? )
-            // InternalTypesParser.g:17054:1: ( rule__TypeVariableWithDefSiteVariance__Group_2__0 )?
+            // InternalTypesParser.g:16959:1: ( ( rule__TypeVariableWithDefSiteVariance__Group_2__0 )? )
+            // InternalTypesParser.g:16960:1: ( rule__TypeVariableWithDefSiteVariance__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getGroup_2()); 
             }
-            // InternalTypesParser.g:17055:1: ( rule__TypeVariableWithDefSiteVariance__Group_2__0 )?
-            int alt139=2;
-            int LA139_0 = input.LA(1);
+            // InternalTypesParser.g:16961:1: ( rule__TypeVariableWithDefSiteVariance__Group_2__0 )?
+            int alt138=2;
+            int LA138_0 = input.LA(1);
 
-            if ( (LA139_0==Extends) ) {
-                alt139=1;
+            if ( (LA138_0==Extends) ) {
+                alt138=1;
             }
-            switch (alt139) {
+            switch (alt138) {
                 case 1 :
-                    // InternalTypesParser.g:17055:2: rule__TypeVariableWithDefSiteVariance__Group_2__0
+                    // InternalTypesParser.g:16961:2: rule__TypeVariableWithDefSiteVariance__Group_2__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__TypeVariableWithDefSiteVariance__Group_2__0();
@@ -49001,16 +48731,16 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group_2__0"
-    // InternalTypesParser.g:17071:1: rule__TypeVariableWithDefSiteVariance__Group_2__0 : rule__TypeVariableWithDefSiteVariance__Group_2__0__Impl rule__TypeVariableWithDefSiteVariance__Group_2__1 ;
+    // InternalTypesParser.g:16977:1: rule__TypeVariableWithDefSiteVariance__Group_2__0 : rule__TypeVariableWithDefSiteVariance__Group_2__0__Impl rule__TypeVariableWithDefSiteVariance__Group_2__1 ;
     public final void rule__TypeVariableWithDefSiteVariance__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17075:1: ( rule__TypeVariableWithDefSiteVariance__Group_2__0__Impl rule__TypeVariableWithDefSiteVariance__Group_2__1 )
-            // InternalTypesParser.g:17076:2: rule__TypeVariableWithDefSiteVariance__Group_2__0__Impl rule__TypeVariableWithDefSiteVariance__Group_2__1
+            // InternalTypesParser.g:16981:1: ( rule__TypeVariableWithDefSiteVariance__Group_2__0__Impl rule__TypeVariableWithDefSiteVariance__Group_2__1 )
+            // InternalTypesParser.g:16982:2: rule__TypeVariableWithDefSiteVariance__Group_2__0__Impl rule__TypeVariableWithDefSiteVariance__Group_2__1
             {
-            pushFollow(FOLLOW_88);
+            pushFollow(FOLLOW_9);
             rule__TypeVariableWithDefSiteVariance__Group_2__0__Impl();
 
             state._fsp--;
@@ -49039,17 +48769,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group_2__0__Impl"
-    // InternalTypesParser.g:17083:1: rule__TypeVariableWithDefSiteVariance__Group_2__0__Impl : ( Extends ) ;
+    // InternalTypesParser.g:16989:1: rule__TypeVariableWithDefSiteVariance__Group_2__0__Impl : ( Extends ) ;
     public final void rule__TypeVariableWithDefSiteVariance__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17087:1: ( ( Extends ) )
-            // InternalTypesParser.g:17088:1: ( Extends )
+            // InternalTypesParser.g:16993:1: ( ( Extends ) )
+            // InternalTypesParser.g:16994:1: ( Extends )
             {
-            // InternalTypesParser.g:17088:1: ( Extends )
-            // InternalTypesParser.g:17089:1: Extends
+            // InternalTypesParser.g:16994:1: ( Extends )
+            // InternalTypesParser.g:16995:1: Extends
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getExtendsKeyword_2_0()); 
@@ -49080,22 +48810,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group_2__1"
-    // InternalTypesParser.g:17102:1: rule__TypeVariableWithDefSiteVariance__Group_2__1 : rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl rule__TypeVariableWithDefSiteVariance__Group_2__2 ;
+    // InternalTypesParser.g:17008:1: rule__TypeVariableWithDefSiteVariance__Group_2__1 : rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl ;
     public final void rule__TypeVariableWithDefSiteVariance__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17106:1: ( rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl rule__TypeVariableWithDefSiteVariance__Group_2__2 )
-            // InternalTypesParser.g:17107:2: rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl rule__TypeVariableWithDefSiteVariance__Group_2__2
+            // InternalTypesParser.g:17012:1: ( rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl )
+            // InternalTypesParser.g:17013:2: rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl
             {
-            pushFollow(FOLLOW_57);
-            rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
             pushFollow(FOLLOW_2);
-            rule__TypeVariableWithDefSiteVariance__Group_2__2();
+            rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -49118,23 +48843,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl"
-    // InternalTypesParser.g:17114:1: rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl : ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 ) ) ;
+    // InternalTypesParser.g:17019:1: rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl : ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 ) ) ;
     public final void rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17118:1: ( ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 ) ) )
-            // InternalTypesParser.g:17119:1: ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 ) )
+            // InternalTypesParser.g:17023:1: ( ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 ) ) )
+            // InternalTypesParser.g:17024:1: ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 ) )
             {
-            // InternalTypesParser.g:17119:1: ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 ) )
-            // InternalTypesParser.g:17120:1: ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 )
+            // InternalTypesParser.g:17024:1: ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 ) )
+            // InternalTypesParser.g:17025:1: ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsAssignment_2_1()); 
             }
-            // InternalTypesParser.g:17121:1: ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 )
-            // InternalTypesParser.g:17121:2: rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1
+            // InternalTypesParser.g:17026:1: ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 )
+            // InternalTypesParser.g:17026:2: rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1
             {
             pushFollow(FOLLOW_2);
             rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1();
@@ -49168,283 +48893,18 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl"
 
 
-    // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group_2__2"
-    // InternalTypesParser.g:17131:1: rule__TypeVariableWithDefSiteVariance__Group_2__2 : rule__TypeVariableWithDefSiteVariance__Group_2__2__Impl ;
-    public final void rule__TypeVariableWithDefSiteVariance__Group_2__2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalTypesParser.g:17135:1: ( rule__TypeVariableWithDefSiteVariance__Group_2__2__Impl )
-            // InternalTypesParser.g:17136:2: rule__TypeVariableWithDefSiteVariance__Group_2__2__Impl
-            {
-            pushFollow(FOLLOW_2);
-            rule__TypeVariableWithDefSiteVariance__Group_2__2__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeVariableWithDefSiteVariance__Group_2__2"
-
-
-    // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group_2__2__Impl"
-    // InternalTypesParser.g:17142:1: rule__TypeVariableWithDefSiteVariance__Group_2__2__Impl : ( ( rule__TypeVariableWithDefSiteVariance__Group_2_2__0 )* ) ;
-    public final void rule__TypeVariableWithDefSiteVariance__Group_2__2__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalTypesParser.g:17146:1: ( ( ( rule__TypeVariableWithDefSiteVariance__Group_2_2__0 )* ) )
-            // InternalTypesParser.g:17147:1: ( ( rule__TypeVariableWithDefSiteVariance__Group_2_2__0 )* )
-            {
-            // InternalTypesParser.g:17147:1: ( ( rule__TypeVariableWithDefSiteVariance__Group_2_2__0 )* )
-            // InternalTypesParser.g:17148:1: ( rule__TypeVariableWithDefSiteVariance__Group_2_2__0 )*
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getGroup_2_2()); 
-            }
-            // InternalTypesParser.g:17149:1: ( rule__TypeVariableWithDefSiteVariance__Group_2_2__0 )*
-            loop140:
-            do {
-                int alt140=2;
-                int LA140_0 = input.LA(1);
-
-                if ( (LA140_0==Ampersand) ) {
-                    alt140=1;
-                }
-
-
-                switch (alt140) {
-            	case 1 :
-            	    // InternalTypesParser.g:17149:2: rule__TypeVariableWithDefSiteVariance__Group_2_2__0
-            	    {
-            	    pushFollow(FOLLOW_58);
-            	    rule__TypeVariableWithDefSiteVariance__Group_2_2__0();
-
-            	    state._fsp--;
-            	    if (state.failed) return ;
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop140;
-                }
-            } while (true);
-
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getGroup_2_2()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeVariableWithDefSiteVariance__Group_2__2__Impl"
-
-
-    // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group_2_2__0"
-    // InternalTypesParser.g:17165:1: rule__TypeVariableWithDefSiteVariance__Group_2_2__0 : rule__TypeVariableWithDefSiteVariance__Group_2_2__0__Impl rule__TypeVariableWithDefSiteVariance__Group_2_2__1 ;
-    public final void rule__TypeVariableWithDefSiteVariance__Group_2_2__0() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalTypesParser.g:17169:1: ( rule__TypeVariableWithDefSiteVariance__Group_2_2__0__Impl rule__TypeVariableWithDefSiteVariance__Group_2_2__1 )
-            // InternalTypesParser.g:17170:2: rule__TypeVariableWithDefSiteVariance__Group_2_2__0__Impl rule__TypeVariableWithDefSiteVariance__Group_2_2__1
-            {
-            pushFollow(FOLLOW_88);
-            rule__TypeVariableWithDefSiteVariance__Group_2_2__0__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-            pushFollow(FOLLOW_2);
-            rule__TypeVariableWithDefSiteVariance__Group_2_2__1();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeVariableWithDefSiteVariance__Group_2_2__0"
-
-
-    // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group_2_2__0__Impl"
-    // InternalTypesParser.g:17177:1: rule__TypeVariableWithDefSiteVariance__Group_2_2__0__Impl : ( Ampersand ) ;
-    public final void rule__TypeVariableWithDefSiteVariance__Group_2_2__0__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalTypesParser.g:17181:1: ( ( Ampersand ) )
-            // InternalTypesParser.g:17182:1: ( Ampersand )
-            {
-            // InternalTypesParser.g:17182:1: ( Ampersand )
-            // InternalTypesParser.g:17183:1: Ampersand
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getAmpersandKeyword_2_2_0()); 
-            }
-            match(input,Ampersand,FOLLOW_2); if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getAmpersandKeyword_2_2_0()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeVariableWithDefSiteVariance__Group_2_2__0__Impl"
-
-
-    // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group_2_2__1"
-    // InternalTypesParser.g:17196:1: rule__TypeVariableWithDefSiteVariance__Group_2_2__1 : rule__TypeVariableWithDefSiteVariance__Group_2_2__1__Impl ;
-    public final void rule__TypeVariableWithDefSiteVariance__Group_2_2__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalTypesParser.g:17200:1: ( rule__TypeVariableWithDefSiteVariance__Group_2_2__1__Impl )
-            // InternalTypesParser.g:17201:2: rule__TypeVariableWithDefSiteVariance__Group_2_2__1__Impl
-            {
-            pushFollow(FOLLOW_2);
-            rule__TypeVariableWithDefSiteVariance__Group_2_2__1__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeVariableWithDefSiteVariance__Group_2_2__1"
-
-
-    // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group_2_2__1__Impl"
-    // InternalTypesParser.g:17207:1: rule__TypeVariableWithDefSiteVariance__Group_2_2__1__Impl : ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_2_1 ) ) ;
-    public final void rule__TypeVariableWithDefSiteVariance__Group_2_2__1__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalTypesParser.g:17211:1: ( ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_2_1 ) ) )
-            // InternalTypesParser.g:17212:1: ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_2_1 ) )
-            {
-            // InternalTypesParser.g:17212:1: ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_2_1 ) )
-            // InternalTypesParser.g:17213:1: ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_2_1 )
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsAssignment_2_2_1()); 
-            }
-            // InternalTypesParser.g:17214:1: ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_2_1 )
-            // InternalTypesParser.g:17214:2: rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_2_1
-            {
-            pushFollow(FOLLOW_2);
-            rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_2_1();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsAssignment_2_2_1()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeVariableWithDefSiteVariance__Group_2_2__1__Impl"
-
-
     // $ANTLR start "rule__TypeDefs__TypesAssignment"
-    // InternalTypesParser.g:17229:1: rule__TypeDefs__TypesAssignment : ( ruleType ) ;
+    // InternalTypesParser.g:17041:1: rule__TypeDefs__TypesAssignment : ( ruleType ) ;
     public final void rule__TypeDefs__TypesAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17233:1: ( ( ruleType ) )
-            // InternalTypesParser.g:17234:1: ( ruleType )
+            // InternalTypesParser.g:17045:1: ( ( ruleType ) )
+            // InternalTypesParser.g:17046:1: ( ruleType )
             {
-            // InternalTypesParser.g:17234:1: ( ruleType )
-            // InternalTypesParser.g:17235:1: ruleType
+            // InternalTypesParser.g:17046:1: ( ruleType )
+            // InternalTypesParser.g:17047:1: ruleType
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeDefsAccess().getTypesTypeParserRuleCall_0()); 
@@ -49479,17 +48939,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TAnnotation__NameAssignment_0_0_1"
-    // InternalTypesParser.g:17244:1: rule__TAnnotation__NameAssignment_0_0_1 : ( RULE_IDENTIFIER ) ;
+    // InternalTypesParser.g:17056:1: rule__TAnnotation__NameAssignment_0_0_1 : ( RULE_IDENTIFIER ) ;
     public final void rule__TAnnotation__NameAssignment_0_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17248:1: ( ( RULE_IDENTIFIER ) )
-            // InternalTypesParser.g:17249:1: ( RULE_IDENTIFIER )
+            // InternalTypesParser.g:17060:1: ( ( RULE_IDENTIFIER ) )
+            // InternalTypesParser.g:17061:1: ( RULE_IDENTIFIER )
             {
-            // InternalTypesParser.g:17249:1: ( RULE_IDENTIFIER )
-            // InternalTypesParser.g:17250:1: RULE_IDENTIFIER
+            // InternalTypesParser.g:17061:1: ( RULE_IDENTIFIER )
+            // InternalTypesParser.g:17062:1: RULE_IDENTIFIER
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTAnnotationAccess().getNameIDENTIFIERTerminalRuleCall_0_0_1_0()); 
@@ -49520,17 +48980,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TAnnotation__ArgsAssignment_1_1_0"
-    // InternalTypesParser.g:17259:1: rule__TAnnotation__ArgsAssignment_1_1_0 : ( ruleTAnnotationArgument ) ;
+    // InternalTypesParser.g:17071:1: rule__TAnnotation__ArgsAssignment_1_1_0 : ( ruleTAnnotationArgument ) ;
     public final void rule__TAnnotation__ArgsAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17263:1: ( ( ruleTAnnotationArgument ) )
-            // InternalTypesParser.g:17264:1: ( ruleTAnnotationArgument )
+            // InternalTypesParser.g:17075:1: ( ( ruleTAnnotationArgument ) )
+            // InternalTypesParser.g:17076:1: ( ruleTAnnotationArgument )
             {
-            // InternalTypesParser.g:17264:1: ( ruleTAnnotationArgument )
-            // InternalTypesParser.g:17265:1: ruleTAnnotationArgument
+            // InternalTypesParser.g:17076:1: ( ruleTAnnotationArgument )
+            // InternalTypesParser.g:17077:1: ruleTAnnotationArgument
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTAnnotationAccess().getArgsTAnnotationArgumentParserRuleCall_1_1_0_0()); 
@@ -49565,17 +49025,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TAnnotation__ArgsAssignment_1_1_1_1"
-    // InternalTypesParser.g:17274:1: rule__TAnnotation__ArgsAssignment_1_1_1_1 : ( ruleTAnnotationArgument ) ;
+    // InternalTypesParser.g:17086:1: rule__TAnnotation__ArgsAssignment_1_1_1_1 : ( ruleTAnnotationArgument ) ;
     public final void rule__TAnnotation__ArgsAssignment_1_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17278:1: ( ( ruleTAnnotationArgument ) )
-            // InternalTypesParser.g:17279:1: ( ruleTAnnotationArgument )
+            // InternalTypesParser.g:17090:1: ( ( ruleTAnnotationArgument ) )
+            // InternalTypesParser.g:17091:1: ( ruleTAnnotationArgument )
             {
-            // InternalTypesParser.g:17279:1: ( ruleTAnnotationArgument )
-            // InternalTypesParser.g:17280:1: ruleTAnnotationArgument
+            // InternalTypesParser.g:17091:1: ( ruleTAnnotationArgument )
+            // InternalTypesParser.g:17092:1: ruleTAnnotationArgument
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTAnnotationAccess().getArgsTAnnotationArgumentParserRuleCall_1_1_1_1_0()); 
@@ -49610,17 +49070,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TAnnotationStringArgument__ValueAssignment"
-    // InternalTypesParser.g:17289:1: rule__TAnnotationStringArgument__ValueAssignment : ( RULE_STRING ) ;
+    // InternalTypesParser.g:17101:1: rule__TAnnotationStringArgument__ValueAssignment : ( RULE_STRING ) ;
     public final void rule__TAnnotationStringArgument__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17293:1: ( ( RULE_STRING ) )
-            // InternalTypesParser.g:17294:1: ( RULE_STRING )
+            // InternalTypesParser.g:17105:1: ( ( RULE_STRING ) )
+            // InternalTypesParser.g:17106:1: ( RULE_STRING )
             {
-            // InternalTypesParser.g:17294:1: ( RULE_STRING )
-            // InternalTypesParser.g:17295:1: RULE_STRING
+            // InternalTypesParser.g:17106:1: ( RULE_STRING )
+            // InternalTypesParser.g:17107:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTAnnotationStringArgumentAccess().getValueSTRINGTerminalRuleCall_0()); 
@@ -49651,17 +49111,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TAnnotationTypeRefArgument__TypeRefAssignment"
-    // InternalTypesParser.g:17304:1: rule__TAnnotationTypeRefArgument__TypeRefAssignment : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:17116:1: rule__TAnnotationTypeRefArgument__TypeRefAssignment : ( ruleTypeRef ) ;
     public final void rule__TAnnotationTypeRefArgument__TypeRefAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17308:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:17309:1: ( ruleTypeRef )
+            // InternalTypesParser.g:17120:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:17121:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:17309:1: ( ruleTypeRef )
-            // InternalTypesParser.g:17310:1: ruleTypeRef
+            // InternalTypesParser.g:17121:1: ( ruleTypeRef )
+            // InternalTypesParser.g:17122:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTAnnotationTypeRefArgumentAccess().getTypeRefTypeRefParserRuleCall_0()); 
@@ -49696,17 +49156,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeRef__UndefModifierAssignment_1"
-    // InternalTypesParser.g:17319:1: rule__TypeRef__UndefModifierAssignment_1 : ( ruleUndefModifierToken ) ;
+    // InternalTypesParser.g:17131:1: rule__TypeRef__UndefModifierAssignment_1 : ( ruleUndefModifierToken ) ;
     public final void rule__TypeRef__UndefModifierAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17323:1: ( ( ruleUndefModifierToken ) )
-            // InternalTypesParser.g:17324:1: ( ruleUndefModifierToken )
+            // InternalTypesParser.g:17135:1: ( ( ruleUndefModifierToken ) )
+            // InternalTypesParser.g:17136:1: ( ruleUndefModifierToken )
             {
-            // InternalTypesParser.g:17324:1: ( ruleUndefModifierToken )
-            // InternalTypesParser.g:17325:1: ruleUndefModifierToken
+            // InternalTypesParser.g:17136:1: ( ruleUndefModifierToken )
+            // InternalTypesParser.g:17137:1: ruleUndefModifierToken
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeRefAccess().getUndefModifierUndefModifierTokenParserRuleCall_1_0()); 
@@ -49741,17 +49201,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeRef__NullModifierAssignment_2"
-    // InternalTypesParser.g:17334:1: rule__TypeRef__NullModifierAssignment_2 : ( ruleNullModifierToken ) ;
+    // InternalTypesParser.g:17146:1: rule__TypeRef__NullModifierAssignment_2 : ( ruleNullModifierToken ) ;
     public final void rule__TypeRef__NullModifierAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17338:1: ( ( ruleNullModifierToken ) )
-            // InternalTypesParser.g:17339:1: ( ruleNullModifierToken )
+            // InternalTypesParser.g:17150:1: ( ( ruleNullModifierToken ) )
+            // InternalTypesParser.g:17151:1: ( ruleNullModifierToken )
             {
-            // InternalTypesParser.g:17339:1: ( ruleNullModifierToken )
-            // InternalTypesParser.g:17340:1: ruleNullModifierToken
+            // InternalTypesParser.g:17151:1: ( ruleNullModifierToken )
+            // InternalTypesParser.g:17152:1: ruleNullModifierToken
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeRefAccess().getNullModifierNullModifierTokenParserRuleCall_2_0()); 
@@ -49786,17 +49246,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PrimitiveType__NameAssignment_1"
-    // InternalTypesParser.g:17349:1: rule__PrimitiveType__NameAssignment_1 : ( ruleVoidOrBindingIdentifier ) ;
+    // InternalTypesParser.g:17161:1: rule__PrimitiveType__NameAssignment_1 : ( ruleVoidOrBindingIdentifier ) ;
     public final void rule__PrimitiveType__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17353:1: ( ( ruleVoidOrBindingIdentifier ) )
-            // InternalTypesParser.g:17354:1: ( ruleVoidOrBindingIdentifier )
+            // InternalTypesParser.g:17165:1: ( ( ruleVoidOrBindingIdentifier ) )
+            // InternalTypesParser.g:17166:1: ( ruleVoidOrBindingIdentifier )
             {
-            // InternalTypesParser.g:17354:1: ( ruleVoidOrBindingIdentifier )
-            // InternalTypesParser.g:17355:1: ruleVoidOrBindingIdentifier
+            // InternalTypesParser.g:17166:1: ( ruleVoidOrBindingIdentifier )
+            // InternalTypesParser.g:17167:1: ruleVoidOrBindingIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrimitiveTypeAccess().getNameVoidOrBindingIdentifierParserRuleCall_1_0()); 
@@ -49831,17 +49291,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PrimitiveType__TypeVarsAssignment_2_1"
-    // InternalTypesParser.g:17364:1: rule__PrimitiveType__TypeVarsAssignment_2_1 : ( ruleTypeVariable ) ;
+    // InternalTypesParser.g:17176:1: rule__PrimitiveType__TypeVarsAssignment_2_1 : ( ruleTypeVariable ) ;
     public final void rule__PrimitiveType__TypeVarsAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17368:1: ( ( ruleTypeVariable ) )
-            // InternalTypesParser.g:17369:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:17180:1: ( ( ruleTypeVariable ) )
+            // InternalTypesParser.g:17181:1: ( ruleTypeVariable )
             {
-            // InternalTypesParser.g:17369:1: ( ruleTypeVariable )
-            // InternalTypesParser.g:17370:1: ruleTypeVariable
+            // InternalTypesParser.g:17181:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:17182:1: ruleTypeVariable
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrimitiveTypeAccess().getTypeVarsTypeVariableParserRuleCall_2_1_0()); 
@@ -49876,17 +49336,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PrimitiveType__DeclaredElementTypeAssignment_3_1"
-    // InternalTypesParser.g:17379:1: rule__PrimitiveType__DeclaredElementTypeAssignment_3_1 : ( ruleParameterizedTypeRefNominal ) ;
+    // InternalTypesParser.g:17191:1: rule__PrimitiveType__DeclaredElementTypeAssignment_3_1 : ( ruleParameterizedTypeRefNominal ) ;
     public final void rule__PrimitiveType__DeclaredElementTypeAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17383:1: ( ( ruleParameterizedTypeRefNominal ) )
-            // InternalTypesParser.g:17384:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17195:1: ( ( ruleParameterizedTypeRefNominal ) )
+            // InternalTypesParser.g:17196:1: ( ruleParameterizedTypeRefNominal )
             {
-            // InternalTypesParser.g:17384:1: ( ruleParameterizedTypeRefNominal )
-            // InternalTypesParser.g:17385:1: ruleParameterizedTypeRefNominal
+            // InternalTypesParser.g:17196:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17197:1: ruleParameterizedTypeRefNominal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrimitiveTypeAccess().getDeclaredElementTypeParameterizedTypeRefNominalParserRuleCall_3_1_0()); 
@@ -49921,23 +49381,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PrimitiveType__AutoboxedTypeAssignment_5_1"
-    // InternalTypesParser.g:17394:1: rule__PrimitiveType__AutoboxedTypeAssignment_5_1 : ( ( ruleTypeReferenceName ) ) ;
+    // InternalTypesParser.g:17206:1: rule__PrimitiveType__AutoboxedTypeAssignment_5_1 : ( ( ruleTypeReferenceName ) ) ;
     public final void rule__PrimitiveType__AutoboxedTypeAssignment_5_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17398:1: ( ( ( ruleTypeReferenceName ) ) )
-            // InternalTypesParser.g:17399:1: ( ( ruleTypeReferenceName ) )
+            // InternalTypesParser.g:17210:1: ( ( ( ruleTypeReferenceName ) ) )
+            // InternalTypesParser.g:17211:1: ( ( ruleTypeReferenceName ) )
             {
-            // InternalTypesParser.g:17399:1: ( ( ruleTypeReferenceName ) )
-            // InternalTypesParser.g:17400:1: ( ruleTypeReferenceName )
+            // InternalTypesParser.g:17211:1: ( ( ruleTypeReferenceName ) )
+            // InternalTypesParser.g:17212:1: ( ruleTypeReferenceName )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrimitiveTypeAccess().getAutoboxedTypeTClassifierCrossReference_5_1_0()); 
             }
-            // InternalTypesParser.g:17401:1: ( ruleTypeReferenceName )
-            // InternalTypesParser.g:17402:1: ruleTypeReferenceName
+            // InternalTypesParser.g:17213:1: ( ruleTypeReferenceName )
+            // InternalTypesParser.g:17214:1: ruleTypeReferenceName
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrimitiveTypeAccess().getAutoboxedTypeTClassifierTypeReferenceNameParserRuleCall_5_1_0_1()); 
@@ -49978,23 +49438,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PrimitiveType__AssignmentCompatibleAssignment_6_1"
-    // InternalTypesParser.g:17413:1: rule__PrimitiveType__AssignmentCompatibleAssignment_6_1 : ( ( ruleTypeReferenceName ) ) ;
+    // InternalTypesParser.g:17225:1: rule__PrimitiveType__AssignmentCompatibleAssignment_6_1 : ( ( ruleTypeReferenceName ) ) ;
     public final void rule__PrimitiveType__AssignmentCompatibleAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17417:1: ( ( ( ruleTypeReferenceName ) ) )
-            // InternalTypesParser.g:17418:1: ( ( ruleTypeReferenceName ) )
+            // InternalTypesParser.g:17229:1: ( ( ( ruleTypeReferenceName ) ) )
+            // InternalTypesParser.g:17230:1: ( ( ruleTypeReferenceName ) )
             {
-            // InternalTypesParser.g:17418:1: ( ( ruleTypeReferenceName ) )
-            // InternalTypesParser.g:17419:1: ( ruleTypeReferenceName )
+            // InternalTypesParser.g:17230:1: ( ( ruleTypeReferenceName ) )
+            // InternalTypesParser.g:17231:1: ( ruleTypeReferenceName )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrimitiveTypeAccess().getAssignmentCompatiblePrimitiveTypeCrossReference_6_1_0()); 
             }
-            // InternalTypesParser.g:17420:1: ( ruleTypeReferenceName )
-            // InternalTypesParser.g:17421:1: ruleTypeReferenceName
+            // InternalTypesParser.g:17232:1: ( ruleTypeReferenceName )
+            // InternalTypesParser.g:17233:1: ruleTypeReferenceName
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrimitiveTypeAccess().getAssignmentCompatiblePrimitiveTypeTypeReferenceNameParserRuleCall_6_1_0_1()); 
@@ -50035,23 +49495,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AnyType__NameAssignment_1"
-    // InternalTypesParser.g:17432:1: rule__AnyType__NameAssignment_1 : ( ( Any ) ) ;
+    // InternalTypesParser.g:17244:1: rule__AnyType__NameAssignment_1 : ( ( Any ) ) ;
     public final void rule__AnyType__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17436:1: ( ( ( Any ) ) )
-            // InternalTypesParser.g:17437:1: ( ( Any ) )
+            // InternalTypesParser.g:17248:1: ( ( ( Any ) ) )
+            // InternalTypesParser.g:17249:1: ( ( Any ) )
             {
-            // InternalTypesParser.g:17437:1: ( ( Any ) )
-            // InternalTypesParser.g:17438:1: ( Any )
+            // InternalTypesParser.g:17249:1: ( ( Any ) )
+            // InternalTypesParser.g:17250:1: ( Any )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAnyTypeAccess().getNameAnyKeyword_1_0()); 
             }
-            // InternalTypesParser.g:17439:1: ( Any )
-            // InternalTypesParser.g:17440:1: Any
+            // InternalTypesParser.g:17251:1: ( Any )
+            // InternalTypesParser.g:17252:1: Any
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAnyTypeAccess().getNameAnyKeyword_1_0()); 
@@ -50088,23 +49548,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VoidType__NameAssignment_1"
-    // InternalTypesParser.g:17455:1: rule__VoidType__NameAssignment_1 : ( ( Void ) ) ;
+    // InternalTypesParser.g:17267:1: rule__VoidType__NameAssignment_1 : ( ( Void ) ) ;
     public final void rule__VoidType__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17459:1: ( ( ( Void ) ) )
-            // InternalTypesParser.g:17460:1: ( ( Void ) )
+            // InternalTypesParser.g:17271:1: ( ( ( Void ) ) )
+            // InternalTypesParser.g:17272:1: ( ( Void ) )
             {
-            // InternalTypesParser.g:17460:1: ( ( Void ) )
-            // InternalTypesParser.g:17461:1: ( Void )
+            // InternalTypesParser.g:17272:1: ( ( Void ) )
+            // InternalTypesParser.g:17273:1: ( Void )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVoidTypeAccess().getNameVoidKeyword_1_0()); 
             }
-            // InternalTypesParser.g:17462:1: ( Void )
-            // InternalTypesParser.g:17463:1: Void
+            // InternalTypesParser.g:17274:1: ( Void )
+            // InternalTypesParser.g:17275:1: Void
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVoidTypeAccess().getNameVoidKeyword_1_0()); 
@@ -50141,23 +49601,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__UndefinedType__NameAssignment_1"
-    // InternalTypesParser.g:17478:1: rule__UndefinedType__NameAssignment_1 : ( ( Undefined ) ) ;
+    // InternalTypesParser.g:17290:1: rule__UndefinedType__NameAssignment_1 : ( ( Undefined ) ) ;
     public final void rule__UndefinedType__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17482:1: ( ( ( Undefined ) ) )
-            // InternalTypesParser.g:17483:1: ( ( Undefined ) )
+            // InternalTypesParser.g:17294:1: ( ( ( Undefined ) ) )
+            // InternalTypesParser.g:17295:1: ( ( Undefined ) )
             {
-            // InternalTypesParser.g:17483:1: ( ( Undefined ) )
-            // InternalTypesParser.g:17484:1: ( Undefined )
+            // InternalTypesParser.g:17295:1: ( ( Undefined ) )
+            // InternalTypesParser.g:17296:1: ( Undefined )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getUndefinedTypeAccess().getNameUndefinedKeyword_1_0()); 
             }
-            // InternalTypesParser.g:17485:1: ( Undefined )
-            // InternalTypesParser.g:17486:1: Undefined
+            // InternalTypesParser.g:17297:1: ( Undefined )
+            // InternalTypesParser.g:17298:1: Undefined
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getUndefinedTypeAccess().getNameUndefinedKeyword_1_0()); 
@@ -50194,23 +49654,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NullType__NameAssignment_1"
-    // InternalTypesParser.g:17501:1: rule__NullType__NameAssignment_1 : ( ( Null ) ) ;
+    // InternalTypesParser.g:17313:1: rule__NullType__NameAssignment_1 : ( ( Null ) ) ;
     public final void rule__NullType__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17505:1: ( ( ( Null ) ) )
-            // InternalTypesParser.g:17506:1: ( ( Null ) )
+            // InternalTypesParser.g:17317:1: ( ( ( Null ) ) )
+            // InternalTypesParser.g:17318:1: ( ( Null ) )
             {
-            // InternalTypesParser.g:17506:1: ( ( Null ) )
-            // InternalTypesParser.g:17507:1: ( Null )
+            // InternalTypesParser.g:17318:1: ( ( Null ) )
+            // InternalTypesParser.g:17319:1: ( Null )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNullTypeAccess().getNameNullKeyword_1_0()); 
             }
-            // InternalTypesParser.g:17508:1: ( Null )
-            // InternalTypesParser.g:17509:1: Null
+            // InternalTypesParser.g:17320:1: ( Null )
+            // InternalTypesParser.g:17321:1: Null
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNullTypeAccess().getNameNullKeyword_1_0()); 
@@ -50247,17 +49707,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TObjectPrototype__DeclaredTypeAccessModifierAssignment_0"
-    // InternalTypesParser.g:17524:1: rule__TObjectPrototype__DeclaredTypeAccessModifierAssignment_0 : ( ruleTypeAccessModifier ) ;
+    // InternalTypesParser.g:17336:1: rule__TObjectPrototype__DeclaredTypeAccessModifierAssignment_0 : ( ruleTypeAccessModifier ) ;
     public final void rule__TObjectPrototype__DeclaredTypeAccessModifierAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17528:1: ( ( ruleTypeAccessModifier ) )
-            // InternalTypesParser.g:17529:1: ( ruleTypeAccessModifier )
+            // InternalTypesParser.g:17340:1: ( ( ruleTypeAccessModifier ) )
+            // InternalTypesParser.g:17341:1: ( ruleTypeAccessModifier )
             {
-            // InternalTypesParser.g:17529:1: ( ruleTypeAccessModifier )
-            // InternalTypesParser.g:17530:1: ruleTypeAccessModifier
+            // InternalTypesParser.g:17341:1: ( ruleTypeAccessModifier )
+            // InternalTypesParser.g:17342:1: ruleTypeAccessModifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTObjectPrototypeAccess().getDeclaredTypeAccessModifierTypeAccessModifierEnumRuleCall_0_0()); 
@@ -50292,23 +49752,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TObjectPrototype__DeclaredProvidedByRuntimeAssignment_1"
-    // InternalTypesParser.g:17539:1: rule__TObjectPrototype__DeclaredProvidedByRuntimeAssignment_1 : ( ( ProvidedByRuntime ) ) ;
+    // InternalTypesParser.g:17351:1: rule__TObjectPrototype__DeclaredProvidedByRuntimeAssignment_1 : ( ( ProvidedByRuntime ) ) ;
     public final void rule__TObjectPrototype__DeclaredProvidedByRuntimeAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17543:1: ( ( ( ProvidedByRuntime ) ) )
-            // InternalTypesParser.g:17544:1: ( ( ProvidedByRuntime ) )
+            // InternalTypesParser.g:17355:1: ( ( ( ProvidedByRuntime ) ) )
+            // InternalTypesParser.g:17356:1: ( ( ProvidedByRuntime ) )
             {
-            // InternalTypesParser.g:17544:1: ( ( ProvidedByRuntime ) )
-            // InternalTypesParser.g:17545:1: ( ProvidedByRuntime )
+            // InternalTypesParser.g:17356:1: ( ( ProvidedByRuntime ) )
+            // InternalTypesParser.g:17357:1: ( ProvidedByRuntime )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTObjectPrototypeAccess().getDeclaredProvidedByRuntimeProvidedByRuntimeKeyword_1_0()); 
             }
-            // InternalTypesParser.g:17546:1: ( ProvidedByRuntime )
-            // InternalTypesParser.g:17547:1: ProvidedByRuntime
+            // InternalTypesParser.g:17358:1: ( ProvidedByRuntime )
+            // InternalTypesParser.g:17359:1: ProvidedByRuntime
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTObjectPrototypeAccess().getDeclaredProvidedByRuntimeProvidedByRuntimeKeyword_1_0()); 
@@ -50345,23 +49805,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TObjectPrototype__DeclaredFinalAssignment_2"
-    // InternalTypesParser.g:17562:1: rule__TObjectPrototype__DeclaredFinalAssignment_2 : ( ( Final ) ) ;
+    // InternalTypesParser.g:17374:1: rule__TObjectPrototype__DeclaredFinalAssignment_2 : ( ( Final ) ) ;
     public final void rule__TObjectPrototype__DeclaredFinalAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17566:1: ( ( ( Final ) ) )
-            // InternalTypesParser.g:17567:1: ( ( Final ) )
+            // InternalTypesParser.g:17378:1: ( ( ( Final ) ) )
+            // InternalTypesParser.g:17379:1: ( ( Final ) )
             {
-            // InternalTypesParser.g:17567:1: ( ( Final ) )
-            // InternalTypesParser.g:17568:1: ( Final )
+            // InternalTypesParser.g:17379:1: ( ( Final ) )
+            // InternalTypesParser.g:17380:1: ( Final )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTObjectPrototypeAccess().getDeclaredFinalFinalKeyword_2_0()); 
             }
-            // InternalTypesParser.g:17569:1: ( Final )
-            // InternalTypesParser.g:17570:1: Final
+            // InternalTypesParser.g:17381:1: ( Final )
+            // InternalTypesParser.g:17382:1: Final
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTObjectPrototypeAccess().getDeclaredFinalFinalKeyword_2_0()); 
@@ -50398,17 +49858,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TObjectPrototype__NameAssignment_4"
-    // InternalTypesParser.g:17585:1: rule__TObjectPrototype__NameAssignment_4 : ( ruleBindingTypesIdentifier ) ;
+    // InternalTypesParser.g:17397:1: rule__TObjectPrototype__NameAssignment_4 : ( ruleBindingTypesIdentifier ) ;
     public final void rule__TObjectPrototype__NameAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17589:1: ( ( ruleBindingTypesIdentifier ) )
-            // InternalTypesParser.g:17590:1: ( ruleBindingTypesIdentifier )
+            // InternalTypesParser.g:17401:1: ( ( ruleBindingTypesIdentifier ) )
+            // InternalTypesParser.g:17402:1: ( ruleBindingTypesIdentifier )
             {
-            // InternalTypesParser.g:17590:1: ( ruleBindingTypesIdentifier )
-            // InternalTypesParser.g:17591:1: ruleBindingTypesIdentifier
+            // InternalTypesParser.g:17402:1: ( ruleBindingTypesIdentifier )
+            // InternalTypesParser.g:17403:1: ruleBindingTypesIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTObjectPrototypeAccess().getNameBindingTypesIdentifierParserRuleCall_4_0()); 
@@ -50443,17 +49903,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TObjectPrototype__TypeVarsAssignment_5_1"
-    // InternalTypesParser.g:17600:1: rule__TObjectPrototype__TypeVarsAssignment_5_1 : ( ruleTypeVariable ) ;
+    // InternalTypesParser.g:17412:1: rule__TObjectPrototype__TypeVarsAssignment_5_1 : ( ruleTypeVariable ) ;
     public final void rule__TObjectPrototype__TypeVarsAssignment_5_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17604:1: ( ( ruleTypeVariable ) )
-            // InternalTypesParser.g:17605:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:17416:1: ( ( ruleTypeVariable ) )
+            // InternalTypesParser.g:17417:1: ( ruleTypeVariable )
             {
-            // InternalTypesParser.g:17605:1: ( ruleTypeVariable )
-            // InternalTypesParser.g:17606:1: ruleTypeVariable
+            // InternalTypesParser.g:17417:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:17418:1: ruleTypeVariable
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTObjectPrototypeAccess().getTypeVarsTypeVariableParserRuleCall_5_1_0()); 
@@ -50488,17 +49948,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TObjectPrototype__TypeVarsAssignment_5_2_1"
-    // InternalTypesParser.g:17615:1: rule__TObjectPrototype__TypeVarsAssignment_5_2_1 : ( ruleTypeVariable ) ;
+    // InternalTypesParser.g:17427:1: rule__TObjectPrototype__TypeVarsAssignment_5_2_1 : ( ruleTypeVariable ) ;
     public final void rule__TObjectPrototype__TypeVarsAssignment_5_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17619:1: ( ( ruleTypeVariable ) )
-            // InternalTypesParser.g:17620:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:17431:1: ( ( ruleTypeVariable ) )
+            // InternalTypesParser.g:17432:1: ( ruleTypeVariable )
             {
-            // InternalTypesParser.g:17620:1: ( ruleTypeVariable )
-            // InternalTypesParser.g:17621:1: ruleTypeVariable
+            // InternalTypesParser.g:17432:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:17433:1: ruleTypeVariable
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTObjectPrototypeAccess().getTypeVarsTypeVariableParserRuleCall_5_2_1_0()); 
@@ -50533,17 +49993,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TObjectPrototype__SuperTypeAssignment_6_1"
-    // InternalTypesParser.g:17630:1: rule__TObjectPrototype__SuperTypeAssignment_6_1 : ( ruleParameterizedTypeRefNominal ) ;
+    // InternalTypesParser.g:17442:1: rule__TObjectPrototype__SuperTypeAssignment_6_1 : ( ruleParameterizedTypeRefNominal ) ;
     public final void rule__TObjectPrototype__SuperTypeAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17634:1: ( ( ruleParameterizedTypeRefNominal ) )
-            // InternalTypesParser.g:17635:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17446:1: ( ( ruleParameterizedTypeRefNominal ) )
+            // InternalTypesParser.g:17447:1: ( ruleParameterizedTypeRefNominal )
             {
-            // InternalTypesParser.g:17635:1: ( ruleParameterizedTypeRefNominal )
-            // InternalTypesParser.g:17636:1: ruleParameterizedTypeRefNominal
+            // InternalTypesParser.g:17447:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17448:1: ruleParameterizedTypeRefNominal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTObjectPrototypeAccess().getSuperTypeParameterizedTypeRefNominalParserRuleCall_6_1_0()); 
@@ -50578,17 +50038,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TObjectPrototype__DeclaredElementTypeAssignment_7_1"
-    // InternalTypesParser.g:17645:1: rule__TObjectPrototype__DeclaredElementTypeAssignment_7_1 : ( ruleParameterizedTypeRefNominal ) ;
+    // InternalTypesParser.g:17457:1: rule__TObjectPrototype__DeclaredElementTypeAssignment_7_1 : ( ruleParameterizedTypeRefNominal ) ;
     public final void rule__TObjectPrototype__DeclaredElementTypeAssignment_7_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17649:1: ( ( ruleParameterizedTypeRefNominal ) )
-            // InternalTypesParser.g:17650:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17461:1: ( ( ruleParameterizedTypeRefNominal ) )
+            // InternalTypesParser.g:17462:1: ( ruleParameterizedTypeRefNominal )
             {
-            // InternalTypesParser.g:17650:1: ( ruleParameterizedTypeRefNominal )
-            // InternalTypesParser.g:17651:1: ruleParameterizedTypeRefNominal
+            // InternalTypesParser.g:17462:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17463:1: ruleParameterizedTypeRefNominal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTObjectPrototypeAccess().getDeclaredElementTypeParameterizedTypeRefNominalParserRuleCall_7_1_0()); 
@@ -50623,17 +50083,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TObjectPrototype__AnnotationsAssignment_8"
-    // InternalTypesParser.g:17660:1: rule__TObjectPrototype__AnnotationsAssignment_8 : ( ruleTAnnotation ) ;
+    // InternalTypesParser.g:17472:1: rule__TObjectPrototype__AnnotationsAssignment_8 : ( ruleTAnnotation ) ;
     public final void rule__TObjectPrototype__AnnotationsAssignment_8() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17664:1: ( ( ruleTAnnotation ) )
-            // InternalTypesParser.g:17665:1: ( ruleTAnnotation )
+            // InternalTypesParser.g:17476:1: ( ( ruleTAnnotation ) )
+            // InternalTypesParser.g:17477:1: ( ruleTAnnotation )
             {
-            // InternalTypesParser.g:17665:1: ( ruleTAnnotation )
-            // InternalTypesParser.g:17666:1: ruleTAnnotation
+            // InternalTypesParser.g:17477:1: ( ruleTAnnotation )
+            // InternalTypesParser.g:17478:1: ruleTAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTObjectPrototypeAccess().getAnnotationsTAnnotationParserRuleCall_8_0()); 
@@ -50668,17 +50128,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TObjectPrototype__OwnedMembersAssignment_10"
-    // InternalTypesParser.g:17675:1: rule__TObjectPrototype__OwnedMembersAssignment_10 : ( ruleTMember ) ;
+    // InternalTypesParser.g:17487:1: rule__TObjectPrototype__OwnedMembersAssignment_10 : ( ruleTMember ) ;
     public final void rule__TObjectPrototype__OwnedMembersAssignment_10() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17679:1: ( ( ruleTMember ) )
-            // InternalTypesParser.g:17680:1: ( ruleTMember )
+            // InternalTypesParser.g:17491:1: ( ( ruleTMember ) )
+            // InternalTypesParser.g:17492:1: ( ruleTMember )
             {
-            // InternalTypesParser.g:17680:1: ( ruleTMember )
-            // InternalTypesParser.g:17681:1: ruleTMember
+            // InternalTypesParser.g:17492:1: ( ruleTMember )
+            // InternalTypesParser.g:17493:1: ruleTMember
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTObjectPrototypeAccess().getOwnedMembersTMemberParserRuleCall_10_0()); 
@@ -50713,17 +50173,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TObjectPrototype__CallableCtorAssignment_11_0"
-    // InternalTypesParser.g:17690:1: rule__TObjectPrototype__CallableCtorAssignment_11_0 : ( ruleCallableCtor ) ;
+    // InternalTypesParser.g:17502:1: rule__TObjectPrototype__CallableCtorAssignment_11_0 : ( ruleCallableCtor ) ;
     public final void rule__TObjectPrototype__CallableCtorAssignment_11_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17694:1: ( ( ruleCallableCtor ) )
-            // InternalTypesParser.g:17695:1: ( ruleCallableCtor )
+            // InternalTypesParser.g:17506:1: ( ( ruleCallableCtor ) )
+            // InternalTypesParser.g:17507:1: ( ruleCallableCtor )
             {
-            // InternalTypesParser.g:17695:1: ( ruleCallableCtor )
-            // InternalTypesParser.g:17696:1: ruleCallableCtor
+            // InternalTypesParser.g:17507:1: ( ruleCallableCtor )
+            // InternalTypesParser.g:17508:1: ruleCallableCtor
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTObjectPrototypeAccess().getCallableCtorCallableCtorParserRuleCall_11_0_0()); 
@@ -50758,17 +50218,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TObjectPrototype__OwnedMembersAssignment_11_1"
-    // InternalTypesParser.g:17705:1: rule__TObjectPrototype__OwnedMembersAssignment_11_1 : ( ruleTMember ) ;
+    // InternalTypesParser.g:17517:1: rule__TObjectPrototype__OwnedMembersAssignment_11_1 : ( ruleTMember ) ;
     public final void rule__TObjectPrototype__OwnedMembersAssignment_11_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17709:1: ( ( ruleTMember ) )
-            // InternalTypesParser.g:17710:1: ( ruleTMember )
+            // InternalTypesParser.g:17521:1: ( ( ruleTMember ) )
+            // InternalTypesParser.g:17522:1: ( ruleTMember )
             {
-            // InternalTypesParser.g:17710:1: ( ruleTMember )
-            // InternalTypesParser.g:17711:1: ruleTMember
+            // InternalTypesParser.g:17522:1: ( ruleTMember )
+            // InternalTypesParser.g:17523:1: ruleTMember
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTObjectPrototypeAccess().getOwnedMembersTMemberParserRuleCall_11_1_0()); 
@@ -50803,17 +50263,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VirtualBaseType__NameAssignment_2"
-    // InternalTypesParser.g:17720:1: rule__VirtualBaseType__NameAssignment_2 : ( ruleBindingTypesIdentifier ) ;
+    // InternalTypesParser.g:17532:1: rule__VirtualBaseType__NameAssignment_2 : ( ruleBindingTypesIdentifier ) ;
     public final void rule__VirtualBaseType__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17724:1: ( ( ruleBindingTypesIdentifier ) )
-            // InternalTypesParser.g:17725:1: ( ruleBindingTypesIdentifier )
+            // InternalTypesParser.g:17536:1: ( ( ruleBindingTypesIdentifier ) )
+            // InternalTypesParser.g:17537:1: ( ruleBindingTypesIdentifier )
             {
-            // InternalTypesParser.g:17725:1: ( ruleBindingTypesIdentifier )
-            // InternalTypesParser.g:17726:1: ruleBindingTypesIdentifier
+            // InternalTypesParser.g:17537:1: ( ruleBindingTypesIdentifier )
+            // InternalTypesParser.g:17538:1: ruleBindingTypesIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVirtualBaseTypeAccess().getNameBindingTypesIdentifierParserRuleCall_2_0()); 
@@ -50848,17 +50308,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VirtualBaseType__OwnedMembersAssignment_4"
-    // InternalTypesParser.g:17735:1: rule__VirtualBaseType__OwnedMembersAssignment_4 : ( ruleTMember ) ;
+    // InternalTypesParser.g:17547:1: rule__VirtualBaseType__OwnedMembersAssignment_4 : ( ruleTMember ) ;
     public final void rule__VirtualBaseType__OwnedMembersAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17739:1: ( ( ruleTMember ) )
-            // InternalTypesParser.g:17740:1: ( ruleTMember )
+            // InternalTypesParser.g:17551:1: ( ( ruleTMember ) )
+            // InternalTypesParser.g:17552:1: ( ruleTMember )
             {
-            // InternalTypesParser.g:17740:1: ( ruleTMember )
-            // InternalTypesParser.g:17741:1: ruleTMember
+            // InternalTypesParser.g:17552:1: ( ruleTMember )
+            // InternalTypesParser.g:17553:1: ruleTMember
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVirtualBaseTypeAccess().getOwnedMembersTMemberParserRuleCall_4_0()); 
@@ -50893,17 +50353,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TClass__DeclaredTypeAccessModifierAssignment_0"
-    // InternalTypesParser.g:17750:1: rule__TClass__DeclaredTypeAccessModifierAssignment_0 : ( ruleTypeAccessModifier ) ;
+    // InternalTypesParser.g:17562:1: rule__TClass__DeclaredTypeAccessModifierAssignment_0 : ( ruleTypeAccessModifier ) ;
     public final void rule__TClass__DeclaredTypeAccessModifierAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17754:1: ( ( ruleTypeAccessModifier ) )
-            // InternalTypesParser.g:17755:1: ( ruleTypeAccessModifier )
+            // InternalTypesParser.g:17566:1: ( ( ruleTypeAccessModifier ) )
+            // InternalTypesParser.g:17567:1: ( ruleTypeAccessModifier )
             {
-            // InternalTypesParser.g:17755:1: ( ruleTypeAccessModifier )
-            // InternalTypesParser.g:17756:1: ruleTypeAccessModifier
+            // InternalTypesParser.g:17567:1: ( ruleTypeAccessModifier )
+            // InternalTypesParser.g:17568:1: ruleTypeAccessModifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getDeclaredTypeAccessModifierTypeAccessModifierEnumRuleCall_0_0()); 
@@ -50938,23 +50398,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TClass__DeclaredProvidedByRuntimeAssignment_1"
-    // InternalTypesParser.g:17765:1: rule__TClass__DeclaredProvidedByRuntimeAssignment_1 : ( ( ProvidedByRuntime ) ) ;
+    // InternalTypesParser.g:17577:1: rule__TClass__DeclaredProvidedByRuntimeAssignment_1 : ( ( ProvidedByRuntime ) ) ;
     public final void rule__TClass__DeclaredProvidedByRuntimeAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17769:1: ( ( ( ProvidedByRuntime ) ) )
-            // InternalTypesParser.g:17770:1: ( ( ProvidedByRuntime ) )
+            // InternalTypesParser.g:17581:1: ( ( ( ProvidedByRuntime ) ) )
+            // InternalTypesParser.g:17582:1: ( ( ProvidedByRuntime ) )
             {
-            // InternalTypesParser.g:17770:1: ( ( ProvidedByRuntime ) )
-            // InternalTypesParser.g:17771:1: ( ProvidedByRuntime )
+            // InternalTypesParser.g:17582:1: ( ( ProvidedByRuntime ) )
+            // InternalTypesParser.g:17583:1: ( ProvidedByRuntime )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getDeclaredProvidedByRuntimeProvidedByRuntimeKeyword_1_0()); 
             }
-            // InternalTypesParser.g:17772:1: ( ProvidedByRuntime )
-            // InternalTypesParser.g:17773:1: ProvidedByRuntime
+            // InternalTypesParser.g:17584:1: ( ProvidedByRuntime )
+            // InternalTypesParser.g:17585:1: ProvidedByRuntime
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getDeclaredProvidedByRuntimeProvidedByRuntimeKeyword_1_0()); 
@@ -50991,23 +50451,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TClass__DeclaredAbstractAssignment_2"
-    // InternalTypesParser.g:17788:1: rule__TClass__DeclaredAbstractAssignment_2 : ( ( Abstract ) ) ;
+    // InternalTypesParser.g:17600:1: rule__TClass__DeclaredAbstractAssignment_2 : ( ( Abstract ) ) ;
     public final void rule__TClass__DeclaredAbstractAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17792:1: ( ( ( Abstract ) ) )
-            // InternalTypesParser.g:17793:1: ( ( Abstract ) )
+            // InternalTypesParser.g:17604:1: ( ( ( Abstract ) ) )
+            // InternalTypesParser.g:17605:1: ( ( Abstract ) )
             {
-            // InternalTypesParser.g:17793:1: ( ( Abstract ) )
-            // InternalTypesParser.g:17794:1: ( Abstract )
+            // InternalTypesParser.g:17605:1: ( ( Abstract ) )
+            // InternalTypesParser.g:17606:1: ( Abstract )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getDeclaredAbstractAbstractKeyword_2_0()); 
             }
-            // InternalTypesParser.g:17795:1: ( Abstract )
-            // InternalTypesParser.g:17796:1: Abstract
+            // InternalTypesParser.g:17607:1: ( Abstract )
+            // InternalTypesParser.g:17608:1: Abstract
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getDeclaredAbstractAbstractKeyword_2_0()); 
@@ -51044,23 +50504,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TClass__DeclaredFinalAssignment_3"
-    // InternalTypesParser.g:17811:1: rule__TClass__DeclaredFinalAssignment_3 : ( ( Final ) ) ;
+    // InternalTypesParser.g:17623:1: rule__TClass__DeclaredFinalAssignment_3 : ( ( Final ) ) ;
     public final void rule__TClass__DeclaredFinalAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17815:1: ( ( ( Final ) ) )
-            // InternalTypesParser.g:17816:1: ( ( Final ) )
+            // InternalTypesParser.g:17627:1: ( ( ( Final ) ) )
+            // InternalTypesParser.g:17628:1: ( ( Final ) )
             {
-            // InternalTypesParser.g:17816:1: ( ( Final ) )
-            // InternalTypesParser.g:17817:1: ( Final )
+            // InternalTypesParser.g:17628:1: ( ( Final ) )
+            // InternalTypesParser.g:17629:1: ( Final )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getDeclaredFinalFinalKeyword_3_0()); 
             }
-            // InternalTypesParser.g:17818:1: ( Final )
-            // InternalTypesParser.g:17819:1: Final
+            // InternalTypesParser.g:17630:1: ( Final )
+            // InternalTypesParser.g:17631:1: Final
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getDeclaredFinalFinalKeyword_3_0()); 
@@ -51097,17 +50557,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TClass__TypingStrategyAssignment_5"
-    // InternalTypesParser.g:17834:1: rule__TClass__TypingStrategyAssignment_5 : ( ruleTypingStrategyDefSiteOperator ) ;
+    // InternalTypesParser.g:17646:1: rule__TClass__TypingStrategyAssignment_5 : ( ruleTypingStrategyDefSiteOperator ) ;
     public final void rule__TClass__TypingStrategyAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17838:1: ( ( ruleTypingStrategyDefSiteOperator ) )
-            // InternalTypesParser.g:17839:1: ( ruleTypingStrategyDefSiteOperator )
+            // InternalTypesParser.g:17650:1: ( ( ruleTypingStrategyDefSiteOperator ) )
+            // InternalTypesParser.g:17651:1: ( ruleTypingStrategyDefSiteOperator )
             {
-            // InternalTypesParser.g:17839:1: ( ruleTypingStrategyDefSiteOperator )
-            // InternalTypesParser.g:17840:1: ruleTypingStrategyDefSiteOperator
+            // InternalTypesParser.g:17651:1: ( ruleTypingStrategyDefSiteOperator )
+            // InternalTypesParser.g:17652:1: ruleTypingStrategyDefSiteOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getTypingStrategyTypingStrategyDefSiteOperatorParserRuleCall_5_0()); 
@@ -51142,17 +50602,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TClass__NameAssignment_6"
-    // InternalTypesParser.g:17849:1: rule__TClass__NameAssignment_6 : ( ruleBindingTypesIdentifier ) ;
+    // InternalTypesParser.g:17661:1: rule__TClass__NameAssignment_6 : ( ruleBindingTypesIdentifier ) ;
     public final void rule__TClass__NameAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17853:1: ( ( ruleBindingTypesIdentifier ) )
-            // InternalTypesParser.g:17854:1: ( ruleBindingTypesIdentifier )
+            // InternalTypesParser.g:17665:1: ( ( ruleBindingTypesIdentifier ) )
+            // InternalTypesParser.g:17666:1: ( ruleBindingTypesIdentifier )
             {
-            // InternalTypesParser.g:17854:1: ( ruleBindingTypesIdentifier )
-            // InternalTypesParser.g:17855:1: ruleBindingTypesIdentifier
+            // InternalTypesParser.g:17666:1: ( ruleBindingTypesIdentifier )
+            // InternalTypesParser.g:17667:1: ruleBindingTypesIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getNameBindingTypesIdentifierParserRuleCall_6_0()); 
@@ -51187,17 +50647,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TClass__TypeVarsAssignment_7_1"
-    // InternalTypesParser.g:17864:1: rule__TClass__TypeVarsAssignment_7_1 : ( ruleTypeVariableWithDefSiteVariance ) ;
+    // InternalTypesParser.g:17676:1: rule__TClass__TypeVarsAssignment_7_1 : ( ruleTypeVariableWithDefSiteVariance ) ;
     public final void rule__TClass__TypeVarsAssignment_7_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17868:1: ( ( ruleTypeVariableWithDefSiteVariance ) )
-            // InternalTypesParser.g:17869:1: ( ruleTypeVariableWithDefSiteVariance )
+            // InternalTypesParser.g:17680:1: ( ( ruleTypeVariableWithDefSiteVariance ) )
+            // InternalTypesParser.g:17681:1: ( ruleTypeVariableWithDefSiteVariance )
             {
-            // InternalTypesParser.g:17869:1: ( ruleTypeVariableWithDefSiteVariance )
-            // InternalTypesParser.g:17870:1: ruleTypeVariableWithDefSiteVariance
+            // InternalTypesParser.g:17681:1: ( ruleTypeVariableWithDefSiteVariance )
+            // InternalTypesParser.g:17682:1: ruleTypeVariableWithDefSiteVariance
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_7_1_0()); 
@@ -51232,17 +50692,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TClass__TypeVarsAssignment_7_2_1"
-    // InternalTypesParser.g:17879:1: rule__TClass__TypeVarsAssignment_7_2_1 : ( ruleTypeVariableWithDefSiteVariance ) ;
+    // InternalTypesParser.g:17691:1: rule__TClass__TypeVarsAssignment_7_2_1 : ( ruleTypeVariableWithDefSiteVariance ) ;
     public final void rule__TClass__TypeVarsAssignment_7_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17883:1: ( ( ruleTypeVariableWithDefSiteVariance ) )
-            // InternalTypesParser.g:17884:1: ( ruleTypeVariableWithDefSiteVariance )
+            // InternalTypesParser.g:17695:1: ( ( ruleTypeVariableWithDefSiteVariance ) )
+            // InternalTypesParser.g:17696:1: ( ruleTypeVariableWithDefSiteVariance )
             {
-            // InternalTypesParser.g:17884:1: ( ruleTypeVariableWithDefSiteVariance )
-            // InternalTypesParser.g:17885:1: ruleTypeVariableWithDefSiteVariance
+            // InternalTypesParser.g:17696:1: ( ruleTypeVariableWithDefSiteVariance )
+            // InternalTypesParser.g:17697:1: ruleTypeVariableWithDefSiteVariance
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_7_2_1_0()); 
@@ -51277,17 +50737,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TClass__SuperClassRefAssignment_8_1"
-    // InternalTypesParser.g:17894:1: rule__TClass__SuperClassRefAssignment_8_1 : ( ruleParameterizedTypeRefNominal ) ;
+    // InternalTypesParser.g:17706:1: rule__TClass__SuperClassRefAssignment_8_1 : ( ruleParameterizedTypeRefNominal ) ;
     public final void rule__TClass__SuperClassRefAssignment_8_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17898:1: ( ( ruleParameterizedTypeRefNominal ) )
-            // InternalTypesParser.g:17899:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17710:1: ( ( ruleParameterizedTypeRefNominal ) )
+            // InternalTypesParser.g:17711:1: ( ruleParameterizedTypeRefNominal )
             {
-            // InternalTypesParser.g:17899:1: ( ruleParameterizedTypeRefNominal )
-            // InternalTypesParser.g:17900:1: ruleParameterizedTypeRefNominal
+            // InternalTypesParser.g:17711:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17712:1: ruleParameterizedTypeRefNominal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getSuperClassRefParameterizedTypeRefNominalParserRuleCall_8_1_0()); 
@@ -51322,17 +50782,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TClass__ImplementedInterfaceRefsAssignment_9_1"
-    // InternalTypesParser.g:17909:1: rule__TClass__ImplementedInterfaceRefsAssignment_9_1 : ( ruleParameterizedTypeRefNominal ) ;
+    // InternalTypesParser.g:17721:1: rule__TClass__ImplementedInterfaceRefsAssignment_9_1 : ( ruleParameterizedTypeRefNominal ) ;
     public final void rule__TClass__ImplementedInterfaceRefsAssignment_9_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17913:1: ( ( ruleParameterizedTypeRefNominal ) )
-            // InternalTypesParser.g:17914:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17725:1: ( ( ruleParameterizedTypeRefNominal ) )
+            // InternalTypesParser.g:17726:1: ( ruleParameterizedTypeRefNominal )
             {
-            // InternalTypesParser.g:17914:1: ( ruleParameterizedTypeRefNominal )
-            // InternalTypesParser.g:17915:1: ruleParameterizedTypeRefNominal
+            // InternalTypesParser.g:17726:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17727:1: ruleParameterizedTypeRefNominal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getImplementedInterfaceRefsParameterizedTypeRefNominalParserRuleCall_9_1_0()); 
@@ -51367,17 +50827,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TClass__ImplementedInterfaceRefsAssignment_9_2_1"
-    // InternalTypesParser.g:17924:1: rule__TClass__ImplementedInterfaceRefsAssignment_9_2_1 : ( ruleParameterizedTypeRefNominal ) ;
+    // InternalTypesParser.g:17736:1: rule__TClass__ImplementedInterfaceRefsAssignment_9_2_1 : ( ruleParameterizedTypeRefNominal ) ;
     public final void rule__TClass__ImplementedInterfaceRefsAssignment_9_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17928:1: ( ( ruleParameterizedTypeRefNominal ) )
-            // InternalTypesParser.g:17929:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17740:1: ( ( ruleParameterizedTypeRefNominal ) )
+            // InternalTypesParser.g:17741:1: ( ruleParameterizedTypeRefNominal )
             {
-            // InternalTypesParser.g:17929:1: ( ruleParameterizedTypeRefNominal )
-            // InternalTypesParser.g:17930:1: ruleParameterizedTypeRefNominal
+            // InternalTypesParser.g:17741:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17742:1: ruleParameterizedTypeRefNominal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getImplementedInterfaceRefsParameterizedTypeRefNominalParserRuleCall_9_2_1_0()); 
@@ -51412,17 +50872,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TClass__AnnotationsAssignment_10"
-    // InternalTypesParser.g:17939:1: rule__TClass__AnnotationsAssignment_10 : ( ruleTAnnotation ) ;
+    // InternalTypesParser.g:17751:1: rule__TClass__AnnotationsAssignment_10 : ( ruleTAnnotation ) ;
     public final void rule__TClass__AnnotationsAssignment_10() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17943:1: ( ( ruleTAnnotation ) )
-            // InternalTypesParser.g:17944:1: ( ruleTAnnotation )
+            // InternalTypesParser.g:17755:1: ( ( ruleTAnnotation ) )
+            // InternalTypesParser.g:17756:1: ( ruleTAnnotation )
             {
-            // InternalTypesParser.g:17944:1: ( ruleTAnnotation )
-            // InternalTypesParser.g:17945:1: ruleTAnnotation
+            // InternalTypesParser.g:17756:1: ( ruleTAnnotation )
+            // InternalTypesParser.g:17757:1: ruleTAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getAnnotationsTAnnotationParserRuleCall_10_0()); 
@@ -51457,17 +50917,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TClass__OwnedMembersAssignment_12"
-    // InternalTypesParser.g:17954:1: rule__TClass__OwnedMembersAssignment_12 : ( ruleTMember ) ;
+    // InternalTypesParser.g:17766:1: rule__TClass__OwnedMembersAssignment_12 : ( ruleTMember ) ;
     public final void rule__TClass__OwnedMembersAssignment_12() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17958:1: ( ( ruleTMember ) )
-            // InternalTypesParser.g:17959:1: ( ruleTMember )
+            // InternalTypesParser.g:17770:1: ( ( ruleTMember ) )
+            // InternalTypesParser.g:17771:1: ( ruleTMember )
             {
-            // InternalTypesParser.g:17959:1: ( ruleTMember )
-            // InternalTypesParser.g:17960:1: ruleTMember
+            // InternalTypesParser.g:17771:1: ( ruleTMember )
+            // InternalTypesParser.g:17772:1: ruleTMember
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getOwnedMembersTMemberParserRuleCall_12_0()); 
@@ -51502,17 +50962,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TClass__CallableCtorAssignment_13_0"
-    // InternalTypesParser.g:17969:1: rule__TClass__CallableCtorAssignment_13_0 : ( ruleCallableCtor ) ;
+    // InternalTypesParser.g:17781:1: rule__TClass__CallableCtorAssignment_13_0 : ( ruleCallableCtor ) ;
     public final void rule__TClass__CallableCtorAssignment_13_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17973:1: ( ( ruleCallableCtor ) )
-            // InternalTypesParser.g:17974:1: ( ruleCallableCtor )
+            // InternalTypesParser.g:17785:1: ( ( ruleCallableCtor ) )
+            // InternalTypesParser.g:17786:1: ( ruleCallableCtor )
             {
-            // InternalTypesParser.g:17974:1: ( ruleCallableCtor )
-            // InternalTypesParser.g:17975:1: ruleCallableCtor
+            // InternalTypesParser.g:17786:1: ( ruleCallableCtor )
+            // InternalTypesParser.g:17787:1: ruleCallableCtor
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getCallableCtorCallableCtorParserRuleCall_13_0_0()); 
@@ -51547,17 +51007,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TClass__OwnedMembersAssignment_13_1"
-    // InternalTypesParser.g:17984:1: rule__TClass__OwnedMembersAssignment_13_1 : ( ruleTMember ) ;
+    // InternalTypesParser.g:17796:1: rule__TClass__OwnedMembersAssignment_13_1 : ( ruleTMember ) ;
     public final void rule__TClass__OwnedMembersAssignment_13_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17988:1: ( ( ruleTMember ) )
-            // InternalTypesParser.g:17989:1: ( ruleTMember )
+            // InternalTypesParser.g:17800:1: ( ( ruleTMember ) )
+            // InternalTypesParser.g:17801:1: ( ruleTMember )
             {
-            // InternalTypesParser.g:17989:1: ( ruleTMember )
-            // InternalTypesParser.g:17990:1: ruleTMember
+            // InternalTypesParser.g:17801:1: ( ruleTMember )
+            // InternalTypesParser.g:17802:1: ruleTMember
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTClassAccess().getOwnedMembersTMemberParserRuleCall_13_1_0()); 
@@ -51592,17 +51052,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TInterface__DeclaredTypeAccessModifierAssignment_0"
-    // InternalTypesParser.g:17999:1: rule__TInterface__DeclaredTypeAccessModifierAssignment_0 : ( ruleTypeAccessModifier ) ;
+    // InternalTypesParser.g:17811:1: rule__TInterface__DeclaredTypeAccessModifierAssignment_0 : ( ruleTypeAccessModifier ) ;
     public final void rule__TInterface__DeclaredTypeAccessModifierAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18003:1: ( ( ruleTypeAccessModifier ) )
-            // InternalTypesParser.g:18004:1: ( ruleTypeAccessModifier )
+            // InternalTypesParser.g:17815:1: ( ( ruleTypeAccessModifier ) )
+            // InternalTypesParser.g:17816:1: ( ruleTypeAccessModifier )
             {
-            // InternalTypesParser.g:18004:1: ( ruleTypeAccessModifier )
-            // InternalTypesParser.g:18005:1: ruleTypeAccessModifier
+            // InternalTypesParser.g:17816:1: ( ruleTypeAccessModifier )
+            // InternalTypesParser.g:17817:1: ruleTypeAccessModifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTInterfaceAccess().getDeclaredTypeAccessModifierTypeAccessModifierEnumRuleCall_0_0()); 
@@ -51637,23 +51097,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TInterface__DeclaredProvidedByRuntimeAssignment_1"
-    // InternalTypesParser.g:18014:1: rule__TInterface__DeclaredProvidedByRuntimeAssignment_1 : ( ( ProvidedByRuntime ) ) ;
+    // InternalTypesParser.g:17826:1: rule__TInterface__DeclaredProvidedByRuntimeAssignment_1 : ( ( ProvidedByRuntime ) ) ;
     public final void rule__TInterface__DeclaredProvidedByRuntimeAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18018:1: ( ( ( ProvidedByRuntime ) ) )
-            // InternalTypesParser.g:18019:1: ( ( ProvidedByRuntime ) )
+            // InternalTypesParser.g:17830:1: ( ( ( ProvidedByRuntime ) ) )
+            // InternalTypesParser.g:17831:1: ( ( ProvidedByRuntime ) )
             {
-            // InternalTypesParser.g:18019:1: ( ( ProvidedByRuntime ) )
-            // InternalTypesParser.g:18020:1: ( ProvidedByRuntime )
+            // InternalTypesParser.g:17831:1: ( ( ProvidedByRuntime ) )
+            // InternalTypesParser.g:17832:1: ( ProvidedByRuntime )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTInterfaceAccess().getDeclaredProvidedByRuntimeProvidedByRuntimeKeyword_1_0()); 
             }
-            // InternalTypesParser.g:18021:1: ( ProvidedByRuntime )
-            // InternalTypesParser.g:18022:1: ProvidedByRuntime
+            // InternalTypesParser.g:17833:1: ( ProvidedByRuntime )
+            // InternalTypesParser.g:17834:1: ProvidedByRuntime
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTInterfaceAccess().getDeclaredProvidedByRuntimeProvidedByRuntimeKeyword_1_0()); 
@@ -51690,17 +51150,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TInterface__TypingStrategyAssignment_3"
-    // InternalTypesParser.g:18037:1: rule__TInterface__TypingStrategyAssignment_3 : ( ruleTypingStrategyDefSiteOperator ) ;
+    // InternalTypesParser.g:17849:1: rule__TInterface__TypingStrategyAssignment_3 : ( ruleTypingStrategyDefSiteOperator ) ;
     public final void rule__TInterface__TypingStrategyAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18041:1: ( ( ruleTypingStrategyDefSiteOperator ) )
-            // InternalTypesParser.g:18042:1: ( ruleTypingStrategyDefSiteOperator )
+            // InternalTypesParser.g:17853:1: ( ( ruleTypingStrategyDefSiteOperator ) )
+            // InternalTypesParser.g:17854:1: ( ruleTypingStrategyDefSiteOperator )
             {
-            // InternalTypesParser.g:18042:1: ( ruleTypingStrategyDefSiteOperator )
-            // InternalTypesParser.g:18043:1: ruleTypingStrategyDefSiteOperator
+            // InternalTypesParser.g:17854:1: ( ruleTypingStrategyDefSiteOperator )
+            // InternalTypesParser.g:17855:1: ruleTypingStrategyDefSiteOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTInterfaceAccess().getTypingStrategyTypingStrategyDefSiteOperatorParserRuleCall_3_0()); 
@@ -51735,17 +51195,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TInterface__NameAssignment_4"
-    // InternalTypesParser.g:18052:1: rule__TInterface__NameAssignment_4 : ( ruleBindingTypesIdentifier ) ;
+    // InternalTypesParser.g:17864:1: rule__TInterface__NameAssignment_4 : ( ruleBindingTypesIdentifier ) ;
     public final void rule__TInterface__NameAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18056:1: ( ( ruleBindingTypesIdentifier ) )
-            // InternalTypesParser.g:18057:1: ( ruleBindingTypesIdentifier )
+            // InternalTypesParser.g:17868:1: ( ( ruleBindingTypesIdentifier ) )
+            // InternalTypesParser.g:17869:1: ( ruleBindingTypesIdentifier )
             {
-            // InternalTypesParser.g:18057:1: ( ruleBindingTypesIdentifier )
-            // InternalTypesParser.g:18058:1: ruleBindingTypesIdentifier
+            // InternalTypesParser.g:17869:1: ( ruleBindingTypesIdentifier )
+            // InternalTypesParser.g:17870:1: ruleBindingTypesIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTInterfaceAccess().getNameBindingTypesIdentifierParserRuleCall_4_0()); 
@@ -51780,17 +51240,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TInterface__TypeVarsAssignment_5_1"
-    // InternalTypesParser.g:18067:1: rule__TInterface__TypeVarsAssignment_5_1 : ( ruleTypeVariableWithDefSiteVariance ) ;
+    // InternalTypesParser.g:17879:1: rule__TInterface__TypeVarsAssignment_5_1 : ( ruleTypeVariableWithDefSiteVariance ) ;
     public final void rule__TInterface__TypeVarsAssignment_5_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18071:1: ( ( ruleTypeVariableWithDefSiteVariance ) )
-            // InternalTypesParser.g:18072:1: ( ruleTypeVariableWithDefSiteVariance )
+            // InternalTypesParser.g:17883:1: ( ( ruleTypeVariableWithDefSiteVariance ) )
+            // InternalTypesParser.g:17884:1: ( ruleTypeVariableWithDefSiteVariance )
             {
-            // InternalTypesParser.g:18072:1: ( ruleTypeVariableWithDefSiteVariance )
-            // InternalTypesParser.g:18073:1: ruleTypeVariableWithDefSiteVariance
+            // InternalTypesParser.g:17884:1: ( ruleTypeVariableWithDefSiteVariance )
+            // InternalTypesParser.g:17885:1: ruleTypeVariableWithDefSiteVariance
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTInterfaceAccess().getTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_5_1_0()); 
@@ -51825,17 +51285,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TInterface__TypeVarsAssignment_5_2_1"
-    // InternalTypesParser.g:18082:1: rule__TInterface__TypeVarsAssignment_5_2_1 : ( ruleTypeVariableWithDefSiteVariance ) ;
+    // InternalTypesParser.g:17894:1: rule__TInterface__TypeVarsAssignment_5_2_1 : ( ruleTypeVariableWithDefSiteVariance ) ;
     public final void rule__TInterface__TypeVarsAssignment_5_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18086:1: ( ( ruleTypeVariableWithDefSiteVariance ) )
-            // InternalTypesParser.g:18087:1: ( ruleTypeVariableWithDefSiteVariance )
+            // InternalTypesParser.g:17898:1: ( ( ruleTypeVariableWithDefSiteVariance ) )
+            // InternalTypesParser.g:17899:1: ( ruleTypeVariableWithDefSiteVariance )
             {
-            // InternalTypesParser.g:18087:1: ( ruleTypeVariableWithDefSiteVariance )
-            // InternalTypesParser.g:18088:1: ruleTypeVariableWithDefSiteVariance
+            // InternalTypesParser.g:17899:1: ( ruleTypeVariableWithDefSiteVariance )
+            // InternalTypesParser.g:17900:1: ruleTypeVariableWithDefSiteVariance
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTInterfaceAccess().getTypeVarsTypeVariableWithDefSiteVarianceParserRuleCall_5_2_1_0()); 
@@ -51870,17 +51330,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TInterface__SuperInterfaceRefsAssignment_6_1"
-    // InternalTypesParser.g:18097:1: rule__TInterface__SuperInterfaceRefsAssignment_6_1 : ( ruleParameterizedTypeRefNominal ) ;
+    // InternalTypesParser.g:17909:1: rule__TInterface__SuperInterfaceRefsAssignment_6_1 : ( ruleParameterizedTypeRefNominal ) ;
     public final void rule__TInterface__SuperInterfaceRefsAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18101:1: ( ( ruleParameterizedTypeRefNominal ) )
-            // InternalTypesParser.g:18102:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17913:1: ( ( ruleParameterizedTypeRefNominal ) )
+            // InternalTypesParser.g:17914:1: ( ruleParameterizedTypeRefNominal )
             {
-            // InternalTypesParser.g:18102:1: ( ruleParameterizedTypeRefNominal )
-            // InternalTypesParser.g:18103:1: ruleParameterizedTypeRefNominal
+            // InternalTypesParser.g:17914:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17915:1: ruleParameterizedTypeRefNominal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTInterfaceAccess().getSuperInterfaceRefsParameterizedTypeRefNominalParserRuleCall_6_1_0()); 
@@ -51915,17 +51375,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TInterface__SuperInterfaceRefsAssignment_6_2_1"
-    // InternalTypesParser.g:18112:1: rule__TInterface__SuperInterfaceRefsAssignment_6_2_1 : ( ruleParameterizedTypeRefNominal ) ;
+    // InternalTypesParser.g:17924:1: rule__TInterface__SuperInterfaceRefsAssignment_6_2_1 : ( ruleParameterizedTypeRefNominal ) ;
     public final void rule__TInterface__SuperInterfaceRefsAssignment_6_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18116:1: ( ( ruleParameterizedTypeRefNominal ) )
-            // InternalTypesParser.g:18117:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17928:1: ( ( ruleParameterizedTypeRefNominal ) )
+            // InternalTypesParser.g:17929:1: ( ruleParameterizedTypeRefNominal )
             {
-            // InternalTypesParser.g:18117:1: ( ruleParameterizedTypeRefNominal )
-            // InternalTypesParser.g:18118:1: ruleParameterizedTypeRefNominal
+            // InternalTypesParser.g:17929:1: ( ruleParameterizedTypeRefNominal )
+            // InternalTypesParser.g:17930:1: ruleParameterizedTypeRefNominal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTInterfaceAccess().getSuperInterfaceRefsParameterizedTypeRefNominalParserRuleCall_6_2_1_0()); 
@@ -51960,17 +51420,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TInterface__AnnotationsAssignment_7"
-    // InternalTypesParser.g:18127:1: rule__TInterface__AnnotationsAssignment_7 : ( ruleTAnnotation ) ;
+    // InternalTypesParser.g:17939:1: rule__TInterface__AnnotationsAssignment_7 : ( ruleTAnnotation ) ;
     public final void rule__TInterface__AnnotationsAssignment_7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18131:1: ( ( ruleTAnnotation ) )
-            // InternalTypesParser.g:18132:1: ( ruleTAnnotation )
+            // InternalTypesParser.g:17943:1: ( ( ruleTAnnotation ) )
+            // InternalTypesParser.g:17944:1: ( ruleTAnnotation )
             {
-            // InternalTypesParser.g:18132:1: ( ruleTAnnotation )
-            // InternalTypesParser.g:18133:1: ruleTAnnotation
+            // InternalTypesParser.g:17944:1: ( ruleTAnnotation )
+            // InternalTypesParser.g:17945:1: ruleTAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTInterfaceAccess().getAnnotationsTAnnotationParserRuleCall_7_0()); 
@@ -52005,17 +51465,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TInterface__OwnedMembersAssignment_9"
-    // InternalTypesParser.g:18142:1: rule__TInterface__OwnedMembersAssignment_9 : ( ruleTMember ) ;
+    // InternalTypesParser.g:17954:1: rule__TInterface__OwnedMembersAssignment_9 : ( ruleTMember ) ;
     public final void rule__TInterface__OwnedMembersAssignment_9() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18146:1: ( ( ruleTMember ) )
-            // InternalTypesParser.g:18147:1: ( ruleTMember )
+            // InternalTypesParser.g:17958:1: ( ( ruleTMember ) )
+            // InternalTypesParser.g:17959:1: ( ruleTMember )
             {
-            // InternalTypesParser.g:18147:1: ( ruleTMember )
-            // InternalTypesParser.g:18148:1: ruleTMember
+            // InternalTypesParser.g:17959:1: ( ruleTMember )
+            // InternalTypesParser.g:17960:1: ruleTMember
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTInterfaceAccess().getOwnedMembersTMemberParserRuleCall_9_0()); 
@@ -52050,17 +51510,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CallableCtor__FparsAssignment_2_0"
-    // InternalTypesParser.g:18157:1: rule__CallableCtor__FparsAssignment_2_0 : ( ruleTFormalParameter ) ;
+    // InternalTypesParser.g:17969:1: rule__CallableCtor__FparsAssignment_2_0 : ( ruleTFormalParameter ) ;
     public final void rule__CallableCtor__FparsAssignment_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18161:1: ( ( ruleTFormalParameter ) )
-            // InternalTypesParser.g:18162:1: ( ruleTFormalParameter )
+            // InternalTypesParser.g:17973:1: ( ( ruleTFormalParameter ) )
+            // InternalTypesParser.g:17974:1: ( ruleTFormalParameter )
             {
-            // InternalTypesParser.g:18162:1: ( ruleTFormalParameter )
-            // InternalTypesParser.g:18163:1: ruleTFormalParameter
+            // InternalTypesParser.g:17974:1: ( ruleTFormalParameter )
+            // InternalTypesParser.g:17975:1: ruleTFormalParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCallableCtorAccess().getFparsTFormalParameterParserRuleCall_2_0_0()); 
@@ -52095,17 +51555,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CallableCtor__FparsAssignment_2_1_1"
-    // InternalTypesParser.g:18172:1: rule__CallableCtor__FparsAssignment_2_1_1 : ( ruleTFormalParameter ) ;
+    // InternalTypesParser.g:17984:1: rule__CallableCtor__FparsAssignment_2_1_1 : ( ruleTFormalParameter ) ;
     public final void rule__CallableCtor__FparsAssignment_2_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18176:1: ( ( ruleTFormalParameter ) )
-            // InternalTypesParser.g:18177:1: ( ruleTFormalParameter )
+            // InternalTypesParser.g:17988:1: ( ( ruleTFormalParameter ) )
+            // InternalTypesParser.g:17989:1: ( ruleTFormalParameter )
             {
-            // InternalTypesParser.g:18177:1: ( ruleTFormalParameter )
-            // InternalTypesParser.g:18178:1: ruleTFormalParameter
+            // InternalTypesParser.g:17989:1: ( ruleTFormalParameter )
+            // InternalTypesParser.g:17990:1: ruleTFormalParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCallableCtorAccess().getFparsTFormalParameterParserRuleCall_2_1_1_0()); 
@@ -52140,17 +51600,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CallableCtor__ReturnTypeRefAssignment_4_1"
-    // InternalTypesParser.g:18187:1: rule__CallableCtor__ReturnTypeRefAssignment_4_1 : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:17999:1: rule__CallableCtor__ReturnTypeRefAssignment_4_1 : ( ruleTypeRef ) ;
     public final void rule__CallableCtor__ReturnTypeRefAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18191:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:18192:1: ( ruleTypeRef )
+            // InternalTypesParser.g:18003:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:18004:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:18192:1: ( ruleTypeRef )
-            // InternalTypesParser.g:18193:1: ruleTypeRef
+            // InternalTypesParser.g:18004:1: ( ruleTypeRef )
+            // InternalTypesParser.g:18005:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCallableCtorAccess().getReturnTypeRefTypeRefParserRuleCall_4_1_0()); 
@@ -52185,17 +51645,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TMethod__DeclaredMemberAccessModifierAssignment_0_0_0"
-    // InternalTypesParser.g:18202:1: rule__TMethod__DeclaredMemberAccessModifierAssignment_0_0_0 : ( ruleMemberAccessModifier ) ;
+    // InternalTypesParser.g:18014:1: rule__TMethod__DeclaredMemberAccessModifierAssignment_0_0_0 : ( ruleMemberAccessModifier ) ;
     public final void rule__TMethod__DeclaredMemberAccessModifierAssignment_0_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18206:1: ( ( ruleMemberAccessModifier ) )
-            // InternalTypesParser.g:18207:1: ( ruleMemberAccessModifier )
+            // InternalTypesParser.g:18018:1: ( ( ruleMemberAccessModifier ) )
+            // InternalTypesParser.g:18019:1: ( ruleMemberAccessModifier )
             {
-            // InternalTypesParser.g:18207:1: ( ruleMemberAccessModifier )
-            // InternalTypesParser.g:18208:1: ruleMemberAccessModifier
+            // InternalTypesParser.g:18019:1: ( ruleMemberAccessModifier )
+            // InternalTypesParser.g:18020:1: ruleMemberAccessModifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTMethodAccess().getDeclaredMemberAccessModifierMemberAccessModifierEnumRuleCall_0_0_0_0()); 
@@ -52230,23 +51690,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TMethod__DeclaredStaticAssignment_0_0_1_0"
-    // InternalTypesParser.g:18217:1: rule__TMethod__DeclaredStaticAssignment_0_0_1_0 : ( ( Static ) ) ;
+    // InternalTypesParser.g:18029:1: rule__TMethod__DeclaredStaticAssignment_0_0_1_0 : ( ( Static ) ) ;
     public final void rule__TMethod__DeclaredStaticAssignment_0_0_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18221:1: ( ( ( Static ) ) )
-            // InternalTypesParser.g:18222:1: ( ( Static ) )
+            // InternalTypesParser.g:18033:1: ( ( ( Static ) ) )
+            // InternalTypesParser.g:18034:1: ( ( Static ) )
             {
-            // InternalTypesParser.g:18222:1: ( ( Static ) )
-            // InternalTypesParser.g:18223:1: ( Static )
+            // InternalTypesParser.g:18034:1: ( ( Static ) )
+            // InternalTypesParser.g:18035:1: ( Static )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTMethodAccess().getDeclaredStaticStaticKeyword_0_0_1_0_0()); 
             }
-            // InternalTypesParser.g:18224:1: ( Static )
-            // InternalTypesParser.g:18225:1: Static
+            // InternalTypesParser.g:18036:1: ( Static )
+            // InternalTypesParser.g:18037:1: Static
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTMethodAccess().getDeclaredStaticStaticKeyword_0_0_1_0_0()); 
@@ -52283,23 +51743,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TMethod__DeclaredAbstractAssignment_0_0_1_1"
-    // InternalTypesParser.g:18240:1: rule__TMethod__DeclaredAbstractAssignment_0_0_1_1 : ( ( Abstract ) ) ;
+    // InternalTypesParser.g:18052:1: rule__TMethod__DeclaredAbstractAssignment_0_0_1_1 : ( ( Abstract ) ) ;
     public final void rule__TMethod__DeclaredAbstractAssignment_0_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18244:1: ( ( ( Abstract ) ) )
-            // InternalTypesParser.g:18245:1: ( ( Abstract ) )
+            // InternalTypesParser.g:18056:1: ( ( ( Abstract ) ) )
+            // InternalTypesParser.g:18057:1: ( ( Abstract ) )
             {
-            // InternalTypesParser.g:18245:1: ( ( Abstract ) )
-            // InternalTypesParser.g:18246:1: ( Abstract )
+            // InternalTypesParser.g:18057:1: ( ( Abstract ) )
+            // InternalTypesParser.g:18058:1: ( Abstract )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTMethodAccess().getDeclaredAbstractAbstractKeyword_0_0_1_1_0()); 
             }
-            // InternalTypesParser.g:18247:1: ( Abstract )
-            // InternalTypesParser.g:18248:1: Abstract
+            // InternalTypesParser.g:18059:1: ( Abstract )
+            // InternalTypesParser.g:18060:1: Abstract
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTMethodAccess().getDeclaredAbstractAbstractKeyword_0_0_1_1_0()); 
@@ -52336,17 +51796,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TMethod__TypeVarsAssignment_0_0_2_1"
-    // InternalTypesParser.g:18263:1: rule__TMethod__TypeVarsAssignment_0_0_2_1 : ( ruleTypeVariable ) ;
+    // InternalTypesParser.g:18075:1: rule__TMethod__TypeVarsAssignment_0_0_2_1 : ( ruleTypeVariable ) ;
     public final void rule__TMethod__TypeVarsAssignment_0_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18267:1: ( ( ruleTypeVariable ) )
-            // InternalTypesParser.g:18268:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:18079:1: ( ( ruleTypeVariable ) )
+            // InternalTypesParser.g:18080:1: ( ruleTypeVariable )
             {
-            // InternalTypesParser.g:18268:1: ( ruleTypeVariable )
-            // InternalTypesParser.g:18269:1: ruleTypeVariable
+            // InternalTypesParser.g:18080:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:18081:1: ruleTypeVariable
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTMethodAccess().getTypeVarsTypeVariableParserRuleCall_0_0_2_1_0()); 
@@ -52381,17 +51841,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TMethod__TypeVarsAssignment_0_0_2_2_1"
-    // InternalTypesParser.g:18278:1: rule__TMethod__TypeVarsAssignment_0_0_2_2_1 : ( ruleTypeVariable ) ;
+    // InternalTypesParser.g:18090:1: rule__TMethod__TypeVarsAssignment_0_0_2_2_1 : ( ruleTypeVariable ) ;
     public final void rule__TMethod__TypeVarsAssignment_0_0_2_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18282:1: ( ( ruleTypeVariable ) )
-            // InternalTypesParser.g:18283:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:18094:1: ( ( ruleTypeVariable ) )
+            // InternalTypesParser.g:18095:1: ( ruleTypeVariable )
             {
-            // InternalTypesParser.g:18283:1: ( ruleTypeVariable )
-            // InternalTypesParser.g:18284:1: ruleTypeVariable
+            // InternalTypesParser.g:18095:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:18096:1: ruleTypeVariable
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTMethodAccess().getTypeVarsTypeVariableParserRuleCall_0_0_2_2_1_0()); 
@@ -52426,17 +51886,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TMethod__NameAssignment_0_0_3_0"
-    // InternalTypesParser.g:18293:1: rule__TMethod__NameAssignment_0_0_3_0 : ( ruleTypesIdentifier ) ;
+    // InternalTypesParser.g:18105:1: rule__TMethod__NameAssignment_0_0_3_0 : ( ruleTypesIdentifier ) ;
     public final void rule__TMethod__NameAssignment_0_0_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18297:1: ( ( ruleTypesIdentifier ) )
-            // InternalTypesParser.g:18298:1: ( ruleTypesIdentifier )
+            // InternalTypesParser.g:18109:1: ( ( ruleTypesIdentifier ) )
+            // InternalTypesParser.g:18110:1: ( ruleTypesIdentifier )
             {
-            // InternalTypesParser.g:18298:1: ( ruleTypesIdentifier )
-            // InternalTypesParser.g:18299:1: ruleTypesIdentifier
+            // InternalTypesParser.g:18110:1: ( ruleTypesIdentifier )
+            // InternalTypesParser.g:18111:1: ruleTypesIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTMethodAccess().getNameTypesIdentifierParserRuleCall_0_0_3_0_0()); 
@@ -52471,17 +51931,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TMethod__NameAssignment_0_0_3_1"
-    // InternalTypesParser.g:18308:1: rule__TMethod__NameAssignment_0_0_3_1 : ( ruleTypesComputedPropertyName ) ;
+    // InternalTypesParser.g:18120:1: rule__TMethod__NameAssignment_0_0_3_1 : ( ruleTypesComputedPropertyName ) ;
     public final void rule__TMethod__NameAssignment_0_0_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18312:1: ( ( ruleTypesComputedPropertyName ) )
-            // InternalTypesParser.g:18313:1: ( ruleTypesComputedPropertyName )
+            // InternalTypesParser.g:18124:1: ( ( ruleTypesComputedPropertyName ) )
+            // InternalTypesParser.g:18125:1: ( ruleTypesComputedPropertyName )
             {
-            // InternalTypesParser.g:18313:1: ( ruleTypesComputedPropertyName )
-            // InternalTypesParser.g:18314:1: ruleTypesComputedPropertyName
+            // InternalTypesParser.g:18125:1: ( ruleTypesComputedPropertyName )
+            // InternalTypesParser.g:18126:1: ruleTypesComputedPropertyName
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTMethodAccess().getNameTypesComputedPropertyNameParserRuleCall_0_0_3_1_0()); 
@@ -52516,17 +51976,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TMethod__FparsAssignment_1_0"
-    // InternalTypesParser.g:18323:1: rule__TMethod__FparsAssignment_1_0 : ( ruleTFormalParameter ) ;
+    // InternalTypesParser.g:18135:1: rule__TMethod__FparsAssignment_1_0 : ( ruleTFormalParameter ) ;
     public final void rule__TMethod__FparsAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18327:1: ( ( ruleTFormalParameter ) )
-            // InternalTypesParser.g:18328:1: ( ruleTFormalParameter )
+            // InternalTypesParser.g:18139:1: ( ( ruleTFormalParameter ) )
+            // InternalTypesParser.g:18140:1: ( ruleTFormalParameter )
             {
-            // InternalTypesParser.g:18328:1: ( ruleTFormalParameter )
-            // InternalTypesParser.g:18329:1: ruleTFormalParameter
+            // InternalTypesParser.g:18140:1: ( ruleTFormalParameter )
+            // InternalTypesParser.g:18141:1: ruleTFormalParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTMethodAccess().getFparsTFormalParameterParserRuleCall_1_0_0()); 
@@ -52561,17 +52021,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TMethod__FparsAssignment_1_1_1"
-    // InternalTypesParser.g:18338:1: rule__TMethod__FparsAssignment_1_1_1 : ( ruleTFormalParameter ) ;
+    // InternalTypesParser.g:18150:1: rule__TMethod__FparsAssignment_1_1_1 : ( ruleTFormalParameter ) ;
     public final void rule__TMethod__FparsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18342:1: ( ( ruleTFormalParameter ) )
-            // InternalTypesParser.g:18343:1: ( ruleTFormalParameter )
+            // InternalTypesParser.g:18154:1: ( ( ruleTFormalParameter ) )
+            // InternalTypesParser.g:18155:1: ( ruleTFormalParameter )
             {
-            // InternalTypesParser.g:18343:1: ( ruleTFormalParameter )
-            // InternalTypesParser.g:18344:1: ruleTFormalParameter
+            // InternalTypesParser.g:18155:1: ( ruleTFormalParameter )
+            // InternalTypesParser.g:18156:1: ruleTFormalParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTMethodAccess().getFparsTFormalParameterParserRuleCall_1_1_1_0()); 
@@ -52606,17 +52066,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TMethod__ReturnTypeRefAssignment_4"
-    // InternalTypesParser.g:18353:1: rule__TMethod__ReturnTypeRefAssignment_4 : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:18165:1: rule__TMethod__ReturnTypeRefAssignment_4 : ( ruleTypeRef ) ;
     public final void rule__TMethod__ReturnTypeRefAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18357:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:18358:1: ( ruleTypeRef )
+            // InternalTypesParser.g:18169:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:18170:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:18358:1: ( ruleTypeRef )
-            // InternalTypesParser.g:18359:1: ruleTypeRef
+            // InternalTypesParser.g:18170:1: ( ruleTypeRef )
+            // InternalTypesParser.g:18171:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTMethodAccess().getReturnTypeRefTypeRefParserRuleCall_4_0()); 
@@ -52651,17 +52111,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TField__DeclaredMemberAccessModifierAssignment_0"
-    // InternalTypesParser.g:18368:1: rule__TField__DeclaredMemberAccessModifierAssignment_0 : ( ruleMemberAccessModifier ) ;
+    // InternalTypesParser.g:18180:1: rule__TField__DeclaredMemberAccessModifierAssignment_0 : ( ruleMemberAccessModifier ) ;
     public final void rule__TField__DeclaredMemberAccessModifierAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18372:1: ( ( ruleMemberAccessModifier ) )
-            // InternalTypesParser.g:18373:1: ( ruleMemberAccessModifier )
+            // InternalTypesParser.g:18184:1: ( ( ruleMemberAccessModifier ) )
+            // InternalTypesParser.g:18185:1: ( ruleMemberAccessModifier )
             {
-            // InternalTypesParser.g:18373:1: ( ruleMemberAccessModifier )
-            // InternalTypesParser.g:18374:1: ruleMemberAccessModifier
+            // InternalTypesParser.g:18185:1: ( ruleMemberAccessModifier )
+            // InternalTypesParser.g:18186:1: ruleMemberAccessModifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFieldAccess().getDeclaredMemberAccessModifierMemberAccessModifierEnumRuleCall_0_0()); 
@@ -52696,23 +52156,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TField__DeclaredStaticAssignment_1_0"
-    // InternalTypesParser.g:18383:1: rule__TField__DeclaredStaticAssignment_1_0 : ( ( Static ) ) ;
+    // InternalTypesParser.g:18195:1: rule__TField__DeclaredStaticAssignment_1_0 : ( ( Static ) ) ;
     public final void rule__TField__DeclaredStaticAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18387:1: ( ( ( Static ) ) )
-            // InternalTypesParser.g:18388:1: ( ( Static ) )
+            // InternalTypesParser.g:18199:1: ( ( ( Static ) ) )
+            // InternalTypesParser.g:18200:1: ( ( Static ) )
             {
-            // InternalTypesParser.g:18388:1: ( ( Static ) )
-            // InternalTypesParser.g:18389:1: ( Static )
+            // InternalTypesParser.g:18200:1: ( ( Static ) )
+            // InternalTypesParser.g:18201:1: ( Static )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFieldAccess().getDeclaredStaticStaticKeyword_1_0_0()); 
             }
-            // InternalTypesParser.g:18390:1: ( Static )
-            // InternalTypesParser.g:18391:1: Static
+            // InternalTypesParser.g:18202:1: ( Static )
+            // InternalTypesParser.g:18203:1: Static
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFieldAccess().getDeclaredStaticStaticKeyword_1_0_0()); 
@@ -52749,23 +52209,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TField__ConstAssignment_1_1"
-    // InternalTypesParser.g:18406:1: rule__TField__ConstAssignment_1_1 : ( ( Const ) ) ;
+    // InternalTypesParser.g:18218:1: rule__TField__ConstAssignment_1_1 : ( ( Const ) ) ;
     public final void rule__TField__ConstAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18410:1: ( ( ( Const ) ) )
-            // InternalTypesParser.g:18411:1: ( ( Const ) )
+            // InternalTypesParser.g:18222:1: ( ( ( Const ) ) )
+            // InternalTypesParser.g:18223:1: ( ( Const ) )
             {
-            // InternalTypesParser.g:18411:1: ( ( Const ) )
-            // InternalTypesParser.g:18412:1: ( Const )
+            // InternalTypesParser.g:18223:1: ( ( Const ) )
+            // InternalTypesParser.g:18224:1: ( Const )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFieldAccess().getConstConstKeyword_1_1_0()); 
             }
-            // InternalTypesParser.g:18413:1: ( Const )
-            // InternalTypesParser.g:18414:1: Const
+            // InternalTypesParser.g:18225:1: ( Const )
+            // InternalTypesParser.g:18226:1: Const
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFieldAccess().getConstConstKeyword_1_1_0()); 
@@ -52802,23 +52262,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TField__DeclaredFinalAssignment_1_2"
-    // InternalTypesParser.g:18429:1: rule__TField__DeclaredFinalAssignment_1_2 : ( ( Final ) ) ;
+    // InternalTypesParser.g:18241:1: rule__TField__DeclaredFinalAssignment_1_2 : ( ( Final ) ) ;
     public final void rule__TField__DeclaredFinalAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18433:1: ( ( ( Final ) ) )
-            // InternalTypesParser.g:18434:1: ( ( Final ) )
+            // InternalTypesParser.g:18245:1: ( ( ( Final ) ) )
+            // InternalTypesParser.g:18246:1: ( ( Final ) )
             {
-            // InternalTypesParser.g:18434:1: ( ( Final ) )
-            // InternalTypesParser.g:18435:1: ( Final )
+            // InternalTypesParser.g:18246:1: ( ( Final ) )
+            // InternalTypesParser.g:18247:1: ( Final )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFieldAccess().getDeclaredFinalFinalKeyword_1_2_0()); 
             }
-            // InternalTypesParser.g:18436:1: ( Final )
-            // InternalTypesParser.g:18437:1: Final
+            // InternalTypesParser.g:18248:1: ( Final )
+            // InternalTypesParser.g:18249:1: Final
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFieldAccess().getDeclaredFinalFinalKeyword_1_2_0()); 
@@ -52855,17 +52315,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TField__NameAssignment_2_0"
-    // InternalTypesParser.g:18452:1: rule__TField__NameAssignment_2_0 : ( ruleTypesIdentifier ) ;
+    // InternalTypesParser.g:18264:1: rule__TField__NameAssignment_2_0 : ( ruleTypesIdentifier ) ;
     public final void rule__TField__NameAssignment_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18456:1: ( ( ruleTypesIdentifier ) )
-            // InternalTypesParser.g:18457:1: ( ruleTypesIdentifier )
+            // InternalTypesParser.g:18268:1: ( ( ruleTypesIdentifier ) )
+            // InternalTypesParser.g:18269:1: ( ruleTypesIdentifier )
             {
-            // InternalTypesParser.g:18457:1: ( ruleTypesIdentifier )
-            // InternalTypesParser.g:18458:1: ruleTypesIdentifier
+            // InternalTypesParser.g:18269:1: ( ruleTypesIdentifier )
+            // InternalTypesParser.g:18270:1: ruleTypesIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFieldAccess().getNameTypesIdentifierParserRuleCall_2_0_0()); 
@@ -52900,17 +52360,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TField__NameAssignment_2_1"
-    // InternalTypesParser.g:18467:1: rule__TField__NameAssignment_2_1 : ( ruleTypesComputedPropertyName ) ;
+    // InternalTypesParser.g:18279:1: rule__TField__NameAssignment_2_1 : ( ruleTypesComputedPropertyName ) ;
     public final void rule__TField__NameAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18471:1: ( ( ruleTypesComputedPropertyName ) )
-            // InternalTypesParser.g:18472:1: ( ruleTypesComputedPropertyName )
+            // InternalTypesParser.g:18283:1: ( ( ruleTypesComputedPropertyName ) )
+            // InternalTypesParser.g:18284:1: ( ruleTypesComputedPropertyName )
             {
-            // InternalTypesParser.g:18472:1: ( ruleTypesComputedPropertyName )
-            // InternalTypesParser.g:18473:1: ruleTypesComputedPropertyName
+            // InternalTypesParser.g:18284:1: ( ruleTypesComputedPropertyName )
+            // InternalTypesParser.g:18285:1: ruleTypesComputedPropertyName
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFieldAccess().getNameTypesComputedPropertyNameParserRuleCall_2_1_0()); 
@@ -52945,17 +52405,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TField__TypeRefAssignment_4"
-    // InternalTypesParser.g:18482:1: rule__TField__TypeRefAssignment_4 : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:18294:1: rule__TField__TypeRefAssignment_4 : ( ruleTypeRef ) ;
     public final void rule__TField__TypeRefAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18486:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:18487:1: ( ruleTypeRef )
+            // InternalTypesParser.g:18298:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:18299:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:18487:1: ( ruleTypeRef )
-            // InternalTypesParser.g:18488:1: ruleTypeRef
+            // InternalTypesParser.g:18299:1: ( ruleTypeRef )
+            // InternalTypesParser.g:18300:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFieldAccess().getTypeRefTypeRefParserRuleCall_4_0()); 
@@ -52990,17 +52450,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TGetter__DeclaredMemberAccessModifierAssignment_0_0_1"
-    // InternalTypesParser.g:18497:1: rule__TGetter__DeclaredMemberAccessModifierAssignment_0_0_1 : ( ruleMemberAccessModifier ) ;
+    // InternalTypesParser.g:18309:1: rule__TGetter__DeclaredMemberAccessModifierAssignment_0_0_1 : ( ruleMemberAccessModifier ) ;
     public final void rule__TGetter__DeclaredMemberAccessModifierAssignment_0_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18501:1: ( ( ruleMemberAccessModifier ) )
-            // InternalTypesParser.g:18502:1: ( ruleMemberAccessModifier )
+            // InternalTypesParser.g:18313:1: ( ( ruleMemberAccessModifier ) )
+            // InternalTypesParser.g:18314:1: ( ruleMemberAccessModifier )
             {
-            // InternalTypesParser.g:18502:1: ( ruleMemberAccessModifier )
-            // InternalTypesParser.g:18503:1: ruleMemberAccessModifier
+            // InternalTypesParser.g:18314:1: ( ruleMemberAccessModifier )
+            // InternalTypesParser.g:18315:1: ruleMemberAccessModifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTGetterAccess().getDeclaredMemberAccessModifierMemberAccessModifierEnumRuleCall_0_0_1_0()); 
@@ -53035,23 +52495,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TGetter__DeclaredAbstractAssignment_0_0_2_0"
-    // InternalTypesParser.g:18512:1: rule__TGetter__DeclaredAbstractAssignment_0_0_2_0 : ( ( Abstract ) ) ;
+    // InternalTypesParser.g:18324:1: rule__TGetter__DeclaredAbstractAssignment_0_0_2_0 : ( ( Abstract ) ) ;
     public final void rule__TGetter__DeclaredAbstractAssignment_0_0_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18516:1: ( ( ( Abstract ) ) )
-            // InternalTypesParser.g:18517:1: ( ( Abstract ) )
+            // InternalTypesParser.g:18328:1: ( ( ( Abstract ) ) )
+            // InternalTypesParser.g:18329:1: ( ( Abstract ) )
             {
-            // InternalTypesParser.g:18517:1: ( ( Abstract ) )
-            // InternalTypesParser.g:18518:1: ( Abstract )
+            // InternalTypesParser.g:18329:1: ( ( Abstract ) )
+            // InternalTypesParser.g:18330:1: ( Abstract )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTGetterAccess().getDeclaredAbstractAbstractKeyword_0_0_2_0_0()); 
             }
-            // InternalTypesParser.g:18519:1: ( Abstract )
-            // InternalTypesParser.g:18520:1: Abstract
+            // InternalTypesParser.g:18331:1: ( Abstract )
+            // InternalTypesParser.g:18332:1: Abstract
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTGetterAccess().getDeclaredAbstractAbstractKeyword_0_0_2_0_0()); 
@@ -53088,23 +52548,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TGetter__DeclaredStaticAssignment_0_0_2_1"
-    // InternalTypesParser.g:18535:1: rule__TGetter__DeclaredStaticAssignment_0_0_2_1 : ( ( Static ) ) ;
+    // InternalTypesParser.g:18347:1: rule__TGetter__DeclaredStaticAssignment_0_0_2_1 : ( ( Static ) ) ;
     public final void rule__TGetter__DeclaredStaticAssignment_0_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18539:1: ( ( ( Static ) ) )
-            // InternalTypesParser.g:18540:1: ( ( Static ) )
+            // InternalTypesParser.g:18351:1: ( ( ( Static ) ) )
+            // InternalTypesParser.g:18352:1: ( ( Static ) )
             {
-            // InternalTypesParser.g:18540:1: ( ( Static ) )
-            // InternalTypesParser.g:18541:1: ( Static )
+            // InternalTypesParser.g:18352:1: ( ( Static ) )
+            // InternalTypesParser.g:18353:1: ( Static )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTGetterAccess().getDeclaredStaticStaticKeyword_0_0_2_1_0()); 
             }
-            // InternalTypesParser.g:18542:1: ( Static )
-            // InternalTypesParser.g:18543:1: Static
+            // InternalTypesParser.g:18354:1: ( Static )
+            // InternalTypesParser.g:18355:1: Static
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTGetterAccess().getDeclaredStaticStaticKeyword_0_0_2_1_0()); 
@@ -53141,17 +52601,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TGetter__NameAssignment_0_0_4_0"
-    // InternalTypesParser.g:18558:1: rule__TGetter__NameAssignment_0_0_4_0 : ( ruleTypesIdentifier ) ;
+    // InternalTypesParser.g:18370:1: rule__TGetter__NameAssignment_0_0_4_0 : ( ruleTypesIdentifier ) ;
     public final void rule__TGetter__NameAssignment_0_0_4_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18562:1: ( ( ruleTypesIdentifier ) )
-            // InternalTypesParser.g:18563:1: ( ruleTypesIdentifier )
+            // InternalTypesParser.g:18374:1: ( ( ruleTypesIdentifier ) )
+            // InternalTypesParser.g:18375:1: ( ruleTypesIdentifier )
             {
-            // InternalTypesParser.g:18563:1: ( ruleTypesIdentifier )
-            // InternalTypesParser.g:18564:1: ruleTypesIdentifier
+            // InternalTypesParser.g:18375:1: ( ruleTypesIdentifier )
+            // InternalTypesParser.g:18376:1: ruleTypesIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTGetterAccess().getNameTypesIdentifierParserRuleCall_0_0_4_0_0()); 
@@ -53186,17 +52646,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TGetter__NameAssignment_0_0_4_1"
-    // InternalTypesParser.g:18573:1: rule__TGetter__NameAssignment_0_0_4_1 : ( ruleTypesComputedPropertyName ) ;
+    // InternalTypesParser.g:18385:1: rule__TGetter__NameAssignment_0_0_4_1 : ( ruleTypesComputedPropertyName ) ;
     public final void rule__TGetter__NameAssignment_0_0_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18577:1: ( ( ruleTypesComputedPropertyName ) )
-            // InternalTypesParser.g:18578:1: ( ruleTypesComputedPropertyName )
+            // InternalTypesParser.g:18389:1: ( ( ruleTypesComputedPropertyName ) )
+            // InternalTypesParser.g:18390:1: ( ruleTypesComputedPropertyName )
             {
-            // InternalTypesParser.g:18578:1: ( ruleTypesComputedPropertyName )
-            // InternalTypesParser.g:18579:1: ruleTypesComputedPropertyName
+            // InternalTypesParser.g:18390:1: ( ruleTypesComputedPropertyName )
+            // InternalTypesParser.g:18391:1: ruleTypesComputedPropertyName
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTGetterAccess().getNameTypesComputedPropertyNameParserRuleCall_0_0_4_1_0()); 
@@ -53231,17 +52691,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TGetter__DeclaredTypeRefAssignment_4"
-    // InternalTypesParser.g:18588:1: rule__TGetter__DeclaredTypeRefAssignment_4 : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:18400:1: rule__TGetter__DeclaredTypeRefAssignment_4 : ( ruleTypeRef ) ;
     public final void rule__TGetter__DeclaredTypeRefAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18592:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:18593:1: ( ruleTypeRef )
+            // InternalTypesParser.g:18404:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:18405:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:18593:1: ( ruleTypeRef )
-            // InternalTypesParser.g:18594:1: ruleTypeRef
+            // InternalTypesParser.g:18405:1: ( ruleTypeRef )
+            // InternalTypesParser.g:18406:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTGetterAccess().getDeclaredTypeRefTypeRefParserRuleCall_4_0()); 
@@ -53276,17 +52736,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TSetter__DeclaredMemberAccessModifierAssignment_0_0_1"
-    // InternalTypesParser.g:18603:1: rule__TSetter__DeclaredMemberAccessModifierAssignment_0_0_1 : ( ruleMemberAccessModifier ) ;
+    // InternalTypesParser.g:18415:1: rule__TSetter__DeclaredMemberAccessModifierAssignment_0_0_1 : ( ruleMemberAccessModifier ) ;
     public final void rule__TSetter__DeclaredMemberAccessModifierAssignment_0_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18607:1: ( ( ruleMemberAccessModifier ) )
-            // InternalTypesParser.g:18608:1: ( ruleMemberAccessModifier )
+            // InternalTypesParser.g:18419:1: ( ( ruleMemberAccessModifier ) )
+            // InternalTypesParser.g:18420:1: ( ruleMemberAccessModifier )
             {
-            // InternalTypesParser.g:18608:1: ( ruleMemberAccessModifier )
-            // InternalTypesParser.g:18609:1: ruleMemberAccessModifier
+            // InternalTypesParser.g:18420:1: ( ruleMemberAccessModifier )
+            // InternalTypesParser.g:18421:1: ruleMemberAccessModifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTSetterAccess().getDeclaredMemberAccessModifierMemberAccessModifierEnumRuleCall_0_0_1_0()); 
@@ -53321,23 +52781,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TSetter__DeclaredAbstractAssignment_0_0_2_0"
-    // InternalTypesParser.g:18618:1: rule__TSetter__DeclaredAbstractAssignment_0_0_2_0 : ( ( Abstract ) ) ;
+    // InternalTypesParser.g:18430:1: rule__TSetter__DeclaredAbstractAssignment_0_0_2_0 : ( ( Abstract ) ) ;
     public final void rule__TSetter__DeclaredAbstractAssignment_0_0_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18622:1: ( ( ( Abstract ) ) )
-            // InternalTypesParser.g:18623:1: ( ( Abstract ) )
+            // InternalTypesParser.g:18434:1: ( ( ( Abstract ) ) )
+            // InternalTypesParser.g:18435:1: ( ( Abstract ) )
             {
-            // InternalTypesParser.g:18623:1: ( ( Abstract ) )
-            // InternalTypesParser.g:18624:1: ( Abstract )
+            // InternalTypesParser.g:18435:1: ( ( Abstract ) )
+            // InternalTypesParser.g:18436:1: ( Abstract )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTSetterAccess().getDeclaredAbstractAbstractKeyword_0_0_2_0_0()); 
             }
-            // InternalTypesParser.g:18625:1: ( Abstract )
-            // InternalTypesParser.g:18626:1: Abstract
+            // InternalTypesParser.g:18437:1: ( Abstract )
+            // InternalTypesParser.g:18438:1: Abstract
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTSetterAccess().getDeclaredAbstractAbstractKeyword_0_0_2_0_0()); 
@@ -53374,23 +52834,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TSetter__DeclaredStaticAssignment_0_0_2_1"
-    // InternalTypesParser.g:18641:1: rule__TSetter__DeclaredStaticAssignment_0_0_2_1 : ( ( Static ) ) ;
+    // InternalTypesParser.g:18453:1: rule__TSetter__DeclaredStaticAssignment_0_0_2_1 : ( ( Static ) ) ;
     public final void rule__TSetter__DeclaredStaticAssignment_0_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18645:1: ( ( ( Static ) ) )
-            // InternalTypesParser.g:18646:1: ( ( Static ) )
+            // InternalTypesParser.g:18457:1: ( ( ( Static ) ) )
+            // InternalTypesParser.g:18458:1: ( ( Static ) )
             {
-            // InternalTypesParser.g:18646:1: ( ( Static ) )
-            // InternalTypesParser.g:18647:1: ( Static )
+            // InternalTypesParser.g:18458:1: ( ( Static ) )
+            // InternalTypesParser.g:18459:1: ( Static )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTSetterAccess().getDeclaredStaticStaticKeyword_0_0_2_1_0()); 
             }
-            // InternalTypesParser.g:18648:1: ( Static )
-            // InternalTypesParser.g:18649:1: Static
+            // InternalTypesParser.g:18460:1: ( Static )
+            // InternalTypesParser.g:18461:1: Static
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTSetterAccess().getDeclaredStaticStaticKeyword_0_0_2_1_0()); 
@@ -53427,17 +52887,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TSetter__NameAssignment_0_0_4_0"
-    // InternalTypesParser.g:18664:1: rule__TSetter__NameAssignment_0_0_4_0 : ( ruleTypesIdentifier ) ;
+    // InternalTypesParser.g:18476:1: rule__TSetter__NameAssignment_0_0_4_0 : ( ruleTypesIdentifier ) ;
     public final void rule__TSetter__NameAssignment_0_0_4_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18668:1: ( ( ruleTypesIdentifier ) )
-            // InternalTypesParser.g:18669:1: ( ruleTypesIdentifier )
+            // InternalTypesParser.g:18480:1: ( ( ruleTypesIdentifier ) )
+            // InternalTypesParser.g:18481:1: ( ruleTypesIdentifier )
             {
-            // InternalTypesParser.g:18669:1: ( ruleTypesIdentifier )
-            // InternalTypesParser.g:18670:1: ruleTypesIdentifier
+            // InternalTypesParser.g:18481:1: ( ruleTypesIdentifier )
+            // InternalTypesParser.g:18482:1: ruleTypesIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTSetterAccess().getNameTypesIdentifierParserRuleCall_0_0_4_0_0()); 
@@ -53472,17 +52932,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TSetter__NameAssignment_0_0_4_1"
-    // InternalTypesParser.g:18679:1: rule__TSetter__NameAssignment_0_0_4_1 : ( ruleTypesComputedPropertyName ) ;
+    // InternalTypesParser.g:18491:1: rule__TSetter__NameAssignment_0_0_4_1 : ( ruleTypesComputedPropertyName ) ;
     public final void rule__TSetter__NameAssignment_0_0_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18683:1: ( ( ruleTypesComputedPropertyName ) )
-            // InternalTypesParser.g:18684:1: ( ruleTypesComputedPropertyName )
+            // InternalTypesParser.g:18495:1: ( ( ruleTypesComputedPropertyName ) )
+            // InternalTypesParser.g:18496:1: ( ruleTypesComputedPropertyName )
             {
-            // InternalTypesParser.g:18684:1: ( ruleTypesComputedPropertyName )
-            // InternalTypesParser.g:18685:1: ruleTypesComputedPropertyName
+            // InternalTypesParser.g:18496:1: ( ruleTypesComputedPropertyName )
+            // InternalTypesParser.g:18497:1: ruleTypesComputedPropertyName
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTSetterAccess().getNameTypesComputedPropertyNameParserRuleCall_0_0_4_1_0()); 
@@ -53517,17 +52977,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TSetter__FparAssignment_2"
-    // InternalTypesParser.g:18694:1: rule__TSetter__FparAssignment_2 : ( ruleTFormalParameter ) ;
+    // InternalTypesParser.g:18506:1: rule__TSetter__FparAssignment_2 : ( ruleTFormalParameter ) ;
     public final void rule__TSetter__FparAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18698:1: ( ( ruleTFormalParameter ) )
-            // InternalTypesParser.g:18699:1: ( ruleTFormalParameter )
+            // InternalTypesParser.g:18510:1: ( ( ruleTFormalParameter ) )
+            // InternalTypesParser.g:18511:1: ( ruleTFormalParameter )
             {
-            // InternalTypesParser.g:18699:1: ( ruleTFormalParameter )
-            // InternalTypesParser.g:18700:1: ruleTFormalParameter
+            // InternalTypesParser.g:18511:1: ( ruleTFormalParameter )
+            // InternalTypesParser.g:18512:1: ruleTFormalParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTSetterAccess().getFparTFormalParameterParserRuleCall_2_0()); 
@@ -53562,17 +53022,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TFunction__DeclaredTypeAccessModifierAssignment_0"
-    // InternalTypesParser.g:18709:1: rule__TFunction__DeclaredTypeAccessModifierAssignment_0 : ( ruleTypeAccessModifier ) ;
+    // InternalTypesParser.g:18521:1: rule__TFunction__DeclaredTypeAccessModifierAssignment_0 : ( ruleTypeAccessModifier ) ;
     public final void rule__TFunction__DeclaredTypeAccessModifierAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18713:1: ( ( ruleTypeAccessModifier ) )
-            // InternalTypesParser.g:18714:1: ( ruleTypeAccessModifier )
+            // InternalTypesParser.g:18525:1: ( ( ruleTypeAccessModifier ) )
+            // InternalTypesParser.g:18526:1: ( ruleTypeAccessModifier )
             {
-            // InternalTypesParser.g:18714:1: ( ruleTypeAccessModifier )
-            // InternalTypesParser.g:18715:1: ruleTypeAccessModifier
+            // InternalTypesParser.g:18526:1: ( ruleTypeAccessModifier )
+            // InternalTypesParser.g:18527:1: ruleTypeAccessModifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFunctionAccess().getDeclaredTypeAccessModifierTypeAccessModifierEnumRuleCall_0_0()); 
@@ -53607,23 +53067,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TFunction__DeclaredProvidedByRuntimeAssignment_1"
-    // InternalTypesParser.g:18724:1: rule__TFunction__DeclaredProvidedByRuntimeAssignment_1 : ( ( ProvidedByRuntime ) ) ;
+    // InternalTypesParser.g:18536:1: rule__TFunction__DeclaredProvidedByRuntimeAssignment_1 : ( ( ProvidedByRuntime ) ) ;
     public final void rule__TFunction__DeclaredProvidedByRuntimeAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18728:1: ( ( ( ProvidedByRuntime ) ) )
-            // InternalTypesParser.g:18729:1: ( ( ProvidedByRuntime ) )
+            // InternalTypesParser.g:18540:1: ( ( ( ProvidedByRuntime ) ) )
+            // InternalTypesParser.g:18541:1: ( ( ProvidedByRuntime ) )
             {
-            // InternalTypesParser.g:18729:1: ( ( ProvidedByRuntime ) )
-            // InternalTypesParser.g:18730:1: ( ProvidedByRuntime )
+            // InternalTypesParser.g:18541:1: ( ( ProvidedByRuntime ) )
+            // InternalTypesParser.g:18542:1: ( ProvidedByRuntime )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFunctionAccess().getDeclaredProvidedByRuntimeProvidedByRuntimeKeyword_1_0()); 
             }
-            // InternalTypesParser.g:18731:1: ( ProvidedByRuntime )
-            // InternalTypesParser.g:18732:1: ProvidedByRuntime
+            // InternalTypesParser.g:18543:1: ( ProvidedByRuntime )
+            // InternalTypesParser.g:18544:1: ProvidedByRuntime
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFunctionAccess().getDeclaredProvidedByRuntimeProvidedByRuntimeKeyword_1_0()); 
@@ -53660,17 +53120,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TFunction__TypeVarsAssignment_3_1"
-    // InternalTypesParser.g:18747:1: rule__TFunction__TypeVarsAssignment_3_1 : ( ruleTypeVariable ) ;
+    // InternalTypesParser.g:18559:1: rule__TFunction__TypeVarsAssignment_3_1 : ( ruleTypeVariable ) ;
     public final void rule__TFunction__TypeVarsAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18751:1: ( ( ruleTypeVariable ) )
-            // InternalTypesParser.g:18752:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:18563:1: ( ( ruleTypeVariable ) )
+            // InternalTypesParser.g:18564:1: ( ruleTypeVariable )
             {
-            // InternalTypesParser.g:18752:1: ( ruleTypeVariable )
-            // InternalTypesParser.g:18753:1: ruleTypeVariable
+            // InternalTypesParser.g:18564:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:18565:1: ruleTypeVariable
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFunctionAccess().getTypeVarsTypeVariableParserRuleCall_3_1_0()); 
@@ -53705,17 +53165,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TFunction__TypeVarsAssignment_3_2_1"
-    // InternalTypesParser.g:18762:1: rule__TFunction__TypeVarsAssignment_3_2_1 : ( ruleTypeVariable ) ;
+    // InternalTypesParser.g:18574:1: rule__TFunction__TypeVarsAssignment_3_2_1 : ( ruleTypeVariable ) ;
     public final void rule__TFunction__TypeVarsAssignment_3_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18766:1: ( ( ruleTypeVariable ) )
-            // InternalTypesParser.g:18767:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:18578:1: ( ( ruleTypeVariable ) )
+            // InternalTypesParser.g:18579:1: ( ruleTypeVariable )
             {
-            // InternalTypesParser.g:18767:1: ( ruleTypeVariable )
-            // InternalTypesParser.g:18768:1: ruleTypeVariable
+            // InternalTypesParser.g:18579:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:18580:1: ruleTypeVariable
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFunctionAccess().getTypeVarsTypeVariableParserRuleCall_3_2_1_0()); 
@@ -53750,17 +53210,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TFunction__NameAssignment_4"
-    // InternalTypesParser.g:18777:1: rule__TFunction__NameAssignment_4 : ( ruleBindingTypesIdentifier ) ;
+    // InternalTypesParser.g:18589:1: rule__TFunction__NameAssignment_4 : ( ruleBindingTypesIdentifier ) ;
     public final void rule__TFunction__NameAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18781:1: ( ( ruleBindingTypesIdentifier ) )
-            // InternalTypesParser.g:18782:1: ( ruleBindingTypesIdentifier )
+            // InternalTypesParser.g:18593:1: ( ( ruleBindingTypesIdentifier ) )
+            // InternalTypesParser.g:18594:1: ( ruleBindingTypesIdentifier )
             {
-            // InternalTypesParser.g:18782:1: ( ruleBindingTypesIdentifier )
-            // InternalTypesParser.g:18783:1: ruleBindingTypesIdentifier
+            // InternalTypesParser.g:18594:1: ( ruleBindingTypesIdentifier )
+            // InternalTypesParser.g:18595:1: ruleBindingTypesIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFunctionAccess().getNameBindingTypesIdentifierParserRuleCall_4_0()); 
@@ -53795,17 +53255,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TFunction__FparsAssignment_6_0"
-    // InternalTypesParser.g:18792:1: rule__TFunction__FparsAssignment_6_0 : ( ruleTFormalParameter ) ;
+    // InternalTypesParser.g:18604:1: rule__TFunction__FparsAssignment_6_0 : ( ruleTFormalParameter ) ;
     public final void rule__TFunction__FparsAssignment_6_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18796:1: ( ( ruleTFormalParameter ) )
-            // InternalTypesParser.g:18797:1: ( ruleTFormalParameter )
+            // InternalTypesParser.g:18608:1: ( ( ruleTFormalParameter ) )
+            // InternalTypesParser.g:18609:1: ( ruleTFormalParameter )
             {
-            // InternalTypesParser.g:18797:1: ( ruleTFormalParameter )
-            // InternalTypesParser.g:18798:1: ruleTFormalParameter
+            // InternalTypesParser.g:18609:1: ( ruleTFormalParameter )
+            // InternalTypesParser.g:18610:1: ruleTFormalParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFunctionAccess().getFparsTFormalParameterParserRuleCall_6_0_0()); 
@@ -53840,17 +53300,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TFunction__FparsAssignment_6_1_1"
-    // InternalTypesParser.g:18807:1: rule__TFunction__FparsAssignment_6_1_1 : ( ruleTFormalParameter ) ;
+    // InternalTypesParser.g:18619:1: rule__TFunction__FparsAssignment_6_1_1 : ( ruleTFormalParameter ) ;
     public final void rule__TFunction__FparsAssignment_6_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18811:1: ( ( ruleTFormalParameter ) )
-            // InternalTypesParser.g:18812:1: ( ruleTFormalParameter )
+            // InternalTypesParser.g:18623:1: ( ( ruleTFormalParameter ) )
+            // InternalTypesParser.g:18624:1: ( ruleTFormalParameter )
             {
-            // InternalTypesParser.g:18812:1: ( ruleTFormalParameter )
-            // InternalTypesParser.g:18813:1: ruleTFormalParameter
+            // InternalTypesParser.g:18624:1: ( ruleTFormalParameter )
+            // InternalTypesParser.g:18625:1: ruleTFormalParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFunctionAccess().getFparsTFormalParameterParserRuleCall_6_1_1_0()); 
@@ -53885,17 +53345,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TFunction__ReturnTypeRefAssignment_9"
-    // InternalTypesParser.g:18822:1: rule__TFunction__ReturnTypeRefAssignment_9 : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:18634:1: rule__TFunction__ReturnTypeRefAssignment_9 : ( ruleTypeRef ) ;
     public final void rule__TFunction__ReturnTypeRefAssignment_9() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18826:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:18827:1: ( ruleTypeRef )
+            // InternalTypesParser.g:18638:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:18639:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:18827:1: ( ruleTypeRef )
-            // InternalTypesParser.g:18828:1: ruleTypeRef
+            // InternalTypesParser.g:18639:1: ( ruleTypeRef )
+            // InternalTypesParser.g:18640:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFunctionAccess().getReturnTypeRefTypeRefParserRuleCall_9_0()); 
@@ -53930,17 +53390,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TEnum__DeclaredTypeAccessModifierAssignment_0"
-    // InternalTypesParser.g:18837:1: rule__TEnum__DeclaredTypeAccessModifierAssignment_0 : ( ruleTypeAccessModifier ) ;
+    // InternalTypesParser.g:18649:1: rule__TEnum__DeclaredTypeAccessModifierAssignment_0 : ( ruleTypeAccessModifier ) ;
     public final void rule__TEnum__DeclaredTypeAccessModifierAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18841:1: ( ( ruleTypeAccessModifier ) )
-            // InternalTypesParser.g:18842:1: ( ruleTypeAccessModifier )
+            // InternalTypesParser.g:18653:1: ( ( ruleTypeAccessModifier ) )
+            // InternalTypesParser.g:18654:1: ( ruleTypeAccessModifier )
             {
-            // InternalTypesParser.g:18842:1: ( ruleTypeAccessModifier )
-            // InternalTypesParser.g:18843:1: ruleTypeAccessModifier
+            // InternalTypesParser.g:18654:1: ( ruleTypeAccessModifier )
+            // InternalTypesParser.g:18655:1: ruleTypeAccessModifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTEnumAccess().getDeclaredTypeAccessModifierTypeAccessModifierEnumRuleCall_0_0()); 
@@ -53975,23 +53435,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TEnum__DeclaredProvidedByRuntimeAssignment_1"
-    // InternalTypesParser.g:18852:1: rule__TEnum__DeclaredProvidedByRuntimeAssignment_1 : ( ( ProvidedByRuntime ) ) ;
+    // InternalTypesParser.g:18664:1: rule__TEnum__DeclaredProvidedByRuntimeAssignment_1 : ( ( ProvidedByRuntime ) ) ;
     public final void rule__TEnum__DeclaredProvidedByRuntimeAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18856:1: ( ( ( ProvidedByRuntime ) ) )
-            // InternalTypesParser.g:18857:1: ( ( ProvidedByRuntime ) )
+            // InternalTypesParser.g:18668:1: ( ( ( ProvidedByRuntime ) ) )
+            // InternalTypesParser.g:18669:1: ( ( ProvidedByRuntime ) )
             {
-            // InternalTypesParser.g:18857:1: ( ( ProvidedByRuntime ) )
-            // InternalTypesParser.g:18858:1: ( ProvidedByRuntime )
+            // InternalTypesParser.g:18669:1: ( ( ProvidedByRuntime ) )
+            // InternalTypesParser.g:18670:1: ( ProvidedByRuntime )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTEnumAccess().getDeclaredProvidedByRuntimeProvidedByRuntimeKeyword_1_0()); 
             }
-            // InternalTypesParser.g:18859:1: ( ProvidedByRuntime )
-            // InternalTypesParser.g:18860:1: ProvidedByRuntime
+            // InternalTypesParser.g:18671:1: ( ProvidedByRuntime )
+            // InternalTypesParser.g:18672:1: ProvidedByRuntime
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTEnumAccess().getDeclaredProvidedByRuntimeProvidedByRuntimeKeyword_1_0()); 
@@ -54028,17 +53488,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TEnum__NameAssignment_3"
-    // InternalTypesParser.g:18875:1: rule__TEnum__NameAssignment_3 : ( ruleBindingTypesIdentifier ) ;
+    // InternalTypesParser.g:18687:1: rule__TEnum__NameAssignment_3 : ( ruleBindingTypesIdentifier ) ;
     public final void rule__TEnum__NameAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18879:1: ( ( ruleBindingTypesIdentifier ) )
-            // InternalTypesParser.g:18880:1: ( ruleBindingTypesIdentifier )
+            // InternalTypesParser.g:18691:1: ( ( ruleBindingTypesIdentifier ) )
+            // InternalTypesParser.g:18692:1: ( ruleBindingTypesIdentifier )
             {
-            // InternalTypesParser.g:18880:1: ( ruleBindingTypesIdentifier )
-            // InternalTypesParser.g:18881:1: ruleBindingTypesIdentifier
+            // InternalTypesParser.g:18692:1: ( ruleBindingTypesIdentifier )
+            // InternalTypesParser.g:18693:1: ruleBindingTypesIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTEnumAccess().getNameBindingTypesIdentifierParserRuleCall_3_0()); 
@@ -54073,17 +53533,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TEnum__LiteralsAssignment_5"
-    // InternalTypesParser.g:18890:1: rule__TEnum__LiteralsAssignment_5 : ( ruleTEnumLiteral ) ;
+    // InternalTypesParser.g:18702:1: rule__TEnum__LiteralsAssignment_5 : ( ruleTEnumLiteral ) ;
     public final void rule__TEnum__LiteralsAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18894:1: ( ( ruleTEnumLiteral ) )
-            // InternalTypesParser.g:18895:1: ( ruleTEnumLiteral )
+            // InternalTypesParser.g:18706:1: ( ( ruleTEnumLiteral ) )
+            // InternalTypesParser.g:18707:1: ( ruleTEnumLiteral )
             {
-            // InternalTypesParser.g:18895:1: ( ruleTEnumLiteral )
-            // InternalTypesParser.g:18896:1: ruleTEnumLiteral
+            // InternalTypesParser.g:18707:1: ( ruleTEnumLiteral )
+            // InternalTypesParser.g:18708:1: ruleTEnumLiteral
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTEnumAccess().getLiteralsTEnumLiteralParserRuleCall_5_0()); 
@@ -54118,17 +53578,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TEnum__LiteralsAssignment_6_1"
-    // InternalTypesParser.g:18905:1: rule__TEnum__LiteralsAssignment_6_1 : ( ruleTEnumLiteral ) ;
+    // InternalTypesParser.g:18717:1: rule__TEnum__LiteralsAssignment_6_1 : ( ruleTEnumLiteral ) ;
     public final void rule__TEnum__LiteralsAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18909:1: ( ( ruleTEnumLiteral ) )
-            // InternalTypesParser.g:18910:1: ( ruleTEnumLiteral )
+            // InternalTypesParser.g:18721:1: ( ( ruleTEnumLiteral ) )
+            // InternalTypesParser.g:18722:1: ( ruleTEnumLiteral )
             {
-            // InternalTypesParser.g:18910:1: ( ruleTEnumLiteral )
-            // InternalTypesParser.g:18911:1: ruleTEnumLiteral
+            // InternalTypesParser.g:18722:1: ( ruleTEnumLiteral )
+            // InternalTypesParser.g:18723:1: ruleTEnumLiteral
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTEnumAccess().getLiteralsTEnumLiteralParserRuleCall_6_1_0()); 
@@ -54163,17 +53623,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TEnumLiteral__NameAssignment"
-    // InternalTypesParser.g:18920:1: rule__TEnumLiteral__NameAssignment : ( RULE_IDENTIFIER ) ;
+    // InternalTypesParser.g:18732:1: rule__TEnumLiteral__NameAssignment : ( RULE_IDENTIFIER ) ;
     public final void rule__TEnumLiteral__NameAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18924:1: ( ( RULE_IDENTIFIER ) )
-            // InternalTypesParser.g:18925:1: ( RULE_IDENTIFIER )
+            // InternalTypesParser.g:18736:1: ( ( RULE_IDENTIFIER ) )
+            // InternalTypesParser.g:18737:1: ( RULE_IDENTIFIER )
             {
-            // InternalTypesParser.g:18925:1: ( RULE_IDENTIFIER )
-            // InternalTypesParser.g:18926:1: RULE_IDENTIFIER
+            // InternalTypesParser.g:18737:1: ( RULE_IDENTIFIER )
+            // InternalTypesParser.g:18738:1: RULE_IDENTIFIER
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTEnumLiteralAccess().getNameIDENTIFIERTerminalRuleCall_0()); 
@@ -54204,17 +53664,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IntersectionTypeExpression__TypeRefsAssignment_1_1_1"
-    // InternalTypesParser.g:18936:1: rule__IntersectionTypeExpression__TypeRefsAssignment_1_1_1 : ( rulePrimaryTypeExpression ) ;
+    // InternalTypesParser.g:18748:1: rule__IntersectionTypeExpression__TypeRefsAssignment_1_1_1 : ( rulePrimaryTypeExpression ) ;
     public final void rule__IntersectionTypeExpression__TypeRefsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18940:1: ( ( rulePrimaryTypeExpression ) )
-            // InternalTypesParser.g:18941:1: ( rulePrimaryTypeExpression )
+            // InternalTypesParser.g:18752:1: ( ( rulePrimaryTypeExpression ) )
+            // InternalTypesParser.g:18753:1: ( rulePrimaryTypeExpression )
             {
-            // InternalTypesParser.g:18941:1: ( rulePrimaryTypeExpression )
-            // InternalTypesParser.g:18942:1: rulePrimaryTypeExpression
+            // InternalTypesParser.g:18753:1: ( rulePrimaryTypeExpression )
+            // InternalTypesParser.g:18754:1: rulePrimaryTypeExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntersectionTypeExpressionAccess().getTypeRefsPrimaryTypeExpressionParserRuleCall_1_1_1_0()); 
@@ -54249,17 +53709,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PrimaryTypeExpression__ReturnTypeRefAssignment_0_1"
-    // InternalTypesParser.g:18951:1: rule__PrimaryTypeExpression__ReturnTypeRefAssignment_0_1 : ( rulePrimaryTypeExpression ) ;
+    // InternalTypesParser.g:18763:1: rule__PrimaryTypeExpression__ReturnTypeRefAssignment_0_1 : ( rulePrimaryTypeExpression ) ;
     public final void rule__PrimaryTypeExpression__ReturnTypeRefAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18955:1: ( ( rulePrimaryTypeExpression ) )
-            // InternalTypesParser.g:18956:1: ( rulePrimaryTypeExpression )
+            // InternalTypesParser.g:18767:1: ( ( rulePrimaryTypeExpression ) )
+            // InternalTypesParser.g:18768:1: ( rulePrimaryTypeExpression )
             {
-            // InternalTypesParser.g:18956:1: ( rulePrimaryTypeExpression )
-            // InternalTypesParser.g:18957:1: rulePrimaryTypeExpression
+            // InternalTypesParser.g:18768:1: ( rulePrimaryTypeExpression )
+            // InternalTypesParser.g:18769:1: rulePrimaryTypeExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrimaryTypeExpressionAccess().getReturnTypeRefPrimaryTypeExpressionParserRuleCall_0_1_0()); 
@@ -54294,17 +53754,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeRefWithModifiers__UndefModifierAssignment_0_1"
-    // InternalTypesParser.g:18966:1: rule__TypeRefWithModifiers__UndefModifierAssignment_0_1 : ( ruleUndefModifierToken ) ;
+    // InternalTypesParser.g:18778:1: rule__TypeRefWithModifiers__UndefModifierAssignment_0_1 : ( ruleUndefModifierToken ) ;
     public final void rule__TypeRefWithModifiers__UndefModifierAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18970:1: ( ( ruleUndefModifierToken ) )
-            // InternalTypesParser.g:18971:1: ( ruleUndefModifierToken )
+            // InternalTypesParser.g:18782:1: ( ( ruleUndefModifierToken ) )
+            // InternalTypesParser.g:18783:1: ( ruleUndefModifierToken )
             {
-            // InternalTypesParser.g:18971:1: ( ruleUndefModifierToken )
-            // InternalTypesParser.g:18972:1: ruleUndefModifierToken
+            // InternalTypesParser.g:18783:1: ( ruleUndefModifierToken )
+            // InternalTypesParser.g:18784:1: ruleUndefModifierToken
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeRefWithModifiersAccess().getUndefModifierUndefModifierTokenParserRuleCall_0_1_0()); 
@@ -54339,17 +53799,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeRefWithModifiers__UndefModifierAssignment_1_1"
-    // InternalTypesParser.g:18981:1: rule__TypeRefWithModifiers__UndefModifierAssignment_1_1 : ( ruleUndefModifierToken ) ;
+    // InternalTypesParser.g:18793:1: rule__TypeRefWithModifiers__UndefModifierAssignment_1_1 : ( ruleUndefModifierToken ) ;
     public final void rule__TypeRefWithModifiers__UndefModifierAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:18985:1: ( ( ruleUndefModifierToken ) )
-            // InternalTypesParser.g:18986:1: ( ruleUndefModifierToken )
+            // InternalTypesParser.g:18797:1: ( ( ruleUndefModifierToken ) )
+            // InternalTypesParser.g:18798:1: ( ruleUndefModifierToken )
             {
-            // InternalTypesParser.g:18986:1: ( ruleUndefModifierToken )
-            // InternalTypesParser.g:18987:1: ruleUndefModifierToken
+            // InternalTypesParser.g:18798:1: ( ruleUndefModifierToken )
+            // InternalTypesParser.g:18799:1: ruleUndefModifierToken
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeRefWithModifiersAccess().getUndefModifierUndefModifierTokenParserRuleCall_1_1_0()); 
@@ -54384,23 +53844,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeRefWithoutModifiers__DynamicAssignment_0_1"
-    // InternalTypesParser.g:18996:1: rule__TypeRefWithoutModifiers__DynamicAssignment_0_1 : ( ( PlusSign ) ) ;
+    // InternalTypesParser.g:18808:1: rule__TypeRefWithoutModifiers__DynamicAssignment_0_1 : ( ( PlusSign ) ) ;
     public final void rule__TypeRefWithoutModifiers__DynamicAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19000:1: ( ( ( PlusSign ) ) )
-            // InternalTypesParser.g:19001:1: ( ( PlusSign ) )
+            // InternalTypesParser.g:18812:1: ( ( ( PlusSign ) ) )
+            // InternalTypesParser.g:18813:1: ( ( PlusSign ) )
             {
-            // InternalTypesParser.g:19001:1: ( ( PlusSign ) )
-            // InternalTypesParser.g:19002:1: ( PlusSign )
+            // InternalTypesParser.g:18813:1: ( ( PlusSign ) )
+            // InternalTypesParser.g:18814:1: ( PlusSign )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeRefWithoutModifiersAccess().getDynamicPlusSignKeyword_0_1_0()); 
             }
-            // InternalTypesParser.g:19003:1: ( PlusSign )
-            // InternalTypesParser.g:19004:1: PlusSign
+            // InternalTypesParser.g:18815:1: ( PlusSign )
+            // InternalTypesParser.g:18816:1: PlusSign
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeRefWithoutModifiersAccess().getDynamicPlusSignKeyword_0_1_0()); 
@@ -54437,17 +53897,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ThisTypeRefStructural__DefinedTypingStrategyAssignment_0"
-    // InternalTypesParser.g:19019:1: rule__ThisTypeRefStructural__DefinedTypingStrategyAssignment_0 : ( ruleTypingStrategyUseSiteOperator ) ;
+    // InternalTypesParser.g:18831:1: rule__ThisTypeRefStructural__DefinedTypingStrategyAssignment_0 : ( ruleTypingStrategyUseSiteOperator ) ;
     public final void rule__ThisTypeRefStructural__DefinedTypingStrategyAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19023:1: ( ( ruleTypingStrategyUseSiteOperator ) )
-            // InternalTypesParser.g:19024:1: ( ruleTypingStrategyUseSiteOperator )
+            // InternalTypesParser.g:18835:1: ( ( ruleTypingStrategyUseSiteOperator ) )
+            // InternalTypesParser.g:18836:1: ( ruleTypingStrategyUseSiteOperator )
             {
-            // InternalTypesParser.g:19024:1: ( ruleTypingStrategyUseSiteOperator )
-            // InternalTypesParser.g:19025:1: ruleTypingStrategyUseSiteOperator
+            // InternalTypesParser.g:18836:1: ( ruleTypingStrategyUseSiteOperator )
+            // InternalTypesParser.g:18837:1: ruleTypingStrategyUseSiteOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getThisTypeRefStructuralAccess().getDefinedTypingStrategyTypingStrategyUseSiteOperatorParserRuleCall_0_0()); 
@@ -54482,17 +53942,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3"
-    // InternalTypesParser.g:19034:1: rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3 : ( ruleTypeRefFunctionTypeExpression ) ;
+    // InternalTypesParser.g:18846:1: rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3 : ( ruleTypeRefFunctionTypeExpression ) ;
     public final void rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19038:1: ( ( ruleTypeRefFunctionTypeExpression ) )
-            // InternalTypesParser.g:19039:1: ( ruleTypeRefFunctionTypeExpression )
+            // InternalTypesParser.g:18850:1: ( ( ruleTypeRefFunctionTypeExpression ) )
+            // InternalTypesParser.g:18851:1: ( ruleTypeRefFunctionTypeExpression )
             {
-            // InternalTypesParser.g:19039:1: ( ruleTypeRefFunctionTypeExpression )
-            // InternalTypesParser.g:19040:1: ruleTypeRefFunctionTypeExpression
+            // InternalTypesParser.g:18851:1: ( ruleTypeRefFunctionTypeExpression )
+            // InternalTypesParser.g:18852:1: ruleTypeRefFunctionTypeExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionTypeExpressionOLDAccess().getDeclaredThisTypeTypeRefFunctionTypeExpressionParserRuleCall_2_3_0()); 
@@ -54527,17 +53987,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1"
-    // InternalTypesParser.g:19049:1: rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1 : ( ruleTypeVariable ) ;
+    // InternalTypesParser.g:18861:1: rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1 : ( ruleTypeVariable ) ;
     public final void rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19053:1: ( ( ruleTypeVariable ) )
-            // InternalTypesParser.g:19054:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:18865:1: ( ( ruleTypeVariable ) )
+            // InternalTypesParser.g:18866:1: ( ruleTypeVariable )
             {
-            // InternalTypesParser.g:19054:1: ( ruleTypeVariable )
-            // InternalTypesParser.g:19055:1: ruleTypeVariable
+            // InternalTypesParser.g:18866:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:18867:1: ruleTypeVariable
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionTypeExpressionOLDAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_1_0()); 
@@ -54572,17 +54032,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1"
-    // InternalTypesParser.g:19064:1: rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1 : ( ruleTypeVariable ) ;
+    // InternalTypesParser.g:18876:1: rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1 : ( ruleTypeVariable ) ;
     public final void rule__FunctionTypeExpressionOLD__OwnedTypeVarsAssignment_4_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19068:1: ( ( ruleTypeVariable ) )
-            // InternalTypesParser.g:19069:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:18880:1: ( ( ruleTypeVariable ) )
+            // InternalTypesParser.g:18881:1: ( ruleTypeVariable )
             {
-            // InternalTypesParser.g:19069:1: ( ruleTypeVariable )
-            // InternalTypesParser.g:19070:1: ruleTypeVariable
+            // InternalTypesParser.g:18881:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:18882:1: ruleTypeVariable
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionTypeExpressionOLDAccess().getOwnedTypeVarsTypeVariableParserRuleCall_4_2_1_0()); 
@@ -54617,17 +54077,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1"
-    // InternalTypesParser.g:19079:1: rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1 : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:18891:1: rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1 : ( ruleTypeRef ) ;
     public final void rule__FunctionTypeExpressionOLD__ReturnTypeRefAssignment_8_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19083:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:19084:1: ( ruleTypeRef )
+            // InternalTypesParser.g:18895:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:18896:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:19084:1: ( ruleTypeRef )
-            // InternalTypesParser.g:19085:1: ruleTypeRef
+            // InternalTypesParser.g:18896:1: ( ruleTypeRef )
+            // InternalTypesParser.g:18897:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionTypeExpressionOLDAccess().getReturnTypeRefTypeRefParserRuleCall_8_1_0()); 
@@ -54662,17 +54122,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ArrowFunctionTypeExpression__ReturnTypeRefAssignment_5"
-    // InternalTypesParser.g:19094:1: rule__ArrowFunctionTypeExpression__ReturnTypeRefAssignment_5 : ( rulePrimaryTypeExpression ) ;
+    // InternalTypesParser.g:18906:1: rule__ArrowFunctionTypeExpression__ReturnTypeRefAssignment_5 : ( rulePrimaryTypeExpression ) ;
     public final void rule__ArrowFunctionTypeExpression__ReturnTypeRefAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19098:1: ( ( rulePrimaryTypeExpression ) )
-            // InternalTypesParser.g:19099:1: ( rulePrimaryTypeExpression )
+            // InternalTypesParser.g:18910:1: ( ( rulePrimaryTypeExpression ) )
+            // InternalTypesParser.g:18911:1: ( rulePrimaryTypeExpression )
             {
-            // InternalTypesParser.g:19099:1: ( rulePrimaryTypeExpression )
-            // InternalTypesParser.g:19100:1: rulePrimaryTypeExpression
+            // InternalTypesParser.g:18911:1: ( rulePrimaryTypeExpression )
+            // InternalTypesParser.g:18912:1: rulePrimaryTypeExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getArrowFunctionTypeExpressionAccess().getReturnTypeRefPrimaryTypeExpressionParserRuleCall_5_0()); 
@@ -54707,17 +54167,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TAnonymousFormalParameterList__FparsAssignment_0"
-    // InternalTypesParser.g:19109:1: rule__TAnonymousFormalParameterList__FparsAssignment_0 : ( ruleTAnonymousFormalParameter ) ;
+    // InternalTypesParser.g:18921:1: rule__TAnonymousFormalParameterList__FparsAssignment_0 : ( ruleTAnonymousFormalParameter ) ;
     public final void rule__TAnonymousFormalParameterList__FparsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19113:1: ( ( ruleTAnonymousFormalParameter ) )
-            // InternalTypesParser.g:19114:1: ( ruleTAnonymousFormalParameter )
+            // InternalTypesParser.g:18925:1: ( ( ruleTAnonymousFormalParameter ) )
+            // InternalTypesParser.g:18926:1: ( ruleTAnonymousFormalParameter )
             {
-            // InternalTypesParser.g:19114:1: ( ruleTAnonymousFormalParameter )
-            // InternalTypesParser.g:19115:1: ruleTAnonymousFormalParameter
+            // InternalTypesParser.g:18926:1: ( ruleTAnonymousFormalParameter )
+            // InternalTypesParser.g:18927:1: ruleTAnonymousFormalParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTAnonymousFormalParameterListAccess().getFparsTAnonymousFormalParameterParserRuleCall_0_0()); 
@@ -54752,17 +54212,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TAnonymousFormalParameterList__FparsAssignment_1_1"
-    // InternalTypesParser.g:19124:1: rule__TAnonymousFormalParameterList__FparsAssignment_1_1 : ( ruleTAnonymousFormalParameter ) ;
+    // InternalTypesParser.g:18936:1: rule__TAnonymousFormalParameterList__FparsAssignment_1_1 : ( ruleTAnonymousFormalParameter ) ;
     public final void rule__TAnonymousFormalParameterList__FparsAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19128:1: ( ( ruleTAnonymousFormalParameter ) )
-            // InternalTypesParser.g:19129:1: ( ruleTAnonymousFormalParameter )
+            // InternalTypesParser.g:18940:1: ( ( ruleTAnonymousFormalParameter ) )
+            // InternalTypesParser.g:18941:1: ( ruleTAnonymousFormalParameter )
             {
-            // InternalTypesParser.g:19129:1: ( ruleTAnonymousFormalParameter )
-            // InternalTypesParser.g:19130:1: ruleTAnonymousFormalParameter
+            // InternalTypesParser.g:18941:1: ( ruleTAnonymousFormalParameter )
+            // InternalTypesParser.g:18942:1: ruleTAnonymousFormalParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTAnonymousFormalParameterListAccess().getFparsTAnonymousFormalParameterParserRuleCall_1_1_0()); 
@@ -54797,23 +54257,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TAnonymousFormalParameter__VariadicAssignment_0"
-    // InternalTypesParser.g:19139:1: rule__TAnonymousFormalParameter__VariadicAssignment_0 : ( ( FullStopFullStopFullStop ) ) ;
+    // InternalTypesParser.g:18951:1: rule__TAnonymousFormalParameter__VariadicAssignment_0 : ( ( FullStopFullStopFullStop ) ) ;
     public final void rule__TAnonymousFormalParameter__VariadicAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19143:1: ( ( ( FullStopFullStopFullStop ) ) )
-            // InternalTypesParser.g:19144:1: ( ( FullStopFullStopFullStop ) )
+            // InternalTypesParser.g:18955:1: ( ( ( FullStopFullStopFullStop ) ) )
+            // InternalTypesParser.g:18956:1: ( ( FullStopFullStopFullStop ) )
             {
-            // InternalTypesParser.g:19144:1: ( ( FullStopFullStopFullStop ) )
-            // InternalTypesParser.g:19145:1: ( FullStopFullStopFullStop )
+            // InternalTypesParser.g:18956:1: ( ( FullStopFullStopFullStop ) )
+            // InternalTypesParser.g:18957:1: ( FullStopFullStopFullStop )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTAnonymousFormalParameterAccess().getVariadicFullStopFullStopFullStopKeyword_0_0()); 
             }
-            // InternalTypesParser.g:19146:1: ( FullStopFullStopFullStop )
-            // InternalTypesParser.g:19147:1: FullStopFullStopFullStop
+            // InternalTypesParser.g:18958:1: ( FullStopFullStopFullStop )
+            // InternalTypesParser.g:18959:1: FullStopFullStopFullStop
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTAnonymousFormalParameterAccess().getVariadicFullStopFullStopFullStopKeyword_0_0()); 
@@ -54850,17 +54310,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TAnonymousFormalParameter__NameAssignment_1_0"
-    // InternalTypesParser.g:19162:1: rule__TAnonymousFormalParameter__NameAssignment_1_0 : ( ruleBindingIdentifier ) ;
+    // InternalTypesParser.g:18974:1: rule__TAnonymousFormalParameter__NameAssignment_1_0 : ( ruleBindingIdentifier ) ;
     public final void rule__TAnonymousFormalParameter__NameAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19166:1: ( ( ruleBindingIdentifier ) )
-            // InternalTypesParser.g:19167:1: ( ruleBindingIdentifier )
+            // InternalTypesParser.g:18978:1: ( ( ruleBindingIdentifier ) )
+            // InternalTypesParser.g:18979:1: ( ruleBindingIdentifier )
             {
-            // InternalTypesParser.g:19167:1: ( ruleBindingIdentifier )
-            // InternalTypesParser.g:19168:1: ruleBindingIdentifier
+            // InternalTypesParser.g:18979:1: ( ruleBindingIdentifier )
+            // InternalTypesParser.g:18980:1: ruleBindingIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTAnonymousFormalParameterAccess().getNameBindingIdentifierParserRuleCall_1_0_0()); 
@@ -54895,17 +54355,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TAnonymousFormalParameter__TypeRefAssignment_2"
-    // InternalTypesParser.g:19177:1: rule__TAnonymousFormalParameter__TypeRefAssignment_2 : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:18989:1: rule__TAnonymousFormalParameter__TypeRefAssignment_2 : ( ruleTypeRef ) ;
     public final void rule__TAnonymousFormalParameter__TypeRefAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19181:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:19182:1: ( ruleTypeRef )
+            // InternalTypesParser.g:18993:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:18994:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:19182:1: ( ruleTypeRef )
-            // InternalTypesParser.g:19183:1: ruleTypeRef
+            // InternalTypesParser.g:18994:1: ( ruleTypeRef )
+            // InternalTypesParser.g:18995:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTAnonymousFormalParameterAccess().getTypeRefTypeRefParserRuleCall_2_0()); 
@@ -54940,23 +54400,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TFormalParameter__VariadicAssignment_0"
-    // InternalTypesParser.g:19192:1: rule__TFormalParameter__VariadicAssignment_0 : ( ( FullStopFullStopFullStop ) ) ;
+    // InternalTypesParser.g:19004:1: rule__TFormalParameter__VariadicAssignment_0 : ( ( FullStopFullStopFullStop ) ) ;
     public final void rule__TFormalParameter__VariadicAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19196:1: ( ( ( FullStopFullStopFullStop ) ) )
-            // InternalTypesParser.g:19197:1: ( ( FullStopFullStopFullStop ) )
+            // InternalTypesParser.g:19008:1: ( ( ( FullStopFullStopFullStop ) ) )
+            // InternalTypesParser.g:19009:1: ( ( FullStopFullStopFullStop ) )
             {
-            // InternalTypesParser.g:19197:1: ( ( FullStopFullStopFullStop ) )
-            // InternalTypesParser.g:19198:1: ( FullStopFullStopFullStop )
+            // InternalTypesParser.g:19009:1: ( ( FullStopFullStopFullStop ) )
+            // InternalTypesParser.g:19010:1: ( FullStopFullStopFullStop )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFormalParameterAccess().getVariadicFullStopFullStopFullStopKeyword_0_0()); 
             }
-            // InternalTypesParser.g:19199:1: ( FullStopFullStopFullStop )
-            // InternalTypesParser.g:19200:1: FullStopFullStopFullStop
+            // InternalTypesParser.g:19011:1: ( FullStopFullStopFullStop )
+            // InternalTypesParser.g:19012:1: FullStopFullStopFullStop
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFormalParameterAccess().getVariadicFullStopFullStopFullStopKeyword_0_0()); 
@@ -54993,17 +54453,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TFormalParameter__NameAssignment_1"
-    // InternalTypesParser.g:19215:1: rule__TFormalParameter__NameAssignment_1 : ( ruleBindingIdentifier ) ;
+    // InternalTypesParser.g:19027:1: rule__TFormalParameter__NameAssignment_1 : ( ruleBindingIdentifier ) ;
     public final void rule__TFormalParameter__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19219:1: ( ( ruleBindingIdentifier ) )
-            // InternalTypesParser.g:19220:1: ( ruleBindingIdentifier )
+            // InternalTypesParser.g:19031:1: ( ( ruleBindingIdentifier ) )
+            // InternalTypesParser.g:19032:1: ( ruleBindingIdentifier )
             {
-            // InternalTypesParser.g:19220:1: ( ruleBindingIdentifier )
-            // InternalTypesParser.g:19221:1: ruleBindingIdentifier
+            // InternalTypesParser.g:19032:1: ( ruleBindingIdentifier )
+            // InternalTypesParser.g:19033:1: ruleBindingIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFormalParameterAccess().getNameBindingIdentifierParserRuleCall_1_0()); 
@@ -55038,17 +54498,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TFormalParameter__TypeRefAssignment_3"
-    // InternalTypesParser.g:19230:1: rule__TFormalParameter__TypeRefAssignment_3 : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:19042:1: rule__TFormalParameter__TypeRefAssignment_3 : ( ruleTypeRef ) ;
     public final void rule__TFormalParameter__TypeRefAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19234:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:19235:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19046:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:19047:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:19235:1: ( ruleTypeRef )
-            // InternalTypesParser.g:19236:1: ruleTypeRef
+            // InternalTypesParser.g:19047:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19048:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTFormalParameterAccess().getTypeRefTypeRefParserRuleCall_3_0()); 
@@ -55083,17 +54543,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__UnionTypeExpressionOLD__TypeRefsAssignment_3"
-    // InternalTypesParser.g:19245:1: rule__UnionTypeExpressionOLD__TypeRefsAssignment_3 : ( ruleTypeRefWithoutModifiers ) ;
+    // InternalTypesParser.g:19057:1: rule__UnionTypeExpressionOLD__TypeRefsAssignment_3 : ( ruleTypeRefWithoutModifiers ) ;
     public final void rule__UnionTypeExpressionOLD__TypeRefsAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19249:1: ( ( ruleTypeRefWithoutModifiers ) )
-            // InternalTypesParser.g:19250:1: ( ruleTypeRefWithoutModifiers )
+            // InternalTypesParser.g:19061:1: ( ( ruleTypeRefWithoutModifiers ) )
+            // InternalTypesParser.g:19062:1: ( ruleTypeRefWithoutModifiers )
             {
-            // InternalTypesParser.g:19250:1: ( ruleTypeRefWithoutModifiers )
-            // InternalTypesParser.g:19251:1: ruleTypeRefWithoutModifiers
+            // InternalTypesParser.g:19062:1: ( ruleTypeRefWithoutModifiers )
+            // InternalTypesParser.g:19063:1: ruleTypeRefWithoutModifiers
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
@@ -55128,17 +54588,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1"
-    // InternalTypesParser.g:19260:1: rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1 : ( ruleTypeRefWithoutModifiers ) ;
+    // InternalTypesParser.g:19072:1: rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1 : ( ruleTypeRefWithoutModifiers ) ;
     public final void rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19264:1: ( ( ruleTypeRefWithoutModifiers ) )
-            // InternalTypesParser.g:19265:1: ( ruleTypeRefWithoutModifiers )
+            // InternalTypesParser.g:19076:1: ( ( ruleTypeRefWithoutModifiers ) )
+            // InternalTypesParser.g:19077:1: ( ruleTypeRefWithoutModifiers )
             {
-            // InternalTypesParser.g:19265:1: ( ruleTypeRefWithoutModifiers )
-            // InternalTypesParser.g:19266:1: ruleTypeRefWithoutModifiers
+            // InternalTypesParser.g:19077:1: ( ruleTypeRefWithoutModifiers )
+            // InternalTypesParser.g:19078:1: ruleTypeRefWithoutModifiers
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
@@ -55173,17 +54633,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3"
-    // InternalTypesParser.g:19275:1: rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3 : ( ruleTypeRefWithoutModifiers ) ;
+    // InternalTypesParser.g:19087:1: rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3 : ( ruleTypeRefWithoutModifiers ) ;
     public final void rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19279:1: ( ( ruleTypeRefWithoutModifiers ) )
-            // InternalTypesParser.g:19280:1: ( ruleTypeRefWithoutModifiers )
+            // InternalTypesParser.g:19091:1: ( ( ruleTypeRefWithoutModifiers ) )
+            // InternalTypesParser.g:19092:1: ( ruleTypeRefWithoutModifiers )
             {
-            // InternalTypesParser.g:19280:1: ( ruleTypeRefWithoutModifiers )
-            // InternalTypesParser.g:19281:1: ruleTypeRefWithoutModifiers
+            // InternalTypesParser.g:19092:1: ( ruleTypeRefWithoutModifiers )
+            // InternalTypesParser.g:19093:1: ruleTypeRefWithoutModifiers
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_3_0()); 
@@ -55218,17 +54678,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1"
-    // InternalTypesParser.g:19290:1: rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1 : ( ruleTypeRefWithoutModifiers ) ;
+    // InternalTypesParser.g:19102:1: rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1 : ( ruleTypeRefWithoutModifiers ) ;
     public final void rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19294:1: ( ( ruleTypeRefWithoutModifiers ) )
-            // InternalTypesParser.g:19295:1: ( ruleTypeRefWithoutModifiers )
+            // InternalTypesParser.g:19106:1: ( ( ruleTypeRefWithoutModifiers ) )
+            // InternalTypesParser.g:19107:1: ( ruleTypeRefWithoutModifiers )
             {
-            // InternalTypesParser.g:19295:1: ( ruleTypeRefWithoutModifiers )
-            // InternalTypesParser.g:19296:1: ruleTypeRefWithoutModifiers
+            // InternalTypesParser.g:19107:1: ( ruleTypeRefWithoutModifiers )
+            // InternalTypesParser.g:19108:1: ruleTypeRefWithoutModifiers
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsTypeRefWithoutModifiersParserRuleCall_4_1_0()); 
@@ -55263,23 +54723,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ParameterizedTypeRefNominal__DeclaredTypeAssignment_0"
-    // InternalTypesParser.g:19305:1: rule__ParameterizedTypeRefNominal__DeclaredTypeAssignment_0 : ( ( ruleTypeReferenceName ) ) ;
+    // InternalTypesParser.g:19117:1: rule__ParameterizedTypeRefNominal__DeclaredTypeAssignment_0 : ( ( ruleTypeReferenceName ) ) ;
     public final void rule__ParameterizedTypeRefNominal__DeclaredTypeAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19309:1: ( ( ( ruleTypeReferenceName ) ) )
-            // InternalTypesParser.g:19310:1: ( ( ruleTypeReferenceName ) )
+            // InternalTypesParser.g:19121:1: ( ( ( ruleTypeReferenceName ) ) )
+            // InternalTypesParser.g:19122:1: ( ( ruleTypeReferenceName ) )
             {
-            // InternalTypesParser.g:19310:1: ( ( ruleTypeReferenceName ) )
-            // InternalTypesParser.g:19311:1: ( ruleTypeReferenceName )
+            // InternalTypesParser.g:19122:1: ( ( ruleTypeReferenceName ) )
+            // InternalTypesParser.g:19123:1: ( ruleTypeReferenceName )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterizedTypeRefNominalAccess().getDeclaredTypeTypeCrossReference_0_0()); 
             }
-            // InternalTypesParser.g:19312:1: ( ruleTypeReferenceName )
-            // InternalTypesParser.g:19313:1: ruleTypeReferenceName
+            // InternalTypesParser.g:19124:1: ( ruleTypeReferenceName )
+            // InternalTypesParser.g:19125:1: ruleTypeReferenceName
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterizedTypeRefNominalAccess().getDeclaredTypeTypeTypeReferenceNameParserRuleCall_0_0_1()); 
@@ -55320,17 +54780,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ParameterizedTypeRefNominal__TypeArgsAssignment_1_1"
-    // InternalTypesParser.g:19324:1: rule__ParameterizedTypeRefNominal__TypeArgsAssignment_1_1 : ( ruleTypeArgument ) ;
+    // InternalTypesParser.g:19136:1: rule__ParameterizedTypeRefNominal__TypeArgsAssignment_1_1 : ( ruleTypeArgument ) ;
     public final void rule__ParameterizedTypeRefNominal__TypeArgsAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19328:1: ( ( ruleTypeArgument ) )
-            // InternalTypesParser.g:19329:1: ( ruleTypeArgument )
+            // InternalTypesParser.g:19140:1: ( ( ruleTypeArgument ) )
+            // InternalTypesParser.g:19141:1: ( ruleTypeArgument )
             {
-            // InternalTypesParser.g:19329:1: ( ruleTypeArgument )
-            // InternalTypesParser.g:19330:1: ruleTypeArgument
+            // InternalTypesParser.g:19141:1: ( ruleTypeArgument )
+            // InternalTypesParser.g:19142:1: ruleTypeArgument
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterizedTypeRefNominalAccess().getTypeArgsTypeArgumentParserRuleCall_1_1_0()); 
@@ -55365,17 +54825,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ParameterizedTypeRefNominal__TypeArgsAssignment_1_2_1"
-    // InternalTypesParser.g:19339:1: rule__ParameterizedTypeRefNominal__TypeArgsAssignment_1_2_1 : ( ruleTypeArgument ) ;
+    // InternalTypesParser.g:19151:1: rule__ParameterizedTypeRefNominal__TypeArgsAssignment_1_2_1 : ( ruleTypeArgument ) ;
     public final void rule__ParameterizedTypeRefNominal__TypeArgsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19343:1: ( ( ruleTypeArgument ) )
-            // InternalTypesParser.g:19344:1: ( ruleTypeArgument )
+            // InternalTypesParser.g:19155:1: ( ( ruleTypeArgument ) )
+            // InternalTypesParser.g:19156:1: ( ruleTypeArgument )
             {
-            // InternalTypesParser.g:19344:1: ( ruleTypeArgument )
-            // InternalTypesParser.g:19345:1: ruleTypeArgument
+            // InternalTypesParser.g:19156:1: ( ruleTypeArgument )
+            // InternalTypesParser.g:19157:1: ruleTypeArgument
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterizedTypeRefNominalAccess().getTypeArgsTypeArgumentParserRuleCall_1_2_1_0()); 
@@ -55410,23 +54870,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ArrayTypeRef__ArrayTypeLiteralAssignment_0"
-    // InternalTypesParser.g:19354:1: rule__ArrayTypeRef__ArrayTypeLiteralAssignment_0 : ( ( LeftSquareBracket ) ) ;
+    // InternalTypesParser.g:19166:1: rule__ArrayTypeRef__ArrayTypeLiteralAssignment_0 : ( ( LeftSquareBracket ) ) ;
     public final void rule__ArrayTypeRef__ArrayTypeLiteralAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19358:1: ( ( ( LeftSquareBracket ) ) )
-            // InternalTypesParser.g:19359:1: ( ( LeftSquareBracket ) )
+            // InternalTypesParser.g:19170:1: ( ( ( LeftSquareBracket ) ) )
+            // InternalTypesParser.g:19171:1: ( ( LeftSquareBracket ) )
             {
-            // InternalTypesParser.g:19359:1: ( ( LeftSquareBracket ) )
-            // InternalTypesParser.g:19360:1: ( LeftSquareBracket )
+            // InternalTypesParser.g:19171:1: ( ( LeftSquareBracket ) )
+            // InternalTypesParser.g:19172:1: ( LeftSquareBracket )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getArrayTypeRefAccess().getArrayTypeLiteralLeftSquareBracketKeyword_0_0()); 
             }
-            // InternalTypesParser.g:19361:1: ( LeftSquareBracket )
-            // InternalTypesParser.g:19362:1: LeftSquareBracket
+            // InternalTypesParser.g:19173:1: ( LeftSquareBracket )
+            // InternalTypesParser.g:19174:1: LeftSquareBracket
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getArrayTypeRefAccess().getArrayTypeLiteralLeftSquareBracketKeyword_0_0()); 
@@ -55463,17 +54923,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ArrayTypeRef__TypeArgsAssignment_1"
-    // InternalTypesParser.g:19377:1: rule__ArrayTypeRef__TypeArgsAssignment_1 : ( ruleTypeArgument ) ;
+    // InternalTypesParser.g:19189:1: rule__ArrayTypeRef__TypeArgsAssignment_1 : ( ruleTypeArgument ) ;
     public final void rule__ArrayTypeRef__TypeArgsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19381:1: ( ( ruleTypeArgument ) )
-            // InternalTypesParser.g:19382:1: ( ruleTypeArgument )
+            // InternalTypesParser.g:19193:1: ( ( ruleTypeArgument ) )
+            // InternalTypesParser.g:19194:1: ( ruleTypeArgument )
             {
-            // InternalTypesParser.g:19382:1: ( ruleTypeArgument )
-            // InternalTypesParser.g:19383:1: ruleTypeArgument
+            // InternalTypesParser.g:19194:1: ( ruleTypeArgument )
+            // InternalTypesParser.g:19195:1: ruleTypeArgument
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getArrayTypeRefAccess().getTypeArgsTypeArgumentParserRuleCall_1_0()); 
@@ -55508,17 +54968,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ParameterizedTypeRefStructural__DefinedTypingStrategyAssignment_0"
-    // InternalTypesParser.g:19392:1: rule__ParameterizedTypeRefStructural__DefinedTypingStrategyAssignment_0 : ( ruleTypingStrategyUseSiteOperator ) ;
+    // InternalTypesParser.g:19204:1: rule__ParameterizedTypeRefStructural__DefinedTypingStrategyAssignment_0 : ( ruleTypingStrategyUseSiteOperator ) ;
     public final void rule__ParameterizedTypeRefStructural__DefinedTypingStrategyAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19396:1: ( ( ruleTypingStrategyUseSiteOperator ) )
-            // InternalTypesParser.g:19397:1: ( ruleTypingStrategyUseSiteOperator )
+            // InternalTypesParser.g:19208:1: ( ( ruleTypingStrategyUseSiteOperator ) )
+            // InternalTypesParser.g:19209:1: ( ruleTypingStrategyUseSiteOperator )
             {
-            // InternalTypesParser.g:19397:1: ( ruleTypingStrategyUseSiteOperator )
-            // InternalTypesParser.g:19398:1: ruleTypingStrategyUseSiteOperator
+            // InternalTypesParser.g:19209:1: ( ruleTypingStrategyUseSiteOperator )
+            // InternalTypesParser.g:19210:1: ruleTypingStrategyUseSiteOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterizedTypeRefStructuralAccess().getDefinedTypingStrategyTypingStrategyUseSiteOperatorParserRuleCall_0_0()); 
@@ -55553,23 +55013,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ParameterizedTypeRefStructural__DeclaredTypeAssignment_1"
-    // InternalTypesParser.g:19407:1: rule__ParameterizedTypeRefStructural__DeclaredTypeAssignment_1 : ( ( ruleTypeReferenceName ) ) ;
+    // InternalTypesParser.g:19219:1: rule__ParameterizedTypeRefStructural__DeclaredTypeAssignment_1 : ( ( ruleTypeReferenceName ) ) ;
     public final void rule__ParameterizedTypeRefStructural__DeclaredTypeAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19411:1: ( ( ( ruleTypeReferenceName ) ) )
-            // InternalTypesParser.g:19412:1: ( ( ruleTypeReferenceName ) )
+            // InternalTypesParser.g:19223:1: ( ( ( ruleTypeReferenceName ) ) )
+            // InternalTypesParser.g:19224:1: ( ( ruleTypeReferenceName ) )
             {
-            // InternalTypesParser.g:19412:1: ( ( ruleTypeReferenceName ) )
-            // InternalTypesParser.g:19413:1: ( ruleTypeReferenceName )
+            // InternalTypesParser.g:19224:1: ( ( ruleTypeReferenceName ) )
+            // InternalTypesParser.g:19225:1: ( ruleTypeReferenceName )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterizedTypeRefStructuralAccess().getDeclaredTypeTypeCrossReference_1_0()); 
             }
-            // InternalTypesParser.g:19414:1: ( ruleTypeReferenceName )
-            // InternalTypesParser.g:19415:1: ruleTypeReferenceName
+            // InternalTypesParser.g:19226:1: ( ruleTypeReferenceName )
+            // InternalTypesParser.g:19227:1: ruleTypeReferenceName
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterizedTypeRefStructuralAccess().getDeclaredTypeTypeTypeReferenceNameParserRuleCall_1_0_1()); 
@@ -55610,17 +55070,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ParameterizedTypeRefStructural__TypeArgsAssignment_2_1"
-    // InternalTypesParser.g:19426:1: rule__ParameterizedTypeRefStructural__TypeArgsAssignment_2_1 : ( ruleTypeArgument ) ;
+    // InternalTypesParser.g:19238:1: rule__ParameterizedTypeRefStructural__TypeArgsAssignment_2_1 : ( ruleTypeArgument ) ;
     public final void rule__ParameterizedTypeRefStructural__TypeArgsAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19430:1: ( ( ruleTypeArgument ) )
-            // InternalTypesParser.g:19431:1: ( ruleTypeArgument )
+            // InternalTypesParser.g:19242:1: ( ( ruleTypeArgument ) )
+            // InternalTypesParser.g:19243:1: ( ruleTypeArgument )
             {
-            // InternalTypesParser.g:19431:1: ( ruleTypeArgument )
-            // InternalTypesParser.g:19432:1: ruleTypeArgument
+            // InternalTypesParser.g:19243:1: ( ruleTypeArgument )
+            // InternalTypesParser.g:19244:1: ruleTypeArgument
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterizedTypeRefStructuralAccess().getTypeArgsTypeArgumentParserRuleCall_2_1_0()); 
@@ -55655,17 +55115,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ParameterizedTypeRefStructural__TypeArgsAssignment_2_2_1"
-    // InternalTypesParser.g:19441:1: rule__ParameterizedTypeRefStructural__TypeArgsAssignment_2_2_1 : ( ruleTypeArgument ) ;
+    // InternalTypesParser.g:19253:1: rule__ParameterizedTypeRefStructural__TypeArgsAssignment_2_2_1 : ( ruleTypeArgument ) ;
     public final void rule__ParameterizedTypeRefStructural__TypeArgsAssignment_2_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19445:1: ( ( ruleTypeArgument ) )
-            // InternalTypesParser.g:19446:1: ( ruleTypeArgument )
+            // InternalTypesParser.g:19257:1: ( ( ruleTypeArgument ) )
+            // InternalTypesParser.g:19258:1: ( ruleTypeArgument )
             {
-            // InternalTypesParser.g:19446:1: ( ruleTypeArgument )
-            // InternalTypesParser.g:19447:1: ruleTypeArgument
+            // InternalTypesParser.g:19258:1: ( ruleTypeArgument )
+            // InternalTypesParser.g:19259:1: ruleTypeArgument
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterizedTypeRefStructuralAccess().getTypeArgsTypeArgumentParserRuleCall_2_2_1_0()); 
@@ -55700,17 +55160,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TStructMemberList__AstStructuralMembersAssignment_1_0"
-    // InternalTypesParser.g:19456:1: rule__TStructMemberList__AstStructuralMembersAssignment_1_0 : ( ruleTStructMember ) ;
+    // InternalTypesParser.g:19268:1: rule__TStructMemberList__AstStructuralMembersAssignment_1_0 : ( ruleTStructMember ) ;
     public final void rule__TStructMemberList__AstStructuralMembersAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19460:1: ( ( ruleTStructMember ) )
-            // InternalTypesParser.g:19461:1: ( ruleTStructMember )
+            // InternalTypesParser.g:19272:1: ( ( ruleTStructMember ) )
+            // InternalTypesParser.g:19273:1: ( ruleTStructMember )
             {
-            // InternalTypesParser.g:19461:1: ( ruleTStructMember )
-            // InternalTypesParser.g:19462:1: ruleTStructMember
+            // InternalTypesParser.g:19273:1: ( ruleTStructMember )
+            // InternalTypesParser.g:19274:1: ruleTStructMember
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTStructMemberListAccess().getAstStructuralMembersTStructMemberParserRuleCall_1_0_0()); 
@@ -55745,17 +55205,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TStructMethod__TypeVarsAssignment_0_0_1_1"
-    // InternalTypesParser.g:19471:1: rule__TStructMethod__TypeVarsAssignment_0_0_1_1 : ( ruleTypeVariable ) ;
+    // InternalTypesParser.g:19283:1: rule__TStructMethod__TypeVarsAssignment_0_0_1_1 : ( ruleTypeVariable ) ;
     public final void rule__TStructMethod__TypeVarsAssignment_0_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19475:1: ( ( ruleTypeVariable ) )
-            // InternalTypesParser.g:19476:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:19287:1: ( ( ruleTypeVariable ) )
+            // InternalTypesParser.g:19288:1: ( ruleTypeVariable )
             {
-            // InternalTypesParser.g:19476:1: ( ruleTypeVariable )
-            // InternalTypesParser.g:19477:1: ruleTypeVariable
+            // InternalTypesParser.g:19288:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:19289:1: ruleTypeVariable
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTStructMethodAccess().getTypeVarsTypeVariableParserRuleCall_0_0_1_1_0()); 
@@ -55790,17 +55250,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TStructMethod__TypeVarsAssignment_0_0_1_2_1"
-    // InternalTypesParser.g:19486:1: rule__TStructMethod__TypeVarsAssignment_0_0_1_2_1 : ( ruleTypeVariable ) ;
+    // InternalTypesParser.g:19298:1: rule__TStructMethod__TypeVarsAssignment_0_0_1_2_1 : ( ruleTypeVariable ) ;
     public final void rule__TStructMethod__TypeVarsAssignment_0_0_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19490:1: ( ( ruleTypeVariable ) )
-            // InternalTypesParser.g:19491:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:19302:1: ( ( ruleTypeVariable ) )
+            // InternalTypesParser.g:19303:1: ( ruleTypeVariable )
             {
-            // InternalTypesParser.g:19491:1: ( ruleTypeVariable )
-            // InternalTypesParser.g:19492:1: ruleTypeVariable
+            // InternalTypesParser.g:19303:1: ( ruleTypeVariable )
+            // InternalTypesParser.g:19304:1: ruleTypeVariable
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTStructMethodAccess().getTypeVarsTypeVariableParserRuleCall_0_0_1_2_1_0()); 
@@ -55835,17 +55295,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TStructMethod__NameAssignment_0_0_2"
-    // InternalTypesParser.g:19501:1: rule__TStructMethod__NameAssignment_0_0_2 : ( ruleIdentifierName ) ;
+    // InternalTypesParser.g:19313:1: rule__TStructMethod__NameAssignment_0_0_2 : ( ruleIdentifierName ) ;
     public final void rule__TStructMethod__NameAssignment_0_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19505:1: ( ( ruleIdentifierName ) )
-            // InternalTypesParser.g:19506:1: ( ruleIdentifierName )
+            // InternalTypesParser.g:19317:1: ( ( ruleIdentifierName ) )
+            // InternalTypesParser.g:19318:1: ( ruleIdentifierName )
             {
-            // InternalTypesParser.g:19506:1: ( ruleIdentifierName )
-            // InternalTypesParser.g:19507:1: ruleIdentifierName
+            // InternalTypesParser.g:19318:1: ( ruleIdentifierName )
+            // InternalTypesParser.g:19319:1: ruleIdentifierName
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTStructMethodAccess().getNameIdentifierNameParserRuleCall_0_0_2_0()); 
@@ -55880,17 +55340,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TStructMethod__ReturnTypeRefAssignment_3_1"
-    // InternalTypesParser.g:19516:1: rule__TStructMethod__ReturnTypeRefAssignment_3_1 : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:19328:1: rule__TStructMethod__ReturnTypeRefAssignment_3_1 : ( ruleTypeRef ) ;
     public final void rule__TStructMethod__ReturnTypeRefAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19520:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:19521:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19332:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:19333:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:19521:1: ( ruleTypeRef )
-            // InternalTypesParser.g:19522:1: ruleTypeRef
+            // InternalTypesParser.g:19333:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19334:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTStructMethodAccess().getReturnTypeRefTypeRefParserRuleCall_3_1_0()); 
@@ -55925,17 +55385,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TStructField__NameAssignment_0"
-    // InternalTypesParser.g:19531:1: rule__TStructField__NameAssignment_0 : ( ruleIdentifierName ) ;
+    // InternalTypesParser.g:19343:1: rule__TStructField__NameAssignment_0 : ( ruleIdentifierName ) ;
     public final void rule__TStructField__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19535:1: ( ( ruleIdentifierName ) )
-            // InternalTypesParser.g:19536:1: ( ruleIdentifierName )
+            // InternalTypesParser.g:19347:1: ( ( ruleIdentifierName ) )
+            // InternalTypesParser.g:19348:1: ( ruleIdentifierName )
             {
-            // InternalTypesParser.g:19536:1: ( ruleIdentifierName )
-            // InternalTypesParser.g:19537:1: ruleIdentifierName
+            // InternalTypesParser.g:19348:1: ( ruleIdentifierName )
+            // InternalTypesParser.g:19349:1: ruleIdentifierName
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTStructFieldAccess().getNameIdentifierNameParserRuleCall_0_0()); 
@@ -55970,17 +55430,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TStructField__TypeRefAssignment_1_1"
-    // InternalTypesParser.g:19546:1: rule__TStructField__TypeRefAssignment_1_1 : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:19358:1: rule__TStructField__TypeRefAssignment_1_1 : ( ruleTypeRef ) ;
     public final void rule__TStructField__TypeRefAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19550:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:19551:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19362:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:19363:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:19551:1: ( ruleTypeRef )
-            // InternalTypesParser.g:19552:1: ruleTypeRef
+            // InternalTypesParser.g:19363:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19364:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTStructFieldAccess().getTypeRefTypeRefParserRuleCall_1_1_0()); 
@@ -56015,17 +55475,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TStructGetter__NameAssignment_0_0_2"
-    // InternalTypesParser.g:19561:1: rule__TStructGetter__NameAssignment_0_0_2 : ( ruleIdentifierName ) ;
+    // InternalTypesParser.g:19373:1: rule__TStructGetter__NameAssignment_0_0_2 : ( ruleIdentifierName ) ;
     public final void rule__TStructGetter__NameAssignment_0_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19565:1: ( ( ruleIdentifierName ) )
-            // InternalTypesParser.g:19566:1: ( ruleIdentifierName )
+            // InternalTypesParser.g:19377:1: ( ( ruleIdentifierName ) )
+            // InternalTypesParser.g:19378:1: ( ruleIdentifierName )
             {
-            // InternalTypesParser.g:19566:1: ( ruleIdentifierName )
-            // InternalTypesParser.g:19567:1: ruleIdentifierName
+            // InternalTypesParser.g:19378:1: ( ruleIdentifierName )
+            // InternalTypesParser.g:19379:1: ruleIdentifierName
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTStructGetterAccess().getNameIdentifierNameParserRuleCall_0_0_2_0()); 
@@ -56060,17 +55520,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TStructGetter__DeclaredTypeRefAssignment_3_1"
-    // InternalTypesParser.g:19576:1: rule__TStructGetter__DeclaredTypeRefAssignment_3_1 : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:19388:1: rule__TStructGetter__DeclaredTypeRefAssignment_3_1 : ( ruleTypeRef ) ;
     public final void rule__TStructGetter__DeclaredTypeRefAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19580:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:19581:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19392:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:19393:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:19581:1: ( ruleTypeRef )
-            // InternalTypesParser.g:19582:1: ruleTypeRef
+            // InternalTypesParser.g:19393:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19394:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTStructGetterAccess().getDeclaredTypeRefTypeRefParserRuleCall_3_1_0()); 
@@ -56105,17 +55565,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TStructSetter__NameAssignment_0_0_2"
-    // InternalTypesParser.g:19591:1: rule__TStructSetter__NameAssignment_0_0_2 : ( ruleIdentifierName ) ;
+    // InternalTypesParser.g:19403:1: rule__TStructSetter__NameAssignment_0_0_2 : ( ruleIdentifierName ) ;
     public final void rule__TStructSetter__NameAssignment_0_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19595:1: ( ( ruleIdentifierName ) )
-            // InternalTypesParser.g:19596:1: ( ruleIdentifierName )
+            // InternalTypesParser.g:19407:1: ( ( ruleIdentifierName ) )
+            // InternalTypesParser.g:19408:1: ( ruleIdentifierName )
             {
-            // InternalTypesParser.g:19596:1: ( ruleIdentifierName )
-            // InternalTypesParser.g:19597:1: ruleIdentifierName
+            // InternalTypesParser.g:19408:1: ( ruleIdentifierName )
+            // InternalTypesParser.g:19409:1: ruleIdentifierName
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTStructSetterAccess().getNameIdentifierNameParserRuleCall_0_0_2_0()); 
@@ -56150,17 +55610,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TStructSetter__FparAssignment_2"
-    // InternalTypesParser.g:19606:1: rule__TStructSetter__FparAssignment_2 : ( ruleTAnonymousFormalParameter ) ;
+    // InternalTypesParser.g:19418:1: rule__TStructSetter__FparAssignment_2 : ( ruleTAnonymousFormalParameter ) ;
     public final void rule__TStructSetter__FparAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19610:1: ( ( ruleTAnonymousFormalParameter ) )
-            // InternalTypesParser.g:19611:1: ( ruleTAnonymousFormalParameter )
+            // InternalTypesParser.g:19422:1: ( ( ruleTAnonymousFormalParameter ) )
+            // InternalTypesParser.g:19423:1: ( ruleTAnonymousFormalParameter )
             {
-            // InternalTypesParser.g:19611:1: ( ruleTAnonymousFormalParameter )
-            // InternalTypesParser.g:19612:1: ruleTAnonymousFormalParameter
+            // InternalTypesParser.g:19423:1: ( ruleTAnonymousFormalParameter )
+            // InternalTypesParser.g:19424:1: ruleTAnonymousFormalParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTStructSetterAccess().getFparTAnonymousFormalParameterParserRuleCall_2_0()); 
@@ -56195,23 +55655,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeTypeRef__ConstructorRefAssignment_1_1"
-    // InternalTypesParser.g:19621:1: rule__TypeTypeRef__ConstructorRefAssignment_1_1 : ( ( Constructor ) ) ;
+    // InternalTypesParser.g:19433:1: rule__TypeTypeRef__ConstructorRefAssignment_1_1 : ( ( Constructor ) ) ;
     public final void rule__TypeTypeRef__ConstructorRefAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19625:1: ( ( ( Constructor ) ) )
-            // InternalTypesParser.g:19626:1: ( ( Constructor ) )
+            // InternalTypesParser.g:19437:1: ( ( ( Constructor ) ) )
+            // InternalTypesParser.g:19438:1: ( ( Constructor ) )
             {
-            // InternalTypesParser.g:19626:1: ( ( Constructor ) )
-            // InternalTypesParser.g:19627:1: ( Constructor )
+            // InternalTypesParser.g:19438:1: ( ( Constructor ) )
+            // InternalTypesParser.g:19439:1: ( Constructor )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeTypeRefAccess().getConstructorRefConstructorKeyword_1_1_0()); 
             }
-            // InternalTypesParser.g:19628:1: ( Constructor )
-            // InternalTypesParser.g:19629:1: Constructor
+            // InternalTypesParser.g:19440:1: ( Constructor )
+            // InternalTypesParser.g:19441:1: Constructor
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeTypeRefAccess().getConstructorRefConstructorKeyword_1_1_0()); 
@@ -56248,17 +55708,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeTypeRef__TypeArgAssignment_3"
-    // InternalTypesParser.g:19644:1: rule__TypeTypeRef__TypeArgAssignment_3 : ( ruleTypeArgInTypeTypeRef ) ;
+    // InternalTypesParser.g:19456:1: rule__TypeTypeRef__TypeArgAssignment_3 : ( ruleTypeArgInTypeTypeRef ) ;
     public final void rule__TypeTypeRef__TypeArgAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19648:1: ( ( ruleTypeArgInTypeTypeRef ) )
-            // InternalTypesParser.g:19649:1: ( ruleTypeArgInTypeTypeRef )
+            // InternalTypesParser.g:19460:1: ( ( ruleTypeArgInTypeTypeRef ) )
+            // InternalTypesParser.g:19461:1: ( ruleTypeArgInTypeTypeRef )
             {
-            // InternalTypesParser.g:19649:1: ( ruleTypeArgInTypeTypeRef )
-            // InternalTypesParser.g:19650:1: ruleTypeArgInTypeTypeRef
+            // InternalTypesParser.g:19461:1: ( ruleTypeArgInTypeTypeRef )
+            // InternalTypesParser.g:19462:1: ruleTypeArgInTypeTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeTypeRefAccess().getTypeArgTypeArgInTypeTypeRefParserRuleCall_3_0()); 
@@ -56293,17 +55753,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Wildcard__DeclaredUpperBoundAssignment_1_0_1"
-    // InternalTypesParser.g:19659:1: rule__Wildcard__DeclaredUpperBoundAssignment_1_0_1 : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:19471:1: rule__Wildcard__DeclaredUpperBoundAssignment_1_0_1 : ( ruleTypeRef ) ;
     public final void rule__Wildcard__DeclaredUpperBoundAssignment_1_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19663:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:19664:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19475:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:19476:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:19664:1: ( ruleTypeRef )
-            // InternalTypesParser.g:19665:1: ruleTypeRef
+            // InternalTypesParser.g:19476:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19477:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWildcardAccess().getDeclaredUpperBoundTypeRefParserRuleCall_1_0_1_0()); 
@@ -56338,17 +55798,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Wildcard__DeclaredLowerBoundAssignment_1_1_1"
-    // InternalTypesParser.g:19674:1: rule__Wildcard__DeclaredLowerBoundAssignment_1_1_1 : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:19486:1: rule__Wildcard__DeclaredLowerBoundAssignment_1_1_1 : ( ruleTypeRef ) ;
     public final void rule__Wildcard__DeclaredLowerBoundAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19678:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:19679:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19490:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:19491:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:19679:1: ( ruleTypeRef )
-            // InternalTypesParser.g:19680:1: ruleTypeRef
+            // InternalTypesParser.g:19491:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19492:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWildcardAccess().getDeclaredLowerBoundTypeRefParserRuleCall_1_1_1_0()); 
@@ -56383,23 +55843,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WildcardNewNotation__UsingInOutNotationAssignment_0_0"
-    // InternalTypesParser.g:19689:1: rule__WildcardNewNotation__UsingInOutNotationAssignment_0_0 : ( ( Out ) ) ;
+    // InternalTypesParser.g:19501:1: rule__WildcardNewNotation__UsingInOutNotationAssignment_0_0 : ( ( Out ) ) ;
     public final void rule__WildcardNewNotation__UsingInOutNotationAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19693:1: ( ( ( Out ) ) )
-            // InternalTypesParser.g:19694:1: ( ( Out ) )
+            // InternalTypesParser.g:19505:1: ( ( ( Out ) ) )
+            // InternalTypesParser.g:19506:1: ( ( Out ) )
             {
-            // InternalTypesParser.g:19694:1: ( ( Out ) )
-            // InternalTypesParser.g:19695:1: ( Out )
+            // InternalTypesParser.g:19506:1: ( ( Out ) )
+            // InternalTypesParser.g:19507:1: ( Out )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationOutKeyword_0_0_0()); 
             }
-            // InternalTypesParser.g:19696:1: ( Out )
-            // InternalTypesParser.g:19697:1: Out
+            // InternalTypesParser.g:19508:1: ( Out )
+            // InternalTypesParser.g:19509:1: Out
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationOutKeyword_0_0_0()); 
@@ -56436,17 +55896,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WildcardNewNotation__DeclaredUpperBoundAssignment_0_1"
-    // InternalTypesParser.g:19712:1: rule__WildcardNewNotation__DeclaredUpperBoundAssignment_0_1 : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:19524:1: rule__WildcardNewNotation__DeclaredUpperBoundAssignment_0_1 : ( ruleTypeRef ) ;
     public final void rule__WildcardNewNotation__DeclaredUpperBoundAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19716:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:19717:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19528:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:19529:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:19717:1: ( ruleTypeRef )
-            // InternalTypesParser.g:19718:1: ruleTypeRef
+            // InternalTypesParser.g:19529:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19530:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWildcardNewNotationAccess().getDeclaredUpperBoundTypeRefParserRuleCall_0_1_0()); 
@@ -56481,23 +55941,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WildcardNewNotation__UsingInOutNotationAssignment_1_0"
-    // InternalTypesParser.g:19727:1: rule__WildcardNewNotation__UsingInOutNotationAssignment_1_0 : ( ( In ) ) ;
+    // InternalTypesParser.g:19539:1: rule__WildcardNewNotation__UsingInOutNotationAssignment_1_0 : ( ( In ) ) ;
     public final void rule__WildcardNewNotation__UsingInOutNotationAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19731:1: ( ( ( In ) ) )
-            // InternalTypesParser.g:19732:1: ( ( In ) )
+            // InternalTypesParser.g:19543:1: ( ( ( In ) ) )
+            // InternalTypesParser.g:19544:1: ( ( In ) )
             {
-            // InternalTypesParser.g:19732:1: ( ( In ) )
-            // InternalTypesParser.g:19733:1: ( In )
+            // InternalTypesParser.g:19544:1: ( ( In ) )
+            // InternalTypesParser.g:19545:1: ( In )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationInKeyword_1_0_0()); 
             }
-            // InternalTypesParser.g:19734:1: ( In )
-            // InternalTypesParser.g:19735:1: In
+            // InternalTypesParser.g:19546:1: ( In )
+            // InternalTypesParser.g:19547:1: In
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationInKeyword_1_0_0()); 
@@ -56534,17 +55994,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WildcardNewNotation__DeclaredLowerBoundAssignment_1_1"
-    // InternalTypesParser.g:19750:1: rule__WildcardNewNotation__DeclaredLowerBoundAssignment_1_1 : ( ruleTypeRef ) ;
+    // InternalTypesParser.g:19562:1: rule__WildcardNewNotation__DeclaredLowerBoundAssignment_1_1 : ( ruleTypeRef ) ;
     public final void rule__WildcardNewNotation__DeclaredLowerBoundAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19754:1: ( ( ruleTypeRef ) )
-            // InternalTypesParser.g:19755:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19566:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:19567:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:19755:1: ( ruleTypeRef )
-            // InternalTypesParser.g:19756:1: ruleTypeRef
+            // InternalTypesParser.g:19567:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19568:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWildcardNewNotationAccess().getDeclaredLowerBoundTypeRefParserRuleCall_1_1_0()); 
@@ -56579,17 +56039,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariable__NameAssignment_0"
-    // InternalTypesParser.g:19765:1: rule__TypeVariable__NameAssignment_0 : ( RULE_IDENTIFIER ) ;
+    // InternalTypesParser.g:19577:1: rule__TypeVariable__NameAssignment_0 : ( RULE_IDENTIFIER ) ;
     public final void rule__TypeVariable__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19769:1: ( ( RULE_IDENTIFIER ) )
-            // InternalTypesParser.g:19770:1: ( RULE_IDENTIFIER )
+            // InternalTypesParser.g:19581:1: ( ( RULE_IDENTIFIER ) )
+            // InternalTypesParser.g:19582:1: ( RULE_IDENTIFIER )
             {
-            // InternalTypesParser.g:19770:1: ( RULE_IDENTIFIER )
-            // InternalTypesParser.g:19771:1: RULE_IDENTIFIER
+            // InternalTypesParser.g:19582:1: ( RULE_IDENTIFIER )
+            // InternalTypesParser.g:19583:1: RULE_IDENTIFIER
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeVariableAccess().getNameIDENTIFIERTerminalRuleCall_0_0()); 
@@ -56620,28 +56080,28 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1"
-    // InternalTypesParser.g:19780:1: rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 : ( ruleParameterizedTypeRef ) ;
+    // InternalTypesParser.g:19592:1: rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 : ( ruleTypeRef ) ;
     public final void rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19784:1: ( ( ruleParameterizedTypeRef ) )
-            // InternalTypesParser.g:19785:1: ( ruleParameterizedTypeRef )
+            // InternalTypesParser.g:19596:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:19597:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:19785:1: ( ruleParameterizedTypeRef )
-            // InternalTypesParser.g:19786:1: ruleParameterizedTypeRef
+            // InternalTypesParser.g:19597:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19598:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_1_1_0()); 
+               before(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsTypeRefParserRuleCall_1_1_0()); 
             }
             pushFollow(FOLLOW_2);
-            ruleParameterizedTypeRef();
+            ruleTypeRef();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_1_1_0()); 
+               after(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsTypeRefParserRuleCall_1_1_0()); 
             }
 
             }
@@ -56664,69 +56124,24 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1"
 
 
-    // $ANTLR start "rule__TypeVariable__DeclaredUpperBoundsAssignment_1_2_1"
-    // InternalTypesParser.g:19795:1: rule__TypeVariable__DeclaredUpperBoundsAssignment_1_2_1 : ( ruleParameterizedTypeRef ) ;
-    public final void rule__TypeVariable__DeclaredUpperBoundsAssignment_1_2_1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalTypesParser.g:19799:1: ( ( ruleParameterizedTypeRef ) )
-            // InternalTypesParser.g:19800:1: ( ruleParameterizedTypeRef )
-            {
-            // InternalTypesParser.g:19800:1: ( ruleParameterizedTypeRef )
-            // InternalTypesParser.g:19801:1: ruleParameterizedTypeRef
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_1_2_1_0()); 
-            }
-            pushFollow(FOLLOW_2);
-            ruleParameterizedTypeRef();
-
-            state._fsp--;
-            if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_1_2_1_0()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeVariable__DeclaredUpperBoundsAssignment_1_2_1"
-
-
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__DeclaredCovariantAssignment_0_0"
-    // InternalTypesParser.g:19810:1: rule__TypeVariableWithDefSiteVariance__DeclaredCovariantAssignment_0_0 : ( ( Out ) ) ;
+    // InternalTypesParser.g:19607:1: rule__TypeVariableWithDefSiteVariance__DeclaredCovariantAssignment_0_0 : ( ( Out ) ) ;
     public final void rule__TypeVariableWithDefSiteVariance__DeclaredCovariantAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19814:1: ( ( ( Out ) ) )
-            // InternalTypesParser.g:19815:1: ( ( Out ) )
+            // InternalTypesParser.g:19611:1: ( ( ( Out ) ) )
+            // InternalTypesParser.g:19612:1: ( ( Out ) )
             {
-            // InternalTypesParser.g:19815:1: ( ( Out ) )
-            // InternalTypesParser.g:19816:1: ( Out )
+            // InternalTypesParser.g:19612:1: ( ( Out ) )
+            // InternalTypesParser.g:19613:1: ( Out )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredCovariantOutKeyword_0_0_0()); 
             }
-            // InternalTypesParser.g:19817:1: ( Out )
-            // InternalTypesParser.g:19818:1: Out
+            // InternalTypesParser.g:19614:1: ( Out )
+            // InternalTypesParser.g:19615:1: Out
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredCovariantOutKeyword_0_0_0()); 
@@ -56763,23 +56178,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__DeclaredContravariantAssignment_0_1"
-    // InternalTypesParser.g:19833:1: rule__TypeVariableWithDefSiteVariance__DeclaredContravariantAssignment_0_1 : ( ( In ) ) ;
+    // InternalTypesParser.g:19630:1: rule__TypeVariableWithDefSiteVariance__DeclaredContravariantAssignment_0_1 : ( ( In ) ) ;
     public final void rule__TypeVariableWithDefSiteVariance__DeclaredContravariantAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19837:1: ( ( ( In ) ) )
-            // InternalTypesParser.g:19838:1: ( ( In ) )
+            // InternalTypesParser.g:19634:1: ( ( ( In ) ) )
+            // InternalTypesParser.g:19635:1: ( ( In ) )
             {
-            // InternalTypesParser.g:19838:1: ( ( In ) )
-            // InternalTypesParser.g:19839:1: ( In )
+            // InternalTypesParser.g:19635:1: ( ( In ) )
+            // InternalTypesParser.g:19636:1: ( In )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredContravariantInKeyword_0_1_0()); 
             }
-            // InternalTypesParser.g:19840:1: ( In )
-            // InternalTypesParser.g:19841:1: In
+            // InternalTypesParser.g:19637:1: ( In )
+            // InternalTypesParser.g:19638:1: In
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredContravariantInKeyword_0_1_0()); 
@@ -56816,17 +56231,17 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__NameAssignment_1"
-    // InternalTypesParser.g:19856:1: rule__TypeVariableWithDefSiteVariance__NameAssignment_1 : ( RULE_IDENTIFIER ) ;
+    // InternalTypesParser.g:19653:1: rule__TypeVariableWithDefSiteVariance__NameAssignment_1 : ( RULE_IDENTIFIER ) ;
     public final void rule__TypeVariableWithDefSiteVariance__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19860:1: ( ( RULE_IDENTIFIER ) )
-            // InternalTypesParser.g:19861:1: ( RULE_IDENTIFIER )
+            // InternalTypesParser.g:19657:1: ( ( RULE_IDENTIFIER ) )
+            // InternalTypesParser.g:19658:1: ( RULE_IDENTIFIER )
             {
-            // InternalTypesParser.g:19861:1: ( RULE_IDENTIFIER )
-            // InternalTypesParser.g:19862:1: RULE_IDENTIFIER
+            // InternalTypesParser.g:19658:1: ( RULE_IDENTIFIER )
+            // InternalTypesParser.g:19659:1: RULE_IDENTIFIER
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getNameIDENTIFIERTerminalRuleCall_1_0()); 
@@ -56857,28 +56272,28 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1"
-    // InternalTypesParser.g:19871:1: rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 : ( ruleParameterizedTypeRef ) ;
+    // InternalTypesParser.g:19668:1: rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 : ( ruleTypeRef ) ;
     public final void rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:19875:1: ( ( ruleParameterizedTypeRef ) )
-            // InternalTypesParser.g:19876:1: ( ruleParameterizedTypeRef )
+            // InternalTypesParser.g:19672:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:19673:1: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:19876:1: ( ruleParameterizedTypeRef )
-            // InternalTypesParser.g:19877:1: ruleParameterizedTypeRef
+            // InternalTypesParser.g:19673:1: ( ruleTypeRef )
+            // InternalTypesParser.g:19674:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_1_0()); 
+               before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsTypeRefParserRuleCall_2_1_0()); 
             }
             pushFollow(FOLLOW_2);
-            ruleParameterizedTypeRef();
+            ruleTypeRef();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_1_0()); 
+               after(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsTypeRefParserRuleCall_2_1_0()); 
             }
 
             }
@@ -56899,51 +56314,6 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         return ;
     }
     // $ANTLR end "rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1"
-
-
-    // $ANTLR start "rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_2_1"
-    // InternalTypesParser.g:19886:1: rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_2_1 : ( ruleParameterizedTypeRef ) ;
-    public final void rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_2_1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalTypesParser.g:19890:1: ( ( ruleParameterizedTypeRef ) )
-            // InternalTypesParser.g:19891:1: ( ruleParameterizedTypeRef )
-            {
-            // InternalTypesParser.g:19891:1: ( ruleParameterizedTypeRef )
-            // InternalTypesParser.g:19892:1: ruleParameterizedTypeRef
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_2_1_0()); 
-            }
-            pushFollow(FOLLOW_2);
-            ruleParameterizedTypeRef();
-
-            state._fsp--;
-            if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_2_1_0()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_2_1"
 
     // $ANTLR start synpred44_InternalTypesParser
     public final void synpred44_InternalTypesParser_fragment() throws RecognitionException {   
@@ -57190,15 +56560,15 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     protected DFA122 dfa122 = new DFA122(this);
     protected DFA124 dfa124 = new DFA124(this);
     static final String dfa_1s = "\22\uffff";
-    static final String dfa_2s = "\1\7\3\6\7\uffff\1\17\3\uffff\1\43\2\uffff";
-    static final String dfa_3s = "\1\155\3\72\7\uffff\1\72\3\uffff\1\56\2\uffff";
-    static final String dfa_4s = "\4\uffff\1\5\1\6\1\7\1\10\1\11\1\13\1\14\1\uffff\1\3\1\4\1\2\1\uffff\1\1\1\12";
+    static final String dfa_2s = "\1\7\3\6\7\uffff\1\17\1\43\5\uffff";
+    static final String dfa_3s = "\1\155\3\72\7\uffff\1\72\1\56\5\uffff";
+    static final String dfa_4s = "\4\uffff\1\5\1\6\1\7\1\10\1\11\1\13\1\14\2\uffff\1\1\1\12\1\3\1\4\1\2";
     static final String dfa_5s = "\22\uffff}>";
     static final String[] dfa_6s = {
             "\1\2\3\uffff\1\12\4\uffff\1\10\1\uffff\1\6\14\uffff\1\1\4\uffff\1\3\27\uffff\1\7\3\uffff\1\5\2\uffff\1\4\51\uffff\1\11",
-            "\1\13\10\uffff\1\14\3\uffff\1\16\3\uffff\1\21\13\uffff\1\20\12\uffff\1\16\2\uffff\1\17\10\uffff\1\15",
-            "\1\13\10\uffff\1\14\3\uffff\1\16\3\uffff\1\21\13\uffff\1\20\12\uffff\1\16\2\uffff\1\17\10\uffff\1\15",
-            "\1\13\10\uffff\1\14\3\uffff\1\16\3\uffff\1\21\13\uffff\1\20\12\uffff\1\16\2\uffff\1\17\10\uffff\1\15",
+            "\1\13\10\uffff\1\17\3\uffff\1\21\3\uffff\1\16\13\uffff\1\15\12\uffff\1\21\2\uffff\1\14\10\uffff\1\20",
+            "\1\13\10\uffff\1\17\3\uffff\1\21\3\uffff\1\16\13\uffff\1\15\12\uffff\1\21\2\uffff\1\14\10\uffff\1\20",
+            "\1\13\10\uffff\1\17\3\uffff\1\21\3\uffff\1\16\13\uffff\1\15\12\uffff\1\21\2\uffff\1\14\10\uffff\1\20",
             "",
             "",
             "",
@@ -57206,11 +56576,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             "",
             "",
             "",
-            "\1\14\3\uffff\1\16\3\uffff\1\21\13\uffff\1\20\12\uffff\1\16\2\uffff\1\17\10\uffff\1\15",
+            "\1\17\3\uffff\1\21\3\uffff\1\16\13\uffff\1\15\12\uffff\1\21\2\uffff\1\14\10\uffff\1\20",
+            "\1\15\12\uffff\1\21",
             "",
             "",
             "",
-            "\1\20\12\uffff\1\16",
             "",
             ""
     };
@@ -57240,96 +56610,96 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
     }
     static final String dfa_7s = "\u00e6\uffff";
-    static final String dfa_8s = "\1\5\11\4\1\uffff\14\124\1\4\40\124\1\4\25\124\1\4\1\uffff\2\4\3\124\2\uffff\106\130\1\141\1\4\1\124\106\141";
-    static final String dfa_9s = "\1\44\11\155\1\uffff\14\132\1\155\40\132\1\155\25\132\1\155\1\uffff\2\155\3\132\2\uffff\106\130\1\141\1\155\1\132\106\141";
-    static final String dfa_10s = "\12\uffff\1\3\104\uffff\1\4\5\uffff\1\2\1\1\u008f\uffff";
+    static final String dfa_8s = "\1\5\10\4\1\uffff\14\124\1\4\40\124\2\4\25\124\1\4\1\uffff\3\124\2\4\2\uffff\106\130\1\141\1\4\1\124\106\141";
+    static final String dfa_9s = "\1\44\10\155\1\uffff\14\132\1\155\40\132\2\155\25\132\1\155\1\uffff\3\132\2\155\2\uffff\106\130\1\141\1\155\1\132\106\141";
+    static final String dfa_10s = "\11\uffff\1\3\105\uffff\1\4\5\uffff\1\1\1\2\u008f\uffff";
     static final String dfa_11s = "\u00e6\uffff}>";
     static final String[] dfa_12s = {
             "\1\3\1\uffff\1\5\11\uffff\1\4\14\uffff\1\1\1\2\4\uffff\1\6",
-            "\1\21\3\uffff\1\20\1\103\1\76\1\16\1\110\1\46\1\105\1\111\1\17\1\113\1\14\1\7\1\30\1\31\1\73\1\42\1\uffff\1\32\1\37\1\40\2\uffff\1\112\1\72\1\33\1\36\1\44\1\15\1\114\1\50\1\10\1\52\1\100\1\56\1\107\1\106\1\23\1\25\1\26\1\27\1\66\1\117\1\51\1\54\1\102\1\61\1\63\1\104\1\24\1\35\1\67\1\75\1\64\1\53\1\65\1\101\1\60\1\62\1\uffff\1\13\1\41\1\70\1\71\1\47\1\115\1\11\1\55\1\57\1\uffff\1\74\1\34\1\43\1\45\1\77\12\uffff\1\12\3\uffff\1\116\14\uffff\1\22",
-            "\1\21\3\uffff\1\20\1\103\1\76\1\16\1\110\1\46\1\105\1\111\1\17\1\113\1\14\1\7\1\30\1\31\1\73\1\42\1\uffff\1\32\1\37\1\40\2\uffff\1\112\1\72\1\33\1\36\1\44\1\15\1\114\1\50\1\10\1\52\1\100\1\56\1\107\1\106\1\23\1\25\1\26\1\27\1\66\1\117\1\51\1\54\1\102\1\61\1\63\1\104\1\24\1\35\1\67\1\75\1\64\1\53\1\65\1\101\1\60\1\62\1\uffff\1\13\1\41\1\70\1\71\1\47\1\115\1\11\1\55\1\57\1\uffff\1\74\1\34\1\43\1\45\1\77\12\uffff\1\12\3\uffff\1\116\14\uffff\1\22",
-            "\1\21\3\uffff\1\20\1\103\1\76\1\16\1\110\1\46\1\105\1\111\1\17\1\113\1\14\1\7\1\30\1\31\1\73\1\42\1\uffff\1\32\1\37\1\40\2\uffff\1\112\1\72\1\33\1\36\1\44\1\15\1\114\1\50\1\10\1\52\1\100\1\56\1\107\1\106\1\23\1\25\1\26\1\27\1\66\1\117\1\51\1\54\1\102\1\61\1\63\1\104\1\24\1\35\1\67\1\75\1\64\1\53\1\65\1\101\1\60\1\62\1\uffff\1\13\1\41\1\70\1\71\1\47\1\115\1\11\1\55\1\57\1\uffff\1\74\1\34\1\43\1\45\1\77\12\uffff\1\12\3\uffff\1\116\14\uffff\1\22",
-            "\1\21\3\uffff\1\20\1\103\1\76\1\16\1\110\1\46\1\105\1\111\1\17\1\113\1\14\1\7\1\30\1\31\1\73\1\42\1\uffff\1\32\1\37\1\40\2\uffff\1\112\1\72\1\33\1\36\1\44\1\15\1\114\1\50\1\10\1\52\1\100\1\56\1\107\1\106\1\23\1\25\1\26\1\27\1\66\1\117\1\51\1\54\1\102\1\61\1\63\1\104\1\24\1\35\1\67\1\75\1\64\1\53\1\65\1\101\1\60\1\62\1\uffff\1\13\1\41\1\70\1\71\1\47\1\115\1\11\1\55\1\57\1\uffff\1\74\1\34\1\43\1\45\1\77\12\uffff\1\12\3\uffff\1\116\14\uffff\1\22",
-            "\1\21\3\uffff\1\20\1\103\1\76\1\16\1\110\1\46\1\105\1\111\1\17\1\113\1\14\1\7\1\30\1\31\1\73\1\42\1\uffff\1\32\1\37\1\40\2\uffff\1\112\1\72\1\33\1\36\1\44\1\15\1\114\1\50\1\10\1\52\1\100\1\56\1\107\1\106\1\23\1\25\1\26\1\27\1\66\1\117\1\51\1\54\1\102\1\61\1\63\1\104\1\24\1\35\1\67\1\75\1\64\1\53\1\65\1\101\1\60\1\62\1\uffff\1\13\1\41\1\70\1\71\1\47\1\115\1\11\1\55\1\57\1\uffff\1\74\1\34\1\43\1\45\1\77\12\uffff\1\12\3\uffff\1\116\14\uffff\1\22",
-            "\1\21\3\uffff\1\20\1\103\1\76\1\16\1\110\1\46\1\105\1\111\1\17\1\113\1\14\1\7\1\30\1\31\1\73\1\42\1\uffff\1\32\1\37\1\40\2\uffff\1\112\1\72\1\33\1\36\1\44\1\15\1\114\1\50\1\10\1\52\1\100\1\56\1\107\1\106\1\23\1\25\1\26\1\27\1\66\1\117\1\51\1\54\1\102\1\61\1\63\1\104\1\24\1\35\1\67\1\75\1\64\1\53\1\65\1\101\1\60\1\62\1\uffff\1\13\1\41\1\70\1\71\1\47\1\115\1\11\1\55\1\57\1\uffff\1\74\1\34\1\43\1\45\1\77\12\uffff\1\12\3\uffff\1\116\14\uffff\1\22",
-            "\1\12\3\uffff\20\12\1\uffff\3\12\2\uffff\23\12\1\uffff\20\12\1\uffff\2\12\1\120\3\12\1\121\2\12\1\uffff\5\12\2\uffff\1\12\5\uffff\1\117\1\uffff\1\12\3\uffff\1\12\14\uffff\1\12",
-            "\1\21\3\uffff\1\20\1\103\1\76\1\16\1\110\1\46\1\105\1\111\1\17\1\113\1\14\1\123\1\30\1\31\1\73\1\42\1\uffff\1\32\1\37\1\40\2\uffff\1\112\1\72\1\33\1\36\1\44\1\15\1\114\1\50\1\124\1\52\1\100\1\56\1\107\1\106\1\23\1\25\1\26\1\122\1\66\1\uffff\1\51\1\54\1\102\1\61\1\63\1\104\1\24\1\35\1\67\1\75\1\64\1\53\1\65\1\101\1\60\1\62\1\uffff\1\13\1\41\1\70\1\71\1\47\1\115\1\11\1\55\1\57\1\uffff\1\74\1\34\1\43\1\45\1\77\2\uffff\1\12\5\uffff\1\117\1\uffff\1\12\3\uffff\1\116\14\uffff\1\22",
-            "\1\125\3\uffff\20\125\1\uffff\3\125\2\uffff\23\125\1\uffff\20\125\1\uffff\11\125\1\uffff\5\125\2\uffff\1\12\5\uffff\1\117\5\uffff\1\125\14\uffff\1\125",
+            "\1\20\3\uffff\1\17\1\103\1\76\1\15\1\110\1\45\1\105\1\111\1\16\1\113\1\13\1\10\1\27\1\30\1\73\1\41\1\uffff\1\31\1\36\1\37\2\uffff\1\112\1\72\1\32\1\35\1\43\1\14\1\114\1\47\1\7\1\51\1\100\1\55\1\107\1\106\1\22\1\24\1\25\1\26\1\65\1\117\1\50\1\53\1\102\1\60\1\62\1\104\1\23\1\34\1\66\1\75\1\63\1\52\1\64\1\101\1\57\1\61\1\uffff\1\12\1\40\1\67\1\71\1\46\1\115\1\70\1\54\1\56\1\uffff\1\74\1\33\1\42\1\44\1\77\12\uffff\1\11\3\uffff\1\116\14\uffff\1\21",
+            "\1\20\3\uffff\1\17\1\103\1\76\1\15\1\110\1\45\1\105\1\111\1\16\1\113\1\13\1\10\1\27\1\30\1\73\1\41\1\uffff\1\31\1\36\1\37\2\uffff\1\112\1\72\1\32\1\35\1\43\1\14\1\114\1\47\1\7\1\51\1\100\1\55\1\107\1\106\1\22\1\24\1\25\1\26\1\65\1\117\1\50\1\53\1\102\1\60\1\62\1\104\1\23\1\34\1\66\1\75\1\63\1\52\1\64\1\101\1\57\1\61\1\uffff\1\12\1\40\1\67\1\71\1\46\1\115\1\70\1\54\1\56\1\uffff\1\74\1\33\1\42\1\44\1\77\12\uffff\1\11\3\uffff\1\116\14\uffff\1\21",
+            "\1\20\3\uffff\1\17\1\103\1\76\1\15\1\110\1\45\1\105\1\111\1\16\1\113\1\13\1\10\1\27\1\30\1\73\1\41\1\uffff\1\31\1\36\1\37\2\uffff\1\112\1\72\1\32\1\35\1\43\1\14\1\114\1\47\1\7\1\51\1\100\1\55\1\107\1\106\1\22\1\24\1\25\1\26\1\65\1\117\1\50\1\53\1\102\1\60\1\62\1\104\1\23\1\34\1\66\1\75\1\63\1\52\1\64\1\101\1\57\1\61\1\uffff\1\12\1\40\1\67\1\71\1\46\1\115\1\70\1\54\1\56\1\uffff\1\74\1\33\1\42\1\44\1\77\12\uffff\1\11\3\uffff\1\116\14\uffff\1\21",
+            "\1\20\3\uffff\1\17\1\103\1\76\1\15\1\110\1\45\1\105\1\111\1\16\1\113\1\13\1\10\1\27\1\30\1\73\1\41\1\uffff\1\31\1\36\1\37\2\uffff\1\112\1\72\1\32\1\35\1\43\1\14\1\114\1\47\1\7\1\51\1\100\1\55\1\107\1\106\1\22\1\24\1\25\1\26\1\65\1\117\1\50\1\53\1\102\1\60\1\62\1\104\1\23\1\34\1\66\1\75\1\63\1\52\1\64\1\101\1\57\1\61\1\uffff\1\12\1\40\1\67\1\71\1\46\1\115\1\70\1\54\1\56\1\uffff\1\74\1\33\1\42\1\44\1\77\12\uffff\1\11\3\uffff\1\116\14\uffff\1\21",
+            "\1\20\3\uffff\1\17\1\103\1\76\1\15\1\110\1\45\1\105\1\111\1\16\1\113\1\13\1\10\1\27\1\30\1\73\1\41\1\uffff\1\31\1\36\1\37\2\uffff\1\112\1\72\1\32\1\35\1\43\1\14\1\114\1\47\1\7\1\51\1\100\1\55\1\107\1\106\1\22\1\24\1\25\1\26\1\65\1\117\1\50\1\53\1\102\1\60\1\62\1\104\1\23\1\34\1\66\1\75\1\63\1\52\1\64\1\101\1\57\1\61\1\uffff\1\12\1\40\1\67\1\71\1\46\1\115\1\70\1\54\1\56\1\uffff\1\74\1\33\1\42\1\44\1\77\12\uffff\1\11\3\uffff\1\116\14\uffff\1\21",
+            "\1\20\3\uffff\1\17\1\103\1\76\1\15\1\110\1\45\1\105\1\111\1\16\1\113\1\13\1\10\1\27\1\30\1\73\1\41\1\uffff\1\31\1\36\1\37\2\uffff\1\112\1\72\1\32\1\35\1\43\1\14\1\114\1\47\1\7\1\51\1\100\1\55\1\107\1\106\1\22\1\24\1\25\1\26\1\65\1\117\1\50\1\53\1\102\1\60\1\62\1\104\1\23\1\34\1\66\1\75\1\63\1\52\1\64\1\101\1\57\1\61\1\uffff\1\12\1\40\1\67\1\71\1\46\1\115\1\70\1\54\1\56\1\uffff\1\74\1\33\1\42\1\44\1\77\12\uffff\1\11\3\uffff\1\116\14\uffff\1\21",
+            "\1\20\3\uffff\1\17\1\103\1\76\1\15\1\110\1\45\1\105\1\111\1\16\1\113\1\13\1\121\1\27\1\30\1\73\1\41\1\uffff\1\31\1\36\1\37\2\uffff\1\112\1\72\1\32\1\35\1\43\1\14\1\114\1\47\1\122\1\51\1\100\1\55\1\107\1\106\1\22\1\24\1\25\1\120\1\65\1\uffff\1\50\1\53\1\102\1\60\1\62\1\104\1\23\1\34\1\66\1\75\1\63\1\52\1\64\1\101\1\57\1\61\1\uffff\1\12\1\40\1\67\1\71\1\46\1\115\1\70\1\54\1\56\1\uffff\1\74\1\33\1\42\1\44\1\77\2\uffff\1\11\5\uffff\1\117\1\uffff\1\11\3\uffff\1\116\14\uffff\1\21",
+            "\1\11\3\uffff\20\11\1\uffff\3\11\2\uffff\23\11\1\uffff\20\11\1\uffff\2\11\1\124\3\11\1\123\2\11\1\uffff\5\11\2\uffff\1\11\5\uffff\1\117\1\uffff\1\11\3\uffff\1\11\14\uffff\1\11",
             "",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\117\3\uffff\20\117\1\uffff\3\117\2\uffff\23\117\1\uffff\20\117\1\uffff\11\117\1\uffff\5\117\2\uffff\1\12\5\uffff\1\117\5\uffff\1\117\14\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\126\3\uffff\20\126\1\uffff\3\126\2\uffff\23\126\1\uffff\20\126\1\uffff\11\126\1\uffff\5\126\2\uffff\1\12\5\uffff\1\117\5\uffff\1\126\14\uffff\1\126",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\117\3\uffff\20\117\1\uffff\3\117\2\uffff\23\117\1\uffff\20\117\1\uffff\11\117\1\uffff\5\117\2\uffff\1\11\5\uffff\1\117\5\uffff\1\117\14\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\125\3\uffff\20\125\1\uffff\3\125\2\uffff\23\125\1\uffff\20\125\1\uffff\11\125\1\uffff\5\125\2\uffff\1\11\5\uffff\1\117\5\uffff\1\125\14\uffff\1\125",
+            "\1\126\3\uffff\20\126\1\uffff\3\126\2\uffff\23\126\1\uffff\20\126\1\uffff\11\126\1\uffff\5\126\2\uffff\1\11\5\uffff\1\117\5\uffff\1\126\14\uffff\1\126",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
             "\1\135\3\uffff\1\134\1\u0092\1\u008d\1\132\1\u0097\1\162\1\u0094\1\u0098\1\133\1\u009a\1\130\1\u0089\1\144\1\145\1\u0088\1\156\1\uffff\1\146\1\153\1\154\2\uffff\1\u0099\1\u0087\1\147\1\152\1\160\1\131\1\u009b\1\164\1\u008a\1\166\1\u008f\1\172\1\u0096\1\u0095\1\137\1\141\1\142\1\143\1\u0082\1\uffff\1\165\1\170\1\u0091\1\175\1\177\1\u0093\1\140\1\151\1\u0083\1\u008c\1\u0080\1\167\1\u0081\1\u0090\1\174\1\176\1\uffff\1\127\1\155\1\u0084\1\u0086\1\163\1\u009c\1\u0085\1\171\1\173\1\uffff\1\u008b\1\150\1\157\1\161\1\u008e\25\uffff\1\u009d\5\uffff\1\136",
             "",
-            "\1\126\3\uffff\20\126\1\uffff\3\126\2\uffff\23\126\1\uffff\20\126\1\uffff\11\126\1\uffff\5\126\2\uffff\1\12\13\uffff\1\126\14\uffff\1\126",
-            "\1\125\3\uffff\20\125\1\uffff\3\125\2\uffff\23\125\1\uffff\20\125\1\uffff\11\125\1\uffff\5\125\2\uffff\1\12\13\uffff\1\125\14\uffff\1\125",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
-            "\1\12\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
+            "\1\126\3\uffff\20\126\1\uffff\3\126\2\uffff\23\126\1\uffff\20\126\1\uffff\11\126\1\uffff\5\126\2\uffff\1\11\13\uffff\1\126\14\uffff\1\126",
+            "\1\125\3\uffff\20\125\1\uffff\3\125\2\uffff\23\125\1\uffff\20\125\1\uffff\11\125\1\uffff\5\125\2\uffff\1\11\13\uffff\1\125\14\uffff\1\125",
             "",
             "",
             "\1\u009e",
@@ -57404,7 +56774,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             "\1\u009e",
             "\1\u009f",
             "\1\u00a6\3\uffff\1\u00a5\1\u00db\1\u00d6\1\u00a3\1\u00e0\1\u00bb\1\u00dd\1\u00e1\1\u00a4\1\u00e3\1\u00a1\1\u00d2\1\u00ad\1\u00ae\1\u00d1\1\u00b7\1\uffff\1\u00af\1\u00b4\1\u00b5\2\uffff\1\u00e2\1\u00d0\1\u00b0\1\u00b3\1\u00b9\1\u00a2\1\u00e4\1\u00bd\1\u00d3\1\u00bf\1\u00d8\1\u00c3\1\u00df\1\u00de\1\u00a8\1\u00aa\1\u00ab\1\u00ac\1\u00cb\1\uffff\1\u00be\1\u00c1\1\u00da\1\u00c6\1\u00c8\1\u00dc\1\u00a9\1\u00b2\1\u00cc\1\u00d5\1\u00c9\1\u00c0\1\u00ca\1\u00d9\1\u00c5\1\u00c7\1\uffff\1\u00a0\1\u00b6\1\u00cd\1\u00cf\1\u00bc\1\u00e5\1\u00ce\1\u00c2\1\u00c4\1\uffff\1\u00d4\1\u00b1\1\u00b8\1\u00ba\1\u00d7\33\uffff\1\u00a7",
-            "\1\12\5\uffff\1\117",
+            "\1\11\5\uffff\1\117",
             "\1\u009f",
             "\1\u009f",
             "\1\u009f",
@@ -58641,19 +58011,19 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     }
     static final String dfa_25s = "\10\uffff";
     static final String dfa_26s = "\1\2\7\uffff";
-    static final String dfa_27s = "\1\5\1\11\2\uffff\1\30\1\11\1\0\1\30";
-    static final String dfa_28s = "\2\155\2\uffff\1\136\1\155\1\0\1\136";
-    static final String dfa_29s = "\2\uffff\1\2\1\1\4\uffff";
+    static final String dfa_27s = "\1\5\1\11\1\uffff\1\30\1\uffff\1\11\1\0\1\30";
+    static final String dfa_28s = "\2\155\1\uffff\1\136\1\uffff\1\155\1\0\1\136";
+    static final String dfa_29s = "\2\uffff\1\2\1\uffff\1\1\3\uffff";
     static final String dfa_30s = "\6\uffff\1\0\1\uffff}>";
     static final String[] dfa_31s = {
             "\1\2\1\uffff\1\2\1\uffff\32\2\1\uffff\15\2\1\uffff\20\2\1\uffff\11\2\1\uffff\13\2\3\uffff\1\2\1\1\3\2\1\uffff\2\2\1\uffff\1\2\10\uffff\1\2",
-            "\2\3\7\uffff\1\3\11\uffff\1\3\27\uffff\1\3\7\uffff\2\3\1\uffff\2\3\2\uffff\1\3\4\uffff\1\3\7\uffff\1\3\15\uffff\1\3\3\uffff\1\3\2\uffff\1\3\7\uffff\1\4",
+            "\2\4\7\uffff\1\4\11\uffff\1\4\27\uffff\1\4\7\uffff\2\4\1\uffff\2\4\2\uffff\1\4\4\uffff\1\4\7\uffff\1\4\15\uffff\1\4\3\uffff\1\4\2\uffff\1\4\7\uffff\1\3",
             "",
+            "\1\4\1\uffff\1\2\2\uffff\1\4\64\uffff\1\4\3\uffff\1\4\1\5\1\uffff\1\4\2\uffff\1\4\1\6\1\4",
             "",
-            "\1\3\1\uffff\1\2\2\uffff\1\3\64\uffff\1\3\3\uffff\1\3\1\5\1\uffff\1\3\2\uffff\1\3\1\6\1\3",
-            "\2\3\7\uffff\1\3\11\uffff\1\3\27\uffff\1\3\7\uffff\2\3\1\uffff\2\3\2\uffff\1\3\4\uffff\1\3\7\uffff\1\3\15\uffff\1\3\3\uffff\1\3\2\uffff\1\3\7\uffff\1\7",
+            "\2\4\7\uffff\1\4\11\uffff\1\4\27\uffff\1\4\7\uffff\2\4\1\uffff\2\4\2\uffff\1\4\4\uffff\1\4\7\uffff\1\4\15\uffff\1\4\3\uffff\1\4\2\uffff\1\4\7\uffff\1\7",
             "\1\uffff",
-            "\1\3\1\uffff\1\2\2\uffff\1\3\64\uffff\1\3\3\uffff\1\3\1\5\1\uffff\1\3\2\uffff\1\3\1\6\1\3"
+            "\1\4\1\uffff\1\2\2\uffff\1\4\64\uffff\1\4\3\uffff\1\4\1\5\1\uffff\1\4\2\uffff\1\4\1\6\1\4"
     };
 
     static final short[] dfa_25 = DFA.unpackEncodedString(dfa_25s);
@@ -58691,7 +58061,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
                         int index122_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred221_InternalTypesParser()) ) {s = 3;}
+                        if ( (synpred221_InternalTypesParser()) ) {s = 4;}
 
                         else if ( (true) ) {s = 2;}
 
@@ -58707,7 +58077,10 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String[] dfa_32s = {
+    static final String dfa_32s = "\1\5\1\11\2\uffff\1\30\1\11\1\0\1\30";
+    static final String dfa_33s = "\2\155\2\uffff\1\136\1\155\1\0\1\136";
+    static final String dfa_34s = "\2\uffff\1\2\1\1\4\uffff";
+    static final String[] dfa_35s = {
             "\1\2\1\uffff\1\2\1\uffff\23\2\1\uffff\6\2\1\uffff\15\2\1\uffff\20\2\1\uffff\11\2\1\uffff\13\2\3\uffff\1\2\1\1\2\2\2\uffff\1\2\2\uffff\1\2\10\uffff\1\2",
             "\2\3\7\uffff\1\3\11\uffff\1\3\27\uffff\1\3\7\uffff\2\3\1\uffff\2\3\2\uffff\1\3\4\uffff\1\3\7\uffff\1\3\15\uffff\1\3\3\uffff\1\3\2\uffff\1\3\7\uffff\1\4",
             "",
@@ -58717,7 +58090,10 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             "\1\uffff",
             "\1\3\1\uffff\1\2\2\uffff\1\3\64\uffff\1\3\3\uffff\1\3\1\5\1\uffff\1\3\2\uffff\1\3\1\6\1\3"
     };
-    static final short[][] dfa_32 = unpackEncodedStringArray(dfa_32s);
+    static final char[] dfa_32 = DFA.unpackEncodedStringToUnsignedChars(dfa_32s);
+    static final char[] dfa_33 = DFA.unpackEncodedStringToUnsignedChars(dfa_33s);
+    static final short[] dfa_34 = DFA.unpackEncodedString(dfa_34s);
+    static final short[][] dfa_35 = unpackEncodedStringArray(dfa_35s);
 
     class DFA124 extends DFA {
 
@@ -58726,11 +58102,11 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             this.decisionNumber = 124;
             this.eot = dfa_25;
             this.eof = dfa_26;
-            this.min = dfa_27;
-            this.max = dfa_28;
-            this.accept = dfa_29;
+            this.min = dfa_32;
+            this.max = dfa_33;
+            this.accept = dfa_34;
             this.special = dfa_30;
-            this.transition = dfa_32;
+            this.transition = dfa_35;
         }
         public String getDescription() {
             return "14450:1: ( rule__ParameterizedTypeRefStructural__Group_2__0 )?";
@@ -58851,6 +58227,5 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x0004000004000000L});
     public static final BitSet FOLLOW_86 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
     public static final BitSet FOLLOW_87 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x1000000010040000L,0x0000202000000009L});
 
 }

@@ -3382,7 +3382,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEClass(typeVariableEClass, TypeVariable.class, "TypeVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTypeVariable_DeclaredCovariant(), theEcorePackage.getEBoolean(), "declaredCovariant", null, 0, 1, TypeVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTypeVariable_DeclaredContravariant(), theEcorePackage.getEBoolean(), "declaredContravariant", null, 0, 1, TypeVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTypeVariable_DeclaredUpperBounds(), theTypeRefsPackage.getParameterizedTypeRef(), null, "declaredUpperBounds", null, 0, -1, TypeVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTypeVariable_DeclaredUpperBounds(), theTypeRefsPackage.getTypeRef(), null, "declaredUpperBounds", null, 0, -1, TypeVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTypeVariable__GetVariance(), this.getVariance(), "getVariance", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

@@ -335,7 +335,7 @@ enum TypingStrategy {
 class TypeVariable extends Type {
 	boolean declaredCovariant
 	boolean declaredContravariant
-	contains ParameterizedTypeRef[] declaredUpperBounds
+	contains TypeRef[] declaredUpperBounds
 
 	/*
 	 * Returns this type variable's {@link eu.numberfour.n4js.ts.types.util.Variance variance}. Always returns

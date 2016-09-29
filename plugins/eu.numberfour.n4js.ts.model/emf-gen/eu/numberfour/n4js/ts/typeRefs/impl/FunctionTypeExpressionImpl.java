@@ -8,7 +8,6 @@
 package eu.numberfour.n4js.ts.typeRefs.impl;
 
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression;
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 
@@ -404,7 +403,7 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 				return XcoreCollectionLiterals.<TypeRef>newImmutableEList(modifiedUpperBound);
 			}
 		}
-		EList<ParameterizedTypeRef> _declaredUpperBounds = typeVar.getDeclaredUpperBounds();
+		EList<TypeRef> _declaredUpperBounds = typeVar.getDeclaredUpperBounds();
 		return XcoreCollectionLiterals.<TypeRef>newImmutableEList(((TypeRef[])org.eclipse.xtext.xbase.lib.Conversions.unwrapArray(_declaredUpperBounds, TypeRef.class)));
 	}
 

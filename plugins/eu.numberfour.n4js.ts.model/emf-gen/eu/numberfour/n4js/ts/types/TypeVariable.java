@@ -7,7 +7,6 @@
  */
 package eu.numberfour.n4js.ts.types;
 
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.util.Variance;
@@ -89,7 +88,7 @@ public interface TypeVariable extends Type {
 
 	/**
 	 * Returns the value of the '<em><b>Declared Upper Bounds</b></em>' containment reference list.
-	 * The list contents are of type {@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef}.
+	 * The list contents are of type {@link eu.numberfour.n4js.ts.typeRefs.TypeRef}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Declared Upper Bounds</em>' containment reference list isn't clear,
@@ -101,7 +100,7 @@ public interface TypeVariable extends Type {
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<ParameterizedTypeRef> getDeclaredUpperBounds();
+	EList<TypeRef> getDeclaredUpperBounds();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -129,7 +128,7 @@ public interface TypeVariable extends Type {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>> _declaredUpperBounds = this.getDeclaredUpperBounds();\nreturn this.getTypeVariableAsString(_declaredUpperBounds);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.TypeRef%>> _declaredUpperBounds = this.getDeclaredUpperBounds();\nreturn this.getTypeVariableAsString(_declaredUpperBounds);'"
 	 * @generated
 	 */
 	String getTypeAsString();

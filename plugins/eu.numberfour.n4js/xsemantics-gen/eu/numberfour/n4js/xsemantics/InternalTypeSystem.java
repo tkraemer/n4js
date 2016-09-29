@@ -3876,7 +3876,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
                                   }
                                 } else {
                                   if ((leftDeclType instanceof TypeVariable)) {
-                                    EList<ParameterizedTypeRef> _declaredUpperBounds = ((TypeVariable)leftDeclType).getDeclaredUpperBounds();
+                                    EList<TypeRef> _declaredUpperBounds = ((TypeVariable)leftDeclType).getDeclaredUpperBounds();
                                     boolean _isEmpty = _declaredUpperBounds.isEmpty();
                                     if (_isEmpty) {
                                       /* false */
@@ -3885,7 +3885,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
                                       }
                                     } else {
                                       /* G |- typeSystemHelper.createIntersectionType(G, leftDeclType.declaredUpperBounds) <: right */
-                                      EList<ParameterizedTypeRef> _declaredUpperBounds_1 = ((TypeVariable)leftDeclType).getDeclaredUpperBounds();
+                                      EList<TypeRef> _declaredUpperBounds_1 = ((TypeVariable)leftDeclType).getDeclaredUpperBounds();
                                       TypeRef _createIntersectionType = this.typeSystemHelper.createIntersectionType(G, ((TypeRef[])Conversions.unwrapArray(_declaredUpperBounds_1, TypeRef.class)));
                                       subtypeInternal(G, _trace_, _createIntersectionType, right);
                                     }

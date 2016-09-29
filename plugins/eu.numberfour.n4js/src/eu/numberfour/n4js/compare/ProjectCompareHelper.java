@@ -37,7 +37,6 @@ import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
 import eu.numberfour.n4js.projectModel.ProjectUtils;
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression;
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.ContainerType;
 import eu.numberfour.n4js.ts.types.FieldAccessor;
@@ -635,8 +634,8 @@ public class ProjectCompareHelper {
 				TypeVariable apiTypeVar = apiTypeVars.get(i);
 				TypeVariable implTypeVar = implTypeVars.get(i);
 
-				EList<ParameterizedTypeRef> apiDeclaredUpperBounds = apiTypeVar.getDeclaredUpperBounds();
-				EList<ParameterizedTypeRef> implDeclaredUpperBounds = implTypeVar.getDeclaredUpperBounds();
+				EList<TypeRef> apiDeclaredUpperBounds = apiTypeVar.getDeclaredUpperBounds();
+				EList<TypeRef> implDeclaredUpperBounds = implTypeVar.getDeclaredUpperBounds();
 
 				IntersectionTypeExpression apiUpperIntersection = TypeUtils
 						.createNonSimplifiedIntersectionType(apiDeclaredUpperBounds);

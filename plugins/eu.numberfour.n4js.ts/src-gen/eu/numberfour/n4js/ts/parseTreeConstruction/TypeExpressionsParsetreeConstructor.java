@@ -8367,12 +8367,11 @@ protected class WildcardNewNotation_DeclaredLowerBoundAssignment_1_1 extends Ass
 /************ begin Rule TypeVariable ****************
  *
  * TypeVariable:
- * 	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
- * 	declaredUpperBounds+=ParameterizedTypeRef)*)?;
+ * 	name=IDENTIFIER ('extends' declaredUpperBounds+=TypeRef)?;
  *
  **/
 
-// name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&' declaredUpperBounds+=ParameterizedTypeRef)*)?
+// name=IDENTIFIER ('extends' declaredUpperBounds+=TypeRef)?
 protected class TypeVariable_Group extends GroupToken {
 	
 	public TypeVariable_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8435,7 +8434,7 @@ protected class TypeVariable_NameAssignment_0 extends AssignmentToken  {
 
 }
 
-// ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&' declaredUpperBounds+=ParameterizedTypeRef)*)?
+// ('extends' declaredUpperBounds+=TypeRef)?
 protected class TypeVariable_Group_1 extends GroupToken {
 	
 	public TypeVariable_Group_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8450,8 +8449,7 @@ protected class TypeVariable_Group_1 extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new TypeVariable_Group_1_2(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new TypeVariable_DeclaredUpperBoundsAssignment_1_1(lastRuleCallOrigin, this, 1, inst);
+			case 0: return new TypeVariable_DeclaredUpperBoundsAssignment_1_1(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -8480,7 +8478,7 @@ protected class TypeVariable_ExtendsKeyword_1_0 extends KeywordToken  {
 
 }
 
-// declaredUpperBounds+=ParameterizedTypeRef
+// declaredUpperBounds+=TypeRef
 protected class TypeVariable_DeclaredUpperBoundsAssignment_1_1 extends AssignmentToken  {
 	
 	public TypeVariable_DeclaredUpperBoundsAssignment_1_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8495,20 +8493,20 @@ protected class TypeVariable_DeclaredUpperBoundsAssignment_1_1 extends Assignmen
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ParameterizedTypeRef_Alternatives(this, this, 0, inst);
+			case 0: return new TypeRef_UnionTypeExpressionParserRuleCall(this, this, 0, inst);
 			default: return null;
 		}	
 	}
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("declaredUpperBounds",true)) == null) return null;
+		if((value = eObjectConsumer.getConsumable("declaredUpperBounds",false)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("declaredUpperBounds");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getParameterizedTypeRefRule().getType().getClassifier())) {
+			if(param.isInstanceOf(grammarAccess.getTypeRefRule().getType().getClassifier())) {
 				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_1_1_0(); 
+				element = grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsTypeRefParserRuleCall_1_1_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -8526,98 +8524,6 @@ protected class TypeVariable_DeclaredUpperBoundsAssignment_1_1 extends Assignmen
 	}	
 }
 
-// ('&' declaredUpperBounds+=ParameterizedTypeRef)*
-protected class TypeVariable_Group_1_2 extends GroupToken {
-	
-	public TypeVariable_Group_1_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getTypeVariableAccess().getGroup_1_2();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new TypeVariable_DeclaredUpperBoundsAssignment_1_2_1(lastRuleCallOrigin, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-}
-
-// '&'
-protected class TypeVariable_AmpersandKeyword_1_2_0 extends KeywordToken  {
-	
-	public TypeVariable_AmpersandKeyword_1_2_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getTypeVariableAccess().getAmpersandKeyword_1_2_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new TypeVariable_Group_1_2(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new TypeVariable_DeclaredUpperBoundsAssignment_1_1(lastRuleCallOrigin, this, 1, inst);
-			default: return null;
-		}	
-	}
-
-}
-
-// declaredUpperBounds+=ParameterizedTypeRef
-protected class TypeVariable_DeclaredUpperBoundsAssignment_1_2_1 extends AssignmentToken  {
-	
-	public TypeVariable_DeclaredUpperBoundsAssignment_1_2_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_1_2_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new ParameterizedTypeRef_Alternatives(this, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-    @Override	
-	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("declaredUpperBounds",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("declaredUpperBounds");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IEObjectConsumer param = createEObjectConsumer((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getParameterizedTypeRefRule().getType().getClassifier())) {
-				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_1_2_1_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-    @Override
-	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
-		if(value == inst.getEObject() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new TypeVariable_AmpersandKeyword_1_2_0(lastRuleCallOrigin, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
-
 
 
 /************ end Rule TypeVariable ****************/
@@ -8627,13 +8533,11 @@ protected class TypeVariable_DeclaredUpperBoundsAssignment_1_2_1 extends Assignm
  *
  * TypeVariableWithDefSiteVariance TypeVariable:
  * 	(declaredCovariant?='out' | declaredContravariant?='in')?
- * 	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
- * 	declaredUpperBounds+=ParameterizedTypeRef)*)?
+ * 	name=IDENTIFIER ('extends' declaredUpperBounds+=TypeRef)?
  *
  **/
 
-// (declaredCovariant?='out' | declaredContravariant?='in')? name=IDENTIFIER ('extends'
-// declaredUpperBounds+=ParameterizedTypeRef ('&' declaredUpperBounds+=ParameterizedTypeRef)*)?
+// (declaredCovariant?='out' | declaredContravariant?='in')? name=IDENTIFIER ('extends' declaredUpperBounds+=TypeRef)?
 protected class TypeVariableWithDefSiteVariance_Group extends GroupToken {
 	
 	public TypeVariableWithDefSiteVariance_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8787,7 +8691,7 @@ protected class TypeVariableWithDefSiteVariance_NameAssignment_1 extends Assignm
 
 }
 
-// ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&' declaredUpperBounds+=ParameterizedTypeRef)*)?
+// ('extends' declaredUpperBounds+=TypeRef)?
 protected class TypeVariableWithDefSiteVariance_Group_2 extends GroupToken {
 	
 	public TypeVariableWithDefSiteVariance_Group_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8802,8 +8706,7 @@ protected class TypeVariableWithDefSiteVariance_Group_2 extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new TypeVariableWithDefSiteVariance_Group_2_2(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_1(lastRuleCallOrigin, this, 1, inst);
+			case 0: return new TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_1(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -8832,7 +8735,7 @@ protected class TypeVariableWithDefSiteVariance_ExtendsKeyword_2_0 extends Keywo
 
 }
 
-// declaredUpperBounds+=ParameterizedTypeRef
+// declaredUpperBounds+=TypeRef
 protected class TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_1 extends AssignmentToken  {
 	
 	public TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8847,20 +8750,20 @@ protected class TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ParameterizedTypeRef_Alternatives(this, this, 0, inst);
+			case 0: return new TypeRef_UnionTypeExpressionParserRuleCall(this, this, 0, inst);
 			default: return null;
 		}	
 	}
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("declaredUpperBounds",true)) == null) return null;
+		if((value = eObjectConsumer.getConsumable("declaredUpperBounds",false)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("declaredUpperBounds");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getParameterizedTypeRefRule().getType().getClassifier())) {
+			if(param.isInstanceOf(grammarAccess.getTypeRefRule().getType().getClassifier())) {
 				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_1_0(); 
+				element = grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsTypeRefParserRuleCall_2_1_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -8877,98 +8780,6 @@ protected class TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_
 		}	
 	}	
 }
-
-// ('&' declaredUpperBounds+=ParameterizedTypeRef)*
-protected class TypeVariableWithDefSiteVariance_Group_2_2 extends GroupToken {
-	
-	public TypeVariableWithDefSiteVariance_Group_2_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getGroup_2_2();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_2_1(lastRuleCallOrigin, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-}
-
-// '&'
-protected class TypeVariableWithDefSiteVariance_AmpersandKeyword_2_2_0 extends KeywordToken  {
-	
-	public TypeVariableWithDefSiteVariance_AmpersandKeyword_2_2_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getAmpersandKeyword_2_2_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new TypeVariableWithDefSiteVariance_Group_2_2(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_1(lastRuleCallOrigin, this, 1, inst);
-			default: return null;
-		}	
-	}
-
-}
-
-// declaredUpperBounds+=ParameterizedTypeRef
-protected class TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_2_1 extends AssignmentToken  {
-	
-	public TypeVariableWithDefSiteVariance_DeclaredUpperBoundsAssignment_2_2_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsAssignment_2_2_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new ParameterizedTypeRef_Alternatives(this, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-    @Override	
-	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("declaredUpperBounds",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("declaredUpperBounds");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IEObjectConsumer param = createEObjectConsumer((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getParameterizedTypeRefRule().getType().getClassifier())) {
-				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_2_1_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-    @Override
-	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
-		if(value == inst.getEObject() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new TypeVariableWithDefSiteVariance_AmpersandKeyword_2_2_0(lastRuleCallOrigin, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
 
 
 

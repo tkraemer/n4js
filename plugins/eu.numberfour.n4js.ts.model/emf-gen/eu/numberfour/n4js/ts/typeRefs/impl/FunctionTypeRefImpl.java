@@ -85,7 +85,7 @@ public class FunctionTypeRefImpl extends ParameterizedTypeRefImpl implements Fun
 	 * @generated
 	 */
 	public EList<TypeRef> getTypeVarUpperBounds(final TypeVariable typeVar) {
-		EList<ParameterizedTypeRef> _declaredUpperBounds = typeVar.getDeclaredUpperBounds();
+		EList<TypeRef> _declaredUpperBounds = typeVar.getDeclaredUpperBounds();
 		return XcoreCollectionLiterals.<TypeRef>newImmutableEList(((TypeRef[])org.eclipse.xtext.xbase.lib.Conversions.unwrapArray(_declaredUpperBounds, TypeRef.class)));
 	}
 

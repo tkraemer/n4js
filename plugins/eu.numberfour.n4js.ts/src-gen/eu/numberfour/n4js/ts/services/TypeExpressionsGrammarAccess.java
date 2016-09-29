@@ -1712,18 +1712,13 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Keyword cExtendsKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cDeclaredUpperBoundsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_1_1_0 = (RuleCall)cDeclaredUpperBoundsAssignment_1_1.eContents().get(0);
-		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
-		private final Keyword cAmpersandKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
-		private final Assignment cDeclaredUpperBoundsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
-		private final RuleCall cDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_1_2_1_0 = (RuleCall)cDeclaredUpperBoundsAssignment_1_2_1.eContents().get(0);
+		private final RuleCall cDeclaredUpperBoundsTypeRefParserRuleCall_1_1_0 = (RuleCall)cDeclaredUpperBoundsAssignment_1_1.eContents().get(0);
 		
 		//TypeVariable:
-		//	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
-		//	declaredUpperBounds+=ParameterizedTypeRef)*)?;
+		//	name=IDENTIFIER ('extends' declaredUpperBounds+=TypeRef)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&' declaredUpperBounds+=ParameterizedTypeRef)*)?
+		//name=IDENTIFIER ('extends' declaredUpperBounds+=TypeRef)?
 		public Group getGroup() { return cGroup; }
 
 		//name=IDENTIFIER
@@ -1732,29 +1727,17 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//IDENTIFIER
 		public RuleCall getNameIDENTIFIERTerminalRuleCall_0_0() { return cNameIDENTIFIERTerminalRuleCall_0_0; }
 
-		//('extends' declaredUpperBounds+=ParameterizedTypeRef ('&' declaredUpperBounds+=ParameterizedTypeRef)*)?
+		//('extends' declaredUpperBounds+=TypeRef)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//'extends'
 		public Keyword getExtendsKeyword_1_0() { return cExtendsKeyword_1_0; }
 
-		//declaredUpperBounds+=ParameterizedTypeRef
+		//declaredUpperBounds+=TypeRef
 		public Assignment getDeclaredUpperBoundsAssignment_1_1() { return cDeclaredUpperBoundsAssignment_1_1; }
 
-		//ParameterizedTypeRef
-		public RuleCall getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_1_1_0() { return cDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_1_1_0; }
-
-		//('&' declaredUpperBounds+=ParameterizedTypeRef)*
-		public Group getGroup_1_2() { return cGroup_1_2; }
-
-		//'&'
-		public Keyword getAmpersandKeyword_1_2_0() { return cAmpersandKeyword_1_2_0; }
-
-		//declaredUpperBounds+=ParameterizedTypeRef
-		public Assignment getDeclaredUpperBoundsAssignment_1_2_1() { return cDeclaredUpperBoundsAssignment_1_2_1; }
-
-		//ParameterizedTypeRef
-		public RuleCall getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_1_2_1_0() { return cDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_1_2_1_0; }
+		//TypeRef
+		public RuleCall getDeclaredUpperBoundsTypeRefParserRuleCall_1_1_0() { return cDeclaredUpperBoundsTypeRefParserRuleCall_1_1_0; }
 	}
 
 	public class TypeVariableWithDefSiteVarianceElements extends AbstractParserRuleElementFinder {
@@ -1770,20 +1753,14 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cExtendsKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cDeclaredUpperBoundsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_1_0 = (RuleCall)cDeclaredUpperBoundsAssignment_2_1.eContents().get(0);
-		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
-		private final Keyword cAmpersandKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
-		private final Assignment cDeclaredUpperBoundsAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_2_1_0 = (RuleCall)cDeclaredUpperBoundsAssignment_2_2_1.eContents().get(0);
+		private final RuleCall cDeclaredUpperBoundsTypeRefParserRuleCall_2_1_0 = (RuleCall)cDeclaredUpperBoundsAssignment_2_1.eContents().get(0);
 		
 		//TypeVariableWithDefSiteVariance TypeVariable:
 		//	(declaredCovariant?='out' | declaredContravariant?='in')?
-		//	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
-		//	declaredUpperBounds+=ParameterizedTypeRef)*)?
+		//	name=IDENTIFIER ('extends' declaredUpperBounds+=TypeRef)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//(declaredCovariant?='out' | declaredContravariant?='in')? name=IDENTIFIER ('extends'
-		//declaredUpperBounds+=ParameterizedTypeRef ('&' declaredUpperBounds+=ParameterizedTypeRef)*)?
+		//(declaredCovariant?='out' | declaredContravariant?='in')? name=IDENTIFIER ('extends' declaredUpperBounds+=TypeRef)?
 		public Group getGroup() { return cGroup; }
 
 		//(declaredCovariant?='out' | declaredContravariant?='in')?
@@ -1807,29 +1784,17 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//IDENTIFIER
 		public RuleCall getNameIDENTIFIERTerminalRuleCall_1_0() { return cNameIDENTIFIERTerminalRuleCall_1_0; }
 
-		//('extends' declaredUpperBounds+=ParameterizedTypeRef ('&' declaredUpperBounds+=ParameterizedTypeRef)*)?
+		//('extends' declaredUpperBounds+=TypeRef)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//'extends'
 		public Keyword getExtendsKeyword_2_0() { return cExtendsKeyword_2_0; }
 
-		//declaredUpperBounds+=ParameterizedTypeRef
+		//declaredUpperBounds+=TypeRef
 		public Assignment getDeclaredUpperBoundsAssignment_2_1() { return cDeclaredUpperBoundsAssignment_2_1; }
 
-		//ParameterizedTypeRef
-		public RuleCall getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_1_0() { return cDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_1_0; }
-
-		//('&' declaredUpperBounds+=ParameterizedTypeRef)*
-		public Group getGroup_2_2() { return cGroup_2_2; }
-
-		//'&'
-		public Keyword getAmpersandKeyword_2_2_0() { return cAmpersandKeyword_2_2_0; }
-
-		//declaredUpperBounds+=ParameterizedTypeRef
-		public Assignment getDeclaredUpperBoundsAssignment_2_2_1() { return cDeclaredUpperBoundsAssignment_2_2_1; }
-
-		//ParameterizedTypeRef
-		public RuleCall getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_2_1_0() { return cDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_2_1_0; }
+		//TypeRef
+		public RuleCall getDeclaredUpperBoundsTypeRefParserRuleCall_2_1_0() { return cDeclaredUpperBoundsTypeRefParserRuleCall_2_1_0; }
 	}
 
 	public class BindingIdentifierElements extends AbstractParserRuleElementFinder {
@@ -2802,8 +2767,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TypeVariable:
-	//	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
-	//	declaredUpperBounds+=ParameterizedTypeRef)*)?;
+	//	name=IDENTIFIER ('extends' declaredUpperBounds+=TypeRef)?;
 	public TypeVariableElements getTypeVariableAccess() {
 		return pTypeVariable;
 	}
@@ -2814,8 +2778,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TypeVariableWithDefSiteVariance TypeVariable:
 	//	(declaredCovariant?='out' | declaredContravariant?='in')?
-	//	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
-	//	declaredUpperBounds+=ParameterizedTypeRef)*)?
+	//	name=IDENTIFIER ('extends' declaredUpperBounds+=TypeRef)?
 	public TypeVariableWithDefSiteVarianceElements getTypeVariableWithDefSiteVarianceAccess() {
 		return pTypeVariableWithDefSiteVariance;
 	}

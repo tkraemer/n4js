@@ -7,7 +7,6 @@
  */
 package eu.numberfour.n4js.ts.types.impl;
 
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.Type;
@@ -105,7 +104,7 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ParameterizedTypeRef> declaredUpperBounds;
+	protected EList<TypeRef> declaredUpperBounds;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -173,9 +172,9 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ParameterizedTypeRef> getDeclaredUpperBounds() {
+	public EList<TypeRef> getDeclaredUpperBounds() {
 		if (declaredUpperBounds == null) {
-			declaredUpperBounds = new EObjectContainmentEList<ParameterizedTypeRef>(ParameterizedTypeRef.class, this, TypesPackage.TYPE_VARIABLE__DECLARED_UPPER_BOUNDS);
+			declaredUpperBounds = new EObjectContainmentEList<TypeRef>(TypeRef.class, this, TypesPackage.TYPE_VARIABLE__DECLARED_UPPER_BOUNDS);
 		}
 		return declaredUpperBounds;
 	}
@@ -216,7 +215,7 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 	 * @generated
 	 */
 	public String getTypeAsString() {
-		EList<ParameterizedTypeRef> _declaredUpperBounds = this.getDeclaredUpperBounds();
+		EList<TypeRef> _declaredUpperBounds = this.getDeclaredUpperBounds();
 		return this.getTypeVariableAsString(_declaredUpperBounds);
 	}
 
@@ -312,7 +311,7 @@ public class TypeVariableImpl extends TypeImpl implements TypeVariable {
 				return;
 			case TypesPackage.TYPE_VARIABLE__DECLARED_UPPER_BOUNDS:
 				getDeclaredUpperBounds().clear();
-				getDeclaredUpperBounds().addAll((Collection<? extends ParameterizedTypeRef>)newValue);
+				getDeclaredUpperBounds().addAll((Collection<? extends TypeRef>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
