@@ -1,0 +1,23 @@
+
+
+
+import { T } from "UserTypes"
+
+
+
+
+
+
+
+
+
+T;
+var t : T;
+
+t.a;
+t.a = null;
+
+t.i;
+t.i = 0;
+
+t.foo();
