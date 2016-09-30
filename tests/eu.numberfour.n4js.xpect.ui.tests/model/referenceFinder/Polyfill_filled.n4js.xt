@@ -21,7 +21,7 @@
 
 // IDE-1662 XPECT FIXME findReferences at Polyfill --> Polyfill - 30, Polyfill - 5
 export public class Polyfill {
-// XPECT FIXME findReferences at x --> x - 30
+// IDE-1662 XPECT FIXME findReferences at x --> x - 30
 	x : int;
 }
 

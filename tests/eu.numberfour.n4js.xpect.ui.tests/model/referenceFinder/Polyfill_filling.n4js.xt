@@ -19,6 +19,6 @@
 @@StaticPolyfillModule
 @StaticPolyfill
 export public class Polyfill extends Polyfill {
-// XPECT FIXME findReferences at z --> z - 32
+// IDE-1662 XPECT FIXME findReferences at z --> z - 32
 	z : String;
 }
