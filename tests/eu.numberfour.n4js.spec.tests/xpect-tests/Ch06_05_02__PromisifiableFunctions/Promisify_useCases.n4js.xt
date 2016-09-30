@@ -59,7 +59,7 @@ async function testWithFunction(allDone : {function()}) {
 	console.log('-> res01:', res01);
 	
 	console.log('use case #2: with await, short syntax');
-	// XPECT FIXME nowarnings
+	// XPECT nowarnings -->
 	var res02 = await foo('some path');
 	console.log('-> res02:', res02);
 	
