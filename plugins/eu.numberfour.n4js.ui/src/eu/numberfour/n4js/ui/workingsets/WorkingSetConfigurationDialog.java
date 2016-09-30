@@ -141,8 +141,7 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 		tableViewer.addCheckStateListener(new ICheckStateListener() {
 			@Override
 			public void checkStateChanged(final CheckStateChangedEvent event) {
-				updateButtonAvailability();
-				getButton(IDialogConstants.OK_ID).setEnabled(!isEmpty(tableViewer.getCheckedElements()));
+				syncSelectionAndButtonStates();
 			}
 		});
 		final GridData data = new GridData(GridData.FILL_BOTH);
@@ -161,7 +160,7 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 		tableViewer.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
 			public void doubleClick(final DoubleClickEvent event) {
-				if (editButton.isEnabled()) {
+				if (editButton != null && editButton.isEnabled()) {
 					editSelectedWorkingSet();
 				}
 			}
@@ -464,10 +463,18 @@ public class WorkingSetConfigurationDialog extends SelectionDialog {
 
 	private void selectAll() {
 		tableViewer.setAllChecked(true);
+		syncSelectionAndButtonStates();
+
 	}
 
 	private void deselectAll() {
 		tableViewer.setAllChecked(false);
+		syncSelectionAndButtonStates();
+	}
+
+	private void syncSelectionAndButtonStates() {
+		updateButtonAvailability();
+		getButton(IDialogConstants.OK_ID).setEnabled(!isEmpty(tableViewer.getCheckedElements()));
 	}
 
 }
