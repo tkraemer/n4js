@@ -1,0 +1,14 @@
+@@StaticPolyfillAware
+
+
+export public class A {}
+export public class B extends A {}
+
+
+export public class C {
+	
+	field;
+	
+	method(): A {return null}
+}
+

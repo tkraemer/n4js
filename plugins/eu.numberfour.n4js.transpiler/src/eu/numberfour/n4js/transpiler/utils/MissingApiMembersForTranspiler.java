@@ -33,14 +33,14 @@ import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import eu.numberfour.n4js.utils.ContainerTypesHelper.MemberCollector;
 
 /**
- *         to here (to isolate logic related to API/Impl stubs)
+ * to here (to isolate logic related to API/Impl stubs)
  */
 public class MissingApiMembersForTranspiler {
 
-	/** Method-stubs injected to be used with testcode written against API */
+	/** Method-stubs injected to be used with test-code written against API */
 	public final MemberList<TMethod> missingApiMethods;
 
-	/** Getter/Setter -stubs injected to be used with testcode written against API */
+	/** Getter/Setter -stubs injected to be used with test-code written against API */
 	public final List<AccessorTuple> missingApiAccessorTuples;
 
 	/**
@@ -136,13 +136,13 @@ public class MissingApiMembersForTranspiler {
 									&& (member.isGetter() || member.isSetter())
 									&& name.equals(member.getName()))
 							.forEach(member -> {
-						if (member.isGetter()) {
-							accTuple.replaceGetterByInheretedGetter_caseIncompletAPI((TGetter) member);
-						} else {
-							// setter
-							accTuple.replaceSetterByInheretedSetter_caseIncompletAPI((TSetter) member);
-						}
-					});
+								if (member.isGetter()) {
+									accTuple.replaceGetterByInheretedGetter_caseIncompletAPI((TGetter) member);
+								} else {
+									// setter
+									accTuple.replaceSetterByInheretedSetter_caseIncompletAPI((TSetter) member);
+								}
+							});
 					if (accTuple.getGetter() == null && accTuple.getSetter() == null) {
 						// complete inheritance: field implemented by pair , can be removed
 						return false;
@@ -153,7 +153,7 @@ public class MissingApiMembersForTranspiler {
 	}
 
 	/**
-	 * Removes all virtual missing api tuples for which a concrete accessor tuple is found in concreteAccessorTuples. If
+	 * Removes all virtual missing API tuples for which a concrete accessor tuple is found in concreteAccessorTuples. If
 	 * the concrete tuple is missing either the getter or setter, the virtual getter/setter will be transferred. From
 	 * the filtered missingApiField-tuple to the existing one. Method has side-effect.
 	 *

@@ -59,6 +59,7 @@ import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
+import eu.nmberfour.n4js.ui.logging.N4jsUiLoggingInitializer;
 import eu.numberfour.n4js.CancelIndicatorBaseExtractor;
 import eu.numberfour.n4js.N4JSRuntimeModule;
 import eu.numberfour.n4js.binaries.BinariesPreferenceStore;
@@ -133,6 +134,8 @@ public class N4JSUiModule extends eu.numberfour.n4js.ui.AbstractN4JSUiModule {
 	 */
 	public N4JSUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
+		// get the logging initialized for UI presentation:
+		N4jsUiLoggingInitializer.init();
 	}
 
 	@Override

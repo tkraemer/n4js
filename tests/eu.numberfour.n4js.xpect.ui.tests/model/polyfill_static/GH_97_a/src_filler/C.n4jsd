@@ -1,0 +1,12 @@
+@@StaticPolyfillModule
+
+
+@StaticPolyfill
+export external public class C extends C {
+	
+	@Override
+	method(): B
+	
+	methodFilled(): A
+}
+
