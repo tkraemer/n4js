@@ -41,6 +41,9 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.xpect.scoping.IN4JSCommaSeparatedValuesExpectation;
 import eu.numberfour.n4js.xpect.scoping.N4JSCommaSeparatedValuesExpectation;
 
+/**
+ * This class provides a XPECT method to specify tests regarding the {@link IReferenceFinder}
+ */
 @SuppressWarnings("restriction")
 @RunWith(XpectRunner.class)
 @XpectImport({ XtextStandaloneSetup.class, XtextWorkspaceSetup.class })
@@ -59,7 +62,8 @@ public class FindReferencesXpectMethod {
 	private ResourceDescriptionsProvider resourceDescriptionsProvider;
 
 	/**
-	 * Compares scope including resource name and line number.
+	 * This XPECT methods compares all computed references at a given EObject to the expected references. The expected
+	 * references include the line number.
 	 */
 	@Xpect
 	@ParameterParser(syntax = "('at' arg1=OFFSET)?")
@@ -85,17 +89,19 @@ public class FindReferencesXpectMethod {
 				if (src instanceof PropertyNameOwner)
 					src = ((PropertyNameOwner) src).getDeclaredName();
 
+				String resultText = "(unknown reference)";
 				ICompositeNode srcNode = NodeModelUtils.getNode(src);
-				if (srcNode == null)
-					return;
+				if (srcNode != null) {
+					int line = srcNode.getStartLine();
 
-				int line = srcNode.getStartLine();
+					String text = NodeModelUtils.getTokenText(srcNode);
+					if (src instanceof GenericDeclaration)
+						text = ((GenericDeclaration) src).getDefinedType().getName();
 
-				String text = NodeModelUtils.getTokenText(srcNode);
-				if (src instanceof GenericDeclaration)
-					text = ((GenericDeclaration) src).getDefinedType().getName();
+					resultText = text + " - " + line;
+				}
 
-				result.add(text + " - " + line);
+				result.add(resultText);
 			}
 
 			@Override
