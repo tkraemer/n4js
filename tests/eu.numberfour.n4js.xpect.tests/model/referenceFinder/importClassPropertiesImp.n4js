@@ -1,7 +1,6 @@
 
 
-
-import { T } from "UserTypes"
+import { T } from "ImportClassPropertiesExp"
 
 
 
