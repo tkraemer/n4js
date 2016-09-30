@@ -1,7 +1,7 @@
 /* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
 
 
-// XPECT findReferences at x --> x - 5, x - 7, x - 11
+// XPECT FIXME findReferences at x --> x - 7, x - 11
 function x () : void {}
 
 x();

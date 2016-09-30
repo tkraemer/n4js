@@ -1,7 +1,13 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   ResourceSet {
+   	ThisFile {}
+   	Resource "importFunctionImp.n4js.xt" {}
+   }
+END_SETUP
+ */
 
 
-// IDE-1662, IDE-1699 XPECT findReferences at zzz --> zzz - 5, zzz - 7, zzz - 10, zzz - 12
+// IDE-1662, IDE-1699 XPECT FIXME findReferences at function --> zzz - 13, zzz - 16, zzz - 18
 export function zzz() {}
 
 zzz();

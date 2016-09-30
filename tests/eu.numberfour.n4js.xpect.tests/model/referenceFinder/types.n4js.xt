@@ -1,9 +1,9 @@
 /* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
 
-// XPECT findReferences at T -->  T - 4, T - 10, T - 16
+// XPECT FIXME findReferences at T -->  T - 10, T - 16
 class T {}
 
-// XPECT findReferences at J -->  J - 7, J - 12, T - 19
+// XPECT FIXME findReferences at J -->  J - 12, T - 19
 interface J {}
 
 
@@ -12,10 +12,10 @@ T;
 J;
 
 
-// XPECT findReferences at E -->  E - 16, E - 21, E - 23
+// XPECT FIXME findReferences at E -->  E - 21, E - 23
 class E extends T {}
 
-// XPECT findReferences at I -->  I - 19, I - 21, I - 23
+// XPECT FIXME findReferences at I -->  I - 21, I - 23
 interface I extends J {}
 
 function foo1(e : E) : I { return null; }

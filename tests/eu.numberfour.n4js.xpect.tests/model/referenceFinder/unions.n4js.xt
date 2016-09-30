@@ -1,20 +1,20 @@
 /* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
 
 export public class A {
-// IDE-1662 XPECT findReferences at a --> a - 5, b.a - 22, union.a - 26
+// IDE-1662 XPECT FIXME findReferences at a --> b.a - 30, union.a - 25
 	a : A;
-// IDE-1662 XPECT findReferences at i --> i - 5, b.i - 22, union.i - 26
+// IDE-1662 XPECT FIXME findReferences at i --> b.i - 31, union.i - 26
 	i : int;
-// IDE-1662 XPECT findReferences at foo --> foo - 5, b.foo - 22, union.foo - 26
+// IDE-1662 XPECT FIXME findReferences at foo --> b.foo - 32, union.foo - 26
 	foo(){};
 }
 
 interface I {
-// IDE-1662 XPECT findReferences at a --> a - 5, j.a - 22, union.a - 26
+// IDE-1662 XPECT FIXME findReferences at a --> j.a - 35, union.a - 25
 	a : A;
-// IDE-1662 XPECT findReferences at i --> i - 14, j.i - 22, union.i - 26
+// IDE-1662 XPECT FIXME findReferences at i --> j.i - 36, union.i - 26
 	i : int;
-// IDE-1662 XPECT findReferences at foo --> foo - 5, j.foo - 22, union.foo - 26
+// IDE-1662 XPECT FIXME findReferences at foo --> j.foo - 37, union.foo - 27
 	foo(){};
 }
 

@@ -1,4 +1,16 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+   ResourceSet {
+   	ThisFile {}
+   	Resource "importFunctionExp.n4js.xt" {}
+   }
+END_SETUP
+ */
+
+
+
+
+
+
 
 
 
