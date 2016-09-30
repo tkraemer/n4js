@@ -188,6 +188,14 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	//   small utility methods that do not have their own strategy class
 	// *****************************************************************************************************
 
+	/** see {@link N4JSTypeSystem#resolveType(RuleEnvironment,TypeArgument)} */
+	public def TypeRef resolveType(RuleEnvironment G, TypeArgument typeArg) {
+		var typeRef = if(typeArg !== null) ts.upperBound(G, typeArg).value;
+		typeRef = if(typeRef !== null) TypeUtils.resolveTypeVariable(typeRef);
+		// TODO IDE-2367 recursively resolve the resulting 'typeRef' until it is stable (requires refactoring of upper/lower bound judgment!)
+		return typeRef;
+	}
+
 	public def boolean allEqualType(RuleEnvironment G, TypeRef... typeRefs) {
 		val len = typeRefs.size;
 		if(len>=2) {
