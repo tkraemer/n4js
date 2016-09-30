@@ -1,0 +1,24 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest 
+   
+ Workspace {
+   	 Project "ReferenceFinderPolyfill" {
+   	 	Folder "src" { 
+	   	 	Folder "n4js" { 
+				ThisFile "Poly.n4js" { from="Polyfill_filling.n4js.xt" }
+			}
+	   	 	Folder "n4js-gen" { 
+				File "Poly.n4js" { from="Polyfill_filled.n4js.xt" }
+	   	 	}
+   	 	}
+   	 	File "manifest.n4mf" { from="manifest.n4mf" }
+   	 }
+   }
+   END_SETUP
+ */
+
+@@StaticPolyfillModule
+@StaticPolyfill
+export public class Polyfill extends Polyfill {
+// XPECT FIXME findReferences at z --> z - 32
+	z : String;
+}

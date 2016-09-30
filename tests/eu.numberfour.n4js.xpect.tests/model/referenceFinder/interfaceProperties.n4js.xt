@@ -1,6 +1,6 @@
 /* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
 
-// XPECT FIXME findReferences at T --> T - 14, T - 15, T - 6
+// Bug of x-pect. Ask Moritz, he knows. XPECT FIXME findReferences at T --> T - 14, T - 15, T - 6
 interface T {
 // XPECT FIXME findReferences at a --> t.a - 17, t.a - 18
 	a : T;
