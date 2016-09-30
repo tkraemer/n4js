@@ -107,6 +107,8 @@ that causes exceptions at runtime in the last line.
 
 In N4JS (and Java), when overriding a method in a subtype, the types of the parameters may be super types, and (in N4JS but not in Java) the return type may be a sub type. E.g., given the following classes
 
+
+[source,java]
 ----
 class A           { fa() {} }
 class B extends A { fb() {} }
@@ -115,6 +117,7 @@ class C extends B { fc() {} }
 
 and the following super type
 
+[source,java]
 ----
 class Sup {
   f(b: B): B { return new B() }
@@ -123,6 +126,7 @@ class Sup {
 
 a sub type of `Sup` may override `f` as follows:
 
+[source,java]
 ----
 class Sub extends Sup {
   @Override
@@ -137,12 +141,14 @@ In type theory, this is expressed with co- and contra-variance: Given a type `Su
 
 The same is true when checking assignability for function types, e.g.
 
+[source,java]
 ----
 f(callback: (B)=>B) {}
 ----
 
 can be called with
 
+[source,java]
 ----
 f((a: A) => return new C())
 ----
@@ -155,6 +161,7 @@ This is *unsound*, as already stated in the TypeScript handbook: "This is unsoun
 
 This assumed bivariance actually violates the so called https://en.wikipedia.org/wiki/Liskov_substitution_principle[subsitution principle]. In TypeScript, the following code is accepted without errors or warnings:
 
+[source,java]
 ----
 class TSSub extends Sup {
   f(b: C): B { b.fc(); return new B() }
@@ -163,6 +170,7 @@ class TSSub extends Sup {
 
 The following function uses the super class `Sup` and assumes that its method `f` accepts a parameter of type `B`.
 
+[source,java]
 ----
 function g(s: Sup) {
   let b = s.f(new B());
@@ -173,6 +181,7 @@ The substitution principles states that we can use a subclass instead of the sup
 However, this is not true in case of TypeScript anymore.
 The following code will create a runtime error:
 
+[source,java]
 ----
 f(new TSSub());
 ----
@@ -184,6 +193,7 @@ This will be surprising for the programmer of that call, but also for the develo
 Parameter bivariance seems to solve some variance problems in the context of generics.
 Let's have a look at the hello-world example for generics, a simplified list that can hold only a single element:
 
+[source,java]
 ----
 class List<T> {
    read(): T { /* .. */ }
@@ -193,6 +203,7 @@ class List<T> {
 
 and two variables
 
+[source,java]
 ----
 let la: List<A>(), lb: List<B>;
 ----
@@ -200,14 +211,16 @@ let la: List<A>(), lb: List<B>;
 Programmers familiar with Java or Scala know that it often causes headaches when using generics and assigning instances of generics.
 Take the following assignments for example:
 
+[source,java]
 ----
-la = lb; // works in TypeScript, N4JS (or Java) issues an error
-lb = la; // both TypeScript and N4JS (or Java) issue an error
+la = lb; // works in TypeScript, N4JS (and Java) issue an error
+lb = la; // both TypeScript and N4JS (and Java) issue an error
 ----
 
 On first glance, it looks great that TypeScript does not issue any errors here.
 Since it's not obvious why both assignments are rejected by N4JS, let's have a look at what happens next:
 
+[source,java]
 ----
 la = new List<A>(); la.write(a); lb = la; lb.read().fb();
 ----
@@ -216,6 +229,7 @@ TypeScript would issue no errors, but we would get a runtime error in the last c
 since the list does not contain an instance of `B`, the method is undefined.
 The same error occurs in the following case:
 
+[source,java]
 ----
 lb = new List<B>(); la = lb; la.write(a); lb.read().fb());
 ----
@@ -299,38 +313,52 @@ Thus, structural types have to be explicitly annotated as being structural, usin
 
 [source,n4js]
 ----
-export public interface ~Point {
-      x : number;
-      y : number;
-  }
-  export public interface ~Point3D {
-      x : number;
-      y : number;
-      z : number;
-  }
-  var p: Point = { x: 0, y: 10, };
-  var p3d: Point3D = { x: 0, y: 10, z: 20 }
+export public interface~Point {
+    x: number;
+    y: number;
+}
+export public interface~Point3D {
+    x: number;
+    y: number;
+    z: number;
+}
+var p: Point = {
+    x: 0,
+    y: 10,
+};
+var p3d: Point3D = {
+    x: 0,
+    y: 10,
+    z: 20
+}
 
-  p = p3d;
-  p3d = p; // error
+p = p3d;
+p3d = p; // error
 ----
 
 [source,javascript]
 ----
 interface Point {
-      x : number;
-      y : number;
-  }
-  interface Point3D {
-      x : number;
-      y : number;
-      z : number;
-  }
-  var p: Point = { x: 0, y: 10, };
-  var p3d: Point3D = { x: 0, y: 10, z: 20 }
+    x: number;
+    y: number;
+}
+interface Point3D {
+    x: number;
+    y: number;
+    z: number;
+}
+var p: Point = {
+    x: 0,
+    y: 10,
+};
+var p3d: Point3D = {
+    x: 0,
+    y: 10,
+    z: 20
+}
 
-  p = p3d;
-  p3d = p; // error
+p = p3d;
+p3d = p; // error
 ----
 
 NOTE: N4JS is using different defaults for access modifiers, e.g. `public` is not the default. For that reason, the interfaces have to be marked as public (and exported).
