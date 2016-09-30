@@ -876,10 +876,16 @@ public class ScriptApiTracker {
 				GetSetGroup getset = hmName2getset.remove(Pair.of(conAccTupel.getName(), conAccTupel.isStatic()));
 				if (getset != null) {
 					// some missings found:
-					if (getset.hasGetter() && !getset.getterIsInAST) {
+					if (getset.hasGetter() && !getset.getterIsInAST
+							&& conAccTupel.getGetter() == null // could be mixed in by interface-default-impl different
+																// to the intended API-path c.f. GH-212
+					) {
 						conAccTupel.setGetter(getset.getter);
 					}
-					if (getset.hasSetter() && !getset.setterIsInAST) {
+					if (getset.hasSetter() && !getset.setterIsInAST
+							&& conAccTupel.getSetter() == null // could be mixed in by interface-default-impl different
+																// to the intended API-path c.f. GH-212
+					) {
 						conAccTupel.setSetter(getset.setter);
 					}
 				}
