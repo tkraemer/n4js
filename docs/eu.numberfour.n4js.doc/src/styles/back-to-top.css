@@ -32,7 +32,6 @@ a:hover.back-to-top {
 /* Reposition buttons when Table of Contents is set to toc2 (right) */
 
 body.toc2.toc-right a.back-to-top {
-	display: none;
 	width: 25px;
 	height: 25px;
 	text-indent: -9999px;

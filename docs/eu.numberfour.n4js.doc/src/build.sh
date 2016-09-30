@@ -51,4 +51,4 @@ find . -name '*.adoc' ! -name 'epub.adoc' -exec "${ME}" --rundoc {}  \;
 
 echo AsciiDoctor HTML conversion finished.
 # uncomment line below to open index on completion
-open generated-docs/index.html
+open generated-docs/userguides/index.html

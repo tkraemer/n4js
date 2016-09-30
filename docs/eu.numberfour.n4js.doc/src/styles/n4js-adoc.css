@@ -19,7 +19,7 @@ script { display: none !important; }
 html { font-family: sans-serif; /* 1 */ -ms-text-size-adjust: 100%; /* 2 */ -webkit-text-size-adjust: 100%; /* 2 */ background-color: #D5DFEA;}
 
 /** Remove default margin. */
-body { margin: 0; background-color: #D5DFEA; }
+body { margin: 0; background-color: #D5DFEA; } /* add margin-right 0 here for mobile*/
 
 /* ========================================================================== Links ========================================================================== */
 /** Remove the gray background color from active links in IE 10. */
@@ -433,15 +433,16 @@ div.ulist li:before {
 #toctitle { color: #244d82; font-size: 1.2em; padding-left: 1em; }
 
 #faq {
-	position: fixed;
+	position: relative;
 	right: 9.3rem;
     top: 9rem;
 	margin-bottom: 20px;
-	position:absolute;z-index:1;padding-left:2rem;border-left:1px solid #d3d3d3
+	left: 45rem;
+	z-index:1;padding-left:2rem;border-left:1px solid #d3d3d3
 
 }
-@media only screen and (max-width: 685px) {
-	div#faq { visibility: hidden; }
+@media only screen and (max-width: 945px) {
+	div#faq { display: none; }
 }
 
 #faq h2 {
@@ -470,7 +471,7 @@ div#faq li:before {
 }
 
 @media only screen and (max-width: 993px) {
-	#features-nav { visibility: hidden; }
+	#features-nav { display: none; }
 }
 
 #features-nav h2 {
@@ -882,7 +883,7 @@ div#remarks.ulist {
 }
 
 div.title:first-of-type {
-    visibility: hidden;
+    display: none;
 }
 
 

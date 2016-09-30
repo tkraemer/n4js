@@ -1,0 +1,51 @@
+#menu {
+		display:none;
+	}
+
+div.slicknav_menu {
+	padding-top: 5px;
+	padding-right: 15px;
+	display:block;
+	background-color: #132445;
+	margin-left: -2rem;
+	margin-right: -2rem;
+	text-align: right;
+	right: 10px;
+	font-size: 1rem;
+	color: white
+	padding-bottom: 0;
+}
+
+
+div.slicknav_menu a {
+	color: white
+	font-size: large;
+    font-weight: 600;
+}
+div.slicknav_menu a:first-of-type {
+	font-size: 120%;
+    font-weight: 600;
+}
+
+div.slicknav_menu a:hover {color: #F7D425; }
+
+li.slicknav_parent.slicknav_open a {
+	color: #F7D425;
+}
+
+li.slicknav_parent.slicknav_open a:hover  {
+	color: #F7D425;
+}
+
+
+@media screen and (min-width: 890px) {
+	div.slicknav_menu {
+		display:none;
+		color: white
+	}
+}
+
+div.slicknav_menu li:last-of-type
+	{
+		padding-bottom: 0.7rem;
+	}

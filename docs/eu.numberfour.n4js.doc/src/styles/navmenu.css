@@ -14,11 +14,6 @@
 }
 
 
-#logo {
-  max-height: 40px;
-  margin-left: 40px;
-  margin-top: 17px;
-}
 
 #menubar ul { margin: 0; padding: 0; white-space:nowrap; padding-left: 10px; padding-right: 10px; line-height: 2rem;}
 #menubar li { margin: 0; padding: 0;   }
@@ -40,16 +35,36 @@
 
 }
 
-@media only screen and (max-width: 828px) {
+@media only screen and (max-width: 890px) {
   #menubar > ul > li {
     visibility: hidden;
   }
 }
 
+@media only screen and (max-width: 500px) {
+#menubar {
+  display: none;
+}
+#logo {
+  margin-top: -55px;
+
+}
+
+}
+
+#logo {
+  min-height: 40px;
+  min-width: 355px;
+  margin-left: 40px;
+  margin-top: 17px;
+  position: relative;
+  overflow: hidden;
+}
+
 #menubar > ul > li::after {
     content: " · ";
-    position: fixed;
-    top: 28px;
+    position: relative;
+    top: 6px;
     padding-left: 3px;
     font-weight: 400;
 }
