@@ -155,7 +155,7 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl i
 	protected List<WorkingSet> initializeWorkingSets() {
 		final Collection<Repository> repositories = newArrayList(repositoryCache.getAllRepositories());
 
-		// we cannot query the cache about it's state
+		// we cannot query the cache about its state
 		// so if we get no repository at all, we assume it has not been initialized yet
 		deferredInitializerSucceeded = !repositories.isEmpty();
 
