@@ -528,9 +528,7 @@ div.social > ul a:visited { color: #244D82; }
 div.social > ul a:hover { color: #F7D425; } 
 
 #bottomright {float: right;}
-@media only screen and (max-width: 800px) {
-	a#bottomright {visibility: hidden;}
-}
+
 
 @media only screen and (max-width: 1050px) {
 	body {width: 100%;}
@@ -888,6 +886,14 @@ div#remarks.ulist {
 
 div.title:first-of-type {
     display: none;
+}
+
+/* Mobile */
+
+@media only screen and (max-width: 800px) {
+	a#bottomright {visibility: hidden;}
+	.sectionbody.paragraph {max-width: 100%}
+	.paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type p { max-width: 100% }
 }
 
 

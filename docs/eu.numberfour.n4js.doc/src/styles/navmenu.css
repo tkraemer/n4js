@@ -142,7 +142,7 @@ body.home li.home, body.tech li.tech {font-weight:bold; }
     border-width: 10px;
     position: absolute;
     top: -20px;
-    left: 50%;
+    left: 10%;
     margin-left: -10px;
 }
 
