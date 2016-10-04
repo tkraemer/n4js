@@ -1881,7 +1881,7 @@ public providedByRuntime interface ~Iterable<out T> {
  * encapsulates. A rejected promise indicates erroneous or abnormal completion
  * of the process.
  */
-public providedByRuntime class Promise<out S, out F> extends Object @Global {
+public providedByRuntime class Promise<out S extends union{any,void}, out F> extends Object @Global {
 
     public constructor(executor:
             {function(
@@ -1889,17 +1889,17 @@ public providedByRuntime class Promise<out S, out F> extends Object @Global {
                 rejectFn: {function(arg: F?):void} ): void
             } ): void
 
-    public <Snew, Fnew> then(
+    public <Snew extends union{any,void}, Fnew> then(
         onFulfilled: {function(arg:S?): union{Snew, Promise<Snew, Fnew>}?},
         onRejected: {function(arg:F?): union{Fnew, Promise<Snew, Fnew>}?}?
     ): Promise<Snew, Fnew>
-    
-    public <Snew, Fnew> catch(onRejected: {function(arg:F?): union{Fnew, Promise<Snew, Fnew>}?}): Promise<Snew, Fnew>
-//    public <Snew> Promise<Snew, F> onFulfilled({function(S):Snew} onFulfilled)
+
+    public <Snew extends union{any,void}, Fnew> catch(onRejected: {function(arg:F?): union{Fnew, Promise<Snew, Fnew>}?}): Promise<Snew, Fnew>
+//    public <Snew extends union{any,void}> Promise<Snew, F> onFulfilled({function(S):Snew} onFulfilled)
 //    public <Fnew> Promise<S, Fnew> onRejected({function(F):Fnew} onRejected)
 
-    public static <S, F> reject(f: F): Promise<S, F>
-    public static <S, F> resolve(s: union{ Promise<S, F>,
+    public static <S extends union{any,void}, F> reject(f: F): Promise<S, F>
+    public static <S extends union{any,void}, F> resolve(s: union{ Promise<S, F>,
 	                                    ~Object with { // i.e. thenable
 	                                        then(...args: any): Promise<S, F>;},
                                         S}): Promise<S, F>
