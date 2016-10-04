@@ -1,0 +1,9 @@
+@N4JS export external public interface IC {}
+@N4JS export external public interface ID extends IC {}
+
+
+@N4JS export external public abstract class C implements IC {
+    public get fetched(): boolean;
+}
+@N4JS export external public abstract class D extends C implements ID {}
+
