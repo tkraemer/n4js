@@ -826,12 +826,12 @@ class Wildcard extends TypeArgument {
 	 * class B&lt;T extends Y&lt;?>> {} // indirectly
 	 * </pre>
 	 */
-	op TypeRef[] getDeclaredOrImplicitUpperBounds() {
+	op TypeRef getDeclaredOrImplicitUpperBound() {
 		val declUB = declaredUpperBound; // containment -> won't trigger resolution
 		if (declUB !== null)
-			return newImmutableEList(declUB);
+			return declUB;
 		if (declaredLowerBound !== null)
-			return emptyEList(); // important: do not inherit upper bounds if we have a declared lower bound!
+			return null; // important: do not inherit upper bounds if we have a declared lower bound!
 		// try to compute implicit upper bound from corresponding type parameter (without resolving proxies!)
 		val parent = eContainer;
 		if (parent instanceof ParameterizedTypeRef) {
@@ -843,14 +843,14 @@ class Wildcard extends TypeArgument {
 						val typeVars = declType.typeVars;
 						val typeVar = if(typeArgIndex < typeVars.size) typeVars.get(typeArgIndex) else null;
 						if (typeVar !== null) {
-							val implicitUBs = typeVar.declaredUpperBounds; // containment -> won't trigger resolution
-							return newImmutableEList(implicitUBs);
+							val implicitUB = typeVar.declaredUpperBound; // containment -> won't trigger resolution
+							return implicitUB;
 						}
 					}
 				}
 			}
 		}
-		return emptyEList(); // no implicit upper bound
+		return null; // no implicit upper bound
 	}
 	/*
 	 * Tells if an implicit upper bound is in effect for the given wildcard, i.e. the wildcards does not have declared
@@ -859,7 +859,7 @@ class Wildcard extends TypeArgument {
 	 * @see #getDeclaredOrImplicitUpperBounds()
 	 */
 	op boolean isImplicitUpperBoundInEffect() {
-		return declaredUpperBound === null && declaredLowerBound === null && !declaredOrImplicitUpperBounds.isEmpty();
+		return declaredUpperBound === null && declaredLowerBound === null && getDeclaredOrImplicitUpperBound()!==null;
 	}
 	/*
 	 * Convenience method, returns the type expression, usually the type name, as a string. Basically used for testing.
@@ -893,9 +893,9 @@ abstract class FunctionTypeExprOrRef extends StaticBaseTypeRef {
 	 * Returns the upper bounds of the given type variable (which should be one of those returned by
 	 * {@link FunctionTypeExprOrRef#getTypeVars()}). Never read the upper bounds directly from the type variable in
 	 * case of type variables coming from a FunctionTypeExprOrRef; for more info why this is required, see
-	 * {@link FunctionTypeExpression#getTypeVarUpperBounds(TypeVariable)}.
+	 * {@link FunctionTypeExpression#getTypeVarUpperBound(TypeVariable)}.
 	 */
-	op TypeRef[] getTypeVarUpperBounds(TypeVariable typeVar)
+	op TypeRef getTypeVarUpperBound(TypeVariable typeVar)
 	/*
 	 * The formal parameters as declared in the expression or of the referenced function type.
 	 */
@@ -940,7 +940,7 @@ abstract class FunctionTypeExprOrRef extends StaticBaseTypeRef {
 		return "{" + (if (declaredThisType !== null) "@This(" + declaredThisType.typeRefAsString + ") " else "")
 			+ "function"
 			+ (if (generic) {
-				"<" + typeVars.map[it.getTypeVariableAsString(getTypeVarUpperBounds(it))].join(",") + ">"
+				"<" + typeVars.map[it.getTypeVariableAsString(getTypeVarUpperBound(it))].join(",") + ">"
 			} else "")
 			+ "(" + fpars.map[if (it.typeRef !== null) it.typeRef.typeRefAsString else "null"].join(",") + ")"
 			+ (if (returnTypeRef !== null) ":" + returnTypeRef.typeRefAsString else "")
@@ -969,8 +969,8 @@ class FunctionTypeRef extends ParameterizedTypeRef, FunctionTypeExprOrRef {
 	/*
 	 * Simply returns the given type variable's declared upper bounds (required by super class API).
 	 */
-	op TypeRef[] getTypeVarUpperBounds(TypeVariable typeVar) {
-		return newImmutableEList(typeVar.declaredUpperBounds);
+	op TypeRef getTypeVarUpperBound(TypeVariable typeVar) {
+		return typeVar.declaredUpperBound;
 	}
 	/*
 	 * Convenience method, returns the fpars of the referenced function type.
@@ -1093,7 +1093,7 @@ class FunctionTypeExpression extends FunctionTypeExprOrRef {
 	 * See property {@link FunctionTypeExpression#getUnboundTypeVarsUpperBounds() unboundTypeVarsUpperBounds} and
 	 * method {@link DerivationComputer#performSubstitutionOnUpperBounds()}.
 	 */
-	op TypeRef[] getTypeVarUpperBounds(TypeVariable typeVar) {
+	op TypeRef getTypeVarUpperBound(TypeVariable typeVar) {
 		if(typeVar===null) {
 			throw new IllegalArgumentException("given type variable may not be null");
 		}
@@ -1101,10 +1101,10 @@ class FunctionTypeExpression extends FunctionTypeExprOrRef {
 		if(idx>=0 && idx<unboundTypeVarsUpperBounds.size) {
 			val modifiedUpperBound = unboundTypeVarsUpperBounds.get(idx);
 			if(modifiedUpperBound!==null) { // we allow 'unboundTypeVarsUpperBounds' to contain null entries for padding
-				return newImmutableEList(modifiedUpperBound);
+				return modifiedUpperBound;
 			}
 		}
-		return newImmutableEList(typeVar.declaredUpperBounds);
+		return typeVar.declaredUpperBound;
 	}
 	/*
 	 * Formal parameters declared in the FunctionTypeExpression in the AST or

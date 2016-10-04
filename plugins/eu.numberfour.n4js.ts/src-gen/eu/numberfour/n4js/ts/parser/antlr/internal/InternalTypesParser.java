@@ -16489,23 +16489,23 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTypeVariable"
-    // InternalTypesParser.g:6245:1: ruleTypeVariable returns [EObject current=null] : ( ( (lv_name_0_0= RULE_IDENTIFIER ) ) (otherlv_1= Extends ( (lv_declaredUpperBounds_2_0= ruleTypeRef ) ) )? ) ;
+    // InternalTypesParser.g:6245:1: ruleTypeVariable returns [EObject current=null] : ( ( (lv_name_0_0= RULE_IDENTIFIER ) ) (otherlv_1= Extends ( (lv_declaredUpperBound_2_0= ruleTypeRef ) ) )? ) ;
     public final EObject ruleTypeVariable() throws RecognitionException {
         EObject current = null;
 
         Token lv_name_0_0=null;
         Token otherlv_1=null;
-        EObject lv_declaredUpperBounds_2_0 = null;
+        EObject lv_declaredUpperBound_2_0 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalTypesParser.g:6248:28: ( ( ( (lv_name_0_0= RULE_IDENTIFIER ) ) (otherlv_1= Extends ( (lv_declaredUpperBounds_2_0= ruleTypeRef ) ) )? ) )
-            // InternalTypesParser.g:6249:1: ( ( (lv_name_0_0= RULE_IDENTIFIER ) ) (otherlv_1= Extends ( (lv_declaredUpperBounds_2_0= ruleTypeRef ) ) )? )
+            // InternalTypesParser.g:6248:28: ( ( ( (lv_name_0_0= RULE_IDENTIFIER ) ) (otherlv_1= Extends ( (lv_declaredUpperBound_2_0= ruleTypeRef ) ) )? ) )
+            // InternalTypesParser.g:6249:1: ( ( (lv_name_0_0= RULE_IDENTIFIER ) ) (otherlv_1= Extends ( (lv_declaredUpperBound_2_0= ruleTypeRef ) ) )? )
             {
-            // InternalTypesParser.g:6249:1: ( ( (lv_name_0_0= RULE_IDENTIFIER ) ) (otherlv_1= Extends ( (lv_declaredUpperBounds_2_0= ruleTypeRef ) ) )? )
-            // InternalTypesParser.g:6249:2: ( (lv_name_0_0= RULE_IDENTIFIER ) ) (otherlv_1= Extends ( (lv_declaredUpperBounds_2_0= ruleTypeRef ) ) )?
+            // InternalTypesParser.g:6249:1: ( ( (lv_name_0_0= RULE_IDENTIFIER ) ) (otherlv_1= Extends ( (lv_declaredUpperBound_2_0= ruleTypeRef ) ) )? )
+            // InternalTypesParser.g:6249:2: ( (lv_name_0_0= RULE_IDENTIFIER ) ) (otherlv_1= Extends ( (lv_declaredUpperBound_2_0= ruleTypeRef ) ) )?
             {
             // InternalTypesParser.g:6249:2: ( (lv_name_0_0= RULE_IDENTIFIER ) )
             // InternalTypesParser.g:6250:1: (lv_name_0_0= RULE_IDENTIFIER )
@@ -16537,7 +16537,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalTypesParser.g:6267:2: (otherlv_1= Extends ( (lv_declaredUpperBounds_2_0= ruleTypeRef ) ) )?
+            // InternalTypesParser.g:6267:2: (otherlv_1= Extends ( (lv_declaredUpperBound_2_0= ruleTypeRef ) ) )?
             int alt122=2;
             int LA122_0 = input.LA(1);
 
@@ -16546,7 +16546,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             }
             switch (alt122) {
                 case 1 :
-                    // InternalTypesParser.g:6268:2: otherlv_1= Extends ( (lv_declaredUpperBounds_2_0= ruleTypeRef ) )
+                    // InternalTypesParser.g:6268:2: otherlv_1= Extends ( (lv_declaredUpperBound_2_0= ruleTypeRef ) )
                     {
                     otherlv_1=(Token)match(input,Extends,FOLLOW_8); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -16554,19 +16554,19 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_1, grammarAccess.getTypeVariableAccess().getExtendsKeyword_1_0());
                           
                     }
-                    // InternalTypesParser.g:6272:1: ( (lv_declaredUpperBounds_2_0= ruleTypeRef ) )
-                    // InternalTypesParser.g:6273:1: (lv_declaredUpperBounds_2_0= ruleTypeRef )
+                    // InternalTypesParser.g:6272:1: ( (lv_declaredUpperBound_2_0= ruleTypeRef ) )
+                    // InternalTypesParser.g:6273:1: (lv_declaredUpperBound_2_0= ruleTypeRef )
                     {
-                    // InternalTypesParser.g:6273:1: (lv_declaredUpperBounds_2_0= ruleTypeRef )
-                    // InternalTypesParser.g:6274:3: lv_declaredUpperBounds_2_0= ruleTypeRef
+                    // InternalTypesParser.g:6273:1: (lv_declaredUpperBound_2_0= ruleTypeRef )
+                    // InternalTypesParser.g:6274:3: lv_declaredUpperBound_2_0= ruleTypeRef
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsTypeRefParserRuleCall_1_1_0()); 
+                      	        newCompositeNode(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundTypeRefParserRuleCall_1_1_0()); 
                       	    
                     }
                     pushFollow(FOLLOW_2);
-                    lv_declaredUpperBounds_2_0=ruleTypeRef();
+                    lv_declaredUpperBound_2_0=ruleTypeRef();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -16575,10 +16575,10 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                       	        if (current==null) {
                       	            current = createModelElementForParent(grammarAccess.getTypeVariableRule());
                       	        }
-                             		add(
+                             		set(
                              			current, 
-                             			"declaredUpperBounds",
-                              		lv_declaredUpperBounds_2_0, 
+                             			"declaredUpperBound",
+                              		lv_declaredUpperBound_2_0, 
                               		"eu.numberfour.n4js.ts.Types.TypeRef");
                       	        afterParserOrEnumRuleCall();
                       	    
@@ -16658,7 +16658,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTypeVariableWithDefSiteVariance"
-    // InternalTypesParser.g:6307:1: ruleTypeVariableWithDefSiteVariance returns [EObject current=null] : ( ( ( (lv_declaredCovariant_0_0= Out ) ) | ( (lv_declaredContravariant_1_0= In ) ) )? ( (lv_name_2_0= RULE_IDENTIFIER ) ) (otherlv_3= Extends ( (lv_declaredUpperBounds_4_0= ruleTypeRef ) ) )? ) ;
+    // InternalTypesParser.g:6307:1: ruleTypeVariableWithDefSiteVariance returns [EObject current=null] : ( ( ( (lv_declaredCovariant_0_0= Out ) ) | ( (lv_declaredContravariant_1_0= In ) ) )? ( (lv_name_2_0= RULE_IDENTIFIER ) ) (otherlv_3= Extends ( (lv_declaredUpperBound_4_0= ruleTypeRef ) ) )? ) ;
     public final EObject ruleTypeVariableWithDefSiteVariance() throws RecognitionException {
         EObject current = null;
 
@@ -16666,17 +16666,17 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
         Token lv_declaredContravariant_1_0=null;
         Token lv_name_2_0=null;
         Token otherlv_3=null;
-        EObject lv_declaredUpperBounds_4_0 = null;
+        EObject lv_declaredUpperBound_4_0 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalTypesParser.g:6310:28: ( ( ( ( (lv_declaredCovariant_0_0= Out ) ) | ( (lv_declaredContravariant_1_0= In ) ) )? ( (lv_name_2_0= RULE_IDENTIFIER ) ) (otherlv_3= Extends ( (lv_declaredUpperBounds_4_0= ruleTypeRef ) ) )? ) )
-            // InternalTypesParser.g:6311:1: ( ( ( (lv_declaredCovariant_0_0= Out ) ) | ( (lv_declaredContravariant_1_0= In ) ) )? ( (lv_name_2_0= RULE_IDENTIFIER ) ) (otherlv_3= Extends ( (lv_declaredUpperBounds_4_0= ruleTypeRef ) ) )? )
+            // InternalTypesParser.g:6310:28: ( ( ( ( (lv_declaredCovariant_0_0= Out ) ) | ( (lv_declaredContravariant_1_0= In ) ) )? ( (lv_name_2_0= RULE_IDENTIFIER ) ) (otherlv_3= Extends ( (lv_declaredUpperBound_4_0= ruleTypeRef ) ) )? ) )
+            // InternalTypesParser.g:6311:1: ( ( ( (lv_declaredCovariant_0_0= Out ) ) | ( (lv_declaredContravariant_1_0= In ) ) )? ( (lv_name_2_0= RULE_IDENTIFIER ) ) (otherlv_3= Extends ( (lv_declaredUpperBound_4_0= ruleTypeRef ) ) )? )
             {
-            // InternalTypesParser.g:6311:1: ( ( ( (lv_declaredCovariant_0_0= Out ) ) | ( (lv_declaredContravariant_1_0= In ) ) )? ( (lv_name_2_0= RULE_IDENTIFIER ) ) (otherlv_3= Extends ( (lv_declaredUpperBounds_4_0= ruleTypeRef ) ) )? )
-            // InternalTypesParser.g:6311:2: ( ( (lv_declaredCovariant_0_0= Out ) ) | ( (lv_declaredContravariant_1_0= In ) ) )? ( (lv_name_2_0= RULE_IDENTIFIER ) ) (otherlv_3= Extends ( (lv_declaredUpperBounds_4_0= ruleTypeRef ) ) )?
+            // InternalTypesParser.g:6311:1: ( ( ( (lv_declaredCovariant_0_0= Out ) ) | ( (lv_declaredContravariant_1_0= In ) ) )? ( (lv_name_2_0= RULE_IDENTIFIER ) ) (otherlv_3= Extends ( (lv_declaredUpperBound_4_0= ruleTypeRef ) ) )? )
+            // InternalTypesParser.g:6311:2: ( ( (lv_declaredCovariant_0_0= Out ) ) | ( (lv_declaredContravariant_1_0= In ) ) )? ( (lv_name_2_0= RULE_IDENTIFIER ) ) (otherlv_3= Extends ( (lv_declaredUpperBound_4_0= ruleTypeRef ) ) )?
             {
             // InternalTypesParser.g:6311:2: ( ( (lv_declaredCovariant_0_0= Out ) ) | ( (lv_declaredContravariant_1_0= In ) ) )?
             int alt123=3;
@@ -16786,7 +16786,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalTypesParser.g:6362:2: (otherlv_3= Extends ( (lv_declaredUpperBounds_4_0= ruleTypeRef ) ) )?
+            // InternalTypesParser.g:6362:2: (otherlv_3= Extends ( (lv_declaredUpperBound_4_0= ruleTypeRef ) ) )?
             int alt124=2;
             int LA124_0 = input.LA(1);
 
@@ -16795,7 +16795,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             }
             switch (alt124) {
                 case 1 :
-                    // InternalTypesParser.g:6363:2: otherlv_3= Extends ( (lv_declaredUpperBounds_4_0= ruleTypeRef ) )
+                    // InternalTypesParser.g:6363:2: otherlv_3= Extends ( (lv_declaredUpperBound_4_0= ruleTypeRef ) )
                     {
                     otherlv_3=(Token)match(input,Extends,FOLLOW_8); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -16803,19 +16803,19 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_3, grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getExtendsKeyword_2_0());
                           
                     }
-                    // InternalTypesParser.g:6367:1: ( (lv_declaredUpperBounds_4_0= ruleTypeRef ) )
-                    // InternalTypesParser.g:6368:1: (lv_declaredUpperBounds_4_0= ruleTypeRef )
+                    // InternalTypesParser.g:6367:1: ( (lv_declaredUpperBound_4_0= ruleTypeRef ) )
+                    // InternalTypesParser.g:6368:1: (lv_declaredUpperBound_4_0= ruleTypeRef )
                     {
-                    // InternalTypesParser.g:6368:1: (lv_declaredUpperBounds_4_0= ruleTypeRef )
-                    // InternalTypesParser.g:6369:3: lv_declaredUpperBounds_4_0= ruleTypeRef
+                    // InternalTypesParser.g:6368:1: (lv_declaredUpperBound_4_0= ruleTypeRef )
+                    // InternalTypesParser.g:6369:3: lv_declaredUpperBound_4_0= ruleTypeRef
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsTypeRefParserRuleCall_2_1_0()); 
+                      	        newCompositeNode(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundTypeRefParserRuleCall_2_1_0()); 
                       	    
                     }
                     pushFollow(FOLLOW_2);
-                    lv_declaredUpperBounds_4_0=ruleTypeRef();
+                    lv_declaredUpperBound_4_0=ruleTypeRef();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -16824,10 +16824,10 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                       	        if (current==null) {
                       	            current = createModelElementForParent(grammarAccess.getTypeVariableWithDefSiteVarianceRule());
                       	        }
-                             		add(
+                             		set(
                              			current, 
-                             			"declaredUpperBounds",
-                              		lv_declaredUpperBounds_4_0, 
+                             			"declaredUpperBound",
+                              		lv_declaredUpperBound_4_0, 
                               		"eu.numberfour.n4js.ts.Types.TypeRef");
                       	        afterParserOrEnumRuleCall();
                       	    

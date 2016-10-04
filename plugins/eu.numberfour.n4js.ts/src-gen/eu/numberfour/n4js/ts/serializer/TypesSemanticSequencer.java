@@ -1554,7 +1554,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     TypeVariableWithDefSiteVariance returns TypeVariable
 	 *
 	 * Constraint:
-	 *     ((declaredCovariant?='out' | declaredContravariant?='in')? name=IDENTIFIER declaredUpperBounds+=TypeRef?)
+	 *     ((declaredCovariant?='out' | declaredContravariant?='in')? name=IDENTIFIER declaredUpperBound=TypeRef?)
 	 */
 	protected void sequence_TypeVariableWithDefSiteVariance(ISerializationContext context, TypeVariable semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1567,7 +1567,7 @@ public class TypesSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     TypeVariable returns TypeVariable
 	 *
 	 * Constraint:
-	 *     (name=IDENTIFIER declaredUpperBounds+=TypeRef?)
+	 *     (name=IDENTIFIER declaredUpperBound=TypeRef?)
 	 */
 	protected void sequence_TypeVariable(ISerializationContext context, TypeVariable semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

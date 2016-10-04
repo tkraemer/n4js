@@ -686,7 +686,7 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTypeVariableAccess().getDeclaredCovariantAssignment_0_0(), "rule__TypeVariable__DeclaredCovariantAssignment_0_0");
 					put(grammarAccess.getTypeVariableAccess().getDeclaredContravariantAssignment_0_1(), "rule__TypeVariable__DeclaredContravariantAssignment_0_1");
 					put(grammarAccess.getTypeVariableAccess().getNameAssignment_1(), "rule__TypeVariable__NameAssignment_1");
-					put(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_2_1(), "rule__TypeVariable__DeclaredUpperBoundsAssignment_2_1");
+					put(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundAssignment_2_1(), "rule__TypeVariable__DeclaredUpperBoundAssignment_2_1");
 					put(grammarAccess.getBindingElementFragmentAccess().getBindingPatternAssignment_0_0(), "rule__BindingElementFragment__BindingPatternAssignment_0_0");
 					put(grammarAccess.getBindingElementFragmentAccess().getAnnotationsAssignment_0_1_0(), "rule__BindingElementFragment__AnnotationsAssignment_0_1_0");
 					put(grammarAccess.getBindingElementFragmentAccess().getVariadicAssignment_0_1_2(), "rule__BindingElementFragment__VariadicAssignment_0_1_2");
@@ -1015,7 +1015,7 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredCovariantAssignment_0_0(), "rule__TypeVariableWithDefSiteVariance__DeclaredCovariantAssignment_0_0");
 					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredContravariantAssignment_0_1(), "rule__TypeVariableWithDefSiteVariance__DeclaredContravariantAssignment_0_1");
 					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getNameAssignment_1(), "rule__TypeVariableWithDefSiteVariance__NameAssignment_1");
-					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsAssignment_2_1(), "rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1");
+					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundAssignment_2_1(), "rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundAssignment_2_1");
 				}
 			};
 		}

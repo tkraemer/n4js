@@ -117,13 +117,13 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	 * IDEBUG-185
 	 *
 	 * @param declaration the generic declaration to check the upper bound declarations of its type variables.
-	 *
 	 */
 	@Check
 	def checkGenericDeclarationType(GenericDeclaration declaration) {
 		val functionType = newRuleEnvironment(declaration).functionType
 		declaration.typeVars.filterNull.forEach [typeVar|
-			typeVar.declaredUpperBounds.filterNull.forEach [ub|
+			val ub = typeVar.declaredUpperBound;
+			if(ub!==null) {
 				val declType = ub.declaredType;
 				if (declType instanceof ContainerType<?> && declType.final) {
 					if(declType === functionType) {
@@ -134,7 +134,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 					val message = getMessageForCLF_UPPER_BOUND_FINAL(declType.name, typeVar.name);
 					addIssue(message, ub, PARAMETERIZED_TYPE_REF__DECLARED_TYPE, CLF_UPPER_BOUND_FINAL);
 				}
-			];
+			};
 		];
 	}
 

@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js.ts.types.internal;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -64,16 +62,11 @@ public final class WildcardAsStringUtils {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("?");
 		final TypeRef declUpperBound = w.getDeclaredUpperBound();
-		final List<TypeRef> upperBounds = showImplicitUpperBounds ? w.getDeclaredOrImplicitUpperBounds()
-				: (declUpperBound != null ? Collections.singletonList(declUpperBound) : Collections.emptyList());
+		final TypeRef upperBound = showImplicitUpperBounds ? w.getDeclaredOrImplicitUpperBound() : declUpperBound;
 		final TypeRef lowerBound = w.getDeclaredLowerBound();
-		if (!upperBounds.isEmpty()) {
+		if (upperBound != null) {
 			sb.append(" extends ");
-			for (int i = 0; i < upperBounds.size(); i++) {
-				if (i > 0)
-					sb.append(" & ");
-				sb.append(upperBounds.get(i).getTypeRefAsString());
-			}
+			sb.append(upperBound.getTypeRefAsString());
 		} else if (lowerBound != null) {
 			sb.append(" super ");
 			sb.append(lowerBound.getTypeRefAsString());

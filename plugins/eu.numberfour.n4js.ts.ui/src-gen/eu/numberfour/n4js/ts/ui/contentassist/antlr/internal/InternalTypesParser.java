@@ -48396,26 +48396,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariable__Group_1__1__Impl"
-    // InternalTypesParser.g:16864:1: rule__TypeVariable__Group_1__1__Impl : ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 ) ) ;
+    // InternalTypesParser.g:16864:1: rule__TypeVariable__Group_1__1__Impl : ( ( rule__TypeVariable__DeclaredUpperBoundAssignment_1_1 ) ) ;
     public final void rule__TypeVariable__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:16868:1: ( ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 ) ) )
-            // InternalTypesParser.g:16869:1: ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 ) )
+            // InternalTypesParser.g:16868:1: ( ( ( rule__TypeVariable__DeclaredUpperBoundAssignment_1_1 ) ) )
+            // InternalTypesParser.g:16869:1: ( ( rule__TypeVariable__DeclaredUpperBoundAssignment_1_1 ) )
             {
-            // InternalTypesParser.g:16869:1: ( ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 ) )
-            // InternalTypesParser.g:16870:1: ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 )
+            // InternalTypesParser.g:16869:1: ( ( rule__TypeVariable__DeclaredUpperBoundAssignment_1_1 ) )
+            // InternalTypesParser.g:16870:1: ( rule__TypeVariable__DeclaredUpperBoundAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_1_1()); 
+               before(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundAssignment_1_1()); 
             }
-            // InternalTypesParser.g:16871:1: ( rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 )
-            // InternalTypesParser.g:16871:2: rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1
+            // InternalTypesParser.g:16871:1: ( rule__TypeVariable__DeclaredUpperBoundAssignment_1_1 )
+            // InternalTypesParser.g:16871:2: rule__TypeVariable__DeclaredUpperBoundAssignment_1_1
             {
             pushFollow(FOLLOW_2);
-            rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1();
+            rule__TypeVariable__DeclaredUpperBoundAssignment_1_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -48423,7 +48423,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_1_1()); 
+               after(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundAssignment_1_1()); 
             }
 
             }
@@ -48843,26 +48843,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl"
-    // InternalTypesParser.g:17019:1: rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl : ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 ) ) ;
+    // InternalTypesParser.g:17019:1: rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl : ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundAssignment_2_1 ) ) ;
     public final void rule__TypeVariableWithDefSiteVariance__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalTypesParser.g:17023:1: ( ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 ) ) )
-            // InternalTypesParser.g:17024:1: ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 ) )
+            // InternalTypesParser.g:17023:1: ( ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundAssignment_2_1 ) ) )
+            // InternalTypesParser.g:17024:1: ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundAssignment_2_1 ) )
             {
-            // InternalTypesParser.g:17024:1: ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 ) )
-            // InternalTypesParser.g:17025:1: ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 )
+            // InternalTypesParser.g:17024:1: ( ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundAssignment_2_1 ) )
+            // InternalTypesParser.g:17025:1: ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsAssignment_2_1()); 
+               before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundAssignment_2_1()); 
             }
-            // InternalTypesParser.g:17026:1: ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 )
-            // InternalTypesParser.g:17026:2: rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1
+            // InternalTypesParser.g:17026:1: ( rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundAssignment_2_1 )
+            // InternalTypesParser.g:17026:2: rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundAssignment_2_1
             {
             pushFollow(FOLLOW_2);
-            rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1();
+            rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundAssignment_2_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -48870,7 +48870,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsAssignment_2_1()); 
+               after(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundAssignment_2_1()); 
             }
 
             }
@@ -56079,9 +56079,9 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TypeVariable__NameAssignment_0"
 
 
-    // $ANTLR start "rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1"
-    // InternalTypesParser.g:19592:1: rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1 : ( ruleTypeRef ) ;
-    public final void rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1() throws RecognitionException {
+    // $ANTLR start "rule__TypeVariable__DeclaredUpperBoundAssignment_1_1"
+    // InternalTypesParser.g:19592:1: rule__TypeVariable__DeclaredUpperBoundAssignment_1_1 : ( ruleTypeRef ) ;
+    public final void rule__TypeVariable__DeclaredUpperBoundAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -56093,7 +56093,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:19598:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsTypeRefParserRuleCall_1_1_0()); 
+               before(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundTypeRefParserRuleCall_1_1_0()); 
             }
             pushFollow(FOLLOW_2);
             ruleTypeRef();
@@ -56101,7 +56101,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsTypeRefParserRuleCall_1_1_0()); 
+               after(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundTypeRefParserRuleCall_1_1_0()); 
             }
 
             }
@@ -56121,7 +56121,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1"
+    // $ANTLR end "rule__TypeVariable__DeclaredUpperBoundAssignment_1_1"
 
 
     // $ANTLR start "rule__TypeVariableWithDefSiteVariance__DeclaredCovariantAssignment_0_0"
@@ -56271,9 +56271,9 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TypeVariableWithDefSiteVariance__NameAssignment_1"
 
 
-    // $ANTLR start "rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1"
-    // InternalTypesParser.g:19668:1: rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1 : ( ruleTypeRef ) ;
-    public final void rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1() throws RecognitionException {
+    // $ANTLR start "rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundAssignment_2_1"
+    // InternalTypesParser.g:19668:1: rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundAssignment_2_1 : ( ruleTypeRef ) ;
+    public final void rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -56285,7 +56285,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:19674:1: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsTypeRefParserRuleCall_2_1_0()); 
+               before(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundTypeRefParserRuleCall_2_1_0()); 
             }
             pushFollow(FOLLOW_2);
             ruleTypeRef();
@@ -56293,7 +56293,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsTypeRefParserRuleCall_2_1_0()); 
+               after(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundTypeRefParserRuleCall_2_1_0()); 
             }
 
             }
@@ -56313,7 +56313,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1"
+    // $ANTLR end "rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundAssignment_2_1"
 
     // $ANTLR start synpred44_InternalTypesParser
     public final void synpred44_InternalTypesParser_fragment() throws RecognitionException {   

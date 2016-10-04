@@ -8589,7 +8589,7 @@ public class InternalN4JSParser extends AbstractInternalHighlightingAntlrParser 
         Token ExtendsKeyword_2_0=null;
         InternalN4JSParser.ruleIdentifierOrThis_return NameIdentifierOrThisParserRuleCall_1_0 = null;
 
-        InternalN4JSParser.ruleTypeRef_return DeclaredUpperBoundsTypeRefParserRuleCall_2_1_0 = null;
+        InternalN4JSParser.ruleTypeRef_return DeclaredUpperBoundTypeRefParserRuleCall_2_1_0 = null;
 
 
 
@@ -8674,12 +8674,12 @@ public class InternalN4JSParser extends AbstractInternalHighlightingAntlrParser 
                     {
                     {
                     pushFollow(FOLLOW_2);
-                    DeclaredUpperBoundsTypeRefParserRuleCall_2_1_0=ruleTypeRef();
+                    DeclaredUpperBoundTypeRefParserRuleCall_2_1_0=ruleTypeRef();
 
                     state._fsp--;
                     if (state.failed) return retval;
                     if ( state.backtracking==0 ) {
-                       announce((DeclaredUpperBoundsTypeRefParserRuleCall_2_1_0!=null?((Token)DeclaredUpperBoundsTypeRefParserRuleCall_2_1_0.start):null), (DeclaredUpperBoundsTypeRefParserRuleCall_2_1_0!=null?((Token)DeclaredUpperBoundsTypeRefParserRuleCall_2_1_0.stop):null), grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_2_1()); 
+                       announce((DeclaredUpperBoundTypeRefParserRuleCall_2_1_0!=null?((Token)DeclaredUpperBoundTypeRefParserRuleCall_2_1_0.start):null), (DeclaredUpperBoundTypeRefParserRuleCall_2_1_0!=null?((Token)DeclaredUpperBoundTypeRefParserRuleCall_2_1_0.stop):null), grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundAssignment_2_1()); 
                     }
 
                     }

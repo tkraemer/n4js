@@ -3248,7 +3248,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TypeVariable:
-	//	name=IDENTIFIER ('extends' declaredUpperBounds+=super::TypeRef)?;
+	//	name=IDENTIFIER ('extends' declaredUpperBound=super::TypeRef)?;
 	public TypeExpressionsGrammarAccess.TypeVariableElements getTypeVariableAccess() {
 		return gaTypeExpressions.getTypeVariableAccess();
 	}
@@ -3259,7 +3259,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TypeVariableWithDefSiteVariance TypeVariable:
 	//	(declaredCovariant?='out' | declaredContravariant?='in')?
-	//	name=IDENTIFIER ('extends' declaredUpperBounds+=super::TypeRef)?
+	//	name=IDENTIFIER ('extends' declaredUpperBound=super::TypeRef)?
 	public TypeExpressionsGrammarAccess.TypeVariableWithDefSiteVarianceElements getTypeVariableWithDefSiteVarianceAccess() {
 		return gaTypeExpressions.getTypeVariableWithDefSiteVarianceAccess();
 	}

@@ -11,8 +11,6 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.util.Variance;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -26,7 +24,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.TypeVariable#isDeclaredCovariant <em>Declared Covariant</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TypeVariable#isDeclaredContravariant <em>Declared Contravariant</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.TypeVariable#getDeclaredUpperBounds <em>Declared Upper Bounds</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TypeVariable#getDeclaredUpperBound <em>Declared Upper Bound</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.ts.types.TypesPackage#getTypeVariable()
@@ -87,20 +85,30 @@ public interface TypeVariable extends Type {
 	void setDeclaredContravariant(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Declared Upper Bounds</b></em>' containment reference list.
-	 * The list contents are of type {@link eu.numberfour.n4js.ts.typeRefs.TypeRef}.
+	 * Returns the value of the '<em><b>Declared Upper Bound</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Declared Upper Bounds</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Declared Upper Bound</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Declared Upper Bounds</em>' containment reference list.
-	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTypeVariable_DeclaredUpperBounds()
+	 * @return the value of the '<em>Declared Upper Bound</em>' containment reference.
+	 * @see #setDeclaredUpperBound(TypeRef)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTypeVariable_DeclaredUpperBound()
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<TypeRef> getDeclaredUpperBounds();
+	TypeRef getDeclaredUpperBound();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TypeVariable#getDeclaredUpperBound <em>Declared Upper Bound</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Declared Upper Bound</em>' containment reference.
+	 * @see #getDeclaredUpperBound()
+	 * @generated
+	 */
+	void setDeclaredUpperBound(TypeRef value);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -128,7 +136,7 @@ public interface TypeVariable extends Type {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.TypeRef%>> _declaredUpperBounds = this.getDeclaredUpperBounds();\nreturn this.getTypeVariableAsString(_declaredUpperBounds);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _declaredUpperBound = this.getDeclaredUpperBound();\nreturn this.getTypeVariableAsString(_declaredUpperBound);'"
 	 * @generated
 	 */
 	String getTypeAsString();
@@ -136,10 +144,10 @@ public interface TypeVariable extends Type {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model unique="false" upperBoundsDataType="eu.numberfour.n4js.ts.types.CollectionOfTypeRef" upperBoundsUnique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _xifexpression = null;\nboolean _isDeclaredCovariant = this.isDeclaredCovariant();\nif (_isDeclaredCovariant)\n{\n\t_xifexpression = \"out \";\n}\nelse\n{\n\t<%java.lang.String%> _xifexpression_1 = null;\n\tboolean _isDeclaredContravariant = this.isDeclaredContravariant();\n\tif (_isDeclaredContravariant)\n\t{\n\t\t_xifexpression_1 = \"in \";\n\t}\n\telse\n\t{\n\t\t_xifexpression_1 = \"\";\n\t}\n\t_xifexpression = _xifexpression_1;\n}\n<%java.lang.String%> _name = this.getName();\n<%java.lang.String%> _plus = (_xifexpression + _name);\n<%java.lang.String%> _xifexpression_2 = null;\nboolean _isEmpty = upperBounds.isEmpty();\nboolean _not = (!_isEmpty);\nif (_not)\n{\n\tfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeRef%>, <%java.lang.String%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeRef%>, <%java.lang.String%>>()\n\t{\n\t\tpublic <%java.lang.String%> apply(final <%eu.numberfour.n4js.ts.typeRefs.TypeRef%> it)\n\t\t{\n\t\t\treturn it.getTypeRefAsString();\n\t\t}\n\t};\n\t<%java.lang.Iterable%><<%java.lang.String%>> _map = <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.map(upperBounds, _function);\n\t<%java.lang.String%> _join = <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.join(_map, \" & \");\n\t_xifexpression_2 = (\" extends \" + _join);\n}\nelse\n{\n\t_xifexpression_2 = \"\";\n}\nreturn (_plus + _xifexpression_2);'"
+	 * @model unique="false" upperBoundUnique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _xifexpression = null;\nboolean _isDeclaredCovariant = this.isDeclaredCovariant();\nif (_isDeclaredCovariant)\n{\n\t_xifexpression = \"out \";\n}\nelse\n{\n\t<%java.lang.String%> _xifexpression_1 = null;\n\tboolean _isDeclaredContravariant = this.isDeclaredContravariant();\n\tif (_isDeclaredContravariant)\n\t{\n\t\t_xifexpression_1 = \"in \";\n\t}\n\telse\n\t{\n\t\t_xifexpression_1 = \"\";\n\t}\n\t_xifexpression = _xifexpression_1;\n}\n<%java.lang.String%> _name = this.getName();\n<%java.lang.String%> _plus = (_xifexpression + _name);\n<%java.lang.String%> _xifexpression_2 = null;\nif ((upperBound != null))\n{\n\t<%java.lang.String%> _typeRefAsString = upperBound.getTypeRefAsString();\n\t_xifexpression_2 = (\" extends \" + _typeRefAsString);\n}\nelse\n{\n\t_xifexpression_2 = \"\";\n}\nreturn (_plus + _xifexpression_2);'"
 	 * @generated
 	 */
-	String getTypeVariableAsString(Collection<? extends TypeRef> upperBounds);
+	String getTypeVariableAsString(TypeRef upperBound);
 
 } // TypeVariable

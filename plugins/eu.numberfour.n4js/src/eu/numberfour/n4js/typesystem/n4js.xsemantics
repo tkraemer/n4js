@@ -1296,14 +1296,8 @@ from {
 					true
 				} else if(leftDeclType instanceof TypeVariable) {
 					// a case like: (T extends B) <: A  (with T being an unbound type variable and A,B two classes with B <: A)
-					if(leftDeclType.declaredUpperBounds.isEmpty) {
-						// T does not have declaredUpperBounds, so T <: A is always false
-						false
-					}
-					else {
-						// T has declaredUpperBounds, so return true iff all upper bounds are subtype of 'right'
-						G |- typeSystemHelper.createIntersectionType(G, leftDeclType.declaredUpperBounds) <: right
-					}
+					val ub = leftDeclType.declaredUpperBound ?: N4JSLanguageUtils.getTypeVariableImplicitUpperBound(G);
+					G |- ub <: right
 				} else {
 					// all other cases are always false, for example:
 					//               B <: (T extends A)  is always false, even if B <: A
@@ -2261,7 +2255,7 @@ axiom upperBoundTypeRef
 rule upperBoundWildcardTypeRef
 	G |~ Wildcard wildcard /\ TypeRef T
 from {
-	val ub = TypeUtils.getDeclaredOrImplicitUpperBound(wildcard);
+	val ub = wildcard.getDeclaredOrImplicitUpperBound();
 	if (ub !==null) {
 		T=ub
 	} else {

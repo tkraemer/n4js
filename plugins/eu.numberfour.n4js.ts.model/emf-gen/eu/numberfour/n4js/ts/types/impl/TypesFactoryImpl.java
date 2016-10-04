@@ -7,15 +7,12 @@
  */
 package eu.numberfour.n4js.ts.types.impl;
 
-import eu.numberfour.n4js.ts.typeRefs.TypeRef;
-
 import eu.numberfour.n4js.ts.types.*;
 
 import eu.numberfour.n4js.ts.types.util.Variance;
 
 import java.lang.Iterable;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
@@ -135,8 +132,6 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 				return createMemberAccessModifierFromString(eDataType, initialValue);
 			case TypesPackage.MEMBER_TYPE:
 				return createMemberTypeFromString(eDataType, initialValue);
-			case TypesPackage.COLLECTION_OF_TYPE_REF:
-				return createCollectionOfTypeRefFromString(eDataType, initialValue);
 			case TypesPackage.ITERABLE_OF_TCLASSIFIER:
 				return createIterableOfTClassifierFromString(eDataType, initialValue);
 			case TypesPackage.VARIANCE:
@@ -172,8 +167,6 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 				return convertMemberAccessModifierToString(eDataType, instanceValue);
 			case TypesPackage.MEMBER_TYPE:
 				return convertMemberTypeToString(eDataType, instanceValue);
-			case TypesPackage.COLLECTION_OF_TYPE_REF:
-				return convertCollectionOfTypeRefToString(eDataType, instanceValue);
 			case TypesPackage.ITERABLE_OF_TCLASSIFIER:
 				return convertIterableOfTClassifierToString(eDataType, instanceValue);
 			case TypesPackage.VARIANCE:
@@ -697,25 +690,6 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 	 */
 	public String convertMemberTypeToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	public Collection<? extends TypeRef> createCollectionOfTypeRefFromString(EDataType eDataType, String initialValue) {
-		return (Collection<? extends TypeRef>)super.createFromString(initialValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertCollectionOfTypeRefToString(EDataType eDataType, Object instanceValue) {
-		return super.convertToString(instanceValue);
 	}
 
 	/**

@@ -674,7 +674,8 @@ public class TypeUtils {
 
 			if (type instanceof TypeVariable) {
 				TypeVariable v = (TypeVariable) type;
-				if (isRawSuperType(v.getDeclaredUpperBounds(), superTypeCandidate, guard)) {
+				TypeRef ub = v.getDeclaredUpperBound();
+				if (ub != null && isRawSuperType(ub, superTypeCandidate, guard)) {
 					return true;
 				}
 				return false;
@@ -713,44 +714,12 @@ public class TypeUtils {
 	public static TypeRef resolveTypeVariable(TypeRef typeRef) {
 		final Type declType = typeRef != null ? typeRef.getDeclaredType() : null;
 		if (declType instanceof TypeVariable) {
-			final TypeRef ub = getDeclaredUpperBound((TypeVariable) declType);
+			final TypeRef ub = ((TypeVariable) declType).getDeclaredUpperBound();
 			if (ub != null) {
 				return ub;
 			}
 		}
 		return typeRef;
-	}
-
-	/**
-	 * Convenience method that returns the declared upper bounds of a TypeVariable as returned by
-	 * {@link TypeVariable#getDeclaredUpperBounds()} as a single TypeRef. If there is more than one upper bound, then an
-	 * intersection type is created. Returns <code>null</code> if no upper bounds were declared.
-	 */
-	public static TypeRef getDeclaredUpperBound(TypeVariable tv) {
-		final EList<TypeRef> ubs = tv.getDeclaredUpperBounds();
-		final int count = ubs.size();
-		if (count == 1) {
-			return ubs.get(0);
-		} else if (count >= 2) {
-			return createNonSimplifiedIntersectionType(ubs);
-		}
-		return null; // no declared upper bounds
-	}
-
-	/**
-	 * Convenience method that returns the declared or implicit upper bounds of a Wildcard as returned by
-	 * {@link Wildcard#getDeclaredOrImplicitUpperBounds()} as a single TypeRef. If there is more than one upper bound
-	 * (occurs only in the case of implicit upper bounds), then an intersection type is created.
-	 */
-	public static TypeRef getDeclaredOrImplicitUpperBound(Wildcard w) {
-		final EList<TypeRef> implicitUBs = w.getDeclaredOrImplicitUpperBounds();
-		final int count = implicitUBs.size();
-		if (count == 1) {
-			return implicitUBs.get(0);
-		} else if (count >= 2) {
-			return createNonSimplifiedIntersectionType(implicitUBs);
-		}
-		return null; // no implicit upper bound
 	}
 
 	/**
@@ -1125,7 +1094,7 @@ public class TypeUtils {
 					final boolean needToMakeImplicitUpperBoundExplicit = !parentIsBeingCopiedAsWell;
 					if (needToMakeImplicitUpperBoundExplicit) {
 						wCopy.setDeclaredUpperBound(
-								TypeUtils.copyWithProxies(getDeclaredOrImplicitUpperBound(wOrig)));
+								TypeUtils.copyWithProxies(wOrig.getDeclaredOrImplicitUpperBound()));
 						return;
 					}
 				}

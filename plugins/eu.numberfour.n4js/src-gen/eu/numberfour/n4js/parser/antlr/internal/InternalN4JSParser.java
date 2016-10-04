@@ -12138,7 +12138,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
         Token otherlv_3=null;
         AntlrDatatypeRuleToken lv_name_2_0 = null;
 
-        EObject lv_declaredUpperBounds_4_0 = null;
+        EObject lv_declaredUpperBound_4_0 = null;
 
 
          enterRule(); 
@@ -12261,11 +12261,11 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsTypeRefParserRuleCall_2_1_0()); 
+                      	        newCompositeNode(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundTypeRefParserRuleCall_2_1_0()); 
                       	    
                     }
                     pushFollow(FOLLOW_2);
-                    lv_declaredUpperBounds_4_0=ruleTypeRef();
+                    lv_declaredUpperBound_4_0=ruleTypeRef();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -12274,10 +12274,10 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                       	        if (current==null) {
                       	            current = createModelElementForParent(grammarAccess.getTypeVariableRule());
                       	        }
-                             		add(
+                             		set(
                              			current, 
-                             			"declaredUpperBounds",
-                              		lv_declaredUpperBounds_4_0, 
+                             			"declaredUpperBound",
+                              		lv_declaredUpperBound_4_0, 
                               		"eu.numberfour.n4js.ts.TypeExpressions.TypeRef");
                       	        afterParserOrEnumRuleCall();
                       	    

@@ -93,7 +93,7 @@ public abstract class FunctionTypeExprOrRefImpl extends StaticBaseTypeRefImpl im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<TypeRef> getTypeVarUpperBounds(TypeVariable typeVar) {
+	public TypeRef getTypeVarUpperBound(TypeVariable typeVar) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -188,8 +188,8 @@ public abstract class FunctionTypeExprOrRefImpl extends StaticBaseTypeRefImpl im
 			EList<TypeVariable> _typeVars = this.getTypeVars();
 			final Function1<TypeVariable, String> _function = new Function1<TypeVariable, String>() {
 				public String apply(final TypeVariable it) {
-					EList<TypeRef> _typeVarUpperBounds = FunctionTypeExprOrRefImpl.this.getTypeVarUpperBounds(it);
-					return it.getTypeVariableAsString(_typeVarUpperBounds);
+					TypeRef _typeVarUpperBound = FunctionTypeExprOrRefImpl.this.getTypeVarUpperBound(it);
+					return it.getTypeVariableAsString(_typeVarUpperBound);
 				}
 			};
 			EList<String> _map = XcoreEListExtensions.<TypeVariable, String>map(_typeVars, _function);
@@ -277,8 +277,8 @@ public abstract class FunctionTypeExprOrRefImpl extends StaticBaseTypeRefImpl im
 				return getFunctionType();
 			case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VARS:
 				return getTypeVars();
-			case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VAR_UPPER_BOUNDS__TYPEVARIABLE:
-				return getTypeVarUpperBounds((TypeVariable)arguments.get(0));
+			case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE:
+				return getTypeVarUpperBound((TypeVariable)arguments.get(0));
 			case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_FPARS:
 				return getFpars();
 			case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_RETURN_TYPE_REF:

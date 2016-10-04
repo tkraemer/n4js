@@ -4404,13 +4404,13 @@ public interface TypeRefsPackage extends EPackage {
 	int WILDCARD___CONTAINS_UNBOUND_TYPE_VARIABLES = TYPE_ARGUMENT___CONTAINS_UNBOUND_TYPE_VARIABLES;
 
 	/**
-	 * The operation id for the '<em>Get Declared Or Implicit Upper Bounds</em>' operation.
+	 * The operation id for the '<em>Get Declared Or Implicit Upper Bound</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WILDCARD___GET_DECLARED_OR_IMPLICIT_UPPER_BOUNDS = TYPE_ARGUMENT_OPERATION_COUNT + 0;
+	int WILDCARD___GET_DECLARED_OR_IMPLICIT_UPPER_BOUND = TYPE_ARGUMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The operation id for the '<em>Is Implicit Upper Bound In Effect</em>' operation.
@@ -4675,13 +4675,13 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VARS = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 2;
 
 	/**
-	 * The operation id for the '<em>Get Type Var Upper Bounds</em>' operation.
+	 * The operation id for the '<em>Get Type Var Upper Bound</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VAR_UPPER_BOUNDS__TYPEVARIABLE = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 3;
+	int FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Get Fpars</em>' operation.
@@ -5063,13 +5063,13 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_REF___GET_TYPE_VARS = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 11;
 
 	/**
-	 * The operation id for the '<em>Get Type Var Upper Bounds</em>' operation.
+	 * The operation id for the '<em>Get Type Var Upper Bound</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF___GET_TYPE_VAR_UPPER_BOUNDS__TYPEVARIABLE = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 12;
+	int FUNCTION_TYPE_REF___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 12;
 
 	/**
 	 * The operation id for the '<em>Get Fpars</em>' operation.
@@ -5460,13 +5460,13 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_EXPRESSION___GET_TYPE_VARS = FUNCTION_TYPE_EXPR_OR_REF_OPERATION_COUNT + 0;
 
 	/**
-	 * The operation id for the '<em>Get Type Var Upper Bounds</em>' operation.
+	 * The operation id for the '<em>Get Type Var Upper Bound</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPRESSION___GET_TYPE_VAR_UPPER_BOUNDS__TYPEVARIABLE = FUNCTION_TYPE_EXPR_OR_REF_OPERATION_COUNT + 1;
+	int FUNCTION_TYPE_EXPRESSION___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE = FUNCTION_TYPE_EXPR_OR_REF_OPERATION_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Function Type Expression</em>' class.
@@ -6893,14 +6893,14 @@ public interface TypeRefsPackage extends EPackage {
 	EAttribute getWildcard_UsingInOutNotation();
 
 	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.Wildcard#getDeclaredOrImplicitUpperBounds() <em>Get Declared Or Implicit Upper Bounds</em>}' operation.
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.Wildcard#getDeclaredOrImplicitUpperBound() <em>Get Declared Or Implicit Upper Bound</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Declared Or Implicit Upper Bounds</em>' operation.
-	 * @see eu.numberfour.n4js.ts.typeRefs.Wildcard#getDeclaredOrImplicitUpperBounds()
+	 * @return the meta object for the '<em>Get Declared Or Implicit Upper Bound</em>' operation.
+	 * @see eu.numberfour.n4js.ts.typeRefs.Wildcard#getDeclaredOrImplicitUpperBound()
 	 * @generated
 	 */
-	EOperation getWildcard__GetDeclaredOrImplicitUpperBounds();
+	EOperation getWildcard__GetDeclaredOrImplicitUpperBound();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.Wildcard#isImplicitUpperBoundInEffect() <em>Is Implicit Upper Bound In Effect</em>}' operation.
@@ -6963,14 +6963,14 @@ public interface TypeRefsPackage extends EPackage {
 	EOperation getFunctionTypeExprOrRef__GetTypeVars();
 
 	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef#getTypeVarUpperBounds(eu.numberfour.n4js.ts.types.TypeVariable) <em>Get Type Var Upper Bounds</em>}' operation.
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef#getTypeVarUpperBound(eu.numberfour.n4js.ts.types.TypeVariable) <em>Get Type Var Upper Bound</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Type Var Upper Bounds</em>' operation.
-	 * @see eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef#getTypeVarUpperBounds(eu.numberfour.n4js.ts.types.TypeVariable)
+	 * @return the meta object for the '<em>Get Type Var Upper Bound</em>' operation.
+	 * @see eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef#getTypeVarUpperBound(eu.numberfour.n4js.ts.types.TypeVariable)
 	 * @generated
 	 */
-	EOperation getFunctionTypeExprOrRef__GetTypeVarUpperBounds__TypeVariable();
+	EOperation getFunctionTypeExprOrRef__GetTypeVarUpperBound__TypeVariable();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef#getFpars() <em>Get Fpars</em>}' operation.
@@ -7063,14 +7063,14 @@ public interface TypeRefsPackage extends EPackage {
 	EOperation getFunctionTypeRef__GetTypeVars();
 
 	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef#getTypeVarUpperBounds(eu.numberfour.n4js.ts.types.TypeVariable) <em>Get Type Var Upper Bounds</em>}' operation.
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef#getTypeVarUpperBound(eu.numberfour.n4js.ts.types.TypeVariable) <em>Get Type Var Upper Bound</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Type Var Upper Bounds</em>' operation.
-	 * @see eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef#getTypeVarUpperBounds(eu.numberfour.n4js.ts.types.TypeVariable)
+	 * @return the meta object for the '<em>Get Type Var Upper Bound</em>' operation.
+	 * @see eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef#getTypeVarUpperBound(eu.numberfour.n4js.ts.types.TypeVariable)
 	 * @generated
 	 */
-	EOperation getFunctionTypeRef__GetTypeVarUpperBounds__TypeVariable();
+	EOperation getFunctionTypeRef__GetTypeVarUpperBound__TypeVariable();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef#getFpars() <em>Get Fpars</em>}' operation.
@@ -7201,14 +7201,14 @@ public interface TypeRefsPackage extends EPackage {
 	EOperation getFunctionTypeExpression__GetTypeVars();
 
 	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#getTypeVarUpperBounds(eu.numberfour.n4js.ts.types.TypeVariable) <em>Get Type Var Upper Bounds</em>}' operation.
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#getTypeVarUpperBound(eu.numberfour.n4js.ts.types.TypeVariable) <em>Get Type Var Upper Bound</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Type Var Upper Bounds</em>' operation.
-	 * @see eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#getTypeVarUpperBounds(eu.numberfour.n4js.ts.types.TypeVariable)
+	 * @return the meta object for the '<em>Get Type Var Upper Bound</em>' operation.
+	 * @see eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#getTypeVarUpperBound(eu.numberfour.n4js.ts.types.TypeVariable)
 	 * @generated
 	 */
-	EOperation getFunctionTypeExpression__GetTypeVarUpperBounds__TypeVariable();
+	EOperation getFunctionTypeExpression__GetTypeVarUpperBound__TypeVariable();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef <em>Deferred Type Ref</em>}'.
@@ -8205,12 +8205,12 @@ public interface TypeRefsPackage extends EPackage {
 		EAttribute WILDCARD__USING_IN_OUT_NOTATION = eINSTANCE.getWildcard_UsingInOutNotation();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Declared Or Implicit Upper Bounds</b></em>' operation.
+		 * The meta object literal for the '<em><b>Get Declared Or Implicit Upper Bound</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation WILDCARD___GET_DECLARED_OR_IMPLICIT_UPPER_BOUNDS = eINSTANCE.getWildcard__GetDeclaredOrImplicitUpperBounds();
+		EOperation WILDCARD___GET_DECLARED_OR_IMPLICIT_UPPER_BOUND = eINSTANCE.getWildcard__GetDeclaredOrImplicitUpperBound();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Implicit Upper Bound In Effect</b></em>' operation.
@@ -8263,12 +8263,12 @@ public interface TypeRefsPackage extends EPackage {
 		EOperation FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VARS = eINSTANCE.getFunctionTypeExprOrRef__GetTypeVars();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Type Var Upper Bounds</b></em>' operation.
+		 * The meta object literal for the '<em><b>Get Type Var Upper Bound</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VAR_UPPER_BOUNDS__TYPEVARIABLE = eINSTANCE.getFunctionTypeExprOrRef__GetTypeVarUpperBounds__TypeVariable();
+		EOperation FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE = eINSTANCE.getFunctionTypeExprOrRef__GetTypeVarUpperBound__TypeVariable();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Fpars</b></em>' operation.
@@ -8345,12 +8345,12 @@ public interface TypeRefsPackage extends EPackage {
 		EOperation FUNCTION_TYPE_REF___GET_TYPE_VARS = eINSTANCE.getFunctionTypeRef__GetTypeVars();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Type Var Upper Bounds</b></em>' operation.
+		 * The meta object literal for the '<em><b>Get Type Var Upper Bound</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation FUNCTION_TYPE_REF___GET_TYPE_VAR_UPPER_BOUNDS__TYPEVARIABLE = eINSTANCE.getFunctionTypeRef__GetTypeVarUpperBounds__TypeVariable();
+		EOperation FUNCTION_TYPE_REF___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE = eINSTANCE.getFunctionTypeRef__GetTypeVarUpperBound__TypeVariable();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Fpars</b></em>' operation.
@@ -8451,12 +8451,12 @@ public interface TypeRefsPackage extends EPackage {
 		EOperation FUNCTION_TYPE_EXPRESSION___GET_TYPE_VARS = eINSTANCE.getFunctionTypeExpression__GetTypeVars();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Type Var Upper Bounds</b></em>' operation.
+		 * The meta object literal for the '<em><b>Get Type Var Upper Bound</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation FUNCTION_TYPE_EXPRESSION___GET_TYPE_VAR_UPPER_BOUNDS__TYPEVARIABLE = eINSTANCE.getFunctionTypeExpression__GetTypeVarUpperBounds__TypeVariable();
+		EOperation FUNCTION_TYPE_EXPRESSION___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE = eINSTANCE.getFunctionTypeExpression__GetTypeVarUpperBound__TypeVariable();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.DeferredTypeRefImpl <em>Deferred Type Ref</em>}' class.

@@ -3870,19 +3870,17 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
                                   }
                                 } else {
                                   if ((leftDeclType instanceof TypeVariable)) {
-                                    EList<TypeRef> _declaredUpperBounds = ((TypeVariable)leftDeclType).getDeclaredUpperBounds();
-                                    boolean _isEmpty = _declaredUpperBounds.isEmpty();
-                                    if (_isEmpty) {
-                                      /* false */
-                                      if (!false) {
-                                        sneakyThrowRuleFailedException("false");
-                                      }
+                                    TypeRef _elvis = null;
+                                    TypeRef _declaredUpperBound = ((TypeVariable)leftDeclType).getDeclaredUpperBound();
+                                    if (_declaredUpperBound != null) {
+                                      _elvis = _declaredUpperBound;
                                     } else {
-                                      /* G |- typeSystemHelper.createIntersectionType(G, leftDeclType.declaredUpperBounds) <: right */
-                                      EList<TypeRef> _declaredUpperBounds_1 = ((TypeVariable)leftDeclType).getDeclaredUpperBounds();
-                                      TypeRef _createIntersectionType = this.typeSystemHelper.createIntersectionType(G, ((TypeRef[])Conversions.unwrapArray(_declaredUpperBounds_1, TypeRef.class)));
-                                      subtypeInternal(G, _trace_, _createIntersectionType, right);
+                                      TypeRef _typeVariableImplicitUpperBound = N4JSLanguageUtils.getTypeVariableImplicitUpperBound(G);
+                                      _elvis = _typeVariableImplicitUpperBound;
                                     }
+                                    final TypeRef ub = _elvis;
+                                    /* G |- ub <: right */
+                                    subtypeInternal(G, _trace_, ub, right);
                                   } else {
                                     /* false */
                                     if (!false) {
@@ -5974,7 +5972,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleUpperBoundWildcardTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Wildcard wildcard) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    final TypeRef ub = TypeUtils.getDeclaredOrImplicitUpperBound(wildcard);
+    final TypeRef ub = wildcard.getDeclaredOrImplicitUpperBound();
     if ((ub != null)) {
       T = ub;
     } else {

@@ -368,11 +368,11 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getWildcardNewNotationAccess().getUsingInOutNotationAssignment_1_0(), "rule__WildcardNewNotation__UsingInOutNotationAssignment_1_0");
 					put(grammarAccess.getWildcardNewNotationAccess().getDeclaredLowerBoundAssignment_1_1(), "rule__WildcardNewNotation__DeclaredLowerBoundAssignment_1_1");
 					put(grammarAccess.getTypeVariableAccess().getNameAssignment_0(), "rule__TypeVariable__NameAssignment_0");
-					put(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_1_1(), "rule__TypeVariable__DeclaredUpperBoundsAssignment_1_1");
+					put(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundAssignment_1_1(), "rule__TypeVariable__DeclaredUpperBoundAssignment_1_1");
 					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredCovariantAssignment_0_0(), "rule__TypeVariableWithDefSiteVariance__DeclaredCovariantAssignment_0_0");
 					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredContravariantAssignment_0_1(), "rule__TypeVariableWithDefSiteVariance__DeclaredContravariantAssignment_0_1");
 					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getNameAssignment_1(), "rule__TypeVariableWithDefSiteVariance__NameAssignment_1");
-					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsAssignment_2_1(), "rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundsAssignment_2_1");
+					put(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundAssignment_2_1(), "rule__TypeVariableWithDefSiteVariance__DeclaredUpperBoundAssignment_2_1");
 				}
 			};
 		}

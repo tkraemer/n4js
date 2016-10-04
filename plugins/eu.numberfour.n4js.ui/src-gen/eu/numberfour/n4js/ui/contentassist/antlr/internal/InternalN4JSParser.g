@@ -27497,9 +27497,9 @@ rule__TypeVariable__Group_2__1__Impl
     }
 :
 (
-{ before(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_2_1()); }
-(rule__TypeVariable__DeclaredUpperBoundsAssignment_2_1)
-{ after(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsAssignment_2_1()); }
+{ before(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundAssignment_2_1()); }
+(rule__TypeVariable__DeclaredUpperBoundAssignment_2_1)
+{ after(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundAssignment_2_1()); }
 )
 
 ;
@@ -85980,14 +85980,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TypeVariable__DeclaredUpperBoundsAssignment_2_1
+rule__TypeVariable__DeclaredUpperBoundAssignment_2_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsTypeRefParserRuleCall_2_1_0()); }
-	ruleTypeRef{ after(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsTypeRefParserRuleCall_2_1_0()); }
+{ before(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundTypeRefParserRuleCall_2_1_0()); }
+	ruleTypeRef{ after(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundTypeRefParserRuleCall_2_1_0()); }
 )
 
 ;

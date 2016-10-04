@@ -27,6 +27,7 @@ import java.util.List
 import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 
 /**
  * Contains some helper methods to compute if type A is a subtype of type B.
@@ -253,14 +254,18 @@ class SubtypeComputer extends TypeSystemHelperStrategy {
 		for (var i = 0; i < right.size; i++) {
 			val leftTypeVar = left.get(i)
 			val rightTypeVar = right.get(i)
-			val leftUpperBound = if (leftTypeVar.declaredUpperBounds.empty)
-					G.anyTypeRef
-				else
-					createIntersectionType(G, leftTypeVar.declaredUpperBounds);
-			val rightUpperBound = if (rightTypeVar.declaredUpperBounds.empty)
-					G.anyTypeRef
-				else
-					createIntersectionType(G, rightTypeVar.declaredUpperBounds);
+			val leftDeclUB = leftTypeVar.declaredUpperBound;
+			val rightDeclUB = rightTypeVar.declaredUpperBound;
+			val leftUpperBound = if (leftDeclUB===null) {
+					N4JSLanguageUtils.getTypeVariableImplicitUpperBound(G)
+				} else {
+					leftDeclUB
+				};
+			val rightUpperBound = if (rightDeclUB===null) {
+					N4JSLanguageUtils.getTypeVariableImplicitUpperBound(G)
+				} else {
+					rightDeclUB
+				};
 			val rightUpperBoundSubst = ts.substTypeVariablesInTypeRef(G, rightUpperBound);
 
 			// leftUpperBound must be a super(!) type of rightUpperBound,

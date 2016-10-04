@@ -233,11 +233,11 @@ UndefModifierToken returns UndefModifier:
 	'?';
 
 TypeVariable:
-	name=IDENTIFIER ('extends' declaredUpperBounds+=TypeRef)?;
+	name=IDENTIFIER ('extends' declaredUpperBound=TypeRef)?;
 
 TypeVariableWithDefSiteVariance returns TypeVariable:
 	(declaredCovariant?='out' | declaredContravariant?='in')?
-	name=IDENTIFIER ('extends' declaredUpperBounds+=TypeRef)?;
+	name=IDENTIFIER ('extends' declaredUpperBound=TypeRef)?;
 
 /*
  * [ECM11] (7.6, pp. 17)

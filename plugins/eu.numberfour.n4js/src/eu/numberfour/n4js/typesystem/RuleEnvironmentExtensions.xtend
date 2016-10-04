@@ -287,7 +287,8 @@ class RuleEnvironmentExtensions {
 		createExistentialTypeRef(
 			typeVar,
 			TypeRefsFactory.eINSTANCE.createWildcard => [
-				declaredUpperBound = TypeUtils.copyIfContained(typeVar.declaredUpperBounds.head)
+				val declUB = typeVar.declaredUpperBound;
+				declaredUpperBound = TypeUtils.copyIfContained(declUB);
 			]
 		)
 	}
@@ -322,7 +323,7 @@ class RuleEnvironmentExtensions {
 	}
 
 	def static TypeRef createTypeRefFromUpperBound(TypeVariable typeVar) {
-		TypeUtils.copyIfContained(typeVar.declaredUpperBounds.head)
+		TypeUtils.copyIfContained(typeVar.declaredUpperBound)
 	}
 
 	/* Returns the top type (which is currently 'any' but may change in the future). */
