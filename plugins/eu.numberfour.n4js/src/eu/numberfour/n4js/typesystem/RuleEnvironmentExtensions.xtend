@@ -45,7 +45,6 @@ import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.types.UndefinedType
-import eu.numberfour.n4js.ts.types.VoidType
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.utils.RecursionGuard
 import it.xsemantics.runtime.RuleEnvironment
@@ -725,14 +724,10 @@ class RuleEnvironmentExtensions {
 		// ignore DeferredTypeRefs
 		if (value instanceof DeferredTypeRef)
 			return false;
-		// ignore void (type 'void' is never a valid substitution for a type variable)
-		if (value instanceof ParameterizedTypeRef)
-			if (value.declaredType instanceof VoidType)
-				return false;
 		// ignore null and undefined (null and undefined do not provide any clue about key's type)
 		if (value instanceof ParameterizedTypeRef)
 			if (value.declaredType instanceof NullType || value.declaredType instanceof UndefinedType)
-				return false;
+				return false; // FIXME is this ok???
 		return true;
 	}
 
