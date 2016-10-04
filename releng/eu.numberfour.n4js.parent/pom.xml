@@ -262,9 +262,10 @@ Contributors:
 							<execution>
 								<id>default-install</id>
 								<!-- rebind to none -->
-								<!-- IDE-2368 enable install again, TODO limit selectively to required bundles.
-								<phase />
+								<!-- IDE-2368 some plugins are enabled specifically in their own poms:
+									* releng/eu.numberfour.n4js.releng.utils
 								 -->
+								<phase />
 							</execution>
 						</executions>
 				</plugin>
