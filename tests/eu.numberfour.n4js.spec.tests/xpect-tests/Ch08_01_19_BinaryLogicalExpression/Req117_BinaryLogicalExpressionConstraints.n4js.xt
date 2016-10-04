@@ -2,7 +2,7 @@
 // IDE-775 Logical And (&&), Logical Or(||)
 
 // ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~
-// Constraints 20 (Binary Logical Expression Constraints): For a given binary logical expression e with e.lhs.type : L
+// Req. 117 (Binary Logical Expression Constraints): For a given binary logical expression e with e.lhs.type : L
 // and e.rhs.type : R the following constraints must hold:
 //  * In N4JS mode, neither L nor R must be undefined or null.
 // ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~  ~~
