@@ -52,12 +52,12 @@ import eu.numberfour.n4js.transpiler.im.Script_IM;
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntry;
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal;
 import eu.numberfour.n4js.transpiler.operations.SymbolTableManagement;
-import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement;
 import eu.numberfour.n4js.ts.types.TModule;
+import eu.numberfour.n4js.utils.ContainerTypesHelper;
 
 /**
  */
@@ -275,7 +275,7 @@ public class PreparationStep {
 					((ParameterizedPropertyAccessExpression_IM) copyEObject).setAnyPlusAccess(true);
 					((ParameterizedPropertyAccessExpression_IM) copyEObject).setNameOfAnyPlusProperty(propName);
 				} else {
-					throw new IllegalStateException("Rewire() called for an proxified original target. IM-eobject = "
+					throw new IllegalStateException("Rewire() called for a proxified original target. IM-eobject = "
 							+ eObject + "   origTarget is "
 							+ originalTarget);
 				}

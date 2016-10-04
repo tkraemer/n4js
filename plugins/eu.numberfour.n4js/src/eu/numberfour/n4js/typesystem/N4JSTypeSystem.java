@@ -274,6 +274,14 @@ public class N4JSTypeSystem {
 	}
 
 	/**
+	 * Get rid of types such as wildcards, ExistentialTypeRef, bound this types, and type variables by replacing them
+	 * with their upper bound.
+	 */
+	public TypeRef resolveType(RuleEnvironment G, TypeArgument typeArgument) {
+		return tsh.resolveType(G, typeArgument);
+	}
+
+	/**
 	 * Convenience method to create a simplified union type. Returns <code>null</code> if
 	 * <ul>
 	 * <li><code>typeRefs</code> is empty, or

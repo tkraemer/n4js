@@ -24,6 +24,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.swt.graphics.Image;
@@ -40,11 +41,13 @@ import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
  * Manager for project location aware working sets.
  */
 @SuppressWarnings("restriction")
-public class ProjectLocationAwareWorkingSetManager extends WorkingSetManagerImpl {
+public class ProjectLocationAwareWorkingSetManager extends WorkingSetManagerImpl implements IDeferredInitializer {
 
 	private static final Path WS_ROOT_PATH = getWorkspace().getRoot().getLocation().toFile().toPath();
 
 	private final Multimap<String, IProject> projectLocations;
+
+	private boolean deferredInitializerSucceeded = false;
 
 	/**
 	 * Sole constructor for creating a new working set manager instance.
@@ -85,6 +88,13 @@ public class ProjectLocationAwareWorkingSetManager extends WorkingSetManagerImpl
 			final String pair = getWorkingSetId(project);
 			locations.put(pair, project);
 		}
+
+		if (!deferredInitializerSucceeded) // only once ever.
+		{
+			// assume not properly initialized if only "other projects" is available as key.
+			deferredInitializerSucceeded = locations.keySet().size() > 1;
+		}
+
 		return locations;
 	}
 
@@ -115,6 +125,24 @@ public class ProjectLocationAwareWorkingSetManager extends WorkingSetManagerImpl
 
 	private RepositoryCache getRepositoryCache() {
 		return Activator.getDefault().getRepositoryCache();
+	}
+
+	@Override
+	public boolean isInitializationRequired() {
+		return !deferredInitializerSucceeded;
+	}
+
+	@Override
+	public boolean lateInit() {
+
+		if (deferredInitializerSucceeded) {
+			return true;
+		}
+
+		discardWorkingSetState();
+		restoreState(new NullProgressMonitor());
+
+		return deferredInitializerSucceeded;
 	}
 
 	/**
