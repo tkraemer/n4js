@@ -242,7 +242,9 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 				}
 
 				// check bounds
-				for (TypeRef upperBound : typeParameter.declaredUpperBounds) {
+				val ubs = typeParameter.declaredUpperBounds;
+				val ubsOrDefault = if(!ubs.empty) ubs else #[G_subst.anyTypeRef];
+				for (TypeRef upperBound : ubsOrDefault) {
 					if(upperBound!==null) {
 						val substituted = ts.substTypeVariables(G_subst, upperBound).value;
 						val result = ts.subtype(G_subst, typeArgument, substituted);
