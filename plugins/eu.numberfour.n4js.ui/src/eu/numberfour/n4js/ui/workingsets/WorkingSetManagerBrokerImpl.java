@@ -343,6 +343,16 @@ public class WorkingSetManagerBrokerImpl implements WorkingSetManagerBroker {
 	}
 
 	private void asyncRefreshCommonViewer(final ProjectExplorer explorer, final boolean resetInput) {
+
+		// do deferred initialization
+		this.getWorkingSetManagers().stream()
+				.filter(m -> (m instanceof IDeferredInitializer))
+				.map(m -> (IDeferredInitializer) m)
+				.filter(m -> m.isInitializationRequired())
+				.forEach(m -> {
+					m.lateInit();
+				});
+
 		final CommonViewer viewer = explorer.getCommonViewer();
 		final Display d = getDisplay();
 		if (!d.isDisposed()) {
