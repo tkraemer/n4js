@@ -146,9 +146,10 @@ public class ContentAssistContextFactory extends ParserBasedContentAssistContext
 	 * access some of its properties.
 	 * </p>
 	 *
-	 * TODO: Remove {@link #ContentAssistContextFactory(IFollowElementAcceptor)} and {@link #setParameterConfig(int)}
-	 * once https://github.com/eclipse/xtext-core/issues/120 is fixed. We only need them because we had to override and
-	 * copy method {@link ContentAssistContextFactory#computeFollowElements(Collection, Collection)}.
+	 * TODO: Remove {@link N4JSFollowElementCalculcator#N4JSFollowElementCalculcator(IFollowElementAcceptor)} and
+	 * {@link N4JSFollowElementCalculcator#setParameterConfig(int)} once
+	 * https://github.com/eclipse/xtext-core/issues/120 is fixed. We only need them because we had to override and copy
+	 * method {@link ContentAssistContextFactory#computeFollowElements(Collection, Collection)}.
 	 */
 	private static class N4JSFollowElementCalculcator extends FollowElementCalculator {
 		public N4JSFollowElementCalculcator(IFollowElementAcceptor acceptor) {
