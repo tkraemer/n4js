@@ -3729,7 +3729,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
           sneakyThrowRuleFailedException("true");
         }
       } else {
-        if (((leftDeclType instanceof VoidType) && (rightDeclType instanceof VoidType))) {
+        if (((((leftDeclType instanceof UndefinedType) || (leftDeclType instanceof NullType)) || (leftDeclType instanceof VoidType)) && (rightDeclType instanceof VoidType))) {
           /* true */
           if (!true) {
             sneakyThrowRuleFailedException("true");
