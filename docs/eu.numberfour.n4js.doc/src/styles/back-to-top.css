@@ -1,3 +1,7 @@
+
+/* =============================================================== Back to top button & TOC right Jquery =============================================== */
+
+
 a.back-to-top {
 	display: none;
 	width: 25px;
@@ -5,8 +9,8 @@ a.back-to-top {
 	text-indent: -9999px;
 	position: fixed;
 	z-index: 999;
-	right: 215px;
-	bottom: 20px;
+	right: 15%;
+	bottom: 5%;
 	background: #032c52 url("up-arrow.png") no-repeat center 43%;
 	-webkit-border-radius: 30px;
 	-moz-border-radius: 30px;
@@ -29,7 +33,6 @@ a:hover.back-to-top {
 	background: url("yellowbars.png") no-repeat center 50%;
 }
 
-/* Reposition buttons when Table of Contents is set to toc2 (right) */
 
 body.toc2.toc-right a.back-to-top {
 	width: 25px;
@@ -70,7 +73,6 @@ body.toc2.toc-right a:hover.back-to-top {
 @media only screen and (max-width: 1535px) {
 	body.toc2.toc-right #tocbutton {
 	background: url("yellowbars.png") no-repeat center 50%;
-	/* visibility: hidden; */
 	left: 98%;
 	z-index: 100000;
 }

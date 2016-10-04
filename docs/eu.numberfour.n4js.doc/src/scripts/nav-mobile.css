@@ -1,51 +1,67 @@
 #menu {
-		display:none;
-	}
+    display: none;
+    }
 
 div.slicknav_menu {
-	padding-top: 5px;
-	padding-right: 15px;
-	display:block;
-	background-color: #132445;
-	margin-left: -2rem;
-	margin-right: -2rem;
-	text-align: right;
-	right: 10px;
-	font-size: 1rem;
-	color: white
-	padding-bottom: 0;
+    padding-top: 5px;
+    padding-right: 15px;
+    background-color: #132445;
+    margin-left: -2rem;
+    margin-right: -2rem;
+    text-align: right;
+    display: none;
+    right: 10px;
+    font-size: 1rem;
+    color: white;
+    padding-bottom: 2rem;
+    background: url("n4js-logo.png");
+    background-position: 10px 10px;
+    background-size: 400px 40px;
+    background-repeat: no-repeat;
+    background-color: #132445;
 }
 
 
 div.slicknav_menu a {
-	color: white
-	font-size: large;
+    color: white
+    font-size: large;
     font-weight: 600;
 }
-div.slicknav_menu a:first-of-type {
-	font-size: 120%;
+div.slicknav_menu a.scroll {
+    font-size: 120%;
     font-weight: 600;
 }
 
 div.slicknav_menu a:hover {color: #F7D425; }
+div.slicknav_menu a:visited {color: white; }
+
+a.slicknav_btn  {
+    padding: 1rem;
+}
 
 li.slicknav_parent.slicknav_open a {
-	color: #F7D425;
+    color: #F7D425;
+    padding-top: 1rem;
 }
 
 li.slicknav_parent.slicknav_open a:hover  {
-	color: #F7D425;
+    color: #F7D425;
+}
+li.slicknav_parent.slicknav_open a:hover  {
+    color: #F7D425;
 }
 
-
-@media screen and (min-width: 890px) {
-	div.slicknav_menu {
-		display:none;
-		color: white
-	}
+@media screen and (max-width: 890px) {
+    div.slicknav_menu {
+        display: block;
+        color: white
+    }
+    #mobile-banner {
+        display: block;
+    }
 }
 
 div.slicknav_menu li:last-of-type
-	{
-		padding-bottom: 0.7rem;
-	}
+    {
+        padding-bottom: 0.7rem;
+    }
