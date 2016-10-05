@@ -123,7 +123,7 @@ Contributors:
 		<!-- xtend runtime dependencies end -->
 
 		<!-- folder for local deployments, either absolute or relative to project-root -->
-		<local-snapshot-deploy-folder>builds/eu.numberfour.n4js.product.build/target/mvn-repository</local-snapshot-deploy-folder>
+		<!-- local-snapshot-deploy-folder>builds/eu.numberfour.n4js.product.build/target/mvn-repository</local-snapshot-deploy-folder -->
 
 		<!-- Test related dependency path tragets. -->
 		<classes-unpacked>classes-unpacked</classes-unpacked>
