@@ -1,5 +1,6 @@
 :doctype: book
 :notitle:
+:toc: right
 
 .FAQ
 = FAQ

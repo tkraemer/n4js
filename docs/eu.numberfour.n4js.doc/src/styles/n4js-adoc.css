@@ -190,8 +190,10 @@ p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type
 
 /* Typography resets */
 div, dl, dt, dd, ul, ol, li, h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6, pre, form, p, blockquote, th, td { margin: 0; padding: 0; direction: ltr; }
-div.openblock.partintro, div.sectionbody.paragraph {font-weight: 500;  line-height: 1.4; margin-bottom: 1em; max-width: 66% }
+div.openblock.partintro, div.sectionbody.paragraph {font-weight: 500;  line-height: 1.4; margin-bottom: 1em; }
 div.sect1 {padding-top: 1rem;}
+
+div.paragraph.faq-intro {max-width: 66%;}
 
 
 /* Default Link Styles */
@@ -1270,6 +1272,9 @@ body.toc2.toc-right a:hover.back-to-top {
 	a.back-to-top {
 	left: 90%;
 }
+
+
+
 
 /* ========================================================================== AsciiSpec ======================================================================= */
 .requirement {
