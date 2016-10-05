@@ -176,7 +176,13 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 	private def void internalCheckAwaitingAPromise(AwaitExpression awaitExpression) {
 		val Expression subExpr = awaitExpression.getExpression();
+		if(subExpr===null) {
+			return; // broken AST
+		}
 		val TypeRef typeRef = ts.tau(subExpr, awaitExpression);
+		if(typeRef===null) {
+			return; // some error (probably broken AST)
+		}
 		val G = RuleEnvironmentExtensions.newRuleEnvironment(awaitExpression);
 		val scope = G.predefinedTypes.builtInTypeScope;
 		val einst = TypeRefsFactory.eINSTANCE;
@@ -1371,7 +1377,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		if (receiverTypeRefRaw === null || receiverTypeRefRaw instanceof UnknownTypeRef) {
 			return; // error otherwise or corrupt AST
 		}
-		val receiverTypeRef = TypeUtils.resolveTypeVariable(ts.upperBound(G, receiverTypeRefRaw).value);
+		val receiverTypeRef = ts.resolveType(G, receiverTypeRefRaw);
 		val isComputedName = (indexedAccess.index instanceof StringLiteral)
 		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(indexedAccess.index);
 		val accessedStaticType = if(receiverTypeRef instanceof TypeTypeRef) tsh.getStaticType(G, receiverTypeRef);

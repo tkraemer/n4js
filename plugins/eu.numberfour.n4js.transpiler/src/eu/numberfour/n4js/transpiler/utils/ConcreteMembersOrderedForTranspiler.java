@@ -144,12 +144,17 @@ public class ConcreteMembersOrderedForTranspiler {
 	 * Maps getters and setters to {@link AccessorTuple}s, used to generate proper setters-getters-pairs for property.
 	 * The passed maps may be changed!
 	 *
+	 * @param getters
+	 *            list of getters
+	 * @param fields
+	 *            list of fields
 	 * @param io_setters
 	 *            map with owned getters, this map may be changed by this method
 	 * @param io_inheritedGetters
 	 *            map with inherited getters, this map may be changed by this method
 	 * @param io_inheritedSetters
 	 *            map with inherited getters, this map may be changed by this method
+	 * @return list of accessor tuples.
 	 */
 	private static List<AccessorTuple> mapToAccessorTuples(Iterable<TGetter> getters,
 			Map<NameStaticPair, TSetter> io_setters, Iterable<TField> fields,
@@ -157,6 +162,7 @@ public class ConcreteMembersOrderedForTranspiler {
 			Map<NameStaticPair, TSetter> io_inheritedSetters) {
 		List<AccessorTuple> tuples = new ArrayList<>();
 
+		// add getters (alone & with corresponding setter)
 		for (TGetter getter : getters) {
 			AccessorTuple tuple = new AccessorTuple(getter.getName(), getter.isStatic());
 			tuple.setGetter(getter);
@@ -178,6 +184,7 @@ public class ConcreteMembersOrderedForTranspiler {
 		}
 
 		// owned fields overriding inherited getters or setters
+		// remove the inherited references - the field will overwrite them.
 		for (TField field : fields) {
 			NameStaticPair nsp = NameStaticPair.of(field);
 			io_inheritedSetters.remove(nsp);
@@ -192,6 +199,7 @@ public class ConcreteMembersOrderedForTranspiler {
 					&&
 					(inhSetter.getContainingType() instanceof TInterface
 							|| inhGetter.getContainingType() instanceof TInterface)) {
+				// getter & setter are inherited from different types.
 				AccessorTuple tuple = new AccessorTuple(inhSetter.getName(), inhSetter.isStatic());
 				tuple.setInheritedGetter(inhGetter);
 				tuple.setInheritedSetter(inhSetter);

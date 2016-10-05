@@ -140,3 +140,8 @@ jackson
 localhost
 jetty
 nullable
+vs.
+maven
+src
+namespace
+classpath

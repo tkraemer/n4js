@@ -23,6 +23,7 @@ import org.xpect.xtext.lib.tests.ValidationTest;
 import eu.numberfour.n4js.xpect.AccessModifierAxpectMethod;
 import eu.numberfour.n4js.xpect.FormatterXpectMethod;
 import eu.numberfour.n4js.xpect.TypeXpectMethod;
+import eu.numberfour.n4js.xpect.references.FindReferencesXpectMethod;
 import eu.numberfour.n4js.xpect.scoping.ScopeXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
 import eu.numberfour.n4js.xpect.validation.ReturnXpectMethod;
@@ -41,6 +42,7 @@ import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 		ResourceDescriptionTest.class,
 		ValidationTest.class,
 		FormatterXpectMethod.class,
+		FindReferencesXpectMethod.class
 })
 @RunWith(XpectRunner.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "model", fileExtensions = { "xt" })

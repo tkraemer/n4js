@@ -602,7 +602,6 @@ public class IncompleteApiImplementationTest extends AbstractN4jscTest {
 	}
 
 	/**  */
-	@Ignore("IDEBUG-863")
 	@Test
 	public void testfield_vs_getset_D() throws ExitCodeException, IOException {
 		System.out.println(logMethodname());

@@ -1,0 +1,18 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+@Promisifiable
+function foo1(a: int, callback: {function(Error, int):void}?): number { return 0; }
+
+@Promisifiable
+function foo2(a: int, callback: {function(Error, int):void}?) {}
+
+async function bar() {
+	// XPECT type of 'foo1(5)' --> Promise<int, Error>
+    // XPECT nowarnings --> "await should only be used on expressions of type Promise<?,?> since otherwise it has no effect."
+    await foo1(5);
+	// XPECT type of 'foo2(5)' --> Promise<int, Error>
+    // XPECT nowarnings --> "await should only be used on expressions of type Promise<?,?> since otherwise it has no effect."
+    await foo2(5);
+}
+

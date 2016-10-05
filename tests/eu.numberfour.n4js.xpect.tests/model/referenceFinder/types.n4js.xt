@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+// Bug of x-pect. Ask Moritz, he knows. IDE-1662 XPECT FIXME findReferences at T -->  T - 10, T - 16
+class T {}
+
+// Bug of x-pect. Ask Moritz, he knows. IDE-1662 XPECT FIXME findReferences at J -->  J - 12, T - 19
+interface J {}
+
+
+T;
+
+J;
+
+
+// Bug of x-pect. Ask Moritz, he knows. IDE-1662 XPECT FIXME findReferences at E -->  E - 21, E - 23
+class E extends T {}
+
+// Bug of x-pect. Ask Moritz, he knows. IDE-1662 XPECT FIXME findReferences at I -->  I - 21, I - 23
+interface I extends J {}
+
+function foo1(e : E) : I { return null; }
+
+function foo2(i : I) : E { return null; }
