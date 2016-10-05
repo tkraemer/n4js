@@ -1,6 +1,18 @@
 :experimental:
 
+[discrete]
+=== Quick Setup & Commands
+
+Prerequisites: ::
+**http://asciidoctor.org/[AsciiDoctor]** RubyGem can be installed with the following:
++
+[source,bash]
+----
+gem install asciidoctor
+----
+
 Eclipse Help Build: ::
++
 [source,bash]
 ----
 cd n4js/docs/eu.numberfour.n4js.doc
@@ -8,6 +20,8 @@ mvn -Dtycho.mode=maven verify
 ----
 
 HTML for Web: ::
+(Requires **http://asciidoctor.org/[AsciiDoctor]** RubyGem)
++
 [source,bash]
 ----
 cd n4js/docs/eu.numberfour.n4js.doc/src
@@ -16,14 +30,11 @@ cd n4js/docs/eu.numberfour.n4js.doc/src
 
 = N4JS IDE Documentation
 
-
-
 Contributions to the source code and documentation of N4JS are highly encouraged.
 Updating, maintaining and improving documentation can be done by experts or complete beginners alike.
 Bring your experience or fresh perspectives to enrich help resources that assist N4JS developers everywhere.
 
 == How to Contribute
-
 
 All documentation for N4JS is written in AsciiDoc (`.adoc` format) and is deployed using a single-source toolchain described below.
 The source AsciiDoc documentation is located in the NumberFour N4JS repository at:
