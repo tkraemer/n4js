@@ -1,0 +1,13 @@
+ProjectId: ReferenceFinderPolyfill
+VendorId: eu.numberfour
+VendorName: "NumberFour AG"
+ProjectType: library
+ProjectVersion: 0.0.1-SNAPSHOT
+Output: "src-gen"
+Sources {
+	source { 
+		"src/n4js"    // hand crafted code.
+		,"src/n4js-gen" // generated results.
+		,"src/n4js_2" // another folder to check validations of overlapping fillings. 
+	}
+}

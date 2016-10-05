@@ -1,0 +1,37 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+export public class A {
+// IDE-1662 XPECT FIXME findReferences at a --> b.a - 30, union.a - 25
+	a : A;
+// IDE-1662 XPECT FIXME findReferences at i --> b.i - 31, union.i - 26
+	i : int;
+// IDE-1662 XPECT FIXME findReferences at foo --> b.foo - 32, union.foo - 26
+	foo(){};
+}
+
+interface I {
+// IDE-1662 XPECT FIXME findReferences at a --> j.a - 35, union.a - 25
+	a : A;
+// IDE-1662 XPECT FIXME findReferences at i --> j.i - 36, union.i - 26
+	i : int;
+// IDE-1662 XPECT FIXME findReferences at foo --> j.foo - 37, union.foo - 27
+	foo(){};
+}
+
+class AI extends A implements I {}
+
+
+var union : A | I;
+union.a;
+union.i;
+union.foo();
+
+var b : A;
+b.a;
+b.i;
+b.foo();
+
+var j : I;
+j.a;
+j.i;
+j.foo();

@@ -51,16 +51,18 @@ import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
  * Working set manager based on Git repositories.
  */
 @SuppressWarnings("restriction")
-public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
+public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl implements IDeferredInitializer {
 
 	private final RepositoryCache repositoryCache;
 	private final IPreferenceChangeListener repositoryChangeListener;
+
+	private boolean deferredInitializerSucceeded = false;
 
 	/**
 	 * Sole constructor for creating the working set manager. Internally initializes the cache for repositories.
 	 */
 	public GitRepositoryAwareWorkingSetManager() {
-		repositoryCache = Activator.getDefault().getRepositoryCache();
+		repositoryCache = Activator.getDefault().getRepositoryCache(); // might not be initialized yet.
 		repositoryChangeListener = new IPreferenceChangeListener() {
 
 			@SuppressWarnings("deprecation")
@@ -152,9 +154,31 @@ public class GitRepositoryAwareWorkingSetManager extends WorkingSetManagerImpl {
 	@Override
 	protected List<WorkingSet> initializeWorkingSets() {
 		final Collection<Repository> repositories = newArrayList(repositoryCache.getAllRepositories());
+
+		// we cannot query the cache about its state
+		// so if we get no repository at all, we assume it has not been initialized yet
+		deferredInitializerSucceeded = !repositories.isEmpty();
+
 		repositories.add(null); // For 'Other Projects'.
 		return newArrayList(from(repositories)
 				.transform(repository -> new GitRepositoryWorkingSet(repository, this)));
+	}
+
+	@Override
+	public boolean isInitializationRequired() {
+		return !deferredInitializerSucceeded;
+	}
+
+	@Override
+	public boolean lateInit() {
+
+		if (deferredInitializerSucceeded) {
+			return true;
+		}
+
+		restoreState(new NullProgressMonitor());
+
+		return deferredInitializerSucceeded;
 	}
 
 	/**
