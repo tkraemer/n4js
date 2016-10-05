@@ -1,3 +1,6 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
 class A {} class B extends A {}
 var a : A;
 var bot : undefined;
@@ -19,6 +22,7 @@ var p_top = function f_top(a : any) { }
 var p_bot = function f_bot(b : undefined) {  }
  
 var c = function f():A { return null; }
+// XPECT errors --> "null is not a subtype of undefined." at "null"
 var c_top = function f(): undefined { return null; }
 var c_bot = function f_bot() { return null; }
 
