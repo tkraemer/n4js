@@ -36,8 +36,10 @@
 }
 
 @media only screen and (max-width: 890px) {
+
   #menubar > ul > li, #menubar {
     visibility: hidden;
+    display: none;
   }
 }
 

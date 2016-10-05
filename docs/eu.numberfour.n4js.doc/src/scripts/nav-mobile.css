@@ -26,15 +26,12 @@ span.slicknav_menutxt {
     color: white;
 }
 
-
-div.slicknav_menu a {
-    color: white
-    font-size: large;
-    font-weight: 600;
-}
-div.slicknav_menu a.scroll {
+div.slicknav_menu a.scroll:first-of-type {
     font-size: 120%;
     font-weight: 600;
+}
+div.slicknav_menu ul li {
+    color: white;
 }
 
 div.slicknav_menu a:hover {color: #F7D425; }
@@ -44,16 +41,12 @@ a.slicknav_btn  {
     padding: 1rem;
 }
 
-li.slicknav_parent.slicknav_open a {
+li.slicknav_parent.slicknav_open a:first-of-type, a:hover {
     color: #F7D425;
-    padding-top: 1rem;
 }
 
-li.slicknav_parent.slicknav_open a:hover  {
-    color: #F7D425;
-}
-li.slicknav_parent.slicknav_open a:hover  {
-    color: #F7D425;
+li.slicknav_parent.slicknav_open  {
+    color: white;
 }
 
 @media screen and (max-width: 890px) {
@@ -65,9 +58,17 @@ li.slicknav_parent.slicknav_open a:hover  {
         display: block;
     }
 }
+
 @media screen and (max-width: 470px) {
 div.slicknav_menu ul:first-of-type {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
+}
+
+div.slicknav_menu ul li {
+    color: white;
+}
+div.slicknav_menu ul li:hover {
+    color: #F7D425;
 }
 }
 div.slicknav_menu li:last-of-type
