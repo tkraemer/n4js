@@ -899,7 +899,377 @@ div.title:first-of-type {
 #div.paragraph.faq-intro {
 	max-width: 66.66%
 }
+/* ========================================================================== Mobile Menu ======================================================================= */
+#menu {
+    display: none;
+    }
 
+div.slicknav_menu {
+    padding-top: 5px;
+    padding-right: 15px;
+    background-color: #132445;
+    margin-left: -2rem;
+    margin-right: -2rem;
+    text-align: right;
+    display: none;
+    right: 10px;
+    font-size: 1rem;
+    color: white;
+    padding-bottom: 2rem;
+    background: url("n4js-logo.png");
+    background-position: 10px 10px;
+    background-size: 344.48px 40px;
+    background-repeat: no-repeat;
+    background-color: #132445;
+}
+
+span.slicknav_menutxt {
+    margin-right: -20px;
+    color: white;
+}
+
+div.slicknav_menu a.scroll:first-of-type {
+    color: #F7D425;
+    font-size: 120%;
+    font-weight: 600;
+}
+div.slicknav_menu ul li a {
+    color: white;
+}
+div.slicknav_menu ul li a:hover {
+    color: #F7D425;
+}
+
+div.slicknav_menu a:hover {color: #F7D425; }
+div.slicknav_menu a:visited {color: white; }
+div.slicknav_menu a {color: white;}
+a.slicknav_btn  {
+    padding: 1rem;
+}
+
+
+li.slicknav_parent.slicknav_open {
+    color: white;
+}
+
+li.slicknav_parent.slicknav_open  {
+    color: white;
+}
+
+@media screen and (max-width: 890px) {
+    div.slicknav_menu {
+        display: block;
+        color: white
+    }
+    #mobile-banner {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 470px) {
+div.slicknav_menu ul:first-of-type {
+    margin-top: 1.5rem;
+}
+
+div.slicknav_menu ul li {
+    color: white;
+}
+div.slicknav_menu ul li:hover {
+    color: #F7D425;
+}
+}
+div.slicknav_menu li:last-of-type
+    {
+        padding-bottom: 0.7rem;
+    }
+/* ========================================================================== NavMenu ======================================================================= */
+
+.banner {
+  height: 1rem;
+  padding-right: 2rem;
+  max-height: 1rem;  
+  max-width: 50%;
+  vertical-align: middle;
+
+  @media (max-width: 800px) {
+    flex-basis: 66.666%%;
+    max-width: 25%;
+    margin: 1rem;
+
+  }
+}
+
+
+
+#menubar ul { margin: 0; padding: 0; white-space:nowrap; padding-left: 10px; padding-right: 10px; line-height: 2rem;}
+#menubar li { margin: 0; padding: 0;   }
+#menubar a { margin: 0; padding: 0;}
+#menubar ul {list-style: none; text-align: right;}
+#menubar a {text-decoration: none;}
+#menubar li {margin-left: 0;}
+#menubar {height: 70px; background-color: #132445; /* box-shadow: 0px 2px 3px rgba(0,0,0,.4); */ position: relative; padding-right: 2rem; margin-left: -2rem;  margin-right: -2rem;  color: white; font-size: 1.9rem;}
+
+
+#menubar > ul > li {
+
+    display:inline-block;
+    margin: 0.2rem;
+    position: relative;
+    z-index: 10000;
+    flex-basis: 66.666%%;
+    font-weight: 700;
+
+}
+
+@media only screen and (max-width: 890px) {
+
+  #menubar > ul > li, #menubar {
+    visibility: hidden;
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+#menubar {
+  display: none;
+}
+
+#logo {
+  margin-top: -55px;
+}
+
+}
+
+#logo {
+  height: 40px;
+  width: 344.8px;
+  margin-left: 40px;
+  margin-top: 17px;
+  position: relative;
+  overflow: hidden;
+}
+
+#menubar > ul > li::after {
+    content: " · ";
+    position: relative;
+    top: 3px;
+    padding-left: 3px;
+    font-weight: 400;
+}
+
+#menubar > ul > li:last-of-type::after {
+  content: none;
+}
+#menubar > ul > li:last-of-type {
+  padding-right: -1rem;
+}
+
+#menubar > ul > li > a {
+    color: #FFFFFF;
+    font-size:  1.2rem;
+    line-height: 50px; 
+    font-weight: 400;
+    /* padding-top: 2rem; */
+    webkit-transition: color .15s;
+    -moz-transition: color .15s;
+    -o-transition: color .15s;
+    transition: color .15s;
+    white-space:nowrap; 
+    -webkit-font-smoothing: auto;
+    letter-spacing: -.01em;
+    padding-top: 0.2em;
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+}
+
+#menubar > ul {
+    margin-right: 12px;
+    margin-top: 1px;
+}
+
+#menubar > ul > li > a:hover {color: #F7D425; }
+body.home li.home, body.tech li.tech {font-weight:bold; }
+
+#menubar > ul > li > ul {
+    opacity: 0;
+    visibility: hidden;
+    padding: 18px 0 20px 0;
+    background-color: #FFFFFF; /* rgb(15,26,54); top menu color */
+    text-align: left;
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    margin-left: -90px;
+-webkit-transition: all .3s .1s;
+   -moz-transition: all .3s .1s;
+     -o-transition: all .3s .1s;
+        transition: all .3s .1s;
+-webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+        border-radius: 5px;
+-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+   -moz-box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+        box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+}
+
+#menubar > li li {
+    width:100%;
+}
+
+#menubar > ul > li:hover > ul {
+    opacity: 1;
+    top: 65px;
+    visibility: visible;
+}
+
+#menubar > ul > li > ul:before{
+    content: '';
+    display: block;
+    border-color: transparent transparent #FFFFFF transparent;
+    border-style: solid;
+    border-width: 10px;
+    position: absolute;
+    top: -20px;
+    left: 10%;
+    margin-left: -10px;
+}
+
+#menubar > ul ul > li { position: relative;}
+
+#menubar ul ul a{
+    color: rgb(50,50,50);
+    font-family: "ITC Officina Serif W01", Verdana, 'Lucida Grande';
+    font-size: 17px;
+    background-color: #FFFFFF; /* rgb(15,26,54); top menu color */
+    padding: 5px 8px 7px 16px;
+    display: block;
+-webkit-transition: background-color .1s;
+   -moz-transition: background-color .1s;
+     -o-transition: background-color .1s;
+        transition: background-color .1s;
+}
+
+#menubar ul ul a:hover {background-color: #244D82; color: #F7D425;}
+
+#menubar ul ul ul {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: -16px;
+    left: 206px;
+    padding: 16px 0 20px 0;
+    background-color: #527AA3;
+    text-align: left;
+    width: 160px;
+-webkit-transition: all .3s;
+   -moz-transition: all .3s;
+     -o-transition: all .3s;
+        transition: all .3s;
+-webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+        border-radius: 5px;
+-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+   -moz-box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+        box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+}
+
+
+#menubar ul ul > li:hover > ul { opacity: 1; left: 196px; visibility: visible;}
+
+
+#menubar ul ul a:hover{
+    background-color: #244D82;
+    color: #F7D425;
+}
+
+/* ========================================================================== Back-to-top button ======================================================================= */
+
+a.back-to-top {
+	display: none;
+	width: 25px;
+	height: 25px;
+	text-indent: -9999px;
+	position: fixed;
+	z-index: 999;
+	right: 15%;
+	bottom: 5%;
+	background: #032c52 url("up-arrow.png") no-repeat center 43%;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}
+
+a:hover.back-to-top {
+	background-color: #F7D425 ;
+}
+#tocbutton {
+	visibility: hidden;
+}
+
+#tocbuttonbars.fa.fa-bars {
+	z-index: 1000;
+	right: 0;
+}
+
+#tocbutton:hover {
+	background: url("yellowbars.png") no-repeat center 50%;
+}
+
+
+body.toc2.toc-right a.back-to-top {
+	width: 25px;
+	height: 25px;
+	text-indent: -9999px;
+	position: fixed;
+	z-index: 1001;
+	right: 90px;
+	bottom: 20px;
+	background: #032c52 url("up-arrow.png") no-repeat center 43%;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}
+
+body.toc2.toc-right #tocbutton {
+	visibility: visible;
+	width: 25px;
+	height: 25px;
+	text-indent: -9999px;
+	position: fixed;
+	z-index: 998;
+	border: none;
+	right: 25px;
+	top: 5px;
+	background: url("bars.png") no-repeat center 50%;
+}
+
+body.toc2.toc-right #tocbutton:hover {
+	background-color: #e3f2ff;
+	background: url("yellowbars.png") no-repeat center 50%;
+}
+
+body.toc2.toc-right a:hover.back-to-top {
+	background-color: #F7D425 ;
+}
+
+@media only screen and (max-width: 1535px) {
+	body.toc2.toc-right #tocbutton {
+	background: url("yellowbars.png") no-repeat center 50%;
+	left: 98%;
+	z-index: 100000;
+}
+@media only screen and (max-width: 1434px) {
+	body.toc2.toc-right #tocbutton {
+	visibility: hidden;
+}
+
+@media only screen and (min-width: ) 
+
+
+@media only screen and (max-width: 1462px) {
+	a.back-to-top {
+	left: 90%;
+}
 
 /* ========================================================================== AsciiSpec ======================================================================= */
 .requirement {
