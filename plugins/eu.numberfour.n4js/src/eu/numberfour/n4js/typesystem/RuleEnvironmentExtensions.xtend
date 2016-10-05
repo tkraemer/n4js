@@ -725,10 +725,10 @@ class RuleEnvironmentExtensions {
 		// ignore DeferredTypeRefs
 		if (value instanceof DeferredTypeRef)
 			return false;
-		// ignore null and undefined (null and undefined do not provide any clue about key's type)
+		// ignore null (null does not provide any clue about key's type)
 		if (value instanceof ParameterizedTypeRef)
-			if (value.declaredType instanceof NullType || value.declaredType instanceof UndefinedType)
-				return false; // FIXME is this ok???
+			if (value.declaredType instanceof NullType)
+				return false;
 		return true;
 	}
 

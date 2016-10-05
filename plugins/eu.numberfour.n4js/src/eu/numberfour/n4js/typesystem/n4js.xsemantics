@@ -1222,16 +1222,13 @@ from {
 		true;
 	} else if (leftDeclType.eIsProxy || rightDeclType.eIsProxy) {
 		true;
-	} else if ((leftDeclType instanceof UndefinedType || leftDeclType instanceof NullType || leftDeclType instanceof VoidType)
-				&& rightDeclType instanceof VoidType) {
+	} else if (leftDeclType instanceof UndefinedType
+				|| (leftDeclType instanceof NullType && !(rightDeclType instanceof UndefinedType || rightDeclType instanceof VoidType))
+				|| (rightDeclType instanceof AnyType && !(leftDeclType instanceof VoidType))) {
 		true
 	} else if (leftDeclType instanceof VoidType
 				|| rightDeclType instanceof VoidType) {
-		false
-	} else if (leftDeclType instanceof NullType
-				|| leftDeclType instanceof UndefinedType
-				|| rightDeclType instanceof AnyType) {
-		true
+		leftDeclType instanceof VoidType && rightDeclType instanceof VoidType
 	} else if ((leftDeclType === G.intType && rightDeclType === G.numberType)
 				|| (leftDeclType === G.numberType && rightDeclType === G.intType)) {
 		true // int <: number AND number <: int (for now, int and number are synonymous)
