@@ -33,11 +33,11 @@ Contributors:
 				<!-- Enable deploy: -->
 					<executions>
 						<execution>
-							<id>default-deploy</id>
+							<id>deploy-to-local-build-repo</id>
 							<!-- rebind to default phase 'deploy' -->
 							<phase>deploy</phase>
 							<configuration>
-								<altDeploymentRepository>snapshot-repo::default::file:${local-snapshot-deploy-folder}</altDeploymentRepository>
+								<altDeploymentRepository>snapshot-repo::local-build-repo::file:${local-snapshot-deploy-folder}</altDeploymentRepository>
 							</configuration>
 						</execution>
 					</executions>
