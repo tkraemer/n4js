@@ -27,22 +27,27 @@ span.slicknav_menutxt {
 }
 
 div.slicknav_menu a.scroll:first-of-type {
+    color: #F7D425;
     font-size: 120%;
     font-weight: 600;
 }
-div.slicknav_menu ul li {
+div.slicknav_menu ul li a {
     color: white;
+}
+div.slicknav_menu ul li a:hover {
+    color: #F7D425;
 }
 
 div.slicknav_menu a:hover {color: #F7D425; }
 div.slicknav_menu a:visited {color: white; }
-
+div.slicknav_menu a {color: white;}
 a.slicknav_btn  {
     padding: 1rem;
 }
 
-li.slicknav_parent.slicknav_open a:first-of-type, a:hover {
-    color: #F7D425;
+
+li.slicknav_parent.slicknav_open {
+    color: white;
 }
 
 li.slicknav_parent.slicknav_open  {
