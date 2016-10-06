@@ -1140,7 +1140,7 @@ body.home li.home, body.tech li.tech {font-weight:bold; }
 
 #menubar ul ul a{
     color: rgb(50,50,50);
-    font-family: ITC Officina Serif W01, Verdana, 'Lucida Grande';
+    font-family: ITC Officina Serif W01, sans-serif, Verdana, 'Lucida Grande';
     font-size: 17px;
     background-color: #FFFFFF; /* rgb(15,26,54); top menu color */
     padding: 5px 8px 7px 16px;
