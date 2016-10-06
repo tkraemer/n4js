@@ -256,7 +256,8 @@ public class NpmPackageToProjectAdapter {
 		String packageName = packageRoot.getName();
 		File packageN4JSDsRoot = new File(definitionsFolder, packageName);
 		if (!(packageN4JSDsRoot.exists() && packageN4JSDsRoot.isDirectory())) {
-			LOGGER.info("No type definitions found for '" + packageName + "' npm package.");
+			LOGGER.info("No type definitions found for '" + packageRoot + "' npm package at '" + packageN4JSDsRoot + "'"
+					+ (!packageN4JSDsRoot.isDirectory() ? " (which is not a directory)" : "") + ".");
 			return statusHelper.OK();
 		}
 
