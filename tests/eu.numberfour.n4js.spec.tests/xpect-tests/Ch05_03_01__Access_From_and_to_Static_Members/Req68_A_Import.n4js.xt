@@ -2,12 +2,12 @@
     
     ResourceSet {
 		ThisFile {}
-		File "Constraint_61_A_Export.n4js.xt" {}
+		File "Req68_Write_Access_Static_Member.n4js.xt" {}
 	}
    
    END_SETUP
  */
-import {C1 as RenamedC1,C2 as RenamedC2} from "Ch05_03_01__Accessing_Static_Members/Constraint_61_A_Export";
+import {C1 as RenamedC1,C2 as RenamedC2} from "Ch05_03_01__Access_From_and_to_Static_Members/Req68_Write_Access_Static_Member";
 
 class C3 extends RenamedC1 {}
 class C4 extends RenamedC2 {}

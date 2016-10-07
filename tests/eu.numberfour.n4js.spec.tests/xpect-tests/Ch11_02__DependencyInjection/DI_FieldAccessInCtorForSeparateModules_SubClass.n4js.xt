@@ -7,8 +7,8 @@
    END_SETUP 
  */
 
-import { A } from "Ch11_01__DependencyInjection/DI_FieldAccessInCtorForSeparateModules_SuperClass"
-import { B } from "Ch11_01__DependencyInjection/DI_FieldAccessInCtorForSeparateModules_SuperClass"
+import { A } from "Ch11_02__DependencyInjection/DI_FieldAccessInCtorForSeparateModules_SuperClass"
+import { B } from "Ch11_02__DependencyInjection/DI_FieldAccessInCtorForSeparateModules_SuperClass"
 
 class C extends A {
 	constructor() {

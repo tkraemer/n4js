@@ -6,12 +6,12 @@
 stdout:
 N4Object.n4type.fqn:      N4BuiltInClasses.N4Object
 N4Class.n4type.fqn:       N4BuiltInClasses.N4Class
-A.n4type.fqn:             Ch07_04_Reflection.Example58_ReflectionWithBuiltInTypes.A
+A.n4type.fqn:             Ch07_04_Reflection_Meta_Information.Example58_ReflectionWithBuiltInTypes.A
 A.n4type.n4superType.fqn: N4BuiltInClasses.N4Object
-C.n4type.fqn:             Ch07_04_Reflection.Example58_ReflectionWithBuiltInTypes.C
+C.n4type.fqn:             Ch07_04_Reflection_Meta_Information.Example58_ReflectionWithBuiltInTypes.C
 C.n4type.n4superTyp.fqn:  N4BuiltInClasses.N4Object
-D.n4type.fqn:             Ch07_04_Reflection.Example58_ReflectionWithBuiltInTypes.D
-D.n4type.n4superType.fqn: Ch07_04_Reflection.Example58_ReflectionWithBuiltInTypes.A
+D.n4type.fqn:             Ch07_04_Reflection_Meta_Information.Example58_ReflectionWithBuiltInTypes.D
+D.n4type.n4superType.fqn: Ch07_04_Reflection_Meta_Information.Example58_ReflectionWithBuiltInTypes.A
 stderr:
 ==>
 --- */
