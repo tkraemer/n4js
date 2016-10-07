@@ -19,7 +19,7 @@
 // for which we do not provide any implementation)
 
 
-import { Color } from "Ch04_14_02__StringBasedEnums/useCase/SomeSBEnum"
+import { Color } from "Ch04_13_02__StringBasedEnums/useCase/SomeSBEnum"
 
 
 console.log(Color.RED);
