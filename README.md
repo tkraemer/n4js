@@ -86,6 +86,14 @@ mvn clean verify
 
 You may have to increase the memory for maven via ```export MAVEN_OPTS="-Xmx2048m"``` (Unix) or ```set MAVEN_OPTS="-Xmx2048m"``` (Windows).
 
+### Publish maven-tooling  ```eu.numberfour.n4js.releng.util```
+NOTE: For extending the N4JS-language in different project, the ```eu.numberfour.n4js.releng.util``` module needs to be published as a maven-plugin. You can deploy this SNAPSHOT-artifact to a local folder by providing the ```local-snapshot-deploy-folder```-property pointing to an absolute path in the local file system:
+
+```
+mvn clean deploy -Dlocal-snapshot-deploy-folder=/var/lib/my/folder/local-mvn-deploy-repository
+```
+The existence of ```local-snapshot-deploy-folder``` will trigger a profile enabling the deploy-goal for the project ```eu.numberfour.n4js.releng.util```      
+
 ## License
 
 Copyright (c) 2016 NumberFour AG.
