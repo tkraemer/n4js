@@ -36,8 +36,11 @@ Contributors:
 							<id>deploy-to-local-build-repo</id>
 							<!-- rebind to default phase 'deploy' -->
 							<phase>deploy</phase>
+							<goals>
+								<goal>deploy</goal>
+							</goals>
 							<configuration>
-								<altDeploymentRepository>snapshot-repo::local-build-repo::file:${local-snapshot-deploy-folder}</altDeploymentRepository>
+								<altDeploymentRepository>local-build-repo::default::file:${local-snapshot-deploy-folder}</altDeploymentRepository>
 							</configuration>
 						</execution>
 					</executions>
