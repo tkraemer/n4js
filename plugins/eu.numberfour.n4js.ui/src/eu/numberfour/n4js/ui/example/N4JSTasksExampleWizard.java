@@ -20,15 +20,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 import com.google.inject.Inject;
 
-import eu.numberfour.n4js.binaries.IllegalBinaryStateException;
 import eu.numberfour.n4js.external.ExternalLibraryWorkspace;
 import eu.numberfour.n4js.external.NpmManager;
 import eu.numberfour.n4js.external.TargetPlatformInstallLocationProvider;
+import eu.numberfour.n4js.ui.internal.N4JSActivator;
 
 /**
  * Wizard for the {@code N4JS Tasks Example} projects.
@@ -66,20 +70,25 @@ public class N4JSTasksExampleWizard extends ExampleInstallerWizard {
 			getContainer().run(true, false, new IRunnableWithProgress() {
 				@Override
 				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-					try {
-						for (String name : toInstall) {
-							monitor.subTask("Install dependency " + name);
-							npmManager.installDependency(name, monitor);
+					for (String name : toInstall) {
+						try {
+							monitor.subTask("Installing dependency '" + name + "'");
+							IStatus status = npmManager.installDependency(name, monitor);
+							if (status.matches(IStatus.ERROR))
+								throw status.getException();
+						} catch (Throwable e) {
+							throw new InvocationTargetException(e,
+									"An error occurred while installing dependency '" + name + "'");
 						}
-					} catch (IllegalBinaryStateException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
 				}
 			});
 		} catch (InvocationTargetException | InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			String pluginId = N4JSActivator.getInstance().getBundle().getSymbolicName();
+			IStatus status = new Status(IStatus.ERROR, pluginId, e.getCause().getMessage(), e.getCause());
+
+			ErrorDialog.openError(getShell(), "Error", e.getMessage(), status);
+			StatusManager.getManager().handle(status);
 		}
 	}
 
