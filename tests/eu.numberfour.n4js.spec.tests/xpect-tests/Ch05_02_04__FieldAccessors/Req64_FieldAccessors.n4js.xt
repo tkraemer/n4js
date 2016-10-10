@@ -6,7 +6,7 @@ class A {
 	// XPECT errors --> "Void is not a valid type for getters and setters." at "name"
 	public get name() : void {} 
 
-	// XPECT errors --> "Void is not a valid type for getters and setters." at "name"
+	// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
 	public set name(p : void) {}
 }
 
@@ -16,7 +16,7 @@ interface I {
 	// XPECT errors --> "Void is not a valid type for getters and setters." at "name"
 	public get name() : void
 
-	// XPECT errors --> "Void is not a valid type for getters and setters." at "name"
+	// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
 	public set name(p : void)
 }
 

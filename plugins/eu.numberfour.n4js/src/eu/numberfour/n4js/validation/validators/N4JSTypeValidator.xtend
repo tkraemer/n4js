@@ -15,7 +15,9 @@ import eu.numberfour.n4js.n4JS.AssignmentExpression
 import eu.numberfour.n4js.n4JS.AssignmentOperator
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ExpressionAnnotationList
+import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.GenericDeclaration
+import eu.numberfour.n4js.n4JS.GetterDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
@@ -31,6 +33,7 @@ import eu.numberfour.n4js.scoping.utils.AbstractDescriptionWithError
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
@@ -52,6 +55,8 @@ import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.ts.types.TypeVariable
+import eu.numberfour.n4js.ts.types.VoidType
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
@@ -78,6 +83,7 @@ import static eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage.Literals.PARAMETERI
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.n4JS.ParameterizedAccess
 
 /**
  * Class for validating the N4JS types.
@@ -155,16 +161,51 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		if (declaredType === null || declaredType.eIsProxy) {
 			return;
 		}
-		if (paramTypeRef.eContainer instanceof TypeTypeRef || (paramTypeRef.eContainer instanceof Wildcard
-			&& paramTypeRef.eContainer.eContainer instanceof TypeTypeRef)) {
 
+		val isInTypeTypeRef = paramTypeRef.eContainer instanceof TypeTypeRef || (
+			paramTypeRef.eContainer instanceof Wildcard && paramTypeRef.eContainer.eContainer instanceof TypeTypeRef);
+
+		internalCheckValidLocationForVoid(paramTypeRef);
+		if (isInTypeTypeRef) {
 			internalCheckValidTypeInTypeTypeRef(paramTypeRef);
-			return;
+		} else {
+			internalCheckTypeArguments(declaredType.typeVars, paramTypeRef.typeArgs, false,
+				declaredType, paramTypeRef, TypeRefsPackage.eINSTANCE.parameterizedTypeRef_DeclaredType);
 		}
-
-		internalCheckTypeArguments(declaredType.typeVars, paramTypeRef.typeArgs, false,
-			declaredType, paramTypeRef, TypeRefsPackage.eINSTANCE.parameterizedTypeRef_DeclaredType);
 		internalCheckDynamic(paramTypeRef);
+	}
+
+	/**
+	 * Requirements 13, Void type.
+	 */
+	def private void internalCheckValidLocationForVoid(ParameterizedTypeRef typeRef) {
+		if (typeRef.declaredType instanceof VoidType && !isValidLocationForVoid(typeRef)) {
+			addIssue(IssueCodes.getMessageForTYS_VOID_AT_WRONG_LOCATION, typeRef, TYS_VOID_AT_WRONG_LOCATION);
+		}
+	}
+	def private boolean isValidLocationForVoid(ParameterizedTypeRef typeRef) {
+		var EObject prev = typeRef;
+		var EObject curr = typeRef.eContainer;
+		while(curr!==null) {
+			switch(curr) {
+				ParameterizedTypeRef:
+					return curr.typeArgs.contains(prev)
+				ParameterizedAccess:
+					return curr.typeArgs.contains(prev)
+				TypeVariable:
+					return curr.declaredUpperBound === prev
+				// the following cases are legal only in the first iteration, that's why we require prev===typeRef:
+				FunctionDefinition:
+					return prev===typeRef && curr.returnTypeRef === prev
+				GetterDeclaration:
+					return prev===typeRef && curr.declaredTypeRef === prev // allowed here for consistency, but another validation will disallow this!
+				FunctionTypeExpression:
+					return prev===typeRef && curr.returnTypeRef === prev
+			}
+			prev = curr;
+			curr = curr.eContainer;
+		}
+		return false;
 	}
 
 	def private void internalCheckValidTypeInTypeTypeRef(ParameterizedTypeRef paramTypeRef) {
