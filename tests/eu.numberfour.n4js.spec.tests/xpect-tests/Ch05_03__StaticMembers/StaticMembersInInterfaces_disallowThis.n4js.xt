@@ -33,14 +33,14 @@ interface I {
 
 
 //
-// but all fine in a class:
+// but all fine in a class (except for fields):
 //
 
 class C {
 	
 	static f2 = 39;
 	
-	// XPECT noerrors -->
+	// XPECT errors --> "The this literal may not be used in initializers of static data fields." at "this"
 	static f = 3 + this.f2;
 	
 	static get g() {
