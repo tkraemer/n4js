@@ -27,9 +27,9 @@ import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement;
  * method, or the static methods can be called directly. The exact mapping is described in
  * {@link #descriptionToNameWithPosition(URI, boolean,IEObjectDescription)}.
  *
- *         approach)
+ * approach)
  */
-class EObjectDescriptionToNameWithPositionMapper implements Function<IEObjectDescription, String> {
+public class EObjectDescriptionToNameWithPositionMapper implements Function<IEObjectDescription, String> {
 
 	private static final String SEPARATOR = " - ";
 	private final URI currentResourceURI;
@@ -88,7 +88,8 @@ class EObjectDescriptionToNameWithPositionMapper implements Function<IEObjectDes
 	 * @param desc
 	 *            the object descriptor
 	 */
-	public static String descriptionToNameWithPosition(URI currentURI, boolean withLineNumber, IEObjectDescription desc) {
+	public static String descriptionToNameWithPosition(URI currentURI, boolean withLineNumber,
+			IEObjectDescription desc) {
 		String name = desc.getName().toString();
 
 		EObject eobj = desc.getEObjectOrProxy();

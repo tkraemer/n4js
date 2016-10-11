@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+
+// IDE-1662 XPECT FIXME findReferences at x --> x - 7, x - 11
+function x () : void {}
+
+x();
+
+class C {
+	constructor() {
+		x();
+	}
+	
+	x : {function():void} = function () {return;};
+}

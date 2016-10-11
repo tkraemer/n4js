@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+
+class T {
+// IDE-1662 XPECT FIXME findReferences at a --> this.a - 18
+	a : T;
+// IDE-1662 XPECT FIXME findReferences at i --> this.i - 20
+	i : int;
+// IDE-1662 XPECT FIXME findReferences at foo --> super.foo - 16
+	foo(){};
+}
+
+class S extends T {
+	@Override
+// IDE-1662 XPECT FIXME findReferences at foo -->
+	foo() {
+		super.foo();
+		
+		this.a;
+		
+		this.i = 0;
+	}
+}
