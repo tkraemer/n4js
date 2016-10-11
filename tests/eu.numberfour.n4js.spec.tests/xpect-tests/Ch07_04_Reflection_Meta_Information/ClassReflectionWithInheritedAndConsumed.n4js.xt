@@ -5,6 +5,27 @@
 <==
 stdout:
 # all direct + consumed + inherited
+ - N4Accessor :: getterPublicStringClassA
+ - N4Accessor :: getterPublicStringClassS
+ - N4Accessor :: getterPublicStringClassSS
+ - N4Accessor :: getterPublicStringRoleR
+ - N4Accessor :: getterPublicStringRoleRR
+ - N4Accessor :: setterPublicStringClassA
+ - N4Accessor :: setterPublicStringClassS
+ - N4Accessor :: setterPublicStringClassSS
+ - N4Accessor :: setterPublicStringRoleR
+ - N4Accessor :: setterPublicStringRoleRR
+ - N4DataField :: datafieldPublicStringClassA
+ - N4DataField :: datafieldPublicStringClassS
+ - N4DataField :: datafieldPublicStringClassSS
+ - N4DataField :: datafieldPublicStringRoleR
+ - N4DataField :: datafieldPublicStringRoleRR
+ - N4Method :: methodPublicVoidClassA
+ - N4Method :: methodPublicVoidClassS
+ - N4Method :: methodPublicVoidClassSS
+ - N4Method :: methodPublicVoidRoleR
+ - N4Method :: methodPublicVoidRoleRR
+# all direct + consumed + inherited + direct static
  - N4Accessor :: getterPublicStaticStringClassA
  - N4Accessor :: getterPublicStaticStringClassS
  - N4Accessor :: getterPublicStaticStringClassSS
@@ -32,32 +53,11 @@ stdout:
  - N4Method :: methodPublicStaticVoidClassA
  - N4Method :: methodPublicStaticVoidClassS
  - N4Method :: methodPublicStaticVoidClassSS
- - N4Method :: methodPublicVoidsClassA
- - N4Method :: methodPublicVoidsClassS
- - N4Method :: methodPublicVoidsClassSS
- - N4Method :: methodPublicVoidsRoleR
- - N4Method :: methodPublicVoidsRoleRR
-# all direct + consumed + inherited + direct static
- - N4Accessor :: getterPublicStaticStringClassA
- - N4Accessor :: getterPublicStaticStringClassS
- - N4Accessor :: getterPublicStaticStringClassSS
- - N4Accessor :: getterPublicStringRoleR
- - N4Accessor :: getterPublicStringRoleRR
- - N4Accessor :: setterPublicStaticStringClassA
- - N4Accessor :: setterPublicStaticStringClassS
- - N4Accessor :: setterPublicStaticStringClassSS
- - N4Accessor :: setterPublicStringRoleR
- - N4Accessor :: setterPublicStringRoleRR
- - N4DataField :: datafieldPublicStaticStringClassA
- - N4DataField :: datafieldPublicStaticStringClassS
- - N4DataField :: datafieldPublicStaticStringClassSS
- - N4DataField :: datafieldPublicStringRoleR
- - N4DataField :: datafieldPublicStringRoleRR
- - N4Method :: methodPublicStaticVoidClassA
- - N4Method :: methodPublicStaticVoidClassS
- - N4Method :: methodPublicStaticVoidClassSS
- - N4Method :: methodPublicVoidsRoleR
- - N4Method :: methodPublicVoidsRoleRR
+ - N4Method :: methodPublicVoidClassA
+ - N4Method :: methodPublicVoidClassS
+ - N4Method :: methodPublicVoidClassSS
+ - N4Method :: methodPublicVoidRoleR
+ - N4Method :: methodPublicVoidRoleRR
 stderr:
 ==>
 --- */
@@ -85,7 +85,7 @@ class SS {
 	public set setterPublicStringClassSS(s : string){
 	}
 	
-	public methodPublicVoidsClassSS() : void{}
+	public methodPublicVoidClassSS() : void{}
 }
 class S extends SS {
 	public static datafieldPublicStaticStringClassS : string = "1";
@@ -109,7 +109,7 @@ class S extends SS {
 	}
 	
 	
-	public methodPublicVoidsClassS() : void{}
+	public methodPublicVoidClassS() : void{}
 }
 interface RR {
 	
@@ -122,7 +122,7 @@ interface RR {
 	public set setterPublicStringRoleRR(s : string){
 	}
 	
-	public methodPublicVoidsRoleRR() : void{}
+	public methodPublicVoidRoleRR() : void{}
 }
 interface R extends RR{
 	public datafieldPublicStringRoleR : string = "3";
@@ -134,7 +134,7 @@ interface R extends RR{
 	public set setterPublicStringRoleR(s : string){
 	}
 	
-	public methodPublicVoidsRoleR() : void{}
+	public methodPublicVoidRoleR() : void{}
 }
 
 class ClassWithStuff extends S implements R {
@@ -159,7 +159,7 @@ class ClassWithStuff extends S implements R {
 	public set setterPublicStringClassA(s : string){
 	}
 	
-	public methodPublicVoidsClassA() : void{}
+	public methodPublicVoidClassA() : void{}
 }
 
 

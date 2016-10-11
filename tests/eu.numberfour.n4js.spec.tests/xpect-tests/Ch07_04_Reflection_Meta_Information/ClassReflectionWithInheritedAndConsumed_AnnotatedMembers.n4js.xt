@@ -4,30 +4,42 @@
 /* XPECT output --- 
 <==
 stdout:
-# allMembers (direct + consumed + inherited + direct static) && annotated with @Nfon
+# allMembers (direct + consumed + inherited + static) && annotated with @Nfon
  - N4DataField :: datafieldPublicStaticStringClassA
  - N4DataField :: datafieldPublicStaticStringClassS
  - N4DataField :: datafieldPublicStaticStringClassSS
+ - N4DataField :: datafieldPublicStringClassA
+ - N4DataField :: datafieldPublicStringClassS
+ - N4DataField :: datafieldPublicStringClassSS
  - N4DataField :: datafieldPublicStringRoleR
  - N4DataField :: datafieldPublicStringRoleRR
-# allDataFields (direct + consumed + inherited + direct static) && annotated with @Nfon
+# allDataFields (direct + consumed + inherited + static) && annotated with @Nfon
  - N4DataField :: datafieldPublicStaticStringClassA
  - N4DataField :: datafieldPublicStaticStringClassS
  - N4DataField :: datafieldPublicStaticStringClassSS
+ - N4DataField :: datafieldPublicStringClassA
+ - N4DataField :: datafieldPublicStringClassS
+ - N4DataField :: datafieldPublicStringClassSS
  - N4DataField :: datafieldPublicStringRoleR
  - N4DataField :: datafieldPublicStringRoleRR
-# allMembers (direct + consumed + inherited + direct static) && annotated with @Test
+# allMembers (direct + consumed + inherited + static) && annotated with @Test
  - N4Method :: methodPublicStaticVoidClassA
  - N4Method :: methodPublicStaticVoidClassS
  - N4Method :: methodPublicStaticVoidClassSS
- - N4Method :: methodPublicVoidsRoleR
- - N4Method :: methodPublicVoidsRoleRR
-# allMethods (direct + consumed + inherited + direct static) && annotated with @Test
+ - N4Method :: methodPublicVoidClassA
+ - N4Method :: methodPublicVoidClassS
+ - N4Method :: methodPublicVoidClassSS
+ - N4Method :: methodPublicVoidRoleR
+ - N4Method :: methodPublicVoidRoleRR
+# allMethods (direct + consumed + inherited + static) && annotated with @Test
  - N4Method :: methodPublicStaticVoidClassA
  - N4Method :: methodPublicStaticVoidClassS
  - N4Method :: methodPublicStaticVoidClassSS
- - N4Method :: methodPublicVoidsRoleR
- - N4Method :: methodPublicVoidsRoleRR
+ - N4Method :: methodPublicVoidClassA
+ - N4Method :: methodPublicVoidClassS
+ - N4Method :: methodPublicVoidClassSS
+ - N4Method :: methodPublicVoidRoleR
+ - N4Method :: methodPublicVoidRoleRR
 stderr:
 ==>
 --- */
@@ -48,8 +60,8 @@ export public class SS{
 	public datafieldPublicStringClassSS_NoAnn : string = "3";
 	
 	@Test
-	public methodPublicVoidsClassSS() : void{}
-	public methodPublicVoidsClassSS_NoAnn() : void{}
+	public methodPublicVoidClassSS() : void{}
+	public methodPublicVoidClassSS_NoAnn() : void{}
 }
 export public class S extends SS {
 	@Nfon
@@ -65,8 +77,8 @@ export public class S extends SS {
 	public datafieldPublicStringClassS_NoAnn : string = "3";
 	
 	@Test
-	public methodPublicVoidsClassS() : void{}
-	public methodPublicVoidsClassS_NoAnn() : void{}
+	public methodPublicVoidClassS() : void{}
+	public methodPublicVoidClassS_NoAnn() : void{}
 }
 interface RR {
 	
@@ -75,8 +87,8 @@ interface RR {
 	public datafieldPublicStringRoleRR_NoAnn : string = "3";
 	
 	@Test
-	public methodPublicVoidsRoleRR() : void{}
-	public methodPublicVoidsRoleRR_NoAnn() : void{}
+	public methodPublicVoidRoleRR() : void{}
+	public methodPublicVoidRoleRR_NoAnn() : void{}
 }
 interface R extends RR {
 	
@@ -85,8 +97,8 @@ interface R extends RR {
 	public datafieldPublicStringRoleR_NoAnn : string = "3";
 	
 	@Test
-	public methodPublicVoidsRoleR() : void{}
-	public methodPublicVoidsRoleR_NoAnn() : void{}
+	public methodPublicVoidRoleR() : void{}
+	public methodPublicVoidRoleR_NoAnn() : void{}
 }
 
 export public class ClassWithStuff extends S implements R {
@@ -103,8 +115,8 @@ export public class ClassWithStuff extends S implements R {
 	public datafieldPublicStringClassA_NoAnn : string = "3";
 	
 	@Test
-	public methodPublicVoidsClassA() : void{}
-	public methodPublicVoidsClassA_NoAnn() : void{}
+	public methodPublicVoidClassA() : void{}
+	public methodPublicVoidClassA_NoAnn() : void{}
 }
 
 
@@ -129,11 +141,11 @@ function printMembers(arr : Array<? extends N4Member>){
 
 
 var test = ClassWithStuff.n4type
-console.log("# allMembers (direct + consumed + inherited + direct static) && annotated with @Nfon")
+console.log("# allMembers (direct + consumed + inherited + static) && annotated with @Nfon")
 printMembers(test.membersWithAnnotation("Nfon", true, true, true));
-console.log("# allDataFields (direct + consumed + inherited + direct static) && annotated with @Nfon")
+console.log("# allDataFields (direct + consumed + inherited + static) && annotated with @Nfon")
 printMembers(test.dataFieldsWithAnnotation("Nfon", true, true, true));
-console.log("# allMembers (direct + consumed + inherited + direct static) && annotated with @Test")
+console.log("# allMembers (direct + consumed + inherited + static) && annotated with @Test")
 printMembers(test.membersWithAnnotation("Test", true, true, true));
-console.log("# allMethods (direct + consumed + inherited + direct static) && annotated with @Test")
+console.log("# allMethods (direct + consumed + inherited + static) && annotated with @Test")
 printMembers(test.methodsWithAnnotation("Test", true, true, true));
