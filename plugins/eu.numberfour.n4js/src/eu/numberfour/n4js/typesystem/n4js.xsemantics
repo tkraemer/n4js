@@ -1223,8 +1223,8 @@ from {
 	} else if (leftDeclType.eIsProxy || rightDeclType.eIsProxy) {
 		true;
 	} else if (leftDeclType instanceof UndefinedType
-				|| (leftDeclType instanceof NullType && !(rightDeclType instanceof UndefinedType || rightDeclType instanceof VoidType || rightDeclType instanceof TypeVariable))
-				|| (rightDeclType instanceof AnyType && !(leftDeclType instanceof VoidType || leftDeclType instanceof TypeVariable))) {
+				|| (leftDeclType instanceof NullType && !(rightDeclType instanceof UndefinedType || rightDeclType instanceof VoidType) && !typeSystemHelper.isOrMightBeVoid(G, right))
+				|| (rightDeclType instanceof AnyType && !(leftDeclType instanceof VoidType) && !typeSystemHelper.isOrMightBeVoid(G, right))) {
 		true
 	} else if (leftDeclType instanceof VoidType
 				|| rightDeclType instanceof VoidType) {

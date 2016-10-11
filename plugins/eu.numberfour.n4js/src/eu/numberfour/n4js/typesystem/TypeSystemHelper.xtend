@@ -432,4 +432,14 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		
 		return unionTRs
 	}
+
+	/**
+	 * Tells if the given type reference is or might possibly end up being type 'void'.
+	 * For example, this method will return <code>true</code> for a type variable iff 'void' would make a valid type
+	 * argument, i.e. iff <code>void</code> is a subtype of the type variable's explicitly declared or implicit upper
+	 * bound.
+	 */
+	def boolean isOrMightBeVoid(RuleEnvironment G, TypeRef typeRef) {
+		ts.subtypeSucceeded(G, G.voidTypeRef, resolveType(G, typeRef))
+	}
 }
