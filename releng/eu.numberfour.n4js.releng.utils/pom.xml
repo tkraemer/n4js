@@ -24,4 +24,28 @@ Contributors:
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>${maven-deploy-plugin.version}</version>
+				<!-- Enable deploy: -->
+					<executions>
+						<execution>
+							<id>deploy-to-local-build-repo</id>
+							<!-- rebind to default phase 'deploy' -->
+							<phase>deploy</phase>
+							<goals>
+								<goal>deploy</goal>
+							</goals>
+							<configuration>
+								<altDeploymentRepository>local-build-repo::default::file:${local-snapshot-deploy-folder}</altDeploymentRepository>
+							</configuration>
+						</execution>
+					</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>
