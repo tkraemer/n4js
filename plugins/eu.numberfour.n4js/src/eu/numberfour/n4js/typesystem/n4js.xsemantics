@@ -1223,8 +1223,8 @@ from {
 	} else if (leftDeclType.eIsProxy || rightDeclType.eIsProxy) {
 		true;
 	} else if (leftDeclType instanceof UndefinedType
-				|| (leftDeclType instanceof NullType && !(rightDeclType instanceof UndefinedType || rightDeclType instanceof VoidType) && !typeSystemHelper.isOrMightBeVoid(G, right))
-				|| (rightDeclType instanceof AnyType && !(leftDeclType instanceof VoidType) && !typeSystemHelper.isOrMightBeVoid(G, right))) {
+				|| (leftDeclType instanceof NullType && !(rightDeclType instanceof UndefinedType || typeSystemHelper.isOrMightBeVoid(G, right)))
+				|| (rightDeclType instanceof AnyType && !typeSystemHelper.isOrMightBeVoid(G, left))) {
 		true
 	} else if (leftDeclType instanceof VoidType
 				|| rightDeclType instanceof VoidType) {
@@ -1549,8 +1549,8 @@ from {
 		left===existentialTypeRef // performance tweak
 		or
 		{
-			left instanceof ParameterizedTypeRef &&
-				(left as ParameterizedTypeRef).declaredType instanceof NullType
+			left.declaredType instanceof NullType
+				&& !typeSystemHelper.isOrMightBeVoid(G, existentialTypeRef)
 		}
 		or
 		{

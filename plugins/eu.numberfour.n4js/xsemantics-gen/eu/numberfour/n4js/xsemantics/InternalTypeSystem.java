@@ -3723,7 +3723,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
           sneakyThrowRuleFailedException("true");
         }
       } else {
-        if ((((leftDeclType instanceof UndefinedType) || (((leftDeclType instanceof NullType) && (!((rightDeclType instanceof UndefinedType) || (rightDeclType instanceof VoidType)))) && (!this.typeSystemHelper.isOrMightBeVoid(G, right)))) || (((rightDeclType instanceof AnyType) && (!(leftDeclType instanceof VoidType))) && (!this.typeSystemHelper.isOrMightBeVoid(G, right))))) {
+        if ((((leftDeclType instanceof UndefinedType) || ((leftDeclType instanceof NullType) && (!((rightDeclType instanceof UndefinedType) || this.typeSystemHelper.isOrMightBeVoid(G, right))))) || ((rightDeclType instanceof AnyType) && (!this.typeSystemHelper.isOrMightBeVoid(G, left))))) {
           /* true */
           if (!true) {
             sneakyThrowRuleFailedException("true");
@@ -4390,7 +4390,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
       /* G |- lowerBound <: left */
       subtypeInternal(G, _trace_, lowerBound, left);
     } else {
-      /* left===existentialTypeRef or { left instanceof ParameterizedTypeRef && (left as ParameterizedTypeRef).declaredType instanceof NullType } or { G |~ existentialTypeRef \/ var TypeRef lowerExt G |- left <: lowerExt } */
+      /* left===existentialTypeRef or { left.declaredType instanceof NullType && !typeSystemHelper.isOrMightBeVoid(G, existentialTypeRef) } or { G |~ existentialTypeRef \/ var TypeRef lowerExt G |- left <: lowerExt } */
       {
         RuleFailedException previousFailure = null;
         try {
@@ -4400,13 +4400,12 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
           }
         } catch (Exception e) {
           previousFailure = extractRuleFailedException(e);
-          /* { left instanceof ParameterizedTypeRef && (left as ParameterizedTypeRef).declaredType instanceof NullType } or { G |~ existentialTypeRef \/ var TypeRef lowerExt G |- left <: lowerExt } */
+          /* { left.declaredType instanceof NullType && !typeSystemHelper.isOrMightBeVoid(G, existentialTypeRef) } or { G |~ existentialTypeRef \/ var TypeRef lowerExt G |- left <: lowerExt } */
           {
             try {
-              /* left instanceof ParameterizedTypeRef && (left as ParameterizedTypeRef).declaredType instanceof NullType */
-              if (!((left instanceof ParameterizedTypeRef) && 
-                (((ParameterizedTypeRef) left).getDeclaredType() instanceof NullType))) {
-                sneakyThrowRuleFailedException("left instanceof ParameterizedTypeRef && (left as ParameterizedTypeRef).declaredType instanceof NullType");
+              /* left.declaredType instanceof NullType && !typeSystemHelper.isOrMightBeVoid(G, existentialTypeRef) */
+              if (!((left.getDeclaredType() instanceof NullType) && (!this.typeSystemHelper.isOrMightBeVoid(G, existentialTypeRef)))) {
+                sneakyThrowRuleFailedException("left.declaredType instanceof NullType && !typeSystemHelper.isOrMightBeVoid(G, existentialTypeRef)");
               }
             } catch (Exception e_1) {
               previousFailure = extractRuleFailedException(e_1);
