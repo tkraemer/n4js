@@ -3723,7 +3723,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
           sneakyThrowRuleFailedException("true");
         }
       } else {
-        if ((((leftDeclType instanceof UndefinedType) || ((leftDeclType instanceof NullType) && (!((rightDeclType instanceof UndefinedType) || (rightDeclType instanceof VoidType))))) || ((rightDeclType instanceof AnyType) && (!(leftDeclType instanceof VoidType))))) {
+        if ((((leftDeclType instanceof UndefinedType) || ((leftDeclType instanceof NullType) && (!(((rightDeclType instanceof UndefinedType) || (rightDeclType instanceof VoidType)) || (rightDeclType instanceof TypeVariable))))) || ((rightDeclType instanceof AnyType) && (!((leftDeclType instanceof VoidType) || (leftDeclType instanceof TypeVariable)))))) {
           /* true */
           if (!true) {
             sneakyThrowRuleFailedException("true");
