@@ -5,6 +5,11 @@
 <==
 stdout:
 # all direct
+ - N4Accessor :: getterPrivateString
+ - N4Accessor :: setterPrivateString
+ - N4DataField :: datafieldPrivateString
+ - N4Method :: methodPrivateVoid
+# all direct + direct static
  - N4Accessor :: getterPrivateStaticString
  - N4Accessor :: getterPrivateString
  - N4Accessor :: setterPrivateStaticString
@@ -12,12 +17,7 @@ stdout:
  - N4DataField :: datafieldPrivateStaticString
  - N4DataField :: datafieldPrivateString
  - N4Method :: methodPrivateStaticVoid
- - N4Method :: methodPrivateVoids
-# all direct + direct static
- - N4Accessor :: getterPrivateStaticString
- - N4Accessor :: setterPrivateStaticString
- - N4DataField :: datafieldPrivateStaticString
- - N4Method :: methodPrivateStaticVoid
+ - N4Method :: methodPrivateVoid
 stderr:
 ==>
 --- */
@@ -46,7 +46,7 @@ class ClassWithStuff{
 	}
 	
 	
-	private methodPrivateVoids() : void{}
+	private methodPrivateVoid() : void{}
 	
 }
 
