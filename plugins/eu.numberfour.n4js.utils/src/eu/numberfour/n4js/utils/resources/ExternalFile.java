@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js.utils.resources;
 
-import static com.google.common.base.Preconditions.checkState;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -53,7 +51,6 @@ public class ExternalFile extends org.eclipse.core.internal.resources.File imple
 	 */
 	public ExternalFile(IProject project, IContainer parent, File file) {
 		super(new Path(file.getAbsolutePath()), null);
-		checkState(file.isFile(), "Resource '" + file + "' is not a file but a directory.");
 		this.file = file;
 		this.project = project;
 		this.parent = parent;
@@ -85,12 +82,12 @@ public class ExternalFile extends org.eclipse.core.internal.resources.File imple
 
 	@Override
 	public boolean exists() {
-		return file.exists();
+		return file.exists() && file.isFile();
 	}
 
 	@Override
 	public boolean exists(int flags, boolean checkType) {
-		return file.exists();
+		return exists();
 	}
 
 	@Override
