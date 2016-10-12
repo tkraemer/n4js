@@ -1,7 +1,37 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
 
-interface I {
+interface I_nonStatic {
+	
+	f2 = 39;
+	
+	// XPECT errors --> "In interfaces, the this literal may not be used in initializers of data fields." at "this"
+	f = 3 + this.f2;
+	
+	get g() {
+		// XPECT noerrors -->
+		this;
+		return null;
+	}
+	
+	set s(value : any) {
+		// XPECT noerrors -->
+		this;
+	}
+	
+	m() {
+		// XPECT noerrors -->
+		this;
+	}
+	
+	// XPECT noerrors -->
+	mRet() : this {
+		return null;
+	}
+}
+
+
+interface I_static {
 	
 	static f2 = 39;
 	
@@ -33,10 +63,36 @@ interface I {
 
 
 //
-// but all fine in a class (except for fields):
+// but all fine in a class (except for static fields):
 //
 
-class C {
+
+class C_nonStatic {
+	
+	f2 = 39;
+	
+	// XPECT noerrors -->
+	f = 3 + this.f2;
+	
+	get g() {
+		// XPECT noerrors -->
+		this;
+		return null;
+	}
+	
+	set s(value : any) {
+		// XPECT noerrors -->
+		this;
+	}
+	
+	m() {
+		// XPECT noerrors -->
+		this;
+	}
+}
+
+
+class C_static {
 	
 	static f2 = 39;
 	
