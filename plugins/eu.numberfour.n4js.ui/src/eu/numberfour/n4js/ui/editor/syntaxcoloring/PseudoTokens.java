@@ -13,7 +13,7 @@ package eu.numberfour.n4js.ui.editor.syntaxcoloring;
 /**
  * Defines token types that are not produced by Antlr but are assigned in the {@link TokenTypeRewriter}.
  */
-interface PseudoTokens {
+public interface PseudoTokens {
 	/**
 	 * Pointer to the biggest normal token type (highest ORD value).
 	 */
