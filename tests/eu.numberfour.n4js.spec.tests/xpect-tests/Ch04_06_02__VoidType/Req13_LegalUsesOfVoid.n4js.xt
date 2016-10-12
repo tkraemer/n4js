@@ -4,10 +4,10 @@
 // XPECT noerrors -->
 function foo1a(): void {}
 
-// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 function foo1b(): any|void {}
 
-// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 function foo1c(p: void) {}
 
 
@@ -15,12 +15,12 @@ function foo1c(p: void) {}
 class C1a {
 	// XPECT noerrors -->
 	m1(): void {}
-	// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+	// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 	m2(): any|void {}
 }
 
 class C1b {
-	// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+	// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 	m(p: void) {}
 }
 
@@ -29,12 +29,12 @@ class C1b {
 let ol1 = {
 	// XPECT noerrors -->
 	void m1() {},
-	// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+	// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 	union{any,void} m2() {}
 };
 
 let ol2 = {
-	// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+	// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 	m(p: void) {}
 };
 
@@ -43,10 +43,10 @@ let ol2 = {
 // XPECT noerrors -->
 let f1a: {function():void};
 
-// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 let f1b: {function():any|void};
 
-// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 let f1c: {function(void)};
 
 
@@ -54,10 +54,10 @@ let f1c: {function(void)};
 // XPECT noerrors -->
 let f2a = function(): void {};
 
-// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 let f2b = function(): any|void {};
 
-// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 let f2c = function(p: void) {}
 
 
@@ -65,42 +65,45 @@ let f2c = function(p: void) {}
 // XPECT noerrors -->
 let f3a = (): void => {};
 
-// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 let f3b = (): any|void => {};
 
-// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 let f3c = (p: void) => {};
 
 
 
-// XPECT noerrors -->
+// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 class G1a<T extends any|void> {}
 
-// XPECT noerrors -->
+// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 let g: G1a<any|void>;
 
-// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 class G1b<T extends {function(void)}> {}
 
+// XPECT noerrors -->
+class G1c<T extends {function():void}> {}
 
 
-// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+
+// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 let x: void;
 
 class C2 {
-	// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+	// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 	field: void;
 }
 
 interface I {
-	// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+	// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 	field: void;
 }
 
 
 
-// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 let ttr: type{void};
-// XPECT errors --> "void may only be used to declare the return type of functions and methods or as a type argument." at "void"
+// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 let ctr: constructor{void};
 

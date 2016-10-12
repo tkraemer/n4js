@@ -55,7 +55,6 @@ import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.Type
-import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.VoidType
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
@@ -83,7 +82,6 @@ import static eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage.Literals.PARAMETERI
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.n4JS.ParameterizedAccess
 
 /**
  * Class for validating the N4JS types.
@@ -179,33 +177,23 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	 * Requirements 13, Void type.
 	 */
 	def private void internalCheckValidLocationForVoid(ParameterizedTypeRef typeRef) {
-		if (typeRef.declaredType instanceof VoidType && !isValidLocationForVoid(typeRef)) {
-			addIssue(IssueCodes.getMessageForTYS_VOID_AT_WRONG_LOCATION, typeRef, TYS_VOID_AT_WRONG_LOCATION);
-		}
-	}
-	def private boolean isValidLocationForVoid(ParameterizedTypeRef typeRef) {
-		var EObject prev = typeRef;
-		var EObject curr = typeRef.eContainer;
-		while(curr!==null) {
-			switch(curr) {
-				ParameterizedTypeRef:
-					return curr.typeArgs.contains(prev)
-				ParameterizedAccess:
-					return curr.typeArgs.contains(prev)
-				TypeVariable:
-					return curr.declaredUpperBound === prev
-				// the following cases are legal only in the first iteration, that's why we require prev===typeRef:
-				FunctionDefinition:
-					return prev===typeRef && curr.returnTypeRef === prev
-				GetterDeclaration:
-					return prev===typeRef && curr.declaredTypeRef === prev // allowed here for consistency, but another validation will disallow this!
-				FunctionTypeExpression:
-					return prev===typeRef && curr.returnTypeRef === prev
+		if (typeRef.declaredType instanceof VoidType) {
+			val isValidLocationForVoid = (
+					typeRef.eContainer instanceof FunctionDefinition
+					&& typeRef.eContainmentFeature===N4JSPackage.eINSTANCE.functionDefinition_ReturnTypeRef
+				) || (
+					typeRef.eContainer instanceof FunctionTypeExpression
+					&& typeRef.eContainmentFeature===TypeRefsPackage.eINSTANCE.functionTypeExpression_ReturnTypeRef
+				) || (
+					// void is not truly allowed as the return type of a getter, but there's a separate validation for
+					// that; so treat this case as legal here:
+					typeRef.eContainer instanceof GetterDeclaration
+					&& typeRef.eContainmentFeature===N4JSPackage.eINSTANCE.typedElement_DeclaredTypeRef
+				);
+			if(!isValidLocationForVoid) {
+				addIssue(IssueCodes.getMessageForTYS_VOID_AT_WRONG_LOCATION, typeRef, TYS_VOID_AT_WRONG_LOCATION);
 			}
-			prev = curr;
-			curr = curr.eContainer;
 		}
-		return false;
 	}
 
 	def private void internalCheckValidTypeInTypeTypeRef(ParameterizedTypeRef paramTypeRef) {

@@ -1222,13 +1222,13 @@ from {
 		true;
 	} else if (leftDeclType.eIsProxy || rightDeclType.eIsProxy) {
 		true;
-	} else if (leftDeclType instanceof UndefinedType
-				|| (leftDeclType instanceof NullType && !(rightDeclType instanceof UndefinedType || typeSystemHelper.isOrMightBeVoid(G, right)))
-				|| (rightDeclType instanceof AnyType && !typeSystemHelper.isOrMightBeVoid(G, left))) {
-		true
 	} else if (leftDeclType instanceof VoidType
 				|| rightDeclType instanceof VoidType) {
 		leftDeclType instanceof VoidType && rightDeclType instanceof VoidType
+	} else if (leftDeclType instanceof UndefinedType
+				|| (leftDeclType instanceof NullType && !(rightDeclType instanceof UndefinedType))
+				|| rightDeclType instanceof AnyType) {
+		true
 	} else if ((leftDeclType === G.intType && rightDeclType === G.numberType)
 				|| (leftDeclType === G.numberType && rightDeclType === G.intType)) {
 		true // int <: number AND number <: int (for now, int and number are synonymous)
@@ -1549,8 +1549,8 @@ from {
 		left===existentialTypeRef // performance tweak
 		or
 		{
-			left.declaredType instanceof NullType
-				&& !typeSystemHelper.isOrMightBeVoid(G, existentialTypeRef)
+			left instanceof ParameterizedTypeRef &&
+				(left as ParameterizedTypeRef).declaredType instanceof NullType
 		}
 		or
 		{
