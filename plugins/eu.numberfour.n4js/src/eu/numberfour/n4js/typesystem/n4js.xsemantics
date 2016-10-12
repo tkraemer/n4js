@@ -2709,7 +2709,10 @@ from {
 							} else {
 								val n4Field = EcoreUtil2.getContainerOfType(location, N4FieldDeclaration);
 								if (n4Field !== null && n4Field.static) {
-									T = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
+									// this case has been disallowed as of GH-263
+									T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef
+									// old:
+									// T = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
 								} else {
 									val n4Getter = EcoreUtil2.getContainerOfType(location, N4GetterDeclaration);
 									if (n4Getter !== null && n4Getter.static) {

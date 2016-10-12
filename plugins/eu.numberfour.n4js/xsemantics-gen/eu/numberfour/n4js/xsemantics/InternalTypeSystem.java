@@ -7149,18 +7149,18 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
               } else {
                 final N4FieldDeclaration n4Field = EcoreUtil2.<N4FieldDeclaration>getContainerOfType(location, N4FieldDeclaration.class);
                 if (((n4Field != null) && n4Field.isStatic())) {
-                  TypeRef _createConstructorTypeRef_1 = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
-                  T = _createConstructorTypeRef_1;
+                  UnknownTypeRef _createUnknownTypeRef = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
+                  T = _createUnknownTypeRef;
                 } else {
                   final N4GetterDeclaration n4Getter = EcoreUtil2.<N4GetterDeclaration>getContainerOfType(location, N4GetterDeclaration.class);
                   if (((n4Getter != null) && n4Getter.isStatic())) {
-                    TypeRef _createConstructorTypeRef_2 = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
-                    T = _createConstructorTypeRef_2;
+                    TypeRef _createConstructorTypeRef_1 = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
+                    T = _createConstructorTypeRef_1;
                   } else {
                     final N4SetterDeclaration n4Setter = EcoreUtil2.<N4SetterDeclaration>getContainerOfType(location, N4SetterDeclaration.class);
                     if (((n4Setter != null) && n4Setter.isStatic())) {
-                      TypeRef _createConstructorTypeRef_3 = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
-                      T = _createConstructorTypeRef_3;
+                      TypeRef _createConstructorTypeRef_2 = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
+                      T = _createConstructorTypeRef_2;
                     } else {
                       /* G |~ thisTargetDEFTYPE.ref ~> T */
                       TypeRef _ref_2 = TypeExtensions.ref(thisTargetDEFTYPE);

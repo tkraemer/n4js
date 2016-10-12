@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.utils.resources;
 
-import static com.google.common.base.Preconditions.checkState;
 import static org.eclipse.core.runtime.IStatus.ERROR;
 
 import java.io.File;
@@ -60,7 +59,6 @@ public class ExternalFolder extends Folder implements IExternalResource {
 	 */
 	public ExternalFolder(IProject project, IContainer parent, File file) {
 		super(new Path(file.getAbsolutePath()), null);
-		checkState(file.isDirectory(), "Resource '" + file + "' is not a directory but a file.");
 		this.file = file;
 		this.project = project;
 		this.parent = parent;
@@ -92,12 +90,12 @@ public class ExternalFolder extends Folder implements IExternalResource {
 
 	@Override
 	public boolean exists() {
-		return file.exists();
+		return file.exists() && file.isDirectory();
 	}
 
 	@Override
 	public boolean exists(int flags, boolean checkType) {
-		return file.exists();
+		return exists();
 	}
 
 	@Override

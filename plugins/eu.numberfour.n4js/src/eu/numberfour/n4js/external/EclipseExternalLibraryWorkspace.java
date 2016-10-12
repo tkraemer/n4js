@@ -395,13 +395,16 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 							return project;
 						}
 
+						// TODO: project.getFile and project.getFolder don't check whether then given path is a file or
+						// a folder, and they should not?
 						final Path relativePath = projectPath.relativize(nestedPath);
 						final IFile file = project.getFile(relativePath.toString());
-						if (null != file) {
+						if (file.exists())
 							return file;
-						}
 
-						return project.getFolder(relativePath.toString());
+						final IFolder folder = project.getFolder(relativePath.toString());
+						if (folder.exists())
+							return folder;
 					}
 				}
 			}
