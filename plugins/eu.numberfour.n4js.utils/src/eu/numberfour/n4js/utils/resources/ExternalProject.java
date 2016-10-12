@@ -291,7 +291,12 @@ public class ExternalProject extends Project implements IExternalResource {
 		if (folderCandidate.isDirectory()) {
 			return new ExternalFolder(this, this, folderCandidate);
 		}
-		return getResource(name, IFolder.class);
+
+		IFolder resource = getResource(name, IFolder.class);
+		if (resource != null)
+			return resource;
+
+		return new ExternalFolder(this, this, folderCandidate);
 	}
 
 	@Override
@@ -301,7 +306,12 @@ public class ExternalProject extends Project implements IExternalResource {
 		if (fileCandidate.isFile()) {
 			return new ExternalFile(this, this, fileCandidate);
 		}
-		return getResource(name, IFile.class);
+
+		IFile resource = getResource(name, IFile.class);
+		if (resource != null)
+			return resource;
+
+		return new ExternalFile(this, this, fileCandidate);
 	}
 
 	private <T extends IResource> T getResource(String name, Class<T> resourceClass) {

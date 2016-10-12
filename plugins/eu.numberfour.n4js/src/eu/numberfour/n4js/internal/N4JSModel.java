@@ -29,6 +29,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.xtext.naming.QualifiedName;
 
@@ -354,34 +356,48 @@ public class N4JSModel {
 	public ImmutableList<? extends IN4JSSourceContainerAware> getProvidedRuntimeLibraries(N4JSProject project) {
 
 		ImmutableList.Builder<IN4JSSourceContainerAware> providedRuntimes = ImmutableList.builder();
+		EList<ProvidedRuntimeLibraryDependency> runtimeLibraries = getAllProvidedRuntimeLibraries(project);
 		URI projectLocation = project.getLocation();
-		ProjectDescription description = getProjectDescription(projectLocation);
 
-		if (projectLocation != null) {
+		// GH-249: If the project n4mf file has parse errors, we need a lot of null checks.
+		for (ProvidedRuntimeLibraryDependency runtimeLibrary : runtimeLibraries) {
+			if (null != runtimeLibrary.getProject()) {
+				URI location = workspace.getLocation(projectLocation, runtimeLibrary, PROJECT);
+				if (null == location) {
+					location = externalLibraryWorkspace.getLocation(projectLocation, runtimeLibrary,
+							PROJECT);
+				}
 
-			for (ProvidedRuntimeLibraryDependency runtimeLibrary : description.getAllProvidedRuntimeLibraries()) {
-				if (null != runtimeLibrary.getProject()) {
-					URI location = workspace.getLocation(projectLocation, runtimeLibrary, PROJECT);
-					if (null == location) {
-						location = externalLibraryWorkspace.getLocation(projectLocation, runtimeLibrary, PROJECT);
-					}
+				if (null != location) {
+					providedRuntimes.add(getN4JSProject(location));
+				} else {
 
+					// Assuming archive (NFAR)
+					location = workspace.getLocation(projectLocation, runtimeLibrary, ARCHIVE);
 					if (null != location) {
-						providedRuntimes.add(getN4JSProject(location));
-					} else {
-
-						// Assuming archive (NFAR)
-						location = workspace.getLocation(projectLocation, runtimeLibrary, ARCHIVE);
-						if (null != location) {
-							providedRuntimes.add(getN4JSArchive(project, location));
-						}
+						providedRuntimes.add(getN4JSArchive(project, location));
 					}
 				}
 			}
-
 		}
 
 		return providedRuntimes.build();
+	}
+
+	private EList<ProvidedRuntimeLibraryDependency> getAllProvidedRuntimeLibraries(N4JSProject project) {
+		URI projectLocation = project.getLocation();
+		if (projectLocation == null)
+			return ECollections.emptyEList();
+
+		ProjectDescription description = getProjectDescription(projectLocation);
+		if (description == null)
+			return ECollections.emptyEList();
+
+		EList<ProvidedRuntimeLibraryDependency> runtimeLibraries = description.getAllProvidedRuntimeLibraries();
+		if (runtimeLibraries == null)
+			return ECollections.emptyEList();
+
+		return runtimeLibraries;
 	}
 
 	public Iterator<URI> iterator(IN4JSSourceContainer sourceContainer) {

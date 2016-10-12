@@ -580,6 +580,13 @@ import it.xsemantics.runtime.RuleEnvironment;
 		// substitutions defined by the original right-hand side ("C" in our example), i.e. substitutions obtained by
 		// calling #addSubstitutions(RuleEnv,right):)
 		// IV <-> string
+		if (variance == CO) {
+			// normalize ⟨ B <: A ⟩ to ⟨ A :> B ⟩ to make sure the (raw) subtype is on the right-hand side
+			final ParameterizedTypeRef tmp = left;
+			left = right;
+			right = tmp;
+			variance = CONTRA;
+		}
 		boolean wasAdded = false;
 		final RuleEnvironment Gx = RuleEnvironmentExtensions.newRuleEnvironment(G);
 		tsh.addSubstitutions(Gx, right);

@@ -1189,7 +1189,7 @@ Contributors:
             wizardID="eu.numberfour.n4js.ui.example.N4JSTasksExampleWizard">
          <projectDescriptor
                contentURI="contents/n4js.example.tasks.zip"
-               description="N4JS project for demonstrating the main capabilities of the language through a simple example. After creating the projects each third party npm dependencies used by this example should be installed manually. For doing that one has to open up the 'manifest.n4mf' file in editor and has to install the required dependencies by applying the quick fix (Ctrl+1 on Windows and Linux operating systems and Cmd+1 on MacOS X) on the missing dependnecies."
+               description="N4JS project for demonstrating the main capabilities of the language through a simple example. After creating the projects each third party npm dependencies used by this example should be installed automatically."
                name="n4js.example.tasks">
          </projectDescriptor>
          <projectDescriptor
@@ -1204,7 +1204,7 @@ Contributors:
       <wizard
             canFinishEarly="false"
             category="eu.numberfour.wizards"
-            class="eu.numberfour.n4js.ui.example.N4JSTasksExampleWizard"
+            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.example.N4JSTasksExampleWizard"
             finalPerspective="eu.numberfour.n4js.product.N4JSPerspective"
             icon="icons/newprj_wiz.gif"
             id="eu.numberfour.n4js.ui.example.N4JSTasksExampleWizard"
@@ -1217,7 +1217,7 @@ Contributors:
       <wizard
             canFinishEarly="false"
             category="org.eclipse.ui.Examples"
-            class="eu.numberfour.n4js.ui.example.N4JSTasksExampleWizard"
+            class="eu.numberfour.n4js.ui.N4JSExecutableExtensionFactory:eu.numberfour.n4js.ui.example.N4JSTasksExampleWizard"
             finalPerspective="eu.numberfour.n4js.product.N4JSPerspective"
             icon="icons/newprj_wiz.gif"
             id="eu.numberfour.n4js.ui.example.N4JSTasksExampleWizard"
