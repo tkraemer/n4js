@@ -14,7 +14,6 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FieldAccessor
-import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.N4ClassExpression
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4JSASTUtils
@@ -106,9 +105,6 @@ public class TypeProcessor extends AbstractProcessor {
 					return; // return only required to avoid confusing logging of cache.getFailSafe(node) below
 				}
 			} else {
-				if(node instanceof FunctionDefinition) {
-					handleAsyncFunctionDefinition(G, node, cache);
-				}
 				// ordinary typing of typable AST nodes
 				// -> simply ask Xsemantics
 				log(indentLevel, "asking Xsemantics ...");

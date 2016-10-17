@@ -43,6 +43,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
+import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
 
 /**
  * Provides some common base functionality used across all processors (e.g. logging). See {@link ASTProcessor} for more
@@ -148,10 +149,12 @@ package abstract class AbstractProcessor {
 			val tFunction = funDef.definedType;
 			if(tFunction instanceof TFunction) {
 				val innerReturnTypeRef = tFunction.returnTypeRef;
-				val outerReturnTypeRef = TypeUtils.createPromiseTypeRef(G.builtInTypeScope, innerReturnTypeRef, null);
-				EcoreUtilN4.doWithDeliver(false, [
-					tFunction.returnTypeRef = outerReturnTypeRef;
-				], tFunction);
+				if(innerReturnTypeRef!==null && !(innerReturnTypeRef instanceof DeferredTypeRef)) {
+					val outerReturnTypeRef = TypeUtils.createPromiseTypeRef(G.builtInTypeScope, innerReturnTypeRef, null);
+					EcoreUtilN4.doWithDeliver(false, [
+						tFunction.returnTypeRef = outerReturnTypeRef;
+					], tFunction);
+				}
 			}
 		}
 	}

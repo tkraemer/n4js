@@ -52,7 +52,6 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 		if (!funExpr.isPoly) { // funExpr has declared types on all fpars and explicitly declared return type
 			// can't use xsemantics here, because it would give us a DeferredTypeRef
 			// return ts.type(G, funExpr).getValue();
-			handleAsyncFunctionDefinition(G, funExpr, cache);
 			val result = TypeUtils.createFunctionTypeExpression(null, #[], fun.fpars, fun.returnTypeRef); // FIXME support for declared this type!!
 			// do not store in cache (TypeProcessor responsible for storing types of non-poly expressions in cache)
 			return result;
@@ -95,7 +94,6 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 		if (funExpr.returnTypeRef !== null) {
 			// explicitly declared return type
 			// -> take the type reference created by the types builder (but wrap in Promise if required)
-			handleAsyncFunctionDefinition(G, funExpr, cache);
 			returnTypeRef = TypeUtils.copy(fun.returnTypeRef);
 		} else {
 			// undeclared return type
