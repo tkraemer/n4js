@@ -15,9 +15,11 @@ import eu.numberfour.n4js.n4JS.AssignmentExpression
 import eu.numberfour.n4js.n4JS.AssignmentOperator
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ExpressionAnnotationList
+import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.GenericDeclaration
 import eu.numberfour.n4js.n4JS.GetterDeclaration
+import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
@@ -25,7 +27,10 @@ import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.TypedElement
+import eu.numberfour.n4js.n4JS.UnaryExpression
+import eu.numberfour.n4js.n4JS.UnaryOperator
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions
 import eu.numberfour.n4js.scoping.N4JSScopeProvider
@@ -49,6 +54,7 @@ import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.PrimitiveType
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
+import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TInterface
@@ -427,6 +433,9 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 
 
 		if (expectedType.value !== null) {
+
+			internalCheckUseOfUndefinedExpression(G, expression, expectedType.value, inferredType.value);
+
 			val boolean writeAccess = ExpressionExtensions.isLeftHandSide(expression);
 			if (writeAccess) {
 
@@ -450,14 +459,31 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 			}
 		}
 	}
-	
+
+	def void internalCheckUseOfUndefinedExpression(RuleEnvironment G, Expression expression, TypeRef expectedTypeRef, TypeRef actualTypeRef) {
+		if(TypeUtils.isUndefined(actualTypeRef) && !TypeUtils.isUndefined(expectedTypeRef)) {
+			val parent = expression.eContainer;
+			if(!(parent instanceof ExpressionStatement)
+				&& !(parent instanceof UnaryExpression && (parent as UnaryExpression).op===UnaryOperator.VOID)
+				&& !(expression instanceof UnaryExpression && (expression as UnaryExpression).op===UnaryOperator.VOID)
+				&& !(expression instanceof ThisLiteral)) {
+
+				val undefinedField = G.globalObjectType.findOwnedMember("undefined", false, false) as TField;
+				val isUndefinedLiteral = if(expression instanceof IdentifierRef) expression.id===undefinedField;
+				if(!isUndefinedLiteral) {
+					addIssue(getMessageForEXP_USE_OF_UNDEF_EXPR, expression, EXP_USE_OF_UNDEF_EXPR);
+				}
+			}
+		}
+	}
+
 	@Check
-	def checkBogusTypeReference(TypedElement te) {
+	def void checkBogusTypeReference(TypedElement te) {
 		if(te.bogusTypeRef !== null) {
 			addIssue(IssueCodes.getMessageForTYS_INVALID_TYPE_SYNTAX, te.bogusTypeRef, TYS_INVALID_TYPE_SYNTAX);
 		}
 	}
-	
+
 //  TODO IDE-1010 Code-snippet with partial solution
 //	@Check
 //	def checkApplyParameters(ParameterizedCallExpression callExpression) {
