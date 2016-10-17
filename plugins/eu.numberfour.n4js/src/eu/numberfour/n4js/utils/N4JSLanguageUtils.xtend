@@ -99,7 +99,8 @@ class N4JSLanguageUtils {
 
 	/**
 	 * If the given function definition is asynchronous, will wrap given return type into a Promise.
-	 * Otherwise, returns given return type unchanged.
+	 * Otherwise, returns given return type unchanged. A return type of <code>void</code> is changed to
+	 * <code>undefined</code>.
 	 */
 	def static TypeRef makePromiseIfAsync(FunctionDefinition functionDef, TypeRef returnTypeRef,
 			BuiltInTypeScope builtInTypeScope) {

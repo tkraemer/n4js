@@ -9,7 +9,7 @@ class App {
 var a = new App
 
 // XPECT noerrors -->
-var p : Promise<void,?> = a.printTemperature("Berlin");
+var p : Promise<undefined,?> = a.printTemperature("Berlin");
 
 // XPECT noerrors -->
 p = a.printTemperature("Hamburg") 

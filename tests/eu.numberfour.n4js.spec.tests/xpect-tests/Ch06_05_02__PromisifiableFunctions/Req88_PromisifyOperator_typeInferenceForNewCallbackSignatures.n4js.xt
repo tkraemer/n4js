@@ -14,13 +14,13 @@
 var v01 = @Promisify foo01(null);
 // XPECT type of 'v02' --> Promise<string,Error>
 var v02 = @Promisify foo02(null);
-// XPECT type of 'v03' --> Promise<void,Error>
+// XPECT type of 'v03' --> Promise<undefined,Error>
 var v03 = @Promisify foo03(null);
 
-// XPECT type of 'v11' --> Promise<Iterable3<string,number,N4Object>,void>
+// XPECT type of 'v11' --> Promise<Iterable3<string,number,N4Object>,undefined>
 var v11 = @Promisify foo11(null);
-// XPECT type of 'v12' --> Promise<string,void>
+// XPECT type of 'v12' --> Promise<string,undefined>
 var v12 = @Promisify foo12(null);
-// XPECT type of 'v13' --> Promise<void,void>
+// XPECT type of 'v13' --> Promise<undefined,undefined>
 var v13 = @Promisify foo13(null);
 

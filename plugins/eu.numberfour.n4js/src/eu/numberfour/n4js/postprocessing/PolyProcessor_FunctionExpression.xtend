@@ -52,8 +52,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 		if (!funExpr.isPoly) { // funExpr has declared types on all fpars and explicitly declared return type
 			// can't use xsemantics here, because it would give us a DeferredTypeRef
 			// return ts.type(G, funExpr).getValue();
-			val retTypeRef = N4JSLanguageUtils.makePromiseIfAsync(funExpr, funExpr.returnTypeRef,
-				G.predefinedTypes.builtInTypeScope); // FIXME support for declared this type!!
+			val retTypeRef = N4JSLanguageUtils.makePromiseIfAsync(funExpr, funExpr.returnTypeRef, G.builtInTypeScope); // FIXME support for declared this type!!
 			val result = TypeUtils.createFunctionTypeExpression(null, #[], fun.fpars, retTypeRef);
 			// do not store in cache (TypeProcessor responsible for storing types of non-poly expressions in cache)
 			return result;
@@ -95,7 +94,8 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 		var TypeRef returnTypeRef;
 		if (funExpr.returnTypeRef !== null) {
 			// explicitly declared return type
-			returnTypeRef = TypeUtils.copy(fun.returnTypeRef); // take the one from the types builder (already wrapped in Promise, if required)
+			// -> take the type reference created by the types builder (but wrap in Promise if required)
+			returnTypeRef = N4JSLanguageUtils.makePromiseIfAsync(funExpr, TypeUtils.copy(fun.returnTypeRef), G.builtInTypeScope);
 		} else {
 			// undeclared return type
 			// -> create infVar for return type IFF funExpr contains return statements OR is single expr arrow function; otherwise use VOID as return type
@@ -113,8 +113,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 			// to obtain outer return type: wrap in Promise if asynchronous
 			// (note: we even do this for void functions, producing the weird Promise<void,?>; but this is intended
 			// for the time being, see N4JS Specification, Section 6.4.1 "Asynchronous Functions")
-			returnTypeRef = N4JSLanguageUtils.makePromiseIfAsync(funExpr, returnTypeRef,
-				G.predefinedTypes.builtInTypeScope);
+			returnTypeRef = N4JSLanguageUtils.makePromiseIfAsync(funExpr, returnTypeRef, G.builtInTypeScope);
 		}
 		result1.returnTypeRef = returnTypeRef;
 

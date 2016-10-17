@@ -29,6 +29,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.xtext.EcoreUtil2;
@@ -82,6 +83,7 @@ import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.types.TypingStrategy;
 import eu.numberfour.n4js.ts.types.UndefModifier;
+import eu.numberfour.n4js.ts.types.UndefinedType;
 import eu.numberfour.n4js.ts.types.VoidType;
 import eu.numberfour.n4js.utils.RecursionGuard;
 
@@ -1122,6 +1124,16 @@ public class TypeUtils {
 	/**
 	 * Returns true iff the argument is non-null and refers to the built-in type 'void'.
 	 */
+	public static boolean isUndefined(TypeArgument typeArg) {
+		if (typeArg instanceof ParameterizedTypeRef) {
+			return ((ParameterizedTypeRef) typeArg).getDeclaredType() instanceof UndefinedType;
+		}
+		return false;
+	}
+
+	/**
+	 * Returns true iff the argument is non-null and refers to the built-in type 'void'.
+	 */
 	public static boolean isVoid(TypeArgument ref0) {
 		if (ref0 instanceof TypeRef) {
 			TypeRef ref = (TypeRef) ref0;
@@ -1160,30 +1172,20 @@ public class TypeUtils {
 	}
 
 	/**
-	 * For the given type-ref, this method returns a Promise<R,?> type-ref.
+	 * For the given success and failure value types, this method returns a Promise<R,?> type reference. The failure
+	 * type is optional (i.e. may be <code>null</code>). A success value type of <code>void</code> will be changed to
+	 * type <code>undefined</code>, because <code>void</code> is not a valid type argument.
+	 * <p>
+	 * WARNING: this method will resolve proxies in 'successType' (in order to check if it points to type 'void')
 	 */
 	public static ParameterizedTypeRef createPromiseTypeRef(BuiltInTypeScope scope, TypeArgument successType,
 			TypeArgument failureTypeOrNull) {
 		Objects.requireNonNull(successType);
 		return createTypeRef(
 				scope.getPromiseType(),
-				TypeUtils.copyWithProxies(successType),
+				isVoid(successType) ? scope.getUndefinedTypeRef() : TypeUtils.copyWithProxies(successType),
 				failureTypeOrNull != null ? TypeUtils.copyWithProxies(failureTypeOrNull)
 						: TypeRefsFactory.eINSTANCE.createWildcard());
-	}
-
-	/**
-	 * Returns a Promise<any,?> type-ref.
-	 */
-	public static ParameterizedTypeRef createPromiseOfAny(BuiltInTypeScope scope) {
-		return createPromiseTypeRef(scope, scope.getAnyTypeRef(), null);
-	}
-
-	/**
-	 * Returns a Promise<void,?> type-ref.
-	 */
-	public static ParameterizedTypeRef createPromiseOfVoid(BuiltInTypeScope scope) {
-		return createPromiseTypeRef(scope, scope.getVoidTypeRef(), null);
 	}
 
 	/**

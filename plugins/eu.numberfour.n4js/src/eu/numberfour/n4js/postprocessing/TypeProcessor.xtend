@@ -14,6 +14,7 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FieldAccessor
+import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.N4ClassExpression
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4JSASTUtils
@@ -27,6 +28,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
+import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem
@@ -34,6 +36,7 @@ import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem.RuleFailedExceptio
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.utils.EcoreUtilN4
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleApplicationTrace
 import it.xsemantics.runtime.RuleEnvironment
@@ -105,6 +108,9 @@ public class TypeProcessor extends AbstractProcessor {
 					return; // return only required to avoid confusing logging of cache.getFailSafe(node) below
 				}
 			} else {
+				if(node instanceof FunctionDefinition) {
+					handleAsyncFunctionDefinition(G, node, cache);
+				}
 				// ordinary typing of typable AST nodes
 				// -> simply ask Xsemantics
 				log(indentLevel, "asking Xsemantics ...");
@@ -122,6 +128,34 @@ public class TypeProcessor extends AbstractProcessor {
 		}
 
 		log(indentLevel, cache.getTypeFailSafe(node));
+	}
+
+	/**
+	 * Some special handling for async functions and methods: we have to wrap their inner return type <code>R</code>
+	 * into a <code>Promise&lt;R,?></code> and use that as their actual, outer return type. This means for async
+	 * functions, the types builder will create a <code>TFunction</code> with the inner return type and during
+	 * post-processing that return type will be changed to a <code>Promise</code> by this method.
+	 * <p>
+	 * In addition, a return type of <code>void</code> will be replaced by <code>undefined</code>, i.e. will produce an
+	 * outer return type of <code>Promise&lt;undefined,?></code>.
+	 * <p>
+	 * NOTES:
+	 * <ol>
+	 * <li>normally, this wrapping could easily be done in the types builder, but because we have to check if the inner
+	 * return type is <code>void</code> we need to resolve proxies, which is not allowed in the types builder.
+	 * <li>this method is only responsible for the handling of declared functions and methods; for function expressions
+	 * code in class {@link PolyProcessor_FunctionExpression} will take care of wrapping the return type into a Promise.
+	 * </ol>
+	 */
+	def private void handleAsyncFunctionDefinition(RuleEnvironment G, FunctionDefinition funDef, ASTMetaInfoCache cache) {
+		if(funDef.isAsync) {
+			val tFunction = funDef.definedType as TFunction;
+			val innerReturnTypeRef = tFunction.returnTypeRef;
+			val outerReturnTypeRef = TypeUtils.createPromiseTypeRef(G.builtInTypeScope, innerReturnTypeRef, null);
+			EcoreUtilN4.doWithDeliver(false, [
+				tFunction.returnTypeRef = outerReturnTypeRef;
+			], tFunction);
+		}
 	}
 
 
