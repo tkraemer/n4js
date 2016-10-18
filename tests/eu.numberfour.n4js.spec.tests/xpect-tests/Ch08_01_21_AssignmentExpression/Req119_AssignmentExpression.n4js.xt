@@ -13,7 +13,7 @@ var a : A, b : B, c : C, d : D;
 var s : string, n : number, bo : boolean;
 var o : Object;
 var n4o : N4Object;
-var f : void;
+function fVoid(): void {}
 
 // XPECT errors --> "string is not a subtype of A." at "s"
 a = s;
@@ -29,8 +29,8 @@ a = gb;
 a = o;
 // XPECT errors --> "N4Object is not a subtype of A." at "n4o"
 a = n4o;
-// XPECT errors --> "void is not a subtype of A." at "f"
-a = f;
+// XPECT errors --> "void is not a subtype of A." at "fVoid()"
+a = fVoid();
 
 
 a = a;

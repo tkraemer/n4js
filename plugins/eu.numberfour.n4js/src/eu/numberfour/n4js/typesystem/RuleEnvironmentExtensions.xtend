@@ -183,6 +183,13 @@ class RuleEnvironmentExtensions {
 	}
 
 	/**
+	 * Convenience method returning the {@link BuiltInTypeScope} via this rule environment's {@link PredefinedTypes}.
+	 */
+	def static BuiltInTypeScope getBuiltInTypeScope(RuleEnvironment G) {
+		return G?.predefinedTypes?.builtInTypeScope;
+	}
+
+	/**
 	 * Returns the resource used to load built-in types and to resolve proxies. This is the resource of the object
 	 */
 	public def static Resource getContextResource(RuleEnvironment G) {
@@ -288,7 +295,8 @@ class RuleEnvironmentExtensions {
 		createExistentialTypeRef(
 			typeVar,
 			TypeRefsFactory.eINSTANCE.createWildcard => [
-				declaredUpperBound = TypeUtils.copyIfContained(typeVar.declaredUpperBounds.head)
+				val declUB = typeVar.declaredUpperBound;
+				declaredUpperBound = TypeUtils.copyIfContained(declUB);
 			]
 		)
 	}
@@ -323,7 +331,7 @@ class RuleEnvironmentExtensions {
 	}
 
 	def static TypeRef createTypeRefFromUpperBound(TypeVariable typeVar) {
-		TypeUtils.copyIfContained(typeVar.declaredUpperBounds.head)
+		TypeUtils.copyIfContained(typeVar.declaredUpperBound)
 	}
 
 	/* Returns the top type (which is currently 'any' but may change in the future). */
@@ -729,9 +737,9 @@ class RuleEnvironmentExtensions {
 		if (value instanceof ParameterizedTypeRef)
 			if (value.declaredType instanceof VoidType)
 				return false;
-		// ignore null and undefined (null and undefined do not provide any clue about key's type)
+		// ignore null (null does not provide any clue about key's type)
 		if (value instanceof ParameterizedTypeRef)
-			if (value.declaredType instanceof NullType || value.declaredType instanceof UndefinedType)
+			if (value.declaredType instanceof NullType)
 				return false;
 		return true;
 	}

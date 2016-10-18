@@ -42,6 +42,6 @@ var test2 : I = h.m();
 // XPECT noerrors -->
 var test3 : J = h.m();
 
-// XPECT errors --> "? extends A & I & J is not a subtype of X." at "h.m()"
+// XPECT errors --> "? extends intersection{A,I,J} is not a subtype of X." at "h.m()"
 var test4 : X = h.m();
 

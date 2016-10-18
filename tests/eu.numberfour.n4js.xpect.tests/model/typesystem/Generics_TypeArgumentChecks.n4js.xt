@@ -87,7 +87,7 @@ class Exotic<T> {
 	// XPECT errors --> "Incorrect number of type arguments for built-in type void: expected 0, got 1." at "void"
 	m1(t : T) : void<T> { }
 	// XPECT errors --> "Incorrect number of type arguments for built-in type undefined: expected 0, got 1." at "undefined"
-	m2(t : T) : undefined<T> { return null; }
+	m2(t : T) : undefined<T> { return undefined; }
 	// XPECT errors --> "Incorrect number of type arguments for built-in type any: expected 0, got 1." at "any"
 	m3(t : T) : any<T> { return null; }
 }

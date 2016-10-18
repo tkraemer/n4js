@@ -2137,21 +2137,15 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIdentifierOrThisParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cExtendsKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cDeclaredUpperBoundsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_1_0 = (RuleCall)cDeclaredUpperBoundsAssignment_2_1.eContents().get(0);
-		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
-		private final Keyword cAmpersandKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
-		private final Assignment cDeclaredUpperBoundsAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_2_1_0 = (RuleCall)cDeclaredUpperBoundsAssignment_2_2_1.eContents().get(0);
+		private final Assignment cDeclaredUpperBoundAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cDeclaredUpperBoundTypeRefParserRuleCall_2_1_0 = (RuleCall)cDeclaredUpperBoundAssignment_2_1.eContents().get(0);
 		
 		//TypeVariable types::TypeVariable:
 		//	(declaredCovariant?='out' | declaredContravariant?='in')?
-		//	name=IdentifierOrThis ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&'
-		//	declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
+		//	name=IdentifierOrThis ('extends' declaredUpperBound=TypeRef)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//(declaredCovariant?='out' | declaredContravariant?='in')? name=IdentifierOrThis ('extends'
-		//declaredUpperBounds+=ParameterizedTypeRefNominal ('&' declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
+		//(declaredCovariant?='out' | declaredContravariant?='in')? name=IdentifierOrThis ('extends' declaredUpperBound=TypeRef)?
 		public Group getGroup() { return cGroup; }
 
 		//(declaredCovariant?='out' | declaredContravariant?='in')?
@@ -2175,29 +2169,17 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//IdentifierOrThis
 		public RuleCall getNameIdentifierOrThisParserRuleCall_1_0() { return cNameIdentifierOrThisParserRuleCall_1_0; }
 
-		//('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&' declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
+		//('extends' declaredUpperBound=TypeRef)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//'extends'
 		public Keyword getExtendsKeyword_2_0() { return cExtendsKeyword_2_0; }
 
-		//declaredUpperBounds+=ParameterizedTypeRefNominal
-		public Assignment getDeclaredUpperBoundsAssignment_2_1() { return cDeclaredUpperBoundsAssignment_2_1; }
+		//declaredUpperBound=TypeRef
+		public Assignment getDeclaredUpperBoundAssignment_2_1() { return cDeclaredUpperBoundAssignment_2_1; }
 
-		//ParameterizedTypeRefNominal
-		public RuleCall getDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_1_0() { return cDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_1_0; }
-
-		//('&' declaredUpperBounds+=ParameterizedTypeRefNominal)*
-		public Group getGroup_2_2() { return cGroup_2_2; }
-
-		//'&'
-		public Keyword getAmpersandKeyword_2_2_0() { return cAmpersandKeyword_2_2_0; }
-
-		//declaredUpperBounds+=ParameterizedTypeRefNominal
-		public Assignment getDeclaredUpperBoundsAssignment_2_2_1() { return cDeclaredUpperBoundsAssignment_2_2_1; }
-
-		//ParameterizedTypeRefNominal
-		public RuleCall getDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_2_1_0() { return cDeclaredUpperBoundsParameterizedTypeRefNominalParserRuleCall_2_2_1_0; }
+		//TypeRef
+		public RuleCall getDeclaredUpperBoundTypeRefParserRuleCall_2_1_0() { return cDeclaredUpperBoundTypeRefParserRuleCall_2_1_0; }
 	}
 
 	public class FormalParameterElements extends AbstractParserRuleElementFinder {
@@ -10888,8 +10870,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TypeVariable types::TypeVariable:
 	//	(declaredCovariant?='out' | declaredContravariant?='in')?
-	//	name=IdentifierOrThis ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&'
-	//	declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
+	//	name=IdentifierOrThis ('extends' declaredUpperBound=TypeRef)?
 	public TypeVariableElements getTypeVariableAccess() {
 		return pTypeVariable;
 	}
@@ -13483,8 +13464,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TypeVariableWithDefSiteVariance TypeVariable:
 	//	(declaredCovariant?='out' | declaredContravariant?='in')?
-	//	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
-	//	declaredUpperBounds+=ParameterizedTypeRef)*)?
+	//	name=IDENTIFIER ('extends' declaredUpperBound=TypeRef)?
 	public TypeExpressionsGrammarAccess.TypeVariableWithDefSiteVarianceElements getTypeVariableWithDefSiteVarianceAccess() {
 		return gaTypeExpressions.getTypeVariableWithDefSiteVarianceAccess();
 	}

@@ -1,8 +1,7 @@
 
 import { ChangeEvent } from 'n4/events/ChangeEvent';
-var @Undefined undef; 
 export public class PropertyChangedEvent extends ChangeEvent {
-    public propertyName : string = undef;
+    public propertyName : string = undefined;
     public propertyIsReadOnly : boolean = false; 
     public value : any; 
     public oldValue : any; 

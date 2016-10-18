@@ -3723,312 +3723,303 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
           sneakyThrowRuleFailedException("true");
         }
       } else {
-        if (((leftDeclType instanceof VoidType) && (rightDeclType instanceof VoidType))) {
-          /* true */
-          if (!true) {
-            sneakyThrowRuleFailedException("true");
+        if (((leftDeclType instanceof VoidType) || (rightDeclType instanceof VoidType))) {
+          /* leftDeclType instanceof VoidType && rightDeclType instanceof VoidType */
+          if (!((leftDeclType instanceof VoidType) && (rightDeclType instanceof VoidType))) {
+            sneakyThrowRuleFailedException("leftDeclType instanceof VoidType && rightDeclType instanceof VoidType");
           }
         } else {
-          if (((leftDeclType instanceof VoidType) || (rightDeclType instanceof VoidType))) {
-            /* false */
-            if (!false) {
-              sneakyThrowRuleFailedException("false");
+          if ((((leftDeclType instanceof UndefinedType) || ((leftDeclType instanceof NullType) && (!(rightDeclType instanceof UndefinedType)))) || (rightDeclType instanceof AnyType))) {
+            /* true */
+            if (!true) {
+              sneakyThrowRuleFailedException("true");
             }
           } else {
-            if ((((leftDeclType instanceof NullType) || (leftDeclType instanceof UndefinedType)) || (rightDeclType instanceof AnyType))) {
+            if ((((leftDeclType == RuleEnvironmentExtensions.intType(G)) && (rightDeclType == RuleEnvironmentExtensions.numberType(G))) || ((leftDeclType == RuleEnvironmentExtensions.numberType(G)) && (rightDeclType == RuleEnvironmentExtensions.intType(G))))) {
               /* true */
               if (!true) {
                 sneakyThrowRuleFailedException("true");
               }
             } else {
-              if ((((leftDeclType == RuleEnvironmentExtensions.intType(G)) && (rightDeclType == RuleEnvironmentExtensions.numberType(G))) || ((leftDeclType == RuleEnvironmentExtensions.numberType(G)) && (rightDeclType == RuleEnvironmentExtensions.intType(G))))) {
-                /* true */
-                if (!true) {
-                  sneakyThrowRuleFailedException("true");
+              if (((leftDeclType instanceof TEnum) && (rightDeclType == RuleEnvironmentExtensions.n4EnumType(G)))) {
+                boolean _hasAnnotation = AnnotationDefinition.STRING_BASED.hasAnnotation(leftDeclType);
+                /* !AnnotationDefinition.STRING_BASED.hasAnnotation( leftDeclType ) */
+                if (!(!_hasAnnotation)) {
+                  sneakyThrowRuleFailedException("!AnnotationDefinition.STRING_BASED.hasAnnotation( leftDeclType )");
                 }
               } else {
-                if (((leftDeclType instanceof TEnum) && (rightDeclType == RuleEnvironmentExtensions.n4EnumType(G)))) {
-                  boolean _hasAnnotation = AnnotationDefinition.STRING_BASED.hasAnnotation(leftDeclType);
-                  /* !AnnotationDefinition.STRING_BASED.hasAnnotation( leftDeclType ) */
-                  if (!(!_hasAnnotation)) {
-                    sneakyThrowRuleFailedException("!AnnotationDefinition.STRING_BASED.hasAnnotation( leftDeclType )");
+                if (((leftDeclType instanceof TEnum) && (((rightDeclType == RuleEnvironmentExtensions.n4StringBasedEnumType(G)) || (rightDeclType == RuleEnvironmentExtensions.stringType(G))) || (rightDeclType == RuleEnvironmentExtensions.stringObjectType(G))))) {
+                  /* AnnotationDefinition.STRING_BASED.hasAnnotation( leftDeclType ) */
+                  if (!AnnotationDefinition.STRING_BASED.hasAnnotation(leftDeclType)) {
+                    sneakyThrowRuleFailedException("AnnotationDefinition.STRING_BASED.hasAnnotation( leftDeclType )");
                   }
                 } else {
-                  if (((leftDeclType instanceof TEnum) && (((rightDeclType == RuleEnvironmentExtensions.n4StringBasedEnumType(G)) || (rightDeclType == RuleEnvironmentExtensions.stringType(G))) || (rightDeclType == RuleEnvironmentExtensions.stringObjectType(G))))) {
-                    /* AnnotationDefinition.STRING_BASED.hasAnnotation( leftDeclType ) */
-                    if (!AnnotationDefinition.STRING_BASED.hasAnnotation(leftDeclType)) {
-                      sneakyThrowRuleFailedException("AnnotationDefinition.STRING_BASED.hasAnnotation( leftDeclType )");
+                  if (((leftDeclType == RuleEnvironmentExtensions.n4StringBasedEnumType(G)) && ((rightDeclType == RuleEnvironmentExtensions.stringType(G)) || (rightDeclType == RuleEnvironmentExtensions.stringObjectType(G))))) {
+                    /* true */
+                    if (!true) {
+                      sneakyThrowRuleFailedException("true");
                     }
                   } else {
-                    if (((leftDeclType == RuleEnvironmentExtensions.n4StringBasedEnumType(G)) && ((rightDeclType == RuleEnvironmentExtensions.stringType(G)) || (rightDeclType == RuleEnvironmentExtensions.stringObjectType(G))))) {
+                    if (((leftDeclType instanceof PrimitiveType) && (((PrimitiveType) leftDeclType).getAssignmentCompatible() == rightDeclType))) {
                       /* true */
                       if (!true) {
                         sneakyThrowRuleFailedException("true");
                       }
                     } else {
-                      if (((leftDeclType instanceof PrimitiveType) && (((PrimitiveType) leftDeclType).getAssignmentCompatible() == rightDeclType))) {
+                      if (((rightDeclType instanceof PrimitiveType) && (leftDeclType == ((PrimitiveType) rightDeclType).getAssignmentCompatible()))) {
                         /* true */
                         if (!true) {
                           sneakyThrowRuleFailedException("true");
                         }
                       } else {
-                        if (((rightDeclType instanceof PrimitiveType) && (leftDeclType == ((PrimitiveType) rightDeclType).getAssignmentCompatible()))) {
-                          /* true */
-                          if (!true) {
-                            sneakyThrowRuleFailedException("true");
+                        if ((((leftDeclType instanceof TInterface) && (!(rightDeclType instanceof TInterface))) && (!(((rightDeclType == RuleEnvironmentExtensions.n4ObjectType(G)) || (rightDeclType == RuleEnvironmentExtensions.objectType(G))) || (rightDeclType == RuleEnvironmentExtensions.anyType(G)))))) {
+                          /* false */
+                          if (!false) {
+                            sneakyThrowRuleFailedException("false");
                           }
                         } else {
-                          if ((((leftDeclType instanceof TInterface) && (!(rightDeclType instanceof TInterface))) && (!(((rightDeclType == RuleEnvironmentExtensions.n4ObjectType(G)) || (rightDeclType == RuleEnvironmentExtensions.objectType(G))) || (rightDeclType == RuleEnvironmentExtensions.anyType(G)))))) {
-                            /* false */
-                            if (!false) {
-                              sneakyThrowRuleFailedException("false");
+                          boolean structuralTyping = false;
+                          boolean _isUseSiteStructuralTyping = right.isUseSiteStructuralTyping();
+                          if (_isUseSiteStructuralTyping) {
+                            final StructuralTypingResult result = this.typeSystemHelper.isStructuralSubtype(G, left, right);
+                            boolean _isValue = result.isValue();
+                            boolean _not = (!_isValue);
+                            if (_not) {
+                              /* fail error result.message data PRIORITY_ERROR */
+                              String _message = result.getMessage();
+                              String error = _message;
+                              Object data = TypeSystemErrorExtensions.PRIORITY_ERROR;
+                              throwForExplicitFail(error, new ErrorInformation(null, null, data));
                             }
+                            structuralTyping = true;
                           } else {
-                            boolean structuralTyping = false;
-                            boolean _isUseSiteStructuralTyping = right.isUseSiteStructuralTyping();
-                            if (_isUseSiteStructuralTyping) {
-                              final StructuralTypingResult result = this.typeSystemHelper.isStructuralSubtype(G, left, right);
-                              boolean _isValue = result.isValue();
-                              boolean _not = (!_isValue);
-                              if (_not) {
-                                /* fail error result.message data PRIORITY_ERROR */
-                                String _message = result.getMessage();
-                                String error = _message;
-                                Object data = TypeSystemErrorExtensions.PRIORITY_ERROR;
-                                throwForExplicitFail(error, new ErrorInformation(null, null, data));
-                              }
-                              structuralTyping = true;
-                            } else {
-                              boolean _isDefSiteStructuralTyping = right.isDefSiteStructuralTyping();
-                              if (_isDefSiteStructuralTyping) {
-                                Pair<TypeRef, TypeRef> _mappedTo = Pair.<TypeRef, TypeRef>of(left, right);
-                                Pair<String, Pair<TypeRef, TypeRef>> _mappedTo_1 = Pair.<String, Pair<TypeRef, TypeRef>>of(RuleEnvironmentExtensions.GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__STRUCT, _mappedTo);
-                                Object _get = G.get(_mappedTo_1);
-                                final Boolean guard = ((Boolean) _get);
-                                if (((guard == null) || (!(guard).booleanValue()))) {
-                                  final StructuralTypingResult result_1 = this.typeSystemHelper.isStructuralSubtype(G, left, right);
-                                  boolean _isValue_1 = result_1.isValue();
-                                  boolean _not_1 = (!_isValue_1);
-                                  if (_not_1) {
-                                    boolean _and = false;
-                                    boolean _isN4ObjectOnLeftWithDefSite = result_1.isN4ObjectOnLeftWithDefSite();
-                                    if (!_isN4ObjectOnLeftWithDefSite) {
-                                      _and = false;
-                                    } else {
-                                      /* G.wrap, (GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__STRUCT->(left->right))<-true |- left <: right */
-                                      RuleEnvironment _wrap = RuleEnvironmentExtensions.wrap(G);
-                                      Pair<TypeRef, TypeRef> _mappedTo_2 = Pair.<TypeRef, TypeRef>of(left, right);
-                                      Pair<String, Pair<TypeRef, TypeRef>> _mappedTo_3 = Pair.<String, Pair<TypeRef, TypeRef>>of(RuleEnvironmentExtensions.GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__STRUCT, _mappedTo_2);
-                                      boolean _ruleinvocation = subtypeSucceeded(environmentComposition(
-                                        _wrap, environmentEntry(_mappedTo_3, true)
-                                      ), _trace_, left, right);
-                                      _and = _ruleinvocation;
-                                    }
-                                    if (_and) {
-                                      structuralTyping = true;
-                                    } else {
-                                      /* fail error result.message data PRIORITY_ERROR */
-                                      String _message_1 = result_1.getMessage();
-                                      String error_1 = _message_1;
-                                      Object data_1 = TypeSystemErrorExtensions.PRIORITY_ERROR;
-                                      throwForExplicitFail(error_1, new ErrorInformation(null, null, data_1));
-                                    }
+                            boolean _isDefSiteStructuralTyping = right.isDefSiteStructuralTyping();
+                            if (_isDefSiteStructuralTyping) {
+                              Pair<TypeRef, TypeRef> _mappedTo = Pair.<TypeRef, TypeRef>of(left, right);
+                              Pair<String, Pair<TypeRef, TypeRef>> _mappedTo_1 = Pair.<String, Pair<TypeRef, TypeRef>>of(RuleEnvironmentExtensions.GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__STRUCT, _mappedTo);
+                              Object _get = G.get(_mappedTo_1);
+                              final Boolean guard = ((Boolean) _get);
+                              if (((guard == null) || (!(guard).booleanValue()))) {
+                                final StructuralTypingResult result_1 = this.typeSystemHelper.isStructuralSubtype(G, left, right);
+                                boolean _isValue_1 = result_1.isValue();
+                                boolean _not_1 = (!_isValue_1);
+                                if (_not_1) {
+                                  boolean _and = false;
+                                  boolean _isN4ObjectOnLeftWithDefSite = result_1.isN4ObjectOnLeftWithDefSite();
+                                  if (!_isN4ObjectOnLeftWithDefSite) {
+                                    _and = false;
+                                  } else {
+                                    /* G.wrap, (GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__STRUCT->(left->right))<-true |- left <: right */
+                                    RuleEnvironment _wrap = RuleEnvironmentExtensions.wrap(G);
+                                    Pair<TypeRef, TypeRef> _mappedTo_2 = Pair.<TypeRef, TypeRef>of(left, right);
+                                    Pair<String, Pair<TypeRef, TypeRef>> _mappedTo_3 = Pair.<String, Pair<TypeRef, TypeRef>>of(RuleEnvironmentExtensions.GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__STRUCT, _mappedTo_2);
+                                    boolean _ruleinvocation = subtypeSucceeded(environmentComposition(
+                                      _wrap, environmentEntry(_mappedTo_3, true)
+                                    ), _trace_, left, right);
+                                    _and = _ruleinvocation;
                                   }
-                                  boolean _isValue_2 = result_1.isValue();
-                                  structuralTyping = _isValue_2;
+                                  if (_and) {
+                                    structuralTyping = true;
+                                  } else {
+                                    /* fail error result.message data PRIORITY_ERROR */
+                                    String _message_1 = result_1.getMessage();
+                                    String error_1 = _message_1;
+                                    Object data_1 = TypeSystemErrorExtensions.PRIORITY_ERROR;
+                                    throwForExplicitFail(error_1, new ErrorInformation(null, null, data_1));
+                                  }
                                 }
+                                boolean _isValue_2 = result_1.isValue();
+                                structuralTyping = _isValue_2;
                               }
                             }
-                            if ((!structuralTyping)) {
-                              boolean _and_1 = false;
-                              if (!((left.isUseSiteStructuralTyping() || left.isDefSiteStructuralTyping()) && 
-                                (!((leftDeclType instanceof TypeVariable) || (rightDeclType instanceof TypeVariable))))) {
-                                _and_1 = false;
-                              } else {
-                                /* G |- right <: G.n4ObjectTypeRef */
-                                ParameterizedTypeRef _n4ObjectTypeRef = RuleEnvironmentExtensions.n4ObjectTypeRef(G);
-                                boolean _ruleinvocation_1 = subtypeSucceeded(G, _trace_, right, _n4ObjectTypeRef);
-                                _and_1 = _ruleinvocation_1;
-                              }
-                              if (_and_1) {
-                                /* fail error "Structural type " + left.typeRefAsString + " is not a subtype of non-structural type " + right.typeRefAsString data PRIORITY_ERROR */
-                                String _typeRefAsString = left.getTypeRefAsString();
-                                String _plus = ("Structural type " + _typeRefAsString);
-                                String _plus_1 = (_plus + " is not a subtype of non-structural type ");
-                                String _typeRefAsString_1 = right.getTypeRefAsString();
-                                String _plus_2 = (_plus_1 + _typeRefAsString_1);
-                                String error_2 = _plus_2;
-                                Object data_2 = TypeSystemErrorExtensions.PRIORITY_ERROR;
-                                throwForExplicitFail(error_2, new ErrorInformation(null, null, data_2));
-                              }
-                              if (((leftDeclType instanceof TypeVariable) || (rightDeclType instanceof TypeVariable))) {
-                                boolean _equals = Objects.equal(leftDeclType, rightDeclType);
-                                if (_equals) {
-                                  /* true */
-                                  if (!true) {
-                                    sneakyThrowRuleFailedException("true");
-                                  }
-                                } else {
-                                  if ((leftDeclType instanceof TypeVariable)) {
-                                    EList<ParameterizedTypeRef> _declaredUpperBounds = ((TypeVariable)leftDeclType).getDeclaredUpperBounds();
-                                    boolean _isEmpty = _declaredUpperBounds.isEmpty();
-                                    if (_isEmpty) {
-                                      /* false */
-                                      if (!false) {
-                                        sneakyThrowRuleFailedException("false");
-                                      }
-                                    } else {
-                                      /* G |- typeSystemHelper.createIntersectionType(G, leftDeclType.declaredUpperBounds) <: right */
-                                      EList<ParameterizedTypeRef> _declaredUpperBounds_1 = ((TypeVariable)leftDeclType).getDeclaredUpperBounds();
-                                      TypeRef _createIntersectionType = this.typeSystemHelper.createIntersectionType(G, ((TypeRef[])Conversions.unwrapArray(_declaredUpperBounds_1, TypeRef.class)));
-                                      subtypeInternal(G, _trace_, _createIntersectionType, right);
-                                    }
-                                  } else {
-                                    /* false */
-                                    if (!false) {
-                                      sneakyThrowRuleFailedException("false");
-                                    }
-                                  }
+                          }
+                          if ((!structuralTyping)) {
+                            boolean _and_1 = false;
+                            if (!((left.isUseSiteStructuralTyping() || left.isDefSiteStructuralTyping()) && 
+                              (!((leftDeclType instanceof TypeVariable) || (rightDeclType instanceof TypeVariable))))) {
+                              _and_1 = false;
+                            } else {
+                              /* G |- right <: G.n4ObjectTypeRef */
+                              ParameterizedTypeRef _n4ObjectTypeRef = RuleEnvironmentExtensions.n4ObjectTypeRef(G);
+                              boolean _ruleinvocation_1 = subtypeSucceeded(G, _trace_, right, _n4ObjectTypeRef);
+                              _and_1 = _ruleinvocation_1;
+                            }
+                            if (_and_1) {
+                              /* fail error "Structural type " + left.typeRefAsString + " is not a subtype of non-structural type " + right.typeRefAsString data PRIORITY_ERROR */
+                              String _typeRefAsString = left.getTypeRefAsString();
+                              String _plus = ("Structural type " + _typeRefAsString);
+                              String _plus_1 = (_plus + " is not a subtype of non-structural type ");
+                              String _typeRefAsString_1 = right.getTypeRefAsString();
+                              String _plus_2 = (_plus_1 + _typeRefAsString_1);
+                              String error_2 = _plus_2;
+                              Object data_2 = TypeSystemErrorExtensions.PRIORITY_ERROR;
+                              throwForExplicitFail(error_2, new ErrorInformation(null, null, data_2));
+                            }
+                            if (((leftDeclType instanceof TypeVariable) || (rightDeclType instanceof TypeVariable))) {
+                              boolean _equals = Objects.equal(leftDeclType, rightDeclType);
+                              if (_equals) {
+                                /* true */
+                                if (!true) {
+                                  sneakyThrowRuleFailedException("true");
                                 }
                               } else {
-                                boolean _equals_1 = Objects.equal(leftDeclType, rightDeclType);
-                                if (_equals_1) {
-                                  if (((left.getTypeArgs().size() > 0) && (left.getTypeArgs().size() <= right.getTypeArgs().size()))) {
-                                    EList<TypeArgument> _typeArgs = left.getTypeArgs();
-                                    int _size = _typeArgs.size();
-                                    EList<TypeArgument> _typeArgs_1 = right.getTypeArgs();
-                                    int _size_1 = _typeArgs_1.size();
-                                    int _min = Math.min(_size, _size_1);
-                                    EList<TypeVariable> _typeVars = rightDeclType.getTypeVars();
-                                    int _size_2 = _typeVars.size();
-                                    final int len = Math.min(_min, _size_2);
-                                    for (int i = 0; (i < len); i++) {
-                                      EList<TypeArgument> _typeArgs_2 = left.getTypeArgs();
-                                      final TypeArgument leftArg = _typeArgs_2.get(i);
-                                      EList<TypeArgument> _typeArgs_3 = right.getTypeArgs();
-                                      final TypeArgument rightArg = _typeArgs_3.get(i);
-                                      final Variance variance = rightDeclType.getVarianceOfTypeVar(i);
-                                      TypeRef leftArgUpper = null;
-                                      /* G |~ leftArg /\ leftArgUpper */
-                                      Result<TypeRef> result_2 = upperBoundInternal(G, _trace_, leftArg);
-                                      checkAssignableTo(result_2.getFirst(), TypeRef.class);
-                                      leftArgUpper = (TypeRef) result_2.getFirst();
-                                      
-                                      TypeRef leftArgLower = null;
-                                      /* G |~ leftArg \/ leftArgLower */
-                                      Result<TypeRef> result_3 = lowerBoundInternal(G, _trace_, leftArg);
-                                      checkAssignableTo(result_3.getFirst(), TypeRef.class);
-                                      leftArgLower = (TypeRef) result_3.getFirst();
-                                      
-                                      TypeRef rightArgUpper = null;
-                                      /* G |~ rightArg /\ rightArgUpper */
-                                      Result<TypeRef> result_4 = upperBoundInternal(G, _trace_, rightArg);
-                                      checkAssignableTo(result_4.getFirst(), TypeRef.class);
-                                      rightArgUpper = (TypeRef) result_4.getFirst();
-                                      
-                                      TypeRef rightArgLower = null;
-                                      /* G |~ rightArg \/ rightArgLower */
-                                      Result<TypeRef> result_5 = lowerBoundInternal(G, _trace_, rightArg);
-                                      checkAssignableTo(result_5.getFirst(), TypeRef.class);
-                                      rightArgLower = (TypeRef) result_5.getFirst();
-                                      
-                                      RuleEnvironment G2 = null;
-                                      if (((rightArg instanceof Wildcard) && ((Wildcard) rightArg).isImplicitUpperBoundInEffect())) {
-                                        Pair<String, TypeArgument> _mappedTo_4 = Pair.<String, TypeArgument>of(RuleEnvironmentExtensions.GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__ARGS, rightArg);
-                                        Object _get_1 = G.get(_mappedTo_4);
-                                        final boolean isGuarded = (_get_1 != null);
-                                        if ((!isGuarded)) {
-                                          RuleEnvironment _wrap_1 = RuleEnvironmentExtensions.wrap(G);
-                                          G2 = _wrap_1;
-                                          Pair<String, TypeArgument> _mappedTo_5 = Pair.<String, TypeArgument>of(RuleEnvironmentExtensions.GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__ARGS, rightArg);
-                                          /* G2.add(GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__ARGS->(rightArg), Boolean.TRUE) */
-                                          if (!G2.add(_mappedTo_5, Boolean.TRUE)) {
-                                            sneakyThrowRuleFailedException("G2.add(GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__ARGS->(rightArg), Boolean.TRUE)");
-                                          }
-                                        } else {
-                                          ParameterizedTypeRef _pTypeRef = RuleEnvironmentExtensions.topTypeRef(G);
-                                          rightArgUpper = _pTypeRef;
-                                          G2 = G;
+                                if ((leftDeclType instanceof TypeVariable)) {
+                                  TypeRef _elvis = null;
+                                  TypeRef _declaredUpperBound = ((TypeVariable)leftDeclType).getDeclaredUpperBound();
+                                  if (_declaredUpperBound != null) {
+                                    _elvis = _declaredUpperBound;
+                                  } else {
+                                    TypeRef _typeVariableImplicitUpperBound = N4JSLanguageUtils.getTypeVariableImplicitUpperBound(G);
+                                    _elvis = _typeVariableImplicitUpperBound;
+                                  }
+                                  final TypeRef ub = _elvis;
+                                  /* G |- ub <: right */
+                                  subtypeInternal(G, _trace_, ub, right);
+                                } else {
+                                  /* false */
+                                  if (!false) {
+                                    sneakyThrowRuleFailedException("false");
+                                  }
+                                }
+                              }
+                            } else {
+                              boolean _equals_1 = Objects.equal(leftDeclType, rightDeclType);
+                              if (_equals_1) {
+                                if (((left.getTypeArgs().size() > 0) && (left.getTypeArgs().size() <= right.getTypeArgs().size()))) {
+                                  EList<TypeArgument> _typeArgs = left.getTypeArgs();
+                                  int _size = _typeArgs.size();
+                                  EList<TypeArgument> _typeArgs_1 = right.getTypeArgs();
+                                  int _size_1 = _typeArgs_1.size();
+                                  int _min = Math.min(_size, _size_1);
+                                  EList<TypeVariable> _typeVars = rightDeclType.getTypeVars();
+                                  int _size_2 = _typeVars.size();
+                                  final int len = Math.min(_min, _size_2);
+                                  for (int i = 0; (i < len); i++) {
+                                    EList<TypeArgument> _typeArgs_2 = left.getTypeArgs();
+                                    final TypeArgument leftArg = _typeArgs_2.get(i);
+                                    EList<TypeArgument> _typeArgs_3 = right.getTypeArgs();
+                                    final TypeArgument rightArg = _typeArgs_3.get(i);
+                                    final Variance variance = rightDeclType.getVarianceOfTypeVar(i);
+                                    TypeRef leftArgUpper = null;
+                                    /* G |~ leftArg /\ leftArgUpper */
+                                    Result<TypeRef> result_2 = upperBoundInternal(G, _trace_, leftArg);
+                                    checkAssignableTo(result_2.getFirst(), TypeRef.class);
+                                    leftArgUpper = (TypeRef) result_2.getFirst();
+                                    
+                                    TypeRef leftArgLower = null;
+                                    /* G |~ leftArg \/ leftArgLower */
+                                    Result<TypeRef> result_3 = lowerBoundInternal(G, _trace_, leftArg);
+                                    checkAssignableTo(result_3.getFirst(), TypeRef.class);
+                                    leftArgLower = (TypeRef) result_3.getFirst();
+                                    
+                                    TypeRef rightArgUpper = null;
+                                    /* G |~ rightArg /\ rightArgUpper */
+                                    Result<TypeRef> result_4 = upperBoundInternal(G, _trace_, rightArg);
+                                    checkAssignableTo(result_4.getFirst(), TypeRef.class);
+                                    rightArgUpper = (TypeRef) result_4.getFirst();
+                                    
+                                    TypeRef rightArgLower = null;
+                                    /* G |~ rightArg \/ rightArgLower */
+                                    Result<TypeRef> result_5 = lowerBoundInternal(G, _trace_, rightArg);
+                                    checkAssignableTo(result_5.getFirst(), TypeRef.class);
+                                    rightArgLower = (TypeRef) result_5.getFirst();
+                                    
+                                    RuleEnvironment G2 = null;
+                                    if (((rightArg instanceof Wildcard) && ((Wildcard) rightArg).isImplicitUpperBoundInEffect())) {
+                                      Pair<String, TypeArgument> _mappedTo_4 = Pair.<String, TypeArgument>of(RuleEnvironmentExtensions.GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__ARGS, rightArg);
+                                      Object _get_1 = G.get(_mappedTo_4);
+                                      final boolean isGuarded = (_get_1 != null);
+                                      if ((!isGuarded)) {
+                                        RuleEnvironment _wrap_1 = RuleEnvironmentExtensions.wrap(G);
+                                        G2 = _wrap_1;
+                                        Pair<String, TypeArgument> _mappedTo_5 = Pair.<String, TypeArgument>of(RuleEnvironmentExtensions.GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__ARGS, rightArg);
+                                        /* G2.add(GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__ARGS->(rightArg), Boolean.TRUE) */
+                                        if (!G2.add(_mappedTo_5, Boolean.TRUE)) {
+                                          sneakyThrowRuleFailedException("G2.add(GUARD_SUBTYPE_PARAMETERIZED_TYPE_REF__ARGS->(rightArg), Boolean.TRUE)");
                                         }
                                       } else {
+                                        ParameterizedTypeRef _pTypeRef = RuleEnvironmentExtensions.topTypeRef(G);
+                                        rightArgUpper = _pTypeRef;
                                         G2 = G;
                                       }
-                                      /* { if(variance!=Variance.CONTRA) { G2 |- leftArgUpper <: rightArgUpper } if(variance!=Variance.CO) { G2 |- rightArgLower <: leftArgLower } } or { if(previousFailure.isOrCausedByPriorityError) { fail error stringRep(left) + " is not a subtype of " + stringRep(right) + " due to incompatible type arguments: " + previousFailure.compileMessage data PRIORITY_ERROR } else { fail } } */
-                                      {
-                                        RuleFailedException previousFailure = null;
-                                        try {
-                                          boolean _notEquals = (!Objects.equal(variance, Variance.CONTRA));
-                                          if (_notEquals) {
-                                            /* G2 |- leftArgUpper <: rightArgUpper */
-                                            subtypeInternal(G2, _trace_, leftArgUpper, rightArgUpper);
-                                          }
-                                          boolean _notEquals_1 = (!Objects.equal(variance, Variance.CO));
-                                          if (_notEquals_1) {
-                                            /* G2 |- rightArgLower <: leftArgLower */
-                                            subtypeInternal(G2, _trace_, rightArgLower, leftArgLower);
-                                          }
-                                        } catch (Exception e) {
-                                          previousFailure = extractRuleFailedException(e);
-                                          RuleFailedException _previousFailure = previousFailure;
-                                          boolean _isOrCausedByPriorityError = TypeSystemErrorExtensions.isOrCausedByPriorityError(_previousFailure);
-                                          if (_isOrCausedByPriorityError) {
-                                            /* fail error stringRep(left) + " is not a subtype of " + stringRep(right) + " due to incompatible type arguments: " + previousFailure.compileMessage data PRIORITY_ERROR */
-                                            String _stringRep = this.stringRep(left);
-                                            String _plus_3 = (_stringRep + " is not a subtype of ");
-                                            String _stringRep_1 = this.stringRep(right);
-                                            String _plus_4 = (_plus_3 + _stringRep_1);
-                                            String _plus_5 = (_plus_4 + " due to incompatible type arguments: ");
-                                            RuleFailedException _previousFailure_1 = previousFailure;
-                                            String _compileMessage = TypeSystemErrorExtensions.compileMessage(_previousFailure_1);
-                                            String _plus_6 = (_plus_5 + _compileMessage);
-                                            String error_3 = _plus_6;
-                                            Object data_3 = TypeSystemErrorExtensions.PRIORITY_ERROR;
-                                            throwForExplicitFail(error_3, new ErrorInformation(null, null, data_3));
-                                          } else {
-                                            /* fail */
-                                            throwForExplicitFail();
-                                          }
+                                    } else {
+                                      G2 = G;
+                                    }
+                                    /* { if(variance!=Variance.CONTRA) { G2 |- leftArgUpper <: rightArgUpper } if(variance!=Variance.CO) { G2 |- rightArgLower <: leftArgLower } } or { if(previousFailure.isOrCausedByPriorityError) { fail error stringRep(left) + " is not a subtype of " + stringRep(right) + " due to incompatible type arguments: " + previousFailure.compileMessage data PRIORITY_ERROR } else { fail } } */
+                                    {
+                                      RuleFailedException previousFailure = null;
+                                      try {
+                                        boolean _notEquals = (!Objects.equal(variance, Variance.CONTRA));
+                                        if (_notEquals) {
+                                          /* G2 |- leftArgUpper <: rightArgUpper */
+                                          subtypeInternal(G2, _trace_, leftArgUpper, rightArgUpper);
+                                        }
+                                        boolean _notEquals_1 = (!Objects.equal(variance, Variance.CO));
+                                        if (_notEquals_1) {
+                                          /* G2 |- rightArgLower <: leftArgLower */
+                                          subtypeInternal(G2, _trace_, rightArgLower, leftArgLower);
+                                        }
+                                      } catch (Exception e) {
+                                        previousFailure = extractRuleFailedException(e);
+                                        RuleFailedException _previousFailure = previousFailure;
+                                        boolean _isOrCausedByPriorityError = TypeSystemErrorExtensions.isOrCausedByPriorityError(_previousFailure);
+                                        if (_isOrCausedByPriorityError) {
+                                          /* fail error stringRep(left) + " is not a subtype of " + stringRep(right) + " due to incompatible type arguments: " + previousFailure.compileMessage data PRIORITY_ERROR */
+                                          String _stringRep = this.stringRep(left);
+                                          String _plus_3 = (_stringRep + " is not a subtype of ");
+                                          String _stringRep_1 = this.stringRep(right);
+                                          String _plus_4 = (_plus_3 + _stringRep_1);
+                                          String _plus_5 = (_plus_4 + " due to incompatible type arguments: ");
+                                          RuleFailedException _previousFailure_1 = previousFailure;
+                                          String _compileMessage = TypeSystemErrorExtensions.compileMessage(_previousFailure_1);
+                                          String _plus_6 = (_plus_5 + _compileMessage);
+                                          String error_3 = _plus_6;
+                                          Object data_3 = TypeSystemErrorExtensions.PRIORITY_ERROR;
+                                          throwForExplicitFail(error_3, new ErrorInformation(null, null, data_3));
+                                        } else {
+                                          /* fail */
+                                          throwForExplicitFail();
                                         }
                                       }
                                     }
                                   }
+                                }
+                              } else {
+                                List<ParameterizedTypeRef> _xifexpression = null;
+                                if ((leftDeclType instanceof ContainerType<?>)) {
+                                  _xifexpression = AllSuperTypeRefsCollector.collect(((ContainerType<?>)leftDeclType));
                                 } else {
-                                  List<ParameterizedTypeRef> _xifexpression = null;
-                                  if ((leftDeclType instanceof ContainerType<?>)) {
-                                    _xifexpression = AllSuperTypeRefsCollector.collect(((ContainerType<?>)leftDeclType));
-                                  } else {
-                                    _xifexpression = CollectionLiterals.<ParameterizedTypeRef>newArrayList();
-                                  }
-                                  final List<ParameterizedTypeRef> allSuperTypeRefs = _xifexpression;
-                                  List<ParameterizedTypeRef> _collectAllImplicitSuperTypes = RuleEnvironmentExtensions.collectAllImplicitSuperTypes(G, left);
-                                  final Iterable<ParameterizedTypeRef> superTypeRefs = Iterables.<ParameterizedTypeRef>concat(allSuperTypeRefs, _collectAllImplicitSuperTypes);
-                                  final Function1<ParameterizedTypeRef, Boolean> _function = (ParameterizedTypeRef it) -> {
-                                    Type _declaredType = it.getDeclaredType();
-                                    return Boolean.valueOf((_declaredType == rightDeclType));
+                                  _xifexpression = CollectionLiterals.<ParameterizedTypeRef>newArrayList();
+                                }
+                                final List<ParameterizedTypeRef> allSuperTypeRefs = _xifexpression;
+                                List<ParameterizedTypeRef> _collectAllImplicitSuperTypes = RuleEnvironmentExtensions.collectAllImplicitSuperTypes(G, left);
+                                final Iterable<ParameterizedTypeRef> superTypeRefs = Iterables.<ParameterizedTypeRef>concat(allSuperTypeRefs, _collectAllImplicitSuperTypes);
+                                final Function1<ParameterizedTypeRef, Boolean> _function = (ParameterizedTypeRef it) -> {
+                                  Type _declaredType = it.getDeclaredType();
+                                  return Boolean.valueOf((_declaredType == rightDeclType));
+                                };
+                                boolean _exists = IterableExtensions.<ParameterizedTypeRef>exists(superTypeRefs, _function);
+                                if (_exists) {
+                                  final RuleEnvironment localG_left = RuleEnvironmentExtensions.wrap(G);
+                                  this.typeSystemHelper.addSubstitutions(localG_left, left);
+                                  EList<TypeVariable> _typeVars_1 = rightDeclType.getTypeVars();
+                                  final Function1<TypeVariable, TypeRef> _function_1 = (TypeVariable it) -> {
+                                    return TypeExtensions.ref(it);
                                   };
-                                  boolean _exists = IterableExtensions.<ParameterizedTypeRef>exists(superTypeRefs, _function);
-                                  if (_exists) {
-                                    final RuleEnvironment localG_left = RuleEnvironmentExtensions.wrap(G);
-                                    this.typeSystemHelper.addSubstitutions(localG_left, left);
-                                    EList<TypeVariable> _typeVars_1 = rightDeclType.getTypeVars();
-                                    final Function1<TypeVariable, TypeRef> _function_1 = (TypeVariable it) -> {
-                                      return TypeExtensions.ref(it);
-                                    };
-                                    List<TypeRef> _map = ListExtensions.<TypeVariable, TypeRef>map(_typeVars_1, _function_1);
-                                    final TypeRef syntheticTypeRef = TypeExtensions.ref(rightDeclType, ((TypeArgument[])Conversions.unwrapArray(_map, TypeArgument.class)));
-                                    /* localG_left |- syntheticTypeRef ~> var TypeRef effectiveSuperTypeRef */
-                                    TypeRef effectiveSuperTypeRef = null;
-                                    Result<TypeArgument> result_2 = substTypeVariablesInternal(localG_left, _trace_, syntheticTypeRef);
-                                    checkAssignableTo(result_2.getFirst(), TypeRef.class);
-                                    effectiveSuperTypeRef = (TypeRef) result_2.getFirst();
-                                    
-                                    /* G |- effectiveSuperTypeRef <: right */
-                                    subtypeInternal(G, _trace_, effectiveSuperTypeRef, right);
-                                  } else {
-                                    /* false */
-                                    if (!false) {
-                                      sneakyThrowRuleFailedException("false");
-                                    }
+                                  List<TypeRef> _map = ListExtensions.<TypeVariable, TypeRef>map(_typeVars_1, _function_1);
+                                  final TypeRef syntheticTypeRef = TypeExtensions.ref(rightDeclType, ((TypeArgument[])Conversions.unwrapArray(_map, TypeArgument.class)));
+                                  /* localG_left |- syntheticTypeRef ~> var TypeRef effectiveSuperTypeRef */
+                                  TypeRef effectiveSuperTypeRef = null;
+                                  Result<TypeArgument> result_2 = substTypeVariablesInternal(localG_left, _trace_, syntheticTypeRef);
+                                  checkAssignableTo(result_2.getFirst(), TypeRef.class);
+                                  effectiveSuperTypeRef = (TypeRef) result_2.getFirst();
+                                  
+                                  /* G |- effectiveSuperTypeRef <: right */
+                                  subtypeInternal(G, _trace_, effectiveSuperTypeRef, right);
+                                } else {
+                                  /* false */
+                                  if (!false) {
+                                    sneakyThrowRuleFailedException("false");
                                   }
                                 }
                               }
@@ -5974,7 +5965,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleUpperBoundWildcardTypeRef(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Wildcard wildcard) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    final TypeRef ub = TypeUtils.getDeclaredOrImplicitUpperBound(wildcard);
+    final TypeRef ub = wildcard.getDeclaredOrImplicitUpperBound();
     if ((ub != null)) {
       T = ub;
     } else {

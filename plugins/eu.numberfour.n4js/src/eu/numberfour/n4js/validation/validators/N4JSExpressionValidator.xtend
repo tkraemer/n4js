@@ -635,9 +635,9 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		internalCheckNewParameters(newExpression, staticType as TClassifier);
 	}
 
-	private def changeToCovariantUpperBoundIfTypeVar(Type type) {
+	private def Type changeToCovariantUpperBoundIfTypeVar(Type type) {
 		if(type instanceof TypeVariable) {
-			val ub = TypeUtils.getDeclaredUpperBound(type);
+			val ub = type.getDeclaredUpperBound();
 			if(ub instanceof ParameterizedTypeRef) {
 				val declType = ub.declaredType;
 				if(declType instanceof TClassifier) {
@@ -1314,11 +1314,11 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 				return false;
 			}
 		} else if (T.declaredType instanceof TypeVariable &&
-			!(T.declaredType as TypeVariable).declaredUpperBounds.empty) {
+			(T.declaredType as TypeVariable).declaredUpperBound!==null) {
 			val typeVariable = T.declaredType as TypeVariable
-			if (! typeVariable.declaredUpperBounds.forall [
-				internalCheckCastExpression(G, S, it, castExpression, false, actualSourceTypeIsCPOE)
-			]) {
+			if (!internalCheckCastExpression(G, S, typeVariable.declaredUpperBound, castExpression, false,
+				actualSourceTypeIsCPOE
+			)) {
 				if (addIssues) {
 					addIssue(IssueCodes.getMessageForEXP_CAST_FAILED(S.typeRefAsString, T.typeRefAsString),
 						castExpression, IssueCodes.EXP_CAST_FAILED);

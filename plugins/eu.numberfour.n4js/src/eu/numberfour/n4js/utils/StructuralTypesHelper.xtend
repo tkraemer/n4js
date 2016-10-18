@@ -28,6 +28,7 @@ import static eu.numberfour.n4js.ts.types.TypingStrategy.*
 import static extension com.google.common.collect.Iterables.concat
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.StructuralMembersPredicates.*
+import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
 
 /**
  * Helper methods for dealing with structural types.
@@ -136,12 +137,15 @@ class StructuralTypesHelper {
 	def private dispatch Iterable<TMember> doCollectMembersOfType(RuleEnvironment G, TypeVariable type,
 		Function1<TMember, Boolean> predicate) {
 
-		val joinOfUpperBounds = tsh.join(G, type.declaredUpperBounds);
+		val declUB = type.declaredUpperBound;
+		val joinOfUpperBounds = if(declUB instanceof IntersectionTypeExpression) {
+			tsh.join(G, declUB.typeRefs)
+		} else {
+			declUB
+		};
 		if (joinOfUpperBounds !== null) {
 			return doCollectMembers(G, joinOfUpperBounds, predicate);
 		}
 		return emptyList;
 	}
-
-
 }

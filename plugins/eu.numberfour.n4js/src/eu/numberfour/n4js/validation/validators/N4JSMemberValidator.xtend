@@ -147,8 +147,7 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 
 		holdsAbstractAndBodyPropertiesOfMethod(it)
 
-		// same for getters, setters:
-		internalCheckAccessorType
+		internalCheckGetterType(n4Getter);
 	}
 
 	@Check
@@ -164,10 +163,6 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 		val it = n4Setter.definedSetter
 
 		holdsAbstractAndBodyPropertiesOfMethod(it)
-
-		// same for methods, getters, setters:
-		// same for getters, setters:
-		internalCheckAccessorType
 	}
 
 	@Check
@@ -447,11 +442,11 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 
 
 
-	def private internalCheckAccessorType(FieldAccessor accessorDeclaration) {
-		val accessorType = accessorDeclaration.declaredTypeRef?.declaredType;
-		if (accessorType !== null && accessorType instanceof VoidType) {
-			val message = IssueCodes.messageForCLF_VOID_ACCESSOR
-			addIssue(message, accessorDeclaration.astElement, PROPERTY_NAME_OWNER__DECLARED_NAME, IssueCodes.CLF_VOID_ACCESSOR)
+	def private internalCheckGetterType(N4GetterDeclaration n4GetterDeclaration) {
+		val getterType = n4GetterDeclaration.declaredTypeRef?.declaredType;
+		if (getterType !== null && getterType instanceof VoidType) {
+			val message = IssueCodes.messageForCLF_VOID_ACCESSOR;
+			addIssue(message, n4GetterDeclaration, PROPERTY_NAME_OWNER__DECLARED_NAME, IssueCodes.CLF_VOID_ACCESSOR);
 		}
 	}
 

@@ -6,15 +6,15 @@ interface I {
 
 	// XPECT noerrors --> "An async method should specify at least one of return type or method body." at "m0"
 	async m0()
-	// XPECT type of 'm1' --> {function():Promise<void, ?>}
+	// XPECT type of 'm1' --> {function():Promise<undefined, ?>}
 	async m1() {}
-	// XPECT type of 'm2' --> {function():Promise<void, ?>}
+	// XPECT type of 'm2' --> {function():Promise<undefined, ?>}
 	async m2() : void {}
 }
 class C {
-	// XPECT type of 'm1' --> {function():Promise<void, ?>}
+	// XPECT type of 'm1' --> {function():Promise<undefined, ?>}
 	async m1() {}
-	// XPECT type of 'm2' --> {function():Promise<void, ?>}
+	// XPECT type of 'm2' --> {function():Promise<undefined, ?>}
 	async m2() : void {}
 }
 

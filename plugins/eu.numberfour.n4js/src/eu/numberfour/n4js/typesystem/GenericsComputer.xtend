@@ -79,8 +79,10 @@ class GenericsComputer extends TypeSystemHelperStrategy {
 			addSubstitutions(G,typeRef.actualThisTypeRef);
 		}
 		else if(declType instanceof TypeVariable) {
-			for(currBound : declType.declaredUpperBounds)
+			val currBound = declType.declaredUpperBound;
+			if(currBound!==null) {
 				addSubstitutions(G,currBound);
+			}
 		}
 		else if(declType instanceof TClassifier) {
 			for(currBaseType : collectSuperTypeRefs(typeRef)) // note: despite its name, collectSuperTypeRefs will also return typeRef itself!!

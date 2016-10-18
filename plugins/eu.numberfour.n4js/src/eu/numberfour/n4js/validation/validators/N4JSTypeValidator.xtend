@@ -15,7 +15,11 @@ import eu.numberfour.n4js.n4JS.AssignmentExpression
 import eu.numberfour.n4js.n4JS.AssignmentOperator
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ExpressionAnnotationList
+import eu.numberfour.n4js.n4JS.ExpressionStatement
+import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.GenericDeclaration
+import eu.numberfour.n4js.n4JS.GetterDeclaration
+import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
@@ -23,7 +27,10 @@ import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.TypedElement
+import eu.numberfour.n4js.n4JS.UnaryExpression
+import eu.numberfour.n4js.n4JS.UnaryOperator
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions
 import eu.numberfour.n4js.scoping.N4JSScopeProvider
@@ -31,6 +38,7 @@ import eu.numberfour.n4js.scoping.utils.AbstractDescriptionWithError
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
@@ -46,12 +54,14 @@ import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.PrimitiveType
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
+import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.ts.types.VoidType
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
@@ -117,13 +127,13 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	 * IDEBUG-185
 	 *
 	 * @param declaration the generic declaration to check the upper bound declarations of its type variables.
-	 *
 	 */
 	@Check
 	def checkGenericDeclarationType(GenericDeclaration declaration) {
 		val functionType = newRuleEnvironment(declaration).functionType
 		declaration.typeVars.filterNull.forEach [typeVar|
-			typeVar.declaredUpperBounds.filterNull.forEach [ub|
+			val ub = typeVar.declaredUpperBound;
+			if(ub!==null) {
 				val declType = ub.declaredType;
 				if (declType instanceof ContainerType<?> && declType.final) {
 					if(declType === functionType) {
@@ -134,7 +144,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 					val message = getMessageForCLF_UPPER_BOUND_FINAL(declType.name, typeVar.name);
 					addIssue(message, ub, PARAMETERIZED_TYPE_REF__DECLARED_TYPE, CLF_UPPER_BOUND_FINAL);
 				}
-			];
+			};
 		];
 	}
 
@@ -155,16 +165,41 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		if (declaredType === null || declaredType.eIsProxy) {
 			return;
 		}
-		if (paramTypeRef.eContainer instanceof TypeTypeRef || (paramTypeRef.eContainer instanceof Wildcard
-			&& paramTypeRef.eContainer.eContainer instanceof TypeTypeRef)) {
 
+		val isInTypeTypeRef = paramTypeRef.eContainer instanceof TypeTypeRef || (
+			paramTypeRef.eContainer instanceof Wildcard && paramTypeRef.eContainer.eContainer instanceof TypeTypeRef);
+
+		internalCheckValidLocationForVoid(paramTypeRef);
+		if (isInTypeTypeRef) {
 			internalCheckValidTypeInTypeTypeRef(paramTypeRef);
-			return;
+		} else {
+			internalCheckTypeArguments(declaredType.typeVars, paramTypeRef.typeArgs, false,
+				declaredType, paramTypeRef, TypeRefsPackage.eINSTANCE.parameterizedTypeRef_DeclaredType);
 		}
-
-		internalCheckTypeArguments(declaredType.typeVars, paramTypeRef.typeArgs, false,
-			declaredType, paramTypeRef, TypeRefsPackage.eINSTANCE.parameterizedTypeRef_DeclaredType);
 		internalCheckDynamic(paramTypeRef);
+	}
+
+	/**
+	 * Requirements 13, Void type.
+	 */
+	def private void internalCheckValidLocationForVoid(ParameterizedTypeRef typeRef) {
+		if (typeRef.declaredType instanceof VoidType) {
+			val isValidLocationForVoid = (
+					typeRef.eContainer instanceof FunctionDefinition
+					&& typeRef.eContainmentFeature===N4JSPackage.eINSTANCE.functionDefinition_ReturnTypeRef
+				) || (
+					typeRef.eContainer instanceof FunctionTypeExpression
+					&& typeRef.eContainmentFeature===TypeRefsPackage.eINSTANCE.functionTypeExpression_ReturnTypeRef
+				) || (
+					// void is not truly allowed as the return type of a getter, but there's a separate validation for
+					// that; so treat this case as legal here:
+					typeRef.eContainer instanceof GetterDeclaration
+					&& typeRef.eContainmentFeature===N4JSPackage.eINSTANCE.typedElement_DeclaredTypeRef
+				);
+			if(!isValidLocationForVoid) {
+				addIssue(IssueCodes.getMessageForTYS_VOID_AT_WRONG_LOCATION, typeRef, TYS_VOID_AT_WRONG_LOCATION);
+			}
+		}
 	}
 
 	def private void internalCheckValidTypeInTypeTypeRef(ParameterizedTypeRef paramTypeRef) {
@@ -398,6 +433,9 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 
 
 		if (expectedType.value !== null) {
+
+			internalCheckUseOfUndefinedExpression(G, expression, expectedType.value, inferredType.value);
+
 			val boolean writeAccess = ExpressionExtensions.isLeftHandSide(expression);
 			if (writeAccess) {
 
@@ -421,14 +459,31 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 			}
 		}
 	}
-	
+
+	def void internalCheckUseOfUndefinedExpression(RuleEnvironment G, Expression expression, TypeRef expectedTypeRef, TypeRef actualTypeRef) {
+		if(TypeUtils.isUndefined(actualTypeRef) && !TypeUtils.isUndefined(expectedTypeRef)) {
+			val parent = expression.eContainer;
+			if(!(parent instanceof ExpressionStatement)
+				&& !(parent instanceof UnaryExpression && (parent as UnaryExpression).op===UnaryOperator.VOID)
+				&& !(expression instanceof UnaryExpression && (expression as UnaryExpression).op===UnaryOperator.VOID)
+				&& !(expression instanceof ThisLiteral)) {
+
+				val undefinedField = G.globalObjectType.findOwnedMember("undefined", false, false) as TField;
+				val isUndefinedLiteral = if(expression instanceof IdentifierRef) expression.id===undefinedField;
+				if(!isUndefinedLiteral) {
+					addIssue(getMessageForEXP_USE_OF_UNDEF_EXPR, expression, EXP_USE_OF_UNDEF_EXPR);
+				}
+			}
+		}
+	}
+
 	@Check
-	def checkBogusTypeReference(TypedElement te) {
+	def void checkBogusTypeReference(TypedElement te) {
 		if(te.bogusTypeRef !== null) {
 			addIssue(IssueCodes.getMessageForTYS_INVALID_TYPE_SYNTAX, te.bogusTypeRef, TYS_INVALID_TYPE_SYNTAX);
 		}
 	}
-	
+
 //  TODO IDE-1010 Code-snippet with partial solution
 //	@Check
 //	def checkApplyParameters(ParameterizedCallExpression callExpression) {

@@ -22,7 +22,6 @@ import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.ts.types.TypeAccessModifier
 import eu.numberfour.n4js.ts.types.TypesFactory
 import eu.numberfour.n4js.ts.utils.TypeUtils
-import eu.numberfour.n4js.utils.N4JSLanguageUtils
 
 /**
  * Type builder for function declaration or expression builder.
@@ -137,10 +136,11 @@ public class N4JSFunctionDefinitionTypesBuilder extends AbstractFunctionDefiniti
 				 */
 				TypeUtils.createDeferredTypeRef //TypeUtils.createComputedTypeRef([resolveAllComputedTypeRefsInTFunction(functionType,functionExpr,builtInTypeScope)])
 			} else {
-				N4JSLanguageUtils.makePromiseIfAsync(functionExpr, functionExpr.returnTypeRef, builtInTypeScope)
+				functionExpr.returnTypeRef
 			};
 		setCopyOfReference([TypeRef typeRef | functionType.returnTypeRef = typeRef], inferredReturnTypeRef,
 			preLinkingPhase)
+		// note: handling of the return type of async functions not done here, see TypeProcessor#handleAsyncFunctionDeclaration()
 	}
 
 	def private TFunction createAndLinkTFunction(FunctionDefinition functionDef, boolean preLinkingPhase) {

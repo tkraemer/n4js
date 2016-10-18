@@ -1,5 +1,4 @@
 import { Event } from 'n4/events/Event';
-var @Undefined undef;
 export public function fireChangeNotification(owner : Object, property : string, newValue : any, oldValue : any, noChangeTracking : boolean?) {
 	return null;
 }
