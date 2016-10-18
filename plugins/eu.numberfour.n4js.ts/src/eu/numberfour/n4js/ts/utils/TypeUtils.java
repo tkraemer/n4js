@@ -1122,7 +1122,7 @@ public class TypeUtils {
 	}
 
 	/**
-	 * Returns true iff the argument is non-null and refers to the built-in type 'void'.
+	 * Returns true iff the argument is non-null and refers to the built-in type 'undefined'.
 	 */
 	public static boolean isUndefined(TypeArgument typeArg) {
 		if (typeArg instanceof ParameterizedTypeRef) {
