@@ -1128,7 +1128,7 @@ body.home li.home, body.tech li.tech {font-weight:bold; }
     position: absolute;
     top: 55px;
     left: 50%;
-    margin-left: -90px;
+    margin-left: -200px;
 -webkit-transition: all .3s .1s;
    -moz-transition: all .3s .1s;
      -o-transition: all .3s .1s;
