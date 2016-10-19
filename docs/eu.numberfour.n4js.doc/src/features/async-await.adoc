@@ -1,6 +1,7 @@
-.Async/Await
 :doctype: book
+:toc: right
 
+.Async/Await
 = Async/Await
 
 Due to the event-driven nature inherent in JavaScript, asynchronous code has

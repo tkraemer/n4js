@@ -22,7 +22,7 @@ The following table gives an overview of features implemented by N4JS.
 <div class="sect1">
 <h2 id="remarks"><a class="anchor" href="#remarks"></a>Remarks</h2>
 <div class="sectionbody">
-<div class="ulist">
+<div id="remarks" class="ulist">
 <ul>
 <li>
 <p>The parser fully supports ECMAScript 2015 syntax including unicode escape sequences, regular expressions and automatic semicolon insertion. Not all constructs are fully supported by the type-checker yet.</p>
@@ -42,7 +42,31 @@ There are no user-defined annotations supported at the moment (this is why we do
 <div class="sect1">
 <h2 id="feature-table"><a class="anchor" href="#feature-table"></a>Feature Table</h2>
 <div class="sectionbody">
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="statements"></a> Statements and expressions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Feature</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Similar to</strong></p></td>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Description</p></th>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>ECMAScript 5</strong></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ES5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ES5 expressions, statements and declarations are fully supported (except scoping in with-statement) including type constraints and inference.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread most">
 <colgroup>
 <col style="width: 28.5714%;">
 <col style="width: 14.2857%;">
@@ -50,36 +74,28 @@ There are no user-defined annotations supported at the moment (this is why we do
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Feature</strong></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Similar to</strong></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Description</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top" colspan="3"><div><div class="sect2">
-<h3 id="statements-and-expressions"><a class="anchor" href="#statements-and-expressions"></a>Statements and expressions</h3>
-
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><strong><span class="done">ECMAScript 5</span></strong></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">ES5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ES5 expressions, statements and declarations are fully supported (except scoping in with-statement) including type constraints and inference.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Import, Export</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">import statement fully supported, exporting declarations is supported, re-export not fully supported yet, no relative imports, no anonymous default export.</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="scoping"></a> Scoping and access restrictions</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>for..of loops</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Fully supported including destructuring.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top" colspan="3"><div><div class="sect2">
-<h3 id="scoping-and-access-restrictions"><a class="anchor" href="#scoping-and-access-restrictions"></a>Scoping and access restrictions</h3>
-
-</div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Function scoping</strong></p></td>
@@ -114,12 +130,20 @@ introduced to restrict access to vendor-types only.</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ES2015-like string templates with validation (of expressions inside the template).</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
 <tr>
-<td class="tableblock halign-center valign-top" colspan="3"><div><div class="sect2">
-<h3 id="functions"><a class="anchor" href="#functions"></a>Functions</h3>
-
-</div></div></td>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="functions"></a> Functions</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Function objects</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES</p></td>
@@ -140,27 +164,62 @@ introduced to restrict access to vendor-types only.</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Fully supported, parameters are treated as arrays inside function</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbc">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Optional parameters</strong></p></td>
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Parameters can be marked optional. This is going to be replaced with ES2015 default parameters.</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Super calls</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Inside methods (of classes), super can be used to call overridden method (or constructor)</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbd">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Generators</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Syntax supported but not supported by language (type checker) yet.</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
 <tr>
-<td class="tableblock halign-center valign-top" colspan="3"><div><div class="sect2">
-<h3 id="declared-types"><a class="anchor" href="#declared-types"></a>Declared types</h3>
-
-</div></div></td>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="declared-types"></a>  Declared types</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Classes</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES2015/Java</p></td>
@@ -186,11 +245,29 @@ introduced to restrict access to vendor-types only.</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Methods as in ES2015, including constructor and static methods; overridden or implemented members are to be annotated with <code>@Override</code> as in Java</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbc">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Field accessors</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Getters and setters (in object literals and classes, instance and static); at the moment pairs are automatically recognized, will be changed to ES2015 semantics</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Data fields</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
@@ -201,17 +278,34 @@ introduced to restrict access to vendor-types only.</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">As in Java, classes can be declared abstract or final (using <code>@Final</code> annotation).</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbc">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
 <tr>
-<td class="tableblock halign-center valign-top" colspan="3"><div><div class="sect2">
-<h3 id="types"><a class="anchor" href="#types"></a>Types</h3>
-
-</div></div></td>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="types"></a>  Types</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Type annotation</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Type annotations using colon syntax similar to ECMAScript 4 proposal or TS, some special types use different syntax (will probably be adjusted to be compatible with TS)</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>any</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">TS</p></td>
@@ -222,6 +316,15 @@ introduced to restrict access to vendor-types only.</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">primitive types as in ES5 (number, string, boolean), special types null and undefined (with special variant void to be used for return type)</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbc">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>int</strong></p></td>
 <td class="tableblock halign-center valign-top"></td>
@@ -232,6 +335,15 @@ introduced to restrict access to vendor-types only.</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">minimal support for symbols, basically only predefined symbols, more support may be added</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Nominal types</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
@@ -272,12 +384,20 @@ introduced to restrict access to vendor-types only.</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>&tilde; TS</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Expressions can be explicitly casted to a type via <code>as</code></p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
 <tr>
-<td class="tableblock halign-center valign-top" colspan="3"><div><div class="sect2">
-<h3 id="generics"><a class="anchor" href="#generics"></a>Generics</h3>
-
-</div></div></td>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="Generics"></a> Generics</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Generic types</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
@@ -298,22 +418,48 @@ introduced to restrict access to vendor-types only.</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Type variables are inferred if not explicitly bound by type arguments in the reference, this is particularly important for generic function/method calls. The type inference algorithm matches the Java 8 specification.</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
 <tr>
-<td class="tableblock halign-center valign-top" colspan="3"><div><div class="sect2">
-<h3 id="type-constructors-and-special-types"><a class="anchor" href="#type-constructors-and-special-types"></a>Type Constructors and Special Types</h3>
-
-</div></div></td>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="special-types"></a>  Type Constructors and Special Types</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Union type</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>&tilde; TS</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An union type defines that a variable (of that type) is subtype of (at least) one type defined in the union. Without further type checks, only members available in all types of the union are available. In case of methods, formal parameter types are merged by means of intersection types (and return types by means of union types)</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread most">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Intersection type</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">TS</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An intersection type defines that a variable (of that type) is subtype of all types defined in the intersection. Thus, members defined in any type of the union are available. Property access to intersection types is not fully supported yet.</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Constructor type</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>&tilde; TS</strong></p></td>
@@ -339,12 +485,20 @@ introduced to restrict access to vendor-types only.</p></td>
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">In larger projects, often classes are automatically generated. In order to enrich these classes without changing the generator, static polyfills can be defined. The transpiler merges these static polyfills into the original modules.</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
 <tr>
-<td class="tableblock halign-center valign-top" colspan="3"><div><div class="sect2">
-<h3 id="asynchronous-programming"><a class="anchor" href="#asynchronous-programming"></a>Asynchronous Programming</h3>
-
-</div></div></td>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="async"></a>  Asynchronous Programming</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Promise</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
@@ -360,12 +514,20 @@ introduced to restrict access to vendor-types only.</p></td>
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Via annotations <code>@Promisifiable</code> ES5-conform functions following code conventions for asynchronous callback parameters (last parameter is a callback function etc.) can be used as if they were defined with <code>async</code> keyword, i.e. they can be used with <code>await</code> keyword (or a promise can be retrieved via annotation <code>@Promisify</code>)</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
 <tr>
-<td class="tableblock halign-center valign-top" colspan="3"><div><div class="sect2">
-<h3 id="components-and-modules"><a class="anchor" href="#components-and-modules"></a>Components and Modules</h3>
-
-</div></div></td>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="modules"></a>  Components and Modules</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Components</strong></p></td>
 <td class="tableblock halign-center valign-top"></td>
@@ -391,17 +553,34 @@ introduced to restrict access to vendor-types only.</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Dependency injection is supported using annotations similar to <a href="https://jcp.org/en/jsr/detail?id=330">JSR-330</a> (probably better known from <a href="https://github.com/google/guice">Guice</a>) and more to reduce client side glue code. Fields (and parameters) can be injected via <code>@Inject</code>, injectors can be easily set up via <code>@GenerateInjector</code> and configured with binders (and <code>@Bind annotation</code>). The built-in framework supports nesting of injectors, different injection points (field, constructor, method), providers and different scopes (default, singleton, injection-chain-singleton).</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
 <tr>
-<td class="tableblock halign-center valign-top" colspan="3"><div><div class="sect2">
-<h3 id="api"><a class="anchor" href="#api"></a>API</h3>
-
-</div></div></td>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="api"></a> API</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>ES5 object types</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">All ECMAScript 5 object types are available in N4JS, type annotations are built-in</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread most">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>ES2015 object types</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ES2015</p></td>
@@ -412,12 +591,20 @@ introduced to restrict access to vendor-types only.</p></td>
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Besides ECMAScript reflection mechanisms, N4JS provides additional reflection at runtime via a built-in class N4Class. This class provides basic information at the moment, this will be improved in future releases</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
 <tr>
-<td class="tableblock halign-center valign-top" colspan="3"><div><div class="sect2">
-<h3 id="testing"><a class="anchor" href="#testing"></a>Testing</h3>
-
-</div></div></td>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="testing"></a> Testing</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>JUnit-like annotations</strong></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Java</p></td>
@@ -438,17 +625,34 @@ introduced to restrict access to vendor-types only.</p></td>
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Tests can be started from the IDE using node.js. It is possible to run single test modules, single methods, or whole packages/projets.</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
 <tr>
-<td class="tableblock halign-center valign-top" colspan="3"><div><div class="sect2">
-<h3 id="node-js-support"><a class="anchor" href="#node-js-support"></a>node.js Support</h3>
-
-</div></div></td>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="node-js"></a> node.js Support</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Dynamic Import</strong></p></td>
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">In order to use projects without type annotations, the dynamic module import can be used to make the module dynamic (so that arbitrary properties can be accessed)</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Automatic download of Type Definitions</strong></p></td>
 <td class="tableblock halign-center valign-top"></td>
@@ -465,12 +669,20 @@ New type definitions will be added in the future.</p></td>
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Components an be exported to the file system, package.json is automatically created and content is organized according to NPM convention&#8201;&#8212;&#8201;ready to be published with NPM (which is not done automatically in order to avoid rash publications)</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
 <tr>
-<td class="tableblock halign-center valign-top" colspan="3"><div><div class="sect2">
-<h3 id="n4js-ide-features"><a class="anchor" href="#n4js-ide-features"></a>N4JS IDE Features</h3>
-
-</div></div></td>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="n4js-ide"></a> N4JS IDE Features</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Syntax highlighting</strong></p></td>
 <td class="tableblock halign-center valign-top"></td>
@@ -486,6 +698,15 @@ New type definitions will be added in the future.</p></td>
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Code is transpiled as you save, only effected modules will be re-compiled</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread most">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Content assist</strong></p></td>
 <td class="tableblock halign-center valign-top"></td>
@@ -502,6 +723,15 @@ New type definitions will be added in the future.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Wizards for creating new projects, classes or interfaces.
 More wizards will be added in future releases</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Organize imports</strong></p></td>
 <td class="tableblock halign-center valign-top"></td>
@@ -523,23 +753,49 @@ lso content assist and quickfixes will add imports - you never have to type impo
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Find all references bound to a declaration</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbc">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Error reporting</strong></p></td>
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">We embrace bug reports! In order to enable easier writing of bug reports, language tests can be written inside the IDE.
 This feature will be improved in the future.</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>Eclipse-powered</strong></p></td>
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Since the IDE is based on Eclipse, additional features such as git support are integrated or can easily be installed</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread most">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 14.2857%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
 <tr>
-<td class="tableblock halign-center valign-top" colspan="3"><div><div class="sect2">
-<h3 id="n4js-headless-compiler"><a class="anchor" href="#n4js-headless-compiler"></a>N4JS Headless Compiler</h3>
-
-</div></div></td>
+<th class="tableblock halign-center valign-top" colspan="3"><a id="headless-compiler"></a>  N4JS Headless Compiler</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><strong>n4jsc</strong></p></td>
 <td class="tableblock halign-center valign-top"></td>
@@ -549,9 +805,32 @@ Additional support simplifying installation and usage will be added in future re
 </tr>
 </tbody>
 </table>
-<div class="sect2">
-<h3 id="references"><a class="anchor" href="#references"></a>References</h3>
-<table class="tableblock frame-all grid-all spread">
+</div>
+</div>
+<div class="sect1">
+<h2 id="legend"><a class="anchor" href="#legend"></a>Legend</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread done">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="5">FeatureTable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>green</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">available, although there might be bugs in the alpha-release.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread most">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -561,31 +840,83 @@ Additional support simplifying installation and usage will be added in future re
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-center valign-top" colspan="5"><p class="tableblock">References</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>yellow</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">mostly available, some aspects or parts of the feature are not implemented yet or will be improved in the future.</p></td>
 </tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbc">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>orange</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">feature available but syntax or semantics will be changed in future releases</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread tbd">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>red</strong></p></td>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">planned for future releases but not implemented yet.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="references"><a class="anchor" href="#references"></a>References</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="5">References</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ES</strong></p></td>
 <td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock"><a href="http://www.ecma-international.org/ecma-262/5.1/">ECMAScript Language Specification</a> / ISO/IEC. Geneva, Switzerland, Juni 2011 (ECMA-262, 5.1 Edition)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ES2015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ES2015</strong></p></td>
 <td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock"><a href="http://www.ecma-international.org/ecma-262/6.0/">ECMAScript 2015 Language Specification</a> / ISO/IEC (ECMA-262, 6th Edition). – International Standard.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ES4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ES4</strong></p></td>
 <td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">Proposed ECMAScript 4th Edition – Language Overview / ECMA. – Proposal, <a href="http://www.ecmascript.org/es4/spec/overview.pdf">PDF</a>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ES.next</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ES.next</strong></p></td>
 <td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">ECMAScript proposals (ECMAScript 2017 or later or never)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>TS</strong></p></td>
 <td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">Hejlsberg, Anders ; Lucco, Steve: <a href="https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md">TypeScript Language Specification</a>. 1.8. Microsoft, Januar 2016.
 <strong>&tilde; TS</strong> means almost similar functionality, <strong>!TS</strong> refers to similar concepts but with major differences.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Java</strong></p></td>
 <td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">Gosling, James et al: <a href="https://docs.oracle.com/javase/specs/jls/se8/html/index.html">The Java Language Specification</a>. Java SE 8 Edition. JSR-337 Java SE 8 Release Contents.</p></td>
 </tr>
 </tbody>
@@ -593,10 +924,9 @@ Additional support simplifying installation and usage will be added in future re
 </div>
 </div>
 </div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-01 18:11:57 +02:00
+Last updated 2016-09-26 16:15:29 +02:00
 </div>
 </div>
 <link rel="stylesheet" href="../scripts/styles/n4jshighlighter.min.css">

@@ -1,6 +1,7 @@
-:doctype: book
-:toc: left
-:toc-title: Jump to topic:
+:toc: right
+:toc-title: Jump to section:
+:commandkey: &#8984;
+
 
 .N4JS npm Export Guide
 = N4JS npm Export Guide
@@ -49,7 +50,7 @@ push each new value into an array and report the results in the console after th
 When right-clicking the module and selecting menu:Run as[Launch in node.js], we have the
 following output in the console:
 
-image::fibonacciconsole.png[]
+image::images/fibonacciconsole.png[]
 
 
 
@@ -62,13 +63,13 @@ An Export wizard will list the available types of exports.
 Select *N4JS npm export* in the *N4 Exports* folder.
 
 
-image::exportwizard.png[]
+image::images/exportwizard.png[]
 
 On the following screen, we can select a target folder and click "Finish" to complete the export. There is
 an option to compress the files on export which will create a tarball.
 
 
-image::npmtargetfolder.png[]
+image::images/npmtargetfolder.png[]
 
 
 If we have a look in the target folder, we can see that a new folder has been created which is our

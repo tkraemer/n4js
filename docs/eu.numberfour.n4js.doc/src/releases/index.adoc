@@ -1,7 +1,9 @@
 :doctype: book
+
 .Releases
 = Releases
 
+[discrete]
 == Current N4JS Release
 
 The current release of N4JS, version 0.3, is a "public alpha".

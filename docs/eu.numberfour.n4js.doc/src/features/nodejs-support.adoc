@@ -1,4 +1,4 @@
-:doctype: book
+:toc: right
 
 .Node.js Support
 = Node.js Support
@@ -14,7 +14,7 @@ N4JS helps Node.js developers to use third-party npm packages with support both 
 required packages can be downloaded and installed on-demand into the IDE via the library manager and this feature is also
 supported in the headless tooling.
 
-image::quickfixnpminstall.png[]
+image::images/quickfixnpminstall.png[]
 
 === Dynamic Import
 
@@ -55,7 +55,7 @@ type definitions seamlessly integrate into the N4JS system. This means that all 
 definitions behave just like any other N4JS module or project declared in the workspace. The language provides type safety while
 the tooling provides content assist, navigation, search functionality and so on.
 
-image::nodejs.png[]
+image::images/nodejs.png[]
 
 The IDE also supports a way to check for any type definition updates in an on-demand fashion. This means that you can initially
 begin to use any third-party packages that don't yet have type definition files. In such cases (as described above) the modules

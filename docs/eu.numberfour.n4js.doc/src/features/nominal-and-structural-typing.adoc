@@ -1,4 +1,5 @@
-:doctype: book
+:notitle:
+:toc: right
 
 .Nominal And Structural Typing
 = Nominal And Structural Typing

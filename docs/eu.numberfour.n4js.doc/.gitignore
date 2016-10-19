@@ -1,0 +1,5 @@
+generated-docs/
+dist/eclipse-html/_headers/
+dist/eclipse-html/_epub/
+dist/eclipse-html/build.sh
+dist/eclipse-html/_epub/scripts/analytics.js
