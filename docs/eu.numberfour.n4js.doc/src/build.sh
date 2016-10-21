@@ -1,15 +1,5 @@
 #!/bin/bash
 
-# Copy Resources (Images, Styles, Scripts)
-if [ ! -d "./generated-docs/" ]; then
-  # Control will enter here if generated-docs folder doesn't exist.
-  mkdir generated-docs
-  cp -r ./articles ./faq ./features ./images ./releases ./scripts ./styles ./userguides generated-docs/
-  rm -v generated-docs/**/*.adoc
-  # Index remains as-is
-  cp index.html generated-docs/index.html
-fi
-
 # Prints out the relative path between to absolute paths.
 #
 # Parameters:
@@ -26,7 +16,6 @@ case "$ref" in $pos/*) break;; esac
     down="$down"
     pos=${pos%/*}
 done
-
 echo "$down${ref##$pos/}"
 }
 
@@ -39,16 +28,25 @@ echo AsciiDoctor - Converting to HTML: "$current"
 asciidoctor -D generated-docs/"$(dirname "$current")" "$current" \
 -a docinfodir="../$(relpath "$2" ./_headers)"/$(dirname "$current")/ -a linkcss=true \
 -a highlightjsdir="../$(relpath "$2" ./scripts/)" -a source-highlighter=highlightjs -a highlightjs-theme=n4jshighlighter \
--a sectlinks=true -a icons=font -a experimental=true -a !last-update-label -a index=true \
+-a sectlinks=true -a icons=font -a experimental=true -a index=true \
 -a docinfo1=true -a doctype=book \
 -a !stylesheet -a idseparator=-
 exit 0
 fi
 
-# Building HTML into generated-docs/html folder retaining directory structure, exclude epub
+# Building HTML into generated-docs/html folder
+# all one-time commands (copying,cleaning resources) must be run/declared before the 
+# find command below
 ME="$0"
-find . -name '*.adoc' ! -name 'epub.adoc' -exec "${ME}" --rundoc {}  \;
+rm -r generated-docs; mkdir generated-docs && cp -r ./articles ./faq ./features ./images ./releases ./scripts ./styles ./userguides generated-docs/ \
+&& cp index.html generated-docs/index.html && find . -name '*.adoc' ! -name 'epub.adoc' -exec "${ME}" --rundoc {}  \;
 
-echo AsciiDoctor HTML conversion finished.
-# uncomment line below to open index on completion
+echo INFO: AsciiDoctor HTML conversion finished.
+
+# Remove unnecessary source files
+echo === Removing source files from distribution directory ===
+rm -v generated-docs/**/*.graffle generated-docs/**/*.adoc
+echo === Distribution directory resources cleaned. ===
+
+# uncomment line below to open docs index on completion
 open generated-docs/userguides/index.html
