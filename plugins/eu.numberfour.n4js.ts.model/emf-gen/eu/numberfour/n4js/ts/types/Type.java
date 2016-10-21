@@ -209,4 +209,18 @@ public interface Type extends TExportableElement, TAnnotableElement {
 	 */
 	String getTypeAsString();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Returns the version of the type (declaration). This is 0 by default for all N4JS types, as this
+	 * feature is only supported by derived languages (such as N4IDL). Subclasses may override this method,
+	 * returning the declared version instead.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return 0;'"
+	 * @generated
+	 */
+	int getVersion();
+
 } // Type
