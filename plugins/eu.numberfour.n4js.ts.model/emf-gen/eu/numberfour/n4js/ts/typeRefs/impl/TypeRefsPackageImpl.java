@@ -987,7 +987,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getParameterizedTypeRefWithVersion_DeclaredRefVersion() {
+	public EAttribute getParameterizedTypeRefWithVersion_DeclaredVersion() {
 		return (EAttribute)parameterizedTypeRefWithVersionEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1763,7 +1763,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		createEOperation(parameterizedTypeRefEClass, PARAMETERIZED_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING);
 
 		parameterizedTypeRefWithVersionEClass = createEClass(PARAMETERIZED_TYPE_REF_WITH_VERSION);
-		createEAttribute(parameterizedTypeRefWithVersionEClass, PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_REF_VERSION);
+		createEAttribute(parameterizedTypeRefWithVersionEClass, PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_VERSION);
 		createEOperation(parameterizedTypeRefWithVersionEClass, PARAMETERIZED_TYPE_REF_WITH_VERSION___GET_REFERENCED_VERSION);
 
 		structuralTypeRefEClass = createEClass(STRUCTURAL_TYPE_REF);
@@ -2052,7 +2052,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		initEOperation(getParameterizedTypeRef__IsDefSiteStructuralTyping(), theEcorePackage.getEBoolean(), "isDefSiteStructuralTyping", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(parameterizedTypeRefWithVersionEClass, ParameterizedTypeRefWithVersion.class, "ParameterizedTypeRefWithVersion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getParameterizedTypeRefWithVersion_DeclaredRefVersion(), theEcorePackage.getEInt(), "declaredRefVersion", null, 0, 1, ParameterizedTypeRefWithVersion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameterizedTypeRefWithVersion_DeclaredVersion(), theEcorePackage.getEBigDecimal(), "declaredVersion", null, 0, 1, ParameterizedTypeRefWithVersion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getParameterizedTypeRefWithVersion__GetReferencedVersion(), theEcorePackage.getEInt(), "getReferencedVersion", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

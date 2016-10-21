@@ -19,6 +19,7 @@ import org.eclipse.xtext.junit4.IRegistryConfigurator;
 import org.eclipse.xtext.junit4.util.ParseHelper;
 import org.eclipse.xtext.junit4.util.ResourceHelper;
 import org.eclipse.xtext.service.AbstractGenericModule;
+import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.SingletonBinding;
 import org.eclipse.xtext.validation.IDiagnosticConverter;
 
@@ -39,7 +40,11 @@ public class N4JSInjectorProvider implements IInjectorProvider, IRegistryConfigu
 	/***/
 	protected Injector injector;
 
-	private final Module runtimeModule;
+	/**
+	 * The runtimeModule with bindings, created in {@link #createRuntimeModule()} since subtypes may create different
+	 * modules.
+	 */
+	protected final Module runtimeModule;
 
 	static {
 		GlobalRegistries.initializeDefaults();
@@ -54,7 +59,14 @@ public class N4JSInjectorProvider implements IInjectorProvider, IRegistryConfigu
 	 * Creates a new injector combining all of the given runtime modules
 	 */
 	public N4JSInjectorProvider(Module... modules) {
-		this.runtimeModule = Modules.override(new N4JSRuntimeModule()).with(Arrays.asList(modules));
+		this.runtimeModule = Modules.override(createRuntimeModule()).with(Arrays.asList(modules));
+	}
+
+	/**
+	 * Called in constructor to create runtime module, may be overridden in subclasses for derived languages.
+	 */
+	protected DefaultRuntimeModule createRuntimeModule() {
+		return new N4JSRuntimeModule();
 	}
 
 	@Override
@@ -67,8 +79,10 @@ public class N4JSInjectorProvider implements IInjectorProvider, IRegistryConfigu
 		return injector;
 	}
 
-	/***/
-	private Injector internalCreateInjector() {
+	/**
+	 * Maybe overridden in subclasses for derived languages.
+	 */
+	protected Injector internalCreateInjector() {
 		return new N4JSStandaloneSetup() {
 			@Override
 			public Injector createInjector() {

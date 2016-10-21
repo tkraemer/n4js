@@ -13,6 +13,8 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 
 import java.lang.reflect.InvocationTargetException;
 
+import java.math.BigDecimal;
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.EList;
@@ -29,31 +31,31 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefWithVersionImpl#getDeclaredRefVersion <em>Declared Ref Version</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefWithVersionImpl#getDeclaredVersion <em>Declared Version</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class ParameterizedTypeRefWithVersionImpl extends ParameterizedTypeRefImpl implements ParameterizedTypeRefWithVersion {
 	/**
-	 * The default value of the '{@link #getDeclaredRefVersion() <em>Declared Ref Version</em>}' attribute.
+	 * The default value of the '{@link #getDeclaredVersion() <em>Declared Version</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getDeclaredRefVersion()
+	 * @see #getDeclaredVersion()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int DECLARED_REF_VERSION_EDEFAULT = 0;
+	protected static final BigDecimal DECLARED_VERSION_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getDeclaredRefVersion() <em>Declared Ref Version</em>}' attribute.
+	 * The cached value of the '{@link #getDeclaredVersion() <em>Declared Version</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getDeclaredRefVersion()
+	 * @see #getDeclaredVersion()
 	 * @generated
 	 * @ordered
 	 */
-	protected int declaredRefVersion = DECLARED_REF_VERSION_EDEFAULT;
+	protected BigDecimal declaredVersion = DECLARED_VERSION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -79,8 +81,8 @@ public class ParameterizedTypeRefWithVersionImpl extends ParameterizedTypeRefImp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getDeclaredRefVersion() {
-		return declaredRefVersion;
+	public BigDecimal getDeclaredVersion() {
+		return declaredVersion;
 	}
 
 	/**
@@ -88,11 +90,11 @@ public class ParameterizedTypeRefWithVersionImpl extends ParameterizedTypeRefImp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setDeclaredRefVersion(int newDeclaredRefVersion) {
-		int oldDeclaredRefVersion = declaredRefVersion;
-		declaredRefVersion = newDeclaredRefVersion;
+	public void setDeclaredVersion(BigDecimal newDeclaredVersion) {
+		BigDecimal oldDeclaredVersion = declaredVersion;
+		declaredVersion = newDeclaredVersion;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_REF_VERSION, oldDeclaredRefVersion, declaredRefVersion));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_VERSION, oldDeclaredVersion, declaredVersion));
 	}
 
 	/**
@@ -101,7 +103,13 @@ public class ParameterizedTypeRefWithVersionImpl extends ParameterizedTypeRefImp
 	 * @generated
 	 */
 	public int getReferencedVersion() {
-		return this.getDeclaredRefVersion();
+		BigDecimal _declaredVersion = this.getDeclaredVersion();
+		boolean _tripleEquals = (_declaredVersion == null);
+		if (_tripleEquals) {
+			return 0;
+		}
+		BigDecimal _declaredVersion_1 = this.getDeclaredVersion();
+		return _declaredVersion_1.intValue();
 	}
 
 	/**
@@ -112,8 +120,8 @@ public class ParameterizedTypeRefWithVersionImpl extends ParameterizedTypeRefImp
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TypeRefsPackage.PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_REF_VERSION:
-				return getDeclaredRefVersion();
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_VERSION:
+				return getDeclaredVersion();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -126,8 +134,8 @@ public class ParameterizedTypeRefWithVersionImpl extends ParameterizedTypeRefImp
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TypeRefsPackage.PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_REF_VERSION:
-				setDeclaredRefVersion((Integer)newValue);
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_VERSION:
+				setDeclaredVersion((BigDecimal)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -141,8 +149,8 @@ public class ParameterizedTypeRefWithVersionImpl extends ParameterizedTypeRefImp
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TypeRefsPackage.PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_REF_VERSION:
-				setDeclaredRefVersion(DECLARED_REF_VERSION_EDEFAULT);
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_VERSION:
+				setDeclaredVersion(DECLARED_VERSION_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -156,8 +164,8 @@ public class ParameterizedTypeRefWithVersionImpl extends ParameterizedTypeRefImp
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TypeRefsPackage.PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_REF_VERSION:
-				return declaredRefVersion != DECLARED_REF_VERSION_EDEFAULT;
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_VERSION:
+				return DECLARED_VERSION_EDEFAULT == null ? declaredVersion != null : !DECLARED_VERSION_EDEFAULT.equals(declaredVersion);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -202,8 +210,8 @@ public class ParameterizedTypeRefWithVersionImpl extends ParameterizedTypeRefImp
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (declaredRefVersion: ");
-		result.append(declaredRefVersion);
+		result.append(" (declaredVersion: ");
+		result.append(declaredVersion);
 		result.append(')');
 		return result.toString();
 	}

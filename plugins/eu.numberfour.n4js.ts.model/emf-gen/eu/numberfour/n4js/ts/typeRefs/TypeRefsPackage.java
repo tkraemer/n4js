@@ -3292,13 +3292,13 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_WITH_VERSION__DEFINED_TYPING_STRATEGY = PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY;
 
 	/**
-	 * The feature id for the '<em><b>Declared Ref Version</b></em>' attribute.
+	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_REF_VERSION = PARAMETERIZED_TYPE_REF_FEATURE_COUNT + 0;
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_VERSION = PARAMETERIZED_TYPE_REF_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Parameterized Type Ref With Version</em>' class.
@@ -7030,15 +7030,15 @@ public interface TypeRefsPackage extends EPackage {
 	EClass getParameterizedTypeRefWithVersion();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefWithVersion#getDeclaredRefVersion <em>Declared Ref Version</em>}'.
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefWithVersion#getDeclaredVersion <em>Declared Version</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Declared Ref Version</em>'.
-	 * @see eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefWithVersion#getDeclaredRefVersion()
+	 * @return the meta object for the attribute '<em>Declared Version</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefWithVersion#getDeclaredVersion()
 	 * @see #getParameterizedTypeRefWithVersion()
 	 * @generated
 	 */
-	EAttribute getParameterizedTypeRefWithVersion_DeclaredRefVersion();
+	EAttribute getParameterizedTypeRefWithVersion_DeclaredVersion();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefWithVersion#getReferencedVersion() <em>Get Referenced Version</em>}' operation.
@@ -8448,12 +8448,12 @@ public interface TypeRefsPackage extends EPackage {
 		EClass PARAMETERIZED_TYPE_REF_WITH_VERSION = eINSTANCE.getParameterizedTypeRefWithVersion();
 
 		/**
-		 * The meta object literal for the '<em><b>Declared Ref Version</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Declared Version</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_REF_VERSION = eINSTANCE.getParameterizedTypeRefWithVersion_DeclaredRefVersion();
+		EAttribute PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_VERSION = eINSTANCE.getParameterizedTypeRefWithVersion_DeclaredVersion();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Referenced Version</b></em>' operation.

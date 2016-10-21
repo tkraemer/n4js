@@ -532,13 +532,16 @@ class ParameterizedTypeRefWithVersion extends ParameterizedTypeRef {
 	 * The declared version of the reference, this is only available in languages derived from N4JS.
 	 * Note that this is the declared version of the reference, not of the declared type itself!
 	 */
-	int declaredRefVersion
+	BigDecimal declaredVersion
 	
 	/**
 	 * Overrides method declared in TypeRef, returns the declared version instead of the default value.
 	 */
 	op int getReferencedVersion() {
-		return declaredRefVersion;
+		if (declaredVersion===null) {
+			return 0;
+		}
+		return declaredVersion.intValue;
 	}
 }
 
