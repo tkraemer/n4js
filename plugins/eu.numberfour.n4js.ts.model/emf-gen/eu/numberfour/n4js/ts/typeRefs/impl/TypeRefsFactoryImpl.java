@@ -71,6 +71,7 @@ public class TypeRefsFactoryImpl extends EFactoryImpl implements TypeRefsFactory
 			case TypeRefsPackage.THIS_TYPE_REF_STRUCTURAL: return createThisTypeRefStructural();
 			case TypeRefsPackage.BOUND_THIS_TYPE_REF: return createBoundThisTypeRef();
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF: return createParameterizedTypeRef();
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF_WITH_VERSION: return createParameterizedTypeRefWithVersion();
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF_STRUCTURAL: return createParameterizedTypeRefStructural();
 			case TypeRefsPackage.EXISTENTIAL_TYPE_REF: return createExistentialTypeRef();
 			case TypeRefsPackage.UNKNOWN_TYPE_REF: return createUnknownTypeRef();
@@ -183,6 +184,16 @@ public class TypeRefsFactoryImpl extends EFactoryImpl implements TypeRefsFactory
 	public ParameterizedTypeRef createParameterizedTypeRef() {
 		ParameterizedTypeRefImpl parameterizedTypeRef = new ParameterizedTypeRefImpl();
 		return parameterizedTypeRef;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ParameterizedTypeRefWithVersion createParameterizedTypeRefWithVersion() {
+		ParameterizedTypeRefWithVersionImpl parameterizedTypeRefWithVersion = new ParameterizedTypeRefWithVersionImpl();
+		return parameterizedTypeRefWithVersion;
 	}
 
 	/**
