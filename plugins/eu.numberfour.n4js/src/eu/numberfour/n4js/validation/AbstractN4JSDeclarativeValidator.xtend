@@ -38,8 +38,8 @@ import eu.numberfour.n4js.n4JS.WhileStatement
 import eu.numberfour.n4js.n4JS.WithStatement
 import eu.numberfour.n4js.projectModel.IN4JSCore
 import eu.numberfour.n4js.services.N4JSGrammarAccess
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument
-import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.Wildcard
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.MemberType
@@ -57,11 +57,13 @@ import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.utils.UtilN4
 import eu.numberfour.n4js.validation.AbstractMessageAdjustingN4JSValidator.MethodWrapperCancelable
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator
 import java.lang.reflect.Method
 import java.util.List
+import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.xtext.nodemodel.ICompositeNode
@@ -71,8 +73,6 @@ import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator.State
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import org.eclipse.emf.common.util.EList
-import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 
 /**
  * Common base class for all N4JS validators. Provides some convenience methods and
@@ -242,14 +242,11 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 				}
 
 				// check bounds
-				for (TypeRef upperBound : typeParameter.declaredUpperBounds) {
-					if(upperBound!==null) {
-						val substituted = ts.substTypeVariables(G_subst, upperBound).value;
-						val result = ts.subtype(G_subst, typeArgument, substituted);
-						if (result.failed) {
-							errorGenerator.generateErrors(messageAcceptor, result, typeArgument);
-						}
-					}
+				val upperBound = typeParameter.declaredUpperBound ?: N4JSLanguageUtils.getTypeVariableImplicitUpperBound(G_subst);
+				val substituted = ts.substTypeVariables(G_subst, upperBound).value;
+				val result = ts.subtype(G_subst, typeArgument, substituted);
+				if (result.failed) {
+					errorGenerator.generateErrors(messageAcceptor, result, typeArgument);
 				}
 			}
 		}

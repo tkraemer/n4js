@@ -6272,45 +6272,22 @@ ruleTypeVariable returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_1_1_0()); 
+	        newCompositeNode(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundTypeRefParserRuleCall_1_1_0()); 
 	    }
-		lv_declaredUpperBounds_2_0=ruleParameterizedTypeRef		{
+		lv_declaredUpperBound_2_0=ruleTypeRef		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTypeVariableRule());
 	        }
-       		add(
+       		set(
        			$current, 
-       			"declaredUpperBounds",
-        		lv_declaredUpperBounds_2_0, 
-        		"eu.numberfour.n4js.ts.TypeExpressions.ParameterizedTypeRef");
+       			"declaredUpperBound",
+        		lv_declaredUpperBound_2_0, 
+        		"eu.numberfour.n4js.ts.Types.TypeRef");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(
-	otherlv_3=Ampersand
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getTypeVariableAccess().getAmpersandKeyword_1_2_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getTypeVariableAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_1_2_1_0()); 
-	    }
-		lv_declaredUpperBounds_4_0=ruleParameterizedTypeRef		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTypeVariableRule());
-	        }
-       		add(
-       			$current, 
-       			"declaredUpperBounds",
-        		lv_declaredUpperBounds_4_0, 
-        		"eu.numberfour.n4js.ts.TypeExpressions.ParameterizedTypeRef");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))*)?)
+))?)
 ;
 
 
@@ -6390,45 +6367,22 @@ ruleTypeVariableWithDefSiteVariance returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_1_0()); 
+	        newCompositeNode(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundTypeRefParserRuleCall_2_1_0()); 
 	    }
-		lv_declaredUpperBounds_4_0=ruleParameterizedTypeRef		{
+		lv_declaredUpperBound_4_0=ruleTypeRef		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTypeVariableWithDefSiteVarianceRule());
 	        }
-       		add(
+       		set(
        			$current, 
-       			"declaredUpperBounds",
-        		lv_declaredUpperBounds_4_0, 
-        		"eu.numberfour.n4js.ts.TypeExpressions.ParameterizedTypeRef");
+       			"declaredUpperBound",
+        		lv_declaredUpperBound_4_0, 
+        		"eu.numberfour.n4js.ts.Types.TypeRef");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(
-	otherlv_5=Ampersand
-    {
-    	newLeafNode(otherlv_5, grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getAmpersandKeyword_2_2_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getTypeVariableWithDefSiteVarianceAccess().getDeclaredUpperBoundsParameterizedTypeRefParserRuleCall_2_2_1_0()); 
-	    }
-		lv_declaredUpperBounds_6_0=ruleParameterizedTypeRef		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTypeVariableWithDefSiteVarianceRule());
-	        }
-       		add(
-       			$current, 
-       			"declaredUpperBounds",
-        		lv_declaredUpperBounds_6_0, 
-        		"eu.numberfour.n4js.ts.TypeExpressions.ParameterizedTypeRef");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))*)?)
+))?)
 ;
 
 

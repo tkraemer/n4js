@@ -54,10 +54,7 @@ function f(): string {}
 class C {
 	// XPECT errors --> "Missing return or throw statement (all control flows must terminate with an return value or be aborted)." at "f"
 	f() : string {}
-	/* XPECT errors ---
-		"Missing return or throw statement (all control flows must terminate with an return value or be aborted)." at "get x() {}"
-		"Void is not a valid type for getters and setters." at "x"
-	--- */
+	// XPECT errors --> "Missing return or throw statement (all control flows must terminate with an return value or be aborted)." at "get x() {}"
 	get x() {}
 	
 	// XPECT errors --> "Set accessors must not return anything." at "return "Hello";"

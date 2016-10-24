@@ -1276,7 +1276,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getWildcard__GetDeclaredOrImplicitUpperBounds() {
+	public EOperation getWildcard__GetDeclaredOrImplicitUpperBound() {
 		return wildcardEClass.getEOperations().get(0);
 	}
 
@@ -1339,7 +1339,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getFunctionTypeExprOrRef__GetTypeVarUpperBounds__TypeVariable() {
+	public EOperation getFunctionTypeExprOrRef__GetTypeVarUpperBound__TypeVariable() {
 		return functionTypeExprOrRefEClass.getEOperations().get(3);
 	}
 
@@ -1429,7 +1429,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getFunctionTypeRef__GetTypeVarUpperBounds__TypeVariable() {
+	public EOperation getFunctionTypeRef__GetTypeVarUpperBound__TypeVariable() {
 		return functionTypeRefEClass.getEOperations().get(2);
 	}
 
@@ -1546,7 +1546,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getFunctionTypeExpression__GetTypeVarUpperBounds__TypeVariable() {
+	public EOperation getFunctionTypeExpression__GetTypeVarUpperBound__TypeVariable() {
 		return functionTypeExpressionEClass.getEOperations().get(1);
 	}
 
@@ -1758,7 +1758,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		createEReference(wildcardEClass, WILDCARD__DECLARED_UPPER_BOUND);
 		createEReference(wildcardEClass, WILDCARD__DECLARED_LOWER_BOUND);
 		createEAttribute(wildcardEClass, WILDCARD__USING_IN_OUT_NOTATION);
-		createEOperation(wildcardEClass, WILDCARD___GET_DECLARED_OR_IMPLICIT_UPPER_BOUNDS);
+		createEOperation(wildcardEClass, WILDCARD___GET_DECLARED_OR_IMPLICIT_UPPER_BOUND);
 		createEOperation(wildcardEClass, WILDCARD___IS_IMPLICIT_UPPER_BOUND_IN_EFFECT);
 		createEOperation(wildcardEClass, WILDCARD___GET_TYPE_REF_AS_STRING);
 
@@ -1766,7 +1766,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		createEOperation(functionTypeExprOrRefEClass, FUNCTION_TYPE_EXPR_OR_REF___GET_DECLARED_THIS_TYPE);
 		createEOperation(functionTypeExprOrRefEClass, FUNCTION_TYPE_EXPR_OR_REF___GET_FUNCTION_TYPE);
 		createEOperation(functionTypeExprOrRefEClass, FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VARS);
-		createEOperation(functionTypeExprOrRefEClass, FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VAR_UPPER_BOUNDS__TYPEVARIABLE);
+		createEOperation(functionTypeExprOrRefEClass, FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE);
 		createEOperation(functionTypeExprOrRefEClass, FUNCTION_TYPE_EXPR_OR_REF___GET_FPARS);
 		createEOperation(functionTypeExprOrRefEClass, FUNCTION_TYPE_EXPR_OR_REF___GET_RETURN_TYPE_REF);
 		createEOperation(functionTypeExprOrRefEClass, FUNCTION_TYPE_EXPR_OR_REF___IS_GENERIC);
@@ -1777,7 +1777,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		functionTypeRefEClass = createEClass(FUNCTION_TYPE_REF);
 		createEOperation(functionTypeRefEClass, FUNCTION_TYPE_REF___GET_DECLARED_THIS_TYPE);
 		createEOperation(functionTypeRefEClass, FUNCTION_TYPE_REF___GET_TYPE_VARS);
-		createEOperation(functionTypeRefEClass, FUNCTION_TYPE_REF___GET_TYPE_VAR_UPPER_BOUNDS__TYPEVARIABLE);
+		createEOperation(functionTypeRefEClass, FUNCTION_TYPE_REF___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE);
 		createEOperation(functionTypeRefEClass, FUNCTION_TYPE_REF___GET_FPARS);
 		createEOperation(functionTypeRefEClass, FUNCTION_TYPE_REF___GET_RETURN_TYPE_REF);
 
@@ -1791,7 +1791,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		createEReference(functionTypeExpressionEClass, FUNCTION_TYPE_EXPRESSION__FPARS);
 		createEReference(functionTypeExpressionEClass, FUNCTION_TYPE_EXPRESSION__RETURN_TYPE_REF);
 		createEOperation(functionTypeExpressionEClass, FUNCTION_TYPE_EXPRESSION___GET_TYPE_VARS);
-		createEOperation(functionTypeExpressionEClass, FUNCTION_TYPE_EXPRESSION___GET_TYPE_VAR_UPPER_BOUNDS__TYPEVARIABLE);
+		createEOperation(functionTypeExpressionEClass, FUNCTION_TYPE_EXPRESSION___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE);
 
 		deferredTypeRefEClass = createEClass(DEFERRED_TYPE_REF);
 		createEOperation(deferredTypeRefEClass, DEFERRED_TYPE_REF___GET_TYPE_REF_AS_STRING);
@@ -2061,7 +2061,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		initEReference(getWildcard_DeclaredLowerBound(), this.getTypeRef(), null, "declaredLowerBound", null, 0, 1, Wildcard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWildcard_UsingInOutNotation(), theEcorePackage.getEBoolean(), "usingInOutNotation", null, 0, 1, Wildcard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEOperation(getWildcard__GetDeclaredOrImplicitUpperBounds(), this.getTypeRef(), "getDeclaredOrImplicitUpperBounds", 0, -1, !IS_UNIQUE, IS_ORDERED);
+		initEOperation(getWildcard__GetDeclaredOrImplicitUpperBound(), this.getTypeRef(), "getDeclaredOrImplicitUpperBound", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getWildcard__IsImplicitUpperBoundInEffect(), theEcorePackage.getEBoolean(), "isImplicitUpperBoundInEffect", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -2075,7 +2075,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 
 		initEOperation(getFunctionTypeExprOrRef__GetTypeVars(), theTypesPackage.getTypeVariable(), "getTypeVars", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getFunctionTypeExprOrRef__GetTypeVarUpperBounds__TypeVariable(), this.getTypeRef(), "getTypeVarUpperBounds", 0, -1, !IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getFunctionTypeExprOrRef__GetTypeVarUpperBound__TypeVariable(), this.getTypeRef(), "getTypeVarUpperBound", 0, 1, !IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTypesPackage.getTypeVariable(), "typeVar", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getFunctionTypeExprOrRef__GetFpars(), theTypesPackage.getTFormalParameter(), "getFpars", 0, -1, !IS_UNIQUE, IS_ORDERED);
@@ -2097,7 +2097,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 
 		initEOperation(getFunctionTypeRef__GetTypeVars(), theTypesPackage.getTypeVariable(), "getTypeVars", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getFunctionTypeRef__GetTypeVarUpperBounds__TypeVariable(), this.getTypeRef(), "getTypeVarUpperBounds", 0, -1, !IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getFunctionTypeRef__GetTypeVarUpperBound__TypeVariable(), this.getTypeRef(), "getTypeVarUpperBound", 0, 1, !IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTypesPackage.getTypeVariable(), "typeVar", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getFunctionTypeRef__GetFpars(), theTypesPackage.getTFormalParameter(), "getFpars", 0, -1, !IS_UNIQUE, IS_ORDERED);
@@ -2116,7 +2116,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 
 		initEOperation(getFunctionTypeExpression__GetTypeVars(), theTypesPackage.getTypeVariable(), "getTypeVars", 0, -1, !IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getFunctionTypeExpression__GetTypeVarUpperBounds__TypeVariable(), this.getTypeRef(), "getTypeVarUpperBounds", 0, -1, !IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getFunctionTypeExpression__GetTypeVarUpperBound__TypeVariable(), this.getTypeRef(), "getTypeVarUpperBound", 0, 1, !IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTypesPackage.getTypeVariable(), "typeVar", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(deferredTypeRefEClass, DeferredTypeRef.class, "DeferredTypeRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

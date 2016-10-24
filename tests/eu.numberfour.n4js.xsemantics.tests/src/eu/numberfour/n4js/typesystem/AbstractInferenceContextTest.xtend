@@ -80,6 +80,7 @@ public abstract class AbstractInferenceContextTest extends AbstractTypeSystemHel
 		class Z {}
 
 		class G<T> {}
+		class Gsub<T> extends G<T> {}
 		class G2<T,S> {}
 		class H<T> {}
 
@@ -126,6 +127,7 @@ public abstract class AbstractInferenceContextTest extends AbstractTypeSystemHel
 	protected var Type Y;
 	protected var Type Z;
 	protected var Type G;
+	protected var Type Gsub;
 	protected var Type G2;
 	protected var Type H;
 
@@ -170,6 +172,7 @@ public abstract class AbstractInferenceContextTest extends AbstractTypeSystemHel
 		Y = selectType("Y");
 		Z = selectType("Z");
 		G = selectType("G");
+		Gsub = selectType("Gsub");
 		G2 = selectType("G2");
 		H = selectType("H");
 

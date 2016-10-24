@@ -8,7 +8,6 @@
 package eu.numberfour.n4js.ts.typeRefs.impl;
 
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression;
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 
@@ -33,8 +32,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import org.eclipse.emf.ecore.xcore.lib.XcoreCollectionLiterals;
 
 /**
  * <!-- begin-user-doc -->
@@ -391,7 +388,7 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<TypeRef> getTypeVarUpperBounds(final TypeVariable typeVar) {
+	public TypeRef getTypeVarUpperBound(final TypeVariable typeVar) {
 		if ((typeVar == null)) {
 			throw new IllegalArgumentException("given type variable may not be null");
 		}
@@ -401,11 +398,10 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 			EList<TypeRef> _unboundTypeVarsUpperBounds = this.getUnboundTypeVarsUpperBounds();
 			final TypeRef modifiedUpperBound = _unboundTypeVarsUpperBounds.get(idx);
 			if ((modifiedUpperBound != null)) {
-				return XcoreCollectionLiterals.<TypeRef>newImmutableEList(modifiedUpperBound);
+				return modifiedUpperBound;
 			}
 		}
-		EList<ParameterizedTypeRef> _declaredUpperBounds = typeVar.getDeclaredUpperBounds();
-		return XcoreCollectionLiterals.<TypeRef>newImmutableEList(((TypeRef[])org.eclipse.xtext.xbase.lib.Conversions.unwrapArray(_declaredUpperBounds, TypeRef.class)));
+		return typeVar.getDeclaredUpperBound();
 	}
 
 	/**
@@ -574,8 +570,8 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 		switch (operationID) {
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION___GET_TYPE_VARS:
 				return getTypeVars();
-			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION___GET_TYPE_VAR_UPPER_BOUNDS__TYPEVARIABLE:
-				return getTypeVarUpperBounds((TypeVariable)arguments.get(0));
+			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE:
+				return getTypeVarUpperBound((TypeVariable)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

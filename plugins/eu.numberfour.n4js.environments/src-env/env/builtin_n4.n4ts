@@ -124,7 +124,7 @@ public abstract class N4Classifier extends N4Type {
 	 * 
 	 * @param consumed if set, consumed members are returned as well (false by default)
 	 * @param inherited if set, inherited members are returned as well (false by default)
-	 * @param _static if set, static members are returned, otherwise instance members (false by default).
+	 * @param _static if set, static members are returned as well (false by default).
 	 * @return array of members, may be empty but never null 
 	 */
 	public members(consumed: boolean?, inherited: boolean?, _static: boolean?): Array<? extends N4Member> 
@@ -136,7 +136,7 @@ public abstract class N4Classifier extends N4Type {
 	 * @param name name of annotation to be used as filter
 	 * @param consumed if set, consumed members are returned as well (false by default)
 	 * @param inherited if set, inherited members are returned as well (false by default)
-	 * @param _static if set, static members are returned, otherwise instance members (false by default).
+	 * @param _static if set, static members are returned as well (false by default).
 	 * @return array of members, may be empty but never null
 	 */
 	public membersWithAnnotation(name: string, consumed: boolean?, inherited: boolean?, _static: boolean?): Array<? extends N4Member> 
@@ -146,7 +146,7 @@ public abstract class N4Classifier extends N4Type {
 	 * 
 	 * @param consumed if set, consumed data fields are returned as well (false by default)
 	 * @param inherited if set, inherited data fields are returned as well (false by default)
-	 * @param _static if set, static data fields are returned, otherwise instance members (false by default).
+	 * @param _static if set, static data fields are returned as well (false by default).
 	 * @return array of data fields, may be empty but never null 
 	 */
 	public dataFields(consumed: boolean?, inherited: boolean?, _static: boolean?): Array<? extends N4DataField>
@@ -158,7 +158,7 @@ public abstract class N4Classifier extends N4Type {
 	 * @param name name of annotation to be used as filter
 	 * @param consumed if set, consumed data fields are returned as well (false by default)
 	 * @param inherited if set, inherited data fields are returned as well (false by default)
-	 * @param _static if set, static data fields are returned, otherwise instance members (false by default).
+	 * @param _static if set, static data fields are returned as well (false by default).
 	 * @return array of data fields, may be empty but never null
 	 */
 	public dataFieldsWithAnnotation(name: string, consumed: boolean?, inherited: boolean?, _static: boolean?): Array<? extends N4DataField>
@@ -168,7 +168,7 @@ public abstract class N4Classifier extends N4Type {
 	 * 
 	 * @param consumed if set, consumed methods are returned as well (false by default)
 	 * @param inherited if set, inherited methods are returned as well (false by default)
-	 * @param _static if set, static methods are returned, otherwise instance members (false by default).
+	 * @param _static if set, static methods are returned as well (false by default).
 	 * @return array of methods, may be empty but never null 
 	 */
 	public methods(consumed: boolean?, inherited: boolean?, _static: boolean?): Array<? extends N4Method>
@@ -180,7 +180,7 @@ public abstract class N4Classifier extends N4Type {
 	 * @param name name of annotation to be used as filter
 	 * @param consumed if set, consumed methods are returned as well (false by default)
 	 * @param inherited if set, inherited methods are returned as well (false by default)
-	 * @param _static if set, static methods are returned, otherwise instance members (false by default).
+	 * @param _static if set, static methods are returned as well (false by default).
 	 * @return array of methods, may be empty but never null
 	 */
 	public methodsWithAnnotation(name: string, consumed: boolean?, inherited: boolean?, _static: boolean?): Array<? extends N4Method>

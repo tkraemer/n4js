@@ -1,0 +1,16 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+interface I<T> {}
+class G<T> implements I<T> {}
+
+function <T> foo(): G<T> { return null; }
+
+let x: I<string>;
+// XPECT noerrors --> "G<any> is not a subtype of I<string>." at "foo()"
+x=foo();
+
+
+// worked before XPECT noerrors -->
+x=<string>foo();
+

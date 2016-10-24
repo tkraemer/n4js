@@ -77,6 +77,7 @@ import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*
+import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
  * Intended for small, static utility methods that
@@ -98,7 +99,8 @@ class N4JSLanguageUtils {
 
 	/**
 	 * If the given function definition is asynchronous, will wrap given return type into a Promise.
-	 * Otherwise, returns given return type unchanged.
+	 * Otherwise, returns given return type unchanged. A return type of <code>void</code> is changed to
+	 * <code>undefined</code>.
 	 */
 	def static TypeRef makePromiseIfAsync(FunctionDefinition functionDef, TypeRef returnTypeRef,
 			BuiltInTypeScope builtInTypeScope) {
@@ -588,5 +590,13 @@ class N4JSLanguageUtils {
 	def static TClass findCovariantConstructorDeclarator(TClass tClass) {
 		// NOTE: ignoring implicit super types, because none of them declares @CovariantConstructor
 		return new ExtendedClassesIterable(tClass).findFirst[declaredCovariantConstructor]; 
+	}
+
+	/**
+	 * Creates a new type reference representing the implicit upper bound to be used for type variables without an
+	 * explicitly declared upper bound.
+	 */
+	def static TypeRef getTypeVariableImplicitUpperBound(RuleEnvironment G) {
+		return G.anyTypeRef;
 	}
 }

@@ -21,6 +21,7 @@ import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import eu.numberfour.n4js.ts.types.TFunction
+import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import it.xsemantics.runtime.RuleEnvironment
@@ -136,7 +137,7 @@ class PromisifyHelper {
 				val errorTypeRef = if(hasErrorFpar) {
 					callback1stFparTypeRef
 				} else {
-					G.voidTypeRef
+					G.undefinedTypeRef
 				};
 				val successFpars = if(hasErrorFpar) {
 					callbackTypeRef.fpars.drop(1)
@@ -148,7 +149,7 @@ class PromisifyHelper {
 				].toList;
 				val len = successFparTypeRefs.size;
 				val successTypeRef = if(len===0) {
-					G.voidTypeRef
+					G.undefinedTypeRef
 				} else if(len===1) {
 					successFparTypeRefs.get(0)
 				} else if(len<=BuiltInTypeScope.ITERABLE_N__MAX_LEN) {
@@ -159,7 +160,7 @@ class PromisifyHelper {
 						BuiltInTypeScope.ITERABLE_N__MAX_LEN,
 						successFparTypeRefs.take(BuiltInTypeScope.ITERABLE_N__MAX_LEN-1) + #[remaining])
 				};
-				return G.promiseTypeRef(successTypeRef, errorTypeRef);
+				return TypeUtils.createPromiseTypeRef(G.builtInTypeScope, successTypeRef, errorTypeRef);
 			}
 		}
 		return null;

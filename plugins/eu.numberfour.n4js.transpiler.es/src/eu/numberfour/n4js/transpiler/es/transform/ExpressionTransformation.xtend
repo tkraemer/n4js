@@ -152,7 +152,7 @@ class ExpressionTransformation extends Transformation {
 			if(originalTarget instanceof TFunction) { // could be a method
 				val originalTargetTypeRef = TypeUtils.createTypeRef(originalTarget) as FunctionTypeRef;
 				val returnTypeRef = promisifyHelper.extractPromisifiedReturnType(state.G, originalTargetTypeRef);
-				val hasErrorValue = !TypeUtils.isVoid(returnTypeRef.typeArgs.drop(1).head); // isVoid() is null-safe
+				val hasErrorValue = !TypeUtils.isUndefined(returnTypeRef.typeArgs.drop(1).head); // isUndefined() is null-safe
 				val hasMoreThan1SuccessValue = state.G.isIterableN(returnTypeRef.typeArgs.head); // isIterableN() is null-safe
 				if(target instanceof ParameterizedPropertyAccessExpression_IM && targetSTE.originalTarget instanceof TMethod) {
 					// we have a method invocation, so we need to preserve the 'this' argument:

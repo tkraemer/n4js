@@ -26,6 +26,7 @@ import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.Map
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 
 /**
  * {@link PolyProcessor} delegates here for processing array literals.
@@ -75,16 +76,14 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 		//
 
 		for (TypeVariable currTypeVar : funcTypeVars) {
-			for (TypeRef currUB : F.getTypeVarUpperBounds(currTypeVar)) { // don't use currTypeVar.getDeclaredUpperBounds() here!
-				if (currUB !== null) {
-					// constraint: currTypeVar <: current upper bound
-					val leftTypeRef = TypeUtils.createTypeRef(currTypeVar);
-					val leftTypeRefSubst = leftTypeRef.subst(G, typeParam2infVar);
-					val rightTypeRef = currUB;
-					val rightTypeRefSubst = rightTypeRef.subst(G, typeParam2infVar);
-					infCtx.addConstraint(leftTypeRefSubst, rightTypeRefSubst, Variance.CO);
-				}
-			}
+			// don't use currTypeVar.getDeclaredUpperBound() in next line!
+			val currUB = F.getTypeVarUpperBound(currTypeVar) ?: N4JSLanguageUtils.getTypeVariableImplicitUpperBound(G);
+			// constraint: currTypeVar <: current upper bound
+			val leftTypeRef = TypeUtils.createTypeRef(currTypeVar);
+			val leftTypeRefSubst = leftTypeRef.subst(G, typeParam2infVar);
+			val rightTypeRef = currUB;
+			val rightTypeRefSubst = rightTypeRef.subst(G, typeParam2infVar);
+			infCtx.addConstraint(leftTypeRefSubst, rightTypeRefSubst, Variance.CO);
 		}
 
 		//

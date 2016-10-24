@@ -1893,7 +1893,7 @@ public providedByRuntime class Promise<out S, out F> extends Object @Global {
         onFulfilled: {function(arg:S?): union{Snew, Promise<Snew, Fnew>}?},
         onRejected: {function(arg:F?): union{Fnew, Promise<Snew, Fnew>}?}?
     ): Promise<Snew, Fnew>
-    
+
     public <Snew, Fnew> catch(onRejected: {function(arg:F?): union{Fnew, Promise<Snew, Fnew>}?}): Promise<Snew, Fnew>
 //    public <Snew> Promise<Snew, F> onFulfilled({function(S):Snew} onFulfilled)
 //    public <Fnew> Promise<S, Fnew> onRejected({function(F):Fnew} onRejected)

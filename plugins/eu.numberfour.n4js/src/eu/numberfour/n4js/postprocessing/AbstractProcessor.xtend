@@ -24,9 +24,12 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TFormalParameter
+import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TStructMember
 import eu.numberfour.n4js.ts.types.TypableElement
+import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem
+import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.utils.UtilN4
 import eu.numberfour.n4js.xsemantics.InternalTypeSystem
 import it.xsemantics.runtime.Result
@@ -40,6 +43,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
+import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
 
 /**
  * Provides some common base functionality used across all processors (e.g. logging). See {@link ASTProcessor} for more
@@ -120,6 +124,39 @@ package abstract class AbstractProcessor {
 			}
 		}
 		return false;
+	}
+
+
+	/**
+	 * Some special handling for async functions (including methods): we have to wrap their inner return type
+	 * <code>R</code> into a <code>Promise&lt;R,?></code> and use that as their actual, outer return type. This means
+	 * for async functions, the types builder will create a <code>TFunction</code> with the inner return type and during
+	 * post-processing this method will change that return type to a <code>Promise</code> (only the return type of the
+	 * TFunction in the types model is changed; the declared return type in the AST remains unchanged).
+	 * <p>
+	 * In addition, a return type of <code>void</code> will be replaced by <code>undefined</code>, i.e. will produce an
+	 * outer return type of <code>Promise&lt;undefined,?></code>. This will be taken care of by method
+	 * {@link TypeUtils#createPromiseTypeRef(BuiltInTypeScope,TypeArgument,TypeArgument)}.
+	 * <p>
+	 * NOTES:
+	 * <ol>
+	 * <li>normally, this wrapping could easily be done in the types builder, but because we have to check if the inner
+	 * return type is <code>void</code> we need to resolve proxies, which is not allowed in the types builder.
+	 * </ol>
+	 */
+	def protected void handleAsyncFunctionDefinition(RuleEnvironment G, FunctionDefinition funDef, ASTMetaInfoCache cache) {
+		if(funDef.isAsync) {
+			val tFunction = funDef.definedType;
+			if(tFunction instanceof TFunction) {
+				val innerReturnTypeRef = tFunction.returnTypeRef;
+				if(innerReturnTypeRef!==null && !(innerReturnTypeRef instanceof DeferredTypeRef)) {
+					val outerReturnTypeRef = TypeUtils.createPromiseTypeRef(G.builtInTypeScope, innerReturnTypeRef, null);
+					EcoreUtilN4.doWithDeliver(false, [
+						tFunction.returnTypeRef = outerReturnTypeRef;
+					], tFunction);
+				}
+			}
+		}
 	}
 
 

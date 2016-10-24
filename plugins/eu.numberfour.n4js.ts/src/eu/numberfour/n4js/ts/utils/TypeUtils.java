@@ -29,6 +29,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.xtext.EcoreUtil2;
@@ -82,6 +83,7 @@ import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.types.TypingStrategy;
 import eu.numberfour.n4js.ts.types.UndefModifier;
+import eu.numberfour.n4js.ts.types.UndefinedType;
 import eu.numberfour.n4js.ts.types.VoidType;
 import eu.numberfour.n4js.utils.RecursionGuard;
 
@@ -621,9 +623,6 @@ public class TypeUtils {
 			final TInterface r = (TInterface) type;
 			return r.getSuperInterfaceRefs();
 		}
-		if (type instanceof TypeVariable) {
-			return ((TypeVariable) type).getDeclaredUpperBounds();
-		}
 		if (type instanceof PrimitiveType) {
 			PrimitiveType assignmentCompatible = ((PrimitiveType) type).getAssignmentCompatible();
 			if (assignmentCompatible != null) {
@@ -677,7 +676,8 @@ public class TypeUtils {
 
 			if (type instanceof TypeVariable) {
 				TypeVariable v = (TypeVariable) type;
-				if (isRawSuperType(v.getDeclaredUpperBounds(), superTypeCandidate, guard)) {
+				TypeRef ub = v.getDeclaredUpperBound();
+				if (ub != null && isRawSuperType(ub, superTypeCandidate, guard)) {
 					return true;
 				}
 				return false;
@@ -716,44 +716,12 @@ public class TypeUtils {
 	public static TypeRef resolveTypeVariable(TypeRef typeRef) {
 		final Type declType = typeRef != null ? typeRef.getDeclaredType() : null;
 		if (declType instanceof TypeVariable) {
-			final TypeRef ub = getDeclaredUpperBound((TypeVariable) declType);
+			final TypeRef ub = ((TypeVariable) declType).getDeclaredUpperBound();
 			if (ub != null) {
 				return ub;
 			}
 		}
 		return typeRef;
-	}
-
-	/**
-	 * Convenience method that returns the declared upper bounds of a TypeVariable as returned by
-	 * {@link TypeVariable#getDeclaredUpperBounds()} as a single TypeRef. If there is more than one upper bound, then an
-	 * intersection type is created. Returns <code>null</code> if no upper bounds were declared.
-	 */
-	public static TypeRef getDeclaredUpperBound(TypeVariable tv) {
-		final EList<ParameterizedTypeRef> ubs = tv.getDeclaredUpperBounds();
-		final int count = ubs.size();
-		if (count == 1) {
-			return ubs.get(0);
-		} else if (count >= 2) {
-			return createNonSimplifiedIntersectionType(ubs);
-		}
-		return null; // no declared upper bounds
-	}
-
-	/**
-	 * Convenience method that returns the declared or implicit upper bounds of a Wildcard as returned by
-	 * {@link Wildcard#getDeclaredOrImplicitUpperBounds()} as a single TypeRef. If there is more than one upper bound
-	 * (occurs only in the case of implicit upper bounds), then an intersection type is created.
-	 */
-	public static TypeRef getDeclaredOrImplicitUpperBound(Wildcard w) {
-		final EList<TypeRef> implicitUBs = w.getDeclaredOrImplicitUpperBounds();
-		final int count = implicitUBs.size();
-		if (count == 1) {
-			return implicitUBs.get(0);
-		} else if (count >= 2) {
-			return createNonSimplifiedIntersectionType(implicitUBs);
-		}
-		return null; // no implicit upper bound
 	}
 
 	/**
@@ -1128,7 +1096,7 @@ public class TypeUtils {
 					final boolean needToMakeImplicitUpperBoundExplicit = !parentIsBeingCopiedAsWell;
 					if (needToMakeImplicitUpperBoundExplicit) {
 						wCopy.setDeclaredUpperBound(
-								TypeUtils.copyWithProxies(getDeclaredOrImplicitUpperBound(wOrig)));
+								TypeUtils.copyWithProxies(wOrig.getDeclaredOrImplicitUpperBound()));
 						return;
 					}
 				}
@@ -1151,6 +1119,16 @@ public class TypeUtils {
 				return changeTypeMap.get(eObject);
 			return super.getTarget(eObject);
 		}
+	}
+
+	/**
+	 * Returns true iff the argument is non-null and refers to the built-in type 'undefined'.
+	 */
+	public static boolean isUndefined(TypeArgument typeArg) {
+		if (typeArg instanceof ParameterizedTypeRef) {
+			return ((ParameterizedTypeRef) typeArg).getDeclaredType() instanceof UndefinedType;
+		}
+		return false;
 	}
 
 	/**
@@ -1194,30 +1172,20 @@ public class TypeUtils {
 	}
 
 	/**
-	 * For the given type-ref, this method returns a Promise<R,?> type-ref.
+	 * For the given success and failure value types, this method returns a Promise<R,?> type reference. The failure
+	 * type is optional (i.e. may be <code>null</code>). A success value type of <code>void</code> will be changed to
+	 * type <code>undefined</code>, because <code>void</code> is not a valid type argument.
+	 * <p>
+	 * WARNING: this method will resolve proxies in 'successType' (in order to check if it points to type 'void')
 	 */
 	public static ParameterizedTypeRef createPromiseTypeRef(BuiltInTypeScope scope, TypeArgument successType,
 			TypeArgument failureTypeOrNull) {
 		Objects.requireNonNull(successType);
 		return createTypeRef(
 				scope.getPromiseType(),
-				TypeUtils.copyWithProxies(successType),
+				isVoid(successType) ? scope.getUndefinedTypeRef() : TypeUtils.copyWithProxies(successType),
 				failureTypeOrNull != null ? TypeUtils.copyWithProxies(failureTypeOrNull)
 						: TypeRefsFactory.eINSTANCE.createWildcard());
-	}
-
-	/**
-	 * Returns a Promise<any,?> type-ref.
-	 */
-	public static ParameterizedTypeRef createPromiseOfAny(BuiltInTypeScope scope) {
-		return createPromiseTypeRef(scope, scope.getAnyTypeRef(), null);
-	}
-
-	/**
-	 * Returns a Promise<void,?> type-ref.
-	 */
-	public static ParameterizedTypeRef createPromiseOfVoid(BuiltInTypeScope scope) {
-		return createPromiseTypeRef(scope, scope.getVoidTypeRef(), null);
 	}
 
 	/**

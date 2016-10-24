@@ -13,11 +13,11 @@ async function hBA () : B<A> { return new B<A>(); }
 
 async function hUndefined () : undefined { return undefined; }
 
-// A promise of nothing is returned XPECT errors --> "Promise<void,?> is not a subtype of string." at "hVoid()"
+// A promise of nothing is returned XPECT errors --> "Promise<undefined,?> is not a subtype of string." at "hVoid()"
 var s1 : string = hVoid();
 
 // A promise of nothing is returned XPECT noerrors -->
-var s2 : Promise<void,?> = hVoid();
+var s2 : Promise<undefined,?> = hVoid();
 
 // a Promise of a custom class is returned XPECT noerrors -->
 var a1 : Promise<A,?> = hA();

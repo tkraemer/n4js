@@ -5,12 +5,12 @@
 /* XPECT formattedLines 300 ---
 var a: ~Object with
 		{fieldA: string?, set bsetter(f: number), set csetter(number), get bgetter(): number, get cgetter(), methodA(), methodB(): ~Object
-			with {x: string?, y: string?, obj: ~i~Object with {sdfljsdf: any}}, methodC(...string): [void]};
+			with {x: string?, y: string?, obj: ~i~Object with {sdfljsdf: any}}, methodC(...string): [number]};
 class X {
 
 	constructor(@Spec spec: ~i~this with
 				{fieldA: string?, set bsetter(f: number), set csetter(number), get bgetter(): number, get cgetter(), methodA(), methodB(): ~Object
-						with {x: string?, y: string?, obj: ~i~Object with {sdfljsdf: any}}, methodC(...string): [void]
+						with {x: string?, y: string?, obj: ~i~Object with {sdfljsdf: any}}, methodC(...string): [number]
 		}) {
 		// ctor body   
 	}
@@ -24,7 +24,7 @@ var a: ~Object with {
     get cgetter(),
     methodA(),
     methodB():~Object with { x:string?,y:string?, obj:~i~Object with{sdfljsdf:any}},
-    methodC(...string):[void]
+    methodC(...string):[number]
 }
 
 class X {
@@ -37,7 +37,7 @@ class X {
     get cgetter(),
     methodA(),
     methodB():~Object with { x:string?,y:string?, obj:~i~Object with{sdfljsdf:any}},
-    methodC(...string):[void]
+    methodC(...string):[number]
 } ){
      // ctor body   
     }

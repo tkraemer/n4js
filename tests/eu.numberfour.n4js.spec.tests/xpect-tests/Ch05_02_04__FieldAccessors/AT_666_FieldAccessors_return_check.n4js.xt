@@ -30,7 +30,6 @@ class D
 	
 	/* XPECT errors ---
 		"Missing return or throw statement (all control flows must terminate with an return value or be aborted)." at "get b () {}"
-		"Void is not a valid type for getters and setters." at "b"
 	--- */
 	get b () {}
 	// 	XPECT errors -->"Set accessors must not return anything." at "return 17;"

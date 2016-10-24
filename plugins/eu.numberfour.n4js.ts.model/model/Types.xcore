@@ -29,7 +29,6 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.internal.MemberByNameAndAccessMap
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.utils.EcoreUtilN4
-import java.util.Collection
 import java.util.Collections
 import java.util.HashMap
 import java.util.List
@@ -37,7 +36,6 @@ import org.eclipse.emf.ecore.EMap
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
 
-type CollectionOfTypeRef wraps Collection<? extends TypeRef>
 type IterableOfTClassifier wraps Iterable<? extends TClassifier>
 type Variance wraps Variance
 
@@ -335,7 +333,7 @@ enum TypingStrategy {
 class TypeVariable extends Type {
 	boolean declaredCovariant
 	boolean declaredContravariant
-	contains ParameterizedTypeRef[] declaredUpperBounds
+	contains TypeRef declaredUpperBound
 
 	/*
 	 * Returns this type variable's {@link eu.numberfour.n4js.ts.types.util.Variance variance}. Always returns
@@ -356,12 +354,12 @@ class TypeVariable extends Type {
 		return emptyEList();
 	}
 	op String getTypeAsString() {
-		return getTypeVariableAsString(declaredUpperBounds);
+		return getTypeVariableAsString(declaredUpperBound);
 	}
-	op String getTypeVariableAsString(CollectionOfTypeRef upperBounds) {
+	op String getTypeVariableAsString(TypeRef upperBound) {
 		return (if(declaredCovariant) "out " else if(declaredContravariant) "in " else "")
 			+ name
-			+ (if (!upperBounds.empty) " extends " + (upperBounds.map[typeRefAsString].join(" & ")) else "");
+			+ (if (upperBound!==null) " extends " + upperBound.typeRefAsString else "");
 	}
 }
 
