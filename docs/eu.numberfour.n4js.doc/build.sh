@@ -42,7 +42,7 @@ do
 	mkdir -p $OUT_FOLDER
 	asciidoctor -D $OUT_FOLDER $ADOC_FILE \
 -a stylesdir=${REL_PATH}../res/styles -a stylesheet=n4js-adoc.css \
--a highlightjsdir=${REL_PATH}../res/scripts -a highlightjs-theme=n4jshighlighter \
+-a highlightjsdir=${REL_PATH}../res/scripts -a highlightjs-theme=n4jshighlighter -a source-highlighter=highlightjs \
 -a docinfodir=${REL_PATH}../res/headers/$HEADER_DIR -a docinfo1=true \
 -a idseparator=- -a doctype=book
 done
