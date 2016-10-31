@@ -21,9 +21,9 @@ var ol2 = {
 
 var ol3 = {
 		p : 13,
-		//XPECT errors --> "Property getter p duplicates property p (line 30)." at "p"
+		//XPECT errors --> "Property getter p duplicates property p (line 23)." at "p"
 		get p(): any {return null},
-		//XPECT errors --> "Property setter p duplicates property p (line 30)." at "p"
+		//XPECT errors --> "Property setter p duplicates property p (line 23)." at "p"
 		set p(value : any) {},
 	};
 
@@ -37,9 +37,8 @@ function fd(p){
 		//XPECT noerrors --> no conflict with outer scope, as property reciver makes thing clear
 		arguments : 4,
 		x : function y(){
-			//XPECT errors --> "Variable y shadows function expression y (line 46)." at "y"
+			//XPECT errors --> "Variable y shadows function expression y (line 39)." at "y"
 			var y = 3;
 		}
 	}
 }
-

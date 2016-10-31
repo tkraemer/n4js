@@ -242,11 +242,14 @@ public class AbstractN4JSDeclarativeValidator extends AbstractMessageAdjustingN4
 				}
 
 				// check bounds
-				val upperBound = typeParameter.declaredUpperBound ?: N4JSLanguageUtils.getTypeVariableImplicitUpperBound(G_subst);
-				val substituted = ts.substTypeVariables(G_subst, upperBound).value;
-				val result = ts.subtype(G_subst, typeArgument, substituted);
-				if (result.failed) {
-					errorGenerator.generateErrors(messageAcceptor, result, typeArgument);
+				val isExceptionCase = TypeUtils.isVoid(typeArgument); // in this case another validation will show an error (avoid duplicate messages)
+				if(!isExceptionCase) {
+					val upperBound = typeParameter.declaredUpperBound ?: N4JSLanguageUtils.getTypeVariableImplicitUpperBound(G_subst);
+					val substituted = ts.substTypeVariables(G_subst, upperBound).value;
+					val result = ts.subtype(G_subst, typeArgument, substituted);
+					if (result.failed) {
+						errorGenerator.generateErrors(messageAcceptor, result, typeArgument);
+					}
 				}
 			}
 		}
