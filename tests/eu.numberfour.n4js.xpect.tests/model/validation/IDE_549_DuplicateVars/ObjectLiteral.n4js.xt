@@ -16,14 +16,7 @@ var ol2 = {
 		//XPECT noerrors --> no conflict on setter and getter
 		set v(value : string) {},
 		//XPECT noerrors --> no conflict on setter and getter
-		get v(): string {return null},
-
-		//XPECT noerrors --> no conflict on setter and getter
-		@Undefined
-		get c(): string {return null},
-		//XPECT noerrors --> no conflict on setter and getter
-		@Undefined
-		set c(value : string) {}		
+		get v(): string {return null}
 	};
 
 var ol3 = {
