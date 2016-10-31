@@ -8,13 +8,11 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js
+package eu.numberfour.n4js.generation
 
 import com.google.inject.Binder
 import com.google.inject.Inject
 import com.google.inject.Module
-import eu.numberfour.n4js.antlr.N4JSAntlrContentAssistGrammarGenerator
-import eu.numberfour.n4js.antlr.N4JSAntlrGrammarGenerator
 import org.eclipse.xtext.Grammar
 import org.eclipse.xtext.xtext.generator.DefaultGeneratorModule
 import org.eclipse.xtext.xtext.generator.XtextGeneratorNaming
@@ -28,15 +26,15 @@ import org.eclipse.xtext.xtext.generator.parser.antlr.AntlrGrammarGenerator
  * into the (new) Xtext language generator.
  */
 class N4JSGeneratorModule extends DefaultGeneratorModule {
-	
+
 	def configureXtextGeneratorNaming(Binder binder) {
 		binder.bind(XtextGeneratorNaming).to(N4JSGeneratorNaming)
 	}
-	
+
 	def configureAntlrGrammarGenerator(Binder binder) {
 		binder.bind(AntlrGrammarGenerator).to(N4JSAntlrGrammarGenerator)
 	}
-	
+
 	def configureAntlrContentAssistGrammarGenerator(Binder binder) {
 		binder.bind(AntlrContentAssistGrammarGenerator).to(N4JSAntlrContentAssistGrammarGenerator)
 	}
@@ -47,17 +45,17 @@ class N4JSGeneratorModule extends DefaultGeneratorModule {
  * as well as the name of the UI plug-in's activator.
  */
 class N4JSGeneratorNaming extends XtextGeneratorNaming {
-	
+
 	@Inject
 	IXtextProjectConfig projectConfig
-	
+
 	override getGenericIdeBasePackage(Grammar grammar) {
 		super.getEclipsePluginBasePackage(grammar)
 	}
 
 	override getEclipsePluginActivator() {
 		val pluginName = projectConfig.eclipsePlugin.name
-		
+
 		if(pluginName === null) {
 			return null
 		} else {
