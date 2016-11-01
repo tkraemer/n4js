@@ -14,12 +14,8 @@ stderr:
 
 
 export const a1 = 'a1';
-export @Undefined const a2 = 'a2';
-export project const a3 = 'a3';
-export @Undefined project const a4 = 'a4';
+export project const a2 = 'a2';
 
 console.log(a1);
 console.log(a2);
-console.log(a3);
-console.log(a4);
 
