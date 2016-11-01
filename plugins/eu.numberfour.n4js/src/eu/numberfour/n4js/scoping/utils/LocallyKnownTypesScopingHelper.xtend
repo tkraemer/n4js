@@ -103,7 +103,9 @@ class LocallyKnownTypesScopingHelper {
 			val IScope importScope = importedElementsScopingHelper.getImportedTypes(parent, script)
 			val local = script.module
 			return MapBasedScope.createScope(importScope,
-				local.topLevelTypes.map[EObjectDescription.create(name, it)])
+				local.topLevelTypes.map[topLevelType | 
+					EObjectDescription.create(topLevelType.name, topLevelType)
+				])
 		]
 	}
 
