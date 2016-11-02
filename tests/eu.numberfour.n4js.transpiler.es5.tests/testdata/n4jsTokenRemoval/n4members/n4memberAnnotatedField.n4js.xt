@@ -12,7 +12,7 @@ stderr:
 
 class C{
 	
-	@Undefined
+	@Internal
 	public const field : string = 'apscsf';
 }
 
