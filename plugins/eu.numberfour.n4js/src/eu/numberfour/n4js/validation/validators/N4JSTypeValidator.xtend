@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.validation.validators
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.n4JS.ArrowFunction
 import eu.numberfour.n4js.n4JS.AssignmentExpression
 import eu.numberfour.n4js.n4JS.AssignmentOperator
 import eu.numberfour.n4js.n4JS.Expression
@@ -40,7 +39,6 @@ import eu.numberfour.n4js.scoping.utils.AbstractDescriptionWithError
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression
@@ -68,7 +66,6 @@ import eu.numberfour.n4js.ts.types.VoidType
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
@@ -434,30 +431,18 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		G = newRuleEnvironment(expression);
 
 		val expectedType = ts.expectedTypeIn(G, expression.eContainer, expression);
-
-
 		if (expectedType.value !== null) {
 
+			// for certain problems in single-expression arrow functions, we want a special error message
 			val singleExprArrowFunction = N4JSASTUtils.getContainingSingleExpressionArrowFunction(expression);
-			if(singleExprArrowFunction!==null) {
-				if (TypeUtils.isVoid(inferredType.value)) {
-					if(TypeUtils.isOptional(expectedType.value)) {
-						return; // all good
-					}
-					val expectedTypeForArrowFunction = expectedTypeForLambda(singleExprArrowFunction);
-					val expectedReturnType = expectedTypeForArrowFunction?.returnTypeRef;
-					if(expectedReturnType!==null && TypeUtils.isVoid(expectedReturnType)) {
-						// special handling for void body in single expression arrow function (only required because the
-						// Poor man's return type inferencer infers an incorrect 'any' in this case)
-						// TODO remove this special handling once the Poor man's return type inferencer is improved
-						// (compare with ordinary function expressions)
-						return;
-					}
-					val message = IssueCodes.getMessageForFUN_SINGLE_EXP_LAMBDA_IMPLICIT_RETURN_ALLOWED_UNLESS_VOID();
-					addIssue(message, expression,
-							IssueCodes.FUN_SINGLE_EXP_LAMBDA_IMPLICIT_RETURN_ALLOWED_UNLESS_VOID);
-					return;
+			if (singleExprArrowFunction!==null && TypeUtils.isVoid(inferredType.value)) {
+				if (TypeUtils.isVoid(expectedType.value) || TypeUtils.isOptional(expectedType.value)) {
+					return; // all good
 				}
+				val message = IssueCodes.getMessageForFUN_SINGLE_EXP_LAMBDA_IMPLICIT_RETURN_ALLOWED_UNLESS_VOID();
+				addIssue(message, expression,
+						IssueCodes.FUN_SINGLE_EXP_LAMBDA_IMPLICIT_RETURN_ALLOWED_UNLESS_VOID);
+				return;
 			}
 
 			internalCheckUseOfUndefinedExpression(G, expression, expectedType.value, inferredType.value);
@@ -484,18 +469,6 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 				createError(result, expression)
 			}
 		}
-	}
-
-	def private FunctionTypeExprOrRef expectedTypeForLambda(ArrowFunction fe) {
-		val RuleEnvironment G = RuleEnvironmentExtensions.newRuleEnvironment(fe);
-		val Result<TypeRef> rtr = ts.expectedTypeIn(G, fe.eContainer(), fe);
-		if (!rtr.failed()) {
-			val TypeRef tr = rtr.getValue();
-			if (tr instanceof FunctionTypeExprOrRef) {
-				return tr;
-			}
-		}
-		return null;
 	}
 
 	def private void internalCheckUseOfUndefinedExpression(RuleEnvironment G, Expression expression, TypeRef expectedTypeRef, TypeRef actualTypeRef) {
