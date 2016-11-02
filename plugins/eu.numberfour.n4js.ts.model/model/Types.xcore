@@ -1,3 +1,4 @@
+
 /**
  * Copyright (c) 2016 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
@@ -593,19 +594,19 @@ class Type extends TExportableElement, TAnnotableElement {
 			name
 		}
 	}
-//	op String getTypeAsHTML() {
-//		return UtilN4.sanitizeForHTML(getTypeAsString());
-//	}
 
 	/*
 	 * Returns the version of the type (declaration). This is 0 by default for all N4JS types, as this 
 	 * feature is only supported by derived languages (such as N4IDL). Subclasses may override this method,
 	 * returning the declared version instead.
 	 */
-	op int getVersion() { 
+	op int getVersion() {
 		return 0;
 	}
 
+//	op String getTypeAsHTML() {
+//		return UtilN4.sanitizeForHTML(getTypeAsString());
+//	}
 }
 
 abstract class AccessibleTypeElement {
