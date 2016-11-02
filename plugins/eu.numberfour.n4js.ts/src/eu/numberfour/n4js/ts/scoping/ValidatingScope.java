@@ -19,8 +19,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 /**
- * A scope implementation that filters the result of {@link #getAllElements()} by a
- * given criteria.
+ * A scope implementation that filters the result of {@link #getAllElements()} by a given criteria.
  *
  * The {@link ValidatingScope} should always be the leaf element in the scope chain.
  */
@@ -30,12 +29,13 @@ public class ValidatingScope implements IScope {
 	private final Predicate<? super IEObjectDescription> allElementsFilter;
 
 	/**
-	 * Creates a new scope that filters the result of {@link #getAllElements()} by
-	 * the given criteria. Only elements that evaluate the predicate to {@code true}
-	 * are returned.
+	 * Creates a new scope that filters the result of {@link #getAllElements()} by the given criteria. Only elements
+	 * that evaluate the predicate to {@code true} are returned.
 	 *
-	 * @param delegate the scope that does the heavy lifting.
-	 * @param allElementsFilter the filter for the elements.
+	 * @param delegate
+	 *            the scope that does the heavy lifting.
+	 * @param allElementsFilter
+	 *            the filter for the elements.
 	 */
 	public ValidatingScope(IScope delegate, Predicate<? super IEObjectDescription> allElementsFilter) {
 		this.delegate = delegate;
@@ -63,12 +63,23 @@ public class ValidatingScope implements IScope {
 	}
 
 	/**
-	 * Returns a filtered iterable of descriptions. Only elements that evaluate to
-	 * {@code true} when passed to the {@link #allElementsFilter} are returned.
+	 * Returns a filtered iterable of descriptions. Only elements that evaluate to {@code true} when passed to the
+	 * {@link #allElementsFilter} are returned.
 	 */
 	@Override
 	public Iterable<IEObjectDescription> getAllElements() {
 		return Iterables.filter(delegate.getAllElements(), allElementsFilter);
 	}
 
+	@Override
+	public String toString() {
+		String delegateString = null;
+		try {
+			delegateString = delegate.toString();
+		} catch (Throwable t) {
+			delegateString = t.getClass().getSimpleName() + " : " + t.getMessage();
+		}
+		return getClass().getSimpleName() + (allElementsFilter != null ? "[filter=" + allElementsFilter + "]" : "")
+				+ " -> " + delegateString;
+	}
 }

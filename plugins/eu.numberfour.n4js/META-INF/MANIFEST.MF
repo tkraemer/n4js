@@ -74,5 +74,6 @@ Export-Package: eu.numberfour.n4js,
  eu.numberfour.n4js.validation,
  eu.numberfour.n4js.validation.helper,
  eu.numberfour.n4js.validation.validators,
- eu.numberfour.n4js.xsemantics
+ eu.numberfour.n4js.xsemantics,
+ eu.numberfour.n4js.xsemantics.validation
 
