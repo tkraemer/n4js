@@ -39,6 +39,12 @@ class ArrowFunctionProcessor {
 	 * This tweak is only required because our poor man's return type inferencer in the types builder infers a wrong
 	 * non-void return type in some cases, which is corrected in this method.
 	 * <p>
+	 * Example:
+	 * <pre>
+	 * function foo(f : {function(): void}) {}
+	 * function none(): void {}
+	 * foo(() => none()); // will show bogus error when disabling this method
+	 * </pre>
 	 * TODO remove this special handling once the Poor man's return type inferencer is improved
 	 */
 	def public void tweakArrowFunctions(RuleEnvironment G, EObject node, ASTMetaInfoCache cache) {
