@@ -515,12 +515,26 @@ public class TypeUtils {
 	 * whole references are copied, but in case of type variable substitution or similar cases, this might be necessary.
 	 */
 	public static void copyTypeModifiers(TypeRef target, TypeRef source) {
-		target.setUndefModifier(source.getUndefModifier());
+		target.setUndefModifier(mergeUndefModifiers(target.getUndefModifier(), source.getUndefModifier()));
 		target.setNullModifier(source.getNullModifier());
 
 		if (target instanceof BaseTypeRef) {
 			((BaseTypeRef) target).setDynamic(target.isDynamic() || source.isDynamic());
 		}
+	}
+
+	/**
+	 * Returns a combined {@link UndefModifier} for the two given type references. The order of arguments given does not
+	 * matter.
+	 * <p>
+	 * This method ignores {@link UndefModifier#MANDATORY} and {@link UndefModifier#ISUNDEFINED}, as these literals seem
+	 * to be obsolete and not used anywhere in the code. Type modifiers require an overall clean-up, see IDE-2405!
+	 */
+	public static UndefModifier mergeUndefModifiers(UndefModifier modifier1, UndefModifier modifier2) {
+		if (modifier1 == UndefModifier.OPTIONAL || modifier2 == UndefModifier.OPTIONAL) {
+			return UndefModifier.OPTIONAL;
+		}
+		return UndefModifier.NA;
 	}
 
 	/**

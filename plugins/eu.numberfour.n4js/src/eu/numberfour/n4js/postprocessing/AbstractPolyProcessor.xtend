@@ -224,10 +224,10 @@ package abstract class AbstractPolyProcessor extends AbstractProcessor {
 				val iMod = modifiers.iterator;
 				val iFpar = resultValue.fpars.iterator;
 				while (iFpar.hasNext && iMod.hasNext) {
-					setUndefModifierNullSafe(iFpar.next.typeRef, iMod.next);
+					mergeUndefModifierNullSafe(iFpar.next.typeRef, iMod.next);
 				}
 				if (iMod.hasNext) {
-					setUndefModifierNullSafe(resultValue.returnTypeRef, iMod.next);
+					mergeUndefModifierNullSafe(resultValue.returnTypeRef, iMod.next);
 				}
 			}
 		}
@@ -235,9 +235,9 @@ package abstract class AbstractPolyProcessor extends AbstractProcessor {
 		return result.value as TypeRef; // we put a TypeRef into 'substTypeVariables', so we always get back a TypeRef
 	}
 
-	def private void setUndefModifierNullSafe(TypeRef typeRef, UndefModifier modifier) {
+	def private void mergeUndefModifierNullSafe(TypeRef typeRef, UndefModifier modifier) {
 		if (typeRef !== null && modifier !== null) {
-			typeRef.undefModifier = modifier;
+			typeRef.undefModifier = TypeUtils.mergeUndefModifiers(typeRef.undefModifier, modifier);
 		}
 	}
 
