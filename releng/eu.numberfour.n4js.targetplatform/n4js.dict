@@ -145,3 +145,4 @@ maven
 src
 namespace
 classpath
+versionable
