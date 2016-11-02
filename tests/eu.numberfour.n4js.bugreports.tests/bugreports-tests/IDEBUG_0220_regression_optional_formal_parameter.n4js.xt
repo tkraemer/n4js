@@ -22,6 +22,7 @@ var foo6 : ~Object with { s: B?; } = {};
 
 function x() {}
 
-// XPECT noerrors --> "Missing type name for type modifier ?." at "type{Object}"
+// TODO GH-204 reenable when fully supported  XPECT ! noerrors --> "Missing type name for type modifier ?." at "type{Object}"
+// TODO GH-204 remove when fully supported  XPECT errors --> "The name of a declared function may not be used as a type name." at "x"
 var foo7 : ~Object with { s: x?; } = {};
 

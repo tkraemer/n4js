@@ -70,13 +70,13 @@ class MyClassY<T extends MyClassX> {
  	...
 ---*/
 function myFun1() : void {
-	/* XPECT scope at myFun1 ---
-		!rguments, Array, Boolean, Date, Error, EvalError, Function,
+	/* XPECT scope at Object ---
+		!arguments, Array, Boolean, Date, Error, EvalError, Function,
 		 JSON, Math, N4Object, Number, Object,  RangeError,
 		ReferenceError, RegExp, String, SyntaxError, TypeError,  URIError,
 		any, boolean, i18nKey, number, pathSelector, string, typeName, ...
 	---*/
-	var myFun2Var = function myFun2(a : myFun1) :
+	var myFun2Var = function myFun2(a : Object) :
 	/* XPECT scope at void ---
 		!arguments, Array, Boolean, Date, Error, EvalError, Function,
 		JSON, Math, N4Object, Number, Object,  RangeError,

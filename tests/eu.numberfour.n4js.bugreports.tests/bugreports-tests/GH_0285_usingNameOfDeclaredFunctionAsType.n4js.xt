@@ -1,0 +1,12 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+// disallowed because not properly supported (parser creates a ParameterizedTypeRef instead of a FunctionTypeRef),
+// but might be allowed in the future, see GH-204
+
+
+function foo(str: string):number { return 42; }
+
+// XPECT errors --> "The name of a declared function may not be used as a type name." at "foo"
+let f: foo;
+

@@ -67,7 +67,7 @@ class NoValidationPluginTest extends AbstractBuilderParticipantTest {
 		assertMarkers("file B should have markers", fileBValidated, 2);
 		assertMarkers("file MyAlreadyAsModuleHack should have markers", fileMyAlreadyAsModuleHack, 2);
 		assertMarkers("file WolfgangsUglyHack should have markers", fileWolfgangsUglyHack, 2);
-		assertMarkers("file JuergenA should have markers", fileJuergenA, 5);
+		assertMarkers("file JuergenA should have markers", fileJuergenA, 6);
 		assertMarkers("file JuergenB should have markers", fileJuergenB, 2);
 
 		addPathsToNoValidate("p/wolfgangsUglyHack" -> null, "p/juergensHacks/*" -> null)
