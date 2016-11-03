@@ -58,7 +58,8 @@ public class MemberScope extends AbstractMemberScope {
 		}
 
 		/**
-		 * Factory method to produce a {@link MemberScope} with the members provided in list 'members'.
+		 * Factory method to produce a {@link MemberScope} with the members provided in list 'members'. Only used for
+		 * structural type references with structural members.
 		 */
 		public IScope create(IScope parent,
 				List<? extends TMember> members, EObject context, boolean staticAccess) {
@@ -66,6 +67,12 @@ public class MemberScope extends AbstractMemberScope {
 		}
 	}
 
+	/**
+	 * The type of which the members are to be found, or null if members are passed as a list in the constructor
+	 * directly (usually for structural types).
+	 *
+	 * @see MemberScopeFactory
+	 */
 	final ContainerType<?> type;
 	final List<TMember> members;
 
@@ -74,6 +81,9 @@ public class MemberScope extends AbstractMemberScope {
 	// @Inject -- too bad that we have no @Assisted features available...
 	final ContainerTypesHelper containerTypesHelper;
 
+	/**
+	 * @see MemberScopeFactory#create(IScope, List, EObject, boolean)
+	 */
 	MemberScope(ContainerTypesHelper containerTypesHelper, IScope parent,
 			List<? extends TMember> members, EObject context,
 			boolean staticAccess) {
@@ -83,6 +93,9 @@ public class MemberScope extends AbstractMemberScope {
 		this.members = new ArrayList<>(members);
 	}
 
+	/**
+	 * @see MemberScopeFactory#create(IScope, ContainerType, EObject, boolean)
+	 */
 	MemberScope(ContainerTypesHelper containerTypesHelper, IScope parent, ContainerType<?> type,
 			EObject context,
 			boolean staticAccess) {
@@ -92,6 +105,9 @@ public class MemberScope extends AbstractMemberScope {
 		this.members = null;
 	}
 
+	/**
+	 * @see MemberScopeFactory#create(ContainerType, EObject, boolean)
+	 */
 	MemberScope(ContainerTypesHelper containerTypesHelper, ContainerType<?> type,
 			EObject context,
 			boolean staticAccess) {
