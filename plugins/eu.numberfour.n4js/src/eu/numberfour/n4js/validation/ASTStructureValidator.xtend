@@ -111,6 +111,9 @@ class ASTStructureValidator {
 
 	@Inject
 	private N4JSLanguageHelper languageHelper;
+	
+	@Inject
+	private JavaScriptVariantHelper jsVariantHelper;
 
 	@ToString
 	protected static class Constraints {

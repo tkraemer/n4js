@@ -30,7 +30,7 @@ import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
 import eu.numberfour.n4js.typesystem.constraints.TypeConstraint
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EObject
 
@@ -58,6 +58,9 @@ package class PolyProcessor extends AbstractPolyProcessor {
 	private N4JSTypeSystem ts;
 	@Inject
 	private TypeSystemHelper tsh;
+	
+	@Inject
+	private JavaScriptVariantHelper jsVariantHelper; 
 
 
 	// ################################################################################################################
@@ -137,7 +140,7 @@ package class PolyProcessor extends AbstractPolyProcessor {
 		// with extremely large array/object literals) but to avoid having to deal with this case with additional code,
 		// we still build a constraint system as usual (TEMPORARAY HACK)
 		// TODO find proper way to deal with extremely large array/object literals
-		if (JavaScriptVariant.getVariant(rootPoly).isECMAScript) {
+		if (jsVariantHelper.doomTypeInference(rootPoly)) {
 			infCtx.addConstraint(TypeConstraint.FALSE);
 		}
 

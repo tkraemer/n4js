@@ -113,8 +113,159 @@ public class JavaScriptVariantHelper {
 		}
 	}
 
-	public boolean checkScoping(EObject eobj) {
-		return false;
+	/**
+	 * Return true if dynamic pseudo scope should be activated
+	 */
+	public boolean activateDynamicPseudoScope(EObject eobj) {
+		return JavaScriptVariant.getVariant(eobj).isECMAScript();
+	}
+
+	/**
+	 * Return true if missing implementation is allowed, for instance in external mode
+	 */
+	public boolean allowMissingImplementation(EObject eobj) {
+		return JavaScriptVariant.getVariant(eobj) == JavaScriptVariant.external;
+	}
+
+	/***
+	 * Return true if override annotation should be checked, e.g. if mode is N4JS
+	 */
+	public boolean checkOverrideAnnotation(EObject eobj) {
+		return !(JavaScriptVariant.getVariant(eobj).isECMAScript());
+	}
+
+	/***
+	 * Return true if type declaration should be checked, e.g. if the mode is N4JS
+	 */
+	public boolean checkTypeDeclaration(EObject eobj) {
+		return JavaScriptVariant.n4js.isActive(eobj);
+	}
+
+	/***
+	 * Return true if type declaration should be checked, e.g. if the mode is N4JS
+	 */
+	public boolean checkMemberDeclaration(EObject eobj) {
+		return JavaScriptVariant.n4js.isActive(eobj);
+	}
+
+	/***
+	 * Return true if variable declaration should be checked, e.g. if the mode is N4JS
+	 */
+	public boolean checkVariable(EObject eobj) {
+		return JavaScriptVariant.n4js.isActive(eobj);
+	}
+
+	/***
+	 * Return true if method reference should be checked
+	 */
+	public boolean checkMethodReference(EObject eobj) {
+		return JavaScriptVariant.getVariant(eobj) == JavaScriptVariant.n4js;
+	}
+
+	/***
+	 * Return true if call expression should be checked
+	 */
+	public boolean checkCallExpression(EObject eobj) {
+		return !JavaScriptVariant.getVariant(eobj).isECMAScript();
+	}
+
+	/***
+	 * Return true if new expression should be checked
+	 */
+	public boolean requireCheckNewExpression(EObject eobj) {
+		return !JavaScriptVariant.getVariant(eobj).isECMAScript();
+	}
+
+	/***
+	 * Return true if indexed access expression should be checked, only in N4JS mode
+	 */
+	public boolean requireCheckIndexedAccessExpression(EObject eobj) {
+		return JavaScriptVariant.getVariant(eobj) == JavaScriptVariant.n4js;
+	}
+
+	/***
+	 * Return true if function name should be checked
+	 */
+	public boolean requireCheckFunctionName(EObject eobj) {
+		return JavaScriptVariant.n4js.isActive(eobj);
+	}
+
+	/***
+	 * Return true if function return should be checked
+	 */
+	public boolean requireCheckFunctionReturn(EObject eobj) {
+		return !JavaScriptVariant.getVariant(eobj).isECMAScript();
+	}
+
+	/***
+	 * Return true if function expression in expression statement should be checked
+	 */
+	public boolean requireCheckFunctionExpressionInExpressionStatement(EObject eobj) {
+		return JavaScriptVariant.getVariant(eobj).isECMAScript();
+	}
+
+	/***
+	 * Return true if a constant declaration has an initializer
+	 */
+	public boolean constantHasInitializer(EObject eobj) {
+		return !JavaScriptVariant.external.isActive(eobj);
+	}
+
+	/***
+	 * Return true if it should be check that no N4JS in runtime environment or lib
+	 */
+	public boolean requirecheckNoN4jsInRuntimeEnvOrLib(EObject eobj) {
+		return JavaScriptVariant.getVariant(eobj) == JavaScriptVariant.n4js;
+	}
+
+	/***
+	 * Return true if it should be check that no N4JS in runtime environment or lib
+	 */
+	public boolean allowWrongReadWrite(EObject eobj) {
+		return JavaScriptVariant.getVariant(eobj).isECMAScript();
+	}
+
+	/***
+	 * Return true if type inference should be doomed
+	 */
+	public boolean doomTypeInference(EObject eobj) {
+		return JavaScriptVariant.getVariant(eobj).isECMAScript();
+	}
+
+	/***
+	 * Return true if annotation should be allowed
+	 */
+	public boolean allowAnnotation(EObject eobj) {
+		JavaScriptVariant currentVariant = JavaScriptVariant.getVariant(eobj);
+		return (currentVariant == JavaScriptVariant.n4js || currentVariant == JavaScriptVariant.external);
+	}
+
+	/***
+	 * Return true if it must be checked that a final field is initialized
+	 */
+	public boolean requireCheckFinalFieldIsInitialized(EObject eobj) {
+		return !JavaScriptVariant.external.isActive(eobj);
+	}
+
+	/***
+	 * Return true if it must be checked if a name starts with dollar
+	 */
+	public boolean requireCheckNameStartsWithDollar(EObject eobj) {
+		return JavaScriptVariant.getVariant(eobj) == JavaScriptVariant.n4js;
+	}
+
+	/***
+	 * Return true if it is required to check if body of a member is missing
+	 */
+	public boolean requireCheckForMissingBody(EObject eobj) {
+		return JavaScriptVariant.getVariant(eobj) != JavaScriptVariant.external;
+	}
+
+	/***
+	 * Return true if it is required to check type matches
+	 */
+	public boolean requireCheckTypeMatchesExpectedType(EObject eobj) {
+		return JavaScriptVariant.getVariant(eobj) != JavaScriptVariant.unrestricted;
 	}
 
 	/**
@@ -124,10 +275,16 @@ public class JavaScriptVariantHelper {
 		return JavaScriptVariant.getVariant(eobj).isECMAScript();
 	}
 
+	/**
+	 * Returns true if the variant is type aware
+	 */
 	public boolean isTypeAware(EObject eobj) { // e.g. in N4JS
 		return JavaScriptVariant.n4js.isActive(eobj);
 	}
 
+	/**
+	 * Returns true if the variant has global object
+	 */
 	public boolean hasGlobalObject(EObject eobj) { // e.g. in unrestricted ECMAScript mode
 		return JavaScriptVariant.unrestricted.isActive(eobj);
 	}

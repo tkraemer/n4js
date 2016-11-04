@@ -25,6 +25,7 @@ import org.eclipse.xtext.scoping.impl.AbstractScope;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4JS.N4JSASTUtils;
 import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions;
@@ -33,7 +34,7 @@ import eu.numberfour.n4js.scoping.utils.WrongStaticAccessDescription;
 import eu.numberfour.n4js.scoping.utils.WrongWriteAccessDescription;
 import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TMember;
-import eu.numberfour.n4js.validation.JavaScriptVariant;
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
 
 /**
  * Base class for real {@link MemberScope}. It allows access to members of a container type, taking static access and
@@ -54,6 +55,9 @@ public abstract class AbstractMemberScope extends AbstractScope {
 	 * Flag indicating static access, used to filter members (or create erroneous descriptions)
 	 */
 	protected final boolean staticAccess;
+
+	@Inject
+	private JavaScriptVariantHelper jsVariantHelper;
 
 	/**
 	 * Creates member scope and context information, subclasses must handle concrete members.
@@ -151,7 +155,7 @@ public abstract class AbstractMemberScope extends AbstractScope {
 			}
 
 			// allowed special case: wrong read/write in a mode other than N4JS
-			if (JavaScriptVariant.getVariant(context).isECMAScript()) { // cf. sec. 13.1
+			if (jsVariantHelper.allowWrongReadWrite(context)) { // cf. sec. 13.1
 				return createSingleElementDescription(existingMember);
 			}
 

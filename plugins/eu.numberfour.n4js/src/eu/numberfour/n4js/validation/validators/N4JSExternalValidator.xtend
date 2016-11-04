@@ -43,7 +43,6 @@ import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.JavaScriptVariant
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.util.Tuples
 import org.eclipse.xtext.validation.Check

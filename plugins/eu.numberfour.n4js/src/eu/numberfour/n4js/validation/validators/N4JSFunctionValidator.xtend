@@ -47,7 +47,7 @@ import eu.numberfour.n4js.utils.nodemodel.HiddenLeafAccess
 import eu.numberfour.n4js.utils.nodemodel.HiddenLeafs
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 import java.util.List
 import org.eclipse.emf.common.util.EList
@@ -83,6 +83,9 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject
 	private N4JSLanguageHelper languageHelper;
 	
+	@Inject 
+	private JavaScriptVariantHelper jsVariantHelper;
+	
 
 	/**
 	 * NEEEDED
@@ -104,7 +107,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def checkFunctionExpressionInExpressionStatement(FunctionDeclaration functionDeclaration) {
 		val container = functionDeclaration.eContainer
-		if (container instanceof Block && JavaScriptVariant.getVariant(functionDeclaration).isECMAScript()) {
+		if (container instanceof Block && jsVariantHelper.requireCheckFunctionExpressionInExpressionStatement(functionDeclaration)) {
 			val msg = getMessageForFUN_BLOCK
 			if (functionDeclaration.name !== null) {
 				addIssue(msg, functionDeclaration, N4JSPackage.Literals.FUNCTION_DECLARATION__NAME, FUN_BLOCK)
@@ -165,7 +168,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def checkFunctionReturn(FunctionDefinition functionDefinition) {
-		if (JavaScriptVariant.getVariant(functionDefinition).isECMAScript()) {
+		if (!jsVariantHelper.requireCheckFunctionReturn(functionDefinition)) {
 			return; // cf. 13.1
 		}
 		holdsDeclaredReturnTypeRefDoesNotReferToNull(functionDefinition);
@@ -392,7 +395,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		var errorMessage = "";
 
 		// Disable function name validation against keywords if not N4JS file.
-		if (JavaScriptVariant.n4js.isActive(definition)) {
+		if (jsVariantHelper.requireCheckFunctionName(definition)) {
 
 			//IDEBUG-304 : allow keywords as member names
 			if(definition instanceof N4MethodDeclaration === false){
