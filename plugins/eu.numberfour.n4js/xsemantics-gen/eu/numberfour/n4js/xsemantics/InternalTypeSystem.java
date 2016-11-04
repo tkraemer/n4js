@@ -140,7 +140,7 @@ import eu.numberfour.n4js.typesystem.TypeSystemHelper;
 import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 import eu.numberfour.n4js.utils.PromisifyHelper;
-import eu.numberfour.n4js.validation.JavaScriptVariant;
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
 import it.xsemantics.runtime.ErrorInformation;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleApplicationTrace;
@@ -486,6 +486,9 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   @Inject
   private PromisifyHelper promisifyHelper;
   
+  @Inject
+  private JavaScriptVariantHelper jsVariantHelper;
+  
   private PolymorphicDispatcher<Result<TypeRef>> typeDispatcher;
   
   private PolymorphicDispatcher<Result<Boolean>> subtypeDispatcher;
@@ -583,6 +586,14 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   public void setPromisifyHelper(final PromisifyHelper promisifyHelper) {
     this.promisifyHelper = promisifyHelper;
+  }
+  
+  public JavaScriptVariantHelper getJsVariantHelper() {
+    return this.jsVariantHelper;
+  }
+  
+  public void setJsVariantHelper(final JavaScriptVariantHelper jsVariantHelper) {
+    this.jsVariantHelper = jsVariantHelper;
   }
   
   public Result<TypeRef> type(final TypableElement element) {
@@ -3350,9 +3361,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         }
       }
     }
-    final JavaScriptVariant jsVariant = JavaScriptVariant.getVariant(vdecl);
-    boolean _isECMAScript = jsVariant.isECMAScript();
-    if (_isECMAScript) {
+    boolean _enforceDynamicTypes = this.jsVariantHelper.enforceDynamicTypes(vdecl);
+    if (_enforceDynamicTypes) {
       TypeRef _makeDynamic = this.typeSystemHelper.makeDynamic(T);
       T = _makeDynamic;
     }
@@ -3422,9 +3432,11 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         TypeRef _typeRef_2 = _definedTypeElement_3.getTypeRef();
         T = _typeRef_2;
       } else {
-        JavaScriptVariant _variant = JavaScriptVariant.getVariant(fpar);
-        boolean _tripleEquals = (_variant == JavaScriptVariant.n4js);
-        if (_tripleEquals) {
+        boolean _enforceDynamicTypes = this.jsVariantHelper.enforceDynamicTypes(fpar);
+        if (_enforceDynamicTypes) {
+          ParameterizedTypeRef _anyTypeRefDynamic = RuleEnvironmentExtensions.anyTypeRefDynamic(G);
+          T = _anyTypeRefDynamic;
+        } else {
           /* T = env(G, fpar, TypeRef) or T = G.anyTypeRef */
           {
             RuleFailedException previousFailure = null;
@@ -3437,9 +3449,6 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
               T = _anyTypeRef;
             }
           }
-        } else {
-          ParameterizedTypeRef _anyTypeRefDynamic = RuleEnvironmentExtensions.anyTypeRefDynamic(G);
-          T = _anyTypeRefDynamic;
         }
       }
     }
@@ -3492,12 +3501,11 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   private ParameterizedTypeRef _applyRuleTypeCatchVariable_1(final RuleEnvironment G, final CatchVariable catchVariable) throws RuleFailedException {
     ParameterizedTypeRef _xifexpression = null;
-    JavaScriptVariant _variant = JavaScriptVariant.getVariant(catchVariable);
-    boolean _tripleEquals = (_variant == JavaScriptVariant.n4js);
-    if (_tripleEquals) {
-      _xifexpression = RuleEnvironmentExtensions.anyTypeRef(G);
-    } else {
+    boolean _enforceDynamicTypes = this.jsVariantHelper.enforceDynamicTypes(catchVariable);
+    if (_enforceDynamicTypes) {
       _xifexpression = RuleEnvironmentExtensions.anyTypeRefDynamic(G);
+    } else {
+      _xifexpression = RuleEnvironmentExtensions.anyTypeRef(G);
     }
     return _xifexpression;
   }
@@ -4978,8 +4986,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleExpectedTypeInPostfixExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final PostfixExpression e, final Expression expression) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    boolean _isActive = JavaScriptVariant.n4js.isActive(e);
-    if (_isActive) {
+    boolean _isTypeAware = this.jsVariantHelper.isTypeAware(e);
+    if (_isTypeAware) {
       ParameterizedTypeRef _numberTypeRef = RuleEnvironmentExtensions.numberTypeRef(G);
       T = _numberTypeRef;
     } else {
@@ -5011,8 +5019,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   protected Result<TypeRef> applyRuleExpectedTypeInUnaryExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final UnaryExpression e, final Expression expression) throws RuleFailedException {
     TypeRef T = null; // output parameter
     StaticBaseTypeRef _xifexpression = null;
-    boolean _isActive = JavaScriptVariant.n4js.isActive(e);
-    if (_isActive) {
+    boolean _isTypeAware = this.jsVariantHelper.isTypeAware(e);
+    if (_isTypeAware) {
       StaticBaseTypeRef _switchResult = null;
       UnaryOperator _op = e.getOp();
       if (_op != null) {
@@ -5112,8 +5120,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleExpectedTypeInMultiplicativeExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final MultiplicativeExpression e, final Expression expression) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    boolean _isActive = JavaScriptVariant.n4js.isActive(e);
-    if (_isActive) {
+    boolean _isTypeAware = this.jsVariantHelper.isTypeAware(e);
+    if (_isTypeAware) {
       ParameterizedTypeRef _numberTypeRef = RuleEnvironmentExtensions.numberTypeRef(G);
       T = _numberTypeRef;
     } else {
@@ -5144,7 +5152,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleExpectedTypeInAdditiveExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final AdditiveExpression e, final Expression expression) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    if (((!Objects.equal(e.getOp(), AdditiveOperator.ADD)) && JavaScriptVariant.n4js.isActive(e))) {
+    if (((!Objects.equal(e.getOp(), AdditiveOperator.ADD)) && this.jsVariantHelper.isTypeAware(e))) {
       ParameterizedTypeRef _numberTypeRef = RuleEnvironmentExtensions.numberTypeRef(G);
       T = _numberTypeRef;
     } else {
@@ -5175,8 +5183,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleExpectedTypeInShiftExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ShiftExpression e, final Expression expression) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    boolean _isActive = JavaScriptVariant.n4js.isActive(e);
-    if (_isActive) {
+    boolean _isTypeAware = this.jsVariantHelper.isTypeAware(e);
+    if (_isTypeAware) {
       ParameterizedTypeRef _numberTypeRef = RuleEnvironmentExtensions.numberTypeRef(G);
       T = _numberTypeRef;
     } else {
@@ -5233,8 +5241,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
             ParameterizedTypeRef _objectTypeRef_1 = RuleEnvironmentExtensions.objectTypeRef(G);
             T = _objectTypeRef_1;
           } else {
-            boolean _isActive = JavaScriptVariant.n4js.isActive(e);
-            if (_isActive) {
+            boolean _isTypeAware = this.jsVariantHelper.isTypeAware(e);
+            if (_isTypeAware) {
               ParameterizedTypeRef _numberTypeRef = RuleEnvironmentExtensions.numberTypeRef(G);
               ParameterizedTypeRef _stringTypeRef = RuleEnvironmentExtensions.stringTypeRef(G);
               UnionTypeExpression _createNonSimplifiedUnionType_1 = TypeUtils.createNonSimplifiedUnionType(_numberTypeRef, _stringTypeRef);
@@ -5246,8 +5254,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
           }
           break;
         default:
-          boolean _isActive_1 = JavaScriptVariant.n4js.isActive(e);
-          if (_isActive_1) {
+          boolean _isTypeAware_1 = this.jsVariantHelper.isTypeAware(e);
+          if (_isTypeAware_1) {
             ParameterizedTypeRef _numberTypeRef_1 = RuleEnvironmentExtensions.numberTypeRef(G);
             ParameterizedTypeRef _stringTypeRef_1 = RuleEnvironmentExtensions.stringTypeRef(G);
             ParameterizedTypeRef _booleanTypeRef = RuleEnvironmentExtensions.booleanTypeRef(G);
@@ -5291,8 +5299,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
           break;
       }
     } else {
-      boolean _isActive_1 = JavaScriptVariant.n4js.isActive(e);
-      if (_isActive_1) {
+      boolean _isTypeAware_1 = this.jsVariantHelper.isTypeAware(e);
+      if (_isTypeAware_1) {
         ParameterizedTypeRef _numberTypeRef_1 = RuleEnvironmentExtensions.numberTypeRef(G);
         ParameterizedTypeRef _stringTypeRef_1 = RuleEnvironmentExtensions.stringTypeRef(G);
         ParameterizedTypeRef _booleanTypeRef = RuleEnvironmentExtensions.booleanTypeRef(G);
@@ -5387,8 +5395,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleExpectedTypeInBinaryBitwiseExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final BinaryBitwiseExpression e, final Expression expression) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    boolean _isActive = JavaScriptVariant.n4js.isActive(e);
-    if (_isActive) {
+    boolean _isTypeAware = this.jsVariantHelper.isTypeAware(e);
+    if (_isTypeAware) {
       ParameterizedTypeRef _numberTypeRef = RuleEnvironmentExtensions.numberTypeRef(G);
       T = _numberTypeRef;
     } else {
@@ -5448,15 +5456,15 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleExpectedTypeOfOperandInAssignmentExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final AssignmentExpression expr, final Expression operand) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    /* { ! n4js.isActive(expr) if (operand===expr.lhs) { T = G.bottomTypeRef } else { T = G.topTypeRef } } or { N4JSASTUtils.isDestructuringAssignment(expr) if (operand===expr.lhs) { T = G.bottomTypeRef } else { T = G.topTypeRef } } or { expr.op===AssignmentOperator.ASSIGN; if (operand===expr.lhs) { T = G.bottomTypeRef } else { G |- expr.lhs : T } } or { expr.op===AssignmentOperator.ADD_ASSIGN if (operand===expr.lhs) { T = TypeUtils.createNonSimplifiedIntersectionType(G.numberTypeRef, G.stringTypeRef); } else { G |- expr.lhs : var ParameterizedTypeRef lhsTypeRef if (lhsTypeRef.declaredType === G.stringType) { T = G.anyTypeRef } else if(G.isNumeric(lhsTypeRef.declaredType)) { T = G.numberTypeRef } else { T = G.anyTypeRef } } } or { T = G.numberTypeRef } */
+    /* { ! jsVariantHelper.isTypeAware(expr) if (operand===expr.lhs) { T = G.bottomTypeRef } else { T = G.topTypeRef } } or { N4JSASTUtils.isDestructuringAssignment(expr) if (operand===expr.lhs) { T = G.bottomTypeRef } else { T = G.topTypeRef } } or { expr.op===AssignmentOperator.ASSIGN; if (operand===expr.lhs) { T = G.bottomTypeRef } else { G |- expr.lhs : T } } or { expr.op===AssignmentOperator.ADD_ASSIGN if (operand===expr.lhs) { T = TypeUtils.createNonSimplifiedIntersectionType(G.numberTypeRef, G.stringTypeRef); } else { G |- expr.lhs : var ParameterizedTypeRef lhsTypeRef if (lhsTypeRef.declaredType === G.stringType) { T = G.anyTypeRef } else if(G.isNumeric(lhsTypeRef.declaredType)) { T = G.numberTypeRef } else { T = G.anyTypeRef } } } or { T = G.numberTypeRef } */
     {
       RuleFailedException previousFailure = null;
       try {
-        boolean _isActive = JavaScriptVariant.n4js.isActive(expr);
-        boolean _not = (!_isActive);
-        /* ! n4js.isActive(expr) */
+        boolean _isTypeAware = this.jsVariantHelper.isTypeAware(expr);
+        boolean _not = (!_isTypeAware);
+        /* ! jsVariantHelper.isTypeAware(expr) */
         if (!_not) {
-          sneakyThrowRuleFailedException("! n4js.isActive(expr)");
+          sneakyThrowRuleFailedException("! jsVariantHelper.isTypeAware(expr)");
         }
         Expression _lhs = expr.getLhs();
         boolean _tripleEquals = (operand == _lhs);
@@ -7174,8 +7182,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
           }
         }
         if (!_matched_1) {
-          boolean _isActive = JavaScriptVariant.unrestricted.isActive(location);
-          if (_isActive) {
+          boolean _hasGlobalObject = this.jsVariantHelper.hasGlobalObject(location);
+          if (_hasGlobalObject) {
             ParameterizedTypeRef _globalObjectTypeRef = RuleEnvironmentExtensions.globalObjectTypeRef(G);
             T = _globalObjectTypeRef;
           } else {
