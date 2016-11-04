@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -40,7 +40,7 @@ import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import java.util.List
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.util.Tuples
@@ -55,7 +55,7 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 
 /**
  * Validation of rules that apply to individual members of a classifier.<p>
- *
+ * 
  * Validation of rules about members:
  * <ul>
  * <li>if the rules require to take into account the other owned or inherited members of the
@@ -68,9 +68,12 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject ContainerTypesHelper containerTypesHelper;
 
+	@Inject
+	private JavaScriptVariantHelper jsVariantHelper;
+
 	/**
 	 * NEEDED
-	 *
+	 * 
 	 * when removed check methods will be called twice once by N4JSValidator, and once by
 	 * AbstractDeclarativeN4JSValidator
 	 */
@@ -169,7 +172,7 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 	def void checkN4StructuralWithOnTypeVariables(ParameterizedTypeRefStructural ptrs) {
 		if (!(ptrs.declaredType instanceof TypeVariable))
 			return;
-		
+
 		for (sm : ptrs.astStructuralMembers) {
 			val message = IssueCodes.getMessageForTYS_ADDITIONAL_STRUCTURAL_MEMBERS_ON_TYPE_VARS()
 			addIssue(message, sm, TYS_ADDITIONAL_STRUCTURAL_MEMBERS_ON_TYPE_VARS)
@@ -178,17 +181,17 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 
 	def boolean holdsAbstractAndBodyPropertiesOfMethod(TMember accessorOrMethod) {
 		return //
-		holdsAbstractOrHasBody(accessorOrMethod)//
+		holdsAbstractOrHasBody(accessorOrMethod) //
 		&& holdsAbstractMethodMustHaveNoBody(accessorOrMethod) //
 		&& holdsAbstractMethodMustNotBeStatic(accessorOrMethod) //
-		&& holdsAbstractMemberContainedInAbstractClassifier(accessorOrMethod)  //
+		&& holdsAbstractMemberContainedInAbstractClassifier(accessorOrMethod) //
 		&& holdsMinimalMemberAccessModifier(accessorOrMethod) //
 	}
 
 	def private internalCheckNameStartsWithDollar(TMember member) {
 
 		// don't validate this in external (i.e. n4jd) files
-		if (JavaScriptVariant.getVariant(member) != JavaScriptVariant.n4js) {
+		if (!jsVariantHelper.requireCheckNameStartsWithDollar(member)) {
 			return
 		}
 
@@ -236,9 +239,7 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	private def holdsConstructorModifiers(TMethod constructor) {
 		if ((constructor.abstract && !(constructor.containingType instanceof TInterface)) // ctor in interface may be abstract (actually it *must* be abstract)
-			|| constructor.static
-			|| constructor.final
-			|| constructor.hasIllegalOverride ) {
+		|| constructor.static || constructor.final || constructor.hasIllegalOverride) {
 			val message = getMessageForCLF_CTOR_ILLEGAL_MODIFIER
 			addIssue(message, constructor.astElement, PROPERTY_NAME_OWNER__DECLARED_NAME, CLF_CTOR_ILLEGAL_MODIFIER)
 			return false;
@@ -249,7 +250,7 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 	/** @return true if not a static polyfill but has a {@code @Override} annotation. */
 	private def boolean getHasIllegalOverride(TMethod constructor) {
 		(! constructor.containingType.isStaticPolyfill) &&
-		AnnotationDefinition.OVERRIDE.hasAnnotation(constructor.astElement as N4MethodDeclaration)
+			AnnotationDefinition.OVERRIDE.hasAnnotation(constructor.astElement as N4MethodDeclaration)
 	}
 
 	/**
@@ -279,8 +280,9 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 
 	private def boolean holdsConstructorNoReturnType(TMethod constructor) {
 		val constructorDecl = constructor.astElement as N4MethodDeclaration;
-		if (constructorDecl.returnTypeRef!==null) {
-			addIssue(getMessageForCLF_CTOR_RETURN_TYPE, constructorDecl, FUNCTION_DEFINITION__RETURN_TYPE_REF, CLF_CTOR_RETURN_TYPE);
+		if (constructorDecl.returnTypeRef !== null) {
+			addIssue(getMessageForCLF_CTOR_RETURN_TYPE, constructorDecl, FUNCTION_DEFINITION__RETURN_TYPE_REF,
+				CLF_CTOR_RETURN_TYPE);
 			return false;
 		}
 		return true;
@@ -317,19 +319,19 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	def private boolean holdsCallableConstructorConstraints(N4MethodDeclaration method) {
-		if(method.isCallableConstructor) {
+		if (method.isCallableConstructor) {
 			// constraint: only in classes
-			if(!(method.eContainer instanceof N4ClassDefinition)) {
+			if (!(method.eContainer instanceof N4ClassDefinition)) {
 				addIssue(getMessageForCLF_CTOR_CALLABLE_ONLY_IN_CLASS, method, CLF_CTOR_CALLABLE_ONLY_IN_CLASS);
 				return false;
 			}
 			// constraint: only in .n4jsd files
-			if(!JavaScriptVariant.external.isActive(method)) {
+			if (!JavaScriptVariant.external.isActive(method)) {
 				addIssue(getMessageForCLF_CTOR_CALLABLE_ONLY_IN_N4JSD, method, CLF_CTOR_CALLABLE_ONLY_IN_N4JSD);
 				return false;
 			}
 			// constraint: not more than one callable constructor per class
-			if((method.eContainer as N4ClassifierDefinition).ownedMembersRaw.filter[isCallableConstructor].size>=2) {
+			if ((method.eContainer as N4ClassifierDefinition).ownedMembersRaw.filter[isCallableConstructor].size >= 2) {
 				addIssue(getMessageForCLF_CTOR_CALLABLE_DUPLICATE, method, CLF_CTOR_CALLABLE_DUPLICATE);
 			}
 		}
@@ -337,13 +339,14 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	def private boolean holdsAbstractOrHasBody(TMember member) {
-		val requireCheckForMissingBody = JavaScriptVariant.getVariant(member) != JavaScriptVariant.external;
+		val requireCheckForMissingBody = jsVariantHelper.requireCheckForMissingBody(member);
 		val memberIsAbstract = switch (member) {
 			TMethod: member.isAbstract()
 			FieldAccessor: member.isAbstract()
 			default: false
 		};
-		if (requireCheckForMissingBody && !memberIsAbstract && (member.astElement as N4MemberDeclaration).body === null) {
+		if (requireCheckForMissingBody && !memberIsAbstract &&
+			(member.astElement as N4MemberDeclaration).body === null) {
 			if (member.isConstructor) {
 				addIssue(messageForCLF_MISSING_CTOR_BODY, member.astElement, PROPERTY_NAME_OWNER__DECLARED_NAME,
 					IssueCodes.CLF_MISSING_CTOR_BODY)
@@ -382,7 +385,8 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 			val classifier = EcoreUtil2.getContainerOfType(member, TClassifier)
 			if (classifier !== null && !classifier.abstract) {
 				val message = IssueCodes.getMessageForCLF_ABSTRACT_MISSING(member.keyword, member.name, classifier.name)
-				addIssue(message, member.astElement, PROPERTY_NAME_OWNER__DECLARED_NAME, IssueCodes.CLF_ABSTRACT_MISSING)
+				addIssue(message, member.astElement, PROPERTY_NAME_OWNER__DECLARED_NAME,
+					IssueCodes.CLF_ABSTRACT_MISSING)
 				return false;
 			}
 		}
@@ -392,7 +396,8 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 	/**
 	 * Internally, internal project and internal private do not exist. (IDEBUG-658)
 	 */
-	def private void internalCheckPrivateOrProjectWithInternalAnnotation(N4MemberDeclaration n4Member, TMember tmember) {
+	def private void internalCheckPrivateOrProjectWithInternalAnnotation(N4MemberDeclaration n4Member,
+		TMember tmember) {
 		if (AnnotationDefinition.INTERNAL.hasAnnotation(n4Member)) {
 			val memberAccessModifier = tmember.memberAccessModifier
 			val hasPrivateModifier = (memberAccessModifier === MemberAccessModifier.PRIVATE)
@@ -423,24 +428,24 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 
 	/** IDEBUG-779  Type Annotations without type but just an optional modifier are not allowed.
 	 */
-    private def boolean holdsDeclaredTypeRefDoesNotReferToNull(N4FieldDeclaration n4Field) {
-    	val declTypeRef = n4Field.declaredTypeRef
-    	if( declTypeRef !== null ) {
-    		if( declTypeRef instanceof ParameterizedTypeRef ){
-	    		if( declTypeRef.declaredType === null )
-	    		{
-	    			val message = IssueCodes.getMessageForCLF_FIELD_MODIFIER_WITHOUT_TYPE(n4Field.name);
-	    			addIssue(message, n4Field, N4JSPackage.Literals.TYPED_ELEMENT__DECLARED_TYPE_REF,
-	    				IssueCodes.CLF_FIELD_MODIFIER_WITHOUT_TYPE
-	    			);
-	    			return false;
-	    		}
-    		}
-    	}
-    	return true;
-    }
-
-
+	private def boolean holdsDeclaredTypeRefDoesNotReferToNull(N4FieldDeclaration n4Field) {
+		val declTypeRef = n4Field.declaredTypeRef
+		if (declTypeRef !== null) {
+			if (declTypeRef instanceof ParameterizedTypeRef) {
+				if (declTypeRef.declaredType === null) {
+					val message = IssueCodes.getMessageForCLF_FIELD_MODIFIER_WITHOUT_TYPE(n4Field.name);
+					addIssue(
+						message,
+						n4Field,
+						N4JSPackage.Literals.TYPED_ELEMENT__DECLARED_TYPE_REF,
+						IssueCodes.CLF_FIELD_MODIFIER_WITHOUT_TYPE
+					);
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 
 	def private internalCheckGetterType(N4GetterDeclaration n4GetterDeclaration) {
 		val getterType = n4GetterDeclaration.declaredTypeRef?.declaredType;
@@ -449,7 +454,6 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 			addIssue(message, n4GetterDeclaration, PROPERTY_NAME_OWNER__DECLARED_NAME, IssueCodes.CLF_VOID_ACCESSOR);
 		}
 	}
-
 
 	@Check
 	def checkDuplicateFieldsIn(N4ClassDeclaration n4ClassDeclaration) {
@@ -500,7 +504,9 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 		boolean isInSameClass) {
 		val members = LazyOverrideAwareMemberCollector.collectAllMembers(tclass)
 		val membersByNameAndStatic = members.groupBy[Tuples.pair(name, static)];
-		val structuralMembersByNameAndStatic = thisTypeRefStructural.structuralMembers.groupBy[Tuples.pair(name, static)];
+		val structuralMembersByNameAndStatic = thisTypeRefStructural.structuralMembers.groupBy [
+			Tuples.pair(name, static)
+		];
 		structuralMembersByNameAndStatic.keySet.forEach [
 			if (membersByNameAndStatic.containsKey(it)) {
 				val structuralFieldDuplicate = structuralMembersByNameAndStatic.get(it).head
@@ -539,13 +545,11 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def checkFixmeUsedWithTestAnnotation(N4MethodDeclaration methodDecl) {
-		ANNOTATIONS_REQUIRE_TEST.forEach[ annotation |
+		ANNOTATIONS_REQUIRE_TEST.forEach [ annotation |
 			if (annotation.hasAnnotation(methodDecl) && !TEST_METHOD.hasAnnotation(methodDecl)) {
-				addIssue(
-					getMessageForANN_REQUIRES_TEST('''@«annotation.name»'''),
-					methodDecl.annotations.findFirst[name == annotation.name],
-					N4JSPackage.eINSTANCE.annotation_Name,
-					ANN_REQUIRES_TEST);
+				addIssue(getMessageForANN_REQUIRES_TEST('''@«annotation.name»'''), methodDecl.annotations.findFirst [
+					name == annotation.name
+				], N4JSPackage.eINSTANCE.annotation_Name, ANN_REQUIRES_TEST);
 			}
 		];
 	}

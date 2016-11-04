@@ -120,6 +120,7 @@ import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
 import eu.numberfour.n4js.validation.IssueUserDataKeys;
 import eu.numberfour.n4js.validation.JavaScriptVariant;
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
 import eu.numberfour.n4js.validation.validators.utils.MemberCube;
 import eu.numberfour.n4js.validation.validators.utils.MemberMatrix;
 import eu.numberfour.n4js.validation.validators.utils.MemberMatrix.SourceAwareIterator;
@@ -153,9 +154,10 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 	private N4JSTypeSystem ts;
 	@Inject
 	private TypeSystemHelper tsh;
-
 	@Inject
 	private MemberVisibilityChecker memberVisibilityChecker;
+	@Inject
+	private JavaScriptVariantHelper jsVariantHelper;
 
 	private final static String TYPE_VAR_CONTEXT = "TYPE_VAR_CONTEXT";
 
@@ -860,7 +862,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 	private void messageMissingImplementations(List<TMember> abstractMembers) {
 		TClassifier classifier = getCurrentClassifier();
-		if (JavaScriptVariant.getVariant(classifier) != JavaScriptVariant.external) {
+		if (!jsVariantHelper.allowMissingImplementation(classifier)) {
 			String message = getMessageForCLF_MISSING_IMPLEMENTATION(classifier.getName(),
 					validatorMessageHelper.descriptions(abstractMembers));
 			addIssue(message, CLF_MISSING_IMPLEMENTATION);
@@ -917,8 +919,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 					continue;
 				}
 				// skip non-n4js variant members
-				if (JavaScriptVariant.getVariant(overriding).equals(JavaScriptVariant.strict) ||
-						JavaScriptVariant.getVariant(overriding).equals(JavaScriptVariant.unrestricted)) {
+				if (!jsVariantHelper.checkOverrideAnnotation(overriding)) {
 					continue;
 				}
 				/*

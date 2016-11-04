@@ -45,7 +45,7 @@ import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.EcoreUtilN4
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import eu.numberfour.n4js.xtext.scoping.FilterWithErrorMarkerScope
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError
 import org.eclipse.emf.ecore.EObject
@@ -61,6 +61,8 @@ class MemberScopingHelper {
 	@Inject TypeSystemHelper tsh;
 	@Inject MemberScope.MemberScopeFactory memberScopeFactory
 	@Inject private MemberVisibilityChecker memberVisibilityChecker
+	@Inject	private JavaScriptVariantHelper jsVariantHelper; 
+
 
 	/**
 	 * Create a new member scope that filters using the given criteria (visibility, static access).
@@ -244,7 +246,7 @@ class MemberScopingHelper {
 
 	private def dispatch IScope members(UnionTypeExpression uniontypeexp, MemberScopeRequest request) {
 
-		if (JavaScriptVariant.getVariant(request.context).isECMAScript()) { // cf. sec. 13.1
+		if (jsVariantHelper.activateDynamicPseudoScope(request.context)) { // cf. sec. 13.1
 			return new DynamicPseudoScope();
 		}
 
@@ -293,7 +295,7 @@ class MemberScopingHelper {
 		if (type.eIsProxy) {
 			return new DynamicPseudoScope()
 		}
-		if (JavaScriptVariant.getVariant(request.context).isECMAScript()) { // cf. sec. 13.1
+		if (jsVariantHelper.activateDynamicPseudoScope(request.context)) { // cf. sec. 13.1
 			return new DynamicPseudoScope();
 		}
 
@@ -301,7 +303,7 @@ class MemberScopingHelper {
 	}
 
 	private def dispatch IScope membersOfType(UndefinedType type, MemberScopeRequest request) {
-		if (JavaScriptVariant.getVariant(request.context).isECMAScript()) { // cf. sec. 13.1
+		if (jsVariantHelper.activateDynamicPseudoScope(request.context)) { // cf. sec. 13.1
 			return new DynamicPseudoScope();
 		}
 
@@ -338,7 +340,7 @@ class MemberScopingHelper {
 				implicitSuperType = builtInTypeScope.n4ObjectType;
 			}
 		}
-		val implicitSuperTypeMemberScope = if (JavaScriptVariant.getVariant(request.context).isECMAScript()) { // cf. sec. 13.1
+		val implicitSuperTypeMemberScope = if (jsVariantHelper.activateDynamicPseudoScope(request.context)) { // cf. sec. 13.1
 				memberScopeFactory.create(new DynamicPseudoScope(), implicitSuperType, request.context,
 					request.staticAccess);
 			} else {
