@@ -135,6 +135,7 @@ import eu.numberfour.n4js.typesbuilder.N4JSFunctionDefinitionTypesBuilder;
 import eu.numberfour.n4js.typesystem.PredefinedTypes;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
 import eu.numberfour.n4js.typesystem.StructuralTypingResult;
+import eu.numberfour.n4js.typesystem.TypeRefWrapper;
 import eu.numberfour.n4js.typesystem.TypeSystemErrorExtensions;
 import eu.numberfour.n4js.typesystem.TypeSystemHelper;
 import eu.numberfour.n4js.utils.ContainerTypesHelper;
@@ -486,6 +487,9 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   @Inject
   private PromisifyHelper promisifyHelper;
   
+  @Inject
+  private TypeRefWrapper typeRefWrapper;
+  
   private PolymorphicDispatcher<Result<TypeRef>> typeDispatcher;
   
   private PolymorphicDispatcher<Result<Boolean>> subtypeDispatcher;
@@ -583,6 +587,14 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   public void setPromisifyHelper(final PromisifyHelper promisifyHelper) {
     this.promisifyHelper = promisifyHelper;
+  }
+  
+  public TypeRefWrapper getTypeRefWrapper() {
+    return this.typeRefWrapper;
+  }
+  
+  public void setTypeRefWrapper(final TypeRefWrapper typeRefWrapper) {
+    this.typeRefWrapper = typeRefWrapper;
   }
   
   public Result<TypeRef> type(final TypableElement element) {
@@ -964,7 +976,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   private TypeRef _applyRuleTypeType_1(final RuleEnvironment G, final Type type) throws RuleFailedException {
-    TypeRef _wrapTypeInTypeRef = TypeUtils.wrapTypeInTypeRef(type);
+    TypeRef _wrapTypeInTypeRef = this.typeRefWrapper.wrapTypeInTypeRef(G, type);
     return _wrapTypeInTypeRef;
   }
   
@@ -1142,7 +1154,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   private TypeRef _applyRuleTypeTypeDefiningElement_1(final RuleEnvironment G, final TypeDefiningElement elem) throws RuleFailedException {
     Type _definedType = elem.getDefinedType();
-    TypeRef _wrapTypeInTypeRef = TypeUtils.wrapTypeInTypeRef(_definedType);
+    TypeRef _wrapTypeInTypeRef = this.typeRefWrapper.wrapTypeInTypeRef(G, _definedType);
     return _wrapTypeInTypeRef;
   }
   

@@ -96,8 +96,10 @@ import eu.numberfour.n4js.ts.validation.TypesKeywordProvider;
 import eu.numberfour.n4js.typesbuilder.N4JSTypesBuilder;
 import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSStringRepresenation;
+import eu.numberfour.n4js.typesystem.N4JSTypeRefWrapper;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSValidatorErrorGenerator;
+import eu.numberfour.n4js.typesystem.TypeRefWrapper;
 import eu.numberfour.n4js.utils.di.scopes.ScopeManager;
 import eu.numberfour.n4js.utils.di.scopes.TransformationScoped;
 import eu.numberfour.n4js.validation.N4JSDiagnostician;
@@ -516,5 +518,13 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 				.bind(IPreferenceValuesProvider.class)
 				.annotatedWith(FormatterPreferences.class)
 				.to(N4JSSimpleFormattingPreferenceProvider.class);
+	}
+
+	/**
+	 * Bind type reference wrapper (used in N4JS.xsemantics). This customization point is used in N4IDL to support
+	 * versions in the type system.
+	 */
+	public Class<? extends TypeRefWrapper> bindTypeRefWrapper() {
+		return N4JSTypeRefWrapper.class;
 	}
 }
