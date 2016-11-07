@@ -326,7 +326,7 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 				return false;
 			}
 			// constraint: only in .n4jsd files
-			if (!JavaScriptVariant.external.isActive(method)) {
+			if (!jsVariantHelper.isExternalMode(method)) {
 				addIssue(getMessageForCLF_CTOR_CALLABLE_ONLY_IN_N4JSD, method, CLF_CTOR_CALLABLE_ONLY_IN_N4JSD);
 				return false;
 			}
