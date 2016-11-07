@@ -119,7 +119,6 @@ import eu.numberfour.n4js.utils.ContainerTypesHelper.MemberCollector;
 import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
 import eu.numberfour.n4js.validation.IssueUserDataKeys;
-import eu.numberfour.n4js.validation.JavaScriptVariant;
 import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
 import eu.numberfour.n4js.validation.validators.utils.MemberCube;
 import eu.numberfour.n4js.validation.validators.utils.MemberMatrix;
@@ -1123,8 +1122,7 @@ public class N4JSMemberRedefinitionValidator extends AbstractN4JSDeclarativeVali
 
 		String counterpartDescription = accessor instanceof TSetter ? "getter" : "setter";
 
-		if (JavaScriptVariant.getVariant(accessor) == JavaScriptVariant.n4js
-				|| JavaScriptVariant.getVariant(accessor) == JavaScriptVariant.external) {
+		if (jsVariantHelper.isN4JSMode(accessor) || jsVariantHelper.isExternalMode(accessor)) {
 			messageMissingOwnedAccessorN4JS(accessorDescription, verb, counterpartDescription, accessor);
 		} else {
 			messageMissingOwnedAccessorJS(accessorDescription, verb, counterpartDescription, accessor);

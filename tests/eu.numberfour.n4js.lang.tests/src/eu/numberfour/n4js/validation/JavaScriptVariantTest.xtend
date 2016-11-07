@@ -36,10 +36,10 @@ class JavaScriptVariantTest {
 
 	@Test
 	def void testN4JSRecognition() {
-		assertVariant(JavaScriptVariantHelper.JavaScriptVariant.n4js, "some/test.n4js", '''"here"''');
-		assertVariant(JavaScriptVariantHelper.JavaScriptVariant.n4js, "some/test.N4JS", '''"here"''');
-		assertVariant(JavaScriptVariantHelper.JavaScriptVariant.n4js, "some/test.n4js.xt", '''"here"''');
-		assertVariant(JavaScriptVariantHelper.JavaScriptVariant.n4js, "some/test.n4js", '''
+		assertVariant(JavaScriptVariant.n4js, "some/test.n4js", '''"here"''');
+		assertVariant(JavaScriptVariant.n4js, "some/test.N4JS", '''"here"''');
+		assertVariant(JavaScriptVariant.n4js, "some/test.n4js.xt", '''"here"''');
+		assertVariant(JavaScriptVariant.n4js, "some/test.n4js", '''
 			function foo() {
 				"use strict"
 				"here"
@@ -48,21 +48,21 @@ class JavaScriptVariantTest {
 
 	@Test
 	def void testStrictRecognition() {
-		assertVariant(JavaScriptVariantHelper.JavaScriptVariant.strict, "some/test.js", '''
+		assertVariant(JavaScriptVariant.strict, "some/test.js", '''
 			"use strict"
 			"here"''');
-		assertVariant(JavaScriptVariantHelper.JavaScriptVariant.strict, "some/test.JS", '''
+		assertVariant(JavaScriptVariant.strict, "some/test.JS", '''
 			"use strict"
 			"here"''');
-		assertVariant(JavaScriptVariantHelper.JavaScriptVariant.strict, "some/test.js.xt", '''
+		assertVariant(JavaScriptVariant.strict, "some/test.js.xt", '''
 			"use strict"
 			"here"''');
-		assertVariant(JavaScriptVariantHelper.JavaScriptVariant.strict, "some/test.js", '''
+		assertVariant(JavaScriptVariant.strict, "some/test.js", '''
 			function foo() {
 				"use strict"
 				"here"
 			}''');
-		assertVariant(JavaScriptVariantHelper.JavaScriptVariant.strict, "some/test.js", '''
+		assertVariant(JavaScriptVariant.strict, "some/test.js", '''
 			function foo() {
 				"nothere"
 			}
@@ -74,17 +74,17 @@ class JavaScriptVariantTest {
 
 	@Test
 	def void testUnrestrictedRecognition() {
-		assertVariant(JavaScriptVariantHelper.JavaScriptVariant.unrestricted, "some/test.js", '''
+		assertVariant(JavaScriptVariant.unrestricted, "some/test.js", '''
 			"here"''');
-		assertVariant(JavaScriptVariantHelper.JavaScriptVariant.unrestricted, "some/test.JS", '''
+		assertVariant(JavaScriptVariant.unrestricted, "some/test.JS", '''
 			"here"''');
-		assertVariant(JavaScriptVariantHelper.JavaScriptVariant.unrestricted, "some/test.js.xt", '''
+		assertVariant(JavaScriptVariant.unrestricted, "some/test.js.xt", '''
 			"here"''');
-		assertVariant(JavaScriptVariantHelper.JavaScriptVariant.unrestricted, "some/test.js", '''
+		assertVariant(JavaScriptVariant.unrestricted, "some/test.js", '''
 			function foo() {
 				"here"
 			}''');
-		assertVariant(JavaScriptVariantHelper.JavaScriptVariant.unrestricted, "some/test.js", '''
+		assertVariant(JavaScriptVariant.unrestricted, "some/test.js", '''
 			function foo() {
 				"use strict"
 				"nothere"
@@ -97,28 +97,28 @@ class JavaScriptVariantTest {
 	/**
 	 * Asserts that a given position, marked by a string literal "here", is in expected variant.
 	 */
-	def assertVariant(JavaScriptVariantHelper.JavaScriptVariant expectedVariant, String filePath, CharSequence src) {
+	def assertVariant(JavaScriptVariant expectedVariant, String filePath, CharSequence src) {
 		val rs = resourceSetProvider.get
 		val script= src.parse(URI.createFileURI(filePath), rs);
 		val location = script.eAllContents.filter(StringLiteral).findFirst["here"==it.value];
 		assertNotNull("Bogus test, did not find string literal \"here\"")
-		val variant = JavaScriptVariantHelper.JavaScriptVariant.getVariant(location)
+		val variant = JavaScriptVariant.getVariant(location)
 		assertEquals(expectedVariant, variant);
 		switch (expectedVariant) {
-			case JavaScriptVariantHelper.JavaScriptVariant.n4js: {
-				assertTrue(JavaScriptVariantHelper.JavaScriptVariant.n4js.isActive(location));
-				assertFalse(JavaScriptVariantHelper.JavaScriptVariant.strict.isActive(location));
-				assertFalse(JavaScriptVariantHelper.JavaScriptVariant.unrestricted.isActive(location));
+			case JavaScriptVariant.n4js: {
+				assertTrue(JavaScriptVariant.n4js.isActive(location));
+				assertFalse(JavaScriptVariant.strict.isActive(location));
+				assertFalse(JavaScriptVariant.unrestricted.isActive(location));
 			}
-			case JavaScriptVariantHelper.JavaScriptVariant.strict: {
-				assertFalse(JavaScriptVariantHelper.JavaScriptVariant.n4js.isActive(location));
-				assertTrue(JavaScriptVariantHelper.JavaScriptVariant.strict.isActive(location));
-				assertFalse(JavaScriptVariantHelper.JavaScriptVariant.unrestricted.isActive(location));
+			case JavaScriptVariant.strict: {
+				assertFalse(JavaScriptVariant.n4js.isActive(location));
+				assertTrue(JavaScriptVariant.strict.isActive(location));
+				assertFalse(JavaScriptVariant.unrestricted.isActive(location));
 			}
-			case JavaScriptVariantHelper.JavaScriptVariant.unrestricted: {
-				assertFalse(JavaScriptVariantHelper.JavaScriptVariant.n4js.isActive(location));
-				assertFalse(JavaScriptVariantHelper.JavaScriptVariant.strict.isActive(location));
-				assertTrue(JavaScriptVariantHelper.JavaScriptVariant.unrestricted.isActive(location));
+			case JavaScriptVariant.unrestricted: {
+				assertFalse(JavaScriptVariant.n4js.isActive(location));
+				assertFalse(JavaScriptVariant.strict.isActive(location));
+				assertTrue(JavaScriptVariant.unrestricted.isActive(location));
 			}
 			default: throw new IllegalArgumentException(expectedVariant.toString)
 		}

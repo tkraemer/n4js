@@ -12,20 +12,20 @@ package eu.numberfour.n4js.tests.scoping
 
 import com.google.inject.Inject
 import eu.numberfour.n4js.N4JSInjectorProvider
+import eu.numberfour.n4js.N4JSParseHelper
 import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
-import eu.numberfour.n4js.validation.JavaScriptVariant
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TField
+import eu.numberfour.n4js.validation.JavaScriptVariant
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
-import eu.numberfour.n4js.N4JSParseHelper
 
 /**
  */

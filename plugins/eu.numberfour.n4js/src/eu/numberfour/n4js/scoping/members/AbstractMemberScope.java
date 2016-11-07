@@ -25,7 +25,6 @@ import org.eclipse.xtext.scoping.impl.AbstractScope;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
-import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4JS.N4JSASTUtils;
 import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions;
@@ -56,8 +55,8 @@ public abstract class AbstractMemberScope extends AbstractScope {
 	 */
 	protected final boolean staticAccess;
 
-	@Inject
-	private JavaScriptVariantHelper jsVariantHelper;
+	// @Inject
+	protected final JavaScriptVariantHelper jsVariantHelper;
 
 	/**
 	 * Creates member scope and context information, subclasses must handle concrete members.
@@ -66,7 +65,7 @@ public abstract class AbstractMemberScope extends AbstractScope {
 	 *            context from where the scope is to be retrieved, neither the context nor its resource must be null
 	 */
 	public AbstractMemberScope(IScope parent, EObject context,
-			boolean staticAccess) {
+			boolean staticAccess, JavaScriptVariantHelper jsVariantHelper) {
 		super(parent, false);
 		if (context == null || context.eResource() == null) {
 			throw new NullPointerException("Cannot create member scope for context " + context
@@ -75,6 +74,7 @@ public abstract class AbstractMemberScope extends AbstractScope {
 		this.context = context;
 		this.contextResource = context.eResource();
 		this.staticAccess = staticAccess;
+		this.jsVariantHelper = jsVariantHelper;
 	}
 
 	/**

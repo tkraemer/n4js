@@ -257,7 +257,7 @@ class ASTStructureValidator {
 		if(model?.eResource !== null && !n4jsCore.isNoValidate(model.eResource.getURI())) {
 			val producer = new ASTStructureDiagnosticProducer(consumer);
 			validateASTStructure(model, producer, Sets.newHashSetWithExpectedSize(2),
-				new Constraints(JavaScriptVariant.n4js.isActive(model), JavaScriptVariant.external.isActive(model))
+				new Constraints(jsVariantHelper.isN4JSMode(model), jsVariantHelper.isExternalMode(model))
 			);
 		}
 	}

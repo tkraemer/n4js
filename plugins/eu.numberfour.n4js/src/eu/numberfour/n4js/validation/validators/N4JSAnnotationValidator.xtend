@@ -336,7 +336,7 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 		if (element === null) {
 			return
 		}
-		if (! JavaScriptVariant.external.isActive(element)) {
+		if (!jsVariantHelper.isExternalMode(element)) {
 			addIssue(getMessageForANN_DISALLOWED_IN_NONDEFINTION_FILE(annotation.name), annotation, ANNOTATION__NAME,
 				ANN_DISALLOWED_IN_NONDEFINTION_FILE);
 			return
@@ -357,7 +357,7 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 		if (element === null) {
 			return
 		}
-		if (! JavaScriptVariant.external.isActive(element)) {
+		if (!jsVariantHelper.isExternalMode(element)) {
 			addIssue(getMessageForANN_DISALLOWED_IN_NONDEFINTION_FILE(annotation.name), annotation, ANNOTATION__NAME,
 				ANN_DISALLOWED_IN_NONDEFINTION_FILE);
 			return
