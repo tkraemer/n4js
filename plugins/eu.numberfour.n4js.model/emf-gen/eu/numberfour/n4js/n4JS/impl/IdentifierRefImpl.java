@@ -18,6 +18,8 @@ import eu.numberfour.n4js.ts.types.IdentifiableElement;
 
 import java.lang.reflect.InvocationTargetException;
 
+import java.math.BigDecimal;
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.EList;
@@ -38,6 +40,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.IdentifierRefImpl#isStrictMode <em>Strict Mode</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.IdentifierRefImpl#getId <em>Id</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.IdentifierRefImpl#getIdAsText <em>Id As Text</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.impl.IdentifierRefImpl#getDeclaredVersion <em>Declared Version</em>}</li>
  * </ul>
  *
  * @generated
@@ -92,6 +95,26 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 	 * @ordered
 	 */
 	protected String idAsText = ID_AS_TEXT_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getDeclaredVersion() <em>Declared Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDeclaredVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final BigDecimal DECLARED_VERSION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getDeclaredVersion() <em>Declared Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDeclaredVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected BigDecimal declaredVersion = DECLARED_VERSION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -197,12 +220,48 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public BigDecimal getDeclaredVersion() {
+		return declaredVersion;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDeclaredVersion(BigDecimal newDeclaredVersion) {
+		BigDecimal oldDeclaredVersion = declaredVersion;
+		declaredVersion = newDeclaredVersion;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.IDENTIFIER_REF__DECLARED_VERSION, oldDeclaredVersion, declaredVersion));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isValidSimpleAssignmentTarget() {
 		boolean _isStrictMode = this.isStrictMode();
 		if (_isStrictMode) {
 			return (((this.getIdAsText() != null) && (!Objects.equal("arguments", this.getIdAsText()))) && (!Objects.equal("eval", this.getIdAsText())));
 		}
 		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getReferencedVersion() {
+		BigDecimal _declaredVersion = this.getDeclaredVersion();
+		boolean _tripleEquals = (_declaredVersion == null);
+		if (_tripleEquals) {
+			return 0;
+		}
+		BigDecimal _declaredVersion_1 = this.getDeclaredVersion();
+		return _declaredVersion_1.intValue();
 	}
 
 	/**
@@ -220,6 +279,8 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 				return basicGetId();
 			case N4JSPackage.IDENTIFIER_REF__ID_AS_TEXT:
 				return getIdAsText();
+			case N4JSPackage.IDENTIFIER_REF__DECLARED_VERSION:
+				return getDeclaredVersion();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -240,6 +301,9 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 				return;
 			case N4JSPackage.IDENTIFIER_REF__ID_AS_TEXT:
 				setIdAsText((String)newValue);
+				return;
+			case N4JSPackage.IDENTIFIER_REF__DECLARED_VERSION:
+				setDeclaredVersion((BigDecimal)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -262,6 +326,9 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 			case N4JSPackage.IDENTIFIER_REF__ID_AS_TEXT:
 				setIdAsText(ID_AS_TEXT_EDEFAULT);
 				return;
+			case N4JSPackage.IDENTIFIER_REF__DECLARED_VERSION:
+				setDeclaredVersion(DECLARED_VERSION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -280,6 +347,8 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 				return id != null;
 			case N4JSPackage.IDENTIFIER_REF__ID_AS_TEXT:
 				return ID_AS_TEXT_EDEFAULT == null ? idAsText != null : !ID_AS_TEXT_EDEFAULT.equals(idAsText);
+			case N4JSPackage.IDENTIFIER_REF__DECLARED_VERSION:
+				return DECLARED_VERSION_EDEFAULT == null ? declaredVersion != null : !DECLARED_VERSION_EDEFAULT.equals(declaredVersion);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -347,6 +416,8 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 		switch (operationID) {
 			case N4JSPackage.IDENTIFIER_REF___IS_VALID_SIMPLE_ASSIGNMENT_TARGET:
 				return isValidSimpleAssignmentTarget();
+			case N4JSPackage.IDENTIFIER_REF___GET_REFERENCED_VERSION:
+				return getReferencedVersion();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
@@ -365,6 +436,8 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 		result.append(strictMode);
 		result.append(", idAsText: ");
 		result.append(idAsText);
+		result.append(", declaredVersion: ");
+		result.append(declaredVersion);
 		result.append(')');
 		return result.toString();
 	}

@@ -25,6 +25,7 @@ import java.lang.Iterable;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.TClassifier#isDeclaredCovariantConstructor <em>Declared Covariant Constructor</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TClassifier#getDeclaredVersion <em>Declared Version</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.ts.types.TypesPackage#getTClassifier()
@@ -57,6 +58,34 @@ public interface TClassifier extends ContainerType<TMember>, SyntaxRelatedTEleme
 	 * @generated
 	 */
 	void setDeclaredCovariantConstructor(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * *
+	 * The declared version of the type. This is not used by N4JS at the moment but only
+	 * in derived languages such as N4IDL. It needs to be stored in the type model though as
+	 * it is required to be cached (i.e. stored in the Xtext index) for scoping etc.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Declared Version</em>' attribute.
+	 * @see #setDeclaredVersion(int)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTClassifier_DeclaredVersion()
+	 * @model unique="false"
+	 * @generated
+	 */
+	int getDeclaredVersion();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TClassifier#getDeclaredVersion <em>Declared Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Declared Version</em>' attribute.
+	 * @see #getDeclaredVersion()
+	 * @generated
+	 */
+	void setDeclaredVersion(int value);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -118,5 +147,18 @@ public interface TClassifier extends ContainerType<TMember>, SyntaxRelatedTEleme
 	 * @generated
 	 */
 	boolean isFinal();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Overrides default implementation of type, returns the actually declared version (which
+	 * is 0 in N4JS as it cannot be set there). Only used for derived languages such as N4IDL.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return this.getDeclaredVersion();'"
+	 * @generated
+	 */
+	int getVersion();
 
 } // TClassifier

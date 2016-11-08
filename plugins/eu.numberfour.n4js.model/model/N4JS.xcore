@@ -893,6 +893,7 @@ class ParenExpression extends PrimaryExpression {
 class IdentifierRef extends PrimaryExpression, StrictModeRelevant {
 	refers IdentifiableElement ^id
 	transient String idAsText
+	BigDecimal declaredVersion
 	/**
 	 * IdentifierReference : Identifier
 	 * 1. If this IdentifierReference is contained in strict mode code and StringValue of Identifier is "eval" or "arguments", return false.
@@ -905,6 +906,14 @@ class IdentifierRef extends PrimaryExpression, StrictModeRelevant {
 			return idAsText !== null && 'arguments' != idAsText && 'eval' != idAsText
 		}
 		return true
+	}
+	/**
+	 * 
+	 */
+	op int getReferencedVersion() {
+		if (declaredVersion === null)
+			return 0;
+		return declaredVersion.intValue;
 	}
 }
 

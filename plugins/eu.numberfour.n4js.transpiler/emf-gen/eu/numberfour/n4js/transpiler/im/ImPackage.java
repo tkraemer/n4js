@@ -591,6 +591,15 @@ public interface ImPackage extends EPackage {
 	int IDENTIFIER_REF_IM__ID_AS_TEXT = N4JSPackage.IDENTIFIER_REF__ID_AS_TEXT;
 
 	/**
+	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IDENTIFIER_REF_IM__DECLARED_VERSION = N4JSPackage.IDENTIFIER_REF__DECLARED_VERSION;
+
+	/**
 	 * The feature id for the '<em><b>Rewired Target</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -616,6 +625,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int IDENTIFIER_REF_IM___IS_VALID_SIMPLE_ASSIGNMENT_TARGET = N4JSPackage.IDENTIFIER_REF___IS_VALID_SIMPLE_ASSIGNMENT_TARGET;
+
+	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IDENTIFIER_REF_IM___GET_REFERENCED_VERSION = N4JSPackage.IDENTIFIER_REF___GET_REFERENCED_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Original Target Of Rewired Target</em>' operation.
@@ -908,6 +926,15 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_IM__DEFINED_TYPING_STRATEGY = TypeRefsPackage.PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY;
 
 	/**
+	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_IM__DECLARED_VERSION = TypeRefsPackage.PARAMETERIZED_TYPE_REF__DECLARED_VERSION;
+
+	/**
 	 * The feature id for the '<em><b>Rewired Target</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1025,15 +1052,6 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_IM___GET_STRUCTURAL_MEMBERS = TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_STRUCTURAL_MEMBERS;
 
 	/**
-	 * The operation id for the '<em>Get Referenced Version</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_IM___GET_REFERENCED_VERSION = TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_REFERENCED_VERSION;
-
-	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1122,6 +1140,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_IM___IS_DEF_SITE_STRUCTURAL_TYPING = TypeRefsPackage.PARAMETERIZED_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_IM___GET_REFERENCED_VERSION = TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_REFERENCED_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Original Target Of Rewired Target</em>' operation.
@@ -1249,6 +1276,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__DEFINED_TYPING_STRATEGY = PARAMETERIZED_TYPE_REF_IM__DEFINED_TYPING_STRATEGY;
+
+	/**
+	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__DECLARED_VERSION = PARAMETERIZED_TYPE_REF_IM__DECLARED_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Rewired Target</b></em>' reference.
@@ -1395,15 +1431,6 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___IS_BOTTOM_TYPE = PARAMETERIZED_TYPE_REF_IM___IS_BOTTOM_TYPE;
 
 	/**
-	 * The operation id for the '<em>Get Referenced Version</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___GET_REFERENCED_VERSION = PARAMETERIZED_TYPE_REF_IM___GET_REFERENCED_VERSION;
-
-	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1474,6 +1501,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___IS_DEF_SITE_STRUCTURAL_TYPING = PARAMETERIZED_TYPE_REF_IM___IS_DEF_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___GET_REFERENCED_VERSION = PARAMETERIZED_TYPE_REF_IM___GET_REFERENCED_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Original Target Of Rewired Target</em>' operation.

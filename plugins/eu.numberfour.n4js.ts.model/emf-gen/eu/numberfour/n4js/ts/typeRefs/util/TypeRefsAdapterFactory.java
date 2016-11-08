@@ -117,10 +117,6 @@ public class TypeRefsAdapterFactory extends AdapterFactoryImpl {
 				return createParameterizedTypeRefAdapter();
 			}
 			@Override
-			public Adapter caseParameterizedTypeRefWithVersion(ParameterizedTypeRefWithVersion object) {
-				return createParameterizedTypeRefWithVersionAdapter();
-			}
-			@Override
 			public Adapter caseStructuralTypeRef(StructuralTypeRef object) {
 				return createStructuralTypeRefAdapter();
 			}
@@ -339,20 +335,6 @@ public class TypeRefsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createParameterizedTypeRefAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefWithVersion <em>Parameterized Type Ref With Version</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefWithVersion
-	 * @generated
-	 */
-	public Adapter createParameterizedTypeRefWithVersionAdapter() {
 		return null;
 	}
 

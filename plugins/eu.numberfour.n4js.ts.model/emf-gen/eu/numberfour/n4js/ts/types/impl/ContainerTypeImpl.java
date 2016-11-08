@@ -13,7 +13,6 @@ import eu.numberfour.n4js.ts.types.ContainerType;
 import eu.numberfour.n4js.ts.types.NameAndAccess;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TMethod;
-import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
@@ -61,7 +60,6 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure0;
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.ContainerTypeImpl#getOwnedMembers <em>Owned Members</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.ContainerTypeImpl#getCallableCtor <em>Callable Ctor</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.ContainerTypeImpl#getTypeVars <em>Type Vars</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.impl.ContainerTypeImpl#getDeclaredVersion <em>Declared Version</em>}</li>
  * </ul>
  *
  * @generated
@@ -106,26 +104,6 @@ public abstract class ContainerTypeImpl<MT extends TMember> extends TypeImpl imp
 	 * @ordered
 	 */
 	protected EList<TypeVariable> typeVars;
-
-	/**
-	 * The default value of the '{@link #getDeclaredVersion() <em>Declared Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDeclaredVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int DECLARED_VERSION_EDEFAULT = 0;
-
-	/**
-	 * The cached value of the '{@link #getDeclaredVersion() <em>Declared Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDeclaredVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected int declaredVersion = DECLARED_VERSION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -239,27 +217,6 @@ public abstract class ContainerTypeImpl<MT extends TMember> extends TypeImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getDeclaredVersion() {
-		return declaredVersion;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setDeclaredVersion(int newDeclaredVersion) {
-		int oldDeclaredVersion = declaredVersion;
-		declaredVersion = newDeclaredVersion;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.CONTAINER_TYPE__DECLARED_VERSION, oldDeclaredVersion, declaredVersion));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public TMethod getOwnedCtor() {
 		EList<MT> _ownedMembers = this.getOwnedMembers();
 		Iterable<TMethod> _filter = Iterables.<TMethod>filter(_ownedMembers, TMethod.class);
@@ -358,15 +315,6 @@ public abstract class ContainerTypeImpl<MT extends TMember> extends TypeImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getVersion() {
-		return this.getDeclaredVersion();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -396,8 +344,6 @@ public abstract class ContainerTypeImpl<MT extends TMember> extends TypeImpl imp
 				return getCallableCtor();
 			case TypesPackage.CONTAINER_TYPE__TYPE_VARS:
 				return getTypeVars();
-			case TypesPackage.CONTAINER_TYPE__DECLARED_VERSION:
-				return getDeclaredVersion();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -425,9 +371,6 @@ public abstract class ContainerTypeImpl<MT extends TMember> extends TypeImpl imp
 				getTypeVars().clear();
 				getTypeVars().addAll((Collection<? extends TypeVariable>)newValue);
 				return;
-			case TypesPackage.CONTAINER_TYPE__DECLARED_VERSION:
-				setDeclaredVersion((Integer)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -452,9 +395,6 @@ public abstract class ContainerTypeImpl<MT extends TMember> extends TypeImpl imp
 			case TypesPackage.CONTAINER_TYPE__TYPE_VARS:
 				getTypeVars().clear();
 				return;
-			case TypesPackage.CONTAINER_TYPE__DECLARED_VERSION:
-				setDeclaredVersion(DECLARED_VERSION_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -475,26 +415,8 @@ public abstract class ContainerTypeImpl<MT extends TMember> extends TypeImpl imp
 				return callableCtor != null;
 			case TypesPackage.CONTAINER_TYPE__TYPE_VARS:
 				return typeVars != null && !typeVars.isEmpty();
-			case TypesPackage.CONTAINER_TYPE__DECLARED_VERSION:
-				return declaredVersion != DECLARED_VERSION_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
-		if (baseClass == Type.class) {
-			switch (baseOperationID) {
-				case TypesPackage.TYPE___GET_VERSION: return TypesPackage.CONTAINER_TYPE___GET_VERSION;
-				default: return super.eDerivedOperationID(baseOperationID, baseClass);
-			}
-		}
-		return super.eDerivedOperationID(baseOperationID, baseClass);
 	}
 
 	/**
@@ -513,8 +435,6 @@ public abstract class ContainerTypeImpl<MT extends TMember> extends TypeImpl imp
 				return findOwnedMember((String)arguments.get(0), (Boolean)arguments.get(1), (Boolean)arguments.get(2));
 			case TypesPackage.CONTAINER_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS:
 				return getOrCreateOwnedMembersByNameAndAccess();
-			case TypesPackage.CONTAINER_TYPE___GET_VERSION:
-				return getVersion();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
@@ -531,8 +451,6 @@ public abstract class ContainerTypeImpl<MT extends TMember> extends TypeImpl imp
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (ownedMembersByNameAndAccess: ");
 		result.append(ownedMembersByNameAndAccess);
-		result.append(", declaredVersion: ");
-		result.append(declaredVersion);
 		result.append(')');
 		return result.toString();
 	}

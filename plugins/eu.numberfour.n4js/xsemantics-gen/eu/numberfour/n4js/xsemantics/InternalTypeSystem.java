@@ -390,7 +390,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   public final static String EXPECTEDTYPEINBINARYLOGICALEXPRESSION = "eu.numberfour.n4js.xsemantics.ExpectedTypeInBinaryLogicalExpression";
   
-  public final static String EXPECTEDTYPEOFOPERANDINASSIGNMENTEXPRESSION = "eu.numberfour.n4js.xsemantics.ExpectedTypeOfOperandInAssignmentExpression";
+  public final static String EXPECTEDTYPEINASSIGNMENTEXPRESSION = "eu.numberfour.n4js.xsemantics.ExpectedTypeInAssignmentExpression";
   
   public final static String EXPECTEDTYPEOFRIGHTSIDEINVARIABLEDECLARATION = "eu.numberfour.n4js.xsemantics.ExpectedTypeOfRightSideInVariableDeclaration";
   
@@ -976,7 +976,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   }
   
   private TypeRef _applyRuleTypeType_1(final RuleEnvironment G, final Type type) throws RuleFailedException {
-    TypeRef _wrapTypeInTypeRef = this.typeRefWrapper.wrapTypeInTypeRef(G, type);
+    TypeRef _wrapTypeInTypeRef = TypeUtils.wrapTypeInTypeRef(type);
     return _wrapTypeInTypeRef;
   }
   
@@ -1154,7 +1154,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   private TypeRef _applyRuleTypeTypeDefiningElement_1(final RuleEnvironment G, final TypeDefiningElement elem) throws RuleFailedException {
     Type _definedType = elem.getDefinedType();
-    TypeRef _wrapTypeInTypeRef = this.typeRefWrapper.wrapTypeInTypeRef(G, _definedType);
+    TypeRef _wrapTypeInTypeRef = TypeUtils.wrapTypeInTypeRef(_definedType);
     return _wrapTypeInTypeRef;
   }
   
@@ -2224,7 +2224,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleTypePropertyAccessExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ParameterizedPropertyAccessExpression expr) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    /* { T = env(G, GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, TypeRef) } or { val G2 = G.wrap G2.add(GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, G2.anyTypeRef) G2 |- expr.target : var TypeRef receiverTypeRef typeSystemHelper.addSubstitutions(G2,receiverTypeRef) G2.addThisType(receiverTypeRef) if (! (receiverTypeRef instanceof UnknownTypeRef) && (expr.target instanceof SuperLiteral || expr.target instanceof ThisLiteral) ) { var containingClass = EcoreUtil2.getContainerOfType(expr,N4ClassDeclaration)?.definedType; if (containingClass instanceof TClass) { if (containingClass.isStaticPolyfill) { containingClass = containingClass.superClassRef?.declaredType } if (containingClass instanceof TClass) { if (containingClass?.superClassRef!==null) { typeSystemHelper.addSubstitutions(G2, containingClass.superClassRef) } } } } val prop = expr.property; var TypeRef propTypeRef; if(prop instanceof TMethod && (prop as TMethod).isConstructor) { val TypeArgument ctorTypeArg = switch(receiverTypeRef) { TypeTypeRef: G.functionTypeRef ParameterizedTypeRef, BoundThisTypeRef: { val declType = if(receiverTypeRef instanceof BoundThisTypeRef) { receiverTypeRef.actualThisTypeRef?.declaredType } else { receiverTypeRef.declaredType }; val finalCtorSig = if(declType instanceof TClassifier) N4JSLanguageUtils.hasCovariantConstructor(declType); if(finalCtorSig) { declType.ref } else if(declType!==null) { TypeUtils.createWildcardExtends(declType.ref) } else { null } } }; propTypeRef = if(ctorTypeArg!==null) { TypeUtils.createTypeTypeRef(ctorTypeArg, true) } else { TypeRefsFactory.eINSTANCE.createUnknownTypeRef }; } else if(receiverTypeRef.dynamic && expr.property!==null && expr.property.eIsProxy) { propTypeRef = G.anyTypeRefDynamic; } else { G2.wrap |- expr.property : propTypeRef if(expr.parameterized) { typeSystemHelper.addSubstitutions(G2,expr); } } G2 |- propTypeRef ~> T if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { val F = T as FunctionTypeExprOrRef; if ((T as FunctionTypeExprOrRef).returnTypeRef instanceof BoundThisTypeRef) { var TypeRef rawT; G |~ expr ~> rawT; val thisTypeRef = TypeUtils.enforceNominalTyping(rawT); if (T instanceof FunctionTypeExpression && T.eContainer==null) { val fte = T as FunctionTypeExpression fte.returnTypeRef = TypeUtils.copyIfContained(thisTypeRef); } else { T = TypeUtils.createFunctionTypeExpression(null, F.typeVars, F.fpars, thisTypeRef); } } } } */
+    /* { T = env(G, GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, TypeRef) } or { val G2 = G.wrap G2.add(GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, G2.anyTypeRef) G2 |- expr.target : var TypeRef receiverTypeRef typeSystemHelper.addSubstitutions(G2,receiverTypeRef) G2.addThisType(receiverTypeRef) if (! (receiverTypeRef instanceof UnknownTypeRef) && (expr.target instanceof SuperLiteral || expr.target instanceof ThisLiteral) ) { var containingClass = EcoreUtil2.getContainerOfType(expr,N4ClassDeclaration)?.definedType; if (containingClass instanceof TClass) { if (containingClass.isStaticPolyfill) { containingClass = containingClass.superClassRef?.declaredType } if (containingClass instanceof TClass) { if (containingClass?.superClassRef!==null) { typeSystemHelper.addSubstitutions(G2, containingClass.superClassRef) } } } } val prop = expr.property; var TypeRef propTypeRef; if(prop instanceof TMethod && (prop as TMethod).isConstructor) { val TypeArgument ctorTypeArg = switch(receiverTypeRef) { TypeTypeRef: G.functionTypeRef ParameterizedTypeRef, BoundThisTypeRef: { val declType = if(receiverTypeRef instanceof BoundThisTypeRef) { receiverTypeRef.actualThisTypeRef?.declaredType } else { receiverTypeRef.declaredType }; val finalCtorSig = if(declType instanceof TClassifier) N4JSLanguageUtils.hasCovariantConstructor(declType); if(finalCtorSig) { declType.ref } else if(declType!==null) { TypeUtils.createWildcardExtends(declType.ref) } else { null } } }; propTypeRef = if(ctorTypeArg!==null) { TypeUtils.createTypeTypeRef(ctorTypeArg, true) } else { TypeRefsFactory.eINSTANCE.createUnknownTypeRef }; } else if(receiverTypeRef.dynamic && expr.property!==null && expr.property.eIsProxy) { propTypeRef = G.anyTypeRefDynamic; } else { G2.wrap |- expr.property : propTypeRef if(expr.parameterized) { typeSystemHelper.addSubstitutions(G2,expr); } } G2 |- propTypeRef ~> T if (receiverTypeRef instanceof ParameterizedTypeRef) { if (receiverTypeRef.referencedVersion > 0) { T = typeRefWrapper.resolveVersion(T, receiverTypeRef.referencedVersion); } } if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { val F = T as FunctionTypeExprOrRef; if ((T as FunctionTypeExprOrRef).returnTypeRef instanceof BoundThisTypeRef) { var TypeRef rawT; G |~ expr ~> rawT; val thisTypeRef = TypeUtils.enforceNominalTyping(rawT); if (T instanceof FunctionTypeExpression && T.eContainer==null) { val fte = T as FunctionTypeExpression fte.returnTypeRef = TypeUtils.copyIfContained(thisTypeRef); } else { T = TypeUtils.createFunctionTypeExpression(null, F.typeVars, F.fpars, thisTypeRef); } } } } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -2367,6 +2367,15 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         checkAssignableTo(result_2.getFirst(), TypeRef.class);
         T = (TypeRef) result_2.getFirst();
         
+        if ((receiverTypeRef instanceof ParameterizedTypeRef)) {
+          int _referencedVersion = ((ParameterizedTypeRef)receiverTypeRef).getReferencedVersion();
+          boolean _greaterThan = (_referencedVersion > 0);
+          if (_greaterThan) {
+            int _referencedVersion_1 = ((ParameterizedTypeRef)receiverTypeRef).getReferencedVersion();
+            TypeRef _resolveVersion = this.typeRefWrapper.<TypeRef>resolveVersion(T, _referencedVersion_1);
+            T = _resolveVersion;
+          }
+        }
         if (((expr.getTarget() instanceof SuperLiteral) && (T instanceof FunctionTypeExprOrRef))) {
           final FunctionTypeExprOrRef F = ((FunctionTypeExprOrRef) T);
           TypeRef _returnTypeRef = ((FunctionTypeExprOrRef) T).getReturnTypeRef();
@@ -2487,7 +2496,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     if ((targetTypeRef instanceof FunctionTypeExprOrRef)) {
       final FunctionTypeExprOrRef F = ((FunctionTypeExprOrRef)targetTypeRef);
       final TFunction tFunction = F.getFunctionType();
-      /* { val inferring = env(G, GUARD_TYPE_CALL_EXPRESSION -> expr, TypeRef) G |- inferring ~> T } or { val G2 = G.wrap; G2.add(GUARD_TYPE_CALL_EXPRESSION -> expr, F.returnTypeRef) if(expr.eContainer instanceof AwaitExpression && expr.eContainmentFeature === N4JSPackage.eINSTANCE.getAwaitExpression_Expression() && tFunction!==null && AnnotationDefinition.PROMISIFIABLE.hasAnnotation(tFunction)) { T = promisifyHelper.extractPromisifiedReturnType(expr); } else { T = F.returnTypeRef ?: G.anyTypeRef; } typeSystemHelper.addSubstitutions(G2, expr, targetTypeRef); G2 |- T ~> T if (T instanceof BoundThisTypeRef && !(expr.receiver instanceof ThisLiteral || expr.receiver instanceof SuperLiteral)) { G2 |~ T /\ T } } */
+      /* { val inferring = env(G, GUARD_TYPE_CALL_EXPRESSION -> expr, TypeRef) G |- inferring ~> T } or { val G2 = G.wrap; G2.add(GUARD_TYPE_CALL_EXPRESSION -> expr, F.returnTypeRef) if(expr.eContainer instanceof AwaitExpression && expr.eContainmentFeature === N4JSPackage.eINSTANCE.getAwaitExpression_Expression() && tFunction!==null && AnnotationDefinition.PROMISIFIABLE.hasAnnotation(tFunction)) { T = promisifyHelper.extractPromisifiedReturnType(expr); } else { T = F.returnTypeRef ?: G.anyTypeRef; } typeSystemHelper.addSubstitutions(G2, expr, targetTypeRef); G2 |- T ~> T if (F instanceof ParameterizedTypeRef) { if (F.referencedVersion > 0) { T = typeRefWrapper.resolveVersion(T, F.referencedVersion); } } if (T instanceof BoundThisTypeRef && !(expr.receiver instanceof ThisLiteral || expr.receiver instanceof SuperLiteral)) { G2 |~ T /\ T } } */
       {
         RuleFailedException previousFailure = null;
         try {
@@ -2528,6 +2537,15 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
           checkAssignableTo(result_2.getFirst(), TypeRef.class);
           T = (TypeRef) result_2.getFirst();
           
+          if ((F instanceof ParameterizedTypeRef)) {
+            int _referencedVersion = F.getReferencedVersion();
+            boolean _greaterThan = (_referencedVersion > 0);
+            if (_greaterThan) {
+              int _referencedVersion_1 = F.getReferencedVersion();
+              TypeRef _resolveVersion = this.typeRefWrapper.<TypeRef>resolveVersion(T, _referencedVersion_1);
+              T = _resolveVersion;
+            }
+          }
           if (((T instanceof BoundThisTypeRef) && (!((expr.getReceiver() instanceof ThisLiteral) || (expr.getReceiver() instanceof SuperLiteral))))) {
             /* G2 |~ T /\ T */
             Result<TypeRef> result_3 = upperBoundInternal(G2, _trace_, T);
@@ -5448,33 +5466,32 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   protected Result<TypeRef> expectedTypeInImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final AssignmentExpression expr, final Expression operand) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<TypeRef> _result_ = applyRuleExpectedTypeOfOperandInAssignmentExpression(G, _subtrace_, expr, operand);
+    	final Result<TypeRef> _result_ = applyRuleExpectedTypeInAssignmentExpression(G, _subtrace_, expr, operand);
     	addToTrace(_trace_, new Provider<Object>() {
     		public Object get() {
-    			return ruleName("expectedTypeOfOperandInAssignmentExpression") + stringRepForEnv(G) + " |- " + stringRep(expr) + " |> " + stringRep(operand) + " : " + stringRep(_result_.getFirst());
+    			return ruleName("expectedTypeInAssignmentExpression") + stringRepForEnv(G) + " |- " + stringRep(expr) + " |> " + stringRep(operand) + " : " + stringRep(_result_.getFirst());
     		}
     	});
     	addAsSubtrace(_trace_, _subtrace_);
     	return _result_;
-    } catch (Exception e_applyRuleExpectedTypeOfOperandInAssignmentExpression) {
-    	expectedTypeInThrowException(ruleName("expectedTypeOfOperandInAssignmentExpression") + stringRepForEnv(G) + " |- " + stringRep(expr) + " |> " + stringRep(operand) + " : " + "TypeRef",
-    		EXPECTEDTYPEOFOPERANDINASSIGNMENTEXPRESSION,
-    		e_applyRuleExpectedTypeOfOperandInAssignmentExpression, expr, operand, new ErrorInformation[] {new ErrorInformation(expr), new ErrorInformation(operand)});
+    } catch (Exception e_applyRuleExpectedTypeInAssignmentExpression) {
+    	expectedTypeInThrowException(ruleName("expectedTypeInAssignmentExpression") + stringRepForEnv(G) + " |- " + stringRep(expr) + " |> " + stringRep(operand) + " : " + "TypeRef",
+    		EXPECTEDTYPEINASSIGNMENTEXPRESSION,
+    		e_applyRuleExpectedTypeInAssignmentExpression, expr, operand, new ErrorInformation[] {new ErrorInformation(expr), new ErrorInformation(operand)});
     	return null;
     }
   }
   
-  protected Result<TypeRef> applyRuleExpectedTypeOfOperandInAssignmentExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final AssignmentExpression expr, final Expression operand) throws RuleFailedException {
+  protected Result<TypeRef> applyRuleExpectedTypeInAssignmentExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final AssignmentExpression expr, final Expression operand) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    /* { ! n4js.isActive(expr) if (operand===expr.lhs) { T = G.bottomTypeRef } else { T = G.topTypeRef } } or { N4JSASTUtils.isDestructuringAssignment(expr) if (operand===expr.lhs) { T = G.bottomTypeRef } else { T = G.topTypeRef } } or { expr.op===AssignmentOperator.ASSIGN; if (operand===expr.lhs) { T = G.bottomTypeRef } else { G |- expr.lhs : T } } or { expr.op===AssignmentOperator.ADD_ASSIGN if (operand===expr.lhs) { T = TypeUtils.createNonSimplifiedIntersectionType(G.numberTypeRef, G.stringTypeRef); } else { G |- expr.lhs : var ParameterizedTypeRef lhsTypeRef if (lhsTypeRef.declaredType === G.stringType) { T = G.anyTypeRef } else if(G.isNumeric(lhsTypeRef.declaredType)) { T = G.numberTypeRef } else { T = G.anyTypeRef } } } or { T = G.numberTypeRef } */
+    /* { N4JSASTUtils.isDestructuringAssignment(expr) if (operand===expr.lhs) { T = G.bottomTypeRef } else { T = G.topTypeRef } } or { expr.op===AssignmentOperator.ASSIGN; if (operand===expr.lhs) { T = G.bottomTypeRef } else { G |- expr.lhs : T } } or { expr.op===AssignmentOperator.ADD_ASSIGN if (operand===expr.lhs) { T = TypeUtils.createNonSimplifiedIntersectionType(G.numberTypeRef, G.stringTypeRef); } else { G |- expr.lhs : var ParameterizedTypeRef lhsTypeRef if (lhsTypeRef.declaredType === G.stringType) { T = G.anyTypeRef } else if(G.isNumeric(lhsTypeRef.declaredType)) { T = G.numberTypeRef } else { T = G.anyTypeRef } } } or { T = G.numberTypeRef } */
     {
       RuleFailedException previousFailure = null;
       try {
-        boolean _isActive = JavaScriptVariant.n4js.isActive(expr);
-        boolean _not = (!_isActive);
-        /* ! n4js.isActive(expr) */
-        if (!_not) {
-          sneakyThrowRuleFailedException("! n4js.isActive(expr)");
+        boolean _isDestructuringAssignment = N4JSASTUtils.isDestructuringAssignment(expr);
+        /* N4JSASTUtils.isDestructuringAssignment(expr) */
+        if (!_isDestructuringAssignment) {
+          sneakyThrowRuleFailedException("N4JSASTUtils.isDestructuringAssignment(expr)");
         }
         Expression _lhs = expr.getLhs();
         boolean _tripleEquals = (operand == _lhs);
@@ -5487,97 +5504,76 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         }
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
-        /* { N4JSASTUtils.isDestructuringAssignment(expr) if (operand===expr.lhs) { T = G.bottomTypeRef } else { T = G.topTypeRef } } or { expr.op===AssignmentOperator.ASSIGN; if (operand===expr.lhs) { T = G.bottomTypeRef } else { G |- expr.lhs : T } } or { expr.op===AssignmentOperator.ADD_ASSIGN if (operand===expr.lhs) { T = TypeUtils.createNonSimplifiedIntersectionType(G.numberTypeRef, G.stringTypeRef); } else { G |- expr.lhs : var ParameterizedTypeRef lhsTypeRef if (lhsTypeRef.declaredType === G.stringType) { T = G.anyTypeRef } else if(G.isNumeric(lhsTypeRef.declaredType)) { T = G.numberTypeRef } else { T = G.anyTypeRef } } } or { T = G.numberTypeRef } */
+        /* { expr.op===AssignmentOperator.ASSIGN; if (operand===expr.lhs) { T = G.bottomTypeRef } else { G |- expr.lhs : T } } or { expr.op===AssignmentOperator.ADD_ASSIGN if (operand===expr.lhs) { T = TypeUtils.createNonSimplifiedIntersectionType(G.numberTypeRef, G.stringTypeRef); } else { G |- expr.lhs : var ParameterizedTypeRef lhsTypeRef if (lhsTypeRef.declaredType === G.stringType) { T = G.anyTypeRef } else if(G.isNumeric(lhsTypeRef.declaredType)) { T = G.numberTypeRef } else { T = G.anyTypeRef } } } or { T = G.numberTypeRef } */
         {
           try {
-            boolean _isDestructuringAssignment = N4JSASTUtils.isDestructuringAssignment(expr);
-            /* N4JSASTUtils.isDestructuringAssignment(expr) */
-            if (!_isDestructuringAssignment) {
-              sneakyThrowRuleFailedException("N4JSASTUtils.isDestructuringAssignment(expr)");
+            AssignmentOperator _op = expr.getOp();
+            boolean _tripleEquals_1 = (_op == AssignmentOperator.ASSIGN);
+            /* expr.op===AssignmentOperator.ASSIGN */
+            if (!_tripleEquals_1) {
+              sneakyThrowRuleFailedException("expr.op===AssignmentOperator.ASSIGN");
             }
             Expression _lhs_1 = expr.getLhs();
-            boolean _tripleEquals_1 = (operand == _lhs_1);
-            if (_tripleEquals_1) {
+            boolean _tripleEquals_2 = (operand == _lhs_1);
+            if (_tripleEquals_2) {
               ParameterizedTypeRef _bottomTypeRef_1 = RuleEnvironmentExtensions.bottomTypeRef(G);
               T = _bottomTypeRef_1;
             } else {
-              ParameterizedTypeRef _pTypeRef_1 = RuleEnvironmentExtensions.topTypeRef(G);
-              T = _pTypeRef_1;
+              /* G |- expr.lhs : T */
+              Expression _lhs_2 = expr.getLhs();
+              Result<TypeRef> result = typeInternal(G, _trace_, _lhs_2);
+              checkAssignableTo(result.getFirst(), TypeRef.class);
+              T = (TypeRef) result.getFirst();
+              
             }
           } catch (Exception e_1) {
             previousFailure = extractRuleFailedException(e_1);
-            /* { expr.op===AssignmentOperator.ASSIGN; if (operand===expr.lhs) { T = G.bottomTypeRef } else { G |- expr.lhs : T } } or { expr.op===AssignmentOperator.ADD_ASSIGN if (operand===expr.lhs) { T = TypeUtils.createNonSimplifiedIntersectionType(G.numberTypeRef, G.stringTypeRef); } else { G |- expr.lhs : var ParameterizedTypeRef lhsTypeRef if (lhsTypeRef.declaredType === G.stringType) { T = G.anyTypeRef } else if(G.isNumeric(lhsTypeRef.declaredType)) { T = G.numberTypeRef } else { T = G.anyTypeRef } } } or { T = G.numberTypeRef } */
+            /* { expr.op===AssignmentOperator.ADD_ASSIGN if (operand===expr.lhs) { T = TypeUtils.createNonSimplifiedIntersectionType(G.numberTypeRef, G.stringTypeRef); } else { G |- expr.lhs : var ParameterizedTypeRef lhsTypeRef if (lhsTypeRef.declaredType === G.stringType) { T = G.anyTypeRef } else if(G.isNumeric(lhsTypeRef.declaredType)) { T = G.numberTypeRef } else { T = G.anyTypeRef } } } or { T = G.numberTypeRef } */
             {
               try {
-                AssignmentOperator _op = expr.getOp();
-                boolean _tripleEquals_2 = (_op == AssignmentOperator.ASSIGN);
-                /* expr.op===AssignmentOperator.ASSIGN */
-                if (!_tripleEquals_2) {
-                  sneakyThrowRuleFailedException("expr.op===AssignmentOperator.ASSIGN");
+                AssignmentOperator _op_1 = expr.getOp();
+                boolean _tripleEquals_3 = (_op_1 == AssignmentOperator.ADD_ASSIGN);
+                /* expr.op===AssignmentOperator.ADD_ASSIGN */
+                if (!_tripleEquals_3) {
+                  sneakyThrowRuleFailedException("expr.op===AssignmentOperator.ADD_ASSIGN");
                 }
-                Expression _lhs_2 = expr.getLhs();
-                boolean _tripleEquals_3 = (operand == _lhs_2);
-                if (_tripleEquals_3) {
-                  ParameterizedTypeRef _bottomTypeRef_2 = RuleEnvironmentExtensions.bottomTypeRef(G);
-                  T = _bottomTypeRef_2;
+                Expression _lhs_3 = expr.getLhs();
+                boolean _tripleEquals_4 = (operand == _lhs_3);
+                if (_tripleEquals_4) {
+                  ParameterizedTypeRef _numberTypeRef = RuleEnvironmentExtensions.numberTypeRef(G);
+                  ParameterizedTypeRef _stringTypeRef = RuleEnvironmentExtensions.stringTypeRef(G);
+                  IntersectionTypeExpression _createNonSimplifiedIntersectionType = TypeUtils.createNonSimplifiedIntersectionType(_numberTypeRef, _stringTypeRef);
+                  T = _createNonSimplifiedIntersectionType;
                 } else {
-                  /* G |- expr.lhs : T */
-                  Expression _lhs_3 = expr.getLhs();
-                  Result<TypeRef> result = typeInternal(G, _trace_, _lhs_3);
-                  checkAssignableTo(result.getFirst(), TypeRef.class);
-                  T = (TypeRef) result.getFirst();
+                  /* G |- expr.lhs : var ParameterizedTypeRef lhsTypeRef */
+                  Expression _lhs_4 = expr.getLhs();
+                  ParameterizedTypeRef lhsTypeRef = null;
+                  Result<TypeRef> result_1 = typeInternal(G, _trace_, _lhs_4);
+                  checkAssignableTo(result_1.getFirst(), ParameterizedTypeRef.class);
+                  lhsTypeRef = (ParameterizedTypeRef) result_1.getFirst();
                   
+                  Type _declaredType = lhsTypeRef.getDeclaredType();
+                  PrimitiveType _stringType = RuleEnvironmentExtensions.stringType(G);
+                  boolean _tripleEquals_5 = (_declaredType == _stringType);
+                  if (_tripleEquals_5) {
+                    ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
+                    T = _anyTypeRef;
+                  } else {
+                    Type _declaredType_1 = lhsTypeRef.getDeclaredType();
+                    boolean _isNumeric = RuleEnvironmentExtensions.isNumeric(G, _declaredType_1);
+                    if (_isNumeric) {
+                      ParameterizedTypeRef _numberTypeRef_1 = RuleEnvironmentExtensions.numberTypeRef(G);
+                      T = _numberTypeRef_1;
+                    } else {
+                      ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
+                      T = _anyTypeRef_1;
+                    }
+                  }
                 }
               } catch (Exception e_2) {
                 previousFailure = extractRuleFailedException(e_2);
-                /* { expr.op===AssignmentOperator.ADD_ASSIGN if (operand===expr.lhs) { T = TypeUtils.createNonSimplifiedIntersectionType(G.numberTypeRef, G.stringTypeRef); } else { G |- expr.lhs : var ParameterizedTypeRef lhsTypeRef if (lhsTypeRef.declaredType === G.stringType) { T = G.anyTypeRef } else if(G.isNumeric(lhsTypeRef.declaredType)) { T = G.numberTypeRef } else { T = G.anyTypeRef } } } or { T = G.numberTypeRef } */
-                {
-                  try {
-                    AssignmentOperator _op_1 = expr.getOp();
-                    boolean _tripleEquals_4 = (_op_1 == AssignmentOperator.ADD_ASSIGN);
-                    /* expr.op===AssignmentOperator.ADD_ASSIGN */
-                    if (!_tripleEquals_4) {
-                      sneakyThrowRuleFailedException("expr.op===AssignmentOperator.ADD_ASSIGN");
-                    }
-                    Expression _lhs_4 = expr.getLhs();
-                    boolean _tripleEquals_5 = (operand == _lhs_4);
-                    if (_tripleEquals_5) {
-                      ParameterizedTypeRef _numberTypeRef = RuleEnvironmentExtensions.numberTypeRef(G);
-                      ParameterizedTypeRef _stringTypeRef = RuleEnvironmentExtensions.stringTypeRef(G);
-                      IntersectionTypeExpression _createNonSimplifiedIntersectionType = TypeUtils.createNonSimplifiedIntersectionType(_numberTypeRef, _stringTypeRef);
-                      T = _createNonSimplifiedIntersectionType;
-                    } else {
-                      /* G |- expr.lhs : var ParameterizedTypeRef lhsTypeRef */
-                      Expression _lhs_5 = expr.getLhs();
-                      ParameterizedTypeRef lhsTypeRef = null;
-                      Result<TypeRef> result_1 = typeInternal(G, _trace_, _lhs_5);
-                      checkAssignableTo(result_1.getFirst(), ParameterizedTypeRef.class);
-                      lhsTypeRef = (ParameterizedTypeRef) result_1.getFirst();
-                      
-                      Type _declaredType = lhsTypeRef.getDeclaredType();
-                      PrimitiveType _stringType = RuleEnvironmentExtensions.stringType(G);
-                      boolean _tripleEquals_6 = (_declaredType == _stringType);
-                      if (_tripleEquals_6) {
-                        ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
-                        T = _anyTypeRef;
-                      } else {
-                        Type _declaredType_1 = lhsTypeRef.getDeclaredType();
-                        boolean _isNumeric = RuleEnvironmentExtensions.isNumeric(G, _declaredType_1);
-                        if (_isNumeric) {
-                          ParameterizedTypeRef _numberTypeRef_1 = RuleEnvironmentExtensions.numberTypeRef(G);
-                          T = _numberTypeRef_1;
-                        } else {
-                          ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
-                          T = _anyTypeRef_1;
-                        }
-                      }
-                    }
-                  } catch (Exception e_3) {
-                    previousFailure = extractRuleFailedException(e_3);
-                    ParameterizedTypeRef _numberTypeRef_2 = RuleEnvironmentExtensions.numberTypeRef(G);
-                    T = _numberTypeRef_2;
-                  }
-                }
+                ParameterizedTypeRef _numberTypeRef_2 = RuleEnvironmentExtensions.numberTypeRef(G);
+                T = _numberTypeRef_2;
               }
             }
           }

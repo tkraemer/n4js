@@ -312,10 +312,14 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 			// imported variables (added as second step to enable shadowing of imported elements)
 			var IScope scope = getImportedIdentifiables(baseScope, script);
 			for (scopeList : scopeLists.reverseView) {
-				scope = MapBasedScope.createScope(scope, scopeList);
+				scope = buildMapBasedScope(scope, scopeList);
 			}
 			return scope;
 		]);
+	}
+
+	protected def buildMapBasedScope(IScope scope, Iterable<IEObjectDescription> descriptions) {
+		return MapBasedScope.createScope(scope, descriptions);
 	}
 
 	private def IScope getScriptBaseScope(Script script, EObject context, EReference ref) {

@@ -272,7 +272,7 @@ judgments {
  * its type, which seems superfluous. However, supporting this simplifies some client code, because the
  * client need not check for this special case and call TypeUtils#createTypeRef() directly.
  */
-axiom typeType G |- Type type: typeRefWrapper.wrapTypeInTypeRef(G, type)
+axiom typeType G |- Type type: TypeUtils.wrapTypeInTypeRef(type)
 
 // keep aligned to axiom typeN4EnumLiteral
 axiom typeTEnumLiteral G |- TEnumLiteral enumLiteral : (enumLiteral.eContainer as TEnum).ref
@@ -310,7 +310,7 @@ from {
  * handled by client code (i.e. call TypeUtils#createTypeRef() directly) but supporting it
  * here relieves client code of handling special cases.
  */
-axiom typeTypeDefiningElement G |- TypeDefiningElement elem : typeRefWrapper.wrapTypeInTypeRef(G, elem.definedType)
+axiom typeTypeDefiningElement G |- TypeDefiningElement elem : TypeUtils.wrapTypeInTypeRef(elem.definedType)
 
 /* @see [N4JS] 6.1.5. Object Literal */
 rule typeObjectLiteral
@@ -746,14 +746,21 @@ from {
 			propTypeRef = G.anyTypeRefDynamic;
 		}
 		else {
+			// TODO: Is wrapping really required here?
 			G2.wrap |- expr.property : propTypeRef
 
 			if(expr.parameterized) {
 				typeSystemHelper.addSubstitutions(G2,expr);
 			}
 		}
-
+		
 		G2 |- propTypeRef ~> T
+
+		if (receiverTypeRef instanceof ParameterizedTypeRef) {
+			if (receiverTypeRef.referencedVersion > 0) {
+				T = typeRefWrapper.resolveVersion(T, receiverTypeRef.referencedVersion);
+			}
+		}
 		
 		if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { // super.foo(): this; cf. GH-95
 			val F = T as FunctionTypeExprOrRef;
@@ -829,6 +836,12 @@ from {
 
 			typeSystemHelper.addSubstitutions(G2, expr, targetTypeRef);
 			G2 |- T ~> T
+
+			if (F instanceof ParameterizedTypeRef) {
+				if (F.referencedVersion > 0) {
+					T = typeRefWrapper.resolveVersion(T, F.referencedVersion);
+				}
+			}
 
 			if (T instanceof BoundThisTypeRef && !(expr.receiver instanceof ThisLiteral || expr.receiver instanceof SuperLiteral)) {
 				// we've got something like "this[C]" as return type of a call expression of the form
@@ -2010,20 +2023,20 @@ axiom expectedTypeInBinaryLogicalExpression
 	G |- BinaryLogicalExpression e |> Expression expression : G.anyTypeRef
 
 /* @see [N4JS] 6.1.21. Assignment Expression */
-rule expectedTypeOfOperandInAssignmentExpression
+rule expectedTypeInAssignmentExpression
 	G |- AssignmentExpression expr |> Expression operand : TypeRef T
 from {
-	{
-		! n4js.isActive(expr)
-		if (operand===expr.lhs) {
-			// left-hand side:
-			T = G.bottomTypeRef // no expectation
-		} else {
-			// right-hand side:
-			T = G.topTypeRef // no expectation
-		}
-	}
-	or
+//	{
+//		! n4js.isActive(expr)
+//		if (operand===expr.lhs) {
+//			// left-hand side:
+//			T = G.bottomTypeRef // no expectation
+//		} else {
+//			// right-hand side:
+//			T = G.topTypeRef // no expectation
+//		}
+//	}
+//	or
 	{
 		N4JSASTUtils.isDestructuringAssignment(expr)
 		if (operand===expr.lhs) {

@@ -1378,15 +1378,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getContainerType_DeclaredVersion() {
-		return (EAttribute)containerTypeEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getContainerType__GetOwnedCtor() {
 		return containerTypeEClass.getEOperations().get(0);
 	}
@@ -1416,15 +1407,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 */
 	public EOperation getContainerType__GetOrCreateOwnedMembersByNameAndAccess() {
 		return containerTypeEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getContainerType__GetVersion() {
-		return containerTypeEClass.getEOperations().get(4);
 	}
 
 	/**
@@ -1612,6 +1594,15 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTClassifier_DeclaredVersion() {
+		return (EAttribute)tClassifierEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getTClassifier__IsAbstract() {
 		return tClassifierEClass.getEOperations().get(0);
 	}
@@ -1650,6 +1641,15 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 */
 	public EOperation getTClassifier__IsFinal() {
 		return tClassifierEClass.getEOperations().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTClassifier__GetVersion() {
+		return tClassifierEClass.getEOperations().get(5);
 	}
 
 	/**
@@ -3007,12 +3007,10 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEReference(containerTypeEClass, CONTAINER_TYPE__OWNED_MEMBERS);
 		createEReference(containerTypeEClass, CONTAINER_TYPE__CALLABLE_CTOR);
 		createEReference(containerTypeEClass, CONTAINER_TYPE__TYPE_VARS);
-		createEAttribute(containerTypeEClass, CONTAINER_TYPE__DECLARED_VERSION);
 		createEOperation(containerTypeEClass, CONTAINER_TYPE___GET_OWNED_CTOR);
 		createEOperation(containerTypeEClass, CONTAINER_TYPE___FIND_OWNED_MEMBER__STRING);
 		createEOperation(containerTypeEClass, CONTAINER_TYPE___FIND_OWNED_MEMBER__STRING_BOOLEAN_BOOLEAN);
 		createEOperation(containerTypeEClass, CONTAINER_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS);
-		createEOperation(containerTypeEClass, CONTAINER_TYPE___GET_VERSION);
 
 		virtualBaseTypeEClass = createEClass(VIRTUAL_BASE_TYPE);
 		createEReference(virtualBaseTypeEClass, VIRTUAL_BASE_TYPE__DECLARED_OWNED_MEMBERS);
@@ -3043,11 +3041,13 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		tClassifierEClass = createEClass(TCLASSIFIER);
 		createEAttribute(tClassifierEClass, TCLASSIFIER__DECLARED_COVARIANT_CONSTRUCTOR);
+		createEAttribute(tClassifierEClass, TCLASSIFIER__DECLARED_VERSION);
 		createEOperation(tClassifierEClass, TCLASSIFIER___IS_ABSTRACT);
 		createEOperation(tClassifierEClass, TCLASSIFIER___GET_SUPER_CLASSIFIERS);
 		createEOperation(tClassifierEClass, TCLASSIFIER___GET_SUPER_CLASSIFIER_REFS);
 		createEOperation(tClassifierEClass, TCLASSIFIER___GET_IMPLEMENTED_OR_EXTENDED_INTERFACE_REFS);
 		createEOperation(tClassifierEClass, TCLASSIFIER___IS_FINAL);
+		createEOperation(tClassifierEClass, TCLASSIFIER___GET_VERSION);
 
 		tObjectPrototypeEClass = createEClass(TOBJECT_PROTOTYPE);
 		createEReference(tObjectPrototypeEClass, TOBJECT_PROTOTYPE__SUPER_TYPE);
@@ -3481,7 +3481,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEReference(getContainerType_OwnedMembers(), g1, null, "ownedMembers", null, 0, -1, ContainerType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getContainerType_CallableCtor(), this.getTMethod(), null, "callableCtor", null, 0, 1, ContainerType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getContainerType_TypeVars(), this.getTypeVariable(), null, "typeVars", null, 0, -1, ContainerType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getContainerType_DeclaredVersion(), theEcorePackage.getEInt(), "declaredVersion", null, 0, 1, ContainerType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getContainerType__GetOwnedCtor(), this.getTMethod(), "getOwnedCtor", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -3502,8 +3501,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		g3 = createEGenericType(this.getTMember());
 		g2.setEUpperBound(g3);
 		initEOperation(op, g1);
-
-		initEOperation(getContainerType__GetVersion(), theEcorePackage.getEInt(), "getVersion", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(virtualBaseTypeEClass, VirtualBaseType.class, "VirtualBaseType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getVirtualBaseType_DeclaredOwnedMembers(), this.getTMember(), null, "declaredOwnedMembers", null, 0, -1, VirtualBaseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3538,6 +3535,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		initEClass(tClassifierEClass, TClassifier.class, "TClassifier", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTClassifier_DeclaredCovariantConstructor(), theEcorePackage.getEBoolean(), "declaredCovariantConstructor", null, 0, 1, TClassifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTClassifier_DeclaredVersion(), theEcorePackage.getEInt(), "declaredVersion", null, 0, 1, TClassifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTClassifier__IsAbstract(), theEcorePackage.getEBoolean(), "isAbstract", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -3548,6 +3546,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEOperation(getTClassifier__GetImplementedOrExtendedInterfaceRefs(), theTypeRefsPackage.getParameterizedTypeRefIterable(), "getImplementedOrExtendedInterfaceRefs", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTClassifier__IsFinal(), theEcorePackage.getEBoolean(), "isFinal", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTClassifier__GetVersion(), theEcorePackage.getEInt(), "getVersion", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(tObjectPrototypeEClass, TObjectPrototype.class, "TObjectPrototype", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTObjectPrototype_SuperType(), theTypeRefsPackage.getParameterizedTypeRef(), null, "superType", null, 0, 1, TObjectPrototype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

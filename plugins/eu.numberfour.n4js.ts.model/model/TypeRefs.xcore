@@ -443,11 +443,19 @@ class ParameterizedTypeRef extends BaseTypeRef {
 	refers Type declaredType
 	contains TypeArgument[] typeArgs
 	boolean arrayTypeLiteral = "false"
+
 	/*
 	 * The defined (declared or inferred) typing strategy on use site, nominal typing by default. Could be changed to structural or structural
 	 * field (via tilde or tilde-tilde operators).
 	 */
 	TypingStrategy definedTypingStrategy
+
+	/*
+	 * The declared version of the reference, this is only available in languages derived from N4JS.
+	 * Note that this is the declared version of the reference, not of the declared type itself!
+	 */
+	BigDecimal declaredVersion
+
 	/**
 	 * Returns the actual typing strategy, that is either the defined typing strategy, or the typing strategy of the declared type.
 	 */
@@ -469,11 +477,14 @@ class ParameterizedTypeRef extends BaseTypeRef {
 	 * Overrides {@link TypeRef#getTypeRefAsString()}
 	 */
 	op String getTypeRefAsString() {
-		return declaredType?.rawTypeAsString + (if (typeArgs.empty) {
+		return declaredType?.rawTypeAsString
+		+ if (referencedVersion > 0) { "#" + referencedVersion } else { "" }
+		+ (if (typeArgs.empty) {
 			""
 		} else {
 			"<" + typeArgs.map[typeRefAsString].join(",") + ">"
-		}) + getModifiersAsString();
+		})
+		+ getModifiersAsString(); 
 	}
 	/*
 	 * Convenience method, returns true if type reference contains type arguments.
@@ -522,25 +533,13 @@ class ParameterizedTypeRef extends BaseTypeRef {
 		}
 		return false
 	}
-}
-
-/*
- * Type reference with explicitly defined version. 
- */
-class ParameterizedTypeRefWithVersion extends ParameterizedTypeRef {
-	/*
-	 * The declared version of the reference, this is only available in languages derived from N4JS.
-	 * Note that this is the declared version of the reference, not of the declared type itself!
-	 */
-	BigDecimal declaredVersion
 	
 	/**
 	 * Overrides method declared in TypeRef, returns the declared version instead of the default value.
 	 */
 	op int getReferencedVersion() {
-		if (declaredVersion===null) {
+		if (declaredVersion === null)
 			return 0;
-		}
 		return declaredVersion.intValue;
 	}
 }

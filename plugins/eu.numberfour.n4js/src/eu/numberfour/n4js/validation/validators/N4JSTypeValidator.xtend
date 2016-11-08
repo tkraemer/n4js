@@ -410,9 +410,9 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def void checkTypeMatchesExpectedType(Expression expression) {
 
-		if(JavaScriptVariant.getVariant(expression) == JavaScriptVariant.unrestricted) {
-			return;
-		}
+//		if(JavaScriptVariant.getVariant(expression) == JavaScriptVariant.unrestricted) {
+//			return;
+//		}
 
 		// expressionAnnotationList occur on function- and class-expressions.
 		// checking of the content is done in N4JSAnnotationValidation

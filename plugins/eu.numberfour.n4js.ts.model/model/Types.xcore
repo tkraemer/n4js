@@ -662,13 +662,6 @@ abstract class ContainerType<MT extends TMember> extends Type {
 	contains TypeVariable[] typeVars
 	
 	/**
-	 * The declared version of the type. This is not used by N4JS at the moment but only
-	 * in derived languages such as N4IDL. It needs to be stored in the type model though as
-	 * it is required to be cached (i.e. stored in the Xtext index) for scoping etc.
-	 */
-	int declaredVersion
-
-	/**
 	 * Convenience method returning the owned constructor or <code>null</code> if not available.
 	 */
 	op TMethod getOwnedCtor() {
@@ -719,14 +712,6 @@ abstract class ContainerType<MT extends TMember> extends Type {
 			],this);
 		}
 		return ownedMembersByNameAndAccess;
-	}
-	
-	/*
-	 * Overrides default implementation of type, returns the actually declared version (which
-	 * is 0 in N4JS as it cannot be set there). Only used for derived languages such as N4IDL.
-	 */
-	op int getVersion() {
-		return declaredVersion;
 	}
 }
 
@@ -842,6 +827,13 @@ abstract class TClassifier extends ContainerType<TMember>, SyntaxRelatedTElement
 	 */
 	boolean declaredCovariantConstructor
 
+	/**
+	 * The declared version of the type. This is not used by N4JS at the moment but only
+	 * in derived languages such as N4IDL. It needs to be stored in the type model though as
+	 * it is required to be cached (i.e. stored in the Xtext index) for scoping etc.
+	 */
+	int declaredVersion
+
 	op boolean isAbstract() {
 		return false
 	}
@@ -886,6 +878,14 @@ abstract class TClassifier extends ContainerType<TMember>, SyntaxRelatedTElement
 	 */
 	op boolean isFinal() {
 		return false;
+	}
+	
+	/*
+	 * Overrides default implementation of type, returns the actually declared version (which
+	 * is 0 in N4JS as it cannot be set there). Only used for derived languages such as N4IDL.
+	 */
+	op int getVersion() {
+		return declaredVersion;
 	}
 }
 

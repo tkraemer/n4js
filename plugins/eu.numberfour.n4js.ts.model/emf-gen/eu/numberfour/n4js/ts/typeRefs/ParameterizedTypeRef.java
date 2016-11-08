@@ -10,6 +10,8 @@ package eu.numberfour.n4js.ts.typeRefs;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypingStrategy;
 
+import java.math.BigDecimal;
+
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -34,6 +36,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#getTypeArgs <em>Type Args</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#isArrayTypeLiteral <em>Array Type Literal</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#getDefinedTypingStrategy <em>Defined Typing Strategy</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#getDeclaredVersion <em>Declared Version</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getParameterizedTypeRef()
@@ -140,6 +143,32 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	void setDefinedTypingStrategy(TypingStrategy value);
 
 	/**
+	 * Returns the value of the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The declared version of the reference, this is only available in languages derived from N4JS.
+	 * Note that this is the declared version of the reference, not of the declared type itself!
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Declared Version</em>' attribute.
+	 * @see #setDeclaredVersion(BigDecimal)
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getParameterizedTypeRef_DeclaredVersion()
+	 * @model unique="false"
+	 * @generated
+	 */
+	BigDecimal getDeclaredVersion();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#getDeclaredVersion <em>Declared Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Declared Version</em>' attribute.
+	 * @see #getDeclaredVersion()
+	 * @generated
+	 */
+	void setDeclaredVersion(BigDecimal value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -171,7 +200,7 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * Overrides {@link TypeRef#getTypeRefAsString()}
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.Type%> _declaredType = this.getDeclaredType();\n<%java.lang.String%> _rawTypeAsString = null;\nif (_declaredType!=null)\n{\n\t_rawTypeAsString=_declaredType.getRawTypeAsString();\n}\n<%java.lang.String%> _xifexpression = null;\n<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>> _typeArgs = this.getTypeArgs();\nboolean _isEmpty = _typeArgs.isEmpty();\nif (_isEmpty)\n{\n\t_xifexpression = \"\";\n}\nelse\n{\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>> _typeArgs_1 = this.getTypeArgs();\n\tfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.String%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.String%>>()\n\t{\n\t\tpublic <%java.lang.String%> apply(final <%eu.numberfour.n4js.ts.typeRefs.TypeArgument%> it)\n\t\t{\n\t\t\treturn it.getTypeRefAsString();\n\t\t}\n\t};\n\t<%org.eclipse.emf.common.util.EList%><<%java.lang.String%>> _map = <%org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions%>.<<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.String%>>map(_typeArgs_1, _function);\n\t<%java.lang.String%> _join = <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.join(_map, \",\");\n\t<%java.lang.String%> _plus = (\"<\" + _join);\n\t_xifexpression = (_plus + \">\");\n}\n<%java.lang.String%> _plus_1 = (_rawTypeAsString + _xifexpression);\n<%java.lang.String%> _modifiersAsString = this.getModifiersAsString();\nreturn (_plus_1 + _modifiersAsString);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.Type%> _declaredType = this.getDeclaredType();\n<%java.lang.String%> _rawTypeAsString = null;\nif (_declaredType!=null)\n{\n\t_rawTypeAsString=_declaredType.getRawTypeAsString();\n}\n<%java.lang.String%> _xifexpression = null;\nint _referencedVersion = this.getReferencedVersion();\nboolean _greaterThan = (_referencedVersion > 0);\nif (_greaterThan)\n{\n\tint _referencedVersion_1 = this.getReferencedVersion();\n\t_xifexpression = (\"#\" + <%java.lang.Integer%>.valueOf(_referencedVersion_1));\n}\nelse\n{\n\t<%java.lang.String%> _xifexpression_1 = null;\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>> _typeArgs = this.getTypeArgs();\n\tboolean _isEmpty = _typeArgs.isEmpty();\n\tif (_isEmpty)\n\t{\n\t\t_xifexpression_1 = \"\";\n\t}\n\telse\n\t{\n\t\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>> _typeArgs_1 = this.getTypeArgs();\n\t\tfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.String%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.String%>>()\n\t\t{\n\t\t\tpublic <%java.lang.String%> apply(final <%eu.numberfour.n4js.ts.typeRefs.TypeArgument%> it)\n\t\t\t{\n\t\t\t\treturn it.getTypeRefAsString();\n\t\t\t}\n\t\t};\n\t\t<%org.eclipse.emf.common.util.EList%><<%java.lang.String%>> _map = <%org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions%>.<<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.String%>>map(_typeArgs_1, _function);\n\t\t<%java.lang.String%> _join = <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.join(_map, \",\");\n\t\t<%java.lang.String%> _plus = (\"<\" + _join);\n\t\t_xifexpression_1 = (_plus + \">\");\n\t}\n\t<%java.lang.String%> _plus_1 = (\"\" + _xifexpression_1);\n\t<%java.lang.String%> _modifiersAsString = this.getModifiersAsString();\n\t_xifexpression = (_plus_1 + _modifiersAsString);\n}\nreturn (_rawTypeAsString + _xifexpression);'"
 	 * @generated
 	 */
 	String getTypeRefAsString();
@@ -248,5 +277,18 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * @generated
 	 */
 	boolean isDefSiteStructuralTyping();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * *
+	 * Overrides method declared in TypeRef, returns the declared version instead of the default value.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.math.BigDecimal%> _declaredVersion = this.getDeclaredVersion();\nboolean _tripleEquals = (_declaredVersion == null);\nif (_tripleEquals)\n{\n\treturn 0;\n}\n<%java.math.BigDecimal%> _declaredVersion_1 = this.getDeclaredVersion();\nreturn _declaredVersion_1.intValue();'"
+	 * @generated
+	 */
+	int getReferencedVersion();
 
 } // ParameterizedTypeRef
