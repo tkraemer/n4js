@@ -171,6 +171,7 @@ import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeHelper
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesbuilder.N4JSFunctionDefinitionTypesBuilder
+import eu.numberfour.n4js.typesystem.TypeRefWrapper
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
@@ -198,6 +199,7 @@ inject DestructureHelper destructureHelper
 inject MemberScopingHelper memberScopingHelper
 inject PromisifyHelper promisifyHelper
 inject JavaScriptVariantHelper jsVariantHelper
+inject TypeRefWrapper typeRefWrapper
 
 judgments {
 
@@ -270,7 +272,7 @@ judgments {
  * its type, which seems superfluous. However, supporting this simplifies some client code, because the
  * client need not check for this special case and call TypeUtils#createTypeRef() directly.
  */
-axiom typeType G |- Type type: TypeUtils.wrapTypeInTypeRef(type)
+axiom typeType G |- Type type: typeRefWrapper.wrapTypeInTypeRef(G, type)
 
 // keep aligned to axiom typeN4EnumLiteral
 axiom typeTEnumLiteral G |- TEnumLiteral enumLiteral : (enumLiteral.eContainer as TEnum).ref
@@ -308,7 +310,7 @@ from {
  * handled by client code (i.e. call TypeUtils#createTypeRef() directly) but supporting it
  * here relieves client code of handling special cases.
  */
-axiom typeTypeDefiningElement G |- TypeDefiningElement elem : TypeUtils.wrapTypeInTypeRef(elem.definedType)
+axiom typeTypeDefiningElement G |- TypeDefiningElement elem : typeRefWrapper.wrapTypeInTypeRef(G, elem.definedType)
 
 /* @see [N4JS] 6.1.5. Object Literal */
 rule typeObjectLiteral
