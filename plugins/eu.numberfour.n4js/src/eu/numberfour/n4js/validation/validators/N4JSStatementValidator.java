@@ -35,7 +35,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
-import eu.numberfour.n4js.validation.JavaScriptVariant;
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
 
@@ -46,6 +46,9 @@ public class N4JSStatementValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
 	private N4JSTypeSystem typeSystem;
+
+	@Inject
+	private JavaScriptVariantHelper jsVariantHelper;
 
 	/**
 	 * NEEEDED
@@ -73,7 +76,7 @@ public class N4JSStatementValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	private boolean holdsConstHasInitializer(VariableDeclaration varDecl) {
-		if (JavaScriptVariant.external.isActive(varDecl)) {
+		if (!jsVariantHelper.constantHasInitializer(varDecl)) {
 			return true; // in .n4jsd --> anything goes
 		}
 		if (varDecl.getExpression() == null) {

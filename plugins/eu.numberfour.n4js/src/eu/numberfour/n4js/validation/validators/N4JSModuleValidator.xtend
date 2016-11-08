@@ -21,7 +21,7 @@ import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import java.util.List
 import java.util.Set
 import java.util.regex.Pattern
@@ -57,6 +57,9 @@ class N4JSModuleValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject IQualifiedNameConverter qualifiedNameConverter
 
 	@Inject IN4JSCore n4jscore;
+	
+	@Inject
+	private JavaScriptVariantHelper jsVariantHelper;
 
 	/**
 	 * NEEDED
@@ -73,7 +76,7 @@ class N4JSModuleValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def void checkNoN4jsInRuntimeEnvOrLib(Script script) {
-		if(JavaScriptVariant.getVariant(script)===JavaScriptVariant.n4js) {
+		if(jsVariantHelper.requirecheckNoN4jsInRuntimeEnvOrLib(script)) {
 			val n4jsProject = n4jscore.findProject(script.eResource.URI).orNull;
 			if(n4jsProject!==null) {
 				val projectType = n4jsProject.projectType;

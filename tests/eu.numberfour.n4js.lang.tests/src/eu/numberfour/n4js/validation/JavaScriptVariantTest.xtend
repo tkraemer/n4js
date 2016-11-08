@@ -8,9 +8,10 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.tests.validation
+package eu.numberfour.n4js.validation
 
 import com.google.inject.Inject
+import com.google.inject.Provider
 import eu.numberfour.n4js.N4JSInjectorProvider
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.StringLiteral
@@ -18,13 +19,11 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.resource.XtextResourceSet
 import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import eu.numberfour.n4js.validation.JavaScriptVariant
-import org.eclipse.xtext.resource.XtextResourceSet
-import com.google.inject.Provider
 
 /**
  */

@@ -53,7 +53,7 @@ import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import eu.numberfour.n4js.validation.ValidatorMessageHelper
 import java.util.ArrayList
 import java.util.Collections
@@ -87,6 +87,9 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject IN4JSCore n4jsCore;
 
 	@Inject SourceElementExtensions sourceElementExtensions;
+	
+	@Inject
+	private JavaScriptVariantHelper jsVariantHelper;
 
 	public static val BASE_JS_TYPES = Sets.newHashSet(
 		#['Object', 'Function', 'Array', 'String', 'Boolean', 'Number', 'Math', 'Date', 'RegExp', 'Error', 'JSON']);
@@ -465,7 +468,7 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 									//this does not work in some JS environments, e.g. IE8
 									//adding a warning, consider removing if it gets annoying
 									//in our platform code
-									if(JavaScriptVariant.n4js.isActive(innerScopeObject)){
+									if(jsVariantHelper.isN4JSMode(innerScopeObject)){
 										addIssue(
 											StringExtensions.toFirstUpper(
 												getMessageForAST_NAME_SHADOW_WARN(

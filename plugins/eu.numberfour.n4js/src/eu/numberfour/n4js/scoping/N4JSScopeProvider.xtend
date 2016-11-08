@@ -55,7 +55,7 @@ import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.ts.types.TStructMethod
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import eu.numberfour.n4js.xtext.scoping.FilteringScope
 import java.util.List
 import org.eclipse.emf.ecore.EObject
@@ -122,6 +122,8 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 	@Inject extension VariableVisibilityChecker
 
 	@Inject extension ProjectUtils;
+	
+	@Inject JavaScriptVariantHelper jsVariantHelper;
 
 	protected def IScope delegateGetScope(EObject context, EReference reference) {
 		return delegate.getScope(context, reference)
@@ -326,7 +328,7 @@ class N4JSScopeProvider extends AbstractScopeProvider implements IDelegatingScop
 		// IDE-1065: there may be user declared globals (i.e. @@Global)
 		val IScope globalScope = delegate.getScope(script, ref);
 
-		if (JavaScriptVariant.getVariant(context).isECMAScript()) { // cf. sec. 13.1
+		if (jsVariantHelper.activateDynamicPseudoScope(context)) { // cf. sec. 13.1
 			return new DynamicPseudoScope(globalScope);
 		}
 		return globalScope;

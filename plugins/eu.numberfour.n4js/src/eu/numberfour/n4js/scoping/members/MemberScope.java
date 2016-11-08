@@ -27,13 +27,12 @@ import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.VirtualBaseType;
 import eu.numberfour.n4js.ts.types.internal.MemberByNameAndAccessMap;
 import eu.numberfour.n4js.utils.ContainerTypesHelper;
-import eu.numberfour.n4js.validation.JavaScriptVariant;
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
 
 /**
  * A scope implementation that wraps a type and allows to access its members as scope content.
  */
 public class MemberScope extends AbstractMemberScope {
-
 	/**
 	 * Emulates a (injector) factory w/o FactoryModuleBuilder
 	 */
@@ -42,19 +41,22 @@ public class MemberScope extends AbstractMemberScope {
 		@Inject
 		ContainerTypesHelper containerTypesHelper;
 
+		@Inject
+		JavaScriptVariantHelper jsVariantHelper;
+
 		/**
 		 * Factory method to produce a {@link MemberScope} with the members of the given ContainerType.
 		 */
 		public IScope create(IScope parent, ContainerType<?> type,
 				EObject context, boolean staticAccess) {
-			return new MemberScope(containerTypesHelper, parent, type, context, staticAccess);
+			return new MemberScope(containerTypesHelper, parent, type, context, staticAccess, jsVariantHelper);
 		}
 
 		/**
 		 * Factory method to produce a {@link MemberScope} with the members of the given ContainerType without a parent.
 		 */
 		public IScope create(ContainerType<?> type, EObject context, boolean staticAccess) {
-			return new MemberScope(containerTypesHelper, type, context, staticAccess);
+			return new MemberScope(containerTypesHelper, type, context, staticAccess, jsVariantHelper);
 		}
 
 		/**
@@ -63,7 +65,7 @@ public class MemberScope extends AbstractMemberScope {
 		 */
 		public IScope create(IScope parent,
 				List<? extends TMember> members, EObject context, boolean staticAccess) {
-			return new MemberScope(containerTypesHelper, parent, members, context, staticAccess);
+			return new MemberScope(containerTypesHelper, parent, members, context, staticAccess, jsVariantHelper);
 		}
 	}
 
@@ -86,8 +88,8 @@ public class MemberScope extends AbstractMemberScope {
 	 */
 	MemberScope(ContainerTypesHelper containerTypesHelper, IScope parent,
 			List<? extends TMember> members, EObject context,
-			boolean staticAccess) {
-		super(parent, context, staticAccess);
+			boolean staticAccess, JavaScriptVariantHelper jsVariantHelper) {
+		super(parent, context, staticAccess, jsVariantHelper);
 		this.containerTypesHelper = containerTypesHelper;
 		this.type = null;
 		this.members = new ArrayList<>(members);
@@ -98,8 +100,8 @@ public class MemberScope extends AbstractMemberScope {
 	 */
 	MemberScope(ContainerTypesHelper containerTypesHelper, IScope parent, ContainerType<?> type,
 			EObject context,
-			boolean staticAccess) {
-		super(parent, context, staticAccess);
+			boolean staticAccess, JavaScriptVariantHelper jsVariantHelper) {
+		super(parent, context, staticAccess, jsVariantHelper);
 		this.containerTypesHelper = containerTypesHelper;
 		this.type = type;
 		this.members = null;
@@ -110,8 +112,8 @@ public class MemberScope extends AbstractMemberScope {
 	 */
 	MemberScope(ContainerTypesHelper containerTypesHelper, ContainerType<?> type,
 			EObject context,
-			boolean staticAccess) {
-		super(IScope.NULLSCOPE, context, staticAccess);
+			boolean staticAccess, JavaScriptVariantHelper jsVariantHelper) {
+		super(IScope.NULLSCOPE, context, staticAccess, jsVariantHelper);
 		this.containerTypesHelper = containerTypesHelper;
 		this.type = type;
 		this.members = null;
@@ -152,9 +154,9 @@ public class MemberScope extends AbstractMemberScope {
 		// #hack for IDE-662 restriction on arguments.callee in all modes except for unrestricted Javascript.
 		if (type instanceof VirtualBaseType) {
 			if (type.getName().equals("ArgumentsType") && existingMember.getName().equals("callee")) {
-				JavaScriptVariant jsVariant = JavaScriptVariant.getVariant(context);
-				if (jsVariant != JavaScriptVariant.unrestricted) {
-					return new RestrictedUsageDescription(description, jsVariant);
+				// JavaScriptVariant jsVariant = JavaScriptVariant.getVariant(context);
+				if (!jsVariantHelper.isUnrestrictedMode(context)) {
+					return new RestrictedUsageDescription(description, jsVariantHelper.variantMode(context));
 				}
 			}
 		}

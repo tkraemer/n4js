@@ -22,10 +22,12 @@ mvn -Dtycho.mode=maven verify
 HTML for Web: ::
 (Requires **http://asciidoctor.org/[AsciiDoctor]** RubyGem)
 +
-[source,bash]
+[source,bash,subs=quotes]
 ----
 cd n4js/docs/eu.numberfour.n4js.doc/src
 ./build.sh
+# Running the script with the `-l` flag (or `--launch`) opens the pages in a browser:
+./build.sh --launch
 ----
 
 = N4JS IDE Documentation

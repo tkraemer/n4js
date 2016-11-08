@@ -102,6 +102,8 @@ import eu.numberfour.n4js.typesystem.N4JSValidatorErrorGenerator;
 import eu.numberfour.n4js.typesystem.TypeRefWrapper;
 import eu.numberfour.n4js.utils.di.scopes.ScopeManager;
 import eu.numberfour.n4js.utils.di.scopes.TransformationScoped;
+import eu.numberfour.n4js.validation.DefaultJavaScriptVariantHelper;
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
 import eu.numberfour.n4js.validation.N4JSDiagnostician;
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider;
 import eu.numberfour.n4js.validation.N4JSIssueSeveritiesProvider;
@@ -518,6 +520,13 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 				.bind(IPreferenceValuesProvider.class)
 				.annotatedWith(FormatterPreferences.class)
 				.to(N4JSSimpleFormattingPreferenceProvider.class);
+	}
+
+	/**
+	 * Bind JavaScriptVariantHelper
+	 */
+	public Class<? extends JavaScriptVariantHelper> bindJavaScriptVariantHelper() {
+		return DefaultJavaScriptVariantHelper.class;
 	}
 
 	/**

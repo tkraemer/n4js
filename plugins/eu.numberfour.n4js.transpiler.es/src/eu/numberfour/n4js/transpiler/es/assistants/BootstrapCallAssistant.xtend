@@ -63,7 +63,7 @@ import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.types.util.SuperInterfacesIterable
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 import java.util.List
 import org.eclipse.xtext.util.Strings
@@ -89,7 +89,7 @@ class BootstrapCallAssistant extends TransformationAssistant {
 	@Inject private TypeAssistant typeAssistant;
 	@Inject private extension QualifiedNameComputer
 	@Inject private ProjectUtils projectUtils;
-
+	@Inject private JavaScriptVariantHelper jsVariantHelper;
 
 	/**
 	 * Create a <code>$makeClass</code> call, including all its required arguments.
@@ -597,7 +597,7 @@ class BootstrapCallAssistant extends TransformationAssistant {
 	}
 
 	def private boolean inN4JSD(Type type) {
-		return JavaScriptVariant.getVariant(type) === JavaScriptVariant.external;
+		return jsVariantHelper.isExternalMode(type);
 	}
 
 	def private boolean isAbstract(ModifiableElement element) {

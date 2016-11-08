@@ -45,7 +45,7 @@ import eu.numberfour.n4js.ui.utils.ImportUtil
 import eu.numberfour.n4js.ui.utils.UIUtils
 import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.validation.IssueUserDataKeys
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 import java.util.ArrayList
 import java.util.concurrent.atomic.AtomicReference
@@ -82,6 +82,9 @@ class N4JSQuickfixProvider extends AbstractN4JSQuickfixProvider {
 
 	@Inject
 	extension SemanticChangeProvider
+	
+	@Inject
+	protected JavaScriptVariantHelper jsVariantHelper;
 
 	/** Retrieve annotation constants from AnnotationDefinition */
 	static final String INTERNAL_ANNOTATION = AnnotationDefinition.INTERNAL.name;
@@ -510,8 +513,7 @@ class N4JSQuickfixProvider extends AbstractN4JSQuickfixProvider {
 		acceptor.accept(issue, "Declare element as exported", "", null) [ context, marker, offset, length, element |
 
 			//Check for .n4jsd file
-			val javascriptVariant = JavaScriptVariant.getVariant(element);
-			if ( javascriptVariant == JavaScriptVariant.external && element instanceof ModifiableElement ) {
+			if (jsVariantHelper.isExternalMode(element) && element instanceof ModifiableElement ) {
 				return #[addCustomModifier(context.xtextDocument, element as ModifiableElement,N4JSLanguageConstants.EXPORT_KEYWORD+" "+N4JSLanguageConstants.EXTERNAL_KEYWORD)]
 			}
 			else if (element instanceof ModifiableElement) {

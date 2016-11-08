@@ -22,12 +22,12 @@ import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.List
 import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.utils.N4JSLanguageUtils
 
 /**
  * Contains some helper methods to compute if type A is a subtype of type B.
@@ -133,32 +133,45 @@ class SubtypeComputer extends TypeSystemHelperStrategy {
 	private def boolean primIsSubtypeFunction(RuleEnvironment G, FunctionTypeExprOrRef left, FunctionTypeExprOrRef right) {
 
 		// return type
-		if (right.returnTypeRef !== null) {
+		val leftReturnTypeRef = left.returnTypeRef;
+		val rightReturnTypeRef = right.returnTypeRef;
+		if (rightReturnTypeRef !== null) {
 
-			// f():void <: f():void --> true
-			// f():B    <: f():void --> true
-			// f():B?   <: f():void --> true
-			// f():void <: f():A    --> false
-			// f():B    <: f():A    --> B <: A
-			// f():B?   <: f():A    --> false (!)
-			// f():void <: f():A?   --> true (!)
-			// f():B    <: f():A?   --> B <: A
-			// f():B?   <: f():A?   --> B <: A
-			if (right.returnTypeRef.declaredType !== G.voidType) {
-				if (left.returnTypeRef.declaredType !== G.voidType) {
+			// f():void <: f():void      --> true
+			// f():B    <: f():void      --> true
+			// f():B?   <: f():void      --> true
+			// f():void <: f():A         --> false, except A==undefined
+			// f():B    <: f():A         --> B <: A
+			// f():B?   <: f():A         --> false (!)
+			// f():void <: f():A?        --> true (!)
+			// f():B    <: f():A?        --> B <: A
+			// f():B?   <: f():A?        --> B <: A
+
+			// note these special cases, that follow from the above rules:
+			// f():void <: f():undefined --> true
+			// f():B    <: f():undefined --> false (!)
+			// f():B?   <: f():undefined --> false (!)
+			// f():undefined <: f():void --> true
+			// f():undefined <: f():A    --> true
+			// f():undefined <: f():A?   --> true
+
+			if (rightReturnTypeRef.declaredType !== G.voidType) {
+				if (leftReturnTypeRef.declaredType !== G.voidType) {
 
 					// both are non-void
-					if (left.returnTypeRef.undefModifier == UndefModifier.OPTIONAL &&
-						!(right.returnTypeRef.undefModifier == UndefModifier.OPTIONAL)) {
+					if (leftReturnTypeRef.undefModifier == UndefModifier.OPTIONAL
+						&& !(rightReturnTypeRef.undefModifier == UndefModifier.OPTIONAL)) {
 						return false;
-					} else if (!isSubtype(G, left.returnTypeRef, right.returnTypeRef)) {
+					} else if (!isSubtype(G, leftReturnTypeRef, rightReturnTypeRef)) {
 						return false;
 					}
 				} else {
 
 					// left is void, right is non-void
-					if (!(right.returnTypeRef.undefModifier == UndefModifier.OPTIONAL))
+					if (!(rightReturnTypeRef.undefModifier == UndefModifier.OPTIONAL)
+						&& !ts.equaltypeSucceeded(G, rightReturnTypeRef, G.undefinedTypeRef)) {
 						return false;
+					}
 				}
 			}
 		}

@@ -33,7 +33,7 @@ import eu.numberfour.n4js.scoping.utils.WrongStaticAccessDescription;
 import eu.numberfour.n4js.scoping.utils.WrongWriteAccessDescription;
 import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TMember;
-import eu.numberfour.n4js.validation.JavaScriptVariant;
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
 
 /**
  * Base class for real {@link MemberScope}. It allows access to members of a container type, taking static access and
@@ -55,6 +55,9 @@ public abstract class AbstractMemberScope extends AbstractScope {
 	 */
 	protected final boolean staticAccess;
 
+	// @Inject
+	protected final JavaScriptVariantHelper jsVariantHelper;
+
 	/**
 	 * Creates member scope and context information, subclasses must handle concrete members.
 	 *
@@ -62,7 +65,7 @@ public abstract class AbstractMemberScope extends AbstractScope {
 	 *            context from where the scope is to be retrieved, neither the context nor its resource must be null
 	 */
 	public AbstractMemberScope(IScope parent, EObject context,
-			boolean staticAccess) {
+			boolean staticAccess, JavaScriptVariantHelper jsVariantHelper) {
 		super(parent, false);
 		if (context == null || context.eResource() == null) {
 			throw new NullPointerException("Cannot create member scope for context " + context
@@ -71,6 +74,7 @@ public abstract class AbstractMemberScope extends AbstractScope {
 		this.context = context;
 		this.contextResource = context.eResource();
 		this.staticAccess = staticAccess;
+		this.jsVariantHelper = jsVariantHelper;
 	}
 
 	/**
@@ -151,7 +155,7 @@ public abstract class AbstractMemberScope extends AbstractScope {
 			}
 
 			// allowed special case: wrong read/write in a mode other than N4JS
-			if (JavaScriptVariant.getVariant(context).isECMAScript()) { // cf. sec. 13.1
+			if (jsVariantHelper.allowWrongReadWrite(context)) { // cf. sec. 13.1
 				return createSingleElementDescription(existingMember);
 			}
 

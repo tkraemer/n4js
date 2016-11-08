@@ -39,11 +39,11 @@ import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.ts.types.TVariable
 import eu.numberfour.n4js.ts.types.TypesFactory
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.resource.DerivedStateAwareResource
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import eu.numberfour.n4js.validation.JavaScriptVariant
 
 /**
  * This class with its {@link N4JSTypesBuilder#createTModuleFromSource(DerivedStateAwareResource,boolean) createTModuleFromSource()}
@@ -76,6 +76,7 @@ public class N4JSTypesBuilder {
 	@Inject private IN4JSCore n4jscore
 	@Inject private IQualifiedNameConverter qualifiedNameConverter
 	@Inject private SpecifierConverter specifierConverter
+	@Inject protected JavaScriptVariantHelper jsVariantHelper;
 
 
 	/**
@@ -122,8 +123,8 @@ public class N4JSTypesBuilder {
 
 			script.buildNamespacesTypesFromModuleImports(result,preLinkingPhase);
 
-			result.n4jsdModule = JavaScriptVariant.getVariant(script) === JavaScriptVariant.external;
-
+			result.n4jsdModule = jsVariantHelper.isExternalMode(script);
+ 
 			// Setting Polyfill property.
 			result.staticPolyfillModule = result.isContainedInStaticPolyfillModule;
 			result.staticPolyfillAware = result.isContainedInStaticPolyfillAware;

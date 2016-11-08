@@ -82,7 +82,7 @@ console.log("roleElement: " + JSON.stringify(roleElement, null, " "))
 var color : ColorHere = ColorHere.BLUE
 console.log("color: " + JSON.stringify(color, null, " "))
 
-var localFun : funHere = funHere
+var localFun: ()=>void = funHere
 console.log("Before localFun call")
 //localFun();
 console.log("typeof: " + (typeof localFun));

@@ -70,7 +70,7 @@ import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleEnvironment
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator
@@ -107,6 +107,9 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
 	private ContainerTypesHelper containerTypesHelper;
+	
+	@Inject
+	private JavaScriptVariantHelper jsVariantHelper;
 
 
 	/**
@@ -164,6 +167,14 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		val declaredType = paramTypeRef.declaredType;
 		if (declaredType === null || declaredType.eIsProxy) {
 			return;
+		}
+
+		// this validation might be removed in the future, see GH-204
+		if (declaredType instanceof TFunction) {
+			if (!(paramTypeRef.eContainer instanceof TypeTypeRef)) { // avoid duplicate error message
+				addIssue(getMessageForTYS_FUNCTION_DISALLOWED_AS_TYPE(), paramTypeRef, TYS_FUNCTION_DISALLOWED_AS_TYPE);
+				return;
+			}
 		}
 
 		val isInTypeTypeRef = paramTypeRef.eContainer instanceof TypeTypeRef || (
@@ -410,9 +421,9 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def void checkTypeMatchesExpectedType(Expression expression) {
 
-//		if(JavaScriptVariant.getVariant(expression) == JavaScriptVariant.unrestricted) {
-//			return;
-//		}
+		if(!jsVariantHelper.requireCheckTypeMatchesExpectedType(expression)) {
+			return;
+		}
 
 		// expressionAnnotationList occur on function- and class-expressions.
 		// checking of the content is done in N4JSAnnotationValidation
