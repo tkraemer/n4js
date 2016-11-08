@@ -55,19 +55,23 @@ class ArrowFunctionProcessor {
 				val exprTypeRef = cache.getType(node).value; // should be in cache, by now
 				if (TypeUtils.isVoid(exprTypeRef)) {
 					// the actual type of 'node' is void
-					val arrFunTypeRef = cache.getTypeFailSafe(arrFun).value as FunctionTypeExpression;
-					if (!TypeUtils.isVoid(arrFunTypeRef?.returnTypeRef)) {
-						// the return type of the containing single-expression arrow function is *not* void
-						// --> this would lead to a type error in N4JSTypeValidation, which we want to fix now in case
-						//     the outer type expectation for the containing arrow function has a return type of 'void'
-						val outerTypeExpectation = expectedTypeForArrowFunction(arrFun);
-						val outerReturnTypeExpectation = outerTypeExpectation?.returnTypeRef;
-						if (outerReturnTypeExpectation !== null && TypeUtils.isVoid(outerReturnTypeExpectation)) {
-							// fix the future type error by changing the return type of the containing arrow function
-							// from non-void to void
-							EcoreUtilN4.doWithDeliver(false, [
-								arrFunTypeRef.returnTypeRef = G.voidTypeRef;
-							], arrFunTypeRef);
+					val arrFunTypeRef = cache.getTypeFailSafe(arrFun).value;
+					if (arrFunTypeRef instanceof FunctionTypeExpression) {
+						if (!TypeUtils.isVoid(arrFunTypeRef?.returnTypeRef)) {
+							// the return type of the containing single-expression arrow function is *not* void
+							// --> this would lead to a type error in N4JSTypeValidation, which we want to fix now
+							//     in case the outer type expectation for the containing arrow function has a
+							//     return type of 'void' OR there is no outer type expectation at all
+							val outerTypeExpectation = expectedTypeForArrowFunction(arrFun);
+							val outerReturnTypeExpectation = outerTypeExpectation?.returnTypeRef;
+							if (outerTypeExpectation === null
+								|| (outerReturnTypeExpectation !== null && TypeUtils.isVoid(outerReturnTypeExpectation))) {
+								// fix the future type error by changing the return type of the containing arrow function
+								// from non-void to void
+								EcoreUtilN4.doWithDeliver(false, [
+									arrFunTypeRef.returnTypeRef = G.voidTypeRef;
+								], arrFunTypeRef);
+							}
 						}
 					}
 				}

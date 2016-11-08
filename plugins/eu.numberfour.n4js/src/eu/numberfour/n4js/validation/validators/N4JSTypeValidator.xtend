@@ -439,10 +439,12 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 				if (TypeUtils.isVoid(expectedType.value) || TypeUtils.isOptional(expectedType.value)) {
 					return; // all good
 				}
-				val message = IssueCodes.getMessageForFUN_SINGLE_EXP_LAMBDA_IMPLICIT_RETURN_ALLOWED_UNLESS_VOID();
-				addIssue(message, expression,
-						IssueCodes.FUN_SINGLE_EXP_LAMBDA_IMPLICIT_RETURN_ALLOWED_UNLESS_VOID);
-				return;
+				if(singleExprArrowFunction.returnTypeRef===null) { // show specialized error message only if return type of arrow function was inferred (i.e. not declared explicitly)
+					val message = IssueCodes.getMessageForFUN_SINGLE_EXP_LAMBDA_IMPLICIT_RETURN_ALLOWED_UNLESS_VOID();
+					addIssue(message, expression,
+							IssueCodes.FUN_SINGLE_EXP_LAMBDA_IMPLICIT_RETURN_ALLOWED_UNLESS_VOID);
+					return;
+				}
 			}
 
 			internalCheckUseOfUndefinedExpression(G, expression, expectedType.value, inferredType.value);
