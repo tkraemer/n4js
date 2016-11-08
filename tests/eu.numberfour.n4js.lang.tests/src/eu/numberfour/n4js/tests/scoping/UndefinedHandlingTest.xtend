@@ -48,9 +48,9 @@ class UndefinedHandlingTest {
 	}
 
 	@Test
-	def void testUndefinedAnnotated() {
+	def void testDeclaredUndefined() {
 		'''
-		var	@Undefined x;
+		var	x: undefined;
 		x.selector;'''.assertUndefined()
 	}
 

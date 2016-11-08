@@ -302,9 +302,9 @@ class JudgmentTypeTest extends AbstractTypesystemTest {
 	}
 
 	@Test
-	def void testUndefineAnnotation() {
+	def void testUndefinedDeclaration() {
 		val script = '''
-			var @Undefined undef;
+			var undef: undefined;
 			undef;
 		'''.parse();
 

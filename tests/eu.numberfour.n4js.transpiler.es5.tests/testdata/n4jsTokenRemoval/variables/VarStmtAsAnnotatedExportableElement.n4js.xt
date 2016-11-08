@@ -10,6 +10,6 @@ stderr:
 ~~~ */
 
 
-@Undefined export @Undefined project var @Undefined d2 : string = 'd2';
+@Internal export @Internal public var d2 : string = 'd2';
 
 console.log(d2);

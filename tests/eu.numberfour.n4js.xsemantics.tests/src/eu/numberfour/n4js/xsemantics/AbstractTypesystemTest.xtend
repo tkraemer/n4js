@@ -185,11 +185,9 @@ abstract class AbstractTypesystemTest {
 	}
 
 	def void assertNoValidationErrors(Script script) {
-		val issues = script.validate();
-		if (! issues.empty) {
-			logger.info(issues.map[toString].join("\n\t"));
-		}
-		assertEquals(0, issues.filter[it.severity!=Severity.WARNING].size)
+		val issues = script.validate().filter[it.severity!=Severity.WARNING].toList;
+		assertEquals("unexpected validation errors:\n\t" + issues.map[toString].join("\n\t"),
+			0, issues.size());
 	}
 
 	def variableStatementDeclaredType(ScriptElement e) {
