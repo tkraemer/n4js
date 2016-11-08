@@ -3231,137 +3231,131 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
       TypeRef _declaredTypeRef_1 = vdecl.getDeclaredTypeRef();
       T = _declaredTypeRef_1;
     } else {
-      boolean _hasAnnotation = AnnotationDefinition.UNDEFINED.hasAnnotation(vdecl);
-      if (_hasAnnotation) {
-        ParameterizedTypeRef _undefinedTypeRef = RuleEnvironmentExtensions.undefinedTypeRef(G);
-        T = _undefinedTypeRef;
-      } else {
-        EObject _eContainer = vdecl.eContainer();
-        if ((_eContainer instanceof BindingElement)) {
-          Expression _expression = vdecl.getExpression();
-          Pair<String, Expression> _mappedTo = Pair.<String, Expression>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _expression);
-          Object _get = G.get(_mappedTo);
-          boolean _tripleEquals = (_get == null);
-          if (_tripleEquals) {
-            final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
-            Expression _expression_1 = vdecl.getExpression();
-            Pair<String, Expression> _mappedTo_1 = Pair.<String, Expression>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _expression_1);
-            boolean _add = G2.add(_mappedTo_1, Boolean.TRUE);
-            /* G2.add(GUARD_VARIABLE_DECLARATION->vdecl.expression,Boolean.TRUE) */
-            if (!_add) {
-              sneakyThrowRuleFailedException("G2.add(GUARD_VARIABLE_DECLARATION->vdecl.expression,Boolean.TRUE)");
-            }
-            TypeRef _elvis = null;
-            TypeRef _typeOfVariableDeclarationInDestructuringPattern = this.destructureHelper.getTypeOfVariableDeclarationInDestructuringPattern(G2, vdecl);
-            if (_typeOfVariableDeclarationInDestructuringPattern != null) {
-              _elvis = _typeOfVariableDeclarationInDestructuringPattern;
-            } else {
-              ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
-              _elvis = _anyTypeRef;
-            }
-            T = _elvis;
+      EObject _eContainer = vdecl.eContainer();
+      if ((_eContainer instanceof BindingElement)) {
+        Expression _expression = vdecl.getExpression();
+        Pair<String, Expression> _mappedTo = Pair.<String, Expression>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _expression);
+        Object _get = G.get(_mappedTo);
+        boolean _tripleEquals = (_get == null);
+        if (_tripleEquals) {
+          final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
+          Expression _expression_1 = vdecl.getExpression();
+          Pair<String, Expression> _mappedTo_1 = Pair.<String, Expression>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _expression_1);
+          boolean _add = G2.add(_mappedTo_1, Boolean.TRUE);
+          /* G2.add(GUARD_VARIABLE_DECLARATION->vdecl.expression,Boolean.TRUE) */
+          if (!_add) {
+            sneakyThrowRuleFailedException("G2.add(GUARD_VARIABLE_DECLARATION->vdecl.expression,Boolean.TRUE)");
+          }
+          TypeRef _elvis = null;
+          TypeRef _typeOfVariableDeclarationInDestructuringPattern = this.destructureHelper.getTypeOfVariableDeclarationInDestructuringPattern(G2, vdecl);
+          if (_typeOfVariableDeclarationInDestructuringPattern != null) {
+            _elvis = _typeOfVariableDeclarationInDestructuringPattern;
           } else {
-            ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
-            T = _anyTypeRef_1;
+            ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
+            _elvis = _anyTypeRef;
+          }
+          T = _elvis;
+        } else {
+          ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
+          T = _anyTypeRef_1;
+        }
+      } else {
+        if (((vdecl.eContainer() instanceof ForStatement) && ((ForStatement) vdecl.eContainer()).isForOf())) {
+          EObject _eContainer_1 = vdecl.eContainer();
+          final ForStatement forOfStmnt = ((ForStatement) _eContainer_1);
+          EObject _eContainer_2 = vdecl.eContainer();
+          Pair<String, EObject> _mappedTo_2 = Pair.<String, EObject>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _eContainer_2);
+          Object _get_1 = G.get(_mappedTo_2);
+          boolean _tripleEquals_1 = (_get_1 == null);
+          if (_tripleEquals_1) {
+            final RuleEnvironment G2_1 = RuleEnvironmentExtensions.wrap(G);
+            EObject _eContainer_3 = vdecl.eContainer();
+            Pair<String, EObject> _mappedTo_3 = Pair.<String, EObject>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _eContainer_3);
+            boolean _add_1 = G2_1.add(_mappedTo_3, Boolean.TRUE);
+            /* G2.add(GUARD_VARIABLE_DECLARATION->vdecl.eContainer,Boolean.TRUE) */
+            if (!_add_1) {
+              sneakyThrowRuleFailedException("G2.add(GUARD_VARIABLE_DECLARATION->vdecl.eContainer,Boolean.TRUE)");
+            }
+            /* { G2 |- forOfStmnt.expression : var TypeRef ofPartTypeRef val elemType = destructureHelper.extractIterableElementType(G2, ofPartTypeRef) elemType!==null G2 |~ elemType /\ T } or { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } */
+            {
+              RuleFailedException previousFailure = null;
+              try {
+                /* G2 |- forOfStmnt.expression : var TypeRef ofPartTypeRef */
+                Expression _expression_2 = forOfStmnt.getExpression();
+                TypeRef ofPartTypeRef = null;
+                Result<TypeRef> result = typeInternal(G2_1, _trace_, _expression_2);
+                checkAssignableTo(result.getFirst(), TypeRef.class);
+                ofPartTypeRef = (TypeRef) result.getFirst();
+                
+                final TypeArgument elemType = this.destructureHelper.extractIterableElementType(G2_1, ofPartTypeRef);
+                /* elemType!==null */
+                if (!(elemType != null)) {
+                  sneakyThrowRuleFailedException("elemType!==null");
+                }
+                /* G2 |~ elemType /\ T */
+                Result<TypeRef> result_1 = upperBoundInternal(G2_1, _trace_, elemType);
+                checkAssignableTo(result_1.getFirst(), TypeRef.class);
+                T = (TypeRef) result_1.getFirst();
+                
+              } catch (Exception e) {
+                previousFailure = extractRuleFailedException(e);
+                UnknownTypeRef _createUnknownTypeRef = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
+                T = _createUnknownTypeRef;
+              }
+            }
+          } else {
+            ParameterizedTypeRef _anyTypeRef_2 = RuleEnvironmentExtensions.anyTypeRef(G);
+            T = _anyTypeRef_2;
           }
         } else {
-          if (((vdecl.eContainer() instanceof ForStatement) && ((ForStatement) vdecl.eContainer()).isForOf())) {
-            EObject _eContainer_1 = vdecl.eContainer();
-            final ForStatement forOfStmnt = ((ForStatement) _eContainer_1);
-            EObject _eContainer_2 = vdecl.eContainer();
-            Pair<String, EObject> _mappedTo_2 = Pair.<String, EObject>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _eContainer_2);
-            Object _get_1 = G.get(_mappedTo_2);
-            boolean _tripleEquals_1 = (_get_1 == null);
-            if (_tripleEquals_1) {
-              final RuleEnvironment G2_1 = RuleEnvironmentExtensions.wrap(G);
-              EObject _eContainer_3 = vdecl.eContainer();
-              Pair<String, EObject> _mappedTo_3 = Pair.<String, EObject>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _eContainer_3);
-              boolean _add_1 = G2_1.add(_mappedTo_3, Boolean.TRUE);
-              /* G2.add(GUARD_VARIABLE_DECLARATION->vdecl.eContainer,Boolean.TRUE) */
-              if (!_add_1) {
-                sneakyThrowRuleFailedException("G2.add(GUARD_VARIABLE_DECLARATION->vdecl.eContainer,Boolean.TRUE)");
-              }
-              /* { G2 |- forOfStmnt.expression : var TypeRef ofPartTypeRef val elemType = destructureHelper.extractIterableElementType(G2, ofPartTypeRef) elemType!==null G2 |~ elemType /\ T } or { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } */
-              {
-                RuleFailedException previousFailure = null;
-                try {
-                  /* G2 |- forOfStmnt.expression : var TypeRef ofPartTypeRef */
-                  Expression _expression_2 = forOfStmnt.getExpression();
-                  TypeRef ofPartTypeRef = null;
-                  Result<TypeRef> result = typeInternal(G2_1, _trace_, _expression_2);
-                  checkAssignableTo(result.getFirst(), TypeRef.class);
-                  ofPartTypeRef = (TypeRef) result.getFirst();
-                  
-                  final TypeArgument elemType = this.destructureHelper.extractIterableElementType(G2_1, ofPartTypeRef);
-                  /* elemType!==null */
-                  if (!(elemType != null)) {
-                    sneakyThrowRuleFailedException("elemType!==null");
-                  }
-                  /* G2 |~ elemType /\ T */
-                  Result<TypeRef> result_1 = upperBoundInternal(G2_1, _trace_, elemType);
-                  checkAssignableTo(result_1.getFirst(), TypeRef.class);
-                  T = (TypeRef) result_1.getFirst();
-                  
-                } catch (Exception e) {
-                  previousFailure = extractRuleFailedException(e);
-                  UnknownTypeRef _createUnknownTypeRef = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
-                  T = _createUnknownTypeRef;
-                }
-              }
-            } else {
-              ParameterizedTypeRef _anyTypeRef_2 = RuleEnvironmentExtensions.anyTypeRef(G);
-              T = _anyTypeRef_2;
-            }
+          if (((vdecl.eContainer() instanceof ForStatement) && ((ForStatement) vdecl.eContainer()).isForIn())) {
+            ParameterizedTypeRef _stringTypeRef = RuleEnvironmentExtensions.stringTypeRef(G);
+            T = _stringTypeRef;
           } else {
-            if (((vdecl.eContainer() instanceof ForStatement) && ((ForStatement) vdecl.eContainer()).isForIn())) {
-              ParameterizedTypeRef _stringTypeRef = RuleEnvironmentExtensions.stringTypeRef(G);
-              T = _stringTypeRef;
-            } else {
-              Expression _expression_3 = vdecl.getExpression();
-              boolean _tripleNotEquals_1 = (_expression_3 != null);
-              if (_tripleNotEquals_1) {
-                Expression _expression_4 = vdecl.getExpression();
-                Pair<String, Expression> _mappedTo_4 = Pair.<String, Expression>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _expression_4);
-                Object _get_2 = G.get(_mappedTo_4);
-                boolean _tripleEquals_2 = (_get_2 == null);
-                if (_tripleEquals_2) {
-                  final RuleEnvironment G2_2 = RuleEnvironmentExtensions.wrap(G);
-                  Expression _expression_5 = vdecl.getExpression();
-                  Pair<String, Expression> _mappedTo_5 = Pair.<String, Expression>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _expression_5);
-                  boolean _add_2 = G2_2.add(_mappedTo_5, Boolean.TRUE);
-                  /* G2.add(GUARD_VARIABLE_DECLARATION->vdecl.expression,Boolean.TRUE) */
-                  if (!_add_2) {
-                    sneakyThrowRuleFailedException("G2.add(GUARD_VARIABLE_DECLARATION->vdecl.expression,Boolean.TRUE)");
-                  }
-                  /* G2 |- vdecl.expression: var TypeRef E */
-                  Expression _expression_6 = vdecl.getExpression();
-                  TypeRef E = null;
-                  Result<TypeRef> result_2 = typeInternal(G2_2, _trace_, _expression_6);
-                  checkAssignableTo(result_2.getFirst(), TypeRef.class);
-                  E = (TypeRef) result_2.getFirst();
-                  
-                  if (((E instanceof BoundThisTypeRef) || ((E instanceof TypeTypeRef) && (((TypeTypeRef) E).getTypeArg() instanceof BoundThisTypeRef)))) {
-                  } else {
-                    /* G2 |~ E /\ E */
-                    Result<TypeRef> result_3 = upperBoundInternal(G2_2, _trace_, E);
-                    checkAssignableTo(result_3.getFirst(), TypeRef.class);
-                    E = (TypeRef) result_3.getFirst();
-                    
-                  }
-                  if ((((E.getDeclaredType() == RuleEnvironmentExtensions.undefinedType(G)) || (E.getDeclaredType() == RuleEnvironmentExtensions.nullType(G))) || (E.getDeclaredType() == RuleEnvironmentExtensions.voidType(G)))) {
-                    ParameterizedTypeRef _anyTypeRef_3 = RuleEnvironmentExtensions.anyTypeRef(G);
-                    T = _anyTypeRef_3;
-                  } else {
-                    T = E;
-                  }
+            Expression _expression_3 = vdecl.getExpression();
+            boolean _tripleNotEquals_1 = (_expression_3 != null);
+            if (_tripleNotEquals_1) {
+              Expression _expression_4 = vdecl.getExpression();
+              Pair<String, Expression> _mappedTo_4 = Pair.<String, Expression>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _expression_4);
+              Object _get_2 = G.get(_mappedTo_4);
+              boolean _tripleEquals_2 = (_get_2 == null);
+              if (_tripleEquals_2) {
+                final RuleEnvironment G2_2 = RuleEnvironmentExtensions.wrap(G);
+                Expression _expression_5 = vdecl.getExpression();
+                Pair<String, Expression> _mappedTo_5 = Pair.<String, Expression>of(RuleEnvironmentExtensions.GUARD_VARIABLE_DECLARATION, _expression_5);
+                boolean _add_2 = G2_2.add(_mappedTo_5, Boolean.TRUE);
+                /* G2.add(GUARD_VARIABLE_DECLARATION->vdecl.expression,Boolean.TRUE) */
+                if (!_add_2) {
+                  sneakyThrowRuleFailedException("G2.add(GUARD_VARIABLE_DECLARATION->vdecl.expression,Boolean.TRUE)");
+                }
+                /* G2 |- vdecl.expression: var TypeRef E */
+                Expression _expression_6 = vdecl.getExpression();
+                TypeRef E = null;
+                Result<TypeRef> result_2 = typeInternal(G2_2, _trace_, _expression_6);
+                checkAssignableTo(result_2.getFirst(), TypeRef.class);
+                E = (TypeRef) result_2.getFirst();
+                
+                if (((E instanceof BoundThisTypeRef) || ((E instanceof TypeTypeRef) && (((TypeTypeRef) E).getTypeArg() instanceof BoundThisTypeRef)))) {
                 } else {
-                  ParameterizedTypeRef _anyTypeRef_4 = RuleEnvironmentExtensions.anyTypeRef(G);
-                  T = _anyTypeRef_4;
+                  /* G2 |~ E /\ E */
+                  Result<TypeRef> result_3 = upperBoundInternal(G2_2, _trace_, E);
+                  checkAssignableTo(result_3.getFirst(), TypeRef.class);
+                  E = (TypeRef) result_3.getFirst();
+                  
+                }
+                if ((((E.getDeclaredType() == RuleEnvironmentExtensions.undefinedType(G)) || (E.getDeclaredType() == RuleEnvironmentExtensions.nullType(G))) || (E.getDeclaredType() == RuleEnvironmentExtensions.voidType(G)))) {
+                  ParameterizedTypeRef _anyTypeRef_3 = RuleEnvironmentExtensions.anyTypeRef(G);
+                  T = _anyTypeRef_3;
+                } else {
+                  T = E;
                 }
               } else {
-                ParameterizedTypeRef _anyTypeRef_5 = RuleEnvironmentExtensions.anyTypeRef(G);
-                T = _anyTypeRef_5;
+                ParameterizedTypeRef _anyTypeRef_4 = RuleEnvironmentExtensions.anyTypeRef(G);
+                T = _anyTypeRef_4;
               }
+            } else {
+              ParameterizedTypeRef _anyTypeRef_5 = RuleEnvironmentExtensions.anyTypeRef(G);
+              T = _anyTypeRef_5;
             }
           }
         }
