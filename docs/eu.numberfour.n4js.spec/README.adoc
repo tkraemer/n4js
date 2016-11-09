@@ -12,4 +12,18 @@ asciispec N4JSSpec.adoc
 
 - [ ] Bibliography macro currently duplicates entries per citation count
 - [ ] Custom Math commands not yet implemented
-- [ ] Minor formatting adjustments & conventions for examples & xrefs to be decided upon
+
+== Formatting / TODO
+
+- [ ] Conventions for examples & xrefs to be decided upon
+- [ ] Tasks create large empty space between paras
+- [ ] Cover to be added
+
+=== Low-prio
+
+- Inline source code formatted as monospace
+
+== Submitting Bug Reports / Suggestions
+
+For reporting new bugs and submitting suggestions, please open an issue in the https://github.numberfour.eu/NumberFour/asciispec/issues[AsciiSpec Repository] and a corresponding Jira Ticket, if necessary.
+

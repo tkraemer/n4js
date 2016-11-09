@@ -1,5 +1,0 @@
-= My lovely include
-
-Here I am including my Document. It is so nice. Just like cite:[ECMA11a].
-
-
