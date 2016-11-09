@@ -1,4 +1,5 @@
 ifndef::config_adoc_include_guard[]
+:config_adoc_include_guard: 1
 // Include guard
 :doctype: book
 
@@ -38,7 +39,7 @@ ifndef::config_adoc_include_guard[]
 
 [discrete]
 == Document Attributes
-:config_adoc_include_guard: 1
+
 
 
 endif::[]
