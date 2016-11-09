@@ -404,6 +404,10 @@ rule typeIdentifierRef G |- IdentifierRef idref: TypeRef T
 from  {
 	G |- idref.id : T
 
+	if (idref.referencedVersion > 0) {
+		T = typeRefWrapper.resolveVersion(T, idref.referencedVersion);
+	}
+
 	if(idref.eContainer instanceof ParameterizedCallExpression
 		&& idref.eContainmentFeature===N4JSPackage.eINSTANCE.getParameterizedCallExpression_Target()) {
 		val callableCtorFunction = typeSystemHelper.getCallableClassConstructorFunction(G, T);
@@ -753,7 +757,7 @@ from {
 				typeSystemHelper.addSubstitutions(G2,expr);
 			}
 		}
-		
+
 		G2 |- propTypeRef ~> T
 
 		if (receiverTypeRef instanceof ParameterizedTypeRef) {
@@ -761,7 +765,7 @@ from {
 				T = typeRefWrapper.resolveVersion(T, receiverTypeRef.referencedVersion);
 			}
 		}
-		
+
 		if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { // super.foo(): this; cf. GH-95
 			val F = T as FunctionTypeExprOrRef;
 			if ((T as FunctionTypeExprOrRef).returnTypeRef instanceof BoundThisTypeRef) {

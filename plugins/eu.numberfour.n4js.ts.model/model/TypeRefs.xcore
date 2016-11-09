@@ -534,6 +534,8 @@ class ParameterizedTypeRef extends BaseTypeRef {
 		return false
 	}
 	
+	// FIXME add an operation isVersioned() and replace all calls to getReferencedVersion that check for ===0 or !==0 by calls to isVersioned()
+	// FIXME factor out declaredVersion and getReferencedVersion() into a super entity "VersionedElement" or something similar
 	/**
 	 * Overrides method declared in TypeRef, returns the declared version instead of the default value.
 	 */

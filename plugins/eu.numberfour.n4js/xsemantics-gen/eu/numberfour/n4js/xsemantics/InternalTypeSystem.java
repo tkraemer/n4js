@@ -1369,6 +1369,13 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result.getFirst(), TypeRef.class);
     T = (TypeRef) result.getFirst();
     
+    int _referencedVersion = idref.getReferencedVersion();
+    boolean _greaterThan = (_referencedVersion > 0);
+    if (_greaterThan) {
+      int _referencedVersion_1 = idref.getReferencedVersion();
+      TypeRef _resolveVersion = this.typeRefWrapper.<TypeRef>resolveVersion(T, _referencedVersion_1);
+      T = _resolveVersion;
+    }
     if (((idref.eContainer() instanceof ParameterizedCallExpression) && (idref.eContainmentFeature() == N4JSPackage.eINSTANCE.getParameterizedCallExpression_Target()))) {
       final TMethod callableCtorFunction = this.typeSystemHelper.getCallableClassConstructorFunction(G, T);
       if ((callableCtorFunction != null)) {
