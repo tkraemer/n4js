@@ -2,7 +2,6 @@ include::index-config.adoc[]
 .N4JS Language Specification
 = N4JS Language Specification
 :toc: right
-:doctype: book
 
 <<<
 

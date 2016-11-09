@@ -671,7 +671,7 @@ h| pass:[~r~A4]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |�
 h| pass:[~r~A5]|  |  |  |  |  |  |  |✓ |  |  |✓ |✓ |  |  |  |✓ |✓ |
 |===
 
-// TODO :  review table size in pdf/html, ensure checkmark encoding is ok.
+// TODO :  fonts must be smaller here, overlapping in HTML and PDF
 
 == Public Setter Annotated With `ProvidesInitializer`
 
