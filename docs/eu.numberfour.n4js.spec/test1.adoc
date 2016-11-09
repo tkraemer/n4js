@@ -1,0 +1,22 @@
+:bib-file: n4jsspec.bib
+:task_def_IDE-: Jira;IDE Backlog;https://jira.numberfour.eu/browse/IDE-${TASK_ID};resources/images/jira.png;IDE-${TASK_ID}
+= Title
+
+content
+
+== Section 1
+
+this is a good task:IDE-2344[]
+
+See my amazing book at cite:[ECMA11a] it is really riveting stuff.
+
+The first time I read cite:[ECMA11a], I thought I would never find something to rival cite:[ECMA11a]  and how well it is composed.
+
+It is composed nearly as well as my bibliography, which doesn't contain any duplicates whatsoever.
+
+include::test2.adoc[leveloffset=+1]
+
+=== Biblio
+
+bibliography::[]
+

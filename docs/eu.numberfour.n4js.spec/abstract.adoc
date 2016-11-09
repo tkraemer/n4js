@@ -1,0 +1,4 @@
+[discrete]
+= Abstract
+
+This document contains the NumberFour JavaScript Specification.

@@ -1,0 +1,15 @@
+= N4JS Language Specification Conversion
+
+Build PDF ::
+[source,bash]
+asciispec -fop N4JSSpec.adoc
+
+Build HTML ::
+[source,bash]
+asciispec N4JSSpec.adoc
+
+== Known Issues
+
+- [ ] Bibliography macro currently duplicates entries per citation count
+- [ ] Custom Math commands not yet implemented
+- [ ] Minor formatting adjustments & conventions for examples & xrefs to be decided upon

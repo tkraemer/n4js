@@ -1,0 +1,75 @@
+= Acronyms
+
+[[AC]]
+
+[cols="^1m,5h,^1m,5h"]
+|===
+|CDep
+|Compile-Time Dependency
+|RDep
+|Run-Time Dependency
+|LDep
+|Load-Time Dependency
+|IDep
+|Initialization-Time Dependency
+|EDep
+|Execution-Time Dependency
+|ANTLR
+|ANother Tool for Language Recognition
+|API
+|Application Programming Interface
+|AST
+|Abstract Syntax Tree
+|ASI
+|Automatic Semicolon Insertion
+|BNF
+|Backus-Naur Form
+|CLI
+|Command Line Interface \acroextra{, including a headless compiler and runner.}
+|DI
+|Dependency Injection
+|DIC
+|DI Component
+|DOM
+|Document Object Model
+|DSL
+|Domain Specific Language
+|EBNF
+|Extended Backus-Naur Form
+|EMF
+|Eclipse Modeling Framework\acroextra{  cite{EMF}}
+|FQN
+|Fully Qualified Name
+|GLB
+|Greatest Lower Bound, also known as \emph{infimum}
+|GCST
+|Greatest Common Sub Type, also known as \emph{meet}
+|IDE
+|Integrated Development Environment
+|IDL
+|Interface Definition Langage
+|LSP
+|Liskov Substitution Principle \cite{Martin96b}
+|LUB
+|Least Upper Bound, also known as \emph{supremum}
+|LCST
+|Least Common Super Type, also known as \emph{join}
+|N4JS
+|NumberFour JavaScript
+|N4JSED
+|N4JS Environment Definition
+|N4IDE
+|N4 Integrated Development Environment \acroextra{Eclipse based IDE for all N4 related languages and projects
+|VM
+|Virtual Machine
+|XML
+|Extensible Markup Language
+|XSLT / XSL
+|XSL Transformations
+|XSL
+|Extensible Stylesheet Language
+|WYSIWYG
+|What You See Is What You Get
+|WLOG
+|without loss of generality
+|===
