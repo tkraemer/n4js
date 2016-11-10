@@ -63,9 +63,9 @@ Also see cite:[West06a] and cite:[MozillaJSRef(https://developer.mozilla.org/en-
 Regarding the location where `this` may be used, the following restrictions
 apply:
 
-//Requirement
-//173Valid location for this literal
-[[req:ValidLocationForThisLiteral]]
+.Valid location for this literal
+[req,id=IDE-173,version=0.3]
+--
 The literal may not be used in
 
 1.  the initializer expression of static data fields in classes.
@@ -74,13 +74,14 @@ both static and non-static).
 3.  static methods of interfaces and static field accessors of
 interfaces.
 
-See also [req:StaticMembersOfInterfaces].
+See also <<req:StaticMembersOfInterfaces>>.
+
+--
 
 The use of `this` is illustrated with some examples as it can often be
 confusing. Type inference heuristics and explanations are provided in
 the next section.
 
-this in unrestricted mode
 [[ex:this_in_unrestricted_mode]]
 In unrestricted mode, `this` is bound to the receiver. If there is no receiver it is bound to the global object, however, we often do not know exactly
 what the global object would be.
@@ -193,9 +194,9 @@ with the `new` operator. If a function is known to be invoked with an explicit
 math:[$thisArg$] (`apply()` etc.), the `@This` annotation can be used to explicitly set the this type. This annotation has precedence over otherwise
 inferred bindings. task:IDE-1010[]
 
-//Requirement
-//90Type Inference Heuristic for This-Keyword
-[[req:Type_Inference_Heuristic_for_This_Keyword]]
+.Type Inference Heuristic for This-Keyword
+[req,id=IDE-90,version=0.3]
+--
 In general, the actual this target can not be inferred from the context of the this
 keyword. A heuristic is defined, however, to compute the probable this
 type:
@@ -225,6 +226,8 @@ math:[\[\begin{aligned}
         \infer{\tee \lstnfbnf{"this"}: \type{global} \type{undefined}}{mode\neq\lenum{unrestricted}}\\
         \end{aligned}\]]
 
+--
+
 If the actual this type is defined as a structural type, the structural
 type information is moved to the this type itself. This is transparent
 to the user in general but maybe visible in case of error messages. That
@@ -232,8 +235,10 @@ is to say that the actual this type is always a nominal type. This is
 indicated by the nominal modifier f
 (cf. <<req:Type_Inference_Heuristic_for_This_Keyword>> .1. and 2.).
 
-91Valid Target and Argument for @This
-Annotation[req:ValidTargetAndArgumentForThisAnnotation] task:IDE-802[]
+.Valid Target and Argument for @This Annotation
+[req,id=IDE-91,version=0.3]
+--
+task:IDE-802[]
 
 1.  The `@This` annotation is only allowed on declared functions, function
 expressions (including arrow functions), methods, and field accessors,
@@ -241,10 +246,14 @@ i.e. getters and setters, except static members of interfaces.
 2.  The type declared by way of `@This(..)` an annotation of a method or field
 accessor must be a subtype of the member’s containing classifier.
 
-//Requirement
-//92Single @This Annotation
-[req:SingleThisAnnotation] task:IDE-802[]
+--
+
+.Single @This Annotation
+[req,id=IDE-92,version=0.3]
+--
+task:IDE-802[]
 It is not allowed to use more then one annotation on an element.
+--
 
 #### Effect of Nominal This Type
 [[ex:Effect_of_Nominal_This_Type]]
@@ -405,27 +414,30 @@ to say either variable, function, or class declarations. Properties of
 object literals or members of a class are referenced via
 math:[$PropertyAccess-Expression.property$] (see <<Property Accessors>>).
 
-image:fig/scopes.png[Scopes]
+image::fig/scopes.png[Scopes,align=center]
 
 An identifier may be bound to a variable (global or local variable,
 parameter, variable defined in a function’s closure), or to a property
 of an object. The latter case is known as property access as further
 described in <<Property Accessors>>.
 
-// TODO: fix math
-----
-//Requirement
-//93Read Access to Identifier
-[[req:Read_Access_to_Identifier]]
+//TODO - fix math
+
+.Read Access to Identifier
+[req,id=IDE-93,version=0.3]
+--
 If an identifier math:[$i$] is accessed, the bound declared element
 math:[$D$] must be readable if it is not used on the left-hand side
 of an assignment expression. math:[\[\begin{aligned}
 & bind(i, D) \\
+
 & \hspace{2em}\land \not\exists\ \type{AssignmentExpression}\ ae \in i.container^*: \\
+//*
 & \hspace{3em} ae.left = i \\
 & \hspace{4em}\lor (\mu(ae.left)=\type{PropertyAccessExpression} \land ae.left.property=i): \\
 & \Rightarrow D.readable \\\end{aligned}\]]
-----
+
+--
 
 ==== Type Inference
 task:IDE-244[]
@@ -439,7 +451,6 @@ as follows: math:[\[\begin{aligned}
     {\typeEnv \entails idref.id: T}\end{aligned}\]]
 
 === Literals
-
 
 cf. cite:[ECMA11a(S11.1.3p.63,S7.8p.19ff)].
 
@@ -464,9 +475,9 @@ Numeric literals representing integers in the range of JavaScript’s
 int32 are inferred to the built-in primitive type `int` instead of `number`. The
 following rules apply:
 
-//Requirement
-//94Numeric literals
-[[req:Numeric literals]]
+.94Numeric literals
+[req,id=IDE-87,version=0.3]
+--
 
 * Numeric literals with a fraction or using scientific notation, e.g. `2.0`
 and `2e0`, respectively, are always inferred to `number`, even if they represent
@@ -506,6 +517,8 @@ The literals `0x100000000` and `0100000000000` produce a syntax error in Java.
 Until IDE-1881 task:IDE-1881[] is complete, all built-in operations always return a `number` even if all operands are of type ``int``. For the time being, we therefore interpret `-1` as
 a negative integer literal (inferred to `int`), but `-(1)` as the negation of a
 positive integer literal (inferred to `number`).
+
+--
 
 === Array Literal
 
@@ -585,13 +598,20 @@ There is an important exception, however: if a type expectation exists
 for the empty array literal and the expected type is , then this will be
 used as the type of the array literal.
 
-95Empty array literal An empty array literal will be inferred as
+.Empty array literal
+[req,id=IDE-95,version=0.3]
+--
+An empty array literal will be inferred as
 follows:
 
 * If there is a type expectation for the empty array literal and the
 expected type is , for any type , then the type of the empty array
 literal will be inferred to .
 * Otherwise, the type of the empty array literal will be inferred to .
+
+--
+
+//TODO - missing annotation above
 
 === Object Literal
 
@@ -716,9 +736,9 @@ math:[$isAccessor = \lnot isData$] is always true.
 
 ==== Semantics [[properties-semantics]]
 
-[[req:Object Literal]]
-//Requirement
-//96Object literal
+.Object literal
+[req,id=IDE-96,version=0.3]
+--
 For a given object literal math:[$ol$] the
 following constraints must hold (cf. cite:[ECMA11a(p.66)]:
 
@@ -759,6 +779,8 @@ math:[\[\begin{aligned}
         mode=\lenum{n4js} \to & \forall pa \in ol.propertyAssignments:\\
         & \mu(pa.name)=\type{N4JSIdentifier}
     \end{aligned}\]]
+
+--
 
 
 ==== Scoping and linking
@@ -920,9 +942,9 @@ The parameterization is part of the property access in case of generic
 methods. For generic functions, a parameterized function call is
 introduced (cf. ). The constraints are basically similar.
 
-//Requirement
-//97Dot Notation
-[[req:Property_Access_And_Dot_Notation]]
+.Property Access and Dot Notation
+[req,id=IDE-97,version=0.3]
+--
 
 1.  If dot notation is used in N4JS mode, the referenced property must
 exist unless receiver is a dynamic type: task:IDE-422[] +
@@ -940,10 +962,11 @@ math:[\[\begin{aligned}
 property is a member with a declared `@This` type (only possible for methods or
 field accessors), then the receiver must be a subtype of the declared `@This`
 type.
+--
 
-//Requirement
-//98Index Access
-[[req:Index_and_Property_Access]]
+.Index Access
+[req,id=IDE-98,version=0.3]
+--
 task:IDE-656[] task:IDE-1734[]
 
 1.  A limited form of computed-name indexed-access is allowed in N4JS
@@ -994,6 +1017,8 @@ math:[\[\begin{aligned}
         & \hspace{3em} \land pae.index.property = "iterator" \\
         \end{aligned}\]]
 
+--
+
 Although index access is very limited, it is still possible to use
 immediate instances of `Object` in terms of a map (but this applies only to index access, not the dot notation):
 
@@ -1008,9 +1033,9 @@ map["Hegel"] = "Dialectic";
 map.spinoza = "Am I?";  // error: Couldn't resolve reference to IdentifiableElement 'spinoza'.
 ----
 
-//Requirement
-//99Parameterized Property Access
-[[req:Parameterized_Property_Access]]
+.Parameterized Property Access
+[req,id=IDE-99,version=0.3]
+--
 For a parameterized property access expression math:[$pae$], the
 following constraints must hold:
 
@@ -1028,6 +1053,8 @@ generic method.
 
 Also see constraints on read (<<req:Read_Access_to_Identifier>>) and write
 (<<req:Write_Acccess>>) access.
+
+--
 
 ==== Type Inference [[type-inference-5]]
 task:IDE-244[] task:IDE-182[] task:IDE-183[]
@@ -1078,8 +1105,9 @@ var c = new C<string>("hello");
 
 ==== Semantics [[new-expression-semantics]]
 
-//Requirement
-//100New expression
+.New expression
+[req,id=IDE-100,version=0.3]
+--
 Let math:[$ne$] be a new expression, with
 math:[$\tee ne.callee: C$]. The following constraints must hold:
 
@@ -1098,6 +1126,8 @@ math:[\[\{ \type{Object}, \type{Function}, \type{String}, \type{Boolean},
 In particular, it must not refer to a primitive type or a defined
 functions (i.e., subtypes of ) cannot be used in new-expressions in
 N4JS.
+
+--
 
 Remarks:
 
@@ -1202,9 +1232,9 @@ fragment Arguments <Yield>*:
 
 ==== Semantics [[function-calls-semantics]]
 
-//Requirement
-101Function Call Constraints
-[[req:Function_Call_Constraints]]
+.Function Call Constraints
+[req,id=IDE-101,version=0.3]
+--
 For a given call expression math:[$f$] bound to a method or function
 declaration math:[$F$], the following constraints must hold:
 
@@ -1222,10 +1252,12 @@ the type of the exceeding arguments must be a subtype of the last
 (variadic) formal parameter type: +
 math:[$\forall |F.pars|<i\leq|f.args|: f.args_i <: F.pars_{|F.pars|-1}$]
 
-//Requirement
-//102Parameterized Function Call Constraints
-[[req:Parameterized_Function_Call_Constraints]]
+--
 
+
+.Parameterized Function Call Constraints
+[req,id=IDE-102,version=0.3]
+--
 * The number of type arguments in a parameterized call expression must
 be equal to the number of type parameters of the generic function /
 method and the type arguments must be subtypes of the corresponding
@@ -1236,6 +1268,8 @@ Note that (for a limited time), constraints
 <<req:Function_Call_Constraints>> and
 <<req:Parameterized_Function_Call_Constraints>> are not applied if the the
 type of math:[$F$] is `Function`. See <<Function_Object_Type>>.
+
+--
 
 ==== Type Inference [[type-inference-7]]
 task:IDE-244[]
@@ -1305,9 +1339,9 @@ The type inference and constraints for postfix operators ```` and
 cite:[ECMA11a(S11.3.1,p.70)], cite:[ECMA11a(S11.3.1,p.70)], are defined similarly to their prefix
 variants (unary expressions), see <<Unary Expression>>.
 
-//Requirement
-//103Postfix Expression Constraints
-[[req:PostfixExpressionConstraints]]
+.Postfix Expression Constraints
+[req,id=IDE-103,version=0.3]
+--
 task:IDE-345[] For a given postfix expression math:[$u$] math:[$u$] with
 math:[$u.op \in \{++,--\}$] and math:[$u.expression.type: T$],
 the following constraints must hold:
@@ -1318,6 +1352,7 @@ number. +
 math:[$u.expression = PropertyAccess \; pa(p)  \land  pa.isDotAccess$]
 math:[$\to$] both math:[$get$] math:[$p$] and
 math:[$set$] math:[$p$] must be defined. task:IDE-737[]
+--
 
 === Unary Expression
 
@@ -1337,8 +1372,10 @@ enum UnaryOperator: delete | void | typeof | inc='++' | dec='--' | pos='+' | neg
 
 For semantics of the delete operator, see also cite:[MozillaJSRef(https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Operators/delete)]
 
-104delete Operator Constraints[req:DeleteOperatorConstraints] For a
-given unary expression math:[$u$] with
+.Delete Operator Constraints
+[req,id=IDE-173,version=0.3]
+--
+For a given unary expression math:[$u$] with
 math:[$u.op=\lstnfjs{delete}$], the following constraints must
 hold:
 
@@ -1350,20 +1387,28 @@ bound target must not be a variable).
 in the containing type and the containing type reference must be
 declared dynamic.
 
-//Requirement
-//105void Operator Constraints
-[[req:VoidOperatorConstraints]]
+--
+
+.Void Operator Constraints
+[req,id=IDE-105,version=0.3]
+--
 There are no specific constraints defined for with math:[$u.op=\lstnfjs{void}$]
 task:IDE-345[]
 
-//Requirement
-//106typeof Operator Constraints
-[[req:TypeOfOperatorConstraints]]
+--
+.Typeof Operator Constraints
+[req,id=IDE-106,version=0.3]
+--
 There are no specific constraints defined for unary expression math:[$u$]
 with math:[$u.op=\lstnfjs{typeof}$]. task:IDE-345[]
 
-107Increment/Decrement Constraints[req:IncrementOperatorConstraints] For
-a given unary expression math:[$u$] math:[$u$] with
+--
+
+
+.Increment/Decrement Constraints
+[req,id=IDE-107,version=0.3]
+--
+For a given unary expression math:[$u$] math:[$u$] with
 math:[$u.op \in \{++,--\}$] and math:[$u.expression.type: T$],
 the following constraints must hold:
 
@@ -1375,9 +1420,12 @@ math:[$u.expression = PropertyAccess \; pa(p)  \land  pa.isDotAccess$]
 math:[$\to$] both math:[$get$] math:[$p$] and
 math:[$set$] math:[$p$] must be defined. task:IDE-768[]
 
-108Unary Plus/Minus/Bitwise Not Operator
-Constraints[req:UnaryPlusOperatorConstraints] For a given unary
-expression math:[$u$] math:[$u$] with
+--
+
+.Unary Plus/Minus/Bitwise Not Operator Constraints
+[req,id=IDE-108,version=0.3]
+--
+For a given unary expression math:[$u$] math:[$u$] with
 math:[$u.op \in \{+,-,\sim\}$] and
 math:[$u.expression.type: T$], the following constraints must hold: task:IDE-345[]
 
@@ -1385,9 +1433,11 @@ math:[$u.expression.type: T$], the following constraints must hold: task:IDE-345
 math:[\[\begin{aligned}
 & \infer{\tee \type{UnaryExpression} \expectType \type{Expression}: \type{number}}{}\end{aligned}\]]
 
-//Requirement
-//109Logical Not Operator Constraints
-[[req:NotOperatorConstraints]]
+--
+
+.Logical Not Operator Constraints
+[req,id=IDE-109,version=0.3]
+--
 There are no specific constraints defined for with
 math:[$u.op=\lstnfjs{!}$].
 
@@ -1397,6 +1447,8 @@ math:[$u.op=\lstnfjs{!}$].
 %\item \todo[jvp]{typeof operator constraints}
 %\end{itemize}
 ////
+
+--
 
 ==== Type Inference [[type-inference-8]]
 
@@ -1430,16 +1482,17 @@ enum MultiplicativeOperator: times='*' | div='/' | mod='%';
 ==== Semantics [[multiplicative-expression-semantics]]
 
 
-110Multiplicative Expression
-Constraints[req:MultiplicativeExpressionConstraints] For a given
-multiplicative expression the following constraints must hold in N4JS
+.Multiplicative Expression Constraints
+[req,id=IDE-110version=0.3]
+--
+For a given multiplicative expression the following constraints must hold in N4JS
 mode task:IDE-345[]:
 
 * The types of the operands must be subtypes of number:
 math:[\[\begin{aligned}
 \infer{\typeEnv \entails \type{MultiplicativeExpression} \expectType \type{Expression}: \type{number}}{}\end{aligned}\]]
 
-
+--
 
 ==== Type Inference
 task:IDE-244[] task:IDE-345[] [[type-inference-9]]
@@ -1463,7 +1516,9 @@ enum AdditiveOperator: add='+' | sub='-';
 
 ==== Semantics [[additive-expression-semantics]]
 
-111Additive Expression Constraints[req:AdditiveExpressionConstraints]
+.Additive Expression Constraints
+[req,id=IDE-111,version=0.3]
+--
 task:IDE-345[]
 For a given additive expression the following constraints must hold in
 N4JS mode:
@@ -1473,6 +1528,7 @@ is not ’+’, otherwise, any type could be used:
 math:[\[\begin{aligned}
 \infer{\typeEnv \entails \type{AdditiveExpression}\ e \expectType \type{Expression}: \type{number}}
     {e.op \neq AdditiveOperator.ADD}\end{aligned}\]]
+--
 
 ==== Type Inference [[type-inference-10]]
 task:IDE-244[] task:IDE-345[]
@@ -1532,14 +1588,15 @@ ShiftOperator returns ShiftOperator:
 
 ==== Semantics [[bitwise-shift-expression-semantics]]
 
-//Requirement
-//112Bitwise Shift Expression Constraints
-[[req:BitwiseShiftExpressionConstraints]]
+.Bitwise Shift Expression Constraints
+[req,id=IDE-112,version=0.3]
+--
 For a given bitwise shift expression math:[$e$] the following constraints must hold in N4JS mode: task:IDE-345[] task:IDE-771[]
 
 * The types of the operands must be both number.
 math:[\[\begin{aligned}
 \infer{\tee \type{BitwiseShiftExpression}\ \expectType\ \type{Expression}: \type{number}}{}\end{aligned}\]]
+--
 
 ==== Type Inference [[type-inference-11]]
 task:IDE-244[] task:IDE-345[]
@@ -1571,10 +1628,12 @@ RelationalOperatorNoIn returns RelationalOperator:
 
 ==== Semantics [[relational-expression-semantics]]
 
-113Greater/Less (Equals) Operator
+.Greater/Less (Equals) Operator Constraints
+[req,id=IDE-113,version=0.3]
+--
 task:IDE-345[]
-Constraints[req:GreaterOperatorConstraints] For a given relational
-expression math:[$e$] with
+
+For a given relational expression math:[$e$] with
 math:[$e.op \in \{ \lstnfjs{<}, \lstnfjs{>}, \lstnfjs{<=}, \lstnfjs{>=} \}$]
 in N4JS mode, the following constraints must hold:
 
@@ -1589,9 +1648,11 @@ number, string, or boolean: math:[\[\begin{aligned}
 &\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ rhs: T}
         { \tee lhs: O & O \not\in \{\type{number,string,boolean}\} & T=\type{\union{number,string,boolean}}  } \\\end{aligned}\]]
 
-//Requirement
-//114instanceof Operator Constraints
-[[req:instanceofOperatorConstraints]]
+--
+
+.Instanceof Operator Constraints
+[req,id=IDE-114,version=0.3]
+--
 For a given relational expression math:[$e$] with
 task:IDE-345[] math:[$e.op = \lstnfjs{instanceof}$], the following constraints
 must hold:
@@ -1617,9 +1678,12 @@ not of type `C`. Thus, the `instanceof` operator cannot be used for structural t
 Use-site structural typing is also not possible since `pass:[~]` would be
 interpreted (by the parser) as a binary operator.
 
-//Requirement
-//115in Operator Constraints
-[[req:inOperatorConstraints]] task:IDE-345[]
+--
+
+.inOperator Constraints
+[req,id=IDE-115,version=0.3]
+--
+task:IDE-345[]
 For a given relational expression math:[$e$] with
 math:[$e.op = \lstnfjs{in}$], the following constraints must hold:
 
@@ -1629,6 +1693,8 @@ math:[\[\begin{aligned}
 2.  In N4JS mode,the left operand is restricted to be of type `string` or `number`:
 math:[\[\begin{aligned}
 &\infer{\tee  lhs\ \lstnfbnf{'in'}\ rhs\  \expectType\ lhs: \type{\union{string,number}}}{}\end{aligned}\]]
+
+--
 
 A special feature of N4JS is support for interface type references in
 combination with the `instance of` operator. The compiler rewrites the code to make this work. task:IDE-561[]
@@ -1758,9 +1824,10 @@ BitwiseORExpressionNoIn returns Expression: BitwiseXORExpressionNoIn
 
 ==== Semantics [[binary-bitwise-expression-semantics]]
 
-//Requirement
-//116Bitwise Bitwise Expression Constraints
-[[req:BitwiseBitwiseExpressionConstraints]]
+.Bitwise Bitwise Expression Constraints
+[req,id=IDE-116,version=0.3]
+--
+
 task:IDE-345[] For a given bitwise bitwise expression math:[$e$] the following constraints must hold
 in N4JS mode:
 
@@ -1768,6 +1835,7 @@ in N4JS mode:
 math:[\[\begin{aligned}
 \infer{\tee \type{BitwiseBitwiseExpression}\ \expectType\ \type{Expression}: \type{number}}{}\end{aligned}\]]
 
+--
 
 ==== Type Inference [[type-inference-14]]
 task:IDE-244[] task:IDE-345[]
@@ -1795,12 +1863,17 @@ LogicalORExpressionNoIn returns Expression: LogicalANDExpressionNoIn
 
 ==== Semantics [[binary-logical-expression-semantics]]
 
-117Binary Logical Expression
-Constraints[req:BinaryLogicalExpressionConstraints] For a given binary
-logical expression math:[$e$] with math:[$e.lhs.type: L$] and
+.Binary Logical Expression Constraints
+[req,id=IDE-117,version=0.3]
+--
+For a given binary logical expression math:[$e$] with math:[$e.lhs.type: L$] and
 math:[$e.rhs.type: R$] the following constraints must hold:
 
 * In N4JS mode math:[$L$] must not be or .task:IDE-775[]
+
+--
+
+//TODO missing annotation above
 
 ==== Type Inference [[type-inference-15]]
 task:IDE-244[]
@@ -1833,9 +1906,10 @@ ConditionalExpressionNoIn returns Expression: LogicalORExpressionNoIn
 ==== Semantics [[conditional-expression-semantics]]
 task:IDE-776[]
 
-118Conditional Expression
-Constraints[req:ConditionalExpressionConstraints] For a given
-conditional expression math:[$e$] with math:[\[\begin{aligned}
+.Conditional Expression Constraints
+[req,id=IDE-118,version=0.3]
+--
+For a given conditional expression math:[$e$] with math:[\[\begin{aligned}
 e.expression.type: C,
 e.trueExpression.type: T,
 e.false\-Expression.type: F \end{aligned}\]] the following constraints
@@ -1849,6 +1923,10 @@ math:[$C \in \{ \type{void},\type{undefined} \}$].
 
 There are no specific constraints defined for the condition. The
 ECMAScript operation `ToBoolean` cite:[ECMA11a(S9.2,p.43)] is used to convert any type to boolean.
+
+--
+
+//TODO check if missing annotation in above requirement
 
 ==== Type Inference [[type-inference-16]]
 task:IDE-348[]
@@ -1908,8 +1986,9 @@ AssignmentOperator:
 ==== Semantics [[assignment-expression-semantics]]
 task:IDE-349[]
 
-//Requirement
-//119Simple Assignment
+.Simple Assignment
+[req,id=IDE-119,version=0.3]
+--
 For a given assignment math:[$assignment$]
 with math:[\[\begin{aligned}
 assignment.op=\lstnfbnf{'='}\end{aligned}\]] the following constraints
@@ -1924,7 +2003,12 @@ replaced with the right part of one of the assignment operators listed
 above, that is, +
 math:[$@ \in \{\lstnfbnf{'*', '/', '\%', '+', '-', '<<', '>>', '>>>', '&', '^', '|'}\}$]
 
-120Compound Assignment For a given assignment
+--
+
+.Compound Assignment
+[req,id=IDE-120,version=0.3]
+--
+For a given assignment
 math:[$left\ op\ right$], with math:[$op=\lstnfbnf{'@='}$] but
 not , both, left and right must be subtypes of `number`. +
 For operator `'+='`,
@@ -1936,15 +2020,18 @@ The right-hand side must, in fact, be a `number` (and not a `boolean`) here in o
 math:[$left \lstnfbnf{'+'} right$] must return a string as well.
 That means that the right-hand side can be of `any` type.
 
-The expected type for the left-hand side is `union{number,string}`.
-//TODO: check formatting of last word
+The expected type for the left-hand side is ``union{number,string}``.
+
 
 The basic idea behind these constraints is that the type of the
 left-hand side is not to be changed by the compound assignment.
 
-//Requirement
-//121Write Acccess
-[[req:Write_Acccess]]
+--
+
+
+.Write Acccess
+[req,id=IDE-121,version=0.3]
+--
 For a given assignment expression
 math:[$assignExpr$], the left-hand side must be writeable or a
 final data field and the assignment must be in the constructor. Let
@@ -1966,6 +2053,8 @@ Also see <<req:Read_Access_to_Identifier>> for read access constraint.
 The left-hand side of an assignment expression may be an array or object
 literal and the assignment expression is then treated as a destructuring
 assignment. See <<Destructuring>> for details.
+
+--
 
 ==== Type Inference [[type-inference-17]]
 task:IDE-244[] task:IDE-349[]
@@ -2070,17 +2159,18 @@ http://www.2ality.com/2011/11/super-references.html[blog]). Note that in  cite:[
 Chapter 12.3.5 ``The Super Keyword``, `super` is defined as a keyword but the
 syntax and semantics are defined in conjunction of member access.]
 
-//Requirement
-//122Type Of Super is Always Nominal
-[[req:Type_Of_Super_is_Always_Nominal]]
+.Type Of Super is Always Nominal
+[req,id=IDE-122,version=0.3]
+--
 The type referenced with the super literal is always nominal. This is a
 consequence of references to types in extend clauses to be nominal.
 math:[\[\begin{aligned}
     \tee \lstnfjs{super}: T \land T.typingStrategy = \lenum{nominal}\end{aligned}\]]
+--
 
-//Requirement
-//123Access Super Constructor with Super Literal
-[req:Access_Super_Constructor_with_Super_Literal]]
+.Access Super Constructor with Super Literal
+[req,id=IDE-123,version=0.3]
+--
 If the super literal math:[$s$] is used to access the super constructor of a
 class, all of the following constraints must hold:
 
@@ -2114,9 +2204,12 @@ Further constraints with regard to super constructor calls are described
 in <<Constructor>>.
 task:IDE-1753[]
 
-124Access Super Member with Super
-Literal[req:Access_Super_Member_with_Super_Literal] If the super literal
-math:[$s$] is used to access a member of the super class, all of
+--
+
+.Access Super Member with Super Literal
+[req,id=IDE-124,version=0.3]
+--
+If the super literal math:[$s$] is used to access a member of the super class, all of
 the following constraints must hold, with
 math:[$c=s.container.container$]
 
@@ -2142,10 +2235,11 @@ of the class defining the method). math:[\[\begin{aligned}
             {s.containingClass=T & \mu(m)=\type{Method} & m.returnType=\type{this}}
         \end{aligned}\]]
 
+--
 
-//Requirement
-//125Super Literal Usage
-[[req:Super Literal Usage]]
+.Super Literal Usage
+[req,id=IDE-125,version=0.3]
+--
 For super literals, either <<req:Access_Super_Constructor_with_Super_Literal>> or <<req:Access_Super_Member_with_Super_Literal>> must hold, no other usage
 is allowed.
 
@@ -2199,6 +2293,9 @@ In line 14, the receiver (which is similar to the this-binding in
 ECMAScript) is changed to `A` . In line 15, using super, the receiver is
 preserved, i.e. `B` coming from line 19.
 
+--
+
+
 == ECMAScript 7 Expressions
 
 === Await Expression
@@ -2216,7 +2313,6 @@ Constraints governing the use of `await` are given together with those for `asyn
 
 A class expression in N4JS is similar to a class expression in
 ECMAScript 6 cite:[ECMA15a(14.5)].
-.
 
 ==== Syntax [[class-expression-syntax]]
 

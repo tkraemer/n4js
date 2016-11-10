@@ -16,13 +16,11 @@ Note that N4JS specific primitive types `pathselector` and `i18nkey` are handled
 === Coercing
 task:IDE-379[]
 
-// TODO: Fix
-
 In cite:[ECMA11a], coercing is defined by means of the abstract specification method `ToPrimitive` cite:[ECMA11a(S9.1)], also see cite:[ECMA11a(S9.10)]). Other conversions, such as `ToNumber`, are not directly supported but reflected in the typing rules of expressions.
 
 We express absence of automatic coercion here by means of subtype
-relations: math:[\[\begin{aligned}
-\infer{\tee \type{Boolean} \notsubtype{\type{boolean}}}{} | \infer{\tee \type{boolean} \notsubtype{\type{Boolean}}}{} \\
+relations:
+math:[\[\begin{aligned} \infer{\tee \type{Boolean} \notsubtype{\type{boolean}}}{} | \infer{\tee \type{boolean} \notsubtype{\type{Boolean}}}{} \\
 \infer{\tee \type{Number} \notsubtype{\type{number}}}{} | \infer{\tee \type{number} \notsubtype{\type{Number}}}{}  \\
 \infer{\tee \type{String} \notsubtype{\type{string}}}{} | \infer{\tee \type{string} \notsubtype{\type{String}}}{} \\\end{aligned}\]]
 
@@ -190,9 +188,9 @@ math:[\[\begin{aligned}
 |\infer{isFinalByType(T)}{\mu(T) \in \{\ \type{TEnum}, \type{Primitive} \} \lor (\mu(T)=\type{Class} \land T.extensibility=\lenum{final} \})}\end{aligned}\]]
 
 
-// Requirement
-//89Cast Validation At Compile Time
-[[req:Cast Validation At Compile Time]]
+.Cast Validation At Compile Time]]
+[req,id=IDE-89,version=0.3]
+--
 Given a type cast expression math:[$e$] in which
 math:[$\tee e.expr: S$] and and target type math:[$T$], the
 following constraints must hold:
@@ -242,8 +240,10 @@ it is valid for at least one element of math:[$T$].
 8.  It math:[$T$] is an intersection type, then the type cast is
 valid if it is valid for all elements of math:[$T$].
 
-Note that `any` is a supertype of all other types, thus it is always possible
+NOTE: `any` is a supertype of all other types, thus it is always possible
 to cast a variable of type `any` to other (non-composed) types.
+
+--
 
 //todo{In Java, there are more illegal cases: " if there exists a supertype X of T, and a supertype Y of S, such that both X and Y are provably distinct parameterized types, and that the erasures of X and Y are the same, a compile time error occurs"}
 

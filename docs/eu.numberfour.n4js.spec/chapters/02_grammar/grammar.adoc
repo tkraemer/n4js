@@ -49,17 +49,19 @@ will lead to errors, others only to warnings. They do not apply for
 identifiers declared in definitions file (n4jsd) in order to enable
 declaration of external entities.
 
-//Requirement
-//Req1
-[[req:N4JS_identifier_restrictions]]
+.N4JS Identifier Restrictions
+[req,id=IDE-1,version=0.3]
+--
 . If the following constraints do not hold, errors are created.
 ..  Leading `$` (dollar sign) character is prohibited for any variable
 name such as fields, variables, types functions and methods.
 ..  Leading `` _ `` (underscore) character is not allowed for identifying any
 functions or methods.
+--
 
 .N4JS identifier recommendations
-[req:N4JS_identifier_recommendations]
+[req,id=IDE-2,version=0.3]
+--
 . If the following constraints do not hold, warnings are created.
 
 . Variable names should, in general, be constructed form the 26 ASCII
@@ -122,6 +124,8 @@ TypeIdentifier:         [A-Z][a-zA-Z0-9]*;
 PackageIdentifier:      [a-z][a-zA-Z0-9]*;
 FQNType:                (PackageIdentifier '.')+ TypeIdentifier;
 ----
+
+--
 
 === This Keyword
 

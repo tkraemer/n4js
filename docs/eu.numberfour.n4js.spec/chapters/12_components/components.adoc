@@ -140,7 +140,10 @@ task:IDE-1400[]
 
 Tests are special projects which contain tests for other projects.
 
-157Test Project[req:Test_Project]
+
+.Test Project
+[req,id=IDE-157,version=0.3]
+--
 
 1.  Tests have full access to the tested project including elements with
 visibility.
@@ -148,6 +151,7 @@ visibility.
 words, other components must not depend on test components.
 
 In a test project, the tested projects can be specified via `testee`.
+--
 
 == Component Content
 
@@ -545,14 +549,21 @@ source folder.
 
 
 
-158GeneralConstraints
+.GeneralConstraints
+[req,id=IDE-158,version=0.3]
+--
+
 
 1.  The projectId used in the manifest file have to match the project
 name in file system as well as project name in the Eclipse workspace.
 2.  There must be an output directory specified so the compiler(s) can
 run.
+--
 
-159Paths Paths are constrained in the following way:
+.Paths
+[req,id=IDE-159,version=0.3]
+--
+Paths Paths are constrained in the following way:
 
 1.  A path cannot appear more than one time within a source fragment
 type (same applies to paths in the resources section).
@@ -566,8 +577,13 @@ Output, Libraries, Resources or Sources.
 7.  The folder a defined path points to must exist in the project (but
 in case of non-existent folders of source fragments, only a warning is
 shown). task:IDEBUG-339[]
+--
 
-160ModuleSpecifiers Module specifiers are constrained in the following
+
+.Module Specifiers
+[req,id=IDE-160,version=0.3]
+--
+Module Specifiers are constrained in the following
 way:
 
 1.  Within a module filter type no duplicate specifiers are allowed.
@@ -579,29 +595,30 @@ module specifier
 certain source container.
 4.  A module specifier is allowed to contain wildcards but it must
 resolve to some existing files in the project
+--
 
-
-161ModuleSpecifierWildcardConstraints
-
-// TODO: fix asterisk below
+.Module Specifier Wildcard Constraints
+[req,id=IDE-161,version=0.3]
+--
 
 . All path patterns are case sensitive.
 . all module specifiers will be matched.
 . all module specifiers will be matched.
 . matches all module specifiers whose qualified name consists of two
 segments where the first part matches test and the second part starts
-with an ``A`` and then two more characters.
+with an `A` and then two more characters.
 .  - matches all module specifiers whose qualified name contains a
 segment that matches test and the last segment ends with an ’XYZ’.
-.  A module specifier wild card isn’t allowed to contain ``\*\*\*``.
+.  A module specifier wild card isn’t allowed to contain ``pass:[***]``.
 .  A module specifier wild card isn’t allowed to contain relative
 navigation.
 .  A module specifier wild card shouldn’t contain the file extension
 (only state the file name (pattern) without extension, valid file
 extensions will then be used to match the file).
-
+--
 
 Examples of using external source fragments and filters are given in ().
+//TODO- missing citation
 
 //TODO :Example Block
 [[ex:No validation and module wrapping example]]
@@ -671,14 +688,15 @@ This is done by computing the transitive closure of required runtime
 libraries and by comparing that with the transitive closure of runtime
 libraries provided by an environment.
 
-// TODO: fix the following section
 
-//////
-[Transitive Component
-Dependencies][def:Transitive_Component_Dependencies] We defined the
-following transitive closures of dependencies: For a given N4JS
-Component math:[$C$] we define math:[\[\begin{aligned}
-C.requiredAPIs^* & = C.requiredPIs \\
+.Transitive Component Dependencies
+[def]
+--
+We defined the following transitive closures of dependencies:
+
+For a given N4JS Component math:[$C$] we define
+////
+math:[\[\begin{aligned} C.requiredAPIs^* & = C.requiredPIs \\
                     & \hspace{4em} \cup \\
                     & \bigcup_{L \in C.requiredLibs}C.requiredPIs^* \\
                     & \hspace{4em} \cup \\
@@ -692,19 +710,26 @@ E.providedRTLibs^* & = E.providedRTLibs \\
                     & \hspace{4em} \cup \\
                     & \bigcup_{ES \in E.extendedRTEnvs} ES.E.providedRTLibs^*\end{aligned}\]]
 
-162Runtime Environment Resolution[req:Runtime_Environment_Resolution] An
-N4JS Component math:[$C$] can be executed in an runtime environment
+////
+
+// TODO - fix math
+--
+
+
+.Runtime Environment Resolution
+[req,id=IDE-162,version=0.3]
+--
+An N4JS Component math:[$C$] can be executed in an runtime environment
 math:[$E$], written as math:[\[\begin{aligned}
 E \models C\end{aligned}\]] if the following constraints hold:
 
 1.  The environment must provide all runtime libraries transitively
-required by the component: math:[\[\begin{aligned}
-\forall R \in C.requiredRTLibs^*: R \in E.providedRTLibs^*\end{aligned}\]]
+required by the component:
+math:[\[\begin{aligned} \forall R \in C.requiredRTLibs^*: R \in E.providedRTLibs^*\end{aligned}\]]
 2.  There exist libraries which can be executed by the environment, so
-that all APIs are implemented: math:[\[\begin{aligned}
-\forall S \in C.requiredAPIs^*: \exists I: S \in I.implementedAPIs \land E \models I\end{aligned}\]]
-
-//////
+that all APIs are implemented:
+math:[\[\begin{aligned} \forall S \in C.requiredAPIs^*: \exists I: S \in I.implementedAPIs \land E \models I\end{aligned}\]]
+--
 
 == Modules
 task:IDE-8[]

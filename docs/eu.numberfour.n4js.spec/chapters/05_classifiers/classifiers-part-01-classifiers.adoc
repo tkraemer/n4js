@@ -87,8 +87,9 @@ the transitive closure of supertypes math:[$superClassifiers^*$]
 
 == Common Semantics of Classifiers
 
-//Requirement
-// 42Subtyping of Classifiers[req:Subtyping_of_Classifiers]
+.Subtyping of Classifiers
+[req,id=IDE-42,version=0.3]
+--
 For a given type math:[$C$], and supertypes +
 math:[$superClassifiers = \{S_1,..., S_n\}$] directly subtyped
 math:[$C$], +
@@ -115,6 +116,7 @@ i.e. the math:[$ownedMember$], and all members inherited from its
 super classifiers. The concrete mechanisms for inheriting a member are
 different and further constraint (cf. <<Redefinition_of_Members>>). A classifier only inherits its members from its direct supertypes, although the supertypes may contains
 members inherited from their supertypes.
+--
 
 == Classes
 
@@ -245,14 +247,16 @@ math:[\[\begin{aligned}
       {C.abstract}
 \end{aligned}\]]
 
-//Requirement
-//43Structural and Nominal Supertypes[req:Structural_and_Nominal_Super_Types]
+.Structural and Nominal Supertypes
+[req,id=IDE-43,version=0.3]
+--
 The type of supertypes and implemented interfaces is always the nominal type, even
 if the supertype is declared structurally.
 math:[\[\begin{aligned}
 & \infer{\tee T.sup: \tsNom \tee S}{bind(T.sup, S)} \\
 & \infer{\tee I: \tsNom \tee S}{I \in T.interfaces & bind(I, S)}
 \end{aligned}\]]
+--
 
 === Semantics [[class-semantics]]
 
@@ -332,15 +336,16 @@ math:[\[\begin{aligned}
 \infer{\tee \type{TClass}\ left \subtype[TClass]\ right}{left=right}[shortcut] \\
 \infer{\tee \type{TClass}\ left \subtype[TClass]\ right}{\tee  left.superType.declaredType \subtype right}\end{aligned}\]]
 
-//Requirement
-// 44Implicit Supertype of Classes[req:Implicit_Super_Type_of_Classes]
-
+.Implicit Supertype of Classes
+[req,id=IDE-44,version=0.3]
+--
 1.  The implicit supertype of all classes is `N4Object`. All classes with no
 explicit supertype are inherited from `N4Object`.
 2.  If the supertype is explicitly set to `Object`, then the class is not
 derived from `N4Object`. Meta-information is created similar to an `N4Object`-derived class. Usually, there is no reason to explicitly derive a class from `Object`.
 3.  External classes are implicitly derived from , unless they are
 annotated with `@N4JS`(cf.<<External_Declarations>>).
+--
 
 === Final Modifier
 task:IDE-147[]
@@ -372,8 +377,9 @@ A class with modifier `abstract` is called an _abstract class_ and has its
 math:[$abstract$] property set to true. Other classes are called
 _concrete_ classes.
 
-//Requirement
-//45Abstract Class[req:Abstract_Class]
+.Abstract Class
+[req,id=IDE-45,version=0.3]
+--
 
 1.  A class math:[$C$] must be declared abstract if it owns or
 inherits one or more abstract members and neither C nor any interfaces
@@ -384,10 +390,11 @@ implemented interfaces. Note that a class may implement fields with
 field accessors and vice versa. task:IDE-553[]
 2.  An abstract class may not be instantiated. task:IDE-148[]
 3.  An abstract class cannot be set to final (with annotation @Final).
+--
 
-//Requirement
-//46Abstract Member[req:Abstract_Member]
-
+.Abstract Member
+[req,id=IDE-46,version=0.3]
+--
 1.  A member declared as abstract must not have a method body (in
 contrary a method not declared as abstract have to have a method body). task:IDE-553[]
 2.  Only methods, getters and setters can be declared as abstract
@@ -403,6 +410,8 @@ only static members can override static members and only instance members can
 override other instance members \task*{IDE-553}
 ////
 
+--
+
 === Non-Instantiable Classes
 
 To make a class non-instantiable outside a defining compilation unit,
@@ -411,7 +420,11 @@ constructor as private. task:IDE-149[] This can be used for singletons.
 
 === Superclass
 
-47Superclass For a class math:[$C$] with a supertype
+
+.Superclass
+[req,id=IDE-47,version=0.3]
+--
+For a class math:[$C$] with a supertype
 math:[$S=C.sup$], the following constraints must hold
 
 * math:[$C.sup$] must reference a class declaration math:[$S$]
@@ -429,6 +442,7 @@ is abstract).
 All members of superclasses become members of a class. This is true even
 if the owning classes are not directly accessible to a class. The
 member-specific access control is not changed.
+--
 
 == Interfaces
 task:IDE-12[] task:IDE-169[] task:IDE-328[] task:IDE-1236[]
@@ -505,8 +519,9 @@ implicitly abstract if they do not provide a default implementation. The
 modifier `abstract` is not required, therefore, in the source code. The following
 constraints apply:
 
-//Requirement
-// 48Interfaces[req:Interfaces]
+.Interfaces
+[req,id=IDE-48,version=0.3]
+--
 For any interface math:[$I$], the following must hold:
 
 1.  Interfaces may not be instantiated.
@@ -528,6 +543,8 @@ This restriction is required, because the order of implementation of
 these fields in an implementing class cannot be guaranteed. This applies
 to both instance and static fields in interfaces, but in case of static
 fields, `this` is also disallowed due to <<StaticMembersOfInterfaces>>.
+
+--
 
 It is possible to declare members in interfaces with a smaller
 visibility as the interface itself. In that case, clients of the
@@ -573,8 +590,9 @@ We all cases we call math:[$C$]A the __implementor__.
 Besides the general constraints described in , the following constraints
 must hold for extending or implementing interfaces:
 
-//Requirement
-// 49Extending Interfaces[req:Extending_Interfaces]
+.Extending Interfaces
+[req,id=IDE-49,version=0.3]
+--
 For a given type
 math:[$I$], and math:[$\{I_1,..., I_n\}$] directly extended by
 math:[$I$], the following constraints must be true:
@@ -601,8 +619,13 @@ math:[$\forall i \in \{1, ..., n\} : M \in I_i.members \land M.abstract \Rightar
 math:[$M$] is accessible from math:[$I$] +
 (note that math:[$M$] need not be an owned member of
 math:[$I_i$]).
+--
 
-50Implementing Interfaces[req:Implementing_Interfaces] For a given type
+.Implementing Interfaces
+[req,id=IDE-50,version=0.3]
+--
+
+For a given type
 math:[$C$], and math:[$\{I_1,..., I_n\}$] directly implemented
 by math:[$C$], the following constraints must be true:
 
@@ -631,7 +654,11 @@ math:[$M$] is accessible from math:[$C$] +
 (note that math:[$M$] need not be an owned member of
 math:[$I_i$]).
 
+--
+
 For default methods in interfaces, see .
+
+//TODO - missing xref
 
 == Generic Classifiers
 task:IDE-38[] task:IDE-39[]
@@ -820,8 +847,9 @@ interface Consumer<in T> { // contravariance
 
 In such cases, the following constraints apply.
 
-// Requirement
-// 51Definition-Site Variance[req:DefinitionSiteVariance]
+.Definition-Site Variance
+[req,id=IDE-51,version=0.3]
+--
 Given a parameterized type with a type parameter , the following must hold:
 
 . `T` may only appear in variance-compatible positions:
@@ -848,6 +876,8 @@ contravariant on definition site, then any kind of wildcard may be
 provided as type argument.
 +
 Unbounded wildcards are allowed in all cases.
+
+--
 
 
 //TODO: example block

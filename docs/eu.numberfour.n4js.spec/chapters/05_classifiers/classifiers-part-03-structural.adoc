@@ -8,7 +8,7 @@ typing. That is, a thing that can swim and quacks like a duck, is a
 duck.
 
 Interfaces or classes can be used for this purpose with a _typing
-strategy modifier_ . Given a type math:[$T$], the simple +++~+++ (tilde)
+strategy modifier_ . Given a type math:[$T$], the simple `pass:[~]` (tilde)
 can be added to its declaration (on definition-site) or in a reference (on
 use-site) to indicate that the type system should use structural typing
 rather than nominal typing.footnote:[This kind of typing is used by
@@ -24,7 +24,7 @@ therefore, always a structural subtype of math:[$~T$].
 Sometimes it is convenient to refer only to the fields of a classifier,
 for example when the initial field values are to be provided in a
 variable passed to the constructor. In that case, the type can be
-modified with ``~~`` (two tildes). This is only possible on use-site, i.e.
+modified with ``pass:[~~]`` (two tildes). This is only possible on use-site, i.e.
 on type references. Furthermore, only on the use-site, it is possible to
 consider only either readable or writable or fields by using the
 read-only ``r `` or write-only ``w `` structural field typing. For
@@ -79,9 +79,10 @@ programmers are enforced to nominal declare the type relation.
 If a type math:[$T$] is declared as structural at its definition,
 math:[$T.defStructural$] is true.
 
-//Requirement
-//75Definition Site Structural Typing
-[[req:Definition Site Structural Typing]]
+
+.Definition Site Structural Typing
+[req,id=IDE-75,version=0.3]
+--
 
 .  The structurally defined type cannot be used on the right hand side
 of the `instanceof` operator:
@@ -110,7 +111,7 @@ defined type must not be inherited from math:[\[\begin{aligned}
     \end{aligned}\]] math:[\[\begin{aligned}
     T.defStructural \Rightarrow \tee T \notsubtype \lstnfjs{N4Object} \land \lstnfjs{N4Object} \not\in T.superTypes^*
     \end{aligned}\]]
-
+--
 
 [[ex:Declaration Site Structural Typing]]
 The following snippet demonstrates the effect of definition-site
@@ -417,11 +418,9 @@ the structural read-only field, math:[$\tsWoFld T$] the structural
 write-only field and math:[$\tsInitFld T$] the structural
 initializer field version of math:[$T$].
 
-
-//Requirement
-//76Use-Site Structural Typing
-[[req:Use_Site_Structural_Typing]]
-
+.Use-Site Structural Typing
+[req,id=IDE-76,version=0.3]
+--
 1.  The structural version of a type is a supertype of the nominal type:
 math:[\[\begin{aligned}
 T \subtype \tsStr T\end{aligned}\]]
@@ -511,6 +510,8 @@ of classes or interfaces. That is to say that structural types cannot be
 used after `extends`, `implements` or `eith` in type declarations.
 footnote:[This is already constrained by the grammar.]
 
+--
+
 Note that all members of `N4Object` are excluded. This implies that extended
 reflective features (cf. <<reflection_meta-information>> ) are not available in the context of structural typing. The `instanceof` operator is still working as described in <<Relational_Expression>>, in
 that it can be used to check the type of an instance.
@@ -520,9 +521,9 @@ also a subtype of math:[$\tsStr T$]: math:[\[\begin{aligned}
 \infer{\tee X \subtype \tee \tsStr T}{\tee X \subtype \tee T}\end{aligned}\]]
 This is only a shortcut for the type inference defined above.
 
-//Requirement
-77Definition and Use-Site Precedence
-[[req:Definition_and_Use_Site_Precedence]]
+.Definition and Use-Site Precedence
+[req,id=IDE-77,version=0.3]
+--
 If a type is structurally typed on both definition and use-site, the rules for
 use-site structural typing (<<req:Use_Site_Structural_Typing>>) are
 applied.
@@ -597,6 +598,8 @@ h|Member of type __X__ | `pass:[~~X]` |`pass:[~r~X]` |`pass:[~w~X]` |`pass:[~i~X
 
 | public set m8(m) { } | | | |
 |===
+
+--
 
 == Structural Read-only, Write-only and Initializer Field Typing
 task:IDE-1777[]
@@ -843,9 +846,9 @@ TAnonymousFormalParameter:
 
 ==== Semantics
 
-//Requirement
-//78Additional structural members
-[[req:Additional structural members]]
+.Additional structural members
+[req,id=IDE-78,version=0.3]
+--
 
 It is only possible to add additional members to a type if use-site structural
 typing is used. The following constraints must hold:
@@ -860,6 +863,8 @@ members.
 
 Additional fields may be declared optional in the same way as fields in
 classes. The rules given in <<Structural Types With Optional Fields>> apply accordingly. Consider the following example:
+
+--
 
 Additional optional members in structural typing
 [[ex:Additional_optional_members_in_structural_typing]]

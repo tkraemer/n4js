@@ -35,12 +35,16 @@ definition specified in  cite:[ECMA11a]   is to be used.
 
 === Function or Field Accessor Bodies
 
-126Dead Code[req:Dead_Code] For all statements in a function or field
-accessor (getter/setter) body, the following constraints must hold:
+.Dead Code
+[req,id=IDE-126,version=0.3]
+--
+For all statements in a function or field accessor (getter/setter) body, the following constraints must hold:
 
 1.  Statements appearing directly after return, throw, break, or
 continue statements (in the same block) are considered to be dead code
 and a warning is issued in these cases.
+
+--
 
 === Variable Statement
 
@@ -112,8 +116,9 @@ statements and declarations are similar except that the pseudo property
 math:[$const$] is set to false for variables and true for
 constants. Also see exported variable statement (<<Export Statement>>) and constant statement and declaration (<<Const>>).
 
-//Requirement
-// 127Variable declaration
+.Variable declaration
+[req,id=IDE-127,version=0.3]
+--
 For a given variable declaration math:[$d$], the following constraints must hold:
 
 * The type of the initializer expression must conform to the declared
@@ -147,6 +152,8 @@ var fun2 = function() : number { var x = fun2;  return -42; }();
 
 The variable statement may contain array or object destructuring
 patterns, see <<Destructuring>> for details.
+
+--
 
 ==== Type Inference [[variable-statement-type-inference]]
 
@@ -185,11 +192,12 @@ IfStatement <Yield>:
 There are no specific constraints defined for the condition, the
 ECMAScript operation `ToBoolean` cite:[ECMA11a(S9.2,p.43)] is used to convert any type to boolean.
 
-//Requirement
-//128If Statement
-[[req:If_Statement]
+.If Statement
+[req,id=IDE-128,version=0.3]
+--
 In N4JS, the expression of an if statement must not evaluate to `void`. If the expressions is a function call
 in particular, the called function must not be declared to return `void`.
+--
 
 === Iteration Statements
 
@@ -250,9 +258,9 @@ TIP: Using for-in is not recommended, instead `pass:[_each]` should be used.
 There are no specific constraints defined for the condition, the
 ECMAScript operation `ToBoolean` cite:[ECMA11a(S9.2,p.43)] is used to convert any type to boolean.
 
-//Requirement
-//129For-In-Statement Constraints
-[[req:For_In_Statement_Constraints]]
+.For-In-Statement Constraints
+[req,id=IDE-129,version=0.3]
+--
 For a given math:[$f$] the following conditions must hold:
 
 * The type of the expression must be conform to object: +
@@ -264,6 +272,8 @@ math:[$f.varDecl \neq null \lor (f.initExpr \neq null \land isRValue(f.initExpr)
 string, i.e. any): math:[\[\begin{aligned}
 & (f.varDecl \neq null \land  \tee f.varDecl \subtype \type{string} ) \\
 \lor & (f.initExp \neq null \land  \tee \type{string} \subtype f.initExpr)\end{aligned}\]]
+
+--
 
 === Return Statement
 
@@ -279,8 +289,9 @@ ReturnStatement <Yield>:
 
 ==== Semantics [[return-statement-semantics]]
 
-130Return statement[req:Return_statement]
-
+.Return statement
+[req,id=IDE-130,version=0.3]
+--
 1.  Expected type of expression in a return statement must be a sub type
 of the return type of the enclosing function:
 math:[\[\begin{aligned}
@@ -297,6 +308,10 @@ math:[\[\begin{aligned}
 * all control flows must either end with a return or throw statement
 4.  Returns statements must be enclosed in a function. A return
 statement, for example, must not be a top-level statement.
+
+--
+
+//TODO - missing annotation above
 
 === With Statement
 
@@ -316,8 +331,11 @@ WithStatement <Yield>:
 N4JS is based on strict mode and the with statement is not allowed in
 strict mode, cf. cite:[ECMA11a(S12.10.1,p.94)].
 
-131With Statement[req:With Statement] With statements are not allowed in
-N4JS or strict mode.
+With Statement
+[req,id=IDE-131,version=0.3]
+--
+With statements are not allowed in N4JS or strict mode.
+--
 
 === Switch Statement
 
@@ -340,12 +358,17 @@ DefaultClause <Yield>: {DefaultClause} 'default' ':' (statements+=Statement<Yiel
 
 ==== Semantics [[switch-statement-semantics]]
 
-132Switch Constraints[req:Switch Constraints] For a given switch
-statement math:[$s$], the following constraints must hold:
+.Switch Constraints
+[req,id=IDE-132,version=0.3]
+--
+For a given switch statement math:[$s$], the following constraints must hold:
 
 * For all cases math:[$c \in s.cases$],
 math:[$s.expr$]===math:[$c.expr$] must be valid according to
 the constraints defined in .
+--
+
+// TODO missing citation above
 
 === Throw, Try, and Catch Statements
 
@@ -432,12 +455,13 @@ A const variable statement is more or less a normal variable statement
 writable (cf. <<req:Write_Acccess>>). This is similar to constant data
 fields (cf. <<Assignment_Modifiers>>).
 
-//Requirement
-//133Writability of const variables
-[[req:Writability_of_const_variables]]
+.Writability of const variables
+[req,id=IDE-133,version=0.3]
+--
 All variable declarations of a const variable statement
 math:[$constStmt$] are not writeable: math:[\[\begin{aligned}
     \forall vdecl \in constStmt.varDecl: \lnot vdecl.writable\end{aligned}\]]
+--
 
 === for ... of statement
 
@@ -449,9 +473,9 @@ See <<Iteration Statements>>
 
 ==== Semantics [[for-of-statement-semantics]]
 
-//Requirement
-//134for ... of statement
-[[req:for_of_statement]]
+.for ... of statement
+[req,id=IDE-134,version=0.3]
+--
 For a given math:[$f$] the following conditions must hold:
 
 1.  The value provided after `of` in a `for ... of` statement must be a subtype of `Iterable<?>`.
@@ -490,6 +514,8 @@ createArrayIterator(), we need to turn the result into an iterable"_.
 
 An array or object destructuring pattern may be used left of the `of`.
 This is used to destructure the elements of the `Iterable` on the right-hand side (not the `Iterable` itself). For detais, see <<Destructuring>>.
+
+--
 
 === Import Statement
 
@@ -640,9 +666,9 @@ module):
 
 ----
 
-//Requirement
-//135Imports
-[[req:Imports]]
+.Imports
+[req,id=IDE-135,version=0.3]
+--
 The following constraints are defined on a
 (non-dynamic) import statement math:[$i$]:
 
@@ -768,15 +794,17 @@ var a2_bad: A2;//error, A2/A2 is not directly accessible with original name
 var a2_correct: C;// A2/A2 is accessible via alias C
 ----
 
+--
+
 ==== Dynamic Imports
 
 N4JS extends the ES6 module import in order that modules without a
 `n4jsd` or `n4js` file (plain `js` modules) can be imported. This is
 done by adding `+` to the name of the named import.
 
-//Requirement
-136Dynamic Import
-[[req:Dynamic_Import]]
+.Dynamic Import
+[req,id=IDE-136,version=0.3]
+--
 Let math:[$i$] be an import
 statement math:[$i$] with a dynamic namespace specifier. The
 following constraints must hold:
@@ -802,6 +830,9 @@ the user. Having an `n4js` file is a completely different story; no
 creates one from the `n4js` file) and there is absolutely no reason to
 use the module dynamically.
 
+--
+
+
 ==== Immutabilaty of Imports
 task:GH-119[]
 
@@ -809,8 +840,11 @@ Imports create always immutable bindings, c.f.
 cite:[ECMA15a(8.1.1.5)]
 http://www.ecma-international.org/ecma-262/6.0/index.html#sec-createimportbinding
 
-137Immutable Import[req:Immutable Import] Let math:[$i$] be a
-binding to an imported element. It is an error if
+
+.Immutable Import
+[req,id=IDE-137,version=0.3]
+--
+Let math:[$i$] be a binding to an imported element. It is an error if
 
 * math:[$i$] occurs on the left-hand side as the assignment-target
 of an assignment expression (this also includes any level in a
@@ -819,6 +853,8 @@ destructuring pattern on the left-hand side),
 * math:[$i$] as a direct argument of a operator,
 * math:[$i$] as a direct argument of the ``increment`` or
 ``decrement`` unary operator (/)
+
+--
 
 === Export Statement
 task:IDE-1302[]

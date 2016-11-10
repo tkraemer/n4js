@@ -44,9 +44,9 @@ be used from N4JS. Together with structural typing , this allows N4JS to
 seamlessly integrate frameworks and libraries which have not been
 implemented in N4JS but in plain ECMAScript or another language.
 
-//Requirement
-//163 - External allowed occurrences
-[[External allowed occurrences]]
+.External allowed occurrences
+[req,id=IDE-163,version=0.3]
+--
 
 * Declarations with external flags are only allowed in files with the
 extension latexmath:[$n4jsd$] (so called N4JS definition files).
@@ -66,41 +66,44 @@ modifier `external`.
 External classifiers are always ’entirely external’ in that it is not
 possible to combine defined methods and external methods within a single
 class or interface.
+--
 
-//Requirement
-//164External classes inheritance
-[[External classes inheritance]]
-
+.External classes inheritance
+[req,id=IDE-164,version=0.3]
+--
 1.  An external class _without_ the `@N4JS` annotation can only inherit from
 another external class or from one of the built-in ECMAScript types
 (e.g. Object). That is, by default external classes are derived from `Object`.
 2.  An external class _with_ the annotation `@N4JS` can only inherit from
 another external class annotated with `@N4JS` or from non-external N4JS classes.
 
-//Requirement
-//165Structurally typed interface implementation
-[[Structurally typed interface implementation]]
+--
 
+.Structurally typed interface implementation
+[req,id=IDE-165,version=0.3]
+--
 1.  An external class _without_ the annotation `@N4JS` can only be implemented
 by structurally typed interfaces.
 2.  An external class _with_ the annotation `@N4JS` can only be implemented by
 structurally typed interfaces annotated with `@N4JS`.
 3.  An external interface _without_ the annotation `@N4JS` must be defined
 structurally.
+--
 
-//Requirement
-//166External interface inheritance
-[[External interface inheritance]]
+.External interface inheritance
+[req,id=IDE-166,version=0.3]
+--
 
 1.  An interface in a n4jsd file _without_ the annotation `@N4JS` can only
 inherit from another interface within a n4jsd file.
 2.  An interface _with_ the `@N4JS` annotation can only inherit from another
 interface annotated with `@N4JS`.
 
-//Requirement
-//167External class/interface members
-[[External class interface members]]
+--
 
+.External class/interface members
+[req,id=IDE-167,version=0.3]
+--
 1.  The static and instance methods, getters and setters of an external
 class must not have a method body.
 2.  The static and instance fields of an external class must not have an
@@ -117,15 +120,17 @@ task:IDE-1509[]
 This means that in external classes, all members except constructors may
 be declared private even if the class is not annotated with `@N4JS`. In
 interfaces, however, private members are disallowed anyway,
-cf. [[req:Interfaces]].
+cf. <<req:Interfaces>>.
 
-//Requirement
-//168Other external declarations
-[[Other external declarations]]
-Other external declarations
+--
+
+.Other external declarations
+[req,id=IDE-168,version=0.3]
+--
 
 1.  The literals of an external enum must not have a value.
 2.  An external function declaration must not have a body.
+--
 
 === Declaring externals
 
@@ -193,9 +198,9 @@ Occasionally it is not possible for the validation to correctly detect a
 corresponding implementation element. For that reason, it is possible to
 disable validation of implementations completely via `@@IgnoreImplementation`.
 
-//Requirement
-[[req:169Implementation of External Declarations]]
-//TODO : Requirements
+.Implementation of External Declarations
+[req,id=IDE-169,version=0.3]
+--
 task:IDE-1099[]
 For a given external declaration latexmath:[$D$] but not for
 API-definitions footnote:[<<API_and_Implementation_Components>>], the
@@ -212,6 +217,7 @@ If, in addition to standard `source`, the `source-external` fragment is
 provided in `Sources`, latexmath:[$n4jsd$] files in the folder tree
 below source folders will be related to modules of the same name in the
 external folders. This is shown in <<externalClassImplementation_naming>>.
+--
 
 [[externalClassImplementation_naming]]
 image:fig/externalClassImplementation_naming.png[title="External Class Implementation, Naming Convention"]
@@ -308,10 +314,10 @@ this can be only used in external definitions. A declaration with
 latexmath:[$global$] can be used without explicit import statement. It
 is not possible to import these declarations.
 
-//Requirement
-//170Global Definitions
-[[req:Global_Definitions]]
 
+.Global Definitions
+[req,id=IDE-170,version=0.3]
+--
 Global Definitions
 
 For a declaration latexmath:[$D$] with latexmath:[$D.global=\TRUE$], not a polyfill
@@ -328,6 +334,7 @@ latexmath:[\[\begin{aligned}
 &\}\\
 &\Rightarrow D.containingProject.type=\lenum{runtimeEnvironment}\end{aligned}\]]
 
+--
 
 == Runtime Definitions
 task:IDE-1036[]
@@ -357,9 +364,9 @@ provided by the runtime.
 
 Since built-in types are usually defined globally, the annotation `@ProvidedByRuntime` is usually used in combination with `@Global`.
 
-//Requirement
-//171Provided By Runtime
-[[req:Provided_By_Runtime]]
+.Provided By Runtime
+[req,id=IDE-171,version=0.3]
+--
 Provided By Runtime
 
 task:IDE-1036[]
@@ -375,6 +382,7 @@ type latexmath:[$\lenum{runtimeEnvironment}$] or
 latexmath:[$\lenum{runtimeLibrary}$].
 4.  There must be no implementation file with the same name as the
 definition module if annotation is defined for a whole module. task:IDE-1084[]
+--
 
 == Applying Polyfills
 task:IDE-1142[]

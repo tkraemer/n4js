@@ -1,5 +1,4 @@
 = Members
-:toc:
 task:IDE-12[] task:IDE-381[]
 
 A member is either a method (which may be a special constructor
@@ -8,11 +7,9 @@ implicitly define an accessor field. Similar to object literals, there
 must be no data field with the same name as a getter or setter.
 
 Redefinition of members (overriding, implementation and consumption) is
-described in .
+described in <<Redefinition_of_Members>>.
 
 == Syntax
-
-//[language=n4bnf,caption={},label={lst:EBNFMember}]
 
 .Syntax N4JS member access modifier
 [source]
@@ -98,12 +95,18 @@ The members of a given classifier math:[$C$] must be named such
 that the following constraints are met:
 
 task:IDE-550[] task:IDE-551[]
-// Requirement
-// 52Member Names[req:Member_Names]
+
+.Member Names
+[req,id=IDE-52,version=0.3]
+--
 1.  No two members may have the same name, except one is static and the
 other is non-static:
 math:[$\forall m_1,m_2 \in C.ownedMembers, m_1\neq m_2: m_1.name\neq m_2.name \lor m_1.static\neq m_2.static$]
 2.  The member name must be a valid identifier name, see .
+
+--
+
+//TODO missing xref above
 
 Thus, over_loading_ of methods is not supported footnote:[In order to
 emulate method overloading, union types are to be used.] and no field
@@ -263,15 +266,16 @@ and method overriding and implementation (<<Overriding of Members>>, <<Implement
 
 The following constraints are defined for methods in ECMAScript 6 cite:[ECMA15a(207)]
 
-// Requirement
-//53Method Definition ECMAScript 6[req:Method Definition ECMAScript 6]
-
+.Method Definition ECMAScript 6
+[req,id=IDE-53,version=0.3]
+--
 * ``It is a Syntax Error if any element of the BoundNames of
 StrictFormalParameters also occurs in the VarDeclaredNames of
 FunctionBody.``
 * ``It is a Syntax Error if any element of the BoundNames of
 StrictFormalParameters also occurs in the LexicallyDeclaredNames of
 FunctionBody.``
+--
 
 Methods – like functions – define a variable execution environment and
 therefore provide access to the actual passed-in parameters through the
@@ -290,8 +294,9 @@ class C {
 var v: {function():void} = new C().m;
 ----
 
-54Method Assignment[req:Method_Assignment]
-
+.Method Assignment
+[req,id=IDE-54,version=0.3]
+--
 .  Different from ECMAScript 2015, methods are defined as readonly,
 that is, it is not possible to dynamically re-assign a property defined
 as method with a new value. This is because assigning or re-assigning a
@@ -304,6 +309,8 @@ issued only if it is guaranteed that no problems will occur:
 ..  The method’s body can be determined at compile time (i.e., it has
 been declared `@Final`) and it lacks usages of `this` or `super`. This is true for instance and static methods.
 ..  The method is the constructor. task:GH-224[]
+
+--
 
 NOTE: The following code demonstrates problems arising when
 methods are assigned to variables in terms of function expressions.
@@ -459,11 +466,13 @@ class. That is to say that type parameters (with type variables) can be
 defined for methods as well, just like for generic functions (see
 <<Generic Functions>>).
 
-// Requirement
-// 55Type variable names for generic methods[req:Type_variable_names_for_generic_methods]
+.Type variable names for generic methods
+[req,id=IDE-10,version=0.3]
+--
 For a given generic method math:[$m$] of a class math:[$C$], the following
 constraint must hold: +
 math:[$\forall\ tp_m \in m.typePars, tp_C \in C.typePars: tp_m.name \neq  tp_C.name$]
+--
 
 Since type variables can be used similarly to types in the scope of a
 generic class, a generic method may refer to a type variable of its
@@ -646,9 +655,10 @@ public fields with the same name, as the `$~~$this` type will contain these fiel
 in the subclass. This is marked as an error in the subclass.
 
 task:IDEBUG-81[]
-//Requirement 58
+
 .Names of additional members of structural this type in constructor
-[[req:Fields_and_constructor_this_type_members]]
+[req,id=IDE-58,version=0.3]
+--
 If the structural this type is used in a constructor of a class
 math:[$C$], and if this structural reference contains an additional
 structural member math:[$SM$], the following constraints must hold
@@ -666,7 +676,7 @@ name as math:[$SM$]: math:[\[\begin{aligned}
 name as math:[$SM$]: math:[\[\begin{aligned}
     \nexists M \in C.members: M.acc=\lenum{public} \land M.name = SM.name
     \end{aligned}\]]
-
+--
 
 #### Field name conflicts with structural member name
 

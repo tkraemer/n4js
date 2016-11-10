@@ -141,8 +141,9 @@ support) it is difficult for nontrivial applications. The solutions that <<AC,DI
 provides should empower N4JS users to achieve the above goals without
 the burden of maintaining so-called ’boilerplate’ code.
 
-image::fig/diTerms.PNG[[fig:diTerms] key: pass the dependency instead of
-letting the client create or find it]
+image::fig/diTerms.PNG[fig:diTerms]
+
+[key: pass the dependency instead of letting the client create or find it]
 
 Core terms
 
@@ -187,9 +188,10 @@ _Injector_ is the main object of <<AC,DI>> mechanisms responsible for creating
 object graphs of the application. At runtime, injectors are instances of
 `N4Injector`.
 
-//Requirement
-//138DI Component and Injector
-[req:DI_Component]
+.DI Component and Injector
+[req,id=IDE-138,version=0.3]
+--
+
 The following constraints must hold for a class math:[$C$] marked as <<AC,DIC>>:
 
 1.  A subclass math:[$S$] of math:[$C$] is a <<DIC>> as well and it
@@ -198,10 +200,11 @@ must be marked with `GenerateInjector` task:IDE-1563[].
 3.  The injector associated to a \ac{DIC} is of type `N4Injector`. It can be retrieved via `N4Injector.of(DIC)` in which `DIC` is the `DIC`.
 4.  Injectors associated to \ac{DIC} a are DI-singletons (cf. <<Singleton Scope>>).
 Two calls to `N4Injector.of(DIC)` are different (as different \acp{DIC} are assumed).
+--
 
-//Requirement
-//139Injection Phase
-[[req:Injection_Phase]]
+.Injection Phase
+[req,id=IDE-139,version=0.3]
+--
 task:IDE-1497[]
 We call the (transitive)
 creation and setting of values by an injector math:[$I$] caused by
@@ -241,6 +244,8 @@ explicit __Binding__s defined by an N4JS developer. A set of these
 combined with _implicit bindings_ creates the _di configuration_ used by
 a given injector. To configure given __Injector__s with given
 __Binder__(s) use `@UseBinder` annotation.
+
+--
 
 ==== DIComponent Relations
 
@@ -290,10 +295,13 @@ math:[$\exists DIC1,DIC2 : DIC1.\seq{binding}.\seq{key} \to DIC2.\seq{binding}.\
 NOTE: Although subtype notation math:[$<:$] is used here it does *not* imply actual subtype relations. It was used in this instance for of lack of formal notations for DI concepts and because this is similar to the Liskov Substitution principle.
 
 A complex Child-Parent relation between components is depicted in <<fig:diagDICParentChild>> and <<ex:Complex_DIComponents_Relations>>.
---
+
 
 [[fig:diagDICParentChild]]
-image::fig/diagDICParentChild.png[title="Complex DIComponents Relations"]
+
+image::fig/diagDICParentChild.png[title="Complex DIComponents Relations",align=center]
+
+--
 
 Complex DIComponents Relations
 [[ex:Complex_DIComponents_Relations]]
@@ -391,8 +399,10 @@ math:[$target*=
      target,                        &\text{otherwise ($target$ is a type reference)}
    \end{cases}$]
 
-140Bindings[req:Bindings] For a given binding
-math:[$b=(key, target)$], the following constraints must
+.Bindings
+[req,id=IDE-140,version=0.3]
+--
+For a given binding math:[$b=(key, target)$], the following constraints must
 hold:
 footnote:[Note that other frameworks may define other constraints, e.g., arbitrary keys.]
 
@@ -410,8 +420,12 @@ reference into account at runtime!
 6.  If during injection phase no binding for a given key is found, an is
 thrown. task:IDEBUG-461[]
 
-141Transitive Bindings[req:Transtive_Bindings] If an injector contains
-two given bindings math:[$b_1=(key_1, target_1)$] and
+--
+
+.Transitive Bindings
+[req,id=IDE-141,version=0.3]
+--
+If an injector contains two given bindings math:[$b_1=(key_1, target_1)$] and
 math:[$b_2=(key_2, key_1)$], an effective binding
 math:[$b=(key_2, target_1)$] is derived (replacing
 math:[$b_1$]).
@@ -441,6 +455,8 @@ create the instance.
 
 If no binding for a requested type is available an error will be thrown.
 
+--
+
 === Injection Points
 
 By _injection point_ we mean a place in the source code which, at
@@ -454,9 +470,9 @@ At runtime, an instance of the containing class will be expected to hold
 reference to an instance of the field declared type. Usually that case
 is called __Field Injection__.
 
-//Requirement
-//142Field Injection
-[[req:Field_Injection]]
+.Field Injection
+[req,id=IDE-142,version=0.3]
+--
 The injector will inject the
 following fields:
 
@@ -465,8 +481,8 @@ following fields:
 3.  The injected fields will be created by the injector and their fields
 will be injected as well.
 
-[Simple Field Injection]
-[ex:Simple_Field_Injection]
+.Simple Field Injection
+[[ex:Simple_Field_Injection]]
 demonstrates simple
 field injection using default bindings. Note that all inherited fields
 (i.e. `A.xInA`) are injected and also fields in injected fields (i.e. )
@@ -500,6 +516,8 @@ console.log(dic.a.xInB);       // --> X
 console.log(dic.a.xInB.y);     // --> Y
 ----
 
+--
+
 ==== Constructor Injection
 task:IDE-1262[]
 
@@ -524,9 +542,9 @@ constructor parameters. In the case of a possible broken injection chain
 due to missing `@Inject` annotations for any subclasses, a validation warning will
 be reported.
 
-//Requirement
-//143Constructor Injection
-[[req:Constructor_Injection]]
+.Constructor Injection
+[req,id=IDE-143,version=0.3]
+--
 If a class math:[$C$] has a constructor marked as injection point, the
 following applies:
 
@@ -541,6 +559,7 @@ There will be a warning generated in math:[$S.ctor$] to mark it as
 injection point as well in order to prevent inconsistent injection
 behavior. Still, math:[$C.ctor$] must be called in
 math:[$S.ctor$] similarly to other overridden constructors.
+--
 
 ==== Method Injection
 
@@ -650,7 +669,7 @@ class B { @Inject a: A; }
 
 [c]0.4
 
-image::fig/injectionGraph_cycleField.png[image]
+image::fig/injectionGraph_cycleField.png[align=center]
 
  +
 
@@ -664,7 +683,7 @@ class D { @Inject c: C; }
 
 [c]0.4
 
-image::fig/injectionGraph_cycleCtorField.png[image]
+image::fig/injectionGraph_cycleCtorField.png[align=center]
 
  +
 
@@ -678,20 +697,24 @@ class F { @Inject constructor(e: E) {} }
 
 [c]0.4
 
-image::fig/injectionGraph_cycleCtor.png[image]
+image::fig/injectionGraph_cycleCtor.png[align=center]
 
  +
 
 The injector needs to detect these cycles and resolve them.
 
-144Resolution of Injection Cycles[req:Resolution_of_Injection_Cycles] A
-cycle math:[$c \subset G$], with math:[$G$] being an injection
+.Resolution of Injection Cycles
+[req,id=IDE-144,version=0.3]
+--
+A cycle math:[$c \subset G$], with math:[$G$] being an injection
 graph, is resolved as follows:
 
 1.  If math:[$c$] contains no edge with math:[$label="ctor"$],
 the cycle is resolved using the algorithm described below.
 2.  If math:[$c$] contains at least one edge with
 math:[$label="ctor"$], a runtime exception is thrown.
+
+--
 
 Cycles stemming from field injection are resolved by halting the
 creation of new instances of types which have been already created by a
@@ -980,11 +1003,13 @@ required in its object graph.
 
 Additional _WithParentInjector_ constraints:
 
-145DI WithParentInjector[req:DI_WithParentInjector]
 
+.DI WithParentInjector
+[req,id=IDE-145,version=0.3]
+--
 1.  Allowed only on annotated with `@GenerateInjector`.
 2.  Its parameter can only be annotated with .
-
+--
 
 ==== N4JS DI @UseBinder
 
@@ -1003,10 +1028,13 @@ arguments are optional::
 
 `@UseBinder` describes _Binder_ to be used (configure) target __Injector__.
 
-146 DI UseInjector[req:DI_use_bindings]
 
+.DI UseInjector
+[req,id=IDE-146,version=0.3]
+--
 1.  Allowed only on annotated with `@GenerateInjector`.
 2.  Its parameter can only be annotated with `@Binder`.
+--
 
 ==== N4JS DI @Binder
 
@@ -1026,12 +1054,14 @@ arguments::
 `@UseBinder` defines a list of bind configurations.
 That can be either annotations on itself or its factory methods annotated with `@Bind`.
 
-147 DI binder[req:DI_Binder]
 
+.DI binder
+[req,id=IDE-147,version=0.3]
+--
 1.  Target `N4ClassDeclaration` must not be __abstract__.
 2.  Target `N4ClassDeclaration`  must not be annotated with `@GenerateInjector`.
 3.  Target class cannot have __injection points__.
-
+--
 
 ==== N4JS DI @Bind
 
@@ -1053,11 +1083,14 @@ Defines _binding_ between type and subtype that will be used by injector
 when configured with target . See also for description of injectable
 types.
 
-148 DI Bind[req:DI_bind]
 
+.DI Bind
+[req,id=IDE-148,version=0.3]
+--
 1.  Allowed only on `N4ClassDeclarations` that are annotated with `@Binder`(<<N4JS DI @Binder>>).
 2.  Parameters are instances of one of the values described in <<N4JS_DI_Validation_N4Injector_Callsites>>.
 3.  The second parameter must be a subtype of the first one.
+--
 
 ==== N4JS DI @Provides
 
@@ -1081,11 +1114,15 @@ arguments are optional::
 method is expected to be part of the `@Binder`. Can be used to implement custom
 scopes.
 
-149 DI Provides[req:DI_provides]
+
+.DI Provides
+[req,id=IDE-149,version=0.3]
+--
 
 1.  Allowed only on `N4MethodDeclarations` that are part of a classifier annotated with `@Binder`.
 2.  Annotated method declared type returns instance of one of the types
 described in _injectable values_  <<N4JS_DI_Validation_N4Injector_Callsites>>.
+--
 
 ==== N4JS DI @Inject
 
@@ -1106,11 +1143,14 @@ arguments::
 `@Inject` defines the injection point into which an instance object will be injected. The specific instance depends on the injector configuration (bindings)
 used. Class fields, methods and constructors can be annotated. See <<N4JS_DI_Injection_Points>> for more information.
 
-150 DI Inject[req:DI_provides]
 
+.DI Inject
+[req,id=IDE-150,version=0.3]
+--
 1.  Injection point bindings need to be resolvable.
 2.  Binding for given type must not be duplicated.
 3.  Annotated types must be instances of one of the types described in <<N4JS_DI_Validation_N4Injector_Callsites>>.
+--
 
 ==== N4JS DI @Singleton
 
@@ -1142,12 +1182,16 @@ specification.
 In order to enable tests for private methods, test projects may define
 which project they are testing.
 
-151Test API methods and types[req:Test_API_methods_and_types]
+.Test API methods and types
+[req,id=IDE-151,version=0.3]
+--
 task:IDE-1468[]
 In some cases, types or methods are only provided for testing purposes. In order
 to improve usability, e.g. content assist, these types and methods can
 be annotated with `@TestAPI`. There are no constraints defined for that annotation
 at the moment.
+--
+
 
 == Polyfill Definitions
 task:IDE-1142[]
@@ -1178,8 +1222,10 @@ modification __filling__.
 We add a new pseudo property math:[$polyfill$] to classes in order
 to distinguish between normal (sub-) classes and polyfill classes.
 
-152Polyfill Class[req:Polyfill_Class] For a polyfill class
-math:[$P$] annotated with `@Polyfill` or  `@StaticPolyfill`, that is
+.Polyfill Class
+[req,id=IDE-152,version=0.3]
+--
+For a polyfill class math:[$P$] annotated with `@Polyfill` or  `@StaticPolyfill`, that is
 math:[$P.polyfill=\TRUE$], all the following constraints must hold:
 
 1.  math:[$P$] must extend a class math:[$F$], math:[$F$]
@@ -1223,6 +1269,7 @@ parameters (with no further modifications): math:[\[\begin{aligned}
 8.  All constraints related to member redefinition (cf. <<Redefinition_of_Members>>) have to hold.
 In the case of polyfills, this is true for constructors (cf.
 <<req:Overriding_Members>>) and private members.
+--
 
 === Runtime Polyfill Definitions
 
@@ -1234,8 +1281,10 @@ course).
 Runtime polyfills are only applicable to runtime libraries or
 environments and thus are limited to n4jsd files.
 
-153Runtime Polyfill Class[req:Runtime_Polyfill_Class] For a
-runtime-polyfill class math:[$P$] annotated with `@Polyfill`, that is
+.Runtime Polyfill Class
+[req,id=IDE-153,version=0.3]
+--
+For a runtime-polyfill class math:[$P$] annotated with `@Polyfill`, that is
 math:[$P.staticpolyfill=\FALSE$], all the following constraints
 must hold in addition to :
 
@@ -1247,7 +1296,9 @@ math:[\[\begin{aligned}
     & P.providedByRuntime = \TRUE \land F.providedByRuntime = \TRUE
     \end{aligned}\]]
 
-154Applying Polyfills[req:Applying_Polyfills]
+.Applying Polyfills
+[req,id=IDE-154,version=0.3]
+--
 task:IDE-1207[]
 A polyfill is
 automatically applied if a runtime library or environment required by
@@ -1255,6 +1306,8 @@ the current project provides it. In this case, the following constraints
 must hold:
 
 1.  No member must be filled by more than one polyfill.
+
+--
 
 === Static Polyfill Definitions
 task:IDE-1735[]
@@ -1293,8 +1346,11 @@ signal the way these files are processed.
 In order to support efficient transpilation, the following constraint
 must hold in addition to constraints :
 
-155static poly fill layout[req:static_poly_fill_layout] For a static
-polyfill class math:[$P$] annotated with `@StaticPolyfill`, that is
+
+.Static Polyfill Layout
+[req,id=IDE-155,version=0.3]
+--
+For a static polyfill class math:[$P$] annotated with `@StaticPolyfill`, that is
 math:[$P.staticpolyfill=\TRUE$], all the following constraints must
 hold in addition to [req:Polyfill_Class]:
 
@@ -1322,10 +1378,14 @@ math:[\[\begin{aligned}
 static polyfill: math:[\[\begin{aligned}
     (P_1 \text{ is static polyfill of } F \land P_2 \text{ is static polyfill of } F) \rightarrow P_1=P_2
     \end{aligned}\]]
+--
 
-156Restrictions on static
-polyfilling[req:Restrictions_on_static_polyfilling] For a static
-polyfilling module math:[$M_P$] the following must hold:
+
+
+.Restrictions on static polyfilling
+[req,id=IDE-148,version=0.3]
+--
+For a static polyfilling module math:[$M_P$] the following must hold:
 
 1.  All top-level elements are static polyfills:
 math:[\[\begin{aligned}
@@ -1346,8 +1406,7 @@ module exist in the same project: math:[\[\begin{aligned}
 
 <<lst:StaticPolyfill_genMod>> shows an example of generated code. <<lst:StaticPolyfill_polyfillMod>> demonstrates the static polyfill.
 Note that the containing project has two source folders configured:
-`Project/src/n4js` and `Project/src/n4js-gen`
-.
+`Project/src/n4js` and `Project/src/n4js-gen`.
 
 [source,n4js]
 ----
@@ -1377,6 +1436,7 @@ export public class B extends B {
     m3(): void {...} // adds new method m3 to B
 }
 ----
+--
 
 === Transpiling static polyfilled classes
 

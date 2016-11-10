@@ -62,6 +62,7 @@ Note that this declarative definition needs to be specified in detail
 for special cases, such as union and intersection types. Usually, the
 union type of two types is also the join.
 
+//TODO missing word
 summarizes all predefined types, that is primitive and built-in
 ECMAScript and N4JS types. Specific rules for the subtype relation are
 defined in the following sections. This type hierarchy shows ``any`` and ``undefined`` as the
@@ -76,6 +77,8 @@ math:[$T \subtype  Top$] is true. We call math:[$Bot$] the
 bottom type, if for all types math:[$T$] the relation
 math:[$Bot<:T$] is true. In N4JS, math:[$Top=``any}$], the
 bottom type math:[$Bot=``undefined}$].
+--
+
 
 ``null`` is almost similar to math:[$Bot$], except that it is not a subtype
 of ``undefined``.
@@ -89,7 +92,7 @@ primitive types and built-in types – these types are final.
 Although the diagram shows inheritance between ``void`` and ``undefined``, this relationship is only semantic: ``void`` is a refinement of ``undefined`` from a type system viewpoint. The
 same applies to the relation of ``Object`` as well as the subtypes shown for ``string`` and ``String``.
 
---
+
 
 [[ex:Type Examples, Class Hierarchy]]
 // TODO example block
@@ -148,6 +151,7 @@ cases of object literals or destructuring are explained later on.
 
 .Type_Annotation_Syntax
 [example]
+--
 The following two listings show the very same code and type annotations are provided on
 the left hand side. For simplicity, is always used as type
 expression.
@@ -200,6 +204,7 @@ class C {
 The code on the right hand side is almost all valid ECMAScript 2015,
 with the exception of field declarations in the class. These are moved
 into the constructor by the N4JS transpiler.
+--
 
 === Properties
 
@@ -381,20 +386,24 @@ class.
 
 ==== Semantics [[type-variables-semantics]]
 
-// TODO Requirement
-[[req:10Type Variables]]
-
+.Type Variable Semantics
+[req,id=IDE-10,version=0.3]
+--
 1.  Enum is not a valid metatype in math:[$declaredUpperBounds$].
 2.  Wildcards are not valid in math:[$declaredUpperBounds$].
 3.  Primitives are not valid in math:[$declaredUpperBounds$].
 4.  Type variables are valid in math:[$declaredUpperBounds$]. task:IDEBUG-830[]
+--
 
 A type variable can be used in any type expression contained in the
 generic class, generic interface, or generic function / method
 definition.
 
-[F-bounded quantification][ex:F_bounded_quantification] Using a type
-variable in the upper bound reference may lead to recursive definition.
+[[ex:F_bounded_quantification]]
+
+[example]
+--
+Using a type variable in the upper bound reference may lead to recursive definition.
 
 [source]
 ----
@@ -403,7 +412,7 @@ class Chain<C extends Chain<C, T>, T> {
     m() : T { return null; }
 }
 ----
-
+--
 
 ==== Type Inference [[type-variables-type-inference]]
 
@@ -569,8 +578,9 @@ the surrounding generic declaration. The actual type arguments must
 conform to the type parameters so that code referencing the generic type
 parameters is still valid.
 
-[[req:11 Parameterized Types]]
-// TODO: Requirement [req:Parameterized_Type]
+.Parameterized Types
+[req,id=IDE-11,version=0.3]
+--
 For a given parameterized
 type reference math:[$R$] with +
 math:[$G=R.declaredType$], the following constraints must hold:
@@ -581,10 +591,14 @@ math:[\[\begin{aligned}
       & |G.typePars|=|R.typeArgs|\\
     &\land \forall\ i, 0<i<|R.typeArgs|: \infType{R.typeArgs_i} <: \infType{R.typePars_i} \\\end{aligned}\]]
 
+--
+
 We define type erasure similar to Java cite:[Gosling12a(S4.6)] as a "mapping from types (possibly including parameterized types and type variables) to types (that are never parameterized types or type variables)". We write $T°$ for the erasure of type $T$.\footnote{The notation $|T|$ used in cite:[Gosling12a] conflicts with the notation of cardinality of sets, which we use in case of union or intersection types for types as well. The notation used here is inspired by cite:[Crary02a], in which  a mapping is defined between a typed language $\lambda$ to an untyped language $\lambda°$.}
 
-[Parameterized Type, Raw Type][def:Parameterized_Type] A parameterized
-type reference math:[$R$] defines a parameterized type
+.Parameterized Type
+[def]
+--
+A parameterized type reference math:[$R$] defines a parameterized type
 math:[$T$], in which all type parameters of
 math:[$R.declaredTpe$] are substituted with the actual values of
 the type arguments. We call the type math:[$T^0$], in which all
@@ -597,6 +611,7 @@ We define for types in general:
 math:[$G<T_1, ..., T_n>$] is simply math:[$G$].
 * The erasure of a type variable is the erasure of its upper bound.
 * The erasure of any other type is the type itself.
+--
 
 This concept of type erasure is purely defined for specification
 purposes. It is not to be confused with the ``real`` type erasure which
@@ -775,7 +790,9 @@ during type inference for these existential types. This enables the type
 inferencer to calculate the join and meet of parameterized types as
 well.
 
-[[req:12Join of Parameterized Types]]
+.Join of Parameterized Types
+[req,id=IDE-12,version=0.3]
+--
 // TODO Requirement
 The join of two parameterized types math:[$G<T_1,\dots,T_n>$] and
 math:[$H<S_1,\dots,S_m>$] is the join of the raw types, this join
@@ -787,6 +804,8 @@ non-generic type, including type variables, simply equal the type
 itself, that is for a given type math:[$T$], the following
 constraints hold: math:[\[\begin{aligned}
 upper(T) = lower(T) = T\end{aligned}\]]
+
+--
 
 //TODO: Example
 [[ex:Upper and lower bound of parameterized types]]
@@ -1113,9 +1132,9 @@ function or method as `void` in order to state that the function does not return
 ==== Semantics [[void-type-semantics]]
 
 
-// TODO: Requirement: 13void type
-//[[req:void type]]
-
+.Void Type
+[req,id=IDE-13,version=0.3]
+--
 * The type `void` may only be used to declare the return type of a function or method.
 * If a function math:[$f$] is declared to return `void`, an error is created if a return statement contains an expression:
 math:[\[\begin{aligned}
@@ -1126,6 +1145,7 @@ math:[\[\begin{aligned}
     &f.returnType=\type{void} \to \\
     & \forall e, bind(e, f): \mu(e.container)=\type{ExpressionStatement}
     \end{aligned}\]]
+--
 
 The following type hierarchy is defined: ``void`` is only a subtype of itself but
 not of any other type and no other type is a subtype of void.
@@ -1244,8 +1264,8 @@ parameters, it would not normally be possible to invoke an instance of ``Functio
 For the time being, however, an instance of ``Function`` can be invoked, any number
 of arguments may be provided and the invocation may be parameterized
 with any number of type arguments (which will be ignored), i.e. 
-[req:Function_Call_Constraints] and
-[req:Parameterized_Function_Call_Constraints] do not apply.
+<<Function_Call_Constraints>> and
+<<Parameterized_Function_Call_Constraints>> do not apply.
 //TODO: link requirements
 
 === Array Object Type
@@ -1257,10 +1277,13 @@ _typeArgs[0]_ (cf. <<Array_Literal>>). Due to type erasure, the item type is not
 available during runtime, that is to say there are no reflective methods
 returning the item type of an array.
 
-[[req:14Array_Type]]
+.Array Type
+[req,id=IDE-14,version=0.3]
+--
 For an array type math:[$A$], the following conditions must be true:
 
 * math:[$|A.typeArgs|=1$]
+--
 
 === String Object Type
 
@@ -1412,11 +1435,13 @@ math:[$<:$] and math:[$<:$] is always true. Using dynamically
 added members of a dynamic type is never type safe. Using the operator
 on a subtype of is not allowed.
 
-15Non-Dynamic Primitive Types[req:Non-Dynamic Primitive Types]
-
+.Non-Dynamic Primitive Types
+[req,id=IDE-15,version=0.3]
+--
 1.  All primitive types except `any` must not be declared dynamic.
 2.  Only parameterized type references and this type reference can be
 declared dynamic. footnote:[This is a consequence of the syntax definition.]
+--
 
 === Optional
 task:IDE-145[] task:IDE-1076[]
@@ -1443,13 +1468,18 @@ parameter is also optional as the cardinality is defined as
 math:[$[0..*]$]. No further parameter can be defined after a
 variadic parameter.
 
-// Req 16 - Variadic and optional parameters
+.Variadic and optional parameters
+[req,id=IDE-16,version=0.3]
+--
 For a parameter math:[$p$], the
 following condition must hold: math:[$p.var \to p.opt$].
 
 A parameter can, however, be declared either optional or variadic. That
 is to say that one can either write math:[$Type=$] (optional) or
 math:[$...Type$], but not math:[$...Type=$]
+
+--
+
 
 Declaring a variadic method parameter of type math:[$T$] causes the
 type of the method parameter to become ``Array<T>``. That is, declaring `function(string ...tags)` causes `tags` to be
@@ -1458,14 +1488,15 @@ an `Array<string>` and not just a scalar `string` value.
 To make this work at runtime, the compiler will generate code that
 constructs the ``method parameter`` from the `arguments` parameter explicitly passed to the function.
 
-//TODO : requirements
-//[req:Variadic_at_Runtime]
-//17Variadic at Runtime
+.Variadic at Runtime
+[req,id=IDE-17,version=0.3]
+--
 task:IDEBUG-106[]
 At runtime, a variadic
 parameter is never set to undefined. Instead, the array may be empty.
 This must be true even if preceding parameters are optionally and not
 arguments are passed at runtime.
+--
 
 For more constraints on using the variadic modifier, see <<Function Object Type>>.
 
@@ -1504,9 +1535,9 @@ types contained in the union type. In other words, a union type is a
 kind of type set, and the type of a variable is contained in the type
 set. Due to interfaces, a variable may conform to multiple types.
 
-// TODO: requirements # 18
-//18Union Type
-
+.Union Type
+[req,id=IDE-18,version=0.3]
+--
 For a given union type math:[$U=\union{T_1,\dots,T_n}$], the following conditions must hold:
 
 1.  Non-empty: At least one element has to be specified:
@@ -1515,10 +1546,11 @@ math:[$U.typeRefs \neq \emptyset$] (math:[$n\geq 1)$]
 math:[$\lnot U.dynamic$]
 3.  Non-optional elements:
 math:[$ \forall T \in U.typeRefs \to \lnot T.opt  $]
+--
 
-// TODO: requirements # 19
-// 19Union Type Subtyping Rules[req:Union_Type_Subtyping_Rules]
-
+.Union Type Subtyping Rules
+[req,id=IDE-19,version=0.3]
+--
 Let math:[$U$] be an union type.
 
 * The union type is a common supertype of all its element types:
@@ -1544,10 +1576,11 @@ math:[$\union{A,\union{B,C}} = \union{\union{A,B},C}$]
 (similar to sets): math:[\[\begin{aligned}
     & \forall 1\leq i < k \leq n, \union{T_1,\dots,T_n}: T_i \neq T_k
     \end{aligned}\]]
+--
 
-
-//TODO requirements:
-//20Implicit simplification of union types[req:Simplification_Union_Type]
+.Implicit simplification of union types
+[req,id=IDE-20,version=0.3]
+--
 Let math:[$U$] be an union type. The following simplification rules
 are always automatically applied to union types.
 
@@ -1578,6 +1611,8 @@ union: math:[\[\begin{aligned}
     \infer{\union{\tsStr T_1, \ldots, \tsStr T_n}}
           {\tsStr \union{T_1, \dots, T_n}}
     \end{aligned}\]]
+--
+
 
 Remarks:
 
@@ -1591,6 +1626,8 @@ footnote:[This is different from Ceylon ( cite:[King13a(3.2.3)]), in
 which the union is defined to be ``the same type as`` math:[$A$].
 Although the meaning of ``same`` is not clear, it is possibly used as a
 synonym for ``equivalent``.]
+
+
 
 // TODO: Example block
 //[Subtyping with union type][ex:Subtyping_with_union_type]
@@ -1647,19 +1684,22 @@ for meet.
 For the definition of join and meet for union types, we define how a
 type is added to a union type:
 
-//Requirement
-//21Union of union type[req:Union of union type]
+.Union of union type
+[req,id=IDE-21,version=0.3]
+--
 The union of union types is defined similar to the union of sets.
 The union is not simplified, but it contains no duplicates.
 
 If a type A is contained in a union type, then the union type is a
 common supertype, and (since it is the union itself) also the ``<<Acronyms,LCST>>`` of both types.
 This finding is the foundation of the definition of join of a (non-union) type with a union type:
+--
 
 // todo: review join with union type
 
-//Requirement
-//22Join with Union Type[req:Join_with_Union_Type]
+.Join with Union Type
+[req,id=IDE-22,version=0.3]
+--
 The join math:[$J$] of a union type math:[$U$] with a type
 math:[$T$] is the union of both types:
 math:[\[\begin{aligned} & \infer {(U \join T) = J}{J=U \cup T}\end{aligned}\]]
@@ -1671,9 +1711,11 @@ elements of the union type directly with another type. That is
 math:[\[A\ \mbox{join}\  \lstnfjs{union\{}B,C\lstnfjs{\}} \neq A\ \mbox{join}\  B \ \mbox{join}\  C\]]
 * The computed join is simplified according to the constraints defined
 above.
+--
 
-//Requirement
-//23Meet with Union Type[req:Meet_with_Union_Type]
+.Meet with Union Type
+[req,id=IDE-23,version=0.3]
+--
 The meet of union types is defined as the meet of the elements.
 That is math:[\[\begin{aligned}
 & \infer{\union{T_1,\dots,T_n} \meet S }
@@ -1689,16 +1731,18 @@ While for a given math:[$U=\union{A,B}$], math:[$A<:U$] and
 math:[$B<:U$], the opposite math:[$U<:A$] is usually not true
 (unless math:[$U$] can be simplified to math:[$A$]). So, for
 math:[$A \meet U$], usually math:[$U$] cannot be the meet.
+--
 
-//Requirement
-//24Upper and Lower Bound of a Union Type[req:Upper_and_Lower_Bound_of_a_Union_Type]
-
+.Upper and Lower Bound of a Union Type
+[req,id=IDE-24,version=0.3]
+--
 task:IDEBUG-260[]
 The upper and lower bound of a union type math:[$U$] is a union type math:[$U'$]
 containing the upper and lower bound of the elements of math:[$U$]:
 math:[\[\begin{aligned}
 upper(\union{T_1, \dots, T_n}) := \union{upper(T_1), \dots, upper(T_1)} \\
 lower(\union{T_1, \dots, T_n}) := \union{lower(T_1), \dots, lower(T_1)} \\\end{aligned}\]]
+--
 
 ==== Warnings
 
@@ -1710,8 +1754,10 @@ definition. Nevertheless the use of the `any` type produces a warning, since
 its use can indicate a misunderstanding of the union type concept and
 since documentation can also be done in a comment.
 
-//Requirement
-//25Any type in union types[req:Any_type_in_union_types]
+
+.Any type in union types
+[req,id=IDE-25,version=0.3]
+--
 No union type shall conatin an type:
 math:[\[\begin{aligned} \not \exists any \in U.typeRefs\end{aligned}\]]
 
@@ -1722,15 +1768,18 @@ used for documentary purposes. However, a warning will be produced to
 indicate unecessary code. The warning is only produced when both of the
 types are either classes or interfaces, since e.g. structural types are
 supertypes of any classes or interfaces.
+--
 
-//Requirement
-//26Redundant subtypes in union types[req:Redundant_subtypes_in_union_types]
+.Redundant subtypes in union types
+[req,id=IDE-26,version=0.3]
+--
 Union types shall not
 contain class or interface types which are a subtype of another class or
 interface type that also is contained in the union type.
 math:[\[\begin{aligned} \not \exists TT \in U.typeRefs :
 \exists T \in U.typeRefs : \\
 (TT <: T \wedge isClassOrInterface(T) \wedge isClassOrInterface(TT))\end{aligned}\]]
+--
 
 === Intersection Type
 task:IDE-142[] task:IDE-385[] task:IDE-383[]
@@ -1769,7 +1818,10 @@ the intersection type, the intersection type virtually declares a
 subclass of an N4Object instead. This virtual subclass also explains why
 only one single class may be contained in the intersection.
 
-27Intersection Type For a given intersection type math:[$I$], the
+.Intersection Type
+[req,id=IDE-27,version=0.3]
+--
+For a given intersection type math:[$I$], the
 following conditions must hold:
 
 1.  The intersection must contain at least one type:
@@ -1781,8 +1833,12 @@ For the time being, only a warning is produced when more than one class
 is contained in the intersection type task:IDE-2302[].
 3.  Non-optional elements:
 math:[$ \forall T \in I.typeRefs \to \lnot T.opt  $]
+--
 
-28Intersection Type Subtyping Rules[Intersection Type Subtyping Rules]
+// TODO fix Req ID
+//.Intersection Type Subtyping Rules
+//[req,id=IDE-26,version=0.3]
+//--
 Let math:[$I$] be an intersection type.
 
 * An intersection type is a subtype of another type, if at least one of
@@ -1801,8 +1857,11 @@ math:[\[\begin{aligned} \infer{S <: I}{\forall T \in I.typeRefs: S <: T} \end{al
 
 * Non-optional elements:
 math:[$ \forall T \in I.typeRefs \to \lnot T.opt  $]
+//--
 
-// TODO: requirements [Implicit simplification of intersection types][req:Simplification_Intersection_Type]
+.Implicit simplification of intersection types
+[req,id=IDE-28,version=0.3]
+--
 Let math:[$I$] be an
 intersection type. The following simplification rules are always
 automatically applied to intersection types.
@@ -1812,6 +1871,8 @@ intersection: math:[\[\begin{aligned}
     \infer{\intersection{\tsStr T_1, \ldots, \tsStr T_n}}
           {\tsStr \intersection{T_1, \dots, T_n}}
     \end{aligned}\]]
+
+--
 
 These subtyping rules are similar to Ceylon.
 footnote:[In Ceylon, for a given union type math:[$U=T_1|T_2$] and intersection type math:[$I=T_1\&T_2$] (with ’|’ is union and ’&’ is intersection),
@@ -1853,8 +1914,9 @@ intersection{A,Any} <: A                        -> true
 
 //TODO: {review join with intersection type, actually, the current constraint it not implemented and I think it is bogus anyway. At the moment, the joint is computed using all types and their supertypes of the contained elements when looking for (common) supertypes, but that is also strange.}
 
-//Requirement
-// 29Join with Intersection Type[req:Join_with_intersection_Type]
+.Join with Intersection Type
+[req,id=IDE-29,version=0.3]
+--
 The join of intersection types is defined as the join of the elements. That is
 math:[\[\begin{aligned}
 & \infer{\intersection{T_1,\dots,T_n} \join S }
@@ -1863,9 +1925,12 @@ math:[\[\begin{aligned}
         {T_1 \join S_1,\dots,T_1 \join S_m,
          \dots,
         T_n \join S_1,\dots,T_n \join S_m} \end{aligned}\]]
+--
 
-30Meet with intersection Type[req:Meet_with_intersection_Type] The meet
-of intersection types is defined over their elements. That is
+.Meet with intersection Type
+[req,id=IDE-30,version=0.3]
+--
+The meet of intersection types is defined over their elements. That is
 math:[\[\begin{aligned}
 &\infer{\intersection{T_1,\dots,T_n} \meet S}
         {\intersection{T_1 \meet S,\dots,T_n \meet S}}\\
@@ -1873,17 +1938,19 @@ math:[\[\begin{aligned}
         {\intersection{T_1\meet S_1,\dots,T_1\meet S_m,
                         \quad \dots,
                         \quad T_n\meet S_1,\dots,T_n\meet S_m}}\end{aligned}\]]
+--
 //TODO  {review meet with intersection type, same as with join}
 
-//Requirement
-//31Upper and Lower Bound of an Intersection Type[req:Upper_and_Lower_Bound_of_an_Intersection_Type]
-
+.Upper and Lower Bound of an Intersection Type
+[req,id=IDE-31,version=0.3]
+--
 task:IDEBUG-260[]
 The upper and lower bound of an intersection type math:[$I$] is a union type
 math:[$I'$] containing the upper and lower bound of the elements of
 math:[$I$]: math:[\[\begin{aligned}
 upper(\intersection{T_1, \dots, T_n}) := \intersection{upper(T_1), \dots, upper(T_1)} \\
 lower(\intersection{T_1, \dots, T_n}) := \intersection{lower(T_1), \dots, lower(T_1)} \\\end{aligned}\]]
+--
 
 ==== Warnings
 
@@ -1895,10 +1962,12 @@ intersection. Nevertheless the use of the `any` type produces a warning, since
 its use can indicate a misunderstanding of the intersection type concept
 and since it always can be omitted.
 
-//Requirement
-// 32Any type in intersection types[req:Any_type_in_intersection_types]
+.Any type in intersection types
+[req,id=IDE-32,version=0.3]
+--
 No intersection type shall conatin an type:
 math:[\[\begin{aligned}\not \exists any \in I.typeRefs\end{aligned}\]]
+--
 
 The use of the `any` type in an intersection type is similar to the following
 case. When two types are used, one of them a supertype of the other,
@@ -1907,14 +1976,16 @@ indicate unecessary code. The warning is only produced when both of the
 types are either classes or interfaces, since e.g. structural types are
 supertypes of any classes or interfaces.
 
-//Requirement
-//33Redundant supertypes in intersection types[req:Redundant_subtypes_in_intersection_types]
+.Redundant supertypes in intersection types
+[req,id=IDE-33,version=0.3]
+--
 Intersection types shall not contain class or interface types which are a supertype of
 another class or interface type that also is contained in the
 intersection type. math:[\[\begin{aligned}
 \not \exists T \in I.typeRefs :
 \exists TT \in I.typeRefs : \\
 (TT <: T \wedge isClassOrInterface(T) \wedge isClassOrInterface(TT))\end{aligned}\]]
+--
 
 === Composed Types in Wildcards
 
@@ -1923,8 +1994,9 @@ constraints apply
 footnote:[see "Covariance and contravariance with unions and intersections" at http://ceylon-lang.org/documentation/1.1/tour/generics/]
 :
 
-//Requirement
-//34Composed Types as Bound of a Wildcard[req:Composed_Types_as_Bound_of_Wildcard]
+.Composed Types as Bound of a Wildcard
+[req,id=IDE-34,version=0.3]
+--
 A composed type may appear as the upper or lower bound of a wildcard. In the covariant case,
 the following subtype relations apply:
 
@@ -1941,6 +2013,7 @@ In the contra variant case, the following subtype relations apply:
 union{ G<? super A>, G<? super B> }  <:  G<? super intersection{A,B}>
 G<? super union{A,B}>  <:  intersection{ G<? super A>, G<? super B> }
 ----
+--
 
 === Property Access for Composed Types
 
@@ -1957,8 +2030,9 @@ math:[$U.properties = T_1.properties \cap T_2.properties$]. It is
 not quite that simple, however, as the question of "equality" with
 regards to properties has to be answered.
 
-//Requirement
-//35Members of an Union Type
+.Members of an Union Type
+[req,id=IDE-35,version=0.3]
+--
 For a given union type math:[$U=T_1|T_2$], the following
 constraints for its members must hold:
 
@@ -2008,7 +2082,7 @@ math:[\[\begin{aligned}
     &\hspace{2em} p_i.opt = true \\
     &\hspace{2em} p_i.var  = true
     \end{aligned}\]]
-
+--
 
 
 // TODO check nesting of lists below
@@ -2047,8 +2121,9 @@ math:[$I.properties = T_1.properties \cup T_2.properties$]. It is
 not quite that simple, however, as the question of "equality” with
 regards to properties has to be answered.
 
-//Requirement
-//36Members of an Intersection Type
+.Members of an Intersection Type
+[req,id=IDE-36,version=0.3]
+--
 For a given intersection type math:[$I=T_1\&T_2$], the following
 constraints for its members must hold:
 math:[$\forall a \in I.attributes:$] math:[\[\begin{aligned}
@@ -2119,6 +2194,7 @@ math:[\[\begin{aligned}
     &\hspace{2em} p_i.opt = true \\
     &\hspace{2em} p_i.var  = true
 \end{aligned}\]]
+--
 
 Remarks on intersection type’s methods:
 
@@ -2420,8 +2496,9 @@ is described in <<Structural_Typing>>.
 
 === Semantics [[this-keyword-semantics]]
 
-// TODO: Requirements
-[[req:37 This Type]]
+.This Type
+[req,id=IDE-37,version=0.3]
+--
 task:IDE-538[]
 
 * used in the context of a class is actually inferred to an existential
@@ -2431,6 +2508,7 @@ type inside the class itself.
 combined with use-site structural typing.
 ** at covariant positions within member declarations, except for static
 members of interfaces.
+--
 
 Remarks
 
@@ -2587,9 +2665,9 @@ static fields with the type of the enumeration and the concrete
 enumeration provides specific static methods including the literals.
 This leads to the following typing rules:
 
-// TODO: requirements
-
-[[req:38Enum_Type_Rules]]
+.Enum Type Rules
+[req,id=IDE-38,version=0.3]
+--
 For a given enumeration declaration math:[$E$] with literals math:[$L$], the following
 type rules are defined:
 
@@ -2662,6 +2740,8 @@ public object N4Enum extends any {
 }
 ----
 
+--
+
 Enums do not define a type hierarchy except that they are subtypes of `N4Enum`.
 In particular, math:[$E \notsubtype Object$] for all enums. Still,
 enums could be used similarly to objects:
@@ -2672,13 +2752,16 @@ name of the enumaration.
 * enum variables used with the `+` operator will always be converted to `string`.
 * enum variables must not be used in a context in which a boolean or number type is expected.
 
-// TODO Requirement
-[[req:39Unique literal names]]
-
+.Unique literal names
+[req,id=IDE-39,version=0.3]
+--
 * math:[$\forall i,j: literals[i].name = literals[j].name \iff i = j$]
 Literal names have to be unique.
+--
 
-[[req:40Enum Literals are Singletons]]
+.Enum Literals are Singletons
+[req,id=IDE-40,version=0.3]
+--
 Enum literals are singletons:
 math:[\[\begin{aligned} \forall e_1,e_2, \mu(e_1)=\mu(e_2)=``N4EnumLiteral`` \land \tee e_1 = \tee e_2: e_1``==}e_2 \iff e_1``===}e_2\end{aligned}\]]
 
@@ -2699,6 +2782,8 @@ var colors: EList<Color>;
 colors.add(Color.R);
 var c: Color = colors.get();
 ----
+
+--
 
 === String-Based Enums
 
@@ -2727,8 +2812,10 @@ used at runtime; instead, the transpiler replaces every read access to
 this getter by an array literal containing a string literal for each of
 the enum’s literals.
 
-[[req:41String-Based Enum Type Rules]]
-// TODO Requirement
+.String-Based Enum Type Rules
+[req,id=IDE-41,version=0.3]
+--
+
 For a string-based enum declaration math:[$E_S$] with literals
 math:[$L_S$] the following type rules are defined:
 
@@ -2834,3 +2921,5 @@ public function process(req: XMLHttpRequest) : void {
   }
 }
 ----
+
+--

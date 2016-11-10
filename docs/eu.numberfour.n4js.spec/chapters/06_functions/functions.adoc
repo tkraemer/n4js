@@ -82,8 +82,9 @@ property advice set.
 
 //\todo{FunctionRestParameter : ”...” -- semantic (ECMAScript 6)}
 
-//Requirement
-//79Function Type}
+.Function Type}
+[req,id=IDE-79,version=0.3]
+--
 Type Given a function type math:[$F$], the following
 constraints must be true:
 
@@ -114,6 +115,8 @@ math:[\[\begin{aligned}
         & \forall r \in F.body.stmts, r\ isa\ \lstnfbnf{ReturnStatement}: \\
         & r.expr\neq null \land \infType{r.expr.typeRef} <: \infType{F.typeRef}
         \end{aligned}\]]
+
+--
 
 === Type Inference [[function-type-inference]]
 
@@ -364,15 +367,18 @@ overriding methods. As Java also supports method overloading: given two
 types math:[$A, B$] with math:[$B <: A$] and a super class
 method `void m(B param)`, it is valid to override `m` as `void m(A param)` in N4JS but not in Java. In Java this would be handled as method overloading and therefore an `@Override` annotation on `m` would produce an error.
 
-//Requirement 80
-Upper and Lower Bound of a Function Type
-[[req:Upper_and_Lower_Bound_of_a_Function_Type]]
+
+.Upper and Lower Bound of a Function Type
+[req,id=IDE-80,version=0.3]
+--
 The upper bound of a function type math:[$F$] is a function type with the lower bound types of the parameters and the upper bound of the return type:
 math:[\[\begin{aligned} upper(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( lower(P_1),\dots,lower(P_n) ): upper(R)\end{aligned}\]]
 The lower bound of a function type math:[$F$] is a function type
 with the upper bound types of the parameters and the lower bound of the
 return type:
 math:[\[\begin{aligned} lower(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( upper(P_1),\dots,upper(P_n) ): lower(R)\end{aligned}\]]
+
+--
 
 === Autoboxing of Function Type
 task:IDE-830[]
@@ -443,13 +449,18 @@ outside the original index boundaries.
 In non-strict ES mode the property holds a reference to the function
 executed cite:[ECMA11a(S10.6,pp61)].
 
-//Requirements 81
-#### arguments.callee
+.arguments.callee
+[req,id=IDE-81,version=0.3]
+--
+
 In N4JS and in ES strict mode the use of `arguments.callee` is
 prohibited.
+--
 
-//Requirements82
-#### arguments as formal parameter name
+
+.arguments as formal parameter name
+[req,id=IDE-82,version=0.3]
+--
 In N4JS, the formal parameters of the function cannot be named `arguments`. This applies to all variable execution environments like field accessors (getter/setter, <<Field_Accessor>>), methods (<<Methods>>) and
 constructors (<<Constructor>>), where `FormalParameter` type is used.
 
@@ -490,6 +501,8 @@ function z(){
     var arguments: number = 4;
 }
 ----
+
+--
 
 == ECMAScript 5 Function Definition
 
@@ -577,13 +590,15 @@ math:[$F$]. math:[\[\begin{aligned}
 of a function definition is different from its return type
 math:[$f.decl$]!
 
-//Requirement
-//83Function Declaration only on Top-Level
-[[req:Function_Declaration_only_on_Top_Level]]
+.Function Declaration only on Top-Level
+[req,id=IDE-83,version=0.3]
+--
 
 1.  In plain JavaScript, function declarations must only be located on
 top-level, that is they must not be nested in blocks. Since this is
 supported by most JavaScript engines, only a warning is issued.
+
+--
 
 === Function Expression
 
@@ -722,15 +737,17 @@ for them).
 variety or not, the usage of `super` isn’t allowed in the body of arrow
 functions.
 
-//Requirement
-//84no.this.in.top.level.arrow.function
-// N4JS Mode
+.no.this.in.top.level.arrow.function in N4JS Mode
+[req,id=IDE-84,version=0.3]
+--
 In N4JS, a top-level arrow function can’t refer to `this` as there’s no outer lexical context that provides a binding for it.
+--
 
-// N4JS Mode
-//Requirements
-//85no.arguments.in.top.level.arrow.function
+.no.arguments.in.top.level.arrow.function
+[req,id=IDE-85,version=0.3]
+--
 In N4JS, a top-level arrow function can’t include usages of `arguments` in its body, again because of the missing binding for it.
+--
 
 == ECMAScript Proposals Function Definition
 
@@ -870,10 +887,9 @@ These patterns are so common that a warning is available whenever both
 The warning aims at hinting about forgetting to wait for the result, while remaining
 non-noisy.
 
-//Requirement
-//86Modifier and
-[[req:Async_and_Await]]
-
+.Modifier `async` and `await`
+[req,id=IDE-86,version=0.3]
+--
 1. `async` may be used on declared functions and methods, and for function
 expressions. and arrow functions.
 2.  A function or method math:[$f$] with a declared return type
@@ -893,6 +909,8 @@ math:[$\mathit{expr} )$] is inferred to math:[$T$] if
 math:[$T$] is not a Promise or it is inferred to math:[$S$] if
 math:[$T$] is a Promise with a success value of type
 math:[$S$], i.e. math:[$T <:$] .
+
+--
 
 === Asynchronous Arrow Functions
 task:IDE-1494[]
@@ -986,9 +1004,9 @@ We can either use this promise directly or immediately `await` on it, as shown i
 The syntax shown in line 4 is merely shorthand for `await @Promisify`, i.e. the
 annotation is optional after `await`.
 
-//Requirements
-// 87Promisifiable
-[[req:Promisifiable]]
+.Promisifiable
+[req,id=IDE-87,version=0.3]
+--
 A function or method math:[$f$] can be annotated with `@Promisifiable` if and only if the following constraints hold:
 
 1.  Last parameter of math:[$f$] is a function (the
@@ -1006,14 +1024,16 @@ Since the return value of the synchronous function call is not available when us
 3.  The callback parameter may be optional.
 footnote:[Even in this case, the function will actually be called with the callback method which is then created by the transpiler. However, the callback is not given in the N4JS code).]
 
+--
+
 According to <<req:Promisifiable>>, a promisifiable function or method may
 or may not have a non-void return type, and that only the first
 parameter of the callback is allowed to be of type `Error`, all other
 parameters must be of other types.
 
-//Requirement
-//88@Promisify and await with promisifiable functions
-[[req:Promisify_and_await__Promisifiable_function]]
+.@Promisify and await with promisifiable functions
+[req,id=IDE-88,version=0.3]
+--
 A promisifiable function math:[$f$] with one of the two valid
 signatures given in <<req:Promisifiable>> can be promisified with `Promisify` or
 used with `await`, if and only if the following constraints hold:
@@ -1029,3 +1049,5 @@ I.e., `await @Promisify f()` is equivalent to `await f()`.
 words this is illegal:
 [source,n4js]
 var pf = @Promisify f; // illegal code!
+
+--

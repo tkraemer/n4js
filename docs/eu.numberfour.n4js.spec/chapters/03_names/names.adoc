@@ -109,9 +109,9 @@ math:[\[\begin{aligned}
 \lenum{private} < \lenum{project} < \lenum{public@Internal} < \lenum{public}
 \end{aligned}\]]
 
-// TODO: requirements
-// 3type access modifiers[req:type access modifiers]
-
+.Type Access Modifiers
+[req,id=IDE-3,version=0.3]
+--
 The following constraints for type access modifiers for a given type math:[$T$]
 (which may be a classifier declaration, a function or a variable) must
 hold:
@@ -127,6 +127,7 @@ type.
 * The _default modifier_ for user declared exported declarations is
 ``project``. That is, this modifier is assumed if no
 modifier is explicitly specified.
+--
 
 .Type Accessibility T
 [def]
@@ -321,9 +322,9 @@ math:[$\alpha(r,M)$] instead of math:[$\alpha_m(r,M)$].
 Although private members are accessible inside a module, it is not
 possible to redefine (override etc.) these members (see <<Redefinition_of_Members>>).
 
-//Requirement
-// 4Default Member Access Modifiers[req:default_member_access_modifiers]
-
+.Default Member Access Modifiers
+[req,id=IDE-4,version=0.3]
+--
 The following constraints for member access modifiers must hold:
 
 1.  The _default modifier_ for members of user-declared classes is
@@ -342,8 +343,8 @@ visible if the host (e.g. the class) is in the same module as the
 provider (the extended class). This also means that abstract members of
 a class are allowed to be defined private as they may be overridden
 within a module.
-
 // TODO {Rework visibility concept for private members. If private members are hidden with symbols an overriding is not possible, even in the same module.}
+--
 
 // Example
 //[Type and Member Access Modifiers][ex:Type_and_Member_Access_Modifiers]
@@ -473,9 +474,13 @@ Identifier names in N4JS are defined similar to cite:[ECMA11a(S11.6)], making it
 or warnings are issued in order to prevent problems when using these
 names.
 
-//Requirement
-5Forbidden Identifier Names in  task:IDEBUG-207[] N4JS[req:Identifier_Names_in_N4JS] In
-N4JS mode, errors are generated in the following cases:
+
+.Forbidden Identifier Names in N4JS
+[req,id=IDE-5,version=0.3]
+--
+task:IDEBUG-207[]
+
+In N4JS mode, errors are generated in the following cases:
 
 .  A name of a type equals
 ..  an access modifier
@@ -488,9 +493,12 @@ method)
 ..  an ECMAScript keyword
 ..  a reserved future ECMAScript word
 
-6Undesired Identifier Names in
-N4JS[req:Undesired_Identifier_Names_in_N4JS] In N4JS mode, warnings are
-generated in the following cases:
+--
+
+.Undesired Identifier Names in N4JS
+[req,id=IDE-6,version=0.3]
+--
+In N4JS mode, warnings are generated in the following cases:
 
 .  The name of a member (of a non external type)
 ..  equals the name of a base type footnote:[``string, boolean, number, any, null``] but the type of the variable is different from that type
@@ -503,6 +511,7 @@ fields)
 ..  equals the name of a base type but the type of the variable is
 different from that type
 ..  is not const but starts with an upper case letter
+--
 
 === Qualified Names
 
@@ -604,21 +613,27 @@ local ``var``-variables or other declarations in that function.
 execution environment.
 --
 
-//Requirement
-// 7Forbidden Duplicates[req:Forbidden_Duplicates]
+.Forbidden Duplicates
+[req,id=IDE-7,version=0.3]
+--
 There must be no two elements defined in the same lexical environment with the same name,
 that is, there must be no duplicates.
+--
 
-8Forbidden Shadowing[req:Forbidden_Shadowing] In general, shadowing is
-allowed in N4JS. But it is not allowed in the following cases:
+.Forbidden Shadowing
+[req,id=IDE-8,version=0.3]
+--
+In general, shadowing is allowed in N4JS. But it is not allowed in the following cases:
 
 1.  No element defined in the standard global scope must be shadowed.
 2.  There must be no function shadowing another function.
 3.  Elements defined in catch blocks must not shadow elements defined
 all parent non-catch-block environments.
+--
 
-//Requirement
-//9Forbidden Names[req:Forbidden_Names]
+.Forbidden Names
+[req,id=IDE-9,version=0.3]
+--
 1. In the script environment, it is not allowed to use the name
 ’arguments’.
 footnote:[This conflicts with the implicit parameter arguments introduced by the transpiler when wrapping the script/module into a definition function.]
@@ -630,7 +645,7 @@ numbers at the left side refer to the numbers in
 [[Forbidden shadowing]]
 image:fig/shadowing.png[Forbidden shadowing]
 
-Rational:
+Rationale:
 
 * We expect only few named nested functions. Since this is expected to
 be a rare case, no shadowing should occur there as this is maybe not
@@ -642,3 +657,4 @@ variables.
 * Function declarations may shadow type declarations. However, both
 entities are to be handled completely differently, so that an error will
 occur if the shadowing is ignored by the programmer anyway.
+--

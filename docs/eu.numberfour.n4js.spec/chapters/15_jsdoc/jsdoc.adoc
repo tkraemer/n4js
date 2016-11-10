@@ -47,20 +47,18 @@ task:IDE-1469[]
 
 Link to type (maybe a function) or member tested by the test.
 
-//Requirement
-//172@testee Semantics
-[[req:_testee_Semantics]]
-
+.@testee Semantics
+[req,id=IDE-172,version=0.3]
+--
 .  Tag can be only used on either
 ..  methods annotated with `@Test`
 ..  classes in test projects or folders, cf. <<jsdoc_tag__testeeFromType>>.
-.  Tag requires a single argument, which is a fully qualified name to a
-type, including the module specifier. Format is like this:
-`pass:[moduleSpecifier '.' typeName ( ('.'|'#') memberName)?]`
-.  Tag is _not_ repeatable, that is a single test method (or class) can
-refer to only one testee. task:IDEBUG-635[]
+.  Tag requires a single argument, which is a fully qualified name to a type, including the module specifier.
+The format is as follows: `pass:[moduleSpecifier '.' typeName ( ('.'|'#') memberName)?]`
+.  Tag is _not_ repeatable, that is a single test method (or class) can refer to only one testee. task:IDEBUG-635[]
 .  Tag precedes the `reqid` tag, i.e., if a `@testee` is specified, the `reqid` will be ignored.
 
+--
 // TODO: check example block formatting
 
 [example]

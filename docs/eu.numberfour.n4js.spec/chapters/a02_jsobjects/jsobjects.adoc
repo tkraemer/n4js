@@ -11,7 +11,7 @@ cite:[ECMA11a(S15,pp.102)] are supported and their properties are annotated with
 
 === Attributes
 
-``constructor:Object``: ::
+`constructor:Object`: ::
 Returns a reference to the Object function that created the instance’s
 prototype.
 
@@ -20,67 +20,67 @@ prototype.
 `toString():Object`: ::
 Returns a string representing the specified object.
 
-``toLocaleString():Object``: ::
+`toLocaleString():Object`: ::
 Returns a string representing the object. This method is meant to be
 overridden by derived objects for locale-specific purposes.
 
-``valueOf():Object``: ::
+`valueOf():Object`: ::
 Returns the primitive value of the specified object.
 
-``hasOwnProperty(prop:String):Boolean``: ::
+`hasOwnProperty(prop:String):Boolean`: ::
 Returns a boolean indicating whether an object contains the specified
 property as a direct property of that object and not inherited through
 the prototype chain.
 
-``isPrototypeOf(object:Object):Boolean``: ::
+`isPrototypeOf(object:Object):Boolean`: ::
 Returns a boolean indication whether the specified object is in the
 prototype chain of the object this method is called upon.
 
-``propertyIsEnumerable(prop:String):Boolean``: ::
+`propertyIsEnumerable(prop:String):Boolean`: ::
 Returns a boolean indicating if the internal ECMAScript DontEnum
 attribute is set.
 
 === Static Methods
 
-``getPrototypeOf(object:Object):Object``: ::
+`getPrototypeOf(object:Object):Object`: ::
 Returns the prototype of the specified object.
 
-``create(object:Object,properties:Object=):Object``: ::
+`create(object:Object,properties:Object=):Object`: ::
 Creates a new object with the specified prototype object and properties.
 
-``defineProperty(object:Object,prop:Object,descriptor:Object):Object``: ::
+`defineProperty(object:Object,prop:Object,descriptor:Object):Object`: ::
 Defines a new property directly on an object or modifies an existing
 property on an object and returns the object.
 
-``defineProperties(object:Object,properties:Object):Object``: ::
+`defineProperties(object:Object,properties:Object):Object`: ::
 Defines new or modifies existing properties directly on an object,
 returning the object.
 
-``seal(object:Object,properties:Object)``: ::
+`seal(object:Object,properties:Object)`: ::
 Seals an object, preventing new properties from being added to it and
 marking all existing properties as non-configurable. Values of present
 properties can still be changed as long as they are writable.
 
-``freeze(object:Object):Object``: ::
+`freeze(object:Object):Object`: ::
 Freezes an object: that is, prevents new properties from being added to it, prevents existing properties from being removed, prevents existing properties or their enumerability, configurability, or writability from being changed.
 In essence, the object is made effectively immutable.
 The method returns the object being frozen.
 
-``preventExtensions(object:Object):Object``: ::
+`preventExtensions(object:Object):Object`: ::
 Prevents new properties from ever being added to an object (i.e.
 prevents future extensions to the object).
 
-``isSealed(object:Object):Boolean static``: ::
+`isSealed(object:Object):Boolean static`: ::
 Determine if an object is sealed.
 
-``isFrozen(object:Object):Boolean``: ::
+`isFrozen(object:Object):Boolean`: ::
 Determine if an object is frozen.
 
-``isExtensible(object:Object):Boolean``: ::
+`isExtensible(object:Object):Boolean`: ::
 Determines if an object is extensible (whether it can have new
 properties added to it).
 
-``keys(object:Object):Array<String>``: ::
+`keys(object:Object):Array<String>`: ::
 Returns an array of all own enumerable properties found upon a given
 object in the same order as that provided by a for-in loop (the
 difference being that a for-in loop enumerates properties in the
@@ -93,114 +93,114 @@ instances and is a sub class of Object.
 
 === Attributes [[string-attributes]]
 
-``number: length`` ::
+`number: length` ::
 The length of a string.
 
 === Methods [[methods-1]]
 
-``String(thing:Object=)``
+`String(thing:Object=)`
 
-``anchor(anchorname:String):String``: ::
+`anchor(anchorname:String):String`: ::
 Creates an HTML anchor.
 
-``big():String``: ::
+`big():String`: ::
 Returns a string in a big font.
 
-``blink():String``: ::
+`blink():String`: ::
 Returns a string in a blinking string.
 
-``bold():String``: ::
+`bold():String`: ::
 Returns a string in a bold font.
 
-``charAt(index:Number):String``: ::
+`charAt(index:Number):String`: ::
 Returns the character at a specified position.
 
-``charCodeAt(index:Number):Number``: ::
+`charCodeAt(index:Number):Number`: ::
 Returns the Unicode of the character at a specified position.
 
-``concat(strings:String...):String``: ::
+`concat(strings:String...):String`: ::
 Joins two or more strings.
 
-``equals(object:Object):Boolean``
+`equals(object:Object):Boolean`
 
-``equalsIgnoreCase(object:Object):Boolean``
+`equalsIgnoreCase(object:Object):Boolean`
 
-``fromCharCode(num:Any...):String``: ::
+`fromCharCode(num:Any...):String`: ::
 Returns a string created by using the specified sequence of Unicode values.
 
-``fixed():String``: ::
+`fixed():String`: ::
 Returns a string as teletype text.
 
-``fontcolor(color):String``: ::
+`fontcolor(color):String`: ::
 Returns a string in a specified color.
 
-``fontsize(size):String``: ::
+`fontsize(size):String`: ::
 Returns a string in a specified size.
 
-``indexOf(searchValue, fromIndex:Number=):Number``: ::
+`indexOf(searchValue, fromIndex:Number=):Number`: ::
 Returns the position of the first occurrence of a specified string value in a string.
 
-``italics():String``: ::
+`italics():String`: ::
 Returns a string in italic.
 
-``lastIndexOf(searchValue, fromIndex:Number=):Number``: ::
+`lastIndexOf(searchValue, fromIndex:Number=):Number`: ::
 Returns the position of the last occurrence of a specified string value, searching backwards from the specified position in a string.
 
-``link(url):String``: ::
+`link(url):String`: ::
 Returns a string as a hyperlink.
 
-``localeCompare(otherString):Number``: ::
+`localeCompare(otherString):Number`: ::
 This method returns a number indicating whether a reference string comes before or after or is the same as the given string in sort order.
 
-``match(search value):String``: ::
+`match(search value):String`: ::
 Searches for a specified value in a string.
 
-``replace(findString,newString):String``: ::
+`replace(findString,newString):String`: ::
 Replaces some characters with some other characters in a string.
 
-``search(search string):Number``: ::
+`search(search string):Number`: ::
 Searches a string for a specified value.
 
-``slice(beginSlice:Number, endSclice:Number=):String``: ::
+`slice(beginSlice:Number, endSclice:Number=):String`: ::
 Extracts a part of a string and returns the extracted part in a new string.
 
-``small():String``: ::
+`small():String`: ::
 Returns a string in a small font.
 
-``split(separator, howmany:Number=):Array<String>``: ::
+`split(separator, howmany:Number=):Array<String>`: ::
 Splits a string into an array of strings.
 
-``strike():String``: ::
+`strike():String`: ::
 Returns a string with a strikethrough.
 
-``sub():String``: ::
+`sub():String`: ::
 Returns a string as subscript.
 
-``substr(start:Number,length:Number=):String``: ::
+`substr(start:Number,length:Number=):String`: ::
 Extracts a specified number of characters in a string, from a start index.
 
-``substring(beginIndex:number,endIndex:Number=):String``: ::
+`substring(beginIndex:number,endIndex:Number=):String`: ::
 Extracts the characters in a string between two specified indices.
 
-``sup():String``: ::
+`sup():String`: ::
 Returns a string as superscript.
 
-``toLocaleUpperCase():String``: ::
+`toLocaleUpperCase():String`: ::
 Returns a string in lowercase letters.
 
-``toString():String``: ::
+`toString():String`: ::
 Returns a String value for this object.
 
-``toUpperCase():String``: ::
+`toUpperCase():String`: ::
 Returns a string in uppercase letters.
 
-``valueOf():String``: ::
+`valueOf():String`: ::
 Returns the primitive value of a String object.
 
 
 === Static Methods [[static-methods-1]]
 
-``String(value:Object=)``: ::
+`String(value:Object=)`: ::
 Static constructor.
 
 == Boolean
@@ -217,158 +217,158 @@ Static constructor.
 
 === Static Attributes
 
-``MAX\_VALUE:Number``: ::
+`MAX\_VALUE:Number`: ::
 The largest representable number.
 
-``MIN\_VALUE:Number``: ::
+`MIN\_VALUE:Number`: ::
 The smallest representable number.
 
-``NaN:Number``: ::
+`NaN:Number`: ::
 Special 'not a number' value.
 
-``NEGATIVE\_INFINITY:Number``: ::
+`NEGATIVE\_INFINITY:Number`: ::
 Special value representing negative infinity, returned on overflow.
 
-``POSITIVE\_INFINITY:Number``: ::
+`POSITIVE\_INFINITY:Number`: ::
 Special value representing infinity, returned on overflow.
 
 === Methods [[methods-2]]
 
-``toExponential(numberOfDecimals:Number=):String``: ::
+`toExponential(numberOfDecimals:Number=):String`: ::
 Converts the value of the object into an exponential notation.
 
-``toFixed(numberOfDecimals:Number=):String``: ::
+`toFixed(numberOfDecimals:Number=):String`: ::
 Formats a number to the specified number of decimals.
 
-``toPrecision(numberOfDecimals:Number=):String``: ::
+`toPrecision(numberOfDecimals:Number=):String`: ::
 Converts a number into an exponential notation if it has more digits than specified.
 
-``valueOf():Number``: ::
+`valueOf():Number`: ::
 Returns the primitive value of a Number object.
 
-``toString(radix:Number=):String``: ::
+`toString(radix:Number=):String`: ::
 Returns a String value for this object. The toString method parses its first argument and attempts to return a string representation in the specified radix (base).
 
 
 === Static Methods [[static-methods-3]]
 
-``Number(value:Object=):Number``: ::
+`Number(value:Object=):Number`: ::
 Static constructor.
 
 == Function [[function]]
 
-``Function`` does not have a super class.
+`Function` does not have a super class.
 
 === Attributes [[attributes-2]]
 
-``prototype:Object``: ::
+`prototype:Object`: ::
 Allows the addition of properties to the instance of the object created by the constructor function.
 
-``length:Number``: ::
+`length:Number`: ::
 Specifies the number of arguments expected by the functio
 
 
 === Methods [[methods-3]]
 
-``apply(thisArg,argsArray:Array=):Object``: ::
+`apply(thisArg,argsArray:Array=):Object`: ::
 Applies the method of another object in the context of a different object (the calling object); arguments can be passed as an Array object.
 
-``call(thisArg,arg...):Object``: ::
+`call(thisArg,arg...):Object`: ::
 Calls (executes) a method of another object in the context of a different object (the calling object); arguments can be passed as they are.
 
-``bind(thisArg:Object,arg...):Function``: ::
+`bind(thisArg:Object,arg...):Function`: ::
 Creates a new function that, when called, itself calls this function in the context of the provided this value with a given sequence of arguments preceding any provided when the new function was called.
 
 == Error
 
-Error does not have a super class.
+`Error` does not have a super class.
 
 
 === Attributes [[attributes-3]]
 
-``name:String``: ::
+`name:String`: ::
 Error name.
 
-``message:String``: ::
+`message:String`: ::
 Error message.
 
 
 === Static Methods [[static-methods-4]]
 
-``Error(message:Object=):Error``: ::
+`Error(message:Object=):Error`: ::
 Static Constructor.
 
 
 == Array
 
 
-``Array`` is a generic type with the type parameter ``E`` and  does not have a super class.
+`Array` is a generic type with the type parameter `E` and  does not have a super class.
 
 === Methods [[methods-4]]
 
-``concat(array...):Array<E>)``: ::
+`concat(array...):Array<E>)`: ::
 Joins two or more arrays and returns the result.
 
-``every(callback:Function):Boolean``: ::
+`every(callback:Function):Boolean`: ::
 Tests whether all elements in the array pass the test implemented by the provided function. The callback will be called with 3 arguments (elementValue,elementIndex,traversedArray).
 
-``filter(callback:Function):Array<E>``: ::
+`filter(callback:Function):Array<E>`: ::
 Creates a new array with all elements that pass the test implemented by the provided function. The callback will be called with 3 arguments (elementValue,elementIndex,traversedArray).
 
-``forEach(callback:Function,thisArg=)``: ::
+`forEach(callback:Function,thisArg=)`: ::
 Calls a function for each element in the array. The callback will be called with 3 arguments (elementValue,elementIndex,traversedArray). Optionally with a thisObject argument to use as this when executing callback.
 
-``indexOf(searchElement,fromIndex=):Number``: ::
+`indexOf(searchElement,fromIndex=):Number`: ::
 Returns the first index at which a given element can be found in the array, or -1 if it is not present.
 
-``join(separator=):String``: ::
+`join(separator=):String`: ::
 Puts all the elements of an array into a string. The elements are separated by a specified delimiter.
 
-``lastIndexOf(searchElement,fromIndex=):Number``: ::
+`lastIndexOf(searchElement,fromIndex=):Number`: ::
 Returns the last (greatest) index of an element within the array equal to the specified value. Will return -1 if none are found.
 
-``length():Number``: ::
+`length():Number`: ::
 The length returns an integer representing the length of an array.
 
-``map(callback:Function,thisArg=):Array``: ::
+`map(callback:Function,thisArg=):Array`: ::
 Creates a new array with the results of calling a provided function on every element in this array. The callback will be called with 3 arguments (elementValue,elementIndex,traversedArray). Optionally, with a thisObject argument to use as this when executing callback.
 
-``pop():E``: ::
+`pop():E`: ::
 Removes and returns the last element of an array.
 
-``push(element...):E``: ::
+`push(element...):E`: ::
 Adds one or more elements to the end of an array and returns the new length.
 
-``reverse():Array<E>``: ::
+`reverse():Array<E>`: ::
 Reverses the order of the elements in an array.
 
-``shift()``: ::
+`shift()`: ::
 Removes and returns the first element of an array.
 
-``slice(start:Number,end:Number=):Array<E>``: ::
+`slice(start:Number,end:Number=):Array<E>`: ::
 Returns selected elements from an existing array.
 
-``some(callback:Function,thisArg=):Boolean``: ::
+`some(callback:Function,thisArg=):Boolean`: ::
 Tests whether some element in the array passes the test implemented by the provided function. The callback will be called with 3 arguments (elementValue,elementIndex,traversedArray). Optionally, with a thisObject argument to use as this when executing callback.
 
-``sort(sortByFunction:Function=):Array<E>``: ::
+`sort(sortByFunction:Function=):Array<E>`: ::
 Sorts the elements of an array. The function will be called with 2 arguments (a,b).
 
-``splice(index:Number,how many:Number,element...):Array<E>``: ::
+`splice(index:Number,how many:Number,element...):Array<E>`: ::
 Removes and adds new elements to an array. Returns the removed elements as an Array.
 
-``toLocaleString():String``: ::
+`toLocaleString():String`: ::
 
-``toString():String``: ::
+`toString():String`: ::
 Returns a String value for Array.
 
-``unshift(element...):E``: ::
+`unshift(element...):E`: ::
 Adds one or more elements to the beginning of an array and returns the new length.
 
 [[static-methods-5]]
 === Static Methods
 
-``Array(item:Object...)``: ::
+`Array(item:Object...)`: ::
 Static constructor.
 
 == Date
@@ -378,160 +378,160 @@ Static constructor.
 [[static-methods-6]]
 === Static Methods
 
-``Date():Date``: ::
+`Date():Date`: ::
 Static constructor.
 
-``Date(milliseconds:Number):Date``: ::
+`Date(milliseconds:Number):Date`: ::
 Constructor.
 
-``Date(date:Date):Date``: ::
+`Date(date:Date):Date`: ::
 Constructor.
 
-``Date(dateString:String):Date``: ::
+`Date(dateString:String):Date`: ::
 Constructor.
 
-``Date(year:Number,month:Number,day=Number=,hour:Number=,minute:Number=,second:Number=,millisecond:Number=):Date``: ::
+`Date(year:Number,month:Number,day=Number=,hour:Number=,minute:Number=,second:Number=,millisecond:Number=):Date`: ::
 Constructor.
 
-``parse(dateString:String):Date``: ::
+`parse(dateString:String):Date`: ::
 Parses a string representation of a date, and returns the number of milliseconds since midnight Jan 1, 1970.
 
-``now():Number``: ::
+`now():Number`: ::
 Returns the numeric value corresponding to the current time.
 
-``UTC(year:Number,month:Number,date:Number=,hrs:Number=,min:Number=,sec:Number=,ms:Number=):Number``: ::
+`UTC(year:Number,month:Number,date:Number=,hrs:Number=,min:Number=,sec:Number=,ms:Number=):Number`: ::
 UTC takes comma-delimited date parameters and returns the number of milliseconds between January 1, 1970, 00:00:00, Universal Time and the time you specified.
 
 [[methods-5]]
 === Methods
 
-``getDate():Number``: ::
+`getDate():Number`: ::
 Returns the day of the month from a Date object (from 1-31).
 
-``getDay():Number``: ::
+`getDay():Number`: ::
 Returns the day of the week from a Date object (from 0-6).
 
-``getFullYear():Number``: ::
+`getFullYear():Number`: ::
 Returns the year, as a four-digit number.
 
-``getHours():Number``: ::
+`getHours():Number`: ::
 Returns the hour of a day (from 0-23).
 
-``getMilliseconds():Number``: ::
+`getMilliseconds():Number`: ::
 Returns the milliseconds of a Date object (from 0-999).
 
-``getMinutes():Number``: ::
+`getMinutes():Number`: ::
 Returns the minutes of a date (from 0-59).
 
-``getMonth():Number``: ::
+`getMonth():Number`: ::
 Returns the month from a date (from 0-11).
 
-``getSeconds():Number``: ::
+`getSeconds():Number`: ::
 Returns the seconds of a date (from 0-59).
 
-``getTime():Number``: ::
+`getTime():Number`: ::
 Returns the number of milliseconds since midnight Jan 1, 1970.
 
-``valueOf():Number``: ::
+`valueOf():Number`: ::
 Returns the primitive value of a Date object as a number data type, the number of milliseconds since midnight 01 January, 1970 UTC. This method is functionally equivalent to the getTime method.
 
-``getTimezoneOffset():Number``: ::
+`getTimezoneOffset():Number`: ::
 Returns the difference in minutes between local time and Greenwich Mean Time (GMT).
 
-``getUTCDate():Number``: ::
+`getUTCDate():Number`: ::
 Returns the day of the month from a date according to Universal Time (from 1-31).
 
-``getUTCDay():Number``: ::
+`getUTCDay():Number`: ::
 Returns the day of the week from a date according to Universal Time (from 0-6).
 
-``getUTCFullYear():Number``: ::
+`getUTCFullYear():Number`: ::
 Returns the four-digit year from a date according to Universal Time.
 
-``getUTCHours():Number``: ::
+`getUTCHours():Number`: ::
 Returns the hour of a date according to Universal Time (from 0-23).
 
-``getUTCMilliseconds():Number``: ::
+`getUTCMilliseconds():Number`: ::
 Returns the milliseconds of a date according to Universal Time (from 0-999).
 
-``getUTCMinutes():Number``: ::
+`getUTCMinutes():Number`: ::
 Returns the minutes of a date according to Universal Time (from 0-59).
 
-``getUTCMonth():Number``: ::
+`getUTCMonth():Number`: ::
 Returns the month from a Date object according to Universal Time (from 0-11).
 
-``getUTCSeconds():Number``: ::
+`getUTCSeconds():Number`: ::
 Returns the seconds of a date according to Universal Time (from 0-59).
 
-``getYear():Number deprecated``: ::
+`getYear():Number deprecated`: ::
 Returns the year as a two-digit or a three/four-digit number, depending on the browser. Use getFullYear() instead!
 
-``setDate(day):Number``: ::
+`setDate(day):Number`: ::
 Sets the day of the month from a Date object (from 1-31).
 
-``setFullYear(full year, month=, day=):Number``: ::
+`setFullYear(full year, month=, day=):Number`: ::
 Sets the year as a four-digit number.
 
-``setHours(hours,minutes=,seconds=,milis=):Number``: ::
+`setHours(hours,minutes=,seconds=,milis=):Number`: ::
 Sets the hour of a day (from 0-23).
 
-``setMilliseconds(mills):Number``: ::
+`setMilliseconds(mills):Number`: ::
 Sets the milliseconds of a Date object (from 0-999).
 
-``setMinutes(minutes,=seconds,=millis):Number``: ::
+`setMinutes(minutes,=seconds,=millis):Number`: ::
 Sets the minutes of a date (from 0-59).
 
-``setMonth" directType="Number(month,day=):Number``: ::
+`setMonth" directType="Number(month,day=):Number`: ::
 Sets the month from a date (from 0-11).
 
-``setSeconds(seconds,millis=):number``: ::
+`setSeconds(seconds,millis=):number`: ::
 Sets the seconds of a date (from 0-59).
 
-``setTime(mills):Number``: ::
+`setTime(mills):Number`: ::
 Sets the number of milliseconds since midnight Jan 1, 1970.
 
-``setUTCDate(day):Number``: ::
+`setUTCDate(day):Number`: ::
 Sets the day of the month from a date according to Universal Time (from 0-6).
 
-``setUTCFullYear(fullyear,month=,day=):Number``: ::
+`setUTCFullYear(fullyear,month=,day=):Number`: ::
 Sets the four-digit year from a date according to Universal Time.
 
-``setUTCHours(hours,minutes=,seconds=,millis=):Number``: ::
+`setUTCHours(hours,minutes=,seconds=,millis=):Number`: ::
 Sets the hour of a date according to Universal Time (from 0-23).
 
-``setUTCMilliseconds(mills):Number``: ::
+`setUTCMilliseconds(mills):Number`: ::
 Sets the milliseconds of a date according to Universal Time (from 0-999).
 
-``setUTCMinutes(minutes,seconds=,millis=):Number``: ::
+`setUTCMinutes(minutes,seconds=,millis=):Number`: ::
 Sets the minutes of a date according to Universal Time time (from 0-59).
 
-``setUTCMonth(month,day=):Number``: ::
+`setUTCMonth(month,day=):Number`: ::
 Sets the month from a Date object according to Universal Time (from 0-11).
 
-``setUTCSeconds(seconds,millis=):Number``: ::
+`setUTCSeconds(seconds,millis=):Number`: ::
 Sets the seconds of a date according to Universal Time (from 0-59).
 
-``setYear(year):Number deprecated``: ::
+`setYear(year):Number deprecated`: ::
 Sets the year, as a two-digit or a three/four-digit number, depending on the browser. Use setFullYear() instead!!
 
-``toDateString():String``: ::
+`toDateString():String`: ::
 Returns the date portion of a Date object in readable form.
 
-``toLocaleDateString():String``: ::
+`toLocaleDateString():String`: ::
 Converts a Date object, according to local time, to a string and returns the date portion.
 
-``toLocaleString():String``: ::
+`toLocaleString():String`: ::
 Converts a Date object, according to local time, to a string.
 
-``toLocaleTimeString():String``: ::
+`toLocaleTimeString():String`: ::
 Converts a Date object, according to local time, to a string and returns the time portion.
 
-``toString():String``: ::
+`toString():String`: ::
 Returns a String value for this object.
 
-``toTimeString():String``: ::
+`toTimeString():String`: ::
 Returns the time portion of a Date object in readable form.
 
-``toUTCString():String``: ::
+`toUTCString():String`: ::
 Converts a Date object, according to Universal Time, to a string.
 
 == Math
@@ -540,115 +540,115 @@ Converts a Date object, according to Universal Time, to a string.
 
 === Static Attributes [[static-attributes-1]]
 
-``E:Number``: ::
+`E:Number`: ::
 Euler's constant and the base of natural logarithms, approximately 2.718.
 
-``LN2:Number``: ::
+`LN2:Number`: ::
 Natural logarithm of 2, approximately 0.693.
 
-``LN10:Number``: ::
+`LN10:Number`: ::
 Natural logarithm of 10, approximately 2.302.
 
-``LOG2E:Number``: ::
+`LOG2E:Number`: ::
 Base 2 logarithm of E, approximately 1.442.
 
-``LOG10E:Number``: ::
+`LOG10E:Number`: ::
 Base 10 logarithm of E, approximately 0.434.
 
-``PI:Number``: ::
+`PI:Number`: ::
 Ratio of the circumference of a circle to its diameter, approximately 3.14159.
 
-``SQRT1\_2:Number``: ::
+`SQRT1\_2:Number`: ::
 Square root of 1/2; equivalently, 1 over the square root of 2, approximately 0.707.
 
-``SQRT2:Number``: ::
+`SQRT2:Number`: ::
 Square root of 2, approximately 1.414.
 
 === Static Methods [[static-methods-7]]
 
-``abs(x):Number``: ::
+`abs(x):Number`: ::
 Returns the absolute value of a number.
 
-``acos(x:Number):Number``: ::
+`acos(x:Number):Number`: ::
 Returns the arccosine of a number.
 
-``asinx:Number):Number``: ::
+`asinx:Number):Number`: ::
 Returns the arcsine of a number.
 
-``atan(x:Number):Number``: ::
+`atan(x:Number):Number`: ::
 Returns the arctangent of a number.
 
-``atan2(y:Number,x:Number):Number``: ::
+`atan2(y:Number,x:Number):Number`: ::
 Returns the arctangent of the quotient of its arguments.
 
-``ceil(x):Number``: ::
+`ceil(x):Number`: ::
 Returns the smallest integer greater than or equal to a number.
 
-``cos(x):Number``: ::
+`cos(x):Number`: ::
 Returns the arctangent of the quotient of its arguments.
 
-``exp(x):Number``: ::
+`exp(x):Number`: ::
 Returns Enumber, where number is the argument, and E is Euler's constant (2.718...), the base of the natural logarithm.
 
-``floor(x):Number``: ::
+`floor(x):Number`: ::
 Returns the largest integer less than or equal to a number.
 
-``log(x):Number``: ::
+`log(x):Number`: ::
 Returns the natural logarithm (loge, also ln) of a number.
 
-``max(value...):Number``: ::
+`max(value...):Number`: ::
 Returns the largest of zero or more numbers.
 
-``min(value...):Number``: ::
+`min(value...):Number`: ::
 Returns the smallest of zero or more numbers.
 
-``pow(base:Number,exponent:Number):Number``: ::
+`pow(base:Number,exponent:Number):Number`: ::
 Returns base to the exponent power, that is, baseexponent.
 
-``random():Number``: ::
+`random():Number`: ::
 Returns a pseudorandom number between 0 and 1.
 
-``round(x:Number):Number``: ::
+`round(x:Number):Number`: ::
 Returns the value of a number rounded to the nearest integer.
 
-``sin(x:Number):Number``: ::
+`sin(x:Number):Number`: ::
 Returns the sine of a number.
 
-``sqrt(x:Number):Number``: ::
+`sqrt(x:Number):Number`: ::
 Returns the positive square root of a number.
 
-``tan(x:Number):Number``: ::
+`tan(x:Number):Number`: ::
 Returns the tangent of a number.
 
 == RegExp
 
 
-``RegExp`` does not have a super class.
+`RegExp` does not have a super class.
 
 
 === Attributes [[attributes-4]]
 
-``global:Boolean``: ::
+`global:Boolean`: ::
 Whether to test the regular expression against all possible matches in a string, or only against the first.
 
-``ignoreCase:Boolean``: ::
+`ignoreCase:Boolean`: ::
 Whether to ignore case while attempting a match in a string.
 
-``lastIndex:Number``: ::
+`lastIndex:Number`: ::
 The index at which to start the next match.
 
-``multiline:Boolean``: ::
+`multiline:Boolean`: ::
 Whether or not to search in strings across multiple lines.
 
-``source:String``: ::
+`source:String`: ::
 The text of the pattern.
 
 === Methods [[methods-6]]
 
-``exec(str:String):Array``: ::
+`exec(str:String):Array`: ::
 Executes a search for a match in its string parameter.
 
-``test(str:String):Boolean``: ::
+`test(str:String):Boolean`: ::
 Tests for a match in its string parameter.
 
 == JSON
