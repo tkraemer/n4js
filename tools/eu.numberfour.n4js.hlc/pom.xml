@@ -27,6 +27,7 @@ Contributors:
 		<hlc.jar-descriptorRef>jar-with-dependencies</hlc.jar-descriptorRef>
 		<hlc.jar-longname>${project.artifactId}-${project.version}-${hlc.jar-descriptorRef}.jar</hlc.jar-longname>
 		<hlc.plugin-folder>plugins</hlc.plugin-folder>
+		<jackson.version>2.5.0</jackson.version>
 	</properties>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
