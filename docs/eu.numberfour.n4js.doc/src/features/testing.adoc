@@ -1,4 +1,4 @@
-:doctype: book
+:toc: right
 
 .Testing
 = Testing
@@ -83,7 +83,7 @@ the Project Explorer view. It is possible to execute all tests form a particular
 one single, fine-grained test case from a particular test class.
 
 
-image::testresultsview.png[]
+image::images/testresultsview.png[]
 
 == Additional Features
 

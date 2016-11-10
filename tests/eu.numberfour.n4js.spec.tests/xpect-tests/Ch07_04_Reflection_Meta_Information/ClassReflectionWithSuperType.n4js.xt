@@ -5,6 +5,19 @@
 <==
 stdout:
 # all direct + inherited
+ - N4Accessor :: getterPrivateString
+ - N4Accessor :: getterPublicStringClassS
+ - N4Accessor :: getterPublicStringClassSS
+ - N4Accessor :: setterPrivateString
+ - N4Accessor :: setterPublicStringClassS
+ - N4Accessor :: setterPublicStringClassSS
+ - N4DataField :: datafieldPrivateString
+ - N4DataField :: datafieldPublicStringClassS
+ - N4DataField :: datafieldPublicStringClassSS
+ - N4Method :: methodPrivateVoid
+ - N4Method :: methodPublicVoidClassS
+ - N4Method :: methodPublicVoidClassSS
+# all direct + inherited + static
  - N4Accessor :: getterPrivateStaticString
  - N4Accessor :: getterPrivateString
  - N4Accessor :: getterPublicStaticStringClassS
@@ -24,24 +37,11 @@ stdout:
  - N4DataField :: datafieldPublicStringClassS
  - N4DataField :: datafieldPublicStringClassSS
  - N4Method :: methodPrivateStaticVoid
- - N4Method :: methodPrivateVoids
+ - N4Method :: methodPrivateVoid
  - N4Method :: methodPublicStaticVoidClassS
  - N4Method :: methodPublicStaticVoidClassSS
- - N4Method :: methodPublicVoidsClassS
- - N4Method :: methodPublicVoidsClassSS
-# all direct + inherited + static
- - N4Accessor :: getterPrivateStaticString
- - N4Accessor :: getterPublicStaticStringClassS
- - N4Accessor :: getterPublicStaticStringClassSS
- - N4Accessor :: setterPrivateStaticString
- - N4Accessor :: setterPublicStaticStringClassS
- - N4Accessor :: setterPublicStaticStringClassSS
- - N4DataField :: datafieldPrivateStaticString
- - N4DataField :: datafieldPublicStaticStringClassS
- - N4DataField :: datafieldPublicStaticStringClassSS
- - N4Method :: methodPrivateStaticVoid
- - N4Method :: methodPublicStaticVoidClassS
- - N4Method :: methodPublicStaticVoidClassSS
+ - N4Method :: methodPublicVoidClassS
+ - N4Method :: methodPublicVoidClassSS
 stderr:
 ==>
 --- */
@@ -69,7 +69,7 @@ class SS{
 	public set setterPublicStringClassSS(s : string){
 	}
 	
-	public methodPublicVoidsClassSS() : void{}
+	public methodPublicVoidClassSS() : void{}
 }
 class S extends SS{
 	public static datafieldPublicStaticStringClassS : string = "1";
@@ -93,7 +93,7 @@ class S extends SS{
 	}
 	
 	
-	public methodPublicVoidsClassS() : void{}
+	public methodPublicVoidClassS() : void{}
 }
 
 
@@ -120,7 +120,7 @@ class ClassWithStuff extends S{
 	}
 	
 	
-	private methodPrivateVoids() : void{}
+	private methodPrivateVoid() : void{}
 	
 }
 

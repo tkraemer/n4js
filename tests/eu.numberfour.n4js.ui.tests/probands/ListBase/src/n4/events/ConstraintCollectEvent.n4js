@@ -1,6 +1,5 @@
 import { ChangeEvent } from 'n4/events/ChangeEvent';
 import { Event } from 'n4/events/Event';
-var @Undefined undef;
 class Constraint{} class ObjectConstraintValidateEntry{} class ConstraintEntry{}
 class ConstraintValidator{}
 export public class ConstraintCollectEvent extends ChangeEvent {

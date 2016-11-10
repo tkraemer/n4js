@@ -11,12 +11,8 @@
 package eu.numberfour.n4js.validation.validators
 
 import eu.numberfour.n4js.AnnotationDefinition
-import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
-import eu.numberfour.n4js.n4JS.N4MemberDeclaration
-import eu.numberfour.n4js.n4JS.ThisArgProvider
-import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.ts.types.PrimitiveType
 import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TypingStrategy
@@ -24,7 +20,6 @@ import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
@@ -110,31 +105,6 @@ class N4JSInterfaceValidator extends AbstractN4JSDeclarativeValidator {
 				}
 			}
 		]
-	}
-
-	@Check
-	def checkFieldOfInterfaceDoesNotContainThis(ThisLiteral thisLiteral) {
-		val context = EcoreUtil2.getContainerOfType(thisLiteral, ThisArgProvider);
-		if(context instanceof N4FieldDeclaration) {
-			val tField = context.definedTypeElement;
-			if(tField?.containingType instanceof TInterface) {
-				if(!tField.static) { // avoid duplicate errors (see next @Check method)
-					val msg = getMessageForCLF_NO_THIS_IN_FIELD_OF_INTERFACE
-					addIssue(msg, thisLiteral, CLF_NO_THIS_IN_FIELD_OF_INTERFACE);
-				}
-			}
-		}
-	}
-	@Check
-	def checkStaticMemberOfInterfaceDoesNotContainThis(ThisLiteral thisLiteral) {
-		val context = EcoreUtil2.getContainerOfType(thisLiteral, ThisArgProvider);
-		if(context instanceof N4MemberDeclaration) {
-			val tMember = context.definedTypeElement;
-			if(tMember?.containingType instanceof TInterface && tMember.static) {
-				val msg = getMessageForCLF_NO_THIS_IN_STATIC_MEMBER_OF_INTERFACE
-				addIssue(msg, thisLiteral, CLF_NO_THIS_IN_STATIC_MEMBER_OF_INTERFACE);
-			}
-		}
 	}
 
 	def private boolean holdsNoCyclicInheritance(N4InterfaceDeclaration n4InterfaceDeclaration) {

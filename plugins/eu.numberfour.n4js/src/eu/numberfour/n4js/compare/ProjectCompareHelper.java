@@ -36,8 +36,6 @@ import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
 import eu.numberfour.n4js.projectModel.ProjectUtils;
-import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression;
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.ContainerType;
 import eu.numberfour.n4js.ts.types.FieldAccessor;
@@ -63,7 +61,6 @@ import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.typesystem.ITypeReplacementProvider;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
-import eu.numberfour.n4js.typesystem.TypeSystemHelper;
 import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
@@ -82,8 +79,6 @@ public class ProjectCompareHelper {
 	private ContainerTypesHelper containerTypesHelper;
 	@Inject
 	private N4JSTypeSystem typeSystem;
-	@Inject
-	private TypeSystemHelper typeSystemHelper;
 
 	private static Logger logger = Logger.getLogger(ProjectCompareHelper.class);
 
@@ -635,18 +630,14 @@ public class ProjectCompareHelper {
 				TypeVariable apiTypeVar = apiTypeVars.get(i);
 				TypeVariable implTypeVar = implTypeVars.get(i);
 
-				EList<ParameterizedTypeRef> apiDeclaredUpperBounds = apiTypeVar.getDeclaredUpperBounds();
-				EList<ParameterizedTypeRef> implDeclaredUpperBounds = implTypeVar.getDeclaredUpperBounds();
+				TypeRef apiDeclaredUpperBound = apiTypeVar.getDeclaredUpperBound();
+				TypeRef implDeclaredUpperBound = implTypeVar.getDeclaredUpperBound();
 
-				IntersectionTypeExpression apiUpperIntersection = TypeUtils
-						.createNonSimplifiedIntersectionType(apiDeclaredUpperBounds);
-				IntersectionTypeExpression implUpperIntersection = TypeUtils
-						.createNonSimplifiedIntersectionType(implDeclaredUpperBounds);
-
-				TypeRef simplifiedApiUpperBound = typeSystemHelper.simplify(ruleEnvironment, apiUpperIntersection);
-				TypeRef simplifiedImplUpperBound = typeSystemHelper.simplify(ruleEnvironment, implUpperIntersection);
-
-				if (typeSystem.equaltype(ruleEnvironment, simplifiedApiUpperBound, simplifiedImplUpperBound).failed()) {
+				if ((apiDeclaredUpperBound != null) != (implDeclaredUpperBound != null)
+						|| (apiDeclaredUpperBound != null
+								&& implDeclaredUpperBound != null
+								&& !typeSystem.equaltypeSucceeded(ruleEnvironment, apiDeclaredUpperBound,
+										implDeclaredUpperBound))) {
 					return ProjectCompareResult.error(
 							String.format(
 									"the upper bound of type variable %s isn't compatible with the API",

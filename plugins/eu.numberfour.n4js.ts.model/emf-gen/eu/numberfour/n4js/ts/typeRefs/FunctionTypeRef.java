@@ -60,10 +60,10 @@ public interface FunctionTypeRef extends ParameterizedTypeRef, FunctionTypeExprO
 	 * Simply returns the given type variable's declared upper bounds (required by super class API).
 	 * <!-- end-model-doc -->
 	 * @model unique="false" typeVarUnique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>> _declaredUpperBounds = typeVar.getDeclaredUpperBounds();\nreturn <%org.eclipse.emf.ecore.xcore.lib.XcoreCollectionLiterals%>.<<%eu.numberfour.n4js.ts.typeRefs.TypeRef%>>newImmutableEList(((<%eu.numberfour.n4js.ts.typeRefs.TypeRef%>[])org.eclipse.xtext.xbase.lib.Conversions.unwrapArray(_declaredUpperBounds, <%eu.numberfour.n4js.ts.typeRefs.TypeRef%>.class)));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return typeVar.getDeclaredUpperBound();'"
 	 * @generated
 	 */
-	EList<TypeRef> getTypeVarUpperBounds(TypeVariable typeVar);
+	TypeRef getTypeVarUpperBound(TypeVariable typeVar);
 
 	/**
 	 * <!-- begin-user-doc -->

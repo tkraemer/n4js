@@ -935,13 +935,13 @@ public interface TypesPackage extends EPackage {
 	int TYPE_VARIABLE__DECLARED_CONTRAVARIANT = TYPE_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Declared Upper Bounds</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Declared Upper Bound</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_VARIABLE__DECLARED_UPPER_BOUNDS = TYPE_FEATURE_COUNT + 2;
+	int TYPE_VARIABLE__DECLARED_UPPER_BOUND = TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Type Variable</em>' class.
@@ -1103,7 +1103,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_VARIABLE___GET_TYPE_VARIABLE_AS_STRING__COLLECTION = TYPE_OPERATION_COUNT + 3;
+	int TYPE_VARIABLE___GET_TYPE_VARIABLE_AS_STRING__TYPEREF = TYPE_OPERATION_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Type Variable</em>' class.
@@ -1170,13 +1170,13 @@ public interface TypesPackage extends EPackage {
 	int INFERENCE_VARIABLE__DECLARED_CONTRAVARIANT = TYPE_VARIABLE__DECLARED_CONTRAVARIANT;
 
 	/**
-	 * The feature id for the '<em><b>Declared Upper Bounds</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Declared Upper Bound</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INFERENCE_VARIABLE__DECLARED_UPPER_BOUNDS = TYPE_VARIABLE__DECLARED_UPPER_BOUNDS;
+	int INFERENCE_VARIABLE__DECLARED_UPPER_BOUND = TYPE_VARIABLE__DECLARED_UPPER_BOUND;
 
 	/**
 	 * The number of structural features of the '<em>Inference Variable</em>' class.
@@ -1338,7 +1338,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INFERENCE_VARIABLE___GET_TYPE_VARIABLE_AS_STRING__COLLECTION = TYPE_VARIABLE___GET_TYPE_VARIABLE_AS_STRING__COLLECTION;
+	int INFERENCE_VARIABLE___GET_TYPE_VARIABLE_AS_STRING__TYPEREF = TYPE_VARIABLE___GET_TYPE_VARIABLE_AS_STRING__TYPEREF;
 
 	/**
 	 * The number of operations of the '<em>Inference Variable</em>' class.
@@ -10761,16 +10761,6 @@ public interface TypesPackage extends EPackage {
 	int MEMBER_TYPE = 55;
 
 	/**
-	 * The meta object id for the '<em>Collection Of Type Ref</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see java.util.Collection
-	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getCollectionOfTypeRef()
-	 * @generated
-	 */
-	int COLLECTION_OF_TYPE_REF = 56;
-
-	/**
 	 * The meta object id for the '<em>Iterable Of TClassifier</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10778,7 +10768,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getIterableOfTClassifier()
 	 * @generated
 	 */
-	int ITERABLE_OF_TCLASSIFIER = 57;
+	int ITERABLE_OF_TCLASSIFIER = 56;
 
 	/**
 	 * The meta object id for the '<em>Variance</em>' data type.
@@ -10788,7 +10778,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getVariance()
 	 * @generated
 	 */
-	int VARIANCE = 58;
+	int VARIANCE = 57;
 
 	/**
 	 * The meta object id for the '<em>Name And Access</em>' data type.
@@ -10798,7 +10788,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNameAndAccess()
 	 * @generated
 	 */
-	int NAME_AND_ACCESS = 59;
+	int NAME_AND_ACCESS = 58;
 
 	/**
 	 * The meta object id for the '<em>Member List</em>' data type.
@@ -10808,7 +10798,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberList()
 	 * @generated
 	 */
-	int MEMBER_LIST = 60;
+	int MEMBER_LIST = 59;
 
 	/**
 	 * The meta object id for the '<em>TClassifier Iterable</em>' data type.
@@ -10818,7 +10808,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTClassifierIterable()
 	 * @generated
 	 */
-	int TCLASSIFIER_ITERABLE = 61;
+	int TCLASSIFIER_ITERABLE = 60;
 
 
 	/**
@@ -11266,15 +11256,15 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTypeVariable_DeclaredContravariant();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link eu.numberfour.n4js.ts.types.TypeVariable#getDeclaredUpperBounds <em>Declared Upper Bounds</em>}'.
+	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.types.TypeVariable#getDeclaredUpperBound <em>Declared Upper Bound</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Declared Upper Bounds</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TypeVariable#getDeclaredUpperBounds()
+	 * @return the meta object for the containment reference '<em>Declared Upper Bound</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TypeVariable#getDeclaredUpperBound()
 	 * @see #getTypeVariable()
 	 * @generated
 	 */
-	EReference getTypeVariable_DeclaredUpperBounds();
+	EReference getTypeVariable_DeclaredUpperBound();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TypeVariable#getVariance() <em>Get Variance</em>}' operation.
@@ -11307,14 +11297,14 @@ public interface TypesPackage extends EPackage {
 	EOperation getTypeVariable__GetTypeAsString();
 
 	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TypeVariable#getTypeVariableAsString(java.util.Collection) <em>Get Type Variable As String</em>}' operation.
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TypeVariable#getTypeVariableAsString(eu.numberfour.n4js.ts.typeRefs.TypeRef) <em>Get Type Variable As String</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Type Variable As String</em>' operation.
-	 * @see eu.numberfour.n4js.ts.types.TypeVariable#getTypeVariableAsString(java.util.Collection)
+	 * @see eu.numberfour.n4js.ts.types.TypeVariable#getTypeVariableAsString(eu.numberfour.n4js.ts.typeRefs.TypeRef)
 	 * @generated
 	 */
-	EOperation getTypeVariable__GetTypeVariableAsString__Collection();
+	EOperation getTypeVariable__GetTypeVariableAsString__TypeRef();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.InferenceVariable <em>Inference Variable</em>}'.
@@ -13366,17 +13356,6 @@ public interface TypesPackage extends EPackage {
 	EEnum getMemberType();
 
 	/**
-	 * Returns the meta object for data type '{@link java.util.Collection <em>Collection Of Type Ref</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>Collection Of Type Ref</em>'.
-	 * @see java.util.Collection
-	 * @model instanceClass="java.util.Collection<? extends eu.numberfour.n4js.ts.typeRefs.TypeRef>"
-	 * @generated
-	 */
-	EDataType getCollectionOfTypeRef();
-
-	/**
 	 * Returns the meta object for data type '{@link java.lang.Iterable <em>Iterable Of TClassifier</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13813,12 +13792,12 @@ public interface TypesPackage extends EPackage {
 		EAttribute TYPE_VARIABLE__DECLARED_CONTRAVARIANT = eINSTANCE.getTypeVariable_DeclaredContravariant();
 
 		/**
-		 * The meta object literal for the '<em><b>Declared Upper Bounds</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Declared Upper Bound</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TYPE_VARIABLE__DECLARED_UPPER_BOUNDS = eINSTANCE.getTypeVariable_DeclaredUpperBounds();
+		EReference TYPE_VARIABLE__DECLARED_UPPER_BOUND = eINSTANCE.getTypeVariable_DeclaredUpperBound();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Variance</b></em>' operation.
@@ -13850,7 +13829,7 @@ public interface TypesPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TYPE_VARIABLE___GET_TYPE_VARIABLE_AS_STRING__COLLECTION = eINSTANCE.getTypeVariable__GetTypeVariableAsString__Collection();
+		EOperation TYPE_VARIABLE___GET_TYPE_VARIABLE_AS_STRING__TYPEREF = eINSTANCE.getTypeVariable__GetTypeVariableAsString__TypeRef();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.impl.InferenceVariableImpl <em>Inference Variable</em>}' class.
@@ -15533,16 +15512,6 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum MEMBER_TYPE = eINSTANCE.getMemberType();
-
-		/**
-		 * The meta object literal for the '<em>Collection Of Type Ref</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see java.util.Collection
-		 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getCollectionOfTypeRef()
-		 * @generated
-		 */
-		EDataType COLLECTION_OF_TYPE_REF = eINSTANCE.getCollectionOfTypeRef();
 
 		/**
 		 * The meta object literal for the '<em>Iterable Of TClassifier</em>' data type.

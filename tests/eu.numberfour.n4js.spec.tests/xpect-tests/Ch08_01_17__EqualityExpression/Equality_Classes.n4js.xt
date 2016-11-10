@@ -101,13 +101,14 @@ anA === funcB();
 
 
 
-// XPECT warnings --> "Neither A is a subtype of B nor B is a subtype of A. The expression will always evaluate to false."  at "anA === aB"
+// XPECT warnings --> "Neither A is a subtype of B nor B is a subtype of A. The expression will always evaluate to false." at "anA === aB"
 anA === aB;
 
-// XPECT warnings --> "Neither A is a subtype of B nor B is a subtype of A. The expression will always evaluate to false."  at "anA === funcB()"
+// XPECT warnings --> "Neither A is a subtype of B nor B is a subtype of A. The expression will always evaluate to false." at "anA === funcB()"
 anA === funcB();
 
 // OK, anA could be undefined
+// XPECT warnings --> "The type of this expression is undefined, so it will never evaluate to a value other than undefined." at "udef"
 anA === udef;
 
 // OK, structural comparison: A is basically an empty Object.

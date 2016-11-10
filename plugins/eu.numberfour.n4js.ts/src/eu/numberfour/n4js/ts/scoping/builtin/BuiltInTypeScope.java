@@ -242,7 +242,7 @@ public final class BuiltInTypeScope extends EnumerableScope {
 	}
 
 	/**
-	 * Returns reference to the built-in type "void".
+	 * Returns a newly created reference to the built-in type "void".
 	 */
 	public final ParameterizedTypeRef getVoidTypeRef() {
 		return TypeUtils.createTypeRef(getVoidType());
@@ -253,6 +253,13 @@ public final class BuiltInTypeScope extends EnumerableScope {
 	 */
 	public final UndefinedType getUndefinedType() {
 		return getEObjectOrProxy(QN_UNDEFINED);
+	}
+
+	/**
+	 * Returns a newly created reference to the built-in type "undefined".
+	 */
+	public final ParameterizedTypeRef getUndefinedTypeRef() {
+		return TypeUtils.createTypeRef(getUndefinedType());
 	}
 
 	/**

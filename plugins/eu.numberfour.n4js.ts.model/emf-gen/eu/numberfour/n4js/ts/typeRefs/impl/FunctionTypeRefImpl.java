@@ -25,7 +25,6 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
-import org.eclipse.emf.ecore.xcore.lib.XcoreCollectionLiterals;
 import org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions;
 
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -84,9 +83,8 @@ public class FunctionTypeRefImpl extends ParameterizedTypeRefImpl implements Fun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<TypeRef> getTypeVarUpperBounds(final TypeVariable typeVar) {
-		EList<ParameterizedTypeRef> _declaredUpperBounds = typeVar.getDeclaredUpperBounds();
-		return XcoreCollectionLiterals.<TypeRef>newImmutableEList(((TypeRef[])org.eclipse.xtext.xbase.lib.Conversions.unwrapArray(_declaredUpperBounds, TypeRef.class)));
+	public TypeRef getTypeVarUpperBound(final TypeVariable typeVar) {
+		return typeVar.getDeclaredUpperBound();
 	}
 
 	/**
@@ -186,8 +184,8 @@ public class FunctionTypeRefImpl extends ParameterizedTypeRefImpl implements Fun
 			EList<TypeVariable> _typeVars = this.getTypeVars();
 			final Function1<TypeVariable, String> _function = new Function1<TypeVariable, String>() {
 				public String apply(final TypeVariable it) {
-					EList<TypeRef> _typeVarUpperBounds = FunctionTypeRefImpl.this.getTypeVarUpperBounds(it);
-					return it.getTypeVariableAsString(_typeVarUpperBounds);
+					TypeRef _typeVarUpperBound = FunctionTypeRefImpl.this.getTypeVarUpperBound(it);
+					return it.getTypeVariableAsString(_typeVarUpperBound);
 				}
 			};
 			EList<String> _map = XcoreEListExtensions.<TypeVariable, String>map(_typeVars, _function);
@@ -271,7 +269,7 @@ public class FunctionTypeRefImpl extends ParameterizedTypeRefImpl implements Fun
 				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_DECLARED_THIS_TYPE: return TypeRefsPackage.FUNCTION_TYPE_REF___GET_DECLARED_THIS_TYPE;
 				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_FUNCTION_TYPE: return TypeRefsPackage.FUNCTION_TYPE_REF___GET_FUNCTION_TYPE;
 				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VARS: return TypeRefsPackage.FUNCTION_TYPE_REF___GET_TYPE_VARS;
-				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VAR_UPPER_BOUNDS__TYPEVARIABLE: return TypeRefsPackage.FUNCTION_TYPE_REF___GET_TYPE_VAR_UPPER_BOUNDS__TYPEVARIABLE;
+				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE: return TypeRefsPackage.FUNCTION_TYPE_REF___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE;
 				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_FPARS: return TypeRefsPackage.FUNCTION_TYPE_REF___GET_FPARS;
 				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_RETURN_TYPE_REF: return TypeRefsPackage.FUNCTION_TYPE_REF___GET_RETURN_TYPE_REF;
 				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___IS_GENERIC: return TypeRefsPackage.FUNCTION_TYPE_REF___IS_GENERIC;
@@ -296,8 +294,8 @@ public class FunctionTypeRefImpl extends ParameterizedTypeRefImpl implements Fun
 				return getDeclaredThisType();
 			case TypeRefsPackage.FUNCTION_TYPE_REF___GET_TYPE_VARS:
 				return getTypeVars();
-			case TypeRefsPackage.FUNCTION_TYPE_REF___GET_TYPE_VAR_UPPER_BOUNDS__TYPEVARIABLE:
-				return getTypeVarUpperBounds((TypeVariable)arguments.get(0));
+			case TypeRefsPackage.FUNCTION_TYPE_REF___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE:
+				return getTypeVarUpperBound((TypeVariable)arguments.get(0));
 			case TypeRefsPackage.FUNCTION_TYPE_REF___GET_FPARS:
 				return getFpars();
 			case TypeRefsPackage.FUNCTION_TYPE_REF___GET_RETURN_TYPE_REF:

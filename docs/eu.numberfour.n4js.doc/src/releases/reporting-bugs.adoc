@@ -1,4 +1,5 @@
 :doctype: book
+:notitle:
 
 .Reporting Bugs
 = Reporting Bugs
@@ -26,7 +27,7 @@ separated from the code, it is often easier to just add this **expectations** to
 The following screenshot shows a typical feature request (on the left hand side), written with Xpect:
 
 
-image::xpect_feature_request.png[]
+image::images/xpect_feature_request.png[]
 
 The great thing about Xpect is that it actually defines a test. That is the feature request (or bug report)
 can be executed. This is even possible within the N4JS IDE, and the result is shown on the right hand side
@@ -48,7 +49,7 @@ keyword `FIXME` to expectations you have but which are not fulfilled. In particu
 expectations, it is very helpful to easily identify what is expected and what is correct behavior. When running the
 test again with the `FIXME` annotation, it will succeed as shown in the following screenshot:
 
-image::xpect_fixme.png[]
+image::images/xpect_fixme.png[]
 
 **Bug reporting will be improved in future releases!**
 

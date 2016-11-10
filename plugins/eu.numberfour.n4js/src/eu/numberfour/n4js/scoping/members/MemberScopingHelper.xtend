@@ -364,10 +364,10 @@ class MemberScopingHelper {
 		return enumScope;
 	}
 
-// TODO type variable can specify multiple upper bounds!
 	private def dispatch IScope membersOfType(TypeVariable typeVar, MemberScopeRequest request) {
-		if (!typeVar.declaredUpperBounds.isEmpty) {
-			return members(typeVar.declaredUpperBounds.head, request)
+		val declUB = typeVar.declaredUpperBound;
+		if (declUB!==null) {
+			return members(declUB, request)
 		} else {
 			val builtInTypeScope = BuiltInTypeScope.get(getResourceSet(typeVar, request.context));
 			val anyType = builtInTypeScope.anyType

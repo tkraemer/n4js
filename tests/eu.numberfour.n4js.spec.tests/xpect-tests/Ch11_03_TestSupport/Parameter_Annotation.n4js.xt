@@ -23,8 +23,8 @@ class C {
 console.log(C.n4type.dataFields()[0].annotations);
 console.log(C.n4type.dataFields()[1].annotations);
 console.log(C.n4type.members()[2].annotations);
-console.log(C.n4type.methods()[0].annotations);
-console.log(C.n4type.methods()[1].annotations);
+console.log(C.n4type.methods(false,false,true)[0].annotations);
+console.log(C.n4type.methods(false,false,true)[1].annotations);
 
 
 /* XPECT output --- 

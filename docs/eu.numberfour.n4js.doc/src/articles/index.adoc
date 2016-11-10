@@ -1,5 +1,5 @@
 :doctype: book
-:showtitle: false
+:notitle:
 
 .N4JS Articles
 = N4JS Articles

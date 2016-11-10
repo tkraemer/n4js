@@ -892,13 +892,12 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		// "in"
 		if( tv.declaredContravariant ) {tv.regionFor.feature(TypesPackage.Literals.TYPE_VARIABLE__DECLARED_CONTRAVARIANT).append[oneSpace];}
 		
-		if(! tv.declaredUpperBounds.isEmpty ) {
+		if( tv.declaredUpperBound!==null ) {
 			// "extends"
 			tv.regionFor.keyword("extends").surround[oneSpace];
-			for ( upperBound: tv.declaredUpperBounds){
-				upperBound.immediatelyFollowing.keyword("&").surround[oneSpace];
-				upperBound.format(document);
-			}
+			val upperBound = tv.declaredUpperBound;
+			upperBound.immediatelyFollowing.keyword("&").surround[oneSpace];
+			upperBound.format(document);
 		}
 
 	}

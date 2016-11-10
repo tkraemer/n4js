@@ -29,7 +29,9 @@ import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.IndexedAccessExpression
+import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
+import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.NumericLiteral
@@ -44,6 +46,7 @@ import eu.numberfour.n4js.n4JS.RelationalOperator
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.n4JS.SuperLiteral
+import eu.numberfour.n4js.n4JS.ThisArgProvider
 import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
@@ -632,9 +635,9 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		internalCheckNewParameters(newExpression, staticType as TClassifier);
 	}
 
-	private def changeToCovariantUpperBoundIfTypeVar(Type type) {
+	private def Type changeToCovariantUpperBoundIfTypeVar(Type type) {
 		if(type instanceof TypeVariable) {
-			val ub = TypeUtils.getDeclaredUpperBound(type);
+			val ub = type.getDeclaredUpperBound();
 			if(ub instanceof ParameterizedTypeRef) {
 				val declType = ub.declaredType;
 				if(declType instanceof TClassifier) {
@@ -1311,11 +1314,11 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 				return false;
 			}
 		} else if (T.declaredType instanceof TypeVariable &&
-			!(T.declaredType as TypeVariable).declaredUpperBounds.empty) {
+			(T.declaredType as TypeVariable).declaredUpperBound!==null) {
 			val typeVariable = T.declaredType as TypeVariable
-			if (! typeVariable.declaredUpperBounds.forall [
-				internalCheckCastExpression(G, S, it, castExpression, false, actualSourceTypeIsCPOE)
-			]) {
+			if (!internalCheckCastExpression(G, S, typeVariable.declaredUpperBound, castExpression, false,
+				actualSourceTypeIsCPOE
+			)) {
 				if (addIssues) {
 					addIssue(IssueCodes.getMessageForEXP_CAST_FAILED(S.typeRefAsString, T.typeRefAsString),
 						castExpression, IssueCodes.EXP_CAST_FAILED);
@@ -1581,6 +1584,40 @@ receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef inst
 	def checkPromisify(PromisifyExpression promiExpr) {
 		if (!promisifyHelper.isPromisifiableExpression(promiExpr.expression)) {
 			addIssue(getMessageForEXP_PROMISIFY_INVALID_USE, promiExpr, EXP_PROMISIFY_INVALID_USE);
+		}
+	}
+
+	/**
+	 * Ensures that 'this' literals are located at a valid location.
+	 */
+	@Check
+	def checkThisLiteral(ThisLiteral thisLiteral) {
+		val context = EcoreUtil2.getContainerOfType(thisLiteral, ThisArgProvider);
+		// 1) not in static members of interfaces
+		if(context instanceof N4MemberDeclaration) {
+			val tMember = context.definedTypeElement;
+			if(tMember?.containingType instanceof TInterface && tMember.static) {
+				val msg = getMessageForCLF_NO_THIS_IN_STATIC_MEMBER_OF_INTERFACE
+				addIssue(msg, thisLiteral, CLF_NO_THIS_IN_STATIC_MEMBER_OF_INTERFACE);
+				return;
+			}
+		}
+		if(context instanceof N4FieldDeclaration) {
+			val tField = context.definedTypeElement;
+			// 2) not in initializers of data fields in interfaces
+			if(tField?.containingType instanceof TInterface) {
+				val msg = getMessageForCLF_NO_THIS_IN_FIELD_OF_INTERFACE
+				addIssue(msg, thisLiteral, CLF_NO_THIS_IN_FIELD_OF_INTERFACE);
+				return;
+			}
+			// 3) not in initializers of static(!) data fields in classes
+			if(tField?.containingType instanceof TClass) {
+				if(tField.static) {
+					val msg = getMessageForCLF_NO_THIS_IN_STATIC_FIELD
+					addIssue(msg, thisLiteral, CLF_NO_THIS_IN_STATIC_FIELD);
+					return;
+				}
+			}
 		}
 	}
 }

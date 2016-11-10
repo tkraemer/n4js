@@ -21,7 +21,7 @@ var a3 : union{A, B,
 
 
 
-// XPECT nowarnings --> 
+// XPECT nowarnings -->
 var b1 : union{A};
 
 // XPECT warnings --> "The use of the any type in a union type is discouraged." at "any"
@@ -40,5 +40,5 @@ var c2 : union{union{A, B}, any};
 var d1 : intersection{A, union{B, any}};
 
 
-// XPECT nowarnings
+// XPECT errors --> "Type void may only be used to declare the return type of functions and methods." at "void"
 var e1 : union{any,void};

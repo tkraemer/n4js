@@ -179,7 +179,7 @@ class TypeUtilsTest {
 		// even though it does not have a parent ParameterizedTypeRef
 		assertEquals(
 			expectedImplicitUpperBoundOfLastWildcard,
-			cpy.declaredOrImplicitUpperBounds.map[typeRefAsString].join(","));
+			cpy.declaredOrImplicitUpperBound?.typeRefAsString);
 
 		// make sure we can copy the wildcard's parent ParameterizedTypeRef without a StackOverflowException
 		val paramTypeRef = wildcard.eContainer as ParameterizedTypeRef;
@@ -189,6 +189,6 @@ class TypeUtilsTest {
 		val copiedWildcardInCpy2 = cpy2.typeArgs.get(0) as Wildcard;
 		assertEquals(
 			expectedImplicitUpperBoundOfLastWildcard,
-			copiedWildcardInCpy2.declaredOrImplicitUpperBounds.map[typeRefAsString].join(","));
+			copiedWildcardInCpy2.declaredOrImplicitUpperBound?.typeRefAsString);
 	}
 }

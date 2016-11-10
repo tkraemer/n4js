@@ -1,98 +1,73 @@
 :experimental:
 
+[discrete]
+=== Quick Setup & Commands
+
+Prerequisites: ::
+**http://asciidoctor.org/[AsciiDoctor]** RubyGem can be installed with the following:
++
+[source,bash]
+----
+gem install asciidoctor
+----
+
+Eclipse Help Build: ::
++
+[source,bash]
+----
+cd n4js/docs/eu.numberfour.n4js.doc
+mvn -Dtycho.mode=maven verify
+----
+
+HTML for Web: ::
+(Requires **http://asciidoctor.org/[AsciiDoctor]** RubyGem)
++
+[source,bash,subs=quotes]
+----
+cd n4js/docs/eu.numberfour.n4js.doc/src
+./build.sh
+# Running the script with the `-l` flag (or `--launch`) opens the pages in a browser:
+./build.sh --launch
+----
+
 = N4JS IDE Documentation
 
 Contributions to the source code and documentation of N4JS are highly encouraged.
 Updating, maintaining and improving documentation can be done by experts or complete beginners alike.
 Bring your experience or fresh perspectives to enrich help resources that assist N4JS developers everywhere.
 
-* <<How to Contribute,How to Contribute Help Content>>
-** <<N4JS Documentation Plugin, Configuring The Documentation Build>>
-*** <<Running the Documentation Plugin as a Standalone, Running as Standalone>>
-* <<About AsciiDoc & AsciiDoctor>>
-** <<Tools, Tools for Writing>>
-** <<Developing AsciiDoc>>
-
-
 == How to Contribute
 
-
-All documentation for N4JS is written in AsciiDoc (`.adoc` format) and is deployed by a single-source toolchain described in detail below.
+All documentation for N4JS is written in AsciiDoc (`.adoc` format) and is deployed using a single-source toolchain described below.
 The source AsciiDoc documentation is located in the NumberFour N4JS repository at:
 
 ``https://github.numberfour.eu/NumberFour/n4js/tree/master/docs/eu.numberfour.n4js.doc/src[n4js/docs/eu.numberfour.n4js.doc/src]``
 
 As the N4JS IDE is built using https://maven.apache.org/[Apache Maven], the command ``mvn verify`` will trigger the build of the N4JS IDE and documentation is generated at ``n4js/docs/eu.numberfour.n4js.doc/target``.
 
-TIP: See the <<Running the Documentation Plugin as a Standalone, running as standalone>> section to build only the documentation.
+The documentation plugin can be run as a standalone module by navigating to ``n4js/docs/eu.numberfour.n4js.doc`` and running ``mvn -Dtycho.mode=maven verify``
 
 To contribute or improve N4JS help, https://help.github.com/articles/fork-a-repo/[fork the N4JS repo], create a pull request with edited or new AsciiDoc files in the source folder and your contribution will be reviewed for inclusion.
 
-== Details on the Maven Build
-
-An XML file in the root of the source folder describes the project being built, its dependencies on external modules and components, the build order, directories, and required plug-ins.
-This XML file, is called ``POM.XML`` (Project Object Model) and is located at
-
-``https://github.com/NumberFour/n4js/blob/master/pom.xml``
-
-The standard convention for building large software projects with Maven is that they are divided into several modules, each with its own POM.
-The POM in the N4JS root folder points at several modules:
-
-.n4js/pom.xml
-[source,xml]
-<modules>
-    <module>releng</module>
-    <module>plugins</module>
-    <module>testhelpers</module>
-    <module>features</module>
-    <module>docs</module>
-    <module>tools</module>
-</modules>
-
-Each module contains a POM that can inherit attributes from the parent and specify additional settings for the build of its module.
-If we navigate to the module at ``n4js/docs/``, we can see that the contained POM specifies a parent (``n4js/pom.xml``) and a nested module (``eu.numberfour.n4js.doc``) which is where our documentation source and target live:
-
-.n4js/docs/pom.xml
-[source,xml]
-----
-<parent>
-    <relativePath>../pom.xml</relativePath>
-</parent>
-
-<modules>
-    <module>eu.numberfour.n4js.doc</module>
-</modules>
-----
-
-=== N4JS Documentation Plugin
+== N4JS Documentation Plugin
 
 The N4JS documentation plugin is located at ``n4js/docs/eu.numberfour.n4js.doc`` whose contents resemble the following:
 
 [source]
 n4js/docs/eu.numberfour.n4js.doc/
-├── build.properties
 ├── help-pages.txt
-├── plugin.xml
 ├── pom.xml
+├── plugin.xml
 ├── src
 │   ├── docs
 │   │   ├── documentation
-│   │   │   ├── ...
 │   │   │   └── tutorial.adoc
-│   │   ├── faq
-│   │   │   ├── ...
-│   │   │   └── faq.adoc
 │   │   ├── features
-│   │   │   ├── ...
 │   │   │   └── testing.adoc
 │   │   └── releases
-│   │       ├── ...
 │   │       └── reporting-bugs.adoc
-│   ├── images
-│   │   ├── ...
-│   │   └── xpect.png
 │   └── styles
-│       └── default.min.css
+│       └── n4js-adoc.css
 └── toc.xml
 
 
@@ -101,12 +76,6 @@ n4js/docs/eu.numberfour.n4js.doc/
 * **help-pages.txt** - A list containing the paths of the **target** HTML files. This is used to generate the **toc.xml**.
 * **toc.xml** - Table Of Contents; contains a structured index of the help pages so they may be registered online or within the N4JS IDE
 * **build.properties** - Describes which items in the root folder are to be included in the N4JS IDE build
-
-==== Running the Documentation Plugin as a Standalone
-
-Executing the command ``mvn -Dtycho.mode=maven verify`` in the eu.numberfour.n4js.doc folder will begin a maven build of the documentation plugin as a standalone.
-Generating the documentation using this method reduces the build time to less than 1 minute.
-
 
 === Generating N4JS IDE Help
 
@@ -117,33 +86,7 @@ In the Maven build, the POM at ``n4js/docs/eu.numberfour.n4js.doc/pom.xml`` is c
 . An ``antrun-plugin`` creates a .txt file containing the paths to the generated HTML pages called ``help-pages.txt``.
 . The ``geneclipsetoc-maven-plugin`` searches for headings in the generated HTML in the ``target`` folder and creates a structured ``toc.xml`` based on this hierarchy that the N4JS IDE can index.
 
-An example execution of the ``asciidoctor-maven-plugin`` to convert source files to HTML in the ``generate-resources`` phase of a Maven build looks like the following:
 
-[source,xml]
-<execution>
-    <id>asciidoc-to-eclipse-html</id>
-    <phase>generate-resources</phase>
-    <goals>
-        <goal>process-asciidoc</goal>
-    </goals>
-    <configuration>
-        <sourceDirectory>src/</sourceDirectory>
-        <outputDirectory>${eclipseHelpDir}</outputDirectory>
-        <imagesdir>../images</imagesdir>
-        <preserveDirectories>true</preserveDirectories>
-        <backend>html5</backend>
-        <sourceHighlighter>highlightjs</sourceHighlighter>
-        <attributes>
-            <toc>false</toc>
-            <icons>font</icons>
-            <sectanchors>true</sectanchors>
-            <idprefix/>
-            <idseparator>-</idseparator>
-        </attributes>
-    </configuration>
-</execution>
-
-These executions can then be run consecutively with different backends, target folders and with individual attributes.
 For generating PDF and EPUB from the source AsciiDoc files, the addition of the following dependencies are required in the ``asciidoctor-maven-plugin``:
 
 [source,xml]
@@ -165,93 +108,28 @@ http://asciidoctor.org/docs/what-is-asciidoc/#what-is-asciidoc[**AsciiDoc**] is 
 http://asciidoctor.org/[**AsciiDoc__tor__**] is the associated toolchain for converting and processing AsciiDoc files.
 It is written in Ruby and is published to https://rubygems.org/gems/asciidoctor[RubyGems.org].
 
-=== AsciiDoc Writing Tips & Resources
+Docs: ::
 
 AsciiDoc files can be written in any text editor and should (for our build) be saved with the ``.adoc`` extension.
 The following are two useful guides for writing AsciiDoc:
-
++
 http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[AsciiDoc Syntax Quick Reference]
-
++
 http://asciidoctor.org/docs/user-manual/[AsciiDoctor User Manual]
 
 
 === Tools
 
-For previewing content as you are writing:
-
 https://asciidoclive.com/[AsciiDocLive] - Free online AsciiDoc editor. Can save to Dropbox or Google Drive.
 
-https://chrome.google.com/webstore/detail/asciidoctorjs-live-previe/iaalpfgpbocpdfblpnhhgllgbdbchmia?hl=en[Asciidoctor.js Live Preview] - Chrome browser plugin (**recommended**).
+Sublime Text Packages: ::
 
-NOTE: It can happen that occasionally, some features (text alignment in non-trivial tables, for instance) may not render exactly as expected in the above Live Preview for chrome.
-If the syntax looks correct but the preview displays your content incorrectly, render to .html in the command line with AsciiDoctor.
+https://packagecontrol.io/packages/OmniMarkupPreviewer[Omni Markup Previewer] - kbd:[Cmd+o] when editing opens a live browser preview.
++
+https://github.com/asciidoctor/sublimetext-asciidoc[Sublime Text AsciiDoc Package] - Syntax highlighting, snippets, keymaps and more.
 
-For **Sublime Text** Users:
+Other Converters: ::
 
-* https://packagecontrol.io/packages/OmniMarkupPreviewer[Omni Markup Previewer] - kbd:[Cmd+o] when editing opens a live browser preview.
-
-* https://github.com/asciidoctor/sublimetext-asciidoc[Sublime Text AsciiDoc Package] - Syntax highlighting, snippets, keymaps and more.
-
-Converting from another Markdown/Markup language:
-
-* https://github.com/opendevise/kramdown-asciidoc[Kramdown] - Convert existing GitHub Flavoured Markdown (``.md``) to AsciiDoc (``.adoc``).
-
-* http://pandoc.org/[Pandoc] - A universal document converter
-
-=== Converting with AsciiDoctor
-
-AsciiDoctor can be invoked from the command line to convert ``.adoc`` plain text to a number of file formats. This can be tested locally with the AsciiDoctor RubyGem:
-
-* AsciiDoctor http://asciidoctor.org/#installation[Installation instructions]
-
-The processor generates the output format using a converter which is mapped to the name of a backend.
-You specify the backend using the -b (--backend) command line option or backend API option.
-The built-in converters are mapped to the following backend names:
-
-|===
-| Backend 3+^| Description
-| **html** (or **html5**) 3+| HTML5, styled with CSS3 (default).
-| **xhtml** (or **xhtml5**) 3+| The XHTML variant of the output from html5.
-| **docbook** (or **docbook5**) 3+| DocBook 5.0 XML.0.
-
-| **docbook45**
-3+| DocBook 4.5 XML.
-
-| **manpage**
-3+|Manual pages for Unix and Unix-like operating systems.
-
-|===
-
-Asciidoctor also has several add-on converters, which can be plugged in by adding the appropriate library to the runtime path (e.g., -r asciidoctor-pdf). These converters are mapped to the following backend names:
-
-|===
-| Backend 3+^| Description
-|**pdf**
-3+|PDF, a portable document format. **Requires the asciidoctor-pdf gem**.
-
-|**epub3**
-3+|EPUB3, a distribution and interchange format standard for digital publications and documents. **Requires the asciidoctor-epub3 gem**.
-
-|**latex**
-3+|LaTeX, a document preparation system for high-quality typesetting. **Requires the asciidoctor-latex gem**.
-
-|**mallard**
-3+|Mallard 1.0 XML. **Requires the asciidoctor-mallard gem** (not yet released).
-|===
-
-
-== Developing AsciiDoc
-
-There are several ports of AsciiDoctor, notably:
-
-* https://github.com/asciidoctor/asciidoctor.js[AsciiDoctor.js] - A JavaScript port of AsciiDoctor
-
-[quote]
-The asciidoctor.js script can be run on any JavaScript platform, including Node.js, Nashorn and, of course, a web browser.
-
-
-* https://github.com/asciidoctor/asciidoctorj[AsciidoctorJ] - Java bindings for AsciiDoctor
-
-[quote]
-AsciidoctorJ is the official library for running Asciidoctor on the JVM.
-Using AsciidoctorJ, you can convert AsciiDoc content or analyze the structure of a parsed AsciiDoc document from Java and other JVM languages.
+https://github.com/opendevise/kramdown-asciidoc[Kramdown] - Convert existing GitHub Flavoured Markdown (``.md``) to AsciiDoc (``.adoc``).
++
+http://pandoc.org/[Pandoc] - A universal document converter

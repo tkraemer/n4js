@@ -677,9 +677,7 @@ ruleWildcardNewNotation :
 // Rule TypeVariable
 ruleTypeVariable :
 	RULE_IDENTIFIER (
-		'extends' ruleParameterizedTypeRef (
-			'&' ruleParameterizedTypeRef
-		)*
+		'extends' ruleTypeRef
 	)?
 ;
 
@@ -689,9 +687,7 @@ ruleTypeVariableWithDefSiteVariance :
 		'out' |
 		'in'
 	)? RULE_IDENTIFIER (
-		'extends' ruleParameterizedTypeRef (
-			'&' ruleParameterizedTypeRef
-		)*
+		'extends' ruleTypeRef
 	)?
 ;
 

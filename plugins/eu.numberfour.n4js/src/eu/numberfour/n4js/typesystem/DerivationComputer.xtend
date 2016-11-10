@@ -161,35 +161,32 @@ class DerivationComputer extends TypeSystemHelperStrategy {
 
 
 	/**
-	 * Performing substitution on the upper bounds of an unbound(!) type variable is non-trivial, because we aren't
-	 * allowed to copy the type variable and change its upper bounds (short version: a type variable is a type and
+	 * Performing substitution on the upper bound of an unbound(!) type variable is non-trivial, because we aren't
+	 * allowed to copy the type variable and change its upper bound (short version: a type variable is a type and
 	 * therefore needs to be contained in a Resource; but our new FunctionTypeExpression 'result' is a TypeRef which
 	 * may not be contained in any Resource).
 	 * <p>
-	 * If type variable substitution on any of <code>currTV</code>'s upper bounds leads to a change of that upper
-	 * bound (and only then), the modified upper bound will be stored in property 'unboundTypeVarsUpperBounds' of
+	 * If type variable substitution on <code>currTV</code>'s upper bound leads to a change of that upper bound (and
+	 * only then!), the modified upper bound will be stored in property 'unboundTypeVarsUpperBounds' of
 	 * <code>result</code>.
 	 * <p>
 	 * This has to be carefully aligned with {@link FunctionTypeExpression#getUnboundTypeVarsUpperBounds()} and
-	 * {@link FunctionTypeExpression#getTypeVarUpperBounds(TypeVariable)}.
+	 * {@link FunctionTypeExpression#getTypeVarUpperBound(TypeVariable)}.
 	 */
 	def private void performSubstitutionOnUpperBounds(RuleEnvironment G, FunctionTypeExprOrRef F, TypeVariable currTV,
 		FunctionTypeExpression result) {
 
-		if(!currTV.declaredUpperBounds.empty) {
-			val oldUBs = F.getTypeVarUpperBounds(currTV);
-			val newUBs = oldUBs.filterNull.map[ts.substTypeVariablesInTypeRef(G,it)].toList;
-			val unchanged = (newUBs == currTV.declaredUpperBounds); // note: identity compare for the elements is what we want
+		val currTV_declUB = currTV.declaredUpperBound;
+		if(currTV_declUB!==null) {
+			val oldUB = F.getTypeVarUpperBound(currTV);
+			val newUB = ts.substTypeVariablesInTypeRef(G,oldUB);
+			val unchanged = (newUB === currTV_declUB); // note: identity compare is what we want
 			if(!unchanged) {
 				val idx = result.unboundTypeVars.indexOf(currTV);
 				while(result.unboundTypeVarsUpperBounds.size<idx) {
 					result.unboundTypeVarsUpperBounds.add(null); // add 'null' as padding entry
 				}
-				val ubSubst = if(newUBs.size===1) {
-					newUBs.get(0)
-				} else {
-					createIntersectionType(G, newUBs) // in case of several upper bounds -> create intersection
-				};
+				val ubSubst = newUB;
 				result.unboundTypeVarsUpperBounds += ubSubst;
 			} else {
 				// upper bound after substitution is identical to the one stored in type variable; no need to copy it

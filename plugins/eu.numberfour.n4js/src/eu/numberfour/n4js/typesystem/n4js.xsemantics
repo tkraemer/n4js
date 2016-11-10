@@ -1034,8 +1034,6 @@ from {
 	// note: keep this rule aligned with rules typeN4FieldDeclaration and typePropertyNameValuePair
 	if (vdecl.declaredTypeRef !== null) {
 		T = vdecl.declaredTypeRef
-	} else if (AnnotationDefinition.UNDEFINED.hasAnnotation(vdecl)) {
-		T = G.undefinedTypeRef
 	} else if(vdecl.eContainer instanceof BindingElement) {
 		// guard against infinite recursion, e.g. for vars like this:
 		// var [a,b] = b; / var {a,b} = b;
@@ -1223,13 +1221,10 @@ from {
 	} else if (leftDeclType.eIsProxy || rightDeclType.eIsProxy) {
 		true;
 	} else if (leftDeclType instanceof VoidType
-				&& rightDeclType instanceof VoidType) {
-		true
-	} else if (leftDeclType instanceof VoidType
 				|| rightDeclType instanceof VoidType) {
-		false
-	} else if (leftDeclType instanceof NullType
-				|| leftDeclType instanceof UndefinedType
+		leftDeclType instanceof VoidType && rightDeclType instanceof VoidType
+	} else if (leftDeclType instanceof UndefinedType
+				|| (leftDeclType instanceof NullType && !(rightDeclType instanceof UndefinedType))
 				|| rightDeclType instanceof AnyType) {
 		true
 	} else if ((leftDeclType === G.intType && rightDeclType === G.numberType)
@@ -1296,14 +1291,8 @@ from {
 					true
 				} else if(leftDeclType instanceof TypeVariable) {
 					// a case like: (T extends B) <: A  (with T being an unbound type variable and A,B two classes with B <: A)
-					if(leftDeclType.declaredUpperBounds.isEmpty) {
-						// T does not have declaredUpperBounds, so T <: A is always false
-						false
-					}
-					else {
-						// T has declaredUpperBounds, so return true iff all upper bounds are subtype of 'right'
-						G |- typeSystemHelper.createIntersectionType(G, leftDeclType.declaredUpperBounds) <: right
-					}
+					val ub = leftDeclType.declaredUpperBound ?: N4JSLanguageUtils.getTypeVariableImplicitUpperBound(G);
+					G |- ub <: right
 				} else {
 					// all other cases are always false, for example:
 					//               B <: (T extends A)  is always false, even if B <: A
@@ -2261,7 +2250,7 @@ axiom upperBoundTypeRef
 rule upperBoundWildcardTypeRef
 	G |~ Wildcard wildcard /\ TypeRef T
 from {
-	val ub = TypeUtils.getDeclaredOrImplicitUpperBound(wildcard);
+	val ub = wildcard.getDeclaredOrImplicitUpperBound();
 	if (ub !==null) {
 		T=ub
 	} else {
@@ -2718,7 +2707,10 @@ from {
 							} else {
 								val n4Field = EcoreUtil2.getContainerOfType(location, N4FieldDeclaration);
 								if (n4Field !== null && n4Field.static) {
-									T = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
+									// this case has been disallowed as of GH-263
+									T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef
+									// old:
+									// T = TypeUtils.createConstructorTypeRef(thisTargetDEFTYPE);
 								} else {
 									val n4Getter = EcoreUtil2.getContainerOfType(location, N4GetterDeclaration);
 									if (n4Getter !== null && n4Getter.static) {

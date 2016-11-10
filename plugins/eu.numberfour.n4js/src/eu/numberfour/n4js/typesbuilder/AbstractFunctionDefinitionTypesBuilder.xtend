@@ -20,7 +20,6 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TGetter
-import eu.numberfour.n4js.utils.N4JSLanguageUtils
 
 /**
  * Base class for functions and methods
@@ -66,14 +65,15 @@ package class AbstractFunctionDefinitionTypesBuilder {
 				BuiltInTypeScope builtInTypeScope, boolean preLinkingPhase) {
 		val inferredReturnTypeRef =
 			if (functionDef.returnTypeRef === null) {
-				if (!preLinkingPhase)
+				if (!preLinkingPhase) {
 					inferReturnTypeFromReturnStatements(functionDef, builtInTypeScope)
+				}
 			} else {
 				functionDef.returnTypeRef
 			};
-		setCopyOfReference([TypeRef typeRef | functionType.returnTypeRef = typeRef],
-			N4JSLanguageUtils.makePromiseIfAsync(functionDef, inferredReturnTypeRef, builtInTypeScope),
-			preLinkingPhase)
+		setCopyOfReference([TypeRef typeRef | functionType.returnTypeRef = typeRef], inferredReturnTypeRef,
+			preLinkingPhase);
+		// note: handling of the return type of async functions not done here, see TypeProcessor#handleAsyncFunctionDeclaration()
 	}
 
 	/**

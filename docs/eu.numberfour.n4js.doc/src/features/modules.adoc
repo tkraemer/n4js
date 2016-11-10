@@ -1,4 +1,4 @@
-:doctype: book
+:toc: right
 
 .Modules
 = Modules
@@ -53,7 +53,7 @@ Content assist within the IDE will add the missing import statement for you.
 
 
 ifdef::backend-html5[]
-image::moduleimport.gif[]
+image::images/moduleimport.gif[]
 
 
 When pasting in a code snippet, you could use kbd:[Ctrl+Shift+O]

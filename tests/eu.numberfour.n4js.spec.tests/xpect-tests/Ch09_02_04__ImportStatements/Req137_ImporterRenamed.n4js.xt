@@ -17,7 +17,7 @@ import { cnst8 as rnCnst8 } from "Ch09_02_04__ImportStatements/Exporter"
 
 let c1:RNC1 = new RNC1();
 let i1:RNI1 = null;
-let f1im : RNf1 = RNf1;
+let f1im: ()=>string = RNf1;
 let valCnst8 = rnCnst8;
 
 // in all cases we expect an error:

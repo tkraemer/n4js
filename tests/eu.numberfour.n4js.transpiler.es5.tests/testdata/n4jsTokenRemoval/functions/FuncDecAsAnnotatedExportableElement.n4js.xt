@@ -8,10 +8,10 @@ stdout:
 stderr:
 ==>
 ~~~ */
-// we need an annotation for the export-declaration, so using Undefined as dummy here:
-@Undefined
+// we need an annotation for the export-declaration, so using @Internal as dummy here:
+@Internal
 // XPECT warnings --> "Final type string should not be used as upper bound of type parameter S. Final types cannot be extended." at "string"
-export project function <S extends string, T, P > len(s : S, t : T, p : P, a, n : number?, ... vas : string) : number {
+export public function <S extends string, T, P > len(s : S, t : T, p : P, a, n : number?, ... vas : string) : number {
 	return (s+t+p+a+n+vas).length
 }
 

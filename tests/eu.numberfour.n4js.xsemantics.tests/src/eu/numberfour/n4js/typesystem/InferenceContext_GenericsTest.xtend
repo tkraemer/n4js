@@ -10,12 +10,12 @@
  */
 package eu.numberfour.n4js.typesystem
 
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 
 /**
  * Here we test constraints like <code>⟨ G&lt;B> <: G&lt;α> ⟩</code>.
@@ -158,5 +158,43 @@ class InferenceContext_GenericsTest extends AbstractInferenceContextTest {
 //			],
 //			alpha -> intersection(B,C)
 //		)
+	}
+
+
+	@Test
+	def void test_inheritanceHierarchy01a() {
+		script.assertSolution(
+			#[
+				constraint(Gsub.of(B),'<:',G.of(alpha)) // ⟨ Gsub<B> <: G<α> ⟩
+			],
+			alpha -> B.ref
+		)
+	}
+	@Test
+	def void test_inheritanceHierarchy01b() {
+		script.assertSolution(
+			#[
+				constraint(G.of(alpha),':>',Gsub.of(B)) // ⟨ G<α> :> Gsub<B> ⟩
+			],
+			alpha -> B.ref
+		)
+	}
+	@Test
+	def void test_inheritanceHierarchy02a() {
+		script.assertSolution(
+			#[
+				constraint(Gsub.of(alpha),'<:',G.of(B)) // ⟨ Gsub<α> <: G<B> ⟩
+			],
+			alpha -> B.ref
+		)
+	}
+	@Test
+	def void test_inheritanceHierarchy02b() {
+		script.assertSolution(
+			#[
+				constraint(G.of(B),':>',Gsub.of(alpha)) // ⟨ G<B> :> Gsub<α> ⟩
+			],
+			alpha -> B.ref
+		)
 	}
 }

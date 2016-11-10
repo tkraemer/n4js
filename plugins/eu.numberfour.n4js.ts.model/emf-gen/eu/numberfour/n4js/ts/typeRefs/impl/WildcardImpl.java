@@ -32,8 +32,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.emf.ecore.xcore.lib.XcoreCollectionLiterals;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Wildcard</b></em>'.
@@ -221,15 +219,15 @@ public class WildcardImpl extends TypeArgumentImpl implements Wildcard {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<TypeRef> getDeclaredOrImplicitUpperBounds() {
+	public TypeRef getDeclaredOrImplicitUpperBound() {
 		final TypeRef declUB = this.getDeclaredUpperBound();
 		if ((declUB != null)) {
-			return XcoreCollectionLiterals.<TypeRef>newImmutableEList(declUB);
+			return declUB;
 		}
 		TypeRef _declaredLowerBound = this.getDeclaredLowerBound();
 		boolean _tripleNotEquals = (_declaredLowerBound != null);
 		if (_tripleNotEquals) {
-			return XcoreCollectionLiterals.<TypeRef>emptyEList();
+			return null;
 		}
 		final EObject parent = this.eContainer();
 		if ((parent instanceof ParameterizedTypeRef)) {
@@ -254,14 +252,14 @@ public class WildcardImpl extends TypeArgumentImpl implements Wildcard {
 						}
 						final TypeVariable typeVar = _xifexpression;
 						if ((typeVar != null)) {
-							final EList<ParameterizedTypeRef> implicitUBs = typeVar.getDeclaredUpperBounds();
-							return XcoreCollectionLiterals.<TypeRef>newImmutableEList(((TypeRef[])org.eclipse.xtext.xbase.lib.Conversions.unwrapArray(implicitUBs, TypeRef.class)));
+							final TypeRef implicitUB = typeVar.getDeclaredUpperBound();
+							return implicitUB;
 						}
 					}
 				}
 			}
 		}
-		return XcoreCollectionLiterals.<TypeRef>emptyEList();
+		return null;
 	}
 
 	/**
@@ -270,7 +268,7 @@ public class WildcardImpl extends TypeArgumentImpl implements Wildcard {
 	 * @generated
 	 */
 	public boolean isImplicitUpperBoundInEffect() {
-		return (((this.getDeclaredUpperBound() == null) && (this.getDeclaredLowerBound() == null)) && (!this.getDeclaredOrImplicitUpperBounds().isEmpty()));
+		return (((this.getDeclaredUpperBound() == null) && (this.getDeclaredLowerBound() == null)) && (this.getDeclaredOrImplicitUpperBound() != null));
 	}
 
 	/**
@@ -384,8 +382,8 @@ public class WildcardImpl extends TypeArgumentImpl implements Wildcard {
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case TypeRefsPackage.WILDCARD___GET_DECLARED_OR_IMPLICIT_UPPER_BOUNDS:
-				return getDeclaredOrImplicitUpperBounds();
+			case TypeRefsPackage.WILDCARD___GET_DECLARED_OR_IMPLICIT_UPPER_BOUND:
+				return getDeclaredOrImplicitUpperBound();
 			case TypeRefsPackage.WILDCARD___IS_IMPLICIT_UPPER_BOUND_IN_EFFECT:
 				return isImplicitUpperBoundInEffect();
 			case TypeRefsPackage.WILDCARD___GET_TYPE_REF_AS_STRING:
