@@ -3,14 +3,8 @@
  */
 package eu.numberfour.n4jsx.formatting2;
 
-import com.google.inject.Inject;
-import eu.numberfour.n4jsx.services.N4JSXGrammarAccess;
-import eu.numberfour.n4js.formatting2.N4JSFormatter;
-import org.eclipse.xtext.formatting2.IFormattableDocument;
+import eu.numberfour.n4js.formatting2.N4JSFormatter
 
 class N4JSXFormatter extends N4JSFormatter {
-
-	@Inject extension N4JSXGrammarAccess
-
 	// FIXME: delegate
 }

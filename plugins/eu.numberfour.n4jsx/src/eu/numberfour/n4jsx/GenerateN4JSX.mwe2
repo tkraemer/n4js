@@ -14,7 +14,7 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var fileExtensions = "n4jsx,idl"
+var fileExtensions = "n4jsx,jsx"
 var projectName = "eu.numberfour.n4jsx"
 var grammarURI = "platform:/resource/${projectName}/src/eu/numberfour/n4jsx/N4JSX.xtext"
 var runtimeProject = "../${projectName}"
