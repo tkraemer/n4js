@@ -16,19 +16,18 @@ import static com.google.common.collect.Lists.newArrayList;
 import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.EXTERNAL_LIBRARIES_SUPPLIER;
 import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.requiresInfrastructureForLibraryManager;
 import static java.util.Collections.emptyList;
-import static org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion.NON_NULL;
 
 import java.io.File;
 import java.net.URI;
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.eclipse.core.runtime.IProduct;
 import org.eclipse.core.runtime.Platform;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 
 import eu.numberfour.n4js.utils.JsonPrettyPrinterFactory;
@@ -36,7 +35,7 @@ import eu.numberfour.n4js.utils.JsonPrettyPrinterFactory;
 /**
  * Represents an external library preference model.
  */
-@JsonSerialize(include = NON_NULL)
+@JsonInclude(content = JsonInclude.Include.NON_NULL)
 public class ExternalLibraryPreferenceModel {
 
 	/**
@@ -97,7 +96,8 @@ public class ExternalLibraryPreferenceModel {
 	 */
 	public static ExternalLibraryPreferenceModel createFromJson(final String jsonString) {
 		try {
-			final ExternalLibraryPreferenceModel model = new ObjectMapper().readValue(jsonString,
+			final ExternalLibraryPreferenceModel model = new ObjectMapper(new JsonPrettyPrinterFactory()).readValue(
+					jsonString,
 					ExternalLibraryPreferenceModel.class);
 			// XXX Make sure that deserialized model instance does not contain any duplicates.
 			return new ExternalLibraryPreferenceModel(model.getExternalLibraryLocationsAsUris());

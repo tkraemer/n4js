@@ -10,16 +10,16 @@
  */
 package eu.numberfour.n4js.external.libraries
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.common.base.Preconditions
 import eu.numberfour.n4js.utils.JsonPrettyPrinterFactory
 import java.io.File
 import java.net.URI
 import java.util.Collection
 import java.util.HashMap
-import org.codehaus.jackson.annotate.JsonIgnore
-import org.codehaus.jackson.annotate.JsonIgnoreProperties
-import org.codehaus.jackson.map.ObjectMapper
-import org.codehaus.jackson.map.annotate.JsonSerialize
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -51,7 +51,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 @Accessors
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonSerialize(include = NON_NULL)
+@JsonInclude(content = JsonInclude.Include.NON_NULL)
 class TargetPlatformModel {
 
 	/** The file extension (without the '.') of the N4 target platform file */
@@ -75,7 +75,7 @@ class TargetPlatformModel {
 
 	@Accessors
 	@JsonIgnoreProperties(ignoreUnknown = true)
-	@JsonSerialize(include = NON_NULL)
+	@JsonInclude(content = JsonInclude.Include.NON_NULL)
 	static class Location {
 		var Config config;
 		var RepositoryType repoType;
@@ -84,7 +84,7 @@ class TargetPlatformModel {
 
 	@Accessors
 	@JsonIgnoreProperties(ignoreUnknown = true)
-	@JsonSerialize(include = NON_NULL)
+	@JsonInclude(content = JsonInclude.Include.NON_NULL)
 	static class Config extends HashMap<String, Object> {
 
 		new() {
@@ -95,7 +95,7 @@ class TargetPlatformModel {
 
 	@Accessors
 	@JsonIgnoreProperties(ignoreUnknown = true)
-	@JsonSerialize(include = NON_NULL)
+	@JsonInclude(content = JsonInclude.Include.NON_NULL)
 	static class Projects extends HashMap<String, ProjectProperties> {
 
 		new() {
@@ -106,7 +106,7 @@ class TargetPlatformModel {
 
 	@Accessors
 	@JsonIgnoreProperties(ignoreUnknown = true)
-	@JsonSerialize(include = NON_NULL)
+	@JsonInclude(content = JsonInclude.Include.NON_NULL)
 	static class ProjectProperties {
 		var String version;
 	}

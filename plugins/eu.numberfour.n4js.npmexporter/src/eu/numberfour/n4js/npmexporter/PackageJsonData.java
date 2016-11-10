@@ -13,14 +13,14 @@ package eu.numberfour.n4js.npmexporter;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Jackson - DataObject. Used for serializing to Json.
  */
-@JsonSerialize(include = Inclusion.NON_NULL)
+@JsonInclude(content = JsonInclude.Include.NON_NULL)
 public class PackageJsonData {
 
 	@JsonProperty

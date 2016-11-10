@@ -10,6 +10,11 @@
  */
 package eu.numberfour.n4js.external.libraries
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
 import com.google.common.base.Preconditions
 import com.google.common.base.Strings
 import eu.numberfour.n4js.external.libraries.TargetPlatformModel.RepositoryType
@@ -18,17 +23,14 @@ import java.io.File
 import java.net.URI
 import java.util.Collection
 import java.util.Map
-import org.codehaus.jackson.annotate.JsonIgnoreProperties
-import org.codehaus.jackson.map.ObjectMapper
-import org.codehaus.jackson.map.annotate.JsonSerialize
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * POJO for the {@code package.json} file.
  */
 @Accessors
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonSerialize(include = NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonInclude(content = JsonInclude.Include.NON_NULL)
 class PackageJson {
 
 	/**
@@ -71,7 +73,7 @@ class PackageJson {
 		if (!model.location.nullOrEmpty) {
 			for (loc : model.location.filter[RepositoryType.npm === repoType]) {
 				if (null !== loc.projects) {
-					loc.projects.forEach[projectId, property |
+					loc.projects.forEach [ projectId, property |
 						val version = Strings.nullToEmpty(property?.version);
 						packageJson.dependencies.put(projectId, version);
 					];
@@ -84,7 +86,7 @@ class PackageJson {
 	/** The file name with the extension of the {@code package.json} file for npm. */
 	public static val String PACKAGE_JSON = 'package.json';
 
-	// GH-217: changed type from "Collection<Collection<String>>" to "Collection<Collection<Object>>", 
+	// GH-217: changed type from "Collection<Collection<String>>" to "Collection<Collection<Object>>",
 	// since https://github.com/npm/npm/blob/a3d718f5e4f15f0c2498e74304c979120611d67e/lib/fetch-package-metadata.js#L77
 	// introduces objects in the inner notation. This change went live with npm version 3.9.3
 	var Collection<Collection<Object>> _args;
@@ -126,9 +128,22 @@ class PackageJson {
 	var String main;
 
 	@Accessors
-	@JsonIgnoreProperties(ignoreUnknown = true)
-	@JsonSerialize(include = NON_NULL)
+	@JsonIgnoreProperties(ignoreUnknown=true)
+	@JsonInclude(content = JsonInclude.Include.NON_NULL)
 	static class Person {
+		new() {
+		}
+
+//		new(Object o){
+//			println('other, ' + o)
+//		}
+		new(String s) {
+			/* puchdb-find has empty string for author, i.e.
+			 * instead value being undef or null it is
+			 *   "author": "",
+			 */
+		}
+
 		var String name;
 		var String email;
 		var String url;
@@ -137,7 +152,9 @@ class PackageJson {
 	@Override
 	override String toString() {
 		try {
-			val mapper  = new ObjectMapper(new JsonPrettyPrinterFactory());
+			val mapper = new ObjectMapper(new JsonPrettyPrinterFactory());
+			mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+			mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 			return mapper.writeValueAsString(this);
 		} catch (Exception e) {
 			throw new RuntimeException('''Error while serializing package.json: «this»''', e);
@@ -154,7 +171,8 @@ class PackageJson {
 	 */
 	static def PackageJson readValue(URI packageLocation) {
 		try {
-			val mapper  = new ObjectMapper(new JsonPrettyPrinterFactory());
+			val mapper = new ObjectMapper(new JsonPrettyPrinterFactory());
+			mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
 			return mapper.readValue(new File(packageLocation), PackageJson);
 		} catch (Exception e) {
 			throw new RuntimeException('''Error while reading package.json from «packageLocation».''', e);
