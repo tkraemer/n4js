@@ -134,9 +134,6 @@ class PackageJson {
 		new() {
 		}
 
-//		new(Object o){
-//			println('other, ' + o)
-//		}
 		new(String s) {
 			/* puchdb-find has empty string for author, i.e.
 			 * instead value being undef or null it is
@@ -153,7 +150,6 @@ class PackageJson {
 	override String toString() {
 		try {
 			val mapper = new ObjectMapper(new JsonPrettyPrinterFactory());
-			mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 			return mapper.writeValueAsString(this);
 		} catch (Exception e) {
