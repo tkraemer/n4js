@@ -9,7 +9,7 @@
             class="eu.numberfour.n4jsx.ui.N4JSXExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
-            extensions="n4jsx,idl"
+            extensions="n4jsx,jsx"
             id="eu.numberfour.n4jsx.N4JSX"
             name="N4JSX Editor">
         </editor>
@@ -227,13 +227,13 @@
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
 			class="eu.numberfour.n4jsx.ui.N4JSXExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
-			type="idl">
+			type="jsx">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
             class="eu.numberfour.n4jsx.ui.N4JSXExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
-            uriExtension="idl">
+            uriExtension="jsx">
         </resourceServiceProvider>
     </extension>
 
@@ -265,7 +265,7 @@
          point="org.eclipse.xtext.builder.participant">
       <participant
             class="eu.numberfour.n4jsx.ui.N4JSXExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
-            fileExtensions="n4jsx,idl"
+            fileExtensions="n4jsx,jsx"
             >
       </participant>
    </extension>
@@ -414,19 +414,19 @@
   <extension point="org.eclipse.compare.contentViewers">
     <viewer id="eu.numberfour.n4jsx.N4JSX.compare.contentViewers"
             class="eu.numberfour.n4jsx.ui.N4JSXExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="n4jsx,idl">
+            extensions="n4jsx,jsx">
     </viewer>
   </extension>
   <extension point="org.eclipse.compare.contentMergeViewers">
     <viewer id="eu.numberfour.n4jsx.N4JSX.compare.contentMergeViewers"
             class="eu.numberfour.n4jsx.ui.N4JSXExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="n4jsx,idl" label="N4JSX Compare">
+            extensions="n4jsx,jsx" label="N4JSX Compare">
      </viewer>
   </extension>
   <extension point="org.eclipse.ui.editors.documentProviders">
     <provider id="eu.numberfour.n4jsx.N4JSX.editors.documentProviders"
             class="eu.numberfour.n4jsx.ui.N4JSXExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
-            extensions="n4jsx,idl">
+            extensions="n4jsx,jsx">
     </provider>
   </extension>
   <extension point="org.eclipse.team.core.fileTypes">
@@ -435,7 +435,7 @@
             type="text">
     </fileTypes>
     <fileTypes
-            extension="idl"
+            extension="jsx"
             type="text">
     </fileTypes>
   </extension>

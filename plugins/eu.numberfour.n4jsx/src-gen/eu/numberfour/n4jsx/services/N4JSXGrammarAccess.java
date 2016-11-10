@@ -577,8 +577,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TypeVariable types::TypeVariable:
 	//	(declaredCovariant?='out' | declaredContravariant?='in')?
-	//	name=IdentifierOrThis ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&'
-	//	declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
+	//	name=IdentifierOrThis ('extends' declaredUpperBound=TypeRef)?
 	public N4JSGrammarAccess.TypeVariableElements getTypeVariableAccess() {
 		return gaN4JS.getTypeVariableAccess();
 	}
@@ -3172,8 +3171,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TypeVariableWithDefSiteVariance TypeVariable:
 	//	(declaredCovariant?='out' | declaredContravariant?='in')?
-	//	name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRef ('&'
-	//	declaredUpperBounds+=ParameterizedTypeRef)*)?
+	//	name=IDENTIFIER ('extends' declaredUpperBound=TypeRef)?
 	public TypeExpressionsGrammarAccess.TypeVariableWithDefSiteVarianceElements getTypeVariableWithDefSiteVarianceAccess() {
 		return gaTypeExpressions.getTypeVariableWithDefSiteVarianceAccess();
 	}

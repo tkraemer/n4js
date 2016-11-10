@@ -691,9 +691,7 @@ ruleTypeVariable :
 		'out' |
 		'in'
 	)? ruleIdentifierOrThis (
-		'extends' ruleParameterizedTypeRefNominal (
-			'&' ruleParameterizedTypeRefNominal
-		)*
+		'extends' ruleTypeRef
 	)?
 ;
 
