@@ -217,7 +217,7 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getJSXElementName_IdentifierRef() {
+	public EReference getJSXElementName_Expression() {
 		return (EReference)jsxElementNameEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -323,7 +323,7 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 		jsxTextEClass = createEClass(JSX_TEXT);
 
 		jsxElementNameEClass = createEClass(JSX_ELEMENT_NAME);
-		createEReference(jsxElementNameEClass, JSX_ELEMENT_NAME__IDENTIFIER_REF);
+		createEReference(jsxElementNameEClass, JSX_ELEMENT_NAME__EXPRESSION);
 
 		jsxAttributeEClass = createEClass(JSX_ATTRIBUTE);
 
@@ -387,7 +387,7 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 		initEClass(jsxTextEClass, JSXText.class, "JSXText", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(jsxElementNameEClass, JSXElementName.class, "JSXElementName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getJSXElementName_IdentifierRef(), theN4JSPackage.getIdentifierRef(), null, "identifierRef", null, 0, 1, JSXElementName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJSXElementName_Expression(), theN4JSPackage.getExpression(), null, "expression", null, 0, 1, JSXElementName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(jsxAttributeEClass, JSXAttribute.class, "JSXAttribute", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

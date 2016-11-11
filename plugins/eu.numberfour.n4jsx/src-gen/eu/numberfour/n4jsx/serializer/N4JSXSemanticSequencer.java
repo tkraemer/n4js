@@ -501,6 +501,8 @@ public class N4JSXSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				return; 
 			case N4JSPackage.IDENTIFIER_REF:
 				if (rule == grammarAccess.getPrimaryExpressionRule()
+						|| rule == grammarAccess.getJSXElementNameExpressionRule()
+						|| action == grammarAccess.getJSXElementNameExpressionAccess().getParameterizedPropertyAccessExpressionTargetAction_1_0()
 						|| rule == grammarAccess.getIdentifierRefRule()
 						|| rule == grammarAccess.getLeftHandSideExpressionRule()
 						|| action == grammarAccess.getLeftHandSideExpressionAccess().getParameterizedCallExpressionTargetAction_1_0()
@@ -951,7 +953,12 @@ public class N4JSXSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				}
 				else break;
 			case N4JSPackage.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION:
-				if (rule == grammarAccess.getLeftHandSideExpressionRule()
+				if (rule == grammarAccess.getJSXElementNameExpressionRule()
+						|| action == grammarAccess.getJSXElementNameExpressionAccess().getParameterizedPropertyAccessExpressionTargetAction_1_0()) {
+					sequence_JSXElementNameExpression_ParameterizedPropertyAccessExpressionTail_TypeArguments(context, (ParameterizedPropertyAccessExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getLeftHandSideExpressionRule()
 						|| rule == grammarAccess.getPostfixExpressionRule()
 						|| action == grammarAccess.getPostfixExpressionAccess().getPostfixExpressionExpressionAction_1_0_0()
 						|| rule == grammarAccess.getCastExpressionRule()
@@ -10296,6 +10303,8 @@ public class N4JSXSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 * Contexts:
 	 *     PrimaryExpression<Yield> returns IdentifierRef
 	 *     PrimaryExpression returns IdentifierRef
+	 *     JSXElementNameExpression returns IdentifierRef
+	 *     JSXElementNameExpression.ParameterizedPropertyAccessExpression_1_0 returns IdentifierRef
 	 *     IdentifierRef<Yield> returns IdentifierRef
 	 *     IdentifierRef returns IdentifierRef
 	 *     LeftHandSideExpression<Yield> returns IdentifierRef
@@ -13048,18 +13057,35 @@ public class N4JSXSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	
 	/**
 	 * Contexts:
+	 *     JSXElementNameExpression returns ParameterizedPropertyAccessExpression
+	 *     JSXElementNameExpression.ParameterizedPropertyAccessExpression_1_0 returns ParameterizedPropertyAccessExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         target=JSXElementNameExpression_ParameterizedPropertyAccessExpression_1_0 
+	 *         (typeArgs+=TypeRef typeArgs+=TypeRef*)? 
+	 *         property=[IdentifiableElement|IdentifierName]
+	 *     )
+	 */
+	protected void sequence_JSXElementNameExpression_ParameterizedPropertyAccessExpressionTail_TypeArguments(ISerializationContext context, ParameterizedPropertyAccessExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     JSXElementName returns JSXElementName
 	 *
 	 * Constraint:
-	 *     identifierRef=JSXIdentifier
+	 *     expression=JSXElementNameExpression
 	 */
 	protected void sequence_JSXElementName(ISerializationContext context, JSXElementName semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, N4JSXPackage.Literals.JSX_ELEMENT_NAME__IDENTIFIER_REF) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSXPackage.Literals.JSX_ELEMENT_NAME__IDENTIFIER_REF));
+			if (transientValues.isValueTransient(semanticObject, N4JSXPackage.Literals.JSX_ELEMENT_NAME__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSXPackage.Literals.JSX_ELEMENT_NAME__EXPRESSION));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getJSXElementNameAccess().getIdentifierRefJSXIdentifierParserRuleCall_0(), semanticObject.getIdentifierRef());
+		feeder.accept(grammarAccess.getJSXElementNameAccess().getExpressionJSXElementNameExpressionParserRuleCall_0(), semanticObject.getExpression());
 		feeder.finish();
 	}
 	

@@ -40,7 +40,7 @@ abstract class JSXChild {}
 class JSXText extends JSXChild {}
 
 class JSXElementName {
-	contains IdentifierRef identifierRef
+	contains Expression expression
 }
 
 abstract class JSXAttribute {

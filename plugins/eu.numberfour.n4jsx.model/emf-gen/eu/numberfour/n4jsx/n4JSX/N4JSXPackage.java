@@ -214,13 +214,13 @@ public interface N4JSXPackage extends EPackage {
 	int JSX_ELEMENT_NAME = 3;
 
 	/**
-	 * The feature id for the '<em><b>Identifier Ref</b></em>' containment reference.
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JSX_ELEMENT_NAME__IDENTIFIER_REF = 0;
+	int JSX_ELEMENT_NAME__EXPRESSION = 0;
 
 	/**
 	 * The number of structural features of the '<em>JSX Element Name</em>' class.
@@ -449,15 +449,15 @@ public interface N4JSXPackage extends EPackage {
 	EClass getJSXElementName();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4jsx.n4JSX.JSXElementName#getIdentifierRef <em>Identifier Ref</em>}'.
+	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4jsx.n4JSX.JSXElementName#getExpression <em>Expression</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Identifier Ref</em>'.
-	 * @see eu.numberfour.n4jsx.n4JSX.JSXElementName#getIdentifierRef()
+	 * @return the meta object for the containment reference '<em>Expression</em>'.
+	 * @see eu.numberfour.n4jsx.n4JSX.JSXElementName#getExpression()
 	 * @see #getJSXElementName()
 	 * @generated
 	 */
-	EReference getJSXElementName_IdentifierRef();
+	EReference getJSXElementName_Expression();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4jsx.n4JSX.JSXAttribute <em>JSX Attribute</em>}'.
@@ -621,12 +621,12 @@ public interface N4JSXPackage extends EPackage {
 		 */
 		EClass JSX_ELEMENT_NAME = eINSTANCE.getJSXElementName();
 		/**
-		 * The meta object literal for the '<em><b>Identifier Ref</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference JSX_ELEMENT_NAME__IDENTIFIER_REF = eINSTANCE.getJSXElementName_IdentifierRef();
+		EReference JSX_ELEMENT_NAME__EXPRESSION = eINSTANCE.getJSXElementName_Expression();
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4jsx.n4JSX.impl.JSXAttributeImpl <em>JSX Attribute</em>}' class.
 		 * <!-- begin-user-doc -->

@@ -68,12 +68,12 @@ ruleJSXChild :
 
 // Rule JSXElementName
 ruleJSXElementName :
-	ruleJSXIdentifier
+	ruleJSXElementNameExpression
 ;
 
-// Rule JSXIdentifier
-ruleJSXIdentifier :
-	RULE_IDENTIFIER
+// Rule JSXElementNameExpression
+ruleJSXElementNameExpression :
+	ruleIdentifierRef ruleParameterizedPropertyAccessExpressionTail*
 ;
 
 // Rule JSXAttributes
