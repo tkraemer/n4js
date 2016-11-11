@@ -7,6 +7,8 @@
  */
 package eu.numberfour.n4jsx.n4JSX.util;
 
+import eu.numberfour.n4js.n4JS.Expression;
+import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4jsx.n4JSX.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -73,8 +75,40 @@ public class N4JSXAdapterFactory extends AdapterFactoryImpl {
 	protected N4JSXSwitch<Adapter> modelSwitch =
 		new N4JSXSwitch<Adapter>() {
 			@Override
-			public Adapter caseDummy(Dummy object) {
-				return createDummyAdapter();
+			public Adapter caseJSXElement(JSXElement object) {
+				return createJSXElementAdapter();
+			}
+			@Override
+			public Adapter caseJSXChild(JSXChild object) {
+				return createJSXChildAdapter();
+			}
+			@Override
+			public Adapter caseJSXText(JSXText object) {
+				return createJSXTextAdapter();
+			}
+			@Override
+			public Adapter caseJSXElementName(JSXElementName object) {
+				return createJSXElementNameAdapter();
+			}
+			@Override
+			public Adapter caseJSXAttribute(JSXAttribute object) {
+				return createJSXAttributeAdapter();
+			}
+			@Override
+			public Adapter caseJSXPropertyAttribute(JSXPropertyAttribute object) {
+				return createJSXPropertyAttributeAdapter();
+			}
+			@Override
+			public Adapter caseJSXSpreadAttribute(JSXSpreadAttribute object) {
+				return createJSXSpreadAttributeAdapter();
+			}
+			@Override
+			public Adapter caseTypableElement(TypableElement object) {
+				return createTypableElementAdapter();
+			}
+			@Override
+			public Adapter caseExpression(Expression object) {
+				return createExpressionAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -97,16 +131,128 @@ public class N4JSXAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4jsx.n4JSX.Dummy <em>Dummy</em>}'.
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4jsx.n4JSX.JSXElement <em>JSX Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see eu.numberfour.n4jsx.n4JSX.Dummy
+	 * @see eu.numberfour.n4jsx.n4JSX.JSXElement
 	 * @generated
 	 */
-	public Adapter createDummyAdapter() {
+	public Adapter createJSXElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4jsx.n4JSX.JSXChild <em>JSX Child</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4jsx.n4JSX.JSXChild
+	 * @generated
+	 */
+	public Adapter createJSXChildAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4jsx.n4JSX.JSXText <em>JSX Text</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4jsx.n4JSX.JSXText
+	 * @generated
+	 */
+	public Adapter createJSXTextAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4jsx.n4JSX.JSXElementName <em>JSX Element Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4jsx.n4JSX.JSXElementName
+	 * @generated
+	 */
+	public Adapter createJSXElementNameAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4jsx.n4JSX.JSXAttribute <em>JSX Attribute</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4jsx.n4JSX.JSXAttribute
+	 * @generated
+	 */
+	public Adapter createJSXAttributeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute <em>JSX Property Attribute</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute
+	 * @generated
+	 */
+	public Adapter createJSXPropertyAttributeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4jsx.n4JSX.JSXSpreadAttribute <em>JSX Spread Attribute</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4jsx.n4JSX.JSXSpreadAttribute
+	 * @generated
+	 */
+	public Adapter createJSXSpreadAttributeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.types.TypableElement <em>Typable Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4js.ts.types.TypableElement
+	 * @generated
+	 */
+	public Adapter createTypableElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.n4JS.Expression <em>Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4js.n4JS.Expression
+	 * @generated
+	 */
+	public Adapter createExpressionAdapter() {
 		return null;
 	}
 

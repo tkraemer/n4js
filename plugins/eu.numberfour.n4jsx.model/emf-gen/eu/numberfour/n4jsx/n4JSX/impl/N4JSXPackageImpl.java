@@ -7,13 +7,24 @@
  */
 package eu.numberfour.n4jsx.n4JSX.impl;
 
-import eu.numberfour.n4jsx.n4JSX.Dummy;
+import eu.numberfour.n4js.n4JS.N4JSPackage;
+import eu.numberfour.n4js.ts.types.TypesPackage;
+import eu.numberfour.n4jsx.n4JSX.JSXAttribute;
+import eu.numberfour.n4jsx.n4JSX.JSXChild;
+import eu.numberfour.n4jsx.n4JSX.JSXElement;
+import eu.numberfour.n4jsx.n4JSX.JSXElementName;
+import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute;
+import eu.numberfour.n4jsx.n4JSX.JSXSpreadAttribute;
+import eu.numberfour.n4jsx.n4JSX.JSXText;
 import eu.numberfour.n4jsx.n4JSX.N4JSXFactory;
 import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -28,8 +39,43 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass dummyEClass = null;
-
+	private EClass jsxElementEClass = null;
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass jsxChildEClass = null;
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass jsxTextEClass = null;
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass jsxElementNameEClass = null;
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass jsxAttributeEClass = null;
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass jsxPropertyAttributeEClass = null;
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass jsxSpreadAttributeEClass = null;
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
@@ -76,6 +122,9 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 
 		isInited = true;
 
+		// Initialize simple dependencies
+		N4JSPackage.eINSTANCE.eClass();
+
 		// Create package meta-data objects
 		theN4JSXPackage.createPackageContents();
 
@@ -96,8 +145,143 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getDummy() {
-		return dummyEClass;
+	public EClass getJSXElement() {
+		return jsxElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getJSXElement_JsxElementName() {
+		return (EReference)jsxElementEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getJSXElement_JsxClosingName() {
+		return (EReference)jsxElementEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getJSXElement_JsxAttributes() {
+		return (EReference)jsxElementEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getJSXElement_JsxChildren() {
+		return (EReference)jsxElementEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getJSXChild() {
+		return jsxChildEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getJSXText() {
+		return jsxTextEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getJSXElementName() {
+		return jsxElementNameEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getJSXElementName_IdentifierRef() {
+		return (EReference)jsxElementNameEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getJSXAttribute() {
+		return jsxAttributeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getJSXPropertyAttribute() {
+		return jsxPropertyAttributeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getJSXPropertyAttribute_Property() {
+		return (EReference)jsxPropertyAttributeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getJSXPropertyAttribute_PropertyAsText() {
+		return (EAttribute)jsxPropertyAttributeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getJSXPropertyAttribute_JsxAttributeValue() {
+		return (EReference)jsxPropertyAttributeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getJSXSpreadAttribute() {
+		return jsxSpreadAttributeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getJSXSpreadAttribute_Expression() {
+		return (EReference)jsxSpreadAttributeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -128,7 +312,28 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		dummyEClass = createEClass(DUMMY);
+		jsxElementEClass = createEClass(JSX_ELEMENT);
+		createEReference(jsxElementEClass, JSX_ELEMENT__JSX_ELEMENT_NAME);
+		createEReference(jsxElementEClass, JSX_ELEMENT__JSX_CLOSING_NAME);
+		createEReference(jsxElementEClass, JSX_ELEMENT__JSX_ATTRIBUTES);
+		createEReference(jsxElementEClass, JSX_ELEMENT__JSX_CHILDREN);
+
+		jsxChildEClass = createEClass(JSX_CHILD);
+
+		jsxTextEClass = createEClass(JSX_TEXT);
+
+		jsxElementNameEClass = createEClass(JSX_ELEMENT_NAME);
+		createEReference(jsxElementNameEClass, JSX_ELEMENT_NAME__IDENTIFIER_REF);
+
+		jsxAttributeEClass = createEClass(JSX_ATTRIBUTE);
+
+		jsxPropertyAttributeEClass = createEClass(JSX_PROPERTY_ATTRIBUTE);
+		createEReference(jsxPropertyAttributeEClass, JSX_PROPERTY_ATTRIBUTE__PROPERTY);
+		createEAttribute(jsxPropertyAttributeEClass, JSX_PROPERTY_ATTRIBUTE__PROPERTY_AS_TEXT);
+		createEReference(jsxPropertyAttributeEClass, JSX_PROPERTY_ATTRIBUTE__JSX_ATTRIBUTE_VALUE);
+
+		jsxSpreadAttributeEClass = createEClass(JSX_SPREAD_ATTRIBUTE);
+		createEReference(jsxSpreadAttributeEClass, JSX_SPREAD_ATTRIBUTE__EXPRESSION);
 	}
 
 	/**
@@ -154,14 +359,45 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 		setNsPrefix(eNS_PREFIX);
 		setNsURI(eNS_URI);
 
+		// Obtain other dependent packages
+		N4JSPackage theN4JSPackage = (N4JSPackage)EPackage.Registry.INSTANCE.getEPackage(N4JSPackage.eNS_URI);
+		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
+		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		jsxElementEClass.getESuperTypes().add(theN4JSPackage.getExpression());
+		jsxElementEClass.getESuperTypes().add(this.getJSXChild());
+		jsxTextEClass.getESuperTypes().add(this.getJSXChild());
+		jsxPropertyAttributeEClass.getESuperTypes().add(this.getJSXAttribute());
+		jsxSpreadAttributeEClass.getESuperTypes().add(this.getJSXAttribute());
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(dummyEClass, Dummy.class, "Dummy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(jsxElementEClass, JSXElement.class, "JSXElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getJSXElement_JsxElementName(), this.getJSXElementName(), null, "jsxElementName", null, 0, 1, JSXElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJSXElement_JsxClosingName(), this.getJSXElementName(), null, "jsxClosingName", null, 0, 1, JSXElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJSXElement_JsxAttributes(), this.getJSXAttribute(), null, "jsxAttributes", null, 0, -1, JSXElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJSXElement_JsxChildren(), this.getJSXChild(), null, "jsxChildren", null, 0, -1, JSXElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(jsxChildEClass, JSXChild.class, "JSXChild", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(jsxTextEClass, JSXText.class, "JSXText", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(jsxElementNameEClass, JSXElementName.class, "JSXElementName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getJSXElementName_IdentifierRef(), theN4JSPackage.getIdentifierRef(), null, "identifierRef", null, 0, 1, JSXElementName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(jsxAttributeEClass, JSXAttribute.class, "JSXAttribute", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(jsxPropertyAttributeEClass, JSXPropertyAttribute.class, "JSXPropertyAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getJSXPropertyAttribute_Property(), theTypesPackage.getIdentifiableElement(), null, "property", null, 0, 1, JSXPropertyAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getJSXPropertyAttribute_PropertyAsText(), theEcorePackage.getEString(), "propertyAsText", null, 0, 1, JSXPropertyAttribute.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJSXPropertyAttribute_JsxAttributeValue(), theN4JSPackage.getExpression(), null, "jsxAttributeValue", null, 0, 1, JSXPropertyAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(jsxSpreadAttributeEClass, JSXSpreadAttribute.class, "JSXSpreadAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getJSXSpreadAttribute_Expression(), theN4JSPackage.getExpression(), null, "expression", null, 0, 1, JSXSpreadAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

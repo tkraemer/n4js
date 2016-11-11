@@ -61,7 +61,11 @@ public class N4JSXFactoryImpl extends EFactoryImpl implements N4JSXFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case N4JSXPackage.DUMMY: return createDummy();
+			case N4JSXPackage.JSX_ELEMENT: return createJSXElement();
+			case N4JSXPackage.JSX_TEXT: return createJSXText();
+			case N4JSXPackage.JSX_ELEMENT_NAME: return createJSXElementName();
+			case N4JSXPackage.JSX_PROPERTY_ATTRIBUTE: return createJSXPropertyAttribute();
+			case N4JSXPackage.JSX_SPREAD_ATTRIBUTE: return createJSXSpreadAttribute();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -72,9 +76,49 @@ public class N4JSXFactoryImpl extends EFactoryImpl implements N4JSXFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Dummy createDummy() {
-		DummyImpl dummy = new DummyImpl();
-		return dummy;
+	public JSXElement createJSXElement() {
+		JSXElementImpl jsxElement = new JSXElementImpl();
+		return jsxElement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public JSXText createJSXText() {
+		JSXTextImpl jsxText = new JSXTextImpl();
+		return jsxText;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public JSXElementName createJSXElementName() {
+		JSXElementNameImpl jsxElementName = new JSXElementNameImpl();
+		return jsxElementName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public JSXPropertyAttribute createJSXPropertyAttribute() {
+		JSXPropertyAttributeImpl jsxPropertyAttribute = new JSXPropertyAttributeImpl();
+		return jsxPropertyAttribute;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public JSXSpreadAttribute createJSXSpreadAttribute() {
+		JSXSpreadAttributeImpl jsxSpreadAttribute = new JSXSpreadAttributeImpl();
+		return jsxSpreadAttribute;
 	}
 
 	/**

@@ -11,12 +11,73 @@
 grammar eu.numberfour.n4jsx.N4JSX with eu.numberfour.n4js.N4JS
 
 import "http://www.numberfour.eu/ide/n4jsx/N4JSX"
-import "http://www.numberfour.eu/ide/n4js/N4JS" as js
+import "http://www.numberfour.eu/ide/n4js/N4JS" as n4js
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://www.numberfour.eu/ide/ts/Types" as types
 import "http://www.numberfour.eu/ide/ts/TypeRefs" as types
 
-IDLScript returns js::Script:
-	{js::Script}
+IDLScript returns n4js::Script:
+	{n4js::Script}
 	annotations+=ScriptAnnotation*
 	scriptElements+=ScriptElement*;
+
+/* see https://facebook.github.io/jsx/  */
+PrimaryExpression <Yield> returns n4js::Expression:
+	ThisLiteral
+	| SuperLiteral
+	| IdentifierRef<Yield>
+	| ParameterizedCallExpression<Yield>
+	| Literal
+	| ArrayLiteral<Yield>
+	| ObjectLiteral<Yield>
+	| ParenExpression<Yield>
+	| AnnotatedExpression<Yield>
+	| FunctionExpression
+	| AsyncFunctionExpression
+	| N4ClassExpression<Yield>
+	| TemplateLiteral<Yield>
+	| JSXElement;
+
+JSXElement:
+	'<' jsxElementName=JSXElementName JSXAttributes
+	(('>' jsxChildren+=JSXChild* JSXClosingElement) | ('/' '>'));
+
+fragment JSXClosingElement *:
+	'<' '/' jsxClosingName=JSXElementName '>';
+
+JSXChild:
+	JSXElement
+	//	| JSXText
+;
+
+JSXElementName:
+	identifierRef=JSXIdentifier
+	//	| JSXNamedspacedName
+	//	| JSXMemberExpression
+;
+
+JSXIdentifier returns n4js::IdentifierRef:
+	id=[types::IdentifiableElement|IDENTIFIER];
+
+	//JSXNamedspacedName:
+//	JSXIdentifier ':' JSXIdentifier;
+//
+//JSXMemberExpression:
+//	JSXIdentifier '.' JSXIdentifier;
+fragment JSXAttributes *:
+	jsxAttributes+=JSXAttribute*;
+
+JSXAttribute:
+	JSXSpreadAttribute
+	|
+	JSXPropertyAttribute;
+
+JSXSpreadAttribute:
+	'{' '...' expression=AssignmentExpression<false,false> '}';
+
+JSXPropertyAttribute:
+// or JSXNamespacedName
+	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | ('{'
+	jsxAttributeValue=AssignmentExpression<false,false> '}'));
+
+	// terminal JSX_TEXT: !('{'|'<'|'>'|'}'); needs to be refactored similar to template text

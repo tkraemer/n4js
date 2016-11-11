@@ -8,6 +8,98 @@ ruleIDLScript :
 	ruleScriptAnnotation* ruleScriptElement*
 ;
 
+// Rule PrimaryExpression
+rulePrimaryExpression :
+	ruleThisLiteral |
+	ruleSuperLiteral |
+	ruleIdentifierRef |
+	ruleParameterizedCallExpression |
+	ruleLiteral |
+	ruleArrayLiteral |
+	ruleObjectLiteral |
+	ruleParenExpression |
+	ruleAnnotatedExpression |
+	ruleFunctionExpression |
+	( (
+	'async' ruleNoLineTerminator 'function'
+	) => ruleAsyncFunctionExpression ) |
+	ruleN4ClassExpression |
+	ruleTemplateLiteral |
+	ruleJSXElement
+;
+
+// Rule PrimaryExpression
+norm1_PrimaryExpression :
+	ruleThisLiteral |
+	ruleSuperLiteral |
+	norm1_IdentifierRef |
+	norm1_ParameterizedCallExpression |
+	ruleLiteral |
+	norm1_ArrayLiteral |
+	norm1_ObjectLiteral |
+	norm1_ParenExpression |
+	norm1_AnnotatedExpression |
+	ruleFunctionExpression |
+	( (
+	'async' ruleNoLineTerminator 'function'
+	) => ruleAsyncFunctionExpression ) |
+	norm1_N4ClassExpression |
+	norm1_TemplateLiteral |
+	ruleJSXElement
+;
+
+// Rule JSXElement
+ruleJSXElement :
+	'<' ruleJSXElementName ruleJSXAttributes (
+		'>' ruleJSXChild* ruleJSXClosingElement |
+		'/' '>'
+	)
+;
+
+// Rule JSXClosingElement
+ruleJSXClosingElement :
+	'<' '/' ruleJSXElementName '>'
+;
+
+// Rule JSXChild
+ruleJSXChild :
+	ruleJSXElement
+;
+
+// Rule JSXElementName
+ruleJSXElementName :
+	ruleJSXIdentifier
+;
+
+// Rule JSXIdentifier
+ruleJSXIdentifier :
+	RULE_IDENTIFIER
+;
+
+// Rule JSXAttributes
+ruleJSXAttributes :
+	ruleJSXAttribute*
+;
+
+// Rule JSXAttribute
+ruleJSXAttribute :
+	ruleJSXSpreadAttribute |
+	ruleJSXPropertyAttribute
+;
+
+// Rule JSXSpreadAttribute
+ruleJSXSpreadAttribute :
+	'{' '...' ruleAssignmentExpression '}'
+;
+
+// Rule JSXPropertyAttribute
+ruleJSXPropertyAttribute :
+	ruleIdentifierName '=' (
+		ruleStringLiteral |
+		'{' ruleAssignmentExpression '}'
+	)
+;
+
 // Rule ScriptElement
 ruleScriptElement :
 	( (
@@ -1755,44 +1847,6 @@ norm1_FinallyBlock :
 // Rule DebuggerStatement
 ruleDebuggerStatement :
 	'debugger' ruleSemi
-;
-
-// Rule PrimaryExpression
-rulePrimaryExpression :
-	ruleThisLiteral |
-	ruleSuperLiteral |
-	ruleIdentifierRef |
-	ruleParameterizedCallExpression |
-	ruleLiteral |
-	ruleArrayLiteral |
-	ruleObjectLiteral |
-	ruleParenExpression |
-	ruleAnnotatedExpression |
-	ruleFunctionExpression |
-	( (
-	'async' ruleNoLineTerminator 'function'
-	) => ruleAsyncFunctionExpression ) |
-	ruleN4ClassExpression |
-	ruleTemplateLiteral
-;
-
-// Rule PrimaryExpression
-norm1_PrimaryExpression :
-	ruleThisLiteral |
-	ruleSuperLiteral |
-	norm1_IdentifierRef |
-	norm1_ParameterizedCallExpression |
-	ruleLiteral |
-	norm1_ArrayLiteral |
-	norm1_ObjectLiteral |
-	norm1_ParenExpression |
-	norm1_AnnotatedExpression |
-	ruleFunctionExpression |
-	( (
-	'async' ruleNoLineTerminator 'function'
-	) => ruleAsyncFunctionExpression ) |
-	norm1_N4ClassExpression |
-	norm1_TemplateLiteral
 ;
 
 // Rule ParenExpression

@@ -24,4 +24,35 @@
 
 package eu.numberfour.n4jsx.n4JSX
 
-class Dummy {} // Generates packages and thus removes warnings / errors about missing exported packages and so on.
+import eu.numberfour.n4js.n4JS.Expression
+import eu.numberfour.n4js.n4JS.IdentifierRef
+import eu.numberfour.n4js.ts.types.IdentifiableElement
+
+class JSXElement extends Expression, JSXChild {
+	contains JSXElementName jsxElementName
+	contains JSXElementName jsxClosingName
+	contains JSXAttribute[] jsxAttributes
+	contains JSXChild[] jsxChildren
+}
+
+abstract class JSXChild {}
+
+class JSXText extends JSXChild {}
+
+class JSXElementName {
+	contains IdentifierRef identifierRef
+}
+
+abstract class JSXAttribute {
+
+}
+
+class JSXPropertyAttribute extends JSXAttribute {
+	refers IdentifiableElement property
+	transient String propertyAsText
+	contains Expression jsxAttributeValue
+}
+
+class JSXSpreadAttribute extends JSXAttribute {
+	contains Expression expression
+}

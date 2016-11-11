@@ -131,6 +131,11 @@ import eu.numberfour.n4js.ts.types.TStructMethod;
 import eu.numberfour.n4js.ts.types.TStructSetter;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesPackage;
+import eu.numberfour.n4jsx.n4JSX.JSXElement;
+import eu.numberfour.n4jsx.n4JSX.JSXElementName;
+import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute;
+import eu.numberfour.n4jsx.n4JSX.JSXSpreadAttribute;
+import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 import eu.numberfour.n4jsx.services.N4JSXGrammarAccess;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
@@ -535,6 +540,10 @@ public class N4JSXSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 						|| rule == grammarAccess.getExpressionRule()
 						|| action == grammarAccess.getExpressionAccess().getCommaExpressionExprsAction_1_0()) {
 					sequence_IdentifierRef(context, (IdentifierRef) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getJSXIdentifierRule()) {
+					sequence_JSXIdentifier(context, (IdentifierRef) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getLetIdentifierRefRule()) {
@@ -1271,6 +1280,21 @@ public class N4JSXSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				return; 
 			case N4JSPackage.YIELD_EXPRESSION:
 				sequence_YieldExpression(context, (YieldExpression) semanticObject); 
+				return; 
+			}
+		else if (epackage == N4JSXPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case N4JSXPackage.JSX_ELEMENT:
+				sequence_JSXAttributes_JSXClosingElement_JSXElement(context, (JSXElement) semanticObject); 
+				return; 
+			case N4JSXPackage.JSX_ELEMENT_NAME:
+				sequence_JSXElementName(context, (JSXElementName) semanticObject); 
+				return; 
+			case N4JSXPackage.JSX_PROPERTY_ATTRIBUTE:
+				sequence_JSXPropertyAttribute(context, (JSXPropertyAttribute) semanticObject); 
+				return; 
+			case N4JSXPackage.JSX_SPREAD_ATTRIBUTE:
+				sequence_JSXSpreadAttribute(context, (JSXSpreadAttribute) semanticObject); 
 				return; 
 			}
 		else if (epackage == TypeRefsPackage.eINSTANCE)
@@ -12446,6 +12470,647 @@ public class N4JSXSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 */
 	protected void sequence_IntersectionTypeExpression_IntersectionTypeExpressionOLD_TypeRefWithModifiers(ISerializationContext context, IntersectionTypeExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PrimaryExpression<Yield> returns JSXElement
+	 *     PrimaryExpression returns JSXElement
+	 *     JSXElement returns JSXElement
+	 *     JSXChild returns JSXElement
+	 *     LeftHandSideExpression<Yield> returns JSXElement
+	 *     LeftHandSideExpression returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<PostfixExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<CastExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<UnaryExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<MultiplicativeExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<AdditiveExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<ShiftExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<RelationalExpression.In> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<RelationalExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<RelationalExpression.In,RelationalExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<EqualityExpression.In> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<EqualityExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<EqualityExpression.In,EqualityExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<BitwiseANDExpression.In> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<BitwiseANDExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<BitwiseANDExpression.In,BitwiseANDExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<BitwiseXORExpression.In> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<BitwiseXORExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<BitwiseXORExpression.In,BitwiseXORExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<BitwiseORExpression.In> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<BitwiseORExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<BitwiseORExpression.In,BitwiseORExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<LogicalANDExpression.In> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<LogicalANDExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<LogicalANDExpression.In,LogicalANDExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<LogicalORExpression.In> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<LogicalORExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<LogicalORExpression.In,LogicalORExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<ConditionalExpression.In> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<ConditionalExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<AssignmentExpression.In> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<AssignmentExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<Expression.In> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<Expression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     LeftHandSideExpression.ParameterizedCallExpression_1_0 returns JSXElement
+	 *     MemberExpression<Yield> returns JSXElement
+	 *     MemberExpression returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<LeftHandSideExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<PostfixExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<CastExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<UnaryExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<MultiplicativeExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<AdditiveExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<ShiftExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<RelationalExpression.In> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<RelationalExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<RelationalExpression.In,RelationalExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<EqualityExpression.In> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<EqualityExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<EqualityExpression.In,EqualityExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<BitwiseANDExpression.In> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<BitwiseANDExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<BitwiseANDExpression.In,BitwiseANDExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<BitwiseXORExpression.In> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<BitwiseXORExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<BitwiseXORExpression.In,BitwiseXORExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<BitwiseORExpression.In> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<BitwiseORExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<BitwiseORExpression.In,BitwiseORExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<LogicalANDExpression.In> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<LogicalANDExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<LogicalANDExpression.In,LogicalANDExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<LogicalORExpression.In> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<LogicalORExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<LogicalORExpression.In,LogicalORExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<ConditionalExpression.In> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<ConditionalExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<AssignmentExpression.In> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<AssignmentExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<Expression.In> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<Expression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     MemberExpression.IndexedAccessExpression_2_1_0_0 returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<LeftHandSideExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<PostfixExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<CastExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<UnaryExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<MultiplicativeExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<AdditiveExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<ShiftExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<RelationalExpression.In> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<RelationalExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<RelationalExpression.In,RelationalExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<EqualityExpression.In> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<EqualityExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<EqualityExpression.In,EqualityExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<BitwiseANDExpression.In> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<BitwiseANDExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<BitwiseANDExpression.In,BitwiseANDExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<BitwiseXORExpression.In> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<BitwiseXORExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<BitwiseXORExpression.In,BitwiseXORExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<BitwiseORExpression.In> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<BitwiseORExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<BitwiseORExpression.In,BitwiseORExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<LogicalANDExpression.In> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<LogicalANDExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<LogicalANDExpression.In,LogicalANDExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<LogicalORExpression.In> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<LogicalORExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<LogicalORExpression.In,LogicalORExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<ConditionalExpression.In> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<ConditionalExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<AssignmentExpression.In> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<AssignmentExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<Expression.In> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<Expression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     MemberExpression.ParameterizedPropertyAccessExpression_2_1_1_0 returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<LeftHandSideExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<PostfixExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<CastExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<UnaryExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<MultiplicativeExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<AdditiveExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<ShiftExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<RelationalExpression.In> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<RelationalExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<RelationalExpression.In,RelationalExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<EqualityExpression.In> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<EqualityExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<EqualityExpression.In,EqualityExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<BitwiseANDExpression.In> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<BitwiseANDExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<BitwiseANDExpression.In,BitwiseANDExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<BitwiseXORExpression.In> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<BitwiseXORExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<BitwiseXORExpression.In,BitwiseXORExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<BitwiseORExpression.In> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<BitwiseORExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<BitwiseORExpression.In,BitwiseORExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<LogicalANDExpression.In> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<LogicalANDExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<LogicalANDExpression.In,LogicalANDExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<LogicalORExpression.In> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<LogicalORExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<LogicalORExpression.In,LogicalORExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<ConditionalExpression.In> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<ConditionalExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<AssignmentExpression.In> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<AssignmentExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<Expression.In> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<Expression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     MemberExpression.TaggedTemplateString_2_1_2_0 returns JSXElement
+	 *     PostfixExpression<Yield> returns JSXElement
+	 *     PostfixExpression returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<CastExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<UnaryExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<MultiplicativeExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<AdditiveExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<ShiftExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<RelationalExpression.In> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<RelationalExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<RelationalExpression.In,RelationalExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<EqualityExpression.In> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<EqualityExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<EqualityExpression.In,EqualityExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<BitwiseANDExpression.In> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<BitwiseANDExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<BitwiseANDExpression.In,BitwiseANDExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<BitwiseXORExpression.In> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<BitwiseXORExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<BitwiseXORExpression.In,BitwiseXORExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<BitwiseORExpression.In> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<BitwiseORExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<BitwiseORExpression.In,BitwiseORExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<LogicalANDExpression.In> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<LogicalANDExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<LogicalANDExpression.In,LogicalANDExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<LogicalORExpression.In> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<LogicalORExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<LogicalORExpression.In,LogicalORExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<ConditionalExpression.In> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<ConditionalExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<AssignmentExpression.In> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<AssignmentExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<Expression.In> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<Expression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     PostfixExpression.PostfixExpression_1_0_0 returns JSXElement
+	 *     CastExpression<Yield> returns JSXElement
+	 *     CastExpression returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<UnaryExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<MultiplicativeExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<AdditiveExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<ShiftExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<RelationalExpression.In> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<RelationalExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<RelationalExpression.In,RelationalExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<EqualityExpression.In> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<EqualityExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<EqualityExpression.In,EqualityExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<BitwiseANDExpression.In> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<BitwiseANDExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<BitwiseANDExpression.In,BitwiseANDExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<BitwiseXORExpression.In> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<BitwiseXORExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<BitwiseXORExpression.In,BitwiseXORExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<BitwiseORExpression.In> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<BitwiseORExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<BitwiseORExpression.In,BitwiseORExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<LogicalANDExpression.In> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<LogicalANDExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<LogicalANDExpression.In,LogicalANDExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<LogicalORExpression.In> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<LogicalORExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<LogicalORExpression.In,LogicalORExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<ConditionalExpression.In> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<ConditionalExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<AssignmentExpression.In> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<AssignmentExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<Expression.In> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<Expression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     CastExpression.CastExpression_1_0_0_0 returns JSXElement
+	 *     UnaryExpression<Yield> returns JSXElement
+	 *     UnaryExpression returns JSXElement
+	 *     MultiplicativeExpression<Yield> returns JSXElement
+	 *     MultiplicativeExpression returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<AdditiveExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<ShiftExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<RelationalExpression.In> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<RelationalExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<RelationalExpression.In,RelationalExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<EqualityExpression.In> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<EqualityExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<EqualityExpression.In,EqualityExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<BitwiseANDExpression.In> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<BitwiseANDExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<BitwiseANDExpression.In,BitwiseANDExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<BitwiseXORExpression.In> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<BitwiseXORExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<BitwiseXORExpression.In,BitwiseXORExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<BitwiseORExpression.In> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<BitwiseORExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<BitwiseORExpression.In,BitwiseORExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<LogicalANDExpression.In> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<LogicalANDExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<LogicalANDExpression.In,LogicalANDExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<LogicalORExpression.In> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<LogicalORExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<LogicalORExpression.In,LogicalORExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<ConditionalExpression.In> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<ConditionalExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<AssignmentExpression.In> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<AssignmentExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<Expression.In> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<Expression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0_0_0 returns JSXElement
+	 *     AdditiveExpression<Yield> returns JSXElement
+	 *     AdditiveExpression returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<ShiftExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<RelationalExpression.In> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<RelationalExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<RelationalExpression.In,RelationalExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<EqualityExpression.In> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<EqualityExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<EqualityExpression.In,EqualityExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<BitwiseANDExpression.In> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<BitwiseANDExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<BitwiseANDExpression.In,BitwiseANDExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<BitwiseXORExpression.In> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<BitwiseXORExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<BitwiseXORExpression.In,BitwiseXORExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<BitwiseORExpression.In> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<BitwiseORExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<BitwiseORExpression.In,BitwiseORExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<LogicalANDExpression.In> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<LogicalANDExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<LogicalANDExpression.In,LogicalANDExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<LogicalORExpression.In> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<LogicalORExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<LogicalORExpression.In,LogicalORExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<ConditionalExpression.In> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<ConditionalExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<AssignmentExpression.In> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<AssignmentExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<Expression.In> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<Expression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     AdditiveExpression.AdditiveExpression_1_0_0_0 returns JSXElement
+	 *     ShiftExpression<Yield> returns JSXElement
+	 *     ShiftExpression returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<RelationalExpression.In> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<RelationalExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<RelationalExpression.In,RelationalExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<EqualityExpression.In> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<EqualityExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<EqualityExpression.In,EqualityExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<BitwiseANDExpression.In> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<BitwiseANDExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<BitwiseANDExpression.In,BitwiseANDExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<BitwiseXORExpression.In> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<BitwiseXORExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<BitwiseXORExpression.In,BitwiseXORExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<BitwiseORExpression.In> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<BitwiseORExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<BitwiseORExpression.In,BitwiseORExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<LogicalANDExpression.In> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<LogicalANDExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<LogicalANDExpression.In,LogicalANDExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<LogicalORExpression.In> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<LogicalORExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<LogicalORExpression.In,LogicalORExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<ConditionalExpression.In> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<ConditionalExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<AssignmentExpression.In> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<AssignmentExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<Expression.In> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<Expression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     ShiftExpression.ShiftExpression_1_0_0 returns JSXElement
+	 *     RelationalExpression<In,Yield> returns JSXElement
+	 *     RelationalExpression<In> returns JSXElement
+	 *     RelationalExpression<Yield> returns JSXElement
+	 *     RelationalExpression returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<In,Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<In> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<EqualityExpression.In> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<EqualityExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<EqualityExpression.In,EqualityExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<BitwiseANDExpression.In> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<BitwiseANDExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<BitwiseANDExpression.In,BitwiseANDExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<BitwiseXORExpression.In> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<BitwiseXORExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<BitwiseXORExpression.In,BitwiseXORExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<BitwiseORExpression.In> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<BitwiseORExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<BitwiseORExpression.In,BitwiseORExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<LogicalANDExpression.In> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<LogicalANDExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<LogicalANDExpression.In,LogicalANDExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<LogicalORExpression.In> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<LogicalORExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<LogicalORExpression.In,LogicalORExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<ConditionalExpression.In> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<ConditionalExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<AssignmentExpression.In> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<AssignmentExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<Expression.In> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<Expression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     RelationalExpression.RelationalExpression_1_0_0 returns JSXElement
+	 *     EqualityExpression<In,Yield> returns JSXElement
+	 *     EqualityExpression<In> returns JSXElement
+	 *     EqualityExpression<Yield> returns JSXElement
+	 *     EqualityExpression returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<In,Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<In> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<BitwiseANDExpression.In> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<BitwiseANDExpression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<BitwiseANDExpression.In,BitwiseANDExpression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<BitwiseXORExpression.In> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<BitwiseXORExpression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<BitwiseXORExpression.In,BitwiseXORExpression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<BitwiseORExpression.In> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<BitwiseORExpression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<BitwiseORExpression.In,BitwiseORExpression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<LogicalANDExpression.In> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<LogicalANDExpression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<LogicalANDExpression.In,LogicalANDExpression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<LogicalORExpression.In> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<LogicalORExpression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<LogicalORExpression.In,LogicalORExpression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<ConditionalExpression.In> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<ConditionalExpression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<AssignmentExpression.In> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<AssignmentExpression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<Expression.In> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<Expression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     EqualityExpression.EqualityExpression_1_0_0_0 returns JSXElement
+	 *     BitwiseANDExpression<In,Yield> returns JSXElement
+	 *     BitwiseANDExpression<In> returns JSXElement
+	 *     BitwiseANDExpression<Yield> returns JSXElement
+	 *     BitwiseANDExpression returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<In,Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<In> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<BitwiseXORExpression.In> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<BitwiseXORExpression.Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<BitwiseXORExpression.In,BitwiseXORExpression.Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<BitwiseORExpression.In> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<BitwiseORExpression.Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<BitwiseORExpression.In,BitwiseORExpression.Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<LogicalANDExpression.In> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<LogicalANDExpression.Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<LogicalANDExpression.In,LogicalANDExpression.Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<LogicalORExpression.In> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<LogicalORExpression.Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<LogicalORExpression.In,LogicalORExpression.Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<ConditionalExpression.In> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<ConditionalExpression.Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<AssignmentExpression.In> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<AssignmentExpression.Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<Expression.In> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<Expression.Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     BitwiseANDExpression.BinaryBitwiseExpression_1_0_0_0 returns JSXElement
+	 *     BitwiseXORExpression<In,Yield> returns JSXElement
+	 *     BitwiseXORExpression<In> returns JSXElement
+	 *     BitwiseXORExpression<Yield> returns JSXElement
+	 *     BitwiseXORExpression returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<In,Yield> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<In> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<Yield> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<BitwiseORExpression.In> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<BitwiseORExpression.Yield> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<BitwiseORExpression.In,BitwiseORExpression.Yield> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<LogicalANDExpression.In> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<LogicalANDExpression.Yield> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<LogicalANDExpression.In,LogicalANDExpression.Yield> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<LogicalORExpression.In> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<LogicalORExpression.Yield> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<LogicalORExpression.In,LogicalORExpression.Yield> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<ConditionalExpression.In> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<ConditionalExpression.Yield> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<AssignmentExpression.In> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<AssignmentExpression.Yield> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<Expression.In> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<Expression.Yield> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     BitwiseXORExpression.BinaryBitwiseExpression_1_0_0_0 returns JSXElement
+	 *     BitwiseORExpression<In,Yield> returns JSXElement
+	 *     BitwiseORExpression<In> returns JSXElement
+	 *     BitwiseORExpression<Yield> returns JSXElement
+	 *     BitwiseORExpression returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<In,Yield> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<In> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<Yield> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<LogicalANDExpression.In> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<LogicalANDExpression.Yield> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<LogicalANDExpression.In,LogicalANDExpression.Yield> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<LogicalORExpression.In> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<LogicalORExpression.Yield> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<LogicalORExpression.In,LogicalORExpression.Yield> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<ConditionalExpression.In> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<ConditionalExpression.Yield> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<AssignmentExpression.In> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<AssignmentExpression.Yield> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<Expression.In> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<Expression.Yield> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     BitwiseORExpression.BinaryBitwiseExpression_1_0_0_0 returns JSXElement
+	 *     LogicalANDExpression<In,Yield> returns JSXElement
+	 *     LogicalANDExpression<In> returns JSXElement
+	 *     LogicalANDExpression<Yield> returns JSXElement
+	 *     LogicalANDExpression returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0<In,Yield> returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0<In> returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0<Yield> returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0<LogicalORExpression.In> returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0<LogicalORExpression.Yield> returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0<LogicalORExpression.In,LogicalORExpression.Yield> returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0<ConditionalExpression.In> returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0<ConditionalExpression.Yield> returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0<AssignmentExpression.In> returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0<AssignmentExpression.Yield> returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0<Expression.In> returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0<Expression.Yield> returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     LogicalANDExpression.BinaryLogicalExpression_1_0_0_0 returns JSXElement
+	 *     LogicalORExpression<In,Yield> returns JSXElement
+	 *     LogicalORExpression<In> returns JSXElement
+	 *     LogicalORExpression<Yield> returns JSXElement
+	 *     LogicalORExpression returns JSXElement
+	 *     LogicalORExpression.BinaryLogicalExpression_1_0_0_0<In,Yield> returns JSXElement
+	 *     LogicalORExpression.BinaryLogicalExpression_1_0_0_0<In> returns JSXElement
+	 *     LogicalORExpression.BinaryLogicalExpression_1_0_0_0<Yield> returns JSXElement
+	 *     LogicalORExpression.BinaryLogicalExpression_1_0_0_0<ConditionalExpression.In> returns JSXElement
+	 *     LogicalORExpression.BinaryLogicalExpression_1_0_0_0<ConditionalExpression.Yield> returns JSXElement
+	 *     LogicalORExpression.BinaryLogicalExpression_1_0_0_0<ConditionalExpression.In,ConditionalExpression.Yield> returns JSXElement
+	 *     LogicalORExpression.BinaryLogicalExpression_1_0_0_0<AssignmentExpression.In> returns JSXElement
+	 *     LogicalORExpression.BinaryLogicalExpression_1_0_0_0<AssignmentExpression.Yield> returns JSXElement
+	 *     LogicalORExpression.BinaryLogicalExpression_1_0_0_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     LogicalORExpression.BinaryLogicalExpression_1_0_0_0<Expression.In> returns JSXElement
+	 *     LogicalORExpression.BinaryLogicalExpression_1_0_0_0<Expression.Yield> returns JSXElement
+	 *     LogicalORExpression.BinaryLogicalExpression_1_0_0_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     LogicalORExpression.BinaryLogicalExpression_1_0_0_0 returns JSXElement
+	 *     ConditionalExpression<In,Yield> returns JSXElement
+	 *     ConditionalExpression<In> returns JSXElement
+	 *     ConditionalExpression<Yield> returns JSXElement
+	 *     ConditionalExpression returns JSXElement
+	 *     ConditionalExpression.ConditionalExpression_1_0_0_0<In,Yield> returns JSXElement
+	 *     ConditionalExpression.ConditionalExpression_1_0_0_0<In> returns JSXElement
+	 *     ConditionalExpression.ConditionalExpression_1_0_0_0<Yield> returns JSXElement
+	 *     ConditionalExpression.ConditionalExpression_1_0_0_0<AssignmentExpression.In> returns JSXElement
+	 *     ConditionalExpression.ConditionalExpression_1_0_0_0<AssignmentExpression.Yield> returns JSXElement
+	 *     ConditionalExpression.ConditionalExpression_1_0_0_0<AssignmentExpression.In,AssignmentExpression.Yield> returns JSXElement
+	 *     ConditionalExpression.ConditionalExpression_1_0_0_0<Expression.In> returns JSXElement
+	 *     ConditionalExpression.ConditionalExpression_1_0_0_0<Expression.Yield> returns JSXElement
+	 *     ConditionalExpression.ConditionalExpression_1_0_0_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     ConditionalExpression.ConditionalExpression_1_0_0_0 returns JSXElement
+	 *     AssignmentExpression<In,Yield> returns JSXElement
+	 *     AssignmentExpression<In> returns JSXElement
+	 *     AssignmentExpression<Yield> returns JSXElement
+	 *     AssignmentExpression returns JSXElement
+	 *     AssignmentExpression.AssignmentExpression_4_1_0_0_0<In,Yield> returns JSXElement
+	 *     AssignmentExpression.AssignmentExpression_4_1_0_0_0<In> returns JSXElement
+	 *     AssignmentExpression.AssignmentExpression_4_1_0_0_0<Yield> returns JSXElement
+	 *     AssignmentExpression.AssignmentExpression_4_1_0_0_0<Expression.In> returns JSXElement
+	 *     AssignmentExpression.AssignmentExpression_4_1_0_0_0<Expression.Yield> returns JSXElement
+	 *     AssignmentExpression.AssignmentExpression_4_1_0_0_0<Expression.In,Expression.Yield> returns JSXElement
+	 *     AssignmentExpression.AssignmentExpression_4_1_0_0_0 returns JSXElement
+	 *     Expression<In,Yield> returns JSXElement
+	 *     Expression<In> returns JSXElement
+	 *     Expression<Yield> returns JSXElement
+	 *     Expression returns JSXElement
+	 *     Expression.CommaExpression_1_0<In,Yield> returns JSXElement
+	 *     Expression.CommaExpression_1_0<In> returns JSXElement
+	 *     Expression.CommaExpression_1_0<Yield> returns JSXElement
+	 *     Expression.CommaExpression_1_0 returns JSXElement
+	 *
+	 * Constraint:
+	 *     (jsxElementName=JSXElementName jsxAttributes+=JSXAttribute* (jsxChildren+=JSXChild* jsxClosingName=JSXElementName)?)
+	 */
+	protected void sequence_JSXAttributes_JSXClosingElement_JSXElement(ISerializationContext context, JSXElement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     JSXElementName returns JSXElementName
+	 *
+	 * Constraint:
+	 *     identifierRef=JSXIdentifier
+	 */
+	protected void sequence_JSXElementName(ISerializationContext context, JSXElementName semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, N4JSXPackage.Literals.JSX_ELEMENT_NAME__IDENTIFIER_REF) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSXPackage.Literals.JSX_ELEMENT_NAME__IDENTIFIER_REF));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getJSXElementNameAccess().getIdentifierRefJSXIdentifierParserRuleCall_0(), semanticObject.getIdentifierRef());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     JSXIdentifier returns IdentifierRef
+	 *
+	 * Constraint:
+	 *     id=[IdentifiableElement|IDENTIFIER]
+	 */
+	protected void sequence_JSXIdentifier(ISerializationContext context, IdentifierRef semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.IDENTIFIER_REF__ID) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.IDENTIFIER_REF__ID));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getJSXIdentifierAccess().getIdIdentifiableElementIDENTIFIERTerminalRuleCall_0_1(), semanticObject.getId());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     JSXAttribute returns JSXPropertyAttribute
+	 *     JSXPropertyAttribute returns JSXPropertyAttribute
+	 *
+	 * Constraint:
+	 *     (property=[IdentifiableElement|IdentifierName] (jsxAttributeValue=StringLiteral | jsxAttributeValue=AssignmentExpression))
+	 */
+	protected void sequence_JSXPropertyAttribute(ISerializationContext context, JSXPropertyAttribute semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     JSXAttribute returns JSXSpreadAttribute
+	 *     JSXSpreadAttribute returns JSXSpreadAttribute
+	 *
+	 * Constraint:
+	 *     expression=AssignmentExpression
+	 */
+	protected void sequence_JSXSpreadAttribute(ISerializationContext context, JSXSpreadAttribute semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, N4JSXPackage.Literals.JSX_SPREAD_ATTRIBUTE__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSXPackage.Literals.JSX_SPREAD_ATTRIBUTE__EXPRESSION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getJSXSpreadAttributeAccess().getExpressionAssignmentExpressionParserRuleCall_2_0(), semanticObject.getExpression());
+		feeder.finish();
 	}
 	
 	
