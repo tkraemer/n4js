@@ -16,8 +16,8 @@ import org.eclipse.xtext.xtext.generator.model.project.*
 import eu.numberfour.n4js.generation.*
 
 var rootPath = ".."
-var runtimeProject = "eu.numberfour.n4js"
-var runtimeProjectPath = "${rootPath}/${runtimeProject}"
+var runtimeProjectName = "eu.numberfour.n4js"
+var runtimeProjectPath = "${rootPath}/${runtimeProjectName}"
 
 var skipUnusedRules = false
 var stripAllComments = true
@@ -30,7 +30,7 @@ Workflow {
 				rootPath = rootPath
 				genericIde = {
 					enabled = true
-					name = "${runtimeProject}.ui"
+					name = "${runtimeProjectName}.ui"
 					root = "${runtimeProjectPath}.ui"
 				}
 				eclipsePlugin = {
