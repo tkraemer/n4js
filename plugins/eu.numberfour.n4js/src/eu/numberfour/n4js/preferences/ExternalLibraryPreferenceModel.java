@@ -35,7 +35,7 @@ import eu.numberfour.n4js.utils.JsonPrettyPrinterFactory;
 /**
  * Represents an external library preference model.
  */
-@JsonInclude(content = JsonInclude.Include.NON_NULL)
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class ExternalLibraryPreferenceModel {
 
 	/**

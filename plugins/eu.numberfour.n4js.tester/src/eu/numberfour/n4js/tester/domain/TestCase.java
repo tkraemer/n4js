@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Class for representing a test case.
  */
 @JsonAutoDetect
-@JsonInclude(content = JsonInclude.Include.NON_NULL)
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class TestCase implements TestElement, Comparable<TestCase> {
 
 	@JsonProperty

@@ -30,7 +30,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 @Accessors
 @JsonIgnoreProperties(ignoreUnknown=true)
-@JsonInclude(content = JsonInclude.Include.NON_NULL)
+@JsonInclude(value=JsonInclude.Include.NON_NULL)
 class PackageJson {
 
 	/**
@@ -129,17 +129,8 @@ class PackageJson {
 
 	@Accessors
 	@JsonIgnoreProperties(ignoreUnknown=true)
-	@JsonInclude(content = JsonInclude.Include.NON_NULL)
+	@JsonInclude(value=JsonInclude.Include.NON_NULL)
 	static class Person {
-		new() {
-		}
-
-		new(String s) {
-			/* puchdb-find has empty string for author, i.e.
-			 * instead value being undef or null it is
-			 *   "author": "",
-			 */
-		}
 
 		var String name;
 		var String email;
@@ -150,7 +141,7 @@ class PackageJson {
 	override String toString() {
 		try {
 			val mapper = new ObjectMapper(new JsonPrettyPrinterFactory());
-			mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+			mapper.enable(SerializationFeature.INDENT_OUTPUT);
 			return mapper.writeValueAsString(this);
 		} catch (Exception e) {
 			throw new RuntimeException('''Error while serializing package.json: «this»''', e);
@@ -168,7 +159,7 @@ class PackageJson {
 	static def PackageJson readValue(URI packageLocation) {
 		try {
 			val mapper = new ObjectMapper(new JsonPrettyPrinterFactory());
-			mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+			mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 			return mapper.readValue(new File(packageLocation), PackageJson);
 		} catch (Exception e) {
 			throw new RuntimeException('''Error while reading package.json from «packageLocation».''', e);

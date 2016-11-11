@@ -40,7 +40,7 @@ import com.google.common.collect.Iterators;
  * Representation of a test suite.
  */
 @JsonAutoDetect
-@JsonInclude(content = JsonInclude.Include.NON_NULL)
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class TestSuite implements TestElement, Iterable<TestCase>, Comparable<TestSuite> {
 
 	@JsonProperty

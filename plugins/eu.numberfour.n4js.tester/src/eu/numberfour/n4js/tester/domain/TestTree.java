@@ -36,7 +36,7 @@ import com.google.common.collect.ImmutableList;
  * Representation of a test tree.
  */
 @JsonAutoDetect
-@JsonInclude(content = JsonInclude.Include.NON_NULL)
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class TestTree implements TestElement, Iterable<TestCase> {
 
 	private List<TestSuite> suites = newArrayList();

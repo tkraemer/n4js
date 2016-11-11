@@ -148,7 +148,7 @@ public class DefaultTestTreeTransformer implements TestTreeTransformer {
 	 * Transformed representation of the test tree.
 	 */
 	@JsonAutoDetect
-	@JsonInclude(content = JsonInclude.Include.NON_NULL)
+	@JsonInclude(value = JsonInclude.Include.NON_NULL)
 	protected static final class MTestTree {
 
 		private static final String PORT_KEY = "port";
@@ -176,7 +176,7 @@ public class DefaultTestTreeTransformer implements TestTreeTransformer {
 	 * Representation of a test descriptor that complies Mangelhaft.
 	 */
 	@JsonAutoDetect
-	@JsonInclude(content = JsonInclude.Include.NON_NULL)
+	@JsonInclude(value = JsonInclude.Include.NON_NULL)
 	protected static final class MTestDescriptor implements Comparable<MTestDescriptor> {
 		@JsonProperty
 		private String origin;

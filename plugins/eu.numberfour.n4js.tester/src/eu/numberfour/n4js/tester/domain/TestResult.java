@@ -23,7 +23,7 @@ import com.google.common.collect.ImmutableList;
  * Class for representing a result (as an outcome) of a particular test.
  */
 @JsonAutoDetect
-@JsonInclude(content = JsonInclude.Include.NON_NULL)
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class TestResult implements Cloneable {
 
 	@JsonProperty

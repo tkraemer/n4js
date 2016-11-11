@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 /**
  * Jackson - DataObject. Used for serializing to Json.
  */
-@JsonInclude(content = JsonInclude.Include.NON_NULL)
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class PackageJsonData {
 
 	@JsonProperty

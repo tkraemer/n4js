@@ -51,7 +51,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 @Accessors
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(content = JsonInclude.Include.NON_NULL)
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 class TargetPlatformModel {
 
 	/** The file extension (without the '.') of the N4 target platform file */
@@ -75,7 +75,7 @@ class TargetPlatformModel {
 
 	@Accessors
 	@JsonIgnoreProperties(ignoreUnknown = true)
-	@JsonInclude(content = JsonInclude.Include.NON_NULL)
+	@JsonInclude(value = JsonInclude.Include.NON_NULL)
 	static class Location {
 		var Config config;
 		var RepositoryType repoType;
@@ -84,7 +84,7 @@ class TargetPlatformModel {
 
 	@Accessors
 	@JsonIgnoreProperties(ignoreUnknown = true)
-	@JsonInclude(content = JsonInclude.Include.NON_NULL)
+	@JsonInclude(value = JsonInclude.Include.NON_NULL)
 	static class Config extends HashMap<String, Object> {
 
 		new() {
@@ -95,7 +95,7 @@ class TargetPlatformModel {
 
 	@Accessors
 	@JsonIgnoreProperties(ignoreUnknown = true)
-	@JsonInclude(content = JsonInclude.Include.NON_NULL)
+	@JsonInclude(value = JsonInclude.Include.NON_NULL)
 	static class Projects extends HashMap<String, ProjectProperties> {
 
 		new() {
@@ -106,7 +106,7 @@ class TargetPlatformModel {
 
 	@Accessors
 	@JsonIgnoreProperties(ignoreUnknown = true)
-	@JsonInclude(content = JsonInclude.Include.NON_NULL)
+	@JsonInclude(value = JsonInclude.Include.NON_NULL)
 	static class ProjectProperties {
 		var String version;
 	}
