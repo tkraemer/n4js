@@ -51,9 +51,13 @@ JSXChild:
 ;
 
 JSXElementName:
-	identifierRef=JSXIdentifier
-	//	| JSXNamedspacedName
-	//	| JSXMemberExpression
+	expression=JSXElementNameExpression
+	;
+
+JSXElementNameExpression returns n4js::Expression:
+	IdentifierRef<false>
+	({n4js::ParameterizedPropertyAccessExpression.target=current} ParameterizedPropertyAccessExpressionTail<false>)*
+	//	| JSXNamedspacedName not supported
 ;
 
 JSXIdentifier returns n4js::IdentifierRef:
@@ -76,7 +80,7 @@ JSXSpreadAttribute:
 	'{' '...' expression=AssignmentExpression<false,false> '}';
 
 JSXPropertyAttribute:
-// or JSXNamespacedName
+// or JSXNamespacedName -- not supported
 	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | ('{'
 	jsxAttributeValue=AssignmentExpression<false,false> '}'));
 

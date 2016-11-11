@@ -7,8 +7,7 @@
  */
 package eu.numberfour.n4jsx.n4JSX.impl;
 
-import eu.numberfour.n4js.n4JS.IdentifierRef;
-
+import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
 
 import eu.numberfour.n4jsx.n4JSX.JSXElementName;
@@ -30,22 +29,21 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4jsx.n4JSX.impl.JSXElementNameImpl#getIdentifierRef <em>Identifier Ref</em>}</li>
+ *   <li>{@link eu.numberfour.n4jsx.n4JSX.impl.JSXElementNameImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class JSXElementNameImpl extends ProxyResolvingEObjectImpl implements JSXElementName {
 	/**
-	 * The cached value of the '{@link #getIdentifierRef() <em>Identifier Ref</em>}' containment reference.
+	 * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getIdentifierRef()
+	 * @see #getExpression()
 	 * @generated
 	 * @ordered
 	 */
-	protected IdentifierRef identifierRef;
-
+	protected Expression expression;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -70,8 +68,8 @@ public class JSXElementNameImpl extends ProxyResolvingEObjectImpl implements JSX
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IdentifierRef getIdentifierRef() {
-		return identifierRef;
+	public Expression getExpression() {
+		return expression;
 	}
 
 	/**
@@ -79,11 +77,11 @@ public class JSXElementNameImpl extends ProxyResolvingEObjectImpl implements JSX
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetIdentifierRef(IdentifierRef newIdentifierRef, NotificationChain msgs) {
-		IdentifierRef oldIdentifierRef = identifierRef;
-		identifierRef = newIdentifierRef;
+	public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
+		Expression oldExpression = expression;
+		expression = newExpression;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, N4JSXPackage.JSX_ELEMENT_NAME__IDENTIFIER_REF, oldIdentifierRef, newIdentifierRef);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, N4JSXPackage.JSX_ELEMENT_NAME__EXPRESSION, oldExpression, newExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -94,18 +92,18 @@ public class JSXElementNameImpl extends ProxyResolvingEObjectImpl implements JSX
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setIdentifierRef(IdentifierRef newIdentifierRef) {
-		if (newIdentifierRef != identifierRef) {
+	public void setExpression(Expression newExpression) {
+		if (newExpression != expression) {
 			NotificationChain msgs = null;
-			if (identifierRef != null)
-				msgs = ((InternalEObject)identifierRef).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - N4JSXPackage.JSX_ELEMENT_NAME__IDENTIFIER_REF, null, msgs);
-			if (newIdentifierRef != null)
-				msgs = ((InternalEObject)newIdentifierRef).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - N4JSXPackage.JSX_ELEMENT_NAME__IDENTIFIER_REF, null, msgs);
-			msgs = basicSetIdentifierRef(newIdentifierRef, msgs);
+			if (expression != null)
+				msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - N4JSXPackage.JSX_ELEMENT_NAME__EXPRESSION, null, msgs);
+			if (newExpression != null)
+				msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - N4JSXPackage.JSX_ELEMENT_NAME__EXPRESSION, null, msgs);
+			msgs = basicSetExpression(newExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSXPackage.JSX_ELEMENT_NAME__IDENTIFIER_REF, newIdentifierRef, newIdentifierRef));
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSXPackage.JSX_ELEMENT_NAME__EXPRESSION, newExpression, newExpression));
 	}
 
 	/**
@@ -116,8 +114,8 @@ public class JSXElementNameImpl extends ProxyResolvingEObjectImpl implements JSX
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case N4JSXPackage.JSX_ELEMENT_NAME__IDENTIFIER_REF:
-				return basicSetIdentifierRef(null, msgs);
+			case N4JSXPackage.JSX_ELEMENT_NAME__EXPRESSION:
+				return basicSetExpression(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -130,8 +128,8 @@ public class JSXElementNameImpl extends ProxyResolvingEObjectImpl implements JSX
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case N4JSXPackage.JSX_ELEMENT_NAME__IDENTIFIER_REF:
-				return getIdentifierRef();
+			case N4JSXPackage.JSX_ELEMENT_NAME__EXPRESSION:
+				return getExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -144,8 +142,8 @@ public class JSXElementNameImpl extends ProxyResolvingEObjectImpl implements JSX
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case N4JSXPackage.JSX_ELEMENT_NAME__IDENTIFIER_REF:
-				setIdentifierRef((IdentifierRef)newValue);
+			case N4JSXPackage.JSX_ELEMENT_NAME__EXPRESSION:
+				setExpression((Expression)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -159,8 +157,8 @@ public class JSXElementNameImpl extends ProxyResolvingEObjectImpl implements JSX
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case N4JSXPackage.JSX_ELEMENT_NAME__IDENTIFIER_REF:
-				setIdentifierRef((IdentifierRef)null);
+			case N4JSXPackage.JSX_ELEMENT_NAME__EXPRESSION:
+				setExpression((Expression)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -174,8 +172,8 @@ public class JSXElementNameImpl extends ProxyResolvingEObjectImpl implements JSX
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case N4JSXPackage.JSX_ELEMENT_NAME__IDENTIFIER_REF:
-				return identifierRef != null;
+			case N4JSXPackage.JSX_ELEMENT_NAME__EXPRESSION:
+				return expression != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -655,17 +655,17 @@ ruleJSXElementName returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getJSXElementNameAccess().getIdentifierRefJSXIdentifierParserRuleCall_0()); 
+	        newCompositeNode(grammarAccess.getJSXElementNameAccess().getExpressionJSXElementNameExpressionParserRuleCall_0()); 
 	    }
-		lv_identifierRef_0_0=ruleJSXIdentifier		{
+		lv_expression_0_0=ruleJSXElementNameExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getJSXElementNameRule());
 	        }
        		set(
        			$current, 
-       			"identifierRef",
-        		lv_identifierRef_0_0, 
-        		"eu.numberfour.n4jsx.N4JSX.JSXIdentifier");
+       			"expression",
+        		lv_expression_0_0, 
+        		"eu.numberfour.n4jsx.N4JSX.JSXElementNameExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -677,35 +677,51 @@ ruleJSXElementName returns [EObject current=null]
 
 
 
-// Entry rule entryRuleJSXIdentifier
-entryRuleJSXIdentifier returns [EObject current=null]
+// Entry rule entryRuleJSXElementNameExpression
+entryRuleJSXElementNameExpression returns [EObject current=null]
 	:
-	{ newCompositeNode(grammarAccess.getJSXIdentifierRule()); }
-	 iv_ruleJSXIdentifier=ruleJSXIdentifier 
-	 { $current=$iv_ruleJSXIdentifier.current; } 
+	{ newCompositeNode(grammarAccess.getJSXElementNameExpressionRule()); }
+	 iv_ruleJSXElementNameExpression=ruleJSXElementNameExpression 
+	 { $current=$iv_ruleJSXElementNameExpression.current; } 
 	 EOF 
 ;
 
-// Rule JSXIdentifier
-ruleJSXIdentifier returns [EObject current=null] 
+// Rule JSXElementNameExpression
+ruleJSXElementNameExpression returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
 (
-(
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getJSXIdentifierRule());
-	        }
-        }
-	otherlv_0=RULE_IDENTIFIER
-	{
-		newLeafNode(otherlv_0, grammarAccess.getJSXIdentifierAccess().getIdIdentifiableElementCrossReference_0()); 
-	}
-
+    { 
+        newCompositeNode(grammarAccess.getJSXElementNameExpressionAccess().getIdentifierRefParserRuleCall_0()); 
+    }
+    this_IdentifierRef_0=ruleIdentifierRef
+    {
+        $current = $this_IdentifierRef_0.current;
+        afterParserOrEnumRuleCall();
+    }
+((
+    {
+        $current = forceCreateModelElementAndSet(
+            grammarAccess.getJSXElementNameExpressionAccess().getParameterizedPropertyAccessExpressionTargetAction_1_0(),
+            $current);
+    }
 )
-)
+    { 
+		if ($current==null) {
+			$current = createModelElement(grammarAccess.getJSXElementNameExpressionRule());
+		}
+        newCompositeNode(grammarAccess.getJSXElementNameExpressionAccess().getParameterizedPropertyAccessExpressionTailParserRuleCall_1_1()); 
+    }
+    this_ParameterizedPropertyAccessExpressionTail_2=ruleParameterizedPropertyAccessExpressionTail[$current]
+    {
+        $current = $this_ParameterizedPropertyAccessExpressionTail_2.current;
+        afterParserOrEnumRuleCall();
+    }
+)*)
 ;
+
+
 
 
 

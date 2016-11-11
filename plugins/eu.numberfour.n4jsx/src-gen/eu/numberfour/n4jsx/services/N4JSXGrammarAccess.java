@@ -241,21 +241,48 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class JSXElementNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4jsx.N4JSX.JSXElementName");
-		private final Assignment cIdentifierRefAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cIdentifierRefJSXIdentifierParserRuleCall_0 = (RuleCall)cIdentifierRefAssignment.eContents().get(0);
+		private final Assignment cExpressionAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cExpressionJSXElementNameExpressionParserRuleCall_0 = (RuleCall)cExpressionAssignment.eContents().get(0);
 		
 		//JSXElementName:
-		//	identifierRef=JSXIdentifier
-		//	//	| JSXNamedspacedName
-		//	//	| JSXMemberExpression
-		//;
+		//	expression=JSXElementNameExpression;
 		@Override public ParserRule getRule() { return rule; }
 
-		//identifierRef=JSXIdentifier
-		public Assignment getIdentifierRefAssignment() { return cIdentifierRefAssignment; }
+		//expression=JSXElementNameExpression
+		public Assignment getExpressionAssignment() { return cExpressionAssignment; }
 
-		//JSXIdentifier
-		public RuleCall getIdentifierRefJSXIdentifierParserRuleCall_0() { return cIdentifierRefJSXIdentifierParserRuleCall_0; }
+		//JSXElementNameExpression
+		public RuleCall getExpressionJSXElementNameExpressionParserRuleCall_0() { return cExpressionJSXElementNameExpressionParserRuleCall_0; }
+	}
+
+	public class JSXElementNameExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4jsx.N4JSX.JSXElementNameExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cIdentifierRefParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cParameterizedPropertyAccessExpressionTargetAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final RuleCall cParameterizedPropertyAccessExpressionTailParserRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		
+		//JSXElementNameExpression n4js::Expression:
+		//	IdentifierRef<false> ({n4js::ParameterizedPropertyAccessExpression.target=current}
+		//	ParameterizedPropertyAccessExpressionTail<false>)*
+		@Override public ParserRule getRule() { return rule; }
+
+		//IdentifierRef<false> ({n4js::ParameterizedPropertyAccessExpression.target=current}
+		//ParameterizedPropertyAccessExpressionTail<false>)*
+		public Group getGroup() { return cGroup; }
+
+		//IdentifierRef<false>
+		public RuleCall getIdentifierRefParserRuleCall_0() { return cIdentifierRefParserRuleCall_0; }
+
+		//({n4js::ParameterizedPropertyAccessExpression.target=current} ParameterizedPropertyAccessExpressionTail<false>)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{n4js::ParameterizedPropertyAccessExpression.target=current}
+		public Action getParameterizedPropertyAccessExpressionTargetAction_1_0() { return cParameterizedPropertyAccessExpressionTargetAction_1_0; }
+
+		//ParameterizedPropertyAccessExpressionTail<false>
+		public RuleCall getParameterizedPropertyAccessExpressionTailParserRuleCall_1_1() { return cParameterizedPropertyAccessExpressionTailParserRuleCall_1_1; }
 	}
 
 	public class JSXIdentifierElements extends AbstractParserRuleElementFinder {
@@ -423,6 +450,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	private final JSXClosingElementElements pJSXClosingElement;
 	private final JSXChildElements pJSXChild;
 	private final JSXElementNameElements pJSXElementName;
+	private final JSXElementNameExpressionElements pJSXElementNameExpression;
 	private final JSXIdentifierElements pJSXIdentifier;
 	private final JSXAttributesElements pJSXAttributes;
 	private final JSXAttributeElements pJSXAttribute;
@@ -452,6 +480,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		this.pJSXClosingElement = new JSXClosingElementElements();
 		this.pJSXChild = new JSXChildElements();
 		this.pJSXElementName = new JSXElementNameElements();
+		this.pJSXElementNameExpression = new JSXElementNameExpressionElements();
 		this.pJSXIdentifier = new JSXIdentifierElements();
 		this.pJSXAttributes = new JSXAttributesElements();
 		this.pJSXAttribute = new JSXAttributeElements();
@@ -554,16 +583,24 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//JSXElementName:
-	//	identifierRef=JSXIdentifier
-	//	//	| JSXNamedspacedName
-	//	//	| JSXMemberExpression
-	//;
+	//	expression=JSXElementNameExpression;
 	public JSXElementNameElements getJSXElementNameAccess() {
 		return pJSXElementName;
 	}
 	
 	public ParserRule getJSXElementNameRule() {
 		return getJSXElementNameAccess().getRule();
+	}
+
+	//JSXElementNameExpression n4js::Expression:
+	//	IdentifierRef<false> ({n4js::ParameterizedPropertyAccessExpression.target=current}
+	//	ParameterizedPropertyAccessExpressionTail<false>)*
+	public JSXElementNameExpressionElements getJSXElementNameExpressionAccess() {
+		return pJSXElementNameExpression;
+	}
+	
+	public ParserRule getJSXElementNameExpressionRule() {
+		return getJSXElementNameExpressionAccess().getRule();
 	}
 
 	//JSXIdentifier n4js::IdentifierRef:

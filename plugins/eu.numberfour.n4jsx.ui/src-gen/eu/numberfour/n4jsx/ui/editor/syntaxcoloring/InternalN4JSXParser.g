@@ -256,7 +256,7 @@ ruleJSXElementName
     }:
 (
 (
-	IdentifierRefJSXIdentifierParserRuleCall_0=ruleJSXIdentifier { announce($IdentifierRefJSXIdentifierParserRuleCall_0.start, $IdentifierRefJSXIdentifierParserRuleCall_0.stop, grammarAccess.getJSXElementNameAccess().getIdentifierRefAssignment()); }
+	ExpressionJSXElementNameExpressionParserRuleCall_0=ruleJSXElementNameExpression { announce($ExpressionJSXElementNameExpressionParserRuleCall_0.start, $ExpressionJSXElementNameExpressionParserRuleCall_0.stop, grammarAccess.getJSXElementNameAccess().getExpressionAssignment()); }
 )
 )
 ;
@@ -265,24 +265,23 @@ ruleJSXElementName
 
 
 
-// Entry rule entryRuleJSXIdentifier
-entryRuleJSXIdentifier
+// Entry rule entryRuleJSXElementNameExpression
+entryRuleJSXElementNameExpression
 	:
-	ruleJSXIdentifier 
+	ruleJSXElementNameExpression 
 	EOF 
 ;
 
-// Rule JSXIdentifier
-ruleJSXIdentifier 
+// Rule JSXElementNameExpression
+ruleJSXElementNameExpression 
     @init {
     }:
-(
-(
-	IdIdentifiableElementIDENTIFIERTerminalRuleCall_0_1=RULE_IDENTIFIER { announce($IdIdentifiableElementIDENTIFIERTerminalRuleCall_0_1, grammarAccess.getJSXIdentifierAccess().getIdAssignment()); }
-
-)
-)
+(	IdentifierRefParserRuleCall_0=ruleIdentifierRef		{ announce($IdentifierRefParserRuleCall_0.start, $IdentifierRefParserRuleCall_0.stop, grammarAccess.getJSXElementNameExpressionAccess().getIdentifierRefParserRuleCall_0()); }
+(	ParameterizedPropertyAccessExpressionTailParserRuleCall_1_1=ruleParameterizedPropertyAccessExpressionTail		{ announce($ParameterizedPropertyAccessExpressionTailParserRuleCall_1_1.start, $ParameterizedPropertyAccessExpressionTailParserRuleCall_1_1.stop, grammarAccess.getJSXElementNameExpressionAccess().getParameterizedPropertyAccessExpressionTailParserRuleCall_1_1()); }
+)*)
 ;
+
+
 
 
 
