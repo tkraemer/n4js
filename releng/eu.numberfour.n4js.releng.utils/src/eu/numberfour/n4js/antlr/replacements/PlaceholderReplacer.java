@@ -12,22 +12,24 @@ package eu.numberfour.n4js.antlr.replacements;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.google.common.base.Charsets;
-import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
 
 /**
  * Utility class to translate search-and-replace patterns into regex and apply them. Both 'search' and 'replace' strings
- * can contain place-holders. Place-holders are identifier surrounded by double asterisks, e.g. **al1**.
- *
- * Working with place-holders instead of using RegEx directly provides the advantage that larger 'search' and 'replace'
- * strings do not need to be RegEx-escaped manually.
- *
- * @author Moritz Eysholdt
+ * can contain regular expressions, encapsulated in two hash characters ('##'). Everything outside is quoted. Working
+ * with place-holders instead of using RegEx directly provides the advantage that larger 'search' and 'replace' strings
+ * do not need to be RegEx-escaped manually.
+ * <p>
+ * Typical usage:
+ * <ol>
+ * <li>Named group with back reference: <code>....##(?<a1>\w+)##...##\k<a1>##...</code>, replace with
+ * <code>...##${a1}##...</code></li>
+ * </ol>
+ * Note: Using single backslashes since pattern is loaded from file.
  */
 public class PlaceholderReplacer {
 
@@ -39,26 +41,17 @@ public class PlaceholderReplacer {
 	/**
 	 * Syntax for place-holders as defined in *.template files.
 	 */
-	private final static Pattern PLACEHOLDER_PATTERN = Pattern.compile("\\*\\*([a-zA-Z0-9]+)\\*\\*");
-
-	private final Pattern searchPattern;
-	private final String replacement;
-	private final String source;
+	private final static Pattern PLACEHOLDER_PATTERN = Pattern.compile("##([^#]+)##");
 
 	/**
-	 * A lightweight way to try out this class.
+	 * Package visible for testing
 	 */
-	public static void main(String[] args) {
-		try {
-			// expected: -AmB-
-			System.out.println(new PlaceholderReplacer("X**a1**Y", "A**a1**B").replaceExactlyOnce("-XmY-"));
-
-			System.out.println(new PlaceholderReplacer("rulePrimaryExpression.java.replacement"));
-			System.out.println(new PlaceholderReplacer("ruleNoLineTerminator.java.replacement"));
-		} catch (Throwable t) {
-			t.printStackTrace();
-		}
-	}
+	final Pattern searchPattern;
+	/**
+	 * Package visible for testing
+	 */
+	final String replacement;
+	private final String source;
 
 	/**
 	 * Load 'search' and 'replace' strings from a file from this class' directory.
@@ -75,54 +68,41 @@ public class PlaceholderReplacer {
 		String[] split = fileContents.split(SEPARATOR);
 		String searchString = split[0];
 		String replacementString = split[1];
-		Map<String, Integer> placeholderNameToIndex = Maps.newHashMap();
-		this.searchPattern = createPattern(searchString, placeholderNameToIndex);
-		this.replacement = createReplace(replacementString, placeholderNameToIndex);
-
+		this.searchPattern = createPattern(searchString);
+		this.replacement = createReplace(replacementString);
 	}
 
 	/**
-	 * A lightweight way to try this class without the need to create files.
+	 * Only used in tests.
 	 */
-	public PlaceholderReplacer(String searchString, String replacementString) {
+	PlaceholderReplacer(String searchString, String replacementString) {
 		this.source = "(dummy)";
-		Map<String, Integer> placeholderNameToIndex = Maps.newHashMap();
-		this.searchPattern = createPattern(searchString, placeholderNameToIndex);
-		this.replacement = createReplace(replacementString, placeholderNameToIndex);
+		this.searchPattern = createPattern(searchString);
+		this.replacement = createReplace(replacementString);
 	}
 
-	private Pattern createPattern(String match, Map<String, Integer> placeholderNameToIndex) {
+	private Pattern createPattern(String match) {
 		Matcher matcher = PLACEHOLDER_PATTERN.matcher(match);
 		int lastOffset = 0;
 		StringBuilder result = new StringBuilder();
-		int matchGroupIndex = 1;
 		while (matcher.find()) {
 			result.append(Pattern.quote(match.substring(lastOffset, matcher.start())));
-			result.append("([a-zA-Z0-9]+)");
-			String placeholderName = matcher.group(1);
-			if (!placeholderNameToIndex.containsKey(placeholderName)) {
-				placeholderNameToIndex.put(placeholderName, matchGroupIndex);
-			}
-			matchGroupIndex++;
+			String regEx = matcher.group(1);
+			result.append(regEx);
 			lastOffset = matcher.end();
 		}
 		result.append(Pattern.quote(match.substring(lastOffset)));
 		return Pattern.compile(result.toString());
 	}
 
-	private String createReplace(String match, Map<String, Integer> placeholderNameToIndex) {
+	private String createReplace(String match) {
 		Matcher matcher = PLACEHOLDER_PATTERN.matcher(match);
 		int lastOffset = 0;
 		StringBuilder result = new StringBuilder();
 		while (matcher.find()) {
 			result.append(Matcher.quoteReplacement(match.substring(lastOffset, matcher.start())));
-			String placeholderName = matcher.group(1);
-			Integer index = placeholderNameToIndex.get(placeholderName);
-			if (index == null) {
-				String msg = "Named placeholder '" + placeholderName + "' does not appear in match pattern";
-				throw new IllegalStateException(msg);
-			}
-			result.append("$" + index);
+			String regEx = matcher.group(1);
+			result.append(regEx);
 			lastOffset = matcher.end();
 		}
 		result.append(Matcher.quoteReplacement(match.substring(lastOffset)));

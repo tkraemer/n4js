@@ -32,9 +32,9 @@ public final EObject rulePrimaryExpression() throws RecognitionException {
             
         try {
             {
-            int **alt1**=13;
-            **alt1** = **dfa1**.predict(input);
-            switch (**alt1**) {
+            int ##(?<alt>\w+)##=13;
+            ##\k<alt>## = ##(?<dfa>\w+)##.predict(input);
+            switch (##\k<alt>##) {
                 case 1 :
 _________________________________REPLACE_WITH_________________________________
 public final EObject rulePrimaryExpression() throws RecognitionException {
@@ -68,15 +68,15 @@ public final EObject rulePrimaryExpression() throws RecognitionException {
          enterRule(); 
         try { 
         	{
-            int **alt1**=13;
+            int ##${alt}##=13;
             // REPLACEMENT rulePrimaryExpression.java.replacement START
             try {
-                **alt1** = **dfa1**.predict(input);
+                ##${alt}## = ##${dfa}##.predict(input);
             } catch (NoViableAltException re) {
             	int as = input.LA(1);
-            	if (as==Async) { **alt1**=3; }
+            	if (as==Async) { ##${alt}##=3; }
             	else throw re;
             }
             // REPLACEMENT rulePrimaryExpression.java.replacement END
-            switch (**alt1**) {
+            switch (##${alt}##) {
                 case 1 : 
