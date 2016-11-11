@@ -1034,8 +1034,6 @@ from {
 	// note: keep this rule aligned with rules typeN4FieldDeclaration and typePropertyNameValuePair
 	if (vdecl.declaredTypeRef !== null) {
 		T = vdecl.declaredTypeRef
-	} else if (AnnotationDefinition.UNDEFINED.hasAnnotation(vdecl)) {
-		T = G.undefinedTypeRef
 	} else if(vdecl.eContainer instanceof BindingElement) {
 		// guard against infinite recursion, e.g. for vars like this:
 		// var [a,b] = b; / var {a,b} = b;

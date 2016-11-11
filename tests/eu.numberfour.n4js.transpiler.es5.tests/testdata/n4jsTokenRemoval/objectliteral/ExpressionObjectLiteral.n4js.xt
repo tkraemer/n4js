@@ -16,14 +16,14 @@ stderr:
 
 
 console.log({ 
-			@Undefined string foo:'foo',
-			@Undefined number bar : 3,
-			@Undefined fn: function <S extends Object, T, P> someInitExpr(s : S, t : T,p : P, a, n : number?, ... vas : string) : number {
+			string foo:'foo',
+			number bar : 3,
+			fn: function <S extends Object, T, P> someInitExpr(s : S, t : T,p : P, a, n : number?, ... vas : string) : number {
 				return (s+t+p+a+n+vas).length
 			},
-			@Undefined {function (any , any ,any ,any , number? , ...string ):number} fn2: function sd(s : any, t : any,p : any,a : any, n : number?, ... vas : string) {
+			{function (any , any ,any ,any , number? , ...string ):number} fn2: function sd(s : any, t : any,p : any,a : any, n : number?, ... vas : string) {
 				return (s+t+p+a+n+vas).length
 			},
-			@Undefined get fng(): {function (s: any, t: any,p: any,a: any, n: number?, ...vas: string):any} { return null;},
-			@Undefined set fns(pfns : {function (s: any, t: any, p: any, a: any, n: number?, ...vas: string ):any}){/*this.fn = null;*/}
-		})
+			get fng(): {function (s: any, t: any,p: any,a: any, n: number?, ...vas: string):any} { return null;},
+			set fns(pfns : {function (s: any, t: any, p: any, a: any, n: number?, ...vas: string ):any}){/*this.fn = null;*/}
+		});
