@@ -200,6 +200,16 @@ abstract class TypeRef extends TypeArgument {
 	op boolean isDefSiteStructuralTyping() {
 		return false
 	}
+	
+	/*
+	 * The version of the type as specified by the reference, this is only available in languages derived from N4JS.
+	 * Note that this is the declared version of the reference, not of the declared type itself! By default, 0 is
+	 * returned which means that no specific version is requested.
+	 */
+	op int getReferencedVersion() { 
+		return 0;
+	}
+	
 }
 
 abstract class StaticBaseTypeRef extends TypeRef {
@@ -511,6 +521,27 @@ class ParameterizedTypeRef extends BaseTypeRef {
 			return true;
 		}
 		return false
+	}
+}
+
+/*
+ * Type reference with explicitly defined version. 
+ */
+class ParameterizedTypeRefWithVersion extends ParameterizedTypeRef {
+	/*
+	 * The declared version of the reference, this is only available in languages derived from N4JS.
+	 * Note that this is the declared version of the reference, not of the declared type itself!
+	 */
+	BigDecimal declaredVersion
+	
+	/**
+	 * Overrides method declared in TypeRef, returns the declared version instead of the default value.
+	 */
+	op int getReferencedVersion() {
+		if (declaredVersion===null) {
+			return 0;
+		}
+		return declaredVersion.intValue;
 	}
 }
 

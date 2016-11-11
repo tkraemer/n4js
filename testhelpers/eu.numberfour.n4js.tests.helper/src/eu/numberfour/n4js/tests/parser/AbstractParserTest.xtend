@@ -22,20 +22,21 @@ import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.junit.Assert
 import org.junit.runner.RunWith
+import eu.numberfour.n4js.n4JS.Script
 
 @RunWith(XtextRunner)
 @InjectWith(N4JSInjectorProvider)
-abstract class AbstractParserTest extends Assert {
+public abstract class AbstractParserTest extends Assert {
 	@Inject
 	protected extension N4JSParseHelper
 
-	def parseSuccessfully(CharSequence js) {
+	protected def Script parseSuccessfully(CharSequence js) {
 		val script = js.parseUnrestricted
 		assertTrue(script.eResource.errors.join('\n') [ line + ': ' + message] , script.eResource.errors.empty)
 		return script
 	}
 
-	def parseWithError(CharSequence js) {
+	protected def parseWithError(CharSequence js) {
 		val script = js.parseUnrestricted
 		assertFalse(script.eResource.errors.toString, script.eResource.errors.empty)
 		return script
