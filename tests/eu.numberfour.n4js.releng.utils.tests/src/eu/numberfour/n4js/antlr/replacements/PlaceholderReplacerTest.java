@@ -45,24 +45,31 @@ public class PlaceholderReplacerTest {
 		assertNotFound("-XmYnZ-", "X##(?<a1>\\w+)##Y##\\k<a1>##Z");
 	}
 
-	@Test
-	public void testRealWorld1() throws IOException {
+	@Test(timeout = 1000)
+	public void testRealWorld() throws IOException {
 		String testBase = Replacements.class.getPackage().getName().replace(".", "/");
-		String in = Resources.toString(Resources.getResource(testBase + "/" + "replacerIn.txt"), Charsets.UTF_8);
-		String repPattern = Resources.toString(Resources.getResource(testBase + "/" + "simplePattern.txt"),
-				Charsets.UTF_8);
-		PlaceholderReplacer pr = new PlaceholderReplacer(repPattern, "");
-		Pattern pattern = pr.searchPattern;
-		Matcher matcher = pattern.matcher(in);
-		assertTrue("Pattern not found", matcher.find());
+		for (int i = 1; i <= 2; i++) {
+			String testFilePrefix = testBase + "/pattern_" + i;
+			String in = Resources.toString(Resources.getResource(testFilePrefix + "_in.txt"), Charsets.UTF_8)
+					.replace("\r\n", "\n");
+			String repPattern = Resources.toString(Resources.getResource(testFilePrefix + ".txt"), Charsets.UTF_8)
+					.replace("\r\n", "\n");
+			PlaceholderReplacer pr = new PlaceholderReplacer(repPattern, "");
+			Pattern pattern = pr.searchPattern;
+			Matcher matcher = pattern.matcher(in);
+			assertTrue(testFilePrefix + " failed, not found", matcher.find());
+		}
 	}
 
-	// Only used for quick test after modifying the replacements
+	// Only used for quick test after modifying the replacements, tests only
+	// search!
 	// @Test
 	public void testReplacementSyntax() throws IOException {
-		new PlaceholderReplacer("ruleSemi.g.replacement");
-		new PlaceholderReplacer("ruleNoLineTerminator.java.replacement");
-		new PlaceholderReplacer("rulePrimaryExpression.java.replacement");
+		for (String s : new String[] { "ruleSemi.g.replacement", "ruleNoLineTerminator.java.replacement",
+				"rulePrimaryExpression.java.replacement" }) {
+			new PlaceholderReplacer(s);
+		}
+
 	}
 
 	void assertReplacement(String expectedOutput, String in, String pattern, String replacement) {
