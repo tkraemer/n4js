@@ -232,11 +232,21 @@ Contributors:
 								<mainClass>org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher</mainClass>
 								<arguments>
 									<argument>file://${project.basedir}${mwe2-file-location}</argument>
+									
+									<!-- for workflows based onGenerator (old) -->
 									<argument>
 										-p
 									</argument>
 									<argument>
 										runtimeProject=/${project.basedir}
+									</argument>
+									
+									<!-- for workflows based on XtextGenerator (new) -->
+									<argument>
+										-p
+									</argument>
+									<argument>
+										rootPath=/${project.basedir}/../
 									</argument>
 								</arguments>
 								<!-- Following switch:
