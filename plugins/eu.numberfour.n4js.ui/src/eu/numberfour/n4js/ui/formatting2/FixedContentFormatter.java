@@ -31,7 +31,9 @@ public class FixedContentFormatter extends ContentFormatter {
 	@Override
 	protected TextEdit createTextEdit(List<ITextReplacement> replacements) {
 		if (replacements.isEmpty()) {
-			return new ReplaceEdit(0, 0, "");
+			// return new ReplaceEdit(0, 0, "");
+			return null; // Return null, otherwise even if there are no changes, e.g. formatting, editor is in dirty
+							// state
 		}
 		ITextRegionAccess regionAccess = replacements.get(0).getTextRegionAccess();
 		String newDocument = regionAccess.getRewriter().renderToString(replacements);
