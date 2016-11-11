@@ -353,4 +353,18 @@ public interface TypeRef extends TypeArgument {
 	 */
 	boolean isDefSiteStructuralTyping();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The version of the type as specified by the reference, this is only available in languages derived from N4JS.
+	 * Note that this is the declared version of the reference, not of the declared type itself! By default, 0 is
+	 * returned which means that no specific version is requested.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return 0;'"
+	 * @generated
+	 */
+	int getReferencedVersion();
+
 } // TypeRef
