@@ -63,7 +63,13 @@ ruleJSXClosingElement :
 
 // Rule JSXChild
 ruleJSXChild :
-	ruleJSXElement
+	ruleJSXElement |
+	ruleJSXExpression
+;
+
+// Rule JSXExpression
+ruleJSXExpression :
+	'{' ruleAssignmentExpression '}'
 ;
 
 // Rule JSXElementName

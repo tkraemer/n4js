@@ -204,6 +204,43 @@ public interface N4JSXPackage extends EPackage {
 	int JSX_TEXT_OPERATION_COUNT = JSX_CHILD_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link eu.numberfour.n4jsx.n4JSX.impl.JSXExpressionImpl <em>JSX Expression</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see eu.numberfour.n4jsx.n4JSX.impl.JSXExpressionImpl
+	 * @see eu.numberfour.n4jsx.n4JSX.impl.N4JSXPackageImpl#getJSXExpression()
+	 * @generated
+	 */
+	int JSX_EXPRESSION = 3;
+
+	/**
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JSX_EXPRESSION__EXPRESSION = JSX_CHILD_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>JSX Expression</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JSX_EXPRESSION_FEATURE_COUNT = JSX_CHILD_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>JSX Expression</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JSX_EXPRESSION_OPERATION_COUNT = JSX_CHILD_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link eu.numberfour.n4jsx.n4JSX.impl.JSXElementNameImpl <em>JSX Element Name</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -211,7 +248,7 @@ public interface N4JSXPackage extends EPackage {
 	 * @see eu.numberfour.n4jsx.n4JSX.impl.N4JSXPackageImpl#getJSXElementName()
 	 * @generated
 	 */
-	int JSX_ELEMENT_NAME = 3;
+	int JSX_ELEMENT_NAME = 4;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -249,7 +286,7 @@ public interface N4JSXPackage extends EPackage {
 	 * @see eu.numberfour.n4jsx.n4JSX.impl.N4JSXPackageImpl#getJSXAttribute()
 	 * @generated
 	 */
-	int JSX_ATTRIBUTE = 4;
+	int JSX_ATTRIBUTE = 5;
 
 	/**
 	 * The number of structural features of the '<em>JSX Attribute</em>' class.
@@ -278,7 +315,7 @@ public interface N4JSXPackage extends EPackage {
 	 * @see eu.numberfour.n4jsx.n4JSX.impl.N4JSXPackageImpl#getJSXPropertyAttribute()
 	 * @generated
 	 */
-	int JSX_PROPERTY_ATTRIBUTE = 5;
+	int JSX_PROPERTY_ATTRIBUTE = 6;
 
 	/**
 	 * The feature id for the '<em><b>Property</b></em>' reference.
@@ -334,7 +371,7 @@ public interface N4JSXPackage extends EPackage {
 	 * @see eu.numberfour.n4jsx.n4JSX.impl.N4JSXPackageImpl#getJSXSpreadAttribute()
 	 * @generated
 	 */
-	int JSX_SPREAD_ATTRIBUTE = 6;
+	int JSX_SPREAD_ATTRIBUTE = 7;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -437,6 +474,27 @@ public interface N4JSXPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getJSXText();
+
+	/**
+	 * Returns the meta object for class '{@link eu.numberfour.n4jsx.n4JSX.JSXExpression <em>JSX Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>JSX Expression</em>'.
+	 * @see eu.numberfour.n4jsx.n4JSX.JSXExpression
+	 * @generated
+	 */
+	EClass getJSXExpression();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4jsx.n4JSX.JSXExpression#getExpression <em>Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Expression</em>'.
+	 * @see eu.numberfour.n4jsx.n4JSX.JSXExpression#getExpression()
+	 * @see #getJSXExpression()
+	 * @generated
+	 */
+	EReference getJSXExpression_Expression();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4jsx.n4JSX.JSXElementName <em>JSX Element Name</em>}'.
@@ -611,6 +669,22 @@ public interface N4JSXPackage extends EPackage {
 		 * @generated
 		 */
 		EClass JSX_TEXT = eINSTANCE.getJSXText();
+		/**
+		 * The meta object literal for the '{@link eu.numberfour.n4jsx.n4JSX.impl.JSXExpressionImpl <em>JSX Expression</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see eu.numberfour.n4jsx.n4JSX.impl.JSXExpressionImpl
+		 * @see eu.numberfour.n4jsx.n4JSX.impl.N4JSXPackageImpl#getJSXExpression()
+		 * @generated
+		 */
+		EClass JSX_EXPRESSION = eINSTANCE.getJSXExpression();
+		/**
+		 * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference JSX_EXPRESSION__EXPRESSION = eINSTANCE.getJSXExpression_Expression();
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4jsx.n4JSX.impl.JSXElementNameImpl <em>JSX Element Name</em>}' class.
 		 * <!-- begin-user-doc -->

@@ -235,8 +235,34 @@ entryRuleJSXChild
 ruleJSXChild 
     @init {
     }:
-	JSXElementParserRuleCall=ruleJSXElement		{ announce($JSXElementParserRuleCall.start, $JSXElementParserRuleCall.stop, grammarAccess.getJSXChildAccess().getJSXElementParserRuleCall()); }
+(	JSXElementParserRuleCall_0=ruleJSXElement		{ announce($JSXElementParserRuleCall_0.start, $JSXElementParserRuleCall_0.stop, grammarAccess.getJSXChildAccess().getJSXElementParserRuleCall_0()); }
 
+    |	JSXExpressionParserRuleCall_1=ruleJSXExpression		{ announce($JSXExpressionParserRuleCall_1.start, $JSXExpressionParserRuleCall_1.stop, grammarAccess.getJSXChildAccess().getJSXExpressionParserRuleCall_1()); }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleJSXExpression
+entryRuleJSXExpression
+	:
+	ruleJSXExpression 
+	EOF 
+;
+
+// Rule JSXExpression
+ruleJSXExpression 
+    @init {
+    }:
+(
+	LeftCurlyBracketKeyword_0=LeftCurlyBracket 	 { announce($LeftCurlyBracketKeyword_0, grammarAccess.getJSXExpressionAccess().getLeftCurlyBracketKeyword_0()); }(
+(
+	ExpressionAssignmentExpressionParserRuleCall_1_0=ruleAssignmentExpression { announce($ExpressionAssignmentExpressionParserRuleCall_1_0.start, $ExpressionAssignmentExpressionParserRuleCall_1_0.stop, grammarAccess.getJSXExpressionAccess().getExpressionAssignment_1()); }
+)
+)
+	RightCurlyBracketKeyword_2=RightCurlyBracket 	 { announce($RightCurlyBracketKeyword_2, grammarAccess.getJSXExpressionAccess().getRightCurlyBracketKeyword_2()); })
 ;
 
 

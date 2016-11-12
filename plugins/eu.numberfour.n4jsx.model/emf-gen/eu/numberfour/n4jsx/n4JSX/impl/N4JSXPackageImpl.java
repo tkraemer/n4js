@@ -13,6 +13,7 @@ import eu.numberfour.n4jsx.n4JSX.JSXAttribute;
 import eu.numberfour.n4jsx.n4JSX.JSXChild;
 import eu.numberfour.n4jsx.n4JSX.JSXElement;
 import eu.numberfour.n4jsx.n4JSX.JSXElementName;
+import eu.numberfour.n4jsx.n4JSX.JSXExpression;
 import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute;
 import eu.numberfour.n4jsx.n4JSX.JSXSpreadAttribute;
 import eu.numberfour.n4jsx.n4JSX.JSXText;
@@ -52,6 +53,12 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 	 * @generated
 	 */
 	private EClass jsxTextEClass = null;
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass jsxExpressionEClass = null;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -208,6 +215,24 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getJSXExpression() {
+		return jsxExpressionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getJSXExpression_Expression() {
+		return (EReference)jsxExpressionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getJSXElementName() {
 		return jsxElementNameEClass;
 	}
@@ -322,6 +347,9 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 
 		jsxTextEClass = createEClass(JSX_TEXT);
 
+		jsxExpressionEClass = createEClass(JSX_EXPRESSION);
+		createEReference(jsxExpressionEClass, JSX_EXPRESSION__EXPRESSION);
+
 		jsxElementNameEClass = createEClass(JSX_ELEMENT_NAME);
 		createEReference(jsxElementNameEClass, JSX_ELEMENT_NAME__EXPRESSION);
 
@@ -372,6 +400,7 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 		jsxElementEClass.getESuperTypes().add(theN4JSPackage.getExpression());
 		jsxElementEClass.getESuperTypes().add(this.getJSXChild());
 		jsxTextEClass.getESuperTypes().add(this.getJSXChild());
+		jsxExpressionEClass.getESuperTypes().add(this.getJSXChild());
 		jsxPropertyAttributeEClass.getESuperTypes().add(this.getJSXAttribute());
 		jsxSpreadAttributeEClass.getESuperTypes().add(this.getJSXAttribute());
 
@@ -385,6 +414,9 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 		initEClass(jsxChildEClass, JSXChild.class, "JSXChild", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(jsxTextEClass, JSXText.class, "JSXText", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(jsxExpressionEClass, JSXExpression.class, "JSXExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getJSXExpression_Expression(), theN4JSPackage.getExpression(), null, "expression", null, 0, 1, JSXExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(jsxElementNameEClass, JSXElementName.class, "JSXElementName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getJSXElementName_Expression(), theN4JSPackage.getExpression(), null, "expression", null, 0, 1, JSXElementName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -133,6 +133,7 @@ import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4jsx.n4JSX.JSXElement;
 import eu.numberfour.n4jsx.n4JSX.JSXElementName;
+import eu.numberfour.n4jsx.n4JSX.JSXExpression;
 import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute;
 import eu.numberfour.n4jsx.n4JSX.JSXSpreadAttribute;
 import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
@@ -1296,6 +1297,9 @@ public class N4JSXSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				return; 
 			case N4JSXPackage.JSX_ELEMENT_NAME:
 				sequence_JSXElementName(context, (JSXElementName) semanticObject); 
+				return; 
+			case N4JSXPackage.JSX_EXPRESSION:
+				sequence_JSXExpression(context, (JSXExpression) semanticObject); 
 				return; 
 			case N4JSXPackage.JSX_PROPERTY_ATTRIBUTE:
 				sequence_JSXPropertyAttribute(context, (JSXPropertyAttribute) semanticObject); 
@@ -13086,6 +13090,25 @@ public class N4JSXSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getJSXElementNameAccess().getExpressionJSXElementNameExpressionParserRuleCall_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     JSXChild returns JSXExpression
+	 *     JSXExpression returns JSXExpression
+	 *
+	 * Constraint:
+	 *     expression=AssignmentExpression
+	 */
+	protected void sequence_JSXExpression(ISerializationContext context, JSXExpression semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, N4JSXPackage.Literals.JSX_EXPRESSION__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSXPackage.Literals.JSX_EXPRESSION__EXPRESSION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getJSXExpressionAccess().getExpressionAssignmentExpressionParserRuleCall_1_0(), semanticObject.getExpression());
 		feeder.finish();
 	}
 	

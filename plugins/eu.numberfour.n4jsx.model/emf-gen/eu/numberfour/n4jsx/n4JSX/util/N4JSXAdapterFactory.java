@@ -87,6 +87,10 @@ public class N4JSXAdapterFactory extends AdapterFactoryImpl {
 				return createJSXTextAdapter();
 			}
 			@Override
+			public Adapter caseJSXExpression(JSXExpression object) {
+				return createJSXExpressionAdapter();
+			}
+			@Override
 			public Adapter caseJSXElementName(JSXElementName object) {
 				return createJSXElementNameAdapter();
 			}
@@ -169,6 +173,20 @@ public class N4JSXAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createJSXTextAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4jsx.n4JSX.JSXExpression <em>JSX Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4jsx.n4JSX.JSXExpression
+	 * @generated
+	 */
+	public Adapter createJSXExpressionAdapter() {
 		return null;
 	}
 

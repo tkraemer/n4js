@@ -63,6 +63,7 @@ public class N4JSXFactoryImpl extends EFactoryImpl implements N4JSXFactory {
 		switch (eClass.getClassifierID()) {
 			case N4JSXPackage.JSX_ELEMENT: return createJSXElement();
 			case N4JSXPackage.JSX_TEXT: return createJSXText();
+			case N4JSXPackage.JSX_EXPRESSION: return createJSXExpression();
 			case N4JSXPackage.JSX_ELEMENT_NAME: return createJSXElementName();
 			case N4JSXPackage.JSX_PROPERTY_ATTRIBUTE: return createJSXPropertyAttribute();
 			case N4JSXPackage.JSX_SPREAD_ATTRIBUTE: return createJSXSpreadAttribute();
@@ -89,6 +90,16 @@ public class N4JSXFactoryImpl extends EFactoryImpl implements N4JSXFactory {
 	public JSXText createJSXText() {
 		JSXTextImpl jsxText = new JSXTextImpl();
 		return jsxText;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public JSXExpression createJSXExpression() {
+		JSXExpressionImpl jsxExpression = new JSXExpressionImpl();
+		return jsxExpression;
 	}
 
 	/**

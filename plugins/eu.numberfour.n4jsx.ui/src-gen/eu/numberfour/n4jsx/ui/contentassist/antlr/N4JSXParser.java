@@ -39,6 +39,7 @@ public class N4JSXParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getPrimaryExpressionAccess().getAlternatives(), "rule__PrimaryExpression__Alternatives");
 					put(grammarAccess.getJSXElementAccess().getAlternatives_3(), "rule__JSXElement__Alternatives_3");
+					put(grammarAccess.getJSXChildAccess().getAlternatives(), "rule__JSXChild__Alternatives");
 					put(grammarAccess.getJSXAttributeAccess().getAlternatives(), "rule__JSXAttribute__Alternatives");
 					put(grammarAccess.getJSXPropertyAttributeAccess().getAlternatives_2(), "rule__JSXPropertyAttribute__Alternatives_2");
 					put(grammarAccess.getScriptElementAccess().getAlternatives(), "rule__ScriptElement__Alternatives");
@@ -145,6 +146,7 @@ public class N4JSXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getJSXElementAccess().getGroup_3_0(), "rule__JSXElement__Group_3_0__0");
 					put(grammarAccess.getJSXElementAccess().getGroup_3_1(), "rule__JSXElement__Group_3_1__0");
 					put(grammarAccess.getJSXClosingElementAccess().getGroup(), "rule__JSXClosingElement__Group__0");
+					put(grammarAccess.getJSXExpressionAccess().getGroup(), "rule__JSXExpression__Group__0");
 					put(grammarAccess.getJSXElementNameExpressionAccess().getGroup(), "rule__JSXElementNameExpression__Group__0");
 					put(grammarAccess.getJSXElementNameExpressionAccess().getGroup_1(), "rule__JSXElementNameExpression__Group_1__0");
 					put(grammarAccess.getJSXSpreadAttributeAccess().getGroup(), "rule__JSXSpreadAttribute__Group__0");
@@ -621,6 +623,7 @@ public class N4JSXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getJSXElementAccess().getJsxElementNameAssignment_1(), "rule__JSXElement__JsxElementNameAssignment_1");
 					put(grammarAccess.getJSXElementAccess().getJsxChildrenAssignment_3_0_1(), "rule__JSXElement__JsxChildrenAssignment_3_0_1");
 					put(grammarAccess.getJSXClosingElementAccess().getJsxClosingNameAssignment_2(), "rule__JSXClosingElement__JsxClosingNameAssignment_2");
+					put(grammarAccess.getJSXExpressionAccess().getExpressionAssignment_1(), "rule__JSXExpression__ExpressionAssignment_1");
 					put(grammarAccess.getJSXElementNameAccess().getExpressionAssignment(), "rule__JSXElementName__ExpressionAssignment");
 					put(grammarAccess.getJSXIdentifierAccess().getIdAssignment(), "rule__JSXIdentifier__IdAssignment");
 					put(grammarAccess.getJSXAttributesAccess().getJsxAttributesAssignment(), "rule__JSXAttributes__JsxAttributesAssignment");

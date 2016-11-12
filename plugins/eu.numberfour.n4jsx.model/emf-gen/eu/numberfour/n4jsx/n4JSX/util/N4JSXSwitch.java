@@ -95,6 +95,13 @@ public class N4JSXSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case N4JSXPackage.JSX_EXPRESSION: {
+				JSXExpression jsxExpression = (JSXExpression)theEObject;
+				T result = caseJSXExpression(jsxExpression);
+				if (result == null) result = caseJSXChild(jsxExpression);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case N4JSXPackage.JSX_ELEMENT_NAME: {
 				JSXElementName jsxElementName = (JSXElementName)theEObject;
 				T result = caseJSXElementName(jsxElementName);
@@ -167,6 +174,21 @@ public class N4JSXSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseJSXText(JSXText object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>JSX Expression</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>JSX Expression</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseJSXExpression(JSXExpression object) {
 		return null;
 	}
 

@@ -46,9 +46,11 @@ fragment JSXClosingElement *:
 	'<' '/' jsxClosingName=JSXElementName '>';
 
 JSXChild:
-	JSXElement
+	JSXElement | JSXExpression
 	//	| JSXText
 ;
+
+JSXExpression: '{' expression=AssignmentExpression<false,false> '}';
 
 JSXElementName:
 	expression=JSXElementNameExpression

@@ -622,9 +622,9 @@ ruleJSXChild returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-
+(
     { 
-        newCompositeNode(grammarAccess.getJSXChildAccess().getJSXElementParserRuleCall()); 
+        newCompositeNode(grammarAccess.getJSXChildAccess().getJSXElementParserRuleCall_0()); 
     }
     this_JSXElement_0=ruleJSXElement
     {
@@ -632,6 +632,65 @@ ruleJSXChild returns [EObject current=null]
         afterParserOrEnumRuleCall();
     }
 
+    |
+    { 
+        newCompositeNode(grammarAccess.getJSXChildAccess().getJSXExpressionParserRuleCall_1()); 
+    }
+    this_JSXExpression_1=ruleJSXExpression
+    {
+        $current = $this_JSXExpression_1.current;
+        afterParserOrEnumRuleCall();
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleJSXExpression
+entryRuleJSXExpression returns [EObject current=null]
+	:
+	{ newCompositeNode(grammarAccess.getJSXExpressionRule()); }
+	 iv_ruleJSXExpression=ruleJSXExpression 
+	 { $current=$iv_ruleJSXExpression.current; } 
+	 EOF 
+;
+
+// Rule JSXExpression
+ruleJSXExpression returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+	otherlv_0=LeftCurlyBracket
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getJSXExpressionAccess().getLeftCurlyBracketKeyword_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getJSXExpressionAccess().getExpressionAssignmentExpressionParserRuleCall_1_0()); 
+	    }
+		lv_expression_1_0=ruleAssignmentExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getJSXExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"expression",
+        		lv_expression_1_0, 
+        		"eu.numberfour.n4js.N4JS.AssignmentExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+	otherlv_2=RightCurlyBracket
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getJSXExpressionAccess().getRightCurlyBracketKeyword_2());
+    }
+)
 ;
 
 

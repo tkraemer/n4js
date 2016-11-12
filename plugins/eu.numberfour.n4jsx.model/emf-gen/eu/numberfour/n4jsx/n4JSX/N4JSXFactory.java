@@ -45,6 +45,15 @@ public interface N4JSXFactory extends EFactory {
 	JSXText createJSXText();
 
 	/**
+	 * Returns a new object of class '<em>JSX Expression</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>JSX Expression</em>'.
+	 * @generated
+	 */
+	JSXExpression createJSXExpression();
+
+	/**
 	 * Returns a new object of class '<em>JSX Element Name</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
