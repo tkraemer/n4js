@@ -98,6 +98,13 @@ Contributors:
 		<!-- *************************************** Headless Tools Tests -->
 		<module>eu.numberfour.n4js.hlc.tests</module>
 		
+		<!-- *************************************** Headless Tools Tests -->
+		<module>eu.numberfour.n4js.hlc.tests</module>
+
+		<!-- *************************************** n4jsx Tests -->
+		<module>eu.numberfour.n4jsx.lang.tests</module>
+		<module>eu.numberfour.n4jsx.spec.tests</module>
+
 	</modules>
 
 
