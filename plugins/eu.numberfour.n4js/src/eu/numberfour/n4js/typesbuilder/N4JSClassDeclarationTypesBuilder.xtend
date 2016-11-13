@@ -29,7 +29,7 @@ import java.util.List
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 
-package class N4JSClassDeclarationTypesBuilder {
+public class N4JSClassDeclarationTypesBuilder {
 
 	@Inject extension N4JSTypesBuilderHelper
 	@Inject extension N4JSFieldTypesBuilder
@@ -37,12 +37,12 @@ package class N4JSClassDeclarationTypesBuilder {
 	@Inject extension N4JSGetterTypesBuilder
 	@Inject extension N4JSSetterTypesBuilder
 
-	def package createTClass(N4ClassDeclaration n4Class, TModule target, boolean preLinkingPhase) {
+	def protected TClass createTClass(N4ClassDeclaration n4Class, TModule target, boolean preLinkingPhase) {
 		if (n4Class.name === null) { // may be null due to syntax errors
 			return null;
 		}
 
-		val tclass = n4Class.createTClass;
+		val TClass tclass = n4Class.createTClass;
 
 		// modifiers
 		tclass.setTypeAccessModifier(n4Class);
@@ -72,6 +72,8 @@ package class N4JSClassDeclarationTypesBuilder {
 		n4Class.definedType = tclass;
 
 		target.topLevelTypes += tclass;
+		
+		return tclass;
 	}
 
 	def package createTClass(N4ClassExpression n4Class, TModule target, boolean preLinkingPhase) {

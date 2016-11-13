@@ -179,6 +179,17 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF_WITH_VERSION: {
+				ParameterizedTypeRefWithVersion parameterizedTypeRefWithVersion = (ParameterizedTypeRefWithVersion)theEObject;
+				T result = caseParameterizedTypeRefWithVersion(parameterizedTypeRefWithVersion);
+				if (result == null) result = caseParameterizedTypeRef(parameterizedTypeRefWithVersion);
+				if (result == null) result = caseBaseTypeRef(parameterizedTypeRefWithVersion);
+				if (result == null) result = caseStaticBaseTypeRef(parameterizedTypeRefWithVersion);
+				if (result == null) result = caseTypeRef(parameterizedTypeRefWithVersion);
+				if (result == null) result = caseTypeArgument(parameterizedTypeRefWithVersion);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case TypeRefsPackage.STRUCTURAL_TYPE_REF: {
 				StructuralTypeRef structuralTypeRef = (StructuralTypeRef)theEObject;
 				T result = caseStructuralTypeRef(structuralTypeRef);
@@ -447,6 +458,21 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseParameterizedTypeRef(ParameterizedTypeRef object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Parameterized Type Ref With Version</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Parameterized Type Ref With Version</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseParameterizedTypeRefWithVersion(ParameterizedTypeRefWithVersion object) {
 		return null;
 	}
 

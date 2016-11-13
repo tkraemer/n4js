@@ -381,6 +381,15 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getReferencedVersion() {
+		return 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -492,6 +501,8 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 				return isUseSiteStructuralTyping();
 			case TypeRefsPackage.TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING:
 				return isDefSiteStructuralTyping();
+			case TypeRefsPackage.TYPE_REF___GET_REFERENCED_VERSION:
+				return getReferencedVersion();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
