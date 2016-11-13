@@ -4,25 +4,29 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
 package eu.numberfour.n4jsx.tests.helper.parser
 
 import com.google.inject.Inject
-import eu.numberfour.n4jsx.tests.helper.N4JSXInjectorProvider
-import eu.numberfour.n4jsx.tests.helper.N4JSXParseHelper
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ParenExpression
 import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4jsx.tests.helper.N4JSXInjectorProvider
+import eu.numberfour.n4jsx.tests.helper.N4JSXParseHelper
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.junit.Assert
 import org.junit.runner.RunWith
+import eu.numberfour.n4jsx.n4JSX.JSXElement
+import eu.numberfour.n4js.n4JS.IdentifierRef
+import eu.numberfour.n4jsx.n4JSX.JSXChild
 
 /**
  * N4IDL version of N4JS' AbstractParserTest 
@@ -35,7 +39,7 @@ public abstract class AbstractN4JSXParserTest extends Assert {
 
 	protected def Script parseSuccessfully(CharSequence js) {
 		val script = js.parseN4JSX
-		assertTrue(script.eResource.errors.join('\n') [ line + ': ' + message] , script.eResource.errors.empty)
+		assertTrue(script.eResource.errors.join('\n')[line + ': ' + message], script.eResource.errors.empty)
 		return script
 	}
 
@@ -59,10 +63,20 @@ public abstract class AbstractN4JSXParserTest extends Assert {
 	protected def getText(Expression it) {
 		NodeModelUtils.getTokenText(NodeModelUtils.findActualNodeFor(it))
 	}
+
 	protected def getPropertyText(ParameterizedPropertyAccessExpression it) {
 		NodeModelUtils.getTokenText(
-			NodeModelUtils.findNodesForFeature(it, N4JSPackage.Literals.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY).head
+			NodeModelUtils.findNodesForFeature(it,
+				N4JSPackage.Literals.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY).head
 		)
 	}
 
+	protected def assertType(Class<?> type, EObject astElement) {
+		assertTrue("Expected type " + type.name + ", was " + astElement.class.name, type.isInstance(astElement))
+	}
+	
+	protected def assertTagName(String expectedName, JSXChild jsxElement) {
+		val actualName = ((jsxElement as JSXElement).jsxElementName.expression as IdentifierRef).idAsText;
+		assertEquals(expectedName, actualName)
+	}
 }
