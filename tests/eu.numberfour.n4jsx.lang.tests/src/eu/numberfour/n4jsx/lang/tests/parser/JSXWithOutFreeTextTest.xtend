@@ -16,6 +16,11 @@ import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4jsx.n4JSX.JSXElement
 import eu.numberfour.n4jsx.tests.helper.parser.AbstractN4JSXParserTest
 import org.junit.Test
+import eu.numberfour.n4js.n4JS.TemplateSegment
+import eu.numberfour.n4jsx.n4JSX.JSXExpression
+import eu.numberfour.n4js.n4JS.TemplateLiteral
+import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute
+import eu.numberfour.n4js.n4JS.StringLiteral
 
 class JSXWithOutFreeTextTest extends AbstractN4JSXParserTest {
 
@@ -63,8 +68,44 @@ class JSXWithOutFreeTextTest extends AbstractN4JSXParserTest {
 		val JSXElement jsxElement = (script.scriptElements.get(1) as ExpressionStatement).expression as JSXElement;
 		assertTagName("div", jsxElement);
 		assertTagName("Foo", jsxElement.jsxChildren.get(0));
-		
 	}
 	
+	@Test
+	def void testOpenCloseTagWithNestedExpression() {
+		val script = '''
+			class Foo{}
+			<div>{`Hello 
+			World`}</div>
+			function bar() {}
+		'''.parseSuccessfully
+		assertEquals(3, script.scriptElements.size)
+		assertType(N4ClassDeclaration, script.scriptElements.get(0))
+		assertType(FunctionDeclaration, script.scriptElements.get(2))
+		
+		val JSXElement jsxElement = (script.scriptElements.get(1) as ExpressionStatement).expression as JSXElement;
+		assertTagName("div", jsxElement);
+		val TemplateSegment seg = ((jsxElement.jsxChildren.get(0) as JSXExpression).expression as TemplateLiteral).segments.head as TemplateSegment;
+		
+		assertEquals("Hello \nWorld",seg.valueAsString );
+	}
 	
+	@Test
+	def void testOpenCloseTagWithPropertyAttribute() {
+		val script = '''
+			class Foo{}
+			<div class="Test"></div>
+			function bar() {}
+		'''.parseSuccessfully
+		assertEquals(3, script.scriptElements.size)
+		assertType(N4ClassDeclaration, script.scriptElements.get(0))
+		assertType(FunctionDeclaration, script.scriptElements.get(2))
+		
+		val JSXElement jsxElement = (script.scriptElements.get(1) as ExpressionStatement).expression as JSXElement;
+		assertTagName("div", jsxElement);
+		
+		val attr = jsxElement.jsxAttributes.head as JSXPropertyAttribute
+		assertEquals("Test", (attr.jsxAttributeValue as StringLiteral).value)
+	}
+
+			
 }
