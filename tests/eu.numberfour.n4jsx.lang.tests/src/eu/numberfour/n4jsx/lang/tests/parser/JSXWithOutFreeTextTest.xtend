@@ -8,11 +8,16 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4jsx.tests.helper
+package eu.numberfour.n4jsx.lang.tests.parser
 
-/**
- *
- */
-class Dummy {
+import eu.numberfour.n4jsx.tests.helper.parser.AbstractN4JSXParserTest
+import org.junit.Test
+
+class JSXWithOutFreeTextTest extends AbstractN4JSXParserTest {
+
+	@Test
+	def void testEmpty_01() {
+		'<div />'.parseSuccessfully
+	}
 	
 }
