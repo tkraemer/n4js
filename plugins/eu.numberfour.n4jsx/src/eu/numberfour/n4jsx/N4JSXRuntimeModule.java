@@ -45,6 +45,7 @@ import com.google.inject.name.Names;
 import eu.numberfour.n4jsx.parser.N4JSXSemicolonInjectingParser;
 import eu.numberfour.n4jsx.parser.RegExLiteralAwareLexer;
 import eu.numberfour.n4jsx.parser.antlr.lexer.InternalN4JSXLexer;
+import eu.numberfour.n4jsx.validation.N4JSXJavaScriptVariantHelper;
 import eu.numberfour.n4js.CancelIndicatorBaseExtractor;
 import eu.numberfour.n4js.conversion.N4JSStringValueConverter;
 import eu.numberfour.n4js.conversion.ValueConverters;
@@ -95,6 +96,7 @@ import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSValidatorErrorGenerator;
 import eu.numberfour.n4js.utils.di.scopes.ScopeManager;
 import eu.numberfour.n4js.utils.di.scopes.TransformationScoped;
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
 import eu.numberfour.n4js.validation.N4JSDiagnostician;
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider;
 import eu.numberfour.n4js.validation.N4JSIssueSeveritiesProvider;
@@ -512,4 +514,10 @@ public class N4JSXRuntimeModule extends eu.numberfour.n4jsx.AbstractN4JSXRuntime
 				.to(N4JSSimpleFormattingPreferenceProvider.class);
 	}
 
+	/**
+	 * Binds JS variant for N4JSX language
+	 */
+	public Class<? extends JavaScriptVariantHelper> bindJavaScriptVariantHelper() {
+		return N4JSXJavaScriptVariantHelper.class;
+	}
 }
