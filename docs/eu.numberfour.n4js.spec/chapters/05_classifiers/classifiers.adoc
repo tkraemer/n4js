@@ -1,0 +1,5 @@
+= Classifiers
+
+include::classifiers-part-01-classifiers.adoc[leveloffset=+1]
+include::classifiers-part-02-members.adoc[leveloffset=+1]
+include::classifiers-part-03-structural.adoc[leveloffset=+1]

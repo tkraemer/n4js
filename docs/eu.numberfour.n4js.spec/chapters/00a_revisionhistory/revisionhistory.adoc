@@ -1,0 +1,16 @@
+.Revision History
+[discrete]
+= Revision History
+
+[cols="^e,^,^,<"]
+|===
+|Date |Tasks |Author |Description
+
+|2013-03-21 m| – |v.Pilgrim |initial commit
+|2016-03-13 m| – |v.Pilgrim |public release, version 0.3 (alpha)
+|2016-05-31 | task:IDE-2226[] |mor |support for definition-site variance,
+cf. <<_definition_site_variance>>
+|2016-07-18 | task:GH-107[] |mor |rename manifest property `artifactId` to `projectId`; remove `projectName`
+|2016-09-09 | task:IDE-2314[] |mor |add `@CovariantConstructor`, cf. <<_covariant_constructors>>, plus related
+adjustments
+|===
