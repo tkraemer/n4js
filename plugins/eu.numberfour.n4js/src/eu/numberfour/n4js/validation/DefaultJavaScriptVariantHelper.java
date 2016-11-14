@@ -138,7 +138,7 @@ public class DefaultJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	}
 
 	/**
-	 * Return true if it should be check that no N4JS in runtime environment or lib
+	 * Return true if wrong read/write should be allowed, e.g. in plain JS mode
 	 */
 	@Override
 	public boolean allowWrongReadWrite(EObject eobj) {
