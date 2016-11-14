@@ -871,13 +871,22 @@ public interface TypesPackage extends EPackage {
 	int TYPE___GET_TYPE_AS_STRING = TEXPORTABLE_ELEMENT_OPERATION_COUNT + 12;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE___GET_VERSION = TEXPORTABLE_ELEMENT_OPERATION_COUNT + 13;
+
+	/**
 	 * The number of operations of the '<em>Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_OPERATION_COUNT = TEXPORTABLE_ELEMENT_OPERATION_COUNT + 13;
+	int TYPE_OPERATION_COUNT = TEXPORTABLE_ELEMENT_OPERATION_COUNT + 14;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TypeVariableImpl <em>Type Variable</em>}' class.
@@ -1068,6 +1077,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TYPE_VARIABLE___GET_RAW_TYPE_AS_STRING = TYPE___GET_RAW_TYPE_AS_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_VARIABLE___GET_VERSION = TYPE___GET_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Variance</em>' operation.
@@ -1305,6 +1323,15 @@ public interface TypesPackage extends EPackage {
 	int INFERENCE_VARIABLE___GET_RAW_TYPE_AS_STRING = TYPE_VARIABLE___GET_RAW_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INFERENCE_VARIABLE___GET_VERSION = TYPE_VARIABLE___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Variance</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1520,6 +1547,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int DECLARED_TYPE_WITH_ACCESS_MODIFIER___GET_TYPE_AS_STRING = TYPE___GET_TYPE_AS_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DECLARED_TYPE_WITH_ACCESS_MODIFIER___GET_VERSION = TYPE___GET_VERSION;
 
 	/**
 	 * The operation id for the '<em>Is Provided By Runtime</em>' operation.
@@ -1793,6 +1829,15 @@ public interface TypesPackage extends EPackage {
 	int TFUNCTION___GET_TYPE_AS_STRING = DECLARED_TYPE_WITH_ACCESS_MODIFIER___GET_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFUNCTION___GET_VERSION = DECLARED_TYPE_WITH_ACCESS_MODIFIER___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Is Provided By Runtime</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2011,13 +2056,22 @@ public interface TypesPackage extends EPackage {
 	int CONTAINER_TYPE__TYPE_VARS = TYPE_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINER_TYPE__DECLARED_VERSION = TYPE_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Container Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 4;
+	int CONTAINER_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -2191,13 +2245,22 @@ public interface TypesPackage extends EPackage {
 	int CONTAINER_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = TYPE_OPERATION_COUNT + 3;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINER_TYPE___GET_VERSION = TYPE_OPERATION_COUNT + 4;
+
+	/**
 	 * The number of operations of the '<em>Container Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER_TYPE_OPERATION_COUNT = TYPE_OPERATION_COUNT + 4;
+	int CONTAINER_TYPE_OPERATION_COUNT = TYPE_OPERATION_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.VirtualBaseTypeImpl <em>Virtual Base Type</em>}' class.
@@ -2271,6 +2334,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int VIRTUAL_BASE_TYPE__TYPE_VARS = CONTAINER_TYPE__TYPE_VARS;
+
+	/**
+	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIRTUAL_BASE_TYPE__DECLARED_VERSION = CONTAINER_TYPE__DECLARED_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Declared Owned Members</b></em>' containment reference list.
@@ -2460,6 +2532,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int VIRTUAL_BASE_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = CONTAINER_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS;
+
+	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIRTUAL_BASE_TYPE___GET_VERSION = CONTAINER_TYPE___GET_VERSION;
 
 	/**
 	 * The number of operations of the '<em>Virtual Base Type</em>' class.
@@ -2670,6 +2751,15 @@ public interface TypesPackage extends EPackage {
 	int MODULE_NAMESPACE_VIRTUAL_TYPE___GET_TYPE_AS_STRING = TYPE___GET_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE_NAMESPACE_VIRTUAL_TYPE___GET_VERSION = TYPE___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Is Provided By Runtime</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2759,6 +2849,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int PRIMITIVE_TYPE__TYPE_VARS = CONTAINER_TYPE__TYPE_VARS;
+
+	/**
+	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMITIVE_TYPE__DECLARED_VERSION = CONTAINER_TYPE__DECLARED_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Declared Element Type</b></em>' containment reference.
@@ -2959,6 +3058,15 @@ public interface TypesPackage extends EPackage {
 	int PRIMITIVE_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = CONTAINER_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMITIVE_TYPE___GET_VERSION = CONTAINER_TYPE___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Element Type</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3149,6 +3257,15 @@ public interface TypesPackage extends EPackage {
 	int BUILT_IN_TYPE___GET_TYPE_AS_STRING = TYPE___GET_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUILT_IN_TYPE___GET_VERSION = TYPE___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Type Vars</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3328,6 +3445,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int ANY_TYPE___GET_TYPE_AS_STRING = BUILT_IN_TYPE___GET_TYPE_AS_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANY_TYPE___GET_VERSION = BUILT_IN_TYPE___GET_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Type Vars</em>' operation.
@@ -3529,6 +3655,15 @@ public interface TypesPackage extends EPackage {
 	int UNDEFINED_TYPE___GET_TYPE_AS_STRING = BUILT_IN_TYPE___GET_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNDEFINED_TYPE___GET_VERSION = BUILT_IN_TYPE___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Type Vars</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3717,6 +3852,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int NULL_TYPE___GET_TYPE_AS_STRING = BUILT_IN_TYPE___GET_TYPE_AS_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NULL_TYPE___GET_VERSION = BUILT_IN_TYPE___GET_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Type Vars</em>' operation.
@@ -3909,6 +4053,15 @@ public interface TypesPackage extends EPackage {
 	int VOID_TYPE___GET_TYPE_AS_STRING = BUILT_IN_TYPE___GET_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VOID_TYPE___GET_VERSION = BUILT_IN_TYPE___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Type Vars</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3998,6 +4151,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCTURAL_TYPE__TYPE_VARS = CONTAINER_TYPE__TYPE_VARS;
+
+	/**
+	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCTURAL_TYPE__DECLARED_VERSION = CONTAINER_TYPE__DECLARED_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Ast Element</b></em>' reference.
@@ -4180,6 +4342,15 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCTURAL_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = CONTAINER_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCTURAL_TYPE___GET_VERSION = CONTAINER_TYPE___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Is Final</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4269,6 +4440,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TCLASSIFIER__TYPE_VARS = CONTAINER_TYPE__TYPE_VARS;
+
+	/**
+	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASSIFIER__DECLARED_VERSION = CONTAINER_TYPE__DECLARED_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Ast Element</b></em>' reference.
@@ -4460,6 +4640,15 @@ public interface TypesPackage extends EPackage {
 	int TCLASSIFIER___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = CONTAINER_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASSIFIER___GET_VERSION = CONTAINER_TYPE___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4585,6 +4774,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TOBJECT_PROTOTYPE__TYPE_VARS = TCLASSIFIER__TYPE_VARS;
+
+	/**
+	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOBJECT_PROTOTYPE__DECLARED_VERSION = TCLASSIFIER__DECLARED_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Ast Element</b></em>' reference.
@@ -4774,6 +4972,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TOBJECT_PROTOTYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = TCLASSIFIER___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS;
+
+	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOBJECT_PROTOTYPE___GET_VERSION = TCLASSIFIER___GET_VERSION;
 
 	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
@@ -4994,6 +5201,15 @@ public interface TypesPackage extends EPackage {
 	int TN4_CLASSIFIER__TYPE_VARS = TCLASSIFIER__TYPE_VARS;
 
 	/**
+	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TN4_CLASSIFIER__DECLARED_VERSION = TCLASSIFIER__DECLARED_VERSION;
+
+	/**
 	 * The feature id for the '<em><b>Ast Element</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5192,6 +5408,15 @@ public interface TypesPackage extends EPackage {
 	int TN4_CLASSIFIER___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = TCLASSIFIER___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TN4_CLASSIFIER___GET_VERSION = TCLASSIFIER___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5344,6 +5569,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TCLASS__TYPE_VARS = TN4_CLASSIFIER__TYPE_VARS;
+
+	/**
+	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASS__DECLARED_VERSION = TN4_CLASSIFIER__DECLARED_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Ast Element</b></em>' reference.
@@ -5607,6 +5841,15 @@ public interface TypesPackage extends EPackage {
 	int TCLASS___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = TN4_CLASSIFIER___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCLASS___GET_VERSION = TN4_CLASSIFIER___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Super Classifiers</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5786,6 +6029,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TINTERFACE__TYPE_VARS = TN4_CLASSIFIER__TYPE_VARS;
+
+	/**
+	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TINTERFACE__DECLARED_VERSION = TN4_CLASSIFIER__DECLARED_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Ast Element</b></em>' reference.
@@ -6002,6 +6254,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TINTERFACE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = TN4_CLASSIFIER___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS;
+
+	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TINTERFACE___GET_VERSION = TN4_CLASSIFIER___GET_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Super Classifiers</em>' operation.
@@ -7151,6 +7412,15 @@ public interface TypesPackage extends EPackage {
 	int TMETHOD___GET_TYPE_AS_STRING = TFUNCTION___GET_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMETHOD___GET_VERSION = TFUNCTION___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Is Provided By Runtime</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7672,6 +7942,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_METHOD___GET_TYPE_AS_STRING = TMETHOD___GET_TYPE_AS_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_METHOD___GET_VERSION = TMETHOD___GET_VERSION;
 
 	/**
 	 * The operation id for the '<em>Is Provided By Runtime</em>' operation.
@@ -10438,6 +10717,15 @@ public interface TypesPackage extends EPackage {
 	int TENUM___GET_TYPE_AS_STRING = DECLARED_TYPE_WITH_ACCESS_MODIFIER___GET_TYPE_AS_STRING;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TENUM___GET_VERSION = DECLARED_TYPE_WITH_ACCESS_MODIFIER___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Is Provided By Runtime</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11584,6 +11872,16 @@ public interface TypesPackage extends EPackage {
 	EOperation getType__GetTypeAsString();
 
 	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.Type#getVersion() <em>Get Version</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Version</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.Type#getVersion()
+	 * @generated
+	 */
+	EOperation getType__GetVersion();
+
+	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.AccessibleTypeElement <em>Accessible Type Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11710,6 +12008,17 @@ public interface TypesPackage extends EPackage {
 	EReference getContainerType_TypeVars();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.ContainerType#getDeclaredVersion <em>Declared Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Declared Version</em>'.
+	 * @see eu.numberfour.n4js.ts.types.ContainerType#getDeclaredVersion()
+	 * @see #getContainerType()
+	 * @generated
+	 */
+	EAttribute getContainerType_DeclaredVersion();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.ContainerType#getOwnedCtor() <em>Get Owned Ctor</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11748,6 +12057,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getContainerType__GetOrCreateOwnedMembersByNameAndAccess();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.ContainerType#getVersion() <em>Get Version</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Version</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.ContainerType#getVersion()
+	 * @generated
+	 */
+	EOperation getContainerType__GetVersion();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.VirtualBaseType <em>Virtual Base Type</em>}'.
@@ -14054,6 +14373,14 @@ public interface TypesPackage extends EPackage {
 		EOperation TYPE___GET_TYPE_AS_STRING = eINSTANCE.getType__GetTypeAsString();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Version</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TYPE___GET_VERSION = eINSTANCE.getType__GetVersion();
+
+		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.impl.AccessibleTypeElementImpl <em>Accessible Type Element</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -14156,6 +14483,14 @@ public interface TypesPackage extends EPackage {
 		EReference CONTAINER_TYPE__TYPE_VARS = eINSTANCE.getContainerType_TypeVars();
 
 		/**
+		 * The meta object literal for the '<em><b>Declared Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONTAINER_TYPE__DECLARED_VERSION = eINSTANCE.getContainerType_DeclaredVersion();
+
+		/**
 		 * The meta object literal for the '<em><b>Get Owned Ctor</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -14186,6 +14521,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation CONTAINER_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = eINSTANCE.getContainerType__GetOrCreateOwnedMembersByNameAndAccess();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Version</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CONTAINER_TYPE___GET_VERSION = eINSTANCE.getContainerType__GetVersion();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.impl.VirtualBaseTypeImpl <em>Virtual Base Type</em>}' class.

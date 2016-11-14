@@ -24,7 +24,7 @@ import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
 /**
  * Base class for structural typing test, providing some assert methods.
  */
-abstract class AbstractStructuralTypingTest extends AbstractParserTest {
+public abstract class AbstractStructuralTypingTest extends AbstractParserTest {
 	def assertField(String expectedType, String expectedName, TMember member) {
 		val field = assertType(TField, member);
 		assertEquals(expectedType, field.typeRef?.typeRefAsString)
