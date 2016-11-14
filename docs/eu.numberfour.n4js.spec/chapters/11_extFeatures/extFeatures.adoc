@@ -8,8 +8,7 @@ number of newly-declared or pre-existing variables or to further
 destructure them by using nested destructuring
 patterns.
 
-footnote:[Further reading on <<AC,DI>>: : Basics cite:[Fowler04b,Prasanna09a],  Verification cite:[Zhu13a,Hudli13a],  Frameworks cite:[Lesiecki08a,Betts13a,Knol13a,Dagger] , Verification ,
-Frameworks ]
+footnote:[Further reading on <<AC,DI>>: : Basics cite:[Fowler04b,Prasanna09a],  Verification cite:[Zhu13a,Hudli13a],  Frameworks cite:[Lesiecki08a,Betts13a,Knol13a,Dagger] , Verification ,Frameworks ]
 
 === Syntax
 
@@ -263,8 +262,9 @@ must provide an instance of the parent injector (the injector of the
 DIComponent passes as a parameter to `@WithParentInjector`) when creating the child injector
 (injector of the DIComponent annotated with `@WithParentInjector`).
 
-// TODO Example Block
-[[ex:Simple DIComponents Relation]]
+.Simple DIComponents Relation
+[example]
+--
 
 [source,n4js]
 ----
@@ -278,6 +278,7 @@ class ChildDIComponent{}
 var parentInejctor = N4Inejctor.of(ParentDiCompoennt);
 var childInjector = N4Inejctor.of(ChildDIComponent, parentInjector);
 ----
+--
 
 With complex DIComponent structures, injector instances can be created
 with a directly-declared parent and also with any of its children. This
@@ -305,8 +306,10 @@ image::fig/diagDICParentChild.png[title="Complex DIComponents Relations",align=c
 
 --
 
-Complex DIComponents Relations
-[[ex:Complex_DIComponents_Relations]]
+.Complex DIComponents Relations
+[example]
+====
+
 
 [source,n4js]
 ----
@@ -343,6 +346,7 @@ N4Injector.of(Y, injectorB2);//throws DIConfigurationError, incompatible parent 
 N4Injector.of(Y, injectorC2);//throws DIConfigurationError, incompatible parent is provided
 N4Injector.of(Y, injectorD2);//throws DIConfigurationError, incompatible parent is provided
 ----
+====
 
 === Binders and Bindings
 
@@ -485,14 +489,15 @@ following fields:
 2.  All inherited fields annotated with `@Inject`. task:IDEBUG-400[]
 3.  The injected fields will be created by the injector and their fields
 will be injected as well.
+--
 
 .Simple Field Injection
-[[ex:Simple_Field_Injection]]
-demonstrates simple
-field injection using default bindings. Note that all inherited fields
+[example]
+--
+<<Simple Field Injection,The listing below>> demonstrates simple field injection using default bindings. Note that all inherited fields
 (i.e. `A.xInA`) are injected and also fields in injected fields (i.e. )
 
-.Simple Field Injection
+.Simple Field Injection [[Simple Field Injection]]
 [source,n4js]
 ----
 class X {
@@ -1307,6 +1312,7 @@ footnote:[This restriction has two reasons: Firstly, user-defined types with imp
 math:[\[\begin{aligned}
     & P.providedByRuntime = \TRUE \land F.providedByRuntime = \TRUE
     \end{aligned}\]]
+--
 
 .Applying Polyfills
 [req,id=IDE-154,version=1]
@@ -1413,9 +1419,9 @@ module exist in the same project: math:[\[\begin{aligned}
      \land M_1.staticPolyfillModul = M_2.staticPolyfillModul = \TRUE }
     \end{aligned}\]]
 
-// TODO: Example Block
-[[ex:Static polyfill]]
-
+.Static polyfill
+[example]
+====
 <<lst:StaticPolyfill_genMod>> shows an example of generated code. <<lst:StaticPolyfill_polyfillMod>> demonstrates the static polyfill.
 Note that the containing project has two source folders configured:
 `Project/src/n4js` and `Project/src/n4js-gen`.
@@ -1433,6 +1439,8 @@ export public class B {
 }
 ----
 
+
+
 [[lst:StaticPolyfill_genMod]]
 [source,n4js]
 ----
@@ -1448,6 +1456,7 @@ export public class B extends B {
     m3(): void {...} // adds new method m3 to B
 }
 ----
+====
 --
 
 === Transpiling static polyfilled classes

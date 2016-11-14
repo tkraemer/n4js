@@ -83,7 +83,9 @@ The use of `this` is illustrated with some examples as it can often be
 confusing. Type inference heuristics and explanations are provided in
 the next section.
 
-[[ex:this_in_unrestricted_mode]]
+.This in Unrestricted Mode
+[example]
+--
 In unrestricted mode, `this` is bound to the receiver. If there is no receiver it is bound to the global object, however, we often do not know exactly
 what the global object would be.
 
@@ -115,9 +117,11 @@ var ol2 = {
     }
 }
 ----
+--
 
-this in strict mode
-[[ex:this_in_strict_mode]]
+.This in strict mode
+[example]
+--
 In strict mode, `this` is bound to the receiver.
 If there is no receiver, it is bound to `undefined`.
 Thus, we will probably get a lot of errors:
@@ -145,9 +149,11 @@ var ol2 = {
     }
 }
 ----
+--
 
-this in N4JS mode
-[[ex:this_in_N4JS_mode]]
+.This in N4JS mode
+[example]
+--
 As in strict mode, `this` is bound to the receiver and if there is no receiver, it is bound to `undefined`. So the example above is also true for N4JS mode. Classes behave slightly differently:
 
 [source,n4js]
@@ -169,7 +175,9 @@ class A {
 }
 ----
 
-Note that in N4JS classes, is always bound to the instance when used in
+--
+
+NOTE: In N4JS classes, `this` is always bound to the instance when used in
 field initialization.
 
 ==== Type Inference
@@ -256,8 +264,9 @@ task:IDE-802[]
 It is not allowed to use more then one annotation on an element.
 --
 
-#### Effect of Nominal This Type
-[[ex:Effect_of_Nominal_This_Type]]
+Effect of Nominal This Type
+[example]
+--
 Given the following declaration
 
 [source,n4js]
@@ -289,8 +298,11 @@ instead of
 this[~Object]
 ----
 
-This and Function Declaration
-[[ex:This and Function Declaration]]
+--
+
+.This and Function Declaration
+[example]
+--
 This example demonstrates the usage of functions annotated with `@This`.
 By using the argument  `union{A,B}` it is possible to have two completely unrelated classes as the receiver type of the function `logger`. To pass an actual object the `apply()` method of the function is used.
 
@@ -314,8 +326,11 @@ logger.apply(a,[]); // prints "~ A was logged ~"
 logger.apply( new B(),[]) // prints "~ B was logged ~"
 ----
 
-This and Function Expressions
-[[ex:This and Function Expressions]]
+--
+
+.This and Function Expressions
+[example]
+--
 In this example a function is created via a function expression. The
 function is then assigned to member field of class B. Via annotating the
 expression with access to the receiver of type B is enabled.
@@ -332,9 +347,11 @@ var b: B = new B();
 b.logMe = @This(B) function() { console.log("*>"+this.log()+"<*"); }
 b.logMe(); // prints "*>B was logged<*"
 ----
+--
 
-This and Constructor Functions
-[[ex:This and Constructor Functions]]
+.This and Constructor Functions
+[example]
+--
 Note that if a function is called as a constructor function with new, the
 type of `this` can be declared via annotation `@This`, as shown in the following
 snippet:
@@ -359,6 +376,8 @@ function Box(w: number w, h: number) {
 var bError = Box(1,2)
 var bOK = new Box(1,2)
 ----
+
+--
 
 Inside the constructor function `Box`, `this` is bound to the structural type
 definition due to the annotation.
@@ -849,8 +868,9 @@ math:[\[\begin{aligned}
 & \infer{\tee \lstnfbnf{'('} e \lstnfbnf{')'}: T}
         {\tee e: T}                                             \tag{\S11.1.6}\end{aligned}\]]
 
-Parenthesized Expression Type Examples
-[[ex:Parenthesized Expression Type Examples]]
+.Parenthesized Expression Type Examples
+[example]
+--
 In the following listing, the type of the plain
 expressions is equivalent to the parenthesized versions:
 
@@ -867,6 +887,8 @@ a;                      (a);
 10-5;                   (10-5);
 f?a:b                   (f?a:b);
 ----
+
+--
 
 === Property Accessors
 
@@ -1021,8 +1043,10 @@ math:[\[\begin{aligned}
 Although index access is very limited, it is still possible to use
 immediate instances of `Object` in terms of a map (but this applies only to index access, not the dot notation):
 
-Object as Map
-[[ex:Object_as_Map]]
+.Object as Map
+[example]
+--
+
 
 [source,n4js]
 ----
@@ -1031,6 +1055,8 @@ map["Kant"] = "Imperative";
 map["Hegel"] = "Dialectic";
 map.spinoza = "Am I?";  // error: Couldn't resolve reference to IdentifiableElement 'spinoza'.
 ----
+
+--
 
 .Parameterized Property Access
 [req,id=IDE-99,version=1]
@@ -1142,8 +1168,9 @@ to 3) It is not possible to refer to union or intersection at that
 location. So this is not explicitly denied here since it is not possible
 anyway.
 
-Abstract classes and construction
-[[ex:Abstract classes and construction]]
+.Abstract classes and construction
+[example]
+--
 The following examples demonstrates the usage of abstract
 classes and constructor types, to make the first two constraints more
 clearer:
@@ -1170,6 +1197,8 @@ foo(A);
 // XPECT noerrors -->
 foo(B);
 ----
+
+--
 
 ==== Type Inference [[type-inference-6]]
 
@@ -1288,7 +1317,9 @@ useful. In that case, the type variable defined in the generic method
 declaration is explicitly bound to types by using type arguments. See
 <<Property_Accessors>> for semantics and type inference.
 
-[[ex:Generic Method Invocation]]
+.Generic Method Invocation
+[example]
+--
 This examples demonstrate how to explicitly
 define the type argument in a method call in case it cannot be inferred
 automatically.
@@ -1318,6 +1349,8 @@ bar(context, "some.path.selector");
 ----
 
 the type variable `T` can be automatically bound to the type of variable `context`.
+
+--
 
 === Postfix Expression
 
@@ -1697,8 +1730,10 @@ math:[\[\begin{aligned}
 A special feature of N4JS is support for interface type references in
 combination with the `instance of` operator. The compiler rewrites the code to make this work. task:IDE-561[]
 
-`instanceof` with Interface
-[[ex:instanceof_with_Interface]]
+.`instanceof` with Interface
+[example]
+--
+
 The following example demonstrates the use of the operator with an interface. This is, of course, not working in pure ECMAScript.
 
 //% see /eu.numberfour.ide.n4js.transpiler.es5.tests/testdata/spec_chap_07_01_16/Ex72_instanceof_with_interfaces.n4js.xt
@@ -1729,6 +1764,8 @@ This will print out
 A is instance of I
 B is instance of I
 ----
+
+--
 
 ==== Type Inference [[type-inference-12]]
 task:IDE-244[] task:IDE-345[]
@@ -1931,7 +1968,9 @@ and false expression (cf. cite:[ECMA11a(S11.12,p.84)]   (): math:[\[\begin{align
     {T = \union{ \tee et, \tee ef}}\end{aligned}\]]
 
 
-[[ex:Type of Conditional Expressions]]
+.Type of Conditional Expressions
+[example]
+--
 Given the following declarations:
 
 [source,n4js]
@@ -1958,6 +1997,8 @@ cond ? (cond ? a : b) : (cond ? c : d); // union{A,B,C,D}
 cond ? (cond ? a : b) : (cond ? b : d); // union{A,B,D}
 cond ? ga : gb;                         // union{G<A>,G<B>}
 ----
+--
+
 
 === Assignment Expression
 
@@ -2088,8 +2129,10 @@ task:IDE-778[]
 All expressions will be evaluated even though only the value of the last
 expression will be the result.
 
-[Comma Expression][ex:CommaExpression] Assignment expressions preceed
-comma expressions:
+.Comma Expression
+[example]
+--
+Assignment expressions preceed comma expressions:
 
 [source,n4js]
 ----
@@ -2097,6 +2140,7 @@ var b: boolean;
 b = (12, 34, true); // ok, b=true
 b =  12, 34, true ; // error, b=12 is invalid
 ----
+--
 
 ==== Type Inference [[type-inference-18]]
 task:IDE-244[]
@@ -2121,8 +2165,10 @@ SuperLiteral: {SuperLiteral} 'super';
 Apart from the use of keyword `super` in wildcards of type expressions (cf. <<Type_Expressions>>), there are two use cases for keyword `super`: super member access and super
 constructor calls.
 
-Super Keyword
-[[ex:SuperKeyword]]
+.Super Keyword
+[example]
+--
+
 Two use cases for keyword super:
 
 [source,n4js]
@@ -2139,6 +2185,8 @@ class B extends A {
     }
 }
 ----
+
+--
 
 ==== Semantics [[super-keyword-semantics]]
 task:IDE-645[]
@@ -2322,7 +2370,7 @@ The inferred type of a class expression simply is the class type as
 described in <<Constructor_Type>>.
 
 === Cast (As) Expression
-task:IDE-161p[]
+task:IDE-161[]
 
 ==== Syntax [[cast-as-expression-syntax]]
 

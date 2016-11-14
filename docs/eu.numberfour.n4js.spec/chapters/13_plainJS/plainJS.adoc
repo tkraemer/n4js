@@ -210,16 +210,22 @@ implementation is disabled, a corresponding implementation must be found
 by the naming convention. If no such implementation is found, a warning
 is generated.
 
-//TODO: Example Block
-[[ex:External Definitions and Their Implementations]]
+--
+
+.External Definitions and Their Implementations
+[example]
+====
+
 If, in addition to standard `source`, the `source-external` fragment is
 provided in `Sources`, math:[$n4jsd$] files in the folder tree
 below source folders will be related to modules of the same name in the
 external folders. This is shown in <<externalClassImplementation_naming>>.
---
+
 
 [[externalClassImplementation_naming]]
 image:fig/externalClassImplementation_naming.png[title="External Class Implementation, Naming Convention"]
+
+====
 
 === Example [[ex:External_Classes_Example]]
 
@@ -269,8 +275,9 @@ export external public class Circle {
 Note that the class and interface names in n4jsd files must match those
 in the js files, respectively.
 
-//TODO :Example Block
-[[ex:Structural typed external interfaces]]
+.Structurally-typed external interfaces
+[example]
+--
 
 [source]
 ----
@@ -289,6 +296,7 @@ export external public class Circle implements Scalable {
     constructor(center: Point, radius: number);
 }
 ----
+--
 
 == Global Definitions
 task:IDE-1036[]
@@ -397,8 +405,9 @@ It also adds completely new classes and features, of course.
 The syntax of runtime polyfills is described in section <<Polyfill_Definitions>>.
 Here, an example of applying a runtime polyfill is detailed.
 
-//TODO example block
-[[ex:Object.observe with Polyfill]]
+.Object.observe with Polyfill
+[example]
+--
 The following snippet demonstrates how to define a polyfill of the built-in
 class to add the new ECMAScript 7 observer functionality.
 This snippet has to be defined in a runtime library or environment.
@@ -419,3 +428,5 @@ export external public class Object extends Object {
 A client referring to this runtime library (or environment) can now
 access the observer methods as if it were defined directly in the
 original declaration of `Object`.
+
+--

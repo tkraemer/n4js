@@ -295,8 +295,9 @@ or fields) is similar to mixing in members from roles as defined in cite:[Dart13
 more constraints exist, (for example, methods of interfaces must be
 public).
 
-// Example
-// [Simple Class][ex:Simple Class]
+.Simple Class
+[example]
+--
 This first example shows a very simple class with a field, a constructor and a method.
 
 [source,n4js]
@@ -312,7 +313,11 @@ class C {
 }
 ----
 
-[[ex:Extend and implement]]
+--
+
+.Extend and implement
+[example]
+--
 The following example demonstrate how a class can extend a superclass and implement an
 interface.
 
@@ -327,6 +332,7 @@ class X extends C implements I {
     foo(): void {}
 }
 ----
+--
 
 A class math:[$C$] is a subtype of another classifier
 math:[$S$] (which can be a class or interface) if the other
@@ -562,7 +568,9 @@ As specified in <<Defining and Calling Constructors>>, interfaces
 cannot contain a constructor i.e.
 math:[$\forall m \in I.ownedMethods: m.name \neq 'constructor'$].
 
-[[ex:Simple Interfaces]]
+.Simple Interfaces
+[example]
+--
 The following example shows
 the syntax for defining interfaces. The second interface extends the
 first one. Note that methods are implicitly defined abstract in
@@ -578,6 +586,7 @@ interface I2 extends I {
     bar(): void
 }
 ----
+--
 
 If a classifier math:[$C$] _implements_ an interface
 math:[$I$], we say math:[$I$] is _implemented_ by

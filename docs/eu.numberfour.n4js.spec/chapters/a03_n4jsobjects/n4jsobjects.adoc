@@ -379,15 +379,15 @@ N4JS provides additional Error types as subtypes of `Error`.
 task:IDE-1510[]
 
 Considering API definitions and concrete implementations of those APIs
-the error `N4-Api\-Not\-Im\-ple\-men\-ted\-Error` is introduced to specifically report missing implementations.
+the error `N4-Api-Not-Implemented-Error` is introduced to specifically report missing implementations.
 Instances of this error type are inserted internally during the
 transpilation of API-implementing projects. Whenever a difference to the
 API in form of a missing implementation is encountered, the transpiler
-will insert stub-code throwing an instance of `N4-Api\-Not\-Im\-ple\-men\-ted\-Error`.
+will insert stub-code throwing an instance of `N4-Api-Not-Implemented-Error`.
 
 API-testing projects can catch those errors and act accordingly. This
 enables tracking of completeness of implementations by counting the
-occasions an `N4-Api\-Not\-Im\-ple\-men\-ted\-Error` was encountered.
+occasions an `N4-Api-NotImplemented-Error` was encountered.
 
 [source,n4js]
 ----

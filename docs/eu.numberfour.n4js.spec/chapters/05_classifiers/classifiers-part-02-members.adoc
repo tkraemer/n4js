@@ -686,9 +686,10 @@ name as math:[$SM$]: math:[\[\begin{aligned}
     \end{aligned}\]]
 --
 
-#### Field name conflicts with structural member name
+.Field name conflicts with structural member name
+[example]
+--
 
-[[ex:Field_name_conflicts_with_structural_member_name]]
 The situation described in <<req:Fields_and_constructor_this_type_members>> is
 demonstrated in the following code fragment:
 
@@ -705,9 +706,10 @@ class B extends A {
     public x: number; // will cause an error message
 }
 ----
+--
 
-[[spec-style-constructor]]
-@Spec-style Constructor ::
+
+@Spec-style Constructor [[spec-style-constructor]] ::
 
 The tedious process of copying the members of the parameter to the
 fields of the class can be automated via the annotation if the argument
@@ -1262,8 +1264,10 @@ N4SetterDeclaration <Yield>:
 Notes with regard to syntax: Although ECMAScript 6 does not define
 fields in classes, it defines getter and setter methods similarly (cf. cite:[ECMA15a(S13.3,p.209)]).
 
-#### Getter and Setter
-[[ex:Getter and Setter]]
+.Getter and Setter
+[example]
+--
+
 The getter and setter implementations usually reference data fields internally. These are to be declared explicitly (although ECMAScript allows creating fields on
 the fly on their first usage (see task IDE-422 task:IDE-422[])).
 The following example demonstrates a typical usage of getter and setter in combination with a data field.
@@ -1295,6 +1299,8 @@ class C {
     }
 }
 ----
+
+--
 
 ==== Properties [[field-acessors-properties]]
 
@@ -1430,7 +1436,9 @@ footnote:[The technical reason for this rule is the way properties are stored in
 It is even possible to call a static field accessor or method of a class
 using dynamic polymorphism, as demonstrated in the following example:
 
-Static members of classes, inheritance and polymorphism [[ex:Polymorphism_and_static_methods]]
+.Static members of classes, inheritance and polymorphism
+[example]
+--
 
 [source,n4js]
 ----
@@ -1463,12 +1471,15 @@ A.bar(); // will print "A#foo"
 B.bar(); // will print "B#foo"
 ----
 
+--
+
 This is quite different from Java where static methods are not inherited
 and references to static methods are statically bound at compile time
 depending on the declared type of the receiver (and not its value):
 
-Static members in Java [[ex:Static_members_in_Java]]
-
+.Static members in Java
+[example]
+--
 [source,java]
 ----
 // !!! JAVA CODE !!!
@@ -1482,6 +1493,7 @@ public class C {
     }
 }
 ----
+--
 
 === Generic static methods
 task:IDE-151[] task:IDE-38[] task:IDE-39[]
@@ -1529,8 +1541,10 @@ body.
 Static members of interfaces are much more restricted than those of
 classes. Compare the following example to <<ex:Polymorphism_and_static_methods>> for classes above:
 
-Example: Static members of interfaces
-[[ex:Static_members_of_interfaces]]
+.Static members of interfaces
+[example]
+--
+
 
 [source,n4js]
 ----
@@ -1548,6 +1562,8 @@ ti.m(); // ERROR! (access to m only allowed directly via type name I)
 ti = J;
 ti.m(); // ERROR! (access to m only allowed directly via type name I)
 ----
+
+--
 
 The last line in is the reason why access to static members has to be
 restricted to direct access via the type name of the containing
@@ -1840,7 +1856,9 @@ implemented or overridden in order to solve conflicts.
 We always use the `@Override` annotation.
 
 
-[[ex:Method Consumption]]
+.Method Consumption
+[example]
+--
 
 <<tab:methodConsumption,Table Method Consumption>> shows simple examples of above rules.
 Assuming that `class C` extends super `class S` and implements interface `I1` and `I2`:
@@ -1849,6 +1867,8 @@ Assuming that `class C` extends super `class S` and implements interface `I1` an
 ----
 class C extends S implements I1, I2 {...}
 ----
+
+--
 
 The columns describe different scenarios in which a method (with same
 name) is defined in different classifiers. We assume that the defined
@@ -1877,7 +1897,9 @@ consumption is noticed at runtime.
 
 // TODO Example Block
 
-[[ex:Field and Field Initializer Consumption]]
+.Field and Field Initializer Consumption
+[example]
+--
 
 [source,n4js]
 ----
@@ -1922,6 +1944,8 @@ console.log(
 )
 ----
 
+
+
 // TODO task:IDE-1236[] {review example in bundle}
 
 We expect the following output (for each field):
@@ -1931,3 +1955,5 @@ the initializer of `s` in `C` is used.
 * `d.t = "D"`: `t` is defined in `D`, solving a conflict stemming from the definition of `t` in `I1` and `I2`. Thus, the initializer of `t` in `D` is used.
 * `d.u = "I1"` : `u` is only defined in `I1`, thus the initializer defined in `I1` is used.
 * `d.v = "I2"` : `v` is overridden in `I2`, so is the field initializer. This is why `d.v` must be assigned to `I2` and not `I0`.
+
+--

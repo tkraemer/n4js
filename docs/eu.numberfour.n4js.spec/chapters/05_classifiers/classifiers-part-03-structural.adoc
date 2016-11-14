@@ -113,11 +113,11 @@ defined type must not be inherited from math:[\[\begin{aligned}
     \end{aligned}\]]
 --
 
-[[ex:Declaration Site Structural Typing]]
-The following snippet demonstrates the effect of definition-site
-structural types by comparing them to nominal declared types:
-
-[[lst:Declaration Site Structural Typing]]
+.Declaration Site Structural Typing
+[example]
+--
+The following snippet demonstrates the effect of definition-site structural types by comparing them to
+nominal declared types: [[lst:Declaration Site Structural Typing]]
 
 .Declaration Site Structural Typing
 [source,n4js,caption="Declaration Site Structural Typing"]
@@ -135,6 +135,8 @@ f(new D());         // ok, D is a nominal subtype (as it implements Tilde)
 f({x:10,y:10});     // ok: Tilde is used with structural typing for non-N4-classifiers
 ----
 
+
+
 Definition site structural typing may lead to unexpected results. For
 example;
 
@@ -147,6 +149,8 @@ class ~E extends C{}
 It may be unexpected, but `E` is not a subtype of `C`, i.e.
 math:[$E \notsubtype C$]! E.g., `instanceof` won’t work with `E`, while it works
 with `C`!
+
+--
 
 == Use-Site Structural Typing
 
@@ -197,8 +201,9 @@ subtype checks.
 // todo{Not implemented yet. See GH-12, subtask 2}
 task:GH-12[]
 
-// TODO: Example Block
-[[ex:Nested Structural Typing Strategies]]
+.Nested Structural Typing Strategies
+[example]
+--
 
 [source,n4js]
 ----
@@ -211,14 +216,17 @@ interface I<T> {
 var a : ~i~A; // ST2
 ----
 
+--
+
+
 The following example demonstrates the effect of the structural type
 modifiers:
 
 
-[[ex:Effect of structural type modifiers on use-site]]
-Let’s assume the type defined on
-the left. The following _pseudo_ code snippets explicitly list the type
-with its members virtually created by a structural modifier. Note that
+.Effect of structural type modifiers on use-site
+[example]
+--
+Let’s assume the type defined on the left. The following _pseudo_ code snippets explicitly list the type with its members virtually created by a structural modifier. Note that
 this is pseudo code, as there are no real or virtual types created.
 Instead, only the subtype relation is defined accordingly:
 
@@ -418,6 +426,8 @@ the structural read-only field, math:[$\tsWoFld T$] the structural
 write-only field and math:[$\tsInitFld T$] the structural
 initializer field version of math:[$T$].
 
+--
+
 .Use-Site Structural Typing
 [req,id=IDE-76,version=1]
 --
@@ -529,8 +539,10 @@ use-site structural typing (<<req:Use_Site_Structural_Typing>>) are
 applied.
 
 
-Use-Site Structural Typing
-[[ex:Use_Site_Structural_Typing]]
+.Use-Site Structural Typing
+[example]
+--
+
 The following example demonstrates the effect of the structural (field)
 modifier, used in this case for function parameters.
 
@@ -549,8 +561,11 @@ f({x:10});      // error, the object literal does not provide function foo()
 g({x:10});      // ok: object literal provides all fields of I
 ----
 
+--
+
 .Structural types variable and instanceof operator
-[[ex:Structural types variable and instanceof operator]]
+[example]
+--
 It is possible to use a variable typed with a structural version of a type on the left hand side of the `instanceof` operator, as demonstrated in this example:
 
 [source,n4js]
@@ -568,6 +583,8 @@ function f(p: ~~C) {
     }
 }
 ----
+
+--
 
 The following table describes the member availability of `X` in various
 typing scenarios. Such as math:[$\tsFld X$],
@@ -621,8 +638,9 @@ typing constructors. The already-initialized fields can be either
 omitted from, or can be re-initialized via, an initializer field typing
 style constructor.
 
-Subtype relationship between structural field typing
-[[ex:Subtype relationship between structural field typing]]
+.Subtype relationship between structural field typing
+[example]
+--
 
 [source,n4js]
 ----
@@ -651,7 +669,7 @@ class A5 {
 <<<
 // Page break before large matrix
 
-[.matrix]
+[.small]
 [cols="19"]
 |===
 |  h| A1 h| pass:[~A1] h| pass:[~~A1] h| pass:[~r~A1] h| pass:[~r~A2] h| pass:[~r~A3] h| pass:[~r~A4] h| pass:[~r~A5]
@@ -677,6 +695,8 @@ h| pass:[~r~A4]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |�
 h| pass:[~r~A5]|  |  |  |  |  |  |  |✓ |  |  |✓ |✓ |  |  |  |✓ |✓ |
 |===
 
+--
+
 // TODO: fonts must be smaller here to prevent overlapping in HTML & PDF
 
 == Public Setter Annotated With `ProvidesInitializer`
@@ -687,8 +707,9 @@ initializer are treated as optional in the initializer field type.
 It is important to note that it is valid to use the `ProvidesInitializer` annotation for
 setters in `n4js` files and not only definition files.
 
-.Setters with treated as optional
-[[ex:Setters with @ProvidesInitializer treated as optional]]
+.Setters with `@ProvidesInitializer` treated as optional
+[example]
+--
 
 [source]
 ----
@@ -706,6 +727,8 @@ console.log(new C({}).y); // 1
 console.log(new C({y: 42}).y); //24
 ----
 
+--
+
 == Structural Types With Optional Fields
 
 
@@ -717,7 +740,9 @@ If a type defines an optional field then this type is always compatible
 with a type that does not define a field with same name and type but is
 equal in all other members.
 
-[[ex:Optional field on one side]]
+.Optional field on one side
+[example]
+--
 
 .Optional field on one side
 [source,n4js]
@@ -735,8 +760,6 @@ function g(~D d) {}
 g(new C()); // ok: C is a (structural) subtype of ~D
 ----
 
-
-[[ex:Optional field on one side]]
 
 .Optional field on one side
 [source,n4js]
@@ -765,13 +788,17 @@ function g(f: ~F) {}
 g(new C()); // ok: C is a (structural) subtype of ~F
 ----
 
+--
+
 == Structural Types With Access Modifier
 
 The access modifier of the subtype have to provide equal or higher
 visibility.
 
-Access modifier in structural typing
-[[ex:Access modifier in structural typing]]
+.Access modifier in structural typing
+[example]
+--
+
 
 [source,n4js]
 ----
@@ -786,6 +813,8 @@ f(new D()); // error: D is no (structural) subtype of ~C, as visibility of s in 
 function g(d: ~D) {}
 g(new C()); // ok: C is a (structural) subtype of ~D, as visibility of s in C is greater-than-or-equal to s in D
 ----
+
+--
 
 == Structural Types With Additional Members
 
@@ -869,8 +898,10 @@ classes. The rules given in <<Structural Types With Optional Fields>> apply acco
 
 --
 
-Additional optional members in structural typing
-[[ex:Additional_optional_members_in_structural_typing]]
+.Additional optional members in structural typing
+[example]
+--
+
 
 [source,n4js]
 ----
@@ -885,13 +916,17 @@ c1 = { f1:42 };  // error: "~Object with { number f1; } is not a subtype of ~C w
 c2 = { f1:42 };  // ok!!
 ----
 
+--
+
 Augmenting a type variable T with additional structural members can
 cause collisions with another member of a type argument for T. Hence,
 type variables must not be augmented with additional structural members
 like in the following example.
 
-Forbidden additional structural members on type variables
-[[ex:Forbidden_additional_structural_members_on_type_variables]]
+.Forbidden additional structural members on type variables
+[example]
+--
+
 
 [source,n4js]
 ----
@@ -900,12 +935,17 @@ interface I<T> {
 }
 ----
 
+--
+
+
 Using an additional structural member on a type variable T could be seen
 as a constraint to T. However, constraints like this should be rather
 stated using an explicit interface like in the example below.
 
-Use explicitly defined Interfaces
-[[ex:Use_explicitly_defined_Interfaces]]
+.Use explicitly defined Interfaces
+[example]
+--
+
 
 [source,n4js]
 ----
@@ -915,3 +955,4 @@ interface ~J {
 interface II<T extends J> {
 }
 ----
+--

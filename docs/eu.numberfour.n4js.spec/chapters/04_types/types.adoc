@@ -79,9 +79,8 @@ bottom type math:[$Bot=``undefined}$].
 
 
 `null` is almost similar to math:[$Bot$], except that it is not a subtype
-of `undefined`.
+of `undefined`. [[cdPredefinedTypesHierarchy]]
 
-[[cdPredefinedTypesHierarchy]]
 
 image:fig/cdPredefinedTypesHierarchy.png[title="Predefined Types Hierarchy"]
 
@@ -94,8 +93,10 @@ same applies to the relation of `Object` as well as the subtypes shown for `Stri
 
 
 
-[[ex:Type Examples, Class Hierarchy]]
-// TODO example block
+.Type Examples, Class Hierarchy
+[example]
+--
+
 In the following examples, we assume the following classes to be given:
 
 [source]
@@ -126,6 +127,8 @@ class G<T> {
 }
 ----
 
+--
+
 == Type Expressions
 
 In contrast to ECMAScript, N4JS defines static
@@ -134,15 +137,14 @@ to specify the type of variables.
 
 === Syntax
 
-summarizes the type expression grammar. Depending on the context, not
-all constructs are allowed. For example, the variadic modifier is only
-allowed for function parameters.
+<<EBNFTypeExpression>>summarizes the type expression grammar. Depending on the context, not
+all constructs are allowed. For example, the variadic modifier is only allowed for function parameters.
 
-References to user-declared types are expressed via ``ParameterizedTypeRef``. This is also true
-for non-generic types, as the type arguments are optional.
+References to user-declared types are expressed via ``ParameterizedTypeRef``.
+This is also true for non-generic types, as the type arguments are optional.
 See <<Parameterized Types>> for details on that reference.
 
-For qualified names and type reference names, see
+For qualified names and type reference names, see <<qualified_names>>
 
 The type expressions are usually added to parameter, field, or variable
 declarations as a suffix, separated with colon (’:’). The same is true
@@ -152,9 +154,9 @@ cases of object literals or destructuring are explained later on.
 .Type_Annotation_Syntax
 [example]
 --
+
 The following two listings show the very same code and type annotations are provided on
-the left hand side. For simplicity, is always used as type
-expression.
+the left hand side. For simplicity, is always used as type expression.
 footnote:[In the N4JS IDE, type annotations are highlighted differently than ordinary code.]
 
 [source]
@@ -204,6 +206,7 @@ class C {
 The code on the right hand side is almost all valid ECMAScript 2015,
 with the exception of field declarations in the class. These are moved
 into the constructor by the N4JS transpiler.
+
 --
 
 === Properties
@@ -320,10 +323,10 @@ At the moment, N4JS does not support type guards or, more general, effect system
 Some notes on terminology:
 
 Type Parameter vs. Type Argument::
-  A type parameter is a declaration containing type variables. A type
-  argument is a binding of a type parameter to a concrete type or to
-  another type parameter. Binding to another type parameter can further
-  restrict the bounds of the type parameter.
+A type parameter is a declaration containing type variables. A type
+argument is a binding of a type parameter to a concrete type or to
+another type parameter. Binding to another type parameter can further
+restrict the bounds of the type parameter.
 
 This is similar to function declarations (with formal parameters) and
 function calls (with arguments).
@@ -357,8 +360,10 @@ TypeVariable:
 ;
 ----
 
-[Type Variable as Upper Bound][ex:Type Variable as Upper Bound] Note
-that type variables are also interpreted as types. Thus, the upper bound
+.Type Variable as Upper Bound
+[example]
+--
+Note that type variables are also interpreted as types. Thus, the upper bound
 of a type variable may be a type variable as shown in the following
 snippet:
 
@@ -368,7 +373,7 @@ class G<T> {
     <X extends T> foo(x: X): void { }
 }
 ----
-
+--
 
 ==== Properties [[type-variables-properties]]
 
@@ -399,10 +404,10 @@ A type variable can be used in any type expression contained in the
 generic class, generic interface, or generic function / method
 definition.
 
-[[ex:F_bounded_quantification]]
-
+.F bounded quantification
 [example]
 --
+
 Using a type variable in the upper bound reference may lead to recursive definition.
 
 [source]
@@ -435,8 +440,9 @@ It is important to note that while type variables may have a declared
 upper bound, they cannot be simply replaced with that upper bound and
 treated like existential types. The following example illustrates this:
 
-[Type variables vs. existential
-types][ex:TypeVariablesVsExistentialTypes]
+.Type variables vs. existential types
+[example]
+--
 
 [source]
 ----
@@ -465,13 +471,15 @@ class X<T extends A, S extends B> {
 }
 ----
 
-Even though the upper bound of is a subtype of ’s upper bound (since
-math:[$B <: A$]), we cannot infer that is a subtype of (line 15),
-because there are valid concrete bindings for which this would not be
-true: for example, if were bound to and to .
+--
 
-This differs from existential types (see and and line 21):
-math:[$<:$] ).
+Even though the upper bound of `S` is a subtype of `T`’s upper bound (since
+math:[$B <: A$]), we cannot infer that `S` is a subtype of `T` (line 15),
+because there are valid concrete bindings for which this would not be
+true: for example, if `T` were bound to `C` and `S` to `B`.
+
+This differs from existential types (see `ga` and `gb` and line 21): `G<? extends B>` $<:$ `G<? extends A>` ).
+
 
 We thus have to define subtype rules for type variables, taking the
 declared upper bound into account. If we have a subtype relation in
@@ -733,9 +741,9 @@ G<? extends A> <: G<?>              -> true
 
 ====
 
-<<cdVarianceChart>> shows the subtype relations of parameterized types (of a single generic type), which can be used as a cheat sheet.
+<<cdVarianceChart>> shows the subtype relations of parameterized types (of a single generic type), which can be used as a cheat sheet. [[cdVarianceChart]]
 
-[[cdVarianceChart]]
+
 
 image::fig/cdVarianceChart.png[title="cdVarianceChart"]
 
@@ -1647,11 +1655,9 @@ which the union is defined to be ``the same type as`` math:[$A$].
 Although the meaning of ``same`` is not clear, it is possibly used as a
 synonym for ``equivalent``.]
 
-
-
-// TODO: Example block
-//[Subtyping with union type][ex:Subtyping_with_union_type]
-
+.Subtyping with union type
+[example]
+--
 Let A, B, and C be defined as in the chapter beginning (math:[$C <: B <: A$])
 
 The following subtyping relations with union types are to be evaluated
@@ -1675,15 +1681,17 @@ union{X,Y} <: union{X,Y,Z}                      -> true
 union{X,Y,Z} <: union{X,Y}                      -> false
 ----
 
+--
+
+
 The simplification constraints are used by the type inferrer. It may be
 useful, however, to define union types with superfluous elements, as the
 next example demonstrates
 
-// TODO : Example
 
 .Superfluous elements in union type
 [example]
-====
+--
 
 [source,n4js]
 ----
@@ -1694,7 +1702,7 @@ class C extends A{}
 function foo(p: union{A,B}) {..}
 ----
 
-====
+--
 
 Although `B` is superfluous, it may indicate that the function handles
 parameters of type differently than one of type `A` or `C`.
@@ -2465,7 +2473,6 @@ or inferred type of the receiver. If it is used as return type, all
 return statements of the methods must return the `this` keyword or a variable
 value implicitly inferred to a `this` type (e.g. `var x = this; return x;`).
 
-[[Simple This Type]]
 .Simple This Type
 [source]
 ----
@@ -2507,8 +2514,9 @@ class. The `this` keyword refers to the type of instances of the class in case
 of instance methods, but to the classifier the of the class in case of
 static methods. See  <<This_Keyword>> for details.
 
-[[ex:This keyword and type in instance and static context]]
-//TODO: Example Block
+.This keyword and type in instance and static context
+[example]
+--
 Note that the following code is not working, because some usages below are
 not valid in N4JS. This is only to demonstrate the types.
 
@@ -2523,6 +2531,7 @@ class C {
     }
 }
 ----
+--
 
 Structural typing and additional members in structural referenced types
 is described in <<Structural_Typing>>.
@@ -2586,8 +2595,9 @@ Instead of using `this` in these cases, the type expressions in the `@This` anno
 context it occurs in (non-static or static). To refer to the
 this-classifier (static type) the construct `type{this}` is used. task:IDE-785[]
 
-[[ex:this type in function-type-expression]]
-//TODO : Example Block
+.This type in function-type-expression
+[example]
+--
 
 [source]
 ----
@@ -2600,14 +2610,16 @@ class A {
 }
 ----
 
+--
 // TODO: task inside footnote
 
 The use of `this` type is limited to situations where it cannot be referred in
 mixed co- and contra-variant ways. In the following example the problem
 is sketched up. footnote:[The phenomenon is described in IDEBUG-263 task:IDEBUG-263[]]
 
-[[ex:problems with this type and type arguments]]
-//TODO: Example Block
+.Problems with this type and type arguments
+[example]
+--
 
 [source]
 ----
@@ -2627,6 +2639,8 @@ b.store.value = funcB  // OK.
 var a2: A = b; // OK, since B is a subtype of A
 a2.store.value( a ) // RUNTIME ERROR, the types are all correct, but remember b.store.value was assigned to funcB, which can only handle subtypes of B !
 ----
+
+--
 
 == Enums
 task:IDE-327[] task:IDE-980[]
@@ -2798,11 +2812,13 @@ Literal names have to be unique.
 Enum literals are singletons:
 math:[\[\begin{aligned} \forall e_1,e_2, \mu(e_1)=\mu(e_2)=``N4EnumLiteral`` \land \tee e_1 = \tee e_2: e_1``==}e_2 \iff e_1``===}e_2\end{aligned}\]]
 
-[[ex:Enumeration List]]
-//TODO: Example Block
+.Enumeration List
+[example]
+--
+
 Due to the common base type `N4Enum` it is possible to define generics accepting only enumeration, as shown in this example:
 
-[source]
+[source,n4js]
 ----
 enum Color { R, G, B}
 
@@ -2817,6 +2833,8 @@ var c: Color = colors.get();
 ----
 
 --
+--
+
 
 === String-Based Enums
 
@@ -2884,11 +2902,9 @@ value, as in
     var c = Color;
 ----
 
-//Example Block
-//.WebIDL example
-//[example]
-
-// TODO: fix the following listings
+.WebIDL example
+[example]
+--
 
 .Gecko-Engine webIDL XMLHttpRequestResponseType as taken from cite:[W3C:Steen:14:XL]
 [source,n4js]
@@ -2903,8 +2919,10 @@ enum XMLHttpRequestResponseType {
 }
 ----
 
+
 Compatible Definition of this Enumeration in N4JS, provided through a
 runtime-library definition:
+
 
 .File in source-folder: w3c/dom/XMLHttpRequestResponseType.n4js
 [source,n4js]
@@ -2954,5 +2972,7 @@ public function process(req: XMLHttpRequest) : void {
   }
 }
 ----
+
+--
 
 --

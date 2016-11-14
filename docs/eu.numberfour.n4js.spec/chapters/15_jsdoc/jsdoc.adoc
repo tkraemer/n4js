@@ -61,9 +61,9 @@ The format is as follows: `pass:[moduleSpecifier '.' typeName ( ('.'|'#') member
 --
 // TODO: check example block formatting
 
+.@testee
 [example]
 --
-[[ex:@testee Example]]
 The target element is to be fully qualified including the module specifier. The module specifier is simply
 the source folder relative path name with forward slashes. Type and
 element are added to that using dot as a separator. For example:
@@ -88,8 +88,9 @@ class is then extended by concrete test classes, correctly setting up
 the test fixture, e.g., creating instances of some classes implementing
 the interfaces tested in the base class.
 
-// TODO Example
-[[ex:Usage of testeeFromType]]
+.Usage of testeeFromType
+[example]
+--
 In the following example, the is used. This tag will lead to a test documentation for `B.foo` and `C.foo`.
 
 [source,n4js]
@@ -112,6 +113,7 @@ class TestB extends Base {}
 class TestC extends Base {}
 
 ----
+--
 
 Note that the resulting spec has to be double-checked for consistency
 since it is easily possible that too many constraints are generated.
@@ -134,8 +136,9 @@ recognized when defined in a member JSDoc). The `@testeeMember` is specified in 
 This only works for instance members, so far! Note: There is no
 validation for invalid combinations!
 
-// TODO Example
-[[ex:testeeType and testeeMethod]]
+.testeeType and testeeMethod
+[example]
+--
 Assume the following testees:
 
 [source,n4js]
@@ -148,7 +151,7 @@ class B extends A {
     @Override foo() { .. }
 }
 ----
-
+--
 Assume that the tests have to ensure the same semantics for `bar`, which is
 maybe changed by a wrong implementation of `foo`. That is, `bar` is to be tested in
 case of the receiver type `A` and `B`. This can be achieved by the following
@@ -195,7 +198,9 @@ links.
 
 // TODO: Example
 
-[[ex:testeeType and testeeMethod with omitted constraints]]
+.testeeType and testeeMethod with omitted constraints
+[example]
+--
 
 Assume testees similar as in <<ex:testeeType_and_testeeMethod>>. Since the semantics of `bar` is not changed in `B`, it is probably not necessary to generate the same constraint in the documentation for `bar` twice (one in the section for class `A` and another one in the section of class `B`).
 Still, we want the test to be executed for both receivers. This is how it is achieved:
@@ -232,6 +237,8 @@ constraint is created in the spec by the spec exporter:
 
 Although a test for receiver of type `B` is run, no additional constraint is
 created since there is no `@testeeType` available neither in `BTest` nor in `BaseTest`.
+
+--
 
 ==== @reqid in Tests [[jsdoc_tag_reqid_in_Tests]]
 

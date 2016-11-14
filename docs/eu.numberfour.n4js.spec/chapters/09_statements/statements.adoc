@@ -578,8 +578,9 @@ The elements to be imported with their names.
 Also see compilation as described in <<Modules>>, for semantics see following
 section.
 
-// TODO: Example Block
-[[ex:Import]]
+.Import
+[example]
+--
 
 [source]
 ----
@@ -589,6 +590,7 @@ import * as F from "p/F"
 import {A as G} from "p/G"
 import {A as H, B as I} from "p/H"
 ----
+--
 
 ==== Semantics [[import-statement-semantics]]
 
@@ -703,8 +705,11 @@ Cross-cutting constraints:
 * No declaration can be imported via named import and namespace import
 at the same time.
 
-//TODO: example block
-[[ex:Imports]]
+--
+
+.Imports
+[example]
+--
 
 Imports cannot be duplicated:
 
@@ -905,9 +910,9 @@ the user:
 The element to be exported, can be a declaration or a variable/const
 statement.
 
-//Example
-//Export
-[[ex:Export]]
+.Export
+[example]
+--
 
 [source]
 ----
@@ -917,6 +922,8 @@ export function foo() {}
 export var a;
 export const c="Hello";
 ----
+
+--
 
 ==== Semantics [[export-statement-semantics]]
 

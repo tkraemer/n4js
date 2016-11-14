@@ -9,7 +9,7 @@ ifndef::config_adoc_include_guard[]
 :sectnums:
 :sectanchors:
 // Path to Bib File
-:bib-file: n4jsspec.bib
+//:bib-file: n4jsspec.bib
 // Source Highlighting Configuration
 :source-highlighter: highlightjs
 :highlightjsdir: resources/scripts

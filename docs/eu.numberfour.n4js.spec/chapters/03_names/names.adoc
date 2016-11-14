@@ -156,7 +156,11 @@ have to be written to concrete syntax may be used even if they are
 generally not accessible. This is illustrated by the following example:
 
 // TODO Example
-//[Implicit, allowed type references in N4JS][ex:Implicit_allowed_type_references_in_N4JS]
+
+.Implicit, allowed type references in N4JS
+[example]
+
+====
 
 [source,n4js]
 ----
@@ -172,6 +176,8 @@ export public class D {
 var d: D = new D()
 d.acceptC( d.takeC() )
 ----
+
+====
 
 --
 
@@ -213,7 +219,10 @@ available in N4JS. Instead, they are synthesized from different
 construct as shown in the next example.
 
 // TODO Example Block
-//[Synthesized Member Access Modifiers in N4JS][ex:Synthesized_Member_Access_Modifiers_in_N4JS]
+
+.Synthesized Member Access Modifiers in N4JS
+[example]
+====
 
 [source,n4js]
 ----
@@ -236,6 +245,8 @@ export @Internal public class C {
     public  m6() {}             // public
 }
 ----
+
+====
 
 math:[$MAM$] does not define a totally ordered set. However, its
 subset
@@ -350,7 +361,9 @@ within a module.
 --
 
 // Example
-//[Type and Member Access Modifiers][ex:Type_and_Member_Access_Modifiers]
+.Type and Member Access Modifiers
+[example]
+====
 
 [source,n4js]
 ----
@@ -396,13 +409,17 @@ export public abstract class Sub extends C {
 var c: C = C.instance();
 ----
 
+====
+
 Members of non-visible types are, in general, not visible for a client.
 Members may become visible, however, if they are accessed via a visible
 type which inherits these members. The following examples demonstrate
 two different scenarios:
 
 
-[[ex:Declaring type vs receiver type]]
+.Declaring type vs receiver type
+[example]
+====
 It is especially noteworthy that the declaring type of a member is
 generally not considered for the accessibility of that member but only
 the receiver type is relevant.
@@ -424,6 +441,8 @@ var t = new N.ApiType();
 // member can be accessed although type Base is not exported:
 t.m(t);
 ----
+====
+
 
 The property access to the member `m` is valid because it fulfills the
 constraints for accessibility. The receiver of the property access is `t` of
@@ -434,8 +453,9 @@ This rule allows for defining a common functionality in module or
 project visible types that becomes accessible via exported, visible
 subtypes.
 
-// TODO: Example
-// [Member Access and Type Access Interplay][ex:Member Access and Type Access Interplay]
+.Member Access and Type Access Interplay
+[example]
+====
 The following example demonstrates the behavior when
 non-visible types are used as return types. In this case, all the
 members of the non-visible types are not accessible, even if they have a
@@ -465,6 +485,8 @@ class Client {
     }
 }
 ----
+
+====
 
 === Valid Names
 

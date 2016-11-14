@@ -172,8 +172,10 @@ with math:[\[\begin{aligned}
         {\{sub \in s.statements | \mu(sub)=\type{ReturnStatement}\} \cup \bigcup_{sub\in s.statements} returns(sub)} \end{aligned}\]]
 --
 
-Function type conformance
-[[ex:Function type conformance]]
+.Function type conformance
+[example]
+--
+
 The following incomplete snippet demonstrates the usage of two function variables
 math:[$f1$] and math:[$f2$], in which
 math:[$\infType{f2} <: \infType{f1}$] must hold true according to
@@ -190,11 +192,13 @@ function bar(f1: {function(A,B):C}) { ... }
 var f1: {function(A,B):C} = function(p1,p2){...};
 bar(f1);
 ----
+--
 
 The type of can be explicitly set via the annotation.
 
-Function Subtyping
-[[ex:Function Subtyping]]
+.Function Subtyping
+[example]
+--
 
 [source]
 ----
@@ -213,9 +217,11 @@ fAny(p);    // --> ok       void <: any
 fVoid(p);   // --> ok       void <: void
 fA(p);      // --> error    void !<: A
 ----
+--
 
-Subtyping with function types
-[[ex:Subtyping_with function types]]
+.Subtyping with function types
+[example]
+--
 If classes A, B, and C are defined as previously mentioned
 (math:[$C <: B <: A$])
 
@@ -236,6 +242,8 @@ evaluated as follows:
 {function(A):void} <: {function(B)}                 -> true
 {function(A):void} <: {function(B):A}               -> false
 ----
+
+
 
 The following examples demonstrate the effect of optional and variadic
 parameters:
@@ -293,6 +301,8 @@ The following examples show the effect of the annotation:
 {@This(A) function():void} <: {@This(any) function():void}  -> false
 {@This(A) function():void} <: {function():void}             -> false
 ----
+--
+
 
 .Function Type Conformance
 [def]
@@ -341,7 +351,7 @@ or contra-variant position, is not relevant:
 
 .Bounded type variable at co-variant position in function type
 [example]
-====
+--
 
 [source]
 ----
@@ -358,7 +368,7 @@ class Y extends X {
 ----
 
 Method `m` in `Y` may return an `A`, thus breaking the contract of m in `X`, but only if it is parameterized to do so, which is not allowed for clients of `X`, only those of `Y`. Therefore, the override in the above example is valid.
-====
+--
 
 The subtype relation for function types is also applied for method
 overriding to ensure that an overriding method’s signature conforms to
@@ -467,9 +477,9 @@ prohibited.
 In N4JS, the formal parameters of the function cannot be named `arguments`. This applies to all variable execution environments like field accessors (getter/setter, <<Field_Accessor>>), methods (<<Methods>>) and
 constructors (<<Constructor>>), where `FormalParameter` type is used.
 
-#### Usage of arguments object
-[[ex:Usage_of_arguments_object]]
-
+.Usage of arguments object
+[example]
+--
 [source,n4js]
 ----
 // regular function
@@ -505,6 +515,7 @@ function z(){
 }
 ----
 
+--
 --
 
 == ECMAScript 5 Function Definition
@@ -568,11 +579,9 @@ math:[$FunctionExpression$]. This supertype contains all common
 properties of these two subtypes, that is, all properties of
 math:[$FunctionExpression$].
 
-[Function Declaration with Type
-Annotation][ex:Function_Declaration_with_Type_Annotation]
-
-
-
+.Function Declaration with Type Annotation
+[example]
+--
 [source]
 ----
 // plain JS
@@ -581,6 +590,7 @@ function f(p) { return p.length }
 function f(p: string): number { return p.length }
 ----
 
+--
 ==== Semantics
 task:IDE-224[]
 
@@ -641,9 +651,9 @@ the formal parameter if the function expression is used as argument,
 this inference has some conceptual limitations. This is demonstrated in
 the next example.
 
-Example: Inference Of Function Expression’s Signature
-[[ex:Inference_Of_Function_Expression_s_Signature]]
-
+.Inference Of Function Expression’s Signature
+[example]
+--
 In general, `{function():any}` is a subtype of `{function():void}` (cf. <<Function Type>>). When the return type of a function
 expression is inferred, this relation is taken into account which may
 lead to unexpected results as shown in the following code snippet:
@@ -653,6 +663,7 @@ lead to unexpected results as shown in the following code snippet:
 function f(cb: {function():void}) { cb() }
 f(function() { return 1; });
 ----
+--
 
 No error is issued: The type of the function expression actually is
 inferred to `{function():any}`, because there is a return statement with an expression.
@@ -808,9 +819,9 @@ there must be no line terminator after the `async` modifier. This enables the
 parser to distinguish between using `async` as an identifier reference and a
 keyword, as shown in the next example.
 
-Async as keyword and identifier
-[[ex:Async_as_keyword_and_identifier]]
-
+.Async as keyword and identifier
+[example]
+--
 [source,n4js]
 ----
 async  // <1>
@@ -825,6 +836,8 @@ non-asynchronous function. The automatic semicolon insertion adds a
 semicolon after the reference on line 1.
 <2> In contrast, `async` on line 3 is
 recognized as a modifier declaring the function as asynchronous.
+
+--
 
 ==== Semantics [[asynchronous-functions-semantics]]
 
@@ -972,7 +985,9 @@ method can then be used as if it were declared with `async`. This is
 particularly useful in N4JS definition files (.n4jsd) to allow using an
 existing callback-based API from N4JS code with the more convenient `await`.
 
-[[ex:Promisifiable]]
+.Promisifiable
+[example]
+--
 Given a function with an N4JS signature
 
 [source,n4js]
@@ -1005,6 +1020,8 @@ The second line shows how `f` can be promisified using the `@Promisify` annotati
 We can either use this promise directly or immediately `await` on it, as shown in line 3.
 The syntax shown in line 4 is merely shorthand for `await @Promisify`, i.e. the
 annotation is optional after `await`.
+
+--
 
 .Promisifiable
 [req,id=IDE-87,version=1]
