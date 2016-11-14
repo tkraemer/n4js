@@ -496,7 +496,6 @@ member inherited from a super class or interface.
 
 == Default Methods in Interfaces
 
-
 If a method declared in an interface defines a body, then this is the
 so-called _default implementation_ and the method is called a __default
 method__. This will be mixed into an implementor of the interface if,
@@ -1722,6 +1721,7 @@ generally assume semantic differences which the consumer has to be aware
 of. Data fields defined in interfaces, in particular, are assumed to be
 concrete. It is not, therefore, possible to consume a field defined in
 two implemented interfaces.
+--
 
 .Consumption of Interface Members
 [req,id=IDE-73,version=1]

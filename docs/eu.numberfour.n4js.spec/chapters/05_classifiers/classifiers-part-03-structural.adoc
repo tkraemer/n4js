@@ -648,6 +648,9 @@ class A5 {
 }
 ----
 
+<<<
+// Page break before large matrix
+
 [.matrix]
 [cols="19"]
 |===
@@ -674,7 +677,7 @@ h| pass:[~r~A4]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |�
 h| pass:[~r~A5]|  |  |  |  |  |  |  |✓ |  |  |✓ |✓ |  |  |  |✓ |✓ |
 |===
 
-// TODO :  fonts must be smaller here, overlapping in HTML and PDF
+// TODO: fonts must be smaller here to prevent overlapping in HTML & PDF
 
 == Public Setter Annotated With `ProvidesInitializer`
 

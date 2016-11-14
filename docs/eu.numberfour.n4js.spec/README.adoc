@@ -16,7 +16,7 @@ asciispec N4JSSpec.adoc
 == Formatting / TODO
 
 - [ ] Conventions for examples & xrefs to be decided upon
-- [ ] Tasks create large empty space between paras
+- [ ] Tasks create empty space between paras in PDF
 - [ ] Cover to be added
 
 === Low-prio
