@@ -142,7 +142,7 @@ Tests are special projects which contain tests for other projects.
 
 
 .Test Project
-[req,id=IDE-157,version=0.3]
+[req,id=IDE-157,version=1]
 --
 
 1.  Tests have full access to the tested project including elements with
@@ -550,7 +550,7 @@ source folder.
 
 
 .GeneralConstraints
-[req,id=IDE-158,version=0.3]
+[req,id=IDE-158,version=1]
 --
 
 
@@ -561,7 +561,7 @@ run.
 --
 
 .Paths
-[req,id=IDE-159,version=0.3]
+[req,id=IDE-159,version=1]
 --
 Paths Paths are constrained in the following way:
 
@@ -581,7 +581,7 @@ shown). task:IDEBUG-339[]
 
 
 .Module Specifiers
-[req,id=IDE-160,version=0.3]
+[req,id=IDE-160,version=1]
 --
 Module Specifiers are constrained in the following
 way:
@@ -598,7 +598,7 @@ resolve to some existing files in the project
 --
 
 .Module Specifier Wildcard Constraints
-[req,id=IDE-161,version=0.3]
+[req,id=IDE-161,version=1]
 --
 
 . All path patterns are case sensitive.
@@ -617,11 +617,12 @@ navigation.
 extensions will then be used to match the file).
 --
 
-Examples of using external source fragments and filters are given in ().
-//TODO- missing citation
+Examples of using external source fragments and filters are given in (<<External_Definitions_and_Their_Implementations>>).
+<<Implementation_of_External_Declarations>>
 
-//TODO :Example Block
-[[ex:No validation and module wrapping example]]
+.No validation and module wrapping example
+[example]
+====
 The following manifest shows the use of filters to disable validation
 and module wrapping.
 
@@ -659,11 +660,13 @@ ModuleFilters {
 }
 ----
 
+====
+
 == Component Dependencies
 
 
 There are several dependencies between components. We can distinguish
-between ``require`` dependencies and ``provide`` dependencies.
+between `require` dependencies and `provide` dependencies.
 
 require::
   _N4JS Components_ require:
@@ -717,7 +720,7 @@ E.providedRTLibs^* & = E.providedRTLibs \\
 
 
 .Runtime Environment Resolution
-[req,id=IDE-162,version=0.3]
+[req,id=IDE-162,version=1]
 --
 An N4JS Component math:[$C$] can be executed in an runtime environment
 math:[$E$], written as math:[\[\begin{aligned}

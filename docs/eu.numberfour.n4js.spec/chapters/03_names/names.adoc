@@ -110,7 +110,7 @@ math:[\[\begin{aligned}
 \end{aligned}\]]
 
 .Type Access Modifiers
-[req,id=IDE-3,version=0.3]
+[req,id=IDE-3,version=1]
 --
 The following constraints for type access modifiers for a given type math:[$T$]
 (which may be a classifier declaration, a function or a variable) must
@@ -268,6 +268,7 @@ m|public            |yes |yes |yes |yes |yes |yes
 
 .Type and Member Accessibility Relation
 [def]
+--
 We define the relation
 math:[\[\begin{aligned} & = \hspace{1em}: \hspace{1em} TAM \times MAM\end{aligned}\]] as follows:
 math:[\[\begin{aligned}
@@ -282,16 +283,18 @@ math:[\[\begin{aligned}
 \infer{tam \geq mam}{\exists mam'\in MAM: tam = mam' \land mam' \geq mam}
 \end{aligned}\]]
 Less, greater then etc. are defined accordingly.
+--
 
 
-// TODO fix the delimiters
 .Member Accessibility
 [def]
+--
 math:[$\alpha_m$]]
 The function
 math:[\[\alpha_m: MemberReference \times MemberDeclaration \to Boolean\]]
 computes if a given reference can access the member declaration that it
 references.
+--
 
 Note that math:[$alpha_m$] and math:[$bind$] are different
 functions. A reference can only bind to a declaration if it can access
@@ -323,7 +326,7 @@ Although private members are accessible inside a module, it is not
 possible to redefine (override etc.) these members (see <<Redefinition_of_Members>>).
 
 .Default Member Access Modifiers
-[req,id=IDE-4,version=0.3]
+[req,id=IDE-4,version=1]
 --
 The following constraints for member access modifiers must hold:
 
@@ -476,7 +479,7 @@ names.
 
 
 .Forbidden Identifier Names in N4JS
-[req,id=IDE-5,version=0.3]
+[req,id=IDE-5,version=1]
 --
 task:IDEBUG-207[]
 
@@ -496,7 +499,7 @@ method)
 --
 
 .Undesired Identifier Names in N4JS
-[req,id=IDE-6,version=0.3]
+[req,id=IDE-6,version=1]
 --
 In N4JS mode, warnings are generated in the following cases:
 
@@ -614,14 +617,14 @@ execution environment.
 --
 
 .Forbidden Duplicates
-[req,id=IDE-7,version=0.3]
+[req,id=IDE-7,version=1]
 --
 There must be no two elements defined in the same lexical environment with the same name,
 that is, there must be no duplicates.
 --
 
 .Forbidden Shadowing
-[req,id=IDE-8,version=0.3]
+[req,id=IDE-8,version=1]
 --
 In general, shadowing is allowed in N4JS. But it is not allowed in the following cases:
 
@@ -632,17 +635,17 @@ all parent non-catch-block environments.
 --
 
 .Forbidden Names
-[req,id=IDE-9,version=0.3]
+[req,id=IDE-9,version=1]
 --
 1. In the script environment, it is not allowed to use the name
 ’arguments’.
 footnote:[This conflicts with the implicit parameter arguments introduced by the transpiler when wrapping the script/module into a definition function.]
 
-<<Forbidden shadowing>> shows nested lexical environments with named elements declared inside (all named ``x`` here), the forbidden cases are marked with arrows (the
+<<fig:forbidden_shadowing>> shows nested lexical environments with named elements declared inside (all named ``x`` here), the forbidden cases are marked with arrows (the
 numbers at the left side refer to the numbers in
-[req:Forbidden_Shadowing].
+<<req:Forbidden_Shadowing>>.
 
-[[Forbidden shadowing]]
+[[fig:forbidden_shadowing]]
 image:fig/shadowing.png[Forbidden shadowing]
 
 Rationale:

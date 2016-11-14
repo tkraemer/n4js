@@ -50,7 +50,7 @@ identifiers declared in definitions file (n4jsd) in order to enable
 declaration of external entities.
 
 .N4JS Identifier Restrictions
-[req,id=IDE-1,version=0.3]
+[req,id=IDE-1,version=1]
 --
 . If the following constraints do not hold, errors are created.
 ..  Leading `$` (dollar sign) character is prohibited for any variable
@@ -60,7 +60,7 @@ functions or methods.
 --
 
 .N4JS identifier recommendations
-[req,id=IDE-2,version=0.3]
+[req,id=IDE-2,version=1]
 --
 . If the following constraints do not hold, warnings are created.
 

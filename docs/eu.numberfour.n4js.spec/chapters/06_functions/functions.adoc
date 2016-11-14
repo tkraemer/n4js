@@ -11,7 +11,7 @@ usages are described in <<Methods>>
 == Function Type
 task:IDE-12[]
 
-A function type is modeled as (see cite:[ECMA11a(S13,p.98)] in ECMAScript .
+A function type is modeled as (see cite:[ECMA11a(S13,p.98)] in ECMAScript.
 
 Function types can be defined by means of;
 
@@ -82,8 +82,8 @@ property advice set.
 
 //\todo{FunctionRestParameter : ”...” -- semantic (ECMAScript 6)}
 
-.Function Type}
-[req,id=IDE-79,version=0.3]
+.Function Type
+[req,id=IDE-79,version=1]
 --
 Type Given a function type math:[$F$], the following
 constraints must be true:
@@ -100,6 +100,7 @@ math:[$F.fpars_i.variadic \to i = |F.fpars|-1$]
 3.  If a function explicitly defines a return type, the last statement
 of the transitive closure of statements of the body must be a return
 statement:
++
 ----
 math:[\[\begin{aligned}    F.typeRef \neq Undefined \to \\
         & |f.body.stmts|>0 \\
@@ -293,7 +294,7 @@ The following examples show the effect of the annotation:
 {@This(A) function():void} <: {function():void}             -> false
 ----
 
-[Function Type Conformance]
+.Function Type Conformance
 [def]
 --
 For the given function types +
@@ -338,7 +339,9 @@ parameters on the left are required to be supertypes of the formal
 parameters’ types in ). Where a particular type variable is used, on co-
 or contra-variant position, is not relevant:
 
-[Bounded type variable at co-variant position in function type]
+.Bounded type variable at co-variant position in function type
+[example]
+====
 
 [source]
 ----
@@ -355,6 +358,7 @@ class Y extends X {
 ----
 
 Method `m` in `Y` may return an `A`, thus breaking the contract of m in `X`, but only if it is parameterized to do so, which is not allowed for clients of `X`, only those of `Y`. Therefore, the override in the above example is valid.
+====
 
 The subtype relation for function types is also applied for method
 overriding to ensure that an overriding method’s signature conforms to
@@ -369,7 +373,7 @@ method `void m(B param)`, it is valid to override `m` as `void m(A param)` in N4
 
 
 .Upper and Lower Bound of a Function Type
-[req,id=IDE-80,version=0.3]
+[req,id=IDE-80,version=1]
 --
 The upper bound of a function type math:[$F$] is a function type with the lower bound types of the parameters and the upper bound of the return type:
 math:[\[\begin{aligned} upper(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( lower(P_1),\dots,lower(P_n) ): upper(R)\end{aligned}\]]
@@ -389,8 +393,7 @@ function type. Nevertheless, for function type expressions and function
 declarations, it is possible to call the properties of Function object
 directly. This is similar to autoboxing for strings.
 
-[Access of Function properties on functions]
-
+.Access of Function properties on functions
 [source]
 ----
 // function declaration
@@ -450,7 +453,7 @@ In non-strict ES mode the property holds a reference to the function
 executed cite:[ECMA11a(S10.6,pp61)].
 
 .arguments.callee
-[req,id=IDE-81,version=0.3]
+[req,id=IDE-81,version=1]
 --
 
 In N4JS and in ES strict mode the use of `arguments.callee` is
@@ -459,7 +462,7 @@ prohibited.
 
 
 .arguments as formal parameter name
-[req,id=IDE-82,version=0.3]
+[req,id=IDE-82,version=1]
 --
 In N4JS, the formal parameters of the function cannot be named `arguments`. This applies to all variable execution environments like field accessors (getter/setter, <<Field_Accessor>>), methods (<<Methods>>) and
 constructors (<<Constructor>>), where `FormalParameter` type is used.
@@ -520,8 +523,8 @@ blocks in N4JSl. This is only true, however, for N4JS files, not for
 plain JS files. task:IDE-1043[]
 
 
-[source,n4js]
 .Syntax Function Declaration and Expression
+[source,n4js]
 ----
 FunctionDeclaration <Yield>:
     => ({FunctionDeclaration}
@@ -591,7 +594,7 @@ of a function definition is different from its return type
 math:[$f.decl$]!
 
 .Function Declaration only on Top-Level
-[req,id=IDE-83,version=0.3]
+[req,id=IDE-83,version=1]
 --
 
 1.  In plain JavaScript, function declarations must only be located on
@@ -738,13 +741,13 @@ variety or not, the usage of `super` isn’t allowed in the body of arrow
 functions.
 
 .no.this.in.top.level.arrow.function in N4JS Mode
-[req,id=IDE-84,version=0.3]
+[req,id=IDE-84,version=1]
 --
 In N4JS, a top-level arrow function can’t refer to `this` as there’s no outer lexical context that provides a binding for it.
 --
 
 .no.arguments.in.top.level.arrow.function
-[req,id=IDE-85,version=0.3]
+[req,id=IDE-85,version=1]
 --
 In N4JS, a top-level arrow function can’t include usages of `arguments` in its body, again because of the missing binding for it.
 --
@@ -875,20 +878,19 @@ In the above example we handle the errors of the nested asynchronous calls to `g
 
 Invoking an async function commonly adopts one of two forms: task:IDEBUG-620[]
 
-// TODO: Fix
 * `var p: Promise<successType,?> = asyncFn()`
 * `await asyncFn()`
 
 These patterns are so common that a warning is available whenever both
 
-.. `Promise` is omitted as expected type; and
-.. `await` is also omitted.
+. `Promise` is omitted as expected type; and
+. `await` is also omitted.
 
 The warning aims at hinting about forgetting to wait for the result, while remaining
 non-noisy.
 
 .Modifier `async` and `await`
-[req,id=IDE-86,version=0.3]
+[req,id=IDE-86,version=1]
 --
 1. `async` may be used on declared functions and methods, and for function
 expressions. and arrow functions.
@@ -934,8 +936,8 @@ In the following listing, a generic function `foo` is defined that has two
 type parameters `S` and `T`. Thereby `S` is used as to declare the parameter type `Array<S>` and `T` is used as the return type and to construct the returned value in the function body.
 
 
-[source,n4js]
 .Generic Function Definition
+[source,n4js]
 ----
 function <S,T> foo(s: Array<S>): T { return new T(s); }
 ----
@@ -1005,7 +1007,7 @@ The syntax shown in line 4 is merely shorthand for `await @Promisify`, i.e. the
 annotation is optional after `await`.
 
 .Promisifiable
-[req,id=IDE-87,version=0.3]
+[req,id=IDE-87,version=1]
 --
 A function or method math:[$f$] can be annotated with `@Promisifiable` if and only if the following constraints hold:
 
@@ -1032,7 +1034,7 @@ parameter of the callback is allowed to be of type `Error`, all other
 parameters must be of other types.
 
 .@Promisify and await with promisifiable functions
-[req,id=IDE-88,version=0.3]
+[req,id=IDE-88,version=1]
 --
 A promisifiable function math:[$f$] with one of the two valid
 signatures given in <<req:Promisifiable>> can be promisified with `Promisify` or

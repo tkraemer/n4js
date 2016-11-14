@@ -1,7 +1,6 @@
 include::index-config.adoc[]
 .N4JS Language Specification
 = N4JS Language Specification
-:toc: right
 
 <<<
 
@@ -79,4 +78,4 @@ include::chapters/a03_n4jsobjects/n4jsobjects.adoc[leveloffset=+1]
 
 // NOTE: current bug in citations causes duplicates in bibliography
 // FOP will not allow hrefs with Duplicate IDs, hence Biblio is commented-out for the moment!
-// bibliography::[]
+//bibliography::[]

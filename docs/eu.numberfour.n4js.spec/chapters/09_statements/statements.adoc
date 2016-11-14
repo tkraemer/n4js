@@ -36,7 +36,7 @@ definition specified in  cite:[ECMA11a]   is to be used.
 === Function or Field Accessor Bodies
 
 .Dead Code
-[req,id=IDE-126,version=0.3]
+[req,id=IDE-126,version=1]
 --
 For all statements in a function or field accessor (getter/setter) body, the following constraints must hold:
 
@@ -117,7 +117,7 @@ math:[$const$] is set to false for variables and true for
 constants. Also see exported variable statement (<<Export Statement>>) and constant statement and declaration (<<Const>>).
 
 .Variable declaration
-[req,id=IDE-127,version=0.3]
+[req,id=IDE-127,version=1]
 --
 For a given variable declaration math:[$d$], the following constraints must hold:
 
@@ -193,7 +193,7 @@ There are no specific constraints defined for the condition, the
 ECMAScript operation `ToBoolean` cite:[ECMA11a(S9.2,p.43)] is used to convert any type to boolean.
 
 .If Statement
-[req,id=IDE-128,version=0.3]
+[req,id=IDE-128,version=1]
 --
 In N4JS, the expression of an if statement must not evaluate to `void`. If the expressions is a function call
 in particular, the called function must not be declared to return `void`.
@@ -259,7 +259,7 @@ There are no specific constraints defined for the condition, the
 ECMAScript operation `ToBoolean` cite:[ECMA11a(S9.2,p.43)] is used to convert any type to boolean.
 
 .For-In-Statement Constraints
-[req,id=IDE-129,version=0.3]
+[req,id=IDE-129,version=1]
 --
 For a given math:[$f$] the following conditions must hold:
 
@@ -290,28 +290,26 @@ ReturnStatement <Yield>:
 ==== Semantics [[return-statement-semantics]]
 
 .Return statement
-[req,id=IDE-130,version=0.3]
+[req,id=IDE-130,version=1]
 --
 1.  Expected type of expression in a return statement must be a sub type
 of the return type of the enclosing function:
 math:[\[\begin{aligned}
     \infer{\tee returnStmt \expectType expression: T}
           {\tee returnStmt.containingFunction: FT & T=FT.returnType}
-    \end{aligned}\]] Note that the expression may be evaluated to .
-2.  If enclosing function is declared to return , then either
+    \end{aligned}\]] Note that the expression may be evaluated to `void`.
+2.  If enclosing function is declared to return `void`, then either
 * no return statement must be defined
 * return statement has no expression
-* type of expression of return statement is
+* type of expression of return statement is `void`
 3.  If enclosing function is declared to to return a type different from
-, then
+`void`, then
 * all return statements must have a return expression
 * all control flows must either end with a return or throw statement
 4.  Returns statements must be enclosed in a function. A return
 statement, for example, must not be a top-level statement.
 
 --
-
-//TODO - missing annotation above
 
 === With Statement
 
@@ -331,8 +329,8 @@ WithStatement <Yield>:
 N4JS is based on strict mode and the with statement is not allowed in
 strict mode, cf. cite:[ECMA11a(S12.10.1,p.94)].
 
-With Statement
-[req,id=IDE-131,version=0.3]
+.With Statement
+[req,id=IDE-131,version=1]
 --
 With statements are not allowed in N4JS or strict mode.
 --
@@ -359,16 +357,14 @@ DefaultClause <Yield>: {DefaultClause} 'default' ':' (statements+=Statement<Yiel
 ==== Semantics [[switch-statement-semantics]]
 
 .Switch Constraints
-[req,id=IDE-132,version=0.3]
+[req,id=IDE-132,version=1]
 --
 For a given switch statement math:[$s$], the following constraints must hold:
 
 * For all cases math:[$c \in s.cases$],
 math:[$s.expr$]===math:[$c.expr$] must be valid according to
-the constraints defined in .
+the constraints defined in <<Equality Expression>>.
 --
-
-// TODO missing citation above
 
 === Throw, Try, and Catch Statements
 
@@ -428,13 +424,11 @@ differences which are elaborated on below.
 
 === Let
 
-Cf. cite:[ECMA11a(13.2.1)], also http://www.2ality.com/2015/02/es6-scoping.html[Rauschmayer,
-2ality: ``Variables and scoping in ECMAScript 6``]
+Cf. cite:[ECMA11a(13.2.1)], also http://www.2ality.com/2015/02/es6-scoping.html[Rauschmayer, 2ality: ``Variables and scoping in ECMAScript 6``]
 
 === Const
 
-Cf. cite:[ECMA15a(13.2.1)], also http://www.2ality.com/2015/02/es6-scoping.html[Rauschmayer,
-2ality: ``Variables and scoping in ECMAScript 6``]
+Cf. cite:[ECMA15a(13.2.1)], also http://www.2ality.com/2015/02/es6-scoping.html[Rauschmayer, 2ality: ``Variables and scoping in ECMAScript 6``]
 
 Additionally to the `var` statement, the `const` statement is supported. It allows for
 declaring variables which must be assigned to a value in the declaration
@@ -456,7 +450,7 @@ writable (cf. <<req:Write_Acccess>>). This is similar to constant data
 fields (cf. <<Assignment_Modifiers>>).
 
 .Writability of const variables
-[req,id=IDE-133,version=0.3]
+[req,id=IDE-133,version=1]
 --
 All variable declarations of a const variable statement
 math:[$constStmt$] are not writeable: math:[\[\begin{aligned}
@@ -474,7 +468,7 @@ See <<Iteration Statements>>
 ==== Semantics [[for-of-statement-semantics]]
 
 .for ... of statement
-[req,id=IDE-134,version=0.3]
+[req,id=IDE-134,version=1]
 --
 For a given math:[$f$] the following conditions must hold:
 
@@ -667,7 +661,7 @@ module):
 ----
 
 .Imports
-[req,id=IDE-135,version=0.3]
+[req,id=IDE-135,version=1]
 --
 The following constraints are defined on a
 (non-dynamic) import statement math:[$i$]:
@@ -803,7 +797,7 @@ N4JS extends the ES6 module import in order that modules without a
 done by adding `+` to the name of the named import.
 
 .Dynamic Import
-[req,id=IDE-136,version=0.3]
+[req,id=IDE-136,version=1]
 --
 Let math:[$i$] be an import
 statement math:[$i$] with a dynamic namespace specifier. The
@@ -842,7 +836,7 @@ http://www.ecma-international.org/ecma-262/6.0/index.html#sec-createimportbindin
 
 
 .Immutable Import
-[req,id=IDE-137,version=0.3]
+[req,id=IDE-137,version=1]
 --
 Let math:[$i$] be a binding to an imported element. It is an error if
 

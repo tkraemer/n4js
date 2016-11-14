@@ -143,7 +143,7 @@ the burden of maintaining so-called ’boilerplate’ code.
 
 image::fig/diTerms.PNG[fig:diTerms]
 
-[key: pass the dependency instead of letting the client create or find it]
+_key: pass the dependency instead of letting the client create or find it_
 
 Core terms
 
@@ -171,25 +171,27 @@ are injectors, type factories/providers, fields initiators etc.
 
 === DI Components and Injectors
 
-N4JS’ <<AC,DI>> systems is based on the notion of .
+N4JS’ <<AC,DI>> systems is based on the notion of <<AC,DIC>>.
 
-[DI Component][def:DI_Component] A is a N4Class annotated with +
-.
+.DI Component
+[def]
+--
+A <<AC,DIC>> is a N4Class annotated with `@GenerateInjector`.
+--
 
 This annotation causes an _injector_ to be created for (and associated
-to) the <<AC,DI>>. can be composed; meaning that when requested to inject an
+to) the <<AC,DI>>. <<AC,DIC>> can be composed; meaning that when requested to inject an
 instance of a type, a <<AC,DIC>>’s injector can delegate this request to the
-injector of the containing <<AC,DIC>>. An injector always prioritizes its own
-configuration before delegating to the container’s injector. For
-validation purposes, a child <<AC,DI>> can be annotated with `@WithParent` to ensure that it is
-always used with a proper parent.
+injector of the containing <<AC,DIC>>.
+An injector always prioritizes its own configuration before delegating to the container’s injector.
+For validation purposes, a child <<AC,DI>> can be annotated with `@WithParent` to ensure that it is always used with a proper parent.
 
 _Injector_ is the main object of <<AC,DI>> mechanisms responsible for creating
 object graphs of the application. At runtime, injectors are instances of
 `N4Injector`.
 
 .DI Component and Injector
-[req,id=IDE-138,version=0.3]
+[req,id=IDE-138,version=1]
 --
 
 The following constraints must hold for a class math:[$C$] marked as <<AC,DIC>>:
@@ -203,7 +205,7 @@ Two calls to `N4Injector.of(DIC)` are different (as different \acp{DIC} are assu
 --
 
 .Injection Phase
-[req,id=IDE-139,version=0.3]
+[req,id=IDE-139,version=1]
 --
 task:IDE-1497[]
 We call the (transitive)
@@ -366,6 +368,7 @@ return statements of the provide method).
 
 .Binding
 [def]
+--
 A _binding_ is a pair
 math:[$bind(key, target)$]. It defines that for a dependency with a
 given key which usually is the expected type at the injection point. An
@@ -399,8 +402,10 @@ math:[$target*=
      target,                        &\text{otherwise ($target$ is a type reference)}
    \end{cases}$]
 
+--
+
 .Bindings
-[req,id=IDE-140,version=0.3]
+[req,id=IDE-140,version=1]
 --
 For a given binding math:[$b=(key, target)$], the following constraints must
 hold:
@@ -423,7 +428,7 @@ thrown. task:IDEBUG-461[]
 --
 
 .Transitive Bindings
-[req,id=IDE-141,version=0.3]
+[req,id=IDE-141,version=1]
 --
 If an injector contains two given bindings math:[$b_1=(key_1, target_1)$] and
 math:[$b_2=(key_2, key_1)$], an effective binding
@@ -471,7 +476,7 @@ reference to an instance of the field declared type. Usually that case
 is called __Field Injection__.
 
 .Field Injection
-[req,id=IDE-142,version=0.3]
+[req,id=IDE-142,version=1]
 --
 The injector will inject the
 following fields:
@@ -543,7 +548,7 @@ due to missing `@Inject` annotations for any subclasses, a validation warning wi
 be reported.
 
 .Constructor Injection
-[req,id=IDE-143,version=0.3]
+[req,id=IDE-143,version=1]
 --
 If a class math:[$C$] has a constructor marked as injection point, the
 following applies:
@@ -639,7 +644,10 @@ Binder@Provides methods.
 ==== Injection Cylces
 task:IDE-1608[]
 
-[Injection Cycle][def:Injection_Cycle] We define an injection graph
+.Injection Cycle
+[def]
+--
+We define an injection graph
 math:[$G(V,E)$] as a directed graph as follows: math:[$V$]
 (the vertices) is the set types of which instances are created during
 the injection phase and which use . math:[$E$] (the edges) is a set
@@ -653,6 +661,7 @@ math:[$T_o$]
 of a parameter used in a constructor injection of type math:[$T_c$]
 
 One cycle in this graph is an injection cycle.
+--
 
 When injecting instances into an object, cycles have to be detected and
 handled independently from the scope. If this is not done, the following
@@ -704,7 +713,7 @@ image::fig/injectionGraph_cycleCtor.png[align=center]
 The injector needs to detect these cycles and resolve them.
 
 .Resolution of Injection Cycles
-[req,id=IDE-144,version=0.3]
+[req,id=IDE-144,version=1]
 --
 A cycle math:[$c \subset G$], with math:[$G$] being an injection
 graph, is resolved as follows:
@@ -1005,7 +1014,7 @@ Additional _WithParentInjector_ constraints:
 
 
 .DI WithParentInjector
-[req,id=IDE-145,version=0.3]
+[req,id=IDE-145,version=1]
 --
 1.  Allowed only on annotated with `@GenerateInjector`.
 2.  Its parameter can only be annotated with .
@@ -1030,7 +1039,7 @@ arguments are optional::
 
 
 .DI UseInjector
-[req,id=IDE-146,version=0.3]
+[req,id=IDE-146,version=1]
 --
 1.  Allowed only on annotated with `@GenerateInjector`.
 2.  Its parameter can only be annotated with `@Binder`.
@@ -1056,7 +1065,7 @@ That can be either annotations on itself or its factory methods annotated with `
 
 
 .DI binder
-[req,id=IDE-147,version=0.3]
+[req,id=IDE-147,version=1]
 --
 1.  Target `N4ClassDeclaration` must not be __abstract__.
 2.  Target `N4ClassDeclaration`  must not be annotated with `@GenerateInjector`.
@@ -1085,7 +1094,7 @@ types.
 
 
 .DI Bind
-[req,id=IDE-148,version=0.3]
+[req,id=IDE-148,version=1]
 --
 1.  Allowed only on `N4ClassDeclarations` that are annotated with `@Binder`(<<N4JS DI @Binder>>).
 2.  Parameters are instances of one of the values described in <<N4JS_DI_Validation_N4Injector_Callsites>>.
@@ -1116,7 +1125,7 @@ scopes.
 
 
 .DI Provides
-[req,id=IDE-149,version=0.3]
+[req,id=IDE-149,version=1]
 --
 
 1.  Allowed only on `N4MethodDeclarations` that are part of a classifier annotated with `@Binder`.
@@ -1145,7 +1154,7 @@ used. Class fields, methods and constructors can be annotated. See <<N4JS_DI_Inj
 
 
 .DI Inject
-[req,id=IDE-150,version=0.3]
+[req,id=IDE-150,version=1]
 --
 1.  Injection point bindings need to be resolvable.
 2.  Binding for given type must not be duplicated.
@@ -1183,7 +1192,7 @@ In order to enable tests for private methods, test projects may define
 which project they are testing.
 
 .Test API methods and types
-[req,id=IDE-151,version=0.3]
+[req,id=IDE-151,version=1]
 --
 task:IDE-1468[]
 In some cases, types or methods are only provided for testing purposes. In order
@@ -1211,7 +1220,9 @@ type modifications the annotation `@Polyfill` is used.
 * Static polyfilling covers code modifications for adapting generated
 code. The annotation `@StaticPolyfill` denotes a polyfill in ordinary code, which usually provides executable implementations.
 
+.Polyfill Class
 [def]
+--
 A _polyfill class_ (or simply __polyfill__) is
 a class modifying an existing one. The polyfill is not a new class (or
 type) on its own. Instead, new members defined in the polyfill are added
@@ -1221,9 +1232,10 @@ modification __filling__.
 
 We add a new pseudo property math:[$polyfill$] to classes in order
 to distinguish between normal (sub-) classes and polyfill classes.
+--
 
 .Polyfill Class
-[req,id=IDE-152,version=0.3]
+[req,id=IDE-152,version=1]
 --
 For a polyfill class math:[$P$] annotated with `@Polyfill` or  `@StaticPolyfill`, that is
 math:[$P.polyfill=\TRUE$], all the following constraints must hold:
@@ -1282,7 +1294,7 @@ Runtime polyfills are only applicable to runtime libraries or
 environments and thus are limited to n4jsd files.
 
 .Runtime Polyfill Class
-[req,id=IDE-153,version=0.3]
+[req,id=IDE-153,version=1]
 --
 For a runtime-polyfill class math:[$P$] annotated with `@Polyfill`, that is
 math:[$P.staticpolyfill=\FALSE$], all the following constraints
@@ -1297,7 +1309,7 @@ math:[\[\begin{aligned}
     \end{aligned}\]]
 
 .Applying Polyfills
-[req,id=IDE-154,version=0.3]
+[req,id=IDE-154,version=1]
 --
 task:IDE-1207[]
 A polyfill is
@@ -1348,11 +1360,11 @@ must hold in addition to constraints :
 
 
 .Static Polyfill Layout
-[req,id=IDE-155,version=0.3]
+[req,id=IDE-155,version=1]
 --
 For a static polyfill class math:[$P$] annotated with `@StaticPolyfill`, that is
 math:[$P.staticpolyfill=\TRUE$], all the following constraints must
-hold in addition to [req:Polyfill_Class]:
+hold in addition to <<req:Polyfill_Class>>:
 
 1.  math:[$P$]’s name equals the name of the filled class and is
 contained in a module with the same qualified name:
@@ -1383,7 +1395,7 @@ static polyfill: math:[\[\begin{aligned}
 
 
 .Restrictions on static polyfilling
-[req,id=IDE-148,version=0.3]
+[req,id=IDE-156,version=1]
 --
 For a static polyfilling module math:[$M_P$] the following must hold:
 

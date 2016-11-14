@@ -3,7 +3,6 @@ ifndef::config_adoc_include_guard[]
 // Include guard
 :doctype: book
 
-
 // ======================= General Document Attributes ======================= //
 // Enabling section numbers and anchors
 
@@ -35,11 +34,5 @@ ifndef::config_adoc_include_guard[]
 // =========================== Inline Cwiki Macro Config =========================== //
 // See https://github.numberfour.eu/NumberFour/asciispec#inline-cwiki-macro for  details.
 :cwiki_def: https://confluence.numberfour.eu/display/${PATH};https://confluence.numberfour.eu/pages/viewpage.action?pageId=${PAGE_ID};icons/jira.png;Confluence entry:${TITLE}
-
-
-[discrete]
-== Document Attributes
-
-
 
 endif::[]

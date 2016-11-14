@@ -2,14 +2,11 @@
 
 == Auto-Boxing and Coercing
 
-Coercing is the ability to implicitly cast one (primitive) type to
-another.
+Coercing is the ability to implicitly cast one (primitive) type to another.
 Auto-Boxing is a special kind of coercing in that is the ability to automatically convert a primitive value type, such as `string`, `number`, or `boolean`, to its corresponding Object type version `String`, `Number`, `Boolean`.
 The capital letters in the latter are an essential distinction.
 
-Conversion between primitives and object-representations of a datatype
-are not automatic in N4JS. Only in the cases of object-method
-invocations on a primitive type (for `string` to call `"abc".length`, for example) automatic conversion is applied.
+Conversion between primitives and object-representations of a datatype are not automatic in N4JS. Only in the cases of object-method invocations on a primitive type (for `string` to call `"abc".length`, for example) automatic conversion is applied.
 
 Note that N4JS specific primitive types `pathselector` and `i18nkey` are handled similarly to `string`.
 
@@ -22,11 +19,14 @@ We express absence of automatic coercion here by means of subtype
 relations:
 math:[\[\begin{aligned} \infer{\tee \type{Boolean} \notsubtype{\type{boolean}}}{} | \infer{\tee \type{boolean} \notsubtype{\type{Boolean}}}{} \\
 \infer{\tee \type{Number} \notsubtype{\type{number}}}{} | \infer{\tee \type{number} \notsubtype{\type{Number}}}{}  \\
-\infer{\tee \type{String} \notsubtype{\type{string}}}{} | \infer{\tee \type{string} \notsubtype{\type{String}}}{} \\\end{aligned}\]]
+\infer{\tee \type{String} \notsubtype{\type{string}}}{} | \infer{\tee \type{string} \notsubtype{\type{String}}}{}
+\\\end{aligned}\]]
 
-and for the N4JS specific types: math:[\[\begin{aligned}
+and for the N4JS specific types:
+math:[\[\begin{aligned}
 \infer{\tee \type{pathSelector<T>} \subtype{\type{string}}}{} \\
-\infer{\tee \type{i18nKey} \subtype{\type{string}}}{} \\\end{aligned}\]]
+\infer{\tee \type{i18nKey} \subtype{\type{string}}}{}
+\\\end{aligned}\]]
 
 If a conversion between primitive and object type is desired, we require
 the user of N4JS to actively convert the values. The reason for that is
@@ -70,7 +70,7 @@ The applied conversions are described in <<Auto_Conversion_of_Class_Instances>>
 === Auto-Boxing of Primitives
 task:IDE-835[]
 
-In cite:[ECMA11a], autoboxing is defined by \lstnfjs{ToObject} cite:[ECMA11a(S9.9)].
+In cite:[ECMA11a], autoboxing is defined by `ToObject` cite:[ECMA11a(S9.9)].
 
 Auto-boxing is not directly supported in N4JS. Instead, primitive types
 virtually have the same members as their corresponding object types. It
@@ -115,10 +115,10 @@ JavaScript `Object` therefore apply to `N4Object` instances as well.
 
 The basic conversion uses the abstract JavaScript function `ToPrimitive` cite:[ECMA11a(S9.1)], which relays on the specification method `Object`
 cite:[ECMA11a(S8.12.8)].
-``DefaultValue`` calls `valueOf` or `toString` methods if they are defined by the class (in the `methods`-builder).
+`DefaultValue` calls `valueOf` or `toString` methods if they are defined by the class (in the `methods`-builder).
 
 Note that according to the cite:[ECMA11a], in most cases, objects are first converted into primitives. That is, in most cases, no extra hint is passed to
-``DefaultValue``. Thus `valueOf` usually takes precedence over toString as
+`DefaultValue`. Thus `valueOf` usually takes precedence over toString as
 demonstrated in the following example:
 
 Auto-Conversion
@@ -189,7 +189,7 @@ math:[\[\begin{aligned}
 
 
 .Cast Validation At Compile Time]]
-[req,id=IDE-89,version=0.3]
+[req,id=IDE-89,version=1]
 --
 Given a type cast expression math:[$e$] in which
 math:[$\tee e.expr: S$] and and target type math:[$T$], the
@@ -245,6 +245,8 @@ to cast a variable of type `any` to other (non-composed) types.
 
 --
 
+// TODO: Review content from old LaTeX spec below and decide if still useful.
+
 //todo{In Java, there are more illegal cases: " if there exists a supertype X of T, and a supertype Y of S, such that both X and Y are provably distinct parameterized types, and that the erasures of X and Y are the same, a compile time error occurs"}
 
 
@@ -283,20 +285,23 @@ to cast a variable of type `any` to other (non-composed) types.
 
 === Type Check
 
-// TODO: fix
-There are basically two ways of testing the type of a variable: `typeof` and `instanceof`.
-task:IDEBUG-293[]
-N4JS supports type comparison via the ECMAScript ``instanceof`` operator. The operator ``instanceof`` retains its standard ECMAScript behavior (e.g. checking whether a value is an instance of a constructor function), but has additional functionality when used with N4JS types.
 
-When used with an N4JS class, ``instanceof`` also supports checking against an interface. For N4JS enumeration values, it can be used to check whether the value is part of a specific enumeration.
+There are basically two ways of testing the type of a variable: `typeof` and `instanceof`. task:IDEBUG-293[]
+N4JS supports type comparison via the ECMAScript `instanceof` operator.
+The operator `instanceof` retains its standard ECMAScript behavior (e.g. checking whether a value is an instance of a constructor function), but has additional functionality when used with N4JS types.
+
+When used with an N4JS class, `instanceof` also supports checking against an interface. For N4JS enumeration values, it can be used to check whether the value is part of a specific enumeration.
+
+`typeof` only returns a string with the name of the ECMAScript type, which is `Object` for all class instances.
 
 
-``typeof`` only returns a string with the name of the ECMAScript type, which is ``Object`` for all class instances.
+N4 specific `string` types, that is `pathSelector` and `i18nkey` cannot be tested during runtime.
+These types, therefore, must not be used in `instanceof` expressions.
+The same is true for string-based enums and arrays which cannot be tested during runtime, thus string-based enum and array types are not permitted on the right-hand side of ``instancesof`` constructs.
+For all types for which the evaluation result of `instanceof` could be computed at compile time, the check is unnecessary and thus it is refused by the compiler.
+Using structural types on the right-hand side of ``instancesof`` constructs is also not permitted.
 
-
-N4 specific ``string`` types, that is ``pathSelector`` and ``i18nkey`` cannot be tested during runtime. These types, therefore, must not be used in ``instanceof`` expressions. The same is true for string-based enums and arrays which cannot be tested during runtime, thus string-based enum and array types are not permitted on the right-hand side of ``instancesof`` constructs. For all types for which the evaluation result of ``instanceof`` could be computed at compile time, the check is unnecessary and thus it is refused by the compiler. Using structural types on the right-hand side of ``instancesof`` constructs is also not permitted.
-
-In order to avoid errors at runtime, the ``instanceof`` operator defines appropriate constraints, see <<Relational_Expression>> for details.
+In order to avoid errors at runtime, the `instanceof` operator defines appropriate constraints, see <<Relational_Expression>> for details.
 
 Type Check Example
 [[ex:TypeCheckExample]]
@@ -359,7 +364,6 @@ This meta-information is currently not available to non-N4 developers.
 
 === Reflection for Classes
 
-
 The meta-information for classes is available by means of `N4Object`’s static
 getter `n4class`. Since it is static getter, it is actually an instance getter of the constructor of a type.
 
@@ -405,7 +409,7 @@ console.log('A.n4class.fqn:             ' + A.n4class.fqn)
 console.log('A.n4class.n4superType.fqn: ' + A.n4class.n4superType.fqn)
 ----
 
-Assuming this code is defined in file ``A``, this will output
+Assuming this code is defined in file `A`, this will output
 
 [source]
 ----
@@ -477,8 +481,6 @@ Conversion between primitives is given as follows:
 ----
 var n: number; var b: boolean; var s: string;
 ----
-
-// TODO Check table is correct, examine options
 
 [cols="^.^1m,^.^1m,<.^3m,<4m"]
 |===

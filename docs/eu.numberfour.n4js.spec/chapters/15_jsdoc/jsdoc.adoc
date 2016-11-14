@@ -48,7 +48,7 @@ task:IDE-1469[]
 Link to type (maybe a function) or member tested by the test.
 
 .@testee Semantics
-[req,id=IDE-172,version=0.3]
+[req,id=IDE-172,version=1]
 --
 .  Tag can be only used on either
 ..  methods annotated with `@Test`

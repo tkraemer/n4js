@@ -63,17 +63,17 @@ math:[\[ \frac{premises}{conclusion} \hspace{5mm} \textrm{rule name} \] ]
 math:[$premises$] is the rule’s premises (e.g., the expression to
 be inferred), math:[$conclusion$] the result of the rule.
 math:[$rule name$] is an optional condition which may be omitted.
---
+
 
 Both parts of the rule may contain multiple expressions, which are
 concatenated via and. For example, the following
 math:[\[\begin{aligned} \frac{P_1 \hspace{5mm}  P_2 \hspace{5mm} P_3}{C} \end{aligned}\]] can be read as
 ' ``if math:[$P_1$], math:[$P_2$], and math:[$P_3$] are all true, then math:[$C$] is true as well`` '.
-
+--
 
 The following judgments (with relation symbols) are used:
 
-// TODO replace math with original LaTeX syntax
+// TODO replace math with original LaTeX
 subtype ``<`` ::
 +
 type``:`` ::
@@ -90,7 +90,7 @@ expectedTypeIn math:[$ \lhd :$] ::
 The following statement, for example, defines transitivity of subtypes
 (in a simplified manner):
 
-// TODO replace math with original LaTeX syntax
+// TODO replace math with original LaTeX
 math:[\[\begin{aligned} \frac{\Gamma B \vdash <: A \hspace{7mm} \Gamma \vdash C <: B}{\Gamma \vdash C: < A}\end{aligned}\]]
 
 is the context containing (bound) type variables etc.,
@@ -200,7 +200,10 @@ In some cases we have to merge types, e.g., types of a union type or
 item types of an array. For that purpose, we define a method
 math:[$merge$] as follows.
 
-[Merge Function][def:Merge Function] We define a pseudo function
+.Merge Function
+[def]
+--
+We define a pseudo function
 math:[\[\begin{aligned}
 merge: Type \times \dots \times Type \to \powerset(Type)\end{aligned}\]]
 
@@ -209,6 +212,7 @@ union type contains two type expressions math:[$te_1$] and
 math:[$te_k$], and if math:[$\tau(te_1)=\tau(te_2)$], then
 math:[$merge(\tau(te_1), \tau(te_2))$] contains only one element.
 The order of the elements is lost, however.
+--
 
 ==== Logic Formulars
 
@@ -243,6 +247,7 @@ subscripted, e.g., math:[$v.methods_i$].
 
 We use the following symbols and font conventions:
 
+//TODO: math processor test section:
 
 math:[$\land$], math:[$\lor$], math:[$\lxor$],
 math:[$\lnot$]::

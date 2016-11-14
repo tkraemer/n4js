@@ -88,7 +88,7 @@ the transitive closure of supertypes math:[$superClassifiers^*$]
 == Common Semantics of Classifiers
 
 .Subtyping of Classifiers
-[req,id=IDE-42,version=0.3]
+[req,id=IDE-42,version=1]
 --
 For a given type math:[$C$], and supertypes +
 math:[$superClassifiers = \{S_1,..., S_n\}$] directly subtyped
@@ -248,7 +248,7 @@ math:[\[\begin{aligned}
 \end{aligned}\]]
 
 .Structural and Nominal Supertypes
-[req,id=IDE-43,version=0.3]
+[req,id=IDE-43,version=1]
 --
 The type of supertypes and implemented interfaces is always the nominal type, even
 if the supertype is declared structurally.
@@ -337,7 +337,7 @@ math:[\[\begin{aligned}
 \infer{\tee \type{TClass}\ left \subtype[TClass]\ right}{\tee  left.superType.declaredType \subtype right}\end{aligned}\]]
 
 .Implicit Supertype of Classes
-[req,id=IDE-44,version=0.3]
+[req,id=IDE-44,version=1]
 --
 1.  The implicit supertype of all classes is `N4Object`. All classes with no
 explicit supertype are inherited from `N4Object`.
@@ -378,7 +378,7 @@ math:[$abstract$] property set to true. Other classes are called
 _concrete_ classes.
 
 .Abstract Class
-[req,id=IDE-45,version=0.3]
+[req,id=IDE-45,version=1]
 --
 
 1.  A class math:[$C$] must be declared abstract if it owns or
@@ -393,7 +393,7 @@ field accessors and vice versa. task:IDE-553[]
 --
 
 .Abstract Member
-[req,id=IDE-46,version=0.3]
+[req,id=IDE-46,version=1]
 --
 1.  A member declared as abstract must not have a method body (in
 contrary a method not declared as abstract have to have a method body). task:IDE-553[]
@@ -422,7 +422,7 @@ constructor as private. task:IDE-149[] This can be used for singletons.
 
 
 .Superclass
-[req,id=IDE-47,version=0.3]
+[req,id=IDE-47,version=1]
 --
 For a class math:[$C$] with a supertype
 math:[$S=C.sup$], the following constraints must hold
@@ -520,7 +520,7 @@ modifier `abstract` is not required, therefore, in the source code. The followin
 constraints apply:
 
 .Interfaces
-[req,id=IDE-48,version=0.3]
+[req,id=IDE-48,version=1]
 --
 For any interface math:[$I$], the following must hold:
 
@@ -587,11 +587,10 @@ math:[$C$]. Members not redefined by math:[$C$] but with a
 default implementations are _mixed in_ or _consumed by_ math:[$C$].
 We all cases we call math:[$C$]A the __implementor__.
 
-Besides the general constraints described in , the following constraints
-must hold for extending or implementing interfaces:
+Besides the general constraints described in <<Common_Semantics_of_Classifiers>>, the following constraints must hold for extending or implementing interfaces:
 
 .Extending Interfaces
-[req,id=IDE-49,version=0.3]
+[req,id=IDE-49,version=1]
 --
 For a given type
 math:[$I$], and math:[$\{I_1,..., I_n\}$] directly extended by
@@ -622,7 +621,7 @@ math:[$I_i$]).
 --
 
 .Implementing Interfaces
-[req,id=IDE-50,version=0.3]
+[req,id=IDE-50,version=1]
 --
 
 For a given type
@@ -656,14 +655,12 @@ math:[$I_i$]).
 
 --
 
-For default methods in interfaces, see .
-
-//TODO - missing xref
+For default methods in interfaces, see <<Default_Methods_in_Interfaces>>.
 
 == Generic Classifiers
 task:IDE-38[] task:IDE-39[]
 
-Classifiers can be declared generic by defining a type parameter via .
+Classifiers can be declared generic by defining a type parameter via `type-param`.
 
 .Generic Classifiers
 [def]
@@ -693,9 +690,10 @@ be explicitly bound in the type references used in the `extend`, `with`, or `imp
 bound) specified in the type parameter.
 --
 
-//TODO
+
 .Generic Type Definition and Usage as Type of Variable
 [example]
+====
 This example demonstrates how to define a generic type and how to refer to it in a
 variable definition.
 
@@ -714,6 +712,8 @@ export class Container<T> {
 }
 ----
 
+====
+
 This type can now be used as a type of a variable as follows
 
 [source,n4js]
@@ -727,9 +727,10 @@ var s: string = stringContainer.getItem();
 
 In line 3, the type variable `T` of the generic class `Container` is bound to `string`.
 
-//Example
-[Binding of type variables with multiple types] For a given generic
-class `G`
+.Binding of type variables with multiple types
+[example]
+====
+For a given generic class `G`
 
 [source,n4js]
 ----
@@ -748,7 +749,7 @@ the variable definition
 var x: G<Number,C,B>;
 ----
 
-would bind the type variables as follows: +
+would bind the type variables as follows:
 
 [cols="^1m,^1m,^4"]
 |===
@@ -758,7 +759,12 @@ would bind the type variables as follows: +
 type constraint.
 |===
 
-[Generic Superclass, Type Argument with Type Variable]
+====
+
+
+.Generic Superclass, Type Argument with Type Variable
+[req,id=IDE-51,version=1]
+--
 For a given generic superclass `SuperClass`
 
 [source,n4js]
@@ -782,7 +788,6 @@ var s: SubClass<C>;
 
 would bind the type variables as follows: +
 
-//TODO double-check header
 
 [cols="^1m,^1m,4"]
 |===
@@ -797,6 +802,8 @@ variable definition.
 | SubClass.X | C |Bound by first type argument specified in variable definition.
 |===
 
+--
+
 == Definition-Site Variance
 
 In addition to use-site declaration of variance in the form of Java-like
@@ -807,15 +814,15 @@ The _variance_ of a parameterized type states how its subtyping relates
 to its type arguments’ subtyping. For example, given a parameterized
 type and plain types and , we know
 
-* if ``G`` is *covariant* w.r.t. its parameter ``T``, then
+* if `G` is *covariant* w.r.t. its parameter `T`, then
 math:[\[\begin{aligned}
         \lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G<B>} \subtype \lstnfjs{G<A>}
     \end{aligned}\]]
-* if ``G`` is *contravariant* w.r.t. its parameter ``T``, then
+* if `G` is *contravariant* w.r.t. its parameter `T`, then
 math:[\[\begin{aligned}
         \lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}
     \end{aligned}\]]
-* if ``G`` is *invariant* w.r.t. its parameter ``T``, then
+* if `G` is *invariant* w.r.t. its parameter `T`, then
 math:[\[\begin{aligned}
         \lstnfjs{B} \subtype \lstnfjs{A} & \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}\\
         \lstnfjs{B} \subtype \lstnfjs{A} & \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}
@@ -827,9 +834,9 @@ example, covariant w.r.t. one type parameter and contravariant
 w.r.t. another.
 
 Strictly speaking, a type parameter/variable itself is not co- or
-contravariant; however, for the sake of simplicity we say " ``T`` is
-covariant" as a short form for "``G`` is covariant with respect to its type
-parameter ``T`` " (for contravariant and invariant accordingly).
+contravariant; however, for the sake of simplicity we say " `T` is
+covariant" as a short form for "`G` is covariant with respect to its type
+parameter `T` " (for contravariant and invariant accordingly).
 
 To declare the variance of a parameterized classifier on definition
 site, simply add keyword `in` or `out` before the corresponding type parameter:
@@ -847,8 +854,9 @@ interface Consumer<in T> { // contravariance
 
 In such cases, the following constraints apply.
 
+//TODO Duplicated Req ID, continuing from 173
 .Definition-Site Variance
-[req,id=IDE-51,version=0.3]
+[req,id=IDE-174,version=1]
 --
 Given a parameterized type with a type parameter , the following must hold:
 
@@ -880,7 +888,6 @@ Unbounded wildcards are allowed in all cases.
 --
 
 
-//TODO: example block
 .Use-site declaration of variance
 [example]
 For illustration purposes, let’s compare use-site and definition-site
@@ -933,5 +940,5 @@ function getNameOfFirstPerson2(list: ImmutableList<Person>): string {
 ----
 
 Now we can invoke ``getNameOfFirstPerson2`` with a ``List<Employee>`` even though the implementor of ``getNameOfFirstPerson2`` did not add a
-use-site declaration of covariance, because the type ``ImmutableList`` is declared to be covariant with respect to its parameter ``T``, and this applies globally
+use-site declaration of covariance, because the type ``ImmutableList`` is declared to be covariant with respect to its parameter `T`, and this applies globally
 throughout the program.

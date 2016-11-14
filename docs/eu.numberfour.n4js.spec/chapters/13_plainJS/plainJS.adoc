@@ -45,14 +45,14 @@ seamlessly integrate frameworks and libraries which have not been
 implemented in N4JS but in plain ECMAScript or another language.
 
 .External allowed occurrences
-[req,id=IDE-163,version=0.3]
+[req,id=IDE-163,version=1]
 --
 
 * Declarations with external flags are only allowed in files with the
-extension latexmath:[$n4jsd$] (so called N4JS definition files).
+extension math:[$n4jsd$] (so called N4JS definition files).
 * Only external classes, external interfaces marked with `@N4JS`, external
 enums, external function declarations and structurally typed interfaces
-are allowed in a latexmath:[$n4jsd$] file.
+are allowed in a math:[$n4jsd$] file.
 * Declarations with external flags are allowed to subclass built-in type
 `Error` type and all of its descendants such as `EvalError`, `RangeError`, `ReferenceError`, `SyntaxError`, `TypeError` and `URIError`, although any of the error types are annotated with `@N4JS`.
 
@@ -69,7 +69,7 @@ class or interface.
 --
 
 .External classes inheritance
-[req,id=IDE-164,version=0.3]
+[req,id=IDE-164,version=1]
 --
 1.  An external class _without_ the `@N4JS` annotation can only inherit from
 another external class or from one of the built-in ECMAScript types
@@ -80,7 +80,7 @@ another external class annotated with `@N4JS` or from non-external N4JS classes.
 --
 
 .Structurally typed interface implementation
-[req,id=IDE-165,version=0.3]
+[req,id=IDE-165,version=1]
 --
 1.  An external class _without_ the annotation `@N4JS` can only be implemented
 by structurally typed interfaces.
@@ -91,7 +91,7 @@ structurally.
 --
 
 .External interface inheritance
-[req,id=IDE-166,version=0.3]
+[req,id=IDE-166,version=1]
 --
 
 1.  An interface in a n4jsd file _without_ the annotation `@N4JS` can only
@@ -102,7 +102,7 @@ interface annotated with `@N4JS`.
 --
 
 .External class/interface members
-[req,id=IDE-167,version=0.3]
+[req,id=IDE-167,version=1]
 --
 1.  The static and instance methods, getters and setters of an external
 class must not have a method body.
@@ -125,7 +125,7 @@ cf. <<req:Interfaces>>.
 --
 
 .Other external declarations
-[req,id=IDE-168,version=0.3]
+[req,id=IDE-168,version=1]
 --
 
 1.  The literals of an external enum must not have a value.
@@ -166,7 +166,6 @@ below <<Implementation of External Declarations>>).
 === Implementation of External Declarations
 task:IDEBUG-242[]
 
-
 All external declarations must be associated with an external
 implementation module in one way or another. Any time the external
 declaration is imported, the compiler generates code that imports the
@@ -199,10 +198,10 @@ corresponding implementation element. For that reason, it is possible to
 disable validation of implementations completely via `@@IgnoreImplementation`.
 
 .Implementation of External Declarations
-[req,id=IDE-169,version=0.3]
+[req,id=IDE-169,version=1]
 --
 task:IDE-1099[]
-For a given external declaration latexmath:[$D$] but not for
+For a given external declaration math:[$D$] but not for
 API-definitions footnote:[<<API_and_Implementation_Components>>], the
 following constraints must hold:
 
@@ -214,7 +213,7 @@ is generated.
 //TODO: Example Block
 [[ex:External Definitions and Their Implementations]]
 If, in addition to standard `source`, the `source-external` fragment is
-provided in `Sources`, latexmath:[$n4jsd$] files in the folder tree
+provided in `Sources`, math:[$n4jsd$] files in the folder tree
 below source folders will be related to modules of the same name in the
 external folders. This is shown in <<externalClassImplementation_naming>>.
 --
@@ -245,9 +244,9 @@ module.exports = {
 
 Assuming
 
-* shapes.js is placed in project folder /external/a/b/shapes.js
-* shapes.n4jsd is placed in project folder /src/a/b/shapes.n4jsd
-* manifest.n4mf defines src as source folder and external as external
+* `shapes.js` is placed in project folder /external/a/b/shapes.js
+* `shapes.n4jsd` is placed in project folder /src/a/b/shapes.n4jsd
+* `manifest.n4mf` defines src as source folder and external as external
 source folder
 
 the following N4JS external class declarations in shapes.n4jsd are
@@ -303,7 +302,7 @@ N4JS supports global definitions via the annotation `Global`. This annotation
 can only be defined on modules (via `@@Global`) – this means that all declarations in the module are globally defined.
 footnote:[Global basically means that the module defines no namespace on its own. Thus the annotation is a script/module related annotation.]
 
-We introduce a new pseudo property latexmath:[$global$] on all declared
+We introduce a new pseudo property math:[$global$] on all declared
 elements accordingly:
 
 Boolean flag set to true if annotation `@Global` is set in containing module. Flag indicates that the exported element is globally available and must not
@@ -311,23 +310,23 @@ be imported. task:IDE-1036[]
 
 Since definition of global elements is not supported by N4JS directly,
 this can be only used in external definitions. A declaration with
-latexmath:[$global$] can be used without explicit import statement. It
+math:[$global$] can be used without explicit import statement. It
 is not possible to import these declarations.
 
 
 .Global Definitions
-[req,id=IDE-170,version=0.3]
+[req,id=IDE-170,version=1]
 --
 Global Definitions
 
-For a declaration latexmath:[$D$] with latexmath:[$D.global=\TRUE$], not a polyfill
-(latexmath:[$D.polyfill=\FALSE)$], the following constraints must hold:
+For a declaration math:[$D$] with math:[$D.global=\TRUE$], not a polyfill
+(math:[$D.polyfill=\FALSE)$], the following constraints must hold:
 
 1.  The name of the definition must not be equal to any primitive type
 (`string`, `number` etc.), `any`, or an built-in N4 type (`N4Object` etc.).
 2.  If the name of the definition equals a basic runtime time Object
 Type then the project must be a runtime environment:
-latexmath:[\[\begin{aligned}
+math:[\[\begin{aligned}
 &D.name \in \{ \\
 &\hspace{3em} 'Object', 'Function', 'Array', 'String', 'Boolean'\\
 &\hspace{3em} 'Number', 'Math', 'Date', 'RegExp', 'Error', 'JSON' \\
@@ -355,7 +354,7 @@ N4JS supports runtime definitions via the annotation `@ProvidedByRuntime`. This 
 * on modules (via `@@ProvidedByRuntime`)– this means that all declarations in the module are provided by the runtime
 * on export statements or declarations.
 
-We introduce a new pseudo property latexmath:[$providedByRuntime$]
+We introduce a new pseudo property math:[$providedByRuntime$]
 accordingly:
 
 Boolean flag set to true if the annotation `@ProvidedByRuntime` is set. Flag indicates that
@@ -365,21 +364,21 @@ provided by the runtime.
 Since built-in types are usually defined globally, the annotation `@ProvidedByRuntime` is usually used in combination with `@Global`.
 
 .Provided By Runtime
-[req,id=IDE-171,version=0.3]
+[req,id=IDE-171,version=1]
 --
 Provided By Runtime
 
 task:IDE-1036[]
 For a declaration
-latexmath:[$D$] with latexmath:[$D.providedByRuntime=\TRUE$], the
+math:[$D$] with math:[$D.providedByRuntime=\TRUE$], the
 following constraints must hold:
 
 1.  The declaration must either be an export declaration itself or an
 exportable declaration.
 2.  The declaration must be contained in a definition module.
 3.  The declaration must be (indirectly) contained in a component of
-type latexmath:[$\lenum{runtimeEnvironment}$] or
-latexmath:[$\lenum{runtimeLibrary}$].
+type math:[$\lenum{runtimeEnvironment}$] or
+math:[$\lenum{runtimeLibrary}$].
 4.  There must be no implementation file with the same name as the
 definition module if annotation is defined for a whole module. task:IDE-1084[]
 --
@@ -398,7 +397,7 @@ It also adds completely new classes and features, of course.
 The syntax of runtime polyfills is described in section <<Polyfill_Definitions>>.
 Here, an example of applying a runtime polyfill is detailed.
 
-// TODO example block
+//TODO example block
 [[ex:Object.observe with Polyfill]]
 The following snippet demonstrates how to define a polyfill of the built-in
 class to add the new ECMAScript 7 observer functionality.

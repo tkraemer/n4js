@@ -81,7 +81,7 @@ math:[$T.defStructural$] is true.
 
 
 .Definition Site Structural Typing
-[req,id=IDE-75,version=0.3]
+[req,id=IDE-75,version=1]
 --
 
 .  The structurally defined type cannot be used on the right hand side
@@ -419,7 +419,7 @@ write-only field and math:[$\tsInitFld T$] the structural
 initializer field version of math:[$T$].
 
 .Use-Site Structural Typing
-[req,id=IDE-76,version=0.3]
+[req,id=IDE-76,version=1]
 --
 1.  The structural version of a type is a supertype of the nominal type:
 math:[\[\begin{aligned}
@@ -522,7 +522,7 @@ also a subtype of math:[$\tsStr T$]: math:[\[\begin{aligned}
 This is only a shortcut for the type inference defined above.
 
 .Definition and Use-Site Precedence
-[req,id=IDE-77,version=0.3]
+[req,id=IDE-77,version=1]
 --
 If a type is structurally typed on both definition and use-site, the rules for
 use-site structural typing (<<req:Use_Site_Structural_Typing>>) are
@@ -847,7 +847,7 @@ TAnonymousFormalParameter:
 ==== Semantics
 
 .Additional structural members
-[req,id=IDE-78,version=0.3]
+[req,id=IDE-78,version=1]
 --
 
 It is only possible to add additional members to a type if use-site structural

@@ -97,7 +97,7 @@ that the following constraints are met:
 task:IDE-550[] task:IDE-551[]
 
 .Member Names
-[req,id=IDE-52,version=0.3]
+[req,id=IDE-52,version=1]
 --
 1.  No two members may have the same name, except one is static and the
 other is non-static:
@@ -267,7 +267,7 @@ and method overriding and implementation (<<Overriding of Members>>, <<Implement
 The following constraints are defined for methods in ECMAScript 6 cite:[ECMA15a(207)]
 
 .Method Definition ECMAScript 6
-[req,id=IDE-53,version=0.3]
+[req,id=IDE-53,version=1]
 --
 * ``It is a Syntax Error if any element of the BoundNames of
 StrictFormalParameters also occurs in the VarDeclaredNames of
@@ -295,7 +295,7 @@ var v: {function():void} = new C().m;
 ----
 
 .Method Assignment
-[req,id=IDE-54,version=0.3]
+[req,id=IDE-54,version=1]
 --
 .  Different from ECMAScript 2015, methods are defined as readonly,
 that is, it is not possible to dynamically re-assign a property defined
@@ -418,8 +418,10 @@ different to Java), they also can be marked as final.
 
 Default methods in interfaces, cf. <<sec:Default_Methods_in_Interfaces>>, may also be declared `@Final`.
 
-// Example
-[Final Methods in Interfaces][ex:Final_Methods_in_Interfaces]
+
+.Final Methods in Interfaces
+[example]
+====
 If a method in an interface is provided with a body, it may be declared
 final. This will ensure that the given method’s body will be in effect
 for all instances of the interface. Note that this means that; (a) a
@@ -441,6 +443,7 @@ class C1 {
 class C2 extends C1 implements I {
 }
 ----
+====
 
 === Abstract Methods
 
@@ -467,7 +470,7 @@ defined for methods as well, just like for generic functions (see
 <<Generic Functions>>).
 
 .Type variable names for generic methods
-[req,id=IDE-10,version=0.3]
+[req,id=IDE-55,version=1]
 --
 For a given generic method math:[$m$] of a class math:[$C$], the following
 constraint must hold: +
@@ -560,8 +563,9 @@ Constructors define a variable execution environment and therefore
 provide access to the actual passed-in parameters through the implicit
 variable inside of their bodies (c.f. <<Arguments_Object>>).
 
-.Defining and CallingConstructors
-[[req:Defining_and_Calling_Constructors]]
+.Defining and Calling Constructors
+[req,id=IDE-56,version=1]
+--
 For a constructor math:[$ctor$] of a class math:[$C$], the following conditions
 must hold:
 
@@ -582,14 +586,19 @@ its direct or indirect super interfaces must be annotated with `@CovariantConstr
 .  A constructor must not have an explicit return type declaration.
 .  The implicit return type of a constructor is `this?`.
 
+--
+
 Properties of object literals may be called `constructor`. However they are not
 recognized as constructors in these cases.
 
-.57 Initialization of Final Fields in the Constructor
-[[req:Initialization of Final Fields in the Constructor]]
+.Initialization of Final Fields in the Constructor
+[req,id=IDE-57,version=1]
+--
 
 1.  Required attributes must be initialized: +
 math:[$\forall a \in C.attr: a.required \to \exists e \in r.elements: a.name = e.name$]
+
+--
 
 Note on syntax: ECMAScript 6 defines constructors similarly, cite:[ECMA15a(S13.5)]. In
 ECMAScript 6 the super constructor is not called automatically as well.
@@ -657,7 +666,7 @@ in the subclass. This is marked as an error in the subclass.
 task:IDEBUG-81[]
 
 .Names of additional members of structural this type in constructor
-[req,id=IDE-58,version=0.3]
+[req,id=IDE-58,version=1]
 --
 If the structural this type is used in a constructor of a class
 math:[$C$], and if this structural reference contains an additional
@@ -714,8 +723,9 @@ class A {
 }
 ----
 
-#### Spec-style Constructor
-[[req:Spec_style_Constructor]]
+.Spec-style Constructor
+[req,id=IDE-59,version=1]
+--
 
 1.  Annotation `@Spec` may only appear on a formal parameter of a constructor.
 2.  Only a single formal parameter of a constructor may be annotated
@@ -745,8 +755,12 @@ those properties provided by an object literal which has the
 corresponding readble fields. These properties will be initialzed.
 // TODO: check if math above is necessary or if ~ this can be enclosed in backticks ``
 
-#### Example: Anonymous Interface in Constructor
-[[ex:Anonymous_Interface_in_Constructor]]
+--
+
+.Anonymous Interface in Constructor
+[example]
+====
+
 The base class `A` in the examples redefines the constructor already defined in `N4Object`. This is not
 generally necessary and is only used here to make the example legible.
 
@@ -766,9 +780,11 @@ class B extends A {
     }
 }
 ----
+====
 
-#### Example: Spec Object and Subclasses
-[[ex:Spec Object and Subclasses]]
+.Spec Object and Subclasses
+[example]
+====
 
 [source]
 ----
@@ -825,9 +841,13 @@ required in the first place.
 
 Optional fields like `n?` in class `A2` or fields with default values like `n=10` in
 class `A3` are not required to be part of the `spec` object.
+====
 
-#### Superfluous Properties in Spec-style Constructor]
-[[ex:Superfluous_Properties_in_Spec_Style_Constructor]]
+
+.Superfluous Properties in Spec-style Constructor
+[example]
+====
+
 Each non-math:[$\lenum{public}$] field has to be set in the constructor
 via the math:[$\lstnfjs{with}$] to the parameter otherwise
 properties are _not_ used to set non-math:[$\lenum{public}$]
@@ -853,6 +873,8 @@ new C(ol) ;
 // weird is not used in constructor
 new C( { s: "Hello", weird: true } );
 ----
+
+====
 
 === Callable Constructors
 
@@ -895,9 +917,9 @@ covariant.
 
 The following rules apply to covariant constructors.
 
-Covariant Constructors
-[[req:Covariant_Constructors]]
-
+.Covariant Constructors
+[req,id=IDE-60,version=1]
+--
 .  Annotation `@CovariantConstructor` may only be applied to classes, interfaces, and
 constructors. Annotating a constructor with this annotation, or its
 containing classifier, or both have all the same effect.
@@ -939,10 +961,11 @@ constraints for the redefinition of ordinary members.
 The following example demonstrates a use case for covariant
 constructors. It shows a small class hierarchy using covariant
 constructors, `Cls` and `Cls2`, together with a helper function `createAnother` that creates and returns a new instance of the same type as its argument `value`.
+--
 
-#### Covariant Constructors
-[[ex:Covariant_Constructors]]
-
+.Covariant Constructors
+[example]
+====
 [source]
 ----
 class A {}
@@ -969,14 +992,17 @@ let y: Cls2;
 y = createAnother(x, new B());
 ----
 
+====
+
 In the code of <<ex:Covariant_Constructors>> we would get an error if we changed the type of parameter `p` in the constructor of `Cls2` to some other type that is not a super type of `B`,
 i.e. the type of the corresponding parameter of `Cls`’s constructor. If we
 removed the `@CovariantConstructor` annotation on `Cls`, we would get an error in the new expression inside function `createAnother`.
 
 The next example illustrates how to use `@CovariantConstructor` with interfaces and shows a behavior that might be surprising at first sight.
 
-#### Covariant Constructors in Interfaces
-[[ex:Covariant_Constructors_in_Interfaces]]
+.Covariant Constructors in Interfaces
+[example]
+====
 
 [source]
 ----
@@ -994,6 +1020,8 @@ class D extends C {
     constructor(p: number) {}
 }
 ----
+
+====
 
 Interface `I` declares a covariant constructor expecting a single parameter
 of type `number`. Even though class `C` implements `I`, it does not need to define an
@@ -1095,8 +1123,9 @@ may be set in the constructor (cf. <<Assignment Modifiers>>).
 
 ==== Semantics [[data-fields-semantics]]
 
-#### Attributes
-[[req:Attributes]]
+.Attributes
+[req,id=IDE-61,version=1]
+--
 For any attribute math:[$a$] if a
 class math:[$C$], the following constraints must hold:
 
@@ -1113,6 +1142,7 @@ in the constructor of the subclass.
 
 For the relation of data fields and field accessors in the context of
 extending classes or implementing interfaces see <<Redefinition_of_Members>>.
+--
 
 ==== Type Inference [[data-fields-type-inference]]
 
@@ -1142,8 +1172,9 @@ task:IDE-946[]
 Assignment of data fields can be modified by the assignment modifiers
 (similar to constant variable declarations, see <<Const>>) and `@Final`.
 
-Const Data Fields
-[[req:Const_Data_Fields]
+.Const Data Fields
+[req,id=IDE-62,version=1]
+--
 For a data field math:[$f$] marked as `const`, the following constraints must hold:
 
 1.  An initializer expression must be provided in the declaration
@@ -1162,9 +1193,11 @@ math:[\[\begin{aligned}
 4.  Constant data fields are not writeable (cf. <<req:Write_Acccess>>):
 math:[\[\begin{aligned}
     f.const \Rightarrow \lnot f.writeable\end{aligned}\]]
+--
 
-#### Final Data Fields
-[[req:Final_Data_Fields]]
+.Final Data Fields
+[req,id=IDE-63,version=1]
+--
 For a data field math:[$f$] marked as `@Final`, the following constraints must hold:
 
 1.  A final data field must not be modified with `const` or `static`:
@@ -1186,7 +1219,7 @@ math:[\[\begin{aligned}
     & \lor (f.public \land \exists fpar \in f.owner.constructor.fpars: \\
     & \hspace{3em} fpar.spec \land \exists sm \in structuralMembers: sm.name=f.name)\end{aligned}\]]
 
-
+--
 // todo{Constraints for final assignment are not completely implemented yet, also they have some problems here (e.g., not all control flows are required to assign a value). They will be implemented in the progress of adding more powerful program analysis in general}
 
 
@@ -1280,9 +1313,10 @@ There must be no field or method with the same name as a field accessor
 (follows from <<req:Member_Names>>). In addition, the following
 constraints must hold:
 
-//Req64
-Field Accessors
-[[req:Field_Accessors]]
+
+.Field Accessors
+[req,id=IDE-64,version=1]
+--
 
 * The return type of a getter must not be `void`.
 * The type of the parameter of a setter must not be `void`.
@@ -1304,6 +1338,8 @@ type, i.e. the getter’s return type need not be the same as a subtype of
 the type of the setter’s parameter (the types can be completely
 unrelated).
 footnote:[Thus, the type of one accessor is not used to infer the type of the other one. E.g., from `set x(string s)`, we cannot infer `get x()` to return ``string`` — instead, the getter is inferred to return `any`.]
+
+--
 
 Getters and setters – like functions – define a variable execution
 environment and therefore provide access to the actual passed-in
@@ -1327,12 +1363,15 @@ interfaces, but there are important differences (for example, no
 inheritance of static members of interfaces, cf. Section
 <<Static_Members_of_Interfaces>>) .
 
-//Requirement 65
-[[req:Static member not abstract]]
+.Static member not abstract
+[req,id=IDE-65,version=1]
+--
 For a static field accessor or method
 math:[$s$], the following constraint must hold:
 
 * math:[$s.static \iff \lnot s.abstract$]
+
+--
 
 Like instance methods, static methods of classes are inherited by
 subclasses and it is possible to override static methods in subclasses.
@@ -1340,8 +1379,11 @@ The very same override constraints are valid in this case as well.
 
 === Access From and To Static Members
 
-[[req:Accessing_Static_Members]]
-Accessing Static Members::
+
+.Accessing Static Members
+[req,id=IDE-66,version=1]
+--
+
 Let math:[$m$] be a static member of class `C`. Except for write-access to
 fields, which will be explained later, you can access math:[$m$]
 via:
@@ -1354,15 +1396,21 @@ via:
 of `C`, +
 e.g., `function <T extends C> f(){T.m}` task:GH-222[]
 
-//Requirement
-//67Static Member Access
-[[req:Type_Variables_and_Static_Members]]
+--
+
+
+.Static Member Access
+[req,id=IDE-67,version=1]
+--
 It is not possible to access instance members from static members. This is true in
 particular for type variables defined by a generic classifier.
+--
 
-//Requirement
-// 68write-access to static data fields and static setter
-[[req:write_access_of_static_data_fields]
+
+.Write-access to static data fields and static setter
+[req,id=IDE-68,version=1]
+--
+
 task:IDE-1071[] task:IDEBUG-442[]
 For static data fields and static setter math:[$f$] the following constraint must hold:
 
@@ -1370,6 +1418,8 @@ For static data fields and static setter math:[$f$] the following constraint mus
 math:[$f.static \land assignExpr.left = T.f \rightarrow T=f.owner$].
 * For every writing unary expression math:[$u$] with
 math:[$u.op \in \{++,--\}  \land   f.static \land  u.expression = T.f \rightarrow T=f.owner$].
+
+--
 
 In the special case of math:[$m$] being a static data field,
 write-access is only possible via the defining type name `C.m`: . So in the
@@ -1381,8 +1431,7 @@ footnote:[The technical reason for this rule is the way properties are stored in
 It is even possible to call a static field accessor or method of a class
 using dynamic polymorphism, as demonstrated in the following example:
 
-Static members of classes, inheritance and polymorphism
-[[ex:Polymorphism_and_static_methods]]
+Static members of classes, inheritance and polymorphism [[ex:Polymorphism_and_static_methods]]
 
 [source,n4js]
 ----
@@ -1419,8 +1468,7 @@ This is quite different from Java where static methods are not inherited
 and references to static methods are statically bound at compile time
 depending on the declared type of the receiver (and not its value):
 
-Static members in Java
-[[ex:Static_members_in_Java]]
+Static members in Java [[ex:Static_members_in_Java]]
 
 [source,java]
 ----
@@ -1453,9 +1501,9 @@ generic static methods.
 Data fields, field accessors and methods of interfaces may be declared
 static. A few restrictions apply:
 
-//Requirement
-//69Static Members of Interfaces
-[[req:StaticMembersOfInterfaces]]
+.Static Members of Interfaces
+[req,id=IDE-69,version=1]
+--
 
 1.  Static members of interfaces may only be accessed directly via the
 containing interface’s type name task:IDEBUG-386[] (this means, of the four ways of
@@ -1466,6 +1514,8 @@ static fields of interfaces. See <<req:ValidLocationForThisLiteral>>.
 3.  The `super` literal may not be used in static methods or field accessors of
 interfaces (in fact, it may not be used in interfaces at all,
 cf. <<req:Access_Super_Member_with_Super_Literal>>).
+
+--
 
 Note that the `this` type as a return type for methods is only allowed for
 instance methods and as an argument type only in constructors
@@ -1513,7 +1563,10 @@ implementing classes. Fields and methods with default implementation
 defined in interfaces can be consumed by the implementor, but certain
 restrictions apply.
 
-70Override Compatible[Override Compatible] A member math:[$M$] is
+.Override Compatible
+[req,id=IDE-70,version=1]
+--
+] A member math:[$M$] is
 _override compatible_ to a member math:[$S$] if and only if the
 following constraints hold:
 
@@ -1547,15 +1600,17 @@ abstract one: math:[\[\begin{aligned}
     M.acc \geq S.acc
     \end{aligned}\]]
 
+--
+
 We define a relation math:[$overrideCompatible(M, S)$] accordingly.
 
 Members overriding or implementing other members must be declared as
 override. If a member does not override another, however, it must not be
 declared as override.
 
-//Requirement
-//71Non-Override Declaration
-[[req:Non_Override_Declaration]]
+.Non-Override Declaration
+[req,id=IDE-71,version=1]
+--
 If and only if a member math:[$M$] of a class math:[$C$] (extending a class
 math:[$S$] and interfaces math:[$I_i$]) does not override or
 implement another member, then it must not be declared as override. That
@@ -1566,6 +1621,7 @@ is the following constraint must hold: math:[\[\begin{aligned}
 &  M'.name=M.name \land M'.static=M.static \\
 & \land M'.acc>\lenum{private} \\\end{aligned}\]]
 
+--
 
 === Overriding of Members
 task:IDE-12[] task:IDE-158[]
@@ -1575,9 +1631,9 @@ them in sub-classes. This definition allows for overriding of static
 methods, but it does not apply to constructors because
 math:[$C.ctor \notin C.ownedMethods$].
 
-//Requirement
-//72Overriding Members
-[[req:Overriding_Members]]
+.Overriding Members
+[req,id=IDE-72,version=1]
+--
 Given a class
 math:[$C$] and a superclass math:[$Sup$]. If for an instance
 or static member math:[$M$] defined in math:[$C$] a member
@@ -1604,6 +1660,7 @@ math:[\[\begin{aligned}
 math:[\[\begin{aligned}
     M.override
     \end{aligned}\]]
+--
 
 Remarks:
 
@@ -1666,9 +1723,9 @@ of. Data fields defined in interfaces, in particular, are assumed to be
 concrete. It is not, therefore, possible to consume a field defined in
 two implemented interfaces.
 
-//Requirement
-//73Consumption of Interface Members
-[[req:Consumption_of_Interface_Members]]
+.Consumption of Interface Members
+[req,id=IDE-73,version=1]
+--
 Given a classifier math:[$C$] footnote:[math:[$C$] could either be a class or an interface.], and interfaces math:[$I_1,..., I_n$]
 implemented (or extended) by math:[$C$], and sets math:[$M_C$]
 and math:[$M_I$] as defined in . A non-static member
@@ -1703,9 +1760,9 @@ math:[\[\begin{aligned}
 
 ==== Member Implementation
 
-//Requirement
-//74Implementation of Interface Members
-[[req:Implementation_of_Interface_Members]]
+.Implementation of Interface Members
+[req,id=IDE-74,version=1]
+--
 For any non-static abstract member math:[$M$] defined in an interface math:[$I$]
 implemented (or extended) by a classifier math:[$C$],
 math:[$M$] must be accessible from math:[$C$] and one or two
@@ -1737,6 +1794,7 @@ math:[$G', S'$] must exist: math:[\[\begin{aligned}
                             & \hspace{3em} \land (G' \in C.ownedMembers \Rightarrow G'.override) \\
                             & \hspace{3em} \land (S' \in C.ownedMembers \Rightarrow S'.override)
         \end{aligned}\]]
+--
 
 Methods defined in interfaces are automatically declared abstract if
 they do not provide a default implementation. This can also be expressed
@@ -1811,8 +1869,8 @@ h| class `C` | | _M~C~_ | *M~C~* | | |_M~C~_
 h| math:[$\in C.members$] |_M~I1~_ | _M~C~_ | _M~C~_ | _M~S~_ | _M~S~_  |_M~C~_
 |===
 
-[[consuming-field-initializers]]
-Consuming Field Initializers ::
+
+Consuming Field Initializers :: [[consuming-field-initializers]]
 Aside from the fields themselves, an implementor _always_ consumes the
 field initialization if the field is consumed – this is how the
 consumption is noticed at runtime.
