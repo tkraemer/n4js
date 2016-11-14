@@ -1,6 +1,9 @@
-include::index-config.adoc[]
+include::config.adoc[]
 .N4JS Language Specification
 = N4JS Language Specification
+
+
+image::resources/images/n4jslogo.png[align="center"]
 
 <<<
 
@@ -10,7 +13,6 @@ Version 0.4
 [.center]
 Revision Date: 28.10.2016
 
-image::resources/images/n4jslogo.svg[align="center"]
 
 [.center]
 (C) 2016 NumberFour AG
