@@ -10,14 +10,24 @@
  */
 package eu.numberfour.n4jsx.validation;
 
+import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 
-import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
+import eu.numberfour.n4js.utils.ResourceType;
+import eu.numberfour.n4js.validation.DefaultJavaScriptVariantHelper;
 
 /**
- * This class defines N4JSX validation features
+ * This class defines validation features N4JSX language
  */
-public class N4JSXJavaScriptVariantHelper implements JavaScriptVariantHelper {
+public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper {
+
+	private static Logger LOGGER = Logger.getLogger(ResourceType.class);
+
+	private final static String EXT_N4JSX = "n4jsx";
+	private final static String EXT_XT = "xt";
+	private final static String END_N4JSX_XT = "." + EXT_N4JSX + "." + EXT_XT;
 
 	/**
 	 * No dynamic pseudo scope for N4JSX
@@ -116,7 +126,8 @@ public class N4JSXJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	}
 
 	/**
-	 * Function expression in expression statement should NOT be checked for N4JSX
+	 * Function expression in expression statement should NOT be checked for
+	 * N4JSX
 	 */
 	@Override
 	public boolean requireCheckFunctionExpressionInExpressionStatement(EObject eobj) {
@@ -148,7 +159,7 @@ public class N4JSXJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	}
 
 	/**
-	 * Type inference should NOT  be doomed for N4JSX
+	 * Type inference should NOT be doomed for N4JSX
 	 */
 	@Override
 	public boolean doomTypeInference(EObject eobj) {
@@ -196,7 +207,8 @@ public class N4JSXJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	}
 
 	/**
-	 * Do NOT enforce dynamic types in call cases even without explicit modifier in N4JSX
+	 * Do NOT enforce dynamic types in call cases even without explicit modifier
+	 * in N4JSX
 	 */
 	@Override
 	public boolean enforceDynamicTypes(EObject eobj) {
@@ -215,7 +227,8 @@ public class N4JSXJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 * The variant N4JSX does NOT have global object
 	 */
 	@Override
-	public boolean hasGlobalObject(EObject eobj) { // e.g. in unrestricted ECMAScript mode
+	public boolean hasGlobalObject(EObject eobj) { // e.g. in unrestricted
+													// ECMAScript mode
 		return false;
 	}
 
@@ -236,11 +249,66 @@ public class N4JSXJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	}
 
 	/**
-	 * N4JSX is actually defined in a N4JS module
+	 * Check if we are in N4JS code mode (N4JSX is considered as N4JS)
 	 */
 	@Override
 	public boolean isN4JSMode(EObject eobj) {
-		return true;
+		// TODO: This method re-implements the logics in class ResourceType,
+		// consider refactor ResourceType to make it more extensible
+		if (eobj == null)
+			return super.isN4JSMode(eobj);
+
+		Resource resource = eobj.eResource();
+		if (resource == null)
+			return super.isN4JSMode(eobj);
+
+		URI uri = resource.getURI();
+		if (uri == null)
+			return super.isN4JSMode(eobj);
+
+		String fileExtension = uri.fileExtension();
+		if (fileExtension == null) {
+			LOGGER.info("URI has no file extension " + uri);
+			return super.isN4JSMode(eobj);
+		} else {
+			fileExtension = fileExtension.toLowerCase();
+			boolean isN4JSExtension = isN4JSXExtension(fileExtension);
+			if (isN4JSExtension) {
+				return isN4JSExtension;
+			} else {
+				return super.isN4JSMode(eobj);
+			}
+		}
+	}
+
+	/**
+	 * Check if a file extension is N4JSX
+	 */
+	private boolean isN4JSXExtension(String fileExtension) {
+		switch (fileExtension) {
+		case EXT_N4JSX:
+			return true;
+		case EXT_XT:
+			String fileExtensionWithoutXT = getXtHiddenType(fileExtension);
+			return isN4JSXExtension(fileExtensionWithoutXT);
+		default:
+			return false;
+		}
+	}
+
+	/**
+	 * For Xpect resources return type hidden by the xt extension.
+	 */
+	private String getXtHiddenType(String fileExtension) {
+		if (fileExtension == null) {
+			return "";
+		}
+
+		String fileExtensionLowerCase = fileExtension.toLowerCase();
+		if (fileExtensionLowerCase.endsWith(END_N4JSX_XT)) {
+			return EXT_N4JSX;
+		}
+		return "";
 	}
 
 	/**
