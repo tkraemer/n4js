@@ -74,6 +74,7 @@ import eu.numberfour.n4js.n4JS.CommaExpression
 import eu.numberfour.n4js.n4JS.ConditionalExpression
 import eu.numberfour.n4js.n4JS.EqualityExpression
 import eu.numberfour.n4js.n4JS.Expression
+import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.ForStatement
 import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDefinition
@@ -153,7 +154,6 @@ import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TEnumLiteral
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFormalParameter
-import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMethod
@@ -2131,52 +2131,23 @@ from {
 rule expectedTypeInReturnStatement
 	G |- ReturnStatement stmt |> Expression expression : TypeRef T
 from {
-	val funDef = EcoreUtil2.getContainerOfType(stmt, FunctionDefinition)
-	// return statement in Classes can have return-types with this.
+	T = typeSystemHelper.getExpectedTypeOfReturnValueExpression(G, expression);
+}
 
-	val G2 = G.wrap
-	G |~ stmt ~> var TypeRef myThisTypeRef
-	G2.addThisType(myThisTypeRef) // takes the real-this type even if it is a type{this} reference.
-
-	// To recap, there's funDef.returnTypeRef (developer-provided type hint)
-	// and there's funDef.definedType (set afterwards by N4JSFunctionDefinitionTypesBuilder)
-	{
-		funDef !== null
-		!funDef.isAsync()
-		// in effect fType becomes funDef.definedType.ref, ie a TFunction
-		G2 |- funDef : var FunctionTypeExprOrRef fType
-		// T becomes fType.returnTypeRef after type variables are substituted
-		G2 |- fType.returnTypeRef ~> T
-	}
-	or
-	{
-		// this OR-alternative is for async funDef (normal case, it's also conceivable we got here via exceptional-control flow).
-		// for an async function, N4JSFunctionDefinitionTypesBuilder sets funDef.definedType.returnTypeRef to Promise<R,?>
-		// where R is based on funDef.returnTypeRef
-		if (funDef !== null) {
-			if (funDef.returnTypeRef!==null) {
-				// short-cut: simply use the declared type in the FunctionDeclaration
-				T = funDef.returnTypeRef
-			}
-			else {
-				// no declared type -> get from first type argument of actual return type from types model
-				val tFun = funDef.definedType;
-				if(tFun instanceof TFunction) {
-					val actualReturnTypeRef = tFun.returnTypeRef;
-					if(TypeUtils.isPromise(actualReturnTypeRef, G.getPredefinedTypes().builtInTypeScope)) {
-						val firstTypeArg = actualReturnTypeRef.typeArgs.head;
-						if(firstTypeArg!==null) {
-							G |~ firstTypeArg /\ T // take upper bound to get rid of Wildcard, etc.
-						}
-					}
-				}
-			}
-		} else
-		{
-			// maybe we are in getter:
-			val getterDef = EcoreUtil2.getContainerOfType(stmt, GetterDeclaration);
-			T = getterDef?.definedGetter?.declaredTypeRef
-		}
+/*
+ * Same as rule 'expectedTypeInReturnStatement', but for the special case of an implicit return in a single-expression
+ * arrow function.
+ */
+rule expectedTypeInExpressionStatement
+	G |- ExpressionStatement exprStmnt |> Expression expression : TypeRef T
+from {
+	if (N4JSASTUtils.getContainingSingleExpressionArrowFunction(expression)!==null) {
+		// special case: we are in a single-expression arrow function
+		// --> so 'expression' is to be treated as if it were the expression of a return statement
+		T = typeSystemHelper.getExpectedTypeOfReturnValueExpression(G, expression);
+	} else {
+		// default case:
+		T = null; // null means: no type expectation
 	}
 }
 
