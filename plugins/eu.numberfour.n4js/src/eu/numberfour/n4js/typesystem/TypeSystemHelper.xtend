@@ -74,7 +74,7 @@ class TypeSystemHelper {
 
 	@Inject private N4JSTypeSystem ts;
 
-	@Inject private TypeRefWrapper typeRefWrapper;
+	@Inject private VersionResolver versionResolver;
 
 	// *****************************************************************************************************
 	//   forwarding of utility methods implemented in strategy classes
@@ -403,7 +403,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		 	 var resultTypeRef = TypeExtensions.ref(type,typeArgs);
 		 	 if (typeRef instanceof ParameterizedTypeRef) {
 	 	 		if (typeRef.referencedVersion > 0) {
-	 	 			resultTypeRef = typeRefWrapper.resolveVersion(resultTypeRef, typeRef.referencedVersion);
+	 	 			resultTypeRef = versionResolver.resolveVersion(resultTypeRef, typeRef.referencedVersion);
 	 	 		}
 		 	 }
 		 	 return resultTypeRef;

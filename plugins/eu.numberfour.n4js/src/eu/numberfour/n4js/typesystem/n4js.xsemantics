@@ -171,7 +171,6 @@ import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeHelper
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesbuilder.N4JSFunctionDefinitionTypesBuilder
-import eu.numberfour.n4js.typesystem.TypeRefWrapper
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
@@ -190,6 +189,7 @@ import static extension eu.numberfour.n4js.ts.utils.TypeExtensions.*
 import static extension eu.numberfour.n4js.ts.utils.TypeUtils.*
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.typesystem.TypeSystemErrorExtensions.*
+import eu.numberfour.n4js.typesystem.VersionResolver
 
 inject TypeSystemHelper typeSystemHelper
 inject N4JSFunctionDefinitionTypesBuilder functionDefinitionTypesBuilder
@@ -199,7 +199,7 @@ inject DestructureHelper destructureHelper
 inject MemberScopingHelper memberScopingHelper
 inject PromisifyHelper promisifyHelper
 inject JavaScriptVariantHelper jsVariantHelper
-inject TypeRefWrapper typeRefWrapper
+inject VersionResolver versionResolver
 
 judgments {
 
@@ -405,7 +405,7 @@ from  {
 	G |- idref.id : T
 
 	if (idref.referencedVersion > 0) {
-		T = typeRefWrapper.resolveVersion(T, idref.referencedVersion);
+		T = versionResolver.resolveVersion(T, idref.referencedVersion);
 	}
 
 	if(idref.eContainer instanceof ParameterizedCallExpression
@@ -762,7 +762,7 @@ from {
 
 		if (receiverTypeRef instanceof ParameterizedTypeRef) {
 			if (receiverTypeRef.referencedVersion > 0) {
-				T = typeRefWrapper.resolveVersion(T, receiverTypeRef.referencedVersion);
+				T = versionResolver.resolveVersion(T, receiverTypeRef.referencedVersion);
 			}
 		}
 
@@ -843,7 +843,7 @@ from {
 
 			if (F instanceof ParameterizedTypeRef) {
 				if (F.referencedVersion > 0) {
-					T = typeRefWrapper.resolveVersion(T, F.referencedVersion);
+					T = versionResolver.resolveVersion(T, F.referencedVersion);
 				}
 			}
 

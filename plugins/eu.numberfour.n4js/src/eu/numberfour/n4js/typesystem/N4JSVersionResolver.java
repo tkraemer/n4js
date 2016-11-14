@@ -12,6 +12,13 @@ package eu.numberfour.n4js.typesystem;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 
-public interface TypeRefWrapper {
-	public <T extends TypeArgument> T resolveVersion(T typeRef, int contextVersion);
+/**
+ * Default implementation of {@link VersionResolver} that always returns the actual parameter. This implementation can
+ * be used in languages where versioning does not apply.
+ */
+public class N4JSVersionResolver implements VersionResolver {
+	@Override
+	public <T extends TypeArgument> T resolveVersion(T typeRef, int contextVersion) {
+		return typeRef;
+	}
 }
