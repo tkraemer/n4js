@@ -1291,7 +1291,7 @@ In the case of polyfills, this is true for constructors (cf.
 === Runtime Polyfill Definitions
 
 (Runtime) Libraries often do not provide completely new types but modify
-existing types. The ECMA-402 Internationalization Standard cite:[ECMA12a], for example, changes methods of the built-in class \lstnfjs{Date} to be timezone aware. Other scenarios include new functionality provided by browsers which are not part of an official standard yet. Even ECMAScript 6 cite:[ECMA15a] extends the predecessor cite:[ECMA11a]  in terms of new methods (or new method parameters) added to
+existing types. The ECMA-402 Internationalization Standard cite:[ECMA12a], for example, changes methods of the built-in class `Date` to be timezone aware. Other scenarios include new functionality provided by browsers which are not part of an official standard yet. Even ECMAScript 6 cite:[ECMA15a] extends the predecessor cite:[ECMA11a]  in terms of new methods (or new method parameters) added to
 existing types (it also adds completely new classes and features, of
 course).
 
