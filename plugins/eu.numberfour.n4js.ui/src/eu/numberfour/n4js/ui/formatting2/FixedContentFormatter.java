@@ -12,6 +12,7 @@ package eu.numberfour.n4js.ui.formatting2;
 
 import java.util.List;
 
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.text.edits.MultiTextEdit;
@@ -58,6 +59,11 @@ public class FixedContentFormatter extends ContentFormatter {
 				return;
 			}
 		}
-		super.format(document, region);
+		try {
+			e.apply(document);
+		} catch (BadLocationException ex) {
+			throw new RuntimeException(ex);
+		}
+
 	}
 }
