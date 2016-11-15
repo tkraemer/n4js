@@ -42,10 +42,6 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.name.Names;
 
-import eu.numberfour.n4jsx.parser.N4JSXSemicolonInjectingParser;
-import eu.numberfour.n4jsx.parser.RegExLiteralAwareLexer;
-import eu.numberfour.n4jsx.parser.antlr.lexer.InternalN4JSXLexer;
-import eu.numberfour.n4jsx.validation.N4JSXJavaScriptVariantHelper;
 import eu.numberfour.n4js.CancelIndicatorBaseExtractor;
 import eu.numberfour.n4js.conversion.N4JSStringValueConverter;
 import eu.numberfour.n4js.conversion.ValueConverters;
@@ -82,7 +78,6 @@ import eu.numberfour.n4js.resource.N4JSUnloader;
 import eu.numberfour.n4js.resource.PostProcessingAwareResource.PostProcessor;
 import eu.numberfour.n4js.resource.UserdataMapper;
 import eu.numberfour.n4js.scoping.N4JSGlobalScopeProvider;
-import eu.numberfour.n4js.scoping.N4JSScopeProvider;
 import eu.numberfour.n4js.scoping.builtin.ScopeRegistrar;
 import eu.numberfour.n4js.scoping.imports.N4JSImportedNamespaceAwareLocalScopeProvider;
 import eu.numberfour.n4js.ts.findReferences.ConcreteSyntaxAwareReferenceFinder;
@@ -102,6 +97,11 @@ import eu.numberfour.n4js.validation.N4JSElementKeywordProvider;
 import eu.numberfour.n4js.validation.N4JSIssueSeveritiesProvider;
 import eu.numberfour.n4js.validation.N4JSResourceValidator;
 import eu.numberfour.n4js.xsemantics.InternalTypeSystem;
+import eu.numberfour.n4jsx.parser.N4JSXSemicolonInjectingParser;
+import eu.numberfour.n4jsx.parser.RegExLiteralAwareLexer;
+import eu.numberfour.n4jsx.parser.antlr.lexer.InternalN4JSXLexer;
+import eu.numberfour.n4jsx.scoping.N4JSXScopeProvider;
+import eu.numberfour.n4jsx.validation.N4JSXJavaScriptVariantHelper;
 import it.xsemantics.runtime.StringRepresentation;
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator;
 
@@ -273,7 +273,7 @@ public class N4JSXRuntimeModule extends eu.numberfour.n4jsx.AbstractN4JSXRuntime
 
 	@Override
 	public Class<? extends IScopeProvider> bindIScopeProvider() {
-		return N4JSScopeProvider.class;
+		return N4JSXScopeProvider.class;
 	}
 
 	/**
