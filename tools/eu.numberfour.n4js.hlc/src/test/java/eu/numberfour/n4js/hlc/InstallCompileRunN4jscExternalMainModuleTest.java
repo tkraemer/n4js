@@ -54,6 +54,9 @@ public class InstallCompileRunN4jscExternalMainModuleTest extends BaseN4jscExter
 		// no main
 		deps.put("body-parser", "^1.15.0");
 
+		// broken main (defined in the package.json, but does not exist in the npm package)
+		deps.put("next", "^1.1.1");
+
 		return deps;
 	}
 

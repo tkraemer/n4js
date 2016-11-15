@@ -10,6 +10,8 @@
  */
 package eu.numberfour.n4js.external
 
+import com.google.common.base.Strings
+
 /**
  * Stripped down copy of test utility for generating manifests.
  *
@@ -30,8 +32,10 @@ class N4JSNpmManifestContentProvider {
 		ProjectVersion: 0.0.1-SNAPSHOT
 		VendorId: npm
 		VendorName: "npm"
-		Output: "«outputFolder»"
-		MainModule:"«main»"
+		Output: "«outputFolder»"«
+		IF Strings.isNullOrEmpty(main) === false»
+		MainModule:"«main»"«
+		ENDIF»
 		ModuleLoader: commonjs
 		Sources {
 			external {

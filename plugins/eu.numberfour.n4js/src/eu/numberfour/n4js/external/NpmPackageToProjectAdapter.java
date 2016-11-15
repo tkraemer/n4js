@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.util.Pair;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -389,8 +390,14 @@ public class NpmPackageToProjectAdapter {
 
 	/**
 	 */
-	private String computeMainModule(File projectFolder) throws IOException {
-		File main = new File(resolveMainModule(projectFolder));
+	private String computeMainModule(File projectFolder) {
+
+		String mainModule = resolveMainModule(projectFolder);
+
+		if (Strings.isNullOrEmpty(mainModule))
+			return mainModule;
+
+		File main = new File(mainModule);
 
 		Path packagePath = projectFolder.toPath();
 		Path packageMainModulePath = main.toPath();
@@ -421,19 +428,19 @@ public class NpmPackageToProjectAdapter {
 	 * @param packageRoot
 	 *            package root folder
 	 * @return string with absolute path to the package main module
-	 * @throws IOException
-	 *             if cannot resolve main module
 	 */
-	private String resolveMainModule(File packageRoot)
-			throws IOException {
+	private String resolveMainModule(File packageRoot) {
 
 		ProcessResult per = commandFactory.createResolveMainModuleCommand(packageRoot).execute();
 
 		if (per.isOK()) {
 			// happy case string with full path to the main module (terminated with line ending)
 			return per.getStdOut().trim();
+		} else {
+			// unhappy case, maybe package is broken, maybe it is library with no single facade.
+			LOGGER.warn("Cannot resolve main module, " + "\n" + "adapted package cannot be used with module import.");
+			return null;
 		}
-		throw new IOException(per.toString());
 	}
 
 }
