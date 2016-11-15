@@ -126,7 +126,7 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 
 	/**
 	 * customized AST element factory, that sets the PropertyAssignment kind depending if the element is a
-	 * name-valur-pair, a getter or setter and the feature is a name.
+	 * name-value-pair, a getter or setter and the feature is a name.
 	 *
 	 * @return Class<{@link PropertyNameAwareElementFactory}>
 	 */
@@ -146,7 +146,7 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 	}
 
 	/**
-	 * Value converter to handle unicode characters.
+	 * Value converter to handle Unicode characters.
 	 *
 	 * @return Class<{@link N4JSStringValueConverter}>
 	 */
@@ -262,7 +262,7 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 
 	/**
 	 * Sets the scope provider to use as delegate for the local scope provider. This delegate is used to handle imported
-	 * elements. The customization makes elements that name is equal to the resource name both referencable by e.g
+	 * elements. The customization makes elements that name is equal to the resource name both referenceable by e.g
 	 * my/pack/A/A as well as my/pack/A if the resource name is A. In this delegate later the import of the built in
 	 * types should be made.
 	 */

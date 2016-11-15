@@ -148,3 +148,6 @@ classpath
 committers
 subfolder
 snippets
+unicode
+referenceable
+lexer

@@ -14,7 +14,7 @@ import com.google.inject.Inject
 import eu.numberfour.n4js.antlr.syntaxcoloring.N4JSHighlightingParserGeneratorFragment2.GuardedXtextGeneratorFileSystemAccess
 import org.eclipse.xtend.lib.annotations.Delegate
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
-import org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessExtensions
+// /*extension see comment in {@link doGenerate()}*/ import org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessExtensions
 import org.eclipse.xtext.xtext.generator.model.IXtextGeneratorFileSystemAccess
 import org.eclipse.xtext.xtext.generator.model.TypeReference
 import org.eclipse.xtext.xtext.generator.parser.antlr.AbstractAntlrGeneratorFragment2
@@ -27,7 +27,7 @@ import org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragmen
  */
 class N4JSHighlightingParserGeneratorFragment2 extends XtextAntlrGeneratorFragment2 {
 	
-	@Inject extension GrammarAccessExtensions grammarUtil
+	// /*extension see comment in {@link doGenerate()}*/ @Inject extension GrammarAccessExtensions grammarUtil
 	@Inject GrammarNaming productionNaming
 	@Inject extension N4JSHighlightingGrammarNaming highlightingNaming
 
