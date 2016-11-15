@@ -560,6 +560,11 @@ Contributors:
 		    <version>54.1.1</version>
 		</dependency>
  -->
+ 		<dependency>
+				<groupId>com.ibm.icu</groupId>
+				<artifactId>icu4j</artifactId>
+				<version>56.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jgit</groupId>
 			<artifactId>org.eclipse.jgit</artifactId>
