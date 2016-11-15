@@ -45,7 +45,7 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 	 * Sole constructor of the pretty printer.
 	 */
 	/* default */ JsonPrettyPrinter() {
-		this._arrayIndenter = new DefaultIndenter(" ", DefaultIndenter.SYS_LF);
+		this._arrayIndenter = new DefaultIndenter(" ", "\n");
 	}
 
 }
