@@ -145,3 +145,6 @@ maven
 src
 namespace
 classpath
+committers
+subfolder
+snippets
