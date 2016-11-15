@@ -69,6 +69,9 @@ public class StartTestResource extends TestResource {
 	protected TestEvent createEvent(final String sessionId, final String testId, final String body)
 			throws ClientResourceException {
 
+		if (isNullOrEmpty(body))
+			throw new ClientResourceException(SC_BAD_REQUEST);
+
 		final Map<?, ?> values = newHashMap();
 		try {
 			values.putAll(mapper.readValue(body, Map.class));

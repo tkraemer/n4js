@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.tester.server.resources.sessions;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Maps.newHashMap;
 import static eu.numberfour.n4js.tester.server.HttpConstants.SC_UNPROCESSABLE_ENTITY;
 import static eu.numberfour.n4js.tester.server.resources.ContentType.PING_SESSION;
@@ -49,6 +50,10 @@ public class PingSessionResource extends SessionResource {
 	@Override
 	@SuppressWarnings("unchecked")
 	protected TestEvent createEvent(final String sessionId, final String body) throws ClientResourceException {
+
+		if (isNullOrEmpty(body))
+			throw new ClientResourceException(SC_BAD_REQUEST);
+
 		final Map<?, ?> values = newHashMap();
 		try {
 			values.putAll(mapper.readValue(body, Map.class));
