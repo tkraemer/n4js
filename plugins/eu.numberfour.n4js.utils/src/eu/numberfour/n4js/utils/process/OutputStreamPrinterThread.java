@@ -35,14 +35,14 @@ public class OutputStreamPrinterThread extends Thread implements AutoCloseable {
 	private final InputStream is;
 	private final OutputStream os;
 	private final ByteArrayOutputStream baos;
-	private final boolean silent;
+	private final OutputRedirection redirect;
 
-	/* default */ OutputStreamPrinterThread(final InputStream is, final OutputStream os, boolean silent) {
+	/* default */ OutputStreamPrinterThread(final InputStream is, final OutputStream os, OutputRedirection redirect) {
 		this.is = checkNotNull(is, "is");
 		this.os = checkNotNull(os, "os");
 		setName(this.getClass().getSimpleName());
 		this.baos = new ByteArrayOutputStream();
-		this.silent = silent;
+		this.redirect = redirect;
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class OutputStreamPrinterThread extends Thread implements AutoCloseable {
 				final byte[] clearedBuffer = new byte[numberOfReadBytes];
 				System.arraycopy(buffer, 0, clearedBuffer, 0, numberOfReadBytes);
 				baos.write(clearedBuffer);
-				if (!silent) {
+				if (redirect == OutputRedirection.REDIRECT) {
 					os.write(clearedBuffer);
 				}
 			}

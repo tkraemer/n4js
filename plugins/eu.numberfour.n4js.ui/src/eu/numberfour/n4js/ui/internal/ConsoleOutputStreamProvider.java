@@ -29,6 +29,7 @@ import org.eclipse.ui.console.MessageConsoleStream;
 import com.google.common.base.Supplier;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.utils.process.OutputRedirection;
 import eu.numberfour.n4js.utils.process.OutputStreamPrinterThread.OutputStreamType;
 import eu.numberfour.n4js.utils.process.OutputStreamProvider;
 
@@ -44,11 +45,12 @@ public class ConsoleOutputStreamProvider implements OutputStreamProvider {
 	private final Supplier<MessageConsole> consoleSupplier = memoize(() -> new MessageConsole("npm Console", null));
 
 	@Override
-	public OutputStream getOutputStream(final OutputStreamType type, boolean silent) {
+	public OutputStream getOutputStream(final OutputStreamType type, OutputRedirection redirect) {
 		if (!PlatformUI.isWorkbenchRunning()) {
-			return DEFAULT.getOutputStream(type, silent);
+			return DEFAULT.getOutputStream(type, redirect);
 		}
 		final MessageConsole console = consoleSupplier.get();
+		boolean silent = redirect == OutputRedirection.SUPPRESS;
 		if (!silent) {
 			console.activate();
 		}

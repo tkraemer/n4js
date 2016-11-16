@@ -16,6 +16,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.binaries.nodejs.NodeProcesBuilder;
+import eu.numberfour.n4js.utils.process.OutputRedirection;
 import eu.numberfour.n4js.utils.process.ProcessExecutionCommand;
 import eu.numberfour.n4js.utils.process.ProcessExecutor;
 import eu.numberfour.n4js.utils.process.ProcessResult;
@@ -51,7 +52,7 @@ public class BinaryCommandFactory {
 			public ProcessResult execute() {
 				ProcessBuilder processBuilder = nodeProccessBuilder.getNpmInstallProcessBuilder(installPath,
 						packageName, saveDependnecy);
-				return processExecutor.createAndExecute(processBuilder, COMMAND_NAME, /* verbose */ false);
+				return processExecutor.createAndExecute(processBuilder, COMMAND_NAME, OutputRedirection.REDIRECT);
 			}
 		};
 	}
@@ -69,7 +70,7 @@ public class BinaryCommandFactory {
 			@Override
 			public ProcessResult execute() {
 				ProcessBuilder processBuilder = nodeProccessBuilder.prepareMainModuleResolveProcessBuilder(packageRoot);
-				return processExecutor.createAndExecute(processBuilder, COMMAND_NAME, /* quiet */ true);
+				return processExecutor.createAndExecute(processBuilder, COMMAND_NAME, OutputRedirection.SUPPRESS);
 			}
 		};
 	}
@@ -86,7 +87,7 @@ public class BinaryCommandFactory {
 			@Override
 			public ProcessResult execute() {
 				ProcessBuilder processBuilder = nodeProccessBuilder.createVersionCheckProcess(binary);
-				return processExecutor.createAndExecute(processBuilder, binary.getLabel(), /* silent */ true);
+				return processExecutor.createAndExecute(processBuilder, binary.getLabel(), OutputRedirection.SUPPRESS);
 			}
 		};
 	}

@@ -34,11 +34,11 @@ public class ProcessExecutor {
 	private static final Logger LOGGER = Logger.getLogger(ProcessExecutor.class);
 
 	/**
-	 * Convenience method delegates to {@link #execute(Process, String, boolean)} with <code>null</code> as name and
-	 * <code>false</code> as redirect flag).
+	 * Convenience method delegates to {@link #execute(Process, String, OutputRedirection)} with <code>null</code> as
+	 * name and {@link OutputRedirection#SUPPRESS} as redirect flag).
 	 */
 	public ProcessResult execute(final Process process) {
-		return execute(process, null, false);
+		return execute(process, null, OutputRedirection.SUPPRESS);
 	}
 
 	/**
@@ -49,13 +49,13 @@ public class ProcessExecutor {
 	 *            the process to execute
 	 * @param name
 	 *            name used in debug messages, null empty string used
-	 * @param silent
-	 *            indicates if captured output should be swallowed or not. If {@code silent} is {@code true}, then the
+	 * @param redirect
+	 *            indicates if captured output should be swallowed or not. If {@link OutputRedirection#SUPPRESS}, then the
 	 *            captured process output will not be flushed to an output streams, in other words, it will not be
 	 *            redirected.
 	 * @return a new result object that represents the actual result of the created process execution
 	 */
-	public ProcessResult execute(final Process process, String name, boolean silent) {
+	public ProcessResult execute(final Process process, String name, OutputRedirection redirect) {
 		// prepare name to be used in log messages
 		name = name == null ? " " : " '" + name + "' ";
 
@@ -67,9 +67,9 @@ public class ProcessExecutor {
 			}
 
 			try (OutputStreamPrinterThread stdOutThread = printerThreadProvider.getPrinterThreadForStdOut(process,
-					silent);
+					redirect);
 					OutputStreamPrinterThread stdErrThread = printerThreadProvider.getPrinterThreadForStdErr(process,
-							silent)) {
+							redirect)) {
 
 				boolean finished = process.waitFor(DEFAULT_PROCESS_TIMEOUT, SECONDS);
 				if (!finished) {
@@ -122,26 +122,27 @@ public class ProcessExecutor {
 	}
 
 	/**
-	 * Convenience method delegates to {@link #createAndExecute(ProcessBuilder, String, boolean)} with <code>null</code>
-	 * as name and <code>false</code> as redirect flag).
+	 * Convenience method delegates to {@link #createAndExecute(ProcessBuilder, String, OutputRedirection)} with
+	 * <code>null</code> as name and {@link OutputRedirection#SUPPRESS} as redirect flag).
 	 */
 	public ProcessResult createAndExecute(final ProcessBuilder processBuilder) {
-		return createAndExecute(processBuilder, null, false);
+		return createAndExecute(processBuilder, null, OutputRedirection.SUPPRESS);
 	}
 
 	/**
 	 * Convenience method for clients that want to execute process from prepared {@link ProcessBuilder}. Delegates to
-	 * {@link #execute(Process, String, boolean)}.
+	 * {@link #execute(Process, String, OutputRedirection)}.
 	 *
 	 * @param processBuilder
 	 *            the {@link ProcessBuilder} used to create process
 	 * @param name
 	 *            name used in debug messages, null empty string used
-	 * @param silent
+	 * @param redirect
 	 *            indicates if captured output should be redirected to this process
 	 * @return a new result object that represents the actual result of the created process execution
 	 */
-	public ProcessResult createAndExecute(final ProcessBuilder processBuilder, String name, boolean silent) {
+	public ProcessResult createAndExecute(final ProcessBuilder processBuilder, String name,
+			OutputRedirection redirect) {
 		// prepare name to be used in log messages
 		String pbName = name == null ? " " : " for process '" + name + "' ";
 
@@ -151,7 +152,7 @@ public class ProcessExecutor {
 		}
 
 		try {
-			return execute(processBuilder.start(), name, silent);
+			return execute(processBuilder.start(), name, redirect);
 		} catch (IOException e) {
 			LOGGER.error("Cannot start process from process builder" + pbName, e);
 			return new ProcessResult(ERROR_EXIT_CODE, "", "");
