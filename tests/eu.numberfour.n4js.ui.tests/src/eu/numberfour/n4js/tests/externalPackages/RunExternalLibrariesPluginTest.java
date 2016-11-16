@@ -147,8 +147,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : LIB_PROJECT_IDS) {
 			getProjectByName(libProjectName).close(new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -167,8 +167,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).close(new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -187,8 +187,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : newArrayList(PB, PC)) {
 			getProjectByName(libProjectName).close(new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -207,8 +207,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).close(new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult firstResult = runClient();
 		// @formatter:off
@@ -222,8 +222,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).open(new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult secondResult = runClient();
 		// @formatter:off
@@ -242,8 +242,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : LIB_PROJECT_IDS) {
 			getProjectByName(libProjectName).delete(true, new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -262,8 +262,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).delete(true, new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -282,8 +282,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).delete(true, new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult firstResult = runClient();
 		// @formatter:off
@@ -298,8 +298,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			final File projectsRoot = new File(getResourceUri(PROBANDS, WORKSPACE_LOC));
 			ProjectUtils.importProject(projectsRoot, libProjectName);
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult secondResult = runClient();
 		// @formatter:off
