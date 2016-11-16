@@ -5,6 +5,8 @@ import * as lodash+ from 'lodash';
 //import * as karma+ from 'karma';
 import * as bar+ from 'bar';
 import * as pouchdbFind+ from 'pouchdb-find';
+//this is for install test on npms with no main module (or broken one)
+import * as nextHead+ from 'next/head';
 import * as bodyparser+ from 'body-parser';
 
 
@@ -19,4 +21,5 @@ check(lodash, 'lodash')
 //check(karma, 'karma')
 check(bar, 'bar')
 check(pouchdbFind, 'pouchdb-find')
+check(nextHead, 'next') //check we can still import non main modules
 check(bodyparser, 'body-parser')

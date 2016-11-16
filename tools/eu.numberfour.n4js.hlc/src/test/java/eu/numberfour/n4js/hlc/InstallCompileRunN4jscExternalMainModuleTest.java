@@ -95,6 +95,7 @@ public class InstallCompileRunN4jscExternalMainModuleTest extends BaseN4jscExter
 				// .append("karma imported").append("\n")
 				.append("bar imported").append("\n") // Bar uses deprecated 'sys'
 				.append("pouchdb-find imported").append("\n")
+				.append("next imported").append("\n")
 				.append("body-parser imported");
 
 		Assert.assertTrue(

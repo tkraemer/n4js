@@ -17,5 +17,6 @@ ProjectDependencies {
     karma,
     bar,
     pouchdb-find,
+    next,
     body-parser
 }
