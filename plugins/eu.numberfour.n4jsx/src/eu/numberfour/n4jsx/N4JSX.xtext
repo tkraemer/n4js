@@ -26,6 +26,7 @@ PrimaryExpression <Yield> returns n4js::Expression:
 	ThisLiteral
 	| SuperLiteral
 	| IdentifierRef<Yield>
+	| JSXElement
 	| ParameterizedCallExpression<Yield>
 	| Literal
 	| ArrayLiteral<Yield>
@@ -36,7 +37,7 @@ PrimaryExpression <Yield> returns n4js::Expression:
 	| AsyncFunctionExpression
 	| N4ClassExpression<Yield>
 	| TemplateLiteral<Yield>
-	| JSXElement;
+;
 
 JSXElement:
 	'<' jsxElementName=JSXElementName JSXAttributes

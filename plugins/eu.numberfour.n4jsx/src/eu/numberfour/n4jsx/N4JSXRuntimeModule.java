@@ -95,7 +95,6 @@ import eu.numberfour.n4js.utils.di.scopes.TransformationScoped;
 import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
 import eu.numberfour.n4js.validation.N4JSDiagnostician;
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider;
-import eu.numberfour.n4js.validation.N4JSIssueSeveritiesProvider;
 import eu.numberfour.n4js.validation.N4JSResourceValidator;
 import eu.numberfour.n4js.xsemantics.InternalTypeSystem;
 import eu.numberfour.n4jsx.parser.N4JSXSemicolonInjectingParser;
@@ -103,6 +102,7 @@ import eu.numberfour.n4jsx.parser.RegExLiteralAwareLexer;
 import eu.numberfour.n4jsx.parser.antlr.lexer.InternalN4JSXLexer;
 import eu.numberfour.n4jsx.scoping.N4JSXScopeProvider;
 import eu.numberfour.n4jsx.typesystem.N4JSXUnsupportedExpressionTypeHelper;
+import eu.numberfour.n4jsx.validation.N4JSXIssueSeveritiesProvider;
 import eu.numberfour.n4jsx.validation.N4JSXJavaScriptVariantHelper;
 import it.xsemantics.runtime.StringRepresentation;
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator;
@@ -414,7 +414,7 @@ public class N4JSXRuntimeModule extends eu.numberfour.n4jsx.AbstractN4JSXRuntime
 	 * configured by the {@link ConfigurableIssueCodesProvider}.
 	 */
 	public Class<? extends IssueSeveritiesProvider> bindIssueSeveritiesProvider() {
-		return N4JSIssueSeveritiesProvider.class;
+		return N4JSXIssueSeveritiesProvider.class;
 	}
 
 	/**

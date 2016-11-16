@@ -13,17 +13,13 @@ package eu.numberfour.n4jsx.validation;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.EValidatorRegistrar;
 
-import com.google.inject.Inject;
-
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.IdentifierRef;
+import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression;
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TFunction;
-import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
-import eu.numberfour.n4js.utils.N4JSLanguageHelper;
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
-import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
 import eu.numberfour.n4jsx.n4JSX.JSXElement;
 import eu.numberfour.n4jsx.n4JSX.JSXElementName;
 
@@ -31,15 +27,13 @@ import eu.numberfour.n4jsx.n4JSX.JSXElementName;
  * Validation of names, cf N4JS Spec, Chapter 3.4., Constraints 3 and 4
  */
 public class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
-
-	@Inject
-	private N4JSLanguageHelper languageHelper;
-
-	@Inject
-	private N4JSTypeSystem ts;
-
-	@Inject
-	private JavaScriptVariantHelper jsVariantHelper;
+	/*
+	 * @Inject private N4JSLanguageHelper languageHelper;
+	 *
+	 * @Inject private N4JSTypeSystem ts;
+	 *
+	 * @Inject private JavaScriptVariantHelper jsVariantHelper;
+	 */
 
 	/**
 	 * NEEEDED
@@ -59,14 +53,26 @@ public class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 	public void checkReactElementBinding(JSXElement jsxElem) {
 		JSXElementName elemName = jsxElem.getJsxElementName();
 		Expression expr = elemName.getExpression();
+
+		IdentifiableElement ie = null;
 		if (expr instanceof IdentifierRef) {
 			IdentifierRef idRef = (IdentifierRef) expr;
-			IdentifiableElement ie = idRef.getId();
+			ie = idRef.getId();
+		}
+
+		if (expr instanceof ParameterizedPropertyAccessExpression) {
+			ParameterizedPropertyAccessExpression ppae = (ParameterizedPropertyAccessExpression) expr;
+			ie = ppae.getProperty();
+		}
+
+		if (ie != null && ie.eContainer() != null) {
 			boolean classOrFunction = false;
 			classOrFunction |= ie instanceof TClass;
 			classOrFunction |= ie instanceof TFunction;
 			if (!classOrFunction) {
-				System.out.println("Problem at: " + ie);
+				String name = ie.getName();
+				String message = IssueCodes.getMessageForREACT_ELEMENT_TYPE_ERROR(name);
+				addIssue(message, expr, IssueCodes.REACT_ELEMENT_TYPE_ERROR);
 			}
 		}
 	}

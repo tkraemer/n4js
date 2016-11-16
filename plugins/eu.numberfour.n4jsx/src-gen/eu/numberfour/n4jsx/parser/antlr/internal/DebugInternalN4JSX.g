@@ -13,6 +13,7 @@ rulePrimaryExpression :
 	ruleThisLiteral |
 	ruleSuperLiteral |
 	ruleIdentifierRef |
+	ruleJSXElement |
 	ruleParameterizedCallExpression |
 	ruleLiteral |
 	ruleArrayLiteral |
@@ -24,8 +25,7 @@ rulePrimaryExpression :
 	'async' ruleNoLineTerminator 'function'
 	) => ruleAsyncFunctionExpression ) |
 	ruleN4ClassExpression |
-	ruleTemplateLiteral |
-	ruleJSXElement
+	ruleTemplateLiteral
 ;
 
 // Rule PrimaryExpression
@@ -33,6 +33,7 @@ norm1_PrimaryExpression :
 	ruleThisLiteral |
 	ruleSuperLiteral |
 	norm1_IdentifierRef |
+	ruleJSXElement |
 	norm1_ParameterizedCallExpression |
 	ruleLiteral |
 	norm1_ArrayLiteral |
@@ -44,8 +45,7 @@ norm1_PrimaryExpression :
 	'async' ruleNoLineTerminator 'function'
 	) => ruleAsyncFunctionExpression ) |
 	norm1_N4ClassExpression |
-	norm1_TemplateLiteral |
-	ruleJSXElement
+	norm1_TemplateLiteral
 ;
 
 // Rule JSXElement
