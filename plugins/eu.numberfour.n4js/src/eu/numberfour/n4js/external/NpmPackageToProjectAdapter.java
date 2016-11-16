@@ -439,7 +439,7 @@ public class NpmPackageToProjectAdapter {
 		} else {
 			// unhappy case, maybe package is broken, maybe it is library with no single facade.
 			LOGGER.warn(
-					"Cannot resolve main module, adapted package no has main facade compatible with module import.");
+					"Cannot resolve main module, adapted project has MainModule to be used with module import.");
 			return null;
 		}
 	}
