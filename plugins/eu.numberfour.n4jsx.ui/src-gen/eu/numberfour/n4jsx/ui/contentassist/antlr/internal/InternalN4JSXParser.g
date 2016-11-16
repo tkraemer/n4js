@@ -85207,12 +85207,8 @@ rule__JSXPropertyAttribute__PropertyAssignment_0
     }
 :
 (
-{ before(grammarAccess.getJSXPropertyAttributeAccess().getPropertyIdentifiableElementCrossReference_0_0()); }
-(
-{ before(grammarAccess.getJSXPropertyAttributeAccess().getPropertyIdentifiableElementIdentifierNameParserRuleCall_0_0_1()); }
-	ruleIdentifierName{ after(grammarAccess.getJSXPropertyAttributeAccess().getPropertyIdentifiableElementIdentifierNameParserRuleCall_0_0_1()); }
-)
-{ after(grammarAccess.getJSXPropertyAttributeAccess().getPropertyIdentifiableElementCrossReference_0_0()); }
+{ before(grammarAccess.getJSXPropertyAttributeAccess().getPropertyIDENTIFIERTerminalRuleCall_0_0()); }
+	RULE_IDENTIFIER{ after(grammarAccess.getJSXPropertyAttributeAccess().getPropertyIDENTIFIERTerminalRuleCall_0_0()); }
 )
 
 ;

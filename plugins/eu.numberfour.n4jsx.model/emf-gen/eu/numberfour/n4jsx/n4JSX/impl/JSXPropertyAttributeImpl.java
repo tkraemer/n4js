@@ -8,8 +8,6 @@
 package eu.numberfour.n4jsx.n4JSX.impl;
 
 import eu.numberfour.n4js.n4JS.Expression;
-import eu.numberfour.n4js.ts.types.IdentifiableElement;
-
 import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute;
 import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 
@@ -38,14 +36,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class JSXPropertyAttributeImpl extends JSXAttributeImpl implements JSXPropertyAttribute {
 	/**
-	 * The cached value of the '{@link #getProperty() <em>Property</em>}' reference.
+	 * The default value of the '{@link #getProperty() <em>Property</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getProperty()
 	 * @generated
 	 * @ordered
 	 */
-	protected IdentifiableElement property;
+	protected static final String PROPERTY_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getProperty() <em>Property</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getProperty()
+	 * @generated
+	 * @ordered
+	 */
+	protected String property = PROPERTY_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getPropertyAsText() <em>Property As Text</em>}' attribute.
@@ -101,15 +109,7 @@ public class JSXPropertyAttributeImpl extends JSXAttributeImpl implements JSXPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IdentifiableElement getProperty() {
-		if (property != null && property.eIsProxy()) {
-			InternalEObject oldProperty = (InternalEObject)property;
-			property = (IdentifiableElement)eResolveProxy(oldProperty);
-			if (property != oldProperty) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, N4JSXPackage.JSX_PROPERTY_ATTRIBUTE__PROPERTY, oldProperty, property));
-			}
-		}
+	public String getProperty() {
 		return property;
 	}
 
@@ -118,17 +118,8 @@ public class JSXPropertyAttributeImpl extends JSXAttributeImpl implements JSXPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IdentifiableElement basicGetProperty() {
-		return property;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setProperty(IdentifiableElement newProperty) {
-		IdentifiableElement oldProperty = property;
+	public void setProperty(String newProperty) {
+		String oldProperty = property;
 		property = newProperty;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, N4JSXPackage.JSX_PROPERTY_ATTRIBUTE__PROPERTY, oldProperty, property));
@@ -221,8 +212,7 @@ public class JSXPropertyAttributeImpl extends JSXAttributeImpl implements JSXPro
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case N4JSXPackage.JSX_PROPERTY_ATTRIBUTE__PROPERTY:
-				if (resolve) return getProperty();
-				return basicGetProperty();
+				return getProperty();
 			case N4JSXPackage.JSX_PROPERTY_ATTRIBUTE__PROPERTY_AS_TEXT:
 				return getPropertyAsText();
 			case N4JSXPackage.JSX_PROPERTY_ATTRIBUTE__JSX_ATTRIBUTE_VALUE:
@@ -240,7 +230,7 @@ public class JSXPropertyAttributeImpl extends JSXAttributeImpl implements JSXPro
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case N4JSXPackage.JSX_PROPERTY_ATTRIBUTE__PROPERTY:
-				setProperty((IdentifiableElement)newValue);
+				setProperty((String)newValue);
 				return;
 			case N4JSXPackage.JSX_PROPERTY_ATTRIBUTE__PROPERTY_AS_TEXT:
 				setPropertyAsText((String)newValue);
@@ -261,7 +251,7 @@ public class JSXPropertyAttributeImpl extends JSXAttributeImpl implements JSXPro
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case N4JSXPackage.JSX_PROPERTY_ATTRIBUTE__PROPERTY:
-				setProperty((IdentifiableElement)null);
+				setProperty(PROPERTY_EDEFAULT);
 				return;
 			case N4JSXPackage.JSX_PROPERTY_ATTRIBUTE__PROPERTY_AS_TEXT:
 				setPropertyAsText(PROPERTY_AS_TEXT_EDEFAULT);
@@ -282,7 +272,7 @@ public class JSXPropertyAttributeImpl extends JSXAttributeImpl implements JSXPro
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case N4JSXPackage.JSX_PROPERTY_ATTRIBUTE__PROPERTY:
-				return property != null;
+				return PROPERTY_EDEFAULT == null ? property != null : !PROPERTY_EDEFAULT.equals(property);
 			case N4JSXPackage.JSX_PROPERTY_ATTRIBUTE__PROPERTY_AS_TEXT:
 				return PROPERTY_AS_TEXT_EDEFAULT == null ? propertyAsText != null : !PROPERTY_AS_TEXT_EDEFAULT.equals(propertyAsText);
 			case N4JSXPackage.JSX_PROPERTY_ATTRIBUTE__JSX_ATTRIBUTE_VALUE:
@@ -301,7 +291,9 @@ public class JSXPropertyAttributeImpl extends JSXAttributeImpl implements JSXPro
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (propertyAsText: ");
+		result.append(" (property: ");
+		result.append(property);
+		result.append(", propertyAsText: ");
 		result.append(propertyAsText);
 		result.append(')');
 		return result.toString();

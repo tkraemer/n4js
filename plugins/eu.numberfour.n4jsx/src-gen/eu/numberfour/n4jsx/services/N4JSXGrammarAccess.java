@@ -71,7 +71,16 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTemplateLiteralParserRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
 		private final RuleCall cJSXElementParserRuleCall_13 = (RuleCall)cAlternatives.eContents().get(13);
 		
-		/// * see https://facebook.github.io/jsx/  * / PrimaryExpression <Yield n4js::Expression:
+		/// * see https://facebook.github.io/jsx/  * / / *
+		//AssignmentExpression <In, Yield> returns n4js::Expression:
+		//	  AwaitExpression<In,Yield>
+		//	| PromisifyExpression<In,Yield>
+		//	| ArrowExpression<In,Yield>
+		//	| <Yield> YieldExpression<In>
+		//	| ConditionalExpression<In,Yield> (=> ({n4js::AssignmentExpression.lhs=current} op=AssignmentOperator) rhs=AssignmentExpression<In,Yield>)?
+		//	| =>JSXElement
+		//;
+		// * / PrimaryExpression <Yield n4js::Expression:
 		//	ThisLiteral
 		//	| SuperLiteral
 		//	| IdentifierRef<Yield> | ParameterizedCallExpression<Yield> | Literal
@@ -419,8 +428,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4jsx.N4JSX.JSXPropertyAttribute");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cPropertyAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cPropertyIdentifiableElementCrossReference_0_0 = (CrossReference)cPropertyAssignment_0.eContents().get(0);
-		private final RuleCall cPropertyIdentifiableElementIdentifierNameParserRuleCall_0_0_1 = (RuleCall)cPropertyIdentifiableElementCrossReference_0_0.eContents().get(1);
+		private final RuleCall cPropertyIDENTIFIERTerminalRuleCall_0_0 = (RuleCall)cPropertyAssignment_0.eContents().get(0);
 		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
 		private final Assignment cJsxAttributeValueAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
@@ -432,24 +440,20 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_2_1_2 = (Keyword)cGroup_2_1.eContents().get(2);
 		
 		//JSXPropertyAttribute:
-		//	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | '{'
+		//	property=IDENTIFIER '=' (jsxAttributeValue=StringLiteral | '{'
 		//	jsxAttributeValue=AssignmentExpression<false,false> '}');
 		@Override public ParserRule getRule() { return rule; }
 
 		//// or JSXNamespacedName -- not supported
-		//property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | '{'
-		//jsxAttributeValue=AssignmentExpression<false,false> '}')
+		//property=IDENTIFIER '=' (jsxAttributeValue=StringLiteral | '{' jsxAttributeValue=AssignmentExpression<false,false> '}')
 		public Group getGroup() { return cGroup; }
 
 		//// or JSXNamespacedName -- not supported
-		//property=[types::IdentifiableElement|IdentifierName]
+		//property=IDENTIFIER
 		public Assignment getPropertyAssignment_0() { return cPropertyAssignment_0; }
 
-		//[types::IdentifiableElement|IdentifierName]
-		public CrossReference getPropertyIdentifiableElementCrossReference_0_0() { return cPropertyIdentifiableElementCrossReference_0_0; }
-
-		//IdentifierName
-		public RuleCall getPropertyIdentifiableElementIdentifierNameParserRuleCall_0_0_1() { return cPropertyIdentifiableElementIdentifierNameParserRuleCall_0_0_1; }
+		//IDENTIFIER
+		public RuleCall getPropertyIDENTIFIERTerminalRuleCall_0_0() { return cPropertyIDENTIFIERTerminalRuleCall_0_0; }
 
 		//'='
 		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
@@ -572,7 +576,16 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		return getIDLScriptAccess().getRule();
 	}
 
-	/// * see https://facebook.github.io/jsx/  * / PrimaryExpression <Yield n4js::Expression:
+	/// * see https://facebook.github.io/jsx/  * / / *
+	//AssignmentExpression <In, Yield> returns n4js::Expression:
+	//	  AwaitExpression<In,Yield>
+	//	| PromisifyExpression<In,Yield>
+	//	| ArrowExpression<In,Yield>
+	//	| <Yield> YieldExpression<In>
+	//	| ConditionalExpression<In,Yield> (=> ({n4js::AssignmentExpression.lhs=current} op=AssignmentOperator) rhs=AssignmentExpression<In,Yield>)?
+	//	| =>JSXElement
+	//;
+	// * / PrimaryExpression <Yield n4js::Expression:
 	//	ThisLiteral
 	//	| SuperLiteral
 	//	| IdentifierRef<Yield> | ParameterizedCallExpression<Yield> | Literal
@@ -698,7 +711,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//JSXPropertyAttribute:
-	//	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | '{'
+	//	property=IDENTIFIER '=' (jsxAttributeValue=StringLiteral | '{'
 	//	jsxAttributeValue=AssignmentExpression<false,false> '}');
 	public JSXPropertyAttributeElements getJSXPropertyAttributeAccess() {
 		return pJSXPropertyAttribute;
