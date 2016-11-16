@@ -13,10 +13,11 @@ Require-Bundle: com.google.guava,
  org.eclipse.core.runtime,
  org.eclipse.xtext.util,
  eu.numberfour.n4js.utils,
- org.codehaus.jackson.core,
- org.codehaus.jackson.mapper,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
- org.eclipse.xtend.lib.macro
+ org.eclipse.xtend.lib.macro,
+ com.fasterxml.jackson.core.jackson-annotations,
+ com.fasterxml.jackson.core.jackson-core,
+ com.fasterxml.jackson.core.jackson-databind
 Export-Package: eu.numberfour.n4js.external.libraries
 Bundle-Vendor: NumberFour AG

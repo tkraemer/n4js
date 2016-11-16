@@ -291,7 +291,7 @@ public class ExternalLibrariesActivator implements BundleActivator {
 			try {
 				checkState(targetPlatformFile.createNewFile(), "Error while creating default target platform file.");
 				try (final FileWriter fw = new FileWriter(targetPlatformFile)) {
-					fw.write(PackageJson.createN4Default().toString());
+					fw.write(TargetPlatformFactory.createN4Default().toString());
 					fw.flush();
 				}
 			} catch (final IOException e) {

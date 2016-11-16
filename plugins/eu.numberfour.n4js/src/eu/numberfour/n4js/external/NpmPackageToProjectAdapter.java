@@ -44,6 +44,7 @@ import com.google.inject.Provider;
 
 import eu.numberfour.n4js.binaries.BinaryCommandFactory;
 import eu.numberfour.n4js.external.libraries.PackageJson;
+import eu.numberfour.n4js.external.libraries.TargetPlatformFactory;
 import eu.numberfour.n4js.n4mf.ProjectDescription;
 import eu.numberfour.n4js.n4mf.resource.ManifestMerger;
 import eu.numberfour.n4js.n4mf.utils.N4MFConstants;
@@ -243,7 +244,7 @@ public class NpmPackageToProjectAdapter {
 	 * @param packageRoot
 	 *            npm package folder.
 	 * @param packageJson
-	 *            {@link PackageJson package.json} of that package.
+	 *            {@link TargetPlatformFactory package.json} of that package.
 	 * @param manifest
 	 *            file that will be adjusted according to manifest fragments.
 	 * @param definitionsFolder
@@ -262,7 +263,7 @@ public class NpmPackageToProjectAdapter {
 			return statusHelper.OK();
 		}
 
-		String packageJsonVersion = packageJson.getVersion();
+		String packageJsonVersion = packageJson.version;
 		Version packageVersion = Version.createFromString(packageJsonVersion);
 		String[] list = packageN4JSDsRoot.list();
 		Set<Version> availableTypeDefinitionsVersions = new HashSet<>();
@@ -375,12 +376,12 @@ public class NpmPackageToProjectAdapter {
 	private void generateManifestContent(File projectFolder, PackageJson packageJSON, File manifest)
 			throws IOException {
 
-		String projectId = packageJSON.getName();
+		String projectId = packageJSON.name;
 		String manifestMain = computeMainModule(projectFolder);
 
 		if (!projectFolder.getName().equals(projectId)) {
 			LOGGER.warn("project folder and project name are different : " + projectFolder.getName() + " <> + "
-					+ packageJSON.getName());
+					+ packageJSON.name);
 		}
 
 		try (FileWriter fw = new FileWriter(manifest)) {

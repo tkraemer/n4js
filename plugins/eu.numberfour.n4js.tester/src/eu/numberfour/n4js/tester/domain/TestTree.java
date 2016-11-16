@@ -17,7 +17,6 @@ import static com.google.common.collect.Iterators.size;
 import static com.google.common.collect.Iterators.transform;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.String.valueOf;
-import static org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion.NON_NULL;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -26,11 +25,10 @@ import java.util.List;
 import java.util.Spliterator;
 import java.util.Spliterators;
 
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 
@@ -38,7 +36,7 @@ import com.google.common.collect.ImmutableList;
  * Representation of a test tree.
  */
 @JsonAutoDetect
-@JsonSerialize(include = NON_NULL)
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class TestTree implements TestElement, Iterable<TestCase> {
 
 	private List<TestSuite> suites = newArrayList();

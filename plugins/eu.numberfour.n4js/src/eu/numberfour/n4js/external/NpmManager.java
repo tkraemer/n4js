@@ -200,7 +200,7 @@ public class NpmManager {
 
 			logInfo("Calculating dependency changes... [2 of 4]");
 			monitor.setTaskName("Calculating dependency changes... [2 of 4]");
-			Map<String, String> afterDependencies = locationProvider.getTargetPlatformContent().getDependencies();
+			Map<String, String> afterDependencies = locationProvider.getTargetPlatformContent().dependencies;
 			if (null == afterDependencies) {
 				afterDependencies = newHashMap();
 			}
