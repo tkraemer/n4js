@@ -1008,7 +1008,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	
 	
 	def dispatch void format(ThrowStatement thrStmt, extension IFormattableDocument document) {
-		thrStmt.expression.prepend[setNewLines(0, 0, 0); oneSpace; autowrap];
+		thrStmt.expression.prepend[setNewLines(0, 0, 0); oneSpace]; // No autowrap, otherwise ASI
 		thrStmt.expression.format;
 	}
 	
