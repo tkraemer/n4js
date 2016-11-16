@@ -69,7 +69,7 @@ public class BinaryCommandFactory {
 			@Override
 			public ProcessResult execute() {
 				ProcessBuilder processBuilder = nodeProccessBuilder.prepareMainModuleResolveProcessBuilder(packageRoot);
-				return processExecutor.createAndExecute(processBuilder, COMMAND_NAME, /* verbose */ false);
+				return processExecutor.createAndExecute(processBuilder, COMMAND_NAME, /* quiet */ true);
 			}
 		};
 	}
