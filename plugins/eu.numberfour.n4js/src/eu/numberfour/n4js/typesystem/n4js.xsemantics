@@ -333,6 +333,7 @@ rule typeThisKeyword
 	G |- ThisLiteral t : TypeRef T
 from {
 	var TypeRef rawT; G |~ t ~> rawT
+	// TODO: Rewrite the actualTypeRef to force proper version!
 	T = TypeUtils.enforceNominalTyping(rawT)
 }
 

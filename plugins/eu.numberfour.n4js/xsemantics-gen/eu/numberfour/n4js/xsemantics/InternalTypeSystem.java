@@ -2025,13 +2025,11 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
       T = (TypeRef) result_1.getFirst();
       
     } else {
-      PromisifyHelper _promisifyHelper = this.promisifyHelper;
       Expression _expression_1 = e.getExpression();
-      boolean _isPromisifiableExpression = _promisifyHelper.isPromisifiableExpression(_expression_1);
+      boolean _isPromisifiableExpression = this.promisifyHelper.isPromisifiableExpression(_expression_1);
       if (_isPromisifiableExpression) {
-        PromisifyHelper _promisifyHelper_1 = this.promisifyHelper;
         Expression _expression_2 = e.getExpression();
-        final TypeRef promisifiedReturnTypeRef = _promisifyHelper_1.extractPromisifiedReturnType(_expression_2);
+        final TypeRef promisifiedReturnTypeRef = this.promisifyHelper.extractPromisifiedReturnType(_expression_2);
         Type _declaredType_1 = promisifiedReturnTypeRef.getDeclaredType();
         TClass _promiseType_1 = RuleEnvironmentExtensions.promiseType(G);
         boolean _tripleEquals_1 = (_declaredType_1 == _promiseType_1);
@@ -2074,9 +2072,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleTypePromisifyExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final PromisifyExpression e) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    PromisifyHelper _promisifyHelper = this.promisifyHelper;
     Expression _expression = e.getExpression();
-    TypeRef _extractPromisifiedReturnType = _promisifyHelper.extractPromisifiedReturnType(_expression);
+    TypeRef _extractPromisifiedReturnType = this.promisifyHelper.extractPromisifiedReturnType(_expression);
     T = _extractPromisifiedReturnType;
     return new Result<TypeRef>(T);
   }
