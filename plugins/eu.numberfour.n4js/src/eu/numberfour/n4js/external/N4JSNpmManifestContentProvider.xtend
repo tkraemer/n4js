@@ -34,7 +34,7 @@ class N4JSNpmManifestContentProvider {
 		VendorName: "npm"
 		Output: "«outputFolder»"«
 		IF Strings.isNullOrEmpty(main) === false»
-		MainModule:"«main»"«
+		MainModule: "«main»"«
 		ENDIF»
 		ModuleLoader: commonjs
 		Sources {
