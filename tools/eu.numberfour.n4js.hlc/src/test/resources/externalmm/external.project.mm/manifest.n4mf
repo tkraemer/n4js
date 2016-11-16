@@ -16,5 +16,6 @@ ProjectDependencies {
     lodash,
     karma,
     bar,
+    pouchdb-find,
     body-parser
 }
