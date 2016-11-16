@@ -8,7 +8,6 @@
 package eu.numberfour.n4jsx.n4JSX;
 
 import eu.numberfour.n4js.n4JS.Expression;
-import eu.numberfour.n4js.ts.types.IdentifiableElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,30 +29,30 @@ import eu.numberfour.n4js.ts.types.IdentifiableElement;
  */
 public interface JSXPropertyAttribute extends JSXAttribute {
 	/**
-	 * Returns the value of the '<em><b>Property</b></em>' reference.
+	 * Returns the value of the '<em><b>Property</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Property</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Property</em>' reference.
-	 * @see #setProperty(IdentifiableElement)
+	 * @return the value of the '<em>Property</em>' attribute.
+	 * @see #setProperty(String)
 	 * @see eu.numberfour.n4jsx.n4JSX.N4JSXPackage#getJSXPropertyAttribute_Property()
-	 * @model
+	 * @model unique="false"
 	 * @generated
 	 */
-	IdentifiableElement getProperty();
+	String getProperty();
 
 	/**
-	 * Sets the value of the '{@link eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute#getProperty <em>Property</em>}' reference.
+	 * Sets the value of the '{@link eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute#getProperty <em>Property</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Property</em>' reference.
+	 * @param value the new value of the '<em>Property</em>' attribute.
 	 * @see #getProperty()
 	 * @generated
 	 */
-	void setProperty(IdentifiableElement value);
+	void setProperty(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Property As Text</b></em>' attribute.

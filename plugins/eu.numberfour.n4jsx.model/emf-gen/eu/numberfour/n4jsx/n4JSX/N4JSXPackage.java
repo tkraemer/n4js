@@ -318,7 +318,7 @@ public interface N4JSXPackage extends EPackage {
 	int JSX_PROPERTY_ATTRIBUTE = 6;
 
 	/**
-	 * The feature id for the '<em><b>Property</b></em>' reference.
+	 * The feature id for the '<em><b>Property</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -538,15 +538,15 @@ public interface N4JSXPackage extends EPackage {
 	EClass getJSXPropertyAttribute();
 
 	/**
-	 * Returns the meta object for the reference '{@link eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute#getProperty <em>Property</em>}'.
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute#getProperty <em>Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Property</em>'.
+	 * @return the meta object for the attribute '<em>Property</em>'.
 	 * @see eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute#getProperty()
 	 * @see #getJSXPropertyAttribute()
 	 * @generated
 	 */
-	EReference getJSXPropertyAttribute_Property();
+	EAttribute getJSXPropertyAttribute_Property();
 
 	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute#getPropertyAsText <em>Property As Text</em>}'.
@@ -720,12 +720,12 @@ public interface N4JSXPackage extends EPackage {
 		 */
 		EClass JSX_PROPERTY_ATTRIBUTE = eINSTANCE.getJSXPropertyAttribute();
 		/**
-		 * The meta object literal for the '<em><b>Property</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Property</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference JSX_PROPERTY_ATTRIBUTE__PROPERTY = eINSTANCE.getJSXPropertyAttribute_Property();
+		EAttribute JSX_PROPERTY_ATTRIBUTE__PROPERTY = eINSTANCE.getJSXPropertyAttribute_Property();
 		/**
 		 * The meta object literal for the '<em><b>Property As Text</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->

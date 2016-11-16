@@ -927,17 +927,19 @@ ruleJSXPropertyAttribute returns [EObject current=null]
     @after { leaveRule(); }:
 ((
 (
+		lv_property_0_0=RULE_IDENTIFIER
 		{
-			if ($current==null) {
+			newLeafNode(lv_property_0_0, grammarAccess.getJSXPropertyAttributeAccess().getPropertyIDENTIFIERTerminalRuleCall_0_0()); 
+		}
+		{
+	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getJSXPropertyAttributeRule());
 	        }
-        }
-		{ 
-	        newCompositeNode(grammarAccess.getJSXPropertyAttributeAccess().getPropertyIdentifiableElementCrossReference_0_0()); 
-	    }
-		ruleIdentifierName
-		{ 
-	        afterParserOrEnumRuleCall();
+       		setWithLastConsumed(
+       			$current, 
+       			"property",
+        		lv_property_0_0, 
+        		"eu.numberfour.n4js.ts.TypeExpressions.IDENTIFIER");
 	    }
 
 )

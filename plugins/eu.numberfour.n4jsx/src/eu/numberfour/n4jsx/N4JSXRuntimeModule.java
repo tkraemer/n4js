@@ -89,6 +89,7 @@ import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSStringRepresenation;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSValidatorErrorGenerator;
+import eu.numberfour.n4js.typesystem.UnsupportedExpressionTypeHelper;
 import eu.numberfour.n4js.utils.di.scopes.ScopeManager;
 import eu.numberfour.n4js.utils.di.scopes.TransformationScoped;
 import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
@@ -101,6 +102,7 @@ import eu.numberfour.n4jsx.parser.N4JSXSemicolonInjectingParser;
 import eu.numberfour.n4jsx.parser.RegExLiteralAwareLexer;
 import eu.numberfour.n4jsx.parser.antlr.lexer.InternalN4JSXLexer;
 import eu.numberfour.n4jsx.scoping.N4JSXScopeProvider;
+import eu.numberfour.n4jsx.typesystem.N4JSXUnsupportedExpressionTypeHelper;
 import eu.numberfour.n4jsx.validation.N4JSXJavaScriptVariantHelper;
 import it.xsemantics.runtime.StringRepresentation;
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator;
@@ -519,5 +521,12 @@ public class N4JSXRuntimeModule extends eu.numberfour.n4jsx.AbstractN4JSXRuntime
 	 */
 	public Class<? extends JavaScriptVariantHelper> bindJavaScriptVariantHelper() {
 		return N4JSXJavaScriptVariantHelper.class;
+	}
+
+	/**
+	 * Bind a helper for typing expression types which are unknown in N4JS.
+	 */
+	public Class<? extends UnsupportedExpressionTypeHelper> bindUnsupportedExpressionTypeHelper() {
+		return N4JSXUnsupportedExpressionTypeHelper.class;
 	}
 }
