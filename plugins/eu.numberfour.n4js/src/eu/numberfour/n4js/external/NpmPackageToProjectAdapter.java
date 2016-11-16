@@ -439,7 +439,7 @@ public class NpmPackageToProjectAdapter {
 		} else {
 			// unhappy case, maybe package is broken, maybe it is library with no single facade.
 			LOGGER.warn(
-					"Cannot resolve main module, adapted project has MainModule to be used with module import.");
+					"Cannot resolve npm package main module, generated project will NOT have MainModule compatible with module import.");
 			return null;
 		}
 	}
