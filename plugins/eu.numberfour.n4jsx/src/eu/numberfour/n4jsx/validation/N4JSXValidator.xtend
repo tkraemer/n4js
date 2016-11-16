@@ -11,6 +11,7 @@
 package eu.numberfour.n4jsx.validation
 
 import eu.numberfour.n4js.validation.N4JSValidator
+import org.eclipse.xtext.validation.ComposedChecks
 
 //import org.eclipse.xtext.validation.Check
 /**
@@ -18,6 +19,10 @@ import eu.numberfour.n4js.validation.N4JSValidator
  *
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
+ 
+@ComposedChecks(validators=#[
+	N4JSXBindingValidator
+])
 class N4JSXValidator extends N4JSValidator {
 // FIXME: register Xcore package
 }
