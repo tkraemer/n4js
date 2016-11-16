@@ -56,6 +56,7 @@ import eu.numberfour.n4js.external.libraries.PackageJson;
 import eu.numberfour.n4js.utils.Arrays2;
 import eu.numberfour.n4js.utils.StatusHelper;
 import eu.numberfour.n4js.utils.git.GitUtils;
+import eu.numberfour.n4js.utils.process.OutputRedirection;
 import eu.numberfour.n4js.utils.process.OutputStreamProvider;
 import eu.numberfour.n4js.utils.process.ProcessResult;
 import eu.numberfour.n4js.utils.resources.DelegatingWorkspace;
@@ -403,7 +404,7 @@ public class NpmManager {
 	private void logInfo(final String message) {
 		LOGGER.info(message);
 		// Print writer is intentionally not released, its just a wrapper to log a message.
-		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_OUT, false));
+		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_OUT, OutputRedirection.REDIRECT));
 		pw.append(getTimestamp() + message + lineSeparator());
 		pw.flush();
 	}
@@ -420,7 +421,7 @@ public class NpmManager {
 	private void logError(final String message, final Throwable t) {
 		LOGGER.error(message, t);
 		// Print writer is intentionally not released, its just a wrapper to log a message.
-		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_ERR, false));
+		final PrintWriter pw = new PrintWriter(osProvider.getOutputStream(STD_ERR, OutputRedirection.SUPPRESS));
 		pw.append(getTimestamp() + message + lineSeparator());
 		if (null != t) {
 			pw.append(getTimestamp() + getStackTraceAsString(t) + lineSeparator());
