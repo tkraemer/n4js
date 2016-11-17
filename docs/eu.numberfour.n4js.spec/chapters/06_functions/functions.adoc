@@ -130,7 +130,7 @@ math:[\[\begin{aligned}
 
 === Type Inference [[function-type-inference]]
 
-.Function Type Conformance, Non-Parameterized
+.Function Type Conformance Non-Parameterized
 [def]
 --
 For the given non-parameterized function types +
