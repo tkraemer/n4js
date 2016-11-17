@@ -100,7 +100,7 @@ ruleJSXSpreadAttribute :
 
 // Rule JSXPropertyAttribute
 ruleJSXPropertyAttribute :
-	RULE_IDENTIFIER '=' (
+	ruleIdentifierName '=' (
 		ruleStringLiteral |
 		'{' ruleAssignmentExpression '}'
 	)

@@ -8,6 +8,7 @@
 package eu.numberfour.n4jsx.n4JSX.impl;
 
 import eu.numberfour.n4js.n4JS.N4JSPackage;
+import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4jsx.n4JSX.JSXAttribute;
 import eu.numberfour.n4jsx.n4JSX.JSXChild;
 import eu.numberfour.n4jsx.n4JSX.JSXElement;
@@ -268,8 +269,8 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getJSXPropertyAttribute_Property() {
-		return (EAttribute)jsxPropertyAttributeEClass.getEStructuralFeatures().get(0);
+	public EReference getJSXPropertyAttribute_Property() {
+		return (EReference)jsxPropertyAttributeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -355,7 +356,7 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 		jsxAttributeEClass = createEClass(JSX_ATTRIBUTE);
 
 		jsxPropertyAttributeEClass = createEClass(JSX_PROPERTY_ATTRIBUTE);
-		createEAttribute(jsxPropertyAttributeEClass, JSX_PROPERTY_ATTRIBUTE__PROPERTY);
+		createEReference(jsxPropertyAttributeEClass, JSX_PROPERTY_ATTRIBUTE__PROPERTY);
 		createEAttribute(jsxPropertyAttributeEClass, JSX_PROPERTY_ATTRIBUTE__PROPERTY_AS_TEXT);
 		createEReference(jsxPropertyAttributeEClass, JSX_PROPERTY_ATTRIBUTE__JSX_ATTRIBUTE_VALUE);
 
@@ -388,6 +389,7 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 
 		// Obtain other dependent packages
 		N4JSPackage theN4JSPackage = (N4JSPackage)EPackage.Registry.INSTANCE.getEPackage(N4JSPackage.eNS_URI);
+		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
@@ -422,7 +424,7 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 		initEClass(jsxAttributeEClass, JSXAttribute.class, "JSXAttribute", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(jsxPropertyAttributeEClass, JSXPropertyAttribute.class, "JSXPropertyAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getJSXPropertyAttribute_Property(), theEcorePackage.getEString(), "property", null, 0, 1, JSXPropertyAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJSXPropertyAttribute_Property(), theTypesPackage.getIdentifiableElement(), null, "property", null, 0, 1, JSXPropertyAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getJSXPropertyAttribute_PropertyAsText(), theEcorePackage.getEString(), "propertyAsText", null, 0, 1, JSXPropertyAttribute.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getJSXPropertyAttribute_JsxAttributeValue(), theN4JSPackage.getExpression(), null, "jsxAttributeValue", null, 0, 1, JSXPropertyAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

@@ -25,6 +25,7 @@
 package eu.numberfour.n4jsx.n4JSX
 
 import eu.numberfour.n4js.n4JS.Expression
+import eu.numberfour.n4js.ts.types.IdentifiableElement
 
 class JSXElement extends Expression, JSXChild {
 	contains JSXElementName jsxElementName
@@ -50,7 +51,7 @@ abstract class JSXAttribute {
 }
 
 class JSXPropertyAttribute extends JSXAttribute {
-	String property
+	refers IdentifiableElement property
 	transient String propertyAsText
 	contains Expression jsxAttributeValue
 }

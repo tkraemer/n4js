@@ -388,7 +388,7 @@ ruleJSXPropertyAttribute
     }:
 ((
 (
-	PropertyIDENTIFIERTerminalRuleCall_0_0=RULE_IDENTIFIER { announce($PropertyIDENTIFIERTerminalRuleCall_0_0, grammarAccess.getJSXPropertyAttributeAccess().getPropertyAssignment_0()); }
+	PropertyIdentifiableElementIdentifierNameParserRuleCall_0_0_1=ruleIdentifierName { announce($PropertyIdentifiableElementIdentifierNameParserRuleCall_0_0_1.start, $PropertyIdentifiableElementIdentifierNameParserRuleCall_0_0_1.stop, grammarAccess.getJSXPropertyAttributeAccess().getPropertyAssignment_0()); }
 
 )
 )

@@ -84,8 +84,7 @@ JSXSpreadAttribute:
 
 JSXPropertyAttribute:
 // or JSXNamespacedName -- not supported
-	property=IDENTIFIER '=' (jsxAttributeValue=StringLiteral | ('{'
-//	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | ('{'
+	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | ('{'
 	jsxAttributeValue=AssignmentExpression<false,false> '}'));
 
 	// terminal JSX_TEXT: !('{'|'<'|'>'|'}'); needs to be refactored similar to template text

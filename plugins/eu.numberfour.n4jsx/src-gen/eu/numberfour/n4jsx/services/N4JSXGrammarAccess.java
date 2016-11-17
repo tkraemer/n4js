@@ -420,7 +420,8 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4jsx.N4JSX.JSXPropertyAttribute");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cPropertyAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cPropertyIDENTIFIERTerminalRuleCall_0_0 = (RuleCall)cPropertyAssignment_0.eContents().get(0);
+		private final CrossReference cPropertyIdentifiableElementCrossReference_0_0 = (CrossReference)cPropertyAssignment_0.eContents().get(0);
+		private final RuleCall cPropertyIdentifiableElementIdentifierNameParserRuleCall_0_0_1 = (RuleCall)cPropertyIdentifiableElementCrossReference_0_0.eContents().get(1);
 		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
 		private final Assignment cJsxAttributeValueAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
@@ -432,28 +433,29 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_2_1_2 = (Keyword)cGroup_2_1.eContents().get(2);
 		
 		//JSXPropertyAttribute:
-		//	property=IDENTIFIER '=' (jsxAttributeValue=StringLiteral | '{'
-		//	//	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | ('{'
+		//	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | '{'
 		//	jsxAttributeValue=AssignmentExpression<false,false> '}');
 		@Override public ParserRule getRule() { return rule; }
 
 		//// or JSXNamespacedName -- not supported
-		//property=IDENTIFIER '=' (jsxAttributeValue=StringLiteral | '{' //	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | ('{'
+		//property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | '{'
 		//jsxAttributeValue=AssignmentExpression<false,false> '}')
 		public Group getGroup() { return cGroup; }
 
 		//// or JSXNamespacedName -- not supported
-		//property=IDENTIFIER
+		//property=[types::IdentifiableElement|IdentifierName]
 		public Assignment getPropertyAssignment_0() { return cPropertyAssignment_0; }
 
-		//IDENTIFIER
-		public RuleCall getPropertyIDENTIFIERTerminalRuleCall_0_0() { return cPropertyIDENTIFIERTerminalRuleCall_0_0; }
+		//[types::IdentifiableElement|IdentifierName]
+		public CrossReference getPropertyIdentifiableElementCrossReference_0_0() { return cPropertyIdentifiableElementCrossReference_0_0; }
+
+		//IdentifierName
+		public RuleCall getPropertyIdentifiableElementIdentifierNameParserRuleCall_0_0_1() { return cPropertyIdentifiableElementIdentifierNameParserRuleCall_0_0_1; }
 
 		//'='
 		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
 
-		//(jsxAttributeValue=StringLiteral | '{' //	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | ('{'
-		//jsxAttributeValue=AssignmentExpression<false,false> '}')
+		//(jsxAttributeValue=StringLiteral | '{' jsxAttributeValue=AssignmentExpression<false,false> '}')
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
 		//jsxAttributeValue=StringLiteral
@@ -462,14 +464,12 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		//StringLiteral
 		public RuleCall getJsxAttributeValueStringLiteralParserRuleCall_2_0_0() { return cJsxAttributeValueStringLiteralParserRuleCall_2_0_0; }
 
-		//'{' //	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | ('{'
-		//jsxAttributeValue=AssignmentExpression<false,false> '}'
+		//'{' jsxAttributeValue=AssignmentExpression<false,false> '}'
 		public Group getGroup_2_1() { return cGroup_2_1; }
 
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2_1_0() { return cLeftCurlyBracketKeyword_2_1_0; }
 
-		////	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | ('{'
 		//jsxAttributeValue=AssignmentExpression<false,false>
 		public Assignment getJsxAttributeValueAssignment_2_1_1() { return cJsxAttributeValueAssignment_2_1_1; }
 
@@ -700,8 +700,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//JSXPropertyAttribute:
-	//	property=IDENTIFIER '=' (jsxAttributeValue=StringLiteral | '{'
-	//	//	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | ('{'
+	//	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | '{'
 	//	jsxAttributeValue=AssignmentExpression<false,false> '}');
 	public JSXPropertyAttributeElements getJSXPropertyAttributeAccess() {
 		return pJSXPropertyAttribute;
