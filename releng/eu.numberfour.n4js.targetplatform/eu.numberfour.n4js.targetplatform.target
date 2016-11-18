@@ -70,7 +70,7 @@
       <repository location="https://meysholdt.github.io/eclipse_jdt_junit_runners/updatesite"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-      <unit id="org.xpect.xtext.lib" version="0.1.0.201111181623"/>
+      <unit id="org.xpect.xtext.lib" version="0.1.0.201611181623"/>
       <repository location="http://www.xpect-tests.org/updatesite/nightly/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
