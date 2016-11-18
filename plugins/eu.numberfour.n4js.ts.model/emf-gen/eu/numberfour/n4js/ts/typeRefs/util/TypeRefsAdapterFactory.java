@@ -73,6 +73,14 @@ public class TypeRefsAdapterFactory extends AdapterFactoryImpl {
 	protected TypeRefsSwitch<Adapter> modelSwitch =
 		new TypeRefsSwitch<Adapter>() {
 			@Override
+			public Adapter caseElementWithVersionDeclaration(ElementWithVersionDeclaration object) {
+				return createElementWithVersionDeclarationAdapter();
+			}
+			@Override
+			public Adapter caseVersionedElement(VersionedElement object) {
+				return createVersionedElementAdapter();
+			}
+			@Override
 			public Adapter caseTypeRef(TypeRef object) {
 				return createTypeRefAdapter();
 			}
@@ -183,6 +191,34 @@ public class TypeRefsAdapterFactory extends AdapterFactoryImpl {
 		return modelSwitch.doSwitch((EObject)target);
 	}
 
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration <em>Element With Version Declaration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration
+	 * @generated
+	 */
+	public Adapter createElementWithVersionDeclarationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.typeRefs.VersionedElement <em>Versioned Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4js.ts.typeRefs.VersionedElement
+	 * @generated
+	 */
+	public Adapter createVersionedElementAdapter() {
+		return null;
+	}
 
 	/**
 	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef <em>Type Ref</em>}'.

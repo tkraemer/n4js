@@ -3318,15 +3318,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getIdentifierRef_DeclaredVersion() {
-		return (EAttribute)identifierRefEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getIdentifierRef__IsValidSimpleAssignmentTarget() {
 		return identifierRefEClass.getEOperations().get(0);
 	}
@@ -3336,7 +3327,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getIdentifierRef__GetReferencedVersion() {
+	public EOperation getIdentifierRef__GetVersion() {
 		return identifierRefEClass.getEOperations().get(1);
 	}
 
@@ -6315,9 +6306,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		identifierRefEClass = createEClass(IDENTIFIER_REF);
 		createEReference(identifierRefEClass, IDENTIFIER_REF__ID);
 		createEAttribute(identifierRefEClass, IDENTIFIER_REF__ID_AS_TEXT);
-		createEAttribute(identifierRefEClass, IDENTIFIER_REF__DECLARED_VERSION);
 		createEOperation(identifierRefEClass, IDENTIFIER_REF___IS_VALID_SIMPLE_ASSIGNMENT_TARGET);
-		createEOperation(identifierRefEClass, IDENTIFIER_REF___GET_REFERENCED_VERSION);
+		createEOperation(identifierRefEClass, IDENTIFIER_REF___GET_VERSION);
 
 		strictModeRelevantEClass = createEClass(STRICT_MODE_RELEVANT);
 		createEAttribute(strictModeRelevantEClass, STRICT_MODE_RELEVANT__STRICT_MODE);
@@ -6836,6 +6826,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		parenExpressionEClass.getESuperTypes().add(this.getPrimaryExpression());
 		identifierRefEClass.getESuperTypes().add(this.getPrimaryExpression());
 		identifierRefEClass.getESuperTypes().add(this.getStrictModeRelevant());
+		identifierRefEClass.getESuperTypes().add(theTypeRefsPackage.getVersionedElement());
+		identifierRefEClass.getESuperTypes().add(theTypeRefsPackage.getElementWithVersionDeclaration());
 		superLiteralEClass.getESuperTypes().add(this.getPrimaryExpression());
 		thisLiteralEClass.getESuperTypes().add(this.getPrimaryExpression());
 		thisLiteralEClass.getESuperTypes().add(this.getStrictModeRelevant());
@@ -7288,11 +7280,10 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEClass(identifierRefEClass, IdentifierRef.class, "IdentifierRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getIdentifierRef_Id(), theTypesPackage.getIdentifiableElement(), null, "id", null, 0, 1, IdentifierRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getIdentifierRef_IdAsText(), theEcorePackage.getEString(), "idAsText", null, 0, 1, IdentifierRef.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getIdentifierRef_DeclaredVersion(), theEcorePackage.getEBigDecimal(), "declaredVersion", null, 0, 1, IdentifierRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getIdentifierRef__IsValidSimpleAssignmentTarget(), theEcorePackage.getEBoolean(), "isValidSimpleAssignmentTarget", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getIdentifierRef__GetReferencedVersion(), theEcorePackage.getEInt(), "getReferencedVersion", 0, 1, !IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIdentifierRef__GetVersion(), theEcorePackage.getEInt(), "getVersion", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(strictModeRelevantEClass, StrictModeRelevant.class, "StrictModeRelevant", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStrictModeRelevant_StrictMode(), theEcorePackage.getEBoolean(), "strictMode", null, 0, 1, StrictModeRelevant.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);

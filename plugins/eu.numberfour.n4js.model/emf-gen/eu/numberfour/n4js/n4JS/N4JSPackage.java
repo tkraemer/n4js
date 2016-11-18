@@ -4902,13 +4902,22 @@ public interface N4JSPackage extends EPackage {
 	int IDENTIFIER_REF__STRICT_MODE = PRIMARY_EXPRESSION_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IDENTIFIER_REF__DECLARED_VERSION = PRIMARY_EXPRESSION_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Id</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF__ID = PRIMARY_EXPRESSION_FEATURE_COUNT + 1;
+	int IDENTIFIER_REF__ID = PRIMARY_EXPRESSION_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Id As Text</b></em>' attribute.
@@ -4917,16 +4926,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF__ID_AS_TEXT = PRIMARY_EXPRESSION_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IDENTIFIER_REF__DECLARED_VERSION = PRIMARY_EXPRESSION_FEATURE_COUNT + 3;
+	int IDENTIFIER_REF__ID_AS_TEXT = PRIMARY_EXPRESSION_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Identifier Ref</em>' class.
@@ -4938,22 +4938,40 @@ public interface N4JSPackage extends EPackage {
 	int IDENTIFIER_REF_FEATURE_COUNT = PRIMARY_EXPRESSION_FEATURE_COUNT + 4;
 
 	/**
+	 * The operation id for the '<em>Is Has Declared Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IDENTIFIER_REF___IS_HAS_DECLARED_VERSION = PRIMARY_EXPRESSION_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Declared Version Or Zero</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IDENTIFIER_REF___DECLARED_VERSION_OR_ZERO = PRIMARY_EXPRESSION_OPERATION_COUNT + 2;
+
+	/**
 	 * The operation id for the '<em>Is Valid Simple Assignment Target</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF___IS_VALID_SIMPLE_ASSIGNMENT_TARGET = PRIMARY_EXPRESSION_OPERATION_COUNT + 0;
+	int IDENTIFIER_REF___IS_VALID_SIMPLE_ASSIGNMENT_TARGET = PRIMARY_EXPRESSION_OPERATION_COUNT + 3;
 
 	/**
-	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * The operation id for the '<em>Get Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF___GET_REFERENCED_VERSION = PRIMARY_EXPRESSION_OPERATION_COUNT + 1;
+	int IDENTIFIER_REF___GET_VERSION = PRIMARY_EXPRESSION_OPERATION_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>Identifier Ref</em>' class.
@@ -4962,7 +4980,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF_OPERATION_COUNT = PRIMARY_EXPRESSION_OPERATION_COUNT + 2;
+	int IDENTIFIER_REF_OPERATION_COUNT = PRIMARY_EXPRESSION_OPERATION_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.StrictModeRelevantImpl <em>Strict Mode Relevant</em>}' class.
@@ -15705,17 +15723,6 @@ public interface N4JSPackage extends EPackage {
 	EAttribute getIdentifierRef_IdAsText();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.n4JS.IdentifierRef#getDeclaredVersion <em>Declared Version</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Declared Version</em>'.
-	 * @see eu.numberfour.n4js.n4JS.IdentifierRef#getDeclaredVersion()
-	 * @see #getIdentifierRef()
-	 * @generated
-	 */
-	EAttribute getIdentifierRef_DeclaredVersion();
-
-	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.IdentifierRef#isValidSimpleAssignmentTarget() <em>Is Valid Simple Assignment Target</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15726,14 +15733,14 @@ public interface N4JSPackage extends EPackage {
 	EOperation getIdentifierRef__IsValidSimpleAssignmentTarget();
 
 	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.IdentifierRef#getReferencedVersion() <em>Get Referenced Version</em>}' operation.
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.IdentifierRef#getVersion() <em>Get Version</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Referenced Version</em>' operation.
-	 * @see eu.numberfour.n4js.n4JS.IdentifierRef#getReferencedVersion()
+	 * @return the meta object for the '<em>Get Version</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.IdentifierRef#getVersion()
 	 * @generated
 	 */
-	EOperation getIdentifierRef__GetReferencedVersion();
+	EOperation getIdentifierRef__GetVersion();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.n4JS.StrictModeRelevant <em>Strict Mode Relevant</em>}'.
@@ -20611,14 +20618,6 @@ public interface N4JSPackage extends EPackage {
 		EAttribute IDENTIFIER_REF__ID_AS_TEXT = eINSTANCE.getIdentifierRef_IdAsText();
 
 		/**
-		 * The meta object literal for the '<em><b>Declared Version</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute IDENTIFIER_REF__DECLARED_VERSION = eINSTANCE.getIdentifierRef_DeclaredVersion();
-
-		/**
 		 * The meta object literal for the '<em><b>Is Valid Simple Assignment Target</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -20627,12 +20626,12 @@ public interface N4JSPackage extends EPackage {
 		EOperation IDENTIFIER_REF___IS_VALID_SIMPLE_ASSIGNMENT_TARGET = eINSTANCE.getIdentifierRef__IsValidSimpleAssignmentTarget();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Referenced Version</b></em>' operation.
+		 * The meta object literal for the '<em><b>Get Version</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation IDENTIFIER_REF___GET_REFERENCED_VERSION = eINSTANCE.getIdentifierRef__GetReferencedVersion();
+		EOperation IDENTIFIER_REF___GET_VERSION = eINSTANCE.getIdentifierRef__GetVersion();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.n4JS.impl.StrictModeRelevantImpl <em>Strict Mode Relevant</em>}' class.

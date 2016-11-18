@@ -7,9 +7,10 @@
  */
 package eu.numberfour.n4js.n4JS;
 
-import eu.numberfour.n4js.ts.types.IdentifiableElement;
+import eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration;
+import eu.numberfour.n4js.ts.typeRefs.VersionedElement;
 
-import java.math.BigDecimal;
+import eu.numberfour.n4js.ts.types.IdentifiableElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,14 +23,13 @@ import java.math.BigDecimal;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.n4JS.IdentifierRef#getId <em>Id</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.IdentifierRef#getIdAsText <em>Id As Text</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.IdentifierRef#getDeclaredVersion <em>Declared Version</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.n4JS.N4JSPackage#getIdentifierRef()
  * @model
  * @generated
  */
-public interface IdentifierRef extends PrimaryExpression, StrictModeRelevant {
+public interface IdentifierRef extends PrimaryExpression, StrictModeRelevant, VersionedElement, ElementWithVersionDeclaration {
 	/**
 	 * Returns the value of the '<em><b>Id</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -83,32 +83,6 @@ public interface IdentifierRef extends PrimaryExpression, StrictModeRelevant {
 	void setIdAsText(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Declared Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Declared Version</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Declared Version</em>' attribute.
-	 * @see #setDeclaredVersion(BigDecimal)
-	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getIdentifierRef_DeclaredVersion()
-	 * @model unique="false"
-	 * @generated
-	 */
-	BigDecimal getDeclaredVersion();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.n4JS.IdentifierRef#getDeclaredVersion <em>Declared Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Declared Version</em>' attribute.
-	 * @see #getDeclaredVersion()
-	 * @generated
-	 */
-	void setDeclaredVersion(BigDecimal value);
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -129,12 +103,12 @@ public interface IdentifierRef extends PrimaryExpression, StrictModeRelevant {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * *
+	 * Override VersionedElement#getVersion() to return the declared version.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.math.BigDecimal%> _declaredVersion = this.getDeclaredVersion();\nboolean _tripleEquals = (_declaredVersion == null);\nif (_tripleEquals)\n{\n\treturn 0;\n}\n<%java.math.BigDecimal%> _declaredVersion_1 = this.getDeclaredVersion();\nreturn _declaredVersion_1.intValue();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return this.declaredVersionOrZero();'"
 	 * @generated
 	 */
-	int getReferencedVersion();
+	int getVersion();
 
 } // IdentifierRef

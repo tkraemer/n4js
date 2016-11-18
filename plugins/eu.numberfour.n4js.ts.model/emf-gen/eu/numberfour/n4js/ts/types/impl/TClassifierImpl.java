@@ -9,6 +9,8 @@ package eu.numberfour.n4js.ts.types.impl;
 
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
+import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
+import eu.numberfour.n4js.ts.typeRefs.VersionedElement;
 
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement;
 import eu.numberfour.n4js.ts.types.TClassifier;
@@ -381,6 +383,12 @@ public abstract class TClassifierImpl extends ContainerTypeImpl<TMember> impleme
 	 */
 	@Override
 	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == VersionedElement.class) {
+			switch (baseOperationID) {
+				case TypeRefsPackage.VERSIONED_ELEMENT___GET_VERSION: return TypesPackage.TCLASSIFIER___GET_VERSION;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
 		if (baseClass == Type.class) {
 			switch (baseOperationID) {
 				case TypesPackage.TYPE___IS_FINAL: return TypesPackage.TCLASSIFIER___IS_FINAL;

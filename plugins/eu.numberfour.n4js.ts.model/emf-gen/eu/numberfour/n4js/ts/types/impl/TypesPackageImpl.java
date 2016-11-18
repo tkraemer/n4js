@@ -1261,15 +1261,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getType__GetVersion() {
-		return typeEClass.getEOperations().get(13);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getAccessibleTypeElement() {
 		return accessibleTypeElementEClass;
 	}
@@ -2991,7 +2982,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEOperation(typeEClass, TYPE___GET_VARIANCE_OF_TYPE_VAR__INT);
 		createEOperation(typeEClass, TYPE___GET_RAW_TYPE_AS_STRING);
 		createEOperation(typeEClass, TYPE___GET_TYPE_AS_STRING);
-		createEOperation(typeEClass, TYPE___GET_VERSION);
 
 		accessibleTypeElementEClass = createEClass(ACCESSIBLE_TYPE_ELEMENT);
 		createEAttribute(accessibleTypeElementEClass, ACCESSIBLE_TYPE_ELEMENT__DECLARED_TYPE_ACCESS_MODIFIER);
@@ -3260,6 +3250,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		tFunctionEClass.getESuperTypes().add(this.getSyntaxRelatedTElement());
 		typeEClass.getESuperTypes().add(this.getTExportableElement());
 		typeEClass.getESuperTypes().add(this.getTAnnotableElement());
+		typeEClass.getESuperTypes().add(theTypeRefsPackage.getVersionedElement());
 		declaredTypeWithAccessModifierEClass.getESuperTypes().add(this.getType());
 		declaredTypeWithAccessModifierEClass.getESuperTypes().add(this.getAccessibleTypeElement());
 		containerTypeEClass.getESuperTypes().add(this.getType());
@@ -3453,8 +3444,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEOperation(getType__GetRawTypeAsString(), theEcorePackage.getEString(), "getRawTypeAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getType__GetTypeAsString(), theEcorePackage.getEString(), "getTypeAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-		initEOperation(getType__GetVersion(), theEcorePackage.getEInt(), "getVersion", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(accessibleTypeElementEClass, AccessibleTypeElement.class, "AccessibleTypeElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAccessibleTypeElement_DeclaredTypeAccessModifier(), this.getTypeAccessModifier(), "declaredTypeAccessModifier", null, 0, 1, AccessibleTypeElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

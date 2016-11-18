@@ -402,8 +402,8 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		 if( type !== null ) {
 		 	 var resultTypeRef = TypeExtensions.ref(type,typeArgs);
 		 	 if (typeRef instanceof ParameterizedTypeRef) {
-	 	 		if (typeRef.referencedVersion > 0) {
-	 	 			resultTypeRef = versionResolver.resolveVersion(resultTypeRef, typeRef.referencedVersion);
+		 	 	if (typeRef.hasDeclaredVersion) {
+	 	 			resultTypeRef = versionResolver.resolveVersion(resultTypeRef, typeRef.declaredVersion.intValue);
 	 	 		}
 		 	 }
 		 	 return resultTypeRef;

@@ -7,6 +7,8 @@
  */
 package eu.numberfour.n4js.ts.types.util;
 
+import eu.numberfour.n4js.ts.typeRefs.VersionedElement;
+
 import eu.numberfour.n4js.ts.types.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -271,6 +273,10 @@ public class TypesAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseTVariable(TVariable object) {
 				return createTVariableAdapter();
+			}
+			@Override
+			public Adapter caseVersionedElement(VersionedElement object) {
+				return createVersionedElementAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -989,6 +995,20 @@ public class TypesAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTVariableAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.typeRefs.VersionedElement <em>Versioned Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4js.ts.typeRefs.VersionedElement
+	 * @generated
+	 */
+	public Adapter createVersionedElementAdapter() {
 		return null;
 	}
 

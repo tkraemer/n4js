@@ -44,9 +44,37 @@ import eu.numberfour.n4js.ts.types.internal.WildcardAsStringUtils
 type ParameterizedTypeRefIterable wraps Iterable<ParameterizedTypeRef>
 
 /*
+ * Base class for all elements that may explicitly declare a version.
+ */
+abstract class ElementWithVersionDeclaration {
+	BigDecimal declaredVersion
+
+	/*
+	 * Indicates whether this type reference has an explicitly declared version. This can only be true for
+	 * ParameterizedTypeRef, as only that class allows for explicitly declaring a version.
+	 */
+	op boolean isHasDeclaredVersion() {
+		return declaredVersion !== null
+	}
+	
+	op int declaredVersionOrZero() {
+		if (hasDeclaredVersion) declaredVersion.intValue else 0
+	}
+}
+
+/*
+ * Base class for all elements that may have a version, either explicitly or implicitly.
+ */
+abstract class VersionedElement {
+	op int getVersion() {
+		return 0
+	}
+}
+
+/*
  * Base class for all type references
  */
-abstract class TypeRef extends TypeArgument {
+abstract class TypeRef extends TypeArgument, VersionedElement {
 	NullModifier nullModifier
 	UndefModifier undefModifier
 	/**
@@ -200,16 +228,13 @@ abstract class TypeRef extends TypeArgument {
 	op boolean isDefSiteStructuralTyping() {
 		return false
 	}
-	
+
 	/*
-	 * The version of the type as specified by the reference, this is only available in languages derived from N4JS.
-	 * Note that this is the declared version of the reference, not of the declared type itself! By default, 0 is
-	 * returned which means that no specific version is requested.
+	 * Override Versioned#getVersion()
 	 */
-	op int getReferencedVersion() { 
-		return 0;
+	op int getVersion() {
+		if (declaredType !== null) declaredType.version else 0
 	}
-	
 }
 
 abstract class StaticBaseTypeRef extends TypeRef {
@@ -430,6 +455,13 @@ class BoundThisTypeRef extends ThisTypeRef, StructuralTypeRef {
 		return (if (structuralType !== null) structuralType.ownedMembers else if (!astStructuralMembers.empty) astStructuralMembers else genStructuralMembers).
 			unmodifiableView;
 	}
+	
+	/*
+	 * Override VersionedElement#getVersion() to return the version of the actual this type reference.
+	 */
+	op int getVersion() {
+		actualThisTypeRef.version
+	}
 }
 
 /**
@@ -439,7 +471,7 @@ class BoundThisTypeRef extends ThisTypeRef, StructuralTypeRef {
  * {@link ParameterizedTypeRefStructural} which support structural typing
  * on use site. However, the latter is not allowed everywhere.
  */
-class ParameterizedTypeRef extends BaseTypeRef {
+class ParameterizedTypeRef extends BaseTypeRef, ElementWithVersionDeclaration {
 	refers Type declaredType
 	contains TypeArgument[] typeArgs
 	boolean arrayTypeLiteral = "false"
@@ -449,12 +481,6 @@ class ParameterizedTypeRef extends BaseTypeRef {
 	 * field (via tilde or tilde-tilde operators).
 	 */
 	TypingStrategy definedTypingStrategy
-
-	/*
-	 * The declared version of the reference, this is only available in languages derived from N4JS.
-	 * Note that this is the declared version of the reference, not of the declared type itself!
-	 */
-	BigDecimal declaredVersion
 
 	/**
 	 * Returns the actual typing strategy, that is either the defined typing strategy, or the typing strategy of the declared type.
@@ -478,7 +504,7 @@ class ParameterizedTypeRef extends BaseTypeRef {
 	 */
 	op String getTypeRefAsString() {
 		return declaredType?.rawTypeAsString
-		+ if (referencedVersion > 0) { "#" + referencedVersion } else { "" }
+		+ if (version > 0) { "#" + version } else { "" }
 		+ (if (typeArgs.empty) {
 			""
 		} else {
@@ -534,15 +560,8 @@ class ParameterizedTypeRef extends BaseTypeRef {
 		return false
 	}
 	
-	// FIXME add an operation isVersioned() and replace all calls to getReferencedVersion that check for ===0 or !==0 by calls to isVersioned()
-	// FIXME factor out declaredVersion and getReferencedVersion() into a super entity "VersionedElement" or something similar
-	/**
-	 * Overrides method declared in TypeRef, returns the declared version instead of the default value.
-	 */
-	op int getReferencedVersion() {
-		if (declaredVersion === null)
-			return 0;
-		return declaredVersion.intValue;
+	op int getVersion() {
+		if (hasDeclaredVersion) declaredVersion.intValue else super.version
 	}
 }
 

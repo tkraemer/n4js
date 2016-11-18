@@ -27,6 +27,7 @@ package eu.numberfour.n4js.n4JS
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefIterable
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.VersionedElement
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TEnum
@@ -54,6 +55,7 @@ import java.util.Collections
 import java.util.Iterator
 import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.ecore.EObject
+import eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration
 
 type IteratorOfStatement wraps Iterator<Statement>
 type IteratorOfReturnStatement wraps Iterator<ReturnStatement>
@@ -890,10 +892,9 @@ class ParenExpression extends PrimaryExpression {
 	}
 }
 
-class IdentifierRef extends PrimaryExpression, StrictModeRelevant {
+class IdentifierRef extends PrimaryExpression, StrictModeRelevant, VersionedElement, ElementWithVersionDeclaration {
 	refers IdentifiableElement ^id
 	transient String idAsText
-	BigDecimal declaredVersion
 	/**
 	 * IdentifierReference : Identifier
 	 * 1. If this IdentifierReference is contained in strict mode code and StringValue of Identifier is "eval" or "arguments", return false.
@@ -907,13 +908,12 @@ class IdentifierRef extends PrimaryExpression, StrictModeRelevant {
 		}
 		return true
 	}
-	/**
-	 * 
+	
+	/*
+	 * Override VersionedElement#getVersion() to return the declared version.
 	 */
-	op int getReferencedVersion() {
-		if (declaredVersion === null)
-			return 0;
-		return declaredVersion.intValue;
+	op int getVersion() {
+		return declaredVersionOrZero
 	}
 }
 

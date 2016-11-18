@@ -9,6 +9,9 @@ package eu.numberfour.n4js.n4JS.util;
 
 import eu.numberfour.n4js.n4JS.*;
 
+import eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration;
+import eu.numberfour.n4js.ts.typeRefs.VersionedElement;
+
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.TypableElement;
 
@@ -693,6 +696,8 @@ public class N4JSSwitch<T> extends Switch<T> {
 				T result = caseIdentifierRef(identifierRef);
 				if (result == null) result = casePrimaryExpression(identifierRef);
 				if (result == null) result = caseStrictModeRelevant(identifierRef);
+				if (result == null) result = caseVersionedElement(identifierRef);
+				if (result == null) result = caseElementWithVersionDeclaration(identifierRef);
 				if (result == null) result = caseExpression(identifierRef);
 				if (result == null) result = caseTypableElement(identifierRef);
 				if (result == null) result = defaultCase(theEObject);
@@ -4052,6 +4057,36 @@ public class N4JSSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseIdentifiableElement(IdentifiableElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Versioned Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Versioned Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseVersionedElement(VersionedElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Element With Version Declaration</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Element With Version Declaration</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseElementWithVersionDeclaration(ElementWithVersionDeclaration object) {
 		return null;
 	}
 

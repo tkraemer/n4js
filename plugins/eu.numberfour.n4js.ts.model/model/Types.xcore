@@ -27,6 +27,7 @@ import com.google.common.collect.Iterables
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefIterable
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.VersionedElement
 import eu.numberfour.n4js.ts.types.internal.MemberByNameAndAccessMap
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.utils.EcoreUtilN4
@@ -487,7 +488,7 @@ enum MemberAccessModifier {
  * </p>
  */
 //TODO why not abstract (doesn't work when it is abstract, but why?)
-class Type extends TExportableElement, TAnnotableElement {
+class Type extends TExportableElement, TAnnotableElement, VersionedElement {
 
 	/**
 	 * Returns true if type's implementation is provided by runtime. Default implementation returns true, overridden in user-defined (meta) types.
@@ -593,15 +594,6 @@ class Type extends TExportableElement, TAnnotableElement {
 		} else {
 			name
 		}
-	}
-
-	/*
-	 * Returns the version of the type (declaration). This is 0 by default for all N4JS types, as this 
-	 * feature is only supported by derived languages (such as N4IDL). Subclasses may override this method,
-	 * returning the declared version instead.
-	 */
-	op int getVersion() {
-		return 0;
 	}
 
 //	op String getTypeAsHTML() {
@@ -831,6 +823,8 @@ abstract class TClassifier extends ContainerType<TMember>, SyntaxRelatedTElement
 	 * The declared version of the type. This is not used by N4JS at the moment but only
 	 * in derived languages such as N4IDL. It needs to be stored in the type model though as
 	 * it is required to be cached (i.e. stored in the Xtext index) for scoping etc.
+	 * 
+	 * This is set by the N4IDL types builder.
 	 */
 	int declaredVersion
 

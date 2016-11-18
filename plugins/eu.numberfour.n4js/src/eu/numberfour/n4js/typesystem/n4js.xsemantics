@@ -125,6 +125,7 @@ import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.scoping.members.MemberScopingHelper
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
@@ -172,6 +173,7 @@ import eu.numberfour.n4js.ts.utils.TypeHelper
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesbuilder.N4JSFunctionDefinitionTypesBuilder
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.typesystem.VersionResolver
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.utils.PromisifyHelper
@@ -189,7 +191,6 @@ import static extension eu.numberfour.n4js.ts.utils.TypeExtensions.*
 import static extension eu.numberfour.n4js.ts.utils.TypeUtils.*
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.typesystem.TypeSystemErrorExtensions.*
-import eu.numberfour.n4js.typesystem.VersionResolver
 
 inject TypeSystemHelper typeSystemHelper
 inject N4JSFunctionDefinitionTypesBuilder functionDefinitionTypesBuilder
@@ -333,7 +334,13 @@ rule typeThisKeyword
 	G |- ThisLiteral t : TypeRef T
 from {
 	var TypeRef rawT; G |~ t ~> rawT
-	// TODO: Rewrite the actualTypeRef to force proper version!
+	
+	if (rawT instanceof ElementWithVersionDeclaration) {
+		if (rawT.hasDeclaredVersion) {
+			rawT = versionResolver.resolveVersion(T, rawT.declaredVersionOrZero);
+		}
+	}
+	
 	T = TypeUtils.enforceNominalTyping(rawT)
 }
 
@@ -405,8 +412,8 @@ rule typeIdentifierRef G |- IdentifierRef idref: TypeRef T
 from  {
 	G |- idref.id : T
 
-	if (idref.referencedVersion > 0) {
-		T = versionResolver.resolveVersion(T, idref.referencedVersion);
+	if (idref.hasDeclaredVersion) {
+		T = versionResolver.resolveVersion(T, idref.declaredVersionOrZero);
 	}
 
 	if(idref.eContainer instanceof ParameterizedCallExpression
@@ -762,8 +769,8 @@ from {
 		G2 |- propTypeRef ~> T
 
 		if (receiverTypeRef instanceof ParameterizedTypeRef) {
-			if (receiverTypeRef.referencedVersion > 0) {
-				T = versionResolver.resolveVersion(T, receiverTypeRef.referencedVersion);
+			if (receiverTypeRef.hasDeclaredVersion) {
+				T = versionResolver.resolveVersion(T, receiverTypeRef.declaredVersionOrZero);
 			}
 		}
 
@@ -843,8 +850,8 @@ from {
 			G2 |- T ~> T
 
 			if (F instanceof ParameterizedTypeRef) {
-				if (F.referencedVersion > 0) {
-					T = versionResolver.resolveVersion(T, F.referencedVersion);
+				if (F.hasDeclaredVersion) {
+					T = versionResolver.resolveVersion(T, F.declaredVersion.intValue);
 				}
 			}
 

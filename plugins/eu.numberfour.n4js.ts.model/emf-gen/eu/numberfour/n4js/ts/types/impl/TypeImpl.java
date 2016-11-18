@@ -8,6 +8,8 @@
 package eu.numberfour.n4js.ts.types.impl;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
+import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
+import eu.numberfour.n4js.ts.typeRefs.VersionedElement;
 
 import eu.numberfour.n4js.ts.types.ArrayLikes;
 import eu.numberfour.n4js.ts.types.TAnnotableElement;
@@ -340,6 +342,11 @@ public class TypeImpl extends TExportableElementImpl implements Type {
 				default: return -1;
 			}
 		}
+		if (baseClass == VersionedElement.class) {
+			switch (derivedFeatureID) {
+				default: return -1;
+			}
+		}
 		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
 	}
 
@@ -356,7 +363,33 @@ public class TypeImpl extends TExportableElementImpl implements Type {
 				default: return -1;
 			}
 		}
+		if (baseClass == VersionedElement.class) {
+			switch (baseFeatureID) {
+				default: return -1;
+			}
+		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == TAnnotableElement.class) {
+			switch (baseOperationID) {
+				default: return -1;
+			}
+		}
+		if (baseClass == VersionedElement.class) {
+			switch (baseOperationID) {
+				case TypeRefsPackage.VERSIONED_ELEMENT___GET_VERSION: return TypesPackage.TYPE___GET_VERSION;
+				default: return -1;
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
 	}
 
 	/**

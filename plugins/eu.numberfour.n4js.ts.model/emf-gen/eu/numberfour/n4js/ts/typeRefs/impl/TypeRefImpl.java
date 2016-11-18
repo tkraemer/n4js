@@ -13,6 +13,7 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
+import eu.numberfour.n4js.ts.typeRefs.VersionedElement;
 
 import eu.numberfour.n4js.ts.types.AnyType;
 import eu.numberfour.n4js.ts.types.NullModifier;
@@ -381,8 +382,18 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getReferencedVersion() {
-		return 0;
+	public int getVersion() {
+		int _xifexpression = (int) 0;
+		Type _declaredType = this.getDeclaredType();
+		boolean _tripleNotEquals = (_declaredType != null);
+		if (_tripleNotEquals) {
+			Type _declaredType_1 = this.getDeclaredType();
+			_xifexpression = _declaredType_1.getVersion();
+		}
+		else {
+			_xifexpression = 0;
+		}
+		return _xifexpression;
 	}
 
 	/**
@@ -459,6 +470,28 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	 * @generated
 	 */
 	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == TypeArgument.class) {
+			switch (baseOperationID) {
+				case TypeRefsPackage.TYPE_ARGUMENT___GET_TYPE_REF_AS_STRING: return TypeRefsPackage.TYPE_REF___GET_TYPE_REF_AS_STRING;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		if (baseClass == VersionedElement.class) {
+			switch (baseOperationID) {
+				case TypeRefsPackage.VERSIONED_ELEMENT___GET_VERSION: return TypeRefsPackage.TYPE_REF___GET_VERSION;
+				default: return -1;
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
 			case TypeRefsPackage.TYPE_REF___GET_MODIFIERS_AS_STRING:
@@ -501,8 +534,8 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 				return isUseSiteStructuralTyping();
 			case TypeRefsPackage.TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING:
 				return isDefSiteStructuralTyping();
-			case TypeRefsPackage.TYPE_REF___GET_REFERENCED_VERSION:
-				return getReferencedVersion();
+			case TypeRefsPackage.TYPE_REF___GET_VERSION:
+				return getVersion();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
