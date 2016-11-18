@@ -12,11 +12,7 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
-:figure-caption!:
-
 image::resources/images/n4jslogo.png[400,400,align="center"]
-
-:figure-caption:
 
 [.center]
 Version 0.4
@@ -90,3 +86,5 @@ include::chapters/a03_n4jsobjects/n4jsobjects.adoc[leveloffset=+1]
 == Bibliography
 
 bibliography::[]
+
+// TODO: update biblio for missing reference cite:[Gosling14a]
