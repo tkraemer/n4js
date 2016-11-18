@@ -10,12 +10,11 @@ asciispec N4JSSpec.adoc
 
 == Known Issues
 
-- [ ] Bibliography macro currently duplicates entries per citation count (biblio temporarily disabled)
 - [ ] Custom Math sytax not yet implemented
 
 == Formatting / TODO
 
-- [ ] Conventions for xrefs to be decided upon
+- [ ] Conventions for xrefs to be decided upon & fixed
 - [ ] Tasks create empty space between paras in PDF
 - [ ] Cover to be added / fixed
 

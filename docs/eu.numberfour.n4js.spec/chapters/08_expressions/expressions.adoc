@@ -49,7 +49,7 @@ newer constructs in some cases.
 task:IDE-232[]
 
 N4JS supports the same expressions as ECMAScript.
-The semantics are described in cite:[ECMA11(S11)].
+The semantics are described in cite:[ECMA11a(S11)].
 In N4JS, some expressions are extended for supporting the declaration of types, annotations, or
 parameterized usages.
 These extensions and type-related aspects as well as specific N4JS constraints are described in this section.

@@ -130,7 +130,10 @@ math:[\[\begin{aligned}
 
 === Type Inference [[function-type-inference]]
 
-.Function Type Conformance, Non-Parameterized
+// TODO - definition title needs comma like so: ".Function Type Conformance, Non-Parameterized"
+// comma currently breaks FOP PDF build, see https://github.numberfour.eu/NumberFour/asciispec/issues/53
+
+.Function Type Conformance Non-Parameterized
 [def]
 --
 For the given non-parameterized function types +
