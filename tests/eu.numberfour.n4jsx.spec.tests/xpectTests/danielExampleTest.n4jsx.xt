@@ -1,0 +1,35 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpectTest
+	ResourceSet {
+		ThisFile {}
+		File "React.n4jsd" {}
+	}
+    END_SETUP
+*/
+
+class A {
+	a : string;
+	//X_PECT noerrors
+	foo() {
+		this.b;
+	}
+}
+
+class LowerComponent extends Component<~Object with {whatTextShouldIShow: string}, String> {
+	@Override
+	public render() {
+		return (<div>{this.props.whatTextShouldIShow}</div>);
+	}
+}
+
+function PureFnComponent(props: ~Object with {myProp: string}) {
+	return (<div>{props.myProp}</div>);
+}
+
+//XPECT noerrors
+//var a = <PureFnComponent myProp="This is my prop"/>
+//X_PECT noerrors
+//var b = <PureFnComponent myOtherProp="This is my other prop"/>
+//X_PECT noerrors
+//var c = <LowerComponent whatTextShouldIShow="Hey"/>
+//X_PECT noerrors
+var c = <LowerComponent whatTextShouldIShowBlah="Hey wrong"/>

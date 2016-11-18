@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpectTest
+	ResourceSet {
+		ThisFile {}
+		File "React.n4jsd" {}
+	}
+    END_SETUP
+*/
+
+class A {
+	a : string;
+	//X_PECT noerrors
+	foo() {
+		this.b;
+	}
+}

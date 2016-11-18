@@ -1,0 +1,19 @@
+class Board extends
+	Component<~Object with {gameName: string},
+			  ~Object with {squares: Array<string>}> {
+
+	constructor() {
+	    super();
+	    this.state = {
+	      squares: new Array<string>(9)
+	    };
+	    if (this.state.squaresBBBB.length == 1) {
+
+	    }
+  	}
+
+	@Override
+	public render() {
+		return (<div>{this.props.gameName}</div>);
+	}
+}

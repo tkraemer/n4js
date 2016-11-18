@@ -9,6 +9,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TField
+import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.utils.ContainerTypesHelper
@@ -27,7 +28,7 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 	ContainerTypesHelper containerTypesHelper;
 
 	@Inject N4JSTypeSystem ts
-	
+
 	@Inject MemberScopingHelper memberScopingHelper
 
 	@Override
@@ -35,9 +36,10 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 		if (reference == N4JSXPackage.Literals.JSX_PROPERTY_ATTRIBUTE__PROPERTY) {
 			if (context instanceof JSXPropertyAttribute) {
 				var expr = (context.eContainer as JSXElement).jsxElementName.expression
-				//TODO: Extend this to cover ParameterizedPropertyAccess as well
+				// TODO: Extend this to cover ParameterizedPropertyAccess as well
 				if (expr instanceof IdentifierRef) {
 					if (expr.id instanceof TClass) {
+						// React component is defined as a class
 						var tclass = expr.id as TClass
 						val memberCollector = containerTypesHelper.fromContext(tclass)
 						val propsFieldT = memberCollector.findMember(tclass, "props", true, false);
@@ -47,10 +49,19 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 							// take upper bound to get rid of ExistentialTypeRefs, ThisTypeRefs, etc.
 							val TypeRef typeRef = if (typeRefRaw !== null) ts.upperBound(G, typeRefRaw).value else null;
 							val staticAccess = typeRef instanceof TypeTypeRef;
-							//TODO: How can we configure visibility check here?
+							// TODO: How can we configure visibility check here?
 							val checkVisibility = false;
 							return memberScopingHelper.createMemberScopeFor(typeRef, context, checkVisibility,
 								staticAccess);
+						}
+					} else if (expr.id instanceof TFunction) {
+						// React component is defined as a function
+						val tfunction = expr.id as TFunction
+						if (tfunction.fpars.length == 1 && tfunction.fpars.get(0).name == "props") {
+							val propsParamT = tfunction.fpars.get(0)	
+							val checkVisibility = false;
+							return memberScopingHelper.createMemberScopeFor(propsParamT.typeRef, context,
+								checkVisibility, false);
 						}
 					}
 				}

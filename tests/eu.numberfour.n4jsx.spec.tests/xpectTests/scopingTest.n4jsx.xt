@@ -1,0 +1,61 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpectTest
+	ResourceSet {
+		ThisFile {}
+		File "React.n4jsd" {}
+	}
+    END_SETUP
+*/
+
+class ~Props  {
+	public myProp: string;
+}
+
+//XPECT noerrors
+function PureFnComponent(props: Props) {
+	return (<div>{props.myProp}</div>);
+}
+
+
+class LowerComponent extends Component<~Object with {whatTextShouldIShow: string}, String> {
+
+	@Override
+	public render() {
+		//XPECT noerrors
+		return (<div>{this.props.whatTextShouldIShow}</div>);
+	}
+}
+
+//var BlahComponent = 10;
+class MyComponent extends
+	Component<~Object with {aProp: string}, String> {
+
+	@Override
+	public render() {
+		const constText = "some text";
+		//XPECT noerrors
+		return (<LowerComponent whatTextShouldIShow="Hallo">{constText}</LowerComponent>
+		);
+	}
+}
+
+class MyHigherLevelComponent extends
+	Component<~Object with {someCondition: Number}, ~Object with {aStateProp: Boolean}> {
+
+	@Override
+	public render() {
+		let d = this.state.aStateProp;
+		//X_PECT noerrors simplePropForMyComponent={5}
+		return (<MyComponent  aProp={
+         (() => {
+           if (this.props.someCondition) {
+             return "ein Text";
+           }
+           return "";
+         })()
+       }>{d}</MyComponent>);
+	}
+}
+
+
+
+
