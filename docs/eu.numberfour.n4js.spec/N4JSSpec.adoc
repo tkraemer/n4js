@@ -1,5 +1,4 @@
 include::config.adoc[]
-[discrete]
 = N4JS Language Specification
 :doctype: book
 
