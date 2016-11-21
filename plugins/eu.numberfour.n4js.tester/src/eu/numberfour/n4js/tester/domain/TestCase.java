@@ -11,18 +11,18 @@
 package eu.numberfour.n4js.tester.domain;
 
 import static com.google.common.base.Strings.nullToEmpty;
-import static org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion.NON_NULL;
 
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.eclipse.emf.common.util.URI;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Class for representing a test case.
  */
 @JsonAutoDetect
-@JsonSerialize(include = NON_NULL)
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class TestCase implements TestElement, Comparable<TestCase> {
 
 	@JsonProperty

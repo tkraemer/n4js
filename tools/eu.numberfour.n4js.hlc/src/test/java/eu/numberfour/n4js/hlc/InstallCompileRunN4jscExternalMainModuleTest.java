@@ -51,8 +51,14 @@ public class InstallCompileRunN4jscExternalMainModuleTest extends BaseN4jscExter
 		// main is "./lib/bar", but there is lib folder and lib.js file
 		deps.put("bar", "^0.1.2");
 
+		// main is "./lib/index.js"
+		deps.put("pouchdb-find", "^0.10.3");
+
 		// no main
 		deps.put("body-parser", "^1.15.0");
+
+		// broken main (defined in the package.json, but does not exist in the npm package)
+		deps.put("next", "^1.1.1");
 
 		return deps;
 	}
@@ -88,6 +94,8 @@ public class InstallCompileRunN4jscExternalMainModuleTest extends BaseN4jscExter
 				// TODO enable this when karma npm package is enabled again.
 				// .append("karma imported").append("\n")
 				.append("bar imported").append("\n") // Bar uses deprecated 'sys'
+				.append("pouchdb-find imported").append("\n")
+				.append("next imported").append("\n")
 				.append("body-parser imported");
 
 		Assert.assertTrue(

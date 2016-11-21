@@ -12,7 +12,6 @@ package eu.numberfour.n4js.ui.internal;
 
 import static com.google.inject.Scopes.SINGLETON;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.xtext.builder.builderState.IBuilderState;
@@ -27,6 +26,7 @@ import org.eclipse.xtext.ui.resource.IResourceSetInitializer;
 import org.eclipse.xtext.ui.resource.IStorage2UriMapperContribution;
 import org.eclipse.xtext.ui.shared.contribution.IEagerContribution;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Binder;
 import com.google.inject.Inject;
 import com.google.inject.Module;

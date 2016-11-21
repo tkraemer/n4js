@@ -10,13 +10,14 @@
  */
 package eu.numberfour.n4js.npmexporter
 
+import com.fasterxml.jackson.core.JsonGenerationException
+import com.fasterxml.jackson.databind.JsonMappingException
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.node.ObjectNode
 import com.google.common.collect.Iterables
+import eu.numberfour.n4js.utils.JsonPrettyPrinterFactory
 import java.io.IOException
-import org.codehaus.jackson.JsonNode
-import org.codehaus.jackson.map.ObjectMapper
-import org.codehaus.jackson.node.ObjectNode
-import org.codehaus.jackson.JsonGenerationException
-import org.codehaus.jackson.map.JsonMappingException
 
 /**
  */
@@ -26,7 +27,7 @@ class PackageJsonTemplate {
 	/** Writes data to a simple string. */
 	def String generateTemplate(PackageJsonData data)throws IOException, JsonGenerationException, JsonMappingException {
 
-		val om = new ObjectMapper().defaultPrettyPrintingWriter;
+		val om = new ObjectMapper(new JsonPrettyPrinterFactory());
 
 		val jsonString = om.writeValueAsString(data)
 
@@ -41,14 +42,14 @@ class PackageJsonTemplate {
 	 * @param rejectionMessageConsumer consumes messages, can be null.
 	 */
 	def static String merge(String jsonPrimary, String jsonSecondary, (String)=>void rejectionMessageConsumer) {
-		val om = new ObjectMapper();
+		val om = new ObjectMapper(new JsonPrettyPrinterFactory());
 		try {
 			val primNode = om.readTree(jsonPrimary)
 			val secondNode = om.readTree( jsonSecondary );
 
 			val result =  merge( primNode, secondNode, emptyList , rejectionMessageConsumer);
 
-			return om.defaultPrettyPrintingWriter.writeValueAsString( result );
+			return om.writeValueAsString( result );
 
 		} catch (IOException exc) {
 			throw Exceptions.sneakyThrow( exc );
@@ -77,7 +78,7 @@ class PackageJsonTemplate {
 					val JsonNode value = updateNode.get(fieldName);
 					if( jsonNode === null ) {
 						 // add if nothing was given in mainNode.
-						 mainNode.put(fieldName, value);
+						 mainNode.set(fieldName, value);
 					} else {
 						// rejected entry.
 						if( messageConsumer !== null ) {

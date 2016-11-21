@@ -323,6 +323,23 @@ public abstract class N4JSASTUtils {
 	}
 
 	/**
+	 * If the given expression is the expression of a single-expression arrow function, then this method returns that
+	 * arrow function; otherwise <code>null</code> is returned.
+	 */
+	public static ArrowFunction getContainingSingleExpressionArrowFunction(Expression expression) {
+		final EObject parent = expression.eContainer();
+		final EObject grandparent = parent != null ? parent.eContainer() : null;
+		final EObject grandgrandparent = grandparent != null ? grandparent.eContainer() : null;
+		if (grandgrandparent instanceof ArrowFunction) {
+			final ArrowFunction arrFun = (ArrowFunction) grandgrandparent;
+			if (arrFun.isSingleExprImplicitReturn() && arrFun.implicitReturnExpr() == expression) {
+				return arrFun;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Returns true iff <code>expr</code> is a semi-legal assignment expression within a constructor to a final field of
 	 * the same class. Here, "semi"-legal means that one requirement for a fully legal such assignment is <b>not</b>
 	 * checked by this method: the requirement that the declaration of the assigned final field must not have an
