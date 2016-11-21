@@ -1,0 +1,13 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+class A{}
+
+// XPECT noerrors --> "Array<any> is not a subtype of Array<A>." at "[]"
+const lambda = ():Array<A> => [];
+
+//no error for multiline
+const lambda2 = ():Array<A> => {
+    return [];
+}
+

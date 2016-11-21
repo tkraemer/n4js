@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.tester.server.resources.tests;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static eu.numberfour.n4js.tester.server.HttpConstants.SC_UNPROCESSABLE_ENTITY;
 import static eu.numberfour.n4js.tester.server.resources.ContentType.END_TEST;
 import static eu.numberfour.n4js.tester.server.resources.HttpMethod.POST;
@@ -18,10 +19,9 @@ import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.tester.domain.TestResult;
@@ -44,6 +44,9 @@ public class EndTestResource extends TestResource {
 	@Override
 	protected TestEvent createEvent(final String sessionId, final String testId, final String body)
 			throws ClientResourceException {
+
+		if (isNullOrEmpty(body))
+			throw new ClientResourceException(SC_BAD_REQUEST);
 
 		final AtomicReference<TestResult> result = new AtomicReference<>();
 		try {

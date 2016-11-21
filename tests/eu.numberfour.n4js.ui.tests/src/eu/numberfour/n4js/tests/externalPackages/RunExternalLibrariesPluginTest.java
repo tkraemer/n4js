@@ -42,6 +42,7 @@ import eu.numberfour.n4js.runner.RunnerFrontEnd;
 import eu.numberfour.n4js.runner.ui.RunnerFrontEndUI;
 import eu.numberfour.n4js.tests.builder.AbstractBuilderParticipantTest;
 import eu.numberfour.n4js.tests.util.ProjectUtils;
+import eu.numberfour.n4js.utils.process.OutputRedirection;
 import eu.numberfour.n4js.utils.process.ProcessExecutor;
 import eu.numberfour.n4js.utils.process.ProcessResult;
 
@@ -147,8 +148,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : LIB_PROJECT_IDS) {
 			getProjectByName(libProjectName).close(new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -167,8 +168,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).close(new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -187,8 +188,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : newArrayList(PB, PC)) {
 			getProjectByName(libProjectName).close(new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -207,8 +208,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).close(new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult firstResult = runClient();
 		// @formatter:off
@@ -222,8 +223,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).open(new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult secondResult = runClient();
 		// @formatter:off
@@ -242,8 +243,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : LIB_PROJECT_IDS) {
 			getProjectByName(libProjectName).delete(true, new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -262,8 +263,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).delete(true, new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult result = runClient();
 		// @formatter:off
@@ -282,8 +283,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			getProjectByName(libProjectName).delete(true, new NullProgressMonitor());
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult firstResult = runClient();
 		// @formatter:off
@@ -298,8 +299,8 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		for (final String libProjectName : newArrayList(PB, PD)) {
 			final File projectsRoot = new File(getResourceUri(PROBANDS, WORKSPACE_LOC));
 			ProjectUtils.importProject(projectsRoot, libProjectName);
+			waitForAutoBuildCheckIndexRigid();
 		}
-		waitForAutoBuildCheckIndexRigid();
 
 		final ProcessResult secondResult = runClient();
 		// @formatter:off
@@ -327,7 +328,7 @@ public class RunExternalLibrariesPluginTest extends AbstractBuilderParticipantTe
 		final org.eclipse.emf.common.util.URI moduleToRun = createPlatformResourceURI(pathToModuleToRun, true);
 		final RunConfiguration config = runnerFrontEnd.createConfiguration(ID, null, moduleToRun);
 		final Process process = runnerFrontEndUI.runInUI(config);
-		final ProcessResult result = processExecutor.execute(process, "", /* redirect output */ false);
+		final ProcessResult result = processExecutor.execute(process, "", OutputRedirection.REDIRECT);
 		assertTrue("Expected 0 error code for the process. Was: " + result.getExitCode(), result.isOK());
 		return result;
 	}

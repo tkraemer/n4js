@@ -1,0 +1,6 @@
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+ 
+/* XPECT formattedLines 1 ---
+if (true) throw new Error("with very looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong message");
+ --- */
+if (true) throw new Error("with very looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong message");

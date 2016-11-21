@@ -27,6 +27,7 @@ import eu.numberfour.n4js.n4JS.CommaExpression;
 import eu.numberfour.n4js.n4JS.ConditionalExpression;
 import eu.numberfour.n4js.n4JS.EqualityExpression;
 import eu.numberfour.n4js.n4JS.Expression;
+import eu.numberfour.n4js.n4JS.ExpressionStatement;
 import eu.numberfour.n4js.n4JS.ForStatement;
 import eu.numberfour.n4js.n4JS.FormalParameter;
 import eu.numberfour.n4js.n4JS.FunctionDefinition;
@@ -134,7 +135,6 @@ import eu.numberfour.n4js.ts.utils.TypeExtensions;
 import eu.numberfour.n4js.ts.utils.TypeHelper;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.typesbuilder.N4JSFunctionDefinitionTypesBuilder;
-import eu.numberfour.n4js.typesystem.PredefinedTypes;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
 import eu.numberfour.n4js.typesystem.StructuralTypingResult;
 import eu.numberfour.n4js.typesystem.TypeSystemErrorExtensions;
@@ -409,6 +409,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   public final static String EXPECTEDTYPEOFRIGHTSIDEINPROPERTYNAMEVALUEPAIR = "eu.numberfour.n4js.xsemantics.ExpectedTypeOfRightSideInPropertyNameValuePair";
   
   public final static String EXPECTEDTYPEINRETURNSTATEMENT = "eu.numberfour.n4js.xsemantics.ExpectedTypeInReturnStatement";
+  
+  public final static String EXPECTEDTYPEINEXPRESSIONSTATEMENT = "eu.numberfour.n4js.xsemantics.ExpectedTypeInExpressionStatement";
   
   public final static String EXPECTEDTYPEINFORSTATEMENT = "eu.numberfour.n4js.xsemantics.ExpectedTypeInForStatement";
   
@@ -5823,81 +5825,39 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleExpectedTypeInReturnStatement(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ReturnStatement stmt, final Expression expression) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    final FunctionDefinition funDef = EcoreUtil2.<FunctionDefinition>getContainerOfType(stmt, FunctionDefinition.class);
-    final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
-    /* G |~ stmt ~> var TypeRef myThisTypeRef */
-    TypeRef myThisTypeRef = null;
-    Result<TypeRef> result = thisTypeRefInternal(G, _trace_, stmt);
-    checkAssignableTo(result.getFirst(), TypeRef.class);
-    myThisTypeRef = (TypeRef) result.getFirst();
-    
-    RuleEnvironmentExtensions.addThisType(G2, myThisTypeRef);
-    /* { funDef !== null !funDef.isAsync() G2 |- funDef : var FunctionTypeExprOrRef fType G2 |- fType.returnTypeRef ~> T } or { if (funDef !== null) { if (funDef.returnTypeRef!==null) { T = funDef.returnTypeRef } else { val tFun = funDef.definedType; if(tFun instanceof TFunction) { val actualReturnTypeRef = tFun.returnTypeRef; if(TypeUtils.isPromise(actualReturnTypeRef, G.getPredefinedTypes().builtInTypeScope)) { val firstTypeArg = actualReturnTypeRef.typeArgs.head; if(firstTypeArg!==null) { G |~ firstTypeArg /\ T } } } } } else { val getterDef = EcoreUtil2.getContainerOfType(stmt, GetterDeclaration); T = getterDef?.definedGetter?.declaredTypeRef } } */
-    {
-      RuleFailedException previousFailure = null;
-      try {
-        /* funDef !== null */
-        if (!(funDef != null)) {
-          sneakyThrowRuleFailedException("funDef !== null");
-        }
-        boolean _isAsync = funDef.isAsync();
-        boolean _not = (!_isAsync);
-        /* !funDef.isAsync() */
-        if (!_not) {
-          sneakyThrowRuleFailedException("!funDef.isAsync()");
-        }
-        /* G2 |- funDef : var FunctionTypeExprOrRef fType */
-        FunctionTypeExprOrRef fType = null;
-        Result<TypeRef> result_1 = typeInternal(G2, _trace_, funDef);
-        checkAssignableTo(result_1.getFirst(), FunctionTypeExprOrRef.class);
-        fType = (FunctionTypeExprOrRef) result_1.getFirst();
-        
-        /* G2 |- fType.returnTypeRef ~> T */
-        TypeRef _returnTypeRef = fType.getReturnTypeRef();
-        Result<TypeArgument> result_2 = substTypeVariablesInternal(G2, _trace_, _returnTypeRef);
-        checkAssignableTo(result_2.getFirst(), TypeRef.class);
-        T = (TypeRef) result_2.getFirst();
-        
-      } catch (Exception e) {
-        previousFailure = extractRuleFailedException(e);
-        if ((funDef != null)) {
-          TypeRef _returnTypeRef_1 = funDef.getReturnTypeRef();
-          boolean _tripleNotEquals = (_returnTypeRef_1 != null);
-          if (_tripleNotEquals) {
-            TypeRef _returnTypeRef_2 = funDef.getReturnTypeRef();
-            T = _returnTypeRef_2;
-          } else {
-            final Type tFun = funDef.getDefinedType();
-            if ((tFun instanceof TFunction)) {
-              final TypeRef actualReturnTypeRef = ((TFunction)tFun).getReturnTypeRef();
-              PredefinedTypes _predefinedTypes = RuleEnvironmentExtensions.getPredefinedTypes(G);
-              boolean _isPromise = TypeUtils.isPromise(actualReturnTypeRef, _predefinedTypes.builtInTypeScope);
-              if (_isPromise) {
-                EList<TypeArgument> _typeArgs = actualReturnTypeRef.getTypeArgs();
-                final TypeArgument firstTypeArg = IterableExtensions.<TypeArgument>head(_typeArgs);
-                if ((firstTypeArg != null)) {
-                  /* G |~ firstTypeArg /\ T */
-                  Result<TypeRef> result_3 = upperBoundInternal(G, _trace_, firstTypeArg);
-                  checkAssignableTo(result_3.getFirst(), TypeRef.class);
-                  T = (TypeRef) result_3.getFirst();
-                  
-                }
-              }
-            }
-          }
-        } else {
-          final GetterDeclaration getterDef = EcoreUtil2.<GetterDeclaration>getContainerOfType(stmt, GetterDeclaration.class);
-          TGetter _definedGetter = null;
-          if (getterDef!=null) {
-            _definedGetter=getterDef.getDefinedGetter();
-          }
-          TypeRef _declaredTypeRef = null;
-          if (_definedGetter!=null) {
-            _declaredTypeRef=_definedGetter.getDeclaredTypeRef();
-          }
-          T = _declaredTypeRef;
-        }
-      }
+    TypeRef _expectedTypeOfReturnValueExpression = this.typeSystemHelper.getExpectedTypeOfReturnValueExpression(G, expression);
+    T = _expectedTypeOfReturnValueExpression;
+    return new Result<TypeRef>(T);
+  }
+  
+  protected Result<TypeRef> expectedTypeInImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ExpressionStatement exprStmnt, final Expression expression) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<TypeRef> _result_ = applyRuleExpectedTypeInExpressionStatement(G, _subtrace_, exprStmnt, expression);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("expectedTypeInExpressionStatement") + stringRepForEnv(G) + " |- " + stringRep(exprStmnt) + " |> " + stringRep(expression) + " : " + stringRep(_result_.getFirst());
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleExpectedTypeInExpressionStatement) {
+    	expectedTypeInThrowException(ruleName("expectedTypeInExpressionStatement") + stringRepForEnv(G) + " |- " + stringRep(exprStmnt) + " |> " + stringRep(expression) + " : " + "TypeRef",
+    		EXPECTEDTYPEINEXPRESSIONSTATEMENT,
+    		e_applyRuleExpectedTypeInExpressionStatement, exprStmnt, expression, new ErrorInformation[] {new ErrorInformation(exprStmnt), new ErrorInformation(expression)});
+    	return null;
+    }
+  }
+  
+  protected Result<TypeRef> applyRuleExpectedTypeInExpressionStatement(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ExpressionStatement exprStmnt, final Expression expression) throws RuleFailedException {
+    TypeRef T = null; // output parameter
+    ArrowFunction _containingSingleExpressionArrowFunction = N4JSASTUtils.getContainingSingleExpressionArrowFunction(expression);
+    boolean _tripleNotEquals = (_containingSingleExpressionArrowFunction != null);
+    if (_tripleNotEquals) {
+      TypeRef _expectedTypeOfReturnValueExpression = this.typeSystemHelper.getExpectedTypeOfReturnValueExpression(G, expression);
+      T = _expectedTypeOfReturnValueExpression;
+    } else {
+      T = null;
     }
     return new Result<TypeRef>(T);
   }

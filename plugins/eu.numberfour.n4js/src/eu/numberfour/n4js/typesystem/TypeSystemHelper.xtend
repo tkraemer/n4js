@@ -87,6 +87,7 @@ class TypeSystemHelper {
 	@Inject private MeetComputer meetComputer;
 
 	@Inject private SubtypeComputer subtypeComputer;
+	@Inject private ExpectedTypeComputer expectedTypeCompuer;
 	@Inject private StructuralTypingComputer structuralTypingComputer;
 
 
@@ -180,6 +181,11 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 
 	def StructuralTypingResult isStructuralSubtype(RuleEnvironment G,TypeRef left, TypeRef right) {
 		return structuralTypingComputer.isStructuralSubtype(G, left, right)
+	}
+
+	/** @see ExpectedTypeComputer#getExpectedTypeOfReturnValueExpression(RuleEnvironment,Expression) */
+	def TypeRef getExpectedTypeOfReturnValueExpression(RuleEnvironment G, Expression returnValueExpr) {
+		return expectedTypeCompuer.getExpectedTypeOfReturnValueExpression(G, returnValueExpr);
 	}
 
 
