@@ -10,6 +10,7 @@ class A {
 	a : string;
 	//X_PECT noerrors
 	foo() {
+		//XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'b'." at "b"
 		this.b;
 	}
 }

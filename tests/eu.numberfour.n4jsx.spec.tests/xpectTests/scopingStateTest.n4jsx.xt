@@ -1,3 +1,11 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpectTest
+	ResourceSet {
+		ThisFile {}
+		File "React.n4jsd" {}
+	}
+    END_SETUP
+*/
+
 class Board extends
 	Component<~Object with {gameName: string},
 			  ~Object with {squares: Array<string>}> {
@@ -5,11 +13,20 @@ class Board extends
 	constructor() {
 	    super();
 	    this.state = {
-	      squares: new Array<string>(9)
+	      //XPECT noerrors
+	      squares: new Array<string>(9),
+	      someNonExistingField: 10
 	    };
-	    if (this.state.squaresBBBB.length == 1) {
+	    //XPECT noerrors
+	    if (this.state.squares.length == 1) {
 
 	    }
+
+		//XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'someNonExistingField'." at "someNonExistingField"
+	    if (this.state.someNonExistingField == 2) {
+
+	    }
+
   	}
 
 	@Override
