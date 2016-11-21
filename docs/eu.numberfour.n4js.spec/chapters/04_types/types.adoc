@@ -789,7 +789,7 @@ Type inference for parameterized types uses the concept of existential types (in
 
 footnote:[The general concept for checking type conformance and inferring types for generic and parameterized types is described in cite:[Igarashi01a] for __Featherweight Java with Generics__].
 
-The concept of existential types with wildcard capture (a special kind of existential type) is published in cite:[Torgersen05], further developed in cite:[Cameron08b] (further developed in  cite:[Cameron09a] cite:[Summers10], also see cite:[Wehr08a] for a similar approach).
+The concept of existential types with wildcard capture (a special kind of existential type) is published in cite:[Torgersen05a], further developed in cite:[Cameron08b] (further developed in  cite:[Cameron09a] cite:[Summers10a], also see cite:[Wehr08a] for a similar approach).
 The key feature of the Java generic wildcard handling is called capture conversion, described in cite:[Gosling12a(S5.1.10)].
 However, there are some slight differences to Java 6 and 7, only with Java 8 similar results can be expected.
 All these papers include formal proofs of certain aspects, however even these paper lack proof of other aspect
@@ -1555,7 +1555,7 @@ types and prefers single typed joins or meets. __The most common use
 case for union types is for emulating method overloading__, as we
 describe later on.
 
-footnote:[For type theory about union types, cite:[Pierce02(a15.7)] and cite:[Igarashi07a], other languages that explicitly support the notion of union type include Ceylon cite:[King13a(3.2.4/5)]
+footnote:[For type theory about union types, cite:[Pierce02a(15.7)] and cite:[Igarashi07a], other languages that explicitly support the notion of union type include Ceylon cite:[King13a(3.2.4/5)]
 
 ==== Syntax [[union-type-syntax]]
 
