@@ -456,7 +456,7 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int requestedVersionOrZero() {
+	public int getRequestedVersionOrZero() {
 		int _xifexpression = (int) 0;
 		boolean _hasRequestedVersion = this.hasRequestedVersion();
 		if (_hasRequestedVersion) {
@@ -653,7 +653,7 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 		if (baseClass == VersionedReference.class) {
 			switch (baseOperationID) {
 				case TypeRefsPackage.VERSIONED_REFERENCE___HAS_REQUESTED_VERSION: return TypeRefsPackage.PARAMETERIZED_TYPE_REF___HAS_REQUESTED_VERSION;
-				case TypeRefsPackage.VERSIONED_REFERENCE___REQUESTED_VERSION_OR_ZERO: return TypeRefsPackage.PARAMETERIZED_TYPE_REF___REQUESTED_VERSION_OR_ZERO;
+				case TypeRefsPackage.VERSIONED_REFERENCE___GET_REQUESTED_VERSION_OR_ZERO: return TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_REQUESTED_VERSION_OR_ZERO;
 				default: return -1;
 			}
 		}
@@ -690,8 +690,8 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 				return getVersion();
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF___HAS_REQUESTED_VERSION:
 				return hasRequestedVersion();
-			case TypeRefsPackage.PARAMETERIZED_TYPE_REF___REQUESTED_VERSION_OR_ZERO:
-				return requestedVersionOrZero();
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_REQUESTED_VERSION_OR_ZERO:
+				return getRequestedVersionOrZero();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

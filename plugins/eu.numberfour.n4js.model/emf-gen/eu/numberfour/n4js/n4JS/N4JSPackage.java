@@ -4947,13 +4947,13 @@ public interface N4JSPackage extends EPackage {
 	int IDENTIFIER_REF___HAS_REQUESTED_VERSION = PRIMARY_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
-	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
+	 * The operation id for the '<em>Get Requested Version Or Zero</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF___REQUESTED_VERSION_OR_ZERO = PRIMARY_EXPRESSION_OPERATION_COUNT + 2;
+	int IDENTIFIER_REF___GET_REQUESTED_VERSION_OR_ZERO = PRIMARY_EXPRESSION_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Is Valid Simple Assignment Target</em>' operation.

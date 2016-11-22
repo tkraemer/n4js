@@ -148,7 +148,6 @@ import it.xsemantics.runtime.RuleApplicationTrace;
 import it.xsemantics.runtime.RuleEnvironment;
 import it.xsemantics.runtime.RuleFailedException;
 import it.xsemantics.runtime.XsemanticsRuntimeSystem;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -1228,14 +1227,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result.getFirst(), TypeRef.class);
     rawT = (TypeRef) result.getFirst();
     
-    if ((rawT instanceof ParameterizedTypeRef)) {
-      boolean _hasRequestedVersion = ((ParameterizedTypeRef)rawT).hasRequestedVersion();
-      if (_hasRequestedVersion) {
-        int _requestedVersionOrZero = ((ParameterizedTypeRef)rawT).requestedVersionOrZero();
-        TypeRef _resolveVersion = this.versionResolver.<TypeRef>resolveVersion(T, _requestedVersionOrZero);
-        rawT = _resolveVersion;
-      }
-    }
+    TypeRef _resolveVersion = this.versionResolver.<TypeRef>resolveVersion(rawT, rawT);
+    rawT = _resolveVersion;
     TypeRef _enforceNominalTyping = TypeUtils.enforceNominalTyping(rawT);
     T = _enforceNominalTyping;
     return new Result<TypeRef>(T);
@@ -1378,12 +1371,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result.getFirst(), TypeRef.class);
     T = (TypeRef) result.getFirst();
     
-    boolean _hasRequestedVersion = idref.hasRequestedVersion();
-    if (_hasRequestedVersion) {
-      int _requestedVersionOrZero = idref.requestedVersionOrZero();
-      TypeRef _resolveVersion = this.versionResolver.<TypeRef>resolveVersion(T, _requestedVersionOrZero);
-      T = _resolveVersion;
-    }
+    TypeRef _resolveVersion = this.versionResolver.<TypeRef>resolveVersion(T, idref);
+    T = _resolveVersion;
     if (((idref.eContainer() instanceof ParameterizedCallExpression) && (idref.eContainmentFeature() == N4JSPackage.eINSTANCE.getParameterizedCallExpression_Target()))) {
       final TMethod callableCtorFunction = this.typeSystemHelper.getCallableClassConstructorFunction(G, T);
       if ((callableCtorFunction != null)) {
@@ -2250,7 +2239,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleTypePropertyAccessExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final ParameterizedPropertyAccessExpression expr) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    /* { T = env(G, GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, TypeRef) } or { val G2 = G.wrap G2.add(GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, G2.anyTypeRef) G2 |- expr.target : var TypeRef receiverTypeRef typeSystemHelper.addSubstitutions(G2,receiverTypeRef) G2.addThisType(receiverTypeRef) if (! (receiverTypeRef instanceof UnknownTypeRef) && (expr.target instanceof SuperLiteral || expr.target instanceof ThisLiteral) ) { var containingClass = EcoreUtil2.getContainerOfType(expr,N4ClassDeclaration)?.definedType; if (containingClass instanceof TClass) { if (containingClass.isStaticPolyfill) { containingClass = containingClass.superClassRef?.declaredType } if (containingClass instanceof TClass) { if (containingClass?.superClassRef!==null) { typeSystemHelper.addSubstitutions(G2, containingClass.superClassRef) } } } } val prop = expr.property; var TypeRef propTypeRef; if(prop instanceof TMethod && (prop as TMethod).isConstructor) { val TypeArgument ctorTypeArg = switch(receiverTypeRef) { TypeTypeRef: G.functionTypeRef ParameterizedTypeRef, BoundThisTypeRef: { val declType = if(receiverTypeRef instanceof BoundThisTypeRef) { receiverTypeRef.actualThisTypeRef?.declaredType } else { receiverTypeRef.declaredType }; val finalCtorSig = if(declType instanceof TClassifier) N4JSLanguageUtils.hasCovariantConstructor(declType); if(finalCtorSig) { declType.ref } else if(declType!==null) { TypeUtils.createWildcardExtends(declType.ref) } else { null } } }; propTypeRef = if(ctorTypeArg!==null) { TypeUtils.createTypeTypeRef(ctorTypeArg, true) } else { TypeRefsFactory.eINSTANCE.createUnknownTypeRef }; } else if(receiverTypeRef.dynamic && expr.property!==null && expr.property.eIsProxy) { propTypeRef = G.anyTypeRefDynamic; } else { G2.wrap |- expr.property : propTypeRef if(expr.parameterized) { typeSystemHelper.addSubstitutions(G2,expr); } } G2 |- propTypeRef ~> T if (receiverTypeRef instanceof ParameterizedTypeRef) { if (receiverTypeRef.hasRequestedVersion) { T = versionResolver.resolveVersion(T, receiverTypeRef.requestedVersionOrZero); } } if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { val F = T as FunctionTypeExprOrRef; if ((T as FunctionTypeExprOrRef).returnTypeRef instanceof BoundThisTypeRef) { var TypeRef rawT; G |~ expr ~> rawT; val thisTypeRef = TypeUtils.enforceNominalTyping(rawT); if (T instanceof FunctionTypeExpression && T.eContainer==null) { val fte = T as FunctionTypeExpression fte.returnTypeRef = TypeUtils.copyIfContained(thisTypeRef); } else { T = TypeUtils.createFunctionTypeExpression(null, F.typeVars, F.fpars, thisTypeRef); } } } } */
+    /* { T = env(G, GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, TypeRef) } or { val G2 = G.wrap G2.add(GUARD_TYPE_PROPERTY_ACCESS_EXPRESSION -> expr, G2.anyTypeRef) G2 |- expr.target : var TypeRef receiverTypeRef typeSystemHelper.addSubstitutions(G2,receiverTypeRef) G2.addThisType(receiverTypeRef) if (! (receiverTypeRef instanceof UnknownTypeRef) && (expr.target instanceof SuperLiteral || expr.target instanceof ThisLiteral) ) { var containingClass = EcoreUtil2.getContainerOfType(expr,N4ClassDeclaration)?.definedType; if (containingClass instanceof TClass) { if (containingClass.isStaticPolyfill) { containingClass = containingClass.superClassRef?.declaredType } if (containingClass instanceof TClass) { if (containingClass?.superClassRef!==null) { typeSystemHelper.addSubstitutions(G2, containingClass.superClassRef) } } } } val prop = expr.property; var TypeRef propTypeRef; if(prop instanceof TMethod && (prop as TMethod).isConstructor) { val TypeArgument ctorTypeArg = switch(receiverTypeRef) { TypeTypeRef: G.functionTypeRef ParameterizedTypeRef, BoundThisTypeRef: { val declType = if(receiverTypeRef instanceof BoundThisTypeRef) { receiverTypeRef.actualThisTypeRef?.declaredType } else { receiverTypeRef.declaredType }; val finalCtorSig = if(declType instanceof TClassifier) N4JSLanguageUtils.hasCovariantConstructor(declType); if(finalCtorSig) { declType.ref } else if(declType!==null) { TypeUtils.createWildcardExtends(declType.ref) } else { null } } }; propTypeRef = if(ctorTypeArg!==null) { TypeUtils.createTypeTypeRef(ctorTypeArg, true) } else { TypeRefsFactory.eINSTANCE.createUnknownTypeRef }; } else if(receiverTypeRef.dynamic && expr.property!==null && expr.property.eIsProxy) { propTypeRef = G.anyTypeRefDynamic; } else { G2.wrap |- expr.property : propTypeRef if(expr.parameterized) { typeSystemHelper.addSubstitutions(G2,expr); } } G2 |- propTypeRef ~> T T = versionResolver.resolveVersion(T, receiverTypeRef); if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { val F = T as FunctionTypeExprOrRef; if ((T as FunctionTypeExprOrRef).returnTypeRef instanceof BoundThisTypeRef) { var TypeRef rawT; G |~ expr ~> rawT; val thisTypeRef = TypeUtils.enforceNominalTyping(rawT); if (T instanceof FunctionTypeExpression && T.eContainer==null) { val fte = T as FunctionTypeExpression fte.returnTypeRef = TypeUtils.copyIfContained(thisTypeRef); } else { T = TypeUtils.createFunctionTypeExpression(null, F.typeVars, F.fpars, thisTypeRef); } } } } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -2393,14 +2382,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         checkAssignableTo(result_2.getFirst(), TypeRef.class);
         T = (TypeRef) result_2.getFirst();
         
-        if ((receiverTypeRef instanceof ParameterizedTypeRef)) {
-          boolean _hasRequestedVersion = ((ParameterizedTypeRef)receiverTypeRef).hasRequestedVersion();
-          if (_hasRequestedVersion) {
-            int _requestedVersionOrZero = ((ParameterizedTypeRef)receiverTypeRef).requestedVersionOrZero();
-            TypeRef _resolveVersion = this.versionResolver.<TypeRef>resolveVersion(T, _requestedVersionOrZero);
-            T = _resolveVersion;
-          }
-        }
+        TypeRef _resolveVersion = this.versionResolver.<TypeRef>resolveVersion(T, receiverTypeRef);
+        T = _resolveVersion;
         if (((expr.getTarget() instanceof SuperLiteral) && (T instanceof FunctionTypeExprOrRef))) {
           final FunctionTypeExprOrRef F = ((FunctionTypeExprOrRef) T);
           TypeRef _returnTypeRef = ((FunctionTypeExprOrRef) T).getReturnTypeRef();
@@ -2521,7 +2504,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     if ((targetTypeRef instanceof FunctionTypeExprOrRef)) {
       final FunctionTypeExprOrRef F = ((FunctionTypeExprOrRef)targetTypeRef);
       final TFunction tFunction = F.getFunctionType();
-      /* { val inferring = env(G, GUARD_TYPE_CALL_EXPRESSION -> expr, TypeRef) G |- inferring ~> T } or { val G2 = G.wrap; G2.add(GUARD_TYPE_CALL_EXPRESSION -> expr, F.returnTypeRef) if(expr.eContainer instanceof AwaitExpression && expr.eContainmentFeature === N4JSPackage.eINSTANCE.getAwaitExpression_Expression() && tFunction!==null && AnnotationDefinition.PROMISIFIABLE.hasAnnotation(tFunction)) { T = promisifyHelper.extractPromisifiedReturnType(expr); } else { T = F.returnTypeRef ?: G.anyTypeRef; } typeSystemHelper.addSubstitutions(G2, expr, targetTypeRef); G2 |- T ~> T if (F instanceof ParameterizedTypeRef) { if (F.hasRequestedVersion) { T = versionResolver.resolveVersion(T, F.requestedVersion.intValue); } } if (T instanceof BoundThisTypeRef && !(expr.receiver instanceof ThisLiteral || expr.receiver instanceof SuperLiteral)) { G2 |~ T /\ T } } */
+      /* { val inferring = env(G, GUARD_TYPE_CALL_EXPRESSION -> expr, TypeRef) G |- inferring ~> T } or { val G2 = G.wrap; G2.add(GUARD_TYPE_CALL_EXPRESSION -> expr, F.returnTypeRef) if(expr.eContainer instanceof AwaitExpression && expr.eContainmentFeature === N4JSPackage.eINSTANCE.getAwaitExpression_Expression() && tFunction!==null && AnnotationDefinition.PROMISIFIABLE.hasAnnotation(tFunction)) { T = promisifyHelper.extractPromisifiedReturnType(expr); } else { T = F.returnTypeRef ?: G.anyTypeRef; } typeSystemHelper.addSubstitutions(G2, expr, targetTypeRef); G2 |- T ~> T T = versionResolver.resolveVersion(T, F); if (T instanceof BoundThisTypeRef && !(expr.receiver instanceof ThisLiteral || expr.receiver instanceof SuperLiteral)) { G2 |~ T /\ T } } */
       {
         RuleFailedException previousFailure = null;
         try {
@@ -2562,15 +2545,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
           checkAssignableTo(result_2.getFirst(), TypeRef.class);
           T = (TypeRef) result_2.getFirst();
           
-          if ((F instanceof ParameterizedTypeRef)) {
-            boolean _hasRequestedVersion = ((ParameterizedTypeRef)F).hasRequestedVersion();
-            if (_hasRequestedVersion) {
-              BigDecimal _requestedVersion = ((ParameterizedTypeRef)F).getRequestedVersion();
-              int _intValue = _requestedVersion.intValue();
-              TypeRef _resolveVersion = this.versionResolver.<TypeRef>resolveVersion(T, _intValue);
-              T = _resolveVersion;
-            }
-          }
+          TypeRef _resolveVersion = this.versionResolver.<TypeRef>resolveVersion(T, F);
+          T = _resolveVersion;
           if (((T instanceof BoundThisTypeRef) && (!((expr.getReceiver() instanceof ThisLiteral) || (expr.getReceiver() instanceof SuperLiteral))))) {
             /* G2 |~ T /\ T */
             Result<TypeRef> result_3 = upperBoundInternal(G2, _trace_, T);

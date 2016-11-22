@@ -334,12 +334,7 @@ rule typeThisKeyword
 from {
 	var TypeRef rawT; G |~ t ~> rawT
 	
-	if (rawT instanceof ParameterizedTypeRef) {
-		if (rawT.hasRequestedVersion) {
-			rawT = versionResolver.resolveVersion(T, rawT.requestedVersionOrZero);
-		}
-	}
-	
+	rawT = versionResolver.resolveVersion(rawT, rawT)
 	T = TypeUtils.enforceNominalTyping(rawT)
 }
 
@@ -411,9 +406,7 @@ rule typeIdentifierRef G |- IdentifierRef idref: TypeRef T
 from  {
 	G |- idref.id : T
 
-	if (idref.hasRequestedVersion) {
-		T = versionResolver.resolveVersion(T, idref.requestedVersionOrZero);
-	}
+	T = versionResolver.resolveVersion(T, idref);
 
 	if(idref.eContainer instanceof ParameterizedCallExpression
 		&& idref.eContainmentFeature===N4JSPackage.eINSTANCE.getParameterizedCallExpression_Target()) {
@@ -766,12 +759,7 @@ from {
 		}
 
 		G2 |- propTypeRef ~> T
-
-		if (receiverTypeRef instanceof ParameterizedTypeRef) {
-			if (receiverTypeRef.hasRequestedVersion) {
-				T = versionResolver.resolveVersion(T, receiverTypeRef.requestedVersionOrZero);
-			}
-		}
+		T = versionResolver.resolveVersion(T, receiverTypeRef);
 
 		if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { // super.foo(): this; cf. GH-95
 			val F = T as FunctionTypeExprOrRef;
@@ -847,12 +835,7 @@ from {
 
 			typeSystemHelper.addSubstitutions(G2, expr, targetTypeRef);
 			G2 |- T ~> T
-
-			if (F instanceof ParameterizedTypeRef) {
-				if (F.hasRequestedVersion) {
-					T = versionResolver.resolveVersion(T, F.requestedVersion.intValue);
-				}
-			}
+			T = versionResolver.resolveVersion(T, F);
 
 			if (T instanceof BoundThisTypeRef && !(expr.receiver instanceof ThisLiteral || expr.receiver instanceof SuperLiteral)) {
 				// we've got something like "this[C]" as return type of a call expression of the form

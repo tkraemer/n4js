@@ -401,12 +401,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		 val type = typeRef.declaredType;
 		 if (type !== null ) {
 		 	 var resultTypeRef = TypeExtensions.ref(type,typeArgs);
-		 	 if (typeRef instanceof ParameterizedTypeRef) {
-		 	 	if (typeRef.hasRequestedVersion) {
-	 	 			resultTypeRef = versionResolver.resolveVersion(resultTypeRef, typeRef.requestedVersion.intValue);
-	 	 		}
-		 	 }
-		 	 return resultTypeRef;
+		 	 return versionResolver.resolveVersion(resultTypeRef, typeRef);
 		 }
 		 return TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
 	 }

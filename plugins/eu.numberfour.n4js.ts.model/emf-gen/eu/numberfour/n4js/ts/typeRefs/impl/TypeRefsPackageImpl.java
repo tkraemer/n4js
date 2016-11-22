@@ -356,7 +356,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getVersionedReference__RequestedVersionOrZero() {
+	public EOperation getVersionedReference__GetRequestedVersionOrZero() {
 		return versionedReferenceEClass.getEOperations().get(1);
 	}
 
@@ -1735,7 +1735,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		versionedReferenceEClass = createEClass(VERSIONED_REFERENCE);
 		createEAttribute(versionedReferenceEClass, VERSIONED_REFERENCE__REQUESTED_VERSION);
 		createEOperation(versionedReferenceEClass, VERSIONED_REFERENCE___HAS_REQUESTED_VERSION);
-		createEOperation(versionedReferenceEClass, VERSIONED_REFERENCE___REQUESTED_VERSION_OR_ZERO);
+		createEOperation(versionedReferenceEClass, VERSIONED_REFERENCE___GET_REQUESTED_VERSION_OR_ZERO);
 
 		typeRefEClass = createEClass(TYPE_REF);
 		createEAttribute(typeRefEClass, TYPE_REF__NULL_MODIFIER);
@@ -1981,7 +1981,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 
 		initEOperation(getVersionedReference__HasRequestedVersion(), theEcorePackage.getEBoolean(), "hasRequestedVersion", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getVersionedReference__RequestedVersionOrZero(), theEcorePackage.getEInt(), "requestedVersionOrZero", 0, 1, !IS_UNIQUE, IS_ORDERED);
+		initEOperation(getVersionedReference__GetRequestedVersionOrZero(), theEcorePackage.getEInt(), "getRequestedVersionOrZero", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(typeRefEClass, TypeRef.class, "TypeRef", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTypeRef_NullModifier(), theTypesPackage.getNullModifier(), "nullModifier", null, 0, 1, TypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -95,7 +95,7 @@ abstract class VersionedReference {
 		return requestedVersion !== null
 	}
 	
-	op int requestedVersionOrZero() {
+	op int getRequestedVersionOrZero() {
 		if (hasRequestedVersion) requestedVersion.intValue else 0
 	}
 }

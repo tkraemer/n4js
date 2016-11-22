@@ -259,7 +259,7 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 	 * @generated
 	 */
 	public int getVersion() {
-		return this.requestedVersionOrZero();
+		return this.getRequestedVersionOrZero();
 	}
 
 	/**
@@ -277,7 +277,7 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int requestedVersionOrZero() {
+	public int getRequestedVersionOrZero() {
 		int _xifexpression = (int) 0;
 		boolean _hasRequestedVersion = this.hasRequestedVersion();
 		if (_hasRequestedVersion) {
@@ -460,7 +460,7 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 		if (baseClass == VersionedReference.class) {
 			switch (baseOperationID) {
 				case TypeRefsPackage.VERSIONED_REFERENCE___HAS_REQUESTED_VERSION: return N4JSPackage.IDENTIFIER_REF___HAS_REQUESTED_VERSION;
-				case TypeRefsPackage.VERSIONED_REFERENCE___REQUESTED_VERSION_OR_ZERO: return N4JSPackage.IDENTIFIER_REF___REQUESTED_VERSION_OR_ZERO;
+				case TypeRefsPackage.VERSIONED_REFERENCE___GET_REQUESTED_VERSION_OR_ZERO: return N4JSPackage.IDENTIFIER_REF___GET_REQUESTED_VERSION_OR_ZERO;
 				default: return -1;
 			}
 		}
@@ -481,8 +481,8 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 				return getVersion();
 			case N4JSPackage.IDENTIFIER_REF___HAS_REQUESTED_VERSION:
 				return hasRequestedVersion();
-			case N4JSPackage.IDENTIFIER_REF___REQUESTED_VERSION_OR_ZERO:
-				return requestedVersionOrZero();
+			case N4JSPackage.IDENTIFIER_REF___GET_REQUESTED_VERSION_OR_ZERO:
+				return getRequestedVersionOrZero();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

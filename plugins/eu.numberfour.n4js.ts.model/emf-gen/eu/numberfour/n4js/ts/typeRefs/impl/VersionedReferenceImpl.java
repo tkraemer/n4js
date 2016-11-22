@@ -113,7 +113,7 @@ public abstract class VersionedReferenceImpl extends ProxyResolvingEObjectImpl i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int requestedVersionOrZero() {
+	public int getRequestedVersionOrZero() {
 		int _xifexpression = (int) 0;
 		boolean _hasRequestedVersion = this.hasRequestedVersion();
 		if (_hasRequestedVersion) {
@@ -194,8 +194,8 @@ public abstract class VersionedReferenceImpl extends ProxyResolvingEObjectImpl i
 		switch (operationID) {
 			case TypeRefsPackage.VERSIONED_REFERENCE___HAS_REQUESTED_VERSION:
 				return hasRequestedVersion();
-			case TypeRefsPackage.VERSIONED_REFERENCE___REQUESTED_VERSION_OR_ZERO:
-				return requestedVersionOrZero();
+			case TypeRefsPackage.VERSIONED_REFERENCE___GET_REQUESTED_VERSION_OR_ZERO:
+				return getRequestedVersionOrZero();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

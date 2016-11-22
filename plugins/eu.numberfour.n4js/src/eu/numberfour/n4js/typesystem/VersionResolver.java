@@ -11,22 +11,63 @@
 package eu.numberfour.n4js.typesystem;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
+import eu.numberfour.n4js.ts.typeRefs.TypeRef;
+import eu.numberfour.n4js.ts.typeRefs.VersionedReference;
 
 /**
  * Strategy for resolving the actual version of a type referenced by a given type reference.
  */
 public interface VersionResolver {
 	/**
-	 * Resolves the version referenced by the given type reference. May return the given type argument or a different
-	 * instance that is assignable to <code>T</code>. Type arguments are also allowed to allow easier use of this
-	 * method.
+	 * Returns a type reference referencing the requested version of the type referenced by the given type reference. If
+	 * the given versioned reference is not actually a subtype of {@link VersionedReference}, the given type reference
+	 * is returned as is.
+	 *
+	 * @see #resolveVersion(TypeArgument, VersionedReference)
 	 *
 	 * @param typeRef
-	 *            the type reference
+	 *            the type reference to resolve
+	 * @param versionedReference
+	 *            the versioned reference to obtain the context version from
+	 * @return a reference to the resolved version of the type
+	 */
+	public default <T extends TypeArgument> T resolveVersion(T typeRef, TypeRef versionedReference) {
+		if (versionedReference instanceof VersionedReference)
+			return resolveVersion(typeRef, (VersionedReference) versionedReference);
+		else
+			return typeRef;
+	}
+
+	/**
+	 * Returns a type reference referencing the requested version of the type referenced by the given type reference. If
+	 * the given versioned reference does not have a requested version, the given type reference is returned as is.
+	 *
+	 * @see #resolveVersion(TypeArgument, int)
+	 *
+	 * @param typeRef
+	 *            the type reference to resolve
+	 * @param versionedReference
+	 *            the versioned reference to obtain the context version from
+	 * @return a reference to the resolved version of the type
+	 */
+	public default <T extends TypeArgument> T resolveVersion(T typeRef, VersionedReference versionedReference) {
+		if (versionedReference.hasRequestedVersion())
+			return resolveVersion(typeRef, versionedReference.getRequestedVersionOrZero());
+		else
+			return typeRef;
+	}
+
+	/**
+	 * Returns a type reference referencing the requested version of the type referenced by the given type reference.
+	 * May return the given type argument or a different instance that is assignable to <code>T</code>. Type arguments
+	 * are also allowed to allow easier use of this method.
+	 *
+	 * @param typeRef
+	 *            the type reference to resolve
 	 * @param contextVersion
 	 *            the context version to use when determining the actual version of the type referenced by the actual
 	 *            parameter
-	 * @return a reference to the resolved version
+	 * @return a reference to the resolved version of the type
 	 */
 	public <T extends TypeArgument> T resolveVersion(T typeRef, int contextVersion);
 }

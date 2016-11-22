@@ -149,13 +149,13 @@ public interface TypeRefsPackage extends EPackage {
 	int VERSIONED_REFERENCE___HAS_REQUESTED_VERSION = 0;
 
 	/**
-	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
+	 * The operation id for the '<em>Get Requested Version Or Zero</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VERSIONED_REFERENCE___REQUESTED_VERSION_OR_ZERO = 1;
+	int VERSIONED_REFERENCE___GET_REQUESTED_VERSION_OR_ZERO = 1;
 
 	/**
 	 * The number of operations of the '<em>Versioned Reference</em>' class.
@@ -3230,13 +3230,13 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF___HAS_REQUESTED_VERSION = BASE_TYPE_REF_OPERATION_COUNT + 0;
 
 	/**
-	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
+	 * The operation id for the '<em>Get Requested Version Or Zero</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF___REQUESTED_VERSION_OR_ZERO = BASE_TYPE_REF_OPERATION_COUNT + 1;
+	int PARAMETERIZED_TYPE_REF___GET_REQUESTED_VERSION_OR_ZERO = BASE_TYPE_REF_OPERATION_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Typing Strategy</em>' operation.
@@ -3682,13 +3682,13 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL___HAS_REQUESTED_VERSION = PARAMETERIZED_TYPE_REF___HAS_REQUESTED_VERSION;
 
 	/**
-	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
+	 * The operation id for the '<em>Get Requested Version Or Zero</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL___REQUESTED_VERSION_OR_ZERO = PARAMETERIZED_TYPE_REF___REQUESTED_VERSION_OR_ZERO;
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL___GET_REQUESTED_VERSION_OR_ZERO = PARAMETERIZED_TYPE_REF___GET_REQUESTED_VERSION_OR_ZERO;
 
 	/**
 	 * The operation id for the '<em>Contains Wildcards</em>' operation.
@@ -5254,13 +5254,13 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_REF___HAS_REQUESTED_VERSION = PARAMETERIZED_TYPE_REF___HAS_REQUESTED_VERSION;
 
 	/**
-	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
+	 * The operation id for the '<em>Get Requested Version Or Zero</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF___REQUESTED_VERSION_OR_ZERO = PARAMETERIZED_TYPE_REF___REQUESTED_VERSION_OR_ZERO;
+	int FUNCTION_TYPE_REF___GET_REQUESTED_VERSION_OR_ZERO = PARAMETERIZED_TYPE_REF___GET_REQUESTED_VERSION_OR_ZERO;
 
 	/**
 	 * The operation id for the '<em>Get Typing Strategy</em>' operation.
@@ -6174,14 +6174,14 @@ public interface TypeRefsPackage extends EPackage {
 	EOperation getVersionedReference__HasRequestedVersion();
 
 	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.VersionedReference#requestedVersionOrZero() <em>Requested Version Or Zero</em>}' operation.
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.VersionedReference#getRequestedVersionOrZero() <em>Get Requested Version Or Zero</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Requested Version Or Zero</em>' operation.
-	 * @see eu.numberfour.n4js.ts.typeRefs.VersionedReference#requestedVersionOrZero()
+	 * @return the meta object for the '<em>Get Requested Version Or Zero</em>' operation.
+	 * @see eu.numberfour.n4js.ts.typeRefs.VersionedReference#getRequestedVersionOrZero()
 	 * @generated
 	 */
-	EOperation getVersionedReference__RequestedVersionOrZero();
+	EOperation getVersionedReference__GetRequestedVersionOrZero();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef <em>Type Ref</em>}'.
@@ -7776,12 +7776,12 @@ public interface TypeRefsPackage extends EPackage {
 		EOperation VERSIONED_REFERENCE___HAS_REQUESTED_VERSION = eINSTANCE.getVersionedReference__HasRequestedVersion();
 
 		/**
-		 * The meta object literal for the '<em><b>Requested Version Or Zero</b></em>' operation.
+		 * The meta object literal for the '<em><b>Get Requested Version Or Zero</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation VERSIONED_REFERENCE___REQUESTED_VERSION_OR_ZERO = eINSTANCE.getVersionedReference__RequestedVersionOrZero();
+		EOperation VERSIONED_REFERENCE___GET_REQUESTED_VERSION_OR_ZERO = eINSTANCE.getVersionedReference__GetRequestedVersionOrZero();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.TypeRefImpl <em>Type Ref</em>}' class.

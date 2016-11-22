@@ -83,10 +83,10 @@ public interface VersionedReference extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model unique="false"
+	 * @model kind="operation" unique="false"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='int _xifexpression = (int) 0;\nboolean _hasRequestedVersion = this.hasRequestedVersion();\nif (_hasRequestedVersion)\n{\n\t<%java.math.BigDecimal%> _requestedVersion = this.getRequestedVersion();\n\t_xifexpression = _requestedVersion.intValue();\n}\nelse\n{\n\t_xifexpression = 0;\n}\nreturn _xifexpression;'"
 	 * @generated
 	 */
-	int requestedVersionOrZero();
+	int getRequestedVersionOrZero();
 
 } // VersionedReference

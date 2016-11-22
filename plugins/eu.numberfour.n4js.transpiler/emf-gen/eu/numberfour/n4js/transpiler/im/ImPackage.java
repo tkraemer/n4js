@@ -627,13 +627,13 @@ public interface ImPackage extends EPackage {
 	int IDENTIFIER_REF_IM___HAS_REQUESTED_VERSION = N4JSPackage.IDENTIFIER_REF___HAS_REQUESTED_VERSION;
 
 	/**
-	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
+	 * The operation id for the '<em>Get Requested Version Or Zero</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF_IM___REQUESTED_VERSION_OR_ZERO = N4JSPackage.IDENTIFIER_REF___REQUESTED_VERSION_OR_ZERO;
+	int IDENTIFIER_REF_IM___GET_REQUESTED_VERSION_OR_ZERO = N4JSPackage.IDENTIFIER_REF___GET_REQUESTED_VERSION_OR_ZERO;
 
 	/**
 	 * The operation id for the '<em>Is Valid Simple Assignment Target</em>' operation.
@@ -1088,13 +1088,13 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_IM___HAS_REQUESTED_VERSION = TypeRefsPackage.PARAMETERIZED_TYPE_REF___HAS_REQUESTED_VERSION;
 
 	/**
-	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
+	 * The operation id for the '<em>Get Requested Version Or Zero</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_IM___REQUESTED_VERSION_OR_ZERO = TypeRefsPackage.PARAMETERIZED_TYPE_REF___REQUESTED_VERSION_OR_ZERO;
+	int PARAMETERIZED_TYPE_REF_IM___GET_REQUESTED_VERSION_OR_ZERO = TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_REQUESTED_VERSION_OR_ZERO;
 
 	/**
 	 * The operation id for the '<em>Get Typing Strategy</em>' operation.
@@ -1485,13 +1485,13 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___HAS_REQUESTED_VERSION = PARAMETERIZED_TYPE_REF_IM___HAS_REQUESTED_VERSION;
 
 	/**
-	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
+	 * The operation id for the '<em>Get Requested Version Or Zero</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___REQUESTED_VERSION_OR_ZERO = PARAMETERIZED_TYPE_REF_IM___REQUESTED_VERSION_OR_ZERO;
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___GET_REQUESTED_VERSION_OR_ZERO = PARAMETERIZED_TYPE_REF_IM___GET_REQUESTED_VERSION_OR_ZERO;
 
 	/**
 	 * The operation id for the '<em>Contains Wildcards</em>' operation.
