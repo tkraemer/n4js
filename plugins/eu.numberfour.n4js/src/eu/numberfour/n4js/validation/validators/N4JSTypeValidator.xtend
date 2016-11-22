@@ -22,6 +22,7 @@ import eu.numberfour.n4js.n4JS.GetterDeclaration
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
+import eu.numberfour.n4js.n4JS.N4JSASTUtils
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
@@ -441,9 +442,21 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		G = newRuleEnvironment(expression);
 
 		val expectedType = ts.expectedTypeIn(G, expression.eContainer, expression);
-
-
 		if (expectedType.value !== null) {
+
+			// for certain problems in single-expression arrow functions, we want a special error message
+			val singleExprArrowFunction = N4JSASTUtils.getContainingSingleExpressionArrowFunction(expression);
+			if (singleExprArrowFunction!==null && TypeUtils.isVoid(inferredType.value)) {
+				if (TypeUtils.isVoid(expectedType.value) || TypeUtils.isOptional(expectedType.value)) {
+					return; // all good
+				}
+				if(singleExprArrowFunction.returnTypeRef===null) { // show specialized error message only if return type of arrow function was inferred (i.e. not declared explicitly)
+					val message = IssueCodes.getMessageForFUN_SINGLE_EXP_LAMBDA_IMPLICIT_RETURN_ALLOWED_UNLESS_VOID();
+					addIssue(message, expression,
+							IssueCodes.FUN_SINGLE_EXP_LAMBDA_IMPLICIT_RETURN_ALLOWED_UNLESS_VOID);
+					return;
+				}
+			}
 
 			internalCheckUseOfUndefinedExpression(G, expression, expectedType.value, inferredType.value);
 
@@ -471,7 +484,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
-	def void internalCheckUseOfUndefinedExpression(RuleEnvironment G, Expression expression, TypeRef expectedTypeRef, TypeRef actualTypeRef) {
+	def private void internalCheckUseOfUndefinedExpression(RuleEnvironment G, Expression expression, TypeRef expectedTypeRef, TypeRef actualTypeRef) {
 		if(TypeUtils.isUndefined(actualTypeRef) && !TypeUtils.isUndefined(expectedTypeRef)) {
 			val parent = expression.eContainer;
 			if(!(parent instanceof ExpressionStatement)

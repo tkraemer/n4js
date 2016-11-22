@@ -10,7 +10,8 @@
  */
 package eu.numberfour.n4js.utils;
 
-import org.codehaus.jackson.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.core.util.DefaultIndenter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 
 /**
  * Custom {@code Jackson} {@link DefaultPrettyPrinter pretty printer} implementation that puts each element of an array
@@ -44,7 +45,7 @@ import org.codehaus.jackson.util.DefaultPrettyPrinter;
 	 * Sole constructor of the pretty printer.
 	 */
 	/* default */ JsonPrettyPrinter() {
-		this._arrayIndenter = new Lf2SpacesIndenter();
+		this._arrayIndenter = new DefaultIndenter(" ", "\n");
 	}
 
 }

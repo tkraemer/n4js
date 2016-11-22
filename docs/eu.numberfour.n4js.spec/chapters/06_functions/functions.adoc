@@ -1,0 +1,1084 @@
+= Functions
+////
+Copyright (c) 2016 NumberFour AG.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+  NumberFour AG - Initial API and implementation
+////
+
+Functions, be they function declarations, expressions or even methods,
+are internally modeled by means of a function type. In this chapter, the
+general function type is described along with its semantics and type
+constraints. Function definitions and expressions are then introduced in
+terms of statements and expressions. Method definitions and special
+usages are described in <<Methods>>
+
+== Function Type
+task:IDE-12[]
+
+A function type is modeled as (see cite:[ECMA11a(S13,p.98)] in ECMAScript.
+
+Function types can be defined by means of;
+
+* A function object (<<Function_Object_Type>>).
+* A function type expression (<<Type_Expressions>>).
+* A function declaration (<<Function_Definition>>).
+* A method declaration (<<Methods>>).
+
+=== Properties
+
+In any case, a function type declares the signature of a function and
+allows validation of calls to that function. A function type has the
+following properties:
+
+``typePars`` ::
+(0-indexed) list of type parameters (i.e. type variables) for generic
+functions.
+
+``fpars`` ::
+(0-indexed) list of formal parameters.
+
+``returnType`` ::
+(possibly inferred) return type (expression) of the function or method.
+
+``name`` ::
+Name of function or method, may be empty or automatically generated (for
+messages).
+
+``body`` ::
+The body of the function, it contains statements math:[$stmts$].
+The body is null if a function type is defined in a type expression, and
+it is the last argument in case of a function object constructor, or the
+content of the function definition body.
+
+Additionally, the following pseudo properties for functions are defined:
+
+``thisTypeRef`` ::
+The this type ref is the type to which the `this`-keyword would be evaluated
+if used inside the function or member. The inference rules are described
+in <<This_Keyword>>.
+
+``fpars`` ::
+List of formal parameters and the this type ref. This is only used for
+sub typing rules. If `this` is not used inside the function, then `any` is set
+instead of the inferred thisTypeRef to allow for more usages. The
+property is computed as follows: +
+math:[\[\begin{aligned}
+    tfpars = \lif & \ \mbox{this is used or explicitly declared}\ \\
+    & \lthen thisTypeRef + fpars \\
+    & \lelse any + fpars
+    \end{aligned}\]]
+
+Parameters (in math:[$pars$]) have the following properties:
+
+`name` ::
+Name of the parameter.
+
+`type` ::
+Type (expression) of the parameter. Note that only parameter types can
+be variadic or optional.
+
+The function definition can be annotated similar to <<Methods>> except that
+the `final` and `abstract` modifiers aren’t supported for function declarations. A function declaration is always final and never abstract. Also, a function has no
+property advice set.
+
+[discrete]
+=== Semantics
+
+//\todo{FunctionRestParameter : ”...” -- semantic (ECMAScript 6)}
+
+.Function Type
+[req,id=IDE-79,version=1]
+--
+Type Given a function type math:[$F$], the following
+constraints must be true:
+
+
+
+1.  Optional parameters must be defined at the end of the (formal)
+parameter list. In particular, an optional parameter must not be
+followed by a non-optional parameter: +
+math:[$F.fpars_i.optional \to \not \exists\ k>i: \lnot F.fpars_k.optvar$]
+2.  Only the last parameter of a method may be defined as variadic
+parameter: +
+math:[$F.fpars_i.variadic \to i = |F.fpars|-1$]
+3.  If a function explicitly defines a return type, the last statement
+of the transitive closure of statements of the body must be a return
+statement:
++
+----
+math:[\[\begin{aligned}    F.typeRef \neq Undefined \to \\
+        & |f.body.stmts|>0 \\
+        & \land f.body.stmts^*_{|f.body.stmts^*|-1} isa\ \lstnfbnf{ReturnStatement}
+        \end{aligned}\]]
+----
+//TODO: fix syntax highlighting
+4.  If a function explicitly defines a return type, all return
+statements must return a type conform to that type:
+math:[\[\begin{aligned}
+        & F.typeRef \neq Undefined \\
+        & \iff \\
+        & \forall r \in F.body.stmts, r\ isa\ \lstnfbnf{ReturnStatement}: \\
+        & r.expr\neq null \land \infType{r.expr.typeRef} <: \infType{F.typeRef}
+        \end{aligned}\]]
+
+--
+
+=== Type Inference [[function-type-inference]]
+
+// TODO - definition title needs comma like so: ".Function Type Conformance, Non-Parameterized"
+// comma currently breaks FOP PDF build, see https://github.numberfour.eu/NumberFour/asciispec/issues/53
+
+.Function Type Conformance Non-Parameterized
+[def]
+--
+For the given non-parameterized function types +
+math:[$F_{left}$] with
+math:[$F_{left}.tfpars=L_0, L_1, ... L_k$] and
+math:[$|F_{left}.typesPars|=0$] +
+math:[$F_{right}$] with
+math:[$F_{right}.tfpars=R_0, R_1, ... R_n$] and
+math:[$|F_{right}.typesPars|=0$], +
+we say math:[$F_{left}$] conforms to math:[$F_{right}$],
+written as math:[$F_{left} <: F_{right}$], if and only if:
+
+* math:[$F_{right}.returnType = \type{void}$] +
+math:[$\lor (F_{left}.returnType = \type{void} \land F_{right}.opt)$] +
+math:[$\lor (F_{left}.returnType <: F_{right}.returnType \land \neg (F_{left}.opt \land \neg F_{right}.opt))$]
+* if math:[$k\leq n$]:
+** math:[$\forall\ i, 1\leq i\leq k: (R_i.opt \to (L_i.opt \lor L_i.var)) \land (R_i.var \to L_i.var)$]
+** math:[$\forall\ i, 1\leq i\leq k: L_i :> R_i$]
+** math:[$L_k.var=true \to \forall\ i, k<i\leq n: L_K :> R_i$]
++
+else (math:[$k>n$]):
+** math:[$\forall\ i, 1\leq i\leq n: (R_i.opt \to (L_i.opt \lor L_i.var)) \land (R_i.var \to L_i.var)$]
+** math:[$\forall\ i, 1\leq i\leq n: L_i :> R_i$]
+** math:[$\forall\ n<i\leq k: L_i.opt \lor L_i.var$]
+** math:[$R_n.var=true \to \forall\ i, n<i\leq k: L_i :> R_n$]
+
+<<cdVarianceFunctionChart>> shows a simple example with the function type conformance relations.
+
+[[cdVarianceFunctionChart]]
+image::fig/cdVarianceFunctionChart.png[title="Function Variance Chart"]
+
+``{function()} $<:$ {function(A)} $<:$ {function(A, A)}`` might be surprising for Java programmers. However, in JavaScript it is
+possible to call a function with any number of arguments independently
+from how many formal parameters the function defines. task:IDE-433[]
+
+If a function does not define a return type, `any` is assumed if at least one
+of the (indirectly) contained return statements contains an expression.
+Otherwise is assumed. This is also true if there is an error due to
+other constraint violations. math:[\[\begin{aligned}
+& \infer{\tee f \lstnfbnf{'('} arglist\ \lstnfbnf{')'}: \type{any}}
+        {binds(f,F)&F.returnType=\NULL & \exists r \in returns(F): r.expression \neq \NULL} \\
+& \infer{\tee f \lstnfbnf{'('} arglist\ \lstnfbnf{')'}: \type{void}}
+        {binds(f,F)&F.returnType=\NULL & \forall r \in returns(F): r.expression \neq \NULL}\end{aligned}\]]
+with math:[\[\begin{aligned}
+& \infer{returns(F): RETS}
+        {\{r \in F.body.statements | \mu(r)=\type{ReturnStatement}\} \cup \bigcup_{s\in F.body.statements} returns(s)} \\
+& \infer{returns(s): RETS}
+        {\{sub \in s.statements | \mu(sub)=\type{ReturnStatement}\} \cup \bigcup_{sub\in s.statements} returns(sub)} \end{aligned}\]]
+--
+
+.Function type conformance
+[example]
+--
+
+The following incomplete snippet demonstrates the usage of two function variables
+math:[$f1$] and math:[$f2$], in which
+math:[$\infType{f2} <: \infType{f1}$] must hold true according to
+the aforementioed constraints. A function `bar` declares a parameter
+math:[$f1$], which is actually a function itself. math:[$f2$]
+is a variable, to which a function expression is a assigned. Function `bar` is
+then called with math:[$f2$] as an argument. Thus, the type of
+math:[$f2$] must be a subtype of the math:[$f1$]’s type.
+
+[source,n4js]
+----
+function bar(f1: {function(A,B):C}) { ... }
+
+var f1: {function(A,B):C} = function(p1,p2){...};
+bar(f1);
+----
+--
+
+The type of can be explicitly set via the annotation.
+
+.Function Subtyping
+[example]
+--
+
+[source]
+----
+function f(): A {..}
+function p(): void {..}
+
+fAny(log: {function():any}) {...}
+fVoid(f: {function():void}) {..}
+fA(g: {function():A}) {...}
+
+fAny(f);    // --> ok       A <: any
+fVoid(f);   // -->error     A !<: void
+fA(f);      // --> ok (easy)    A <: A
+
+fAny(p);    // --> ok       void <: any
+fVoid(p);   // --> ok       void <: void
+fA(p);      // --> error    void !<: A
+----
+--
+
+.Subtyping with function types
+[example]
+--
+If classes A, B, and C are defined as previously mentioned
+(math:[$C <: B <: A$])
+
+The following subtyping relations with function types are to be
+evaluated as follows:
+
+[source]
+----
+{function():void} <: {function():void}              -> true
+{function(A):A} <: {function(A):A}                  -> true
+{function(A):void} <: {function(B):void}            -> true
+{function():B} <: {function():A}                    -> true
+{function(A):B} <: {function(B):A}                  -> true
+{function(A):A} <: {function(B):void}               -> true (!)
+{function(A):A} <: {function(B):any}                -> true
+{function(A):A} <: {function(B)}                    -> true
+{function(A):void} <: {function(B):any}             -> false (!)
+{function(A):void} <: {function(B)}                 -> true
+{function(A):void} <: {function(B):A}               -> false
+----
+
+
+
+The following examples demonstrate the effect of optional and variadic
+parameters:
+
+[source]
+----
+{function(A)} <: {function(B)}                      -> true
+{function(A...)} <: {function(A)}                   -> true
+{function(A, A)} <: {function(A)}                   -> false
+{function(A)} <: {function(A,A)}                    -> true (!)
+{function(A, A...)} <: {function(A)}                -> true
+{function(A)} <: {function(A,A...)}                 -> true (!)
+{function(A, A...)} <: {function(B)}                -> true
+{function(A?)} <: {function(A?)}                    -> true
+{function(A...)} <: {function(A...)}                -> true
+{function(A?)} <: {function(A)}                     -> true
+{function(A)} <: {function(A?)}                     -> false
+{function(A...)} <: {function(A?)}                  -> true
+{function(A?)} <: {function(A...)}                  -> true (!)
+{function(A,A...)} <: {function(A...)}              -> false
+{function(A,A?)} <: {function(A...)}                -> false
+{function(A?,A...)} <: {function(A...)}             -> true
+{function(A...)} <: {function(A?,A...)}             -> true
+{function(A...)} <: {function(A?)}                  -> true
+{function(A?,A?)} <: {function(A...)}               -> true (!)
+{function(A?,A?,A?)} <: {function(A...)}            -> true (!)
+{function(A?)} <: {function()}                      -> true (!)
+{function(A...)} <: {function()}                    -> true (!)
+----
+
+The following examples demonstrate the effect of optional return types:
+
+[source]
+----
+{function():void} <: {function():void}              -> true
+{function():X}    <: {function():void}              -> true
+{function():X?}   <: {function():void}              -> true
+{function():void} <: {function():Y}                 -> false
+{function():X}    <: {function():Y}                 -> X <: Y
+{function():X?}   <: {function():Y}                 -> false (!)
+{function():void} <: {function():Y?}                -> true (!)
+{function():X}    <: {function():Y?}                -> X <: Y
+{function():X?}   <: {function():Y?}                -> X <: Y
+----
+
+The following examples show the effect of the annotation:
+
+[source]
+----
+{@This(A) function():void} <: {@This(X) function():void}    -> false
+{@This(B) function():void} <: {@This(A) function():void}    -> false
+{@This(A) function():void} <: {@This(B) function():void}    -> true
+{@This(any) function():void} <: {@This(X) function():void}  -> true
+{function():void} <: {@This(X) function():void}             -> true
+{@This(A) function():void} <: {@This(any) function():void}  -> false
+{@This(A) function():void} <: {function():void}             -> false
+----
+--
+
+
+.Function Type Conformance
+[def]
+--
+For the given function types +
+math:[$F_{left}$] with
+math:[$F_{left}.tfpars=L_0, L_1, ... L_k$] +
+math:[$F_{right}$] with
+math:[$F_{right}.tfpars=R_0, R_1, ... R_n$], +
+we say math:[$F_{left}$] conforms to math:[$F_{right}$],
+written as math:[$F_{left} <: F_{right}$], if and only if:
+
+* if math:[$|F_{left}.typePars|=|F_{right}.typePars|=0$]:
+** math:[$F_{left} <: F_{right}$]
+(cf. <<def:Function_Type_Conformance_NonParameterized>>)
+* else if
+math:[$|F_{left}.typePars|>0 \land |F_{right}.typePars|=0$]:
+** math:[$\exists \typeSubs: ( \typeEnvAdd \typeSubs ) \entails F_{left} <: F_{right}$]
+(cf. <<def:Function_Type_Conformance_NonParameterized>>)
++
+(i.e. there exists a substitution math:[$\typeSubs$] of type
+variables in math:[$F_{left}$] so that after substitution it
+becomes a subtype of math:[$F_{right}$] as defined by
+<<def:Function_Type_Conformance_NonParameterized>>)
+* else if math:[$|F_{left}.typePars|=|F_{right}.typePars|$]:
+** math:[$\typeEnvAdd \{ V^r_i \leftarrow V^l_i | 0 \leq i \leq n \} \entails F_{left} <: F_{right}$]
+( accordingly)
+** math:[$\forall 0 \leq i \leq n : \\
+        \intersection{V^l_i.\mathit{upperBounds}} :> \intersection{V^r_i.\mathit{upperBounds}}$]
++
+with math:[$F_{left}.typePars=V^l_0, V^l_1, ... V^l_n$] and
+math:[$F_{right}.typePars=V^r_0, V^r_1, ... V^r_n$] +
+(i.e. we replace each type variable in math:[$F_{right}$] by the
+corresponding type variable at the same index in math:[$F_{left}$]
+and check the constraints from<<def:Function_Type_Conformance_NonParameterized>> as if math:[$F_{left}$] and
+math:[$F_{right}$] were non-parameterized functions and, in
+addition, the upper bounds on the left side need to be supertypes of the
+upper bounds on the right side).
+--
+
+Note that the upper bounds on the left must be supertypes of the
+right-side upper bounds (for similar reasons why types of formal
+parameters on the left are required to be supertypes of the formal
+parameters’ types in ). Where a particular type variable is used, on co-
+or contra-variant position, is not relevant:
+
+.Bounded type variable at co-variant position in function type
+[example]
+--
+
+[source]
+----
+class A {}
+class B extends A {}
+
+class X {
+    <T extends B> m(): T { return null; }
+}
+class Y extends X {
+    @Override
+    <T extends A> m(): T { return null; }
+}
+----
+
+Method `m` in `Y` may return an `A`, thus breaking the contract of m in `X`, but only if it is parameterized to do so, which is not allowed for clients of `X`, only those of `Y`. Therefore, the override in the above example is valid.
+--
+
+The subtype relation for function types is also applied for method
+overriding to ensure that an overriding method’s signature conforms to
+that of the overridden method, see <<req:Overriding_Members>> (applies to
+method comnsumption and implementation accordingly, see
+<<req:Consumption_of_Interface_Members>> and
+<<req:Implementation_of_Interface_Members>>). Note that this is very
+different from Java which is far more restrictive when checking
+overriding methods. As Java also supports method overloading: given two
+types math:[$A, B$] with math:[$B <: A$] and a super class
+method `void m(B param)`, it is valid to override `m` as `void m(A param)` in N4JS but not in Java. In Java this would be handled as method overloading and therefore an `@Override` annotation on `m` would produce an error.
+
+
+.Upper and Lower Bound of a Function Type
+[req,id=IDE-80,version=1]
+--
+The upper bound of a function type math:[$F$] is a function type with the lower bound types of the parameters and the upper bound of the return type:
+math:[\[\begin{aligned} upper(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( lower(P_1),\dots,lower(P_n) ): upper(R)\end{aligned}\]]
+The lower bound of a function type math:[$F$] is a function type
+with the upper bound types of the parameters and the lower bound of the
+return type:
+math:[\[\begin{aligned} lower(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( upper(P_1),\dots,upper(P_n) ): lower(R)\end{aligned}\]]
+
+--
+
+=== Autoboxing of Function Type
+task:IDE-830[]
+
+Function types, compared to other types like String, come only in on
+flavour: the Function object representation. There is no primitive
+function type. Nevertheless, for function type expressions and function
+declarations, it is possible to call the properties of Function object
+directly. This is similar to autoboxing for strings.
+
+.Access of Function properties on functions
+[source]
+----
+// function declaration
+var param: number = function(a,b){}.length // 2
+
+function a(x: number) : number { return x*x; }
+// function reference
+a.length; // 1
+
+// function variable
+var f = function(m,l,b){/*...*/};
+f.length; // 3
+
+class A {
+    s: string;
+    sayS(): string{ return this.s; }
+}
+
+var objA: A = new A();
+objA.s = "A";
+
+var objB = {s:"B"}
+
+// function variable
+var m = objA.sayS; // method as function, detached from objA
+var mA: {function(any)} = m.bind(objA); // bind to objA
+var mB: {function(any)} = m.bind(objB); // bind to objB
+
+m()  // returns: undefined
+mA() // returns: A
+mB() // returns: B
+
+m.call(objA,1,2,3);  // returns: A
+m.apply(objB,[1,2,3]); // returns: B
+m.toString(); // returns: function sayS(){ return this.s; }
+----
+
+=== Arguments Object
+task:IDE-662[]
+
+A special arguments object is defined within the body of a function. It
+is accessible through the implicitly-defined local variable named ,
+unless it is shadowed by a local variable, a formal parameter or a
+function named ``arguments`` or in the rare case that the function
+itself is called ’arguments’ cite:[ECMA11a(S10.5,pp59)]. The argument object has array-like behavior even though it is not of type `array`:
+
+* All actual passed-in parameters of the current execution context can
+be retrieved by math:[$0-based$] index access.
+* The `length` property of the arguments object stores the actual number of
+passed-in arguments which may differ from the number of formally defined
+number of parameters math:[$fpars$] of the containing function.
+* It is possible to store custom values in the arguments object, even
+outside the original index boundaries.
+* All obtained values from the arguments object are of type `any`.
+
+In non-strict ES mode the property holds a reference to the function
+executed cite:[ECMA11a(S10.6,pp61)].
+
+.arguments.callee
+[req,id=IDE-81,version=1]
+--
+
+In N4JS and in ES strict mode the use of `arguments.callee` is
+prohibited.
+--
+
+
+.arguments as formal parameter name
+[req,id=IDE-82,version=1]
+--
+In N4JS, the formal parameters of the function cannot be named `arguments`. This applies to all variable execution environments like field accessors (getter/setter, <<Field_Accessor>>), methods (<<Methods>>) and
+constructors (<<Constructor>>), where `FormalParameter` type is used.
+
+.Usage of arguments object
+[example]
+--
+[source,n4js]
+----
+// regular function
+function a1(s1: string, n2: number) {
+    var l: number = arguments.length;
+    var s: string = arguments[0] as string;
+}
+
+class A {
+    // property access
+    get s(): string { return ""+arguments.length; } // 0
+    set s(n: number) { console.log( arguments.length ); }  // 1
+    // method
+    m(arg: string) {
+        var l: number = arguments.length;
+        var s: string = arguments[0]  as string;
+    }
+}
+
+// property access in object literals
+var x = {
+    a:5,
+    get b(): string {
+        return ""+arguments.length
+    }
+}
+
+// invalid:
+function z(){
+    arguments.length // illegal, see next lines
+    // define arguments to be a plain variable of type number:
+    var arguments: number = 4;
+}
+----
+
+--
+--
+
+== ECMAScript 5 Function Definition
+
+=== Function Declaration
+
+==== Syntax
+
+A function can be defined as described in cite:[ECMA11a(S13,p.98)] and additional annotations can be specified.
+Since N4JS is based on cite:[ECMA15a], the syntax contains constructs not available in cite:[ECMA11a].
+The newer constructs defined only in cite:[ECMA15a] and proposals already implemented in N4JS are described in <<ECMAScript 2015 Function Definition>> and <<ECMAScript Proposals Function Definition>>.
+
+
+In contrast to plain JavaScript, function declarations can be used in
+blocks in N4JSl. This is only true, however, for N4JS files, not for
+plain JS files. task:IDE-1043[]
+
+
+.Syntax Function Declaration and Expression
+[source,n4js]
+----
+FunctionDeclaration <Yield>:
+    => ({FunctionDeclaration}
+        annotations+=Annotation*
+        (declaredModifiers+=N4Modifier)*
+        -> FunctionImpl <Yield,Yield,Expression=false>
+    ) => Semi?
+;
+
+
+fragment AsyncNoTrailingLineBreak *: (declaredAsync?='async' NoLineTerminator)?;
+
+fragment FunctionImpl<Yield, YieldIfGenerator, Expression>*:
+    'function'
+    (
+        generator?='*' FunctionHeader<YieldIfGenerator,Generator=true> FunctionBody<Yield=true,Expression>
+    |   FunctionHeader<Yield,Generator=false> FunctionBody<Yield=false,Expression>
+    )
+;
+
+fragment FunctionHeader<Yield, Generator>*:
+    TypeVariables?
+    name=BindingIdentifier<Yield>?
+    StrictFormalParameters<Yield=Generator>
+    (-> ':' returnTypeRef=TypeRef)?
+;
+
+fragment FunctionBody <Yield, Expression>*:
+        <Expression> body=Block<Yield>
+    |   <!Expression> body=Block<Yield>?
+;
+----
+
+Properties of the function declaration and expression are described in
+in <<Function Type>>.
+
+For this specification, we introduce a supertype
+math:[$FunctionDefinition$] for both,
+math:[$FunctionDeclaration$] and
+math:[$FunctionExpression$]. This supertype contains all common
+properties of these two subtypes, that is, all properties of
+math:[$FunctionExpression$].
+
+.Function Declaration with Type Annotation
+[example]
+--
+[source]
+----
+// plain JS
+function f(p) { return p.length }
+// N4JS
+function f(p: string): number { return p.length }
+----
+
+--
+==== Semantics
+task:IDE-224[]
+
+A function defined in a class’s method (or method modifier) builder is a
+method, see <<Methods>> for details and additional constraints.
+The metatype of a function definition is function type (<<Function Type>>), as a function declaration is only a different syntax for creating a object.
+Constraints for function type are described in <<Function Type>>. Another consequence is that the inferred type of a function definition math:[$fdecl$] is simply its function type
+math:[$F$]. math:[\[\begin{aligned}
+\infer{\infType{F}}{\infType{fdecl}}\end{aligned}\]] Note that the type
+of a function definition is different from its return type
+math:[$f.decl$]!
+
+.Function Declaration only on Top-Level
+[req,id=IDE-83,version=1]
+--
+
+1.  In plain JavaScript, function declarations must only be located on
+top-level, that is they must not be nested in blocks. Since this is
+supported by most JavaScript engines, only a warning is issued.
+
+--
+
+=== Function Expression
+
+A function expression cite:[ECMA11a(S11.2.5)] is quite similar to a function declaration. Thus,
+most details are explained in .
+
+==== Syntax [[function-expression-syntax]]
+
+[source]
+----
+FunctionExpression:
+         ({FunctionExpression}
+            FunctionImpl<Yield=false,YieldIfGenerator=true,Expression=true>
+         )
+;
+----
+
+==== Semantics and Type Inference
+
+In general, the inferred type of a function expression simply is the
+function type as described in <<Function Type>>. Often, the signature of a function
+expression is not explicitly specified but it can be inferred from the
+context. The following context information is used to infer the full
+signature:
+
+* If the function expression is used on the right hand side of an
+assignment, the expected return type can be inferred from the left hand
+side.
+* If the function expression is used as an argument in a call to another
+function, the full signature can be inferred from the corresponding type
+of the formal parameter declaration.
+
+// todo[lb,jvp]{give some examples}
+
+Although the signature of the function expression may be inferred from
+the formal parameter if the function expression is used as argument,
+this inference has some conceptual limitations. This is demonstrated in
+the next example.
+
+.Inference Of Function Expression’s Signature
+[example]
+--
+In general, `{function():any}` is a subtype of `{function():void}` (cf. <<Function Type>>). When the return type of a function
+expression is inferred, this relation is taken into account which may
+lead to unexpected results as shown in the following code snippet:
+
+[source]
+----
+function f(cb: {function():void}) { cb() }
+f(function() { return 1; });
+----
+--
+
+No error is issued: The type of the function expression actually is
+inferred to `{function():any}`, because there is a return statement with an expression.
+It is not inferred to `{function():void}`, even if the formal parameter of `f` suggests that.
+Due to the previously-stated relation `{function():any} <: {function():void}` this is correct – the client (in this
+case function `f`) works perfectly well even if `cb` returns something.
+The contract of arguments states that the type of the argument is a subtype
+of the type of the formal parameter. This is what the inferencer takes
+into account!
+
+== ECMAScript 2015 Function Definition
+
+=== Generator Functions
+
+
+Cf. cite:[ECMA15a(S14.4)], also see cite:[Kuizinas14a]. Syntax supported, semantic and transpilation not
+supported yet.
+
+=== Arrow Function Expression
+task:IDE-252[]
+
+This is an ECMAScript 6 expression (see cite:[ECMA15a(S14.2)]) for simplifying the definition of anonymous function expressions, aka
+lambdas or closures. The ECMAScript Specification calls this a function
+definition even though they may only appear in the context of
+expressions.
+
+Along with Assignments, Arrow function expressions have the least
+precedence, e.g. they serve as the entry point for the expression tree.
+
+Arrow function expressions can be considered syntactic window-dressing
+for old-school function expressions and therefore do not support the
+benefits regarding parameter annotations although parameter types may be
+given explicitly. The return type can be given as type hint if desired,
+but this is not mandatory (if left out, the return type is inferred).
+The notation `pass:[@=>]` stands for an async arrow function (<<Asynchronous Arrow Functions>>).
+
+==== Syntax [[arrow-function-expression-syntax]]
+
+The simplified syntax reads like this:
+
+[source,n4js]
+----
+ArrowExpression returns ArrowFunction:
+    =>(
+        {ArrowFunction}
+        (
+            '('
+                ( fpars+=FormalParameterNoAnnotations ( ',' fpars+=FormalParameterNoAnnotations )* )?
+            ')'
+            (':' returnTypeRef=TypeRef)?
+        |   fpars+=FormalParameterNoType
+        )
+        '=>'
+    ) (
+        (=> hasBracesAroundBody?='{' body=BlockMinusBraces '}') | body=ExpressionDisguisedAsBlock
+    )
+;
+
+FormalParameterNoAnnotations returns FormalParameter:
+    (declaredTypeRef=TypeRef variadic?='...'?)? name=JSIdentifier
+;
+FormalParameterNoType returns FormalParameter: name=JSIdentifier;
+
+BlockMinusBraces returns Block: {Block} statements+=Statement*;
+
+ExpressionDisguisedAsBlock returns Block:
+    {Block} statements+=AssignmentExpressionStatement
+;
+
+AssignmentExpressionStatement returns ExpressionStatement: expression=AssignmentExpression;
+----
+
+==== Semantics and Type Inference [[arrow-function-expression-semantics-and-type-inference]]
+
+Generally speaking, the semantics are very similar to the function
+expressions but the devil’s in the details:
+
+* `arguments`: Unlike normal function expressions, an arrow function does not
+introduce an implicit `arguments` variable (<<Arguments Object>>), therefore any occurrence of it in the arrow function’s body has always the same binding as an occurrence of `arguments` in the lexical context enclosing the arrow function.
+* `this`: An arrow function does not introduce a binding of its own for the `this` keyword. That explains why uses in the body of arrow function have the
+same meaning as occurrences in the enclosing lexical scope. As a
+consequence, an arrow function at the top level has both usages of `arguments` and `this` flagged as error (the outer lexical context doesn’t provide definitions
+for them).
+* `super`: As with function expressions in general, whether of the arrow
+variety or not, the usage of `super` isn’t allowed in the body of arrow
+functions.
+
+.no.this.in.top.level.arrow.function in N4JS Mode
+[req,id=IDE-84,version=1]
+--
+In N4JS, a top-level arrow function can’t refer to `this` as there’s no outer lexical context that provides a binding for it.
+--
+
+.no.arguments.in.top.level.arrow.function
+[req,id=IDE-85,version=1]
+--
+In N4JS, a top-level arrow function can’t include usages of `arguments` in its body, again because of the missing binding for it.
+--
+
+== ECMAScript Proposals Function Definition
+
+=== Asynchronous Functions
+task:IDE-1175[] task:IDE-1593[]
+
+To improve language-level support for asynchronous code, there exists an
+ECMAScript proposal
+footnote:[see http://tc39.github.io/ecmascript-asyncawait/] based on Promises which are provided by ES6 as built-in types.
+N4JS implements this proposal.
+This concept is supported for declared functions and methods (<<Asynchronous_Methods>>) as well
+as for function expressions and arrow functions (<<Asynchronous Arrow Functions>>).
+
+==== Syntax [[asynchronous-functions-syntax]]
+
+The following syntax rules are extracted from the real syntax rules.
+They only display parts relevant to declaring a function or method as
+asynchronous.
+
+[source]
+----
+AsyncFunctionDeclaration <Yield>:
+        (declaredModifiers+=N4Modifier)*
+        declaredAsync?='async' NoLineTerminator 'function'
+        FunctionHeader<Yield,Generator=false>
+        FunctionBody<Yield=false,Expression=false> Semi
+;
+
+AsyncFunctionExpression:
+        declaredAsync?='async' NoLineTerminator 'function'
+        FunctionHeader<Yield=false,Generator=false>
+        FunctionBody<Yield=false,Expression=true>
+;
+
+AsyncArrowExpression <In, Yield>:
+        declaredAsync?='async' NoLineTerminator '('
+            (fpars+=FormalParameter<Yield>
+                (',' fpars+=FormalParameter<Yield>)*)?
+        ')' (':' returnTypeRef=TypeRef)? '=>'
+        (   '{' body=BlockMinusBraces<Yield> '}'
+            | body=ExpressionDisguisedAsBlock<In>
+        )
+;
+
+AsyncMethodDeclaration:
+    annotations+=Annotation+ (declaredModifiers+=N4Modifier)* TypeVariables?
+    declaredAsync?='async' NoLineTerminator LiteralOrComputedPropertyName<Yield>
+    MethodParamsReturnAndBody
+----
+
+’async’ is not a reserved word in ECMAScript and it can therefore be
+used either as an identifier or as a keyword, depending on the context.
+When used as a modifier to declare a function as asynchronous, then
+there must be no line terminator after the `async` modifier. This enables the
+parser to distinguish between using `async` as an identifier reference and a
+keyword, as shown in the next example.
+
+.Async as keyword and identifier
+[example]
+--
+[source,n4js]
+----
+async  // <1>
+function foo() {}
+// vs
+async function bar(); // <2>
+----
+
+<1> In this snippet, the `async` on line 1 is an identifier reference (referencing a
+variable or parameter) and the function defined on line 2 is a
+non-asynchronous function. The automatic semicolon insertion adds a
+semicolon after the reference on line 1.
+<2> In contrast, `async` on line 3 is
+recognized as a modifier declaring the function as asynchronous.
+
+--
+
+==== Semantics [[asynchronous-functions-semantics]]
+
+The basic idea is to make code dealing with Promises easier to write and
+more readable without changing the functionality of Promises. Take this
+example:
+
+[source,n4js]
+.A simple asynchronous function using async/await.
+----
+// some asynchronous legacy API using promises
+interface DB {}
+interface DBAccess {
+    getDataBase(): Promise<DB,?>
+    loadEntry(db: DB, id: string): Promise<string,?>
+}
+
+var access: DBAccess;
+
+// our own function using async/await
+async function loadAddress(id: string) : string {
+    try {
+        var db: DB = await access.getDataBase();
+        var entry: string = await access.loadEntry(db, id);
+        return entry.address;
+    }
+    catch(err) {
+        // either getDataBase() or loadEntry() failed
+        throw err;
+    }
+}
+----
+
+The modifier `async` changes the return type of `loadAddress()` from `string` (the declared return type) to `Promise<string,?>` (the actual return type).
+For code inside the function, the return
+type is still `string`: the value in the return statement of the last line will
+be wrapped in a Promise. For client code outside the function and in
+case of recursive invocations, the return type is `Promise<string,?>`. To raise an error, simply throw an exception, its value will become the error value of the returned Promise.
+
+If the expression after an `await` evaluates to a `Promise`, execution of the enclosing asynchronous function will be suspended until either a success value is available (which will then make the entire await-expession evaluate to
+this success value and continue execution) or until the Promise is
+rejected (which will then cause an exception to be thrown at the
+location of the await-expression).
+If, on the other hand, the expression
+after an `await` evaluates to a non-promise, the value will be simply passed
+through. In addition, a warning is shown to indicate the unnecessary `await`
+epression.
+
+Note how method `loadAddress()` above can be implemented without any explicit references to the built-in type Promise.
+In the above example we handle the errors of the nested asynchronous calls to `getDataBase()` and `loadEntry()` for demonstration purposes only; if we are not interested in the errors we could simply remove the try/catch block and any errors would be forwarded to the caller of `loadAddress()`.
+
+Invoking an async function commonly adopts one of two forms: task:IDEBUG-620[]
+
+* `var p: Promise<successType,?> = asyncFn()`
+* `await asyncFn()`
+
+These patterns are so common that a warning is available whenever both
+
+. `Promise` is omitted as expected type; and
+. `await` is also omitted.
+
+The warning aims at hinting about forgetting to wait for the result, while remaining
+non-noisy.
+
+.Modifier `async` and `await`
+[req,id=IDE-86,version=1]
+--
+1. `async` may be used on declared functions and methods, and for function
+expressions. and arrow functions.
+2.  A function or method math:[$f$] with a declared return type
+math:[$R$] that is declared has an actual return type of `async`.
++
+NOTE: for the time being this applies also to functions with a void
+return type, producing the actual return type `Promise<void,?>` (to be reconsidered).
+3.  Given a function or method math:[$f$] with a declared return
+type math:[$R$] that is declared , all return statements in
+math:[$f$] must have an expression of type math:[$R$] (and not
+of type ).
+4.  `await` can be used in expressions directly enclosed in an async function,
+and behaves like a unary operator with the same precedence as in ES6.
+5.  Given an expression math:[$\mathit{expr}$] of type
+math:[$T$], the type of math:[$($]
+math:[$\mathit{expr} )$] is inferred to math:[$T$] if
+math:[$T$] is not a Promise or it is inferred to math:[$S$] if
+math:[$T$] is a Promise with a success value of type
+math:[$S$], i.e. math:[$T <:$] .
+
+--
+
+=== Asynchronous Arrow Functions
+task:IDE-1494[]
+
+An `await` expression is allowed in the body of an async arrow function but not
+in the body of a non-async arrow function. The semantics here are
+intentional and are in line with similar constraint for function
+expressions.
+
+== N4JS Extended Function Definition
+
+=== Generic Functions
+
+A generic function is a function with a list of generic type parameters.
+These type parameters can be used in the function signature to declare
+the types of formal parameters and the return type. In addition, the
+type parameters can be used in the function body, for example when
+declaring the type of a local variable.
+
+In the following listing, a generic function `foo` is defined that has two
+type parameters `S` and `T`. Thereby `S` is used as to declare the parameter type `Array<S>` and `T` is used as the return type and to construct the returned value in the function body.
+
+
+.Generic Function Definition
+[source,n4js]
+----
+function <S,T> foo(s: Array<S>): T { return new T(s); }
+----
+
+If a generic type parameter is not used as a formal parameter type or
+the return type, a warning is generated.
+
+=== Promisifiable Functions
+task:IDE-2018[]
+
+
+In many existing libraries, which have been developed in
+pre-ES6-promise-API times, callback methods are used for asynchronous
+behavior. An asynchronous function follows the following conventions:
+
+[source,n4js]
+----
+'function' name '(' arbitraryParameters ',' callbackFunction ')'
+----
+
+Usually the function returns nothing (`void`). The callback function usually
+takes two arguments,in which the first is an error object and the other
+is the result value of the asynchronous operation. The callback function
+is called from the asynchronous function, leading to nested function
+calls (aka ’callback hell’).
+
+In order to simplify usage of this pattern, it is possible to mark such
+a function or method as `@Promisifiable`. It is then possible to ’promisify’ an
+invocation of this function or method, which means no callback function
+argument has to be provided and a will be returned. The function or
+method can then be used as if it were declared with `async`. This is
+particularly useful in N4JS definition files (.n4jsd) to allow using an
+existing callback-based API from N4JS code with the more convenient `await`.
+
+.Promisifiable
+[example]
+--
+Given a function with an N4JS signature
+
+[source,n4js]
+----
+f(x: int, cb: {function(Error, string)}): void
+----
+
+This method can be annotated with `Promisifiable` as follows:
+
+[source,n4js]
+----
+@Promisifiable f(x: int, cb: {function(Error, string)}): void
+----
+
+With this annotation, the function can be invoked in four different
+ways:
+
+[source,n4js]
+----
+f(42, function(err, result1) { /* ... */ });            // traditional
+var promise: Promise<string,Error> = @Promisify f(42);  // promise
+var result3: string = await @Promisify f(42);           // long
+var result4: string = await f(42);                      // short
+----
+
+The first line is only provided for completeness and shows that a
+promisifiable function can still be used in the ordinary way by
+providing a callback - no special handling will occur in this case.
+The second line shows how `f` can be promisified using the `@Promisify` annotation - no callback needs to be provided and instead, a `Promise` will be returned.
+We can either use this promise directly or immediately `await` on it, as shown in line 3.
+The syntax shown in line 4 is merely shorthand for `await @Promisify`, i.e. the
+annotation is optional after `await`.
+
+--
+
+.Promisifiable
+[req,id=IDE-87,version=1]
+--
+A function or method math:[$f$] can be annotated with `@Promisifiable` if and only if the following constraints hold:
+
+1.  Last parameter of math:[$f$] is a function (the
+math:[$callback$]).
+2.  The math:[$callback$] has a signature of
+* `{function(E, T0, T1, ..., Tn): V}`, or
+* `{function(T0, T1, ..., Tn): V}`
++
+in which math:[$E$] is type `Error` or a subtype thereof,
+math:[$T_0, ..., T_n$] are arbitrary types except or its subtypes.
+math:[$E$], if given, is then the type of the error value, and
+math:[$T_0, ..., T_n$] are the types of the success values of the
+asynchronous operation. +
+Since the return value of the synchronous function call is not available when using `@Promisify`, math:[$V$] is recommended to be `void`, but it can be any type.
+3.  The callback parameter may be optional.
+footnote:[Even in this case, the function will actually be called with the callback method which is then created by the transpiler. However, the callback is not given in the N4JS code).]
+
+--
+
+According to <<req:Promisifiable>>, a promisifiable function or method may
+or may not have a non-void return type, and that only the first
+parameter of the callback is allowed to be of type `Error`, all other
+parameters must be of other types.
+
+.@Promisify and await with promisifiable functions
+[req,id=IDE-88,version=1]
+--
+A promisifiable function math:[$f$] with one of the two valid
+signatures given in <<req:Promisifiable>> can be promisified with `Promisify` or
+used with `await`, if and only if the following constraints hold:
+
+1.  Function math:[$f$] must be annotated with `@Promisifiable`.
+2.  Using `@Promisify f()` without `await` returns a promise of type `Promise<S,F>` where
+* math:[$S$] is `IterableN<T0,...,Tn>` if math:[$n\geq 2$], `T` if math:[$n=1$], and `void` if math:[$n=0$].
+* math:[$F$] is `E` if given, `void` otherwise.
+3.  Using `await @Promisify f()` returns a value of type `IterableN<T0,...,Tn>` if math:[$n\geq 2$], `T` if math:[$n=1$], and `void` if math:[$n=0$].
+4.  In case of using an `await`, the annotation can be omitted. +
+I.e., `await @Promisify f()` is equivalent to `await f()`.
+5.  Only call expressions using f as target can be promisified, in other
+words this is illegal:
+[source,n4js]
+var pf = @Promisify f; // illegal code!
+
+--

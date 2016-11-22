@@ -13,9 +13,9 @@ package eu.numberfour.n4js.tester;
 import static java.lang.String.valueOf;
 import static java.util.UUID.randomUUID;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.eclipse.core.runtime.Platform;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Supplier;
 import com.google.inject.Inject;
 import com.google.inject.Injector;

@@ -222,5 +222,6 @@ Export-Package: com.jayway.restassured,
  org.hamcrest.text,
  org.hamcrest.xml
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.codehaus.jackson.core;bundle-version="1.6.0",
- org.codehaus.jackson.mapper;bundle-version="1.6.0"
+Require-Bundle: com.fasterxml.jackson.core.jackson-annotations,
+ com.fasterxml.jackson.core.jackson-core,
+ com.fasterxml.jackson.core.jackson-databind
