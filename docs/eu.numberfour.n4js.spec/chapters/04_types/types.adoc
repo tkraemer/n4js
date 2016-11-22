@@ -71,10 +71,10 @@ Note that this declarative definition needs to be specified in detail
 for special cases, such as union and intersection types. Usually, the
 union type of two types is also the join.
 
-<<cdPredefinedTypesHierarchy>> summarizes all predefined types, that is primitive and built-in
-ECMAScript and N4JS types. Specific rules for the subtype relation are
-defined in the following sections. This type hierarchy shows `any` and `undefined` as the
-top and bottom type (cf. cite:[Pierce02a(15.4)]) We define these types here explicitly:
+<<cdPredefinedTypesHierarchy,The Predefined Types Heirarchy figure>> summarizes all predefined types,
+that is primitive and built-in ECMAScript and N4JS types.
+Specific rules for the subtype relation are defined in the following sections.
+This type hierarchy shows `any` and `undefined` as the top and bottom type (cf. cite:[Pierce02a(15.4)]) We define these types here explicitly:
 
 .Top and Bottom Type
 [def]
@@ -83,15 +83,15 @@ We call math:[$Top$]
 the top type, if for all types math:[$T$] the relation
 math:[$T \subtype  Top$] is true. We call math:[$Bot$] the
 bottom type, if for all types math:[$T$] the relation
-math:[$Bot<:T$] is true. In N4JS, math:[$Top=``any}$], the
-bottom type math:[$Bot=``undefined}$].
+math:[$Bot<:T$] is true. In N4JS, math:[$Top=`any}$], the
+bottom type math:[$Bot=`undefined}$].
 --
 
 
 `null` is almost similar to math:[$Bot$], except that it is not a subtype
-of `undefined`. [[cdPredefinedTypesHierarchy]]
+of `undefined`.
 
-
+[[cdPredefinedTypesHierarchy]]
 image:fig/cdPredefinedTypesHierarchy.png[title="Predefined Types Hierarchy"]
 
 For every primitive type there is a corresponding built-in type as
@@ -147,14 +147,14 @@ to specify the type of variables.
 
 === Syntax
 
-<<EBNFTypeExpression>>summarizes the type expression grammar. Depending on the context, not
-all constructs are allowed. For example, the variadic modifier is only allowed for function parameters.
+The listing <<EBNFTypeExpression,EBNF Type Expression>> summarizes the type expression grammar.
+Depending on the context, not all constructs are allowed. For example, the variadic modifier is only allowed for function parameters.
 
-References to user-declared types are expressed via ``ParameterizedTypeRef``.
+References to user-declared types are expressed via `ParameterizedTypeRef`.
 This is also true for non-generic types, as the type arguments are optional.
-See <<Parameterized Types>> for details on that reference.
+See <<__parameterized-types,Parameterized Types>> for details on that reference.
 
-For qualified names and type reference names, see <<qualified_names>>
+For qualified names and type reference names, see <<_qualified-names,Qualified Names>>
 
 The type expressions are usually added to parameter, field, or variable
 declarations as a suffix, separated with colon (’:’). The same is true
@@ -237,7 +237,7 @@ math:[$optvar=var \lor opt$], reflect the facts that a variadic
 parameter is also optional (as its cardinality is math:[$[0..n]).$]
 
 Pseudo property referencing the variable declaration (or expression)
-which ``owns`` the type expression.
+which `owns` the type expression.
 
 === Semantics
 
@@ -266,11 +266,11 @@ be visible in the given scope.
 Predefined Type::
   Predefined types, such as String, Number, or Object; and .
 Array Type::
-  <<Array Object Type>>.
+  <<_array-object-type,Array Object Type>>.
 Function Type::
-  Described in <<../06_funtions/Functions.adoc>>, <<../06_funtions/Functions.adoc#function_type>>.
+  Described in <<functions>>, <<_function_type>>.
 Any Type::
-  <<Any Type>>.
+  <<_any-type,Any Type>>.
 
 [discrete]
 ==== N4Types
@@ -278,16 +278,16 @@ Any Type::
 Declared Type::
   (Unparameterized) Reference to defined class <<Classes>> or enum <<Enums>>.
 Parameterized Type::
-  Parameterized reference to defined generic class or interface; <<Parameterized Types>>.
+  Parameterized reference to defined generic class or interface; <<Parameterized-Types,Parameterized Types>>.
 This Type::
-<<This Type>>.
+<<_this-type,This Type>>.
 Constructor and Type Type::
-  Class type, that is the meta class of a defined class or interface, <<Constructor and Classifier Type>>.
+  Class type, that is the meta class of a defined class or interface, <<_constructor-and-classifier-type,Constructor and Classifier Type>>.
 
 Union Types::
-Union of types, <<Union Type>>.
+Union of types, <<_union-type,Union-Type>>.
 Type Variable::
-Type variable, <<Type Variables>>.
+Type variable, <<_type-variables,Type Variables>>.
 
 Type expressions are used to explicitly declare the type of a variable,
 parameter and return type of a function or method, fields (and object
@@ -348,9 +348,7 @@ declares a generic type. A generic type declares a family of types. The
 type parameters have to be bound with type arguments when referencing a
 generic type.
 
-
 === Type Variables
-
 
 A type variable is an identifier used as a type in the context of a
 generic class definition, generic interface definition or generic method
@@ -503,13 +501,13 @@ the right side: the result is true if and only if the type variable on
 the left has one or more declared upper bounds.
 math:[\[intersection(left.declaredUpperBounds) <: right\]] +
 This is the case for
-math:[\[``(T extends B)} <: ``A}\]] in which T is an
+math:[\[`(T extends B)} <: `A}\]] in which T is an
 unbound type variable and A, B two classes with math:[$B <: A$].
 3.  In all other cases the result is false. +
 This includes cases such as +
-math:[\[``B} <: ``(T extends A)}\]] which is always
+math:[\[`B} <: `(T extends A)}\]] which is always
 false, even if math:[$B <: A$] or +
-math:[\[``(T extends A)} <: ``(S extends B)}\]] which
+math:[\[`(T extends A)} <: `(S extends B)}\]] which
 is always false, even if math:[$A = B$].
 
 We thus obtain the following defintion:
@@ -580,14 +578,14 @@ Typing strategy, by default nominal, see for details
 
 `structuralMembers` ::
 in case of structural typing, reference can add additional members to
-the structural type, see <<Structural Typing>> for details.
+the structural type, see <<_structural-typing,Structural Typing>> for details.
 
 
 *Pseudo Properties:*
 
 `importSpec` ::
 The `ImportSpecifier`, may be null if this is a local type reference. Note that this may
-be a `NamedImportSpecifier`. See <<Import Statement>> for details for details.
+be a `NamedImportSpecifier`. See <<_import-statement,Import Statement>> for details for details.
 
 `moduleWideName` ::
 Returns simple name of type, that is either the simple name as declared,
@@ -645,11 +643,11 @@ purposes. It is not to be confused with the `real` type erasure which
 takes place at runtime, in which almost no types (except primitive
 types) are available.
 
-That is, the type reference in ``var G<string> gs;``
-actually defines a type ``G<string>``, so that
+That is, the type reference in `var G<string> gs;`
+actually defines a type `G<string>`, so that
 math:[$\infTypeNF{gs} = \type{G<string>]. It may reference a type
-defined by a class declaration ``class G<T>``.
-It is important that the type ``G<string>`` is different from ``G<T>``.
+defined by a class declaration `class G<T>`.
+It is important that the type `G<string>` is different from `G<T>`.
 
 If a parameterized type reference math:[$R$] has no type arguments,
 then it is similar to the declared type. That is,
@@ -693,7 +691,7 @@ To avoid problems due to different interpretations, usage of raw types
 is not allowed in N4JS. footnote:[Although raw type usage is prohibited, the N4JS validator interprets raw types according to the first case, which may lead to consequential errors.]
 
 Calls to generic functions and methods can also be parameterized, this
-is described in <<Function_Calls>>. Note that invocation of generic
+is described in <<_function-calls,Function Calls>>. Note that invocation of generic
 functions or methods does not need to be parameterized.
 
 .Type Conformance
@@ -751,10 +749,9 @@ G<? extends A> <: G<?>              -> true
 
 ====
 
-<<cdVarianceChart>> shows the subtype relations of parameterized types (of a single generic type), which can be used as a cheat sheet. [[cdVarianceChart]]
+The figure <<cdVarianceChart>> shows the subtype relations of parameterized types (of a single generic type), which can be used as a cheat sheet.
 
-
-
+[[cdVarianceChart]]
 image::fig/cdVarianceChart.png[title="cdVarianceChart"]
 
 Cheat sheet: subtype relation of parameterized types
@@ -880,13 +877,14 @@ supported.
 In case an upper bound of a type variable shall consist only of a few
 members, it seems convenient to use additional structural members, like
 on interface I2 in the
-example <<ex:Use declared interfaces for lower bounds>> below. However,
+example <<ex:use-declared-interfaces-for-lower-bounds,Use declared interfaces for lower bounds>> below. However,
 type variables must not be constrained using structural types (see
-constraint <<Use_Site_Structural_Typing>>). Hence, the recommended
+constraint <<__use-site-structural-typing,Use-Site Structural Typing>>). Hence, the recommended
 solution is to use an explicitly declared interface that uses definition
 site structural typing for these constraints as an upper bound (see
 interface in the example).
 
+[[ex:use-declared-interfaces-for-lower-bounds]]
 .Use declared interfaces for lower bounds
 [example]
 ====
@@ -949,7 +947,7 @@ Although it is not possible to use `undefined` in a type expression, there are t
 ways of declaring an element as undefined:
 
 * For functions, the return type can be declared `void`, which is almost
-similar to `undefined`, see <<Void Type>>.
+similar to `undefined`, see <<_void-type,Void Type>>.
 * (Local) Variables can be declared as by using the annotation `@Undefined`. This does not only set the type to `undefined`, but also prevents users from assigning a value to this variable. That is, `@Undefined` basically means that the value of the
 variable is constantly set to `undefined`.
 
@@ -988,7 +986,7 @@ Original LaTeX math:
 \infer{\tee \type{null}\ left <: \type{Type} right}{right \neq \type{undefined}} &
 \end{align*}
 ////
-math:[\[\begin{aligned} \infer{\tee ``null}\ left <: ``Type} right}{right \neq `undefined` &\end{aligned}\]]
+math:[\[\begin{aligned} \infer{\tee `null}\ left <: `Type} right}{right \neq `undefined` &\end{aligned}\]]
 
 Please note that
 
@@ -1004,11 +1002,11 @@ for variable declarations. For example in
 var x = null;
 ----
 
-the type of variable `x` is inferred to `any` (cf. <<Var Statement>>).
+the type of variable `x` is inferred to `any` (cf. <<Var-Statement>>).
 
 The type `null` will be inferred to false in a boolean expression.
 
-The call ``typeof null`` will return ’object’.
+The call `typeof null` will return ’object’.
 
 === Primitive Boolean Type
 
@@ -1035,7 +1033,7 @@ var b = false; console.log(b == 0) | prints true
 The type is subtype of :
 math:[\[\begin{aligned} \infer{\type{boolean} <: \type{any}}{}\end{aligned}\]]
 
-Variables of type `boolean` can be auto-converted (coerced) to `Boolean`, as described in <<Auto-Boxing and Coercing>>.
+Variables of type `boolean` can be auto-converted (coerced) to `Boolean`, as described in <<_auto-boxing-and-coercing,Auto-Boxing and Coercing>>.
 
 === Primitive String Type
 
@@ -1059,8 +1057,8 @@ You can handle a primitive `String` like an object type `String` but with these
 exceptions:
 
 *  `typeof "MyString"` is `'string'` but `typeof new String("MyString")` is `'object'`
-*  `"MyString" instanceof String` or ``instanceof Object`` will return ``false``, for ``new String("MyString")`` both checks evaluate to ``true``
-*  ``console.log(eval("2+2"))`` returns ``4``, ``console.log(eval(new String("2+2")))`` returns string ``"2+2"``
+*  `"MyString" instanceof String` or `instanceof Object` will return `false`, for `new String("MyString")` both checks evaluate to `true`
+*  `console.log(eval("2+2"))` returns `4`, `console.log(eval(new String("2+2")))` returns string `"2+2"`
 
 This marks a difference to Java. In JavaScript, Unicode escape sequences
 are never interpreted as a special character.
@@ -1072,26 +1070,26 @@ The `string` type is a subtype of `any`:
 math:[\[\begin{aligned} \infer{\type{string} <: \type{any}}{}\end{aligned}\]]
 
 It is supertype of the N4JS primitive type `pathselector`, and `i18nKey`.
-<<Primitive Pathselector and I18nKey>>
+<<_primitive-pathselector-and-I18nKey,Primitive Pathselector and I18nKey>>
 
 // TODO: xref
-However, variables of type `string` can be auto-converted (coerced) to `string`, as described in <<Autoboxing and coercing>>.
+However, variables of type `string` can be auto-converted (coerced) to `string`, as described in <<_autoboxing-and-coercing,Autoboxing and coercing>>.
 
 === Primitive Number Type
 
 In ECMAScript numbers are usually 64-bit floating point numbers. For
 details see cite:[ECMA11a(8.5)].
-With prefix ``0`` you indicate that the number is octal based and with prefix ``0x`` it is marked as hexadecimal based.
+With prefix `0` you indicate that the number is octal based and with prefix `0x` it is marked as hexadecimal based.
 
-`NaN` can be produced by e.g.  '`0 / 0`’ or ’``1 - x``’. `typeof NaN` will return `number`.
+`NaN` can be produced by e.g.  '`0 / 0`’ or ’`1 - x`’. `typeof NaN` will return `number`.
 
 ==== Semantics [[primitive-number-type-semantics]]
 
 The type `number` is subtype of `any`:
-math:[\[\begin{aligned} \infer{``number} <: ``any}}{} \\\end{aligned}\]]
+math:[\[\begin{aligned} \infer{`number} <: `any}}{} \\\end{aligned}\]]
 
 However, variables of type `number` can be auto-converted (coerced) to `Number`, as
-described in <<Integer Literals>> .
+described in <<Integer-Literals>> .
 //TODO: xref
 
 === Primitive Type int
@@ -1100,9 +1098,10 @@ described in <<Integer Literals>> .
 Actually ECMAScript defines an internal type `int32`. A number of this type is
 returned by the binary or operation using zero as operand, e.g.
 ECMAScript’s internal type int32 can be represented in N4JS by a
-built-in primitive type called `int`. For details on how numeric literals map to types `number` and `int`, refer to <<integer Literals>>.
+built-in primitive type called `int`. For details on how numeric literals map to types `number` and `int`, refer to
+<<integer-Literals>>.
 
-IMPORTANT: for the time being, built-in type `int` is synonymous to type `number`. This means one can be assigned to the other and a value declared to be of type ``int`` may actually be a 64-bit floating point number.
+IMPORTANT: for the time being, built-in type `int` is synonymous to type `number`. This means one can be assigned to the other and a value declared to be of type `int` may actually be a 64-bit floating point number.
 footnote:[The rationale for having this limited implementation of type is that API designers already want to start providing hints where later only 32-bit integers will be used. For the time being, **this is checked neither statically nor at runtime**!]
 
 
@@ -1113,7 +1112,7 @@ footnote:[The rationale for having this limited implementation of type is that A
 
 The primitive type `symbol` is directly as in ECMAScript 6. Support for symbols is kept to a minimum in N4JS. While this primitive type can be used
 without any restrictions, the only value of this type available in N4JS
-is the built-in symbol `Symbol.iterator`. Other built-in symbols from ECMAScript 6 and the creation of new symbols are not supported. For more details, see <<Primitive Symbol Type Object Type>>.
+is the built-in symbol `Symbol.iterator`. Other built-in symbols from ECMAScript 6 and the creation of new symbols are not supported. For more details, see <<Primitive-Symbol-Type-Object-Type>>.
 // TODO: Fix xref
 
 == Primitive N4JS Types
@@ -1136,7 +1135,7 @@ assigned to a variable of type `any`, but a variable declared  `any` can only be
 ==== Semantics [[any-type-semantics]]
 
 `any` is supertype of all other types. That is,
-math:[\[\begin{aligned} \infer{\tee `Type` left \subtype ``any}}{}\end{aligned}\]
+math:[\[\begin{aligned} \infer{\tee `Type` left \subtype `any}}{}\end{aligned}\]
 is an axiom and true for all types.
 
 ==== Type Inference [[any-type-type-inference]]
@@ -1154,7 +1153,7 @@ In that case, the inferred type of that variable will always be `any` as well.
 If an initializer is provided, the declared type of the variable will be
 set to the inferred type of the initializer. Therefore in the latter
 case, the inferred type of the variable will always be the type of the
-initializer (cf. <<Var_Statement>>).
+initializer (cf. <<Var-Statement>>).
 
 If a variable is declared as type , it can be used just as every
 variable can be used in raw ECMAScript. Since every property can be get
@@ -1163,7 +1162,7 @@ formally expressed in <<Identifier>>.
 
 === Void Type
 
-The type `void` is the type returned by the ECMAScript `void` operator (see <<Unary Expressions>>), which is similar to `undefined`. However, the type `undefined` cannot be expressed explicitly in type
+The type `void` is the type returned by the ECMAScript `void` operator (see <<Unary-Expressions>>), which is similar to `undefined`. However, the type `undefined` cannot be expressed explicitly in type
 expressions. Instead, it is possible to declare the return type of a
 function or method as `void` in order to state that the function does not return anything.
 
@@ -1213,7 +1212,7 @@ types are, in fact, translated to strings and do not add any new
 functionality. They are solely defined for enabling additional
 validation.
 
-* ``pathSelector<T>}`` is a generic type for specifying path selector expressions. PathSelectors are used to specify a path to a property in a (JSON-like) model tree.
+* `pathSelector<T>}` is a generic type for specifying path selector expressions. PathSelectors are used to specify a path to a property in a (JSON-like) model tree.
 * The type variable defines the context type (or type of the
 root of the tree) in which the selector is to be validated. A path
 selector is defined as a string literal that has to conform to the path
@@ -1233,7 +1232,7 @@ project depending on it.
 
 ==== Semantics [[pathselector-semantics]]
 
-The N4JS primitive types ``i18nKey`` and `pathSelector<T>` are basically only marker types of strings
+The N4JS primitive types `i18nKey` and `pathSelector<T>` are basically only marker types of strings
 for enabling additional validation. Thus, they are completely
 interchangeable with string types:
 math:[\[\begin{aligned}\infer{\type{i18nKey} <: \type{string}}{}             && \infer{\type{string} <: \type{i18nKey}}{}        \\
@@ -1260,16 +1259,16 @@ required by certain expressions.
 // TODO: Fix Section
 
 *  `Object`   cite:[ECMA11a(p111)];
-*  ``Function``  cite:[ECMA11a(p117)]; representing functions and function objects <<Function_Type>> but also methods  (<<methods>>)
-*  ``Array``    cite:[ECMA11a(1p122)], representing array objects, see <<Array Object Type>>
+*  `Function`  cite:[ECMA11a(p117)]; representing functions and function objects <<Function_Type>> but also methods  (<<methods>>)
+*  `Array`    cite:[ECMA11a(1p122)], representing array objects, see <<Array Object Type>>
 *  `String` cite:[ECMA11a(p141)]
-*  ``Boolean`` cite:[ECMA11a(p141)]
-*  ``Number`` cite:[ECMA11a(p141)]
-*  ``RegExp`` cite:[ECMA11a(p180)]; they can be constructed by means of special literals (cf. <<Literals>>)
+*  `Boolean` cite:[ECMA11a(p141)]
+*  `Number` cite:[ECMA11a(p141)]
+*  `RegExp` cite:[ECMA11a(p180)]; they can be constructed by means of special literals (cf. <<Literals>>)
 *  global object type
-*  ``Symbol``
-*  ``Promise``
-*  ``Iterator`` and ``Iterable``
+*  `Symbol`
+*  `Promise`
+*  `Iterator` and `Iterable`
 
 All other ECMAScript types (cite:[ECMA11a(S15)], such as `Math`, `Date`, or `Error` are supported by means of predefined classes.
 ECMAScript 2015 types are defined in the ECMAScript
@@ -1280,7 +1279,7 @@ These predefined objects are kind of subtypes of .
 === Semantics [[ECMAScript-objects-semantics]]
 
 It is not possible to inherit from any of the built-in ECMAScript object
-types except for `Object` and ``Error``, that is, to use one of these types as supertype
+types except for `Object` and `Error`, that is, to use one of these types as supertype
 of a class. From the N4JS language’s point of view, these built-in types
 are all final.
 
@@ -1288,30 +1287,30 @@ are all final.
 
 `Object` cite:[ECMA11a(S8.6)] is the (implicit) supertype of all declared (i.e., non-primtive) types, including native types.
 It models the ECMAScript type `Object`, except that no properties may be dynamically added to it.
-In order to declare a variable to which properties can be dynamically added, the type ``Object+`` has to be declared (cf. <<Type Modifiers>>).
+In order to declare a variable to which properties can be dynamically added, the type `Object+` has to be declared
+(cf. <<Type-Modifiers>>).
 
-=== Function Object Type
+=== Function-Object-Type
 
 The built-in object type `Function`, a subtype of `Object`, represents all functions, regardless of how they are defined (either via function expression,
 function declaration, or method declaration).
-They are described in detail in <<Function Object Type>>.
+They are described in detail in <<Function-Object-Type>>.
 
-Since ``Function`` is the supertype of all functions regardless of number and types
+Since `Function` is the supertype of all functions regardless of number and types
 of formal parameters, return type, and number and bounds of type
-parameters, it would not normally be possible to invoke an instance of ``Function``.
-For the time being, however, an instance of ``Function`` can be invoked, any number
+parameters, it would not normally be possible to invoke an instance of `Function`.
+For the time being, however, an instance of `Function` can be invoked, any number
 of arguments may be provided and the invocation may be parameterized
 with any number of type arguments (which will be ignored), i.e. 
-<<Function_Call_Constraints>> and
-<<Parameterized_Function_Call_Constraints>> do not apply.
+<<Function-Call-Constraints>> and <<Parameterized-Function-Call-Constraints>> do not apply.
 //TODO: link requirements
 
 === Array Object Type
 
-The ``Array`` type is generic with one type parameter,
+The `Array` type is generic with one type parameter,
 which is the item type. An array is accessed with the index operator,
-the type of the index parameter is ``Number``. The type of the stored values is
-_typeArgs[0]_ (cf. <<Array_Literal>>). Due to type erasure, the item type is not
+the type of the index parameter is `Number`. The type of the stored values is
+_typeArgs[0]_ (cf. <<Array-Literal>>). Due to type erasure, the item type is not
 available during runtime, that is to say there are no reflective methods
 returning the item type of an array.
 
@@ -1431,7 +1430,7 @@ subtype of `Object`.
 ==== Semantics [[N4Object-semantics]]
 
 math:[\[\begin{aligned}
-\infer{``N4Object`` <: `Object`}{}\end{aligned}\]]
+\infer{`N4Object` <: `Object`}{}\end{aligned}\]]
 
 === N4Class
 
@@ -1492,7 +1491,7 @@ optional parameter also has to be optional or variadic.
 
 An optional return type indicates that the function / method need not be
 left via a return statement with an expression; in that case the return
-value is `undefined`. For constraints on using the optional modifier, see <<Function Object Type>>.
+value is `undefined`. For constraints on using the optional modifier, see <<Function-Object-Type>>.
 
 // TODO : {The optional modifier will be replaced with the default argument concept.}
 
@@ -1520,11 +1519,11 @@ math:[$...Type$], but not math:[$...Type=$]
 
 
 Declaring a variadic method parameter of type math:[$T$] causes the
-type of the method parameter to become ``Array<T>``. That is, declaring `function(string ...tags)` causes `tags` to be
+type of the method parameter to become `Array<T>`. That is, declaring `function(string ...tags)` causes `tags` to be
 an `Array<string>` and not just a scalar `string` value.
 
 To make this work at runtime, the compiler will generate code that
-constructs the ``method parameter`` from the `arguments` parameter explicitly passed to the function.
+constructs the `method parameter` from the `arguments` parameter explicitly passed to the function.
 
 .Variadic at Runtime
 [req,id=IDE-17,version=1]
@@ -1536,7 +1535,7 @@ This must be true even if preceding parameters are optionally and not
 arguments are passed at runtime.
 --
 
-For more constraints on using the variadic modifier, see <<Function Object Type>>.
+For more constraints on using the variadic modifier, see <<Function-Object-Type>>.
 
 == Union and Intersection Type (Composed Types)
 
@@ -1638,9 +1637,9 @@ math:[\[\begin{aligned}
 * Simplification of union type with undefined or null: Since undefined
 is the bottom type, and null is kind of a second button type, they are
 removed from the union: math:[\[\begin{aligned}
-    \infer{\union{T_1,\dots,T_{k-1},``undefined},T_k,\dots,T_n}}
+    \infer{\union{T_1,\dots,T_{k-1},`undefined},T_k,\dots,T_n}}
           {\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}} \\
-    \infer{\union{T_1,\dots,T_{k-1},``null},T_k,\dots,T_n}}
+    \infer{\union{T_1,\dots,T_{k-1},`null},T_k,\dots,T_n}}
           {\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}} \\
     \end{aligned}\]] Note that the simplification rules for union types
 with one element are applied first.
@@ -1661,9 +1660,9 @@ equivalent, however: math:[$A <:= U$] and
 math:[$U <:= A$].
 
 footnote:[This is different from Ceylon ( cite:[King13a(3.2.3)]), in
-which the union is defined to be ``the same type as`` math:[$A$].
-Although the meaning of ``same`` is not clear, it is possibly used as a
-synonym for ``equivalent``.]
+which the union is defined to be `the same type as` math:[$A$].
+Although the meaning of `same` is not clear, it is possibly used as a
+synonym for `equivalent`.]
 
 .Subtyping with union type
 [example]
@@ -1671,7 +1670,7 @@ synonym for ``equivalent``.]
 Let A, B, and C be defined as in the chapter beginning (math:[$C <: B <: A$])
 
 The following subtyping relations with union types are to be evaluated
-as follows footnote:[See Example <<Type Examples, Class Hierarchy>> for class definitions.]:
+as follows footnote:[See Example <<ex:Class-Hierarchy>> for class definitions.]:
 
 [source]
 ----
@@ -1717,7 +1716,7 @@ function foo(p: union{A,B}) {..}
 Although `B` is superfluous, it may indicate that the function handles
 parameters of type differently than one of type `A` or `C`.
 
-Although a union type is a ``<<Acronyms,LCST>>`` of its contained (non-superfluous) types, the
+Although a union type is a `<<AC,LCST>>` of its contained (non-superfluous) types, the
 type inferrer usually does not create new union types when computing the
 join of types. If the join of types including at least one union type is
 calculated, the union type is preserved if possible. The same is true
@@ -1733,7 +1732,7 @@ The union of union types is defined similar to the union of sets.
 The union is not simplified, but it contains no duplicates.
 
 If a type A is contained in a union type, then the union type is a
-common supertype, and (since it is the union itself) also the ``<<Acronyms,LCST>>`` of both types.
+common supertype, and (since it is the union itself) also the `<<AC,LCST>>` of both types.
 This finding is the foundation of the definition of join of a (non-union) type with a union type:
 --
 
@@ -1869,7 +1868,7 @@ following conditions must hold:
 1.  The intersection must contain at least one type:
 math:[$I.typeRefs \neq \emptyset$]
 2.  Only one class must be contained in the intersection type: +
-math:[$(\exists C \in I.typeRefs: \mu(C)=``Class}) \to \not\exists T \in I.typeRefs \setminus\{C\}: \mu(T)=``Class}$]
+math:[$(\exists C \in I.typeRefs: \mu(C)=`Class}) \to \not\exists T \in I.typeRefs \setminus\{C\}: \mu(T)=`Class}$]
 +
 For the time being, only a warning is produced when more than one class
 is contained in the intersection type task:IDE-2302[].
@@ -1934,7 +1933,7 @@ Let A, B, and C be defined as in the chapter beginning
 (math:[$C <: B <: A$])
 
 The following subtyping relations with intersection types are to be
-evaluated as follows footnote:[See Example <<Type Examples, Class Hierarchy>> for class definitions.]:
+evaluated as follows footnote:[See Example <<ex:Class-Hierarchy>> for class definitions.]:
 
 [source]
 ----
@@ -2257,13 +2256,13 @@ necessary to access these types directly, for example to access static
 members or for dynamic construction of instances. These two use cases
 are actually slightly different and N4JS provides two different types,
 one for each use case: constructor and classifier type.footnote:[The
-classifier type is, in fact, the ``type type`` or ``metatype`` of a
+classifier type is, in fact, the `type type` or `metatype` of a
 type. We use the term classifier type in the specification to avoid the
-bogus ``type type`` terminology.] The constructor is basically the
+bogus `type type` terminology.] The constructor is basically the
 classifier type with the additional possibility to call it via in order
 to create new instances of the declared type.
 
-Both ``meta`` types are different from Java’s type ``Class<T>``, as the latter has a defined set of members, while the N4JS metatypes will have members
+Both `meta` types are different from Java’s type `Class<T>`, as the latter has a defined set of members, while the N4JS metatypes will have members
 according to a class definition. The concept of constructors as
 metatypes is similar to ECMAScript 2015 cite:[ECMA15a(14.5)]..
 
@@ -2284,15 +2283,15 @@ classifier type .
 2.  The keyword in a static method of a type math:[$T$] actually
 binds to the classifier type .
 3.  The constructor type is a subtype of the classifier type :
-math:[\[\begin{aligned} \forall T: ``constructor\{$T$\}`` <: ``type\{$T$\}`` \end{aligned}\]]
+math:[\[\begin{aligned} \forall T: `constructor\{$T$\}` <: `type\{$T$\}` \end{aligned}\]]
 4.  If a class math:[$B$] is a subtype (subclass) of a class
 math:[$A$], then the classifier type also is a subtype of :
-math:[\[\begin{aligned}\infer{``type\{$B$\}`` <: ``type\{$A$\}``} {B <: A}\end{aligned}\]]
+math:[\[\begin{aligned}\infer{`type\{$B$\}` <: `type\{$A$\}`} {B <: A}\end{aligned}\]]
 5.  If a class math:[$B$] is a subtype (subclass) of a class
 math:[$A$], and if the constructor function of math:[$B$] is a
 subtype of the constructor function of math:[$A$], then the
 classifier type also is a subtype of :
-math:[\[\begin{aligned} \infer{``constructor\{$B$\}`` <: ``constructor\{$A$\``}}{   {B <: A} & {B.ctor <: A.ctor} }\end{aligned}\]]
+math:[\[\begin{aligned} \infer{`constructor\{$B$\}` <: `constructor\{$A$\`}}{   {B <: A} & {B.ctor <: A.ctor} }\end{aligned}\]]
 The subtype relation of the constructor function is
 defined in . In the case of the default constructor, the type of the
 object literal argument depends on required attributes.
@@ -2407,7 +2406,7 @@ This means we have the constructor function of class `{C}` (but only if is
 non-abstract) or the constructor function of any non-abstract subclass
 of `{C}` with an override compatible signature to that of `{C}`'s constructor
 function.
-2.  having a value of type ``constructor{? extends C}``, we know we have ...
+2.  having a value of type `constructor{? extends C}`, we know we have ...
 * a constructor function of `{C}` or a subclass of `{C}`,
 * that can be used for instantiation (i.e. the represented class is not
 abstract).
@@ -2417,7 +2416,7 @@ constructor function’s signature. However, if `{C}` has a covariant
 constructor, cf. <<Covariant_Constructors>>, we can still conclude that we have an override compatible constructor function to that of `{C}`, because classes with
 covariant constructors enforce all their subclasses to have override
 compatible constructors.
-3.  have a value of type ``type{? extends C}`` or ``type{C}`` (the two types are equivalent), we know we
+3.  have a value of type `type{? extends C}` or `type{C}` (the two types are equivalent), we know we
 have ...
 * an object representing a type (often constructor functions are used
 for this, e.g. in the case of classes, but could also be a plain object,
@@ -2570,6 +2569,7 @@ overridden method), it is not possible to use the type in formal
 parameters but only as return type. The following listing demonstrates
 that problem:
 +
+[source,n4js]
 ----
 class A {
     bar(x: this): void { ... } // error
@@ -2730,14 +2730,14 @@ type rules are defined:
 
 1.  Every enumeration math:[$E$] is a subtype of the base type :
 math:[\[\begin{aligned}
-        \infer{\tee ``type\{E\}} \subtype ``type\{N4Enum\}}}{}
+        \infer{\tee `type\{E\}} \subtype `type\{N4Enum\}}}{}
     \end{aligned}\]]
 2.  Every literal math:[$L$] of an enumeration math:[$E$] is
 of the type of the enumeration: math:[\[\begin{aligned}
         \infer{\tee L: E}{L \in E.literals}
     \end{aligned}\]] That means that every literal is a subtype of :
 math:[\[\begin{aligned}
-        \infer{\tee L \subtype ``N4Enum`` }{L \in E.literals}
+        \infer{\tee L \subtype `N4Enum` }{L \in E.literals}
     \end{aligned}\]]
 3.  Since the implementation of enumerations may vary per runtime, enum
 literals are not objects: math:[\[\begin{aligned}
@@ -2820,7 +2820,7 @@ Literal names have to be unique.
 [req,id=IDE-40,version=1]
 --
 Enum literals are singletons:
-math:[\[\begin{aligned} \forall e_1,e_2, \mu(e_1)=\mu(e_2)=``N4EnumLiteral`` \land \tee e_1 = \tee e_2: e_1``==}e_2 \iff e_1``===}e_2\end{aligned}\]]
+math:[\[\begin{aligned} \forall e_1,e_2, \mu(e_1)=\mu(e_2)=`N4EnumLiteral` \land \tee e_1 = \tee e_2: e_1`==}e_2 \iff e_1`===}e_2\end{aligned}\]]
 
 .Enumeration List
 [example]

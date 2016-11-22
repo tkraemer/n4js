@@ -88,6 +88,8 @@ include::chapters/a02_jsobjects/jsobjects.adoc[leveloffset=+1]
 
 include::chapters/a03_n4jsobjects/n4jsobjects.adoc[leveloffset=+1]
 
+include::acronyms.adoc[leveloffset=+1]
+
 == Bibliography
 
 bibliography::[]

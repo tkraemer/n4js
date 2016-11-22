@@ -18,7 +18,7 @@ the visibility of a declaration by limiting its scope.
 
 _Extensibility_ refers to whether a given type can be subtyped, or in
 the case of members, whether they can be overridden. Access control is a
-prerequisite for extensibility which is further explained in <<N4_Specific_Classifiers>>
+prerequisite for extensibility which is further explained in <<_n4js-specific-classifiers,N4JS Specific Classifiers>>
 
 == Access Control
 task:IDE-84[] task:IDE-556[]
@@ -65,10 +65,10 @@ enum TypeAccessModifier:      project
 ----
 
 If a type is not exported, its visibility is private. If a type has
-declared visibility , it may additionally be marked as internal via the
-annotation . Thus, we have the following set of type access modifiers:
+declared visibility `public`, it may additionally be marked as internal via the
+annotation `@Internal`. Thus, we have the following set of type access modifiers:
 
-math:[ TAM = \(``private`` ``project``, ``public@Internal``, ``public``)]
+TAM = `private` `project` `public@Internal` `public`
 
 That is, in N4JS, only the type access modifiers and are available. The
 redundant modifier serves only documentation purpose and can be
@@ -103,15 +103,16 @@ export public function f2() {}      // public
 The access control levels are defined as listed in .
 
 .Type Access Control
-[cols="^,^,^,^,^"]
+[cols="^m,^,^,^,^"]
 |===
 5+^|*Type Access*
 
 h|Modifier h|Module h| Project h| Vendor h| World
-|``private`` |yes |no |no |no
-|``project`` |yes |yes |no |no
-|``public@Internal`` |yes |yes |yes |no
-|``public`` |yes |yes |yes |yes
+
+|private |yes |no |no |no
+|project |yes |yes |no |no
+|public@Internal |yes |yes |yes |no
+|public |yes |yes |yes |yes
 |===
 
 math:[$TAM$] is a totally ordered set:
@@ -127,15 +128,15 @@ The following constraints for type access modifiers for a given type math:[$T$]
 hold:
 
 * It is an error if math:[$T$] is not exported but defined as
-``project``, ``public`` or
-``public@Internal``.
-* It is an error if an annotation ``@Internal`` is
-present on a module private or ``project`` visible
+`project`, `public` or
+`public@Internal`.
+* It is an error if an annotation `@Internal` is
+present on a module private or `project` visible
 type.
 * The type modifier for all built-in ECMAScript types is
-``public``.
+`public`.
 * The _default modifier_ for user declared exported declarations is
-``project``. That is, this modifier is assumed if no
+`project`. That is, this modifier is assumed if no
 modifier is explicitly specified.
 --
 
@@ -221,7 +222,7 @@ MAM &= \{ & \\
 &\lenum{project}, \lenum{public@Internal}, \lenum{public}\\
 \}
 \end{aligned}\]]
-``protected@Internal`` and ``public@Internal`` are synthesized tags and were
+`protected@Internal` and `public@Internal` are synthesized tags and were
 introduced as shorthand notation for the `@Internal` annotation together with `protected` or `public` access modifiers.
 The modifier is the default one and it can be omitted.
 As with the type access modifiers, not all member access modifiers are
@@ -268,21 +269,20 @@ math:[\[\begin{aligned}
 \lenum{private} < \lenum{project} < \lenum{protected@Internal} < \lenum{protected} < \lenum{public}
 \end{aligned}\]]
 
-<<Member Access Controls>> shows which members are accessible from where.
+<<tab:Member-Access-Controls,Table Member Access Controls>> shows which members are accessible from where.
 
-[[Member Access Controls]]
-
+[[tab:Member-Access-Controls]]
 .Member Access Control
-[cols="<,^,^,^,^,^,^"]
+[cols="<m,^,^,^,^,^,^"]
 |===
 | Access Modifier | Inside Module | Inside Project | Vendor | Vendor Subtypes  | Other Projects |Everywhere
 
-m|private           |yes |no |no |no |no |no
-m|project           |yes |yes |no |no |no |no
-m|protected@Internal|yes |yes |yes |no |no |no
-m|protected         |yes |yes |yes |no |yes |no
-m|public@Internal   |yes |yes |yes |yes |no |no
-m|public            |yes |yes |yes |yes |yes |yes
+|private           |yes |no |no |no |no |no
+|project           |yes |yes |no |no |no |no
+|protected@Internal|yes |yes |yes |no |no |no
+|protected         |yes |yes |yes |no |yes |no
+|public@Internal   |yes |yes |yes |yes |no |no
+|public            |yes |yes |yes |yes |yes |yes
 |===
 
 // TODO Definition
@@ -326,7 +326,7 @@ metatypes, no shadowing etc).
 Formally, we define math:[$\alpha_m$] for a given reference
 math:[$r$] and member declaration math:[$M$] as
 follows:
-footnote:[See <<N4_Specific_Classifiers>> for definitions of metatype properties. Note that math:[$r.receiver$] always refers to a type declaration in the context of an expression as the receiver type of math:[$r$]. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member
+footnote:[See <<_N4-Specific-Classifiers>> for definitions of metatype properties. Note that math:[$r.receiver$] always refers to a type declaration in the context of an expression as the receiver type of math:[$r$]. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member
 declaration.]
 
 footnote:[Note, the Java-like access restriction for members of visibility ``protected`` or ``protected@Internal`` to code that is responsible for the implementation of that object. cite:[Gosling14a(S6.6.2,p.166)]]
@@ -344,7 +344,7 @@ If the type of the arguments is clear from the context, we simply write
 math:[$\alpha(r,M)$] instead of math:[$\alpha_m(r,M)$].
 
 Although private members are accessible inside a module, it is not
-possible to redefine (override etc.) these members (see <<Redefinition_of_Members>>).
+possible to redefine (override etc.) these members (see <<_Redefinition-of-Members>>).
 
 .Default Member Access Modifiers
 [req,id=IDE-4,version=1]
@@ -352,13 +352,13 @@ possible to redefine (override etc.) these members (see <<Redefinition_of_Member
 The following constraints for member access modifiers must hold:
 
 1.  The _default modifier_ for members of user-declared classes is
-``project``.
+`project`.
 2.  The _default modifier_ for members of interfaces is the same as the
 visibility of the interface itself, except for private interfaces. For
 private interfaces, the default modifier for members is
-``project``.
+`project`.
 3.  The modifier for enum literals is always
-``public``.
+`public`.
 4.  Private members of a classifier are visible and accessible within a
 module, i.e. you can access the private method of a class, for instance,
 when the use of the class as receiver is in the same module where the
@@ -674,8 +674,7 @@ all parent non-catch-block environments.
 footnote:[This conflicts with the implicit parameter arguments introduced by the transpiler when wrapping the script/module into a definition function.]
 
 <<fig:forbidden_shadowing>> shows nested lexical environments with named elements declared inside (all named ``x`` here), the forbidden cases are marked with arrows (the
-numbers at the left side refer to the numbers in
-<<req:Forbidden_Shadowing>>.
+numbers at the left side refer to the numbers in <<IDE-8,Forbidden Shadowing>>.
 
 [[fig:forbidden_shadowing]]
 image:fig/shadowing.png[Forbidden shadowing]

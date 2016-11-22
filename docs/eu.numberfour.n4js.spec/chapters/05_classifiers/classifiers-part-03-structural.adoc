@@ -34,7 +34,7 @@ therefore, always a structural subtype of math:[$~T$].
 Sometimes it is convenient to refer only to the fields of a classifier,
 for example when the initial field values are to be provided in a
 variable passed to the constructor. In that case, the type can be
-modified with ``pass:[~~]`` (two tildes). This is only possible on use-site, i.e.
+modified with `pass:[~~]` (two tildes). This is only possible on use-site, i.e.
 on type references. Furthermore, only on the use-site, it is possible to
 consider only either readable or writable or fields by using the
 read-only ``r `` or write-only ``w `` structural field typing. For
@@ -164,11 +164,10 @@ with `C`!
 
 == Use-Site Structural Typing
 
-
 Use-site structural typing offers several typing strategy modifiers to
 define the accessability of public properties of classes and interfaces.
 They can be used e.g. on variable declarations like this: `pass:[var c : ~C]` .
-The table <<tab:Available_Fields_of_Structural_Types>> shows which properties
+The table <<tab:available-fields-of-structural-types>> shows which properties
 of structural types can be accessed in the different type strategies.
 For example, when using the write-only structural strategy (i.e.
 math:[$\tsWoFld X$]), only the writeable fields, can be accessed
@@ -180,10 +179,7 @@ available. The initializer structural typing provides readable fields
 for every writeable field of the references type.
 
 
-[[tab:Available Fields of Structural Types]]
-
-//TODO: Fix table
-
+[[tab:available-fields-of-structural-types]]
 .Available Fields of Structural Types
 [cols="<,^,^,^,^,^"]
 |===
@@ -202,8 +198,9 @@ for every writeable field of the references type.
 
 Multiple structural typing strategies can be nested when there are
 multiple use sites, like in the
-example <<ex:Nested Structural Typing Strategies>> below at the locations
+example <<ex:nested-structural-typing-strategies>> below at the locations
 ST1 and ST2. In the example, the datafield `a.field` has the nested structural
+//TODO: check formatting below
 type `{\tsInitFld A}` and thus the datafield `a.field.df` is
 readable. Nested structural types are evaluated on the fly when doing
 subtype checks.
@@ -211,6 +208,7 @@ subtype checks.
 // todo{Not implemented yet. See GH-12, subtask 2}
 task:GH-12[]
 
+[[ex:nested-structural-typing-strategies]]
 .Nested Structural Typing Strategies
 [example]
 --
@@ -533,7 +531,7 @@ footnote:[This is already constrained by the grammar.]
 --
 
 Note that all members of `N4Object` are excluded. This implies that extended
-reflective features (cf. <<reflection_meta-information>> ) are not available in the context of structural typing. The `instanceof` operator is still working as described in <<Relational_Expression>>, in
+reflective features (cf. <<_reflection-meta-information,Reflection Meta Information>> ) are not available in the context of structural typing. The `instanceof` operator is still working as described in <<_relational-expression,Relational Expression>>, in
 that it can be used to check the type of an instance.
 
 If a type math:[$X$] is a (nominal) subtype of T, it is, of course,
@@ -545,7 +543,7 @@ This is only a shortcut for the type inference defined above.
 [req,id=IDE-77,version=1]
 --
 If a type is structurally typed on both definition and use-site, the rules for
-use-site structural typing (<<req:Use_Site_Structural_Typing>>) are
+use-site structural typing (<<IDE-76,Use-Site Structural Typing>>) are
 applied.
 
 
@@ -896,7 +894,7 @@ It is only possible to add additional members to a type if use-site structural
 typing is used. The following constraints must hold:
 
 1.  For all additional members defined in a structural type reference,
-the constraints for member overriding (<<req:Overriding_Members>>) apply
+the constraints for member overriding (<<IDE-72,requirement Overriding Members>>) apply
 as well.
 2.  All additional members have the access modifier set to
 math:[$\lenum{public}$].
@@ -904,7 +902,7 @@ math:[$\lenum{public}$].
 members.
 
 Additional fields may be declared optional in the same way as fields in
-classes. The rules given in <<Structural Types With Optional Fields>> apply accordingly. Consider the following example:
+classes. The rules given in <<_structural-types-with-optional-fields,Structural Types With Optional Fields>> apply accordingly. Consider the following example:
 
 --
 

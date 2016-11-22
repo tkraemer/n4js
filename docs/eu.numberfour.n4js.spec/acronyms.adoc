@@ -45,7 +45,7 @@ Contributors:
 |EBNF
 |Extended Backus-Naur Form
 |EMF
-|Eclipse Modeling Framework cite:[EMF]
+|Eclipse Modeling Framework ([[EMF,EMF]])
 |FQN
 |Fully Qualified Name
 |GLB
