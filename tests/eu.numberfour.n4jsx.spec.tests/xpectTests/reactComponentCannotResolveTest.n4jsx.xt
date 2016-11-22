@@ -13,5 +13,5 @@ class LowerComponent extends Component<~Object with {whatTextShouldIShow: string
 	}
 }
 
-//XPECT errors --> Couldn't resolve reference to IdentifiableElement 'whatTextShouldIShowBLAH'.
+//XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'whatTextShouldIShowBLAH'." at "whatTextShouldIShowBLAH"
 var c = <LowerComponent whatTextShouldIShowBLAH="Hey wrong"/>

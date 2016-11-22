@@ -17,7 +17,7 @@ function PureFnComponent(props: Props) {
 //XPECT noerrors
 var a = <PureFnComponent myProp="This is my prop"/>
 
-class LowerComponent2 extends Component<~Object with {whatTextShouldIShow: string}, ~Object with {squares: Array<string>}> {
+class LowerComponent extends Component<~Object with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
 	constructor() {
 	    super();
 	    this.state = {
@@ -44,7 +44,7 @@ class MyComponent extends
 	public render() {
 		const constText = "some text";
 		//XPECT noerrors
-		return (<LowerComponent2 whatTextShouldIShow="Hallo">{constText}</LowerComponent>
+		return (<LowerComponent whatTextShouldIShow="Hallo">{constText}</LowerComponent>
 		);
 	}
 }
@@ -55,7 +55,7 @@ class MyHigherLevelComponent extends
 	@Override
 	public render() {
 		let d = this.state.aStateProp;
-		//TODO X_PECT errors --> "Couldn't resolve reference to IdentifiableElement 'simplePropForMyComponent'." at "simplePropForMyComponent"
+		//XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'simplePropForMyComponent'." at "simplePropForMyComponent"
 		return (<MyComponent aProp={5} simplePropForMyComponent={
          (() => {
          	//XPECT noerrors

@@ -76,5 +76,4 @@ public class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 			}
 		}
 	}
-
 }
