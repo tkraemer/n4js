@@ -9,8 +9,8 @@ package eu.numberfour.n4js.n4JS.util;
 
 import eu.numberfour.n4js.n4JS.*;
 
-import eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration;
-import eu.numberfour.n4js.ts.typeRefs.VersionedElement;
+import eu.numberfour.n4js.ts.typeRefs.VersionProvider;
+import eu.numberfour.n4js.ts.typeRefs.VersionedReference;
 
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.TypableElement;
@@ -696,8 +696,8 @@ public class N4JSSwitch<T> extends Switch<T> {
 				T result = caseIdentifierRef(identifierRef);
 				if (result == null) result = casePrimaryExpression(identifierRef);
 				if (result == null) result = caseStrictModeRelevant(identifierRef);
-				if (result == null) result = caseVersionedElement(identifierRef);
-				if (result == null) result = caseElementWithVersionDeclaration(identifierRef);
+				if (result == null) result = caseVersionProvider(identifierRef);
+				if (result == null) result = caseVersionedReference(identifierRef);
 				if (result == null) result = caseExpression(identifierRef);
 				if (result == null) result = caseTypableElement(identifierRef);
 				if (result == null) result = defaultCase(theEObject);
@@ -4061,32 +4061,32 @@ public class N4JSSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Versioned Element</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Version Provider</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Versioned Element</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Version Provider</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseVersionedElement(VersionedElement object) {
+	public T caseVersionProvider(VersionProvider object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Element With Version Declaration</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Versioned Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Element With Version Declaration</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Versioned Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseElementWithVersionDeclaration(ElementWithVersionDeclaration object) {
+	public T caseVersionedReference(VersionedReference object) {
 		return null;
 	}
 

@@ -573,13 +573,13 @@ public interface ImPackage extends EPackage {
 	int IDENTIFIER_REF_IM__STRICT_MODE = N4JSPackage.IDENTIFIER_REF__STRICT_MODE;
 
 	/**
-	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * The feature id for the '<em><b>Requested Version</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF_IM__DECLARED_VERSION = N4JSPackage.IDENTIFIER_REF__DECLARED_VERSION;
+	int IDENTIFIER_REF_IM__REQUESTED_VERSION = N4JSPackage.IDENTIFIER_REF__REQUESTED_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' reference.
@@ -618,22 +618,22 @@ public interface ImPackage extends EPackage {
 	int IDENTIFIER_REF_IM_FEATURE_COUNT = N4JSPackage.IDENTIFIER_REF_FEATURE_COUNT + 1;
 
 	/**
-	 * The operation id for the '<em>Is Has Declared Version</em>' operation.
+	 * The operation id for the '<em>Has Requested Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF_IM___IS_HAS_DECLARED_VERSION = N4JSPackage.IDENTIFIER_REF___IS_HAS_DECLARED_VERSION;
+	int IDENTIFIER_REF_IM___HAS_REQUESTED_VERSION = N4JSPackage.IDENTIFIER_REF___HAS_REQUESTED_VERSION;
 
 	/**
-	 * The operation id for the '<em>Declared Version Or Zero</em>' operation.
+	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF_IM___DECLARED_VERSION_OR_ZERO = N4JSPackage.IDENTIFIER_REF___DECLARED_VERSION_OR_ZERO;
+	int IDENTIFIER_REF_IM___REQUESTED_VERSION_OR_ZERO = N4JSPackage.IDENTIFIER_REF___REQUESTED_VERSION_OR_ZERO;
 
 	/**
 	 * The operation id for the '<em>Is Valid Simple Assignment Target</em>' operation.
@@ -908,13 +908,13 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_IM__DYNAMIC = TypeRefsPackage.PARAMETERIZED_TYPE_REF__DYNAMIC;
 
 	/**
-	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * The feature id for the '<em><b>Requested Version</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_IM__DECLARED_VERSION = TypeRefsPackage.PARAMETERIZED_TYPE_REF__DECLARED_VERSION;
+	int PARAMETERIZED_TYPE_REF_IM__REQUESTED_VERSION = TypeRefsPackage.PARAMETERIZED_TYPE_REF__REQUESTED_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type</b></em>' reference.
@@ -1079,22 +1079,22 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_IM___GET_MODIFIERS_AS_STRING = TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_MODIFIERS_AS_STRING;
 
 	/**
-	 * The operation id for the '<em>Is Has Declared Version</em>' operation.
+	 * The operation id for the '<em>Has Requested Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_IM___IS_HAS_DECLARED_VERSION = TypeRefsPackage.PARAMETERIZED_TYPE_REF___IS_HAS_DECLARED_VERSION;
+	int PARAMETERIZED_TYPE_REF_IM___HAS_REQUESTED_VERSION = TypeRefsPackage.PARAMETERIZED_TYPE_REF___HAS_REQUESTED_VERSION;
 
 	/**
-	 * The operation id for the '<em>Declared Version Or Zero</em>' operation.
+	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_IM___DECLARED_VERSION_OR_ZERO = TypeRefsPackage.PARAMETERIZED_TYPE_REF___DECLARED_VERSION_OR_ZERO;
+	int PARAMETERIZED_TYPE_REF_IM___REQUESTED_VERSION_OR_ZERO = TypeRefsPackage.PARAMETERIZED_TYPE_REF___REQUESTED_VERSION_OR_ZERO;
 
 	/**
 	 * The operation id for the '<em>Get Typing Strategy</em>' operation.
@@ -1278,13 +1278,13 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__DYNAMIC = PARAMETERIZED_TYPE_REF_IM__DYNAMIC;
 
 	/**
-	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * The feature id for the '<em><b>Requested Version</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__DECLARED_VERSION = PARAMETERIZED_TYPE_REF_IM__DECLARED_VERSION;
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__REQUESTED_VERSION = PARAMETERIZED_TYPE_REF_IM__REQUESTED_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type</b></em>' reference.
@@ -1476,22 +1476,22 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___GET_MODIFIERS_AS_STRING = PARAMETERIZED_TYPE_REF_IM___GET_MODIFIERS_AS_STRING;
 
 	/**
-	 * The operation id for the '<em>Is Has Declared Version</em>' operation.
+	 * The operation id for the '<em>Has Requested Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___IS_HAS_DECLARED_VERSION = PARAMETERIZED_TYPE_REF_IM___IS_HAS_DECLARED_VERSION;
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___HAS_REQUESTED_VERSION = PARAMETERIZED_TYPE_REF_IM___HAS_REQUESTED_VERSION;
 
 	/**
-	 * The operation id for the '<em>Declared Version Or Zero</em>' operation.
+	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___DECLARED_VERSION_OR_ZERO = PARAMETERIZED_TYPE_REF_IM___DECLARED_VERSION_OR_ZERO;
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___REQUESTED_VERSION_OR_ZERO = PARAMETERIZED_TYPE_REF_IM___REQUESTED_VERSION_OR_ZERO;
 
 	/**
 	 * The operation id for the '<em>Contains Wildcards</em>' operation.

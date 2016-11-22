@@ -13,7 +13,7 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
-import eu.numberfour.n4js.ts.typeRefs.VersionedElement;
+import eu.numberfour.n4js.ts.typeRefs.VersionProvider;
 
 import eu.numberfour.n4js.ts.types.AnyType;
 import eu.numberfour.n4js.ts.types.NullModifier;
@@ -477,9 +477,9 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
-		if (baseClass == VersionedElement.class) {
+		if (baseClass == VersionProvider.class) {
 			switch (baseOperationID) {
-				case TypeRefsPackage.VERSIONED_ELEMENT___GET_VERSION: return TypeRefsPackage.TYPE_REF___GET_VERSION;
+				case TypeRefsPackage.VERSION_PROVIDER___GET_VERSION: return TypeRefsPackage.TYPE_REF___GET_VERSION;
 				default: return -1;
 			}
 		}

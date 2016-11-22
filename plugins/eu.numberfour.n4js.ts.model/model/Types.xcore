@@ -27,7 +27,6 @@ import com.google.common.collect.Iterables
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefIterable
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
-import eu.numberfour.n4js.ts.typeRefs.VersionedElement
 import eu.numberfour.n4js.ts.types.internal.MemberByNameAndAccessMap
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.utils.EcoreUtilN4
@@ -37,6 +36,7 @@ import java.util.List
 import org.eclipse.emf.ecore.EMap
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
+import eu.numberfour.n4js.ts.typeRefs.VersionProvider
 
 type IterableOfTClassifier wraps Iterable<? extends TClassifier>
 type Variance wraps Variance
@@ -488,7 +488,7 @@ enum MemberAccessModifier {
  * </p>
  */
 //TODO why not abstract (doesn't work when it is abstract, but why?)
-class Type extends TExportableElement, TAnnotableElement, VersionedElement {
+class Type extends TExportableElement, TAnnotableElement, VersionProvider {
 
 	/**
 	 * Returns true if type's implementation is provided by runtime. Default implementation returns true, overridden in user-defined (meta) types.

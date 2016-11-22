@@ -11,7 +11,6 @@ import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration;
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression;
@@ -32,7 +31,8 @@ import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeVariableMapping;
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.VersionedElement;
+import eu.numberfour.n4js.ts.typeRefs.VersionProvider;
+import eu.numberfour.n4js.ts.typeRefs.VersionedReference;
 import eu.numberfour.n4js.ts.typeRefs.Wildcard;
 
 import eu.numberfour.n4js.ts.types.TypesPackage;
@@ -63,14 +63,14 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass elementWithVersionDeclarationEClass = null;
+	private EClass versionProviderEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass versionedElementEClass = null;
+	private EClass versionedReferenceEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -311,8 +311,8 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getElementWithVersionDeclaration() {
-		return elementWithVersionDeclarationEClass;
+	public EClass getVersionProvider() {
+		return versionProviderEClass;
 	}
 
 	/**
@@ -320,8 +320,8 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getElementWithVersionDeclaration_DeclaredVersion() {
-		return (EAttribute)elementWithVersionDeclarationEClass.getEStructuralFeatures().get(0);
+	public EOperation getVersionProvider__GetVersion() {
+		return versionProviderEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -329,8 +329,8 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getElementWithVersionDeclaration__IsHasDeclaredVersion() {
-		return elementWithVersionDeclarationEClass.getEOperations().get(0);
+	public EClass getVersionedReference() {
+		return versionedReferenceEClass;
 	}
 
 	/**
@@ -338,8 +338,8 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getElementWithVersionDeclaration__DeclaredVersionOrZero() {
-		return elementWithVersionDeclarationEClass.getEOperations().get(1);
+	public EAttribute getVersionedReference_RequestedVersion() {
+		return (EAttribute)versionedReferenceEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -347,8 +347,8 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getVersionedElement() {
-		return versionedElementEClass;
+	public EOperation getVersionedReference__HasRequestedVersion() {
+		return versionedReferenceEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -356,8 +356,8 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getVersionedElement__GetVersion() {
-		return versionedElementEClass.getEOperations().get(0);
+	public EOperation getVersionedReference__RequestedVersionOrZero() {
+		return versionedReferenceEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -1729,13 +1729,13 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		isCreated = true;
 
 		// Create classes and their features
-		elementWithVersionDeclarationEClass = createEClass(ELEMENT_WITH_VERSION_DECLARATION);
-		createEAttribute(elementWithVersionDeclarationEClass, ELEMENT_WITH_VERSION_DECLARATION__DECLARED_VERSION);
-		createEOperation(elementWithVersionDeclarationEClass, ELEMENT_WITH_VERSION_DECLARATION___IS_HAS_DECLARED_VERSION);
-		createEOperation(elementWithVersionDeclarationEClass, ELEMENT_WITH_VERSION_DECLARATION___DECLARED_VERSION_OR_ZERO);
+		versionProviderEClass = createEClass(VERSION_PROVIDER);
+		createEOperation(versionProviderEClass, VERSION_PROVIDER___GET_VERSION);
 
-		versionedElementEClass = createEClass(VERSIONED_ELEMENT);
-		createEOperation(versionedElementEClass, VERSIONED_ELEMENT___GET_VERSION);
+		versionedReferenceEClass = createEClass(VERSIONED_REFERENCE);
+		createEAttribute(versionedReferenceEClass, VERSIONED_REFERENCE__REQUESTED_VERSION);
+		createEOperation(versionedReferenceEClass, VERSIONED_REFERENCE___HAS_REQUESTED_VERSION);
+		createEOperation(versionedReferenceEClass, VERSIONED_REFERENCE___REQUESTED_VERSION_OR_ZERO);
 
 		typeRefEClass = createEClass(TYPE_REF);
 		createEAttribute(typeRefEClass, TYPE_REF__NULL_MODIFIER);
@@ -1945,7 +1945,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 
 		// Add supertypes to classes
 		typeRefEClass.getESuperTypes().add(this.getTypeArgument());
-		typeRefEClass.getESuperTypes().add(this.getVersionedElement());
+		typeRefEClass.getESuperTypes().add(this.getVersionProvider());
 		staticBaseTypeRefEClass.getESuperTypes().add(this.getTypeRef());
 		baseTypeRefEClass.getESuperTypes().add(this.getStaticBaseTypeRef());
 		composedTypeRefEClass.getESuperTypes().add(this.getStaticBaseTypeRef());
@@ -1958,7 +1958,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		boundThisTypeRefEClass.getESuperTypes().add(this.getThisTypeRef());
 		boundThisTypeRefEClass.getESuperTypes().add(this.getStructuralTypeRef());
 		parameterizedTypeRefEClass.getESuperTypes().add(this.getBaseTypeRef());
-		parameterizedTypeRefEClass.getESuperTypes().add(this.getElementWithVersionDeclaration());
+		parameterizedTypeRefEClass.getESuperTypes().add(this.getVersionedReference());
 		parameterizedTypeRefStructuralEClass.getESuperTypes().add(this.getParameterizedTypeRef());
 		parameterizedTypeRefStructuralEClass.getESuperTypes().add(this.getStructuralTypeRef());
 		existentialTypeRefEClass.getESuperTypes().add(this.getTypeRef());
@@ -1972,16 +1972,16 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		deferredTypeRefEClass.getESuperTypes().add(this.getTypeRef());
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(elementWithVersionDeclarationEClass, ElementWithVersionDeclaration.class, "ElementWithVersionDeclaration", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getElementWithVersionDeclaration_DeclaredVersion(), theEcorePackage.getEBigDecimal(), "declaredVersion", null, 0, 1, ElementWithVersionDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(versionProviderEClass, VersionProvider.class, "VersionProvider", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEOperation(getElementWithVersionDeclaration__IsHasDeclaredVersion(), theEcorePackage.getEBoolean(), "isHasDeclaredVersion", 0, 1, !IS_UNIQUE, IS_ORDERED);
+		initEOperation(getVersionProvider__GetVersion(), theEcorePackage.getEInt(), "getVersion", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getElementWithVersionDeclaration__DeclaredVersionOrZero(), theEcorePackage.getEInt(), "declaredVersionOrZero", 0, 1, !IS_UNIQUE, IS_ORDERED);
+		initEClass(versionedReferenceEClass, VersionedReference.class, "VersionedReference", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getVersionedReference_RequestedVersion(), theEcorePackage.getEBigDecimal(), "requestedVersion", null, 0, 1, VersionedReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(versionedElementEClass, VersionedElement.class, "VersionedElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEOperation(getVersionedReference__HasRequestedVersion(), theEcorePackage.getEBoolean(), "hasRequestedVersion", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getVersionedElement__GetVersion(), theEcorePackage.getEInt(), "getVersion", 0, 1, !IS_UNIQUE, IS_ORDERED);
+		initEOperation(getVersionedReference__RequestedVersionOrZero(), theEcorePackage.getEInt(), "requestedVersionOrZero", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(typeRefEClass, TypeRef.class, "TypeRef", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTypeRef_NullModifier(), theTypesPackage.getNullModifier(), "nullModifier", null, 0, 1, TypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

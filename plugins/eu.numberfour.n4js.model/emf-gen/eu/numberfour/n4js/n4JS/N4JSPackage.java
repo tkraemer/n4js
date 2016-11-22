@@ -4902,13 +4902,13 @@ public interface N4JSPackage extends EPackage {
 	int IDENTIFIER_REF__STRICT_MODE = PRIMARY_EXPRESSION_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * The feature id for the '<em><b>Requested Version</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF__DECLARED_VERSION = PRIMARY_EXPRESSION_FEATURE_COUNT + 1;
+	int IDENTIFIER_REF__REQUESTED_VERSION = PRIMARY_EXPRESSION_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' reference.
@@ -4938,22 +4938,22 @@ public interface N4JSPackage extends EPackage {
 	int IDENTIFIER_REF_FEATURE_COUNT = PRIMARY_EXPRESSION_FEATURE_COUNT + 4;
 
 	/**
-	 * The operation id for the '<em>Is Has Declared Version</em>' operation.
+	 * The operation id for the '<em>Has Requested Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF___IS_HAS_DECLARED_VERSION = PRIMARY_EXPRESSION_OPERATION_COUNT + 1;
+	int IDENTIFIER_REF___HAS_REQUESTED_VERSION = PRIMARY_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
-	 * The operation id for the '<em>Declared Version Or Zero</em>' operation.
+	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF___DECLARED_VERSION_OR_ZERO = PRIMARY_EXPRESSION_OPERATION_COUNT + 2;
+	int IDENTIFIER_REF___REQUESTED_VERSION_OR_ZERO = PRIMARY_EXPRESSION_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Is Valid Simple Assignment Target</em>' operation.

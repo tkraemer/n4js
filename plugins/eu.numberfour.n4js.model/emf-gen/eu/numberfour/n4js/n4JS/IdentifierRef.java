@@ -7,8 +7,8 @@
  */
 package eu.numberfour.n4js.n4JS;
 
-import eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration;
-import eu.numberfour.n4js.ts.typeRefs.VersionedElement;
+import eu.numberfour.n4js.ts.typeRefs.VersionProvider;
+import eu.numberfour.n4js.ts.typeRefs.VersionedReference;
 
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 
@@ -29,7 +29,7 @@ import eu.numberfour.n4js.ts.types.IdentifiableElement;
  * @model
  * @generated
  */
-public interface IdentifierRef extends PrimaryExpression, StrictModeRelevant, VersionedElement, ElementWithVersionDeclaration {
+public interface IdentifierRef extends PrimaryExpression, StrictModeRelevant, VersionProvider, VersionedReference {
 	/**
 	 * Returns the value of the '<em><b>Id</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -106,7 +106,7 @@ public interface IdentifierRef extends PrimaryExpression, StrictModeRelevant, Ve
 	 * Override VersionedElement#getVersion() to return the declared version.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return this.declaredVersionOrZero();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return this.requestedVersionOrZero();'"
 	 * @generated
 	 */
 	int getVersion();

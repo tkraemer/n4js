@@ -9,7 +9,7 @@ package eu.numberfour.n4js.ts.types.impl;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
-import eu.numberfour.n4js.ts.typeRefs.VersionedElement;
+import eu.numberfour.n4js.ts.typeRefs.VersionProvider;
 
 import eu.numberfour.n4js.ts.types.ArrayLikes;
 import eu.numberfour.n4js.ts.types.TAnnotableElement;
@@ -342,7 +342,7 @@ public class TypeImpl extends TExportableElementImpl implements Type {
 				default: return -1;
 			}
 		}
-		if (baseClass == VersionedElement.class) {
+		if (baseClass == VersionProvider.class) {
 			switch (derivedFeatureID) {
 				default: return -1;
 			}
@@ -363,7 +363,7 @@ public class TypeImpl extends TExportableElementImpl implements Type {
 				default: return -1;
 			}
 		}
-		if (baseClass == VersionedElement.class) {
+		if (baseClass == VersionProvider.class) {
 			switch (baseFeatureID) {
 				default: return -1;
 			}
@@ -383,9 +383,9 @@ public class TypeImpl extends TExportableElementImpl implements Type {
 				default: return -1;
 			}
 		}
-		if (baseClass == VersionedElement.class) {
+		if (baseClass == VersionProvider.class) {
 			switch (baseOperationID) {
-				case TypeRefsPackage.VERSIONED_ELEMENT___GET_VERSION: return TypesPackage.TYPE___GET_VERSION;
+				case TypeRefsPackage.VERSION_PROVIDER___GET_VERSION: return TypesPackage.TYPE___GET_VERSION;
 				default: return -1;
 			}
 		}

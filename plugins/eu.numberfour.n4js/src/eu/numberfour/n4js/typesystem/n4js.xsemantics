@@ -125,7 +125,6 @@ import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.scoping.members.MemberScopingHelper
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
@@ -335,9 +334,9 @@ rule typeThisKeyword
 from {
 	var TypeRef rawT; G |~ t ~> rawT
 	
-	if (rawT instanceof ElementWithVersionDeclaration) {
-		if (rawT.hasDeclaredVersion) {
-			rawT = versionResolver.resolveVersion(T, rawT.declaredVersionOrZero);
+	if (rawT instanceof ParameterizedTypeRef) {
+		if (rawT.hasRequestedVersion) {
+			rawT = versionResolver.resolveVersion(T, rawT.requestedVersionOrZero);
 		}
 	}
 	
@@ -412,8 +411,8 @@ rule typeIdentifierRef G |- IdentifierRef idref: TypeRef T
 from  {
 	G |- idref.id : T
 
-	if (idref.hasDeclaredVersion) {
-		T = versionResolver.resolveVersion(T, idref.declaredVersionOrZero);
+	if (idref.hasRequestedVersion) {
+		T = versionResolver.resolveVersion(T, idref.requestedVersionOrZero);
 	}
 
 	if(idref.eContainer instanceof ParameterizedCallExpression
@@ -769,8 +768,8 @@ from {
 		G2 |- propTypeRef ~> T
 
 		if (receiverTypeRef instanceof ParameterizedTypeRef) {
-			if (receiverTypeRef.hasDeclaredVersion) {
-				T = versionResolver.resolveVersion(T, receiverTypeRef.declaredVersionOrZero);
+			if (receiverTypeRef.hasRequestedVersion) {
+				T = versionResolver.resolveVersion(T, receiverTypeRef.requestedVersionOrZero);
 			}
 		}
 
@@ -850,8 +849,8 @@ from {
 			G2 |- T ~> T
 
 			if (F instanceof ParameterizedTypeRef) {
-				if (F.hasDeclaredVersion) {
-					T = versionResolver.resolveVersion(T, F.declaredVersion.intValue);
+				if (F.hasRequestedVersion) {
+					T = versionResolver.resolveVersion(T, F.requestedVersion.intValue);
 				}
 			}
 

@@ -36,7 +36,7 @@ import org.eclipse.emf.common.util.EList;
  * @model abstract="true"
  * @generated
  */
-public interface TypeRef extends TypeArgument, VersionedElement {
+public interface TypeRef extends TypeArgument, VersionProvider {
 	/**
 	 * Returns the value of the '<em><b>Null Modifier</b></em>' attribute.
 	 * The literals are from the enumeration {@link eu.numberfour.n4js.ts.types.NullModifier}.

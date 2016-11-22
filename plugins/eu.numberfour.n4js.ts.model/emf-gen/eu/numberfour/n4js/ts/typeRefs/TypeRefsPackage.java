@@ -75,78 +75,23 @@ public interface TypeRefsPackage extends EPackage {
 	TypeRefsPackage eINSTANCE = eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.ElementWithVersionDeclarationImpl <em>Element With Version Declaration</em>}' class.
+	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.VersionProviderImpl <em>Version Provider</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see eu.numberfour.n4js.ts.typeRefs.impl.ElementWithVersionDeclarationImpl
-	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getElementWithVersionDeclaration()
+	 * @see eu.numberfour.n4js.ts.typeRefs.impl.VersionProviderImpl
+	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getVersionProvider()
 	 * @generated
 	 */
-	int ELEMENT_WITH_VERSION_DECLARATION = 0;
+	int VERSION_PROVIDER = 0;
 
 	/**
-	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * The number of structural features of the '<em>Version Provider</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT_WITH_VERSION_DECLARATION__DECLARED_VERSION = 0;
-
-	/**
-	 * The number of structural features of the '<em>Element With Version Declaration</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELEMENT_WITH_VERSION_DECLARATION_FEATURE_COUNT = 1;
-
-	/**
-	 * The operation id for the '<em>Is Has Declared Version</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELEMENT_WITH_VERSION_DECLARATION___IS_HAS_DECLARED_VERSION = 0;
-
-	/**
-	 * The operation id for the '<em>Declared Version Or Zero</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELEMENT_WITH_VERSION_DECLARATION___DECLARED_VERSION_OR_ZERO = 1;
-
-	/**
-	 * The number of operations of the '<em>Element With Version Declaration</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELEMENT_WITH_VERSION_DECLARATION_OPERATION_COUNT = 2;
-
-	/**
-	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.VersionedElementImpl <em>Versioned Element</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see eu.numberfour.n4js.ts.typeRefs.impl.VersionedElementImpl
-	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getVersionedElement()
-	 * @generated
-	 */
-	int VERSIONED_ELEMENT = 1;
-
-	/**
-	 * The number of structural features of the '<em>Versioned Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VERSIONED_ELEMENT_FEATURE_COUNT = 0;
+	int VERSION_PROVIDER_FEATURE_COUNT = 0;
 
 	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
@@ -155,16 +100,71 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VERSIONED_ELEMENT___GET_VERSION = 0;
+	int VERSION_PROVIDER___GET_VERSION = 0;
 
 	/**
-	 * The number of operations of the '<em>Versioned Element</em>' class.
+	 * The number of operations of the '<em>Version Provider</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VERSIONED_ELEMENT_OPERATION_COUNT = 1;
+	int VERSION_PROVIDER_OPERATION_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.VersionedReferenceImpl <em>Versioned Reference</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see eu.numberfour.n4js.ts.typeRefs.impl.VersionedReferenceImpl
+	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getVersionedReference()
+	 * @generated
+	 */
+	int VERSIONED_REFERENCE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Requested Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSIONED_REFERENCE__REQUESTED_VERSION = 0;
+
+	/**
+	 * The number of structural features of the '<em>Versioned Reference</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSIONED_REFERENCE_FEATURE_COUNT = 1;
+
+	/**
+	 * The operation id for the '<em>Has Requested Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSIONED_REFERENCE___HAS_REQUESTED_VERSION = 0;
+
+	/**
+	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSIONED_REFERENCE___REQUESTED_VERSION_OR_ZERO = 1;
+
+	/**
+	 * The number of operations of the '<em>Versioned Reference</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSIONED_REFERENCE_OPERATION_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.TypeArgumentImpl <em>Type Argument</em>}' class.
@@ -3050,13 +3050,13 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF__DYNAMIC = BASE_TYPE_REF__DYNAMIC;
 
 	/**
-	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * The feature id for the '<em><b>Requested Version</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF__DECLARED_VERSION = BASE_TYPE_REF_FEATURE_COUNT + 0;
+	int PARAMETERIZED_TYPE_REF__REQUESTED_VERSION = BASE_TYPE_REF_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type</b></em>' reference.
@@ -3221,22 +3221,22 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF___GET_MODIFIERS_AS_STRING = BASE_TYPE_REF___GET_MODIFIERS_AS_STRING;
 
 	/**
-	 * The operation id for the '<em>Is Has Declared Version</em>' operation.
+	 * The operation id for the '<em>Has Requested Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF___IS_HAS_DECLARED_VERSION = BASE_TYPE_REF_OPERATION_COUNT + 0;
+	int PARAMETERIZED_TYPE_REF___HAS_REQUESTED_VERSION = BASE_TYPE_REF_OPERATION_COUNT + 0;
 
 	/**
-	 * The operation id for the '<em>Declared Version Or Zero</em>' operation.
+	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF___DECLARED_VERSION_OR_ZERO = BASE_TYPE_REF_OPERATION_COUNT + 1;
+	int PARAMETERIZED_TYPE_REF___REQUESTED_VERSION_OR_ZERO = BASE_TYPE_REF_OPERATION_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Typing Strategy</em>' operation.
@@ -3475,13 +3475,13 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL__DYNAMIC = PARAMETERIZED_TYPE_REF__DYNAMIC;
 
 	/**
-	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * The feature id for the '<em><b>Requested Version</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL__DECLARED_VERSION = PARAMETERIZED_TYPE_REF__DECLARED_VERSION;
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL__REQUESTED_VERSION = PARAMETERIZED_TYPE_REF__REQUESTED_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type</b></em>' reference.
@@ -3673,22 +3673,22 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL___GET_MODIFIERS_AS_STRING = PARAMETERIZED_TYPE_REF___GET_MODIFIERS_AS_STRING;
 
 	/**
-	 * The operation id for the '<em>Is Has Declared Version</em>' operation.
+	 * The operation id for the '<em>Has Requested Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL___IS_HAS_DECLARED_VERSION = PARAMETERIZED_TYPE_REF___IS_HAS_DECLARED_VERSION;
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL___HAS_REQUESTED_VERSION = PARAMETERIZED_TYPE_REF___HAS_REQUESTED_VERSION;
 
 	/**
-	 * The operation id for the '<em>Declared Version Or Zero</em>' operation.
+	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL___DECLARED_VERSION_OR_ZERO = PARAMETERIZED_TYPE_REF___DECLARED_VERSION_OR_ZERO;
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL___REQUESTED_VERSION_OR_ZERO = PARAMETERIZED_TYPE_REF___REQUESTED_VERSION_OR_ZERO;
 
 	/**
 	 * The operation id for the '<em>Contains Wildcards</em>' operation.
@@ -5074,13 +5074,13 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_REF__DYNAMIC = PARAMETERIZED_TYPE_REF__DYNAMIC;
 
 	/**
-	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * The feature id for the '<em><b>Requested Version</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF__DECLARED_VERSION = PARAMETERIZED_TYPE_REF__DECLARED_VERSION;
+	int FUNCTION_TYPE_REF__REQUESTED_VERSION = PARAMETERIZED_TYPE_REF__REQUESTED_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type</b></em>' reference.
@@ -5245,22 +5245,22 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_REF___GET_MODIFIERS_AS_STRING = PARAMETERIZED_TYPE_REF___GET_MODIFIERS_AS_STRING;
 
 	/**
-	 * The operation id for the '<em>Is Has Declared Version</em>' operation.
+	 * The operation id for the '<em>Has Requested Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF___IS_HAS_DECLARED_VERSION = PARAMETERIZED_TYPE_REF___IS_HAS_DECLARED_VERSION;
+	int FUNCTION_TYPE_REF___HAS_REQUESTED_VERSION = PARAMETERIZED_TYPE_REF___HAS_REQUESTED_VERSION;
 
 	/**
-	 * The operation id for the '<em>Declared Version Or Zero</em>' operation.
+	 * The operation id for the '<em>Requested Version Or Zero</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF___DECLARED_VERSION_OR_ZERO = PARAMETERIZED_TYPE_REF___DECLARED_VERSION_OR_ZERO;
+	int FUNCTION_TYPE_REF___REQUESTED_VERSION_OR_ZERO = PARAMETERIZED_TYPE_REF___REQUESTED_VERSION_OR_ZERO;
 
 	/**
 	 * The operation id for the '<em>Get Typing Strategy</em>' operation.
@@ -6123,65 +6123,65 @@ public interface TypeRefsPackage extends EPackage {
 
 
 	/**
-	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration <em>Element With Version Declaration</em>}'.
+	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.VersionProvider <em>Version Provider</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Element With Version Declaration</em>'.
-	 * @see eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration
+	 * @return the meta object for class '<em>Version Provider</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.VersionProvider
 	 * @generated
 	 */
-	EClass getElementWithVersionDeclaration();
+	EClass getVersionProvider();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration#getDeclaredVersion <em>Declared Version</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Declared Version</em>'.
-	 * @see eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration#getDeclaredVersion()
-	 * @see #getElementWithVersionDeclaration()
-	 * @generated
-	 */
-	EAttribute getElementWithVersionDeclaration_DeclaredVersion();
-
-	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration#isHasDeclaredVersion() <em>Is Has Declared Version</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Is Has Declared Version</em>' operation.
-	 * @see eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration#isHasDeclaredVersion()
-	 * @generated
-	 */
-	EOperation getElementWithVersionDeclaration__IsHasDeclaredVersion();
-
-	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration#declaredVersionOrZero() <em>Declared Version Or Zero</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Declared Version Or Zero</em>' operation.
-	 * @see eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration#declaredVersionOrZero()
-	 * @generated
-	 */
-	EOperation getElementWithVersionDeclaration__DeclaredVersionOrZero();
-
-	/**
-	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.VersionedElement <em>Versioned Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Versioned Element</em>'.
-	 * @see eu.numberfour.n4js.ts.typeRefs.VersionedElement
-	 * @generated
-	 */
-	EClass getVersionedElement();
-
-	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.VersionedElement#getVersion() <em>Get Version</em>}' operation.
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.VersionProvider#getVersion() <em>Get Version</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Version</em>' operation.
-	 * @see eu.numberfour.n4js.ts.typeRefs.VersionedElement#getVersion()
+	 * @see eu.numberfour.n4js.ts.typeRefs.VersionProvider#getVersion()
 	 * @generated
 	 */
-	EOperation getVersionedElement__GetVersion();
+	EOperation getVersionProvider__GetVersion();
+
+	/**
+	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.VersionedReference <em>Versioned Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Versioned Reference</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.VersionedReference
+	 * @generated
+	 */
+	EClass getVersionedReference();
+
+	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.VersionedReference#getRequestedVersion <em>Requested Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Requested Version</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.VersionedReference#getRequestedVersion()
+	 * @see #getVersionedReference()
+	 * @generated
+	 */
+	EAttribute getVersionedReference_RequestedVersion();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.VersionedReference#hasRequestedVersion() <em>Has Requested Version</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Has Requested Version</em>' operation.
+	 * @see eu.numberfour.n4js.ts.typeRefs.VersionedReference#hasRequestedVersion()
+	 * @generated
+	 */
+	EOperation getVersionedReference__HasRequestedVersion();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.VersionedReference#requestedVersionOrZero() <em>Requested Version Or Zero</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Requested Version Or Zero</em>' operation.
+	 * @see eu.numberfour.n4js.ts.typeRefs.VersionedReference#requestedVersionOrZero()
+	 * @generated
+	 */
+	EOperation getVersionedReference__RequestedVersionOrZero();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef <em>Type Ref</em>}'.
@@ -7732,48 +7732,14 @@ public interface TypeRefsPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.ElementWithVersionDeclarationImpl <em>Element With Version Declaration</em>}' class.
+		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.VersionProviderImpl <em>Version Provider</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see eu.numberfour.n4js.ts.typeRefs.impl.ElementWithVersionDeclarationImpl
-		 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getElementWithVersionDeclaration()
+		 * @see eu.numberfour.n4js.ts.typeRefs.impl.VersionProviderImpl
+		 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getVersionProvider()
 		 * @generated
 		 */
-		EClass ELEMENT_WITH_VERSION_DECLARATION = eINSTANCE.getElementWithVersionDeclaration();
-
-		/**
-		 * The meta object literal for the '<em><b>Declared Version</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ELEMENT_WITH_VERSION_DECLARATION__DECLARED_VERSION = eINSTANCE.getElementWithVersionDeclaration_DeclaredVersion();
-
-		/**
-		 * The meta object literal for the '<em><b>Is Has Declared Version</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ELEMENT_WITH_VERSION_DECLARATION___IS_HAS_DECLARED_VERSION = eINSTANCE.getElementWithVersionDeclaration__IsHasDeclaredVersion();
-
-		/**
-		 * The meta object literal for the '<em><b>Declared Version Or Zero</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ELEMENT_WITH_VERSION_DECLARATION___DECLARED_VERSION_OR_ZERO = eINSTANCE.getElementWithVersionDeclaration__DeclaredVersionOrZero();
-
-		/**
-		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.VersionedElementImpl <em>Versioned Element</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see eu.numberfour.n4js.ts.typeRefs.impl.VersionedElementImpl
-		 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getVersionedElement()
-		 * @generated
-		 */
-		EClass VERSIONED_ELEMENT = eINSTANCE.getVersionedElement();
+		EClass VERSION_PROVIDER = eINSTANCE.getVersionProvider();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Version</b></em>' operation.
@@ -7781,7 +7747,41 @@ public interface TypeRefsPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation VERSIONED_ELEMENT___GET_VERSION = eINSTANCE.getVersionedElement__GetVersion();
+		EOperation VERSION_PROVIDER___GET_VERSION = eINSTANCE.getVersionProvider__GetVersion();
+
+		/**
+		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.VersionedReferenceImpl <em>Versioned Reference</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see eu.numberfour.n4js.ts.typeRefs.impl.VersionedReferenceImpl
+		 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getVersionedReference()
+		 * @generated
+		 */
+		EClass VERSIONED_REFERENCE = eINSTANCE.getVersionedReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Requested Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VERSIONED_REFERENCE__REQUESTED_VERSION = eINSTANCE.getVersionedReference_RequestedVersion();
+
+		/**
+		 * The meta object literal for the '<em><b>Has Requested Version</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation VERSIONED_REFERENCE___HAS_REQUESTED_VERSION = eINSTANCE.getVersionedReference__HasRequestedVersion();
+
+		/**
+		 * The meta object literal for the '<em><b>Requested Version Or Zero</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation VERSIONED_REFERENCE___REQUESTED_VERSION_OR_ZERO = eINSTANCE.getVersionedReference__RequestedVersionOrZero();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.TypeRefImpl <em>Type Ref</em>}' class.

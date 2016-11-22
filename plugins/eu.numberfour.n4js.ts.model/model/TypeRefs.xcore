@@ -44,37 +44,66 @@ import eu.numberfour.n4js.ts.types.internal.WildcardAsStringUtils
 type ParameterizedTypeRefIterable wraps Iterable<ParameterizedTypeRef>
 
 /*
- * Base class for all elements that may explicitly declare a version.
+ * Base class for all things that can provide a version. The returned value will be 0 in any language that does not
+ * support versions. In those languages that do support versions, the return value depends on the semantics of the
+ * actual subclass and how it implements the getVersion method.
+ * 
+ * All type references and all types extend this class. In addition, some AST nodes such as IdentifierRef and
+ * N4IDLClassDeclaration also extend this class.
+ * 
+ * Type references generally delegate a call to getVersion to the type that they reference (via declaredType).
+ * Exceptions are BoundThisTypeRef, which delegates to actualThisTypeRef, and ParameterizedTypeRef, which will return
+ * the requested version if the user provided one.
+ * 
+ * Types usually return 0 unless they are explicitly versionable, in which case they return the declared version.
+ * In N4IDL, this only applies to TClassifier, which returns the version that was declared by the user (as set by the 
+ * types builder).
+ * 
+ * For AST nodes, the return value depends highly on the type of the node itself. For example, the IdentifierRef returns
+ * the explicitly requested version if the user provided one, otherwise it returns 0. For an N4IDLClassDeclaration, 
+ * getVersion returns the version that was declared by the user for that class.
+ * 
+ * It was decided that TypeRef and Type should extend VersionProvider to avoid switching on the type of a the Type or 
+ * TypeRef instance under consideration. This is possible since 0 is a sensible default for unversioned objects.
  */
-abstract class ElementWithVersionDeclaration {
-	BigDecimal declaredVersion
-
-	/*
-	 * Indicates whether this type reference has an explicitly declared version. This can only be true for
-	 * ParameterizedTypeRef, as only that class allows for explicitly declaring a version.
-	 */
-	op boolean isHasDeclaredVersion() {
-		return declaredVersion !== null
-	}
-	
-	op int declaredVersionOrZero() {
-		if (hasDeclaredVersion) declaredVersion.intValue else 0
-	}
-}
-
-/*
- * Base class for all elements that may have a version, either explicitly or implicitly.
- */
-abstract class VersionedElement {
+abstract class VersionProvider {
 	op int getVersion() {
 		return 0
 	}
 }
 
 /*
+ * This is a base class for all AST nodes that represent a reference to a versioned object and where the user can
+ * explicitly request a specific version. Currently, this includes ParameterizedTypeRef (for explicitly versioned
+ * parameter types and local variables in N4IDL migration scripts) and IdentifierRef (for explicitly versioned 
+ * references to identifiers as the callee of a NewExpression).
+ * 
+ * If an instance of this class does not have an explicitly requested version (set by the parser), then the type system
+ * may compute the requested version from context information and store the result in the requestedVersion attribute.
+ * 
+ * The latter only happens in N4IDL via N4IDLVersionResolver.
+ */
+abstract class VersionedReference {
+	BigDecimal requestedVersion
+
+	/*
+	 * Indicates whether this type reference has an explicitly requested version. A requested version can either be
+	 * set by the parser when the user explicitly requests a specific version in source code, or by the type system
+	 * when computing the implicitly requested version, e.g. for property access expressions.
+	 */
+	op boolean hasRequestedVersion() {
+		return requestedVersion !== null
+	}
+	
+	op int requestedVersionOrZero() {
+		if (hasRequestedVersion) requestedVersion.intValue else 0
+	}
+}
+
+/*
  * Base class for all type references
  */
-abstract class TypeRef extends TypeArgument, VersionedElement {
+abstract class TypeRef extends TypeArgument, VersionProvider {
 	NullModifier nullModifier
 	UndefModifier undefModifier
 	/**
@@ -471,7 +500,7 @@ class BoundThisTypeRef extends ThisTypeRef, StructuralTypeRef {
  * {@link ParameterizedTypeRefStructural} which support structural typing
  * on use site. However, the latter is not allowed everywhere.
  */
-class ParameterizedTypeRef extends BaseTypeRef, ElementWithVersionDeclaration {
+class ParameterizedTypeRef extends BaseTypeRef, VersionedReference {
 	refers Type declaredType
 	contains TypeArgument[] typeArgs
 	boolean arrayTypeLiteral = "false"
@@ -561,7 +590,11 @@ class ParameterizedTypeRef extends BaseTypeRef, ElementWithVersionDeclaration {
 	}
 	
 	op int getVersion() {
-		if (hasDeclaredVersion) declaredVersion.intValue else super.version
+		/*
+		 * If a specific version was requested, then we return that, otherwise we delegate to the overridden method,
+		 * which will delegate to the declared type.
+		 */
+		if (hasRequestedVersion) requestedVersion.intValue else super.version
 	}
 }
 

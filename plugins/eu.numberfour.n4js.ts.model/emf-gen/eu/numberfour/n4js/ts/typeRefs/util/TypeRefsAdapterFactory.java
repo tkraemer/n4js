@@ -73,12 +73,12 @@ public class TypeRefsAdapterFactory extends AdapterFactoryImpl {
 	protected TypeRefsSwitch<Adapter> modelSwitch =
 		new TypeRefsSwitch<Adapter>() {
 			@Override
-			public Adapter caseElementWithVersionDeclaration(ElementWithVersionDeclaration object) {
-				return createElementWithVersionDeclarationAdapter();
+			public Adapter caseVersionProvider(VersionProvider object) {
+				return createVersionProviderAdapter();
 			}
 			@Override
-			public Adapter caseVersionedElement(VersionedElement object) {
-				return createVersionedElementAdapter();
+			public Adapter caseVersionedReference(VersionedReference object) {
+				return createVersionedReferenceAdapter();
 			}
 			@Override
 			public Adapter caseTypeRef(TypeRef object) {
@@ -193,30 +193,30 @@ public class TypeRefsAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration <em>Element With Version Declaration</em>}'.
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.typeRefs.VersionProvider <em>Version Provider</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see eu.numberfour.n4js.ts.typeRefs.ElementWithVersionDeclaration
+	 * @see eu.numberfour.n4js.ts.typeRefs.VersionProvider
 	 * @generated
 	 */
-	public Adapter createElementWithVersionDeclarationAdapter() {
+	public Adapter createVersionProviderAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.typeRefs.VersionedElement <em>Versioned Element</em>}'.
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.typeRefs.VersionedReference <em>Versioned Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see eu.numberfour.n4js.ts.typeRefs.VersionedElement
+	 * @see eu.numberfour.n4js.ts.typeRefs.VersionedReference
 	 * @generated
 	 */
-	public Adapter createVersionedElementAdapter() {
+	public Adapter createVersionedReferenceAdapter() {
 		return null;
 	}
 
