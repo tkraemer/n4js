@@ -582,7 +582,7 @@ fragment FunctionBody <Yield, Expression>*:
 ----
 
 Properties of the function declaration and expression are described in
-in <<Function Type>>.
+in <<_function-type,Function Type>>.
 
 For this specification, we introduce a supertype
 math:[$FunctionDefinition$] for both,
@@ -608,8 +608,8 @@ task:IDE-224[]
 
 A function defined in a class’s method (or method modifier) builder is a
 method, see <<Methods>> for details and additional constraints.
-The metatype of a function definition is function type (<<Function Type>>), as a function declaration is only a different syntax for creating a object.
-Constraints for function type are described in <<Function Type>>. Another consequence is that the inferred type of a function definition math:[$fdecl$] is simply its function type
+The metatype of a function definition is function type (<<_function-type,Function Type>>), as a function declaration is only a different syntax for creating a object.
+Constraints for function type are described in <<_function-type,Function Type>>. Another consequence is that the inferred type of a function definition math:[$fdecl$] is simply its function type
 math:[$F$]. math:[\[\begin{aligned}
 \infer{\infType{F}}{\infType{fdecl}}\end{aligned}\]] Note that the type
 of a function definition is different from its return type
@@ -644,7 +644,7 @@ FunctionExpression:
 ==== Semantics and Type Inference
 
 In general, the inferred type of a function expression simply is the
-function type as described in <<Function Type>>. Often, the signature of a function
+function type as described in <<_function-type,Function Type>>. Often, the signature of a function
 expression is not explicitly specified but it can be inferred from the
 context. The following context information is used to infer the full
 signature:
@@ -666,7 +666,7 @@ the next example.
 .Inference Of Function Expression’s Signature
 [example]
 --
-In general, `{function():any}` is a subtype of `{function():void}` (cf. <<Function Type>>). When the return type of a function
+In general, `{function():any}` is a subtype of `{function():void}` (cf. <<_function-type,Function Type>>). When the return type of a function
 expression is inferred, this relation is taken into account which may
 lead to unexpected results as shown in the following code snippet:
 
