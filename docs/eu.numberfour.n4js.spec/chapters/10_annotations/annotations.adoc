@@ -74,7 +74,7 @@ corresponding sections:
 |@Undefined             |Variable                                      |<<_undefined-type>>
 |@StringBased           |Enum                                          |<<_string-based-enums>>
 |@Final                 |Class, Member                                 |<<_final-methods>>
-|@Spec                  |FPar                                          |<<_spec-construtor>>
+|@Spec                  |FPar                                          |<<_spec-constructor>>
 |@Override              |Method                                        |<<_redefinition-of-members>>
 |@Promisifiable         |Function                                      |<<_promisifiable-functions>>
 |@Promisify             |CallExpression                                |<<_promisifiable-functions>>

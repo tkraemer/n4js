@@ -455,8 +455,8 @@ ConstDeclaration returns VariableDeclaration: typeRef=TypeRef? name=IDENTIFIER c
 ==== Semantics [[const-semantics]]
 
 A const variable statement is more or less a normal variable statement
-(see <<Variable Statement>>), except that all variables declared by that statement are not
-writable (cf. <<req:Write_Acccess>>). This is similar to constant data
+(see <<_variable-statement,Variable Statement>>), except that all variables declared by that statement are not
+writable (cf. <<IDE-121,requirement: Write-Acccess>>). This is similar to constant data
 fields (cf. <<Assignment_Modifiers>>).
 
 .Writability of const variables
@@ -473,7 +473,7 @@ ES6 introduced a new form of `for` statement: `for ... of` to iterate over the e
 
 ==== Syntax [[for-of-statement-syntax]]
 
-See <<Iteration Statements>>
+See <<_iteration-statements,Iteration Statements>>
 
 ==== Semantics [[for-of-statement-semantics]]
 
@@ -948,7 +948,7 @@ Imported namespaces cannot be exported.
 
 Declared elements (types, variables, functions) are usually only visible
 outside the declaring module if the elements are exported and imported
-(by the using module, cf. <<Import_Statement>>>>).
+(by the using module, cf. <<_import-statement,Import Statement>>).
 
 Some special components (runtime environment and libraries, cf. <<Runtime_Environment_Libraries>>, may export elements globally. This is done by annotating the export (or the
 whole module) with `@Global`, see <<Global_Definitions>> for details.

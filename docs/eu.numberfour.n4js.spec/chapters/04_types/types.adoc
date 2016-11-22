@@ -71,7 +71,7 @@ Note that this declarative definition needs to be specified in detail
 for special cases, such as union and intersection types. Usually, the
 union type of two types is also the join.
 
-<<cdPredefinedTypesHierarchy,The Predefined Types Heirarchy figure>> summarizes all predefined types,
+<<fig-cd-predefined-type-heirarchy,The Predefined Types Heirarchy figure>> summarizes all predefined types,
 that is primitive and built-in ECMAScript and N4JS types.
 Specific rules for the subtype relation are defined in the following sections.
 This type hierarchy shows `any` and `undefined` as the top and bottom type (cf. cite:[Pierce02a(15.4)]) We define these types here explicitly:
@@ -91,7 +91,7 @@ bottom type math:[$Bot=`undefined}$].
 `null` is almost similar to math:[$Bot$], except that it is not a subtype
 of `undefined`.
 
-[[cdPredefinedTypesHierarchy]]
+[[fig-cd-predefined-type-heirarchy]]
 image:fig/cdPredefinedTypesHierarchy.png[title="Predefined Types Hierarchy"]
 
 For every primitive type there is a corresponding built-in type as
@@ -268,7 +268,7 @@ Predefined Type::
 Array Type::
   <<_array-object-type,Array Object Type>>.
 Function Type::
-  Described in <<functions>>, <<_function_type>>.
+  Described in <<functions,Functions>>, <<_function_type,Function Type>>.
 Any Type::
   <<_any-type,Any Type>>.
 
@@ -278,14 +278,14 @@ Any Type::
 Declared Type::
   (Unparameterized) Reference to defined class <<Classes>> or enum <<Enums>>.
 Parameterized Type::
-  Parameterized reference to defined generic class or interface; <<Parameterized-Types,Parameterized Types>>.
+  Parameterized reference to defined generic class or interface; <<_parameterized-types,Parameterized Types>>.
 This Type::
 <<_this-type,This Type>>.
 Constructor and Type Type::
   Class type, that is the meta class of a defined class or interface, <<_constructor-and-classifier-type,Constructor and Classifier Type>>.
 
 Union Types::
-Union of types, <<_union-type,Union-Type>>.
+Union of types, <<_union-type,Union Type>>.
 Type Variable::
 Type variable, <<_type-variables,Type Variables>>.
 
@@ -879,7 +879,7 @@ members, it seems convenient to use additional structural members, like
 on interface I2 in the
 example <<ex:use-declared-interfaces-for-lower-bounds,Use declared interfaces for lower bounds>> below. However,
 type variables must not be constrained using structural types (see
-constraint <<__use-site-structural-typing,Use-Site Structural Typing>>). Hence, the recommended
+constraint <<_use-site-structural-typing,Use-Site Structural Typing>>). Hence, the recommended
 solution is to use an explicitly declared interface that uses definition
 site structural typing for these constraints as an upper bound (see
 interface in the example).
@@ -1073,7 +1073,7 @@ It is supertype of the N4JS primitive type `pathselector`, and `i18nKey`.
 <<_primitive-pathselector-and-I18nKey,Primitive Pathselector and I18nKey>>
 
 // TODO: xref
-However, variables of type `string` can be auto-converted (coerced) to `string`, as described in <<_autoboxing-and-coercing,Autoboxing and coercing>>.
+However, variables of type `string` can be auto-converted (coerced) to `string`, as described in <<_autoboxing-and-coercing,Auto-Boxing and coercing>>.
 
 === Primitive Number Type
 
@@ -1089,7 +1089,7 @@ The type `number` is subtype of `any`:
 math:[\[\begin{aligned} \infer{`number} <: `any}}{} \\\end{aligned}\]]
 
 However, variables of type `number` can be auto-converted (coerced) to `Number`, as
-described in <<Integer-Literals>> .
+described in <<_integer-literals,Integer Literals>> .
 //TODO: xref
 
 === Primitive Type int
@@ -2474,7 +2474,7 @@ type of a method parameter
 * an existential type argument inside a return type expression for
 methods (e.g.`ArrayList<? extends this> method(){...}`)
 
-The precise rule where it may appear is given below in <<req:37 This Type>>.
+The precise rule where it may appear is given below in <<IDE-37,requirement: This Type>>.
 
 The `this` type is similar to a type variable, and it is bound to the declared
 or inferred type of the receiver. If it is used as return type, all
@@ -2893,8 +2893,8 @@ math:[$E_S$] is of the type of the string-based enumeration.
 math:[\[\begin{aligned}
         \infer{ \tee l \subtype E_S }{l \in E_S.L_S}
     \end{aligned}\]]
-.  <<req:39Unique literal names>> also applies for `N4StringBasedEnum`.
-.  [<<req:40Enum Literals are Singletons>>]
+.  <<IDE-39,requirement: Unique Literal Names>> also applies for `N4StringBasedEnum`.
+.  [<<IDE-40,requirement: Enum Literals are Singletons>>]
 also applies for `N4StringBasedEnum`.
 .  References to string-based enums may only be used in the following
 places:

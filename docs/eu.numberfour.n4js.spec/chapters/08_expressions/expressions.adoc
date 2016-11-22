@@ -85,7 +85,7 @@ both static and non-static).
 3.  static methods of interfaces and static field accessors of
 interfaces.
 
-See also <<req:StaticMembersOfInterfaces>>.
+See also <<IDE-69,requirement: Static Members of Interfaces>>.
 
 --
 
@@ -252,7 +252,7 @@ type information is moved to the this type itself. This is transparent
 to the user in general but maybe visible in case of error messages. That
 is to say that the actual this type is always a nominal type. This is
 indicated by the nominal modifier f
-(cf. <<req:Type_Inference_Heuristic_for_This_Keyword>> .1. and 2.).
+(cf. <<IDE-90,requirement: Type Inference Heuristic for This Keyword>> .1. and 2.).
 
 .Valid Target and Argument for @This Annotation
 [req,id=IDE-91,version=1]
@@ -442,14 +442,14 @@ members of a class or properties of an object literal are to be accessed
 via `this`. Identifier references always reference declared elements, that is
 to say either variable, function, or class declarations. Properties of
 object literals or members of a class are referenced via
-math:[$PropertyAccess-Expression.property$] (see <<Property Accessors>>).
+math:[$PropertyAccess-Expression.property$] (see <<_property-accessors,Property Accessors>>).
 
 image::fig/scopes.png[Scopes,align=center]
 
 An identifier may be bound to a variable (global or local variable,
 parameter, variable defined in a function’s closure), or to a property
 of an object. The latter case is known as property access as further
-described in <<Property Accessors>>.
+described in <<_property-accessors,Property Accessors>>.
 
 //TODO - fix math
 
@@ -1086,8 +1086,8 @@ must be subtypes of the boundaries of the parameters of the called
 generic method.
 //\todo[JvP, LB]{How to formalize that best?}
 
-Also see constraints on read (<<req:Read_Access_to_Identifier>>) and write
-(<<req:Write_Acccess>>) access.
+Also see constraints on read (<<IDE-93,requirement: Read Access to Identifier>>) and write
+(<<IDE-121,requirement: Write-Acccess>>) access.
 
 --
 
@@ -1303,8 +1303,8 @@ declared upper boundaries of the type parameters of the called generic
 function.
 
 Note that (for a limited time), constraints
-<<req:Function_Call_Constraints>> and
-<<req:Parameterized_Function_Call_Constraints>> are not applied if the the
+<<IDE-101,Function Call Constraints>> and
+<<IDE-102,Parameterized Function Call Constraints>> are not applied if the the
 type of math:[$F$] is `Function`. See <<Function_Object_Type>>.
 
 --
@@ -1313,7 +1313,7 @@ type of math:[$F$] is `Function`. See <<Function_Object_Type>>.
 task:IDE-244[]
 
 A call expression math:[$expr$] is bound to a method (<<Methods>>) or function
-declaration (which may be part of a function definition (<<Function_Definition>> or specified via a function type <<Fucntion_Type>>) math:[$F$] (via evaluation of `MemberExpression`. The type of the call is inferred from the function declaration or type math:[$F$] as follows:
+declaration (which may be part of a function definition (<<_function-definition,Function Definition>> or specified via a function type <<Fucntion_Type>>) math:[$F$] (via evaluation of `MemberExpression`. The type of the call is inferred from the function declaration or type math:[$F$] as follows:
 
 math:[\[\begin{aligned}
 \infer{\tee expr: T}{bind(expr.target, F) & F.returnType: T}\end{aligned}\]]
@@ -2093,7 +2093,7 @@ The value of writeable is true for setters and usually for variables and
 data fields. Assignability of variables and data fields can be
 restricted via `const` or the `@Final` annotation. See <<Assignment_Modifiers>>(data fields) and <<Const>> (const variables) for details.
 
-Also see <<req:Read_Access_to_Identifier>> for read access constraint.
+Also see <<IDE-93,requirement: Read Access to Identifier>> for read access constraint.
 
 The left-hand side of an assignment expression may be an array or object
 literal and the assignment expression is then treated as a destructuring
@@ -2292,7 +2292,7 @@ of the class defining the method). math:[\[\begin{aligned}
 .Super Literal Usage
 [req,id=IDE-125,version=1]
 --
-For super literals, either <<req:Access_Super_Constructor_with_Super_Literal>> or <<req:Access_Super_Member_with_Super_Literal>> must hold, no other usage
+For super literals, either <<IDE-123,requirement: Access Super Constructor with Super Literal>> or <<IDE-124,requirement: Access Super Member with Super Literal>> must hold, no other usage
 is allowed.
 
 Consequences:

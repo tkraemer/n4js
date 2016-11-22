@@ -329,7 +329,7 @@ follows:
 footnote:[See <<_n4-specific-classifiers,N4-Specific Classifiers>> for definitions of metatype properties. Note that math:[$r.receiver$] always refers to a type declaration in the context of an expression as the receiver type of math:[$r$]. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member
 declaration.]
 
-footnote:[Note, the Java-like access restriction for members of visibility ``protected`` or ``protected@Internal`` to code that is responsible for the implementation of that object. cite:[Gosling14a(S6.6.2,p.166)]]
+footnote:[Note, the Java-like access restriction for members of visibility `protected` or ``protected@Internal`` to code that is responsible for the implementation of that object. cite:[Gosling14a(S6.6.2,p.166)]]
 
  math:[\[\begin{aligned}
 &\infer{\alpha_m(r, M)}{M.acc = \lenum{public}}\\
@@ -673,8 +673,7 @@ all parent non-catch-block environments.
 ’arguments’.
 footnote:[This conflicts with the implicit parameter arguments introduced by the transpiler when wrapping the script/module into a definition function.]
 
-<<fig:forbidden_shadowing>> shows nested lexical environments with named elements declared inside (all named ``x`` here), the forbidden cases are marked with arrows (the
-numbers at the left side refer to the numbers in <<IDE-8,Forbidden Shadowing>>.
+<<fig:forbidden_shadowing,Fig. Forbidden Shadowing>> shows nested lexical environments with named elements declared inside (all named ``x`` here), the forbidden cases are marked with arrows (the numbers at the left side refer to the numbers in <<IDE-8,Forbidden Shadowing>>.
 
 [[fig:forbidden_shadowing]]
 image:fig/shadowing.png[Forbidden shadowing]

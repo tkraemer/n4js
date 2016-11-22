@@ -53,7 +53,7 @@ defined.
 
 `typingStrategy`: ::
 The definition-site typing strategy. By default nominal typing is used.
-See <<_structural-typing,Structural Typing>>for details.
+See <<_structural-typing,Structural Typing>> for details.
 
 
 The following pseudo properties are defined via annotations:
@@ -208,11 +208,11 @@ math:[$false$], see <<_abstract-classes,Abstract Classes>>.
 `external`: ::
 Boolean flag indicating whether class is a declaration without
 implementation or with an external (non-N4JS) implementation; default is
-math:[$false$], see <<_definition-site-structural-typing,Definition-Site-Structural-Typing>>.
+math:[$false$], see <<_definition-site-structural-typing,Definition-Site Structural Typing>>.
 
 `defStructural`: ::
 Boolean flag indicating whether subtype relation uses nominal or
-structural typing, see <<_definition-site-structural-typing,Definition-Site-Structural-Typing>> for details.
+structural typing, see <<_definition-site-structural-typing,Definition-Site Structural Typing>> for details.
 
 `superType/sup`: ::
 The type referenced by math:[$superType$] is called direct
