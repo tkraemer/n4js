@@ -202,7 +202,7 @@ class) become members of a class. For example, if `B extends A`, and if `A` is n
 accessible to some client `C` but `B` is, then the members of `A` are indirectly
 accessible to `C` in so far as they are accessed via `B`. This is true in
 particular for interfaces, as their properties are possibly merged into
-the consuming class (cf. <<Implementation_of_members>>).
+the consuming class (cf. <<_implementation-of-members,Implementation of Members>>).
 
 The following member access modifiers are supported by N4JS:
 
@@ -326,7 +326,7 @@ metatypes, no shadowing etc).
 Formally, we define math:[$\alpha_m$] for a given reference
 math:[$r$] and member declaration math:[$M$] as
 follows:
-footnote:[See <<_N4-Specific-Classifiers>> for definitions of metatype properties. Note that math:[$r.receiver$] always refers to a type declaration in the context of an expression as the receiver type of math:[$r$]. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member
+footnote:[See <<_n4-specific-classifiers,N4-Specific Classifiers>> for definitions of metatype properties. Note that math:[$r.receiver$] always refers to a type declaration in the context of an expression as the receiver type of math:[$r$]. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member
 declaration.]
 
 footnote:[Note, the Java-like access restriction for members of visibility ``protected`` or ``protected@Internal`` to code that is responsible for the implementation of that object. cite:[Gosling14a(S6.6.2,p.166)]]
@@ -344,7 +344,7 @@ If the type of the arguments is clear from the context, we simply write
 math:[$\alpha(r,M)$] instead of math:[$\alpha_m(r,M)$].
 
 Although private members are accessible inside a module, it is not
-possible to redefine (override etc.) these members (see <<_Redefinition-of-Members>>).
+possible to redefine (override etc.) these members (see <<_redefinition-of-members,Redefinition of Members>>).
 
 .Default Member Access Modifiers
 [req,id=IDE-4,version=1]

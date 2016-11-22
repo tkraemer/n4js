@@ -40,10 +40,10 @@ Arbitrary annotations, see <<Annotations>> for details.
 N4JS member access modifier: `private`, `project`, `potected`, or `public`; the latter two can be combined with `@Internal`; default is `project` for classes and private interfaces. For a non-private interface defaults to the interface’s visibility. task:IDE-84[]
 
 `name` ::
-The simple name of the member, that is an identifier name (cf. <<Valid-Names>>).
+The simple name of the member, that is an identifier name (cf. <<_valid-names,Valid Names>>).
 
 `static` ::
-Boolean property to distinguish instance from classifier members, see <<Static-Members>>.
+Boolean property to distinguish instance from classifier members, see <<_static-members,Static Members>>.
 
 
 The following pseudo properties are defined via annotations:
@@ -56,7 +56,7 @@ task:IDE-138[]
 And we additionally define the following pseudo properties:
 
 `acc` ::
-Member access modifier as described in <<Accessibility-of-Members>>, it is the aggregated value of
+Member access modifier as described in <<_accessibility-of-members,Accessibility of Members>>, it is the aggregated value of
 the math:[$accessModifier$] and the math:[$export$] property.
 
 `owner` ::
@@ -238,7 +238,7 @@ The following pseudo properties are defined via annotations:
 
 `final` ::
 Boolean flag set to true if annotation `@Final` is set. Flag indicates that
-method must not be overridden in subclasses; see <<Final-Methods>>.
+method must not be overridden in subclasses; see <<_final-methods,Final Methods>>.
 
 `declaresOverride` ::
 Flag set to true if annotation `@Overrides` is set. Flag indicates that method must
@@ -271,8 +271,8 @@ implementing methods.
 In addition, method declarations and definitions have to comply with the
 constraints for naming members of classifiers (cf. <<Member-Names>>)
 and with the constraints detailed in the following sections on final
-methods (<<Final-Methods>>), abstract methods (<<Abstract-Methods>>
-and method overriding and implementation (<<Overriding-of-Members>>, <<Implementation-of-Members>>).
+methods (<<_final-methods,Final Methods>>), abstract methods (<<_abstract-methods,Abstract Methods>>
+and method overriding and implementation (<<_overriding-of-members,Overriding of Members>>, <<_implementation-of-members,Implementation of Members>>).
 
 The following constraints are defined for methods in ECMAScript 6 cite:[ECMA15a(207)]
 
@@ -520,7 +520,7 @@ a definition file, annotation `@ProvidesDefaultImplementation` can be used, cf.
 //requirement
 
 When a method in an interface is provided with a default implementation,
-it may even be declared `@Final`, see <<Final-Methods>>.
+it may even be declared `@Final`, see <<_final-methods,Final Methods>>.
 
 //todo{it is currently unclear whether default methods are allowed in structural interfaces; see task IDE-1666 for details} task:IDE-1666[]
 

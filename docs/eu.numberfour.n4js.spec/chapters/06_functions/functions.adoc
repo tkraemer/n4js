@@ -24,8 +24,8 @@ A function type is modeled as (see cite:[ECMA11a(S13,p.98)] in ECMAScript.
 
 Function types can be defined by means of;
 
-* A function object (<<Function_Object_Type>>).
-* A function type expression (<<Type_Expressions>>).
+* A function object (<<_function_object_type,Function Object Type>>).
+* A function type expression (<<Type_Expressions,Type Expressions>>).
 * A function declaration (<<Function_Definition>>).
 * A method declaration (<<Methods>>).
 
