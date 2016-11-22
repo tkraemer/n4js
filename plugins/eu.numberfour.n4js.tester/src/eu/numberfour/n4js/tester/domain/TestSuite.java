@@ -21,7 +21,6 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Maps.uniqueIndex;
 import static java.util.Collections.unmodifiableList;
-import static org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion.NON_NULL;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -31,10 +30,9 @@ import java.util.Map;
 import java.util.Spliterator;
 import java.util.Spliterators;
 
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 
@@ -42,7 +40,7 @@ import com.google.common.collect.Iterators;
  * Representation of a test suite.
  */
 @JsonAutoDetect
-@JsonSerialize(include = NON_NULL)
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class TestSuite implements TestElement, Iterable<TestCase>, Comparable<TestSuite> {
 
 	@JsonProperty

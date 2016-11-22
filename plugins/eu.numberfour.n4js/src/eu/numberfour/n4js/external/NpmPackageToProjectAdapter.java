@@ -37,12 +37,14 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.util.Pair;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import eu.numberfour.n4js.binaries.BinaryCommandFactory;
 import eu.numberfour.n4js.external.libraries.PackageJson;
+import eu.numberfour.n4js.external.libraries.TargetPlatformFactory;
 import eu.numberfour.n4js.n4mf.ProjectDescription;
 import eu.numberfour.n4js.n4mf.resource.ManifestMerger;
 import eu.numberfour.n4js.n4mf.utils.N4MFConstants;
@@ -242,7 +244,7 @@ public class NpmPackageToProjectAdapter {
 	 * @param packageRoot
 	 *            npm package folder.
 	 * @param packageJson
-	 *            {@link PackageJson package.json} of that package.
+	 *            {@link TargetPlatformFactory package.json} of that package.
 	 * @param manifest
 	 *            file that will be adjusted according to manifest fragments.
 	 * @param definitionsFolder
@@ -261,7 +263,7 @@ public class NpmPackageToProjectAdapter {
 			return statusHelper.OK();
 		}
 
-		String packageJsonVersion = packageJson.getVersion();
+		String packageJsonVersion = packageJson.version;
 		Version packageVersion = Version.createFromString(packageJsonVersion);
 		String[] list = packageN4JSDsRoot.list();
 		Set<Version> availableTypeDefinitionsVersions = new HashSet<>();
@@ -374,12 +376,12 @@ public class NpmPackageToProjectAdapter {
 	private void generateManifestContent(File projectFolder, PackageJson packageJSON, File manifest)
 			throws IOException {
 
-		String projectId = packageJSON.getName();
+		String projectId = packageJSON.name;
 		String manifestMain = computeMainModule(projectFolder);
 
 		if (!projectFolder.getName().equals(projectId)) {
 			LOGGER.warn("project folder and project name are different : " + projectFolder.getName() + " <> + "
-					+ packageJSON.getName());
+					+ packageJSON.name);
 		}
 
 		try (FileWriter fw = new FileWriter(manifest)) {
@@ -389,8 +391,14 @@ public class NpmPackageToProjectAdapter {
 
 	/**
 	 */
-	private String computeMainModule(File projectFolder) throws IOException {
-		File main = new File(resolveMainModule(projectFolder));
+	private String computeMainModule(File projectFolder) {
+
+		String mainModule = resolveMainModule(projectFolder);
+
+		if (Strings.isNullOrEmpty(mainModule))
+			return mainModule;
+
+		File main = new File(mainModule);
 
 		Path packagePath = projectFolder.toPath();
 		Path packageMainModulePath = main.toPath();
@@ -421,19 +429,20 @@ public class NpmPackageToProjectAdapter {
 	 * @param packageRoot
 	 *            package root folder
 	 * @return string with absolute path to the package main module
-	 * @throws IOException
-	 *             if cannot resolve main module
 	 */
-	private String resolveMainModule(File packageRoot)
-			throws IOException {
+	private String resolveMainModule(File packageRoot) {
 
 		ProcessResult per = commandFactory.createResolveMainModuleCommand(packageRoot).execute();
 
 		if (per.isOK()) {
 			// happy case string with full path to the main module (terminated with line ending)
 			return per.getStdOut().trim();
+		} else {
+			// unhappy case, maybe package is broken, maybe it is library with no single facade.
+			LOGGER.warn(
+					"Cannot resolve npm package main module, generated project will NOT have MainModule compatible with module import.");
+			return null;
 		}
-		throw new IOException(per.toString());
 	}
 
 }

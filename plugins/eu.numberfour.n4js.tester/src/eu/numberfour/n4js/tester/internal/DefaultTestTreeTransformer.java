@@ -19,7 +19,6 @@ import static java.lang.String.valueOf;
 import static java.util.Collections.singletonMap;
 import static java.util.Collections.sort;
 import static org.apache.log4j.Logger.getLogger;
-import static org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion.NON_NULL;
 
 import java.util.Collection;
 import java.util.List;
@@ -28,10 +27,10 @@ import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -137,7 +136,7 @@ public class DefaultTestTreeTransformer implements TestTreeTransformer {
 
 	/**
 	 * Override the server port used in the "endpoint" flag
-	 * 
+	 *
 	 * @param httpServerPort
 	 *            a valid tcp port.
 	 */
@@ -149,7 +148,7 @@ public class DefaultTestTreeTransformer implements TestTreeTransformer {
 	 * Transformed representation of the test tree.
 	 */
 	@JsonAutoDetect
-	@JsonSerialize(include = NON_NULL)
+	@JsonInclude(value = JsonInclude.Include.NON_NULL)
 	protected static final class MTestTree {
 
 		private static final String PORT_KEY = "port";
@@ -177,7 +176,7 @@ public class DefaultTestTreeTransformer implements TestTreeTransformer {
 	 * Representation of a test descriptor that complies Mangelhaft.
 	 */
 	@JsonAutoDetect
-	@JsonSerialize(include = NON_NULL)
+	@JsonInclude(value = JsonInclude.Include.NON_NULL)
 	protected static final class MTestDescriptor implements Comparable<MTestDescriptor> {
 		@JsonProperty
 		private String origin;

@@ -13,9 +13,9 @@ package eu.numberfour.n4js.tester;
 import java.io.IOException;
 import java.util.Map;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.eclipse.emf.common.util.URI;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 

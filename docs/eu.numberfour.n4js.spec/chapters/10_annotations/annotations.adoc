@@ -1,0 +1,179 @@
+= Annotations
+task:IDE-139[] task:IDE-260[] task:IDE-272[]
+////
+Copyright (c) 2016 NumberFour AG.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+  NumberFour AG - Initial API and implementation
+////
+
+== Introduction
+
+Annotations are used to further define meta properties of language
+elements such as types, variables and functions. These annotations are
+used by the compiler and validator to prohibit the developer from
+introducing constructs which are either not allowed or are unnecessary
+in certain contexts.
+
+Since annotations are to be processed by the compiler and the
+compilation cannot be extended by third-party users for security
+reasons, annotations cannot be defined by developers. Instead, the
+compiler comes with a predefined set of annotations which are summarized
+here.
+
+=== Syntax
+
+Annotations are used similarly as in Java (although new annotations
+cannot be defined by the user). They are formally defined as follows:
+
+[source,n4js]
+----
+Annotation:'@' AnnotationNoAtSign;
+ScriptAnnotation returns Annotation: '@@' AnnotationNoAtSign;
+
+AnnotationNoAtSign returns Annotation:
+    name=AnnotationName (=> '(' (args+=AnnotationArgument (',' args+=AnnotationArgument)*)? ')')?;
+
+AnnotationArgument:
+    LiteralAnnotationArgument | TypeRefAnnotationArgument
+;
+
+LiteralAnnotationArgument:
+    literal=Literal
+;
+
+TypeRefAnnotationArgument:
+    typeRef=TypeRef
+;
+----
+
+=== Properties
+
+
+We use the map notation for retrieving annotation properties and values
+from a list of annotations, for example
+math:[$x.annotations[Required]$], or shorter
+math:[$x@Required$].
+
+=== Element-Specific Annotations
+
+The following annotations are element-specific and are explained in the
+corresponding sections:
+
+// TODO: Check if this table is correct
+
+[cols="1m,2m,1"]
+|===
+|Annotation ^| Element Types | Section
+
+|@Internal      |TypeDefiningElement, Member, Function, Export|<<Access_Control>>
+|@Undefined       |Variable       |<<Undefined_Type>>
+|@StringBased       |Enum           |<<String_Based_Enums>>
+|@Final             |Class, Member                              |<<Final_Methods>>
+|@Spec             |FPar        |<<Spec_Construtor>>
+|@Override|Method                                   |<<Redefinition_of_Members>>
+|@Promisifiable     |Function     |<<Promisifiable_Functions>>
+|@Promisify         |CallExpression              |<<Promisifiable_Functions>>
+|@This              |Function                                   |<<This_keyword>>
+|@N4JS               |Class, Export Statement                       |<<External_Declarations>>
+|@IgnoreImplementation  |Script, ExportDeclaration, ExportableElement   |<<External_Declarations>>
+|@Global            |External Declaration                           |<<Global_Definitions>>
+|@ProvidedByRuntime |External Declaration                           |<<Runtime_Definitions>>
+|@TestAPI           |TypeDefiningElement, Member                    |<<Test_Support>>
+|@Polyfill          |Class                                      |<<Polyfill_Definitions>>
+|@StaticPolyfill        |Class                                      |<<Static_Polyfill_Definitions>>
+|@StaticPolyfillAware   |Script                                     |<<Static_Polyfill_Definitions>>
+|@StaticPolyfillModule  |Script                                     |<<Static_Polyfill_Definitions>>
+|@Transient         |Field
+|===
+
+
+* intended for internal use only; will be removed.
+
+=== General Annotations
+
+
+==== IDEBUG
+
+`IDEBUG` is an annotation similar to Java’s ``@SuppressWarnings``. It changes the severity of an issue
+from an error to a warning so that code can be compiled regardless of
+validation errors. This is to be used for known IDE bugs only.
+
+=== Syntax [[idebug-syntax]]
+
+[source]
+----
+'@IDEBUG' '(' bugID = INT ',' errorMessage=STRING ')'
+----
+
+The annotation is defined transitively and repeatable on script, type
+declaration, function and method level.
+
+==== Semantics
+
+This annotation will cause errors issued in the scope of the annotation
+(in the defined script, type, or method) to be transformed to warnings
+if their message text is similar to the math:[$errorMessage$] text.
+If math:[$errorMessage$] ends with ``…`` (three dots as a single
+character, created by Eclipse to abbreviate messages), then the error’s
+message text must start with the specified text.
+
+If no matching error is found, the annotation itself will issue an
+error.
+
+[IDEBUG][ex:IDEBUG] In the following code snippet, two errors are to be
+transformed to warnings.
+
+[source]
+----
+export class TestDataBridge with IModuleTest {
+    @IDEBUG(166, "{function(number):void} is not a subtype of {function(T):void}.")
+    @IDEBUG(91, "Incorrect number of arguments: expected 1, got 2.")
+    @Override public run(): void {
+        var foo = new Foo(),
+            cb = function(val: number): void {},
+            db = DataBridge.<number>bind(foo, "bar");
+        db.add(cb);
+        Assert.isTrue(called);
+    }
+}
+----
+
+The first one would occur on line 8, since there is a bug in the IDE
+type system (as of writing this example) that type arguments are not
+correctly bound in case of function expressions used as callback
+methods. The annotation in line 2 transforms the error
+
+[source]
+----
+{function(number):void} is not a subtype of {function(T):void}.
+----
+
+into a warning with the following text:
+
+[source]
+----
+IDEBUG-166: {function(number):void} is not a subtype of {function(T):void}.
+----
+
+refers to the corresponding bug report, that is .
+
+The annotation on line 3 was proposed as a workaround for ``IDEBUG-91`` which has
+been fixed. footnote:[Hopefully IDEBUG-166 task:IDEBUG-166[] is fixed at time of publication.]. No error message is produced and an error will be issued on line 3 instead:
+
+[source]
+----
+No matching error found, apparently bug IDEBUG-91 has been fixed or does not occur here.
+----
+
+==== Suppress Warnings
+//\version{0.5}{This is not part of version 0.3}
+
+== Declaration of Annotations
+
+//TODO: fix
+//version{>0.5}{not implemented in version 0.3} task:IDE-139[]

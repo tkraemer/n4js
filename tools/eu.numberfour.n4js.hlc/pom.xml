@@ -27,6 +27,7 @@ Contributors:
 		<hlc.jar-descriptorRef>jar-with-dependencies</hlc.jar-descriptorRef>
 		<hlc.jar-longname>${project.artifactId}-${project.version}-${hlc.jar-descriptorRef}.jar</hlc.jar-longname>
 		<hlc.plugin-folder>plugins</hlc.plugin-folder>
+		<jackson.version>2.5.0</jackson.version>
 	</properties>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
@@ -88,35 +89,35 @@ Contributors:
 			<!-- copy plugin-list -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-dependency-plugin</artifactId>
-						<version>${maven-dependency-plugin.version}</version>
-						<executions>
-							<execution>
-								<id>copy-n4js-plugins</id>
-								<phase>package</phase>
-								<goals>
-									<goal>copy</goal>
-								</goals>
-								<configuration>
-									<artifactItems>
-										<artifactItem>
-											<groupId>eu.numberfour.n4js</groupId>
-											<artifactId>eu.numberfour.n4js.runner.nodejs</artifactId>
-											<version>0.0.1-SNAPSHOT</version>
-											<type>jar</type>
-											<destFileName>optional-new-name.jar</destFileName>
-										</artifactItem>
-									</artifactItems>
-									<outputDirectory>${project.build.directory}/${hlc.plugin-folder}</outputDirectory>
-									<overWriteReleases>true</overWriteReleases>
-									<overWriteSnapshots>true</overWriteSnapshots>
-								</configuration>
-							</execution>
-						</executions>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${maven-dependency-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>copy-n4js-plugins</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>eu.numberfour.n4js</groupId>
+									<artifactId>eu.numberfour.n4js.runner.nodejs</artifactId>
+									<version>0.0.1-SNAPSHOT</version>
+									<type>jar</type>
+									<destFileName>optional-new-name.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>${project.build.directory}/${hlc.plugin-folder}</outputDirectory>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
-				<!-- Executing the build as part of the integration test in a separate
+				<!-- Executing the build as part of the integration test in a separate 
 					vm. -->
 				<!-- config-HELP with:: mvn exec:help -Ddetail=true -Dgoal=exec -->
 				<groupId>org.codehaus.mojo</groupId>
@@ -234,7 +235,7 @@ Contributors:
 		<pluginManagement>
 			<plugins>
 				<plugin>
-					<!-- M2E specific lifecycle configruation to suppress the warning: "maven-enforcer-plugin
+					<!-- M2E specific lifecycle configruation to suppress the warning: "maven-enforcer-plugin 
 						(goal "enforce") is ignored by m2e." source: http://stackoverflow.com/a/13043842 -->
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -266,7 +267,11 @@ Contributors:
 	<profiles>
 		<profile>
 			<id>noTests</id>
-			<activation><property><name>noTests</name></property></activation>
+			<activation>
+				<property>
+					<name>noTests</name>
+				</property>
+			</activation>
 			<build>
 				<plugins>
 					<plugin>
@@ -286,21 +291,21 @@ Contributors:
 						</executions>
 					</plugin>
 					<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-resources-plugin</artifactId>
-							<version>${maven-resources-plugin.version}</version>
-							<executions>
-									<execution>
-											<id>default-testResources</id>
-											<phase>none</phase>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>${maven-resources-plugin.version}</version>
+						<executions>
+							<execution>
+								<id>default-testResources</id>
+								<phase>none</phase>
 								<configuration>
 									<systemProperties>
 										<NODEJS_PATH>${NODEJS_PATH}</NODEJS_PATH>
 										<eu.numberfour.n4js.defaultNodePath>${eu.numberfour.n4js.defaultNodePath}</eu.numberfour.n4js.defaultNodePath>
 									</systemProperties>
 								</configuration>
-									</execution>
-							</executions>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -457,23 +462,26 @@ Contributors:
 			<artifactId>eu.numberfour.n4js.tester.nodejs</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<!-- Test helper for the integration tests.  -->
+		<!-- Test helper for the integration tests. -->
 		<dependency>
 			<groupId>eu.numberfour.n4js</groupId>
 			<artifactId>eu.numberfour.n4js.tests.helper</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-
-
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-core-asl</artifactId>
-			<version>1.6.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.6.0</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.xtext</groupId>
@@ -501,27 +509,27 @@ Contributors:
 			<version>9.2.9.v20150224</version>
 		</dependency>
 		<dependency>
-		<groupId>org.eclipse.equinox</groupId>
+			<groupId>org.eclipse.equinox</groupId>
 			<artifactId>org.eclipse.equinox.common</artifactId>
-				<version>[3.6.0,)</version>
+			<version>[3.6.0,)</version>
 		</dependency>
 		<!-- Missing IWorkspcae -->
 		<dependency>
 			<groupId>org.eclipse.core</groupId>
-				<artifactId>org.eclipse.core.resources</artifactId>
-				<version>[3.7.100,)</version>
+			<artifactId>org.eclipse.core.resources</artifactId>
+			<version>[3.7.100,)</version>
 		</dependency>
-		<!-- Missing org.eclipse.core.runtime.jobs.ISchedulingRule-->
+		<!-- Missing org.eclipse.core.runtime.jobs.ISchedulingRule -->
 		<dependency>
 			<groupId>org.eclipse.core</groupId>
 			<artifactId>org.eclipse.core.jobs</artifactId>
-				<version>[3.5.100,)</version>
+			<version>[3.5.100,)</version>
 		</dependency>
 		<!-- xsemantics -->
 		<dependency>
-				<groupId>net.sf.xsemantics</groupId>
-				<artifactId>it.xsemantics.dsl</artifactId>
-				<version>1.9.0</version>
+			<groupId>net.sf.xsemantics</groupId>
+			<artifactId>it.xsemantics.dsl</artifactId>
+			<version>1.9.0</version>
 		</dependency>
 		<!-- java.lang.ClassNotFoundException: org.osgi.framework.BundleException -->
 		<dependency>
@@ -529,7 +537,7 @@ Contributors:
 			<artifactId>org.eclipse.osgi</artifactId>
 			<version>[3.7.1,)</version>
 		</dependency>
-		<!-- Xcore lib  -->
+		<!-- Xcore lib -->
 		<dependency>
 			<groupId>org.eclipse.emf</groupId>
 			<artifactId>org.eclipse.emf.ecore.xcore.lib</artifactId>
@@ -552,12 +560,12 @@ Contributors:
 		    <version>54.1.1</version>
 		</dependency>
  -->
-		<dependency>
+ 		<dependency>
 				<groupId>com.ibm.icu</groupId>
 				<artifactId>icu4j</artifactId>
 				<version>56.1</version>
 		</dependency>
- 		<dependency>
+		<dependency>
 			<groupId>org.eclipse.jgit</groupId>
 			<artifactId>org.eclipse.jgit</artifactId>
 			<version>4.1.1.201511131810-r</version>
@@ -575,11 +583,10 @@ Contributors:
 			<version>[15.0.0]</version>
 		</dependency>
 
-		<!--  # # Below are dependencies which don't go into the jar # # # # # # # # # # # # # # # # # # # # # # # #
-				They are required for testing.
-		-->
-		<!-- JUnit is required for compiling the tests
-			It will not be copied to the jar -->
+		<!-- # # Below are dependencies which don't go into the jar # # # # # # 
+			# # # # # # # # # # # # # # # # # # They are required for testing. -->
+		<!-- JUnit is required for compiling the tests It will not be copied to 
+			the jar -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

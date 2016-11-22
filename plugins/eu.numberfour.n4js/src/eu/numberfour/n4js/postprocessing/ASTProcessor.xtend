@@ -77,6 +77,8 @@ public class ASTProcessor extends AbstractProcessor {
 	private TypeProcessor typeProcessor;
 	@Inject
 	private TypeDeferredProcessor typeDeferredProcessor;
+	@Inject
+	private ArrowFunctionProcessor arrowFunctionProcessor;
 
 	/**
 	 * Called from N4JSPostProcessor.
@@ -318,6 +320,8 @@ public class ASTProcessor extends AbstractProcessor {
 			// all the logic from method #xsemantics_type() above for handling references to other resources
 			ts.type(G, elem);
 		}
+
+		arrowFunctionProcessor.tweakArrowFunctions(G, node, cache);
 	}
 
 
