@@ -422,11 +422,11 @@ By default, methods can be overridden. To prevent a method from being
 overridden, it must be annotated with `@Final`.
 
 Of course, a method cannot be declared both abstract and final
-(cf. <<Abstract-Member>>). Private methods are implicitly declared
+(cf. <<_abstract-member,Abstract Member>>). Private methods are implicitly declared
 final. Because static methods can be overridden in subclasses (which is
 different to Java), they also can be marked as final.
 
-Default methods in interfaces, cf. <<Default-Methods-in-Interfaces>>, may also be declared `@Final`.
+Default methods in interfaces, cf. <<_default-methods-in-interfaces,Default Methods in Interfaces>>, may also be declared `@Final`.
 
 
 .Final Methods in Interfaces
@@ -462,11 +462,11 @@ A method can be declared without defining it, i.e. without providing a
 method body, and is then called an __abstract method__. Such methods
 must be declared with modifier `abstract` and have their property
 math:[$abstract$] set to true. Constraints for abstract methods are
-covered in <<Abstract-Member>> (see <<Abstract-Classes>>).
+covered in <<_abstract-member,Abstract Member>> (see <<_abstract-classes,Abstract Classes>>).
 
 In interfaces, methods are always abstract by default and they do not
 have to be marked as abstract. If a method in an interface provides a
-body, then this is the default implementation. See <<Implementation-of-Members>> about how the default implementation may be mixed in the consumer.
+body, then this is the default implementation. See <<_implementation-of-members,Implementation-of-Members>> about how the default implementation may be mixed in the consumer.
 
 === Generic Methods
 task:IDE-38[] task:IDE-39[]
@@ -477,7 +477,7 @@ are used similarly to predefined or declared types. Additionally,
 methods may be declared generic independently from their containing
 class. That is to say that type parameters (with type variables) can be
 defined for methods as well, just like for generic functions (see
-<<Generic-Functions>>).
+<<_generic-functions,Generic Functions>>).
 
 .Type variable names for generic methods
 [req,id=IDE-55,version=1]
@@ -511,8 +511,8 @@ so-called _default implementation_ and the method is called a __default
 method__. This will be mixed into an implementor of the interface if,
 and only if, neither the implementing class nor any of its direct or
 indirect superclasses already provides an implementation for this
-method; for details see <<Member-Consumption>>. Since the implementor is not known, some constraints exist for the body. I.e., no access to super is possible,
-cf. <<Access-Super-Member-with-Super-Literal>>.
+method; for details see <<_member-consumption,Member Consumption>>. Since the implementor is not known, some constraints exist for the body. I.e., no access to super is possible,
+cf. <<_access-super-member-with-super-literal,Access Super Member with Super Literal>>.
 
 In order to declare an interface to provide a default implementation in
 a definition file, annotation `@ProvidesDefaultImplementation` can be used, cf.
@@ -530,7 +530,7 @@ N4JS implements the async/await concept proposed for ECMAScript 7, which
 provides a more convenient and readable syntax for writing asynchronous
 code compared to using built-in type Promise directly. This concept can
 be applied to methods in exactly the same way as to declared functions.
-See <<Asynchronous-Functions>> and <<Asynchronous-Arrow-Functions>> for details.
+See <<Asynchronous-Functions>> and <<_asynchronous-arrow-functions,Asynchronous Arrow Functions>> for details.
 
 == Constructors
 task:IDE-159[]

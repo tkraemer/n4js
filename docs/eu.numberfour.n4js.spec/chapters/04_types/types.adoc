@@ -268,7 +268,7 @@ Predefined Type::
 Array Type::
   <<_array-object-type,Array Object Type>>.
 Function Type::
-  Described in <<functions>>, <<_function_type>>.
+  Described in <<functions,Functions>>, <<_function_type,Function Type>>.
 Any Type::
   <<_any-type,Any Type>>.
 
@@ -278,14 +278,14 @@ Any Type::
 Declared Type::
   (Unparameterized) Reference to defined class <<Classes>> or enum <<Enums>>.
 Parameterized Type::
-  Parameterized reference to defined generic class or interface; <<Parameterized-Types,Parameterized Types>>.
+  Parameterized reference to defined generic class or interface; <<_parameterized-types,Parameterized Types>>.
 This Type::
 <<_this-type,This Type>>.
 Constructor and Type Type::
   Class type, that is the meta class of a defined class or interface, <<_constructor-and-classifier-type,Constructor and Classifier Type>>.
 
 Union Types::
-Union of types, <<_union-type,Union-Type>>.
+Union of types, <<_union-type,Union Type>>.
 Type Variable::
 Type variable, <<_type-variables,Type Variables>>.
 
@@ -879,7 +879,7 @@ members, it seems convenient to use additional structural members, like
 on interface I2 in the
 example <<ex:use-declared-interfaces-for-lower-bounds,Use declared interfaces for lower bounds>> below. However,
 type variables must not be constrained using structural types (see
-constraint <<__use-site-structural-typing,Use-Site Structural Typing>>). Hence, the recommended
+constraint <<_use-site-structural-typing,Use-Site Structural Typing>>). Hence, the recommended
 solution is to use an explicitly declared interface that uses definition
 site structural typing for these constraints as an upper bound (see
 interface in the example).
@@ -1073,7 +1073,7 @@ It is supertype of the N4JS primitive type `pathselector`, and `i18nKey`.
 <<_primitive-pathselector-and-I18nKey,Primitive Pathselector and I18nKey>>
 
 // TODO: xref
-However, variables of type `string` can be auto-converted (coerced) to `string`, as described in <<_autoboxing-and-coercing,Autoboxing and coercing>>.
+However, variables of type `string` can be auto-converted (coerced) to `string`, as described in <<_autoboxing-and-coercing,Auto-Boxing and coercing>>.
 
 === Primitive Number Type
 
@@ -1089,7 +1089,7 @@ The type `number` is subtype of `any`:
 math:[\[\begin{aligned} \infer{`number} <: `any}}{} \\\end{aligned}\]]
 
 However, variables of type `number` can be auto-converted (coerced) to `Number`, as
-described in <<Integer-Literals>> .
+described in <<_integer-literals,Integer Literals>> .
 //TODO: xref
 
 === Primitive Type int
