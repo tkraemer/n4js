@@ -1813,7 +1813,7 @@ Methods defined in interfaces are automatically declared abstract if
 they do not provide a default implementation. This can also be expressed
 explicitly via adding the `abstract` modifier. If a class implementing an abstract
 interface does not implement a method declared in the interface, the
-class needs to be declared abstract (cf. <<Abstract_Classes>>).
+class needs to be declared abstract (cf. <<_abstract-classes,Abstract Classes>>).
 
 Consequences for method implementation:
 
@@ -1826,7 +1826,7 @@ math:[\[\begin{aligned}
         & \forall M \in C.methods, M' \in I_i.methods (i=1\dots n): \\
         & \hspace{2em} M.name=M'.name \Rightarrow M.acc \neq private \to M.acc \geq M'.acc
     \end{aligned}\]]
-3.  Methods in the implementor must be a supertype footnote:[As defined in <<Function_Type>> for function types.] of methods from implemented interfaces.
+3.  Methods in the implementor must be a supertype footnote:[As defined in <<_function-type,Function Type>> for function types.] of methods from implemented interfaces.
 That is to say the implemented methods are override-compatible.
 4.  There may be several methods math:[$M_1, ..., M_n$] defined in
 different implemented interfaces and a single owned method

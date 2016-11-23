@@ -442,7 +442,7 @@ MainModule ::
 (optional) A plain module specifier defining the project’s ``main
 module``. If this property is defined, other projects can import from
 this project using imports where the string following keyword `from` states the
-project name and not the complete module specifier (see <<Imprt_Statement_Semantics>>).
+project name and not the complete module specifier (see <<_import-statement-semantics,Import Statement Semantics>>).
 
 CompatibleWith ::
 In the case of a runtime environment or library, this specifies to which
@@ -1034,7 +1034,7 @@ with the same fully-qualified name from math:[$I_n$].
 
 == API and Implementation With DI
 
-API projects may use N4JS DI (<<Dependency_Injection>>) language features which require
+API projects may use N4JS DI (<<_dependency-injection,Dependency Injection>>) language features which require
 Implementation projects to provide DI-compatible behaviour in order to
 allow a Client (implemented against an API project) to be executed with
 a given Implementation project. This is essential for normal execution

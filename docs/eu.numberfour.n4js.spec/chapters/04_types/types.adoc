@@ -2474,7 +2474,7 @@ type of a method parameter
 * an existential type argument inside a return type expression for
 methods (e.g.`ArrayList<? extends this> method(){...}`)
 
-The precise rule where it may appear is given below in <<req:37 This Type>>.
+The precise rule where it may appear is given below in <<IDE-37,requirement: This Type>>.
 
 The `this` type is similar to a type variable, and it is bound to the declared
 or inferred type of the receiver. If it is used as return type, all
@@ -2893,8 +2893,8 @@ math:[$E_S$] is of the type of the string-based enumeration.
 math:[\[\begin{aligned}
         \infer{ \tee l \subtype E_S }{l \in E_S.L_S}
     \end{aligned}\]]
-.  <<req:39Unique literal names>> also applies for `N4StringBasedEnum`.
-.  [<<req:40Enum Literals are Singletons>>]
+.  <<IDE-39,requirement: Unique Literal Names>> also applies for `N4StringBasedEnum`.
+.  [<<IDE-40,requirement: Enum Literals are Singletons>>]
 also applies for `N4StringBasedEnum`.
 .  References to string-based enums may only be used in the following
 places:

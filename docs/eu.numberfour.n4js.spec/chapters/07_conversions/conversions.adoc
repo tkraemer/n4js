@@ -109,7 +109,7 @@ Function expressions and declarations always define an object of type `Function`
 
 It is always possible to use a function expression where a `Function` is required, and to use an object of type `Function` where a function expression is expected.
 This is only possible if the function signatures are subtype-compatible,
-see <<Function_Type>> for details.
+see <<_function-type,Function Type>> for details.
 
 Still, it is always possible to call members of `Function`, e.g.,
 `function(){}.length()`.

@@ -237,7 +237,7 @@ method can be used to create a root object causing a new injection phase
 to take place.
 .  If math:[$C.ctor$] is marked as injection point, all its
 arguments are set by the injector. This is also true for an inherited
-constructor marked as an injection point. See <<req:Constructor_Injection>> task:IDE-1264[]. For all arguments the injection phase constraints have to hold as well.
+constructor marked as an injection point. See <<IDE-143,requirement: Constructor Injection>> task:IDE-1264[]. For all arguments the injection phase constraints have to hold as well.
 \item All fields of $C$, including \emph{inherited} once, marked as injection points are set by the injector. For all fields the injection phase constraints have to hold as well.
 task:IDE-1264[] task:IDEBUG-441[]
 .  All fields of math:[$C$], including _inherited_ once, marked as
@@ -1293,9 +1293,9 @@ parameters (with no further modifications): math:[\[\begin{aligned}
     &   \hspace{3em} P.typePars_i=F.typePars_i \\
     &   \hspace{3em} \land P.typePars_i.name=P.super.typeArgs_i.name \\
     \end{aligned}\]]
-8.  All constraints related to member redefinition (cf. <<Redefinition_of_Members>>) have to hold.
+8.  All constraints related to member redefinition (cf. <<_redefinition_of_members,Redefinition of Members>>) have to hold.
 In the case of polyfills, this is true for constructors (cf.
-<<req:Overriding_Members>>) and private members.
+<<IDE-72,requirement: Overriding Members>>) and private members.
 --
 
 === Runtime Polyfill Definitions
@@ -1380,7 +1380,7 @@ must hold in addition to constraints :
 --
 For a static polyfill class math:[$P$] annotated with `@StaticPolyfill`, that is
 math:[$P.staticpolyfill=\TRUE$], all the following constraints must
-hold in addition to <<req:Polyfill_Class>>:
+hold in addition to <<IDE-152,requirement: Polyfill Class>>:
 
 1.  math:[$P$]’s name equals the name of the filled class and is
 contained in a module with the same qualified name:

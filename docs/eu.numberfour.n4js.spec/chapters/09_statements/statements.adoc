@@ -456,7 +456,7 @@ ConstDeclaration returns VariableDeclaration: typeRef=TypeRef? name=IDENTIFIER c
 
 A const variable statement is more or less a normal variable statement
 (see <<_variable-statement,Variable Statement>>), except that all variables declared by that statement are not
-writable (cf. <<req:Write_Acccess>>). This is similar to constant data
+writable (cf. <<IDE-121,requirement: Write-Acccess>>). This is similar to constant data
 fields (cf. <<Assignment_Modifiers>>).
 
 .Writability of const variables

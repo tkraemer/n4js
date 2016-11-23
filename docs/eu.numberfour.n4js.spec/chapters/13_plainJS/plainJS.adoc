@@ -130,7 +130,7 @@ task:IDE-1509[]
 This means that in external classes, all members except constructors may
 be declared private even if the class is not annotated with `@N4JS`. In
 interfaces, however, private members are disallowed anyway,
-cf. <<req:Interfaces>>.
+cf. <<IDE-48,requirement: Interfaces>>.
 
 --
 
