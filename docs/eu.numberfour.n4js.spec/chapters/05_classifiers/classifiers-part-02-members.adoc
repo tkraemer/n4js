@@ -1006,7 +1006,7 @@ y = createAnother(x, new B());
 
 ====
 
-In the code of <<ex:Covariant_Constructors>> we would get an error if we changed the type of parameter `p` in the constructor of `Cls2` to some other type that is not a super type of `B`,
+In the code of <<_ex-covariant-constructors,Covariant Constructors example>>, we would get an error if we changed the type of parameter `p` in the constructor of `Cls2` to some other type that is not a super type of `B`,
 i.e. the type of the corresponding parameter of `Cls`’s constructor. If we
 removed the `@CovariantConstructor` annotation on `Cls`, we would get an error in the new expression inside function `createAnother`.
 
@@ -1536,7 +1536,7 @@ and field accessors of interfaces, therefore, always have to provide a
 body.
 
 Static members of interfaces are much more restricted than those of classes.
-Compare the following example to <<ex:Polymorphism_and_static_methods,Polymorphism and Static Methods>> for classes above:
+Compare the following example to <<_polymorphism-and-static-methods,Polymorphism and Static Methods>> for classes above:
 
 .Static members of interfaces
 [example]

@@ -198,7 +198,7 @@ for every writeable field of the references type.
 
 Multiple structural typing strategies can be nested when there are
 multiple use sites, like in the
-example <<ex:nested-structural-typing-strategies>> below at the locations
+example <<_ex-nested-structural-typing-strategies,Nested Structural Typing Strategies>> below at the locations
 ST1 and ST2. In the example, the datafield `a.field` has the nested structural
 //TODO: check formatting below
 type `{\tsInitFld A}` and thus the datafield `a.field.df` is

@@ -877,7 +877,7 @@ supported.
 In case an upper bound of a type variable shall consist only of a few
 members, it seems convenient to use additional structural members, like
 on interface I2 in the
-example <<ex:use-declared-interfaces-for-lower-bounds,Use declared interfaces for lower bounds>> below. However,
+example <<_use-declared-interfaces-for-lower-bounds,Use declared interfaces for lower bounds>> below. However,
 type variables must not be constrained using structural types (see
 constraint <<_use-site-structural-typing,Use-Site Structural Typing>>). Hence, the recommended
 solution is to use an explicitly declared interface that uses definition
@@ -1442,10 +1442,11 @@ The type `N4Class` is used for extended reflection in N4JS.
 
 // TODO: work in progress
 
-Currently there are built-in types `Iterable2<T1,T2>`...`Iterable9<T1,...,T9>`. They are mainly intended for type system support of array destructuring literals.
+Currently there are built-in types `Iterable2<T1,T2>` -> `Iterable9<T1, -> ,T9>`.
+They are mainly intended for type system support of array destructuring literals.
 
 Not documented in detail yet, because we want to gain experience with
-current solution, first, and major refinement might be incoming...
+current solution, first, and major refinement might be incoming.
 
 == Type Modifiers
 
@@ -1519,7 +1520,7 @@ math:[$...Type$], but not math:[$...Type=$]
 
 
 Declaring a variadic method parameter of type math:[$T$] causes the
-type of the method parameter to become `Array<T>`. That is, declaring `function(string ...tags)` causes `tags` to be
+type of the method parameter to become `Array<T>`. That is, declaring `function(string ..tags)` causes `tags` to be
 an `Array<string>` and not just a scalar `string` value.
 
 To make this work at runtime, the compiler will generate code that
@@ -1670,7 +1671,7 @@ synonym for `equivalent`.]
 Let A, B, and C be defined as in the chapter beginning (math:[$C <: B <: A$])
 
 The following subtyping relations with union types are to be evaluated
-as follows footnote:[See Example <<ex:Class-Hierarchy>> for class definitions.]:
+as follows footnote:[See Example <<_class-hierarchy>> for class definitions.]:
 
 [source]
 ----
@@ -1933,7 +1934,7 @@ Let A, B, and C be defined as in the chapter beginning
 (math:[$C <: B <: A$])
 
 The following subtyping relations with intersection types are to be
-evaluated as follows footnote:[See Example <<ex:Class-Hierarchy>> for class definitions.]:
+evaluated as follows footnote:[See Example <<_class-hierarchy>> for class definitions.]:
 
 [source]
 ----
@@ -2395,7 +2396,7 @@ the upper bound directly. That is, a type reference `type{? extends C}` can simp
 To conclude this chapter, let us compare the different types introduced
 above depending on whether they are used with wildcards or not:
 
-1.  having a value of type `constructor{C}`, we know we have ...
+1.  having a value of type `constructor{C}`, we know we have
 * a constructor function of `{C}` or a subclass of `{C}`,
 * that can be used for instantiation (i.e. the represented class is not
 abstract),
@@ -2406,7 +2407,7 @@ This means we have the constructor function of class `{C}` (but only if is
 non-abstract) or the constructor function of any non-abstract subclass
 of `{C}` with an override compatible signature to that of `{C}`'s constructor
 function.
-2.  having a value of type `constructor{? extends C}`, we know we have ...
+2.  having a value of type `constructor{? extends C}`, we know we have
 * a constructor function of `{C}` or a subclass of `{C}`,
 * that can be used for instantiation (i.e. the represented class is not
 abstract).
@@ -2417,7 +2418,7 @@ constructor, cf. <<_covariant-constructors,Covariant Constructors>>, we can sti
 covariant constructors enforce all their subclasses to have override
 compatible constructors.
 3.  have a value of type `type{? extends C}` or `type{C}` (the two types are equivalent), we know we
-have ...
+have:
 * an object representing a type (often constructor functions are used
 for this, e.g. in the case of classes, but could also be a plain object,
 e.g. in the case of interfaces),
@@ -2450,17 +2451,17 @@ base class always has Function.prototype as its prototype. If we had
 defined `A` as `class A extends Object {}` in the listing above, then the constructor of `A` would have Object’s constructor as its prototype (depicted in as a dashed red
 arrow), which would make a more consistent overall picture.
 
-[[image:constructors_and_prototypes]]
+[[_img-constructors-and-prototypes]]
 image::fig/ctorsProtosInES6.png[title="Constructors and prototypes for two classes A and B in ECMAScript 2015 (not N4JS!)"]
 
 Base classes in the above sense are not available in N4JS. If an N4JS
 class does not provide an `extends` clause, it will implicitly inherit from
-built-in class `N4Object`, if it provides an `extends` clause stating `Object` as its super type, then it corresponds to what is shown in <<_image:constructors-and-prototypes,Constructors and prototypes>> with the red dashed arrow.
+built-in class `N4Object`, if it provides an `extends` clause stating `Object` as its super type, then it corresponds to what is shown in <<_img-constructors-and-prototypes,Constructors and prototypes>> with the red dashed arrow.
 
 == This Type
 task:IDE-377[] task:IDE-785[] task:IDEBUG-228[]
 
-The keyword may represent either a literal (cf. <<ex:this-keyword-and-type-in-instance-and-static-context,example: This keyword and type in instance and static context>>) or may refer to the type. In this section, we describe the latter case.
+The keyword may represent either a literal (cf. <<_this-keyword-and-type-in-instance-and-static-context,example: This keyword and type in instance and static context>>) or may refer to the type. In this section, we describe the latter case.
 
 Typical use cases of the type include:
 
