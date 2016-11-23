@@ -45,7 +45,7 @@ Contributors:
 |EBNF
 |Extended Backus-Naur Form
 |EMF
-|Eclipse Modeling Framework ([[EMF,EMF]])
+|Eclipse Modeling Framework [[EMF]]
 |FQN
 |Fully Qualified Name
 |GLB
@@ -58,6 +58,7 @@ Contributors:
 |Interface Definition Langage
 |LSP
 |Liskov Substitution Principle cite:[Martin96b]
+//TODO missing from biblio ^^^
 |LUB
 |Least Upper Bound, also known as _supremum_
 |LCST
@@ -79,5 +80,5 @@ Contributors:
 |WYSIWYG
 |What You See Is What You Get
 |WLOG
-|without loss of generality
+|Without loss of generality
 |===

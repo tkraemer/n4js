@@ -442,7 +442,7 @@ MainModule ::
 (optional) A plain module specifier defining the project’s ``main
 module``. If this property is defined, other projects can import from
 this project using imports where the string following keyword `from` states the
-project name and not the complete module specifier (see <<_import-statement-semantics,Import Statement Semantics>>).
+project name and not the complete module specifier (see <<import-statement-semantics,Import Statement Semantics>>).
 
 CompatibleWith ::
 In the case of a runtime environment or library, this specifies to which
@@ -514,7 +514,7 @@ type. There exist three different source fragment types:
 * *external*: Implementation of modules defined in definition files (n4jsd). These
   implementations are never validated nor fully compiled. Instead, they
   are only wrapped into module definitions and copied to the output
-  folder. See <<External_Declarations>> and <<_implementation-of-external-declarations,Implementation of External Declarations>> for details.
+  folder. See <<_external-declarations,External Declarations>> and <<_implementation-of-external-declarations,Implementation of External Declarations>> for details.
 
 
 Filters for fine-tuning the validator and compiler. A filter is applied
@@ -627,7 +627,7 @@ navigation.
 extensions will then be used to match the file).
 --
 
-Examples of using external source fragments and filters are given in (<<External_Definitions_and_Their_Implementations>>).
+Examples of using external source fragments and filters are given in (<<_implementation-of-external-declarations>>).
 <<_implementation-of-external-declarations,Implementation of External Declarations>>
 
 .No validation and module wrapping example

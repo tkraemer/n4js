@@ -146,6 +146,7 @@ recognized when defined in a member JSDoc). The `@testeeMember` is specified in 
 This only works for instance members, so far! Note: There is no
 validation for invalid combinations!
 
+[[ex:testeetype-and-testeemethod]]
 .testeeType and testeeMethod
 [example]
 --
@@ -212,7 +213,7 @@ links.
 [example]
 --
 
-Assume testees similar as in <<ex:testeeType_and_testeeMethod>>. Since the semantics of `bar` is not changed in `B`, it is probably not necessary to generate the same constraint in the documentation for `bar` twice (one in the section for class `A` and another one in the section of class `B`).
+Assume testees similar as in <<ex:testeetype-and-testeemethod>>. Since the semantics of `bar` is not changed in `B`, it is probably not necessary to generate the same constraint in the documentation for `bar` twice (one in the section for class `A` and another one in the section of class `B`).
 Still, we want the test to be executed for both receivers. This is how it is achieved:
 
 [source,n4js]

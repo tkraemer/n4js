@@ -49,8 +49,8 @@ ifndef::config_adoc_include_guard[]
 // Creates a clickable (and copyable) link beside section titles
 :sectlink:
 
-// Embed images and stylesheet
-:data-uri:
+// Link to css instead of embedding
+:linkcss:
 
 // Allows for UI macros, see http://asciidoctor.org/docs/user-manual/#user-interface-macros
 :experimental: true

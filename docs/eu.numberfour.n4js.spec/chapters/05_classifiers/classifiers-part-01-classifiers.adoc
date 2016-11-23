@@ -64,7 +64,7 @@ the classifier may be accessible outside the project. task:IDE-84[]
 
 `final`: ::
 Boolean property which is set to final if annotation `@Final` is set. Also see
-<<_final-extensibility,Final Extensibility>>
+<<_final-modifier,Final Extensibility>>
 
 `deprecated`: ::
 Boolean property set to true if annotation `@Deprecated` is set.
@@ -74,7 +74,7 @@ task:IDE-138[]
 We additionally define the following pseudo properties:
 
 `acc`: ::
-Type access modifier as described in <<_accessibility-of-types,Accessibility of types>>, it is the aggregated value of the
+Type access modifier as described in <<_accessibility-of-types-top-level-variables-and-function-declarations,Accessibility of types>>, it is the aggregated value of the
 math:[$accessModifier$] and the math:[$export$] property.
 
 `owned{Fields|Methods|Getters|Setters|Accessors}`: ::
@@ -229,7 +229,7 @@ default. Instead of math:[$implementedInterfaces$], we simply write
 math:[$interfaces$].
 
 `ownedCtor`: ::
-Explicit constructor of a class (if any), see <<Constructor>>.
+Explicit constructor of a class (if any), see <<_constructor-and-classifier-type,Constructor>>.
 
 And we additionally define the following pseudo properties:
 
@@ -513,7 +513,7 @@ math:[\[\begin{aligned}
 
 ==== Semantics [[interfaces-semantics]]
 
-Interfaces are used to describe the public <<AC,API>> of a classifier. The main
+Interfaces are used to describe the public <<Acronyms,API>> of a classifier. The main
 requirement is that the instance of an interface, which must be an
 instance of a class since interfaces cannot have instances, provides all
 members declared in the interface. Thus, a (concrete) class implementing
@@ -568,13 +568,13 @@ interface may be able to use the interface but not to implement it.
 
 In order to simplify modeling of runtime types, such as elements,
 interfaces do not only support the notation of static methods but
-constant data fields as well. Since <<AC,IDL>> cite:[OMG14a] is used to describe these elements in specifications (and mapped to JavaScript via rules described in cite:[W3C12a])
+constant data fields as well. Since <<Acronyms,IDL>> cite:[OMG14a] is used to describe these elements in specifications (and mapped to JavaScript via rules described in cite:[W3C12a])
 constant data fields are an often-used technique there and they can be
 modeled in N4JS 1:1.
 
 // todo[IDE-1236]{check current implementation: fields and methods}
 
-As specified in <<_defining-and-calling-constructors,Defining and Calling Constructors>>, interfaces
+As specified in <<IDE-56,Defining and calling Constructors,Defining and Calling Constructors>>, interfaces
 cannot contain a constructor i.e.
 math:[$\forall m \in I.ownedMethods: m.name \neq 'constructor'$].
 
