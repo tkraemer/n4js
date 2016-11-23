@@ -1089,7 +1089,7 @@ Boolean flag set to true if field is a static field.
 
 `const` ::
 Boolean flag set to true if field cannot be changed. Note that const fields are automatically static. Const fields need an initializer.
-Also see <<Assignment-Modifiers>>.
+Also see <<_assignment-modifiers,Assignment Modifiers>>.
 
 Note that math:[$const$] is _not_ the (reversed) value of the property descriptor math:[$writable$] as the latter is checked at runtime while const may or may not be checked at runtime.
 
@@ -1108,7 +1108,7 @@ set via annotation `@Writeable(true|false)`. The default value is math:[$\TRUE$]
 
 `final` ::
 Boolean flag making the field read-only, and it must be set in the
-constructor. Also see <<Assignment-Modifiers>>.
+constructor. Also see <<_assignment-modifiers,Assignment Modifiers>>.
 
 // TODO: use the following formatting to allow for better readability?
 // #### Derived values for fields:
@@ -1122,7 +1122,7 @@ Always false for fields.
 
 `writeable` ::
 Set to false if field is declared const or final. In the latter case, it
-may be set in the constructor (cf. <<Assignment-Modifiers>>).
+may be set in the constructor (cf. <<_assignment-modifiers,Assignment Modifiers>>).
 
 ==== Semantics [[data-fields-semantics]]
 
@@ -1362,7 +1362,7 @@ possible that a static member has the same name as an instance member.
 Note that static members are not only allowed in classes but also in
 interfaces, but there are important differences (for example, no
 inheritance of static members of interfaces, cf. Section
-<<Static-Members-of-Interfaces>>) .
+<<_static-members-of-interfaces,Static Members of Interfaces>>) .
 
 .Static member not abstract
 [req,id=IDE-65,version=1]
