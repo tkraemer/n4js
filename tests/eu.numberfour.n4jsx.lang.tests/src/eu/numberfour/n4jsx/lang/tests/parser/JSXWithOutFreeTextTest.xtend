@@ -106,6 +106,30 @@ class JSXWithOutFreeTextTest extends AbstractN4JSXParserTest {
 		val attr = jsxElement.jsxAttributes.head as JSXPropertyAttribute
 		assertEquals("Test", (attr.jsxAttributeValue as StringLiteral).value)
 	}
+	
+	/**
+	 * The example produces the same error when using the babel transpiler.
+	 */
+	@Test
+	def void testRegExAmbiguity() {
+		'''
+			"Hello"
+			
+			<div></div>
+		'''.parseWithError
+	}
 
+	/**
+	 * The example produces the same error when using the babel transpiler.
+	 */
+	@Test
+	def void testRegExAmbiguityContra() {
+		'''
+			<div></div>
+			
+			"Hello"
+		'''.parseSuccessfully
+	}
+			
 			
 }

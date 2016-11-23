@@ -85726,7 +85726,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_14;
         }
         public String getDescription() {
-            return "1019:1: ( ( ( ( () CommercialAt ( This | Target | RULE_IDENTIFIER ) ) )=>this_AnnotatedScriptElement_0= ruleAnnotatedScriptElement ) | ( ( ( () ( ( ruleN4Modifier ) )* Class ( ( ruleTypingStrategyDefSiteOperator ) )? ( ( ruleBindingIdentifier ) )? ) )=>this_N4ClassDeclaration_1= ruleN4ClassDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* Interface ( ( ruleTypingStrategyDefSiteOperator ) )? ( ( ruleBindingIdentifier ) )? ) )=>this_N4InterfaceDeclaration_2= ruleN4InterfaceDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* Enum ( ( ruleBindingIdentifier ) )? ) )=>this_N4EnumDeclaration_3= ruleN4EnumDeclaration ) | this_ImportDeclaration_4= ruleImportDeclaration | this_ExportDeclaration_5= ruleExportDeclaration | this_RootStatement_6= ruleRootStatement )";
+            return "1017:1: ( ( ( ( () CommercialAt ( This | Target | RULE_IDENTIFIER ) ) )=>this_AnnotatedScriptElement_0= ruleAnnotatedScriptElement ) | ( ( ( () ( ( ruleN4Modifier ) )* Class ( ( ruleTypingStrategyDefSiteOperator ) )? ( ( ruleBindingIdentifier ) )? ) )=>this_N4ClassDeclaration_1= ruleN4ClassDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* Interface ( ( ruleTypingStrategyDefSiteOperator ) )? ( ( ruleBindingIdentifier ) )? ) )=>this_N4InterfaceDeclaration_2= ruleN4InterfaceDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* Enum ( ( ruleBindingIdentifier ) )? ) )=>this_N4EnumDeclaration_3= ruleN4EnumDeclaration ) | this_ImportDeclaration_4= ruleImportDeclaration | this_ExportDeclaration_5= ruleExportDeclaration | this_RootStatement_6= ruleRootStatement )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -86000,7 +86000,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_20;
         }
         public String getDescription() {
-            return "1177:2: ( ( () this_ExportDeclarationImpl_2= ruleExportDeclarationImpl[$current] ) | ( () this_ImportDeclarationImpl_4= ruleImportDeclarationImpl[$current] ) | ( () ( ( ( ( ( ruleN4Modifier ) )* ruleAsyncNoTrailingLineBreak[null] Function ) )=> ( ( (lv_declaredModifiers_6_0= ruleN4Modifier ) )* this_AsyncNoTrailingLineBreak_7= ruleAsyncNoTrailingLineBreak[$current] ( ( Function )=>this_FunctionImpl_8= ruleFunctionImpl[$current] ) ) ) ) | ( ( ( () ( (lv_declaredModifiers_10_0= ruleN4Modifier ) )* otherlv_11= Class ( (lv_typingStrategy_12_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_13_0= ruleBindingIdentifier ) ) (this_TypeVariables_14= ruleTypeVariables[$current] )? (this_ClassExtendsClause_15= ruleClassExtendsClause[$current] )? ) | ( () ( (lv_declaredModifiers_17_0= ruleN4Modifier ) )* otherlv_18= Interface ( (lv_typingStrategy_19_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_20_0= ruleBindingIdentifier ) ) (this_TypeVariables_21= ruleTypeVariables[$current] )? (this_InterfaceImplementsList_22= ruleInterfaceImplementsList[$current] )? ) ) this_Members_23= ruleMembers[$current] ) | ( () ( (lv_declaredModifiers_25_0= ruleN4Modifier ) )* otherlv_26= Enum ( (lv_name_27_0= ruleBindingIdentifier ) ) otherlv_28= LeftCurlyBracket ( (lv_literals_29_0= ruleN4EnumLiteral ) ) (otherlv_30= Comma ( (lv_literals_31_0= ruleN4EnumLiteral ) ) )* otherlv_32= RightCurlyBracket ) )";
+            return "1175:2: ( ( () this_ExportDeclarationImpl_2= ruleExportDeclarationImpl[$current] ) | ( () this_ImportDeclarationImpl_4= ruleImportDeclarationImpl[$current] ) | ( () ( ( ( ( ( ruleN4Modifier ) )* ruleAsyncNoTrailingLineBreak[null] Function ) )=> ( ( (lv_declaredModifiers_6_0= ruleN4Modifier ) )* this_AsyncNoTrailingLineBreak_7= ruleAsyncNoTrailingLineBreak[$current] ( ( Function )=>this_FunctionImpl_8= ruleFunctionImpl[$current] ) ) ) ) | ( ( ( () ( (lv_declaredModifiers_10_0= ruleN4Modifier ) )* otherlv_11= Class ( (lv_typingStrategy_12_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_13_0= ruleBindingIdentifier ) ) (this_TypeVariables_14= ruleTypeVariables[$current] )? (this_ClassExtendsClause_15= ruleClassExtendsClause[$current] )? ) | ( () ( (lv_declaredModifiers_17_0= ruleN4Modifier ) )* otherlv_18= Interface ( (lv_typingStrategy_19_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_20_0= ruleBindingIdentifier ) ) (this_TypeVariables_21= ruleTypeVariables[$current] )? (this_InterfaceImplementsList_22= ruleInterfaceImplementsList[$current] )? ) ) this_Members_23= ruleMembers[$current] ) | ( () ( (lv_declaredModifiers_25_0= ruleN4Modifier ) )* otherlv_26= Enum ( (lv_name_27_0= ruleBindingIdentifier ) ) otherlv_28= LeftCurlyBracket ( (lv_literals_29_0= ruleN4EnumLiteral ) ) (otherlv_30= Comma ( (lv_literals_31_0= ruleN4EnumLiteral ) ) )* otherlv_32= RightCurlyBracket ) )";
         }
     }
     static final String dfa_21s = "\13\uffff";
@@ -86043,7 +86043,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_26;
         }
         public String getDescription() {
-            return "1272:7: ( ( () ( (lv_declaredModifiers_10_0= ruleN4Modifier ) )* otherlv_11= Class ( (lv_typingStrategy_12_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_13_0= ruleBindingIdentifier ) ) (this_TypeVariables_14= ruleTypeVariables[$current] )? (this_ClassExtendsClause_15= ruleClassExtendsClause[$current] )? ) | ( () ( (lv_declaredModifiers_17_0= ruleN4Modifier ) )* otherlv_18= Interface ( (lv_typingStrategy_19_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_20_0= ruleBindingIdentifier ) ) (this_TypeVariables_21= ruleTypeVariables[$current] )? (this_InterfaceImplementsList_22= ruleInterfaceImplementsList[$current] )? ) )";
+            return "1270:7: ( ( () ( (lv_declaredModifiers_10_0= ruleN4Modifier ) )* otherlv_11= Class ( (lv_typingStrategy_12_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_13_0= ruleBindingIdentifier ) ) (this_TypeVariables_14= ruleTypeVariables[$current] )? (this_ClassExtendsClause_15= ruleClassExtendsClause[$current] )? ) | ( () ( (lv_declaredModifiers_17_0= ruleN4Modifier ) )* otherlv_18= Interface ( (lv_typingStrategy_19_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_20_0= ruleBindingIdentifier ) ) (this_TypeVariables_21= ruleTypeVariables[$current] )? (this_InterfaceImplementsList_22= ruleInterfaceImplementsList[$current] )? ) )";
         }
     }
     static final String dfa_27s = "\101\uffff";
@@ -86140,7 +86140,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_32;
         }
         public String getDescription() {
-            return "1790:2: ( ( ( CommercialAt | Private | Project | Protected | Public | External | Abstract | Static | Const | Class | Interface | Enum | Async | Function | Var | Let )=> (lv_exportedElement_9_0= ruleExportableElement ) ) | ( ( (lv_defaultExportedExpression_10_0= norm1_AssignmentExpression ) ) ruleSemi ) )";
+            return "1788:2: ( ( ( CommercialAt | Private | Project | Protected | Public | External | Abstract | Static | Const | Class | Interface | Enum | Async | Function | Var | Let )=> (lv_exportedElement_9_0= ruleExportableElement ) ) | ( ( (lv_defaultExportedExpression_10_0= norm1_AssignmentExpression ) ) ruleSemi ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -86480,7 +86480,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_39;
         }
         public String getDescription() {
-            return "2053:1: ( ( ( ( () CommercialAt ( This | Target | RULE_IDENTIFIER ) ) )=>this_AnnotatedExportableElement_0= ruleAnnotatedExportableElement ) | ( ( ( () ( ( ruleN4Modifier ) )* Class ( ( ruleTypingStrategyDefSiteOperator ) )? ( ( ruleBindingIdentifier ) )? ) )=>this_N4ClassDeclaration_1= ruleN4ClassDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* Interface ( ( ruleTypingStrategyDefSiteOperator ) )? ( ( ruleBindingIdentifier ) )? ) )=>this_N4InterfaceDeclaration_2= ruleN4InterfaceDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* Enum ( ( ruleBindingIdentifier ) )? ) )=>this_N4EnumDeclaration_3= ruleN4EnumDeclaration ) | this_ExportedFunctionDeclaration_4= ruleExportedFunctionDeclaration | this_ExportedVariableStatement_5= ruleExportedVariableStatement )";
+            return "2051:1: ( ( ( ( () CommercialAt ( This | Target | RULE_IDENTIFIER ) ) )=>this_AnnotatedExportableElement_0= ruleAnnotatedExportableElement ) | ( ( ( () ( ( ruleN4Modifier ) )* Class ( ( ruleTypingStrategyDefSiteOperator ) )? ( ( ruleBindingIdentifier ) )? ) )=>this_N4ClassDeclaration_1= ruleN4ClassDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* Interface ( ( ruleTypingStrategyDefSiteOperator ) )? ( ( ruleBindingIdentifier ) )? ) )=>this_N4InterfaceDeclaration_2= ruleN4InterfaceDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* Enum ( ( ruleBindingIdentifier ) )? ) )=>this_N4EnumDeclaration_3= ruleN4EnumDeclaration ) | this_ExportedFunctionDeclaration_4= ruleExportedFunctionDeclaration | this_ExportedVariableStatement_5= ruleExportedVariableStatement )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -87218,7 +87218,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_46;
         }
         public String getDescription() {
-            return "2201:2: ( ( () ( (lv_declaredModifiers_2_0= ruleN4Modifier ) )* this_AsyncNoTrailingLineBreak_3= ruleAsyncNoTrailingLineBreak[$current] this_FunctionImpl_4= ruleFunctionImpl[$current] ) | ( () ( (lv_declaredModifiers_6_0= ruleN4Modifier ) )* ( (lv_varStmtKeyword_7_0= ruleVariableStatementKeyword ) ) ( (lv_varDeclsOrBindings_8_0= ruleExportedVariableDeclarationOrBinding ) ) (otherlv_9= Comma ( (lv_varDeclsOrBindings_10_0= ruleExportedVariableDeclarationOrBinding ) ) )* ruleSemi ) | ( ( ( () ( (lv_declaredModifiers_13_0= ruleN4Modifier ) )* otherlv_14= Class ( (lv_typingStrategy_15_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_16_0= ruleBindingIdentifier ) ) (this_TypeVariables_17= ruleTypeVariables[$current] )? (this_ClassExtendsClause_18= ruleClassExtendsClause[$current] )? ) | ( () ( (lv_declaredModifiers_20_0= ruleN4Modifier ) )* otherlv_21= Interface ( (lv_typingStrategy_22_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_23_0= ruleBindingIdentifier ) ) (this_TypeVariables_24= ruleTypeVariables[$current] )? (this_InterfaceImplementsList_25= ruleInterfaceImplementsList[$current] )? ) ) this_Members_26= ruleMembers[$current] ) | ( () ( (lv_declaredModifiers_28_0= ruleN4Modifier ) )* otherlv_29= Enum ( (lv_name_30_0= ruleBindingIdentifier ) ) otherlv_31= LeftCurlyBracket ( (lv_literals_32_0= ruleN4EnumLiteral ) ) (otherlv_33= Comma ( (lv_literals_34_0= ruleN4EnumLiteral ) ) )* otherlv_35= RightCurlyBracket ) )";
+            return "2199:2: ( ( () ( (lv_declaredModifiers_2_0= ruleN4Modifier ) )* this_AsyncNoTrailingLineBreak_3= ruleAsyncNoTrailingLineBreak[$current] this_FunctionImpl_4= ruleFunctionImpl[$current] ) | ( () ( (lv_declaredModifiers_6_0= ruleN4Modifier ) )* ( (lv_varStmtKeyword_7_0= ruleVariableStatementKeyword ) ) ( (lv_varDeclsOrBindings_8_0= ruleExportedVariableDeclarationOrBinding ) ) (otherlv_9= Comma ( (lv_varDeclsOrBindings_10_0= ruleExportedVariableDeclarationOrBinding ) ) )* ruleSemi ) | ( ( ( () ( (lv_declaredModifiers_13_0= ruleN4Modifier ) )* otherlv_14= Class ( (lv_typingStrategy_15_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_16_0= ruleBindingIdentifier ) ) (this_TypeVariables_17= ruleTypeVariables[$current] )? (this_ClassExtendsClause_18= ruleClassExtendsClause[$current] )? ) | ( () ( (lv_declaredModifiers_20_0= ruleN4Modifier ) )* otherlv_21= Interface ( (lv_typingStrategy_22_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_23_0= ruleBindingIdentifier ) ) (this_TypeVariables_24= ruleTypeVariables[$current] )? (this_InterfaceImplementsList_25= ruleInterfaceImplementsList[$current] )? ) ) this_Members_26= ruleMembers[$current] ) | ( () ( (lv_declaredModifiers_28_0= ruleN4Modifier ) )* otherlv_29= Enum ( (lv_name_30_0= ruleBindingIdentifier ) ) otherlv_31= LeftCurlyBracket ( (lv_literals_32_0= ruleN4EnumLiteral ) ) (otherlv_33= Comma ( (lv_literals_34_0= ruleN4EnumLiteral ) ) )* otherlv_35= RightCurlyBracket ) )";
         }
     }
     static final String dfa_47s = "\14\uffff";
@@ -87264,7 +87264,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_53;
         }
         public String getDescription() {
-            return "()* loopback of 2256:2: ( (lv_declaredModifiers_6_0= ruleN4Modifier ) )*";
+            return "()* loopback of 2254:2: ( (lv_declaredModifiers_6_0= ruleN4Modifier ) )*";
         }
     }
 
@@ -87282,7 +87282,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_26;
         }
         public String getDescription() {
-            return "2342:7: ( ( () ( (lv_declaredModifiers_13_0= ruleN4Modifier ) )* otherlv_14= Class ( (lv_typingStrategy_15_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_16_0= ruleBindingIdentifier ) ) (this_TypeVariables_17= ruleTypeVariables[$current] )? (this_ClassExtendsClause_18= ruleClassExtendsClause[$current] )? ) | ( () ( (lv_declaredModifiers_20_0= ruleN4Modifier ) )* otherlv_21= Interface ( (lv_typingStrategy_22_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_23_0= ruleBindingIdentifier ) ) (this_TypeVariables_24= ruleTypeVariables[$current] )? (this_InterfaceImplementsList_25= ruleInterfaceImplementsList[$current] )? ) )";
+            return "2340:7: ( ( () ( (lv_declaredModifiers_13_0= ruleN4Modifier ) )* otherlv_14= Class ( (lv_typingStrategy_15_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_16_0= ruleBindingIdentifier ) ) (this_TypeVariables_17= ruleTypeVariables[$current] )? (this_ClassExtendsClause_18= ruleClassExtendsClause[$current] )? ) | ( () ( (lv_declaredModifiers_20_0= ruleN4Modifier ) )* otherlv_21= Interface ( (lv_typingStrategy_22_0= ruleTypingStrategyDefSiteOperator ) )? ( (lv_name_23_0= ruleBindingIdentifier ) ) (this_TypeVariables_24= ruleTypeVariables[$current] )? (this_InterfaceImplementsList_25= ruleInterfaceImplementsList[$current] )? ) )";
         }
     }
     static final String dfa_54s = "\36\uffff";
@@ -87346,7 +87346,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_60;
         }
         public String getDescription() {
-            return "2913:1: ( ( ( ruleBindingIdentifier ) ) | ( ( ( ruleIdentifierName ) ) otherlv_2= As ( (lv_alias_3_0= ruleBindingIdentifier ) ) ) )";
+            return "2911:1: ( ( ( ruleBindingIdentifier ) ) | ( ( ( ruleIdentifierName ) ) otherlv_2= As ( (lv_alias_3_0= ruleBindingIdentifier ) ) ) )";
         }
     }
     static final String dfa_61s = "\133\uffff";
@@ -87471,7 +87471,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_67;
         }
         public String getDescription() {
-            return "3184:4: ( ( ruleSemi )=> ruleSemi )?";
+            return "3182:4: ( ( ruleSemi )=> ruleSemi )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -87681,7 +87681,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_74;
         }
         public String getDescription() {
-            return "3903:1: ( ( ( () LeftCurlyBracket ) )=> (lv_body_0_0= ruleBlock ) )?";
+            return "3901:1: ( ( ( () LeftCurlyBracket ) )=> (lv_body_0_0= ruleBlock ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -87725,7 +87725,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_74;
         }
         public String getDescription() {
-            return "3937:1: ( ( ( () LeftCurlyBracket ) )=> (lv_body_0_0= norm1_Block ) )?";
+            return "3935:1: ( ( ( () LeftCurlyBracket ) )=> (lv_body_0_0= norm1_Block ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -87846,7 +87846,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_80;
         }
         public String getDescription() {
-            return "4662:3: ( ( ( ( LeftCurlyBracket )=> (lv_hasBracesAroundBody_18_0= LeftCurlyBracket ) ) ( (lv_body_19_0= ruleBlockMinusBraces ) ) otherlv_20= RightCurlyBracket ) | ( (lv_body_21_0= ruleExpressionDisguisedAsBlock ) ) )";
+            return "4660:3: ( ( ( ( LeftCurlyBracket )=> (lv_hasBracesAroundBody_18_0= LeftCurlyBracket ) ) ( (lv_body_19_0= ruleBlockMinusBraces ) ) otherlv_20= RightCurlyBracket ) | ( (lv_body_21_0= ruleExpressionDisguisedAsBlock ) ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -87890,7 +87890,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_80;
         }
         public String getDescription() {
-            return "5009:3: ( ( ( ( LeftCurlyBracket )=> (lv_hasBracesAroundBody_18_0= LeftCurlyBracket ) ) ( (lv_body_19_0= ruleBlockMinusBraces ) ) otherlv_20= RightCurlyBracket ) | ( (lv_body_21_0= norm1_ExpressionDisguisedAsBlock ) ) )";
+            return "5007:3: ( ( ( ( LeftCurlyBracket )=> (lv_hasBracesAroundBody_18_0= LeftCurlyBracket ) ) ( (lv_body_19_0= ruleBlockMinusBraces ) ) otherlv_20= RightCurlyBracket ) | ( (lv_body_21_0= norm1_ExpressionDisguisedAsBlock ) ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -87934,7 +87934,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_80;
         }
         public String getDescription() {
-            return "5356:3: ( ( ( ( LeftCurlyBracket )=> (lv_hasBracesAroundBody_18_0= LeftCurlyBracket ) ) ( (lv_body_19_0= norm1_BlockMinusBraces ) ) otherlv_20= RightCurlyBracket ) | ( (lv_body_21_0= ruleExpressionDisguisedAsBlock ) ) )";
+            return "5354:3: ( ( ( ( LeftCurlyBracket )=> (lv_hasBracesAroundBody_18_0= LeftCurlyBracket ) ) ( (lv_body_19_0= norm1_BlockMinusBraces ) ) otherlv_20= RightCurlyBracket ) | ( (lv_body_21_0= ruleExpressionDisguisedAsBlock ) ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -87978,7 +87978,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_80;
         }
         public String getDescription() {
-            return "5703:3: ( ( ( ( LeftCurlyBracket )=> (lv_hasBracesAroundBody_18_0= LeftCurlyBracket ) ) ( (lv_body_19_0= norm1_BlockMinusBraces ) ) otherlv_20= RightCurlyBracket ) | ( (lv_body_21_0= norm1_ExpressionDisguisedAsBlock ) ) )";
+            return "5701:3: ( ( ( ( LeftCurlyBracket )=> (lv_hasBracesAroundBody_18_0= LeftCurlyBracket ) ) ( (lv_body_19_0= norm1_BlockMinusBraces ) ) otherlv_20= RightCurlyBracket ) | ( (lv_body_21_0= norm1_ExpressionDisguisedAsBlock ) ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -88072,7 +88072,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_86;
         }
         public String getDescription() {
-            return "6593:2: ( ( ( ( ruleBindingPattern ) )=> (lv_bindingPattern_0_0= ruleBindingPattern ) ) | ( ( (lv_annotations_1_0= ruleAnnotation ) )* (this_BogusTypeRefFragment_2= ruleBogusTypeRefFragment[$current] )? ( (lv_variadic_3_0= FullStopFullStopFullStop ) )? ( (lv_name_4_0= ruleBindingIdentifier ) ) (this_ColonSepTypeRef_5= ruleColonSepTypeRef[$current] )? ) )";
+            return "6591:2: ( ( ( ( ruleBindingPattern ) )=> (lv_bindingPattern_0_0= ruleBindingPattern ) ) | ( ( (lv_annotations_1_0= ruleAnnotation ) )* (this_BogusTypeRefFragment_2= ruleBogusTypeRefFragment[$current] )? ( (lv_variadic_3_0= FullStopFullStopFullStop ) )? ( (lv_name_4_0= ruleBindingIdentifier ) ) (this_ColonSepTypeRef_5= ruleColonSepTypeRef[$current] )? ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -88156,7 +88156,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_91;
         }
         public String getDescription() {
-            return "6634:3: (this_BogusTypeRefFragment_2= ruleBogusTypeRefFragment[$current] )?";
+            return "6632:3: (this_BogusTypeRefFragment_2= ruleBogusTypeRefFragment[$current] )?";
         }
     }
     static final String dfa_92s = "\43\uffff";
@@ -88223,7 +88223,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_97;
         }
         public String getDescription() {
-            return "6728:2: ( ( ( ( norm1_BindingPattern ) )=> (lv_bindingPattern_0_0= norm1_BindingPattern ) ) | ( ( (lv_annotations_1_0= ruleAnnotation ) )* (this_BogusTypeRefFragment_2= ruleBogusTypeRefFragment[$current] )? ( (lv_variadic_3_0= FullStopFullStopFullStop ) )? ( (lv_name_4_0= norm1_BindingIdentifier ) ) (this_ColonSepTypeRef_5= ruleColonSepTypeRef[$current] )? ) )";
+            return "6726:2: ( ( ( ( norm1_BindingPattern ) )=> (lv_bindingPattern_0_0= norm1_BindingPattern ) ) | ( ( (lv_annotations_1_0= ruleAnnotation ) )* (this_BogusTypeRefFragment_2= ruleBogusTypeRefFragment[$current] )? ( (lv_variadic_3_0= FullStopFullStopFullStop ) )? ( (lv_name_4_0= norm1_BindingIdentifier ) ) (this_ColonSepTypeRef_5= ruleColonSepTypeRef[$current] )? ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -88299,7 +88299,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_98;
         }
         public String getDescription() {
-            return "6769:3: (this_BogusTypeRefFragment_2= ruleBogusTypeRefFragment[$current] )?";
+            return "6767:3: (this_BogusTypeRefFragment_2= ruleBogusTypeRefFragment[$current] )?";
         }
     }
     static final String dfa_99s = "\120\uffff";
@@ -88411,7 +88411,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_104;
         }
         public String getDescription() {
-            return "7046:1: ( ( ( ( () LeftCurlyBracket ) )=>this_Block_0= ruleBlock ) | ( ( ( () ( ( ruleN4Modifier ) )* ruleAsyncNoTrailingLineBreak[null] Function ) )=>this_FunctionDeclaration_1= ruleFunctionDeclaration ) | ( ( ( () ( ( ruleVariableStatementKeyword ) ) ) )=>this_VariableStatement_2= norm1_VariableStatement ) | this_EmptyStatement_3= ruleEmptyStatement | ( ( ( ( ( ruleBindingIdentifier ) ) Colon ) )=>this_LabelledStatement_4= ruleLabelledStatement ) | this_ExpressionStatement_5= ruleExpressionStatement | this_IfStatement_6= ruleIfStatement | this_IterationStatement_7= ruleIterationStatement | this_ContinueStatement_8= ruleContinueStatement | this_BreakStatement_9= ruleBreakStatement | this_ReturnStatement_10= ruleReturnStatement | this_WithStatement_11= ruleWithStatement | this_SwitchStatement_12= ruleSwitchStatement | this_ThrowStatement_13= ruleThrowStatement | this_TryStatement_14= ruleTryStatement | this_DebuggerStatement_15= ruleDebuggerStatement )";
+            return "7044:1: ( ( ( ( () LeftCurlyBracket ) )=>this_Block_0= ruleBlock ) | ( ( ( () ( ( ruleN4Modifier ) )* ruleAsyncNoTrailingLineBreak[null] Function ) )=>this_FunctionDeclaration_1= ruleFunctionDeclaration ) | ( ( ( () ( ( ruleVariableStatementKeyword ) ) ) )=>this_VariableStatement_2= norm1_VariableStatement ) | this_EmptyStatement_3= ruleEmptyStatement | ( ( ( ( ( ruleBindingIdentifier ) ) Colon ) )=>this_LabelledStatement_4= ruleLabelledStatement ) | this_ExpressionStatement_5= ruleExpressionStatement | this_IfStatement_6= ruleIfStatement | this_IterationStatement_7= ruleIterationStatement | this_ContinueStatement_8= ruleContinueStatement | this_BreakStatement_9= ruleBreakStatement | this_ReturnStatement_10= ruleReturnStatement | this_WithStatement_11= ruleWithStatement | this_SwitchStatement_12= ruleSwitchStatement | this_ThrowStatement_13= ruleThrowStatement | this_TryStatement_14= ruleTryStatement | this_DebuggerStatement_15= ruleDebuggerStatement )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -89037,7 +89037,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_109;
         }
         public String getDescription() {
-            return "7239:1: ( ( ( ( () LeftCurlyBracket ) )=>this_Block_0= norm1_Block ) | ( ( ( () ( ( ruleN4Modifier ) )* ruleAsyncNoTrailingLineBreak[null] Function ) )=>this_FunctionDeclaration_1= norm1_FunctionDeclaration ) | ( ( ( () ( ( ruleVariableStatementKeyword ) ) ) )=>this_VariableStatement_2= norm3_VariableStatement ) | this_EmptyStatement_3= ruleEmptyStatement | ( ( ( ( ( norm1_BindingIdentifier ) ) Colon ) )=>this_LabelledStatement_4= norm1_LabelledStatement ) | this_ExpressionStatement_5= norm1_ExpressionStatement | this_IfStatement_6= norm1_IfStatement | this_IterationStatement_7= norm1_IterationStatement | this_ContinueStatement_8= norm1_ContinueStatement | this_BreakStatement_9= norm1_BreakStatement | this_ReturnStatement_10= norm1_ReturnStatement | this_WithStatement_11= norm1_WithStatement | this_SwitchStatement_12= norm1_SwitchStatement | this_ThrowStatement_13= norm1_ThrowStatement | this_TryStatement_14= norm1_TryStatement | this_DebuggerStatement_15= ruleDebuggerStatement )";
+            return "7237:1: ( ( ( ( () LeftCurlyBracket ) )=>this_Block_0= norm1_Block ) | ( ( ( () ( ( ruleN4Modifier ) )* ruleAsyncNoTrailingLineBreak[null] Function ) )=>this_FunctionDeclaration_1= norm1_FunctionDeclaration ) | ( ( ( () ( ( ruleVariableStatementKeyword ) ) ) )=>this_VariableStatement_2= norm3_VariableStatement ) | this_EmptyStatement_3= ruleEmptyStatement | ( ( ( ( ( norm1_BindingIdentifier ) ) Colon ) )=>this_LabelledStatement_4= norm1_LabelledStatement ) | this_ExpressionStatement_5= norm1_ExpressionStatement | this_IfStatement_6= norm1_IfStatement | this_IterationStatement_7= norm1_IterationStatement | this_ContinueStatement_8= norm1_ContinueStatement | this_BreakStatement_9= norm1_BreakStatement | this_ReturnStatement_10= norm1_ReturnStatement | this_WithStatement_11= norm1_WithStatement | this_SwitchStatement_12= norm1_SwitchStatement | this_ThrowStatement_13= norm1_ThrowStatement | this_TryStatement_14= norm1_TryStatement | this_DebuggerStatement_15= ruleDebuggerStatement )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -89649,7 +89649,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_115;
         }
         public String getDescription() {
-            return "7440:1: ( ( ( ( () CommercialAt ( This | Target | RULE_IDENTIFIER ) ) )=>this_AnnotatedFunctionDeclaration_0= ruleAnnotatedFunctionDeclaration ) | this_RootStatement_1= ruleRootStatement )";
+            return "7438:1: ( ( ( ( () CommercialAt ( This | Target | RULE_IDENTIFIER ) ) )=>this_AnnotatedFunctionDeclaration_0= ruleAnnotatedFunctionDeclaration ) | this_RootStatement_1= ruleRootStatement )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -89693,7 +89693,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_115;
         }
         public String getDescription() {
-            return "7481:1: ( ( ( ( () CommercialAt ( This | Target | RULE_IDENTIFIER ) ) )=>this_AnnotatedFunctionDeclaration_0= norm1_AnnotatedFunctionDeclaration ) | this_RootStatement_1= norm1_RootStatement )";
+            return "7479:1: ( ( ( ( () CommercialAt ( This | Target | RULE_IDENTIFIER ) ) )=>this_AnnotatedFunctionDeclaration_0= norm1_AnnotatedFunctionDeclaration ) | this_RootStatement_1= norm1_RootStatement )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -89737,7 +89737,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_53;
         }
         public String getDescription() {
-            return "()* loopback of 7722:2: ( (lv_declaredModifiers_1_0= ruleN4Modifier ) )*";
+            return "()* loopback of 7720:2: ( (lv_declaredModifiers_1_0= ruleN4Modifier ) )*";
         }
     }
     static final String dfa_116s = "\35\uffff";
@@ -89798,7 +89798,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_121;
         }
         public String getDescription() {
-            return "()* loopback of 8710:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
+            return "()* loopback of 8708:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -89841,7 +89841,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_121;
         }
         public String getDescription() {
-            return "()* loopback of 8786:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
+            return "()* loopback of 8784:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -89926,7 +89926,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_127;
         }
         public String getDescription() {
-            return "()* loopback of 8862:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
+            return "()* loopback of 8860:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -89969,7 +89969,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_127;
         }
         public String getDescription() {
-            return "()* loopback of 8938:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
+            return "()* loopback of 8936:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -90012,7 +90012,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_121;
         }
         public String getDescription() {
-            return "()* loopback of 9014:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
+            return "()* loopback of 9012:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -90055,7 +90055,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_121;
         }
         public String getDescription() {
-            return "()* loopback of 9102:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
+            return "()* loopback of 9100:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -90098,7 +90098,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_127;
         }
         public String getDescription() {
-            return "()* loopback of 9190:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
+            return "()* loopback of 9188:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -90141,7 +90141,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_127;
         }
         public String getDescription() {
-            return "()* loopback of 9278:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
+            return "()* loopback of 9276:2: ( (lv_annotations_0_0= ruleAnnotation ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -90186,7 +90186,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_67;
         }
         public String getDescription() {
-            return "10100:1: ( ( ruleSemi )=> ruleSemi )?";
+            return "10098:1: ( ( ruleSemi )=> ruleSemi )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -90373,7 +90373,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_134;
         }
         public String getDescription() {
-            return "10358:1: ( ( ( ( ( ( ruleLetIdentifierRef ) ) ( ( In ) ) ( ( norm1_Expression ) ) RightParenthesis ) )=> ( ( (lv_initExpr_3_0= ruleLetIdentifierRef ) ) ( (lv_forIn_4_0= In ) ) ( (lv_expression_5_0= norm1_Expression ) ) otherlv_6= RightParenthesis ) ) | ( ( ( ( ( Var | Const | Let )=> (lv_varStmtKeyword_7_0= ruleVariableStatementKeyword ) ) ( ( ( ( ( ( ruleBindingIdentifierAsVariableDeclaration ) ) ( ( ( In ) ) | ( ( Of ) ) ) ( Await | CommercialAt | LeftParenthesis | Async | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )? ) )=> ( ( (lv_varDeclsOrBindings_8_0= ruleBindingIdentifierAsVariableDeclaration ) ) ( ( (lv_forIn_9_0= In ) ) | ( (lv_forOf_10_0= Of ) ) ) ( ( Await | CommercialAt | LeftParenthesis | Async | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm1_AssignmentExpression ) )? ) ) | ( ( (lv_varDeclsOrBindings_12_0= norm4_VariableDeclarationOrBinding ) ) ( ( (otherlv_13= Comma ( (lv_varDeclsOrBindings_14_0= ruleVariableDeclarationOrBinding ) ) )* otherlv_15= Semicolon ( (lv_expression_16_0= norm1_Expression ) )? otherlv_17= Semicolon ( (lv_updateExpr_18_0= norm1_Expression ) )? ) | ( ( (lv_forIn_19_0= In ) ) ( (lv_expression_20_0= norm1_Expression ) )? ) | ( ( (lv_forOf_21_0= Of ) ) ( (lv_expression_22_0= norm1_AssignmentExpression ) )? ) ) ) ) ) | ( ( (lv_initExpr_23_0= ruleExpression ) ) ( (otherlv_24= Semicolon ( (lv_expression_25_0= norm1_Expression ) )? otherlv_26= Semicolon ( (lv_updateExpr_27_0= norm1_Expression ) )? ) | ( ( (lv_forIn_28_0= In ) ) ( (lv_expression_29_0= norm1_Expression ) )? ) | ( ( (lv_forOf_30_0= Of ) ) ( (lv_expression_31_0= norm1_AssignmentExpression ) )? ) ) ) | (otherlv_32= Semicolon ( (lv_expression_33_0= norm1_Expression ) )? otherlv_34= Semicolon ( (lv_updateExpr_35_0= norm1_Expression ) )? ) ) otherlv_36= RightParenthesis ) )";
+            return "10356:1: ( ( ( ( ( ( ruleLetIdentifierRef ) ) ( ( In ) ) ( ( norm1_Expression ) ) RightParenthesis ) )=> ( ( (lv_initExpr_3_0= ruleLetIdentifierRef ) ) ( (lv_forIn_4_0= In ) ) ( (lv_expression_5_0= norm1_Expression ) ) otherlv_6= RightParenthesis ) ) | ( ( ( ( ( Var | Const | Let )=> (lv_varStmtKeyword_7_0= ruleVariableStatementKeyword ) ) ( ( ( ( ( ( ruleBindingIdentifierAsVariableDeclaration ) ) ( ( ( In ) ) | ( ( Of ) ) ) ( Await | CommercialAt | LeftParenthesis | Async | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )? ) )=> ( ( (lv_varDeclsOrBindings_8_0= ruleBindingIdentifierAsVariableDeclaration ) ) ( ( (lv_forIn_9_0= In ) ) | ( (lv_forOf_10_0= Of ) ) ) ( ( Await | CommercialAt | LeftParenthesis | Async | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm1_AssignmentExpression ) )? ) ) | ( ( (lv_varDeclsOrBindings_12_0= norm4_VariableDeclarationOrBinding ) ) ( ( (otherlv_13= Comma ( (lv_varDeclsOrBindings_14_0= ruleVariableDeclarationOrBinding ) ) )* otherlv_15= Semicolon ( (lv_expression_16_0= norm1_Expression ) )? otherlv_17= Semicolon ( (lv_updateExpr_18_0= norm1_Expression ) )? ) | ( ( (lv_forIn_19_0= In ) ) ( (lv_expression_20_0= norm1_Expression ) )? ) | ( ( (lv_forOf_21_0= Of ) ) ( (lv_expression_22_0= norm1_AssignmentExpression ) )? ) ) ) ) ) | ( ( (lv_initExpr_23_0= ruleExpression ) ) ( (otherlv_24= Semicolon ( (lv_expression_25_0= norm1_Expression ) )? otherlv_26= Semicolon ( (lv_updateExpr_27_0= norm1_Expression ) )? ) | ( ( (lv_forIn_28_0= In ) ) ( (lv_expression_29_0= norm1_Expression ) )? ) | ( ( (lv_forOf_30_0= Of ) ) ( (lv_expression_31_0= norm1_AssignmentExpression ) )? ) ) ) | (otherlv_32= Semicolon ( (lv_expression_33_0= norm1_Expression ) )? otherlv_34= Semicolon ( (lv_updateExpr_35_0= norm1_Expression ) )? ) ) otherlv_36= RightParenthesis ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -90493,7 +90493,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_139;
         }
         public String getDescription() {
-            return "10433:7: ( ( ( ( Var | Const | Let )=> (lv_varStmtKeyword_7_0= ruleVariableStatementKeyword ) ) ( ( ( ( ( ( ruleBindingIdentifierAsVariableDeclaration ) ) ( ( ( In ) ) | ( ( Of ) ) ) ( Await | CommercialAt | LeftParenthesis | Async | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )? ) )=> ( ( (lv_varDeclsOrBindings_8_0= ruleBindingIdentifierAsVariableDeclaration ) ) ( ( (lv_forIn_9_0= In ) ) | ( (lv_forOf_10_0= Of ) ) ) ( ( Await | CommercialAt | LeftParenthesis | Async | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm1_AssignmentExpression ) )? ) ) | ( ( (lv_varDeclsOrBindings_12_0= norm4_VariableDeclarationOrBinding ) ) ( ( (otherlv_13= Comma ( (lv_varDeclsOrBindings_14_0= ruleVariableDeclarationOrBinding ) ) )* otherlv_15= Semicolon ( (lv_expression_16_0= norm1_Expression ) )? otherlv_17= Semicolon ( (lv_updateExpr_18_0= norm1_Expression ) )? ) | ( ( (lv_forIn_19_0= In ) ) ( (lv_expression_20_0= norm1_Expression ) )? ) | ( ( (lv_forOf_21_0= Of ) ) ( (lv_expression_22_0= norm1_AssignmentExpression ) )? ) ) ) ) ) | ( ( (lv_initExpr_23_0= ruleExpression ) ) ( (otherlv_24= Semicolon ( (lv_expression_25_0= norm1_Expression ) )? otherlv_26= Semicolon ( (lv_updateExpr_27_0= norm1_Expression ) )? ) | ( ( (lv_forIn_28_0= In ) ) ( (lv_expression_29_0= norm1_Expression ) )? ) | ( ( (lv_forOf_30_0= Of ) ) ( (lv_expression_31_0= norm1_AssignmentExpression ) )? ) ) ) | (otherlv_32= Semicolon ( (lv_expression_33_0= norm1_Expression ) )? otherlv_34= Semicolon ( (lv_updateExpr_35_0= norm1_Expression ) )? ) )";
+            return "10431:7: ( ( ( ( Var | Const | Let )=> (lv_varStmtKeyword_7_0= ruleVariableStatementKeyword ) ) ( ( ( ( ( ( ruleBindingIdentifierAsVariableDeclaration ) ) ( ( ( In ) ) | ( ( Of ) ) ) ( Await | CommercialAt | LeftParenthesis | Async | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )? ) )=> ( ( (lv_varDeclsOrBindings_8_0= ruleBindingIdentifierAsVariableDeclaration ) ) ( ( (lv_forIn_9_0= In ) ) | ( (lv_forOf_10_0= Of ) ) ) ( ( Await | CommercialAt | LeftParenthesis | Async | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm1_AssignmentExpression ) )? ) ) | ( ( (lv_varDeclsOrBindings_12_0= norm4_VariableDeclarationOrBinding ) ) ( ( (otherlv_13= Comma ( (lv_varDeclsOrBindings_14_0= ruleVariableDeclarationOrBinding ) ) )* otherlv_15= Semicolon ( (lv_expression_16_0= norm1_Expression ) )? otherlv_17= Semicolon ( (lv_updateExpr_18_0= norm1_Expression ) )? ) | ( ( (lv_forIn_19_0= In ) ) ( (lv_expression_20_0= norm1_Expression ) )? ) | ( ( (lv_forOf_21_0= Of ) ) ( (lv_expression_22_0= norm1_AssignmentExpression ) )? ) ) ) ) ) | ( ( (lv_initExpr_23_0= ruleExpression ) ) ( (otherlv_24= Semicolon ( (lv_expression_25_0= norm1_Expression ) )? otherlv_26= Semicolon ( (lv_updateExpr_27_0= norm1_Expression ) )? ) | ( ( (lv_forIn_28_0= In ) ) ( (lv_expression_29_0= norm1_Expression ) )? ) | ( ( (lv_forOf_30_0= Of ) ) ( (lv_expression_31_0= norm1_AssignmentExpression ) )? ) ) ) | (otherlv_32= Semicolon ( (lv_expression_33_0= norm1_Expression ) )? otherlv_34= Semicolon ( (lv_updateExpr_35_0= norm1_Expression ) )? ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -90604,7 +90604,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_145;
         }
         public String getDescription() {
-            return "10457:2: ( ( ( ( ( ( ruleBindingIdentifierAsVariableDeclaration ) ) ( ( ( In ) ) | ( ( Of ) ) ) ( Await | CommercialAt | LeftParenthesis | Async | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )? ) )=> ( ( (lv_varDeclsOrBindings_8_0= ruleBindingIdentifierAsVariableDeclaration ) ) ( ( (lv_forIn_9_0= In ) ) | ( (lv_forOf_10_0= Of ) ) ) ( ( Await | CommercialAt | LeftParenthesis | Async | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm1_AssignmentExpression ) )? ) ) | ( ( (lv_varDeclsOrBindings_12_0= norm4_VariableDeclarationOrBinding ) ) ( ( (otherlv_13= Comma ( (lv_varDeclsOrBindings_14_0= ruleVariableDeclarationOrBinding ) ) )* otherlv_15= Semicolon ( (lv_expression_16_0= norm1_Expression ) )? otherlv_17= Semicolon ( (lv_updateExpr_18_0= norm1_Expression ) )? ) | ( ( (lv_forIn_19_0= In ) ) ( (lv_expression_20_0= norm1_Expression ) )? ) | ( ( (lv_forOf_21_0= Of ) ) ( (lv_expression_22_0= norm1_AssignmentExpression ) )? ) ) ) )";
+            return "10455:2: ( ( ( ( ( ( ruleBindingIdentifierAsVariableDeclaration ) ) ( ( ( In ) ) | ( ( Of ) ) ) ( Await | CommercialAt | LeftParenthesis | Async | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )? ) )=> ( ( (lv_varDeclsOrBindings_8_0= ruleBindingIdentifierAsVariableDeclaration ) ) ( ( (lv_forIn_9_0= In ) ) | ( (lv_forOf_10_0= Of ) ) ) ( ( Await | CommercialAt | LeftParenthesis | Async | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm1_AssignmentExpression ) )? ) ) | ( ( (lv_varDeclsOrBindings_12_0= norm4_VariableDeclarationOrBinding ) ) ( ( (otherlv_13= Comma ( (lv_varDeclsOrBindings_14_0= ruleVariableDeclarationOrBinding ) ) )* otherlv_15= Semicolon ( (lv_expression_16_0= norm1_Expression ) )? otherlv_17= Semicolon ( (lv_updateExpr_18_0= norm1_Expression ) )? ) | ( ( (lv_forIn_19_0= In ) ) ( (lv_expression_20_0= norm1_Expression ) )? ) | ( ( (lv_forOf_21_0= Of ) ) ( (lv_expression_22_0= norm1_AssignmentExpression ) )? ) ) ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -90737,7 +90737,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_150;
         }
         public String getDescription() {
-            return "10687:3: ( ( Await | CommercialAt | LeftParenthesis | Async | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm1_AssignmentExpression ) )?";
+            return "10685:3: ( ( Await | CommercialAt | LeftParenthesis | Async | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm1_AssignmentExpression ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -90780,7 +90780,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_134;
         }
         public String getDescription() {
-            return "11197:1: ( ( ( ( ( ( ruleLetIdentifierRef ) ) ( ( In ) ) ( ( norm3_Expression ) ) RightParenthesis ) )=> ( ( (lv_initExpr_3_0= ruleLetIdentifierRef ) ) ( (lv_forIn_4_0= In ) ) ( (lv_expression_5_0= norm3_Expression ) ) otherlv_6= RightParenthesis ) ) | ( ( ( ( ( Var | Const | Let )=> (lv_varStmtKeyword_7_0= ruleVariableStatementKeyword ) ) ( ( ( ( ( ( norm2_BindingIdentifierAsVariableDeclaration ) ) ( ( ( In ) ) | ( ( Of ) ) ) ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )? ) )=> ( ( (lv_varDeclsOrBindings_8_0= norm2_BindingIdentifierAsVariableDeclaration ) ) ( ( (lv_forIn_9_0= In ) ) | ( (lv_forOf_10_0= Of ) ) ) ( ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm3_AssignmentExpression ) )? ) ) | ( ( (lv_varDeclsOrBindings_12_0= norm6_VariableDeclarationOrBinding ) ) ( ( (otherlv_13= Comma ( (lv_varDeclsOrBindings_14_0= norm2_VariableDeclarationOrBinding ) ) )* otherlv_15= Semicolon ( (lv_expression_16_0= norm3_Expression ) )? otherlv_17= Semicolon ( (lv_updateExpr_18_0= norm3_Expression ) )? ) | ( ( (lv_forIn_19_0= In ) ) ( (lv_expression_20_0= norm3_Expression ) )? ) | ( ( (lv_forOf_21_0= Of ) ) ( (lv_expression_22_0= norm3_AssignmentExpression ) )? ) ) ) ) ) | ( ( (lv_initExpr_23_0= norm2_Expression ) ) ( (otherlv_24= Semicolon ( (lv_expression_25_0= norm3_Expression ) )? otherlv_26= Semicolon ( (lv_updateExpr_27_0= norm3_Expression ) )? ) | ( ( (lv_forIn_28_0= In ) ) ( (lv_expression_29_0= norm3_Expression ) )? ) | ( ( (lv_forOf_30_0= Of ) ) ( (lv_expression_31_0= norm3_AssignmentExpression ) )? ) ) ) | (otherlv_32= Semicolon ( (lv_expression_33_0= norm3_Expression ) )? otherlv_34= Semicolon ( (lv_updateExpr_35_0= norm3_Expression ) )? ) ) otherlv_36= RightParenthesis ) )";
+            return "11195:1: ( ( ( ( ( ( ruleLetIdentifierRef ) ) ( ( In ) ) ( ( norm3_Expression ) ) RightParenthesis ) )=> ( ( (lv_initExpr_3_0= ruleLetIdentifierRef ) ) ( (lv_forIn_4_0= In ) ) ( (lv_expression_5_0= norm3_Expression ) ) otherlv_6= RightParenthesis ) ) | ( ( ( ( ( Var | Const | Let )=> (lv_varStmtKeyword_7_0= ruleVariableStatementKeyword ) ) ( ( ( ( ( ( norm2_BindingIdentifierAsVariableDeclaration ) ) ( ( ( In ) ) | ( ( Of ) ) ) ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )? ) )=> ( ( (lv_varDeclsOrBindings_8_0= norm2_BindingIdentifierAsVariableDeclaration ) ) ( ( (lv_forIn_9_0= In ) ) | ( (lv_forOf_10_0= Of ) ) ) ( ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm3_AssignmentExpression ) )? ) ) | ( ( (lv_varDeclsOrBindings_12_0= norm6_VariableDeclarationOrBinding ) ) ( ( (otherlv_13= Comma ( (lv_varDeclsOrBindings_14_0= norm2_VariableDeclarationOrBinding ) ) )* otherlv_15= Semicolon ( (lv_expression_16_0= norm3_Expression ) )? otherlv_17= Semicolon ( (lv_updateExpr_18_0= norm3_Expression ) )? ) | ( ( (lv_forIn_19_0= In ) ) ( (lv_expression_20_0= norm3_Expression ) )? ) | ( ( (lv_forOf_21_0= Of ) ) ( (lv_expression_22_0= norm3_AssignmentExpression ) )? ) ) ) ) ) | ( ( (lv_initExpr_23_0= norm2_Expression ) ) ( (otherlv_24= Semicolon ( (lv_expression_25_0= norm3_Expression ) )? otherlv_26= Semicolon ( (lv_updateExpr_27_0= norm3_Expression ) )? ) | ( ( (lv_forIn_28_0= In ) ) ( (lv_expression_29_0= norm3_Expression ) )? ) | ( ( (lv_forOf_30_0= Of ) ) ( (lv_expression_31_0= norm3_AssignmentExpression ) )? ) ) ) | (otherlv_32= Semicolon ( (lv_expression_33_0= norm3_Expression ) )? otherlv_34= Semicolon ( (lv_updateExpr_35_0= norm3_Expression ) )? ) ) otherlv_36= RightParenthesis ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -90824,7 +90824,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_139;
         }
         public String getDescription() {
-            return "11272:7: ( ( ( ( Var | Const | Let )=> (lv_varStmtKeyword_7_0= ruleVariableStatementKeyword ) ) ( ( ( ( ( ( norm2_BindingIdentifierAsVariableDeclaration ) ) ( ( ( In ) ) | ( ( Of ) ) ) ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )? ) )=> ( ( (lv_varDeclsOrBindings_8_0= norm2_BindingIdentifierAsVariableDeclaration ) ) ( ( (lv_forIn_9_0= In ) ) | ( (lv_forOf_10_0= Of ) ) ) ( ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm3_AssignmentExpression ) )? ) ) | ( ( (lv_varDeclsOrBindings_12_0= norm6_VariableDeclarationOrBinding ) ) ( ( (otherlv_13= Comma ( (lv_varDeclsOrBindings_14_0= norm2_VariableDeclarationOrBinding ) ) )* otherlv_15= Semicolon ( (lv_expression_16_0= norm3_Expression ) )? otherlv_17= Semicolon ( (lv_updateExpr_18_0= norm3_Expression ) )? ) | ( ( (lv_forIn_19_0= In ) ) ( (lv_expression_20_0= norm3_Expression ) )? ) | ( ( (lv_forOf_21_0= Of ) ) ( (lv_expression_22_0= norm3_AssignmentExpression ) )? ) ) ) ) ) | ( ( (lv_initExpr_23_0= norm2_Expression ) ) ( (otherlv_24= Semicolon ( (lv_expression_25_0= norm3_Expression ) )? otherlv_26= Semicolon ( (lv_updateExpr_27_0= norm3_Expression ) )? ) | ( ( (lv_forIn_28_0= In ) ) ( (lv_expression_29_0= norm3_Expression ) )? ) | ( ( (lv_forOf_30_0= Of ) ) ( (lv_expression_31_0= norm3_AssignmentExpression ) )? ) ) ) | (otherlv_32= Semicolon ( (lv_expression_33_0= norm3_Expression ) )? otherlv_34= Semicolon ( (lv_updateExpr_35_0= norm3_Expression ) )? ) )";
+            return "11270:7: ( ( ( ( Var | Const | Let )=> (lv_varStmtKeyword_7_0= ruleVariableStatementKeyword ) ) ( ( ( ( ( ( norm2_BindingIdentifierAsVariableDeclaration ) ) ( ( ( In ) ) | ( ( Of ) ) ) ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )? ) )=> ( ( (lv_varDeclsOrBindings_8_0= norm2_BindingIdentifierAsVariableDeclaration ) ) ( ( (lv_forIn_9_0= In ) ) | ( (lv_forOf_10_0= Of ) ) ) ( ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm3_AssignmentExpression ) )? ) ) | ( ( (lv_varDeclsOrBindings_12_0= norm6_VariableDeclarationOrBinding ) ) ( ( (otherlv_13= Comma ( (lv_varDeclsOrBindings_14_0= norm2_VariableDeclarationOrBinding ) ) )* otherlv_15= Semicolon ( (lv_expression_16_0= norm3_Expression ) )? otherlv_17= Semicolon ( (lv_updateExpr_18_0= norm3_Expression ) )? ) | ( ( (lv_forIn_19_0= In ) ) ( (lv_expression_20_0= norm3_Expression ) )? ) | ( ( (lv_forOf_21_0= Of ) ) ( (lv_expression_22_0= norm3_AssignmentExpression ) )? ) ) ) ) ) | ( ( (lv_initExpr_23_0= norm2_Expression ) ) ( (otherlv_24= Semicolon ( (lv_expression_25_0= norm3_Expression ) )? otherlv_26= Semicolon ( (lv_updateExpr_27_0= norm3_Expression ) )? ) | ( ( (lv_forIn_28_0= In ) ) ( (lv_expression_29_0= norm3_Expression ) )? ) | ( ( (lv_forOf_30_0= Of ) ) ( (lv_expression_31_0= norm3_AssignmentExpression ) )? ) ) ) | (otherlv_32= Semicolon ( (lv_expression_33_0= norm3_Expression ) )? otherlv_34= Semicolon ( (lv_updateExpr_35_0= norm3_Expression ) )? ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -90934,7 +90934,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_156;
         }
         public String getDescription() {
-            return "11296:2: ( ( ( ( ( ( norm2_BindingIdentifierAsVariableDeclaration ) ) ( ( ( In ) ) | ( ( Of ) ) ) ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )? ) )=> ( ( (lv_varDeclsOrBindings_8_0= norm2_BindingIdentifierAsVariableDeclaration ) ) ( ( (lv_forIn_9_0= In ) ) | ( (lv_forOf_10_0= Of ) ) ) ( ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm3_AssignmentExpression ) )? ) ) | ( ( (lv_varDeclsOrBindings_12_0= norm6_VariableDeclarationOrBinding ) ) ( ( (otherlv_13= Comma ( (lv_varDeclsOrBindings_14_0= norm2_VariableDeclarationOrBinding ) ) )* otherlv_15= Semicolon ( (lv_expression_16_0= norm3_Expression ) )? otherlv_17= Semicolon ( (lv_updateExpr_18_0= norm3_Expression ) )? ) | ( ( (lv_forIn_19_0= In ) ) ( (lv_expression_20_0= norm3_Expression ) )? ) | ( ( (lv_forOf_21_0= Of ) ) ( (lv_expression_22_0= norm3_AssignmentExpression ) )? ) ) ) )";
+            return "11294:2: ( ( ( ( ( ( norm2_BindingIdentifierAsVariableDeclaration ) ) ( ( ( In ) ) | ( ( Of ) ) ) ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )? ) )=> ( ( (lv_varDeclsOrBindings_8_0= norm2_BindingIdentifierAsVariableDeclaration ) ) ( ( (lv_forIn_9_0= In ) ) | ( (lv_forOf_10_0= Of ) ) ) ( ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm3_AssignmentExpression ) )? ) ) | ( ( (lv_varDeclsOrBindings_12_0= norm6_VariableDeclarationOrBinding ) ) ( ( (otherlv_13= Comma ( (lv_varDeclsOrBindings_14_0= norm2_VariableDeclarationOrBinding ) ) )* otherlv_15= Semicolon ( (lv_expression_16_0= norm3_Expression ) )? otherlv_17= Semicolon ( (lv_updateExpr_18_0= norm3_Expression ) )? ) | ( ( (lv_forIn_19_0= In ) ) ( (lv_expression_20_0= norm3_Expression ) )? ) | ( ( (lv_forOf_21_0= Of ) ) ( (lv_expression_22_0= norm3_AssignmentExpression ) )? ) ) ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -91059,7 +91059,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_157;
         }
         public String getDescription() {
-            return "11526:3: ( ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm3_AssignmentExpression ) )?";
+            return "11524:3: ( ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_11_0= norm3_AssignmentExpression ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -91148,7 +91148,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_162;
         }
         public String getDescription() {
-            return "13649:1: ( ( ( ( ruleBindingPattern ) )=> (lv_bindingPattern_0_0= ruleBindingPattern ) ) | ( ( ( ( ( ruleBindingIdentifier ) ) Colon ) )=> ( ( (lv_name_1_0= ruleBindingIdentifier ) ) ( ( Colon )=>this_ColonSepTypeRef_2= ruleColonSepTypeRef[$current] ) ) ) | ( (this_BogusTypeRefFragment_3= ruleBogusTypeRefFragment[$current] )? ( (lv_name_4_0= ruleBindingIdentifier ) ) ) )";
+            return "13647:1: ( ( ( ( ruleBindingPattern ) )=> (lv_bindingPattern_0_0= ruleBindingPattern ) ) | ( ( ( ( ( ruleBindingIdentifier ) ) Colon ) )=> ( ( (lv_name_1_0= ruleBindingIdentifier ) ) ( ( Colon )=>this_ColonSepTypeRef_2= ruleColonSepTypeRef[$current] ) ) ) | ( (this_BogusTypeRefFragment_3= ruleBogusTypeRefFragment[$current] )? ( (lv_name_4_0= ruleBindingIdentifier ) ) ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -91631,7 +91631,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_163;
         }
         public String getDescription() {
-            return "13711:7: (this_BogusTypeRefFragment_3= ruleBogusTypeRefFragment[$current] )?";
+            return "13709:7: (this_BogusTypeRefFragment_3= ruleBogusTypeRefFragment[$current] )?";
         }
     }
     static final String dfa_164s = "\42\uffff";
@@ -91697,7 +91697,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_169;
         }
         public String getDescription() {
-            return "13754:1: ( ( ( ( norm1_BindingPattern ) )=> (lv_bindingPattern_0_0= norm1_BindingPattern ) ) | ( ( ( ( ( norm1_BindingIdentifier ) ) Colon ) )=> ( ( (lv_name_1_0= norm1_BindingIdentifier ) ) ( ( Colon )=>this_ColonSepTypeRef_2= ruleColonSepTypeRef[$current] ) ) ) | ( (this_BogusTypeRefFragment_3= ruleBogusTypeRefFragment[$current] )? ( (lv_name_4_0= norm1_BindingIdentifier ) ) ) )";
+            return "13752:1: ( ( ( ( norm1_BindingPattern ) )=> (lv_bindingPattern_0_0= norm1_BindingPattern ) ) | ( ( ( ( ( norm1_BindingIdentifier ) ) Colon ) )=> ( ( (lv_name_1_0= norm1_BindingIdentifier ) ) ( ( Colon )=>this_ColonSepTypeRef_2= ruleColonSepTypeRef[$current] ) ) ) | ( (this_BogusTypeRefFragment_3= ruleBogusTypeRefFragment[$current] )? ( (lv_name_4_0= norm1_BindingIdentifier ) ) ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -92165,7 +92165,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_170;
         }
         public String getDescription() {
-            return "13816:7: (this_BogusTypeRefFragment_3= ruleBogusTypeRefFragment[$current] )?";
+            return "13814:7: (this_BogusTypeRefFragment_3= ruleBogusTypeRefFragment[$current] )?";
         }
     }
     static final String dfa_171s = "\5\uffff";
@@ -92202,7 +92202,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_176;
         }
         public String getDescription() {
-            return "()* loopback of 14272:2: (otherlv_4= Comma ( (lv_elements_5_0= ruleArrayPadding ) )* ( (lv_elements_6_0= ruleArrayElement ) ) )*";
+            return "()* loopback of 14270:2: (otherlv_4= Comma ( (lv_elements_5_0= ruleArrayPadding ) )* ( (lv_elements_6_0= ruleArrayElement ) ) )*";
         }
     }
 
@@ -92220,7 +92220,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_176;
         }
         public String getDescription() {
-            return "()* loopback of 14412:2: (otherlv_4= Comma ( (lv_elements_5_0= ruleArrayPadding ) )* ( (lv_elements_6_0= norm1_ArrayElement ) ) )*";
+            return "()* loopback of 14410:2: (otherlv_4= Comma ( (lv_elements_5_0= ruleArrayPadding ) )* ( (lv_elements_6_0= norm1_ArrayElement ) ) )*";
         }
     }
     static final String dfa_177s = "\121\uffff";
@@ -92333,7 +92333,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_182;
         }
         public String getDescription() {
-            return "14817:1: (this_AnnotatedPropertyAssignment_0= ruleAnnotatedPropertyAssignment | ( ( ( () ( ( ruleTypeRefWithModifiers ) )? ( ( ruleLiteralOrComputedPropertyName ) ) Colon ) )=>this_PropertyNameValuePair_1= rulePropertyNameValuePair ) | ( ( ( () ruleGetterHeader[null] ) )=>this_PropertyGetterDeclaration_2= rulePropertyGetterDeclaration ) | ( ( ( () Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=>this_PropertySetterDeclaration_3= rulePropertySetterDeclaration ) | ( ( ( () ( ruleTypeVariables[null] )? ( ( ruleTypeRefWithModifiers ) )? ( ( ( ( Asterisk ) ) ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=>this_PropertyMethodDeclaration_4= rulePropertyMethodDeclaration ) | this_PropertyNameValuePairSingleName_5= rulePropertyNameValuePairSingleName )";
+            return "14815:1: (this_AnnotatedPropertyAssignment_0= ruleAnnotatedPropertyAssignment | ( ( ( () ( ( ruleTypeRefWithModifiers ) )? ( ( ruleLiteralOrComputedPropertyName ) ) Colon ) )=>this_PropertyNameValuePair_1= rulePropertyNameValuePair ) | ( ( ( () ruleGetterHeader[null] ) )=>this_PropertyGetterDeclaration_2= rulePropertyGetterDeclaration ) | ( ( ( () Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=>this_PropertySetterDeclaration_3= rulePropertySetterDeclaration ) | ( ( ( () ( ruleTypeVariables[null] )? ( ( ruleTypeRefWithModifiers ) )? ( ( ( ( Asterisk ) ) ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=>this_PropertyMethodDeclaration_4= rulePropertyMethodDeclaration ) | this_PropertyNameValuePairSingleName_5= rulePropertyNameValuePairSingleName )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -93573,7 +93573,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_182;
         }
         public String getDescription() {
-            return "15124:1: (this_AnnotatedPropertyAssignment_0= norm1_AnnotatedPropertyAssignment | ( ( ( () ( ( ruleTypeRefWithModifiers ) )? ( ( norm1_LiteralOrComputedPropertyName ) ) Colon ) )=>this_PropertyNameValuePair_1= norm1_PropertyNameValuePair ) | ( ( ( () norm1_GetterHeader[null] ) )=>this_PropertyGetterDeclaration_2= norm1_PropertyGetterDeclaration ) | ( ( ( () Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=>this_PropertySetterDeclaration_3= norm1_PropertySetterDeclaration ) | ( ( ( () ( ruleTypeVariables[null] )? ( ( ruleTypeRefWithModifiers ) )? ( ( ( ( Asterisk ) ) ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=>this_PropertyMethodDeclaration_4= norm1_PropertyMethodDeclaration ) | this_PropertyNameValuePairSingleName_5= norm1_PropertyNameValuePairSingleName )";
+            return "15122:1: (this_AnnotatedPropertyAssignment_0= norm1_AnnotatedPropertyAssignment | ( ( ( () ( ( ruleTypeRefWithModifiers ) )? ( ( norm1_LiteralOrComputedPropertyName ) ) Colon ) )=>this_PropertyNameValuePair_1= norm1_PropertyNameValuePair ) | ( ( ( () norm1_GetterHeader[null] ) )=>this_PropertyGetterDeclaration_2= norm1_PropertyGetterDeclaration ) | ( ( ( () Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=>this_PropertySetterDeclaration_3= norm1_PropertySetterDeclaration ) | ( ( ( () ( ruleTypeVariables[null] )? ( ( ruleTypeRefWithModifiers ) )? ( ( ( ( Asterisk ) ) ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=>this_PropertyMethodDeclaration_4= norm1_PropertyMethodDeclaration ) | this_PropertyNameValuePairSingleName_5= norm1_PropertyNameValuePairSingleName )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -94902,7 +94902,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_187;
         }
         public String getDescription() {
-            return "15448:1: ( ( ( ( ( () ( ( ruleTypeRefWithModifiers ) )? ( ( ruleLiteralOrComputedPropertyName ) ) Colon ) )=> ( () ( (lv_declaredTypeRef_2_0= ruleTypeRefWithModifiers ) )? ( (lv_declaredName_3_0= ruleLiteralOrComputedPropertyName ) ) otherlv_4= Colon ) ) ( (lv_expression_5_0= norm1_AssignmentExpression ) ) ) | ( ( ( ( () ruleGetterHeader[null] ) )=> ( () this_GetterHeader_7= ruleGetterHeader[$current] ) ) ( ( ( () LeftCurlyBracket ) )=> (lv_body_8_0= ruleBlock ) ) ) | ( ( ( ( () Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=> ( () otherlv_10= Set ( ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT )=> (lv_declaredName_11_0= ruleLiteralOrComputedPropertyName ) ) ) ) otherlv_12= LeftParenthesis ( (lv_fpar_13_0= ruleFormalParameter ) ) otherlv_14= RightParenthesis ( ( ( () LeftCurlyBracket ) )=> (lv_body_15_0= ruleBlock ) ) ) | ( ( ( ( () ( ruleTypeVariables[null] )? ( ( ruleTypeRefWithModifiers ) )? ( ( ( ( Asterisk ) ) ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=> ( () (this_TypeVariables_17= ruleTypeVariables[$current] )? ( (lv_returnTypeRef_18_0= ruleTypeRefWithModifiers ) )? ( ( ( (lv_generator_19_0= Asterisk ) ) ( (lv_declaredName_20_0= ruleLiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsAndBody_21= norm1_MethodParamsAndBody[$current] ) ) | ( ( (lv_declaredName_22_0= ruleLiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsAndBody_23= ruleMethodParamsAndBody[$current] ) ) ) ) ) (otherlv_24= Semicolon )? ) | ( () ( (lv_declaredTypeRef_26_0= ruleTypeRef ) )? ( (lv_identifierRef_27_0= ruleIdentifierRef ) ) (otherlv_28= EqualsSign ( (lv_expression_29_0= norm1_AssignmentExpression ) ) )? ) )";
+            return "15446:1: ( ( ( ( ( () ( ( ruleTypeRefWithModifiers ) )? ( ( ruleLiteralOrComputedPropertyName ) ) Colon ) )=> ( () ( (lv_declaredTypeRef_2_0= ruleTypeRefWithModifiers ) )? ( (lv_declaredName_3_0= ruleLiteralOrComputedPropertyName ) ) otherlv_4= Colon ) ) ( (lv_expression_5_0= norm1_AssignmentExpression ) ) ) | ( ( ( ( () ruleGetterHeader[null] ) )=> ( () this_GetterHeader_7= ruleGetterHeader[$current] ) ) ( ( ( () LeftCurlyBracket ) )=> (lv_body_8_0= ruleBlock ) ) ) | ( ( ( ( () Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=> ( () otherlv_10= Set ( ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT )=> (lv_declaredName_11_0= ruleLiteralOrComputedPropertyName ) ) ) ) otherlv_12= LeftParenthesis ( (lv_fpar_13_0= ruleFormalParameter ) ) otherlv_14= RightParenthesis ( ( ( () LeftCurlyBracket ) )=> (lv_body_15_0= ruleBlock ) ) ) | ( ( ( ( () ( ruleTypeVariables[null] )? ( ( ruleTypeRefWithModifiers ) )? ( ( ( ( Asterisk ) ) ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=> ( () (this_TypeVariables_17= ruleTypeVariables[$current] )? ( (lv_returnTypeRef_18_0= ruleTypeRefWithModifiers ) )? ( ( ( (lv_generator_19_0= Asterisk ) ) ( (lv_declaredName_20_0= ruleLiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsAndBody_21= norm1_MethodParamsAndBody[$current] ) ) | ( ( (lv_declaredName_22_0= ruleLiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsAndBody_23= ruleMethodParamsAndBody[$current] ) ) ) ) ) (otherlv_24= Semicolon )? ) | ( () ( (lv_declaredTypeRef_26_0= ruleTypeRef ) )? ( (lv_identifierRef_27_0= ruleIdentifierRef ) ) (otherlv_28= EqualsSign ( (lv_expression_29_0= norm1_AssignmentExpression ) ) )? ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -96165,7 +96165,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_191;
         }
         public String getDescription() {
-            return "15465:2: ( (lv_declaredTypeRef_2_0= ruleTypeRefWithModifiers ) )?";
+            return "15463:2: ( (lv_declaredTypeRef_2_0= ruleTypeRefWithModifiers ) )?";
         }
     }
     static final String dfa_192s = "\7\4\1\uffff\1\4\4\134\1\uffff";
@@ -96202,7 +96202,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "16012:3: ( (lv_returnTypeRef_18_0= ruleTypeRefWithModifiers ) )?";
+            return "16010:3: ( (lv_returnTypeRef_18_0= ruleTypeRefWithModifiers ) )?";
         }
     }
     static final String dfa_194s = "\1\4\1\uffff\5\4\4\140\1\uffff";
@@ -96239,7 +96239,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_196;
         }
         public String getDescription() {
-            return "16123:2: ( (lv_declaredTypeRef_26_0= ruleTypeRef ) )?";
+            return "16121:2: ( (lv_declaredTypeRef_26_0= ruleTypeRef ) )?";
         }
     }
 
@@ -96257,7 +96257,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_187;
         }
         public String getDescription() {
-            return "16204:1: ( ( ( ( ( () ( ( ruleTypeRefWithModifiers ) )? ( ( norm1_LiteralOrComputedPropertyName ) ) Colon ) )=> ( () ( (lv_declaredTypeRef_2_0= ruleTypeRefWithModifiers ) )? ( (lv_declaredName_3_0= norm1_LiteralOrComputedPropertyName ) ) otherlv_4= Colon ) ) ( (lv_expression_5_0= norm3_AssignmentExpression ) ) ) | ( ( ( ( () norm1_GetterHeader[null] ) )=> ( () this_GetterHeader_7= norm1_GetterHeader[$current] ) ) ( ( ( () LeftCurlyBracket ) )=> (lv_body_8_0= ruleBlock ) ) ) | ( ( ( ( () Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=> ( () otherlv_10= Set ( ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT )=> (lv_declaredName_11_0= norm1_LiteralOrComputedPropertyName ) ) ) ) otherlv_12= LeftParenthesis ( (lv_fpar_13_0= norm1_FormalParameter ) ) otherlv_14= RightParenthesis ( ( ( () LeftCurlyBracket ) )=> (lv_body_15_0= ruleBlock ) ) ) | ( ( ( ( () ( ruleTypeVariables[null] )? ( ( ruleTypeRefWithModifiers ) )? ( ( ( ( Asterisk ) ) ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=> ( () (this_TypeVariables_17= ruleTypeVariables[$current] )? ( (lv_returnTypeRef_18_0= ruleTypeRefWithModifiers ) )? ( ( ( (lv_generator_19_0= Asterisk ) ) ( (lv_declaredName_20_0= norm1_LiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsAndBody_21= norm1_MethodParamsAndBody[$current] ) ) | ( ( (lv_declaredName_22_0= norm1_LiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsAndBody_23= ruleMethodParamsAndBody[$current] ) ) ) ) ) (otherlv_24= Semicolon )? ) | ( () ( (lv_declaredTypeRef_26_0= ruleTypeRef ) )? ( (lv_identifierRef_27_0= norm1_IdentifierRef ) ) (otherlv_28= EqualsSign ( (lv_expression_29_0= norm3_AssignmentExpression ) ) )? ) )";
+            return "16202:1: ( ( ( ( ( () ( ( ruleTypeRefWithModifiers ) )? ( ( norm1_LiteralOrComputedPropertyName ) ) Colon ) )=> ( () ( (lv_declaredTypeRef_2_0= ruleTypeRefWithModifiers ) )? ( (lv_declaredName_3_0= norm1_LiteralOrComputedPropertyName ) ) otherlv_4= Colon ) ) ( (lv_expression_5_0= norm3_AssignmentExpression ) ) ) | ( ( ( ( () norm1_GetterHeader[null] ) )=> ( () this_GetterHeader_7= norm1_GetterHeader[$current] ) ) ( ( ( () LeftCurlyBracket ) )=> (lv_body_8_0= ruleBlock ) ) ) | ( ( ( ( () Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=> ( () otherlv_10= Set ( ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT )=> (lv_declaredName_11_0= norm1_LiteralOrComputedPropertyName ) ) ) ) otherlv_12= LeftParenthesis ( (lv_fpar_13_0= norm1_FormalParameter ) ) otherlv_14= RightParenthesis ( ( ( () LeftCurlyBracket ) )=> (lv_body_15_0= ruleBlock ) ) ) | ( ( ( ( () ( ruleTypeVariables[null] )? ( ( ruleTypeRefWithModifiers ) )? ( ( ( ( Asterisk ) ) ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=> ( () (this_TypeVariables_17= ruleTypeVariables[$current] )? ( (lv_returnTypeRef_18_0= ruleTypeRefWithModifiers ) )? ( ( ( (lv_generator_19_0= Asterisk ) ) ( (lv_declaredName_20_0= norm1_LiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsAndBody_21= norm1_MethodParamsAndBody[$current] ) ) | ( ( (lv_declaredName_22_0= norm1_LiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsAndBody_23= ruleMethodParamsAndBody[$current] ) ) ) ) ) (otherlv_24= Semicolon )? ) | ( () ( (lv_declaredTypeRef_26_0= ruleTypeRef ) )? ( (lv_identifierRef_27_0= norm1_IdentifierRef ) ) (otherlv_28= EqualsSign ( (lv_expression_29_0= norm3_AssignmentExpression ) ) )? ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -97495,7 +97495,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_191;
         }
         public String getDescription() {
-            return "16221:2: ( (lv_declaredTypeRef_2_0= ruleTypeRefWithModifiers ) )?";
+            return "16219:2: ( (lv_declaredTypeRef_2_0= ruleTypeRefWithModifiers ) )?";
         }
     }
 
@@ -97513,7 +97513,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "16768:3: ( (lv_returnTypeRef_18_0= ruleTypeRefWithModifiers ) )?";
+            return "16766:3: ( (lv_returnTypeRef_18_0= ruleTypeRefWithModifiers ) )?";
         }
     }
     static final String[] dfa_197s = {
@@ -97546,7 +97546,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_197;
         }
         public String getDescription() {
-            return "16879:2: ( (lv_declaredTypeRef_26_0= ruleTypeRef ) )?";
+            return "16877:2: ( (lv_declaredTypeRef_26_0= ruleTypeRef ) )?";
         }
     }
 
@@ -97564,7 +97564,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "17002:3: ( (lv_returnTypeRef_2_0= ruleTypeRefWithModifiers ) )?";
+            return "17000:3: ( (lv_returnTypeRef_2_0= ruleTypeRefWithModifiers ) )?";
         }
     }
 
@@ -97582,7 +97582,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "17162:3: ( (lv_returnTypeRef_2_0= ruleTypeRefWithModifiers ) )?";
+            return "17160:3: ( (lv_returnTypeRef_2_0= ruleTypeRefWithModifiers ) )?";
         }
     }
 
@@ -97600,7 +97600,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_191;
         }
         public String getDescription() {
-            return "17304:2: ( (lv_declaredTypeRef_1_0= ruleTypeRefWithModifiers ) )?";
+            return "17302:2: ( (lv_declaredTypeRef_1_0= ruleTypeRefWithModifiers ) )?";
         }
     }
 
@@ -97618,7 +97618,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_191;
         }
         public String getDescription() {
-            return "17393:2: ( (lv_declaredTypeRef_1_0= ruleTypeRefWithModifiers ) )?";
+            return "17391:2: ( (lv_declaredTypeRef_1_0= ruleTypeRefWithModifiers ) )?";
         }
     }
 
@@ -97636,7 +97636,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_196;
         }
         public String getDescription() {
-            return "17473:2: ( (lv_declaredTypeRef_0_0= ruleTypeRef ) )?";
+            return "17471:2: ( (lv_declaredTypeRef_0_0= ruleTypeRef ) )?";
         }
     }
 
@@ -97654,7 +97654,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_197;
         }
         public String getDescription() {
-            return "17545:2: ( (lv_declaredTypeRef_0_0= ruleTypeRef ) )?";
+            return "17543:2: ( (lv_declaredTypeRef_0_0= ruleTypeRef ) )?";
         }
     }
     static final String dfa_198s = "\70\uffff";
@@ -97742,7 +97742,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_203;
         }
         public String getDescription() {
-            return "19289:1: ( ( ( ( ( () New FullStop ) )=> ( () otherlv_1= New otherlv_2= FullStop ) ) otherlv_3= Target ) | ( ( ( ( () New ) )=> ( () otherlv_5= New ) ) ( (lv_callee_6_0= ruleMemberExpression ) ) ( ( LessThanSign )=>this_TypeArguments_7= ruleTypeArguments[$current] )? ( ( ( ( LeftParenthesis ) )=> (lv_withArgs_8_0= LeftParenthesis ) ) (this_Arguments_9= ruleArguments[$current] )? otherlv_10= RightParenthesis ( ( () this_IndexedAccessExpressionTail_12= ruleIndexedAccessExpressionTail[$current] ) | ( () this_ParameterizedPropertyAccessExpressionTail_14= ruleParameterizedPropertyAccessExpressionTail[$current] ) | ( () ( (lv_template_16_0= ruleTemplateLiteral ) ) ) )* )? ) | (this_PrimaryExpression_17= rulePrimaryExpression ( ( () this_IndexedAccessExpressionTail_19= ruleIndexedAccessExpressionTail[$current] ) | ( () this_ParameterizedPropertyAccessExpressionTail_21= ruleParameterizedPropertyAccessExpressionTail[$current] ) | ( () ( (lv_template_23_0= ruleTemplateLiteral ) ) ) )* ) )";
+            return "19287:1: ( ( ( ( ( () New FullStop ) )=> ( () otherlv_1= New otherlv_2= FullStop ) ) otherlv_3= Target ) | ( ( ( ( () New ) )=> ( () otherlv_5= New ) ) ( (lv_callee_6_0= ruleMemberExpression ) ) ( ( LessThanSign )=>this_TypeArguments_7= ruleTypeArguments[$current] )? ( ( ( ( LeftParenthesis ) )=> (lv_withArgs_8_0= LeftParenthesis ) ) (this_Arguments_9= ruleArguments[$current] )? otherlv_10= RightParenthesis ( ( () this_IndexedAccessExpressionTail_12= ruleIndexedAccessExpressionTail[$current] ) | ( () this_ParameterizedPropertyAccessExpressionTail_14= ruleParameterizedPropertyAccessExpressionTail[$current] ) | ( () ( (lv_template_16_0= ruleTemplateLiteral ) ) ) )* )? ) | (this_PrimaryExpression_17= rulePrimaryExpression ( ( () this_IndexedAccessExpressionTail_19= ruleIndexedAccessExpressionTail[$current] ) | ( () this_ParameterizedPropertyAccessExpressionTail_21= ruleParameterizedPropertyAccessExpressionTail[$current] ) | ( () ( (lv_template_23_0= ruleTemplateLiteral ) ) ) )* ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -97851,7 +97851,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_208;
         }
         public String getDescription() {
-            return "19549:1: ( ( ( ( ( () New FullStop ) )=> ( () otherlv_1= New otherlv_2= FullStop ) ) otherlv_3= Target ) | ( ( ( ( () New ) )=> ( () otherlv_5= New ) ) ( (lv_callee_6_0= norm1_MemberExpression ) ) ( ( LessThanSign )=>this_TypeArguments_7= ruleTypeArguments[$current] )? ( ( ( ( LeftParenthesis ) )=> (lv_withArgs_8_0= LeftParenthesis ) ) (this_Arguments_9= norm1_Arguments[$current] )? otherlv_10= RightParenthesis ( ( () this_IndexedAccessExpressionTail_12= norm1_IndexedAccessExpressionTail[$current] ) | ( () this_ParameterizedPropertyAccessExpressionTail_14= norm1_ParameterizedPropertyAccessExpressionTail[$current] ) | ( () ( (lv_template_16_0= norm1_TemplateLiteral ) ) ) )* )? ) | (this_PrimaryExpression_17= norm1_PrimaryExpression ( ( () this_IndexedAccessExpressionTail_19= norm1_IndexedAccessExpressionTail[$current] ) | ( () this_ParameterizedPropertyAccessExpressionTail_21= norm1_ParameterizedPropertyAccessExpressionTail[$current] ) | ( () ( (lv_template_23_0= norm1_TemplateLiteral ) ) ) )* ) )";
+            return "19547:1: ( ( ( ( ( () New FullStop ) )=> ( () otherlv_1= New otherlv_2= FullStop ) ) otherlv_3= Target ) | ( ( ( ( () New ) )=> ( () otherlv_5= New ) ) ( (lv_callee_6_0= norm1_MemberExpression ) ) ( ( LessThanSign )=>this_TypeArguments_7= ruleTypeArguments[$current] )? ( ( ( ( LeftParenthesis ) )=> (lv_withArgs_8_0= LeftParenthesis ) ) (this_Arguments_9= norm1_Arguments[$current] )? otherlv_10= RightParenthesis ( ( () this_IndexedAccessExpressionTail_12= norm1_IndexedAccessExpressionTail[$current] ) | ( () this_ParameterizedPropertyAccessExpressionTail_14= norm1_ParameterizedPropertyAccessExpressionTail[$current] ) | ( () ( (lv_template_16_0= norm1_TemplateLiteral ) ) ) )* )? ) | (this_PrimaryExpression_17= norm1_PrimaryExpression ( ( () this_IndexedAccessExpressionTail_19= norm1_IndexedAccessExpressionTail[$current] ) | ( () this_ParameterizedPropertyAccessExpressionTail_21= norm1_ParameterizedPropertyAccessExpressionTail[$current] ) | ( () ( (lv_template_23_0= norm1_TemplateLiteral ) ) ) )* ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -97977,7 +97977,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_215;
         }
         public String getDescription() {
-            return "()* loopback of 20656:1: ( ( ( () ( ( ruleShiftOperator ) ) ( ( ruleAdditiveExpression ) ) ) )=> ( () ( (lv_op_2_0= ruleShiftOperator ) ) ( (lv_rhs_3_0= ruleAdditiveExpression ) ) ) )*";
+            return "()* loopback of 20654:1: ( ( ( () ( ( ruleShiftOperator ) ) ( ( ruleAdditiveExpression ) ) ) )=> ( () ( (lv_op_2_0= ruleShiftOperator ) ) ( (lv_rhs_3_0= ruleAdditiveExpression ) ) ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -98116,7 +98116,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_221;
         }
         public String getDescription() {
-            return "()* loopback of 20729:1: ( ( ( () ( ( ruleShiftOperator ) ) ( ( norm1_AdditiveExpression ) ) ) )=> ( () ( (lv_op_2_0= ruleShiftOperator ) ) ( (lv_rhs_3_0= norm1_AdditiveExpression ) ) ) )*";
+            return "()* loopback of 20727:1: ( ( ( () ( ( ruleShiftOperator ) ) ( ( norm1_AdditiveExpression ) ) ) )=> ( () ( (lv_op_2_0= ruleShiftOperator ) ) ( (lv_rhs_3_0= norm1_AdditiveExpression ) ) ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -98260,7 +98260,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_228;
         }
         public String getDescription() {
-            return "()* loopback of 20857:1: ( ( ( () ( ( ruleRelationalOperator ) ) ( New | This_1 | Super | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD ) ) )=> ( () ( (lv_op_2_0= ruleRelationalOperator ) ) ( ( New | This_1 | Super | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_rhs_3_0= ruleShiftExpression ) ) ) )*";
+            return "()* loopback of 20855:1: ( ( ( () ( ( ruleRelationalOperator ) ) ( New | This_1 | Super | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD ) ) )=> ( () ( (lv_op_2_0= ruleRelationalOperator ) ) ( ( New | This_1 | Super | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_rhs_3_0= ruleShiftExpression ) ) ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -98532,7 +98532,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_235;
         }
         public String getDescription() {
-            return "()* loopback of 21186:1: ( ( ( () ( ( norm1_RelationalOperator ) ) ( New | This_1 | Super | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD ) ) )=> ( () ( (lv_op_2_0= norm1_RelationalOperator ) ) ( ( New | This_1 | Super | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_rhs_3_0= ruleShiftExpression ) ) ) )*";
+            return "()* loopback of 21184:1: ( ( ( () ( ( norm1_RelationalOperator ) ) ( New | This_1 | Super | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD ) ) )=> ( () ( (lv_op_2_0= norm1_RelationalOperator ) ) ( ( New | This_1 | Super | Yield | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_rhs_3_0= ruleShiftExpression ) ) ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -98799,7 +98799,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_240;
         }
         public String getDescription() {
-            return "()* loopback of 21515:1: ( ( ( () ( ( ruleRelationalOperator ) ) ( New | This_1 | Super | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD ) ) )=> ( () ( (lv_op_2_0= ruleRelationalOperator ) ) ( ( New | This_1 | Super | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_rhs_3_0= norm1_ShiftExpression ) ) ) )*";
+            return "()* loopback of 21513:1: ( ( ( () ( ( ruleRelationalOperator ) ) ( New | This_1 | Super | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD ) ) )=> ( () ( (lv_op_2_0= ruleRelationalOperator ) ) ( ( New | This_1 | Super | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_rhs_3_0= norm1_ShiftExpression ) ) ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -98940,7 +98940,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_243;
         }
         public String getDescription() {
-            return "()* loopback of 21839:1: ( ( ( () ( ( norm1_RelationalOperator ) ) ( New | This_1 | Super | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD ) ) )=> ( () ( (lv_op_2_0= norm1_RelationalOperator ) ) ( ( New | This_1 | Super | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_rhs_3_0= norm1_ShiftExpression ) ) ) )*";
+            return "()* loopback of 21837:1: ( ( ( () ( ( norm1_RelationalOperator ) ) ( New | This_1 | Super | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD ) ) )=> ( () ( (lv_op_2_0= norm1_RelationalOperator ) ) ( ( New | This_1 | Super | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | LeftParenthesis | CommercialAt | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_rhs_3_0= norm1_ShiftExpression ) ) ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -99203,7 +99203,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_248;
         }
         public String getDescription() {
-            return "24433:1: ( ( ( ( () Await ) )=>this_AwaitExpression_0= ruleAwaitExpression ) | ( ( ( () CommercialAt Promisify ) )=>this_PromisifyExpression_1= rulePromisifyExpression ) | ( ( ( ( ( LeftParenthesis ( ( ( ruleFormalParameter ) ) ( Comma ( ( ruleFormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( ( ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) )=> ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) ) ( ( ( ruleFormalParameter ) ) ( Comma ( ( ruleFormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( ruleBindingIdentifierAsFormalParameter ) ) ) EqualsSignGreaterThanSign ) )=>this_ArrowExpression_2= ruleArrowExpression ) | (this_ConditionalExpression_3= ruleConditionalExpression ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_5_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_6_0= ruleAssignmentExpression ) ) )? ) )";
+            return "24431:1: ( ( ( ( () Await ) )=>this_AwaitExpression_0= ruleAwaitExpression ) | ( ( ( () CommercialAt Promisify ) )=>this_PromisifyExpression_1= rulePromisifyExpression ) | ( ( ( ( ( LeftParenthesis ( ( ( ruleFormalParameter ) ) ( Comma ( ( ruleFormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( ( ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) )=> ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) ) ( ( ( ruleFormalParameter ) ) ( Comma ( ( ruleFormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( ruleBindingIdentifierAsFormalParameter ) ) ) EqualsSignGreaterThanSign ) )=>this_ArrowExpression_2= ruleArrowExpression ) | (this_ConditionalExpression_3= ruleConditionalExpression ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_5_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_6_0= ruleAssignmentExpression ) ) )? ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -99696,7 +99696,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_254;
         }
         public String getDescription() {
-            return "24544:1: ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_5_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_6_0= ruleAssignmentExpression ) ) )?";
+            return "24542:1: ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_5_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_6_0= ruleAssignmentExpression ) ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -99890,7 +99890,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_248;
         }
         public String getDescription() {
-            return "24604:1: ( ( ( ( () Await ) )=>this_AwaitExpression_0= norm1_AwaitExpression ) | ( ( ( () CommercialAt Promisify ) )=>this_PromisifyExpression_1= norm1_PromisifyExpression ) | ( ( ( ( ( LeftParenthesis ( ( ( ruleFormalParameter ) ) ( Comma ( ( ruleFormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( ( ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) )=> ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) ) ( ( ( ruleFormalParameter ) ) ( Comma ( ( ruleFormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( ruleBindingIdentifierAsFormalParameter ) ) ) EqualsSignGreaterThanSign ) )=>this_ArrowExpression_2= norm1_ArrowExpression ) | (this_ConditionalExpression_3= norm1_ConditionalExpression ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_5_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_6_0= norm1_AssignmentExpression ) ) )? ) )";
+            return "24602:1: ( ( ( ( () Await ) )=>this_AwaitExpression_0= norm1_AwaitExpression ) | ( ( ( () CommercialAt Promisify ) )=>this_PromisifyExpression_1= norm1_PromisifyExpression ) | ( ( ( ( ( LeftParenthesis ( ( ( ruleFormalParameter ) ) ( Comma ( ( ruleFormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( ( ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) )=> ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) ) ( ( ( ruleFormalParameter ) ) ( Comma ( ( ruleFormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( ruleBindingIdentifierAsFormalParameter ) ) ) EqualsSignGreaterThanSign ) )=>this_ArrowExpression_2= norm1_ArrowExpression ) | (this_ConditionalExpression_3= norm1_ConditionalExpression ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_5_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_6_0= norm1_AssignmentExpression ) ) )? ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -100377,7 +100377,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_257;
         }
         public String getDescription() {
-            return "24715:1: ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_5_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_6_0= norm1_AssignmentExpression ) ) )?";
+            return "24713:1: ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_5_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_6_0= norm1_AssignmentExpression ) ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -100647,7 +100647,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_262;
         }
         public String getDescription() {
-            return "24775:1: ( ( ( ( () Await ) )=>this_AwaitExpression_0= norm2_AwaitExpression ) | ( ( ( () CommercialAt Promisify ) )=>this_PromisifyExpression_1= norm2_PromisifyExpression ) | ( ( ( ( ( LeftParenthesis ( ( ( norm1_FormalParameter ) ) ( Comma ( ( norm1_FormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( ( ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) )=> ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) ) ( ( ( norm1_FormalParameter ) ) ( Comma ( ( norm1_FormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( norm1_BindingIdentifierAsFormalParameter ) ) ) EqualsSignGreaterThanSign ) )=>this_ArrowExpression_2= norm2_ArrowExpression ) | this_YieldExpression_3= ruleYieldExpression | (this_ConditionalExpression_4= norm2_ConditionalExpression ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_6_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_7_0= norm2_AssignmentExpression ) ) )? ) )";
+            return "24773:1: ( ( ( ( () Await ) )=>this_AwaitExpression_0= norm2_AwaitExpression ) | ( ( ( () CommercialAt Promisify ) )=>this_PromisifyExpression_1= norm2_PromisifyExpression ) | ( ( ( ( ( LeftParenthesis ( ( ( norm1_FormalParameter ) ) ( Comma ( ( norm1_FormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( ( ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) )=> ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) ) ( ( ( norm1_FormalParameter ) ) ( Comma ( ( norm1_FormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( norm1_BindingIdentifierAsFormalParameter ) ) ) EqualsSignGreaterThanSign ) )=>this_ArrowExpression_2= norm2_ArrowExpression ) | this_YieldExpression_3= ruleYieldExpression | (this_ConditionalExpression_4= norm2_ConditionalExpression ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_6_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_7_0= norm2_AssignmentExpression ) ) )? ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -101119,7 +101119,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_265;
         }
         public String getDescription() {
-            return "24896:1: ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_6_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_7_0= norm2_AssignmentExpression ) ) )?";
+            return "24894:1: ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_6_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_7_0= norm2_AssignmentExpression ) ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -101313,7 +101313,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_262;
         }
         public String getDescription() {
-            return "24956:1: ( ( ( ( () Await ) )=>this_AwaitExpression_0= norm3_AwaitExpression ) | ( ( ( () CommercialAt Promisify ) )=>this_PromisifyExpression_1= norm3_PromisifyExpression ) | ( ( ( ( ( LeftParenthesis ( ( ( norm1_FormalParameter ) ) ( Comma ( ( norm1_FormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( ( ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) )=> ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) ) ( ( ( norm1_FormalParameter ) ) ( Comma ( ( norm1_FormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( norm1_BindingIdentifierAsFormalParameter ) ) ) EqualsSignGreaterThanSign ) )=>this_ArrowExpression_2= norm3_ArrowExpression ) | this_YieldExpression_3= norm1_YieldExpression | (this_ConditionalExpression_4= norm3_ConditionalExpression ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_6_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_7_0= norm3_AssignmentExpression ) ) )? ) )";
+            return "24954:1: ( ( ( ( () Await ) )=>this_AwaitExpression_0= norm3_AwaitExpression ) | ( ( ( () CommercialAt Promisify ) )=>this_PromisifyExpression_1= norm3_PromisifyExpression ) | ( ( ( ( ( LeftParenthesis ( ( ( norm1_FormalParameter ) ) ( Comma ( ( norm1_FormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( ( ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) )=> ( ( ( Async ) ) ruleNoLineTerminator[null] LeftParenthesis ) ) ( ( ( norm1_FormalParameter ) ) ( Comma ( ( norm1_FormalParameter ) ) )* )? RightParenthesis ( Colon ( ( ruleTypeRef ) ) )? ) | ( ( norm1_BindingIdentifierAsFormalParameter ) ) ) EqualsSignGreaterThanSign ) )=>this_ArrowExpression_2= norm3_ArrowExpression ) | this_YieldExpression_3= norm1_YieldExpression | (this_ConditionalExpression_4= norm3_ConditionalExpression ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_6_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_7_0= norm3_AssignmentExpression ) ) )? ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -101764,7 +101764,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_257;
         }
         public String getDescription() {
-            return "25077:1: ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_6_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_7_0= norm3_AssignmentExpression ) ) )?";
+            return "25075:1: ( ( ( ( () ( ( ruleAssignmentOperator ) ) ) )=> ( () ( (lv_op_6_0= ruleAssignmentOperator ) ) ) ) ( (lv_rhs_7_0= norm3_AssignmentExpression ) ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -102050,7 +102050,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_272;
         }
         public String getDescription() {
-            return "25179:3: ( ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_3_0= norm2_AssignmentExpression ) )?";
+            return "25177:3: ( ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_3_0= norm2_AssignmentExpression ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -102224,7 +102224,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_278;
         }
         public String getDescription() {
-            return "25344:3: ( ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_3_0= norm3_AssignmentExpression ) )?";
+            return "25342:3: ( ( Await | CommercialAt | LeftParenthesis | Async | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Implements | Interface | Private | Protected | Public | Out | Yield | New | This_1 | Super | LessThanSign | True | False | Null | Solidus | SolidusEqualsSign | LeftSquareBracket | LeftCurlyBracket | Function | Class | Delete | Void | Typeof | PlusSignPlusSign | HyphenMinusHyphenMinus | PlusSign | HyphenMinus | Tilde | ExclamationMark | RULE_IDENTIFIER | RULE_DOUBLE | RULE_INT | RULE_BINARY_INT | RULE_OCTAL_INT | RULE_LEGACY_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT | RULE_STRING | RULE_NO_SUBSTITUTION_TEMPLATE_LITERAL | RULE_TEMPLATE_HEAD )=> (lv_expression_3_0= norm3_AssignmentExpression ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -102396,7 +102396,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_285;
         }
         public String getDescription() {
-            return "27799:2: ( ( ( LeftParenthesis )=>otherlv_1= LeftParenthesis ) ( ( (lv_args_2_0= ruleAnnotationArgument ) ) (otherlv_3= Comma ( (lv_args_4_0= ruleAnnotationArgument ) ) )* )? otherlv_5= RightParenthesis )?";
+            return "27797:2: ( ( ( LeftParenthesis )=>otherlv_1= LeftParenthesis ) ( ( (lv_args_2_0= ruleAnnotationArgument ) ) (otherlv_3= Comma ( (lv_args_4_0= ruleAnnotationArgument ) ) )* )? otherlv_5= RightParenthesis )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -102532,7 +102532,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_290;
         }
         public String getDescription() {
-            return "29354:1: (this_AnnotatedN4MemberDeclaration_0= ruleAnnotatedN4MemberDeclaration | ( ( ( () ( ( ruleN4Modifier ) )* ruleGetterHeader[null] ) )=>this_N4GetterDeclaration_1= ruleN4GetterDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=>this_N4SetterDeclaration_2= ruleN4SetterDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* ( ruleTypeVariables[null] )? ( ruleBogusTypeRefFragment[null] )? ( ( ( ( Asterisk ) ) ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ruleAsyncNoTrailingLineBreak[null] ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=>this_N4MethodDeclaration_3= ruleN4MethodDeclaration ) | this_N4FieldDeclaration_4= ruleN4FieldDeclaration | this_N4CallableConstructorDeclaration_5= ruleN4CallableConstructorDeclaration )";
+            return "29352:1: (this_AnnotatedN4MemberDeclaration_0= ruleAnnotatedN4MemberDeclaration | ( ( ( () ( ( ruleN4Modifier ) )* ruleGetterHeader[null] ) )=>this_N4GetterDeclaration_1= ruleN4GetterDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=>this_N4SetterDeclaration_2= ruleN4SetterDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* ( ruleTypeVariables[null] )? ( ruleBogusTypeRefFragment[null] )? ( ( ( ( Asterisk ) ) ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ruleAsyncNoTrailingLineBreak[null] ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=>this_N4MethodDeclaration_3= ruleN4MethodDeclaration ) | this_N4FieldDeclaration_4= ruleN4FieldDeclaration | this_N4CallableConstructorDeclaration_5= ruleN4CallableConstructorDeclaration )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -103737,7 +103737,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_290;
         }
         public String getDescription() {
-            return "29658:1: (this_AnnotatedN4MemberDeclaration_0= norm1_AnnotatedN4MemberDeclaration | ( ( ( () ( ( ruleN4Modifier ) )* norm1_GetterHeader[null] ) )=>this_N4GetterDeclaration_1= norm1_N4GetterDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=>this_N4SetterDeclaration_2= norm1_N4SetterDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* ( ruleTypeVariables[null] )? ( ruleBogusTypeRefFragment[null] )? ( ( ( ( Asterisk ) ) ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ruleAsyncNoTrailingLineBreak[null] ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=>this_N4MethodDeclaration_3= norm1_N4MethodDeclaration ) | this_N4FieldDeclaration_4= norm1_N4FieldDeclaration | this_N4CallableConstructorDeclaration_5= norm1_N4CallableConstructorDeclaration )";
+            return "29656:1: (this_AnnotatedN4MemberDeclaration_0= norm1_AnnotatedN4MemberDeclaration | ( ( ( () ( ( ruleN4Modifier ) )* norm1_GetterHeader[null] ) )=>this_N4GetterDeclaration_1= norm1_N4GetterDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=>this_N4SetterDeclaration_2= norm1_N4SetterDeclaration ) | ( ( ( () ( ( ruleN4Modifier ) )* ( ruleTypeVariables[null] )? ( ruleBogusTypeRefFragment[null] )? ( ( ( ( Asterisk ) ) ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ruleAsyncNoTrailingLineBreak[null] ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=>this_N4MethodDeclaration_3= norm1_N4MethodDeclaration ) | this_N4FieldDeclaration_4= norm1_N4FieldDeclaration | this_N4CallableConstructorDeclaration_5= norm1_N4CallableConstructorDeclaration )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -105035,7 +105035,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_296;
         }
         public String getDescription() {
-            return "29979:1: ( ( ( ( ( () ( ( ruleN4Modifier ) )* ruleGetterHeader[null] ) )=> ( () ( (lv_declaredModifiers_2_0= ruleN4Modifier ) )* this_GetterHeader_3= ruleGetterHeader[$current] ) ) ( ( ( () LeftCurlyBracket ) )=> (lv_body_4_0= ruleBlock ) )? (otherlv_5= Semicolon )? ) | ( ( ( ( () ( ( ruleN4Modifier ) )* Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=> ( () ( (lv_declaredModifiers_7_0= ruleN4Modifier ) )* otherlv_8= Set ( ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT )=> (lv_declaredName_9_0= ruleLiteralOrComputedPropertyName ) ) ) ) otherlv_10= LeftParenthesis ( (lv_fpar_11_0= ruleFormalParameter ) ) otherlv_12= RightParenthesis ( ( ( () LeftCurlyBracket ) )=> (lv_body_13_0= ruleBlock ) )? (otherlv_14= Semicolon )? ) | ( ( ( ( () ( ( ruleN4Modifier ) )* ( ruleTypeVariables[null] )? ( ruleBogusTypeRefFragment[null] )? ( ( ( ( Asterisk ) ) ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ruleAsyncNoTrailingLineBreak[null] ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=> ( () ( (lv_declaredModifiers_16_0= ruleN4Modifier ) )* (this_TypeVariables_17= ruleTypeVariables[$current] )? (this_BogusTypeRefFragment_18= ruleBogusTypeRefFragment[$current] )? ( ( ( (lv_generator_19_0= Asterisk ) ) ( (lv_declaredName_20_0= ruleLiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsReturnAndBody_21= norm1_MethodParamsReturnAndBody[$current] ) ) | (this_AsyncNoTrailingLineBreak_22= ruleAsyncNoTrailingLineBreak[$current] ( (lv_declaredName_23_0= ruleLiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsReturnAndBody_24= ruleMethodParamsReturnAndBody[$current] ) ) ) ) ) (otherlv_25= Semicolon )? ) | ( () this_FieldDeclarationImpl_27= ruleFieldDeclarationImpl[$current] ) )";
+            return "29977:1: ( ( ( ( ( () ( ( ruleN4Modifier ) )* ruleGetterHeader[null] ) )=> ( () ( (lv_declaredModifiers_2_0= ruleN4Modifier ) )* this_GetterHeader_3= ruleGetterHeader[$current] ) ) ( ( ( () LeftCurlyBracket ) )=> (lv_body_4_0= ruleBlock ) )? (otherlv_5= Semicolon )? ) | ( ( ( ( () ( ( ruleN4Modifier ) )* Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=> ( () ( (lv_declaredModifiers_7_0= ruleN4Modifier ) )* otherlv_8= Set ( ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT )=> (lv_declaredName_9_0= ruleLiteralOrComputedPropertyName ) ) ) ) otherlv_10= LeftParenthesis ( (lv_fpar_11_0= ruleFormalParameter ) ) otherlv_12= RightParenthesis ( ( ( () LeftCurlyBracket ) )=> (lv_body_13_0= ruleBlock ) )? (otherlv_14= Semicolon )? ) | ( ( ( ( () ( ( ruleN4Modifier ) )* ( ruleTypeVariables[null] )? ( ruleBogusTypeRefFragment[null] )? ( ( ( ( Asterisk ) ) ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ruleAsyncNoTrailingLineBreak[null] ( ( ruleLiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=> ( () ( (lv_declaredModifiers_16_0= ruleN4Modifier ) )* (this_TypeVariables_17= ruleTypeVariables[$current] )? (this_BogusTypeRefFragment_18= ruleBogusTypeRefFragment[$current] )? ( ( ( (lv_generator_19_0= Asterisk ) ) ( (lv_declaredName_20_0= ruleLiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsReturnAndBody_21= norm1_MethodParamsReturnAndBody[$current] ) ) | (this_AsyncNoTrailingLineBreak_22= ruleAsyncNoTrailingLineBreak[$current] ( (lv_declaredName_23_0= ruleLiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsReturnAndBody_24= ruleMethodParamsReturnAndBody[$current] ) ) ) ) ) (otherlv_25= Semicolon )? ) | ( () this_FieldDeclarationImpl_27= ruleFieldDeclarationImpl[$current] ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -106338,7 +106338,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_303;
         }
         public String getDescription() {
-            return "30020:3: ( ( ( () LeftCurlyBracket ) )=> (lv_body_4_0= ruleBlock ) )?";
+            return "30018:3: ( ( ( () LeftCurlyBracket ) )=> (lv_body_4_0= ruleBlock ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -106382,7 +106382,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_303;
         }
         public String getDescription() {
-            return "30450:1: ( ( ( () LeftCurlyBracket ) )=> (lv_body_13_0= ruleBlock ) )?";
+            return "30448:1: ( ( ( () LeftCurlyBracket ) )=> (lv_body_13_0= ruleBlock ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -106446,7 +106446,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_307;
         }
         public String getDescription() {
-            return "()* loopback of 30508:2: ( (lv_declaredModifiers_16_0= ruleN4Modifier ) )*";
+            return "()* loopback of 30506:2: ( (lv_declaredModifiers_16_0= ruleN4Modifier ) )*";
         }
     }
 
@@ -106464,7 +106464,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "30538:3: (this_BogusTypeRefFragment_18= ruleBogusTypeRefFragment[$current] )?";
+            return "30536:3: (this_BogusTypeRefFragment_18= ruleBogusTypeRefFragment[$current] )?";
         }
     }
 
@@ -106482,7 +106482,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_296;
         }
         public String getDescription() {
-            return "30689:1: ( ( ( ( ( () ( ( ruleN4Modifier ) )* norm1_GetterHeader[null] ) )=> ( () ( (lv_declaredModifiers_2_0= ruleN4Modifier ) )* this_GetterHeader_3= norm1_GetterHeader[$current] ) ) ( ( ( () LeftCurlyBracket ) )=> (lv_body_4_0= norm1_Block ) )? (otherlv_5= Semicolon )? ) | ( ( ( ( () ( ( ruleN4Modifier ) )* Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=> ( () ( (lv_declaredModifiers_7_0= ruleN4Modifier ) )* otherlv_8= Set ( ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT )=> (lv_declaredName_9_0= norm1_LiteralOrComputedPropertyName ) ) ) ) otherlv_10= LeftParenthesis ( (lv_fpar_11_0= norm1_FormalParameter ) ) otherlv_12= RightParenthesis ( ( ( () LeftCurlyBracket ) )=> (lv_body_13_0= norm1_Block ) )? (otherlv_14= Semicolon )? ) | ( ( ( ( () ( ( ruleN4Modifier ) )* ( ruleTypeVariables[null] )? ( ruleBogusTypeRefFragment[null] )? ( ( ( ( Asterisk ) ) ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ruleAsyncNoTrailingLineBreak[null] ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=> ( () ( (lv_declaredModifiers_16_0= ruleN4Modifier ) )* (this_TypeVariables_17= ruleTypeVariables[$current] )? (this_BogusTypeRefFragment_18= ruleBogusTypeRefFragment[$current] )? ( ( ( (lv_generator_19_0= Asterisk ) ) ( (lv_declaredName_20_0= norm1_LiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsReturnAndBody_21= norm1_MethodParamsReturnAndBody[$current] ) ) | (this_AsyncNoTrailingLineBreak_22= ruleAsyncNoTrailingLineBreak[$current] ( (lv_declaredName_23_0= norm1_LiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsReturnAndBody_24= ruleMethodParamsReturnAndBody[$current] ) ) ) ) ) (otherlv_25= Semicolon )? ) | ( () this_FieldDeclarationImpl_27= norm1_FieldDeclarationImpl[$current] ) )";
+            return "30687:1: ( ( ( ( ( () ( ( ruleN4Modifier ) )* norm1_GetterHeader[null] ) )=> ( () ( (lv_declaredModifiers_2_0= ruleN4Modifier ) )* this_GetterHeader_3= norm1_GetterHeader[$current] ) ) ( ( ( () LeftCurlyBracket ) )=> (lv_body_4_0= norm1_Block ) )? (otherlv_5= Semicolon )? ) | ( ( ( ( () ( ( ruleN4Modifier ) )* Set ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT ) ) )=> ( () ( (lv_declaredModifiers_7_0= ruleN4Modifier ) )* otherlv_8= Set ( ( Break | Case | Catch | Class | Const | Continue | Debugger | Default | Delete | Do | Else | Export | Extends | Finally | For | Function | If | Import | In | Instanceof | New | Return | Super | Switch | This_1 | Throw | Try | Typeof | Var | Void | While | With | Yield | Null | True | False | Enum | Get | Set | Let | Project | External | Abstract | Static | As | From | Constructor | Of | Target | Type | Union | Intersection | This | Promisify | Await | Async | Implements | Interface | Private | Protected | Public | Out | LeftSquareBracket | RULE_IDENTIFIER | RULE_STRING | RULE_DOUBLE | RULE_INT | RULE_OCTAL_INT | RULE_HEX_INT | RULE_SCIENTIFIC_INT )=> (lv_declaredName_9_0= norm1_LiteralOrComputedPropertyName ) ) ) ) otherlv_10= LeftParenthesis ( (lv_fpar_11_0= norm1_FormalParameter ) ) otherlv_12= RightParenthesis ( ( ( () LeftCurlyBracket ) )=> (lv_body_13_0= norm1_Block ) )? (otherlv_14= Semicolon )? ) | ( ( ( ( () ( ( ruleN4Modifier ) )* ( ruleTypeVariables[null] )? ( ruleBogusTypeRefFragment[null] )? ( ( ( ( Asterisk ) ) ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) | ( ruleAsyncNoTrailingLineBreak[null] ( ( norm1_LiteralOrComputedPropertyName ) ) LeftParenthesis ) ) ) )=> ( () ( (lv_declaredModifiers_16_0= ruleN4Modifier ) )* (this_TypeVariables_17= ruleTypeVariables[$current] )? (this_BogusTypeRefFragment_18= ruleBogusTypeRefFragment[$current] )? ( ( ( (lv_generator_19_0= Asterisk ) ) ( (lv_declaredName_20_0= norm1_LiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsReturnAndBody_21= norm1_MethodParamsReturnAndBody[$current] ) ) | (this_AsyncNoTrailingLineBreak_22= ruleAsyncNoTrailingLineBreak[$current] ( (lv_declaredName_23_0= norm1_LiteralOrComputedPropertyName ) ) ( ( LeftParenthesis )=>this_MethodParamsReturnAndBody_24= ruleMethodParamsReturnAndBody[$current] ) ) ) ) ) (otherlv_25= Semicolon )? ) | ( () this_FieldDeclarationImpl_27= norm1_FieldDeclarationImpl[$current] ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -107779,7 +107779,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_312;
         }
         public String getDescription() {
-            return "30730:3: ( ( ( () LeftCurlyBracket ) )=> (lv_body_4_0= norm1_Block ) )?";
+            return "30728:3: ( ( ( () LeftCurlyBracket ) )=> (lv_body_4_0= norm1_Block ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -107823,7 +107823,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_312;
         }
         public String getDescription() {
-            return "31160:1: ( ( ( () LeftCurlyBracket ) )=> (lv_body_13_0= norm1_Block ) )?";
+            return "31158:1: ( ( ( () LeftCurlyBracket ) )=> (lv_body_13_0= norm1_Block ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -107867,7 +107867,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_307;
         }
         public String getDescription() {
-            return "()* loopback of 31218:2: ( (lv_declaredModifiers_16_0= ruleN4Modifier ) )*";
+            return "()* loopback of 31216:2: ( (lv_declaredModifiers_16_0= ruleN4Modifier ) )*";
         }
     }
 
@@ -107885,7 +107885,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "31248:3: (this_BogusTypeRefFragment_18= ruleBogusTypeRefFragment[$current] )?";
+            return "31246:3: (this_BogusTypeRefFragment_18= ruleBogusTypeRefFragment[$current] )?";
         }
     }
     static final String dfa_313s = "\2\uffff\10\1\1\uffff";
@@ -107921,7 +107921,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_315;
         }
         public String getDescription() {
-            return "()* loopback of 31390:2: ( (lv_declaredModifiers_0_0= ruleN4Modifier ) )*";
+            return "()* loopback of 31388:2: ( (lv_declaredModifiers_0_0= ruleN4Modifier ) )*";
         }
     }
     static final String dfa_316s = "\1\uffff\6\15\1\uffff\5\15\1\uffff";
@@ -107960,7 +107960,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_318;
         }
         public String getDescription() {
-            return "31408:3: (this_BogusTypeRefFragment_1= ruleBogusTypeRefFragment[$current] )?";
+            return "31406:3: (this_BogusTypeRefFragment_1= ruleBogusTypeRefFragment[$current] )?";
         }
     }
 
@@ -107978,7 +107978,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_315;
         }
         public String getDescription() {
-            return "()* loopback of 31494:2: ( (lv_declaredModifiers_0_0= ruleN4Modifier ) )*";
+            return "()* loopback of 31492:2: ( (lv_declaredModifiers_0_0= ruleN4Modifier ) )*";
         }
     }
 
@@ -107996,7 +107996,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_318;
         }
         public String getDescription() {
-            return "31512:3: (this_BogusTypeRefFragment_1= ruleBogusTypeRefFragment[$current] )?";
+            return "31510:3: (this_BogusTypeRefFragment_1= ruleBogusTypeRefFragment[$current] )?";
         }
     }
 
@@ -108014,7 +108014,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_307;
         }
         public String getDescription() {
-            return "()* loopback of 31707:2: ( (lv_declaredModifiers_1_0= ruleN4Modifier ) )*";
+            return "()* loopback of 31705:2: ( (lv_declaredModifiers_1_0= ruleN4Modifier ) )*";
         }
     }
 
@@ -108032,7 +108032,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "31737:3: (this_BogusTypeRefFragment_3= ruleBogusTypeRefFragment[$current] )?";
+            return "31735:3: (this_BogusTypeRefFragment_3= ruleBogusTypeRefFragment[$current] )?";
         }
     }
 
@@ -108050,7 +108050,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_307;
         }
         public String getDescription() {
-            return "()* loopback of 31891:2: ( (lv_declaredModifiers_1_0= ruleN4Modifier ) )*";
+            return "()* loopback of 31889:2: ( (lv_declaredModifiers_1_0= ruleN4Modifier ) )*";
         }
     }
 
@@ -108068,7 +108068,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "31921:3: (this_BogusTypeRefFragment_3= ruleBogusTypeRefFragment[$current] )?";
+            return "31919:3: (this_BogusTypeRefFragment_3= ruleBogusTypeRefFragment[$current] )?";
         }
     }
 
@@ -108086,7 +108086,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_303;
         }
         public String getDescription() {
-            return "32239:4: ( ( ( () LeftCurlyBracket ) )=> (lv_body_3_0= ruleBlock ) )?";
+            return "32237:4: ( ( ( () LeftCurlyBracket ) )=> (lv_body_3_0= ruleBlock ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -108130,7 +108130,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_303;
         }
         public String getDescription() {
-            return "32308:4: ( ( ( () LeftCurlyBracket ) )=> (lv_body_3_0= norm1_Block ) )?";
+            return "32306:4: ( ( ( () LeftCurlyBracket ) )=> (lv_body_3_0= norm1_Block ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -108174,7 +108174,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_303;
         }
         public String getDescription() {
-            return "32391:3: ( ( ( () LeftCurlyBracket ) )=> (lv_body_3_0= ruleBlock ) )?";
+            return "32389:3: ( ( ( () LeftCurlyBracket ) )=> (lv_body_3_0= ruleBlock ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -108218,7 +108218,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_312;
         }
         public String getDescription() {
-            return "32471:3: ( ( ( () LeftCurlyBracket ) )=> (lv_body_3_0= norm1_Block ) )?";
+            return "32469:3: ( ( ( () LeftCurlyBracket ) )=> (lv_body_3_0= norm1_Block ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -108262,7 +108262,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_303;
         }
         public String getDescription() {
-            return "33313:1: ( ( ( () LeftCurlyBracket ) )=> (lv_body_7_0= ruleBlock ) )?";
+            return "33311:1: ( ( ( () LeftCurlyBracket ) )=> (lv_body_7_0= ruleBlock ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -108306,7 +108306,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_312;
         }
         public String getDescription() {
-            return "33755:1: ( ( ( () LeftCurlyBracket ) )=> (lv_body_7_0= norm1_Block ) )?";
+            return "33753:1: ( ( ( () LeftCurlyBracket ) )=> (lv_body_7_0= norm1_Block ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -108360,7 +108360,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_320;
         }
         public String getDescription() {
-            return "()* loopback of 34069:2: (otherlv_4= Comma ( (lv_elements_5_0= ruleElision ) )* ( (lv_elements_6_0= ruleBindingRestElement ) ) )*";
+            return "()* loopback of 34067:2: (otherlv_4= Comma ( (lv_elements_5_0= ruleElision ) )* ( (lv_elements_6_0= ruleBindingRestElement ) ) )*";
         }
     }
     static final String[] dfa_321s = {
@@ -108386,7 +108386,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_321;
         }
         public String getDescription() {
-            return "()* loopback of 34198:2: (otherlv_4= Comma ( (lv_elements_5_0= ruleElision ) )* ( (lv_elements_6_0= norm1_BindingRestElement ) ) )*";
+            return "()* loopback of 34196:2: (otherlv_4= Comma ( (lv_elements_5_0= ruleElision ) )* ( (lv_elements_6_0= norm1_BindingRestElement ) ) )*";
         }
     }
     static final String dfa_322s = "\111\uffff";
@@ -108493,7 +108493,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_328;
         }
         public String getDescription() {
-            return "34288:1: ( ( ( ( ( ( ( ruleLiteralOrComputedPropertyName ) ) Colon ) )=> ( ( (lv_declaredName_0_0= ruleLiteralOrComputedPropertyName ) ) otherlv_1= Colon ) ) ( (lv_value_2_0= ruleBindingElement ) ) ) | ( (lv_value_3_0= ruleSingleNameBinding ) ) )";
+            return "34286:1: ( ( ( ( ( ( ( ruleLiteralOrComputedPropertyName ) ) Colon ) )=> ( ( (lv_declaredName_0_0= ruleLiteralOrComputedPropertyName ) ) otherlv_1= Colon ) ) ( (lv_value_2_0= ruleBindingElement ) ) ) | ( (lv_value_3_0= ruleSingleNameBinding ) ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -109054,7 +109054,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_333;
         }
         public String getDescription() {
-            return "34367:1: ( ( ( ( ( ( ( norm1_LiteralOrComputedPropertyName ) ) Colon ) )=> ( ( (lv_declaredName_0_0= norm1_LiteralOrComputedPropertyName ) ) otherlv_1= Colon ) ) ( (lv_value_2_0= norm1_BindingElement ) ) ) | ( (lv_value_3_0= norm1_SingleNameBinding ) ) )";
+            return "34365:1: ( ( ( ( ( ( ( norm1_LiteralOrComputedPropertyName ) ) Colon ) )=> ( ( (lv_declaredName_0_0= norm1_LiteralOrComputedPropertyName ) ) otherlv_1= Colon ) ) ( (lv_value_2_0= norm1_BindingElement ) ) ) | ( (lv_value_3_0= norm1_SingleNameBinding ) ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -109539,7 +109539,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_339;
         }
         public String getDescription() {
-            return "35330:1: ( ( ( ( ( () LeftParenthesis ruleTAnonymousFormalParameterList[null] RightParenthesis EqualsSignGreaterThanSign ) )=> ( () otherlv_1= LeftParenthesis this_TAnonymousFormalParameterList_2= ruleTAnonymousFormalParameterList[$current] otherlv_3= RightParenthesis otherlv_4= EqualsSignGreaterThanSign ) ) ( (lv_returnTypeRef_5_0= rulePrimaryTypeExpression ) ) ) | this_ArrayTypeRef_6= ruleArrayTypeRef | this_TypeRefWithModifiers_7= ruleTypeRefWithModifiers | (otherlv_8= LeftParenthesis this_TypeRef_9= ruleTypeRef otherlv_10= RightParenthesis ) )";
+            return "35328:1: ( ( ( ( ( () LeftParenthesis ruleTAnonymousFormalParameterList[null] RightParenthesis EqualsSignGreaterThanSign ) )=> ( () otherlv_1= LeftParenthesis this_TAnonymousFormalParameterList_2= ruleTAnonymousFormalParameterList[$current] otherlv_3= RightParenthesis otherlv_4= EqualsSignGreaterThanSign ) ) ( (lv_returnTypeRef_5_0= rulePrimaryTypeExpression ) ) ) | this_ArrayTypeRef_6= ruleArrayTypeRef | this_TypeRefWithModifiers_7= ruleTypeRefWithModifiers | (otherlv_8= LeftParenthesis this_TypeRef_9= ruleTypeRef otherlv_10= RightParenthesis ) )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -109722,7 +109722,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_346;
         }
         public String getDescription() {
-            return "35575:2: ( ( ( PlusSign ) )=> (lv_dynamic_2_0= PlusSign ) )?";
+            return "35573:2: ( ( ( PlusSign ) )=> (lv_dynamic_2_0= PlusSign ) )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -109787,7 +109787,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_350;
         }
         public String getDescription() {
-            return "35729:1: (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ArrayTypeRef_1= ruleArrayTypeRef | this_ThisTypeRef_2= ruleThisTypeRef | this_TypeTypeRef_3= ruleTypeTypeRef | this_FunctionTypeExpressionOLD_4= ruleFunctionTypeExpressionOLD | this_ArrowFunctionTypeExpression_5= ruleArrowFunctionTypeExpression | this_UnionTypeExpressionOLD_6= ruleUnionTypeExpressionOLD | this_IntersectionTypeExpressionOLD_7= ruleIntersectionTypeExpressionOLD )";
+            return "35727:1: (this_ParameterizedTypeRef_0= ruleParameterizedTypeRef | this_ArrayTypeRef_1= ruleArrayTypeRef | this_ThisTypeRef_2= ruleThisTypeRef | this_TypeTypeRef_3= ruleTypeTypeRef | this_FunctionTypeExpressionOLD_4= ruleFunctionTypeExpressionOLD | this_ArrowFunctionTypeExpression_5= ruleArrowFunctionTypeExpression | this_UnionTypeExpressionOLD_6= ruleUnionTypeExpressionOLD | this_IntersectionTypeExpressionOLD_7= ruleIntersectionTypeExpressionOLD )";
         }
     }
     static final String dfa_351s = "\1\uffff\1\34\14\uffff\1\34\3\uffff\3\34\11\uffff";
@@ -109848,7 +109848,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_356;
         }
         public String getDescription() {
-            return "36333:3: ( ( ( ( ruleBindingIdentifier ) )=> (lv_name_1_0= ruleBindingIdentifier ) ) otherlv_2= Colon )?";
+            return "36331:3: ( ( ( ( ruleBindingIdentifier ) )=> (lv_name_1_0= ruleBindingIdentifier ) ) otherlv_2= Colon )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -110187,7 +110187,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_357;
         }
         public String getDescription() {
-            return "36623:2: ( ( ( LessThanSign )=>otherlv_1= LessThanSign ) ( (lv_typeArgs_2_0= ruleTypeArgument ) ) (otherlv_3= Comma ( (lv_typeArgs_4_0= ruleTypeArgument ) ) )* otherlv_5= GreaterThanSign )?";
+            return "36621:2: ( ( ( LessThanSign )=>otherlv_1= LessThanSign ) ( (lv_typeArgs_2_0= ruleTypeArgument ) ) (otherlv_3= Comma ( (lv_typeArgs_4_0= ruleTypeArgument ) ) )* otherlv_5= GreaterThanSign )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -110231,7 +110231,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_357;
         }
         public String getDescription() {
-            return "36791:2: ( ( ( LessThanSign )=>otherlv_2= LessThanSign ) ( (lv_typeArgs_3_0= ruleTypeArgument ) ) (otherlv_4= Comma ( (lv_typeArgs_5_0= ruleTypeArgument ) ) )* otherlv_6= GreaterThanSign )?";
+            return "36789:2: ( ( ( LessThanSign )=>otherlv_2= LessThanSign ) ( (lv_typeArgs_3_0= ruleTypeArgument ) ) (otherlv_4= Comma ( (lv_typeArgs_5_0= ruleTypeArgument ) ) )* otherlv_6= GreaterThanSign )?";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -110354,7 +110354,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_362;
         }
         public String getDescription() {
-            return "36934:1: ( ( ( ( () Get ( ( ruleIdentifierName ) ) ) )=>this_TStructGetter_0= ruleTStructGetter ) | ( ( ( () Set ( ( ruleIdentifierName ) ) ) )=>this_TStructSetter_1= ruleTStructSetter ) | ( ( ( () ( LessThanSign ( ( ruleTypeVariable ) ) ( Comma ( ( ruleTypeVariable ) ) )* GreaterThanSign )? ( ( ruleIdentifierName ) ) LeftParenthesis ) )=>this_TStructMethod_2= ruleTStructMethod ) | this_TStructField_3= ruleTStructField )";
+            return "36932:1: ( ( ( ( () Get ( ( ruleIdentifierName ) ) ) )=>this_TStructGetter_0= ruleTStructGetter ) | ( ( ( () Set ( ( ruleIdentifierName ) ) ) )=>this_TStructSetter_1= ruleTStructSetter ) | ( ( ( () ( LessThanSign ( ( ruleTypeVariable ) ) ( Comma ( ( ruleTypeVariable ) ) )* GreaterThanSign )? ( ( ruleIdentifierName ) ) LeftParenthesis ) )=>this_TStructMethod_2= ruleTStructMethod ) | this_TStructField_3= ruleTStructField )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -111350,7 +111350,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_191;
         }
         public String getDescription() {
-            return "14828:2: ( ( ruleTypeRefWithModifiers ) )?";
+            return "14826:2: ( ( ruleTypeRefWithModifiers ) )?";
         }
     }
 
@@ -111368,7 +111368,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "15068:28: ( ( ruleTypeRefWithModifiers ) )?";
+            return "15066:28: ( ( ruleTypeRefWithModifiers ) )?";
         }
     }
 
@@ -111386,7 +111386,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_191;
         }
         public String getDescription() {
-            return "15135:2: ( ( ruleTypeRefWithModifiers ) )?";
+            return "15133:2: ( ( ruleTypeRefWithModifiers ) )?";
         }
     }
 
@@ -111404,7 +111404,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "15375:28: ( ( ruleTypeRefWithModifiers ) )?";
+            return "15373:28: ( ( ruleTypeRefWithModifiers ) )?";
         }
     }
 
@@ -111422,7 +111422,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_191;
         }
         public String getDescription() {
-            return "15449:2: ( ( ruleTypeRefWithModifiers ) )?";
+            return "15447:2: ( ( ruleTypeRefWithModifiers ) )?";
         }
     }
 
@@ -111440,7 +111440,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "15970:28: ( ( ruleTypeRefWithModifiers ) )?";
+            return "15968:28: ( ( ruleTypeRefWithModifiers ) )?";
         }
     }
 
@@ -111458,7 +111458,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_191;
         }
         public String getDescription() {
-            return "16205:2: ( ( ruleTypeRefWithModifiers ) )?";
+            return "16203:2: ( ( ruleTypeRefWithModifiers ) )?";
         }
     }
 
@@ -111476,7 +111476,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "16726:28: ( ( ruleTypeRefWithModifiers ) )?";
+            return "16724:28: ( ( ruleTypeRefWithModifiers ) )?";
         }
     }
 
@@ -111494,7 +111494,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_307;
         }
         public String getDescription() {
-            return "()* loopback of 29592:2: ( ( ruleN4Modifier ) )*";
+            return "()* loopback of 29590:2: ( ( ruleN4Modifier ) )*";
         }
     }
 
@@ -111512,7 +111512,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "29596:29: ( ruleBogusTypeRefFragment[null] )?";
+            return "29594:29: ( ruleBogusTypeRefFragment[null] )?";
         }
     }
 
@@ -111530,7 +111530,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_307;
         }
         public String getDescription() {
-            return "()* loopback of 29896:2: ( ( ruleN4Modifier ) )*";
+            return "()* loopback of 29894:2: ( ( ruleN4Modifier ) )*";
         }
     }
 
@@ -111548,7 +111548,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "29900:29: ( ruleBogusTypeRefFragment[null] )?";
+            return "29898:29: ( ruleBogusTypeRefFragment[null] )?";
         }
     }
 
@@ -111566,7 +111566,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_307;
         }
         public String getDescription() {
-            return "()* loopback of 30478:2: ( ( ruleN4Modifier ) )*";
+            return "()* loopback of 30476:2: ( ( ruleN4Modifier ) )*";
         }
     }
 
@@ -111584,7 +111584,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "30482:29: ( ruleBogusTypeRefFragment[null] )?";
+            return "30480:29: ( ruleBogusTypeRefFragment[null] )?";
         }
     }
 
@@ -111602,7 +111602,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_307;
         }
         public String getDescription() {
-            return "()* loopback of 31188:2: ( ( ruleN4Modifier ) )*";
+            return "()* loopback of 31186:2: ( ( ruleN4Modifier ) )*";
         }
     }
 
@@ -111620,7 +111620,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
             this.transition = dfa_193;
         }
         public String getDescription() {
-            return "31192:29: ( ruleBogusTypeRefFragment[null] )?";
+            return "31190:29: ( ruleBogusTypeRefFragment[null] )?";
         }
     }
  

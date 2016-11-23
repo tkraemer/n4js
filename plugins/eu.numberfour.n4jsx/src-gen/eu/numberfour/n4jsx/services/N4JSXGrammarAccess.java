@@ -234,7 +234,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//JSXChild:
 		//	JSXElement | JSXExpression
-		//	//	| JSXText
+		//	//	| JSXText -- not supported yet, cf. IDE-2414
 		//;
 		@Override public ParserRule getRule() { return rule; }
 
@@ -256,6 +256,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExpressionAssignmentExpressionParserRuleCall_1_0 = (RuleCall)cExpressionAssignment_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
+		//// terminal JSX_TEXT: !('{'|'<'|'>'|'}'); needs to be refactored similar to template text, cf. IDE-2414
 		//JSXExpression:
 		//	'{' expression=AssignmentExpression<false,false> '}';
 		@Override public ParserRule getRule() { return rule; }
@@ -322,36 +323,13 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getParameterizedPropertyAccessExpressionTailParserRuleCall_1_1() { return cParameterizedPropertyAccessExpressionTailParserRuleCall_1_1; }
 	}
 
-	public class JSXIdentifierElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4jsx.N4JSX.JSXIdentifier");
-		private final Assignment cIdAssignment = (Assignment)rule.eContents().get(1);
-		private final CrossReference cIdIdentifiableElementCrossReference_0 = (CrossReference)cIdAssignment.eContents().get(0);
-		private final RuleCall cIdIdentifiableElementIDENTIFIERTerminalRuleCall_0_1 = (RuleCall)cIdIdentifiableElementCrossReference_0.eContents().get(1);
-		
-		//JSXIdentifier n4js::IdentifierRef:
-		//	id=[types::IdentifiableElement|IDENTIFIER]
-		@Override public ParserRule getRule() { return rule; }
-
-		//id=[types::IdentifiableElement|IDENTIFIER]
-		public Assignment getIdAssignment() { return cIdAssignment; }
-
-		//[types::IdentifiableElement|IDENTIFIER]
-		public CrossReference getIdIdentifiableElementCrossReference_0() { return cIdIdentifiableElementCrossReference_0; }
-
-		//IDENTIFIER
-		public RuleCall getIdIdentifiableElementIDENTIFIERTerminalRuleCall_0_1() { return cIdIdentifiableElementIDENTIFIERTerminalRuleCall_0_1; }
-	}
-
 	public class JSXAttributesElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4jsx.N4JSX.JSXAttributes");
 		private final Assignment cJsxAttributesAssignment = (Assignment)rule.eContents().get(0);
 		private final RuleCall cJsxAttributesJSXAttributeParserRuleCall_0 = (RuleCall)cJsxAttributesAssignment.eContents().get(0);
 		
-		////JSXNamedspacedName:
-		////	JSXIdentifier ':' JSXIdentifier;
-		////
-		////JSXMemberExpression:
-		////	JSXIdentifier '.' JSXIdentifier;
+		////JSXNamedspacedName: JSXIdentifier ':' JSXIdentifier -- not supported in N4JSX
+		////JSXMemberExpression: JSXIdentifier '.' JSXIdentifier -- defined by means of ParameterizedPropertyAccessExpression
 		//fragment JSXAttributes *:
 		//	jsxAttributes+=JSXAttribute*;
 		@Override public ParserRule getRule() { return rule; }
@@ -437,12 +415,10 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		//	jsxAttributeValue=AssignmentExpression<false,false> '}');
 		@Override public ParserRule getRule() { return rule; }
 
-		//// or JSXNamespacedName -- not supported
 		//property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | '{'
 		//jsxAttributeValue=AssignmentExpression<false,false> '}')
 		public Group getGroup() { return cGroup; }
 
-		//// or JSXNamespacedName -- not supported
 		//property=[types::IdentifiableElement|IdentifierName]
 		public Assignment getPropertyAssignment_0() { return cPropertyAssignment_0; }
 
@@ -489,7 +465,6 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	private final JSXExpressionElements pJSXExpression;
 	private final JSXElementNameElements pJSXElementName;
 	private final JSXElementNameExpressionElements pJSXElementNameExpression;
-	private final JSXIdentifierElements pJSXIdentifier;
 	private final JSXAttributesElements pJSXAttributes;
 	private final JSXAttributeElements pJSXAttribute;
 	private final JSXSpreadAttributeElements pJSXSpreadAttribute;
@@ -520,7 +495,6 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		this.pJSXExpression = new JSXExpressionElements();
 		this.pJSXElementName = new JSXElementNameElements();
 		this.pJSXElementNameExpression = new JSXElementNameExpressionElements();
-		this.pJSXIdentifier = new JSXIdentifierElements();
 		this.pJSXAttributes = new JSXAttributesElements();
 		this.pJSXAttribute = new JSXAttributeElements();
 		this.pJSXSpreadAttribute = new JSXSpreadAttributeElements();
@@ -612,7 +586,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//JSXChild:
 	//	JSXElement | JSXExpression
-	//	//	| JSXText
+	//	//	| JSXText -- not supported yet, cf. IDE-2414
 	//;
 	public JSXChildElements getJSXChildAccess() {
 		return pJSXChild;
@@ -622,6 +596,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		return getJSXChildAccess().getRule();
 	}
 
+	//// terminal JSX_TEXT: !('{'|'<'|'>'|'}'); needs to be refactored similar to template text, cf. IDE-2414
 	//JSXExpression:
 	//	'{' expression=AssignmentExpression<false,false> '}';
 	public JSXExpressionElements getJSXExpressionAccess() {
@@ -653,21 +628,8 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		return getJSXElementNameExpressionAccess().getRule();
 	}
 
-	//JSXIdentifier n4js::IdentifierRef:
-	//	id=[types::IdentifiableElement|IDENTIFIER]
-	public JSXIdentifierElements getJSXIdentifierAccess() {
-		return pJSXIdentifier;
-	}
-	
-	public ParserRule getJSXIdentifierRule() {
-		return getJSXIdentifierAccess().getRule();
-	}
-
-	////JSXNamedspacedName:
-	////	JSXIdentifier ':' JSXIdentifier;
-	////
-	////JSXMemberExpression:
-	////	JSXIdentifier '.' JSXIdentifier;
+	////JSXNamedspacedName: JSXIdentifier ':' JSXIdentifier -- not supported in N4JSX
+	////JSXMemberExpression: JSXIdentifier '.' JSXIdentifier -- defined by means of ParameterizedPropertyAccessExpression
 	//fragment JSXAttributes *:
 	//	jsxAttributes+=JSXAttribute*;
 	public JSXAttributesElements getJSXAttributesAccess() {

@@ -33,18 +33,82 @@ In both cases, the name must be capitalized (i.e., start with an upper case lett
 
 Component must be written capitalized (i.e. first letter upper case), html (or other xml elements) must be written lower case.
 
-N4JS scripts with file extension "n4jsx" support the special JSX syntax.
+N4JS scripts with file extension "n4jsx" support the special https://facebook.github.io/jsx/[JSX syntax].
 
 .JSX Basic Syntax
 [req,id=IDE-241102,version=1]
 --
-TODO basic syntax
+task:IDE-2411[]
+The following JSX syntax is supported (EBNF with model element assignments as used in Xtext). All other ECMAScript 2015 and N4JS syntax constructs are unaffected by this addition.
+----
+PrimaryExpression <Yield> returns n4js::Expression:
+	... // as in N4JS
+	| JSXElement
+;
+
+JSXElement:
+	'<' jsxElementName=JSXElementName JSXAttributes
+	(('>' jsxChildren+=JSXChild* JSXClosingElement) | ('/' '>'));
+
+fragment JSXClosingElement *:
+	'<' '/' jsxClosingName=JSXElementName '>';
+
+JSXChild:
+	JSXElement | JSXExpression
+;
+
+JSXExpression: '{' expression=AssignmentExpression<false,false> '}';
+
+JSXElementName:
+	expression=JSXElementNameExpression
+	;
+
+JSXElementNameExpression returns n4js::Expression:
+	IdentifierRef<false>
+	({n4js::ParameterizedPropertyAccessExpression.target=current} ParameterizedPropertyAccessExpressionTail<false>)*
+;
+
+fragment JSXAttributes *:
+	jsxAttributes+=JSXAttribute*;
+
+JSXAttribute:
+	JSXSpreadAttribute
+	|
+	JSXPropertyAttribute;
+
+JSXSpreadAttribute:
+	'{' '...' expression=AssignmentExpression<false,false> '}';
+
+JSXPropertyAttribute:
+	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | ('{'
+	jsxAttributeValue=AssignmentExpression<false,false> '}'));
+----
+
+This syntax is similar to the syntax defined by https://facebook.github.io/jsx/[JSX], except that
+
+* JSXNamedspaceName is not supported
+* JSXText is not supported, instead, string template literals are to be used
+
+
 --
 
+Remarks on differences between the syntax defined in <<IDE-241102>> and https://facebook.github.io/jsx/[JSX]:
+
+* JSXSelfClosingElement, JSXOpeningElement and JSXClosingElement are merged into one single rule JSXElement
+* JSXAttributes is defined as fragment, that is, the attributes become fields of the JSXElement
+* The different types of JSXElementName are defined by means of JSXElementNameExpression which is a simple expression, reusing the existing rules IdentifierRef and ParameterizedPropertyAccessExpression to model JSXIdentifer and JSXMemberExpression respectively
+* JSXPropertyAttribute models the JSX non-spread JSXAttribute definition; again existing rules (IdentifierName, StringLiteral) are used to model JSX specific ones (JSXAttributeName, JSXDoubleStringCharacters, JSXSingleStringCharacters)
+
+
 .JSX Syntax With Free Text
-[req,id=IDE-TODO,version=1]
+[req,id=IDE-241401,version=1]
 --
-TODO free text syntax
+task:IDE-2414[]
+----
+JSXChild:
+	JSXElement | JSXExpression | JSXText
+;
+----
 --
 
 

@@ -48,8 +48,10 @@ fragment JSXClosingElement *:
 
 JSXChild:
 	JSXElement | JSXExpression
-	//	| JSXText
+	//	| JSXText -- not supported yet, cf. IDE-2414
 ;
+
+// terminal JSX_TEXT: !('{'|'<'|'>'|'}'); needs to be refactored similar to template text, cf. IDE-2414
 
 JSXExpression: '{' expression=AssignmentExpression<false,false> '}';
 
@@ -63,14 +65,9 @@ JSXElementNameExpression returns n4js::Expression:
 	//	| JSXNamedspacedName not supported
 ;
 
-JSXIdentifier returns n4js::IdentifierRef:
-	id=[types::IdentifiableElement|IDENTIFIER];
+//JSXNamedspacedName: JSXIdentifier ':' JSXIdentifier -- not supported in N4JSX
+//JSXMemberExpression: JSXIdentifier '.' JSXIdentifier -- defined by means of ParameterizedPropertyAccessExpression
 
-	//JSXNamedspacedName:
-//	JSXIdentifier ':' JSXIdentifier;
-//
-//JSXMemberExpression:
-//	JSXIdentifier '.' JSXIdentifier;
 fragment JSXAttributes *:
 	jsxAttributes+=JSXAttribute*;
 
@@ -83,8 +80,5 @@ JSXSpreadAttribute:
 	'{' '...' expression=AssignmentExpression<false,false> '}';
 
 JSXPropertyAttribute:
-// or JSXNamespacedName -- not supported
 	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | ('{'
 	jsxAttributeValue=AssignmentExpression<false,false> '}'));
-
-	// terminal JSX_TEXT: !('{'|'<'|'>'|'}'); needs to be refactored similar to template text

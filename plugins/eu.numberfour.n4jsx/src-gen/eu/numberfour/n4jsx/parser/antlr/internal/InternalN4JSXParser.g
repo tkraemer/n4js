@@ -785,8 +785,6 @@ ruleJSXElementNameExpression returns [EObject current=null]
 
 
 
-
-
 // Rule JSXAttributes
 ruleJSXAttributes [EObject in_current] returns [EObject current=in_current] 
     @init { enterRule(); 

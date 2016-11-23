@@ -545,10 +545,6 @@ public class N4JSXSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 					sequence_IdentifierRef(context, (IdentifierRef) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getJSXIdentifierRule()) {
-					sequence_JSXIdentifier(context, (IdentifierRef) semanticObject); 
-					return; 
-				}
 				else if (rule == grammarAccess.getLetIdentifierRefRule()) {
 					sequence_LetIdentifierRef(context, (IdentifierRef) semanticObject); 
 					return; 
@@ -13109,24 +13105,6 @@ public class N4JSXSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getJSXExpressionAccess().getExpressionAssignmentExpressionParserRuleCall_1_0(), semanticObject.getExpression());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     JSXIdentifier returns IdentifierRef
-	 *
-	 * Constraint:
-	 *     id=[IdentifiableElement|IDENTIFIER]
-	 */
-	protected void sequence_JSXIdentifier(ISerializationContext context, IdentifierRef semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.IDENTIFIER_REF__ID) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.IDENTIFIER_REF__ID));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getJSXIdentifierAccess().getIdIdentifiableElementIDENTIFIERTerminalRuleCall_0_1(), semanticObject.getId());
 		feeder.finish();
 	}
 	

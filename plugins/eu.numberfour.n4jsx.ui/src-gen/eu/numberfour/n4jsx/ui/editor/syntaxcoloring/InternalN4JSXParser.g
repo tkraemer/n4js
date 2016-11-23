@@ -312,8 +312,6 @@ ruleJSXElementNameExpression
 
 
 
-
-
 // Rule JSXAttributes
 ruleJSXAttributes 
     @init {

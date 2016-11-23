@@ -407,8 +407,6 @@ finally {
 
 
 
-
-
 // Rule JSXAttributes
 ruleJSXAttributes 
     @init {
@@ -85169,7 +85167,6 @@ rule__JSXElementName__ExpressionAssignment
 finally {
 	restoreStackSize(stackSize);
 }
-
 
 rule__JSXAttributes__JsxAttributesAssignment
     @init {

@@ -625,7 +625,6 @@ public class N4JSXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getJSXClosingElementAccess().getJsxClosingNameAssignment_2(), "rule__JSXClosingElement__JsxClosingNameAssignment_2");
 					put(grammarAccess.getJSXExpressionAccess().getExpressionAssignment_1(), "rule__JSXExpression__ExpressionAssignment_1");
 					put(grammarAccess.getJSXElementNameAccess().getExpressionAssignment(), "rule__JSXElementName__ExpressionAssignment");
-					put(grammarAccess.getJSXIdentifierAccess().getIdAssignment(), "rule__JSXIdentifier__IdAssignment");
 					put(grammarAccess.getJSXAttributesAccess().getJsxAttributesAssignment(), "rule__JSXAttributes__JsxAttributesAssignment");
 					put(grammarAccess.getJSXSpreadAttributeAccess().getExpressionAssignment_2(), "rule__JSXSpreadAttribute__ExpressionAssignment_2");
 					put(grammarAccess.getJSXPropertyAttributeAccess().getPropertyAssignment_0(), "rule__JSXPropertyAttribute__PropertyAssignment_0");
