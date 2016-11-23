@@ -12,7 +12,7 @@ GEN_FOLDER=generated-docs/html
 rm -rf ./$GEN_FOLDER/; mkdir -p ./$GEN_FOLDER/
 
 echo INFO: Copying resources to ./$GEN_FOLDER/
-cp -r scripts styles images ./$SRC_FOLDER/chapters ./$GEN_FOLDER/
+cp -r styles images scripts ./$GEN_FOLDER/
 
 echo INFO: AsciiSpec Generating HTML
 
