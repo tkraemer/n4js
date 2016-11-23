@@ -1,0 +1,108 @@
+= JSX
+////
+Copyright (c) 2016 NumberFour AG.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+  NumberFour AG - Initial API and implementation
+////
+
+== JSX Support
+
+task:IDE-2411[]
+
+.React Component
+[req,id=IDE-241101,version=1]
+--
+There are two ways of defining a React component:
+
+* functional component: A function is a React component, iff
+** is return type is React.Element
+** the function has no parameter, of it defines a single (optional) parameter, and its type only has public fields (or methods defined by Object). The fields may be defined as optional.
+* class component: A class is a React component, iff
+** it extends React.Component.
+** the type parameters must be structural types.
+*** The first parameter defines the properties type, it must only define public fields (or methods defined by Object)
+*** The second parameter defines the state type, it must only define public fields (or methods defined by Object)
+
+In both cases, the name must be capitalized (i.e., start with an upper case letter).
+--
+
+Component must be written capitalized (i.e. first letter upper case), html (or other xml elements) must be written lower case.
+
+N4JS scripts with file extension "n4jsx" support the special JSX syntax.
+
+.JSX Basic Syntax
+[req,id=IDE-241102,version=1]
+--
+TODO basic syntax
+--
+
+.JSX Syntax With Free Text
+[req,id=IDE-TODO,version=1]
+--
+TODO free text syntax
+--
+
+
+.JSX Extended Syntax Check
+[req,id=IDE-241103,version=1]
+--
+* It is an error, if corresponding opening and closing JSXElements have different names.
+--
+
+
+
+.JSX Expression Type
+[req,id=IDE-241113,version=1]
+--
+The type of a JSX expression is React.Element.
+--
+
+
+
+.React Symbol
+[req,id=IDE-241114,version=1]
+--
+
+If a JSX literal is used, it is an error if the React symbol is not imported via
+----
+import React from "react"
+----
+
+--
+
+
+.JSXElement names (tags)
+[req,id=IDE-241115,version=1]
+--
+* It is an error if a capitalized tag cannot be bound to a function or class declaration.
+--
+
+.JSXElements referring to React components
+[req,id=IDE-241116,version=1]
+--
+* It is an error, if a tag binds to a function declaration, which is not conform to the functional component definition.
+* It is an error, if a tag binds to a class declaration, which is not conform to the class component definition.
+--
+
+.JSXAttributes and React component properties
+[req,id=IDE-241117,version=1]
+--
+If the tag binds to a component, the following constraints must hold:
+
+* The attribute must be a non-private field of the properties type.
+* The tag should define attributes for all non-optional fields of the properties type. If no attribute is defined for a non-optional field, a warning is issued.
+--
+
+.JSXElements referring to XML elements
+[req,id=IDE-241118,version=1]
+--
+If the lower-case tag does not bind to a function or class declaration, the following constraints must be hold:
+
+* If the tag is not a pre-defined html tag, a warning is issued.
+* If an attribute of the tag is not a pre-defined property of the html tag or react specific attribtues, a warning is issued.
+--
