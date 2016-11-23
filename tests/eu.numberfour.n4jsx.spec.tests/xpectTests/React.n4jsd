@@ -15,7 +15,7 @@ export external public class HTMLElement {
 /**
  * dbo TODO more
  */
-export external public abstract class ~Element {
+export external public abstract class Element {
     protected constructor();
 };
 

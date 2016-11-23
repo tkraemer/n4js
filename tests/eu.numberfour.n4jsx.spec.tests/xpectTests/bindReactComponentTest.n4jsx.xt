@@ -1,0 +1,21 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpectTest
+	ResourceSet {
+		ThisFile {}
+		File "React.n4jsd" {}
+	}
+    END_SETUP
+*/
+
+const A = 10;
+
+//XPECT errors --> "A is a used as a React component but is neither function nor class." at "A"
+var a = <A/>
+console.log(a)
+
+function B(): string {
+	//XPECT errors --> "Element is not a subtype of string." at "<div/>"
+	return <div/>
+}
+
+//XPECT errors --> "Function B is not a valid React functional component." at "B"
+var b = <B/>

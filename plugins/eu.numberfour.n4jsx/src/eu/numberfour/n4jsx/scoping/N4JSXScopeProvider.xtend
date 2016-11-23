@@ -58,7 +58,7 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 						// React component is defined as a function
 						val tfunction = expr.id as TFunction
 						if (tfunction.fpars.length == 1 && tfunction.fpars.get(0).name == "props") {
-							val propsParamT = tfunction.fpars.get(0)	
+							val propsParamT = tfunction.fpars.get(0)
 							val checkVisibility = false;
 							return memberScopingHelper.createMemberScopeFor(propsParamT.typeRef, context,
 								checkVisibility, false);
@@ -83,3 +83,4 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 		return super.getScope(context, reference);
 	}
 }
+	
