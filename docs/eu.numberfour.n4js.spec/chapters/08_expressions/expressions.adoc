@@ -442,14 +442,14 @@ members of a class or properties of an object literal are to be accessed
 via `this`. Identifier references always reference declared elements, that is
 to say either variable, function, or class declarations. Properties of
 object literals or members of a class are referenced via
-math:[$PropertyAccess-Expression.property$] (see <<Property Accessors>>).
+math:[$PropertyAccess-Expression.property$] (see <<_property-accessors,Property Accessors>>).
 
 image::fig/scopes.png[Scopes,align=center]
 
 An identifier may be bound to a variable (global or local variable,
 parameter, variable defined in a function’s closure), or to a property
 of an object. The latter case is known as property access as further
-described in <<Property Accessors>>.
+described in <<_property-accessors,Property Accessors>>.
 
 //TODO - fix math
 
@@ -1313,7 +1313,7 @@ type of math:[$F$] is `Function`. See <<Function_Object_Type>>.
 task:IDE-244[]
 
 A call expression math:[$expr$] is bound to a method (<<Methods>>) or function
-declaration (which may be part of a function definition (<<Function_Definition>> or specified via a function type <<Fucntion_Type>>) math:[$F$] (via evaluation of `MemberExpression`. The type of the call is inferred from the function declaration or type math:[$F$] as follows:
+declaration (which may be part of a function definition (<<_function-definition,Function Definition>> or specified via a function type <<Fucntion_Type>>) math:[$F$] (via evaluation of `MemberExpression`. The type of the call is inferred from the function declaration or type math:[$F$] as follows:
 
 math:[\[\begin{aligned}
 \infer{\tee expr: T}{bind(expr.target, F) & F.returnType: T}\end{aligned}\]]

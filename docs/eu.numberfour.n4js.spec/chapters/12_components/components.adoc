@@ -514,7 +514,7 @@ type. There exist three different source fragment types:
 * *external*: Implementation of modules defined in definition files (n4jsd). These
   implementations are never validated nor fully compiled. Instead, they
   are only wrapped into module definitions and copied to the output
-  folder. See <<External_Declarations>> and <<Implementation_of_External_Declarations>> for details.
+  folder. See <<External_Declarations>> and <<_implementation-of-external-declarations,Implementation of External Declarations>> for details.
 
 
 Filters for fine-tuning the validator and compiler. A filter is applied
@@ -628,7 +628,7 @@ extensions will then be used to match the file).
 --
 
 Examples of using external source fragments and filters are given in (<<External_Definitions_and_Their_Implementations>>).
-<<Implementation_of_External_Declarations>>
+<<_implementation-of-external-declarations,Implementation of External Declarations>>
 
 .No validation and module wrapping example
 [example]
@@ -901,7 +901,7 @@ formatted file with the following structure:
 
 Properties files have the file extension `properties` and describe how
 to localize text in a project. They basically define keys
-<<Primitive_Pathselector__I18nKey>> with their
+<<_primitive-pathselector-I18nKey,Primitive Pathselector I18nKey>> with their
 values. The key is used during runtime to retrieve text localized to the
 user’s locale.
 

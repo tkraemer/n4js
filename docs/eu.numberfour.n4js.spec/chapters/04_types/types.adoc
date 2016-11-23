@@ -71,7 +71,7 @@ Note that this declarative definition needs to be specified in detail
 for special cases, such as union and intersection types. Usually, the
 union type of two types is also the join.
 
-<<cdPredefinedTypesHierarchy,The Predefined Types Heirarchy figure>> summarizes all predefined types,
+<<fig-cd-predefined-type-heirarchy,The Predefined Types Heirarchy figure>> summarizes all predefined types,
 that is primitive and built-in ECMAScript and N4JS types.
 Specific rules for the subtype relation are defined in the following sections.
 This type hierarchy shows `any` and `undefined` as the top and bottom type (cf. cite:[Pierce02a(15.4)]) We define these types here explicitly:
@@ -91,7 +91,7 @@ bottom type math:[$Bot=`undefined}$].
 `null` is almost similar to math:[$Bot$], except that it is not a subtype
 of `undefined`.
 
-[[cdPredefinedTypesHierarchy]]
+[[fig-cd-predefined-type-heirarchy]]
 image:fig/cdPredefinedTypesHierarchy.png[title="Predefined Types Hierarchy"]
 
 For every primitive type there is a corresponding built-in type as

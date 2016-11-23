@@ -161,7 +161,7 @@ In some cases, the instantiation from an outer scope is not wanted. A
 possible approach is to use a structurally typed interface instead of a
 class to link to the implementation.
 
-In case of API-definitions (see <<API_and_Implementation_Components>>), it might be useful to limit the visibility of classes to narrower scopes such as package or private.
+In case of API-definitions (see <<_api-and-implementation-components,API and Implementation Components>>), it might be useful to limit the visibility of classes to narrower scopes such as package or private.
 
 External declarations can be instantiated if the following three
 requirements are fulfilled (not a constraint!):
@@ -171,7 +171,7 @@ they are accessible from outside.
 * The contained or inherited constructor of an external class must be
 public.
 * The external class must be linked to an implementation module (see
-below <<Implementation of External Declarations>>).
+below <<_implementation-of-external-declarations,Implementation of External Declarations>>).
 
 === Implementation of External Declarations
 task:IDEBUG-242[]
@@ -186,7 +186,7 @@ corresponding implementation:
 
 1.  By naming convention defined in the manifest.
 2.  By declaring that the implementation is provided by the JavaScript
-runtime, see <<Runtime_Definitions>> for details.
+runtime, see <<_runtime_definitions,Runtime Definitions>> for details.
 
 The naming convention is based on the `external` source fragments
 defined in the manifest (<<Manifest>>). If the implementation is provided by the
@@ -212,7 +212,7 @@ disable validation of implementations completely via `@@IgnoreImplementation`.
 --
 task:IDE-1099[]
 For a given external declaration math:[$D$] but not for
-API-definitions footnote:[<<API_and_Implementation_Components>>], the
+API-definitions footnote:[<<_api-and-implementation-components,API and Implementation Components>>], the
 following constraints must hold:
 
 1.  If the declaration is neither provided by runtime nor validation of
@@ -229,7 +229,7 @@ is generated.
 If, in addition to standard `source`, the `source-external` fragment is
 provided in `Sources`, math:[$n4jsd$] files in the folder tree
 below source folders will be related to modules of the same name in the
-external folders. This is shown in <<externalClassImplementation_naming>>.
+external folders. This is shown in <<_externalClassImplementation_naming,Fig: External Class Implementation Naming>>.
 
 
 [[externalClassImplementation_naming]]
@@ -365,7 +365,7 @@ provided by the runtime itself.
 Since these cases are rather rare and in order to enable additional
 checks such as verification that a given runtime actually provides the
 elements, this kind of element can only be defined in components of type
-runtime environment or runtime library (cf <<Runtime_Environment_Libraries>>).
+runtime environment or runtime library (cf <<_runtime_environment_libraries,Runtime Environment Libraries>>).
 
 N4JS supports runtime definitions via the annotation `@ProvidedByRuntime`. This annotation can be defined
 
@@ -412,7 +412,7 @@ Even ECMAScript 6 cite:[ECMA15a] extends the predecessor cite:[ECMA11a] in terms
 existing types.
 It also adds completely new classes and features, of course.
 
-The syntax of runtime polyfills is described in section <<Polyfill_Definitions>>.
+The syntax of runtime polyfills is described in section <<_polyfill-definitions,PolyFill Definitions>>.
 Here, an example of applying a runtime polyfill is detailed.
 
 .Object.observe with Polyfill

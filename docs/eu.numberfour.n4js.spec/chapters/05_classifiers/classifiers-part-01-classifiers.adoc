@@ -53,7 +53,7 @@ defined.
 
 `typingStrategy`: ::
 The definition-site typing strategy. By default nominal typing is used.
-See <<_structural-typing,Structural Typing>>for details.
+See <<_structural-typing,Structural Typing>> for details.
 
 
 The following pseudo properties are defined via annotations:

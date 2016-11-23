@@ -264,12 +264,12 @@ math:[$enumerable$], this is always set to false for methods.
 === Semantics
 
 Since methods are ECMAScript functions, all constraints specified in
-<<Function-Type>> apply to methods as well. This section describes default values and
+<<_function-type,Function-Type>> apply to methods as well. This section describes default values and
 function type conformance which is required for overriding and
 implementing methods.
 
 In addition, method declarations and definitions have to comply with the
-constraints for naming members of classifiers (cf. <<Member-Names>>)
+constraints for naming members of classifiers (cf. <<_member-names,Member Names>>)
 and with the constraints detailed in the following sections on final
 methods (<<_final-methods,Final Methods>>), abstract methods (<<_abstract-methods,Abstract Methods>>
 and method overriding and implementation (<<_overriding-of-members,Overriding of Members>>, <<_implementation-of-members,Implementation of Members>>).
@@ -289,7 +289,7 @@ FunctionBody.`
 
 Methods – like functions – define a variable execution environment and
 therefore provide access to the actual passed-in parameters through the
-implicit variable inside of their bodies (c.f. <<Arguments-Objects>>).
+implicit variable inside of their bodies (c.f. <<_arguments-objects,Arguments Objects>>).
 
 Methods are similar to function definitions but they must not be
 assigned to or from variables. The following code issues an error
@@ -422,7 +422,7 @@ By default, methods can be overridden. To prevent a method from being
 overridden, it must be annotated with `@Final`.
 
 Of course, a method cannot be declared both abstract and final
-(cf. <<_abstract-member,Abstract Member>>). Private methods are implicitly declared
+(cf. <<IDE-46,Abstract Member>>). Private methods are implicitly declared
 final. Because static methods can be overridden in subclasses (which is
 different to Java), they also can be marked as final.
 
@@ -462,7 +462,7 @@ A method can be declared without defining it, i.e. without providing a
 method body, and is then called an __abstract method__. Such methods
 must be declared with modifier `abstract` and have their property
 math:[$abstract$] set to true. Constraints for abstract methods are
-covered in <<_abstract-member,Abstract Member>> (see <<_abstract-classes,Abstract Classes>>).
+covered in <<IDE-46,Abstract Member>> (see <<_abstract-classes,Abstract Classes>>).
 
 In interfaces, methods are always abstract by default and they do not
 have to be marked as abstract. If a method in an interface provides a

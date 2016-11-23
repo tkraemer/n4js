@@ -1112,7 +1112,7 @@ types.
 [req,id=IDE-148,version=1]
 --
 1.  Allowed only on `N4ClassDeclarations` that are annotated with `@Binder`(<<N4JS DI @Binder>>).
-2.  Parameters are instances of one of the values described in <<N4JS_DI_Validation_N4Injector_Callsites>>.
+2.  Parameters are instances of one of the values described in <<_validation-of-callsites-targeting-n4injector-methods,Validation of callsites targeting N4Injector methods>>.
 3.  The second parameter must be a subtype of the first one.
 --
 
@@ -1145,7 +1145,7 @@ scopes.
 
 1.  Allowed only on `N4MethodDeclarations` that are part of a classifier annotated with `@Binder`.
 2.  Annotated method declared type returns instance of one of the types
-described in _injectable values_  <<N4JS_DI_Validation_N4Injector_Callsites>>.
+described in _injectable values_  <<_validation-of-callsites-targeting-n4injector-methods,Validation of callsites targeting N4Injector methods>>.
 --
 
 ==== N4JS DI @Inject
@@ -1173,7 +1173,7 @@ used. Class fields, methods and constructors can be annotated. See <<N4JS_DI_Inj
 --
 1.  Injection point bindings need to be resolvable.
 2.  Binding for given type must not be duplicated.
-3.  Annotated types must be instances of one of the types described in <<N4JS_DI_Validation_N4Injector_Callsites>>.
+3.  Annotated types must be instances of one of the types described in <<_validation-of-callsites-targeting-n4injector-methods,Validation of callsites targeting N4Injector methods>>.
 --
 
 ==== N4JS DI @Singleton
