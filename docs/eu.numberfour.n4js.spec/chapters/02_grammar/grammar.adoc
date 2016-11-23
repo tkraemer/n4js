@@ -152,7 +152,7 @@ task:IDE-95[]
 
 Cf. cite:[ECMA11a(S7.9)]
 
-<<AC,ASI>> is supported by the parser, however warnings are issued. task:IDE-95[]
+<<Acronyms,ASI>> is supported by the parser, however warnings are issued. task:IDE-95[]
 
 === JSDoc
 

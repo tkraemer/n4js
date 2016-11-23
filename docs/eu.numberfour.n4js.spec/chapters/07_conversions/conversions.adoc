@@ -75,7 +75,7 @@ so = new String( s );
 
 Conversion of variables of type `Object` or from one primitive type to another is expressed in terms of typing rules for expressions. That is, it is not
 possible to convert any `Object` to a primitive in general, but it is possible to do so in the context of certain expressions such as additive operator.
-The applied conversions are described in <<Auto_Conversion_of_Class_Instances>>
+The applied conversions are described in <<_auto-conversion-of-class-instances,Auto-Conversion of Class Instances>>
 
 === Auto-Boxing of Primitives
 task:IDE-835[]
@@ -86,7 +86,7 @@ Auto-boxing is not directly supported in N4JS. Instead, primitive types
 virtually have the same members as their corresponding object types. It
 is then possible to use the auto-boxing feature when calling a member.
 In general, auto-boxing is only supported for accessing built-in
-read-only (immutable) properties. For example, `"some string value".split(" ");` is supported but `"some string value".foo=1;` will be rejected as String does not allow properties to be added (cf. vs. , see <<Type_Modifiers_Dynamic>>).
+read-only (immutable) properties. For example, `"some string value".split(" ");` is supported but `"some string value".foo=1;` will be rejected as String does not allow properties to be added (cf. vs. , see <<_type-modifiers-dynamic,Dynamic Type Modifiers>>).
 
 Auto-boxing often leads to problems, in particular in combination with
 dynamic types – this is why it is not directly supported in N4JS. For
@@ -175,7 +175,7 @@ console.log(d+1);                       // 21
 ==== Auto-Conversion of Interface Instances
 
 Instances of interfaces actually are instances of classes at runtime.
-The auto-conversion rules described in <<Auto-Conversion of Class Instances>> are applied to instances declared as instances of interfaces as well.
+The auto-conversion rules described in <<_auto-conversion-of-class-instances,Auto-Conversion of Class Instances>> are applied to instances declared as instances of interfaces as well.
 
 === Auto-Conversion of Enum Literals
 
@@ -191,7 +191,7 @@ enumeration value.
 task:IDE-161[] task:IDE-928[] (IDEBUG-56): Casting to TypeVars
 
 
-Type casts are expressed with the cast expression (`as`), see <<As_Expression>> for details.
+Type casts are expressed with the cast expression (`as`), see <<_as-expression,As Expression>> for details.
 
 We first define helper rules for the type cast constraints as follows:
 math:[\[\begin{aligned}
@@ -315,7 +315,7 @@ The same is true for string-based enums and arrays which cannot be tested during
 For all types for which the evaluation result of `instanceof` could be computed at compile time, the check is unnecessary and thus it is refused by the compiler.
 Using structural types on the right-hand side of ``instancesof`` constructs is also not permitted.
 
-In order to avoid errors at runtime, the `instanceof` operator defines appropriate constraints, see <<Relational_Expression>> for details.
+In order to avoid errors at runtime, the `instanceof` operator defines appropriate constraints, see <<_relational-expressions,Relational Expression>> for details.
 
 .Type Check Example
 [example]
@@ -415,7 +415,7 @@ N4Class
 --
 
 The built-in types `N4Object` and `N4Class` are also accessible.
-They are not defined in a module, thus their <<AC,FQN>> returns only their simple name.
+They are not defined in a module, thus their <<Acronyms,FQN>> returns only their simple name.
 
 .Reflection with Built-In Types
 [example]

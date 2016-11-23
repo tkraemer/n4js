@@ -18,7 +18,7 @@ number of newly-declared or pre-existing variables or to further
 destructure them by using nested destructuring
 patterns.
 
-footnote:[Further reading on <<AC,DI>>: : Basics cite:[Fowler04b,Prasanna09a],  Verification cite:[Zhu13a,Hudli13a],  Frameworks cite:[Lesiecki08a,Betts13a,Knol13a,Dagger] , Verification ,Frameworks ]
+footnote:[Further reading on <<Acronyms,DI>>: : Basics cite:[Fowler04b,Prasanna09a],  Verification cite:[Zhu13a,Hudli13a],  Frameworks cite:[Lesiecki08a,Betts13a,Knol13a,Dagger] , Verification ,Frameworks ]
 
 === Syntax
 
@@ -138,15 +138,15 @@ var {propOfOl: newVar: typeOfNewVar} = ol
 
 == Dependency Injection
 
-This chapter describes <<AC,DI>> mechanisms for N4JS. This includes compiler,
-validation and language extensions that allow to achieve <<AC,DI>> mechanisms
+This chapter describes <<Acronyms,DI>> mechanisms for N4JS. This includes compiler,
+validation and language extensions that allow to achieve <<Acronyms,DI>> mechanisms
 built in into the N4JS language and IDE.
 
-N4JS <<AC,DI>> support specifies a means for obtaining objects in such a way as to
+N4JS <<Acronyms,DI>> support specifies a means for obtaining objects in such a way as to
 maximize reusability, testability and maintainability, especially
 compared to traditional approaches such as constructors, factories and
 service locators. While this can be achieved manually (without tooling
-support) it is difficult for nontrivial applications. The solutions that <<AC,DI>>
+support) it is difficult for nontrivial applications. The solutions that <<Acronyms,DI>>
 provides should empower N4JS users to achieve the above goals without
 the burden of maintaining so-called ’boilerplate’ code.
 
@@ -180,22 +180,22 @@ are injectors, type factories/providers, fields initiators etc.
 
 === DI Components and Injectors
 
-N4JS’ <<AC,DI>> systems is based on the notion of <<AC,DIC>>.
+N4JS’ <<Acronyms,DI>> systems is based on the notion of <<Acronyms,DIC>>.
 
 .DI Component
 [def]
 --
-A <<AC,DIC>> is a N4Class annotated with `@GenerateInjector`.
+A <<Acronyms,DIC>> is a N4Class annotated with `@GenerateInjector`.
 --
 
 This annotation causes an _injector_ to be created for (and associated
-to) the <<AC,DI>>. <<AC,DIC>> can be composed; meaning that when requested to inject an
-instance of a type, a <<AC,DIC>>’s injector can delegate this request to the
-injector of the containing <<AC,DIC>>.
+to) the <<Acronyms,DI>>. <<Acronyms,DIC>> can be composed; meaning that when requested to inject an
+instance of a type, a <<Acronyms,DIC>>’s injector can delegate this request to the
+injector of the containing <<Acronyms,DIC>>.
 An injector always prioritizes its own configuration before delegating to the container’s injector.
-For validation purposes, a child <<AC,DI>> can be annotated with `@WithParent` to ensure that it is always used with a proper parent.
+For validation purposes, a child <<Acronyms,DI>> can be annotated with `@WithParent` to ensure that it is always used with a proper parent.
 
-_Injector_ is the main object of <<AC,DI>> mechanisms responsible for creating
+_Injector_ is the main object of <<Acronyms,DI>> mechanisms responsible for creating
 object graphs of the application. At runtime, injectors are instances of
 `N4Injector`.
 
@@ -203,14 +203,14 @@ object graphs of the application. At runtime, injectors are instances of
 [req,id=IDE-138,version=1]
 --
 
-The following constraints must hold for a class math:[$C$] marked as <<AC,DIC>>:
+The following constraints must hold for a class math:[$C$] marked as <<Acronyms,DIC>>:
 
-1.  A subclass math:[$S$] of math:[$C$] is a <<DIC>> as well and it
+1.  A subclass math:[$S$] of math:[$C$] is a <<Acronyms,DIC>> as well and it
 must be marked with `GenerateInjector` task:IDE-1563[].
-2.  If a parent <<DIComponent Relations,DIC>> math:[$P$] is specified via `WithParent`, then math:[$P$] must be a \ac{DIC} as well.
-3.  The injector associated to a \ac{DIC} is of type `N4Injector`. It can be retrieved via `N4Injector.of(DIC)` in which `DIC` is the `DIC`.
-4.  Injectors associated to \ac{DIC} a are DI-singletons (cf. <<Singleton Scope>>).
-Two calls to `N4Injector.of(DIC)` are different (as different \acp{DIC} are assumed).
+2.  If a parent <<DIComponent Relations,DIC>> math:[$P$] is specified via `WithParent`, then math:[$P$] must be a <<Acronyms,DIC>> as well.
+3.  The injector associated to a <<Acronyms,DIC>> is of type `N4Injector`. It can be retrieved via `N4Injector.of(DIC)` in which `DIC` is the `DIC`.
+4.  Injectors associated to <<Acronyms,DIC>> a are DI-singletons (cf. <<Singleton Scope>>).
+Two calls to `N4Injector.of(DIC)` are different (as different <<Acronyms,DIC>> are assumed).
 --
 
 .Injection Phase
@@ -227,7 +227,7 @@ constraints have to hold:
 
 .  Root objects are created by one of the following mechanisms:
 ..  Any class or interface can be created as root objects via an
-injector associated to a \ac{DIC}: `var x: X = N4Injector.of(DIC).create(X);`
+injector associated to a <<Acronyms,DIC>>: `var x: X = N4Injector.of(DIC).create(X);`
 in which `DIC` is a `ac{DIC}`. Of course, an appropriate binding must
 exist. footnote:[Usually, only the itself is created like that, e.g., `ar dic = N4Injector.of(DIC).create(DIC);}`]
 ..  If a type has the injector being injected, e.g. via field injection
@@ -307,8 +307,7 @@ math:[$\exists DIC1,DIC2 : DIC1.\seq{binding}.\seq{key} \to DIC2.\seq{binding}.\
 
 NOTE: Although subtype notation math:[$<:$] is used here it does *not* imply actual subtype relations. It was used in this instance for of lack of formal notations for DI concepts and because this is similar to the Liskov Substitution principle.
 
-A complex Child-Parent relation between components is depicted in <<fig:diagDICParentChild>> and <<ex:Complex_DIComponents_Relations>>.
-
+A complex Child-Parent relation between components is depicted in <<_fig:diagdicparentchild,DIC Parent Child diagram>> and <<_ex:complex-dicomponents-relations,Complex DIComponent Relations example>> below.
 
 [[fig:diagDICParentChild]]
 
@@ -316,6 +315,7 @@ image::fig/diagDICParentChild.png[title="Complex DIComponents Relations",align=c
 
 --
 
+[[ex:complex-dicomponents-relations]]
 .Complex DIComponents Relations
 [example]
 ====
@@ -368,11 +368,11 @@ annotations and a method annotated with `@Provides`.
 _Binder_ is declared by annotating a class with the annotation.
 
 A _Binding_ is part of a configuration that defines which instance of
-what type should be injected into an _injection point_ (<<N4JS_DI_Injection_Points>>) with an expected type.
+what type should be injected into an _injection point_ (<<_n4js_di_injection_points,N4JS DI Injection Points>>) with an expected type.
 
 _Provider Method_ is essentially a _factory method_ that is used to
 create an instance of a type. N4JS allows a developer to declare those
-methods (see <<N4JS_DI_@Provides>>) which gives them a hook in instance creation process.
+methods (see <<_n4js-di-provides,N4JS DI @Provides>>) which gives them a hook in instance creation process.
 Those methods will be used when creating instances by the _Injector_
 configured with the corresponding __Binder__. A provider method is a
 special kind of binding (math:[$key$]) in which the return type of
@@ -650,7 +650,7 @@ built-in ``N4Provider``s.
 
 === N4JS DI Life Cycle and Scopes
 
-<<AC,DI>> Life Cycle defines when a new instance is created by the injector as its
+<<Acronyms,DI>> Life Cycle defines when a new instance is created by the injector as its
 destruction is handled by JavaScript. The creation depends on the scope
 of the type. Aside from the scopes, note that it is also possible to
 implement custom scopes and life cycle management via `N4JSProvider` and

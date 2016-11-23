@@ -597,7 +597,7 @@ math:[\[\begin{aligned}
 &\infer{\tee(a): Array<T>}{\tee a.\seq{elements}: \seq{T_e} &  T = \bigcup \seq{T_e}} \end{aligned}\]]
 
 In other languages not supporting union types, the element type is often
-inferred as the join (<<AC,LCST>>) of the element types. Using a union type here
+inferred as the join (<<Acronyms,LCST>>) of the element types. Using a union type here
 preserves more information (as the actual types are still known). For
 many use cases the behavior is similar though, as the members of a union
 type are the members of the join of the elements of the union.

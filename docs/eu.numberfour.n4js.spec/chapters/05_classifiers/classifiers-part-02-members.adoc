@@ -310,7 +310,7 @@ var v: {function():void} = new C().m;
 .  Different from ECMAScript 2015, methods are defined as readonly,
 that is, it is not possible to dynamically re-assign a property defined
 as method with a new value. This is because assigning or re-assigning a
-method breaks encapsulation. Methods are the <<AC,API>> of a class, their
+method breaks encapsulation. Methods are the <<Acronyms,API>> of a class, their
 implementation is internal to the class.
 .  When assigning a method to a variable, a warning is issued since
 this would lead to an detached this reference inside the method when it

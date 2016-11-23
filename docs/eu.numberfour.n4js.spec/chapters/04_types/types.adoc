@@ -1717,7 +1717,7 @@ function foo(p: union{A,B}) {..}
 Although `B` is superfluous, it may indicate that the function handles
 parameters of type differently than one of type `A` or `C`.
 
-Although a union type is a `<<AC,LCST>>` of its contained (non-superfluous) types, the
+Although a union type is a `<<Acronyms,LCST>>` of its contained (non-superfluous) types, the
 type inferrer usually does not create new union types when computing the
 join of types. If the join of types including at least one union type is
 calculated, the union type is preserved if possible. The same is true
@@ -1733,7 +1733,7 @@ The union of union types is defined similar to the union of sets.
 The union is not simplified, but it contains no duplicates.
 
 If a type A is contained in a union type, then the union type is a
-common supertype, and (since it is the union itself) also the `<<AC,LCST>>` of both types.
+common supertype, and (since it is the union itself) also the `<<Acronyms,LCST>>` of both types.
 This finding is the foundation of the definition of join of a (non-union) type with a union type:
 --
 

@@ -442,7 +442,7 @@ MainModule ::
 (optional) A plain module specifier defining the project’s ``main
 module``. If this property is defined, other projects can import from
 this project using imports where the string following keyword `from` states the
-project name and not the complete module specifier (see <<_import-statement-semantics,Import Statement Semantics>>).
+project name and not the complete module specifier (see <<import-statement-semantics,Import Statement Semantics>>).
 
 CompatibleWith ::
 In the case of a runtime environment or library, this specifies to which

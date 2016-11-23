@@ -513,7 +513,7 @@ math:[\[\begin{aligned}
 
 ==== Semantics [[interfaces-semantics]]
 
-Interfaces are used to describe the public <<AC,API>> of a classifier. The main
+Interfaces are used to describe the public <<Acronyms,API>> of a classifier. The main
 requirement is that the instance of an interface, which must be an
 instance of a class since interfaces cannot have instances, provides all
 members declared in the interface. Thus, a (concrete) class implementing
@@ -568,7 +568,7 @@ interface may be able to use the interface but not to implement it.
 
 In order to simplify modeling of runtime types, such as elements,
 interfaces do not only support the notation of static methods but
-constant data fields as well. Since <<AC,IDL>> cite:[OMG14a] is used to describe these elements in specifications (and mapped to JavaScript via rules described in cite:[W3C12a])
+constant data fields as well. Since <<Acronyms,IDL>> cite:[OMG14a] is used to describe these elements in specifications (and mapped to JavaScript via rules described in cite:[W3C12a])
 constant data fields are an often-used technique there and they can be
 modeled in N4JS 1:1.
 
