@@ -183,7 +183,7 @@ IdentifierName: IDENTIFIER | ReservedWord | N4Keyword;
 NumericLiteralAsString: DOUBLE | INT | OCTAL_INT | HEX_INT | SCIENTIFIC_INT;
 StringLiteralAsName: STRING;
 
-// see ~\autoref{sec:Asynchronous_Functions}~
+// see ~\autoref{sec:_asynchronous-functions}~
 fragment AsyncNoTrailingLineBreak *: (declaredAsync?='async' NoLineTerminator)?;
 
 fragment StrictFormalParameters <Yield>*:
@@ -1344,7 +1344,7 @@ footnote:[Thus, the type of one accessor is not used to infer the type of the ot
 
 Getters and setters – like functions – define a variable execution
 environment and therefore provide access to the actual passed-in
-parameters through the implicit `arguments` variable inside of their bodies (c.f. <<_arguments-objects>>).
+parameters through the implicit `arguments` variable inside of their bodies (c.f. <<_arguments-object>>).
 
 == Static Members
 task:IDE-151[] task:IDE-505[]
@@ -1391,7 +1391,7 @@ via:
 
 1.  The class declaration instance, i.e. the classifier or constructor type, `constructor{C}`, i.e. `C.m`
 2.  The class declaration instance of a subtype, i.e. the classifier or constructor type, i.e. `D.m`, if `D` is a subclass of `C`.
-3.  `v.m`, if `v` is a variable of type `C` (i.e. classifier type as defined in <<_constructor-and-classifier-type_Type>>) or a subtype thereof.
+3.  `v.m`, if `v` is a variable of type `C` (i.e. classifier type as defined in <<_constructor-and-classifier-type>>) or a subtype thereof.
 4. `this.m` inside the body of any static method declared in `C` or any sub-class of `C`.
 5.  Via a type variable math:[$T$] which upper bound is a subclass
 of `C`, +

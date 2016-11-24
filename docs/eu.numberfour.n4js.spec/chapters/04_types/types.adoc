@@ -1368,7 +1368,7 @@ application in the loop with as little support for symbols as possible.
 === Promise
 
 `Promise` is provided as a built-in type as in ECMAScript 2015. Also see
-[sec:Asynchronous_Functions] for asynchronous functions.
+[sec:_asynchronous-functions] for asynchronous functions.
 
 === Iterator Interface
 task:IDE-1220[]
@@ -2333,6 +2333,7 @@ Consequences:
 * Overriding of static methods is possible and by using the constructor
 or classifier type, polymorphism for static methods is possible as well.
 +
+[[_polymorphism-and-static-methods]]
 .Static Polymorphism
 [example]
 ====

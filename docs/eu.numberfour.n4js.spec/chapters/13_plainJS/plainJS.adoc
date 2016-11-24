@@ -365,7 +365,7 @@ provided by the runtime itself.
 Since these cases are rather rare and in order to enable additional
 checks such as verification that a given runtime actually provides the
 elements, this kind of element can only be defined in components of type
-runtime environment or runtime library (cf <<_runtime_environment_libraries,Runtime Environment Libraries>>).
+runtime environment or runtime library (cf <<_runtime-environment-and-runtime-libraries,Runtime Environment Libraries>>).
 
 N4JS supports runtime definitions via the annotation `@ProvidedByRuntime`. This annotation can be defined
 

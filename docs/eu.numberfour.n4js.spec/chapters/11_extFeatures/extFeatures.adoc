@@ -101,7 +101,7 @@ places:
 other places where variable declarations are allowed, e.g. plain for
 loops; called _destructuring binding_; see <<_variable-statement,Var Statement>>).
 * On the left-hand side of an assignment expression (the assignment
-expression is then called _destructuring assignment_; see <<Assignment_Expression>>).
+expression is then called _destructuring assignment_; see <<_assignment-expression>>).
 * In a `for..in` or `for..of` loop on the left side of the `in`/`of` (see <<_for-of-statement>>). +
 NOTE: It can also be used in plain statements, but then we actually have
 one of the above two use cases.

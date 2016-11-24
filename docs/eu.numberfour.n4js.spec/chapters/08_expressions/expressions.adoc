@@ -2172,7 +2172,7 @@ last expression: math:[\[\begin{aligned}
 SuperLiteral: {SuperLiteral} 'super';
 ----
 
-Apart from the use of keyword `super` in wildcards of type expressions (cf. <<Type_Expressions>>), there are two use cases for keyword `super`: super member access and super
+Apart from the use of keyword `super` in wildcards of type expressions (cf. <<_type-expressions>>), there are two use cases for keyword `super`: super member access and super
 constructor calls.
 
 .Super Keyword
@@ -2360,7 +2360,7 @@ preserved, i.e. `B` coming from line 19.
 In N4JS, `await` is implemented as a unary operator with the same precedence as
 `yield` in ECMAScript 6.
 
-Constraints governing the use of `await` are given together with those for `async` in <<Asynchronous_Functions>>.
+Constraints governing the use of `await` are given together with those for `async` in <<_asynchronous-functions>>.
 
 == N4JS Specific Expressions
 
@@ -2377,7 +2377,7 @@ See <<Classes>>.
 ==== Semantics and Type Inference [[class-expression-semantics-type-inference]]
 
 The inferred type of a class expression simply is the class type as
-described in <<_constructor-and-classifier-type_Type>>.
+described in <<_constructor-and-classifier-type>>.
 
 === Cast (As) Expression
 task:IDE-161[]
