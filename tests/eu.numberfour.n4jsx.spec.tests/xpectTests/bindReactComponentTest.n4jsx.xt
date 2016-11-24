@@ -1,10 +1,15 @@
-/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpectTest
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
 	ResourceSet {
 		ThisFile {}
-		File "React.n4jsd" {}
+		File "react.n4jsd" {}
 	}
-    END_SETUP
+
+	END_SETUP
 */
+
+
+import * as React from "react"
 
 const A = 10;
 
@@ -20,9 +25,9 @@ function B(): string {
 //XPECT errors --> "Function B is not a valid React functional component." at "B"
 var b = <B/>
 
-class C extends Component<Object, Object> {
+class C extends React.Component<Object, Object> {
 	@Override
-	public render(): Element {
+	public render(): React.Element {
 		return <button/>
 	}
 }

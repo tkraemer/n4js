@@ -21,16 +21,10 @@ import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
-import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4jsx.helpers.ReactLookupHelper
 import eu.numberfour.n4jsx.n4JSX.JSXElement
-import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
-import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.emf.ecore.util.EcoreUtil
-import org.eclipse.xtext.naming.IQualifiedNameConverter
-import org.eclipse.xtext.scoping.IGlobalScopeProvider
-import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
@@ -41,12 +35,9 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject
 	protected N4JSTypeSystem ts;
 	@Inject
-	protected TypeSystemHelper tsh
-
+	protected TypeSystemHelper tsh	
 	@Inject
-	IGlobalScopeProvider globalScoperProvider
-	@Inject
-	IQualifiedNameConverter qualifedNameConverter
+	ReactLookupHelper reactLookupHelper;
 
 	/**
 	 * NEEEDED
@@ -87,7 +78,10 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 			if (!classOrFunction) {
 				val message = IssueCodes.getMessageForREACT_ELEMENT_NOT_FUNCTION_OR_CLASS_ERROR(name);
 				addIssue(message, expr, IssueCodes.REACT_ELEMENT_NOT_FUNCTION_OR_CLASS_ERROR);
+				return
 			}
+			
+			
 
 			if (isFunction) {
 				// Check if the function conforms to React functional component, i.e. its return type is Element
@@ -96,11 +90,12 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 					val typeRef = tfunction.returnTypeRef as ParameterizedTypeRef
 
 					val G = RuleEnvironmentExtensions.newRuleEnvironment(jsxElem);
-					val elementClassTypeRef = jsxElem.createParemterizedTypeRefToReactClass("#/Element")
+					val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
+					val elementClassTypeRef = reactLookupHelper.lookUpReactClassifier(jsxElem, reference, "Element", "react")
 					if (elementClassTypeRef === null)
 						return
 
-					val result = ts.subtype(G, typeRef, elementClassTypeRef)
+					val result = ts.subtype(G, typeRef, TypeUtils.createTypeRef(elementClassTypeRef))
 					if (result.value === null || !result.value) {
 						val message = IssueCodes.getMessageForREACT_ELEMENT_FUNCTION_NOT_REACT_ELEMENT_ERROR(name);
 						addIssue(message, expr, IssueCodes.REACT_ELEMENT_FUNCTION_NOT_REACT_ELEMENT_ERROR);
@@ -114,11 +109,12 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 				val tclassTypeRef = TypeUtils.createTypeRef(tclass);
 
 				val G = RuleEnvironmentExtensions.newRuleEnvironment(jsxElem);
-				val componentClassTypeRef = jsxElem.createParemterizedTypeRefToReactClass("#/Component")
+				val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
+				val componentClassTypeRef = reactLookupHelper.lookUpReactClassifier(jsxElem, reference, "Component", "react")
 				if (componentClassTypeRef === null)
 					return
 
-				val result = ts.subtype(G, tclassTypeRef, componentClassTypeRef)
+				val result = ts.subtype(G, tclassTypeRef, TypeUtils.createTypeRef(componentClassTypeRef))
 				if (result.value === null || !result.value) {
 					val message = IssueCodes.getMessageForREACT_ELEMENT_CLASS_NOT_REACT_ELEMENT_ERROR(name);
 					addIssue(message, expr, IssueCodes.REACT_ELEMENT_CLASS_NOT_REACT_ELEMENT_ERROR);
@@ -126,24 +122,5 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 			}
 		}
 	}
-
-	def private createParemterizedTypeRefToReactClass(EObject context, String qualifiedName) {
-		val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
-		val IScope scope = globalScoperProvider.getScope(context.eResource, reference, null)
-		val eod = scope.getSingleElement(qualifedNameConverter.toQualifiedName(qualifiedName))
-		if (eod === null) {
-			return null
-		}
-		var reactClassT = eod.EObjectOrProxy as TClass
-		if (reactClassT.eIsProxy) {
-			val ResourceSet resourceSet = EcoreUtilN4.getResourceSet(context)
-			val resolvedProxy = EcoreUtil.resolve(reactClassT, resourceSet);
-			if (resolvedProxy.eIsProxy) {
-				return null
-			}
-			reactClassT = resolvedProxy as TClass
-		}
-
-		return TypeUtils.createTypeRef(reactClassT)
-	}
+	
 }

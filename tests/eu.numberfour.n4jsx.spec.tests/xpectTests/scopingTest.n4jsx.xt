@@ -1,7 +1,7 @@
-/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpectTest
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
 	ResourceSet {
 		ThisFile {}
-		File "React.n4jsd" {}
+		File "react.n4jsd" {}
 	}
     END_SETUP
 */

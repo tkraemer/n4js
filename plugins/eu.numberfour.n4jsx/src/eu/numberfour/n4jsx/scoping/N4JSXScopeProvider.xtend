@@ -30,6 +30,8 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 	@Inject N4JSTypeSystem ts
 
 	@Inject MemberScopingHelper memberScopingHelper
+	
+	@Inject N4JSScopeProvider scp
 
 	@Override
 	override getScope(EObject context, EReference reference) {
@@ -78,8 +80,7 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 		if (jsxElName !== null) {
 			val scope = super.getScope(context, reference);
 			return new DynamicPseudoScope(scope);
-		}
-
+		}		
 		return super.getScope(context, reference);
 	}
 }
