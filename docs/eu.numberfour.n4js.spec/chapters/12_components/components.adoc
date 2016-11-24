@@ -627,7 +627,7 @@ navigation.
 extensions will then be used to match the file).
 --
 
-Examples of using external source fragments and filters are given in (<<External_Definitions_and_Their_Implementations>>).
+Examples of using external source fragments and filters are given in (<<_implementation-of-external-declarations>>).
 <<_implementation-of-external-declarations,Implementation of External Declarations>>
 
 .No validation and module wrapping example

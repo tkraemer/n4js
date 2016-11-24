@@ -24,9 +24,9 @@ A function type is modeled as (see cite:[ECMA11a(S13,p.98)] in ECMAScript.
 
 Function types can be defined by means of;
 
-* A function object (<<_function_object_type,Function Object Type>>).
+* A function object (<<_function-object-type,Function Object Type>>).
 * A function type expression (<<_type-expressions,Type Expressions>>).
-* A function declaration (<<_function-definition,Function Definition>>).
+* A function declaration (<<_function-declaration,Function Definition>>).
 * A method declaration (<<Methods>>).
 
 === Properties
@@ -327,18 +327,21 @@ math:[$F_{right}.tfpars=R_0, R_1, ... R_n$], +
 we say math:[$F_{left}$] conforms to math:[$F_{right}$],
 written as math:[$F_{left} <: F_{right}$], if and only if:
 
+function_type_conformance_non_parameterized
+
+
 * if math:[$|F_{left}.typePars|=|F_{right}.typePars|=0$]:
 ** math:[$F_{left} <: F_{right}$]
-(cf. <<def:Function_Type_Conformance_NonParameterized>>)
+(cf. <<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>>)
 * else if
 math:[$|F_{left}.typePars|>0 \land |F_{right}.typePars|=0$]:
 ** math:[$\exists \typeSubs: ( \typeEnvAdd \typeSubs ) \entails F_{left} <: F_{right}$]
-(cf. <<def:Function_Type_Conformance_NonParameterized>>)
+(cf. <<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>>)
 +
 (i.e. there exists a substitution math:[$\typeSubs$] of type
 variables in math:[$F_{left}$] so that after substitution it
 becomes a subtype of math:[$F_{right}$] as defined by
-<<def:Function_Type_Conformance_NonParameterized>>)
+<<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>>)
 * else if math:[$|F_{left}.typePars|=|F_{right}.typePars|$]:
 ** math:[$\typeEnvAdd \{ V^r_i \leftarrow V^l_i | 0 \leq i \leq n \} \entails F_{left} <: F_{right}$]
 ( accordingly)
@@ -349,7 +352,7 @@ with math:[$F_{left}.typePars=V^l_0, V^l_1, ... V^l_n$] and
 math:[$F_{right}.typePars=V^r_0, V^r_1, ... V^r_n$] +
 (i.e. we replace each type variable in math:[$F_{right}$] by the
 corresponding type variable at the same index in math:[$F_{left}$]
-and check the constraints from<<def:Function_Type_Conformance_NonParameterized>> as if math:[$F_{left}$] and
+and check the constraints from<<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>> as if math:[$F_{left}$] and
 math:[$F_{right}$] were non-parameterized functions and, in
 addition, the upper bounds on the left side need to be supertypes of the
 upper bounds on the right side).
@@ -487,7 +490,7 @@ prohibited.
 [req,id=IDE-82,version=1]
 --
 In N4JS, the formal parameters of the function cannot be named `arguments`. This applies to all variable execution environments like field accessors (getter/setter, <<Field_Accessor>>), methods (<<Methods>>) and
-constructors (<<Constructor>>), where `FormalParameter` type is used.
+constructors (<<_constructor-and-classifier-type,Constructor>>), where `FormalParameter` type is used.
 
 .Usage of arguments object
 [example]
@@ -784,7 +787,7 @@ To improve language-level support for asynchronous code, there exists an
 ECMAScript proposal
 footnote:[see http://tc39.github.io/ecmascript-asyncawait/] based on Promises which are provided by ES6 as built-in types.
 N4JS implements this proposal.
-This concept is supported for declared functions and methods (<<Asynchronous_Methods>>) as well
+This concept is supported for declared functions and methods (<<_asynchronous-methods>>) as well
 as for function expressions and arrow functions (<<Asynchronous Arrow Functions>>).
 
 ==== Syntax [[asynchronous-functions-syntax]]

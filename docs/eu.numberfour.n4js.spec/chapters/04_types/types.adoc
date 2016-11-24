@@ -71,7 +71,7 @@ Note that this declarative definition needs to be specified in detail
 for special cases, such as union and intersection types. Usually, the
 union type of two types is also the join.
 
-<<fig-cd-predefined-type-heirarchy,The Predefined Types Heirarchy figure>> summarizes all predefined types,
+<<fig-cd-predefined-type-hierarchy,The Predefined Types Heirarchy figure>> summarizes all predefined types,
 that is primitive and built-in ECMAScript and N4JS types.
 Specific rules for the subtype relation are defined in the following sections.
 This type hierarchy shows `any` and `undefined` as the top and bottom type (cf. cite:[Pierce02a(15.4)]) We define these types here explicitly:
@@ -91,7 +91,7 @@ bottom type math:[$Bot=`undefined}$].
 `null` is almost similar to math:[$Bot$], except that it is not a subtype
 of `undefined`.
 
-[[fig-cd-predefined-type-heirarchy]]
+[[fig-cd-predefined-type-hierarchy]]
 image:fig/cdPredefinedTypesHierarchy.png[title="Predefined Types Hierarchy"]
 
 For every primitive type there is a corresponding built-in type as
@@ -268,7 +268,7 @@ Predefined Type::
 Array Type::
   <<_array-object-type,Array Object Type>>.
 Function Type::
-  Described in <<functions,Functions>>, <<_function-type,Function Type>>.
+  Described in <<_functions,Functions>>, <<_function-type,Function Type>>.
 Any Type::
   <<_any-type,Any Type>>.
 
@@ -877,9 +877,9 @@ supported.
 In case an upper bound of a type variable shall consist only of a few
 members, it seems convenient to use additional structural members, like
 on interface I2 in the
-example <<_use-declared-interfaces-for-lower-bounds,Use declared interfaces for lower bounds>> below. However,
+example <<ex:use-declared-interfaces-for-lower-bounds,Use declared interfaces for lower bounds>> below. However,
 type variables must not be constrained using structural types (see
-constraint <<_use-site-structural-typing,Use-Site Structural Typing>>). Hence, the recommended
+constraint <<IDE-76,Use-Site Structural Typing>>). Hence, the recommended
 solution is to use an explicitly declared interface that uses definition
 site structural typing for these constraints as an upper bound (see
 interface in the example).
@@ -1002,7 +1002,7 @@ for variable declarations. For example in
 var x = null;
 ----
 
-the type of variable `x` is inferred to `any` (cf. <<_var-statement,Var Statement>>).
+the type of variable `x` is inferred to `any` (cf. <<_variable-statement,Var Statement>>).
 
 The type `null` will be inferred to false in a boolean expression.
 
@@ -1033,7 +1033,7 @@ var b = false; console.log(b == 0) | prints true
 The type is subtype of :
 math:[\[\begin{aligned} \infer{\type{boolean} <: \type{any}}{}\end{aligned}\]]
 
-Variables of type `boolean` can be auto-converted (coerced) to `Boolean`, as described in <<_auto-boxing-and-coercing,Auto-Boxing and Coercing>>.
+Variables of type `boolean` can be auto-converted (coerced) to `Boolean`, as described in <<_autoboxing-and-coercing,Autoboxing and Coercing>>.
 
 === Primitive String Type
 
@@ -1070,10 +1070,10 @@ The `string` type is a subtype of `any`:
 math:[\[\begin{aligned} \infer{\type{string} <: \type{any}}{}\end{aligned}\]]
 
 It is supertype of the N4JS primitive type `pathselector`, and `i18nKey`.
-<<_primitive-pathselector-and-I18nKey,Primitive Pathselector and I18nKey>>
+<<_primitive-pathselector-and-i18nkey,Primitive Pathselector and I18nKey>>
 
 // TODO: xref
-However, variables of type `string` can be auto-converted (coerced) to `string`, as described in <<_autoboxing-and-coercing,Auto-Boxing and coercing>>.
+However, variables of type `string` can be auto-converted (coerced) to `string`, as described in <<_autoboxing-and-coercing,Autoboxing and coercing>>.
 
 === Primitive Number Type
 
@@ -1113,7 +1113,7 @@ footnote:[The rationale for having this limited implementation of type is that A
 The primitive type `symbol` is directly as in ECMAScript 6. Support for symbols is kept to a minimum in N4JS. While this primitive type can be used
 without any restrictions, the only value of this type available in N4JS
 is the built-in symbol `Symbol.iterator`. Other built-in symbols from ECMAScript 6 and the creation of new symbols are not supported.
-For more details, see <<_primitive-symbol-type-object-type,Primitive Symbol Type Object Type>>.
+For more details, see <<_symbol,Primitive Symbol Type Object Type>>.
 
 == Primitive N4JS Types
 
@@ -1153,7 +1153,7 @@ In that case, the inferred type of that variable will always be `any` as well.
 If an initializer is provided, the declared type of the variable will be
 set to the inferred type of the initializer. Therefore in the latter
 case, the inferred type of the variable will always be the type of the
-initializer (cf. <<_var-statement,Var Statement>>).
+initializer (cf. <<_variable-statement,Var Statement>>).
 
 If a variable is declared as type , it can be used just as every
 variable can be used in raw ECMAScript. Since every property can be get
@@ -1162,7 +1162,7 @@ formally expressed in <<Identifier>>.
 
 === Void Type
 
-The type `void` is the type returned by the ECMAScript `void` operator (see <<_unary-expressions,Unary Expressions>>), which is similar to `undefined`. However, the type `undefined` cannot be expressed explicitly in type
+The type `void` is the type returned by the ECMAScript `void` operator (see <<_unary-expression,Unary Expressions>>), which is similar to `undefined`. However, the type `undefined` cannot be expressed explicitly in type
 expressions. Instead, it is possible to declare the return type of a
 function or method as `void` in order to state that the function does not return anything.
 
@@ -1302,7 +1302,7 @@ parameters, it would not normally be possible to invoke an instance of `Function
 For the time being, however, an instance of `Function` can be invoked, any number
 of arguments may be provided and the invocation may be parameterized
 with any number of type arguments (which will be ignored), i.e. 
-<<_function-call-constraints,Function Call Constraints>> and <<_parameterized-function-call-constraints,Parameterized Function Call Constraints>> do not apply.
+<<IDE-101,Function Call Constraints>> and <<IDE-102,Parameterized Function Call Constraints>> do not apply.
 //TODO: link requirements
 
 === Array Object Type
@@ -1830,12 +1830,9 @@ Intersection type reflects the dynamic nature of JavaScript, similar to
 union type. As in Java, intersection type is used to define the type
 boundaries of type variables in type parameter definitions. They are
 inferred by the type inferencer for type checking (as a result of join
-or meet). In contrast to Java, however, intersection type can be
-declared explicitly by means of intersection type expression.
-footnote:[For type theory about intersection types, see and , other
-languages supporting explicit notion of intersection type include Ceylon
-cite:[Pierce02a(15.7)] and cite:[Laurent12a], other languages supporting explicit notion of intersection type include Ceylon
-cite:[King13a(3.2.4/5)].
+or meet).
+In contrast to Java, however, intersection type can be declared explicitly by means of intersection type expression.
+footnote:[For type theory about intersection types, see cite:[Pierce02a(15.7)] and cite:[Laurent12a], other languages supporting explicit notion of intersection type include Ceylon cite:[King13a(3.2.4/5)]].
 
 ==== Syntax [[intersection-type-syntax]]
 
@@ -2298,7 +2295,7 @@ defined in . In the case of the default constructor, the type of the
 object literal argument depends on required attributes.
 +
 This subtype relation for the constructor type is enforced if the
-constructor of the super class is marked as `final`, see <<Constructor>> for details.
+constructor of the super class is marked as `final`, see <<_constructor-and-classifier-type,Constructor>> for details.
 6.  The type of a classifier declaration or classifier expression is the
 constructor of that class:
 math:[\[\begin{aligned} \infer{\tee C: \lstnfjs{constructor[$C$]}}
@@ -2451,17 +2448,17 @@ base class always has Function.prototype as its prototype. If we had
 defined `A` as `class A extends Object {}` in the listing above, then the constructor of `A` would have Object’s constructor as its prototype (depicted in as a dashed red
 arrow), which would make a more consistent overall picture.
 
-[[_img-constructors-and-prototypes]]
+[[fig-constructors-and-prototypes]]
 image::fig/ctorsProtosInES6.png[title="Constructors and prototypes for two classes A and B in ECMAScript 2015 (not N4JS!)"]
 
 Base classes in the above sense are not available in N4JS. If an N4JS
 class does not provide an `extends` clause, it will implicitly inherit from
-built-in class `N4Object`, if it provides an `extends` clause stating `Object` as its super type, then it corresponds to what is shown in <<_img-constructors-and-prototypes,Constructors and prototypes>> with the red dashed arrow.
+built-in class `N4Object`, if it provides an `extends` clause stating `Object` as its super type, then it corresponds to what is shown in <<fig-constructors-and-prototypes,Constructors and prototypes>> with the red dashed arrow.
 
 == This Type
 task:IDE-377[] task:IDE-785[] task:IDEBUG-228[]
 
-The keyword may represent either a literal (cf. <<_this-keyword-and-type-in-instance-and-static-context,example: This keyword and type in instance and static context>>) or may refer to the type. In this section, we describe the latter case.
+The keyword may represent either a literal (cf. <<ex:this-keyword-and-type-in-instance-and-static-context,example: This keyword and type in instance and static context>>) or may refer to the type. In this section, we describe the latter case.
 
 Typical use cases of the type include:
 
@@ -2861,7 +2858,7 @@ a result, the actual type in JavaScript will be `string`. To provide the N4JS
 user with some validations regarding the validity of a statement at
 compile time, a special kind of subtypes of `string` are introduced: the
 string-based enum using the `@StringBased` annotation. (See also other string-based
-types like `pathSelector<T>` and `i18nKey` in <<_primitive-pathselector-and-I18nKey,Primitive Pathselector and I18nKey>>.)
+types like `pathSelector<T>` and `i18nKey` in <<_primitive-pathselector-and-i18nkey,Primitive Pathselector and I18nKey>>.)
 
 String-based enums do not have any kind of runtime representation;
 instead, the transpiler will replace each reference to a literal of a

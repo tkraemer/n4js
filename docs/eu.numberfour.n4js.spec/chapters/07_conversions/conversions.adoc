@@ -10,10 +10,10 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
-== Auto-Boxing and Coercing
+== Autoboxing and Coercing
 
 Coercing is the ability to implicitly cast one (primitive) type to another.
-Auto-Boxing is a special kind of coercing in that is the ability to automatically convert a primitive value type, such as `string`, `number`, or `boolean`, to its corresponding Object type version `String`, `Number`, `Boolean`.
+Autoboxing is a special kind of coercing in that is the ability to automatically convert a primitive value type, such as `string`, `number`, or `boolean`, to its corresponding Object type version `String`, `Number`, `Boolean`.
 The capital letters in the latter are an essential distinction.
 
 Conversion between primitives and object-representations of a datatype are not automatic in N4JS. Only in the cases of object-method invocations on a primitive type (for `string` to call `"abc".length`, for example) automatic conversion is applied.
@@ -77,18 +77,18 @@ Conversion of variables of type `Object` or from one primitive type to another i
 possible to convert any `Object` to a primitive in general, but it is possible to do so in the context of certain expressions such as additive operator.
 The applied conversions are described in <<_auto-conversion-of-class-instances,Auto-Conversion of Class Instances>>
 
-=== Auto-Boxing of Primitives
+=== Autoboxing of Primitives
 task:IDE-835[]
 
 In cite:[ECMA11a], autoboxing is defined by `ToObject` cite:[ECMA11a(S9.9)].
 
-Auto-boxing is not directly supported in N4JS. Instead, primitive types
+Autoboxing is not directly supported in N4JS. Instead, primitive types
 virtually have the same members as their corresponding object types. It
-is then possible to use the auto-boxing feature when calling a member.
-In general, auto-boxing is only supported for accessing built-in
+is then possible to use the Autoboxing feature when calling a member.
+In general, Autoboxing is only supported for accessing built-in
 read-only (immutable) properties. For example, `"some string value".split(" ");` is supported but `"some string value".foo=1;` will be rejected as String does not allow properties to be added (cf. vs. , see <<_type-modifiers-dynamic,Dynamic Type Modifiers>>).
 
-Auto-boxing often leads to problems, in particular in combination with
+Autoboxing often leads to problems, in particular in combination with
 dynamic types – this is why it is not directly supported in N4JS. For
 example,
 
@@ -101,11 +101,11 @@ console.log(s.prop); // prints "undefined"
 
 // todo[wk: restrict coercing]{\url{http://restrictmode.org/} describes some restrictions on operators with regards to coercing and common bugs, we should consider implementing some of these restrictions as well. Also see chapter type inference}
 
-=== Auto-Boxing of Function Expressions and Declarations
+=== Autoboxing of Function Expressions and Declarations
 task:IDE-830[]
 
 
-Function expressions and declarations always define an object of type `Function`, thus coercing or auto-boxing is not required in case of functions:
+Function expressions and declarations always define an object of type `Function`, thus coercing or Autoboxing is not required in case of functions:
 
 It is always possible to use a function expression where a `Function` is required, and to use an object of type `Function` where a function expression is expected.
 This is only possible if the function signatures are subtype-compatible,
@@ -315,7 +315,7 @@ The same is true for string-based enums and arrays which cannot be tested during
 For all types for which the evaluation result of `instanceof` could be computed at compile time, the check is unnecessary and thus it is refused by the compiler.
 Using structural types on the right-hand side of ``instancesof`` constructs is also not permitted.
 
-In order to avoid errors at runtime, the `instanceof` operator defines appropriate constraints, see <<_relational-expressions,Relational Expression>> for details.
+In order to avoid errors at runtime, the `instanceof` operator defines appropriate constraints, see <<_relational-expression,Relational Expression>> for details.
 
 .Type Check Example
 [example]

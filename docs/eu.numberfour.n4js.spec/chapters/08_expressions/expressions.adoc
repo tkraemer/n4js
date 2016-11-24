@@ -63,7 +63,7 @@ version and the other variants are deduced to that binary version. E.g.,
 === The this Literal
 task:IDE-229[] task:IDE-505[]
 
-This section describes the `this` literal and the semantics of the `@This` annotation, the type `this` is described in <<This_Type>>.
+This section describes the `this` literal and the semantics of the `@This` annotation, the type `this` is described in <<_this-type>>.
 
 ==== Semantics
 
@@ -842,7 +842,7 @@ outside.
 ==== Type Inference [[type-inference-3]]
 task:IDE-244[] task:IDE-343[] task:IDE-691[]
 
-An object literal implicitly extends ``Object``, therefore, object literal types use structural typing. For details see <<Structural_Typing>>.
+An object literal implicitly extends ``Object``, therefore, object literal types use structural typing. For details see <<_structural-typing>>.
 From a type systems point of view, the two variables `ol` and `st` below have the same type.
 
 [source,n4js]
@@ -1216,7 +1216,7 @@ The type of a new expression math:[$ne$] is inferred as follows:
 math:[\[\begin{aligned}
 & \infer{\tee ne: C}{\tee ne.callee: \type{constructor\{C\}}} \end{aligned}\]]
 
-For classes, constructors are described in <<Constructor>>.
+For classes, constructors are described in <<_constructor-and-classifier-type,Constructor>>.
 
 In N4JS it is not allowed to call new on a plain function. For example:
 
@@ -1230,7 +1230,7 @@ will issue an error.
 
 === Function Expression
 
-See <<Functions.adoc>> for details.
+See <<_functions,Functions>> for details.
 
 === Function Calls
 task:IDE-186[] task:IDE-851[]
@@ -1305,7 +1305,7 @@ function.
 Note that (for a limited time), constraints
 <<IDE-101,Function Call Constraints>> and
 <<IDE-102,Parameterized Function Call Constraints>> are not applied if the the
-type of math:[$F$] is `Function`. See <<Function_Object_Type>>.
+type of math:[$F$] is `Function`. See <<_function-object-type>>.
 
 --
 
@@ -1313,7 +1313,7 @@ type of math:[$F$] is `Function`. See <<Function_Object_Type>>.
 task:IDE-244[]
 
 A call expression math:[$expr$] is bound to a method (<<Methods>>) or function
-declaration (which may be part of a function definition (<<_function-definition,Function Definition>> or specified via a function type <<Fucntion_Type>>) math:[$F$] (via evaluation of `MemberExpression`. The type of the call is inferred from the function declaration or type math:[$F$] as follows:
+declaration (which may be part of a function definition (<<_function-declaration,Function Definition>> or specified via a function type <<_function-type>>) math:[$F$] (via evaluation of `MemberExpression`. The type of the call is inferred from the function declaration or type math:[$F$] as follows:
 
 math:[\[\begin{aligned}
 \infer{\tee expr: T}{bind(expr.target, F) & F.returnType: T}\end{aligned}\]]
@@ -1325,7 +1325,7 @@ required as the function argument types are usually inferred from the
 given arguments. In some cases, for instance with pathSelectors, this is
 useful. In that case, the type variable defined in the generic method
 declaration is explicitly bound to types by using type arguments. See
-<<Property_Accessors>> for semantics and type inference.
+<<_property-accessors>> for semantics and type inference.
 
 .Generic Method Invocation
 [example]
@@ -2091,13 +2091,13 @@ v.writeable \lor
 
 The value of writeable is true for setters and usually for variables and
 data fields. Assignability of variables and data fields can be
-restricted via `const` or the `@Final` annotation. See <<Assignment_Modifiers>>(data fields) and <<Const>> (const variables) for details.
+restricted via `const` or the `@Final` annotation. See <<_assignment-modifiers>>(data fields) and <<Const>> (const variables) for details.
 
 Also see <<IDE-93,requirement: Read Access to Identifier>> for read access constraint.
 
 The left-hand side of an assignment expression may be an array or object
 literal and the assignment expression is then treated as a destructuring
-assignment. See <<Destructuring>> for details.
+assignment. See <<_array-and-object-destructuring>> for details.
 
 --
 
@@ -2253,7 +2253,7 @@ indirectly contained in math:[$c$].] math:[\[\begin{aligned}
         \end{aligned}\]]
 
 Further constraints with regard to super constructor calls are described
-in <<Constructor>>.
+in <<_constructor-and-classifier-type,Constructor>>.
 task:IDE-1753[]
 
 --
@@ -2377,7 +2377,7 @@ See <<Classes>>.
 ==== Semantics and Type Inference [[class-expression-semantics-type-inference]]
 
 The inferred type of a class expression simply is the class type as
-described in <<Constructor_Type>>.
+described in <<_constructor-and-classifier-type_Type>>.
 
 === Cast (As) Expression
 task:IDE-161[]

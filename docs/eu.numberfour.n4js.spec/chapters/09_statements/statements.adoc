@@ -161,7 +161,7 @@ var fun2 = function() : number { var x = fun2;  return -42; }();
 ----
 
 The variable statement may contain array or object destructuring
-patterns, see <<Destructuring>> for details.
+patterns, see <<_array-and-object-destructuring>> for details.
 
 --
 
@@ -259,7 +259,7 @@ ContinueStatement <Yield>: {ContinueStatement} 'continue' (label=[LabelledStatem
 BreakStatement <Yield>: {BreakStatement} 'break' (label=[LabelledStatement|BindingIdentifier<Yield>])? Semi;
 ----
 
-Since math:[$varDecl(s)$] are ``VariableStatement``s as described in <<_var-statement,Var Statement>>, the declared variables can be type annotated.
+Since math:[$varDecl(s)$] are ``VariableStatement``s as described in <<_variable-statement,Var Statement>>, the declared variables can be type annotated.
 
 TIP: Using for-in is not recommended, instead `pass:[_each]` should be used.
 
@@ -457,7 +457,7 @@ ConstDeclaration returns VariableDeclaration: typeRef=TypeRef? name=IDENTIFIER c
 A const variable statement is more or less a normal variable statement
 (see <<_variable-statement,Variable Statement>>), except that all variables declared by that statement are not
 writable (cf. <<IDE-121,requirement: Write-Acccess>>). This is similar to constant data
-fields (cf. <<Assignment_Modifiers>>).
+fields (cf. <<_assignment-modifiers>>).
 
 .Writability of const variables
 [req,id=IDE-133,version=1]
@@ -517,7 +517,7 @@ for-of. That loop works with iterables. Before we can use it with
 createArrayIterator(), we need to turn the result into an iterable"_.
 
 An array or object destructuring pattern may be used left of the `of`.
-This is used to destructure the elements of the `Iterable` on the right-hand side (not the `Iterable` itself). For detais, see <<Destructuring>>.
+This is used to destructure the elements of the `Iterable` on the right-hand side (not the `Iterable` itself). For detais, see <<_array-and-object-destructuring>>.
 
 --
 
@@ -631,7 +631,7 @@ specifiers, see <<Qualified_Names>>.]:
 
 ----
 * or project name only, assuming the project defines a main module in
-its manifest (using the `MainModule` manifest property, <<Manifest_Properties>>):
+its manifest (using the `MainModule` manifest property, <<_properties-8>>):
 +
 [source]
 ----
@@ -950,7 +950,7 @@ Declared elements (types, variables, functions) are usually only visible
 outside the declaring module if the elements are exported and imported
 (by the using module, cf. <<_import-statement,Import Statement>>).
 
-Some special components (runtime environment and libraries, cf. <<Runtime_Environment_Libraries>>, may export elements globally. This is done by annotating the export (or the
+Some special components (runtime environment and libraries, cf. <<_runtime-environment-and-runtime-libraries>>, may export elements globally. This is done by annotating the export (or the
 whole module) with `@Global`, see <<Global_Definitions>> for details.
 
 By adding `default` after the keyword `export`, the identifiable element can be exported as ’the default’. This can then be imported from other modules via

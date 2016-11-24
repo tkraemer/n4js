@@ -99,10 +99,10 @@ places:
 
 * In a variable declaration (not just in variable statements but also in
 other places where variable declarations are allowed, e.g. plain for
-loops; called _destructuring binding_; see <<_var-statement,Var Statement>>).
+loops; called _destructuring binding_; see <<_variable-statement,Var Statement>>).
 * On the left-hand side of an assignment expression (the assignment
 expression is then called _destructuring assignment_; see <<Assignment_Expression>>).
-* In a `for..in` or `for..of` loop on the left side of the `in`/`of` (see <<for_of_statement>>). +
+* In a `for..in` or `for..of` loop on the left side of the `in`/`of` (see <<_for-of-statement>>). +
 NOTE: It can also be used in plain statements, but then we actually have
 one of the above two use cases.
 * With lists of formal parameters or function arguments (NOT SUPPORTED
@@ -368,7 +368,7 @@ annotations and a method annotated with `@Provides`.
 _Binder_ is declared by annotating a class with the annotation.
 
 A _Binding_ is part of a configuration that defines which instance of
-what type should be injected into an _injection point_ (<<_n4js_di_injection_points,N4JS DI Injection Points>>) with an expected type.
+what type should be injected into an _injection point_ (<<_n4js-di-injection-points,N4JS DI Injection Points>>) with an expected type.
 
 _Provider Method_ is essentially a _factory method_ that is used to
 create an instance of a type. N4JS allows a developer to declare those
@@ -504,10 +504,11 @@ will be injected as well.
 .Simple Field Injection
 [example]
 --
-<<Simple Field Injection,The listing below>> demonstrates simple field injection using default bindings. Note that all inherited fields
+<<ex:field-injection,The listing below>> demonstrates simple field injection using default bindings. Note that all inherited fields
 (i.e. `A.xInA`) are injected and also fields in injected fields (i.e. )
 
-.Simple Field Injection [[Simple Field Injection]]
+[[ex:field-injection]]
+.Simple Field Injection
 [source,n4js]
 ----
 class X {
@@ -1165,7 +1166,7 @@ arguments::
   NO
 
 `@Inject` defines the injection point into which an instance object will be injected. The specific instance depends on the injector configuration (bindings)
-used. Class fields, methods and constructors can be annotated. See <<N4JS_DI_Injection_Points>> for more information.
+used. Class fields, methods and constructors can be annotated. See <<_n4js-di-injection-points>> for more information.
 
 
 .DI Inject
@@ -1293,7 +1294,7 @@ parameters (with no further modifications): math:[\[\begin{aligned}
     &   \hspace{3em} P.typePars_i=F.typePars_i \\
     &   \hspace{3em} \land P.typePars_i.name=P.super.typeArgs_i.name \\
     \end{aligned}\]]
-8.  All constraints related to member redefinition (cf. <<_redefinition_of_members,Redefinition of Members>>) have to hold.
+8.  All constraints related to member redefinition (cf. <<_redefinition-of-members,Redefinition of Members>>) have to hold.
 In the case of polyfills, this is true for constructors (cf.
 <<IDE-72,requirement: Overriding Members>>) and private members.
 --

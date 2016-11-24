@@ -264,12 +264,12 @@ math:[$enumerable$], this is always set to false for methods.
 === Semantics
 
 Since methods are ECMAScript functions, all constraints specified in
-<<_function-type,Function-Type>> apply to methods as well. This section describes default values and
+<<_function-type,Function Type>> apply to methods as well. This section describes default values and
 function type conformance which is required for overriding and
 implementing methods.
 
 In addition, method declarations and definitions have to comply with the
-constraints for naming members of classifiers (cf. <<_member-names,Member Names>>)
+constraints for naming members of classifiers (cf. <<IDE-52,Member Names>>)
 and with the constraints detailed in the following sections on final
 methods (<<_final-methods,Final Methods>>), abstract methods (<<_abstract-methods,Abstract Methods>>
 and method overriding and implementation (<<_overriding-of-members,Overriding of Members>>, <<_implementation-of-members,Implementation of Members>>).
@@ -512,7 +512,7 @@ method__. This will be mixed into an implementor of the interface if,
 and only if, neither the implementing class nor any of its direct or
 indirect superclasses already provides an implementation for this
 method; for details see <<_member-consumption,Member Consumption>>. Since the implementor is not known, some constraints exist for the body. I.e., no access to super is possible,
-cf. <<_access-super-member-with-super-literal,Access Super Member with Super Literal>>.
+cf. <<IDE-124,Access Super Member with Super Literal>>.
 
 In order to declare an interface to provide a default implementation in
 a definition file, annotation `@ProvidesDefaultImplementation` can be used, cf.
@@ -530,7 +530,7 @@ N4JS implements the async/await concept proposed for ECMAScript 7, which
 provides a more convenient and readable syntax for writing asynchronous
 code compared to using built-in type Promise directly. This concept can
 be applied to methods in exactly the same way as to declared functions.
-See <<Asynchronous-Functions>> and <<_asynchronous-arrow-functions,Asynchronous Arrow Functions>> for details.
+See <<_asynchronous-functions,Asynchronous Functions>> and <<_asynchronous-arrow-functions,Asynchronous Arrow Functions>> for details.
 
 == Constructors
 task:IDE-159[]
@@ -571,7 +571,7 @@ class C {
 
 Constructors define a variable execution environment and therefore
 provide access to the actual passed-in parameters through the implicit
-variable inside of their bodies (c.f. <<Arguments-Object>>).
+variable inside of their bodies (c.f. <<_arguments-object>>).
 
 .Defining and Calling Constructors
 [req,id=IDE-56,version=1]
@@ -614,7 +614,7 @@ Note on syntax: ECMAScript 6 defines constructors similarly, cite:[ECMA15a(S13.5
 ECMAScript 6 the super constructor is not called automatically as well.
 
 The super literal used in order to call super methods is further
-described in <<Super-keyword>>.
+described in <<_the-super-keyword>>.
 
 
 === Structural This Type in Constructor and Spec Parameter
@@ -974,7 +974,7 @@ constructors. It shows a small class hierarchy using covariant
 constructors, `Cls` and `Cls2`, together with a helper function `createAnother` that creates and returns a new instance of the same type as its argument `value`.
 --
 
-[[ex:Covariant_Constructors]]
+[[ex:covariant-constructors]]
 .Covariant Constructors
 [example]
 ====
@@ -1006,7 +1006,7 @@ y = createAnother(x, new B());
 
 ====
 
-In the code of <<_ex-covariant-constructors,Covariant Constructors example>>, we would get an error if we changed the type of parameter `p` in the constructor of `Cls2` to some other type that is not a super type of `B`,
+In the code of <<ex:covariant-constructors,Covariant Constructors example>>, we would get an error if we changed the type of parameter `p` in the constructor of `Cls2` to some other type that is not a super type of `B`,
 i.e. the type of the corresponding parameter of `Cls`’s constructor. If we
 removed the `@CovariantConstructor` annotation on `Cls`, we would get an error in the new expression inside function `createAnother`.
 
@@ -1344,7 +1344,7 @@ footnote:[Thus, the type of one accessor is not used to infer the type of the ot
 
 Getters and setters – like functions – define a variable execution
 environment and therefore provide access to the actual passed-in
-parameters through the implicit `arguments` variable inside of their bodies (c.f. <<Arguments-Objects>>).
+parameters through the implicit `arguments` variable inside of their bodies (c.f. <<_arguments-objects>>).
 
 == Static Members
 task:IDE-151[] task:IDE-505[]
@@ -1391,7 +1391,7 @@ via:
 
 1.  The class declaration instance, i.e. the classifier or constructor type, `constructor{C}`, i.e. `C.m`
 2.  The class declaration instance of a subtype, i.e. the classifier or constructor type, i.e. `D.m`, if `D` is a subclass of `C`.
-3.  `v.m`, if `v` is a variable of type `C` (i.e. classifier type as defined in <<Constructor_Type>>) or a subtype thereof.
+3.  `v.m`, if `v` is a variable of type `C` (i.e. classifier type as defined in <<_constructor-and-classifier-type_Type>>) or a subtype thereof.
 4. `this.m` inside the body of any static method declared in `C` or any sub-class of `C`.
 5.  Via a type variable math:[$T$] which upper bound is a subclass
 of `C`, +

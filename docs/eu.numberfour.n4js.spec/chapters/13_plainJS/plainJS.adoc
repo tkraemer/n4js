@@ -232,7 +232,7 @@ below source folders will be related to modules of the same name in the
 external folders. This is shown in <<_externalClassImplementation_naming,Fig: External Class Implementation Naming>>.
 
 
-[[externalClassImplementation_naming]]
+[[_externalClassImplementation_naming]]
 image:fig/externalClassImplementation_naming.png[title="External Class Implementation, Naming Convention"]
 
 ====
