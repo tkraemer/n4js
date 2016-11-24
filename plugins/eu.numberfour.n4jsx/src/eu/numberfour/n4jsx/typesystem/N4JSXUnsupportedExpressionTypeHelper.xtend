@@ -16,16 +16,19 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.DefaultUnsupportedExpressionTypeHelper
+import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4jsx.n4JSX.JSXElement
 import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EReference
-import org.eclipse.xtext.naming.IQualifiedNameConverter
-import org.eclipse.xtext.scoping.IGlobalScopeProvider
-import org.eclipse.xtext.scoping.IScope
-import eu.numberfour.n4js.ts.types.TypingStrategy
-import org.eclipse.emf.ecore.util.EcoreUtil
-import eu.numberfour.n4js.utils.EcoreUtilN4
 import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.emf.ecore.util.EcoreUtil
+import org.eclipse.xtext.naming.IQualifiedNameConverter
+import org.eclipse.xtext.scoping.IScope
+import org.eclipse.xtext.scoping.IScopeProvider
+import eu.numberfour.n4js.ts.types.TClassifier
+import org.eclipse.xtext.util.IResourceScopeCache
+import org.eclipse.xtext.resource.IEObjectDescription
+import org.eclipse.xtext.EcoreUtil2
 
 /**
  * Adds support for typing JSX elements.
@@ -33,21 +36,39 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 class N4JSXUnsupportedExpressionTypeHelper extends DefaultUnsupportedExpressionTypeHelper {
 
 	@Inject
-	IGlobalScopeProvider globalScoperProvider
+	IScopeProvider scopeProvider
 	@Inject 
 	IQualifiedNameConverter qualifedNameConverter
 	
+	private static val REACT_ELEMENT = "react.Element";
+	
+	@Inject
+	private IResourceScopeCache resourceScopeCacheHelper;
+	
 	override typeExpression(Expression expression, RuleEnvironment G) {
 		if (expression instanceof JSXElement) {
-			val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
-			val IScope scope = globalScoperProvider.getScope(expression.eResource, reference, null)
-			val eod = scope.getSingleElement(qualifedNameConverter.toQualifiedName("#/Element"))
-			var elementClassT = eod.EObjectOrProxy as TClass 
-			if (elementClassT.eIsProxy) {
-				val ResourceSet resourceSet = EcoreUtilN4.getResourceSet(expression)
-				elementClassT = EcoreUtil.resolve(elementClassT, resourceSet) as TClass
+			val classifierReactElement = resourceScopeCacheHelper.get(REACT_ELEMENT, expression.eResource, [
+				val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
+				val IScope scope = scopeProvider.getScope(expression, reference)
+				val IEObjectDescription eod = scope.allElements.findFirst[e|
+						val classifier = e.EObjectOrProxy;	
+					if (classifier instanceof TClassifier) {
+						return "Element"==classifier.exportedName && "react"==classifier.containingModule.qualifiedName
+					}
+					return false;
+				]
+				
+				val classifier = eod.EObjectOrProxy as TClassifier;
+				if (classifier.eIsProxy) {
+					EcoreUtil2.resolve(classifier, expression.eResource)
+				}				
+				return classifier;
+			]);
+			
+			if (classifierReactElement===null) {
+				throw new IllegalStateException("React.Element not found");
 			}
-			val typeRef = TypeUtils.createTypeRef(elementClassT)
+			val typeRef = TypeUtils.createTypeRef(classifierReactElement)
 			return typeRef
 		} else {
 			return super.typeExpression(expression, G)
