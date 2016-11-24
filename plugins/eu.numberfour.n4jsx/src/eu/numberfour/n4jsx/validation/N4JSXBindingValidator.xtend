@@ -4,19 +4,33 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
 package eu.numberfour.n4jsx.validation;
 
+import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TFunction
+import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4jsx.n4JSX.JSXElement
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.emf.ecore.util.EcoreUtil
+import org.eclipse.xtext.naming.IQualifiedNameConverter
+import org.eclipse.xtext.scoping.IGlobalScopeProvider
+import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
@@ -24,17 +38,19 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
  * Validation of names, cf N4JS Spec, Chapter 3.4., Constraints 3 and 4
  */
 class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
-	/*
-	 * @Inject private N4JSLanguageHelper languageHelper;
-	 *
-	 * @Inject private N4JSTypeSystem ts;
-	 *
-	 * @Inject private JavaScriptVariantHelper jsVariantHelper;
-	 */
+	@Inject
+	protected N4JSTypeSystem ts;
+	@Inject
+	protected TypeSystemHelper tsh
+
+	@Inject
+	IGlobalScopeProvider globalScoperProvider
+	@Inject
+	IQualifiedNameConverter qualifedNameConverter
 
 	/**
 	 * NEEEDED
-	 *
+	 * 
 	 * when removed check methods will be called twice once by N4JSValidator, and once by
 	 * AbstractDeclarativeN4JSValidator
 	 */
@@ -49,7 +65,7 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 	def void checkReactElementBinding(JSXElement jsxElem) {
 		val elemName = jsxElem.getJsxElementName();
 		val expr = elemName.getExpression();
-		
+
 		if (!(expr instanceof IdentifierRef)) {
 			return;
 		}
@@ -78,21 +94,56 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 				val tfunction = ie as TFunction
 				if (tfunction.returnTypeRef instanceof ParameterizedTypeRef) {
 					val typeRef = tfunction.returnTypeRef as ParameterizedTypeRef
-					if (typeRef.declaredType instanceof TClass) {
-						val tClass = typeRef.declaredType as TClass
-						if (tClass.exportedName == "Element") {
-							return;
-						}
+
+					val G = RuleEnvironmentExtensions.newRuleEnvironment(jsxElem);
+					val elementClassTypeRef = jsxElem.createParemterizedTypeRefToReactClass("#/Element")
+					if (elementClassTypeRef === null)
+						return
+
+					val result = ts.subtype(G, typeRef, elementClassTypeRef)
+					if (result.value === null || !result.value) {
+						val message = IssueCodes.getMessageForREACT_ELEMENT_FUNCTION_NOT_REACT_ELEMENT_ERROR(name);
+						addIssue(message, expr, IssueCodes.REACT_ELEMENT_FUNCTION_NOT_REACT_ELEMENT_ERROR);
 					}
 				}
-				
-				val message = IssueCodes.getMessageForREACT_ELEMENT_FUNCTION_NOT_REACT_ELEMENT_ERROR(name);
-				addIssue(message, expr, IssueCodes.REACT_ELEMENT_FUNCTION_NOT_REACT_ELEMENT_ERROR);
-				
+			}
+
+			if (isClass) {
+				// Check if the class is a valid React component, i.e. extends React.Component
+				val tclass = ie as TClass
+				val tclassTypeRef = TypeUtils.createTypeRef(tclass);
+
+				val G = RuleEnvironmentExtensions.newRuleEnvironment(jsxElem);
+				val componentClassTypeRef = jsxElem.createParemterizedTypeRefToReactClass("#/Component")
+				if (componentClassTypeRef === null)
+					return
+
+				val result = ts.subtype(G, tclassTypeRef, componentClassTypeRef)
+				if (result.value === null || !result.value) {
+					val message = IssueCodes.getMessageForREACT_ELEMENT_CLASS_NOT_REACT_ELEMENT_ERROR(name);
+					addIssue(message, expr, IssueCodes.REACT_ELEMENT_CLASS_NOT_REACT_ELEMENT_ERROR);
+				}
 			}
 		}
 	}
-	
-		
-	
+
+	def private createParemterizedTypeRefToReactClass(EObject context, String qualifiedName) {
+		val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
+		val IScope scope = globalScoperProvider.getScope(context.eResource, reference, null)
+		val eod = scope.getSingleElement(qualifedNameConverter.toQualifiedName(qualifiedName))
+		if (eod === null) {
+			return null
+		}
+		var reactClassT = eod.EObjectOrProxy as TClass
+		if (reactClassT.eIsProxy) {
+			val ResourceSet resourceSet = EcoreUtilN4.getResourceSet(context)
+			val resolvedProxy = EcoreUtil.resolve(reactClassT, resourceSet);
+			if (resolvedProxy.eIsProxy) {
+				return null
+			}
+			reactClassT = resolvedProxy as TClass
+		}
+
+		return TypeUtils.createTypeRef(reactClassT)
+	}
 }

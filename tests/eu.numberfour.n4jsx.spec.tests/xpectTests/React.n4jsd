@@ -46,7 +46,7 @@ export external public class ~SyntheticEvent {
  * http://facebook.github.io/react/docs/reusable-components.html
  * http://facebook.github.io/react/blog/2015/03/10/react-v0.13.html
  */
-export external public abstract class ~Component<PropsT extends Object, StateT extends Object> {
+export external public abstract class Component<PropsT extends Object, StateT extends Object> {
     public props: PropsT;
     public state: StateT;
     public context: Object+;

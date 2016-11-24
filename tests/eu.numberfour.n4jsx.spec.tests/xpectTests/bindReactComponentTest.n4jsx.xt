@@ -19,3 +19,21 @@ function B(): string {
 
 //XPECT errors --> "Function B is not a valid React functional component." at "B"
 var b = <B/>
+
+class C extends Component<Object, Object> {
+	@Override
+	public render(): Element {
+		return <button/>
+	}
+}
+
+//XPECT noerrors
+const c = <C/>
+
+class D {
+
+}
+
+//XPECT errors --> "Class D is not a valid React component." at "D"
+<D/>
+
