@@ -268,7 +268,7 @@ Predefined Type::
 Array Type::
   <<_array-object-type,Array Object Type>>.
 Function Type::
-  Described in <<functions,Functions>>, <<_function_type,Function Type>>.
+  Described in <<functions,Functions>>, <<_function-type,Function Type>>.
 Any Type::
   <<_any-type,Any Type>>.
 
@@ -1259,7 +1259,7 @@ required by certain expressions.
 // TODO: Fix Section
 
 *  `Object`   cite:[ECMA11a(p111)];
-*  `Function`  cite:[ECMA11a(p117)]; representing functions and function objects <<_function_type,Function Type>> but also methods (<<_methods,Methods>>)
+*  `Function`  cite:[ECMA11a(p117)]; representing functions and function objects <<_function-type,Function Type>> but also methods (<<_methods,Methods>>)
 *  `Array`    cite:[ECMA11a(1p122)], representing array objects, see <<_array-object-type,Array Object Type>>
 *  `String` cite:[ECMA11a(p141)]
 *  `Boolean` cite:[ECMA11a(p141)]

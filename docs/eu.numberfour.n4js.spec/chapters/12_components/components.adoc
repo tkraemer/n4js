@@ -514,7 +514,7 @@ type. There exist three different source fragment types:
 * *external*: Implementation of modules defined in definition files (n4jsd). These
   implementations are never validated nor fully compiled. Instead, they
   are only wrapped into module definitions and copied to the output
-  folder. See <<External_Declarations>> and <<_implementation-of-external-declarations,Implementation of External Declarations>> for details.
+  folder. See <<_external-declarations,External Declarations>> and <<_implementation-of-external-declarations,Implementation of External Declarations>> for details.
 
 
 Filters for fine-tuning the validator and compiler. A filter is applied

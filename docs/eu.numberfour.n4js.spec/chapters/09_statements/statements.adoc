@@ -259,7 +259,7 @@ ContinueStatement <Yield>: {ContinueStatement} 'continue' (label=[LabelledStatem
 BreakStatement <Yield>: {BreakStatement} 'break' (label=[LabelledStatement|BindingIdentifier<Yield>])? Semi;
 ----
 
-Since math:[$varDecl(s)$] are ``VariableStatement``s as described in <<Var_Statement>>, the declared variables can be type annotated.
+Since math:[$varDecl(s)$] are ``VariableStatement``s as described in <<_var-statement,Var Statement>>, the declared variables can be type annotated.
 
 TIP: Using for-in is not recommended, instead `pass:[_each]` should be used.
 

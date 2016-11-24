@@ -289,7 +289,7 @@ FunctionBody.`
 
 Methods – like functions – define a variable execution environment and
 therefore provide access to the actual passed-in parameters through the
-implicit variable inside of their bodies (c.f. <<_arguments-objects,Arguments Objects>>).
+implicit variable inside of their bodies (c.f. <<_arguments-object,Arguments Objects>>).
 
 Methods are similar to function definitions but they must not be
 assigned to or from variables. The following code issues an error

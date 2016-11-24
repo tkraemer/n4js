@@ -99,7 +99,7 @@ places:
 
 * In a variable declaration (not just in variable statements but also in
 other places where variable declarations are allowed, e.g. plain for
-loops; called _destructuring binding_; see <<Var_Statement>>).
+loops; called _destructuring binding_; see <<_var-statement,Var Statement>>).
 * On the left-hand side of an assignment expression (the assignment
 expression is then called _destructuring assignment_; see <<Assignment_Expression>>).
 * In a `for..in` or `for..of` loop on the left side of the `in`/`of` (see <<for_of_statement>>). +

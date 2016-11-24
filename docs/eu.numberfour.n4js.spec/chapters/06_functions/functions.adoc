@@ -60,7 +60,7 @@ Additionally, the following pseudo properties for functions are defined:
 ``thisTypeRef`` ::
 The this type ref is the type to which the `this`-keyword would be evaluated
 if used inside the function or member. The inference rules are described
-in <<This_Keyword>>.
+in <<_this-keyword,This Keyword>>.
 
 ``fpars`` ::
 List of formal parameters and the this type ref. This is only used for
