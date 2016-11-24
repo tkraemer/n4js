@@ -89,9 +89,8 @@ bottom type math:[$Bot=`undefined}$].
 
 
 `null` is almost similar to math:[$Bot$], except that it is not a subtype
-of `undefined`.
+of `undefined`.[[fig-cd-predefined-type-hierarchy]]
 
-[[fig-cd-predefined-type-hierarchy]]
 image:fig/cdPredefinedTypesHierarchy.png[title="Predefined Types Hierarchy"]
 
 For every primitive type there is a corresponding built-in type as
@@ -102,7 +101,7 @@ Although the diagram shows inheritance between `void` and `undefined`, this rela
 same applies to the relation of `Object` as well as the subtypes shown for `String` and `String`.
 
 
-
+[[_class-example]]
 .Type Examples, Class Hierarchy
 [example]
 --

@@ -191,7 +191,7 @@ enumeration value.
 task:IDE-161[] task:IDE-928[] (IDEBUG-56): Casting to TypeVars
 
 
-Type casts are expressed with the cast expression (`as`), see <<_as-expression,As Expression>> for details.
+Type casts are expressed with the cast expression (`as`), see <<_cast-as-expression,As Expression>> for details.
 
 We first define helper rules for the type cast constraints as follows:
 math:[\[\begin{aligned}

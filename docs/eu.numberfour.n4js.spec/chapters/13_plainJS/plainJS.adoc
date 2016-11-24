@@ -189,7 +189,7 @@ corresponding implementation:
 runtime, see <<_runtime-definitions,Runtime Definitions>> for details.
 
 The naming convention is based on the `external` source fragments
-defined in the manifest (<<Manifest>>). If the implementation is provided by the
+defined in the manifest (<<_component-manifest>>). If the implementation is provided by the
 runtime directly, then this can be also specified in the manifest by a
 module filter.
 
@@ -229,10 +229,8 @@ is generated.
 If, in addition to standard `source`, the `source-external` fragment is
 provided in `Sources`, math:[$n4jsd$] files in the folder tree
 below source folders will be related to modules of the same name in the
-external folders. This is shown in <<_externalClassImplementation_naming,Fig: External Class Implementation Naming>>.
+external folders. This is shown in External Class Implementation Naming below.
 
-
-[[_externalClassImplementation_naming]]
 image:fig/externalClassImplementation_naming.png[title="External Class Implementation, Naming Convention"]
 
 ====

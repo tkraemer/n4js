@@ -489,7 +489,7 @@ prohibited.
 .arguments as formal parameter name
 [req,id=IDE-82,version=1]
 --
-In N4JS, the formal parameters of the function cannot be named `arguments`. This applies to all variable execution environments like field accessors (getter/setter, <<_field-accessor>>), methods (<<Methods>>) and
+In N4JS, the formal parameters of the function cannot be named `arguments`. This applies to all variable execution environments like field accessors (getter/setter, <<_field-accessors-getter-setter>>), methods (<<Methods>>) and
 constructors (<<_constructor-and-classifier-type,Constructor>>), where `FormalParameter` type is used.
 
 .Usage of arguments object

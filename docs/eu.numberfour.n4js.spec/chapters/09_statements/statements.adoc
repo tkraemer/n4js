@@ -616,7 +616,7 @@ The module to import from is identified by the string literal following
 keyword `from`. This string must be a valid
 
 * complete module specifier footnote:[For more details on module
-specifiers, see <<Qualified_Names>>.]:
+specifiers, see <<_qualified-names>>.]:
 +
 [source]
 ----
@@ -954,4 +954,4 @@ Some special components (runtime environment and libraries, cf. <<_runtime-envir
 whole module) with `@Global`, see <<_global-definitions>> for details.
 
 By adding `default` after the keyword `export`, the identifiable element can be exported as ’the default’. This can then be imported from other modules via
-default imports (see <<Import_Statement>>).
+default imports (see <<_import-statement>>).

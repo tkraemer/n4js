@@ -368,7 +368,7 @@ annotations and a method annotated with `@Provides`.
 _Binder_ is declared by annotating a class with the annotation.
 
 A _Binding_ is part of a configuration that defines which instance of
-what type should be injected into an _injection point_ (<<_n4js-di-injection-points,N4JS DI Injection Points>>) with an expected type.
+what type should be injected into an _injection point_ (<<_injection-points,N4JS DI Injection Points>>) with an expected type.
 
 _Provider Method_ is essentially a _factory method_ that is used to
 create an instance of a type. N4JS allows a developer to declare those
@@ -1166,7 +1166,7 @@ arguments::
   NO
 
 `@Inject` defines the injection point into which an instance object will be injected. The specific instance depends on the injector configuration (bindings)
-used. Class fields, methods and constructors can be annotated. See <<_n4js-di-injection-points>> for more information.
+used. Class fields, methods and constructors can be annotated. See <<_injection-points>> for more information.
 
 
 .DI Inject
@@ -1433,10 +1433,11 @@ module exist in the same project: math:[\[\begin{aligned}
 .Static polyfill
 [example]
 ====
-<<lst:StaticPolyfill_genMod>> shows an example of generated code. <<lst:StaticPolyfill_polyfillMod>> demonstrates the static polyfill.
+<<ex:staticpolyfill-genmod,Static Polyfill GenMod example>> shows an example of generated code. <<ex:staticpolyfill-polyfillmod,Static Polyfill Mod example>> demonstrates the static polyfill.
 Note that the containing project has two source folders configured:
 `Project/src/n4js` and `Project/src/n4js-gen`.
 
+[[ex:staticpolyfill-polyfillmod]]
 [source,n4js]
 ----
 @@StaticPolyfillAware
@@ -1452,7 +1453,7 @@ export public class B {
 
 
 
-[[lst:StaticPolyfill_genMod]]
+[[ex:staticpolyfill-genmod]]
 [source,n4js]
 ----
 @@StaticPolyfillModule
