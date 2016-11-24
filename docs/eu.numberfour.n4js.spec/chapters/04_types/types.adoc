@@ -101,7 +101,7 @@ Although the diagram shows inheritance between `void` and `undefined`, this rela
 same applies to the relation of `Object` as well as the subtypes shown for `String` and `String`.
 
 
-[[_class-example]]
+[[ex:class-hierarchy]]
 .Type Examples, Class Hierarchy
 [example]
 --
@@ -1670,7 +1670,7 @@ synonym for `equivalent`.]
 Let A, B, and C be defined as in the chapter beginning (math:[$C <: B <: A$])
 
 The following subtyping relations with union types are to be evaluated
-as follows footnote:[See Example <<_class-hierarchy>> for class definitions.]:
+as follows footnote:[See Example <<ex:class-hierarchy>> for class definitions.]:
 
 [source]
 ----
@@ -1930,7 +1930,7 @@ Let A, B, and C be defined as in the chapter beginning
 (math:[$C <: B <: A$])
 
 The following subtyping relations with intersection types are to be
-evaluated as follows footnote:[See Example <<_class-hierarchy>> for class definitions.]:
+evaluated as follows footnote:[See Example <<ex:class-hierarchy>> for class definitions.]:
 
 [source]
 ----

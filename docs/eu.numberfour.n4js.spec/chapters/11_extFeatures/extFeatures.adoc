@@ -307,9 +307,8 @@ math:[$\exists DIC1,DIC2 : DIC1.\seq{binding}.\seq{key} \to DIC2.\seq{binding}.\
 
 NOTE: Although subtype notation math:[$<:$] is used here it does *not* imply actual subtype relations. It was used in this instance for of lack of formal notations for DI concepts and because this is similar to the Liskov Substitution principle.
 
-A complex Child-Parent relation between components is depicted in <<_fig:diagdicparentchild,DIC Parent Child diagram>> and <<_ex:complex-dicomponents-relations,Complex DIComponent Relations example>> below.
-
-[[fig:diagDICParentChild]]
+A complex Child-Parent relation between components is depicted in DIC Parent Child diagram and
+<<ex:complex-dicomponents-relations,Complex DIComponent Relations example>> below.
 
 image::fig/diagDICParentChild.png[title="Complex DIComponents Relations",align=center]
 
