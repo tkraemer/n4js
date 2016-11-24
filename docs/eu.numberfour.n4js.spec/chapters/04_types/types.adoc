@@ -89,9 +89,8 @@ bottom type math:[$Bot=`undefined}$].
 
 
 `null` is almost similar to math:[$Bot$], except that it is not a subtype
-of `undefined`.
+of `undefined`.[[fig-cd-predefined-type-hierarchy]]
 
-[[fig-cd-predefined-type-hierarchy]]
 image:fig/cdPredefinedTypesHierarchy.png[title="Predefined Types Hierarchy"]
 
 For every primitive type there is a corresponding built-in type as
@@ -102,7 +101,7 @@ Although the diagram shows inheritance between `void` and `undefined`, this rela
 same applies to the relation of `Object` as well as the subtypes shown for `String` and `String`.
 
 
-
+[[ex:class-hierarchy]]
 .Type Examples, Class Hierarchy
 [example]
 --
@@ -1368,7 +1367,7 @@ application in the loop with as little support for symbols as possible.
 === Promise
 
 `Promise` is provided as a built-in type as in ECMAScript 2015. Also see
-[sec:Asynchronous_Functions] for asynchronous functions.
+[sec:_asynchronous-functions] for asynchronous functions.
 
 === Iterator Interface
 task:IDE-1220[]
@@ -1671,7 +1670,7 @@ synonym for `equivalent`.]
 Let A, B, and C be defined as in the chapter beginning (math:[$C <: B <: A$])
 
 The following subtyping relations with union types are to be evaluated
-as follows footnote:[See Example <<_class-hierarchy>> for class definitions.]:
+as follows footnote:[See Example <<ex:class-hierarchy>> for class definitions.]:
 
 [source]
 ----
@@ -1931,7 +1930,7 @@ Let A, B, and C be defined as in the chapter beginning
 (math:[$C <: B <: A$])
 
 The following subtyping relations with intersection types are to be
-evaluated as follows footnote:[See Example <<_class-hierarchy>> for class definitions.]:
+evaluated as follows footnote:[See Example <<ex:class-hierarchy>> for class definitions.]:
 
 [source]
 ----
@@ -2333,6 +2332,7 @@ Consequences:
 * Overriding of static methods is possible and by using the constructor
 or classifier type, polymorphism for static methods is possible as well.
 +
+[[_polymorphism-and-static-methods]]
 .Static Polymorphism
 [example]
 ====

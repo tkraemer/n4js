@@ -127,7 +127,7 @@ defined type must not be inherited from math:[\[\begin{aligned}
 [example]
 --
 The following snippet demonstrates the effect of definition-site structural types by comparing them to
-nominal declared types: [[lst:Declaration Site Structural Typing]]
+nominal declared types: [[ex:declaration-site-structural-typing]]
 
 .Declaration Site Structural Typing
 [source,n4js,caption="Declaration Site Structural Typing"]

@@ -86,7 +86,7 @@ Autoboxing is not directly supported in N4JS. Instead, primitive types
 virtually have the same members as their corresponding object types. It
 is then possible to use the Autoboxing feature when calling a member.
 In general, Autoboxing is only supported for accessing built-in
-read-only (immutable) properties. For example, `"some string value".split(" ");` is supported but `"some string value".foo=1;` will be rejected as String does not allow properties to be added (cf. vs. , see <<_type-modifiers-dynamic,Dynamic Type Modifiers>>).
+read-only (immutable) properties. For example, `"some string value".split(" ");` is supported but `"some string value".foo=1;` will be rejected as String does not allow properties to be added (cf. vs. , see <<_dynamic,Dynamic Type Modifiers>>).
 
 Autoboxing often leads to problems, in particular in combination with
 dynamic types – this is why it is not directly supported in N4JS. For
@@ -191,7 +191,7 @@ enumeration value.
 task:IDE-161[] task:IDE-928[] (IDEBUG-56): Casting to TypeVars
 
 
-Type casts are expressed with the cast expression (`as`), see <<_as-expression,As Expression>> for details.
+Type casts are expressed with the cast expression (`as`), see <<_cast-as-expression,As Expression>> for details.
 
 We first define helper rules for the type cast constraints as follows:
 math:[\[\begin{aligned}

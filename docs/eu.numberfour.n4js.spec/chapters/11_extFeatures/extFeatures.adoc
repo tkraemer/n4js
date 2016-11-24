@@ -101,7 +101,7 @@ places:
 other places where variable declarations are allowed, e.g. plain for
 loops; called _destructuring binding_; see <<_variable-statement,Var Statement>>).
 * On the left-hand side of an assignment expression (the assignment
-expression is then called _destructuring assignment_; see <<Assignment_Expression>>).
+expression is then called _destructuring assignment_; see <<_assignment-expression>>).
 * In a `for..in` or `for..of` loop on the left side of the `in`/`of` (see <<_for-of-statement>>). +
 NOTE: It can also be used in plain statements, but then we actually have
 one of the above two use cases.
@@ -307,9 +307,8 @@ math:[$\exists DIC1,DIC2 : DIC1.\seq{binding}.\seq{key} \to DIC2.\seq{binding}.\
 
 NOTE: Although subtype notation math:[$<:$] is used here it does *not* imply actual subtype relations. It was used in this instance for of lack of formal notations for DI concepts and because this is similar to the Liskov Substitution principle.
 
-A complex Child-Parent relation between components is depicted in <<_fig:diagdicparentchild,DIC Parent Child diagram>> and <<_ex:complex-dicomponents-relations,Complex DIComponent Relations example>> below.
-
-[[fig:diagDICParentChild]]
+A complex Child-Parent relation between components is depicted in DIC Parent Child diagram and
+<<ex:complex-dicomponents-relations,Complex DIComponent Relations example>> below.
 
 image::fig/diagDICParentChild.png[title="Complex DIComponents Relations",align=center]
 
@@ -368,7 +367,7 @@ annotations and a method annotated with `@Provides`.
 _Binder_ is declared by annotating a class with the annotation.
 
 A _Binding_ is part of a configuration that defines which instance of
-what type should be injected into an _injection point_ (<<_n4js-di-injection-points,N4JS DI Injection Points>>) with an expected type.
+what type should be injected into an _injection point_ (<<_injection-points,N4JS DI Injection Points>>) with an expected type.
 
 _Provider Method_ is essentially a _factory method_ that is used to
 create an instance of a type. N4JS allows a developer to declare those
@@ -1166,7 +1165,7 @@ arguments::
   NO
 
 `@Inject` defines the injection point into which an instance object will be injected. The specific instance depends on the injector configuration (bindings)
-used. Class fields, methods and constructors can be annotated. See <<_n4js-di-injection-points>> for more information.
+used. Class fields, methods and constructors can be annotated. See <<_injection-points>> for more information.
 
 
 .DI Inject
@@ -1433,10 +1432,11 @@ module exist in the same project: math:[\[\begin{aligned}
 .Static polyfill
 [example]
 ====
-<<lst:StaticPolyfill_genMod>> shows an example of generated code. <<lst:StaticPolyfill_polyfillMod>> demonstrates the static polyfill.
+<<ex:staticpolyfill-genmod,Static Polyfill GenMod example>> shows an example of generated code. <<ex:staticpolyfill-polyfillmod,Static Polyfill Mod example>> demonstrates the static polyfill.
 Note that the containing project has two source folders configured:
 `Project/src/n4js` and `Project/src/n4js-gen`.
 
+[[ex:staticpolyfill-polyfillmod]]
 [source,n4js]
 ----
 @@StaticPolyfillAware
@@ -1452,7 +1452,7 @@ export public class B {
 
 
 
-[[lst:StaticPolyfill_genMod]]
+[[ex:staticpolyfill-genmod]]
 [source,n4js]
 ----
 @@StaticPolyfillModule

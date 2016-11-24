@@ -901,11 +901,11 @@ formatted file with the following structure:
 
 Properties files have the file extension `properties` and describe how
 to localize text in a project. They basically define keys
-<<_primitive-pathselector-I18nKey,Primitive Pathselector I18nKey>> with their
+<<_primitive-pathselector-and-i18nkey,Primitive Pathselector I18nKey>> with their
 values. The key is used during runtime to retrieve text localized to the
 user’s locale.
 
-=== Syntax [[N4 Deployment Descriptor Syntax]]
+=== Syntax [[n4-deployment-descriptor-syntax]]
 
 The syntax of a resource file is defined as:
 
