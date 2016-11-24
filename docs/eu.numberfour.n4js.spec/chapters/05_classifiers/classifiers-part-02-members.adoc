@@ -935,7 +935,7 @@ constructors. Annotating a constructor with this annotation, or its
 containing classifier, or both have all the same effect.
 .  Given a class math:[$C$] with an owned constructor
 math:[$ctor$] and a super class math:[$Sup$] that has a
-covariant constructor (owned or inherited, see ), then
+covariant constructor (owned or inherited, see <<covariant_constructor,Covariant Constructor>>), then
 ..  math:[$Sup.constructor$] must be accessible from
 math:[$C$],
 ..  math:[$ctor$] must be override compatible with
