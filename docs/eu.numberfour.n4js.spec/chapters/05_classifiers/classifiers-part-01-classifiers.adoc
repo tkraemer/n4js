@@ -234,7 +234,7 @@ Explicit constructor of a class (if any), see <<_constructor-and-classifier-type
 And we additionally define the following pseudo properties:
 
 `ctor`: ::
-Explicit or implicit constructor of a class, see .
+Explicit or implicit constructor of a class, see <<_constructor-and-classifier-type,Constructor>>.
 
 `fields`: ::
 Further derived properties for retrieving all methods (property
@@ -873,7 +873,6 @@ interface Consumer<in T> { // contravariance
 
 In such cases, the following constraints apply.
 
-//TODO Duplicated Req ID, continuing from 173
 .Definition-Site Variance
 [req,id=IDE-174,version=1]
 --

@@ -112,14 +112,14 @@ task:IDE-550[] task:IDE-551[]
 1.  No two members may have the same name, except one is static and the
 other is non-static:
 math:[$\forall m_1,m_2 \in C.ownedMembers, m_1\neq m_2: m_1.name\neq m_2.name \lor m_1.static\neq m_2.static$]
-2.  The member name must be a valid identifier name, see .
+2.  The member name must be a valid identifier name, see <<_identifier-names-and-identifiers,Identifier Grammar>>.
 
 --
 
-//TODO missing xref above
 
-Thus, over_loading_ of methods is not supported footnote:[In order to
-emulate method overloading, union types are to be used.] and no field
+
+Thus, over_loading_ of methods is not supported
+footnote:[In order to emulate method overloading, union types are to be used.] and no field
 may have the same name as a method. However, over_riding_ of methods,
 getters, and setters are possible, see <<_redefinition-of-members,Redefinition of Members>>. Static members may also have the same name as non-static members
 footnote:[ cite[ECMA15a(p214)], `ClassBody : ClassElementList` indicates that it is possible to have the same name for instance and static members.].
@@ -242,7 +242,7 @@ method must not be overridden in subclasses; see <<_final-methods,Final Methods>
 
 `declaresOverride` ::
 Flag set to true if annotation `@Overrides` is set. Flag indicates that method must
-override a method of a superclass; see , .
+override a method of a superclass; see <<_overriding-of-members,Overriding of Members>>.
 
 Additionally, we define the following pseudo properties:
 
@@ -517,7 +517,6 @@ cf. <<IDE-124,Access Super Member with Super Literal>>.
 In order to declare an interface to provide a default implementation in
 a definition file, annotation `@ProvidesDefaultImplementation` can be used, cf.
 <<IDE-167,External Class/Interface Members>>.
-//requirement
 
 When a method in an interface is provided with a default implementation,
 it may even be declared `@Final`, see <<_final-methods,Final Methods>>.
@@ -642,8 +641,8 @@ class A{
 Remarks:
 
 * The type of the formal parameter `this` refers to the
-structural field type, see for details on structural typing. It contains
-all public fields of the type.
+structural field type, see <<_structural-typing,Structural Typing>> for details on structural typing.
+It contains all public fields of the type.
 * Subclasses may override the constructor and introduce additional
 parameters. They have to call the super constructor explicitly, however,
 providing a parameter with at least all required attributes of the
@@ -765,7 +764,6 @@ public, non-static, non-optional writable fields,
 math:[$\nfjstilde i \nfjstilde\lstnfjs{this}$] constructor accepts
 those properties provided by an object literal which has the
 corresponding readble fields. These properties will be initialzed.
-// TODO: check if math above is necessary or if ~ this can be enclosed in backticks `
 
 --
 
@@ -1189,7 +1187,6 @@ keyword in the initializer expression of a constant field:
 math:[\[\begin{aligned}
     \nexists sub \in f.expr^*: sub="this"\end{aligned}\]]
 //*
-// TODO: fix syntax highlighting error above
 3.  A constant data field must not be annotated with `@Final`:
 math:[\[\begin{aligned}
     f.const \Rightarrow \lnot f.final\end{aligned}\]]
@@ -1891,8 +1888,6 @@ Consuming Field Initializers :: [[consuming-field-initializers]]
 Aside from the fields themselves, an implementor _always_ consumes the
 field initialization if the field is consumed – this is how the
 consumption is noticed at runtime.
-
-// TODO Example Block
 
 .Field and Field Initializer Consumption
 [example]

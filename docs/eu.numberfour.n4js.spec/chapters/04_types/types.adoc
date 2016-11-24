@@ -19,7 +19,7 @@ and used in N4JS.
 Besides standard JavaScript types, the following metatypes are
 introduced:
 
-* Classifiers, that is class or interface (see )
+* Classifiers, that is class or interface (see <<_classifiers,Classifiers>>)
 * Enum
 
 Classifiers, methods and functions may be declared generic.
@@ -573,7 +573,7 @@ The type arguments, may be empty.
 
 
 `definedTypingStrategy` ::
-Typing strategy, by default nominal, see for details
+Typing strategy, by default nominal, see <<_structural-typing,Structural Typing>> for details
 
 `structuralMembers` ::
 in case of structural typing, reference can add additional members to
@@ -1071,7 +1071,6 @@ math:[\[\begin{aligned} \infer{\type{string} <: \type{any}}{}\end{aligned}\]]
 It is supertype of the N4JS primitive type `pathselector`, and `i18nKey`.
 <<_primitive-pathselector-and-i18nkey,Primitive Pathselector and I18nKey>>
 
-// TODO: xref
 However, variables of type `string` can be auto-converted (coerced) to `string`, as described in <<_autoboxing-and-coercing,Autoboxing and coercing>>.
 
 === Primitive Number Type
@@ -1089,11 +1088,9 @@ math:[\[\begin{aligned} \infer{`number} <: `any}}{} \\\end{aligned}\]]
 
 However, variables of type `number` can be auto-converted (coerced) to `Number`, as
 described in <<_integer-literals,Integer Literals>> .
-//TODO: xref
 
 === Primitive Type int
 
-//TODO: xref
 Actually ECMAScript defines an internal type `int32`. A number of this type is
 returned by the binary or operation using zero as operand, e.g.
 ECMAScript’s internal type int32 can be represented in N4JS by a
@@ -1255,7 +1252,6 @@ The following types, derived from certain ECMAScript predefined objects
 and constructs, are supported by means of built-in types as they are
 required by certain expressions.
 
-// TODO: Fix Section
 
 *  `Object`   cite:[ECMA11a(p111)];
 *  `Function`  cite:[ECMA11a(p117)]; representing functions and function objects <<_function-type,Function Type>> but also methods (<<_methods,Methods>>)
@@ -1302,7 +1298,6 @@ For the time being, however, an instance of `Function` can be invoked, any numbe
 of arguments may be provided and the invocation may be parameterized
 with any number of type arguments (which will be ignored), i.e. 
 <<IDE-101,Function Call Constraints>> and <<IDE-102,Parameterized Function Call Constraints>> do not apply.
-//TODO: link requirements
 
 === Array Object Type
 
@@ -1367,7 +1362,7 @@ application in the loop with as little support for symbols as possible.
 === Promise
 
 `Promise` is provided as a built-in type as in ECMAScript 2015. Also see
-[sec:_asynchronous-functions] for asynchronous functions.
+<<_asynchronous-functions,Asynchronous Functions>> for asynchronous functions.
 
 === Iterator Interface
 task:IDE-1220[]
@@ -1873,10 +1868,9 @@ is contained in the intersection type task:IDE-2302[].
 math:[$ \forall T \in I.typeRefs \to \lnot T.opt  $]
 --
 
-// TODO fix Duplicated Req ID
-//.Intersection Type Subtyping Rules
-//[req,id=IDE-26,version=1]
-//--
+.Intersection Type Subtyping Rules
+[req,id=IDE-175,version=1]
+--
 Let math:[$I$] be an intersection type.
 
 * An intersection type is a subtype of another type, if at least one of
@@ -1895,7 +1889,7 @@ math:[\[\begin{aligned} \infer{S <: I}{\forall T \in I.typeRefs: S <: T} \end{al
 
 * Non-optional elements:
 math:[$ \forall T \in I.typeRefs \to \lnot T.opt  $]
-//--
+--
 
 .Implicit simplification of intersection types
 [req,id=IDE-28,version=1]
@@ -2125,8 +2119,6 @@ math:[\[\begin{aligned}
     \end{aligned}\]]
 --
 
-
-// TODO check nesting of lists below
 Remarks on union type’s members:
 
 * Fields of the same type are merged to a composed field with the same

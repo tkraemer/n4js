@@ -73,7 +73,6 @@ Also see cite:[West06a] and cite:[MozillaJSRef(https://developer.mozilla.org/en-
 Regarding the location where `this` may be used, the following restrictions
 apply:
 
-//TODO Duplicated Requirement ID, begging from 172...
 .Valid location for this literal
 [req,id=IDE-173,version=1]
 --
@@ -212,7 +211,6 @@ with the `new` operator. If a function is known to be invoked with an explicit
 math:[$thisArg$] (`apply()` etc.), the `@This` annotation can be used to explicitly set the this type. This annotation has precedence over otherwise
 inferred bindings. task:IDE-1010[]
 
-// TODO: Duplicated Requirement ID
 .Type Inference Heuristic for This-Keyword
 [req,id=IDE-90,version=1]
 --
@@ -451,8 +449,6 @@ parameter, variable defined in a function’s closure), or to a property
 of an object. The latter case is known as property access as further
 described in <<_property-accessors,Property Accessors>>.
 
-//TODO - fix math
-
 .Read Access to Identifier
 [req,id=IDE-93,version=1]
 --
@@ -520,8 +516,6 @@ numbers, so all values above `0x7fffffff` and `017777777777` lie outside the ran
 See below for further elaboration.
 
 There are differences to numeric literals in Java:
-
-//TODO: fix table
 
 [cols="2m,2e,1m,2e,1m"]
 |===
@@ -1412,7 +1406,8 @@ enum UnaryOperator: delete | void | typeof | inc='++' | dec='--' | pos='+' | neg
 
 ==== Semantics [[unary-expression-semantics]]
 
-For semantics of the delete operator, see also cite:[MozillaJSRef(https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Operators/delete)]
+For semantics of the delete operator, see also
+cite:[MozillaJSRef(https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Operators/delete)]
 
 .Delete Operator Constraints
 [req,id=IDE-104,version=1]
@@ -1498,7 +1493,6 @@ The following operators have fixed types independent of their operand
 types:
 task:IDE-244[] task:IDE-345[]
 
-// TODO: fix math
 ----
 math:[\[\begin{aligned}
 &\infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{}     \tag{\S 11.4.1}\\
@@ -2410,4 +2404,4 @@ exceptions thrown at the cast until later when accessing properties
 which may not be present in case of a failed cast.
 
 An error is issued if the cast is either unnecessary or cannot succeed.
-See further details in .
+See further details in <<_type-cast,Type Cast>>.

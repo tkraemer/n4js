@@ -81,9 +81,8 @@ image::fig/cmpd_component_content.png[title="Content of a Component"]
 
 
 Different N4JS component types are described in this section. At compile
-time and runtime, dependent components have to be available. This is the
-responsibility of the user interface ( or ) and described in the
-specification.
+time and runtime, dependent components have to be available.
+This is the responsibility of the user interface (<<AC,IDE>> or <<AC,CLI>>) and described in the <<AC,N4IDE>> specification.
 
 === Apps
 
@@ -724,8 +723,6 @@ E.providedRTLibs^* & = E.providedRTLibs \\
                     & \bigcup_{ES \in E.extendedRTEnvs} ES.E.providedRTLibs^*\end{aligned}\]]
 
 ////
-
-// TODO - fix math
 --
 
 
@@ -779,11 +776,11 @@ declaration, or N4 type declaration defined and exported by another
 module into the current module under the given alias (which is similar
 to the original name if no alias is defined). The name of the module is
 its project’s source folder’s relative path without any extension, see
-for details.
+<<_qualified-names,Qualified Names>> for details.
 
 This are the properties of script, which can be specified by the user:
 
-Arbitrary annotations, see and below for details.
+Arbitrary annotations, see <<_annotations,Annotations>> and below for details.
 
 The content of the script.
 

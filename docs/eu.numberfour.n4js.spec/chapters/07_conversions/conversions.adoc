@@ -336,7 +336,6 @@ var x = new Sub();
 
 `typeof x` will simply return `object`. The following table shows the difference between plain JavaScript `instanceof` and N4JS’s `instanceof`:
 
-// TODO :fix table
 
 [cols="<m,^m,^m"]
 |===

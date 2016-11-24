@@ -264,8 +264,8 @@ A Parent-Child relation can be established between two DIComponents.
 Child DIComponents use the parent bindings but can also be configured
 with their own bindings or _change_ targets used by a parent. The final
 circumstance is local to the child and is referred to as __rebinding__.
-For more information about bindings see . A Child-Parent relation is
-expressed by the annotation attached to a given DIComponent. When this
+For more information about bindings see <<_binders-and-bindings,N4JS Binder and Bindings>>.
+A Child-Parent relation is expressed by the annotation attached to a given DIComponent. When this
 relation is defined between DIComponents, the user needs to take care to
 preserve the proper relation between injectors. In other words, the user
 must provide an instance of the parent injector (the injector of the
@@ -1104,8 +1104,8 @@ arguments are optional::
   NO
 
 Defines _binding_ between type and subtype that will be used by injector
-when configured with target . See also for description of injectable
-types.
+when configured with target <<_n4js-di-binder,DI Binder>>.
+See also <<_validation-of-callsites-targeting-n4injector-methods,Callsites>> for description of injectable types.
 
 
 .DI Bind

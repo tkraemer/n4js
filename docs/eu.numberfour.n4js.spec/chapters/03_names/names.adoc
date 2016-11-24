@@ -166,8 +166,6 @@ themselves in the concrete syntax of the N4JS file. Types that do not
 have to be written to concrete syntax may be used even if they are
 generally not accessible. This is illustrated by the following example:
 
-// TODO Example
-
 .Implicit, allowed type references in N4JS
 [example]
 
@@ -229,7 +227,6 @@ As with the type access modifiers, not all member access modifiers are
 available in N4JS. Instead, they are synthesized from different
 construct as shown in the next example.
 
-// TODO Example Block
 
 .Synthesized Member Access Modifiers in N4JS
 [example]
@@ -368,7 +365,7 @@ within a module.
 // TODO {Rework visibility concept for private members. If private members are hidden with symbols an overriding is not possible, even in the same module.}
 --
 
-// Example
+
 .Type and Member Access Modifiers
 [example]
 ====
