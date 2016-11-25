@@ -28,23 +28,16 @@ import org.eclipse.xtext.util.IResourceScopeCache
 class N4JSXUnsupportedExpressionTypeHelper extends DefaultUnsupportedExpressionTypeHelper {
 	@Inject
 	ReactLookupHelper reactLookupHelper;
-	
-	private static val REACT_ELEMENT = "react.Element";
-	
-	@Inject
-	private IResourceScopeCache resourceScopeCacheHelper;
-	
+		
 	override typeExpression(Expression expression, RuleEnvironment G) {
 		if (expression instanceof JSXElement) {
-			val classifierReactElement = resourceScopeCacheHelper.get(REACT_ELEMENT, expression.eResource, [
-				val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
-				return reactLookupHelper.lookUpReactClassifier(expression, reference, "Element", "react");
-			]);
+			val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
+			val classifierReactElement = reactLookupHelper.lookUpReactClassifier(expression, reference, "Element", "react");
 			
 			if (classifierReactElement===null) {
 				throw new IllegalStateException("React.Element not found");
 			}
-			val typeRef = TypeUtils.createTypeRef(classifierReactElement as TClassifier)
+			val typeRef = TypeUtils.createTypeRef(classifierReactElement)
 			return typeRef
 		} else {
 			return super.typeExpression(expression, G)
