@@ -13,8 +13,11 @@ package eu.numberfour.n4jsx.validation;
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
+import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.utils.TypeUtils
@@ -27,6 +30,8 @@ import eu.numberfour.n4jsx.n4JSX.JSXElement
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
+
+import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
  * Validation of names, cf N4JS Spec, Chapter 3.4., Constraints 3 and 4
@@ -71,9 +76,16 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 		}
 
 		if (ie !== null && ie.eContainer() !== null) {
+			val G = ie.newRuleEnvironment 
+			val r = ts.type(G, ie)
+			val tr = r.value
+			
+			if (tr === null)
+				return
+						
 			var classOrFunction = false;
-			var isFunction = ie instanceof TFunction;
-			var isClass = ie instanceof TClass;
+			var isFunction = tr instanceof FunctionTypeExpression || tr instanceof FunctionTypeRef;
+			var isClass = tr instanceof TypeTypeRef && (tr as TypeTypeRef).constructorRef;
 			classOrFunction = isFunction || isClass;
 			val name = ie.getName();
 			if (!classOrFunction) {
@@ -84,11 +96,12 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 
 			if (isFunction) {
 				// Check if the function conforms to React functional component, i.e. its return type is Element
-				val tfunction = ie as TFunction
+				val tfunction = tr.declaredType as TFunction
+				
 				if (tfunction.returnTypeRef instanceof ParameterizedTypeRef) {
 					val typeRef = tfunction.returnTypeRef as ParameterizedTypeRef
 
-					val G = RuleEnvironmentExtensions.newRuleEnvironment(jsxElem);
+					//val G = RuleEnvironmentExtensions.newRuleEnvironment(jsxElem);
 					val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
 					val elementClassTypeRef = reactLookupHelper.lookUpReactClassifier(jsxElem, reference, "Element", "react")
 					if (elementClassTypeRef === null)
@@ -107,7 +120,7 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 				val tclass = ie as TClass
 				val tclassTypeRef = TypeUtils.createTypeRef(tclass);
 
-				val G = RuleEnvironmentExtensions.newRuleEnvironment(jsxElem);
+				val G2 = RuleEnvironmentExtensions.newRuleEnvironment(jsxElem);
 				val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
 				val componentClassTypeRef = reactLookupHelper.lookUpReactClassifier(jsxElem, reference, "Component", "react")
 				if (componentClassTypeRef === null)
