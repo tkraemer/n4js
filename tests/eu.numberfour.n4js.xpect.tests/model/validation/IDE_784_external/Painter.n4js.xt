@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSSpectTest 
+/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
 
 	ResourceSet {
 		ThisFile {}
