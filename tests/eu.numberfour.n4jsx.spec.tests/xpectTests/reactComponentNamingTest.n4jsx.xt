@@ -36,6 +36,7 @@ class c extends React.Component<Object, Object> {
 class D extends React.Component<Object, Object> {
 	@Override
 	public render(): React.Element {
-		return <img/>
+		//XPECT noerrors
+		return <button/>
 	}
 }

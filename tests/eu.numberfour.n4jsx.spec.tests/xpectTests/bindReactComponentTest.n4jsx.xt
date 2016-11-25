@@ -13,7 +13,10 @@ import * as React from "react"
 
 const A = 10;
 
-//XPECT errors --> "A is a used as a React component but is neither function nor class." at "A"
+//XPECT errors ---
+//"A is a used as a React component but is neither function nor class." at "A"
+//"JSX element A does not bind to any valid React component." at "A"
+//---
 var a = <A/>
 console.log(a)
 

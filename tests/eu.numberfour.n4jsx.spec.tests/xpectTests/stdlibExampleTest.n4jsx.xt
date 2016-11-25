@@ -1,25 +1,55 @@
-/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpectTest
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
 	ResourceSet {
 		ThisFile {}
+		File "Blob.n4jsd" {}
+		File "ClientRect.n4jsd" {}
+		File "ClipboardEvent.n4jsd" {}
+		File "console.n4jsd" {}
+		File "CSSStyleDeclaration.n4jsd" {}
+		File "Document.n4jsd" {}
+		File "DOMTokenList.n4jsd" {}
+		File "Element.n4jsd" {}
+		File "Event.n4jsd" {}
+		File "EventTarget.n4jsd" {}
+		File "FormData.n4jsd" {}
+		File "HTMLCanvasElement.n4jsd" {}
+		File "HTMLDialogElement.n4jsd" {}
+		File "HTMLElement.n4jsd" {}
+		File "HTMLInputElement.n4jsd" {}
+		File "KeyboardEvent.n4jsd" {}
+		File "Location.n4jsd" {}
+		File "MouseEvent.n4jsd" {}
+		File "NamedNodeMap.n4jsd" {}
+		File "Navigator.n4jsd" {}
+		File "Node.n4jsd" {}
+		File "NodeList.n4jsd" {}
+
 		File "react.n4jsd" {}
+		File "react-dom.n4jsd" {}
 	}
+
     END_SETUP
 */
+
+
+import * as React from "react"
+import * as ReactDOM from "react-dom"
 
 class ~Props  {
 	public myProp: string;
 }
 
-function PureFnComponent(props: Props) {
+function PureFnComponent(props: Props): React.Element {
 	return (<div>{props.myProp}</div>);
 }
 
 //XPECT noerrors
 var a = <PureFnComponent myProp="This is my prop"/>
 
-class LowerComponent extends Component<~Object with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
-	constructor() {
-	    super();
+class LowerComponent extends React.Component<~Object with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
+	public constructor(props: ~Object with {whatTextShouldIShow : string}) {
+	    super(props);
 	    this.state = {
 	      //XPECT noerrors
 	      squares: new Array<string>(9)
@@ -31,17 +61,17 @@ class LowerComponent extends Component<~Object with {whatTextShouldIShow : strin
   	}
 
 	@Override
-	public render() {
+	public render(): React.Element {
 		//XPECT noerrors
 		return (<div>{this.props.whatTextShouldIShow}</div>);
 	}
 }
 
 class MyComponent extends
-	Component<~Object with {aProp: string}, String> {
+	React.Component<~Object with {aProp: string}, String> {
 
 	@Override
-	public render() {
+	public render(): React.Element {
 		const constText = "some text";
 		//XPECT noerrors
 		return (<LowerComponent whatTextShouldIShow="Hallo">{constText}</LowerComponent>
@@ -50,10 +80,10 @@ class MyComponent extends
 }
 
 class MyHigherLevelComponent extends
-	Component<~Object with {someCondition: Number}, ~Object with {aStateProp: Boolean}> {
+	React.Component<~Object with {someCondition: Number}, ~Object with {aStateProp: Boolean}> {
 
 	@Override
-	public render() {
+	public render(): React.Element {
 		let d = this.state.aStateProp;
 		//XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'simplePropForMyComponent'." at "simplePropForMyComponent"
 		return (<MyComponent aProp={5} simplePropForMyComponent={
@@ -68,12 +98,4 @@ class MyHigherLevelComponent extends
 	}
 }
 
-var wrongTypeComponent = 10;
-
-//XPECT errors --> "Type wrongTypeComponent is no valid react element type." at "wrongTypeComponent"
-<wrongTypeComponent/>;
-//XPECT noerrors
-<PossibleRuntimeComponent/>
-
-//React.render(MyHigherLevelComponent, document.getElementById("#rootDomNode"));
-
+ReactDOM.render(<MyHigherLevelComponent/>, document.getElementById("#rootDomNode"));

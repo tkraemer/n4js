@@ -12,7 +12,7 @@ import * as React from "react"
 
 function A(props: ~Object with {message: string}): React.Element {
 	return (
-		//XPECT errors --> "JSX element Div do not bind to any valid React component." at "Div"
+		//XPECT errors --> "JSX element Div does not bind to any valid React component." at "Div"
 		<Div message="Hello"/>
 	);
 }
@@ -27,7 +27,7 @@ function B(props: ~Object with {message: string}): React.Element {
 
 function C(props: ~Object with {message: string}): React.Element {
 	return (
-		//XPECT warnings --> "Tag blah is not a valid HTML tag." at "blah"
+		//XPECT warnings --> "Tag blah is an unknown HTML tag." at "blah"
 		<blah message="Hello"/>
 	);
 }

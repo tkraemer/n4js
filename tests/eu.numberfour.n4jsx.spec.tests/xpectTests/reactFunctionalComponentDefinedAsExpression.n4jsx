@@ -32,10 +32,10 @@
     END_SETUP
 */
 
-import * as React from "react";
+//import * as React from "react";
 
-const MyComp = (props: ~Object with {bar: string}): React.Element => {
-	return <div foo={props.bar} />
-};
+//const MyComp = (props: ~Object with {bar: string}): React.Element => {
+//	return <div foo={props.bar} />
+//};
 
-<MyComp bar="Hello"/>
+//<MyComp bar="Hello"/>
