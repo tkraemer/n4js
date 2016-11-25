@@ -57,6 +57,7 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 		val elemName = jsxElem.getJsxElementName();
 		val expr = elemName.getExpression();
 
+		//TODO: Handle property access case
 		if (!(expr instanceof IdentifierRef)) {
 			return;
 		}
@@ -80,8 +81,6 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 				addIssue(message, expr, IssueCodes.REACT_ELEMENT_NOT_FUNCTION_OR_CLASS_ERROR);
 				return
 			}
-			
-			
 
 			if (isFunction) {
 				// Check if the function conforms to React functional component, i.e. its return type is Element

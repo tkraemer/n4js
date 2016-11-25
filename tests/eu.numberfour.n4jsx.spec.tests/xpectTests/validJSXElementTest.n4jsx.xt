@@ -1,0 +1,33 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "react.n4jsd" {}
+	}
+
+	END_SETUP
+*/
+
+import * as React from "react"
+
+function A(props: ~Object with {message: string}): React.Element {
+	return (
+		//XPECT errors --> "JSX element Div do not bind to any valid React component." at "Div"
+		<Div message="Hello"/>
+	);
+}
+
+
+function B(props: ~Object with {message: string}): React.Element {
+	return (
+		//XPECT noerrors
+		<div message="Hello"/>
+	);
+}
+
+function C(props: ~Object with {message: string}): React.Element {
+	return (
+		//XPECT warnings --> "Tag blah is not a valid HTML tag." at "blah"
+		<blah message="Hello"/>
+	);
+}
