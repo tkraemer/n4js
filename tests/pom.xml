@@ -94,9 +94,6 @@ Contributors:
 
 		<!-- *************************************** Tests testing the test helpers -->
 		<module>/eu.numberfour.n4js.test.helpers.tests</module>
-
-		<!-- *************************************** Headless Tools Tests -->
-		<module>eu.numberfour.n4js.hlc.tests</module>
 		
 		<!-- *************************************** Headless Tools Tests -->
 		<module>eu.numberfour.n4js.hlc.tests</module>
