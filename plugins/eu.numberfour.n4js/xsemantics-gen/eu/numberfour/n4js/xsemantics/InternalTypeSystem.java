@@ -31,6 +31,7 @@ import eu.numberfour.n4js.n4JS.ExpressionStatement;
 import eu.numberfour.n4js.n4JS.ForStatement;
 import eu.numberfour.n4js.n4JS.FormalParameter;
 import eu.numberfour.n4js.n4JS.FunctionDefinition;
+import eu.numberfour.n4js.n4JS.FunctionExpression;
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor;
 import eu.numberfour.n4js.n4JS.GetterDeclaration;
 import eu.numberfour.n4js.n4JS.IdentifierRef;
@@ -39,6 +40,7 @@ import eu.numberfour.n4js.n4JS.IntLiteral;
 import eu.numberfour.n4js.n4JS.LocalArgumentsVariable;
 import eu.numberfour.n4js.n4JS.MultiplicativeExpression;
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration;
+import eu.numberfour.n4js.n4JS.N4ClassExpression;
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition;
 import eu.numberfour.n4js.n4JS.N4EnumLiteral;
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration;
@@ -137,6 +139,7 @@ import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
 import eu.numberfour.n4js.typesystem.StructuralTypingResult;
 import eu.numberfour.n4js.typesystem.TypeSystemErrorExtensions;
 import eu.numberfour.n4js.typesystem.TypeSystemHelper;
+import eu.numberfour.n4js.typesystem.UnsupportedExpressionTypeHelper;
 import eu.numberfour.n4js.typesystem.VersionResolver;
 import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import eu.numberfour.n4js.utils.N4JSLanguageUtils;
@@ -313,6 +316,12 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   public final static String TYPECOMMAEXPRESSION = "eu.numberfour.n4js.xsemantics.TypeCommaExpression";
   
   public final static String TYPECASTEXPRESSION = "eu.numberfour.n4js.xsemantics.TypeCastExpression";
+  
+  public final static String TYPEN4CLASSEXPRESSION = "eu.numberfour.n4js.xsemantics.TypeN4ClassExpression";
+  
+  public final static String TYPEFUNCTIONEXPRESSION = "eu.numberfour.n4js.xsemantics.TypeFunctionExpression";
+  
+  public final static String TYPEUNSUPPORTEDEXPRESSION = "eu.numberfour.n4js.xsemantics.TypeUnsupportedExpression";
   
   public final static String TYPEVARIABLEDECLARATION = "eu.numberfour.n4js.xsemantics.TypeVariableDeclaration";
   
@@ -495,6 +504,9 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   @Inject
   private VersionResolver versionResolver;
   
+  @Inject
+  private UnsupportedExpressionTypeHelper expressionTypeHelper;
+  
   private PolymorphicDispatcher<Result<TypeRef>> typeDispatcher;
   
   private PolymorphicDispatcher<Result<Boolean>> subtypeDispatcher;
@@ -608,6 +620,14 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   public void setVersionResolver(final VersionResolver versionResolver) {
     this.versionResolver = versionResolver;
+  }
+  
+  public UnsupportedExpressionTypeHelper getExpressionTypeHelper() {
+    return this.expressionTypeHelper;
+  }
+  
+  public void setExpressionTypeHelper(final UnsupportedExpressionTypeHelper expressionTypeHelper) {
+    this.expressionTypeHelper = expressionTypeHelper;
   }
   
   public Result<TypeRef> type(final TypableElement element) {
@@ -3223,6 +3243,86 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     TypeRef T = null; // output parameter
     TypeRef _targetTypeRef = e.getTargetTypeRef();
     T = _targetTypeRef;
+    return new Result<TypeRef>(T);
+  }
+  
+  protected Result<TypeRef> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final N4ClassExpression e) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<TypeRef> _result_ = applyRuleTypeN4ClassExpression(G, _subtrace_, e);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("typeN4ClassExpression") + stringRepForEnv(G) + " |- " + stringRep(e) + " : " + stringRep(_result_.getFirst());
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleTypeN4ClassExpression) {
+    	typeThrowException(ruleName("typeN4ClassExpression") + stringRepForEnv(G) + " |- " + stringRep(e) + " : " + "TypeRef",
+    		TYPEN4CLASSEXPRESSION,
+    		e_applyRuleTypeN4ClassExpression, e, new ErrorInformation[] {new ErrorInformation(e)});
+    	return null;
+    }
+  }
+  
+  protected Result<TypeRef> applyRuleTypeN4ClassExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final N4ClassExpression e) throws RuleFailedException {
+    TypeRef T = null; // output parameter
+    Result<TypeRef> _applyRuleTypeTypeDefiningElement = this.applyRuleTypeTypeDefiningElement(G, _trace_, e);
+    TypeRef _value = _applyRuleTypeTypeDefiningElement.getValue();
+    T = _value;
+    return new Result<TypeRef>(T);
+  }
+  
+  protected Result<TypeRef> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FunctionExpression e) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<TypeRef> _result_ = applyRuleTypeFunctionExpression(G, _subtrace_, e);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("typeFunctionExpression") + stringRepForEnv(G) + " |- " + stringRep(e) + " : " + stringRep(_result_.getFirst());
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleTypeFunctionExpression) {
+    	typeThrowException(ruleName("typeFunctionExpression") + stringRepForEnv(G) + " |- " + stringRep(e) + " : " + "TypeRef",
+    		TYPEFUNCTIONEXPRESSION,
+    		e_applyRuleTypeFunctionExpression, e, new ErrorInformation[] {new ErrorInformation(e)});
+    	return null;
+    }
+  }
+  
+  protected Result<TypeRef> applyRuleTypeFunctionExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FunctionExpression e) throws RuleFailedException {
+    TypeRef T = null; // output parameter
+    Result<TypeRef> _applyRuleTypeTypeDefiningElement = this.applyRuleTypeTypeDefiningElement(G, _trace_, e);
+    TypeRef _value = _applyRuleTypeTypeDefiningElement.getValue();
+    T = _value;
+    return new Result<TypeRef>(T);
+  }
+  
+  protected Result<TypeRef> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Expression e) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<TypeRef> _result_ = applyRuleTypeUnsupportedExpression(G, _subtrace_, e);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("typeUnsupportedExpression") + stringRepForEnv(G) + " |- " + stringRep(e) + " : " + stringRep(_result_.getFirst());
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleTypeUnsupportedExpression) {
+    	typeThrowException(ruleName("typeUnsupportedExpression") + stringRepForEnv(G) + " |- " + stringRep(e) + " : " + "TypeRef",
+    		TYPEUNSUPPORTEDEXPRESSION,
+    		e_applyRuleTypeUnsupportedExpression, e, new ErrorInformation[] {new ErrorInformation(e)});
+    	return null;
+    }
+  }
+  
+  protected Result<TypeRef> applyRuleTypeUnsupportedExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Expression e) throws RuleFailedException {
+    TypeRef T = null; // output parameter
+    TypeRef _typeExpression = this.expressionTypeHelper.typeExpression(e, G);
+    T = _typeExpression;
     return new Result<TypeRef>(T);
   }
   

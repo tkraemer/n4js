@@ -74,6 +74,10 @@ Contributors:
 		<!-- npm exporter -->
 		<module>eu.numberfour.n4js.npmexporter</module>
 		<module>eu.numberfour.n4js.npmexporter.ui</module>
+		<!-- n4jsx language -->
+		<module>eu.numberfour.n4jsx</module>
+		<module>eu.numberfour.n4jsx.model</module>
+		<module>eu.numberfour.n4jsx.ui</module>
 		
 	</modules>
 

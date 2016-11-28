@@ -36,6 +36,7 @@ Contributors:
 		<module>eu.numberfour.n4js.ts.tests.helper</module>
 		<module>eu.numberfour.n4js.ts.ui.tests.helper</module>
 		<module>eu.numberfour.n4js.tester.tests.helper</module>
+		<module>eu.numberfour.n4jsx.tests.helper</module>
 	</modules>
 
 </project>

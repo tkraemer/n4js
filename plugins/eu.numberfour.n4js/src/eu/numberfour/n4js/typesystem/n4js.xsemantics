@@ -78,6 +78,7 @@ import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.ForStatement
 import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDefinition
+import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.GetterDeclaration
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.IndexedAccessExpression
@@ -85,6 +86,7 @@ import eu.numberfour.n4js.n4JS.IntLiteral
 import eu.numberfour.n4js.n4JS.LocalArgumentsVariable
 import eu.numberfour.n4js.n4JS.MultiplicativeExpression
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
+import eu.numberfour.n4js.n4JS.N4ClassExpression
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition
 import eu.numberfour.n4js.n4JS.N4EnumLiteral
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
@@ -172,6 +174,7 @@ import eu.numberfour.n4js.ts.utils.TypeHelper
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesbuilder.N4JSFunctionDefinitionTypesBuilder
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.typesystem.UnsupportedExpressionTypeHelper
 import eu.numberfour.n4js.typesystem.VersionResolver
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
@@ -200,6 +203,7 @@ inject MemberScopingHelper memberScopingHelper
 inject PromisifyHelper promisifyHelper
 inject JavaScriptVariantHelper jsVariantHelper
 inject VersionResolver versionResolver
+inject UnsupportedExpressionTypeHelper expressionTypeHelper
 
 judgments {
 
@@ -1030,6 +1034,33 @@ from {
 	T = e.targetTypeRef
 }
 
+/* This is needed to remove the ambiguity:
+ * N4ClassExpression is both a TypeDefininingElement and an Expression,
+ * thus the dispatcher needs the exact type.
+ * (same pattern as rules upperBoundFunctionTypeRef, lowerBoundFunctionTypeRef)
+ */
+ rule typeN4ClassExpression
+ 	G |- N4ClassExpression e: TypeRef T
+ from {
+ 	T = this.applyRuleTypeTypeDefiningElement(G, _trace_, e).value;
+}
+
+/* This is needed to remove the ambiguity:
+ * FunctionExpression is both a TypeDefininingElement and an Expression,
+ * thus the dispatcher needs the exact type.
+ * (same pattern as rules upperBoundFunctionTypeRef, lowerBoundFunctionTypeRef)
+ */
+ rule typeFunctionExpression
+ 	G |- FunctionExpression e: TypeRef T
+ from {
+ 	T = this.applyRuleTypeTypeDefiningElement(G, _trace_, e).value;
+}
+
+rule typeUnsupportedExpression
+	G |- Expression e: TypeRef T
+from {
+	T = expressionTypeHelper.typeExpression(e, G)
+}
 
 /* ----------------------------------------------------------------------
  * AST nodes: statements

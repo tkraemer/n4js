@@ -23,7 +23,7 @@ import eu.numberfour.n4js.n4JS.StringLiteral;
 import eu.numberfour.n4js.utils.ResourceType;
 
 /**
- *
+ * This enum represents various JS variants
  */
 public enum JavaScriptVariant {
 

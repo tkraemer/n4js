@@ -1,0 +1,62 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "Blob.n4jsd" {}
+		File "ClientRect.n4jsd" {}
+		File "ClipboardEvent.n4jsd" {}
+		File "console.n4jsd" {}
+		File "CSSStyleDeclaration.n4jsd" {}
+		File "Document.n4jsd" {}
+		File "DOMTokenList.n4jsd" {}
+		File "Element.n4jsd" {}
+		File "Event.n4jsd" {}
+		File "EventTarget.n4jsd" {}
+		File "FormData.n4jsd" {}
+		File "HTMLCanvasElement.n4jsd" {}
+		File "HTMLDialogElement.n4jsd" {}
+		File "HTMLElement.n4jsd" {}
+		File "HTMLInputElement.n4jsd" {}
+		File "KeyboardEvent.n4jsd" {}
+		File "Location.n4jsd" {}
+		File "MouseEvent.n4jsd" {}
+		File "NamedNodeMap.n4jsd" {}
+		File "Navigator.n4jsd" {}
+		File "Node.n4jsd" {}
+		File "NodeList.n4jsd" {}
+
+		File "react.n4jsd" {}
+		File "react-dom.n4jsd" {}
+	}
+
+    END_SETUP
+*/
+import * as React from "react"
+
+class Board extends
+	React.Component<~Object with {gameName: string},
+			  ~Object with {squares: Array<string>}> {
+
+	public f() {
+	    this.state = {
+	      //XPECT noerrors
+	      squares: new Array<string>(9),
+	      someNonExistingField: 10
+	    };
+	    //XPECT noerrors
+	    if (this.state.squares.length == 1) {
+
+	    }
+
+		//XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'someNonExistingField'." at "someNonExistingField"
+	    if (this.state.someNonExistingField == 2) {
+
+	    }
+
+  	}
+
+	@Override
+	public render() : React.Element {
+		return (<div>{this.props.gameName}</div>);
+	}
+}

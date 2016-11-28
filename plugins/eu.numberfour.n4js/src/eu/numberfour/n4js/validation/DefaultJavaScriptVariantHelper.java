@@ -13,7 +13,7 @@ package eu.numberfour.n4js.validation;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- *
+ * This class defines validation features for N4JS language
  */
 public class DefaultJavaScriptVariantHelper implements JavaScriptVariantHelper {
 
