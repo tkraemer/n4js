@@ -47,7 +47,6 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.typeRefs.Wildcard
-import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.MemberAccessModifier
 import eu.numberfour.n4js.ts.types.TAnnotableElement
@@ -77,6 +76,7 @@ import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*
+
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
@@ -336,7 +336,7 @@ class N4JSLanguageUtils {
 			if(parent!==null) {
 				var Variance vFactor = null;
 				// case #1: curr is nested in parent's type arguments
-				val parentDeclType = parent.declaredType as ContainerType<?>;
+				val parentDeclType = parent.declaredType;
 				val parentTypeArgs = parent.typeArgs;
 				val parentTypeArgsSize = parentTypeArgs.size;
 				for(var idx=0;vFactor===null && idx<parentTypeArgsSize;idx++) {
