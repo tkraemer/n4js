@@ -21,7 +21,11 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.eclipse.xtext.junit4,
  eu.numberfour.n4js.tests.helper,
  org.xpect.xtext.lib;bundle-version="0.1.0",
- eu.numberfour.n4jsx.ui;bundle-version="0.0.1"
+ eu.numberfour.n4jsx.ui,
+ eu.numberfour.n4js.n4mf.ui,
+ eu.numberfour.n4js.ui,
+ eu.numberfour.n4js.regex.ui,
+ eu.numberfour.n4js.ts.ui
 Import-Package: org.apache.log4j,
  org.hamcrest.core,
  org.junit;version="4.5.0",

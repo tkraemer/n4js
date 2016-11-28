@@ -10,9 +10,11 @@ import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFunction
+import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.utils.ContainerTypesHelper
+import eu.numberfour.n4jsx.helpers.ReactLookupHelper
 import eu.numberfour.n4jsx.n4JSX.JSXElement
 import eu.numberfour.n4jsx.n4JSX.JSXElementName
 import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute
@@ -31,10 +33,14 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 
 	@Inject MemberScopingHelper memberScopingHelper
 
+	@Inject
+	private ReactLookupHelper reactHelper;
+
 	@Override
 	override getScope(EObject context, EReference reference) {
 		if (reference == N4JSXPackage.Literals.JSX_PROPERTY_ATTRIBUTE__PROPERTY) {
 			if (context instanceof JSXPropertyAttribute) {
+				// Define scoping for attributes of JSX Elements
 				var expr = (context.eContainer as JSXElement).jsxElementName.expression
 				// TODO: Extend this to cover ParameterizedPropertyAccess as well
 				if (expr instanceof IdentifierRef) {
@@ -42,8 +48,9 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 						// React component is defined as a class
 						var tclass = expr.id as TClass
 						val memberCollector = containerTypesHelper.fromContext(tclass)
-						val propsFieldT = memberCollector.findMember(tclass, "props", true, false);
-						if (propsFieldT instanceof TField) {
+						val propsFieldT = memberCollector.findMember(tclass, "props", false, false);
+						
+						if (propsFieldT instanceof TField || propsFieldT instanceof TGetter) {
 							val G = propsFieldT.newRuleEnvironment;
 							var typeRefRaw = ts.tau(propsFieldT, TypeUtils.createTypeRef(tclass))
 							// take upper bound to get rid of ExistentialTypeRefs, ThisTypeRefs, etc.
@@ -55,19 +62,23 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 								staticAccess);
 						}
 					} else if (expr.id instanceof TFunction) {
-						// React component is defined as a function
+						// React component is defined as a functional component
 						val tfunction = expr.id as TFunction
-						if (tfunction.fpars.length == 1 && tfunction.fpars.get(0).name == "props") {
-							val propsParamT = tfunction.fpars.get(0)	
+						if (tfunction.fpars.length > 0) {
+							val propsParamT = tfunction.fpars.get(0)
 							val checkVisibility = false;
 							return memberScopingHelper.createMemberScopeFor(propsParamT.typeRef, context,
 								checkVisibility, false);
 						}
+					} else {
+						val scope = super.getScope(context, reference);
+						return new DynamicPseudoScope(scope);
 					}
 				}
 			}
 		}
 
+		// Ignore binding for JSXElement names and property attributes
 		var JSXElementName jsxElName;
 		for (var ei = context; ei !== null; ei = ei.eContainer) {
 			if (ei instanceof JSXElementName) {
@@ -75,11 +86,24 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 			}
 		}
 
+		// If the name is lower case, ignore binding error
 		if (jsxElName !== null) {
 			val scope = super.getScope(context, reference);
 			return new DynamicPseudoScope(scope);
 		}
 
+//		//If the name is lower case, ignore binding error
+//		if ( jsxElName !== null) {
+//			if (jsxElName.expression instanceof IdentifierRef) {
+//				val idRef = jsxElName.expression as IdentifierRef
+//				if (idRef.idAsText.length > 0) {
+//					if (Character::isLowerCase(idRef.idAsText.charAt(0))) {
+//						val scope = super.getScope(context, reference);
+//						return new DynamicPseudoScope(scope);		
+//					}		
+//				}
+//			}			
+//		}		
 		return super.getScope(context, reference);
 	}
 }

@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.tests;
+package eu.numberfour.n4jsx.spec.tests;
 
 import org.junit.runner.RunWith;
 import org.xpect.XpectImport;
@@ -45,8 +45,8 @@ import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 		FindReferencesXpectMethod.class
 })
 @RunWith(XpectRunner.class)
-@XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "model", fileExtensions = { "xt" })
+@XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "xpectTests", fileExtensions = { "xt" })
 @XpectImport(SuppressIssuesSetup.class)
-public class N4JSSpectTest {
+public class N4JSXSpecTest {
 	//
 }

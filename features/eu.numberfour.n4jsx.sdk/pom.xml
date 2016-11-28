@@ -18,8 +18,8 @@ Contributors:
 	<packaging>eclipse-feature</packaging>
 
 	<parent>
-		<groupId>eu.numberfour.n4jsx</groupId>
-		<artifactId>eu.numberfour.n4jsx.features</artifactId>
+		<groupId>eu.numberfour.n4js</groupId>
+		<artifactId>eu.numberfour.n4js.features</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>

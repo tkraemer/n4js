@@ -31,17 +31,27 @@
 
     END_SETUP
 */
+
 import * as React from "react"
 
-class LowerComponent extends React.Component<~Object with {whatTextShouldIShow: string}, String> {
-	@Override
-	public render(): React.Element {
-		return (<div>{this.props.whatTextShouldIShow}</div>);
-	}
+function A(props: ~Object with {message: string}): React.Element {
+	return (
+		//XPECT errors --> "JSX element Div does not bind to any valid React component." at "Div"
+		<Div message="Hello"/>
+	);
 }
 
-//XPECT noerrors
-var c = <LowerComponent whatTextShouldIShow="OK"/>
 
-//XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'whatTextShouldIShowBLAH'." at "whatTextShouldIShowBLAH"
-var d = <LowerComponent whatTextShouldIShowBLAH="Hey wrong"/>
+function B(props: ~Object with {message: string}): React.Element {
+	return (
+		//XPECT noerrors
+		<div message="Hello"/>
+	);
+}
+
+function C(props: ~Object with {message: string}): React.Element {
+	return (
+		//XPECT warnings --> "Tag blah is an unknown HTML tag." at "blah"
+		<blah message="Hello"/>
+	);
+}

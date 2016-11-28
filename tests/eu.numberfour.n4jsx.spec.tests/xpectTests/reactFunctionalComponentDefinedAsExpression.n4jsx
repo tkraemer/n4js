@@ -31,17 +31,11 @@
 
     END_SETUP
 */
-import * as React from "react"
 
-class LowerComponent extends React.Component<~Object with {whatTextShouldIShow: string}, String> {
-	@Override
-	public render(): React.Element {
-		return (<div>{this.props.whatTextShouldIShow}</div>);
-	}
-}
+//import * as React from "react";
 
-//XPECT noerrors
-var c = <LowerComponent whatTextShouldIShow="OK"/>
+//const MyComp = (props: ~Object with {bar: string}): React.Element => {
+//	return <div foo={props.bar} />
+//};
 
-//XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'whatTextShouldIShowBLAH'." at "whatTextShouldIShowBLAH"
-var d = <LowerComponent whatTextShouldIShowBLAH="Hey wrong"/>
+//<MyComp bar="Hello"/>
