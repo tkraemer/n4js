@@ -18,13 +18,12 @@ typing. That is, a thing that can swim and quacks like a duck, is a
 duck.
 
 Interfaces or classes can be used for this purpose with a _typing
-strategy modifier_ . Given a type math:[$T$], the simple `pass:[~]` (tilde)
+strategy modifier_ . Given a type math:[$T$], the simple ``pass:[~]`` (tilde)
 can be added to its declaration (on definition-site) or in a reference (on
 use-site) to indicate that the type system should use structural typing
-rather than nominal typing.footnote:[This kind of typing is used by
-TypeScript only. By defining a structural typed classifier or reference,
-it basically behaves as it would behave – without that modifier – in
-TypeScript.] This means that some other type must provide the same
+rather than nominal typing.
+footnote:[This kind of typing is used by TypeScript only. By defining a structural typed classifier or reference, it basically behaves as it would behave – without that modifier – in TypeScript.]
+This means that some other type must provide the same
 members as type math:[$T$] to be deemed a structural subtype.
 However, the operator cannot be used anymore with the type or reference
 as this operator relies on the declaration information (or at least the
@@ -34,15 +33,14 @@ therefore, always a structural subtype of math:[$~T$].
 Sometimes it is convenient to refer only to the fields of a classifier,
 for example when the initial field values are to be provided in a
 variable passed to the constructor. In that case, the type can be
-modified with `pass:[~~]` (two tildes). This is only possible on use-site, i.e.
+modified with ``pass:[~~]`` (two tildes). This is only possible on use-site, i.e.
 on type references. Furthermore, only on the use-site, it is possible to
 consider only either readable or writable or fields by using the
-read-only ``r `` or write-only ``w `` structural field typing. For
+read-only ``pass:[r~]`` or write-only ``pass:[w~]`` structural field typing. For
 initialization blocks, it is even possible to use structural initializer
-field typing via the ``i `` operator.
+field typing via the ``pass:[i~]`` operator.
 
 == Syntax
-
 
 Structural typing is specified using the typing strategy modifier. There
 are two modifiers defined; one for definition-site and one for use-site
@@ -166,7 +164,7 @@ with `C`!
 
 Use-site structural typing offers several typing strategy modifiers to
 define the accessability of public properties of classes and interfaces.
-They can be used e.g. on variable declarations like this: `pass:[var c : ~C]` .
+They can be used e.g. on variable declarations like this: ``pass:[var c : ~C]``.
 The table <<tab:available-fields-of-structural-types>> shows which properties
 of structural types can be accessed in the different type strategies.
 For example, when using the write-only structural strategy (i.e.
@@ -415,16 +413,16 @@ foo(c: ~~C, i: ~~I) {
 ^h| Type ^h| Structural Type ^h| Structural Field Type
 |===
 
-* If a type is referenced with the structural type modifier `pass:[~]` , the
+* If a type is referenced with the structural type modifier ``pass:[~]`` , the
 property math:[$T.refStructural$] is true. If a type is referenced
-with the structural field type modifier `pass:[~~]`, the property
+with the structural field type modifier ``pass:[~~]``, the property
 math:[$T.refStructuralField$] is true.
 * If a type is referenced with
-the structural read-only field type modifier `pass:[~r~]`, the property
+the structural read-only field type modifier ``pass:[~r~]``, the property
 math:[$T.refStructuralReadOnlyField$] is true.
-* If a type is referenced with the structural write-only field type modifier `pass:[~w~]`, then the property math:[$T.refStructuralWriteOnlyField$] is true.
+* If a type is referenced with the structural write-only field type modifier ``pass:[~w~]``, then the property math:[$T.refStructuralWriteOnlyField$] is true.
 If a type is referenced with the structural initializer field type
-modifier `pass:[~i~]`, then the property
+modifier ``pass:[~i~]``, then the property
 math:[$T.refStructuralInitField$] is true.
 
 We call math:[$T$] the (nominal) type T, math:[$\tsStr T$] the
@@ -459,7 +457,7 @@ hand side of the `instanceof` operator: math:[\[\begin{aligned}
 & \hspace{6em}\lor T.refStructuralReadOnlyField \\
 & \hspace{6em}\lor T.refStructuralWriteOnlyField \\
 & \hspace{6em}\lor T.refStructuralInitField)\end{aligned}\]] That is,
-the following code will always issue an error: `pass:[x instanceof ~T]`.
+the following code will always issue an error: ``pass:[x instanceof ~T]``.
 footnote:[Since this is already prevented by the parser (the tilde is interpreted as an unary operator), error messages are likely to look a little strange.]
 6.  A type math:[$X$] is a subtype of a structural version of a
 type math:[$\tsStr T$], if it contains all public, non-static
@@ -601,7 +599,7 @@ math:[$\tsInitFld X$].
 
 [cols="<2m,^,^,^,^"]
 |===
-h|Member of type __X__ | `pass:[~~X]` |`pass:[~r~X]` |`pass:[~w~X]` |`pass:[~i~X]`
+h|Member of type __X__ | ``pass:[~~X]`` |``pass:[~r~X]`` |``pass:[~w~X]`` |``pass:[~i~X]``
 
 | private m0; | -- | -- | -- | --
 | public set m1(m) { } |write | -- | write |read
@@ -705,7 +703,7 @@ h| pass:[~r~A5]|  |  |  |  |  |  |  |✓ |  |  |✓ |✓ |  |  |  |✓ |✓ |
 
 --
 
-// TODO: fonts must be smaller here to prevent overlapping in HTML & PDF
+// TODO: fonts must be smaller here to prevent overlapping in PDF
 
 == Public Setter Annotated With `ProvidesInitializer`
 

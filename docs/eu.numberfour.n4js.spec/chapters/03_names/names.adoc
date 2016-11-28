@@ -37,11 +37,11 @@ declaration with the same identifier.
 We distinguish the following contexts from which an element is accessed
 as follows:
 
-1.  Module or type: access from elements in the same module or type.
-2.  Subtype: access from a subtype.
-3.  Project: access from the same project.
-4.  Vendor: access from different project of the same vendor.
-5.  World: access from anything else.
+1.  *Module or type*: access from elements in the same module or type.
+2.  *Subtype*: access from a subtype.
+3.  *Project*: access from the same project.
+4.  *Vendor*: access from different project of the same vendor.
+5.  *World*: access from anything else.
 
 Accessibility is defined by modifiers on types and members, e.g , via
 the statement, and by the annotation. Extensibility is defined by the
@@ -168,7 +168,6 @@ generally not accessible. This is illustrated by the following example:
 
 .Implicit, allowed type references in N4JS
 [example]
-
 ====
 
 [source,n4js]
@@ -324,7 +323,7 @@ follows:
 footnote:[See <<_n4js-specific-classifiers,N4-Specific Classifiers>> for definitions of metatype properties. Note that math:[$r.receiver$] always refers to a type declaration in the context of an expression as the receiver type of math:[$r$]. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member
 declaration.]
 
-footnote:[Note, the Java-like access restriction for members of visibility ``protected`` or ``protected@Internal`` to code that is responsible for the implementation of that object. cite:[Gosling14a(S6.6.2,p.166)]]
+footnote:[Note, the Java-like access restriction for members of visibility `protected` or `protected@Internal` to code that is responsible for the implementation of that object. cite:[Gosling15a(S6.6.2,p.166)]]
 
  math:[\[\begin{aligned}
 &\infer{\alpha_m(r, M)}{M.acc = \lenum{public}}\\
@@ -531,7 +530,7 @@ method)
 In N4JS mode, warnings are generated in the following cases:
 
 .  The name of a member (of a non external type)
-..  equals the name of a base type footnote:[``string, boolean, number, any, null``] but the type of the variable is different from that type
+..  equals the name of a base type footnote:[`string, boolean, number, any, null`] but the type of the variable is different from that type
 ..  is not static nor const but starts with an upper case letter
 .  The name of a non-external n4 types (class, interface, enum) starts
 with a lower case letter
@@ -557,8 +556,8 @@ members. For example, if we want to reference certain members in JSDoc
 comments or for unambiguous error messages. For this reason, we formally
 define qualified names even if they cannot occur in source code.
 
-<<tab:typenames,Type Names>> shows the different names of a given type ``C``, defined in a module
-``M.n4js``, defined in a package ``p`` of a project ``MyProject``.
+<<tab:typenames,Type Names>> shows the different names of a given type `C`, defined in a module
+`M.n4js`, defined in a package `p` of a project `MyProject`.
 
 [[tab:typenames]]
 .Different forms of module and type specifiers.
@@ -595,13 +594,13 @@ Identifiers to specific variables and functions based upon the lexical
 nesting structure of ECMAScript code. cite:[ECMA11a(10.2)].
 
 Elements that introduce lexical environments: ::
-``FunctionDefinition``, ``VariableDeclaration``, ``CatchBlock``, ``WithStatement``,
-``ImportDeclaration``
+`FunctionDefinition`, `VariableDeclaration`, `CatchBlock`, `WithStatement`,
+`ImportDeclaration`
 
 
 N4JS specific declarations: ::
-``N4ClassDeclaration``, ``N4InterfaceDeclaration``,
-``N4EnumDeclaration``, ``N4MethodDeclaration``.
+`N4ClassDeclaration`, `N4InterfaceDeclaration`,
+`N4EnumDeclaration`, `N4MethodDeclaration`.
 
 
 Additionally, a built-in lexical environment that defines global scope
@@ -627,14 +626,14 @@ Two elements with the same name declared in the same lexical environment
 An element defined in an environment _shadows_ all elements with the same name in outer environments.
 
 In class hierarchies, a member with the same name as a member defined in
-a supertype is said to override the latter. Overriding is discussed in .
+a supertype is said to override the latter. Overriding is discussed in <<_redefinition-of-members,Redefinition of Members>>.
 
 For the following constraints, we make the following assumptions:
 
 * Names of function expressions or declarations are handles similar to
 locally declared elements in the function. Function declarations are
 additionally declaring a name in their outer scope.
-* The implicit formal parameter ``arguments`` is treated similar to declared formal
+* The implicit formal parameter `arguments` is treated similar to declared formal
 parameters.
 * Formal parameters are defined in the lexical environment of a
 function, that is, they are defined in the same lexical environment as
@@ -667,11 +666,11 @@ all parent non-catch-block environments.
 1. In the script environment, it is not allowed to use the name
 ’arguments’.
 footnote:[This conflicts with the implicit parameter arguments introduced by the transpiler when wrapping the script/module into a definition function.]
-
-The figure Forbidden Shadowing below shows nested lexical environments with named elements declared inside (all named ``x`` here), the forbidden cases are marked with arrows (the numbers at the left side refer to the numbers in <<IDE-8,Forbidden Shadowing>>.
-
++
+The figure Forbidden Shadowing below shows nested lexical environments with named elements declared inside (all named `x` here), the forbidden cases are marked with arrows (the numbers at the left side refer to the numbers in <<IDE-8,Forbidden Shadowing>>.
++
 .Forbidden Shadowing
-image:fig/shadowing.png[]
+image::fig/shadowing.png[]
 
 Rationale:
 

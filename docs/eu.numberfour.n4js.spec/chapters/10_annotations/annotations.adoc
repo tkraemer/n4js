@@ -74,7 +74,7 @@ corresponding sections:
 |@Undefined             |Variable                                      |<<_undefined-type>>
 |@StringBased           |Enum                                          |<<_string-based-enums>>
 |@Final                 |Class, Member                                 |<<_final-methods>>
-|@Spec                  |FPar                                          |<<IDE-59>>
+|@Spec                  |FPar                                          |<<IDE-59,Spec-Style Constructor>>
 |@Override              |Method                                        |<<_redefinition-of-members>>
 |@Promisifiable         |Function                                      |<<_promisifiable-functions>>
 |@Promisify             |CallExpression                                |<<_promisifiable-functions>>
@@ -88,7 +88,7 @@ corresponding sections:
 |@StaticPolyfill        |Class                                         |<<_static-polyfill-definitions>>
 |@StaticPolyfillAware   |Script                                        |<<_static-polyfill-definitions>>
 |@StaticPolyfillModule  |Script                                        |<<_static-polyfill-definitions>>
-|@Transient             |Field
+|@Transient             |Field                                         | *
 |===
 
 

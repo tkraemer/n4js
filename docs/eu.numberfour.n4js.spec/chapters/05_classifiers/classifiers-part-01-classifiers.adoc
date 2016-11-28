@@ -25,71 +25,74 @@ enum N4JSTypeAccessModifier: project | public;
 
 == Properties
 
-Properties defined by syntactic elements:
+*Properties defined by syntactic elements:*
 
-`annotations`: ::
+`annotations` ::
 Arbitrary annotations, see <<Annotations>> for details.
 
-`accessModifier`: ::
+`accessModifier` ::
 N4JS type access modifier: `public`, or `project`;  `public` can be combined with `@Internal`; if
 math:[$export$] is math:[$true$] the default is else the
 default is `private`.
+
 task:IDE-84[]
 
-`name`: ::
+`name` ::
 The simple name of a classifier. If the classifier is defined by an
 anonymous class expression, an artificial but unique name is created.
 The name needs to be a valid identifier, see <<_valid-names,Valid Names>>.
 
-`typePars`: ::
+`typePars` ::
 Collection of type parameters of a generic classifier; empty by default.
 
 
-`ownedMembers`: ::
+`ownedMembers` ::
 Collection of owned members, i.e. methods and fields defined directly in
 the classifier and, if present, the explicitly defined constructor.
 Depending on the concrete classifier, additional constraints are
 defined.
 
-`typingStrategy`: ::
+`typingStrategy` ::
 The definition-site typing strategy. By default nominal typing is used.
 See <<_structural-typing,Structural Typing>> for details.
 
+*The following pseudo properties are defined via annotations:*
 
-The following pseudo properties are defined via annotations:
-
-`export`: ::
+`export` ::
 Boolean property set to true if the `export` modifier is set. If value is true,
-the classifier may be accessible outside the project. task:IDE-84[]
+the classifier may be accessible outside the project.
 
-`final`: ::
+task:IDE-84[]
+
+`final` ::
 Boolean property which is set to final if annotation `@Final` is set. Also see
 <<_final-modifier,Final Extensibility>>
 
-`deprecated`: ::
+`deprecated` ::
 Boolean property set to true if annotation `@Deprecated` is set.
 // Version 0.4, not implemented in Version 0.3
+
 task:IDE-138[]
 
-We additionally define the following pseudo properties:
+*We additionally define the following pseudo properties:*
 
-`acc`: ::
+`acc` ::
 Type access modifier as described in <<_accessibility-of-types-top-level-variables-and-function-declarations,Accessibility of types>>, it is the aggregated value of the
 math:[$accessModifier$] and the math:[$export$] property.
 
-`owned{Fields|Methods|Getters|Setters|Accessors}`: ::
+`owned{Fields|Methods|Getters|Setters|Accessors}` ::
 Filters ownedMembers by metatype, short for +
 math:[$x \in ownedMembers, \mu(x)=\type{Field}$] etc.
 
-`members`: ::
+`members` ::
 Reflexive transitive closure of all members of a classifier and its
 super classifiers, see below on how this is calculated.
 
-`fields|methods|getters|setters|accessors`: ::
+`fields|methods|getters|setters|accessors` ::
 Filters members by metatype, short for +
 math:[$x \in members, \mu(x)=\type{Field}$] etc.
 
-`superClassifiers`: ::
+`superClassifiers` ::
 Classes and interface may extend or implement classes or interfaces. Any
 class or interface extended or interface implemented is called __super
 classifier__. We distinguish the directly subtyped classifiers and from
@@ -201,20 +204,20 @@ fragment Members <Yield>*:
 These are the properties of class, which can be specified by the user:
 Syntax N4 Class Declaration and Expression
 
-`abstract`: ::
+`abstract` ::
 Boolean flag indicating whether class may be instantiable; default is
 math:[$false$], see <<_abstract-classes,Abstract Classes>>.
 
-`external`: ::
+`external` ::
 Boolean flag indicating whether class is a declaration without
 implementation or with an external (non-N4JS) implementation; default is
 math:[$false$], see <<_definition-site-structural-typing,Definition-Site Structural Typing>>.
 
-`defStructural`: ::
+`defStructural` ::
 Boolean flag indicating whether subtype relation uses nominal or
 structural typing, see <<_definition-site-structural-typing,Definition-Site Structural Typing>> for details.
 
-`superType/sup`: ::
+`superType/sup` ::
 The type referenced by math:[$superType$] is called direct
 superclass of a class, and vice versa the class is a direct subclass of
 math:[$superType$]. Instead of math:[$superType$], we
@@ -223,20 +226,20 @@ math:[$sup^+$] is defined as the transitive closures of all direct
 and indirect superclasses of a class. If no supertype is explicitly
 stated, classes are derived from `N4Object`.
 
-`implementedInterfaces$/$interfaces$]`: ::
+`implementedInterfaces$/$interfaces$]` ::
 Collection of interfaces directly _implemented_ by the class; empty by
 default. Instead of math:[$implementedInterfaces$], we simply write
 math:[$interfaces$].
 
-`ownedCtor`: ::
+`ownedCtor` ::
 Explicit constructor of a class (if any), see <<_constructor-and-classifier-type,Constructor>>.
 
 And we additionally define the following pseudo properties:
 
-`ctor`: ::
+`ctor` ::
 Explicit or implicit constructor of a class, see <<_constructor-and-classifier-type,Constructor>>.
 
-`fields`: ::
+`fields` ::
 Further derived properties for retrieving all methods (property
 math:[$methods$]), fields (property math:[$fields$]), static
 members (property math:[$staticOwnedMembers$]), etc. can easily be

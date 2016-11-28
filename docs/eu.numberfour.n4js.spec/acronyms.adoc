@@ -1,3 +1,4 @@
+[appendix]
 = Acronyms [[AC]]
 ////
 Copyright (c) 2016 NumberFour AG.

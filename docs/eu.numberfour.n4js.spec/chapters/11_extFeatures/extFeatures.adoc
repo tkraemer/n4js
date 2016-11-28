@@ -18,7 +18,7 @@ number of newly-declared or pre-existing variables or to further
 destructure them by using nested destructuring
 patterns.
 
-footnote:[Further reading on <<Acronyms,DI>>: : Basics cite:[Fowler04b,Prasanna09a],  Verification cite:[Zhu13a,Hudli13a],  Frameworks cite:[Lesiecki08a,Betts13a,Knol13a,Dagger] , Verification ,Frameworks ]
+footnote:[Further reading on <<Acronyms,DI>>: : Basics cite:[Fowler04b,Prasanna09a], Verification cite:[Zhu13a,Hudli13a], Frameworks cite:[Lesiecki08a,Betts13a,Knol13a,Dagger] ]
 
 === Syntax
 
@@ -150,7 +150,7 @@ support) it is difficult for nontrivial applications. The solutions that <<Acron
 provides should empower N4JS users to achieve the above goals without
 the burden of maintaining so-called ’boilerplate’ code.
 
-image::fig/diTerms.PNG[fig:diTerms]
+image::fig/diTerms.PNG[title="DI Terms"]
 
 _key: pass the dependency instead of letting the client create or find it_
 
@@ -683,21 +683,14 @@ handled independently from the scope. If this is not done, the following
 examples would result in an infinite loop causing the entire script to
 freeze until the engine reports an error:
 
-[c]0.6
-
 [source,n4js]
 ----
 class A { @Inject b: B; }
 class B { @Inject a: A; }
 ----
 
-[c]0.4
 
-image::fig/injectionGraph_cycleField.png[align=center]
-
- +
-
-[c]0.6
+image::fig/injectionGraph_cycleField.png[title="Field Cycle",align=center]
 
 [source,n4js]
 ----
@@ -705,13 +698,8 @@ class C { @Inject constructor(d: D) {} }
 class D { @Inject c: C; }
 ----
 
-[c]0.4
 
-image::fig/injectionGraph_cycleCtorField.png[align=center]
-
- +
-
-[c]0.6
+image::fig/injectionGraph_cycleCtorField.png[title="Ctor Field Cycle",align=center]
 
 [source,n4js]
 ----
@@ -719,11 +707,8 @@ class E { @Inject constructor(f: F) {} }
 class F { @Inject constructor(e: E) {} }
 ----
 
-[c]0.4
+image::fig/injectionGraph_cycleCtor.png[title="Ctor Cycle",align=center]
 
-image::fig/injectionGraph_cycleCtor.png[align=center]
-
- +
 
 The injector needs to detect these cycles and resolve them.
 
@@ -769,13 +754,10 @@ function doInjectionWithCylceAwareness(object, createdInstancesPerType) {
 }
 ----
 
-The actual instance is created in line 10 via . This function then takes
-scopes into account. The map is passed to that function in order to
-enable cycle detection for constructor injection. The following scopes
-are supported by the N4JS \ac{DI}, other scopes, cf.
-https://jersey.java.net/documentation/latest/ioc.html[Jersey custom
-scopes] and https://github.com/google/guice/wiki/CustomScopes[Guice
-custom scopes], may be added in the future.
+The actual instance is created in line 10 via `createInstance`.
+This function then takes scopes into account.
+The map is passed to that function in order to enable cycle detection for constructor injection. The following scopes
+are supported by the N4JS \ac{DI}, other scopes, cf. https://jersey.java.net/documentation/latest/ioc.html[Jersey custom scopes] and https://github.com/google/guice/wiki/CustomScopes[Guice custom scopes], may be added in the future.
 
 This algorithm is not working for constructor injection because it is
 possible to already access all fields of the arguments passed to the
@@ -870,8 +852,9 @@ This table describes the singleton behavior when both bindings are
 configured at child injector levels but not the root injector level.
 
 //TODO : check tables
-.DI Child Binding[tab:diChildBinding]
-[cols="^,^,^,^,^,^",options="header",]
+[[tab:diChildBinding]]
+.DI Child Binding
+[cols="^,^,^,^,^,^",options="header"]
 |===
 |Binding | |U math:[$\rightarrow$] V | |J math:[$\rightarrow$]
 U |
@@ -983,8 +966,6 @@ Following annotations describe API used to configure N4JSDI.
 
 ==== N4JS DI @GenerateInjector
 
-3
-
 name::
   @GenerateInjector
 targets::
@@ -1003,8 +984,6 @@ will be responsible for creating an instance of that class and all of
 its dependencies.
 
 ==== N4JS DI @WithParentInjector
-
-3
 
 name::
   @WithParentInjector
@@ -1098,7 +1077,6 @@ retention policy::
 transitive::
   NO
 arguments::
-   +
   TypeRef key, TypeRef target
 arguments are optional::
   NO
@@ -1134,9 +1112,8 @@ arguments::
 arguments are optional::
   NO
 
-`@Provides` marks _factory method_ to be used as part \ac{DI}. This is treated as _explicit binding_ between declared return type and actual return type. This
-method is expected to be part of the `@Binder`. Can be used to implement custom
-scopes.
+`@Provides` marks _factory method_ to be used as part <<AC,DI>>. This is treated as _explicit binding_ between declared return type and actual return type. This method is expected to be part of the `@Binder`.
+Can be used to implement custom scopes.
 
 
 .DI Provides
@@ -1342,7 +1319,7 @@ task:IDE-1735[]
 
 Static polyfilling is a compile time feature to enrich the definition
 and usually also the implementation of generated code in N4JS. It is
-related to runtime polyfilling described in () in a sense that both
+related to runtime polyfilling described in <<_runtime-polyfill-definitions,Runtime Polyfill Definitions>> in a sense that both
 fillings enrich the types they address. Despite this, static polyfilling
 and runtime polyfilling differ in the way they are handled.
 

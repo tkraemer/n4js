@@ -48,7 +48,7 @@ StringLiteralComputedName: STRING ;
 
 As can be seen, a computed-name must be either
 
-* task:IDE-1220[] a symbol reference, e.g. ``Symbol.iterator``,
+* task:IDE-1220[] a symbol reference, e.g. `Symbol.iterator`,
 * task:IDE-1734[] a string literal, i.e., a compile time known constant. This notation is useful when interoperating with libraries that define members whose
 names contain special characters (e.g., a field name starting with
 commercial-at)
@@ -164,9 +164,7 @@ JSDoc, that is, the behavior of a program must not change if all the
 JSDoc is removed. The JSDoc tags and overall syntax is a mixture of tags
 defined by the https://developers.google.com/closure/compiler/docs/js-for-compiler[Google Closure Compiler], Java's http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html[JavaDoc] tool and N4-specific tags.
 
-JSDoc comments are multiline comments, starting with `pass:[/**]`
-
-(instead of simple multiline comments, starting with `pass:[/*]`).
+JSDoc comments are multiline comments, starting with ``pass:[/**]`` (instead of simple multiline comments, starting with ``pass:[/*]``).
 
 [source]
 ----
@@ -189,11 +187,11 @@ SLVALUE:         ([^\n]+);
 ----
 
 `MLVALUE` ::
-short for ``multi-line value``. This is usually only used for the
+short for `multi-line value`. This is usually only used for the
 general description of types or members.
 
 `SLVALUE` ::
-short for ``single-line value``. This is a description which ends at
+short for `single-line value`. This is a description which ends at
 the end of a line. It is usually used in combination with other tags,
 e.g., to further describe a parameter of a method.
 

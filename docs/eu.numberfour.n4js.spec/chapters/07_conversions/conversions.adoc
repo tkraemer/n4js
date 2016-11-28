@@ -311,9 +311,9 @@ When used with an N4JS class, `instanceof` also supports checking against an int
 
 N4 specific `string` types, that is `pathSelector` and `i18nkey` cannot be tested during runtime.
 These types, therefore, must not be used in `instanceof` expressions.
-The same is true for string-based enums and arrays which cannot be tested during runtime, thus string-based enum and array types are not permitted on the right-hand side of ``instancesof`` constructs.
+The same is true for string-based enums and arrays which cannot be tested during runtime, thus string-based enum and array types are not permitted on the right-hand side of `instancesof` constructs.
 For all types for which the evaluation result of `instanceof` could be computed at compile time, the check is unnecessary and thus it is refused by the compiler.
-Using structural types on the right-hand side of ``instancesof`` constructs is also not permitted.
+Using structural types on the right-hand side of `instancesof` constructs is also not permitted.
 
 In order to avoid errors at runtime, the `instanceof` operator defines appropriate constraints, see <<_relational-expression,Relational Expression>> for details.
 
@@ -361,20 +361,20 @@ from instances as well.
 This getter is of type `N4Class` which is a built-in type just like `N4Object`. It contains the following members:
 
 
-``fqn`` ::
+`fqn` ::
 The math:[$FQN$] of the type.
 
-``n4superType`` ::
-The `N4Class` of the supertype, may be null if supertype is a not an .
+`n4superType` ::
+The `N4Class` of the supertype, may be null if supertype is a not an `N4Class`.
 
-``allImplementedInterfaces`` ::
+`allImplementedInterfaces` ::
 List of The math:[$FQN$] of implemented interfaces (transitively
 but without interfaces implemented by supertype)
 
-``get isClass`` ::
+`get isClass` ::
 True if the type is an N4Class.
 
-``get isInterface]`` ::
+`get isInterface` ::
 True if the type is an N4Interface.
 
 This meta-information is currently not available to non-N4 developers.
@@ -402,7 +402,7 @@ console.log(b.constructor.n4class.n4superType.fqn);
 console.log(B.n4class.constructor.n4class.fqn);
 ----
 
-Assuming this code is defined in file ``A``, this will output
+Assuming this code is defined in file `A`, this will output
 
 [source]
 ----

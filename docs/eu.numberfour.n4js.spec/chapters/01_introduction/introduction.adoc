@@ -16,7 +16,7 @@ slightly augmented similar to the grammar language of Xtext http://www.eclipse.o
 Similar to cite:[ECMA11a], we define types with properties only for the purpose of
 explanation and usage within this specification. We use the Xtext
 notation style to assign values to meta-properties. Particularly, we use
-the Xtext notation for collection (``+=``) and boolean (``?=``) values. These
+the Xtext notation for collection (`+=`) and boolean (`?=`) values. These
 properties are written in italics. Enumerations are defined similar to
 Xtext. In order to allow the specification of default values, which are
 often defined by omitting the value, we always define the literal
@@ -25,21 +25,21 @@ explicitly if it can be defined by the user.
 The following lists informally defines the grammar:
 
 Terminal::
-  Terminals (or terminal strings) are enclosed in single quotes, e.g., ``terminal``.
+  Terminals (or terminal strings) are enclosed in single quotes, e.g., `terminal`.
 Enumerations::
   Rules which contain only terminals used as values for properties are
-  marked with ``enum`` for enumeration.
+  marked with `enum` for enumeration.
 Properties::
   Values of non-terminals, e.g., other rules, can be assigned to
   properties. The property name and the assignment are not part of the
-  original syntax and only used for the meta description. E.g., ``__name=__Identifier``.
+  original syntax and only used for the meta description. E.g., `__name=__Identifier`.
 Collection Properties::
-  If a property is a collection, values are added to that list via ``+=``.
-  E.g.,``__property+=__Value`` .
+  If a property is a collection, values are added to that list via `+=`.
+  E.g.,`__property+=__Value` .
 Boolean Properties::
   Boolean properties are set to false by default, if the value (usually
   a terminal) is found, the boolean value is set to true. Often, the
-  name of the property is similar to the terminal. E.g., ``__final?__='final'?``.
+  name of the property is similar to the terminal. E.g., `__final?__='final'?`.
 
 Properties of a non-terminal are sometimes listed again below the
 grammar. In that case, often pseudo properties are introduced which are
@@ -74,9 +74,9 @@ math:[\[\begin{aligned} \frac{P_1 \hspace{5mm}  P_2 \hspace{5mm} P_3}{C} \end{al
 The following judgments (with relation symbols) are used:
 
 // TODO replace math with original LaTeX
-subtype ``<`` ::
+subtype `<` ::
 +
-type``:`` ::
+type ``:`` ::
   in which the left hand side is a declaration or
   expression, and the right hand side a type. We also use
   math:[$\infType{..}$] as a function returning the (inferred) type
@@ -94,7 +94,7 @@ The following statement, for example, defines transitivity of subtypes
 math:[\[\begin{aligned} \frac{\Gamma B \vdash <: A \hspace{7mm} \Gamma \vdash C <: B}{\Gamma \vdash C: < A}\end{aligned}\]]
 
 is the context containing (bound) type variables etc.,
-math:[$\entails$] can be read as ``entails``. Thus, the rule can be
+math:[$\entails$] can be read as `entails`. Thus, the rule can be
 read as follows: if the type B is a subtype of type A in context (i.e.
 with constraints on type variables specified in ), and if type C is a
 subtype of B, then C is also a subtype of A in context .
@@ -121,7 +121,7 @@ A variable or other typed element may be associated with three types:
 
 1.  Declared type: the type explicitly specified in the code, e.g., .
 2.  Inferred type: the type inferred by the type inferencer, e.g.,
-infers the type of s to ``string``. I.e.
+infers the type of s to `string`. I.e.
 math:[$\Gamma \vdash s :{string}$] will be true, or
 math:[$[\![s]\!] < :string $\]]. If an element is
 annotated with a type ,i.e. it has a declared type, the inferred type
@@ -132,7 +132,7 @@ specification.
 
 These types are not type declarations but type references, in fact, as
 they may be parameterized. For the sake of simplicity, we often omit the
-``Ref`` suffix to shorten formulas. Consequently, we define the
+`Ref` suffix to shorten formulas. Consequently, we define the
 following properties and pseudo properties for typed elements such as
 variables:
 
@@ -182,7 +182,7 @@ variable).
 
 footnote:[One can interpret this similar to delegate methods, that is, instead of writing ``r.binding().getType()``, a method ``r.getType()\{return binding().getType();`` is defined.]
 
-A ``DeclaredType`` references the type declaration by its simple name that has been
+A `DeclaredType` references the type declaration by its simple name that has been
 imported from a module specifier. We define the method
 math:[$bind$] for declared types as well:
 
@@ -225,7 +225,7 @@ explicitly checking the metatype (via
 math:[$\mu(X)=:{MetaType}$]), we precede the variable with the
 type, that is: math:[$:{MetaType} X$].
 
-Instead of ``type casting`` elements, often properties are simply
+Instead of `type casting` elements, often properties are simply
 accessed. If an element does not define that element, it is either
 assumed to be false or null by default.
 

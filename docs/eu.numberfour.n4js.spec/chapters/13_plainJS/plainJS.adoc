@@ -231,7 +231,7 @@ provided in `Sources`, math:[$n4jsd$] files in the folder tree
 below source folders will be related to modules of the same name in the
 external folders. This is shown in External Class Implementation Naming below.
 
-image:fig/externalClassImplementation_naming.png[title="External Class Implementation, Naming Convention"]
+image::fig/externalClassImplementation_naming.png[title="External Class Implementation, Naming Convention"]
 
 ====
 
@@ -258,12 +258,12 @@ module.exports = {
 
 Assuming
 
-* `shapes.js` is placed in project folder /external/a/b/shapes.js
-* `shapes.n4jsd` is placed in project folder /src/a/b/shapes.n4jsd
-* `manifest.n4mf` defines src as source folder and external as external
+* `shapes.js` is placed in project folder */external/a/b/shapes.js*
+* `shapes.n4jsd` is placed in project folder */src/a/b/shapes.n4jsd*
+* `manifest.n4mf` defines *src* as source folder and *external* as external
 source folder
 
-the following N4JS external class declarations in shapes.n4jsd are
+the following N4JS external class declarations in *shapes.n4jsd* are
 sufficient:
 
 

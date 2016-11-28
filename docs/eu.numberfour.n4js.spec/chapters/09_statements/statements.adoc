@@ -12,11 +12,11 @@ Contributors:
 
 For all statements, we define the following pseudo properties:
 
-``containingFunction`` ::
+`containingFunction` ::
 The function or method in which the statement is (indirectly) contained,
 this may be null.
 
-``containingClass`` ::
+`containingClass` ::
 The class in which the statement is (indirectly) contained, this may be
 null.
 
@@ -140,7 +140,7 @@ math:[$d$] except where the reference is contained in a class
 expression or function expression and the class is not immediately
 initialized or the function is not immediately invoked. In these cases,
 the code is executed later and the self-reference is not a problem. +
-To clarify: ``should not`` means that only a warning will be produced.
+To clarify: `should not` means that only a warning will be produced.
 
 [source]
 ----
@@ -215,7 +215,7 @@ in particular, the called function must not be declared to return `void`.
 
 Cf. cite:[ECMA11a(S12.6,p.90ff)]
 
-The syntax already considers the for-of style described in .
+The syntax already considers the for-of style described in <<_for-of-statement,For ... of Statement>>.
 
 [source]
 ----
@@ -259,9 +259,9 @@ ContinueStatement <Yield>: {ContinueStatement} 'continue' (label=[LabelledStatem
 BreakStatement <Yield>: {BreakStatement} 'break' (label=[LabelledStatement|BindingIdentifier<Yield>])? Semi;
 ----
 
-Since math:[$varDecl(s)$] are ``VariableStatement``s as described in <<_variable-statement,Var Statement>>, the declared variables can be type annotated.
+Since math:[$varDecl(s)$] are `VariableStatement`s as described in <<_variable-statement,Var Statement>>, the declared variables can be type annotated.
 
-TIP: Using for-in is not recommended, instead `pass:[_each]` should be used.
+TIP: Using for-in is not recommended, instead ``pass:[_each]`` should be used.
 
 ==== Semantics [[iterations-statements-semantics]]
 
@@ -434,11 +434,11 @@ differences which are elaborated on below.
 
 === Let
 
-Cf. cite:[ECMA11a(13.2.1)], also http://www.2ality.com/2015/02/es6-scoping.html[Rauschmayer, 2ality: ``Variables and scoping in ECMAScript 6``]
+Cf. cite:[ECMA11a(13.2.1)], also http://www.2ality.com/2015/02/es6-scoping.html[Rauschmayer, 2ality: *Variables and scoping in ECMAScript 6*]
 
 === Const
 
-Cf. cite:[ECMA15a(13.2.1)], also http://www.2ality.com/2015/02/es6-scoping.html[Rauschmayer, 2ality: ``Variables and scoping in ECMAScript 6``]
+Cf. cite:[ECMA15a(13.2.1)], also http://www.2ality.com/2015/02/es6-scoping.html[Rauschmayer, 2ality: *Variables and scoping in ECMAScript 6*]
 
 Additionally to the `var` statement, the `const` statement is supported. It allows for
 declaring variables which must be assigned to a value in the declaration
@@ -507,9 +507,9 @@ different versions of V8). Older implementations require an `Iterator` or accept
 both `Iterator` an or `Iterable`.
 
 Requiring an `Iterable` and not accepting a plain `Iterator` seems to be the final decision (as of Dec. 2014). For reference, see abstract operations
-``GetIterator`` in cite:[ECMA15a(S7.4.2)] and "CheckIterable"
-cite:[ECMA15a(S7.4.1)] and their application in "ForIn/OfExpressionEvaluation" cite:[ECMA15a(S13.6.4.8)] and ``CheckIterable`` and their application in
-``ForIn/OfExpressionEvaluation`` . See also a related blog
+`GetIterator` in cite:[ECMA15a(S7.4.2)] and "CheckIterable"
+cite:[ECMA15a(S7.4.1)] and their application in "ForIn/OfExpressionEvaluation" cite:[ECMA15a(S13.6.4.8)] and `CheckIterable` and their application in
+`ForIn/OfExpressionEvaluation` . See also a related blog
 post
 footnote:[available at: http://www.2ality.com/2013/06/iterators-generators.html] that is kept up
 to date with changes to ECMAScript 6: _"ECMAScript 6 has a new loop,
@@ -569,10 +569,10 @@ ModuleSpecifier: STRING;
 These are the properties of import declaration which can be specified by
 the user:
 
-``annotations`` ::
+`annotations` ::
 Arbitrary annotations, see <<Annotations>> and below for details.
 
-``importSpecifiers`` ::
+`importSpecifiers` ::
 The elements to be imported with their names.
 
 ////
@@ -860,8 +860,8 @@ of an assignment expression (this also includes any level in a
 destructuring pattern on the left-hand side),
 * math:[$i$] as a direct argument of a postfix operator (/),
 * math:[$i$] as a direct argument of a operator,
-* math:[$i$] as a direct argument of the ``increment`` or
-``decrement`` unary operator (/)
+* math:[$i$] as a direct argument of the `increment` or
+`decrement` unary operator (/)
 
 --
 
@@ -916,7 +916,7 @@ ExportableElement:
 This are the properties of export declaration, which can be specified by
 the user:
 
-``exportedElement`` ::
+`exportedElement` ::
 The element to be exported, can be a declaration or a variable/const
 statement.
 

@@ -35,21 +35,21 @@ In any case, a function type declares the signature of a function and
 allows validation of calls to that function. A function type has the
 following properties:
 
-``typePars`` ::
+`typePars`  ::
 (0-indexed) list of type parameters (i.e. type variables) for generic
 functions.
 
-``fpars`` ::
+`fpars`  ::
 (0-indexed) list of formal parameters.
 
-``returnType`` ::
+`returnType` ::
 (possibly inferred) return type (expression) of the function or method.
 
-``name`` ::
+`name` ::
 Name of function or method, may be empty or automatically generated (for
 messages).
 
-``body`` ::
+`body` ::
 The body of the function, it contains statements math:[$stmts$].
 The body is null if a function type is defined in a type expression, and
 it is the last argument in case of a function object constructor, or the
@@ -57,12 +57,12 @@ content of the function definition body.
 
 Additionally, the following pseudo properties for functions are defined:
 
-``thisTypeRef`` ::
+`thisTypeRef` ::
 The this type ref is the type to which the `this`-keyword would be evaluated
 if used inside the function or member. The inference rules are described
 in <<_this-keyword,This Keyword>>.
 
-``fpars`` ::
+`fpars` ::
 List of formal parameters and the this type ref. This is only used for
 sub typing rules. If `this` is not used inside the function, then `any` is set
 instead of the inferred thisTypeRef to allow for more usages. The
@@ -462,7 +462,7 @@ task:IDE-662[]
 A special arguments object is defined within the body of a function. It
 is accessible through the implicitly-defined local variable named ,
 unless it is shadowed by a local variable, a formal parameter or a
-function named ``arguments`` or in the rare case that the function
+function named `arguments` or in the rare case that the function
 itself is called ’arguments’ cite:[ECMA11a(S10.5,pp59)]. The argument object has array-like behavior even though it is not of type `array`:
 
 * All actual passed-in parameters of the current execution context can
@@ -631,7 +631,7 @@ supported by most JavaScript engines, only a warning is issued.
 === Function Expression
 
 A function expression cite:[ECMA11a(S11.2.5)] is quite similar to a function declaration. Thus,
-most details are explained in .
+most details are explained in <<_ecmascript-5-function-definition,Function Definition>>.
 
 ==== Syntax [[function-expression-syntax]]
 

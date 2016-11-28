@@ -40,7 +40,7 @@ math:[\[T < S \iff T \subtype S \land T \neq S\]]
 --
 
 Whether nominal or structural typing is used depends on the declaration
-of the type or the reference. This is explained further in .
+of the type or the reference. This is explained further in <<_structural-typing,Structural Typing>>.
 
 For convenience reasons, we sometimes revert the operator, that is
 math:[\[T \subtype S \iff S :> T\]] We write
@@ -91,10 +91,10 @@ bottom type math:[$Bot=`undefined}$].
 `null` is almost similar to math:[$Bot$], except that it is not a subtype
 of `undefined`.[[fig-cd-predefined-type-hierarchy]]
 
-image:fig/cdPredefinedTypesHierarchy.png[title="Predefined Types Hierarchy"]
+image::fig/cdPredefinedTypesHierarchy.png[title="Predefined Types Hierarchy"]
 
 For every primitive type there is a corresponding built-in type as
-defined in cite:[ECMA11a], e.g. and . There is no inheritance supported for
+defined in cite:[ECMA11a], e.g. `string` and `String`. There is no inheritance supported for
 primitive types and built-in types – these types are final.
 
 Although the diagram shows inheritance between `void` and `undefined`, this relationship is only semantic: `void` is a refinement of `undefined` from a type system viewpoint. The
@@ -156,11 +156,11 @@ See <<_parameterized-types,Parameterized Types>> for details on that reference.
 For qualified names and type reference names, see <<_qualified-names,Qualified Names>>
 
 The type expressions are usually added to parameter, field, or variable
-declarations as a suffix, separated with colon (’:’). The same is true
+declarations as a suffix, separated with colon (``:``). The same is true
 for function, method, getter or setter return types. Exceptions in the
 cases of object literals or destructuring are explained later on.
 
-.Type_Annotation_Syntax
+.Type Annotation Syntax
 [example]
 --
 
@@ -222,19 +222,25 @@ into the constructor by the N4JS transpiler.
 
 
 Besides the properties indirectly defined by the grammar, the following
-pseudo properties are used for type expressions: Properties of :
+pseudo properties are used for type expressions:
 
+Properties of ``TypeExpression``::
+
+`var` ::
 If true, variable of that type is variadic. This is only allowed for
 parameters. Default value: math:[$false$].
 
+`opt` ::
 If true, variable of that type is optional. This is only allowed for
 parameters and return types. This actually means that the type
-math:[$T$] actually is a union type of . Default value:
+math:[$T$] actually is a union type of `Undef|$T$`. Default value:
 math:[$false$].
 
+`optvar` ::
 math:[$optvar=var \lor opt$], reflect the facts that a variadic
 parameter is also optional (as its cardinality is math:[$[0..n]).$]
 
+`entity` ::
 Pseudo property referencing the variable declaration (or expression)
 which `owns` the type expression.
 
@@ -312,8 +318,9 @@ supposed to be changed.
 
 --
 
-[Variable type is not changeable] Given the following example.
+Given the following example.
 
+.Variable type is not changeable
 [source]
 ----
 var x: any;
@@ -751,9 +758,7 @@ G<? extends A> <: G<?>              -> true
 The figure <<cdVarianceChart>> shows the subtype relations of parameterized types (of a single generic type), which can be used as a cheat sheet.
 
 [[cdVarianceChart]]
-image::fig/cdVarianceChart.png[title="cdVarianceChart"]
-
-Cheat sheet: subtype relation of parameterized types
+image::fig/cdVarianceChart.png[title="Cheat Sheet: Subtype Relation of Parameterized Types"]
 
 
 .Subtyping between different generic types
@@ -918,8 +923,7 @@ with lower case letters::
 * `string` cite:[ECMA11a(S8.4)]
 * `number` cite:[ECMA11a(S8.5)]
 
-Although Object is a primitive type in cite:[ECMA11a(S8.5)], it is interpreted here as an
-object type and described in .
+Although Object is a primitive type in cite:[ECMA11a(S8.5)], it is interpreted here as an object type and described in <<_object-type,Object Type>>.
 
 Please note that primitive types are values (= no objects) so they have
 no properties and you cannot inherit from them.
@@ -1209,22 +1213,23 @@ functionality. They are solely defined for enabling additional
 validation.
 
 * `pathSelector<T>}` is a generic type for specifying path selector expressions. PathSelectors are used to specify a path to a property in a (JSON-like) model tree.
-* The type variable defines the context type (or type of the
+* The type variable `T` defines the context type (or type of the
 root of the tree) in which the selector is to be validated. A path
 selector is defined as a string literal that has to conform to the path
-selector grammar . cite:[PathSelector]. The context type is then used to perform a semantic
-validation of the path selector.
-* is a string which refers to an internationalization key. The type is
+selector grammar cite:[PathSelector]. The context type is then used to perform a semantic
+// TODO: The path selector grammar along with base classes using these selectors are not part of the public version yet. Path selectors are not yet validated at compile time.
+* `i18nKey` is a string which refers to an internationalization key. The `i18nKey` type is
 used to reference resource keys specified in resource files. In a
-project math:[$p$], the type defines the transitive set of all
+project math:[$p$], the `i18nKey` type defines the transitive set of all
 resource keys accessible from math:[$p$]. Since resource keys are
-specified as strings, this means that the type defines a subset of all
-string literals that can be assigned to a variable of type in the
+specified as strings, this means that the `i18nKey` type defines a subset of all
+string literals that can be assigned to a variable of type `i18nKey` in the
 current project. That means that an assignment of a string literal to a
-variable of type is only valid if that string literal is contained in
-the set defined by . Resource keys are declared in the properties files
+variable of type `i18nKey` is only valid if that string literal is contained in
+the set defined by `i18nKey`. Resource keys are declared in the properties files
 of a project and all resource keys from a project are accessible to any
 project depending on it.
+// TODO: I18nkeys are not yet validated
 
 ==== Semantics [[pathselector-semantics]]
 
@@ -1238,7 +1243,7 @@ As special literals for these N4JS types do not exist, the type has to
 be explicitly specified in order to enable the additional validation.
 Note that this validation cannot be applied for more complicated
 expressions with parts which cannot be evaluated at compile time. For
-example, cannot be evaluated at compile time.
+example, ``"some.path."+segment+".prop"`` cannot be evaluated at compile time.
 
 == Built-in ECMAScript Object Types
 
@@ -1269,7 +1274,7 @@ All other ECMAScript types (cite:[ECMA11a(S15)], such as `Math`, `Date`, or `Err
 ECMAScript 2015 types are defined in the ECMAScript
 2015 runtime environment. Since they are defined and used similar to
 user defined classes, they are not explained in further detail here.
-These predefined objects are kind of subtypes of .
+These predefined objects are kind of subtypes of `Object`.
 
 === Semantics [[ECMAScript-objects-semantics]]
 
@@ -1436,11 +1441,10 @@ The type `N4Class` is used for extended reflection in N4JS.
 
 // TODO: work in progress
 
-Currently there are built-in types `Iterable2<T1,T2>` -> `Iterable9<T1, -> ,T9>`.
+Currently there are built-in types `Iterable2<T1,T2>`...`Iterable9<T1,...,T9>`.
 They are mainly intended for type system support of array destructuring literals.
 
-Not documented in detail yet, because we want to gain experience with
-current solution, first, and major refinement might be incoming.
+NOTE: This is not documented in detail yet, because we want to gain experience with the current solution first, major refinement may be incoming.
 
 == Type Modifiers
 

@@ -388,7 +388,7 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
 
 #header > h1:first-child { color: black; font-weight: bold; margin-top: 2.25rem; margin-bottom: 0; }
 #header > h1:first-child + #toc { margin-top: 8px; border-top: 1px solid #dddddd; }
-#header > h1:only-child, body.toc2 #header > h1:nth-last-child(2) { border-bottom: 1px solid #dddddd; padding-bottom: 8px; }
+#header > h1:only-child, body.toc2 #header > h1:nth-last-child(2) { border-bottom: 1px solid #dddddd; padding-bottom: 8px; max-width: 100%; text-align: center; }
 #header .details { border-bottom: 1px solid #dddddd; line-height: 1.45; padding-top: 0.25em; padding-bottom: 0.25em; padding-left: 0.25em; color: #417dcb; display: -ms-flexbox; display: -webkit-flex; display: flex; -ms-flex-flow: row wrap; -webkit-flex-flow: row wrap; flex-flow: row wrap; }
 #header .details span:first-child { margin-left: -0.125em; }
 #header .details span.email a { color: #6999d6; }
@@ -1313,4 +1313,10 @@ div.openblock.definition {
 .bibliography .content .paragraph {
 	padding-left: 6em;
 	text-indent: -6em;
+}
+
+/* ================================ Project-Specific Modifications ================================ */
+
+.n4jslogo {
+	padding-top: 20px;
 }
