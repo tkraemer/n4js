@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -54,7 +54,7 @@ import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.ResourceType
 import eu.numberfour.n4js.utils.StructuralTypesHelper
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.validation.Check
@@ -77,9 +77,12 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject ProjectUtils pu;
 
+	@Inject
+	private JavaScriptVariantHelper jsVariantHelper;
+
 	/**
 	 * NEEEDED
-	 *
+	 * 
 	 * when removed check methods will be called twice once by N4JSValidator, and once by
 	 * AbstractDeclarativeN4JSValidator
 	 */
@@ -90,25 +93,25 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def checkExportedWhenVisibilityHigherThanPrivate(TypeDefiningElement typeDefiningElement) {
 		val resType = ResourceType.getResourceType(typeDefiningElement);
-		val isPlainJS = resType=== ResourceType.JS
-		if(isPlainJS){
-			return;//does not apply to plain JS files
+		val isPlainJS = resType === ResourceType.JS
+		if (isPlainJS) {
+			return; // does not apply to plain JS files
 		}
 
-
-		if(typeDefiningElement instanceof ObjectLiteral) {
+		if (typeDefiningElement instanceof ObjectLiteral) {
 			return; // does not apply to ObjectLiterals and their defined type TStructuralType
 		}
-		if(typeDefiningElement instanceof NamespaceImportSpecifier) {
+		if (typeDefiningElement instanceof NamespaceImportSpecifier) {
 			return; // does not apply to NamespaceImportSpecifier and their defined type ModuleNamespaceVirtualType
 		}
 
 		val type = typeDefiningElement.definedType
 
-		if (type!==null && !type.exported && type.typeAccessModifier.ordinal > TypeAccessModifier.PRIVATE.ordinal) {
+		if (type !== null && !type.exported && type.typeAccessModifier.ordinal > TypeAccessModifier.PRIVATE.ordinal) {
 			if (type instanceof SyntaxRelatedTElement) {
 				if (type.astElement !== null) {
-					val message = getMessageForCLF_NOT_EXPORTED_NOT_PRIVATE(type.keyword, type.typeAccessModifier.keyword)
+					val message = getMessageForCLF_NOT_EXPORTED_NOT_PRIVATE(type.keyword,
+						type.typeAccessModifier.keyword)
 					val eObjectToNameFeature = type.astElement.findNameFeature
 					addIssue(message, eObjectToNameFeature.key, eObjectToNameFeature.value,
 						CLF_NOT_EXPORTED_NOT_PRIVATE)
@@ -130,18 +133,20 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 		}
 		if (annotation !== null) {
 			val typeAccessModifier = switch (it : exportableElement) {
-				VariableStatement: it.varDecl.filter(ExportedVariableDeclaration).head?.definedVariable?.
-					typeAccessModifier
-				FunctionDeclaration: definedType?.typeAccessModifier
-				TypeDefiningElement: definedType?.typeAccessModifier
-				default: null
+				VariableStatement:
+					it.varDecl.filter(ExportedVariableDeclaration).head?.definedVariable?.typeAccessModifier
+				FunctionDeclaration:
+					definedType?.typeAccessModifier
+				TypeDefiningElement:
+					definedType?.typeAccessModifier
+				default:
+					null
 			}
 			if (typeAccessModifier !== null && typeAccessModifier.ordinal <= TypeAccessModifier.PROJECT.ordinal) {
-				val message =
-					getMessageForCLF_LOW_ACCESSOR_WITH_INTERNAL(exportableElement.keyword, typeAccessModifier.keyword)
+				val message = getMessageForCLF_LOW_ACCESSOR_WITH_INTERNAL(exportableElement.keyword,
+					typeAccessModifier.keyword)
 				val eObjectToNameFeature = exportableElement.findNameFeature
-				addIssue(message, eObjectToNameFeature.key, eObjectToNameFeature.value,
-					CLF_LOW_ACCESSOR_WITH_INTERNAL)
+				addIssue(message, eObjectToNameFeature.key, eObjectToNameFeature.value, CLF_LOW_ACCESSOR_WITH_INTERNAL)
 			}
 		}
 	}
@@ -151,12 +156,9 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 		if (typeRef.undefModifier == UndefModifier.OPTIONAL) {
 			val parent = typeRef.eContainer;
 
-			val isLegalUseOfOptional =
-					isFormalParameterButNotInASetter(parent)
-					|| isReturnTypeButNotOfAGetter(typeRef,parent)
-					|| parent instanceof N4FieldDeclaration
-					|| parent instanceof TAnonymousFormalParameter
-					|| parent instanceof TStructField;
+			val isLegalUseOfOptional = isFormalParameterButNotInASetter(parent) ||
+				isReturnTypeButNotOfAGetter(typeRef, parent) || parent instanceof N4FieldDeclaration ||
+				parent instanceof TAnonymousFormalParameter || parent instanceof TStructField;
 
 			if (!isLegalUseOfOptional) {
 				val message = getMessageForEXP_OPTIONAL_INVALID_PLACE
@@ -172,24 +174,24 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 		elem instanceof FormalParameter && !(elem.eContainer instanceof N4SetterDeclaration) &&
 			!(elem.eContainer instanceof PropertySetterDeclaration)
 	}
-	def private isReturnTypeButNotOfAGetter(TypeRef typeRef, EObject parent) {
-		(parent instanceof FunctionDefinition && (parent as FunctionDefinition).returnTypeRef === typeRef && !(parent instanceof N4GetterDeclaration))
-		|| (parent instanceof TFunction && (parent as TFunction).returnTypeRef === typeRef && !(parent instanceof TGetter))
-		|| (parent instanceof FunctionTypeExpression && (parent as FunctionTypeExpression).returnTypeRef === typeRef)
-	}
 
+	def private isReturnTypeButNotOfAGetter(TypeRef typeRef, EObject parent) {
+		(parent instanceof FunctionDefinition && (parent as FunctionDefinition).returnTypeRef === typeRef &&
+			!(parent instanceof N4GetterDeclaration)) ||
+			(parent instanceof TFunction && (parent as TFunction).returnTypeRef === typeRef &&
+				!(parent instanceof TGetter)) ||
+			(parent instanceof FunctionTypeExpression && (parent as FunctionTypeExpression).returnTypeRef === typeRef)
+	}
 
 	@Check
 	def checkFieldConstFinalValidCombinations(N4FieldDeclaration n4field) {
-		if(n4field.const && n4field.declaredStatic) {
+		if (n4field.const && n4field.declaredStatic) {
 			val msg = getMessageForCLF_FIELD_CONST_STATIC;
 			addIssue(msg, n4field, N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName, CLF_FIELD_CONST_STATIC);
-		}
-		else if(n4field.const && n4field.final) {
+		} else if (n4field.const && n4field.final) {
 			val msg = getMessageForCLF_FIELD_CONST_FINAL;
 			addIssue(msg, n4field, N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName, CLF_FIELD_CONST_FINAL);
-		}
-		else if(n4field.final && n4field.declaredStatic) {
+		} else if (n4field.final && n4field.declaredStatic) {
 			val msg = getMessageForCLF_FIELD_FINAL_STATIC;
 			addIssue(msg, n4field, N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName, CLF_FIELD_FINAL_STATIC);
 		}
@@ -197,11 +199,11 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Check
 	def checkFieldConstInitialization(N4FieldDeclaration n4field) {
-		if(JavaScriptVariant.external.isActive(n4field)) {
+		if (!jsVariantHelper.constantHasInitializer(n4field)) {
 			return; // in .n4jsd --> anything goes
 		}
 
-		if(n4field.const && n4field.expression===null) {
+		if (n4field.const && n4field.expression === null) {
 			val msg = getMessageForCLF_FIELD_CONST_MISSING_INIT(n4field.name);
 			addIssue(msg, n4field, N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName, CLF_FIELD_CONST_MISSING_INIT);
 		}
@@ -212,91 +214,93 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def checkFieldFinalInitialization(N4ClassifierDefinition n4classifier) {
-		if(JavaScriptVariant.external.isActive(n4classifier)) {
+		if (!jsVariantHelper.requireCheckFinalFieldIsInitialized(n4classifier)) {
 			return; // in .n4jsd --> anything goes
 		}
 
-		var Iterable<N4FieldDeclaration> finalFieldsWithoutInit = n4classifier.ownedFields.filterNull.filter[final && expression===null];
-		if(finalFieldsWithoutInit.empty) {
+		var Iterable<N4FieldDeclaration> finalFieldsWithoutInit = n4classifier.ownedFields.filterNull.filter [
+			final && expression === null
+		];
+		if (finalFieldsWithoutInit.empty) {
 			return; // nothing to check here
 		}
 
 		finalFieldsWithoutInit = filterFieldsInitializedViaSpecConstructor(n4classifier, finalFieldsWithoutInit);
-		if(finalFieldsWithoutInit.empty) {
+		if (finalFieldsWithoutInit.empty) {
 			return; // nothing to anymore
 		}
 
 		finalFieldsWithoutInit = filterFieldsInitializedExplicitlyInConstructor(n4classifier, finalFieldsWithoutInit);
-		if(finalFieldsWithoutInit.empty) {
+		if (finalFieldsWithoutInit.empty) {
 			return; // nothing to do anymore
 		}
 
 		// create error messages:
-		val boolean replacedByPolyfill = n4classifier.ownedCtor !== n4classifier.polyfilledOrOwnCtor ;
-		if( replacedByPolyfill ) {
-			finalFieldsWithoutInit.forEach[
+		val boolean replacedByPolyfill = n4classifier.ownedCtor !== n4classifier.polyfilledOrOwnCtor;
+		if (replacedByPolyfill) {
+			finalFieldsWithoutInit.forEach [
 				val msg = getMessageForCLF_FIELD_FINAL_MISSING_INIT_IN_STATIC_POLYFILL(it.name);
-				addIssue(msg,it,N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName,CLF_FIELD_FINAL_MISSING_INIT_IN_STATIC_POLYFILL)
+				addIssue(msg, it, N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName,
+					CLF_FIELD_FINAL_MISSING_INIT_IN_STATIC_POLYFILL)
 			]
 		} else {
-			finalFieldsWithoutInit.forEach[
+			finalFieldsWithoutInit.forEach [
 				val msg = getMessageForCLF_FIELD_FINAL_MISSING_INIT(it.name);
-				addIssue(msg,it,N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName,CLF_FIELD_FINAL_MISSING_INIT)
+				addIssue(msg, it, N4JSPackage.eINSTANCE.propertyNameOwner_DeclaredName, CLF_FIELD_FINAL_MISSING_INIT)
 			]
 		}
 	}
 
-	private def Iterable<N4FieldDeclaration> filterFieldsInitializedViaSpecConstructor(N4ClassifierDefinition n4classifier, Iterable<N4FieldDeclaration> finalFieldsWithoutInit) {
-		
+	private def Iterable<N4FieldDeclaration> filterFieldsInitializedViaSpecConstructor(
+		N4ClassifierDefinition n4classifier, Iterable<N4FieldDeclaration> finalFieldsWithoutInit) {
+
 		if (null === n4classifier.definedType) {
 			return emptyList
 		}
-		
+
 		val ctor = n4classifier.polyfilledOrOwnCtor;
-		val tctor =
-				if (ctor===null) {
-					containerTypesHelper.fromContext(n4classifier).findConstructor(n4classifier.definedType as ContainerType<?>);
-				} else {
-					ctor.definedTypeElement as TMethod;
-				}
+		val tctor = if (ctor === null) {
+				containerTypesHelper.fromContext(n4classifier).findConstructor(
+					n4classifier.definedType as ContainerType<?>);
+			} else {
+				ctor.definedTypeElement as TMethod;
+			}
 
 		val specPar = tctor?.fpars?.findFirst[AnnotationDefinition.SPEC.hasAnnotation(it)];
 		val typeRef = specPar?.typeRef;
 		if (typeRef instanceof ThisTypeRefStructural) {
-			val boundThisTypeRef = TypeUtils.createBoundThisTypeRefStructural(TypeUtils.createTypeRef(n4classifier.definedType), typeRef);
-			val specMemberFieldName = structuralTypesHelper.collectStructuralMembers(
-					n4classifier.newRuleEnvironment,
-					boundThisTypeRef, TypingStrategy.STRUCTURAL_FIELDS).map[name].toSet;
+			val boundThisTypeRef = TypeUtils.createBoundThisTypeRefStructural(
+				TypeUtils.createTypeRef(n4classifier.definedType), typeRef);
+			val specMemberFieldName = structuralTypesHelper.collectStructuralMembers(n4classifier.newRuleEnvironment,
+				boundThisTypeRef, TypingStrategy.STRUCTURAL_FIELDS).map[name].toSet;
 			return finalFieldsWithoutInit.filter[! specMemberFieldName.contains(name)];
 		}
 		return finalFieldsWithoutInit;
 	}
 
-	private def Iterable<N4FieldDeclaration> filterFieldsInitializedExplicitlyInConstructor(N4ClassifierDefinition n4classifier, Iterable<N4FieldDeclaration> finalFieldsWithoutInit) {
+	private def Iterable<N4FieldDeclaration> filterFieldsInitializedExplicitlyInConstructor(
+		N4ClassifierDefinition n4classifier, Iterable<N4FieldDeclaration> finalFieldsWithoutInit) {
 
 		val N4MethodDeclaration ctor = n4classifier.polyfilledOrOwnCtor;
 
-		val finalFieldsAssignedInCtor =
-			if(ctor?.body===null) {
+		val finalFieldsAssignedInCtor = if (ctor?.body === null) {
 				#[]
-			}
-			else {
-				ctor.body.allStatements
-				.map[eAllContents.toIterable].toIterable.flatten
-				.map[isAssignmentToFinalFieldInThis]
-				.filterNull.toSet
+			} else {
+				ctor.body.allStatements.map[eAllContents.toIterable].toIterable.flatten.map [
+					isAssignmentToFinalFieldInThis
+				].filterNull.toSet
 			};
 		return finalFieldsWithoutInit.filter[!finalFieldsAssignedInCtor.contains(it.definedField)];
 	}
 
 	private def TField isAssignmentToFinalFieldInThis(EObject astNode) {
-		if(astNode instanceof AssignmentExpression) {
+		if (astNode instanceof AssignmentExpression) {
 			val lhs = astNode.lhs;
-			if(lhs instanceof ParameterizedPropertyAccessExpression) {
-				if(lhs.target instanceof ThisLiteral) {
+			if (lhs instanceof ParameterizedPropertyAccessExpression) {
+				if (lhs.target instanceof ThisLiteral) {
 					val prop = lhs.property;
-					if(prop instanceof TField) {
-						if(prop.final) {
+					if (prop instanceof TField) {
+						if (prop.final) {
 							return prop;
 						}
 					}
@@ -311,7 +315,7 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 
 		// if static polyfill is available, then look for  filled in ctor.
 		val polyAware = n4classifier.definedType.containingModule.isStaticPolyfillAware
-		val polyfill = if( polyAware ) pu.getStaticPolyfill( n4classifier.definedType ) else null;
+		val polyfill = if (polyAware) pu.getStaticPolyfill(n4classifier.definedType) else null;
 		val polyfillCtor = polyfill?.ownedCtor
 
 		val N4MethodDeclaration ctor = polyfillCtor ?: n4classifier.ownedCtor;

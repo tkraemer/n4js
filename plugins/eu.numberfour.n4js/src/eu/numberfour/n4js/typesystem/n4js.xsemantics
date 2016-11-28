@@ -78,6 +78,7 @@ import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.ForStatement
 import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDefinition
+import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.GetterDeclaration
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.IndexedAccessExpression
@@ -85,6 +86,7 @@ import eu.numberfour.n4js.n4JS.IntLiteral
 import eu.numberfour.n4js.n4JS.LocalArgumentsVariable
 import eu.numberfour.n4js.n4JS.MultiplicativeExpression
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
+import eu.numberfour.n4js.n4JS.N4ClassExpression
 import eu.numberfour.n4js.n4JS.N4ClassifierDefinition
 import eu.numberfour.n4js.n4JS.N4EnumLiteral
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
@@ -172,11 +174,12 @@ import eu.numberfour.n4js.ts.utils.TypeHelper
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesbuilder.N4JSFunctionDefinitionTypesBuilder
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.typesystem.UnsupportedExpressionTypeHelper
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.utils.PromisifyHelper
 import eu.numberfour.n4js.validation.AbstractMessageAdjustingN4JSValidator
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.List
 import org.eclipse.emf.common.util.ECollections
@@ -184,7 +187,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
 
 import static eu.numberfour.n4js.typesystem.TypeSystemErrorExtensions.PRIORITY_ERROR
-import static eu.numberfour.n4js.validation.JavaScriptVariant.*
 
 import static extension eu.numberfour.n4js.ts.utils.TypeExtensions.*
 import static extension eu.numberfour.n4js.ts.utils.TypeUtils.*
@@ -198,6 +200,8 @@ inject ContainerTypesHelper containerTypesHelper
 inject DestructureHelper destructureHelper
 inject MemberScopingHelper memberScopingHelper
 inject PromisifyHelper promisifyHelper
+inject JavaScriptVariantHelper jsVariantHelper
+inject UnsupportedExpressionTypeHelper expressionTypeHelper
 
 judgments {
 
@@ -1021,6 +1025,33 @@ from {
 	T = e.targetTypeRef
 }
 
+/* This is needed to remove the ambiguity:
+ * N4ClassExpression is both a TypeDefininingElement and an Expression,
+ * thus the dispatcher needs the exact type.
+ * (same pattern as rules upperBoundFunctionTypeRef, lowerBoundFunctionTypeRef)
+ */
+ rule typeN4ClassExpression
+ 	G |- N4ClassExpression e: TypeRef T
+ from {
+ 	T = this.applyRuleTypeTypeDefiningElement(G, _trace_, e).value;
+}
+
+/* This is needed to remove the ambiguity:
+ * FunctionExpression is both a TypeDefininingElement and an Expression,
+ * thus the dispatcher needs the exact type.
+ * (same pattern as rules upperBoundFunctionTypeRef, lowerBoundFunctionTypeRef)
+ */
+ rule typeFunctionExpression
+ 	G |- FunctionExpression e: TypeRef T
+ from {
+ 	T = this.applyRuleTypeTypeDefiningElement(G, _trace_, e).value;
+}
+
+rule typeUnsupportedExpression
+	G |- Expression e: TypeRef T
+from {
+	T = expressionTypeHelper.typeExpression(e, G)
+}
 
 /* ----------------------------------------------------------------------
  * AST nodes: statements
@@ -1103,10 +1134,11 @@ from {
 	} else {
 		T = G.anyTypeRef
 	}
-	val jsVariant = JavaScriptVariant.getVariant(vdecl);
-	if (jsVariant.isECMAScript) { // plain JavaScript
+	
+	if (jsVariantHelper.enforceDynamicTypes(vdecl)) {
 		T = typeSystemHelper.makeDynamic(T);
 	}
+	
 }
 
 rule typeFormalParameter
@@ -1135,12 +1167,12 @@ from {
 		T = fpar.definedTypeElement.typeRef;
 	}
 	else {
-		if (JavaScriptVariant.getVariant(fpar)===JavaScriptVariant.n4js) {
+		if (jsVariantHelper.enforceDynamicTypes(fpar)) {//  e.g. plain ECMAScript
+			T = G.anyTypeRefDynamic
+		} else { // e.g., N4JS
 			T = env(G, fpar, TypeRef)
 			or
 			T = G.anyTypeRef
-		} else { // plain JavaScript
-			T = G.anyTypeRefDynamic
 		}
 	}
 	if (T !== null) {
@@ -1152,10 +1184,10 @@ from {
 }
 
 axiom typeCatchVariable G |- CatchVariable catchVariable:
-	if (JavaScriptVariant.getVariant(catchVariable)===JavaScriptVariant.n4js) {
-		G.anyTypeRef
-	} else { // plain JavaScript
+	if (jsVariantHelper.enforceDynamicTypes(catchVariable)) {//  e.g. plain ECMAScript 
 		G.anyTypeRefDynamic
+	} else { // e.g. N4JS
+		G.anyTypeRef
 	}
 
 axiom typeLocalArgumentsVariable G |- LocalArgumentsVariable lArgumentsVar : G.argumentsTypeRef
@@ -1867,7 +1899,7 @@ from {
 rule expectedTypeInPostfixExpression
 	G |- PostfixExpression e |> Expression expression : TypeRef T
 from {
-	if (n4js.isActive(e)) {
+	if (jsVariantHelper.isTypeAware(e)) {
 		T = G.numberTypeRef
 	} else {
 		T = G.anyTypeRef
@@ -1879,7 +1911,7 @@ rule expectedTypeInUnaryExpression
 	G |- UnaryExpression e |> Expression expression : TypeRef T
 from {
 	T =
-	if (n4js.isActive(e)) {
+	if ( jsVariantHelper.isTypeAware(e) ) { // e.g. in N4JS
 		switch (e.op) {
 			case UnaryOperator.DELETE: TypeUtils.createNonSimplifiedUnionType(G.anyTypeRef,G.voidTypeRef)
 			case UnaryOperator.VOID:   TypeUtils.createNonSimplifiedUnionType(G.anyTypeRef,G.voidTypeRef)
@@ -1892,7 +1924,7 @@ from {
 			case UnaryOperator.NOT: G.anyTypeRef
 			default: G.anyTypeRef
 		}
-	} else {
+	} else { // e.g. plain ECMAScript
 		switch (e.op) {
 			case UnaryOperator.DELETE: TypeUtils.createNonSimplifiedUnionType(G.anyTypeRef,G.voidTypeRef)
 			case UnaryOperator.VOID:   TypeUtils.createNonSimplifiedUnionType(G.anyTypeRef,G.voidTypeRef)
@@ -1906,7 +1938,7 @@ from {
 rule expectedTypeInMultiplicativeExpression
 	G |- MultiplicativeExpression e |> Expression expression : TypeRef T
 from {
-	if (n4js.isActive(e)) {
+	if (jsVariantHelper.isTypeAware(e)) {
 		T = G.numberTypeRef
 	} else {
 		T = G.anyTypeRef
@@ -1917,7 +1949,7 @@ from {
 rule expectedTypeInAdditiveExpression
 	G |- AdditiveExpression e |> Expression expression : TypeRef T
 from {
-	if (e.op != AdditiveOperator.ADD && n4js.isActive(e)) {
+	if (e.op != AdditiveOperator.ADD && jsVariantHelper.isTypeAware(e)) {
 		T = G.numberTypeRef
 	} else {
 		T = G.anyTypeRef
@@ -1928,7 +1960,7 @@ from {
 rule expectedTypeInShiftExpression
 	G |- ShiftExpression e |> Expression expression : TypeRef T
 from {
-	if (n4js.isActive(e)) {
+	if (jsVariantHelper.isTypeAware(e)) {
 		T = G.numberTypeRef
 	} else {
 		T = G.anyTypeRef
@@ -1952,7 +1984,7 @@ from {
 			if (expression===e.rhs) {
 				T = G.objectTypeRef
 			} else { // lhs:
-				if (n4js.isActive(e)) {
+				if (jsVariantHelper.isTypeAware(e)) {
 					T = TypeUtils.createNonSimplifiedUnionType(G.numberTypeRef, G.stringTypeRef);
 				} else {
 					T = G.anyTypeRef
@@ -1960,7 +1992,7 @@ from {
 			}
 		}
 		default: { // <, <=, >, >=
-			if (n4js.isActive(e)) {
+			if (jsVariantHelper.isTypeAware(e)) {
 				// TODO this looks expensive...
 				val primsTR = TypeUtils.createNonSimplifiedUnionType(G.numberTypeRef, G.stringTypeRef, G.booleanTypeRef);
 				val otherSide = if (expression===e.lhs) { e.rhs; } else { e.lhs; }
@@ -1994,7 +2026,7 @@ axiom expectedTypeInEqualityExpression
 rule expectedTypeInBinaryBitwiseExpression
 	G |- BinaryBitwiseExpression e |> Expression expression : TypeRef T
 from {
-	if (n4js.isActive(e)) {
+	if (jsVariantHelper.isTypeAware(e)) {
 		T = G.numberTypeRef
 	} else {
 		T = G.anyTypeRef
@@ -2010,7 +2042,7 @@ rule expectedTypeOfOperandInAssignmentExpression
 	G |- AssignmentExpression expr |> Expression operand : TypeRef T
 from {
 	{
-		! n4js.isActive(expr)
+		! jsVariantHelper.isTypeAware(expr)
 		if (operand===expr.lhs) {
 			// left-hand side:
 			T = G.bottomTypeRef // no expectation
@@ -2701,7 +2733,8 @@ from {
 						}
 					}
 					default: {
-						if (unrestricted.isActive(location)) {
+//						if (unrestricted.isActive(location)) {
+						if (jsVariantHelper.hasGlobalObject(location)) {
 							T = G.globalObjectTypeRef
 						} else {
 							T = G.undefinedTypeRef

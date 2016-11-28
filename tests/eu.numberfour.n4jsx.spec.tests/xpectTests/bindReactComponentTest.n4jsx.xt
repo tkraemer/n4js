@@ -1,0 +1,47 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "react.n4jsd" {}
+	}
+
+	END_SETUP
+*/
+
+
+import * as React from "react"
+
+const A = 10;
+
+//XPECT errors ---
+//"A is a used as a React component but is neither function nor class." at "A"
+//"JSX element A does not bind to any valid React component." at "A"
+//---
+var a = <A/>
+console.log(a)
+
+function B(): string {
+	//XPECT errors --> "Element is not a subtype of string." at "<div/>"
+	return <div/>
+}
+
+//XPECT errors --> "Function B is not a valid React functional component." at "B"
+var b = <B/>
+
+class C extends React.Component<Object, Object> {
+	@Override
+	public render(): React.Element {
+		return <button/>
+	}
+}
+
+//XPECT noerrors
+const c = <C/>
+
+class D {
+
+}
+
+//XPECT errors --> "Class D is not a valid React component." at "D"
+<D/>
+

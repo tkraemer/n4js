@@ -43,6 +43,8 @@ Contributors:
 		note: feature e.n.i.smith.sdk is *not* supposed to be in the product (only used in developer launch configuration)
 		<module>/eu.numberfour.n4js.smith.sdk</module>
 -->
+
+		<module>/eu.numberfour.n4jsx.sdk</module>
 	</modules>
 
 	<build>

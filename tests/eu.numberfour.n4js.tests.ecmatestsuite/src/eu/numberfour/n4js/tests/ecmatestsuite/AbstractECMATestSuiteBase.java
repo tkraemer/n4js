@@ -81,7 +81,7 @@ public abstract class AbstractECMATestSuiteBase extends AbstractJSLibTest {
 			uri = uri.trimFileExtension().appendFileExtension("n4js");
 		}
 		try {
-			Script script = this.parserN4JS.parse(code, uri, resourceSet);
+			Script script = doParse(code, uri, resourceSet, analyser);
 			if (config.isValidator()) {
 				Analyser syntaxAnalyzer = new PositiveAnalyser(logger, tester);
 				syntaxAnalyzer.analyse(script, config.entry.getName(), code);
@@ -98,7 +98,19 @@ public abstract class AbstractECMATestSuiteBase extends AbstractJSLibTest {
 		}
 	}
 
-	boolean isStrictModeTestCase(String code) {
+	/**
+	 * Subclasses may override to reuse test suite for sublanguages. Analyzer is only passed in order to check whether
+	 * test is positive or negative.
+	 */
+	protected Script doParse(String code, URI uri, XtextResourceSet resourceSet,
+			@SuppressWarnings("unused") Analyser analyser) throws Exception {
+		return parserN4JS.parse(code, uri, resourceSet);
+	}
+
+	/**
+	 * Returns true, if code contains "flags: [onlyStrict]"
+	 */
+	protected boolean isStrictModeTestCase(String code) {
 		return code.contains("flags: [onlyStrict]");
 	}
 

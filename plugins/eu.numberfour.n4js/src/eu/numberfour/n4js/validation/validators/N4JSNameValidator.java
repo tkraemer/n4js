@@ -57,7 +57,7 @@ import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.utils.N4JSLanguageHelper;
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator;
-import eu.numberfour.n4js.validation.JavaScriptVariant;
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
 
 /**
  * Validation of names, cf N4JS Spec, Chapter 3.4., Constraints 3 and 4
@@ -69,6 +69,9 @@ public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
 	private N4JSTypeSystem ts;
+
+	@Inject
+	private JavaScriptVariantHelper jsVariantHelper;
 
 	/**
 	 * NEEEDED
@@ -112,7 +115,7 @@ public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
 		if (Strings.isEmpty(n4TypeDeclaration.getName())) {
 			return true; // invalid AST
 		}
-		if (!JavaScriptVariant.n4js.isActive(n4TypeDeclaration)) {
+		if (!jsVariantHelper.checkTypeDeclaration(n4TypeDeclaration)) {
 			return true;
 		}
 		return n4TypeDeclaration.isExternal();
@@ -214,7 +217,7 @@ public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
 		if (Strings.isEmpty(n4Member.getName()) || n4Member.getOwner() == null) {
 			return true; // infinalid AST
 		}
-		if (!JavaScriptVariant.n4js.isActive(n4Member)) {
+		if (!jsVariantHelper.checkMemberDeclaration(n4Member)) {
 			return true;
 		}
 		return n4Member.getOwner().isExternal();
@@ -301,7 +304,7 @@ public class N4JSNameValidator extends AbstractN4JSDeclarativeValidator {
 		if (Strings.isEmpty(variable.getName())) {
 			return true; // invalid AST
 		}
-		if (!JavaScriptVariant.n4js.isActive(variable)) {
+		if (!jsVariantHelper.checkVariable(variable)) {
 			return true;
 		}
 		return false;

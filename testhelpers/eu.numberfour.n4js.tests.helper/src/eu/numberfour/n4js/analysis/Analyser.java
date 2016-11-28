@@ -25,4 +25,9 @@ public interface Analyser {
 	 */
 	public void analyse(final Script script, final String codeName, final String code);
 	// public void analyse(final @Nonnull Script script, final @Nonnull String codeName, final @Nonnull String code);
+
+	/**
+	 * Returns true if test is negative.
+	 */
+	public boolean isNegative();
 }

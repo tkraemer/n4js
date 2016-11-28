@@ -110,4 +110,9 @@ public class PositiveAnalyser extends BaseAnalyser implements Analyser {
 		}
 	}
 
+	@Override
+	public boolean isNegative() {
+		return false;
+	}
+
 }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -43,7 +43,7 @@ import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.util.Tuples
 import org.eclipse.xtext.validation.Check
@@ -66,9 +66,12 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject
 	private IN4JSCore n4jsCore;
 
+	@Inject
+	private JavaScriptVariantHelper jsVariantHelper;
+
 	/**
 	 * NEEEDED
-	 *
+	 * 
 	 * when removed check methods will be called twice once by N4JSValidator, and once by
 	 * AbstractDeclarativeN4JSValidator
 	 */
@@ -107,7 +110,7 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	private def boolean holdsExternalOnlyInDefinitionFile(N4TypeDeclaration typeDecl, String typesName) {
-		if (typeDecl.external && JavaScriptVariant.getVariant(typeDecl) != JavaScriptVariant.external) {
+		if (typeDecl.external && !jsVariantHelper.isExternalMode(typeDecl)) {
 			val message = getMessageForCLF_EXT_EXTERNAL_N4JSD(typesName)
 			addIssue(message, typeDecl, N4JSPackage.Literals.N4_TYPE_DECLARATION__NAME, CLF_EXT_EXTERNAL_N4JSD)
 			return false;
@@ -127,7 +130,8 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 		for (valInfo : PROVIDES_ANNOTATION_INFO) {
 
 			// @ProvidesInitializer is supported for setters in n4js files as well. (IDE-1996)
-			if (AnnotationDefinition.PROVIDES_INITIALZER === valInfo.first && memberDecl instanceof N4SetterDeclaration) {
+			if (AnnotationDefinition.PROVIDES_INITIALZER === valInfo.first &&
+				memberDecl instanceof N4SetterDeclaration) {
 				return;
 			}
 
@@ -136,7 +140,7 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 			val Class<?> metaType = valInfo.third;
 
 			if (annodef.hasAnnotation(memberDecl)) {
-				if (JavaScriptVariant.getVariant(memberDecl) != JavaScriptVariant.external) {
+				if (!jsVariantHelper.isExternalMode(memberDecl)) {
 					val msg = getMessageForCLF_EXT_PROVIDES_IMPL_ONLY_IN_DEFFILES(annodef.name, typeName);
 					addIssue(msg, memberDecl, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 						CLF_EXT_PROVIDES_IMPL_ONLY_IN_DEFFILES);
@@ -145,7 +149,7 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 
 				val N4ClassifierDefinition owner = memberDecl.owner;
 
-				if (! (metaType.isInstance(owner))) {
+				if (!(metaType.isInstance(owner))) {
 					val msg = getMessageForCLF_EXT_PROVIDES_IMPL_ONLY_IN_INTERFACE_MEMBERS(annodef.name, typeName);
 					addIssue(msg, memberDecl, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME,
 						CLF_EXT_PROVIDES_IMPL_ONLY_IN_INTERFACE_MEMBERS);
@@ -168,7 +172,7 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def checkExternalFunctionsDefinedInN4JSDFile(FunctionDeclaration funDecl) {
-		if (funDecl.external && JavaScriptVariant.getVariant(funDecl) != JavaScriptVariant.external) {
+		if (funDecl.external && !jsVariantHelper.isExternalMode(funDecl)) {
 			val message = getMessageForCLF_EXT_EXTERNAL_N4JSD("Functions")
 			addIssue(message, funDecl, N4JSPackage.Literals.FUNCTION_DECLARATION__NAME, CLF_EXT_EXTERNAL_N4JSD)
 		}
@@ -181,13 +185,13 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 	def checkExternalVariableStatementAssigments(ExportedVariableStatement variableStatement) {
 
 		if (variableStatement.external &&
-			JavaScriptVariant.getVariant(variableStatement) != JavaScriptVariant.external) {
+			!jsVariantHelper.isExternalMode(variableStatement)) {
 			val message = getMessageForCLF_EXT_EXTERNAL_N4JSD("Variables")
 			addIssue(message, variableStatement, CLF_EXT_EXTERNAL_N4JSD)
 		}
 
 		variableStatement.varDecl.forEach [ evd |
-			if (JavaScriptVariant.getVariant(evd) == JavaScriptVariant.external && evd.expression !== null) {
+			if (jsVariantHelper.isExternalMode(evd) && evd.expression !== null) {
 				val mod = if (evd.const) {
 						"constant"
 					} else {
@@ -204,7 +208,7 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def checkAllowedElementsInN4JSDFile(EObject eo) {
-		if (JavaScriptVariant.getVariant(eo) == JavaScriptVariant.external && eo.eContainer instanceof Script) {
+		if (jsVariantHelper.isExternalMode(eo) && eo.eContainer instanceof Script) {
 			val found = eo.findUnallowedElement
 			if (found) {
 				handleUnallowedElement(eo)
@@ -212,7 +216,7 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 				handleExportDeclaration(eo)
 			} else if (!(eo instanceof AnnotationList || eo instanceof Annotation || eo instanceof EmptyStatement ||
 				eo instanceof ImportDeclaration)) {
-				// 	relaxed by IDEBUG-561:		handleNotExported(eo)
+				// relaxed by IDEBUG-561:		handleNotExported(eo)
 			}
 		}
 	}
@@ -230,7 +234,7 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 
 	def private handleN4ClassDeclaration(ExportDeclaration eo, N4ClassDeclaration exported) {
 		validateClassifierIsExternal(exported.external, "classes", eo)
-		//	relaxed by IDEBUG-561:	exported.validateClassifierIsPublicApi("classes", eo)
+		// relaxed by IDEBUG-561:	exported.validateClassifierIsPublicApi("classes", eo)
 		if (AnnotationDefinition.N4JS.hasAnnotation(exported)) {
 			validateExtensionOfNotAnnotatedClass(exported, eo)
 			validateConsumptionOfNonAnnotatedInterfaces(exported.implementedInterfaceRefs, eo, "classes")
@@ -240,16 +244,15 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 			validateConsumptionOfNonExternalInterfaces(exported.implementedInterfaceRefs, eo, "classes")
 		}
 		validateNoObservableAtClassifier(eo, exported, "classes")
-		//	relaxed by IDEBUG-561:	validatePublicConstructor(exported)
+		// relaxed by IDEBUG-561:	validatePublicConstructor(exported)
 		validateMembers(exported, "classes")
 	}
 
 	def private handleN4InterfaceDeclaration(ExportDeclaration eo, N4InterfaceDeclaration exported) {
-		if (exported.typingStrategy == TypingStrategy.NOMINAL ||
-			exported.typingStrategy == TypingStrategy.DEFAULT) {
+		if (exported.typingStrategy == TypingStrategy.NOMINAL || exported.typingStrategy == TypingStrategy.DEFAULT) {
 			validateClassifierIsExternal(exported.external, "interfaces", eo)
 		}
-		// 	relaxed by IDEBUG-561:		exported.validateClassifierIsPublicApi("interfaces", eo)
+		// relaxed by IDEBUG-561:		exported.validateClassifierIsPublicApi("interfaces", eo)
 		if (AnnotationDefinition.N4JS.hasAnnotation(exported)) {
 			validateConsumptionOfNonAnnotatedInterfaces(exported.superInterfaceRefs, eo, "interfaces")
 		} else {
@@ -260,8 +263,8 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	def private handleN4EnumDeclaration(ExportDeclaration eo, N4EnumDeclaration exported) {
-		// 	relaxed by IDEBUG-561:		exported.validateEnumIsPublicApi(eo)
-		if(!exported.isStringBased) { // note: literal in a string-based enum may have value even in .n4jsd files!
+		// relaxed by IDEBUG-561:		exported.validateEnumIsPublicApi(eo)
+		if (!exported.isStringBased) { // note: literal in a string-based enum may have value even in .n4jsd files!
 			for (literal : exported.literals.filter[it.value !== null]) {
 				val message = getMessageForCLF_EXT_LITERAL_NO_VALUE
 				addIssue(message, literal, N4JSPackage.Literals.N4_ENUM_LITERAL__VALUE, CLF_EXT_LITERAL_NO_VALUE)
@@ -270,7 +273,7 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	def private handleFunctionDeclaration(ExportDeclaration eo, FunctionDeclaration exported) {
-		// 	relaxed by IDEBUG-561:		exported.validateFunctionIsPublicApi(eo)
+		// relaxed by IDEBUG-561:		exported.validateFunctionIsPublicApi(eo)
 		if (exported.body !== null) {
 			val message = getMessageForCLF_EXT_FUN_NO_BODY
 			val eObjectToNameFeature = eo.findNameFeature
@@ -335,8 +338,7 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 		validateNoNfonAtMember(declaration, classesOrRolesOrInterface)
 	}
 
-	private def validateNoObservableAtMember(N4ClassifierDeclaration declaration,
-		String classesOrRolesOrInterface) {
+	private def validateNoObservableAtMember(N4ClassifierDeclaration declaration, String classesOrRolesOrInterface) {
 		for (member : declaration.ownedMembers.filter[AnnotationDefinition.OBSERVABLE.hasAnnotation(it)]) {
 			val message = getMessageForCLF_EXT_METHOD_NO_ANNO(member.keyword.toFirstUpper + "s",
 				classesOrRolesOrInterface, "Observable")
@@ -405,11 +407,11 @@ class N4JSExternalValidator extends AbstractN4JSDeclarativeValidator {
 	/**
 	 * Returns with {@code true} if the type argument is a subtype of Error. Could be direct or implicit subtype as well.
 	 * 13.1 ExternalDeclarations, Constraints 144/c (External allowed occurrences)
-	 *
+	 * 
 	 * @see IDEBUG-512
 	 */
 	def private isSubtypeOfError(Type type) {
-		var toPrototype = [Type t | if (t instanceof TObjectPrototype) t else null];
+		var toPrototype = [Type t|if (t instanceof TObjectPrototype) t else null];
 		var TObjectPrototype prototype = toPrototype.apply(type);
 		while (null !== prototype) {
 			val G = RuleEnvironmentExtensions.newRuleEnvironment(prototype);
