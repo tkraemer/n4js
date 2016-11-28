@@ -389,6 +389,7 @@ class G<T> {
 ----
 --
 
+[discrete]
 ==== Properties [[type-variables-properties]]
 
 A type parameter defines a type variable, which type may be constrained
@@ -403,6 +404,7 @@ element is clear from the context.
 Upper bounds of concrete type bound to the type variable, i.e. a super
 class.
 
+[discrete]
 ==== Semantics [[type-variables-semantics]]
 
 .Type Variable Semantics
@@ -433,6 +435,7 @@ class Chain<C extends Chain<C, T>, T> {
 ----
 --
 
+[discrete]
 ==== Type Inference [[type-variables-type-inference]]
 
 In many cases, type variables are not directly used in subtype relations
@@ -537,6 +540,7 @@ References to generic types (cf. <<Classes>>) can be parameterized with type
 arguments. A type reference with type arguments is called parameterized
 type.
 
+[discrete]
 ==== Syntax [[parameterized-types-syntax]]
 
 
@@ -567,6 +571,7 @@ Wildcard returns Wildcard:
 ;
 ----
 
+[discrete]
 ==== Properties [[parameterized-types-properties]]
 
 Properties of parameterized type references (nominal or structural):
@@ -598,6 +603,7 @@ Returns simple name of type, that is either the simple name as declared,
 or the alias in case of an imported type with alias in the import
 statement.
 
+[discrete]
 ==== Semantics [[parameterized-types-semantics]]
 
 The main purpose of a parameterized type reference is to simply refer to
@@ -784,6 +790,7 @@ G<A> <: H<A>                        -> false
 
 ====
 
+[discrete]
 ==== Type Inference [[parameterized-types-type-inference]]
 
 Type inference for parameterized types uses the concept of existential types (in Java, a slightly modified version called capture conversion is implemented).
@@ -975,6 +982,7 @@ true for all types math:[$T$].
 
 The `null` type cannot be declared explicitly by the user. Only the keyword `null` is inferred to type `null`.
 
+[discrete]
 ==== Semantics [[null-type-semantics]]
 
 In contrast to `undefined`, it expresses the intentional absence of a value.
@@ -1030,7 +1038,7 @@ var a = true; console.log(a == 1) | prints true
 var b = false; console.log(b == 0) | prints true
 |===
 
-
+[discrete]
 ==== Semantics [[primitive-boolean-type-semantics]]
 
 The type is subtype of :
@@ -1066,6 +1074,7 @@ exceptions:
 This marks a difference to Java. In JavaScript, Unicode escape sequences
 are never interpreted as a special character.
 
+[discrete]
 ==== Semantics [[primitive-string-type-semantics]]
 
 The `string` type is a subtype of `any`:
@@ -1085,6 +1094,7 @@ With prefix `0` you indicate that the number is octal based and with prefix `0x`
 
 `NaN` can be produced by e.g.  '`0 / 0`’ or ’`1 - x`’. `typeof NaN` will return `number`.
 
+[discrete]
 ==== Semantics [[primitive-number-type-semantics]]
 
 The type `number` is subtype of `any`:
@@ -1131,6 +1141,7 @@ type of functions and methods
 Any type is the default type of all variables for without a type
 declaration. It has no properties. A value of any other type can be
 assigned to a variable of type `any`, but a variable declared  `any` can only be assigned to another variable declared with the type `any`.
+
 
 ==== Semantics [[any-type-semantics]]
 

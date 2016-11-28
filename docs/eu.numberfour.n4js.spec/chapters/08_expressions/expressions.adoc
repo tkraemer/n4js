@@ -65,6 +65,7 @@ task:IDE-229[] task:IDE-505[]
 
 This section describes the `this` literal and the semantics of the `@This` annotation, the type `this` is described in <<_this-type>>.
 
+[discrete]
 ==== Semantics
 
 Semantics are similar to the original ECMAScript this keyword, see cite:[ECMA11a(11.1.1,p.63)])
@@ -189,6 +190,7 @@ class A {
 NOTE: In N4JS classes, `this` is always bound to the instance when used in
 field initialization.
 
+[discrete]
 ==== Type Inference
 task:IDE-244[]
 
@@ -401,6 +403,7 @@ TIP: Using constructor functions is not recommended and an error or warning will
 
 === Identifier
 
+[discrete]
 ==== Syntax
 
 Identifiers as expressions are identifier references. They are defined
@@ -419,6 +422,7 @@ BindingIdentifier <Yield>:
 ;
 ----
 
+[discrete]
 ==== Semantics
 
 The type of an identifier math:[$i$] is resolved depending on its
@@ -463,6 +467,7 @@ of an assignment expression. math:[\[\begin{aligned}
 
 --
 
+[discrete]
 ==== Type Inference
 task:IDE-244[]
 
@@ -478,6 +483,7 @@ as follows: math:[\[\begin{aligned}
 
 cf. cite:[ECMA11a(S11.1.3p.63,S7.8p.19ff)].
 
+[discrete]
 ==== Type Inference
 
 
@@ -544,6 +550,7 @@ positive integer literal (inferred to `number`).
 
 === Array Literal
 
+[discrete]
 ==== Syntax
 
 cf cite:[ECMA11a(S11.1.4,p.63)]
@@ -570,6 +577,7 @@ ArrayElement <Yield> returns ArrayElement: {ArrayElement} spread?='...'? express
 ----
 
 
+[discrete]
 ==== Type Inference
 
 task:IDE-244[] task:IDE-342[]
@@ -635,6 +643,7 @@ literal will be inferred to `Array<T>`.
 
 === Object Literal
 
+[discrete]
 ==== Syntax  [[object-literal-syntax]]
 
 Cf. cite:[ECMA11a(S11.1.5,p.65ff)]
@@ -754,6 +763,7 @@ math:[$\mu(p)=\type{PropertyNameValuePair}$]. It is comparable to
 ECMAScript’s spec function `isDataDescriptor`. The equation
 math:[$isAccessor = \lnot isData$] is always true.
 
+[discrete]
 ==== Semantics [[properties-semantics]]
 
 .Object literal
@@ -831,6 +841,7 @@ to undefined or global.
 * Nested properties of an object literal are also accessible from
 outside.
 
+[discrete]
 ==== Type Inference [[type-inference-3]]
 task:IDE-244[] task:IDE-343[] task:IDE-691[]
 
@@ -850,6 +861,7 @@ var st: ~Object with { s: string; n: number;};
 
 The grouping operator is defined here as a parenthesized expression.
 
+[discrete]
 ==== Syntax [[parenthesized-expression-grouping-syntax]]
 
 cf. cite:[ECMA11a(S11.1.6,p.67)]
@@ -859,6 +871,7 @@ cf. cite:[ECMA11a(S11.1.6,p.67)]
 ParenExpression <Yield>: '(' expression=Expression<In=true,Yield> ')';
 ----
 
+[discrete]
 ==== Type Inference [[Grouping-Operator-type-inference]]
 task:IDE-244[] task:IDE-345[]
 
@@ -894,6 +907,7 @@ f?a:b                   (f?a:b);
 
 === Property Accessors
 
+[discrete]
 ==== Syntax [[property-accessor-syntax]]
 
 Property accessors in N4JS are based on cite:[ECMA11a(S11.2.1,p.67ff)]. They cannot only be used for
@@ -958,6 +972,7 @@ Returns the name of the property. This is either the
 math:[$property$] converted to a simple name or the index converted
 to a name (where possible) if it is an indexed-accessed expression.
 
+[discrete]
 ==== Semantics [[property-acessors-semantics]]
 task:IDE-12[]
 
@@ -1083,6 +1098,7 @@ Also see constraints on read (<<IDE-93,requirement: Read Access to Identifier>>)
 
 --
 
+[discrete]
 ==== Type Inference [[type-inference-5]]
 task:IDE-244[] task:IDE-182[] task:IDE-183[]
 
@@ -1111,6 +1127,7 @@ task:IDE-192[] task:IDE-204[]
 
 cf. cite:[ECMA11a(S11.2.2,p.68)]
 
+[discrete]
 ==== Syntax [[new-expression-syntax]]
 
 ----
@@ -1130,6 +1147,7 @@ class C<T> {
 var c = new C<string>("hello");
 ----
 
+[discrete]
 ==== Semantics [[new-expression-semantics]]
 
 .New expression
@@ -1202,6 +1220,7 @@ foo(B);
 
 --
 
+[discrete]
 ==== Type Inference [[type-inference-6]]
 
 The type of a new expression math:[$ne$] is inferred as follows:
@@ -1232,6 +1251,7 @@ the ECMAScript’s CallExpression, a ParameterizedCallExpression is
 introduced to allow type arguments passed to plain functions.
 
 
+[discrete]
 ==== Syntax
 task:IDE-177[] [[function-calls-syntax]]
 
@@ -1260,6 +1280,7 @@ fragment Arguments <Yield>*:
 ;
 ----
 
+[discrete]
 ==== Semantics [[function-calls-semantics]]
 
 .Function Call Constraints
@@ -1301,6 +1322,7 @@ type of math:[$F$] is `Function`. See <<_function-object-type>>.
 
 --
 
+[discrete]
 ==== Type Inference [[type-inference-7]]
 task:IDE-244[]
 
@@ -1356,6 +1378,7 @@ the type variable `T` can be automatically bound to the type of variable `contex
 
 === Postfix Expression
 
+[discrete]
 ==== Syntax [[postfix-expression-syntax]]
 
 [source,n4js]
@@ -1366,6 +1389,7 @@ PostfixExpression returns Expression: LeftHandSideExpression
 enum PostfixOperator: inc='++' | dec='--';
 ----
 
+[discrete]
 ==== Semantics and Type Inference [[semantics-and-type-inference]]
 
 The type inference and constraints for postfix operators ```` and
@@ -1390,6 +1414,7 @@ math:[$set$] math:[$p$] must be defined. task:IDE-737[]
 
 === Unary Expression
 
+[discrete]
 ==== Syntax [[unary-expression-syntax]]
 
 We define the following unary operators and expression, similar to cite:[ECMA11a(p.70ff)]::
@@ -1402,6 +1427,7 @@ UnaryExpression returns Expression:
 enum UnaryOperator: delete | void | typeof | inc='++' | dec='--' | pos='+' | neg='-' | inv='$\sim$' | not='!';
 ----
 
+[discrete]
 ==== Semantics [[unary-expression-semantics]]
 
 For semantics of the delete operator, see also
@@ -1485,6 +1511,7 @@ math:[$u.op=\lstnfjs{!}$].
 
 --
 
+[discrete]
 ==== Type Inference [[type-inference-8]]
 
 The following operators have fixed types independent of their operand
@@ -1502,6 +1529,7 @@ math:[\[\begin{aligned}
 
 === Multiplicative Expression
 
+[discrete]
 ==== Syntax [[multiplicative-expression-syntax]]
 
 Cf. cite:[ECMA11a(p.73ff)]
@@ -1513,6 +1541,7 @@ MultiplicativeExpression returns Expression: UnaryExpression
 enum MultiplicativeOperator: times='*' | div='/' | mod='%';
 ----
 
+[discrete]
 ==== Semantics [[multiplicative-expression-semantics]]
 
 
@@ -1528,6 +1557,7 @@ math:[\[\begin{aligned}
 
 --
 
+[discrete]
 ==== Type Inference
 task:IDE-244[] task:IDE-345[] [[type-inference-9]]
 
@@ -1537,6 +1567,7 @@ math:[\[\begin{aligned}
 
 === Additive Expression
 
+[discrete]
 ==== Syntax [[additive-expression-syntax]]
 
 Cf. cite:[ECMA11a(p.75ff)]
@@ -1548,6 +1579,7 @@ AdditiveExpression returns Expression: MultiplicativeExpression
 enum AdditiveOperator: add='+' | sub='-';
 ----
 
+[discrete]
 ==== Semantics [[additive-expression-semantics]]
 
 .Additive Expression Constraints
@@ -1564,6 +1596,7 @@ math:[\[\begin{aligned}
     {e.op \neq AdditiveOperator.ADD}\end{aligned}\]]
 --
 
+[discrete]
 ==== Type Inference [[type-inference-10]]
 task:IDE-244[] task:IDE-345[]
 
@@ -1603,6 +1636,7 @@ false+1;        // number 1
 
 === Bitwise Shift Expression
 
+[discrete]
 ==== Syntax [[bitwise-shift-expression-syntax]]
 
 task:IDE-288[] Cf. cite:[ECMA11a(p.76f)]
@@ -1619,6 +1653,7 @@ ShiftOperator returns ShiftOperator:
     ;
 ----
 
+[discrete]
 ==== Semantics [[bitwise-shift-expression-semantics]]
 
 .Bitwise Shift Expression Constraints
@@ -1631,6 +1666,7 @@ math:[\[\begin{aligned}
 \infer{\tee \type{BitwiseShiftExpression}\ \expectType\ \type{Expression}: \type{number}}{}\end{aligned}\]]
 --
 
+[discrete]
 ==== Type Inference [[type-inference-11]]
 task:IDE-244[] task:IDE-345[]
 
@@ -1641,6 +1677,7 @@ math:[\[\begin{aligned}
 
 === Relational Expression
 
+[discrete]
 ==== Syntax [[relational-expression-syntax]]
 
 Cf. cite:[ECMA11a(p.77ff)]
@@ -1659,6 +1696,7 @@ RelationalOperatorNoIn returns RelationalOperator:
     '<' | '>' | '<=' | '>=' | 'instanceof';
 ----
 
+[discrete]
 ==== Semantics [[relational-expression-semantics]]
 
 .Greater/Less (Equals) Operator Constraints
@@ -1769,6 +1807,7 @@ B is instance of I
 
 --
 
+[discrete]
 ==== Type Inference [[type-inference-12]]
 task:IDE-244[] task:IDE-345[]
 
@@ -1778,6 +1817,7 @@ math:[\[\begin{aligned}
 
 === Equality Expression
 
+[discrete]
 ==== Syntax [[equality-expression-syntax]]
 
 Cf. cite:[ECMA11a(p.80ff)]
@@ -1794,6 +1834,7 @@ EqualityExpressionNoIn returns Expression: RelationalExpressionNoIn
 enum EqualityOperator: same='===' | nsame='!==' | eq='==' | neq='!=';
 ----
 
+[discrete]
 ==== Semantics [[equality-expression-semantics]]
 task:IDE-345[]
 
@@ -1823,6 +1864,7 @@ Neither math:[$\lstnfjs{? extends A}\subtype \lstnfjs{B}$] nor
 math:[$\lstnfjs{B} \subtype \lstnfjs{? extends A}$] is true. This
 is why the upper bounds are to be used.
 
+[discrete]
 ==== Type Inference [[type-inference-13]]
 task:IDE-244[] task:IDE-345[]
 
@@ -1834,6 +1876,7 @@ math:[\[\begin{aligned}
 
 === Binary Bitwise Expression
 
+[discrete]
 ==== Syntax [[binary-bitwise-expression-syntax]]
 
 Cf. cite:[ECMA11a(p.82ff)]
@@ -1859,6 +1902,7 @@ BitwiseORExpressionNoIn returns Expression: BitwiseXORExpressionNoIn
     (=> ({BitwiseORExpression.lhs=current} '|') rhs=BitwiseXORExpressionNoIn)*;
 ----
 
+[discrete]
 ==== Semantics [[binary-bitwise-expression-semantics]]
 
 .Bitwise Bitwise Expression Constraints
@@ -1874,6 +1918,7 @@ math:[\[\begin{aligned}
 
 --
 
+[discrete]
 ==== Type Inference [[type-inference-14]]
 task:IDE-244[] task:IDE-345[]
 
@@ -1883,6 +1928,7 @@ math:[\[\begin{aligned}
 
 === Binary Logical Expression
 
+[discrete]
 ==== Syntax [[binary-logical-expression-syntax]]
 
 [source,n4js]
@@ -1898,6 +1944,7 @@ LogicalORExpressionNoIn returns Expression: LogicalANDExpressionNoIn
     (=> ({LogicalORExpression.lhs=current} '||') rhs=LogicalANDExpressionNoIn)*;
 ----
 
+[discrete]
 ==== Semantics [[binary-logical-expression-semantics]]
 
 .Binary Logical Expression Constraints
@@ -1910,6 +1957,7 @@ math:[$e.rhs.type: R$] the following constraints must hold:
 
 --
 
+[discrete]
 ==== Type Inference [[type-inference-15]]
 task:IDE-244[]
 
@@ -1925,6 +1973,7 @@ math:[\[\begin{aligned}
 
 === Conditional Expression
 
+[discrete]
 ==== Syntax [[conditional-expression-syntax]]
 
 Cf. cite:[ECMA11a(S11.12,p.84)]
@@ -1938,6 +1987,7 @@ ConditionalExpressionNoIn returns Expression: LogicalORExpressionNoIn
     (=> ({ConditionalExpression.expression=current} '?') trueExpression=AssignmentExpression  ':' falseExpression=AssignmentExpressionNoIn)?;
 ----
 
+[discrete]
 ==== Semantics [[conditional-expression-semantics]]
 task:IDE-776[]
 
@@ -1961,6 +2011,7 @@ ECMAScript operation `ToBoolean` cite:[ECMA11a(S9.2,p.43)] is used to convert an
 
 --
 
+[discrete]
 ==== Type Inference [[type-inference-16]]
 task:IDE-348[]
 
@@ -2004,6 +2055,7 @@ cond ? ga : gb;                         // union{G<A>,G<B>}
 
 === Assignment Expression
 
+[discrete]
 ==== Syntax [[assignment-expression-syntax]]
 
 [source,n4js]
@@ -2020,6 +2072,7 @@ AssignmentOperator:
 ;
 ----
 
+[discrete]
 ==== Semantics [[assignment-expression-semantics]]
 task:IDE-349[]
 
@@ -2093,6 +2146,7 @@ assignment. See <<_array-and-object-destructuring>> for details.
 
 --
 
+[discrete]
 ==== Type Inference [[type-inference-17]]
 task:IDE-244[] task:IDE-349[]
 
@@ -2113,6 +2167,7 @@ math:[\[\begin{aligned}
 
 === Comma Expression
 
+[discrete]
 ==== Syntax [[comma-expression-syntax]]
 
 Cf. cite:[ECMA11a(S11.14,p.85)]
@@ -2125,6 +2180,7 @@ CommaExpression <In, Yield>:
 ;
 ----
 
+[discrete]
 ==== Semantics [[comma-expression-semantics]]
 task:IDE-778[]
 
@@ -2144,6 +2200,7 @@ b =  12, 34, true ; // error, b=12 is invalid
 ----
 --
 
+[discrete]
 ==== Type Inference [[type-inference-18]]
 task:IDE-244[]
 
@@ -2190,6 +2247,7 @@ class B extends A {
 
 --
 
+[discrete]
 ==== Semantics [[super-keyword-semantics]]
 task:IDE-645[]
 
@@ -2360,10 +2418,12 @@ Constraints governing the use of `await` are given together with those for `asyn
 A class expression in N4JS is similar to a class expression in
 ECMAScript 6 cite:[ECMA15a(14.5)].
 
+[discrete]
 ==== Syntax [[class-expression-syntax]]
 
 See <<Classes>>.
 
+[discrete]
 ==== Semantics and Type Inference [[class-expression-semantics-type-inference]]
 
 The inferred type of a class expression simply is the class type as
@@ -2372,6 +2432,7 @@ described in <<_constructor-and-classifier-type>>.
 === Cast (As) Expression
 task:IDE-161[]
 
+[discrete]
 ==== Syntax [[cast-as-expression-syntax]]
 
 [source,n4js]

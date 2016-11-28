@@ -58,6 +58,7 @@ and a warning is issued in these cases.
 
 === Variable Statement
 
+[discrete]
 ==== Syntax [[variable-statement-syntax]]
 
 A var statement can declare the type of the variable with a type
@@ -119,6 +120,7 @@ const MESSAGE = "Hello World";
 // MESSAGE.type := string
 ----
 
+[discrete]
 ==== Semantics [[variable-statement-semantics]]
 
 From a model and type inference point of view, variable and constant
@@ -165,6 +167,7 @@ patterns, see <<_array-and-object-destructuring>> for details.
 
 --
 
+[discrete]
 ==== Type Inference [[variable-statement-type-inference]]
 
 The type of a variable is the type of its declaration:
@@ -184,6 +187,7 @@ math:[\[\begin{aligned}
 
 === If Statement
 
+[discrete]
 ==== Syntax [[if-statement-syntax]]
 
 Cf. cite:[ECMA11a(S12.5,p.89)]
@@ -197,6 +201,7 @@ IfStatement <Yield>:
 ----
 
 
+[discrete]
 ==== Semantics [[if-statement-semantics]]
 
 There are no specific constraints defined for the condition, the
@@ -211,6 +216,7 @@ in particular, the called function must not be declared to return `void`.
 
 === Iteration Statements
 
+[discrete]
 ==== Syntax [[iterations-statements-syntax]]
 
 Cf. cite:[ECMA11a(S12.6,p.90ff)]
@@ -263,6 +269,7 @@ Since math:[$varDecl(s)$] are `VariableStatement`s as described in <<_variable-s
 
 TIP: Using for-in is not recommended, instead ``pass:[_each]`` should be used.
 
+[discrete]
 ==== Semantics [[iterations-statements-semantics]]
 
 There are no specific constraints defined for the condition, the
@@ -287,6 +294,7 @@ string, i.e. any): math:[\[\begin{aligned}
 
 === Return Statement
 
+[discrete]
 ==== Syntax [[return-statement-syntax]]
 
 The returns statement is defined as in cite:[ECMA11a(S12.9,p.93)] with
@@ -297,6 +305,7 @@ ReturnStatement <Yield>:
     'return' (expression=Expression<In=true,Yield>)? Semi;
 ----
 
+[discrete]
 ==== Semantics [[return-statement-semantics]]
 
 .Return statement
@@ -323,6 +332,7 @@ statement, for example, must not be a top-level statement.
 
 === With Statement
 
+[discrete]
 ==== Syntax [[with-statement-syntax]]
 
 The with statement is not allowed in N4JS, thus an error is issued.
@@ -334,6 +344,7 @@ WithStatement <Yield>:
     statement=Statement<Yield>;
 ----
 
+[discrete]
 ==== Semantics [[with-statement-semantics]]
 
 N4JS is based on strict mode and the with statement is not allowed in
@@ -347,6 +358,7 @@ With statements are not allowed in N4JS or strict mode.
 
 === Switch Statement
 
+[discrete]
 ==== Syntax [[switch-statement-syntax]]
 
 Cf. cite:[ECMA11a(S12.11,p.94ff)]
@@ -364,6 +376,7 @@ CaseClause <Yield>: 'case' expression=Expression<In=true,Yield> ':' (statements+
 DefaultClause <Yield>: {DefaultClause} 'default' ':' (statements+=Statement<Yield>)*;
 ----
 
+[discrete]
 ==== Semantics [[switch-statement-semantics]]
 
 .Switch Constraints
@@ -378,6 +391,7 @@ the constraints defined in <<Equality Expression>>.
 
 === Throw, Try, and Catch Statements
 
+[discrete]
 ==== Syntax [[throw-try-catch-syntax]]
 
 Cf. cite:[ECMA11a(S12.13/14,p.96ff)]
@@ -405,6 +419,7 @@ FinallyBlock <Yield>: {FinallyBlock} 'finally' block=Block<Yield>;
 There must be not type annotation for the catch variable, as this would
 lead to the wrong assumption that a type can be specified.
 
+[discrete]
 ==== Type Inference [[throw-try-catch-type-inference]]
 
 The type of the catch variable is always assumed to be .
@@ -414,6 +429,7 @@ math:[\[\begin{aligned}
 === Debugger Statement
 
 
+[discrete]
 ==== Syntax [[debugger-statement-syntax]]
 
 Cf. cite:[ECMA11a(S12.15,p.97ff)])
@@ -423,6 +439,7 @@ Cf. cite:[ECMA11a(S12.15,p.97ff)])
 DebuggerStatement: {DebuggerStatement} 'debugger' Semi;
 ----
 
+[discrete]
 ==== Semantics [[debugger-statement--semantics]]
 
 na
@@ -452,6 +469,7 @@ ConstStatement returns VariableStatement: 'const' varDecl+=ConstDeclaration ( ',
 ConstDeclaration returns VariableDeclaration: typeRef=TypeRef? name=IDENTIFIER const?='=' expression=AssignmentExpression;
 ----
 
+[discrete]
 ==== Semantics [[const-semantics]]
 
 A const variable statement is more or less a normal variable statement
@@ -471,10 +489,12 @@ math:[$constStmt$] are not writeable: math:[\[\begin{aligned}
 
 ES6 introduced a new form of `for` statement: `for ... of` to iterate over the elements of an  `Iterable`, cf. <<_iterablen>>.
 
+[discrete]
 ==== Syntax [[for-of-statement-syntax]]
 
 See <<_iteration-statements,Iteration Statements>>
 
+[discrete]
 ==== Semantics [[for-of-statement-semantics]]
 
 .for ... of statement
@@ -525,6 +545,7 @@ This is used to destructure the elements of the `Iterable` on the right-hand sid
 
 Cf. ES6 import cite:[ECMA15a(15.2.2)], see also https://babeljs.io/docs/usage/modules/
 
+[discrete]
 ==== Syntax [[import-statement-syntax]]
 
 The grammar of import declarations is defined as follows:
@@ -602,6 +623,7 @@ import {A as H, B as I} from "p/H"
 ----
 --
 
+[discrete]
 ==== Semantics [[import-statement-semantics]]
 
 Import statements are used to import identifiable elements from another
@@ -870,6 +892,7 @@ task:IDE-1302[]
 
 Cf. ES6 import cite:[ECMA15a(15.2.3)]
 
+[discrete]
 ==== Syntax [[export-statement-syntax]]
 
 Grammar of export declarations is defined as follows:
@@ -935,6 +958,7 @@ export const c="Hello";
 
 --
 
+[discrete]
 ==== Semantics [[export-statement-semantics]]
 
 
