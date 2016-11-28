@@ -40,10 +40,12 @@ class ReactLookupHelper {
 	@Inject
 	private IResourceScopeCache resourceScopeCacheHelper;
 
-	def lookUpReactClassifier(EObject context, EReference reference, String reactName, String reactModuleName) {
+
+	def TClassifier lookUpReactClassifier(EObject context, EReference reference, String reactName, String reactModuleName) {
+		//val String key = //REACT_TYPE__ + reactModuleName + "." + reactName;
 		val String key = reactModuleName + "." + reactName;
 
-		resourceScopeCacheHelper.get(key, context.eResource, [
+		return resourceScopeCacheHelper.get(key, context.eResource, [
 			val IScope scope = scopeProvider.getScope(context, reference)
 			val IEObjectDescription eod = scope.allElements.findFirst [ e |
 				val classifier = e.EObjectOrProxy;

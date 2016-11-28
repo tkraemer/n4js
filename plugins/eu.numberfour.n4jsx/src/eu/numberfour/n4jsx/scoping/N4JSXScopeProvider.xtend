@@ -13,6 +13,7 @@ import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4jsx.helpers.ReactLookupHelper
 import eu.numberfour.n4jsx.n4JSX.JSXElement
@@ -30,6 +31,7 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 	ContainerTypesHelper containerTypesHelper;
 
 	@Inject N4JSTypeSystem ts
+	@Inject TypeSystemHelper tsh	
 
 	@Inject MemberScopingHelper memberScopingHelper
 
@@ -47,6 +49,15 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 					if (expr.id instanceof TClass) {
 						// React component is defined as a class
 						var tclass = expr.id as TClass
+						
+						val TClass reactElement = null;
+						val reactElement_propst = reactElement.typeVars.get(0);
+						val G = context.newRuleEnvironment;
+						tsh.addSubstitutions(G, TypeUtils.createTypeRef(tclass));
+						ts.substTypeVariablesInTypeRef(G, TypeUtils.createTypeRef(reactElement_propst));
+						
+						
+						
 						val memberCollector = containerTypesHelper.fromContext(tclass)
 						val propsFieldT = memberCollector.findMember(tclass, "props", false, false);
 						
