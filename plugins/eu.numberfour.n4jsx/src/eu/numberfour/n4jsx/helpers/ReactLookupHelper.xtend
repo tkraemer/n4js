@@ -11,6 +11,7 @@
 package eu.numberfour.n4jsx.helpers
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
@@ -25,6 +26,8 @@ import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.IScopeProvider
 import org.eclipse.xtext.util.IResourceScopeCache
+
+import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
  * This helper provides utilities for looking up React definitions
@@ -66,6 +69,15 @@ class ReactLookupHelper {
 			return classifier as TClassifier;
 		])
 	}
+//	
+//	public def boolean isExpressionRefersToReactElement(Expression expr) {
+//		val G = expr.newRuleEnvironment;
+//		val exprResult = ts.type(G, expr);
+//		if (exprResult.failed)
+//			return false;
+//			
+//		
+//	}
 
 	/**
 	 * This methods check if a function declaration defines a React component 

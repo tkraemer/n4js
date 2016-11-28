@@ -11,18 +11,12 @@
 package eu.numberfour.n4jsx.validation;
 
 import com.google.inject.Inject
-import eu.numberfour.n4js.n4JS.IdentifierRef
-import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
-import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
-import eu.numberfour.n4js.ts.typeRefs.FunctionTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
+import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
-import eu.numberfour.n4js.ts.types.TClass
-import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
-import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4jsx.helpers.ReactLookupHelper
@@ -32,7 +26,6 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 
 /**
  * Validation of names, cf N4JS Spec, Chapter 3.4., Constraints 3 and 4
@@ -41,7 +34,7 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject
 	protected N4JSTypeSystem ts;
 	@Inject
-	protected TypeSystemHelper tsh	
+	protected TypeSystemHelper tsh
 	@Inject
 	ReactLookupHelper reactLookupHelper;
 
@@ -60,83 +53,55 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def void checkReactElementBinding(JSXElement jsxElem) {
-		val elemName = jsxElem.getJsxElementName();
-		val expr = elemName.getExpression();
+		val expr = jsxElem.jsxElementName.expression;
+		val G = expr.newRuleEnvironment;
+		val exprResult = ts.type(G, expr);
+		if (exprResult.failed)
+			return
 
-//		//TODO: Handle property access case
-//		if (!(expr instanceof IdentifierRef)) {
-//			return;
-//		}
-//
-//		val idRef = expr as IdentifierRef;
-//		var ie = idRef.getId();
-//
-//		if (expr instanceof ParameterizedPropertyAccessExpression) {
-//			val ppae = expr;
-//			ie = ppae.getProperty();
-//		}
-//
-//		if (ie !== null && ie.eContainer() !== null) {
-			val G = expr.newRuleEnvironment 
-			val exprRes = ts.type(G, expr)
-			val tr = exprRes.value
-			
-			if (tr === null)
-				return
-						
-			var classOrFunction = false;
-			// hint: obtain the built-in type "Function" via G
-			var isFunction = tr instanceof FunctionTypeExprOrRef; // <- replaec with subtype check tr <: Function
-			var isClass = tr instanceof TypeTypeRef && (tr as TypeTypeRef).constructorRef;
-			
-			classOrFunction = isFunction || isClass;
-//			val name = ie.getName();
-val name = ""; // remove this
-			if (!classOrFunction) {
-				val message = IssueCodes.getMessageForREACT_ELEMENT_NOT_FUNCTION_OR_CLASS_ERROR(name);
-				addIssue(message, expr, IssueCodes.REACT_ELEMENT_NOT_FUNCTION_OR_CLASS_ERROR);
-				return
+		val TypeRef exprTypeRef = exprResult.value
+		var isFunction = exprTypeRef instanceof FunctionTypeExprOrRef;
+		var isClass = exprTypeRef instanceof TypeTypeRef && (exprTypeRef as TypeTypeRef).constructorRef;
+
+		if (!isFunction && !isClass) {
+			val message = IssueCodes.getMessageForREACT_ELEMENT_NOT_FUNCTION_OR_CLASS_ERROR(exprTypeRef.toString);
+			addIssue(message, expr, IssueCodes.REACT_ELEMENT_NOT_FUNCTION_OR_CLASS_ERROR);
+			return
+		}
+
+		if (exprTypeRef instanceof FunctionTypeExprOrRef) {
+			// Check if the function conforms to React functional component, i.e. its return type is Element
+			val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE;
+			val elementClassTypeRef = reactLookupHelper.lookUpReactClassifier(jsxElem, reference, "Element", "react");
+			if (elementClassTypeRef === null)
+				return;
+
+			val result = ts.subtype(G, exprTypeRef.returnTypeRef, TypeUtils.createTypeRef(elementClassTypeRef));
+			if (result.failed) {
+				val message = IssueCodes.getMessageForREACT_ELEMENT_FUNCTION_NOT_REACT_ELEMENT_ERROR(exprTypeRef.returnTypeRef.toString);
+				addIssue(message, expr, IssueCodes.REACT_ELEMENT_FUNCTION_NOT_REACT_ELEMENT_ERROR);
 			}
+		}
 
-			if (isFunction) {
-				// Check if the function conforms to React functional component, i.e. its return type is Element
-				val tfunction = tr.declaredType as TFunction
+		if (exprTypeRef instanceof TypeTypeRef) {
+			if (!exprTypeRef.constructorRef) {
+				return;
+			}			
+			// Check if the class is a valid React component, i.e. extends React.Component
+			val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
+			val componentClassTypeRef = reactLookupHelper.lookUpReactClassifier(jsxElem, reference, "Component",
+				"react")
+			if (componentClassTypeRef === null)
+				return
 				
-				if (tfunction.returnTypeRef instanceof ParameterizedTypeRef) {
-					val typeRef = tfunction.returnTypeRef as ParameterizedTypeRef;
+			val tclass = tsh.getStaticType(G, exprTypeRef); 
+			val tclassTypeRef = TypeUtils.createTypeRef(tclass);
 
-					//val G = RuleEnvironmentExtensions.newRuleEnvironment(jsxElem);
-					val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE;
-					val elementClassTypeRef = reactLookupHelper.lookUpReactClassifier(jsxElem, reference, "Element", "react");
-					if (elementClassTypeRef === null)
-						return;
-
-					val result = ts.subtype(G, typeRef, TypeUtils.createTypeRef(elementClassTypeRef));
-					if (result.failed) {
-						val message = IssueCodes.getMessageForREACT_ELEMENT_FUNCTION_NOT_REACT_ELEMENT_ERROR(name);
-						addIssue(message, expr, IssueCodes.REACT_ELEMENT_FUNCTION_NOT_REACT_ELEMENT_ERROR);
-					}
-				}
+			val resultSubType = ts.subtype(G, tclassTypeRef, TypeUtils.createTypeRef(componentClassTypeRef))
+			if (resultSubType.failed) {
+				val message = IssueCodes.getMessageForREACT_ELEMENT_CLASS_NOT_REACT_ELEMENT_ERROR();
+				addIssue(message, expr, IssueCodes.REACT_ELEMENT_CLASS_NOT_REACT_ELEMENT_ERROR);
 			}
-
-			if (isClass) {
-				// Check if the class is a valid React component, i.e. extends React.Component
-				val tclass = tsh.getStaticType(G, tr as TypeTypeRef); //TODO nach oben verschieben
-				val tclassTypeRef = TypeUtils.createTypeRef(tclass);
-
-				val G2 = RuleEnvironmentExtensions.newRuleEnvironment(jsxElem);
-				val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
-				val componentClassTypeRef = reactLookupHelper.lookUpReactClassifier(jsxElem, reference, "Component", "react")
-				if (componentClassTypeRef === null)
-					return
-
-				val result = ts.subtype(G, tclassTypeRef, TypeUtils.createTypeRef(componentClassTypeRef))
-				if (result.value === null || !result.value) {
-					val message = IssueCodes.getMessageForREACT_ELEMENT_CLASS_NOT_REACT_ELEMENT_ERROR(name);
-					addIssue(message, expr, IssueCodes.REACT_ELEMENT_CLASS_NOT_REACT_ELEMENT_ERROR);
-				}
-			}
-//		}
+		}
 	}
-	
 }

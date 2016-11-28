@@ -8,14 +8,8 @@
 	END_SETUP
 */
 
+
 import * as React from "react"
-
-const MyComp = (props: React.ComponentProps+): React.Element => {
-	return <div foo={props.bar} />
-};
-
-//XPECT noerrors
-<MyComp/>
 
 function F(props: ~Object with {myProp: int}): React.Element {
 	return <div/>
@@ -23,5 +17,15 @@ function F(props: ~Object with {myProp: int}): React.Element {
 
 var myF = F;
 
-//XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'myProp2'." at "myProp2"
 <myF myProp="10" myProp2="hello"/>
+
+
+class C extends React.Component<~Object with {aProp: int}, Object>{
+	@Override
+	public render(): React.Element {
+		return <button/>
+	}
+}
+
+<C prop="10"/>
+

@@ -66,7 +66,7 @@ class N4JSXNameValidator extends N4JSNameValidator {
 		// nop
 	}
 
-	@Check
+	//@Check
 	def void checkValidFunctionalComponent(JSXElement jsxElement) {
 		if (jsxElement.jsxElementName !== null) {
 			val JSXElementName jsxElementName = jsxElement.jsxElementName
@@ -125,7 +125,7 @@ class N4JSXNameValidator extends N4JSNameValidator {
 		}
 	}
 
-	@Check
+	//@Check
 	override void checkN4TypeDeclaration(N4TypeDeclaration n4TypeDeclaration) {
 		super.checkN4TypeDeclaration(n4TypeDeclaration)
 		if (n4TypeDeclaration instanceof N4ClassDeclaration) {
@@ -155,7 +155,7 @@ class N4JSXNameValidator extends N4JSNameValidator {
 	/**
 	 * This method checks React functional component should not start with lower case
 	 */
-	@Check
+	//@Check
 	def void checkReactFunctionalComponentBinding(FunctionDeclaration funcDecl) {
 		if (reactHelper.isFunctionDeclarationAReactComponent(funcDecl)) {
 			if (funcDecl.name !== null && funcDecl.name.length > 0 && Character::isLowerCase(funcDecl.name.charAt(0))) {
