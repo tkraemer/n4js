@@ -89,7 +89,9 @@ import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSStringRepresenation;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSValidatorErrorGenerator;
+import eu.numberfour.n4js.typesystem.N4JSVersionResolver;
 import eu.numberfour.n4js.typesystem.UnsupportedExpressionTypeHelper;
+import eu.numberfour.n4js.typesystem.VersionResolver;
 import eu.numberfour.n4js.utils.di.scopes.ScopeManager;
 import eu.numberfour.n4js.utils.di.scopes.TransformationScoped;
 import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
@@ -521,6 +523,14 @@ public class N4JSXRuntimeModule extends eu.numberfour.n4jsx.AbstractN4JSXRuntime
 	 */
 	public Class<? extends JavaScriptVariantHelper> bindJavaScriptVariantHelper() {
 		return N4JSXJavaScriptVariantHelper.class;
+	}
+
+	/**
+	 * Bind type version resolver (used in N4JS.xsemantics). This customization point is used in N4IDL to support
+	 * versions in the type system.
+	 */
+	public Class<? extends VersionResolver> bindVersionResolver() {
+		return N4JSVersionResolver.class;
 	}
 
 	/**
