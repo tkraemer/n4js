@@ -276,7 +276,7 @@ public class PreparationStep {
 					final String propName = getPropertyAsString((ParameterizedPropertyAccessExpression) eObject);
 					((ParameterizedPropertyAccessExpression_IM) copyEObject).setAnyPlusAccess(true);
 					((ParameterizedPropertyAccessExpression_IM) copyEObject).setNameOfAnyPlusProperty(propName);
-				} else if (eObject.eContainer() instanceof JSXElementName) {
+				} else if (eObject.eContainer() instanceof JSXElementName) { // TODO IDE-2416 remove this
 					if (eObject instanceof IdentifierRef) {
 						IdentifierRef_IM acc = ((IdentifierRef_IM) copyEObject);
 						String name = ((IdentifierRef) eObject).getIdAsText();
