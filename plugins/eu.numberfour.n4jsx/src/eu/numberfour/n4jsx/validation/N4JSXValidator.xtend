@@ -31,6 +31,7 @@ import eu.numberfour.n4js.validation.validators.N4JSLambdaValidator
 import eu.numberfour.n4js.validation.validators.N4JSMemberRedefinitionValidator
 import eu.numberfour.n4js.validation.validators.N4JSMemberValidator
 import eu.numberfour.n4js.validation.validators.N4JSModuleValidator
+import eu.numberfour.n4js.validation.validators.N4JSNameValidator
 import eu.numberfour.n4js.validation.validators.N4JSStatementValidator
 import eu.numberfour.n4js.validation.validators.N4JSSuperValidator
 import eu.numberfour.n4js.validation.validators.N4JSSyntaxValidator
@@ -56,8 +57,7 @@ import org.eclipse.xtext.validation.ComposedChecks
 @ComposedChecks(validators=#[
 	IDEBUGValidator,
 	// N4JSStrictValidator,
-	//N4JSNameValidator,
-	N4JSXNameValidator,
+	N4JSNameValidator,
 	N4JSClassifierValidator,
 	N4JSMemberRedefinitionValidator,
 	N4JSClassValidator,

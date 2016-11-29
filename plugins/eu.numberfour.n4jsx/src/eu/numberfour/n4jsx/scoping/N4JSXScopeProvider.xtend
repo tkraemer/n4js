@@ -31,7 +31,7 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 	@Override
 	override getScope(EObject context, EReference reference) {
 		if (reference == N4JSXPackage.Literals.JSX_PROPERTY_ATTRIBUTE__PROPERTY) {
-			if (context instanceof JSXPropertyAttribute) {
+			if (context instanceof JSXPropertyAttribute || context instanceof JSXElement) {
 				// Define scoping for attributes of JSX Elements
 				var expr = (context.eContainer as JSXElement).jsxElementName.expression;
 				val G = expr.newRuleEnvironment;
@@ -83,24 +83,11 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 			}
 		}
 
-		// If the name is lower case, ignore binding error
 		if (jsxElName !== null) {
 			val scope = super.getScope(context, reference);
 			return new DynamicPseudoScope(scope);
 		}
 
-//		//If the name is lower case, ignore binding error
-//		if ( jsxElName !== null) {
-//			if (jsxElName.expression instanceof IdentifierRef) {
-//				val idRef = jsxElName.expression as IdentifierRef
-//				if (idRef.idAsText.length > 0) {
-//					if (Character::isLowerCase(idRef.idAsText.charAt(0))) {
-//						val scope = super.getScope(context, reference);
-//						return new DynamicPseudoScope(scope);		
-//					}		
-//				}
-//			}			
-//		}		
 		return super.getScope(context, reference);
 	}
 }

@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright (c) 2016 NumberFour AG.
-All rights reserved. This program and the accompanying materials
-are made available under the terms of the Eclipse Public License v1.0
-which accompanies this distribution, and is available at
-http://www.eclipse.org/legal/epl-v10.html
-
-Contributors:
-  NumberFour AG - Initial API and implementation
--->
+<!-- Copyright (c) 2016 NumberFour AG. All rights reserved. This program 
+	and the accompanying materials are made available under the terms of the 
+	Eclipse Public License v1.0 which accompanies this distribution, and is available 
+	at http://www.eclipse.org/legal/epl-v10.html Contributors: NumberFour AG 
+	- Initial API and implementation -->
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -44,9 +39,10 @@ Contributors:
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<profiles>
 		<profile>
+			<!-- ECMA regression suite -->
 			<id>execute-smoke-tests</id>
 			<build>
 				<plugins>
@@ -58,11 +54,24 @@ Contributors:
 								<id>TychoSurefireSmokeTest</id>
 								<phase>integration-test</phase>
 							</execution>
-						</executions>						
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<includes>
+								<include>**/*ECMA5Test*.java</include>
+								<include>**/*ECMA6Test*.java</include>
+							</includes>
+							<systemPropertyVariables>
+								<log4j.configuration>file:${project.build.outputDirectory}/NODEBUGlog4j.xml</log4j.configuration>
+							</systemPropertyVariables>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>
-		</profile>	
+		</profile>
 	</profiles>
 
 </project>

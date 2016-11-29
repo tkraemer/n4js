@@ -17,10 +17,14 @@ function F(props: ~Object with {myProp: int}): React.Element {
 
 var myF = F;
 
+//XPECT errors ---
+//"Couldn't resolve reference to IdentifiableElement 'myProp2'." at "myProp2"
+//"React functional component myF cannot start with lower case." at "myF"
+//---
 <myF myProp="10" myProp2="hello"/>
 
 
-class C extends React.Component<~Object with {aProp: int}, Object>{
+class C extends React.Component<~Object with {prop: int}, Object>{
 	@Override
 	public render(): React.Element {
 		return <button/>
