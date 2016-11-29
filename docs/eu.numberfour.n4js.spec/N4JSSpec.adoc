@@ -1,7 +1,6 @@
 include::config.adoc[]
-= N4JS Language Specification
-:doctype: book
 
+= N4JS Language Specification
 ////
 Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
@@ -13,24 +12,20 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
-:figure-caption!:
-
-image::resources/images/n4jslogo.png[400,400,align="center"]
-
-:figure-caption:
+[.n4jslogo]
+image::images/n4jslogo.png[400,400,align="center"]
 
 [.center]
-Version 0.4
+*Version 0.4*
 
 [.center]
-Revision Date: 28.10.2016
-
-
-[.center]
-(C) 2016 NumberFour AG
+*Revision Date: 28/11/2016*
 
 [.center]
-Authors: +
+*(C) 2016 NumberFour AG*
+
+[.center]
+*Authors:* +
 Jens von Pilgrim, Jakub Siberski, Mark-Oliver Reiser, +
 Torsten Krämer, Ákos Kitta, Sebastian Zarnekow, Lorenzo Bettini, Jörg Reichert
 
@@ -90,6 +85,9 @@ include::chapters/a02_jsobjects/jsobjects.adoc[leveloffset=+1]
 
 include::chapters/a03_n4jsobjects/n4jsobjects.adoc[leveloffset=+1]
 
+include::acronyms.adoc[leveloffset=+1]
+
+[appendix]
 == Bibliography
 
 bibliography::[]

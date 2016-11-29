@@ -23,7 +23,7 @@ body { margin: 0; background-color: #D5DFEA; font-family: ITC Officina Sans W01,
 
 /* ========================================================================== Links ========================================================================== */
 /** Remove the gray background color from active links in IE 10. */
-a { background: transparent; }
+a { background: transparent; white-space: pre;}
 
 /** Address `outline` inconsistency between Chrome and other browsers. */
 a:focus { outline: thin dotted; }
@@ -359,7 +359,7 @@ h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { line-heig
 .clearfix:before, .clearfix:after, .float-group:before, .float-group:after { content: " "; display: table; }
 .clearfix:after, .float-group:after { clear: both; }
 
-*:not(pre) > code { font-size: inherit; font-style: normal !important; letter-spacing: 0; padding: 0; line-height: inherit; }
+*:not(pre) > code { font-size: inherit; font-style: normal !important; letter-spacing: 0; padding: 0; line-height: inherit; overflow-wrap: break-word}
 
 pre, pre > code { line-height: 1.4; color: black; font-family: monospace, serif; font-weight: normal; }
 
@@ -388,7 +388,7 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
 
 #header > h1:first-child { color: black; font-weight: bold; margin-top: 2.25rem; margin-bottom: 0; }
 #header > h1:first-child + #toc { margin-top: 8px; border-top: 1px solid #dddddd; }
-#header > h1:only-child, body.toc2 #header > h1:nth-last-child(2) { border-bottom: 1px solid #dddddd; padding-bottom: 8px; }
+#header > h1:only-child, body.toc2 #header > h1:nth-last-child(2) { border-bottom: 1px solid #dddddd; padding-bottom: 8px; max-width: 100%; text-align: center; }
 #header .details { border-bottom: 1px solid #dddddd; line-height: 1.45; padding-top: 0.25em; padding-bottom: 0.25em; padding-left: 0.25em; color: #417dcb; display: -ms-flexbox; display: -webkit-flex; display: flex; -ms-flex-flow: row wrap; -webkit-flex-flow: row wrap; flex-flow: row wrap; }
 #header .details span:first-child { margin-left: -0.125em; }
 #header .details span.email a { color: #6999d6; }
@@ -579,22 +579,18 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-si
 .exampleblock > .content > :first-child { margin-top: 0; }
 .exampleblock > .content > :last-child { margin-bottom: 0; }
 
-.sidebarblock { position: absolute; border-style: solid; border-width: 1px; border-color: #d9d9d9; margin: -2rem -7.5rem 0rem 63.65rem; padding: .2rem; background: #f2f2f2; -webkit-border-radius: 0; border-radius: 0; text-align: left; width: 5.5rem;}
+.sidebarblock { position: absolute; border-style: solid; border-width: 1px; border-color: #d9d9d9; right:-12.2%; padding: .2rem; background: #f2f2f2; -webkit-border-radius: 0; border-radius: 0; text-align: left; width: 5.5rem;}
 .sidebarblock > :first-child { margin-top: 0; }
 .sidebarblock > :last-child { margin-bottom: 0; }
 .sidebarblock > .content > .title { color: #6999d6; margin-top: 0; }
 
-@media only screen and (max-width: 1203px) { 
-.sidebarblock { position: absolute; right: 12%; }
-}
-@media only screen and (max-width: 817px) { 
-.sidebarblock { position: absolute; right: 18%; }
+@media only screen and (max-width: 1220px) { 
+.sidebarblock { position: absolute; right: -7%; }
 }
 
-@media only screen and (max-width: 562px) { 
-.sidebarblock { position: absolute; right: 25%; }
+@media only screen and (max-width: 1122px) { 
+.sidebarblock { position: absolute; right: -3%; }
 }
-
 .exampleblock > .content > :last-child > :last-child, .exampleblock > .content .olist > ol > li:last-child > :last-child, .exampleblock > .content .ulist > ul > li:last-child > :last-child, .exampleblock > .content .qlist > ol > li:last-child > :last-child, .sidebarblock > .content > :last-child > :last-child, .sidebarblock > .content .olist > ol > li:last-child > :last-child, .sidebarblock > .content .ulist > ul > li:last-child > :last-child, .sidebarblock > .content .qlist > ol > li:last-child > :last-child { margin-bottom: 0; }
 
 .literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint { background: #eeeeee; }
@@ -792,7 +788,15 @@ div.unbreakable { page-break-inside: avoid; }
 
 .big { font-size: larger; }
 
-.small { font-size: smaller; }
+.small { font-size: small; }
+
+.x-small { font-size: x-small; }
+
+.xx-small { font-size: xx-small; }
+
+.x-large { font-size: x-large; }
+
+.xx-large { font-size: xx-large; }
 
 .underline { text-decoration: underline; }
 
@@ -890,9 +894,6 @@ div#remarks.ulist {
 	max-width: 70%;
 }
 
-div.title:first-of-type {
-    display: none;
-}
 
 /* Mobile */
 
@@ -1292,6 +1293,7 @@ div.openblock.definition {
     padding: 1rem;
 }
 
+
 /* Requirement Block */
 .requirement {
     border: 1px solid #aaaaaa;
@@ -1313,12 +1315,8 @@ div.openblock.definition {
 	text-indent: -6em;
 }
 
-/* Definition Block */
-div.openblock.todo {
-    border: 1px solid #aaaaaa;
-    padding: 0.5em;
-    margin-bottom: 1rem;
-    background-color: aliceblue;
-    border-radius: 10px;
-    padding: 1rem;
+/* ================================ Project-Specific Modifications ================================ */
+
+.n4jslogo {
+	padding-top: 20px;
 }
