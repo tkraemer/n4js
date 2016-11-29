@@ -28,7 +28,7 @@ import org.eclipse.xtext.xtext.generator.parser.antlr.AntlrGrammarGenerator
 import org.eclipse.xtext.xtext.generator.parser.antlr.AntlrOptions
 
 /**
- * Customized production grammar generation.
+ * Customized production ANTLR grammar generator.
  */
 class N4JSAntlrGrammarGenerator extends AntlrGrammarGenerator {
 	

@@ -23,7 +23,8 @@ import org.eclipse.xtext.xtext.generator.parser.antlr.GrammarNaming
 import org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
 
 /**
- * Custom highlighting parser generator fragment.
+ * Custom variant of {@link XtextAntlrGeneratorFragment2} generating the highlighting grammar & parser
+ *  without a dedicated lexer, reuses the production lexer.
  */
 class N4JSHighlightingParserGeneratorFragment2 extends XtextAntlrGeneratorFragment2 {
 	
@@ -44,6 +45,10 @@ class N4JSHighlightingParserGeneratorFragment2 extends XtextAntlrGeneratorFragme
 		generateHighlightingGrammar()
 	}
 	
+	/**
+	 * TODO IDE-2406:Can be removed once https://github.com/eclipse/xtext-core/issues/158
+	 *  is resolved and the solution is leveraged in N4JSAntlrHighlightingGrammarGenerator.
+	 */
 	@FinalFieldsConstructor
 	static class GuardedXtextGeneratorFileSystemAccess implements IXtextGeneratorFileSystemAccess {
 		
@@ -59,8 +64,8 @@ class N4JSHighlightingParserGeneratorFragment2 extends XtextAntlrGeneratorFragme
 			/**
 			 * Via this customization the generation of an additional lexer grammar is suppressed,
 			 *  since the production lexer is re-used.
-			 * Can be removed once https://github.com/eclipse/xtext-core/issues/158
-	 		 *  is resolved and the solution is leveraged in N4JSAntlrHighlightingGrammarGenerator. 
+			 * TODO IDE-2406: Can be removed once https://github.com/eclipse/xtext-core/issues/158
+	 		 *  is resolved and the solution is leveraged in N4JSAntlrHighlightingGrammarGenerator.
 			 */
 			override generateFile(String fileName, CharSequence contents) {
 				if (contents !== null)
