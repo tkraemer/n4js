@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.WrappedException;
@@ -121,6 +122,15 @@ import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.utils.N4JSLanguageUtils;
+import eu.numberfour.n4jsx.n4JSX.JSXAttribute;
+import eu.numberfour.n4jsx.n4JSX.JSXChild;
+import eu.numberfour.n4jsx.n4JSX.JSXElement;
+import eu.numberfour.n4jsx.n4JSX.JSXElementName;
+import eu.numberfour.n4jsx.n4JSX.JSXExpression;
+import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute;
+import eu.numberfour.n4jsx.n4JSX.JSXSpreadAttribute;
+import eu.numberfour.n4jsx.n4JSX.JSXText;
+import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 
 /**
  * Traverses an intermediate model and serializes it to a {@link SourceMapAwareAppendable}. Client code should only use
@@ -170,6 +180,9 @@ import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 
 	@Override
 	public Boolean defaultCase(EObject object) {
+		if (object.eClass().getEPackage() == N4JSXPackage.eINSTANCE) { // TODO IDE-2416 remove this
+			return caseJSX(object);
+		}
 		throw new IllegalStateException(
 				"PrettyPrinterSwitch missing a case for objects of type " + object.eClass().getName());
 	}
@@ -916,6 +929,100 @@ import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 		if (code.endsWith("\n"))
 			code = code.substring(0, code.length() - 1);
 		write(code);
+		return DONE;
+	}
+
+	// ###############################################################################################################
+	// JSX support
+	// TODO IDE-2416
+
+	private Boolean caseJSX(EObject object) {
+		if (object instanceof JSXElement) {
+			return caseJSXElement((JSXElement) object);
+		} else if (object instanceof JSXChild) {
+			return caseJSXChild((JSXChild) object);
+		} else if (object instanceof JSXText) {
+			return caseJSXText((JSXText) object);
+		} else if (object instanceof JSXExpression) {
+			return caseJSXExpression((JSXExpression) object);
+		} else if (object instanceof JSXElementName) {
+			return caseJSXElementName((JSXElementName) object);
+		} else if (object instanceof JSXAttribute) {
+			return caseJSXAttribute((JSXAttribute) object);
+		} else if (object instanceof JSXPropertyAttribute) {
+			return caseJSXPropertyAttribute((JSXPropertyAttribute) object);
+		} else if (object instanceof JSXSpreadAttribute) {
+			return caseJSXSpreadAttribute((JSXSpreadAttribute) object);
+		} else {
+			throw new UnsupportedOperationException("unsupported type of object: " + object.eClass().getName());
+		}
+	}
+
+	private Boolean caseJSXElement(JSXElement object) {
+		write("<");
+		if (object.getJsxElementName() == null)
+			throw new IllegalStateException(
+					"JSX element has no name " + object.eClass().getName());
+
+		doSwitch(object.getJsxElementName());
+
+		JSXElementName jsxClosingName = object.getJsxClosingName();
+		if (jsxClosingName == null) {
+			write("/>");
+		} else {
+			write(">");
+			List<JSXChild> jsxChildren = object.getJsxChildren();
+			if (jsxChildren.isEmpty() == false) {
+				for (JSXChild child : jsxChildren) {
+					doSwitch(child);
+				}
+			}
+			write("</");
+			doSwitch(object.getJsxClosingName());
+			write(">");
+		}
+
+		return DONE;
+	}
+
+	private Boolean caseJSXChild(JSXChild object) {
+		throw new IllegalStateException(
+				"PrettyPrinterSwitch missing a case for objects of type " + object.eClass().getName());
+	}
+
+	private Boolean caseJSXText(JSXText object) {
+		write("/* TODO JSXText not supported */");
+		return DONE;
+	}
+
+	private Boolean caseJSXExpression(JSXExpression object) {
+		write("{");
+		doSwitch(object.getExpression());
+		write("}");
+		return DONE;
+	}
+
+	private Boolean caseJSXElementName(JSXElementName object) {
+		write(((IdentifierRef_IM) object.getExpression()).getIdAsText());
+		return DONE;
+	}
+
+	private Boolean caseJSXAttribute(JSXAttribute object) {
+		write("/* TODO JSXAttribute not supported */");
+		return DONE;
+	}
+
+	private Boolean caseJSXPropertyAttribute(JSXPropertyAttribute object) {
+		// write(object.getProperty());
+		// write(" = ");
+		write(object.getPropertyAsText());
+		return DONE;
+	}
+
+	private Boolean caseJSXSpreadAttribute(JSXSpreadAttribute object) {
+		write("{");
+		doSwitch(object.getExpression());
+		write("}");
 		return DONE;
 	}
 

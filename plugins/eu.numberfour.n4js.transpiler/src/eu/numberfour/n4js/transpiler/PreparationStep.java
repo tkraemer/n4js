@@ -44,6 +44,7 @@ import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.n4JS.Variable;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.transpiler.TranspilerState.STECache;
+import eu.numberfour.n4js.transpiler.im.IdentifierRef_IM;
 import eu.numberfour.n4js.transpiler.im.ImFactory;
 import eu.numberfour.n4js.transpiler.im.ImPackage;
 import eu.numberfour.n4js.transpiler.im.ParameterizedPropertyAccessExpression_IM;
@@ -58,6 +59,7 @@ import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.utils.ContainerTypesHelper;
+import eu.numberfour.n4jsx.n4JSX.JSXElementName;
 
 /**
  */
@@ -274,6 +276,17 @@ public class PreparationStep {
 					final String propName = getPropertyAsString((ParameterizedPropertyAccessExpression) eObject);
 					((ParameterizedPropertyAccessExpression_IM) copyEObject).setAnyPlusAccess(true);
 					((ParameterizedPropertyAccessExpression_IM) copyEObject).setNameOfAnyPlusProperty(propName);
+				} else if (eObject.eContainer() instanceof JSXElementName) {
+					if (eObject instanceof IdentifierRef) {
+						IdentifierRef_IM acc = ((IdentifierRef_IM) copyEObject);
+						String name = ((IdentifierRef) eObject).getIdAsText();
+						final SymbolTableEntryOriginal entry = ImFactory.eINSTANCE.createSymbolTableEntryOriginal();
+						entry.setName(name);
+						entry.setOriginalTarget(((IdentifierRef) eObject).getId());
+						acc.setIdAsText(name);
+					} else {
+						throw new IllegalStateException("Unsupported JSX element " + eObject);
+					}
 				} else {
 					throw new IllegalStateException("Rewire() called for a proxified original target. IM-eobject = "
 							+ eObject + "   origTarget is "
