@@ -66,7 +66,7 @@ class N4JSXNameValidator extends N4JSNameValidator {
 		// nop
 	}
 
-	//@Check
+	@Check
 	def void checkValidFunctionalComponent(JSXElement jsxElement) {
 		if (jsxElement.jsxElementName !== null) {
 			val JSXElementName jsxElementName = jsxElement.jsxElementName

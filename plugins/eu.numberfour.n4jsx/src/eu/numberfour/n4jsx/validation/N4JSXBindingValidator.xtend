@@ -11,6 +11,7 @@
 package eu.numberfour.n4jsx.validation;
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
@@ -49,11 +50,12 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	/**
-	 * This method checks JSXElement binding
+	 * This method checks if JSXElement binds to a valid React component function or class React component declaration
 	 */
 	@Check
 	def void checkReactElementBinding(JSXElement jsxElem) {
 		val expr = jsxElem.jsxElementName.expression;
+		
 		val G = expr.newRuleEnvironment;
 		val exprResult = ts.type(G, expr);
 		if (exprResult.failed)
@@ -64,6 +66,13 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 		var isClass = exprTypeRef instanceof TypeTypeRef && (exprTypeRef as TypeTypeRef).constructorRef;
 
 		if (!isFunction && !isClass) {
+			//If the JSX element name is an identifier and starts with lower case, the check is done in the name validator
+			if (expr instanceof IdentifierRef) {
+				if ( (expr.idAsText !== null) && Character::isLowerCase(expr.idAsText.charAt(0)) ) {
+					return;
+				} 
+			}
+		
 			val message = IssueCodes.getMessageForREACT_ELEMENT_NOT_FUNCTION_OR_CLASS_ERROR(exprTypeRef.toString);
 			addIssue(message, expr, IssueCodes.REACT_ELEMENT_NOT_FUNCTION_OR_CLASS_ERROR);
 			return
