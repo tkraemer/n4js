@@ -1,12 +1,10 @@
 = N4JS Language Specification
 
-Build PDF ::
+Build PDF, HTML and launch in browser: ::
 [source,bash]
-asciispec -fop N4JSSpec.adoc
-
-Build HTML ::
-[source,bash]
-asciispec N4JSSpec.adoc
+----
+./build.sh -l
+----
 
 == Prerequisites
 
