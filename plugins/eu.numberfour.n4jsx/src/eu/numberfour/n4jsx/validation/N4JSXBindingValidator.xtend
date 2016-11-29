@@ -18,12 +18,15 @@ import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
+import eu.numberfour.n4js.ts.types.TField
+import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4jsx.helpers.ReactLookupHelper
 import eu.numberfour.n4jsx.n4JSX.JSXElement
+import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute
 import eu.numberfour.n4jsx.n4JSX.N4JSXPackage
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.Arrays
@@ -43,7 +46,7 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject protected TypeSystemHelper tsh
 	@Inject ReactLookupHelper reactLookupHelper;
 	@Inject IScopeProvider scopeProvider
-	
+
 	private static final List<String> htmlTags = Arrays.asList(
 		"a",
 		"abbr",
@@ -110,22 +113,65 @@ class N4JSXBindingValidator extends AbstractN4JSDeclarativeValidator {
 		}
 
 		if (exprTypeRef instanceof TypeTypeRef && (exprTypeRef as TypeTypeRef).constructorRef) {
-			checkTypeTypeRefConstructor(G, jsxElem, expr, exprTypeRef as TypeTypeRef)
+			checkTypeTypeRefConstructor(G, jsxElem, expr, exprTypeRef as TypeTypeRef);
 		}
 
-	// Furthermore, check that all non-optional fields of the properties type are used
+		// Furthermore, check that all non-optional fields of the properties type are used
+		checkAllNonOptionalFieldsAreSpecified(G, jsxElem, exprTypeRef);
+
 	}
-//	
-//	def private void checkAllNonOptionalFieldsAreSpecified(RuleEnvironment G, JSXElement jsxElement,
-//		TypeRef exprTypeRef) {
-//		val jsxPropertyAttributes = jsxElement.jsxAttributes;
-//		
-//		val scope = scopeProvider.getScope(jsxElement, N4JSXPackage.Literals.JSX_PROPERTY_ATTRIBUTE__PROPERTY)
-//		scope.allElements
-//		
-//
-//
-//	}
+
+	def private void checkAllNonOptionalFieldsAreSpecified(RuleEnvironment G, JSXElement jsxElement,
+		TypeRef exprTypeRef) {
+		val jsxPropertyAttributes = jsxElement.jsxAttributes;
+		val properties = jsxPropertyAttributes.map[a|(a as JSXPropertyAttribute).property];
+		val propsType = jsxElement.getPropsType(exprTypeRef);
+		if (propsType === null)
+			return;
+
+		val nonOptionalFieldsInPropsType = tsh.structuralTypesHelper.collectStructuralMembers(G, propsType,
+			TypingStrategy.STRUCTURAL).filter[m|(m instanceof TField) && !m.isOptional];
+		// println("fieldsInPropsType = " + fieldsInPropsType);
+		nonOptionalFieldsInPropsType.forEach [ member |
+			val field = member as TField;
+			if (!(properties.contains(field))) {
+				val message = IssueCodes.getMessageForJSXPROPERTY_ATTRIBUTE_NON_OPTIONAL_PROPERTY_NOT_SPECIFIED(field.name);
+				addIssue(
+					message,
+					jsxElement,
+					N4JSXPackage.Literals.JSX_ELEMENT__JSX_ELEMENT_NAME,
+					IssueCodes.JSXPROPERTY_ATTRIBUTE_NON_OPTIONAL_PROPERTY_NOT_SPECIFIED
+				);
+			}
+		]
+	}
+
+	def private getPropsType(JSXElement jsxElement, TypeRef exprTypeRef) {
+		val RuleEnvironment G = jsxElement.newRuleEnvironment
+
+		if (exprTypeRef instanceof TypeTypeRef && (exprTypeRef as TypeTypeRef).constructorRef) {
+			// The JSX name is of type class constructor
+			val tclass = tsh.getStaticType(G, exprTypeRef as TypeTypeRef);
+			val EReference referenceParameterizedTypeRef = TypeRefsPackage.Literals.
+				PARAMETERIZED_TYPE_REF__DECLARED_TYPE;
+			val tComponentClassifier = reactLookupHelper.lookUpReactClassifier(jsxElement,
+				referenceParameterizedTypeRef, "Component", "react");
+			val reactComponentProps = tComponentClassifier.typeVars.get(0);
+			tsh.addSubstitutions(G, TypeUtils.createTypeRef(tclass));
+			ts.substTypeVariablesInTypeRef(G, TypeUtils.createTypeRef(reactComponentProps));
+
+			val reactComponentPropsTypeRef = G.get(reactComponentProps);
+			if (reactComponentPropsTypeRef !== null && (reactComponentPropsTypeRef instanceof TypeRef))
+				return reactComponentPropsTypeRef as TypeRef;
+
+		} else if (exprTypeRef instanceof FunctionTypeExprOrRef) {
+			if (exprTypeRef.fpars.length > 0) {
+				val tPropsParam = exprTypeRef.fpars.get(0);
+				return tPropsParam.typeRef
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * This method implementation the validation case when JSX element refers to a function type expression or function ref

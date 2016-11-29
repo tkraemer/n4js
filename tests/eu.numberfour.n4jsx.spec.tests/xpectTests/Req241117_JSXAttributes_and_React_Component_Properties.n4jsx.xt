@@ -22,5 +22,5 @@ function MyReactFuncComponent(props: ~MyProps): React.Element {
 	);
 }
 
-//XPECT warnings --> Non-optional property x should be specified
+//XPECT warnings --> "Non-optional property x should be specified." at "MyReactFuncComponent"
 <MyReactFuncComponent y="Hi"/>

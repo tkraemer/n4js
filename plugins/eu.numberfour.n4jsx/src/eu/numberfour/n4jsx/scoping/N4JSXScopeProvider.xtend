@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EReference
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 class N4JSXScopeProvider extends N4JSScopeProvider {
-	
+
 	@Inject N4JSTypeSystem ts
 	@Inject TypeSystemHelper tsh
 	@Inject MemberScopingHelper memberScopingHelper
@@ -33,7 +33,12 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 		if (reference == N4JSXPackage.Literals.JSX_PROPERTY_ATTRIBUTE__PROPERTY) {
 			if (context instanceof JSXPropertyAttribute || context instanceof JSXElement) {
 				// Define scoping for attributes of JSX Elements
-				var expr = (context.eContainer as JSXElement).jsxElementName.expression;
+				var expr = if (context instanceof JSXPropertyAttribute) {
+						(context.eContainer as JSXElement).jsxElementName.expression;
+					} else {
+						(context as JSXElement).jsxElementName.expression;
+					}
+
 				val G = expr.newRuleEnvironment;
 				val exprResult = ts.type(G, expr);
 				val exprTypeRef = exprResult.value;
@@ -58,7 +63,7 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 								context, checkVisibility, staticAccess);
 						}
 					} else if (exprTypeRef instanceof FunctionTypeExprOrRef) { // TODO: check subtype <: Function is more generic?
-						// JSX name is a function expression
+					// JSX name is a function expression
 						if (exprTypeRef.fpars.length > 0) {
 							val tPropsParam = exprTypeRef.fpars.get(0)
 							// TODO: How can we configure visibility check here?
@@ -74,7 +79,7 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 			}
 		}
 
-		//TODO: Clean up this
+		// TODO: Clean up this
 		// Ignore binding for JSXElement names and property attributes
 		var JSXElementName jsxElName;
 		for (var ei = context; ei !== null; ei = ei.eContainer) {
