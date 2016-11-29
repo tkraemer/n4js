@@ -84,6 +84,8 @@ include::chapters/15_jsdoc/jsdoc.adoc[leveloffset=+1]
 
 include::chapters/16_jsx/jsx.adoc[leveloffset=+1]
 
+include::chapters/17_idl/idl.adoc[leveloffset=+1]
+
 include::chapters/a01_grammars/grammars.adoc[leveloffset=+1]
 
 include::chapters/a02_jsobjects/jsobjects.adoc[leveloffset=+1]
