@@ -12,6 +12,8 @@ function f () {
 	console.log("Hello");
 }
 
+
+// TODO GH-204 remove when fully supported  XPECT errors --> "The name of a declared function may not be used as a type name." at "f"
 var myF : f = f;
 // XPECT noerrors --> "Not a function or method: f."
 myF();

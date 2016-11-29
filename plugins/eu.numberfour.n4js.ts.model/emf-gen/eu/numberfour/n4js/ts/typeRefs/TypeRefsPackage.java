@@ -82,7 +82,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getTypeArgument()
 	 * @generated
 	 */
-	int TYPE_ARGUMENT = 16;
+	int TYPE_ARGUMENT = 17;
 
 	/**
 	 * The number of structural features of the '<em>Type Argument</em>' class.
@@ -365,13 +365,22 @@ public interface TypeRefsPackage extends EPackage {
 	int TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = TYPE_ARGUMENT_OPERATION_COUNT + 19;
 
 	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_REF___GET_REFERENCED_VERSION = TYPE_ARGUMENT_OPERATION_COUNT + 20;
+
+	/**
 	 * The number of operations of the '<em>Type Ref</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REF_OPERATION_COUNT = TYPE_ARGUMENT_OPERATION_COUNT + 20;
+	int TYPE_REF_OPERATION_COUNT = TYPE_ARGUMENT_OPERATION_COUNT + 21;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.StaticBaseTypeRefImpl <em>Static Base Type Ref</em>}' class.
@@ -607,6 +616,15 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STATIC_BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATIC_BASE_TYPE_REF___GET_REFERENCED_VERSION = TYPE_REF___GET_REFERENCED_VERSION;
 
 	/**
 	 * The number of operations of the '<em>Static Base Type Ref</em>' class.
@@ -851,6 +869,15 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = STATIC_BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BASE_TYPE_REF___GET_REFERENCED_VERSION = STATIC_BASE_TYPE_REF___GET_REFERENCED_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
@@ -1113,6 +1140,15 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPOSED_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = STATIC_BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSED_TYPE_REF___GET_REFERENCED_VERSION = STATIC_BASE_TYPE_REF___GET_REFERENCED_VERSION;
 
 	/**
 	 * The operation id for the '<em>Is Dynamic</em>' operation.
@@ -1386,6 +1422,15 @@ public interface TypeRefsPackage extends EPackage {
 	int UNION_TYPE_EXPRESSION___IS_DEF_SITE_STRUCTURAL_TYPING = COMPOSED_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION_TYPE_EXPRESSION___GET_REFERENCED_VERSION = COMPOSED_TYPE_REF___GET_REFERENCED_VERSION;
+
+	/**
 	 * The operation id for the '<em>Is Dynamic</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1657,6 +1702,15 @@ public interface TypeRefsPackage extends EPackage {
 	int INTERSECTION_TYPE_EXPRESSION___IS_DEF_SITE_STRUCTURAL_TYPING = COMPOSED_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERSECTION_TYPE_EXPRESSION___GET_REFERENCED_VERSION = COMPOSED_TYPE_REF___GET_REFERENCED_VERSION;
+
+	/**
 	 * The operation id for the '<em>Is Dynamic</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1881,6 +1935,15 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int THIS_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THIS_TYPE_REF___GET_REFERENCED_VERSION = BASE_TYPE_REF___GET_REFERENCED_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
@@ -2134,6 +2197,15 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int THIS_TYPE_REF_NOMINAL___IS_DEF_SITE_STRUCTURAL_TYPING = THIS_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THIS_TYPE_REF_NOMINAL___GET_REFERENCED_VERSION = THIS_TYPE_REF___GET_REFERENCED_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
@@ -2432,6 +2504,15 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int THIS_TYPE_REF_STRUCTURAL___IS_DEF_SITE_STRUCTURAL_TYPING = THIS_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THIS_TYPE_REF_STRUCTURAL___GET_REFERENCED_VERSION = THIS_TYPE_REF___GET_REFERENCED_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
@@ -2741,6 +2822,15 @@ public interface TypeRefsPackage extends EPackage {
 	int BOUND_THIS_TYPE_REF___IS_BOTTOM_TYPE = THIS_TYPE_REF___IS_BOTTOM_TYPE;
 
 	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOUND_THIS_TYPE_REF___GET_REFERENCED_VERSION = THIS_TYPE_REF___GET_REFERENCED_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3021,6 +3111,15 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF___GET_STRUCTURAL_MEMBERS = BASE_TYPE_REF___GET_STRUCTURAL_MEMBERS;
 
 	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF___GET_REFERENCED_VERSION = BASE_TYPE_REF___GET_REFERENCED_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3120,6 +3219,313 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_OPERATION_COUNT = BASE_TYPE_REF_OPERATION_COUNT + 9;
 
 	/**
+	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefWithVersionImpl <em>Parameterized Type Ref With Version</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefWithVersionImpl
+	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getParameterizedTypeRefWithVersion()
+	 * @generated
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION = 11;
+
+	/**
+	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION__NULL_MODIFIER = PARAMETERIZED_TYPE_REF__NULL_MODIFIER;
+
+	/**
+	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION__UNDEF_MODIFIER = PARAMETERIZED_TYPE_REF__UNDEF_MODIFIER;
+
+	/**
+	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION__DYNAMIC = PARAMETERIZED_TYPE_REF__DYNAMIC;
+
+	/**
+	 * The feature id for the '<em><b>Declared Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_TYPE = PARAMETERIZED_TYPE_REF__DECLARED_TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Type Args</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION__TYPE_ARGS = PARAMETERIZED_TYPE_REF__TYPE_ARGS;
+
+	/**
+	 * The feature id for the '<em><b>Array Type Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION__ARRAY_TYPE_LITERAL = PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL;
+
+	/**
+	 * The feature id for the '<em><b>Defined Typing Strategy</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION__DEFINED_TYPING_STRATEGY = PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY;
+
+	/**
+	 * The feature id for the '<em><b>Declared Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_VERSION = PARAMETERIZED_TYPE_REF_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Parameterized Type Ref With Version</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION_FEATURE_COUNT = PARAMETERIZED_TYPE_REF_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Is Final By Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___IS_FINAL_BY_TYPE = PARAMETERIZED_TYPE_REF___IS_FINAL_BY_TYPE;
+
+	/**
+	 * The operation id for the '<em>Is Dynamic</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___IS_DYNAMIC = PARAMETERIZED_TYPE_REF___IS_DYNAMIC;
+
+	/**
+	 * The operation id for the '<em>Is Existential</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___IS_EXISTENTIAL = PARAMETERIZED_TYPE_REF___IS_EXISTENTIAL;
+
+	/**
+	 * The operation id for the '<em>Get Declared Upper Bound</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___GET_DECLARED_UPPER_BOUND = PARAMETERIZED_TYPE_REF___GET_DECLARED_UPPER_BOUND;
+
+	/**
+	 * The operation id for the '<em>Get Declared Lower Bound</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___GET_DECLARED_LOWER_BOUND = PARAMETERIZED_TYPE_REF___GET_DECLARED_LOWER_BOUND;
+
+	/**
+	 * The operation id for the '<em>Get Type Args</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___GET_TYPE_ARGS = PARAMETERIZED_TYPE_REF___GET_TYPE_ARGS;
+
+	/**
+	 * The operation id for the '<em>Undefined Or Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___UNDEFINED_OR_NULL = PARAMETERIZED_TYPE_REF___UNDEFINED_OR_NULL;
+
+	/**
+	 * The operation id for the '<em>To String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___TO_STRING = PARAMETERIZED_TYPE_REF___TO_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Declared Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___GET_DECLARED_TYPE = PARAMETERIZED_TYPE_REF___GET_DECLARED_TYPE;
+
+	/**
+	 * The operation id for the '<em>Is Top Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___IS_TOP_TYPE = PARAMETERIZED_TYPE_REF___IS_TOP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Is Bottom Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___IS_BOTTOM_TYPE = PARAMETERIZED_TYPE_REF___IS_BOTTOM_TYPE;
+
+	/**
+	 * The operation id for the '<em>Get Structural Members</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___GET_STRUCTURAL_MEMBERS = PARAMETERIZED_TYPE_REF___GET_STRUCTURAL_MEMBERS;
+
+	/**
+	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___GET_MODIFIERS_AS_STRING = PARAMETERIZED_TYPE_REF___GET_MODIFIERS_AS_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Typing Strategy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___GET_TYPING_STRATEGY = PARAMETERIZED_TYPE_REF___GET_TYPING_STRATEGY;
+
+	/**
+	 * The operation id for the '<em>Contains Wildcards</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___CONTAINS_WILDCARDS = PARAMETERIZED_TYPE_REF___CONTAINS_WILDCARDS;
+
+	/**
+	 * The operation id for the '<em>Get Type Ref As String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___GET_TYPE_REF_AS_STRING = PARAMETERIZED_TYPE_REF___GET_TYPE_REF_AS_STRING;
+
+	/**
+	 * The operation id for the '<em>Is Parameterized</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___IS_PARAMETERIZED = PARAMETERIZED_TYPE_REF___IS_PARAMETERIZED;
+
+	/**
+	 * The operation id for the '<em>Is Generic</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___IS_GENERIC = PARAMETERIZED_TYPE_REF___IS_GENERIC;
+
+	/**
+	 * The operation id for the '<em>Is Raw</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___IS_RAW = PARAMETERIZED_TYPE_REF___IS_RAW;
+
+	/**
+	 * The operation id for the '<em>Contains Unbound Type Variables</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___CONTAINS_UNBOUND_TYPE_VARIABLES = PARAMETERIZED_TYPE_REF___CONTAINS_UNBOUND_TYPE_VARIABLES;
+
+	/**
+	 * The operation id for the '<em>Is Use Site Structural Typing</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___IS_USE_SITE_STRUCTURAL_TYPING = PARAMETERIZED_TYPE_REF___IS_USE_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Is Def Site Structural Typing</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___IS_DEF_SITE_STRUCTURAL_TYPING = PARAMETERIZED_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION___GET_REFERENCED_VERSION = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Parameterized Type Ref With Version</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_WITH_VERSION_OPERATION_COUNT = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.StructuralTypeRefImpl <em>Structural Type Ref</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3127,7 +3533,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getStructuralTypeRef()
 	 * @generated
 	 */
-	int STRUCTURAL_TYPE_REF = 11;
+	int STRUCTURAL_TYPE_REF = 12;
 
 	/**
 	 * The feature id for the '<em><b>Ast Structural Members</b></em>' containment reference list.
@@ -3227,7 +3633,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getParameterizedTypeRefStructural()
 	 * @generated
 	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL = 12;
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL = 13;
 
 	/**
 	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
@@ -3437,6 +3843,15 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL___IS_BOTTOM_TYPE = PARAMETERIZED_TYPE_REF___IS_BOTTOM_TYPE;
 
 	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL___GET_REFERENCED_VERSION = PARAMETERIZED_TYPE_REF___GET_REFERENCED_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3570,7 +3985,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getExistentialTypeRef()
 	 * @generated
 	 */
-	int EXISTENTIAL_TYPE_REF = 13;
+	int EXISTENTIAL_TYPE_REF = 14;
 
 	/**
 	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
@@ -3780,6 +4195,15 @@ public interface TypeRefsPackage extends EPackage {
 	int EXISTENTIAL_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXISTENTIAL_TYPE_REF___GET_REFERENCED_VERSION = TYPE_REF___GET_REFERENCED_VERSION;
+
+	/**
 	 * The operation id for the '<em>Is Existential</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3832,7 +4256,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getUnknownTypeRef()
 	 * @generated
 	 */
-	int UNKNOWN_TYPE_REF = 14;
+	int UNKNOWN_TYPE_REF = 15;
 
 	/**
 	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
@@ -4051,6 +4475,15 @@ public interface TypeRefsPackage extends EPackage {
 	int UNKNOWN_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNKNOWN_TYPE_REF___GET_REFERENCED_VERSION = TYPE_REF___GET_REFERENCED_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Type Ref As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4076,7 +4509,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getTypeTypeRef()
 	 * @generated
 	 */
-	int TYPE_TYPE_REF = 15;
+	int TYPE_TYPE_REF = 16;
 
 	/**
 	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
@@ -4313,6 +4746,15 @@ public interface TypeRefsPackage extends EPackage {
 	int TYPE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_TYPE_REF___GET_REFERENCED_VERSION = BASE_TYPE_REF___GET_REFERENCED_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4347,7 +4789,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getWildcard()
 	 * @generated
 	 */
-	int WILDCARD = 17;
+	int WILDCARD = 18;
 
 	/**
 	 * The feature id for the '<em><b>Declared Upper Bound</b></em>' containment reference.
@@ -4447,7 +4889,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getFunctionTypeExprOrRef()
 	 * @generated
 	 */
-	int FUNCTION_TYPE_EXPR_OR_REF = 18;
+	int FUNCTION_TYPE_EXPR_OR_REF = 19;
 
 	/**
 	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
@@ -4648,6 +5090,15 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_EXPR_OR_REF___IS_DEF_SITE_STRUCTURAL_TYPING = STATIC_BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_EXPR_OR_REF___GET_REFERENCED_VERSION = STATIC_BASE_TYPE_REF___GET_REFERENCED_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Declared This Type</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4754,7 +5205,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getFunctionTypeRef()
 	 * @generated
 	 */
-	int FUNCTION_TYPE_REF = 19;
+	int FUNCTION_TYPE_REF = 20;
 
 	/**
 	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
@@ -4937,6 +5388,15 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_REF___GET_STRUCTURAL_MEMBERS = PARAMETERIZED_TYPE_REF___GET_STRUCTURAL_MEMBERS;
 
 	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_REF___GET_REFERENCED_VERSION = PARAMETERIZED_TYPE_REF___GET_REFERENCED_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5106,7 +5566,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getFunctionTypeExpression()
 	 * @generated
 	 */
-	int FUNCTION_TYPE_EXPRESSION = 20;
+	int FUNCTION_TYPE_EXPRESSION = 21;
 
 	/**
 	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
@@ -5379,6 +5839,15 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_EXPRESSION___IS_DEF_SITE_STRUCTURAL_TYPING = FUNCTION_TYPE_EXPR_OR_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_EXPRESSION___GET_REFERENCED_VERSION = FUNCTION_TYPE_EXPR_OR_REF___GET_REFERENCED_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Declared This Type</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5485,7 +5954,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getDeferredTypeRef()
 	 * @generated
 	 */
-	int DEFERRED_TYPE_REF = 21;
+	int DEFERRED_TYPE_REF = 22;
 
 	/**
 	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
@@ -5704,6 +6173,15 @@ public interface TypeRefsPackage extends EPackage {
 	int DEFERRED_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFERRED_TYPE_REF___GET_REFERENCED_VERSION = TYPE_REF___GET_REFERENCED_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Type Ref As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5729,7 +6207,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getTypeVariableMapping()
 	 * @generated
 	 */
-	int TYPE_VARIABLE_MAPPING = 22;
+	int TYPE_VARIABLE_MAPPING = 23;
 
 	/**
 	 * The feature id for the '<em><b>Type Var</b></em>' reference.
@@ -5775,7 +6253,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getParameterizedTypeRefIterable()
 	 * @generated
 	 */
-	int PARAMETERIZED_TYPE_REF_ITERABLE = 23;
+	int PARAMETERIZED_TYPE_REF_ITERABLE = 24;
 
 
 	/**
@@ -6009,6 +6487,16 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTypeRef__IsDefSiteStructuralTyping();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#getReferencedVersion() <em>Get Referenced Version</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Referenced Version</em>' operation.
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRef#getReferencedVersion()
+	 * @generated
+	 */
+	EOperation getTypeRef__GetReferencedVersion();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.StaticBaseTypeRef <em>Static Base Type Ref</em>}'.
@@ -6530,6 +7018,37 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getParameterizedTypeRef__IsDefSiteStructuralTyping();
+
+	/**
+	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefWithVersion <em>Parameterized Type Ref With Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Parameterized Type Ref With Version</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefWithVersion
+	 * @generated
+	 */
+	EClass getParameterizedTypeRefWithVersion();
+
+	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefWithVersion#getDeclaredVersion <em>Declared Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Declared Version</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefWithVersion#getDeclaredVersion()
+	 * @see #getParameterizedTypeRefWithVersion()
+	 * @generated
+	 */
+	EAttribute getParameterizedTypeRefWithVersion_DeclaredVersion();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefWithVersion#getReferencedVersion() <em>Get Referenced Version</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Referenced Version</em>' operation.
+	 * @see eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefWithVersion#getReferencedVersion()
+	 * @generated
+	 */
+	EOperation getParameterizedTypeRefWithVersion__GetReferencedVersion();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef <em>Structural Type Ref</em>}'.
@@ -7483,6 +8002,14 @@ public interface TypeRefsPackage extends EPackage {
 		EOperation TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = eINSTANCE.getTypeRef__IsDefSiteStructuralTyping();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Referenced Version</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TYPE_REF___GET_REFERENCED_VERSION = eINSTANCE.getTypeRef__GetReferencedVersion();
+
+		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.StaticBaseTypeRefImpl <em>Static Base Type Ref</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7909,6 +8436,32 @@ public interface TypeRefsPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation PARAMETERIZED_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = eINSTANCE.getParameterizedTypeRef__IsDefSiteStructuralTyping();
+
+		/**
+		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefWithVersionImpl <em>Parameterized Type Ref With Version</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefWithVersionImpl
+		 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getParameterizedTypeRefWithVersion()
+		 * @generated
+		 */
+		EClass PARAMETERIZED_TYPE_REF_WITH_VERSION = eINSTANCE.getParameterizedTypeRefWithVersion();
+
+		/**
+		 * The meta object literal for the '<em><b>Declared Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETERIZED_TYPE_REF_WITH_VERSION__DECLARED_VERSION = eINSTANCE.getParameterizedTypeRefWithVersion_DeclaredVersion();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Referenced Version</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETERIZED_TYPE_REF_WITH_VERSION___GET_REFERENCED_VERSION = eINSTANCE.getParameterizedTypeRefWithVersion__GetReferencedVersion();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.StructuralTypeRefImpl <em>Structural Type Ref</em>}' class.

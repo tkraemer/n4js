@@ -249,6 +249,15 @@ public class TypeImpl extends TExportableElementImpl implements Type {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getVersion() {
+		return 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -384,6 +393,8 @@ public class TypeImpl extends TExportableElementImpl implements Type {
 				return getRawTypeAsString();
 			case TypesPackage.TYPE___GET_TYPE_AS_STRING:
 				return getTypeAsString();
+			case TypesPackage.TYPE___GET_VERSION:
+				return getVersion();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

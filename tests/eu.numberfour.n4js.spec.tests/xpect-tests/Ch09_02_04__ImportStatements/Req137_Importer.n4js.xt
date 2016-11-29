@@ -17,7 +17,7 @@ import { cnst8 } from "Ch09_02_04__ImportStatements/Exporter"
 
 let c1:C1 = new C1();
 let i1:I1 = null;
-let f1im : f1 = f1;
+let f1im: ()=>string = f1;
 let valCnst8 = cnst8;
 
 // in all cases we expect an error:

@@ -36,7 +36,6 @@ import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.N4_SETTER_DECLARATION
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.SCRIPT;
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.STRING_LITERAL;
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.TYPE_DEFINING_ELEMENT;
-import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.TYPE_PROVIDING_ELEMENT;
 import static eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage.Literals.TYPE_REF;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
@@ -93,12 +92,6 @@ public final class AnnotationDefinition {
 					EXPORTABLE_ELEMENT,
 					EXPORT_DECLARATION)
 			.end();
-
-	/**
-	 * 4.5.1. Undefined Type
-	 */
-	public final static AnnotationDefinition UNDEFINED = define("Undefined")
-			.targets(TYPE_PROVIDING_ELEMENT, EXPORTABLE_ELEMENT).end();
 
 	/**
 	 * 4.14.2 StringBased Enumeration Type (subtype of string)

@@ -1,7 +1,7 @@
 /* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest  END_SETUP */
 
 
-/* XPECT output ~~~
+/* XPECT ! output ~~~
 <==
 stdout:
 b1
@@ -12,9 +12,14 @@ stderr:
 ~~~ */
 
 
-var @Undefined b1 : string = 'b1';
-var @Undefined c1_1 : string = 'c1_1', @Undefined c1_2 : string = 'c1_2';
+// had to disable this test, because there does no longer exist an annotation that can be put on VariableDeclarations
+// (losing this test should not be a problem, because this test was intended as a challenge for the *old* transpiler;
+// for the new transpiler, this test case should be trivial)
 
-console.log(b1);
-console.log(c1_1);
-console.log(c1_2);
+
+//var @Undefined b1 : string = 'b1';
+//var @Undefined c1_1 : string = 'c1_1', @Undefined c1_2 : string = 'c1_2';
+
+//console.log(b1);
+//console.log(c1_1);
+//console.log(c1_2);
