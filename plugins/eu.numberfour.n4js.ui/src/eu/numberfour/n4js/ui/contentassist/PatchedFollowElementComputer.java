@@ -42,8 +42,8 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 /**
- * Remove this class once the change of https://github.com/eclipse/xtext-core/pull/167 is available in the target
- * platform.
+ * TODO IDE-2406: Remove this class once the change of https://github.com/eclipse/xtext-core/pull/167 is available in
+ * the target platform.
  */
 public class PatchedFollowElementComputer extends FollowElementComputer {
 

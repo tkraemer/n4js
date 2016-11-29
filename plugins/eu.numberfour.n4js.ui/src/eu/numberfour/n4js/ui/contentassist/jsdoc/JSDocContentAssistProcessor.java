@@ -63,6 +63,9 @@ public class JSDocContentAssistProcessor implements IContentAssistProcessor {
 	 */
 	public DelegatingContentAssistContextFactory.StatefulFactory getContextFactory() {
 
+		// TODO IDE-2446: Suggested improvement of the following situation
+		// kept the original comment for easy spotting
+
 		// TODO hack. I have no clue why this is needed and how pool should be set.
 		ExecutorService pool = Executors.newFixedThreadPool(3);
 		contentAssistContextFactory.setPool(pool);

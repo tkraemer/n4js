@@ -143,7 +143,7 @@ public class N4JSUiModule extends eu.numberfour.n4js.ui.AbstractN4JSUiModule {
 	}
 
 	/**
-	 * TODO
+	 * Bind the {@link IXtextBuilderParticipant} being aware of generating the Javascript files in the output directory.
 	 */
 	public Class<? extends IXtextBuilderParticipant> bindIXtextBuilderParticipant() {
 		return N4JSBuilderParticipant.class;
