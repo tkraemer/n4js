@@ -938,12 +938,12 @@ import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 	private Boolean caseJSX(EObject object) {
 		if (object instanceof JSXElement) {
 			return caseJSXElement((JSXElement) object);
-		} else if (object instanceof JSXChild) {
-			return caseJSXChild((JSXChild) object);
 		} else if (object instanceof JSXText) {
 			return caseJSXText((JSXText) object);
 		} else if (object instanceof JSXExpression) {
 			return caseJSXExpression((JSXExpression) object);
+		} else if (object instanceof JSXChild) {
+			return caseJSXChild((JSXChild) object);
 		} else if (object instanceof JSXElementName) {
 			return caseJSXElementName((JSXElementName) object);
 		} else if (object instanceof JSXPropertyAttribute) {
