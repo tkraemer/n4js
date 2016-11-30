@@ -122,7 +122,6 @@ import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.utils.N4JSLanguageUtils;
-import eu.numberfour.n4jsx.n4JSX.JSXAttribute;
 import eu.numberfour.n4jsx.n4JSX.JSXChild;
 import eu.numberfour.n4jsx.n4JSX.JSXElement;
 import eu.numberfour.n4jsx.n4JSX.JSXElementName;
@@ -947,8 +946,6 @@ import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 			return caseJSXExpression((JSXExpression) object);
 		} else if (object instanceof JSXElementName) {
 			return caseJSXElementName((JSXElementName) object);
-		} else if (object instanceof JSXAttribute) {
-			return caseJSXAttribute((JSXAttribute) object);
 		} else if (object instanceof JSXPropertyAttribute) {
 			return caseJSXPropertyAttribute((JSXPropertyAttribute) object);
 		} else if (object instanceof JSXSpreadAttribute) {
@@ -1004,11 +1001,6 @@ import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 
 	private Boolean caseJSXElementName(JSXElementName object) {
 		write(((IdentifierRef_IM) object.getExpression()).getIdAsText());
-		return DONE;
-	}
-
-	private Boolean caseJSXAttribute(JSXAttribute object) {
-		write("/* TODO JSXAttribute not supported */");
 		return DONE;
 	}
 
