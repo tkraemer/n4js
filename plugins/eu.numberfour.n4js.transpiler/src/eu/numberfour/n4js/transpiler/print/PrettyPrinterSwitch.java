@@ -1008,7 +1008,15 @@ import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 		write(' ');
 		write(object.getPropertyAsText());
 		write("=");
-		doSwitch(object.getJsxAttributeValue());
+		final Expression value = object.getJsxAttributeValue();
+		final boolean requiresCurlyBraces = !(value instanceof StringLiteral);
+		if (requiresCurlyBraces) {
+			write('{');
+			doSwitch(value);
+			write('}');
+		} else {
+			doSwitch(value);
+		}
 		return DONE;
 	}
 
