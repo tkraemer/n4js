@@ -14,14 +14,13 @@ import com.google.common.base.Optional
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import eu.numberfour.n4js.N4JSGlobals
-import eu.numberfour.n4js.conversion.ValueConverters
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4js.n4JS.Script
-import eu.numberfour.n4js.resource.N4JSResource
-import eu.numberfour.n4js.resource.N4JSResourceDescriptionStrategy
 import eu.numberfour.n4js.n4mf.BootstrapModule
 import eu.numberfour.n4js.n4mf.DeclaredVersion
 import eu.numberfour.n4js.n4mf.ProjectDescription
+import eu.numberfour.n4js.resource.N4JSResource
+import eu.numberfour.n4js.resource.N4JSResourceDescriptionStrategy
 import eu.numberfour.n4js.ts.scoping.N4TSQualifiedNameProvider
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TModule
@@ -34,12 +33,12 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.EcoreUtil2
-import org.eclipse.xtext.conversion.IValueConverter
 import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
-import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*;
+
+import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 
 /**
  * Provides utilities for generating resource (file or module) descriptors that are based on containing project and its properties.
@@ -55,12 +54,12 @@ public class ProjectUtils {
 	@Inject
 	IQualifiedNameConverter qualifiedNameConverter;
 
-	IValueConverter<String> valueConverter;
-
-	@Inject
-	def protected setValueConverter(ValueConverters service) {
-		valueConverter = service.BindingIdentifier
-	}
+//	IValueConverter<String> valueConverter;
+//
+//	@Inject
+//	def protected setValueConverter(ValueConverters service) {
+//		valueConverter = service.BindingIdentifier
+//	}
 
 	/**
 	 * Based on provided file resource URI and extension (must include dot!) will generate descriptor in form of Project-0.0.1
@@ -133,23 +132,51 @@ public class ProjectUtils {
 	}
 
 	public def String getValidJavascriptIdentifierName(String moduleSpecifier) {
-		try {
-			return valueConverter.toValue(moduleSpecifier, null);
-		} catch (Exception e) {
-			val string = "at position ";
-			val message = e.getMessage;
-			val index = message.indexOf(string);
-			if (index > 0) {
-				val numberStr = message.substring(index + string.length, e.getMessage.length - 1);
-				val number = Integer.valueOf(numberStr);
-				val chars = moduleSpecifier.toCharArray;
-				val charAtPos = chars.get(number - 1);
-				val newModuleSpecifier = moduleSpecifier.substring(0, number - 1) +
-						charAtPos.toUnicode + moduleSpecifier.substring(number);
-				return getValidJavascriptIdentifierName(newModuleSpecifier);
-			}
+
+
+//try {
+//	valueConverter.toValue(moduleSpecifier, null);
+//} catch (Exception e) {
+//	if(e instanceof NullPointerException) {
+//		println("OLD IMPLEMENTATION WOULD'VE FAILED")
+//	}
+//}
+
+
+		if(moduleSpecifier===null || moduleSpecifier.length===0) {
 			return moduleSpecifier;
 		}
+		val sb = new StringBuilder();
+		for(var int i=0;i<moduleSpecifier.length;i++) {
+			val ch = moduleSpecifier.charAt(i);
+			val isValid = if(i===0) Character.isJavaIdentifierStart(ch) else Character.isJavaIdentifierPart(ch);
+			if(isValid) {
+				sb.append(ch);
+			} else {
+				sb.append(toUnicode(ch));
+			}
+		}
+		return sb.toString();
+
+
+
+//		try {
+//			return valueConverter.toValue(moduleSpecifier, null);
+//		} catch (Exception e) {
+//			val string = "at position ";
+//			val message = e.getMessage;
+//			val index = message.indexOf(string);
+//			if (index > 0) {
+//				val numberStr = message.substring(index + string.length, e.getMessage.length - 1);
+//				val number = Integer.valueOf(numberStr);
+//				val chars = moduleSpecifier.toCharArray;
+//				val charAtPos = chars.get(number - 1);
+//				val newModuleSpecifier = moduleSpecifier.substring(0, number - 1) +
+//						charAtPos.toUnicode + moduleSpecifier.substring(number);
+//				return getValidJavascriptIdentifierName(newModuleSpecifier);
+//			}
+//			return moduleSpecifier;
+//		}
 	}
 
 	def private toUnicode(char charAtPos) {
