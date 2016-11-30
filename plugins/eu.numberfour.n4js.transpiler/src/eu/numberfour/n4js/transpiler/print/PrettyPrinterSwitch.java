@@ -122,6 +122,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.utils.N4JSLanguageUtils;
+import eu.numberfour.n4jsx.n4JSX.JSXAttribute;
 import eu.numberfour.n4jsx.n4JSX.JSXChild;
 import eu.numberfour.n4jsx.n4JSX.JSXElement;
 import eu.numberfour.n4jsx.n4JSX.JSXElementName;
@@ -963,6 +964,12 @@ import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 
 		doSwitch(object.getJsxElementName());
 
+		if (!object.getJsxAttributes().isEmpty()) {
+			for (JSXAttribute attr : object.getJsxAttributes()) {
+				doSwitch(attr);
+			}
+		}
+
 		JSXElementName jsxClosingName = object.getJsxClosingName();
 		if (jsxClosingName == null) {
 			write("/>");
@@ -987,7 +994,7 @@ import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 				"PrettyPrinterSwitch missing a case for objects of type " + object.eClass().getName());
 	}
 
-	private Boolean caseJSXText(JSXText object) {
+	private Boolean caseJSXText(@SuppressWarnings("unused") JSXText object) {
 		write("/* TODO JSXText not supported */");
 		return DONE;
 	}
@@ -1005,9 +1012,10 @@ import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 	}
 
 	private Boolean caseJSXPropertyAttribute(JSXPropertyAttribute object) {
-		// write(object.getProperty());
-		// write(" = ");
+		write(' ');
 		write(object.getPropertyAsText());
+		write("=");
+		doSwitch(object.getJsxAttributeValue());
 		return DONE;
 	}
 

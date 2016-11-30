@@ -12,6 +12,7 @@ package eu.numberfour.n4js.transpiler;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.TreeIterator;
@@ -60,6 +61,8 @@ import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.utils.ContainerTypesHelper;
 import eu.numberfour.n4jsx.n4JSX.JSXElementName;
+import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute;
+import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 
 /**
  */
@@ -176,6 +179,25 @@ public class PreparationStep {
 			script_IM.setSymbolTable(ImFactory.eINSTANCE.createSymbolTable());
 		}
 
+		// TODO IDE-2416 doing this here is a hack
+		// this should be done in an N4JSX customization of N4JSLinker!!!!
+		private void initializeJSXPropertyAttribute(JSXPropertyAttribute copy, JSXPropertyAttribute eObject) {
+			final List<INode> propNodes = NodeModelUtils
+					.findNodesForFeature(eObject, N4JSXPackage.eINSTANCE.getJSXPropertyAttribute_Property());
+			if (propNodes != null && !propNodes.isEmpty()) {
+				final INode propNode = propNodes.get(0);
+				if (propNode != null) {
+					final String propAsText = NodeModelUtils.getTokenText(propNode);
+					if (propAsText != null && !propAsText.isEmpty()) {
+						copy.setPropertyAsText(propAsText);
+						return;
+					}
+				}
+			}
+			throw new IllegalStateException(
+					"failed to derive value of property JSXPropertyAttribute#propertyAsText from parse tree");
+		}
+
 		@Override
 		protected EObject createCopy(EObject eObject) {
 			final EObject copy = super.createCopy(eObject);
@@ -201,6 +223,8 @@ public class PreparationStep {
 			} else if (copy instanceof N4MemberDeclaration) {
 				info.setOriginalDefinedMember_internal((N4MemberDeclaration) copy,
 						((N4MemberDeclaration) eObject).getDefinedTypeElement());
+			} else if (copy instanceof JSXPropertyAttribute) { // TODO IDE-2416
+				initializeJSXPropertyAttribute((JSXPropertyAttribute) copy, (JSXPropertyAttribute) eObject);
 			}
 			return copy;
 		}
