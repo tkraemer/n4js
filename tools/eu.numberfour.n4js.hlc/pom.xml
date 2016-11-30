@@ -433,6 +433,17 @@ Contributors:
 			<artifactId>eu.numberfour.n4js.jsdoc</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<!-- N4JSX -->
+		<dependency>
+			<groupId>eu.numberfour.n4js</groupId>
+			<artifactId>eu.numberfour.n4jsx</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.numberfour.n4js</groupId>
+			<artifactId>eu.numberfour.n4jsx.model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<!-- Runner base -->
 		<dependency>
 			<groupId>eu.numberfour.n4js</groupId>
