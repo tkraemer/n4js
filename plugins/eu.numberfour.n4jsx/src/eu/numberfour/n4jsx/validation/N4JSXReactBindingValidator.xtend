@@ -102,12 +102,12 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		}
 
 		if (isFunction) {
-			checkFunctionTypeExprOrRef(jsxElem, expr, exprTypeRef as FunctionTypeExprOrRef);
+			checkFunctionTypeExprOrRef(jsxElem, exprTypeRef as FunctionTypeExprOrRef);
 			checkReactComponentShouldStartWithUppercase(jsxElem, true);
 		}
 
 		if (isClass) {
-			checkTypeTypeRefConstructor(jsxElem, expr, exprTypeRef as TypeTypeRef);
+			checkTypeTypeRefConstructor(jsxElem, exprTypeRef as TypeTypeRef);
 			checkReactComponentShouldStartWithUppercase(jsxElem, false);
 		}
 
@@ -126,7 +126,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 				val message = IssueCodes.getMessageForREACT_FUNCTIONAL_COMPONENT_CANNOT_START_WITH_LOWER_CASE(refName);
 				addIssue(
 					message,
-					expr,
+					jsxElem,
 					N4JSXPackage.Literals.JSX_ELEMENT__JSX_ELEMENT_NAME,
 					IssueCodes.REACT_FUNCTIONAL_COMPONENT_CANNOT_START_WITH_LOWER_CASE
 				);
@@ -134,7 +134,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 				val message = IssueCodes.getMessageForREACT_CLASS_COMPONENT_CANNOT_START_WITH_LOWER_CASE(refName);
 				addIssue(
 					message,
-					expr,
+					jsxElem,
 					N4JSXPackage.Literals.JSX_ELEMENT__JSX_ELEMENT_NAME,
 					IssueCodes.REACT_CLASS_COMPONENT_CANNOT_START_WITH_LOWER_CASE
 				);
@@ -145,22 +145,21 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	/**
 	 * The JSX element binds to a function or function expression, check that the return type is a subtype of React.Element 
 	 */
-	def private void checkFunctionTypeExprOrRef(JSXElement jsxElem, Expression expr,
-		FunctionTypeExprOrRef exprTypeRef) {
-
+	def private void checkFunctionTypeExprOrRef(JSXElement jsxElem, FunctionTypeExprOrRef exprTypeRef) {
 		val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE;
 		val elementClassTypeRef = reactHelper.lookUpReactClassifier(jsxElem, reference, REACT_ELEMENT, REACT_MODULE);
 		if (elementClassTypeRef === null)
 			return;
 
+		val expr = jsxElem.jsxElementName.expression;
 		val G = expr.newRuleEnvironment;
 		val result = ts.subtype(G, exprTypeRef.returnTypeRef, TypeUtils.createTypeRef(elementClassTypeRef));
 		if (result.failed) {
 			val message = IssueCodes.
 				getMessageForREACT_ELEMENT_FUNCTION_NOT_REACT_ELEMENT_ERROR(exprTypeRef.returnTypeRef.typeRefAsString);
 			addIssue(
-				message, 
-				expr, 
+				message,
+				expr,
 				IssueCodes.REACT_ELEMENT_FUNCTION_NOT_REACT_ELEMENT_ERROR
 			);
 		}
@@ -169,20 +168,17 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	/**
 	 * The JSX element binds to a class, check that the class type is a subtype of React.Component 
 	 */
-	def private void checkTypeTypeRefConstructor(JSXElement jsxElem, Expression expr, TypeTypeRef exprTypeRef) {
-		// Check if the class is a valid React component, i.e. extends React.Component
-		
-		
+	def private void checkTypeTypeRefConstructor(JSXElement jsxElem, TypeTypeRef exprTypeRef) {
 		val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
 		val componentClassTypeRef = reactHelper.lookUpReactClassifier(jsxElem, reference,
 			N4JSXReactBindingValidator.REACT_COMPONENT, REACT_MODULE)
 		if (componentClassTypeRef === null)
 			return
 
+		val expr = jsxElem.jsxElementName.expression;
 		val G = expr.newRuleEnvironment;
 		val tclass = tsh.getStaticType(G, exprTypeRef);
 		val tclassTypeRef = TypeUtils.createTypeRef(tclass);
-
 		val resultSubType = ts.subtype(G, tclassTypeRef, TypeUtils.createTypeRef(componentClassTypeRef))
 		if (resultSubType.failed) {
 			val message = IssueCodes.getMessageForREACT_ELEMENT_CLASS_NOT_REACT_ELEMENT_ERROR();
@@ -193,30 +189,30 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	/**
 	 * Check that non-optional fields of "props" should be specified in JSX element
 	 */
-	def private void checkAllNonOptionalFieldsAreSpecified(JSXElement jsxElement, TypeRef exprTypeRef) {
-		val jsxPropertyAttributes = jsxElement.jsxAttributes;
+	def private void checkAllNonOptionalFieldsAreSpecified(JSXElement jsxElem, TypeRef exprTypeRef) {
+		val jsxPropertyAttributes = jsxElem.jsxAttributes;
 		val properties = jsxPropertyAttributes.map[a|(a as JSXPropertyAttribute).property];
-		val propsType = jsxElement.propsType;
+		val propsType = jsxElem.propsType;
 		if (propsType === null)
 			return;
 
-		val G = jsxElement.newRuleEnvironment;
+		val G = jsxElem.newRuleEnvironment;
 		val nonOptionalFieldsInPropsType = tsh.structuralTypesHelper.collectStructuralMembers(G, propsType,
 			TypingStrategy.STRUCTURAL).filter[m|(m instanceof TField) && !m.isOptional];
-		// println("fieldsInPropsType = " + fieldsInPropsType);
-		nonOptionalFieldsInPropsType.forEach [ member |
-			val field = member as TField;
-			if (!(properties.contains(field))) {
-				val message = IssueCodes.
-					getMessageForJSXPROPERTY_ATTRIBUTE_NON_OPTIONAL_PROPERTY_NOT_SPECIFIED(field.name);
-				addIssue(
-					message,
-					jsxElement,
-					N4JSXPackage.Literals.JSX_ELEMENT__JSX_ELEMENT_NAME,
-					IssueCodes.JSXPROPERTY_ATTRIBUTE_NON_OPTIONAL_PROPERTY_NOT_SPECIFIED
-				);
-			}
-		]
+		
+		val String missingFields = nonOptionalFieldsInPropsType.filter[field|!(properties.contains(field))].map [field |
+			field.name
+		].join(",")
+
+		if (!missingFields.isEmpty) {
+			val message = IssueCodes.getMessageForJSXPROPERTY_ATTRIBUTE_NON_OPTIONAL_PROPERTY_NOT_SPECIFIED(missingFields);
+			addIssue(
+				message,
+				jsxElem,
+				N4JSXPackage.Literals.JSX_ELEMENT__JSX_ELEMENT_NAME,
+				IssueCodes.JSXPROPERTY_ATTRIBUTE_NON_OPTIONAL_PROPERTY_NOT_SPECIFIED
+			);
+		}
 	}
 
 	/**
