@@ -22,7 +22,7 @@ function MyNormalFunction(props: ~React.ComponentProps with {myOtherProp: string
 }
 
 //XPECT errors --> "Expect a function returning React element but the return type is string." at "MyNormalFunction"
-<MyNormalFunction/>
+<MyNormalFunction myOtherProp="Hello"/>
 
 class MyReactClassComponent extends React.Component<~Object with {prop: int}, Object> {
 	@Override

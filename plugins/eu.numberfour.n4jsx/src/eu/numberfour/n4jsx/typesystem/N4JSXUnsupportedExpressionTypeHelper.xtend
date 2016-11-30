@@ -16,18 +16,18 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.DefaultUnsupportedExpressionTypeHelper
-import eu.numberfour.n4jsx.helpers.ReactLookupHelper
 import eu.numberfour.n4jsx.n4JSX.JSXElement
 import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.util.IResourceScopeCache
+import eu.numberfour.n4jsx.helpers.ReactHelper
 
 /**
  * Adds support for typing JSX elements.
  */
 class N4JSXUnsupportedExpressionTypeHelper extends DefaultUnsupportedExpressionTypeHelper {
 	@Inject
-	ReactLookupHelper reactLookupHelper;
+	ReactHelper reactLookupHelper;
 		
 	override typeExpression(Expression expression, RuleEnvironment G) {
 		if (expression instanceof JSXElement) {

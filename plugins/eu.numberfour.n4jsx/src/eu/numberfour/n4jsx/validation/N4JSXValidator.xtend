@@ -82,7 +82,7 @@ import org.eclipse.xtext.validation.ComposedChecks
 	N4JSModuleValidator,
 	N4JSDestructureValidator,
 	UnsupportedFeatureValidator,
-	N4JSXBindingValidator
+	N4JSXReactBindingValidator
 ])
 @Log
 class N4JSXValidator extends InternalTypeSystemValidator {
