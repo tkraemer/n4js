@@ -64,6 +64,7 @@ import eu.numberfour.n4js.external.NpmManager;
 import eu.numberfour.n4js.external.TargetPlatformInstallLocationProvider;
 import eu.numberfour.n4js.external.TypeDefinitionGitLocationProvider;
 import eu.numberfour.n4js.external.libraries.PackageJson;
+import eu.numberfour.n4js.external.libraries.TargetPlatformFactory;
 import eu.numberfour.n4js.external.libraries.TargetPlatformModel;
 import eu.numberfour.n4js.generator.headless.HeadlessHelper;
 import eu.numberfour.n4js.generator.headless.N4HeadlessCompiler;
@@ -558,7 +559,7 @@ public class N4jsc {
 
 			// Convert target platform file into package JSON for now.
 			TargetPlatformModel model = TargetPlatformModel.readValue(targetPlatformFile.toURI());
-			PackageJson packageJson = PackageJson.createN4DefaultWithDependencies(model);
+			PackageJson packageJson = TargetPlatformFactory.createN4DefaultWithDependencies(model);
 			File packageJsonFile = new File(targetPlatformInstallLocation, PackageJson.PACKAGE_JSON);
 			try {
 				if (!packageJsonFile.exists()) {
@@ -571,8 +572,8 @@ public class N4jsc {
 							.setTargetPlatformFileLocation(packageJsonFile.toURI());
 
 					// install dependencies if needed
-					final Map<String, String> dependencies = packageJson.getDependencies();
-					if (null != dependencies) {
+					final Map<String, String> dependencies = packageJson.dependencies;
+					if (null != packageJson.dependencies) {
 						final Iterable<String> packageNames = dependencies.keySet();
 						for (final String packageName : packageNames) {
 							try {

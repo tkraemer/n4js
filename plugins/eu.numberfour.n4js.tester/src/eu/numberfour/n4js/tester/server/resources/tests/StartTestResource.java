@@ -36,10 +36,9 @@ import java.util.function.Consumer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.tester.UrlDecoderService;
@@ -53,8 +52,7 @@ import eu.numberfour.n4js.tester.server.resources.Resource;
  * <p>
  * <tt>HTTP PUT/n4.ide/testing/sessions/{sessionId}/tests/{testId}/start/</tt>
  */
-@Resource(path = "/{sessionId}/tests/{testId}/start/", method = POST, requestContentType = START_TEST,
-responseContentType = "application/vnd.n4.ide.start_test_res.tm+json")
+@Resource(path = "/{sessionId}/tests/{testId}/start/", method = POST, requestContentType = START_TEST, responseContentType = "application/vnd.n4.ide.start_test_res.tm+json")
 public class StartTestResource extends TestResource {
 
 	private static final String TIMEOUT_KEY = "timeout";
@@ -70,6 +68,9 @@ public class StartTestResource extends TestResource {
 	@SuppressWarnings("unchecked")
 	protected TestEvent createEvent(final String sessionId, final String testId, final String body)
 			throws ClientResourceException {
+
+		if (isNullOrEmpty(body))
+			throw new ClientResourceException(SC_BAD_REQUEST);
 
 		final Map<?, ?> values = newHashMap();
 		try {
@@ -153,8 +154,7 @@ public class StartTestResource extends TestResource {
 					builder()
 							.put("rel", "end test")
 							.put("uri", format(END_TEMP, sessionId, testId))
-							.build()
-					));
+							.build()));
 		}
 	}
 

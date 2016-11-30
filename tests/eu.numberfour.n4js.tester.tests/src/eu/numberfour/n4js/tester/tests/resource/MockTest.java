@@ -48,7 +48,6 @@ import java.util.stream.Stream;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.varia.NullAppender;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.eclipse.emf.common.util.URI;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
@@ -59,6 +58,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.tester.TesterFacade;

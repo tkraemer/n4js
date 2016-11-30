@@ -13,9 +13,9 @@ package eu.numberfour.n4js.utils;
 import java.io.IOException;
 import java.io.Writer;
 
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.io.IOContext;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.io.IOContext;
 
 /**
  * Factory for prettier JSON output than the default one.
@@ -25,8 +25,8 @@ import org.codehaus.jackson.io.IOContext;
 public class JsonPrettyPrinterFactory extends JsonFactory {
 
 	@Override
-	protected JsonGenerator _createJsonGenerator(final Writer out, final IOContext ctxt) throws IOException {
-		return super._createJsonGenerator(out, ctxt).setPrettyPrinter(new JsonPrettyPrinter());
+	protected JsonGenerator _createGenerator(final Writer out, final IOContext ctxt) throws IOException {
+		return super._createGenerator(out, ctxt).setPrettyPrinter(new JsonPrettyPrinter());
 	}
 
 }

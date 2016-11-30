@@ -189,8 +189,9 @@ Contributors:
 						<plugin id="org.eclipse.jetty.server"/>
 						<plugin id="org.eclipse.jetty.servlet"/>
 						<plugin id="org.eclipse.jetty.util"/>
-						<plugin id="org.codehaus.jackson.core"/>
-						<plugin id="org.codehaus.jackson.mapper"/>						
+						<plugin id="com.fasterxml.jackson.core.jackson-core"/>	
+						<plugin id="com.fasterxml.jackson.core.jackson-annotations"/>
+						<plugin id="com.fasterxml.jackson.core.jackson-databind"/>						
 					</excludes>
 				</configuration>
 			</plugin>

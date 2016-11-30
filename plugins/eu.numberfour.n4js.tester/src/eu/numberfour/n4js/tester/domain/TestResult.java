@@ -11,21 +11,19 @@
 package eu.numberfour.n4js.tester.domain;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion.NON_NULL;
 
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableList;
 
 /**
  * Class for representing a result (as an outcome) of a particular test.
  */
 @JsonAutoDetect
-@JsonSerialize(include = NON_NULL)
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class TestResult implements Cloneable {
 
 	@JsonProperty
