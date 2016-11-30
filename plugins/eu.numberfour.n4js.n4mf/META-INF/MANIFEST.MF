@@ -26,7 +26,7 @@ Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: eu.numberfour.n4js.n4mf,
- eu.numberfour.n4js.n4mf.formatting,
+ eu.numberfour.n4js.n4mf.formatting2,
  eu.numberfour.n4js.n4mf.parser.antlr,
  eu.numberfour.n4js.n4mf.parser.antlr.internal,
  eu.numberfour.n4js.n4mf.parser.antlr.lexer,
