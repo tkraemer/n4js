@@ -78,6 +78,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		if (!isFunction && !isClass) {
 			val String refName = expr.refName
 			if ((refName !== null) && Character::isLowerCase(refName.charAt(0))) {
+				 //See Req. IDE-241118 
 				// If the JSX element name starts with lower case, warning if it is unknown HTML tag
 				if (!htmlTags.contains(refName)) {
 					val message = IssueCodes.getMessageForHTMLTAG_UNKNOWN(refName);
@@ -89,7 +90,8 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 					);
 				}
 			} else {
-				// JSX element name starts with an upper case, error because it does not bind to a class or function 
+				// JSX element name starts with an upper case, error because it does not bind to a class or function
+				// See Req. IDE-241115 
 				val message = IssueCodes.
 					getMessageForREACT_ELEMENT_NOT_FUNCTION_OR_CLASS_ERROR(exprTypeRef.typeRefAsString);
 				addIssue(message, expr, IssueCodes.REACT_ELEMENT_NOT_FUNCTION_OR_CLASS_ERROR);
@@ -139,7 +141,8 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	/**
-	 * The JSX element binds to a function or function expression, check that the return type is a subtype of React.Element 
+	 * The JSX element binds to a function or function expression, check that the return type is a subtype of React.Element
+	 * See Req. IDE-241116 
 	 */
 	def private void checkFunctionTypeExprOrRef(JSXElement jsxElem, FunctionTypeExprOrRef exprTypeRef) {
 		val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE;
@@ -162,7 +165,8 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	/**
-	 * The JSX element binds to a class, check that the class type is a subtype of React.Component 
+	 * The JSX element binds to a class, check that the class type is a subtype of React.Component
+	 * See Req. IDE-241116 
 	 */
 	def private void checkTypeTypeRefConstructor(JSXElement jsxElem, TypeTypeRef exprTypeRef) {
 		val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
@@ -184,6 +188,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * Check that non-optional fields of "props" should be specified in JSX element
+	 * See Req. IDE-241117
 	 */
 	def private void checkAllNonOptionalFieldsAreSpecified(JSXElement jsxElem, TypeRef exprTypeRef) {
 		val jsxPropertyAttributes = jsxElem.jsxAttributes;
