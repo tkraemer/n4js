@@ -12,19 +12,12 @@ GEN_FOLDER=generated-docs/html
 rm -rf ./$GEN_FOLDER/; mkdir -p ./$GEN_FOLDER/
 
 echo INFO: Copying resources to ./$GEN_FOLDER/
-cp -r scripts styles images ./$SRC_FOLDER/chapters ./$GEN_FOLDER/
+cp -r styles images scripts ./$GEN_FOLDER/
 
 echo INFO: AsciiSpec Generating HTML
 
 ####################### Build HTML for gh-pages #######################
-# All values are built-in AsciiDoctor CLI attributes passed with -a flag, 
-# see http://asciidoctor.org/docs/user-manual/#builtin-attributes
-asciispec -D $GEN_FOLDER/ N4JSSpec.adoc  \
--a docinfodir=headers -a docinfo1=true \
--a stylesdir=styles -a stylesheet=n4-adoc.css \
--a source-highlighter=highlight.js -a highlightjsdir=scripts -a highlightjs-theme=n4jshighlighter \
--a toc=right -a sectnums=true -a sectanchors=true -a sectlinks=true \
--a data-uri=true -a doctype=book -a experimental=true -a idseparator=-
+asciispec -a data-uri=true -D $GEN_FOLDER/ N4JSSpec.adoc 
 
 echo INFO: AsciiSpec HTML conversion Done
 
