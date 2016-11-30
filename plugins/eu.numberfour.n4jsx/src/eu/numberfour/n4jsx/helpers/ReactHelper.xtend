@@ -23,6 +23,7 @@ import eu.numberfour.n4jsx.n4JSX.JSXElement
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.IScopeProvider
@@ -44,6 +45,8 @@ class ReactHelper {
 	public final static String REACT_MODULE = "react";	
 	public final static String REACT_COMPONENT = "Component";
 	public final static String REACT_ELEMENT = "Element";
+	@Inject private extension IQualifiedNameConverter qualifierNameConverter;
+	
 
 	/**
 	 * Lookup React component/element type. For increased efficiency, the found results are cached
@@ -53,11 +56,12 @@ class ReactHelper {
 		val String key = REACT_TYPE + reactModuleName + "." + reactName;
 		return resourceScopeCacheHelper.get(key, context.eResource, [
 			val IScope scope = scopeProvider.getScope(context, reference)
+			val allEODs = scope.allElements;
 			val IEObjectDescription eod = scope.allElements.findFirst [ e |
 				val classifier = e.EObjectOrProxy;
 				if (classifier instanceof TClassifier) {
 					return reactName == classifier.exportedName &&
-						reactModuleName == classifier.containingModule.qualifiedName;
+						reactModuleName == classifier.containingModule.qualifiedName.toQualifiedName.lastSegment;
 				}
 				return false;
 			]
@@ -110,7 +114,8 @@ class ReactHelper {
 			val EReference referenceParameterizedTypeRef = TypeRefsPackage.Literals.
 				PARAMETERIZED_TYPE_REF__DECLARED_TYPE;
 			val tComponentClassifier = lookUpReactClassifier(jsxElem,
-				referenceParameterizedTypeRef, eu.numberfour.n4jsx.helpers.ReactHelper.REACT_COMPONENT, REACT_MODULE);
+				referenceParameterizedTypeRef, ReactHelper.REACT_COMPONENT, REACT_MODULE);
+				//TODO: Make sure typeArgs has at least one element
 			val reactComponentProps = tComponentClassifier.typeVars.get(0);
 			tsh.addSubstitutions(G, TypeUtils.createTypeRef(tclass));
 			ts.substTypeVariablesInTypeRef(G, TypeUtils.createTypeRef(reactComponentProps));
