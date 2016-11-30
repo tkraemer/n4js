@@ -943,8 +943,6 @@ import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 			return caseJSXText((JSXText) object);
 		} else if (object instanceof JSXExpression) {
 			return caseJSXExpression((JSXExpression) object);
-		} else if (object instanceof JSXChild) {
-			return caseJSXChild((JSXChild) object);
 		} else if (object instanceof JSXElementName) {
 			return caseJSXElementName((JSXElementName) object);
 		} else if (object instanceof JSXPropertyAttribute) {
@@ -989,11 +987,6 @@ import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 		return DONE;
 	}
 
-	private Boolean caseJSXChild(JSXChild object) {
-		throw new IllegalStateException(
-				"PrettyPrinterSwitch missing a case for objects of type " + object.eClass().getName());
-	}
-
 	private Boolean caseJSXText(@SuppressWarnings("unused") JSXText object) {
 		write("/* TODO JSXText not supported */");
 		return DONE;
@@ -1021,6 +1014,7 @@ import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 
 	private Boolean caseJSXSpreadAttribute(JSXSpreadAttribute object) {
 		write("{");
+		write("... ");
 		doSwitch(object.getExpression());
 		write("}");
 		return DONE;
