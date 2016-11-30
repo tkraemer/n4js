@@ -44,10 +44,6 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject private TypeSystemHelper tsh
 	@Inject private extension ReactHelper reactHelper;
 
-	private final static String REACT_MODULE = "react";
-	private final static String REACT_COMPONENT = "Component";
-	private final static String REACT_ELEMENT = "Element";
-
 	private static final List<String> htmlTags = Arrays.asList(
 		"a",
 		"abbr",
@@ -147,7 +143,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	def private void checkFunctionTypeExprOrRef(JSXElement jsxElem, FunctionTypeExprOrRef exprTypeRef) {
 		val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE;
-		val elementClassTypeRef = reactHelper.lookUpReactClassifier(jsxElem, reference, REACT_ELEMENT, REACT_MODULE);
+		val elementClassTypeRef = reactHelper.lookUpReactClassifier(jsxElem, reference, ReactHelper.REACT_ELEMENT, ReactHelper.REACT_MODULE);
 		if (elementClassTypeRef === null)
 			return;
 
@@ -171,7 +167,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	def private void checkTypeTypeRefConstructor(JSXElement jsxElem, TypeTypeRef exprTypeRef) {
 		val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
 		val componentClassTypeRef = reactHelper.lookUpReactClassifier(jsxElem, reference,
-			N4JSXReactBindingValidator.REACT_COMPONENT, REACT_MODULE)
+			ReactHelper.REACT_COMPONENT, ReactHelper.REACT_MODULE)
 		if (componentClassTypeRef === null)
 			return
 

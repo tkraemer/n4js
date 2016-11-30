@@ -32,7 +32,7 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 
 /**
  * This helper provides utilities for looking up React definitions such as React.Component or React.Element or
- * for calculating types related to React
+ * for calculating types related to React (e.g. of props property) etc.
  */
 class ReactHelper {
 	@Inject	protected N4JSTypeSystem ts;
@@ -40,17 +40,17 @@ class ReactHelper {
 	@Inject	IScopeProvider scopeProvider
 	@Inject	private IResourceScopeCache resourceScopeCacheHelper;
 
-	private final static String REACT_MODULE = "react";	
-	private final static String REACT_COMPNENT = "Component";
+	public final static String REACT_TYPE = "REACT_TYPE__";
+	public final static String REACT_MODULE = "react";	
+	public final static String REACT_COMPONENT = "Component";
+	public final static String REACT_ELEMENT = "Element";
 
 	/**
 	 * Lookup React component/element type. For increased efficiency, the found results are cached
 	 *
 	 */
 	def public TClassifier lookUpReactClassifier(EObject context, EReference reference, String reactName, String reactModuleName) {
-		//val String key = //REACT_TYPE__ + reactModuleName + "." + reactName;
-		val String key = reactModuleName + "." + reactName;
-
+		val String key = REACT_TYPE + reactModuleName + "." + reactName;
 		return resourceScopeCacheHelper.get(key, context.eResource, [
 			val IScope scope = scopeProvider.getScope(context, reference)
 			val IEObjectDescription eod = scope.allElements.findFirst [ e |
@@ -110,7 +110,7 @@ class ReactHelper {
 			val EReference referenceParameterizedTypeRef = TypeRefsPackage.Literals.
 				PARAMETERIZED_TYPE_REF__DECLARED_TYPE;
 			val tComponentClassifier = lookUpReactClassifier(jsxElem,
-				referenceParameterizedTypeRef, REACT_COMPNENT, REACT_MODULE);
+				referenceParameterizedTypeRef, eu.numberfour.n4jsx.helpers.ReactHelper.REACT_COMPONENT, REACT_MODULE);
 			val reactComponentProps = tComponentClassifier.typeVars.get(0);
 			tsh.addSubstitutions(G, TypeUtils.createTypeRef(tclass));
 			ts.substTypeVariablesInTypeRef(G, TypeUtils.createTypeRef(reactComponentProps));

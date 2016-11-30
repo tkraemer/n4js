@@ -23,7 +23,15 @@ import eu.numberfour.n4js.n4JS.StringLiteral;
 import eu.numberfour.n4js.utils.ResourceType;
 
 /**
- * This enum represents various JS variants
+ * JavaScript variant to adjust validation. See ECMAScript Spec, 10.2.1 Strict Mode Code.
+ * <p>
+ * Note that the variants are mutually exclusive. There is a precedence of the variants: n4js precedes strict precedes
+ * unrestricted. That is, even if a script in a file with extension ".n4js" contains strict mode literals ("use strict")
+ * the mode is always n4js. This class is used by {@link JavaScriptVariantHelper}
+ *
+ * @see <a href=
+ *      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode">MDN
+ *      </a>
  */
 public enum JavaScriptVariant {
 

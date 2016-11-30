@@ -14,7 +14,8 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 
 /**
- * This class contains custom scoping for N4JSX language.
+ * This class contains custom scoping for N4JSX language. The main difference compared to N4JSScopeProvider 
+ * is that we need to bind JSX property attributes to fields of "props" type 
  * 
  * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#scoping
  * on how and when to use it
