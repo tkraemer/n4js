@@ -23,16 +23,14 @@ import org.eclipse.emf.ecore.EReference
 class N4JSXScopeProvider extends N4JSScopeProvider {
 	@Inject MemberScopingHelper memberScopingHelper
 	@Inject extension ReactHelper reactHelper;
-
+	
 	@Override
 	override getScope(EObject context, EReference reference) {
 		if (reference == N4JSXPackage.Literals.JSX_PROPERTY_ATTRIBUTE__PROPERTY) {
 			if (context instanceof JSXPropertyAttribute) {
 				val jsxElem = (context.eContainer as JSXElement);
 				val TypeRef propsTypeRef = jsxElem.getPropsType();
-
-				//TODO check visibility and static??				
-				val checkVisibility = false;
+				val checkVisibility = true;
 				val staticAccess = false;
 				if (propsTypeRef !== null) {
 					return memberScopingHelper.createMemberScopeFor(propsTypeRef, context,

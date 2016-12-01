@@ -21,7 +21,7 @@ function MyNormalFunction(props: ~React.ComponentProps with {myOtherProp: string
 	return "My Normal Function";
 }
 
-//XPECT errors --> "Expect a function returning React element but the return type is string." at "MyNormalFunction"
+//XPECT errors --> "Expect a function returning React.Element but the return type is string." at "MyNormalFunction"
 <MyNormalFunction myOtherProp="Hello"/>
 
 class MyReactClassComponent extends React.Component<~Object with {prop: int}, Object> {
@@ -41,6 +41,6 @@ class MyNormalClass  {
 	}
 }
 
-//XPECT errors --> "The referred class is not a valid React component." at "MyNormalClass"
+//XPECT errors --> "The referred class is not a subtype of React.Component" at "MyNormalClass"
 <MyNormalClass/>
 

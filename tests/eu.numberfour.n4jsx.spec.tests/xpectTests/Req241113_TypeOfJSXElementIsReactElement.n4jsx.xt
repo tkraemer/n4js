@@ -11,6 +11,14 @@
 
 import * as React from "react"
 
+function MyReactFuncComponent(props: ~React.ComponentProps with {myProp: string}): React.Element {
+	return (<div></div>);
+}
+
+//XPECT type of '<MyReactFuncComponent myProp="Hello"/>' --> Element
+var a = <MyReactFuncComponent myProp="Hello"/>;
+
+
 class C extends React.Component<~Object with {prop: int}, Object> {
 	@Override
 	public render(): React.Element {
@@ -18,9 +26,5 @@ class C extends React.Component<~Object with {prop: int}, Object> {
 	}
 }
 
-//XPECT errors --> "JSX element is expected to bind to either a function or class, but bind to type [unknown] instead." at "MyProp"
-<MyProp/>
-
-const D = 10;
-//XPECT errors --> "JSX element is expected to bind to either a function or class, but bind to type int instead." at "D"
-<D/>
+//XPECT type of b --> Element
+var b = <C prop={5}/>

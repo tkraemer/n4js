@@ -40,12 +40,13 @@ class ReactHelper {
 	@Inject protected TypeSystemHelper tsh
 	@Inject	IScopeProvider scopeProvider
 	@Inject	private IResourceScopeCache resourceScopeCacheHelper;
+	@Inject private extension IQualifiedNameConverter qualifierNameConverter;
 
 	public final static String REACT_TYPE = "REACT_TYPE__";
 	public final static String REACT_MODULE = "react";	
 	public final static String REACT_COMPONENT = "Component";
 	public final static String REACT_ELEMENT = "Element";
-	@Inject private extension IQualifiedNameConverter qualifierNameConverter;
+	
 	
 
 	/**
@@ -56,7 +57,6 @@ class ReactHelper {
 		val String key = REACT_TYPE + reactModuleName + "." + reactName;
 		return resourceScopeCacheHelper.get(key, context.eResource, [
 			val IScope scope = scopeProvider.getScope(context, reference)
-			val allEODs = scope.allElements;
 			val IEObjectDescription eod = scope.allElements.findFirst [ e |
 				val classifier = e.EObjectOrProxy;
 				if (classifier instanceof TClassifier) {
@@ -115,7 +115,10 @@ class ReactHelper {
 				PARAMETERIZED_TYPE_REF__DECLARED_TYPE;
 			val tComponentClassifier = lookUpReactClassifier(jsxElem,
 				referenceParameterizedTypeRef, ReactHelper.REACT_COMPONENT, REACT_MODULE);
-				//TODO: Make sure typeArgs has at least one element
+			if (tComponentClassifier === null || tComponentClassifier.typeVars.isEmpty) {
+				return null;
+			}	
+			
 			val reactComponentProps = tComponentClassifier.typeVars.get(0);
 			tsh.addSubstitutions(G, TypeUtils.createTypeRef(tclass));
 			ts.substTypeVariablesInTypeRef(G, TypeUtils.createTypeRef(reactComponentProps));

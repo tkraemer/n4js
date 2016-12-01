@@ -114,7 +114,8 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	/**
-	 * Check that a React component should start with an upper case 
+	 * Check that a React function/class component should start with an upper case
+	 * See Req. 241101 
 	 */
 	def private void checkReactComponentShouldStartWithUppercase(JSXElement jsxElem, boolean isFunctionalComponent) {
 		val expr = jsxElem.jsxElementName.expression;
@@ -173,8 +174,8 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		val componentClassTypeRef = reactHelper.lookUpReactClassifier(jsxElem, reference,
 			ReactHelper.REACT_COMPONENT, ReactHelper.REACT_MODULE)
 		if (componentClassTypeRef === null)
-			return
-
+			return;
+		
 		val expr = jsxElem.jsxElementName.expression;
 		val G = expr.newRuleEnvironment;
 		val tclass = tsh.getStaticType(G, exprTypeRef);
