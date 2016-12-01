@@ -10,11 +10,11 @@
 
 //import * as React from "react"
 //XPECT noerrors
-var a = <h></h>
+var a = <h1></h1>
 
 //there is no closing element XPECT noerrors
 var b = <div/>
 
-//XPECT errors --> "Opening element h does not match with closing element h2." at "h2"
-var c = <h></h2>
+//XPECT errors --> "Opening element h1 does not match with closing element h2." at "h2"
+var c = <h1></h2>
 
