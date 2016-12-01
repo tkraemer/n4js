@@ -44,15 +44,26 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject private TypeSystemHelper tsh
 	@Inject private extension ReactHelper reactHelper;
 
+	//Source: http://www.w3schools.com/tags/
 	private static final List<String> htmlTags = Arrays.asList(
-		"a",
-		"abbr",
-		"address",
-		"area",
-		"button",
-		"div",
-		"li",
-		"ol"
+		"a","abbr",	"address", "area", "article", "aside", "audio", 	
+		"b", "base", "bdi", "bdo", "blockquote", "body", "br", "button",
+		"canvas", "caption", "cite", "code", "col", "colgroup", 
+		"datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "dt", 
+		"em", "embed", 
+		"fieldset", "figcaption", "figure", "footer", "form",
+		"h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hr", "html",
+		"i", "iframe", "img", "input", "ins", 
+		"kbd", "keygen", 
+		"label", "legend", "li", "link", 
+		"main", "map", "mark", "menu", "menuitem", "meta", "meter",
+		"nav", "noscript", 
+		"object", "ol", "optgroup", "option", 
+		"p", "param", "pre", "progress", "q", "rp", "rt", "ruby", 
+		"s", "samp", "script", "section", "select", "small", "source", "span",
+		"strong", "style", "sub", "summary", "sup", 
+		"table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track",
+		"u", "ul", "var", "video", "wbr"
 	)
 
 	/**
@@ -66,7 +77,28 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	/**
-	 * This method checks if JSXElement binds to a valid React component function or class React component declaration
+	 * This method checks that JSXElement bind to a valid React component function or class React component declaration
+	 * See Req. 241103
+	 */
+	@Check
+	def public void checkOpeningClosingElementMismatch(JSXElement jsxElem) {
+		val openingName = jsxElem?.jsxElementName?.expression?.refName;
+		val closingName = jsxElem?.jsxClosingName?.expression?.refName;
+
+		if ((jsxElem.jsxClosingName !==null) && !(openingName == closingName)) {
+			//Only check if the closing element exists, e.g. not null
+			val message = IssueCodes.getMessageForJSXELEMENT_OPENING_CLOSING_ELEMENT_NOT_MATCH(openingName, closingName);
+			addIssue(
+				message,
+				jsxElem,
+				N4JSXPackage.Literals.JSX_ELEMENT__JSX_CLOSING_NAME,
+				IssueCodes.JSXELEMENT_OPENING_CLOSING_ELEMENT_NOT_MATCH
+			);
+		}
+	}
+
+	/**
+	 * This method checks that JSXElement bind to a valid React component function or class React component declaration
 	 */
 	@Check
 	def public void checkReactElementBinding(JSXElement jsxElem) {
@@ -78,7 +110,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		if (!isFunction && !isClass) {
 			val String refName = expr.refName
 			if ((refName !== null) && Character::isLowerCase(refName.charAt(0))) {
-				 //See Req. IDE-241118 
+				// See Req. IDE-241118 
 				// If the JSX element name starts with lower case, warning if it is unknown HTML tag
 				if (!htmlTags.contains(refName)) {
 					val message = IssueCodes.getMessageForHTMLTAG_UNKNOWN(refName);
@@ -147,7 +179,8 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	def private void checkFunctionTypeExprOrRef(JSXElement jsxElem, FunctionTypeExprOrRef exprTypeRef) {
 		val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE;
-		val elementClassTypeRef = reactHelper.lookUpReactClassifier(jsxElem, reference, ReactHelper.REACT_ELEMENT, ReactHelper.REACT_MODULE);
+		val elementClassTypeRef = reactHelper.lookUpReactClassifier(jsxElem, reference, ReactHelper.REACT_ELEMENT,
+			ReactHelper.REACT_MODULE);
 		if (elementClassTypeRef === null)
 			return;
 
@@ -171,11 +204,11 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	def private void checkTypeTypeRefConstructor(JSXElement jsxElem, TypeTypeRef exprTypeRef) {
 		val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
-		val componentClassTypeRef = reactHelper.lookUpReactClassifier(jsxElem, reference,
-			ReactHelper.REACT_COMPONENT, ReactHelper.REACT_MODULE)
+		val componentClassTypeRef = reactHelper.lookUpReactClassifier(jsxElem, reference, ReactHelper.REACT_COMPONENT,
+			ReactHelper.REACT_MODULE)
 		if (componentClassTypeRef === null)
 			return;
-		
+
 		val expr = jsxElem.jsxElementName.expression;
 		val G = expr.newRuleEnvironment;
 		val tclass = tsh.getStaticType(G, exprTypeRef);
@@ -201,13 +234,14 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		val G = jsxElem.newRuleEnvironment;
 		val nonOptionalFieldsInPropsType = tsh.structuralTypesHelper.collectStructuralMembers(G, propsType,
 			TypingStrategy.STRUCTURAL).filter[m|(m instanceof TField) && !m.isOptional];
-		
-		val String missingFields = nonOptionalFieldsInPropsType.filter[field|!(properties.contains(field))].map [field |
+
+		val String missingFields = nonOptionalFieldsInPropsType.filter[field|!(properties.contains(field))].map [ field |
 			field.name
 		].join(",")
 
 		if (!missingFields.isEmpty) {
-			val message = IssueCodes.getMessageForJSXPROPERTY_ATTRIBUTE_NON_OPTIONAL_PROPERTY_NOT_SPECIFIED(missingFields);
+			val message = IssueCodes.
+				getMessageForJSXPROPERTY_ATTRIBUTE_NON_OPTIONAL_PROPERTY_NOT_SPECIFIED(missingFields);
 			addIssue(
 				message,
 				jsxElem,

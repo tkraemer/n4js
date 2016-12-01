@@ -48,7 +48,7 @@ class MyComponent extends
 	public render(): React.Element {
 		const constText = "some text";
 		//XPECT noerrors
-		return (<LowerComponent whatTextShouldIShow="Hallo">{constText}</LowerReact.Component>
+		return (<LowerComponent whatTextShouldIShow="Hallo">{constText}</LowerComponent>
 		);
 	}
 }
@@ -68,6 +68,6 @@ class MyHigherComponent extends
            }
            return "";
          })()
-       }>{d}</MyReact.Component>);
+       }>{d}</MyComponent>);
 	}
 }
