@@ -11,6 +11,7 @@
 import * as React from "react"
 
 class MyProps implements React.ComponentProps  {
+	public a: int;
 	public x: int;
 	public y: string;
 	private z: string;
@@ -23,11 +24,11 @@ function MyReactFuncComponent(props: ~MyProps): React.Element {
 	);
 }
 
-//XPECT warnings --> "Non-optional property x should be specified." at "MyReactFuncComponent"
+//XPECT warnings --> "Non-optional property a,x should be specified." at "MyReactFuncComponent"
 <MyReactFuncComponent y="Hi"/>;
 
 //XPECT errors --> "field z is not available for structurally referenced type ~MyProps." at "z"
-<MyReactFuncComponent x={1} y="Hello" z="I am private property"/>
+<MyReactFuncComponent a={2} x={1} y="Hello" z="I am private property"/>
 
 function MyOtherReactFuncComponent(props: ~React.ComponentProps with {a: int, b: string?}): React.Element {
 	return (
