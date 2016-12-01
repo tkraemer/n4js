@@ -34,6 +34,5 @@ Export-Package: eu.numberfour.n4js.regex,
  eu.numberfour.n4js.regex.validation,
  eu.numberfour.n4js.regex.scoping,
  eu.numberfour.n4js.regex.generator,
- eu.numberfour.n4js.regex.formatting,
  eu.numberfour.n4js.regex.parser.antlr.lexer
 
