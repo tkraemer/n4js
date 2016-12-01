@@ -27,18 +27,24 @@ import eu.numberfour.n4js.validation.DefaultJavaScriptVariantHelper;
 @Singleton
 public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper {
 
+	enum N4JSXResourceType {
+		N4JSX, JSX, OTHER
+	}
+
 	private static Logger LOGGER = Logger.getLogger(ResourceType.class);
 
 	private final static String EXT_N4JSX = "n4jsx";
+	private final static String EXT_JSX = "jsx";
 	private final static String EXT_XT = "xt";
 	private final static String END_N4JSX_XT = "." + EXT_N4JSX + "." + EXT_XT;
+	private final static String END_JSX_XT = "." + EXT_JSX + "." + EXT_XT;
 
 	/**
 	 * No dynamic pseudo scope for N4JSX
 	 */
 	@Override
 	public boolean activateDynamicPseudoScope(EObject eobj) {
-		return false;
+		return super.activateDynamicPseudoScope(eobj) || !getResourceType(eobj).equals(N4JSXResourceType.N4JSX);
 	}
 
 	/**
@@ -46,7 +52,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean allowMissingImplementation(EObject eobj) {
-		return false;
+		return super.allowMissingImplementation(eobj);
 	}
 
 	/**
@@ -54,7 +60,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean checkOverrideAnnotation(EObject eobj) {
-		return true;
+		return super.checkOverrideAnnotation(eobj) && !getResourceType(eobj).equals(N4JSXResourceType.JSX);
 	}
 
 	/**
@@ -260,57 +266,69 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 		if (eobj == null)
 			return super.isN4JSMode(eobj);
 
-		Resource resource = eobj.eResource();
-		if (resource == null)
-			return super.isN4JSMode(eobj);
-
-		URI uri = resource.getURI();
-		if (uri == null)
-			return super.isN4JSMode(eobj);
-
-		String fileExtension = uri.fileExtension();
-		if (fileExtension == null) {
-			LOGGER.info("URI has no file extension " + uri);
-			return super.isN4JSMode(eobj);
-		} else {
-			fileExtension = fileExtension.toLowerCase();
-			boolean isN4JSExtension = isN4JSXExtension(fileExtension);
-			if (isN4JSExtension) {
-				return isN4JSExtension;
-			} else {
-				return super.isN4JSMode(eobj);
-			}
-		}
+		return super.isN4JSMode(eobj) || getResourceType(eobj).equals(N4JSXResourceType.N4JSX);
 	}
 
 	/**
-	 * Check if a file extension is N4JSX
+	 * Check the file extension
 	 */
-	private boolean isN4JSXExtension(String fileExtension) {
-		switch (fileExtension) {
-		case EXT_N4JSX:
-			return true;
-		case EXT_XT:
-			String fileExtensionWithoutXT = getXtHiddenType(fileExtension);
-			return isN4JSXExtension(fileExtensionWithoutXT);
-		default:
-			return false;
+	private N4JSXResourceType getResourceType(EObject eobj) {
+		if (eobj == null)
+			return N4JSXResourceType.OTHER;
+
+		Resource resource = eobj.eResource();
+		if (resource == null)
+			return N4JSXResourceType.OTHER;
+
+		URI uri = resource.getURI();
+		if (uri == null)
+			return N4JSXResourceType.OTHER;
+
+		ResourceType resourceType = ResourceType.getResourceType(uri);
+		if (resourceType != ResourceType.UNKOWN) {
+			return N4JSXResourceType.OTHER;
+		} else {
+			String fileExtension = uri.fileExtension();
+
+			if (fileExtension == null) {
+				LOGGER.info("URI has no file extension " + uri);
+				return N4JSXResourceType.OTHER;
+			} else {
+				fileExtension = fileExtension.toLowerCase();
+			}
+
+			switch (fileExtension) {
+			case EXT_N4JSX:
+				return N4JSXResourceType.N4JSX;
+			case EXT_JSX:
+				return N4JSXResourceType.JSX;
+			case EXT_XT:
+				N4JSXResourceType resourceTypeWithinXT = getXtHiddenType(uri);
+				if (resourceTypeWithinXT.equals(N4JSXResourceType.OTHER))
+					return N4JSXResourceType.OTHER;
+				else
+					return resourceTypeWithinXT;
+			default:
+				return N4JSXResourceType.OTHER;
+			}
 		}
 	}
 
 	/**
 	 * For Xpect resources return type hidden by the xt extension.
 	 */
-	private String getXtHiddenType(String fileExtension) {
-		if (fileExtension == null) {
-			return "";
+	private N4JSXResourceType getXtHiddenType(URI uri) {
+		if (uri == null) {
+			return N4JSXResourceType.OTHER;
 		}
 
-		String fileExtensionLowerCase = fileExtension.toLowerCase();
-		if (fileExtensionLowerCase.endsWith(END_N4JSX_XT)) {
-			return EXT_N4JSX;
-		}
-		return "";
+		String uriAsString = uri.toString().toLowerCase();
+		if (uriAsString.endsWith(END_JSX_XT)) {
+			return N4JSXResourceType.JSX;
+		} else if (uriAsString.endsWith(END_N4JSX_XT)) {
+			return N4JSXResourceType.N4JSX;
+		} else
+			return N4JSXResourceType.OTHER;
 	}
 
 	/**
