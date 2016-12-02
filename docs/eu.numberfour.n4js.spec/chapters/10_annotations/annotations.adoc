@@ -70,25 +70,25 @@ corresponding sections:
 |===
 |Annotation ^| Element Types | Section
 
-|@Internal      |TypeDefiningElement, Member, Function, Export|<<Access_Control>>
-|@Undefined       |Variable       |<<Undefined_Type>>
-|@StringBased       |Enum           |<<String_Based_Enums>>
-|@Final             |Class, Member                              |<<Final_Methods>>
-|@Spec             |FPar        |<<Spec_Construtor>>
-|@Override|Method                                   |<<Redefinition_of_Members>>
-|@Promisifiable     |Function     |<<Promisifiable_Functions>>
-|@Promisify         |CallExpression              |<<Promisifiable_Functions>>
-|@This              |Function                                   |<<This_keyword>>
-|@N4JS               |Class, Export Statement                       |<<External_Declarations>>
-|@IgnoreImplementation  |Script, ExportDeclaration, ExportableElement   |<<External_Declarations>>
-|@Global            |External Declaration                           |<<Global_Definitions>>
-|@ProvidedByRuntime |External Declaration                           |<<Runtime_Definitions>>
-|@TestAPI           |TypeDefiningElement, Member                    |<<Test_Support>>
-|@Polyfill          |Class                                      |<<Polyfill_Definitions>>
-|@StaticPolyfill        |Class                                      |<<Static_Polyfill_Definitions>>
-|@StaticPolyfillAware   |Script                                     |<<Static_Polyfill_Definitions>>
-|@StaticPolyfillModule  |Script                                     |<<Static_Polyfill_Definitions>>
-|@Transient         |Field
+|@Internal              |TypeDefiningElement, Member, Function, Export |<<_access-control>>
+|@Undefined             |Variable                                      |<<_undefined-type>>
+|@StringBased           |Enum                                          |<<_string-based-enums>>
+|@Final                 |Class, Member                                 |<<_final-methods>>
+|@Spec                  |FPar                                          |<<IDE-59,Spec-Style Constructor>>
+|@Override              |Method                                        |<<_redefinition-of-members>>
+|@Promisifiable         |Function                                      |<<_promisifiable-functions>>
+|@Promisify             |CallExpression                                |<<_promisifiable-functions>>
+|@This                  |Function                                      |<<_this-keyword>>
+|@N4JS                  |Class, Export Statement                       |<<_external-declarations>>
+|@IgnoreImplementation  |Script, ExportDeclaration, ExportableElement  |<<_external-declarations>>
+|@Global                |External Declaration                          |<<_global-definitions>>
+|@ProvidedByRuntime     |External Declaration                          |<<_runtime-definitions>>
+|@TestAPI               |TypeDefiningElement, Member                   |<<_test-support>>
+|@Polyfill              |Class                                         |<<_polyfill-definitions>>
+|@StaticPolyfill        |Class                                         |<<_static-polyfill-definitions>>
+|@StaticPolyfillAware   |Script                                        |<<_static-polyfill-definitions>>
+|@StaticPolyfillModule  |Script                                        |<<_static-polyfill-definitions>>
+|@Transient             |Field                                         | *
 |===
 
 
@@ -99,7 +99,7 @@ corresponding sections:
 
 ==== IDEBUG
 
-`IDEBUG` is an annotation similar to Java’s ``@SuppressWarnings``. It changes the severity of an issue
+`IDEBUG` is an annotation similar to Java’s `@SuppressWarnings`. It changes the severity of an issue
 from an error to a warning so that code can be compiled regardless of
 validation errors. This is to be used for known IDE bugs only.
 
@@ -118,7 +118,7 @@ declaration, function and method level.
 This annotation will cause errors issued in the scope of the annotation
 (in the defined script, type, or method) to be transformed to warnings
 if their message text is similar to the math:[$errorMessage$] text.
-If math:[$errorMessage$] ends with ``…`` (three dots as a single
+If math:[$errorMessage$] ends with `…` (three dots as a single
 character, created by Eclipse to abbreviate messages), then the error’s
 message text must start with the specified text.
 
@@ -162,7 +162,7 @@ IDEBUG-166: {function(number):void} is not a subtype of {function(T):void}.
 
 refers to the corresponding bug report, that is .
 
-The annotation on line 3 was proposed as a workaround for ``IDEBUG-91`` which has
+The annotation on line 3 was proposed as a workaround for `IDEBUG-91` which has
 been fixed. footnote:[Hopefully IDEBUG-166 task:IDEBUG-166[] is fixed at time of publication.]. No error message is produced and an error will be issued on line 3 instead:
 
 [source]

@@ -18,7 +18,7 @@ the visibility of a declaration by limiting its scope.
 
 _Extensibility_ refers to whether a given type can be subtyped, or in
 the case of members, whether they can be overridden. Access control is a
-prerequisite for extensibility which is further explained in <<N4_Specific_Classifiers>>
+prerequisite for extensibility which is further explained in <<_n4js-specific-classifiers,N4JS Specific Classifiers>>
 
 == Access Control
 task:IDE-84[] task:IDE-556[]
@@ -37,11 +37,11 @@ declaration with the same identifier.
 We distinguish the following contexts from which an element is accessed
 as follows:
 
-1.  Module or type: access from elements in the same module or type.
-2.  Subtype: access from a subtype.
-3.  Project: access from the same project.
-4.  Vendor: access from different project of the same vendor.
-5.  World: access from anything else.
+1.  *Module or type*: access from elements in the same module or type.
+2.  *Subtype*: access from a subtype.
+3.  *Project*: access from the same project.
+4.  *Vendor*: access from different project of the same vendor.
+5.  *World*: access from anything else.
 
 Accessibility is defined by modifiers on types and members, e.g , via
 the statement, and by the annotation. Extensibility is defined by the
@@ -65,10 +65,10 @@ enum TypeAccessModifier:      project
 ----
 
 If a type is not exported, its visibility is private. If a type has
-declared visibility , it may additionally be marked as internal via the
-annotation . Thus, we have the following set of type access modifiers:
+declared visibility `public`, it may additionally be marked as internal via the
+annotation `@Internal`. Thus, we have the following set of type access modifiers:
 
-math:[ TAM = \(``private`` ``project``, ``public@Internal``, ``public``)]
+TAM = `private` `project` `public@Internal` `public`
 
 That is, in N4JS, only the type access modifiers and are available. The
 redundant modifier serves only documentation purpose and can be
@@ -103,15 +103,16 @@ export public function f2() {}      // public
 The access control levels are defined as listed in .
 
 .Type Access Control
-[cols="^,^,^,^,^"]
+[cols="^m,^,^,^,^"]
 |===
 5+^|*Type Access*
 
 h|Modifier h|Module h| Project h| Vendor h| World
-|``private`` |yes |no |no |no
-|``project`` |yes |yes |no |no
-|``public@Internal`` |yes |yes |yes |no
-|``public`` |yes |yes |yes |yes
+
+|private |yes |no |no |no
+|project |yes |yes |no |no
+|public@Internal |yes |yes |yes |no
+|public |yes |yes |yes |yes
 |===
 
 math:[$TAM$] is a totally ordered set:
@@ -127,15 +128,15 @@ The following constraints for type access modifiers for a given type math:[$T$]
 hold:
 
 * It is an error if math:[$T$] is not exported but defined as
-``project``, ``public`` or
-``public@Internal``.
-* It is an error if an annotation ``@Internal`` is
-present on a module private or ``project`` visible
+`project`, `public` or
+`public@Internal`.
+* It is an error if an annotation `@Internal` is
+present on a module private or `project` visible
 type.
 * The type modifier for all built-in ECMAScript types is
-``public``.
+`public`.
 * The _default modifier_ for user declared exported declarations is
-``project``. That is, this modifier is assumed if no
+`project`. That is, this modifier is assumed if no
 modifier is explicitly specified.
 --
 
@@ -165,11 +166,8 @@ themselves in the concrete syntax of the N4JS file. Types that do not
 have to be written to concrete syntax may be used even if they are
 generally not accessible. This is illustrated by the following example:
 
-// TODO Example
-
 .Implicit, allowed type references in N4JS
 [example]
-
 ====
 
 [source,n4js]
@@ -201,7 +199,7 @@ class) become members of a class. For example, if `B extends A`, and if `A` is n
 accessible to some client `C` but `B` is, then the members of `A` are indirectly
 accessible to `C` in so far as they are accessed via `B`. This is true in
 particular for interfaces, as their properties are possibly merged into
-the consuming class (cf. <<Implementation_of_members>>).
+the consuming class (cf. <<_implementation-of-members,Implementation of Members>>).
 
 The following member access modifiers are supported by N4JS:
 
@@ -221,14 +219,13 @@ MAM &= \{ & \\
 &\lenum{project}, \lenum{public@Internal}, \lenum{public}\\
 \}
 \end{aligned}\]]
-``protected@Internal`` and ``public@Internal`` are synthesized tags and were
+`protected@Internal` and `public@Internal` are synthesized tags and were
 introduced as shorthand notation for the `@Internal` annotation together with `protected` or `public` access modifiers.
 The modifier is the default one and it can be omitted.
 As with the type access modifiers, not all member access modifiers are
 available in N4JS. Instead, they are synthesized from different
 construct as shown in the next example.
 
-// TODO Example Block
 
 .Synthesized Member Access Modifiers in N4JS
 [example]
@@ -263,29 +260,26 @@ subset
 math:[\[\begin{aligned}
 MAM \backslash \{\lenum{public@Internal}\}
 \end{aligned}\]] is a totally
-ordered set footnote:[That is, for application developers not providing a library or a public API available to other vendors, member access modifiers behave almost similar to modifiers known from Java.]:
+ordered set footnote:[That is, for application developers not providing a library or a public API available to other vendors, member access modifiers behave almost similar to modifiers known from Java.] :
 math:[\[\begin{aligned}
 \lenum{private} < \lenum{project} < \lenum{protected@Internal} < \lenum{protected} < \lenum{public}
 \end{aligned}\]]
 
-<<Member Access Controls>> shows which members are accessible from where.
+<<tab:Member-Access-Controls,Table Member Access Controls>> shows which members are accessible from where.
 
-[[Member Access Controls]]
-
+[[tab:Member-Access-Controls]]
 .Member Access Control
-[cols="<,^,^,^,^,^,^"]
+[cols="<m,^,^,^,^,^,^"]
 |===
 | Access Modifier | Inside Module | Inside Project | Vendor | Vendor Subtypes  | Other Projects |Everywhere
 
-m|private           |yes |no |no |no |no |no
-m|project           |yes |yes |no |no |no |no
-m|protected@Internal|yes |yes |yes |no |no |no
-m|protected         |yes |yes |yes |no |yes |no
-m|public@Internal   |yes |yes |yes |yes |no |no
-m|public            |yes |yes |yes |yes |yes |yes
+|private           |yes |no |no |no |no |no
+|project           |yes |yes |no |no |no |no
+|protected@Internal|yes |yes |yes |no |no |no
+|protected         |yes |yes |yes |no |yes |no
+|public@Internal   |yes |yes |yes |yes |no |no
+|public            |yes |yes |yes |yes |yes |yes
 |===
-
-// TODO Definition
 
 .Type and Member Accessibility Relation
 [def]
@@ -326,10 +320,10 @@ metatypes, no shadowing etc).
 Formally, we define math:[$\alpha_m$] for a given reference
 math:[$r$] and member declaration math:[$M$] as
 follows:
-footnote:[See <<N4_Specific_Classifiers>> for definitions of metatype properties. Note that math:[$r.receiver$] always refers to a type declaration in the context of an expression as the receiver type of math:[$r$]. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member
+footnote:[See <<_n4js-specific-classifiers,N4-Specific Classifiers>> for definitions of metatype properties. Note that math:[$r.receiver$] always refers to a type declaration in the context of an expression as the receiver type of math:[$r$]. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member
 declaration.]
 
-footnote:[Note, the Java-like access restriction for members of visibility ``protected`` or ``protected@Internal`` to code that is responsible for the implementation of that object. cite:[Gosling14a(S6.6.2,p.166)]]
+footnote:[Note, the Java-like access restriction for members of visibility `protected` or `protected@Internal` to code that is responsible for the implementation of that object. cite:[Gosling15a(S6.6.2,p.166)]]
 
  math:[\[\begin{aligned}
 &\infer{\alpha_m(r, M)}{M.acc = \lenum{public}}\\
@@ -344,7 +338,7 @@ If the type of the arguments is clear from the context, we simply write
 math:[$\alpha(r,M)$] instead of math:[$\alpha_m(r,M)$].
 
 Although private members are accessible inside a module, it is not
-possible to redefine (override etc.) these members (see <<Redefinition_of_Members>>).
+possible to redefine (override etc.) these members (see <<_redefinition-of-members,Redefinition of Members>>).
 
 .Default Member Access Modifiers
 [req,id=IDE-4,version=1]
@@ -352,13 +346,13 @@ possible to redefine (override etc.) these members (see <<Redefinition_of_Member
 The following constraints for member access modifiers must hold:
 
 1.  The _default modifier_ for members of user-declared classes is
-``project``.
+`project`.
 2.  The _default modifier_ for members of interfaces is the same as the
 visibility of the interface itself, except for private interfaces. For
 private interfaces, the default modifier for members is
-``project``.
+`project`.
 3.  The modifier for enum literals is always
-``public``.
+`public`.
 4.  Private members of a classifier are visible and accessible within a
 module, i.e. you can access the private method of a class, for instance,
 when the use of the class as receiver is in the same module where the
@@ -370,7 +364,7 @@ within a module.
 // TODO {Rework visibility concept for private members. If private members are hidden with symbols an overriding is not possible, even in the same module.}
 --
 
-// Example
+
 .Type and Member Access Modifiers
 [example]
 ====
@@ -536,7 +530,7 @@ method)
 In N4JS mode, warnings are generated in the following cases:
 
 .  The name of a member (of a non external type)
-..  equals the name of a base type footnote:[``string, boolean, number, any, null``] but the type of the variable is different from that type
+..  equals the name of a base type footnote:[`string, boolean, number, any, null`] but the type of the variable is different from that type
 ..  is not static nor const but starts with an upper case letter
 .  The name of a non-external n4 types (class, interface, enum) starts
 with a lower case letter
@@ -562,8 +556,8 @@ members. For example, if we want to reference certain members in JSDoc
 comments or for unambiguous error messages. For this reason, we formally
 define qualified names even if they cannot occur in source code.
 
-<<tab:typenames,Type Names>> shows the different names of a given type ``C``, defined in a module
-``M.n4js``, defined in a package ``p`` of a project ``MyProject``.
+<<tab:typenames,Type Names>> shows the different names of a given type `C`, defined in a module
+`M.n4js`, defined in a package `p` of a project `MyProject`.
 
 [[tab:typenames]]
 .Different forms of module and type specifiers.
@@ -600,13 +594,13 @@ Identifiers to specific variables and functions based upon the lexical
 nesting structure of ECMAScript code. cite:[ECMA11a(10.2)].
 
 Elements that introduce lexical environments: ::
-``FunctionDefinition``, ``VariableDeclaration``, ``CatchBlock``, ``WithStatement``,
-``ImportDeclaration``
+`FunctionDefinition`, `VariableDeclaration`, `CatchBlock`, `WithStatement`,
+`ImportDeclaration`
 
 
 N4JS specific declarations: ::
-``N4ClassDeclaration``, ``N4InterfaceDeclaration``,
-``N4EnumDeclaration``, ``N4MethodDeclaration``.
+`N4ClassDeclaration`, `N4InterfaceDeclaration`,
+`N4EnumDeclaration`, `N4MethodDeclaration`.
 
 
 Additionally, a built-in lexical environment that defines global scope
@@ -632,14 +626,14 @@ Two elements with the same name declared in the same lexical environment
 An element defined in an environment _shadows_ all elements with the same name in outer environments.
 
 In class hierarchies, a member with the same name as a member defined in
-a supertype is said to override the latter. Overriding is discussed in .
+a supertype is said to override the latter. Overriding is discussed in <<_redefinition-of-members,Redefinition of Members>>.
 
 For the following constraints, we make the following assumptions:
 
 * Names of function expressions or declarations are handles similar to
 locally declared elements in the function. Function declarations are
 additionally declaring a name in their outer scope.
-* The implicit formal parameter ``arguments`` is treated similar to declared formal
+* The implicit formal parameter `arguments` is treated similar to declared formal
 parameters.
 * Formal parameters are defined in the lexical environment of a
 function, that is, they are defined in the same lexical environment as
@@ -672,13 +666,11 @@ all parent non-catch-block environments.
 1. In the script environment, it is not allowed to use the name
 ’arguments’.
 footnote:[This conflicts with the implicit parameter arguments introduced by the transpiler when wrapping the script/module into a definition function.]
-
-<<fig:forbidden_shadowing>> shows nested lexical environments with named elements declared inside (all named ``x`` here), the forbidden cases are marked with arrows (the
-numbers at the left side refer to the numbers in
-<<req:Forbidden_Shadowing>>.
-
-[[fig:forbidden_shadowing]]
-image:fig/shadowing.png[Forbidden shadowing]
++
+The figure Forbidden Shadowing below shows nested lexical environments with named elements declared inside (all named `x` here), the forbidden cases are marked with arrows (the numbers at the left side refer to the numbers in <<IDE-8,Forbidden Shadowing>>.
++
+.Forbidden Shadowing
+image::fig/shadowing.png[]
 
 Rationale:
 

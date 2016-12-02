@@ -25,71 +25,74 @@ enum N4JSTypeAccessModifier: project | public;
 
 == Properties
 
-Properties defined by syntactic elements:
+*Properties defined by syntactic elements:*
 
-`annotations`: ::
+`annotations` ::
 Arbitrary annotations, see <<Annotations>> for details.
 
-`accessModifier`: ::
-N4JS type access modifier: ``public``, or ``project``;  ``public`` can be combined with ``@Internal``; if
+`accessModifier` ::
+N4JS type access modifier: `public`, or `project`;  `public` can be combined with `@Internal`; if
 math:[$export$] is math:[$true$] the default is else the
 default is `private`.
+
 task:IDE-84[]
 
-`name`: ::
+`name` ::
 The simple name of a classifier. If the classifier is defined by an
 anonymous class expression, an artificial but unique name is created.
-The name needs to be a valid identifier, see <<Valid_Names>>.
+The name needs to be a valid identifier, see <<_valid-names,Valid Names>>.
 
-`typePars`: ::
+`typePars` ::
 Collection of type parameters of a generic classifier; empty by default.
 
 
-`ownedMembers`: ::
+`ownedMembers` ::
 Collection of owned members, i.e. methods and fields defined directly in
 the classifier and, if present, the explicitly defined constructor.
 Depending on the concrete classifier, additional constraints are
 defined.
 
-`typingStrategy`: ::
+`typingStrategy` ::
 The definition-site typing strategy. By default nominal typing is used.
-See <<Structural_Typing>>for details.
+See <<_structural-typing,Structural Typing>> for details.
 
+*The following pseudo properties are defined via annotations:*
 
-The following pseudo properties are defined via annotations:
-
-`export`: ::
+`export` ::
 Boolean property set to true if the `export` modifier is set. If value is true,
-the classifier may be accessible outside the project. task:IDE-84[]
+the classifier may be accessible outside the project.
 
-`final`: ::
-Boolean property which is set to final if annotation ``@Final`` is set. Also see
-<<Final_Extensibility>>
+task:IDE-84[]
 
-`deprecated`: ::
-Boolean property set to true if annotation ``@Deprecated`` is set.
+`final` ::
+Boolean property which is set to final if annotation `@Final` is set. Also see
+<<_final-modifier,Final Extensibility>>
+
+`deprecated` ::
+Boolean property set to true if annotation `@Deprecated` is set.
 // Version 0.4, not implemented in Version 0.3
+
 task:IDE-138[]
 
-We additionally define the following pseudo properties:
+*We additionally define the following pseudo properties:*
 
-``acc``: ::
-Type access modifier as described in <<Accessibility_of_Types>>, it is the aggregated value of the
+`acc` ::
+Type access modifier as described in <<_accessibility-of-types-top-level-variables-and-function-declarations,Accessibility of types>>, it is the aggregated value of the
 math:[$accessModifier$] and the math:[$export$] property.
 
-``owned{Fields|Methods|Getters|Setters|Accessors}``: ::
+`owned{Fields|Methods|Getters|Setters|Accessors}` ::
 Filters ownedMembers by metatype, short for +
 math:[$x \in ownedMembers, \mu(x)=\type{Field}$] etc.
 
-``members``: ::
+`members` ::
 Reflexive transitive closure of all members of a classifier and its
 super classifiers, see below on how this is calculated.
 
-``fields|methods|getters|setters|accessors``: ::
+`fields|methods|getters|setters|accessors` ::
 Filters members by metatype, short for +
 math:[$x \in members, \mu(x)=\type{Field}$] etc.
 
-``superClassifiers``: ::
+`superClassifiers` ::
 Classes and interface may extend or implement classes or interfaces. Any
 class or interface extended or interface implemented is called __super
 classifier__. We distinguish the directly subtyped classifiers and from
@@ -124,7 +127,7 @@ property math:[$members$] to refer to all members of a classifier.
 This includes all members directly declared by the classifier itself,
 i.e. the math:[$ownedMember$], and all members inherited from its
 super classifiers. The concrete mechanisms for inheriting a member are
-different and further constraint (cf. <<Redefinition_of_Members>>). A classifier only inherits its members from its direct supertypes, although the supertypes may contains
+different and further constraint (cf. <<_redefinition-of-members,Redefinition of Members>>). A classifier only inherits its members from its direct supertypes, although the supertypes may contains
 members inherited from their supertypes.
 --
 
@@ -142,12 +145,12 @@ least until the semantics of them are finalized in ECMAScript 6.
 // \todo{SZ: Reconsider this. The test suites contains a couple of examples with class expressions and they don't look unreasonable to me. If we really want that, the code in ASTStructureValidator for N4ClassExpressions should be enabled.}
 
 In N4JS (as in many other languages) multi-inheritance of classes is not
-supported. Although the ``diamond problem`` (of functions being defined
+supported. Although the `diamond problem` (of functions being defined
 in both superclasses) could be solved via union and intersection types,
 this would lead to problems when calling these super implementations.
 This is particularly an issue due to JavaScript not supporting multiple
 prototypes.
-footnote:[E.g., for given ``class A{ foo(A):A{}} class B{ foo(B):B{}}``, a class C could be defined as ``class C{ foo(union{A,B}):intersection{A,B}{}}``. In this case it would then be a syntactical problem (and even worse - a conceptual problem) of how to call the super methods defined in A and Bfrom C.]
+footnote:[E.g., for given `class A{ foo(A):A{}} class B{ foo(B):B{}}`, a class C could be defined as `class C{ foo(union{A,B}):intersection{A,B}{}}`. In this case it would then be a syntactical problem (and even worse - a conceptual problem) of how to call the super methods defined in A and Bfrom C.]
 Interfaces, however, allow for multi-inheritance. Since the
 former can also define functions with bodies, this is not a hard
 restriction.
@@ -201,20 +204,20 @@ fragment Members <Yield>*:
 These are the properties of class, which can be specified by the user:
 Syntax N4 Class Declaration and Expression
 
-``abstract``: ::
+`abstract` ::
 Boolean flag indicating whether class may be instantiable; default is
-math:[$false$], see <<Abstract Classes>>.
+math:[$false$], see <<_abstract-classes,Abstract Classes>>.
 
-``external``: ::
+`external` ::
 Boolean flag indicating whether class is a declaration without
 implementation or with an external (non-N4JS) implementation; default is
-math:[$false$], see <<Definition_Site_Structural_Typing>>.
+math:[$false$], see <<_definition-site-structural-typing,Definition-Site Structural Typing>>.
 
-``defStructural``: ::
+`defStructural` ::
 Boolean flag indicating whether subtype relation uses nominal or
-structural typing, see <<Definition_Site_Structural_Typing>> for details.
+structural typing, see <<_definition-site-structural-typing,Definition-Site Structural Typing>> for details.
 
-``superType/sup``: ::
+`superType/sup` ::
 The type referenced by math:[$superType$] is called direct
 superclass of a class, and vice versa the class is a direct subclass of
 math:[$superType$]. Instead of math:[$superType$], we
@@ -223,20 +226,20 @@ math:[$sup^+$] is defined as the transitive closures of all direct
 and indirect superclasses of a class. If no supertype is explicitly
 stated, classes are derived from `N4Object`.
 
-``implementedInterfaces$/$interfaces$]``: ::
+`implementedInterfaces$/$interfaces$]` ::
 Collection of interfaces directly _implemented_ by the class; empty by
 default. Instead of math:[$implementedInterfaces$], we simply write
 math:[$interfaces$].
 
-``ownedCtor``: ::
-Explicit constructor of a class (if any), see <<Constructor>>.
+`ownedCtor` ::
+Explicit constructor of a class (if any), see <<_constructor-and-classifier-type,Constructor>>.
 
 And we additionally define the following pseudo properties:
 
-``ctor``: ::
-Explicit or implicit constructor of a class, see .
+`ctor` ::
+Explicit or implicit constructor of a class, see <<_constructor-and-classifier-type,Constructor>>.
 
-``fields``: ::
+`fields` ::
 Further derived properties for retrieving all methods (property
 math:[$methods$]), fields (property math:[$fields$]), static
 members (property math:[$staticOwnedMembers$]), etc. can easily be
@@ -297,7 +300,7 @@ contain
 * types
 * implemented interfaces
 
-Note that even ``static`` is used in ECMAScript 6.
+Note that even `static` is used in ECMAScript 6.
 --
 
 Mixing in members (i.e. interface’s methods with default implementation
@@ -360,7 +363,7 @@ explicit supertype are inherited from `N4Object`.
 2.  If the supertype is explicitly set to `Object`, then the class is not
 derived from `N4Object`. Meta-information is created similar to an `N4Object`-derived class. Usually, there is no reason to explicitly derive a class from `Object`.
 3.  External classes are implicitly derived from , unless they are
-annotated with `@N4JS`(cf.<<External_Declarations>>).
+annotated with `@N4JS`(cf.<<_external-declarations,External-Declarations>>).
 --
 
 === Final Modifier
@@ -369,14 +372,14 @@ task:IDE-147[]
 Extensibility refers to whether a given classifier can be subtyped.
 Accessibility is a prerequisite for extensibility. If a type cannot be
 seen, it cannot be subclassed. The only modifier influencing the
-extensibility directly is the annotation ``@Final``, which prevents all subtyping.
+extensibility directly is the annotation `@Final`, which prevents all subtyping.
 The following table shows how to prevent other projects or vendors from
 subtyping by also restricting the accessibility of the constructor:
 
 .Extensibility of Types
 [cols="<,^,^,^"]
 |===
-^|Type ``C`` Settings 3+| Subclassed in
+^|Type `C` Settings 3+| Subclassed in
 
 ||*Project* |*Vendor* |*World*
 m|C.final |no |no |no
@@ -513,7 +516,7 @@ math:[\[\begin{aligned}
 
 ==== Semantics [[interfaces-semantics]]
 
-Interfaces are used to describe the public <<AC,API>> of a classifier. The main
+Interfaces are used to describe the public <<Acronyms,API>> of a classifier. The main
 requirement is that the instance of an interface, which must be an
 instance of a class since interfaces cannot have instances, provides all
 members declared in the interface. Thus, a (concrete) class implementing
@@ -558,7 +561,7 @@ of an interface. +
 This restriction is required, because the order of implementation of
 these fields in an implementing class cannot be guaranteed. This applies
 to both instance and static fields in interfaces, but in case of static
-fields, `this` is also disallowed due to <<StaticMembersOfInterfaces>>.
+fields, `this` is also disallowed due to <<_static-members-of-interfaces,Static Members Of Interfaces>>.
 
 --
 
@@ -568,13 +571,13 @@ interface may be able to use the interface but not to implement it.
 
 In order to simplify modeling of runtime types, such as elements,
 interfaces do not only support the notation of static methods but
-constant data fields as well. Since <<AC,IDL>> cite:[OMG14a] is used to describe these elements in specifications (and mapped to JavaScript via rules described in cite:[W3C12a])
+constant data fields as well. Since <<Acronyms,IDL>> cite:[OMG14a] is used to describe these elements in specifications (and mapped to JavaScript via rules described in cite:[W3C12a])
 constant data fields are an often-used technique there and they can be
 modeled in N4JS 1:1.
 
 // todo[IDE-1236]{check current implementation: fields and methods}
 
-As specified in <<Defining and Calling Constructors>>, interfaces
+As specified in <<IDE-56,Defining and calling Constructors,Defining and Calling Constructors>>, interfaces
 cannot contain a constructor i.e.
 math:[$\forall m \in I.ownedMethods: m.name \neq 'constructor'$].
 
@@ -606,7 +609,7 @@ math:[$C$]. Members not redefined by math:[$C$] but with a
 default implementations are _mixed in_ or _consumed by_ math:[$C$].
 We all cases we call math:[$C$]A the __implementor__.
 
-Besides the general constraints described in <<Common_Semantics_of_Classifiers>>, the following constraints must hold for extending or implementing interfaces:
+Besides the general constraints described in <<_common-semantics-of-classifiers,Common Semantics of Classifiers>>, the following constraints must hold for extending or implementing interfaces:
 
 .Extending Interfaces
 [req,id=IDE-49,version=1]
@@ -674,7 +677,7 @@ math:[$I_i$]).
 
 --
 
-For default methods in interfaces, see <<Default_Methods_in_Interfaces>>.
+For default methods in interfaces, see <<_default-methods-in-interfaces,Default Methods in Interfaces>>.
 
 == Generic Classifiers
 task:IDE-38[] task:IDE-39[]
@@ -692,15 +695,15 @@ math:[$|C.typePars|\geq 1$].
 If a classifier does not define any type parameters, it is not generic,
 even if its superclass or any implemented interface is generic.
 
-The format of the type parameter expression is described in <<Parameterized Types>>. The type variable defined by the type parameter’s type expression can be used
+The format of the type parameter expression is described in <<_parameterized-types,Parameterized Types>>. The type variable defined by the type parameter’s type expression can be used
 just like a normal type inside the class definition.
 
 If using a generic classifier as type of a variable, it may be
 parameterized. This is usually done via a type expression (cf.
-<<sec:Parameterized_Types>>) or via `type-arg` in case of supertypes. If a generic
+<<_parameterized-types,Parameterized Types>>) or via `type-arg` in case of supertypes. If a generic
 classifier defines multiple type variables, these variables are bound in
 the order of their definition. In any case, all type variables have to
-be bound. That means in particular that raw types are not allowed. (cf <<Parametrized_Types>> for details).
+be bound. That means in particular that raw types are not allowed. (cf <<_parameterized-types,Parameterized Types>> for details).
 
 If a generic classifier is used as super classifier, the type arguments
 can be type variables. Note that the type variable of the super
@@ -873,7 +876,6 @@ interface Consumer<in T> { // contravariance
 
 In such cases, the following constraints apply.
 
-//TODO Duplicated Req ID, continuing from 173
 .Definition-Site Variance
 [req,id=IDE-174,version=1]
 --
@@ -932,16 +934,16 @@ function getNameOfFirstPerson(list: List<? extends Person>): string {
 
 Function `getNameOfFirstPerson` below takes a list and returns the name of the first person in
 the list. Since it never adds new elements to the given list, it could
-accept ``List``s of any subtype of ``Person``, for example a ``List<Employee>``. To allow this, its formal
-parameter has a type of ``List<? extends Person>`` instead of ``List<Person>``. Such use-site variance is useful whenever an invariant type, like ``List`` above, is being used in a way such that it can be treated as if it were co- or contravariant.
+accept `List`s of any subtype of `Person`, for example a `List<Employee>`. To allow this, its formal
+parameter has a type of `List<? extends Person>` instead of `List<Person>`. Such use-site variance is useful whenever an invariant type, like `List` above, is being used in a way such that it can be treated as if it were co- or contravariant.
 
 Sometimes, however, we are dealing with types that are inherently
-covariant or contravariant, for example an ``ImmutableList`` from which we can only read elements would be covariant. In such a case, use-site declaration of
+covariant or contravariant, for example an `ImmutableList` from which we can only read elements would be covariant. In such a case, use-site declaration of
 variance is tedious and error-prone: we would have to declare the
 variance wherever the type is being used and would have to make sure not
 to forget the declaration or otherwise limit the flexibility and
 reusability of the code (for example, in the above code we could not
-call ``getNameOfFirstPerson`` with a ``List<Employee>``).
+call `getNameOfFirstPerson` with a `List<Employee>`).
 
 The solution is to declare the variance on declaration site, as in the
 following code sample:
@@ -958,6 +960,6 @@ function getNameOfFirstPerson2(list: ImmutableList<Person>): string {
 }
 ----
 
-Now we can invoke ``getNameOfFirstPerson2`` with a ``List<Employee>`` even though the implementor of ``getNameOfFirstPerson2`` did not add a
-use-site declaration of covariance, because the type ``ImmutableList`` is declared to be covariant with respect to its parameter `T`, and this applies globally
+Now we can invoke `getNameOfFirstPerson2` with a `List<Employee>` even though the implementor of `getNameOfFirstPerson2` did not add a
+use-site declaration of covariance, because the type `ImmutableList` is declared to be covariant with respect to its parameter `T`, and this applies globally
 throughout the program.

@@ -12,11 +12,11 @@ Contributors:
 
 For all statements, we define the following pseudo properties:
 
-``containingFunction`` ::
+`containingFunction` ::
 The function or method in which the statement is (indirectly) contained,
 this may be null.
 
-``containingClass`` ::
+`containingClass` ::
 The class in which the statement is (indirectly) contained, this may be
 null.
 
@@ -58,6 +58,7 @@ and a warning is issued in these cases.
 
 === Variable Statement
 
+[discrete]
 ==== Syntax [[variable-statement-syntax]]
 
 A var statement can declare the type of the variable with a type
@@ -119,6 +120,7 @@ const MESSAGE = "Hello World";
 // MESSAGE.type := string
 ----
 
+[discrete]
 ==== Semantics [[variable-statement-semantics]]
 
 From a model and type inference point of view, variable and constant
@@ -140,7 +142,7 @@ math:[$d$] except where the reference is contained in a class
 expression or function expression and the class is not immediately
 initialized or the function is not immediately invoked. In these cases,
 the code is executed later and the self-reference is not a problem. +
-To clarify: ``should not`` means that only a warning will be produced.
+To clarify: `should not` means that only a warning will be produced.
 
 [source]
 ----
@@ -161,10 +163,11 @@ var fun2 = function() : number { var x = fun2;  return -42; }();
 ----
 
 The variable statement may contain array or object destructuring
-patterns, see <<Destructuring>> for details.
+patterns, see <<_array-and-object-destructuring>> for details.
 
 --
 
+[discrete]
 ==== Type Inference [[variable-statement-type-inference]]
 
 The type of a variable is the type of its declaration:
@@ -184,6 +187,7 @@ math:[\[\begin{aligned}
 
 === If Statement
 
+[discrete]
 ==== Syntax [[if-statement-syntax]]
 
 Cf. cite:[ECMA11a(S12.5,p.89)]
@@ -197,6 +201,7 @@ IfStatement <Yield>:
 ----
 
 
+[discrete]
 ==== Semantics [[if-statement-semantics]]
 
 There are no specific constraints defined for the condition, the
@@ -211,11 +216,12 @@ in particular, the called function must not be declared to return `void`.
 
 === Iteration Statements
 
+[discrete]
 ==== Syntax [[iterations-statements-syntax]]
 
 Cf. cite:[ECMA11a(S12.6,p.90ff)]
 
-The syntax already considers the for-of style described in .
+The syntax already considers the for-of style described in <<_for-of-statement,For ... of Statement>>.
 
 [source]
 ----
@@ -259,10 +265,11 @@ ContinueStatement <Yield>: {ContinueStatement} 'continue' (label=[LabelledStatem
 BreakStatement <Yield>: {BreakStatement} 'break' (label=[LabelledStatement|BindingIdentifier<Yield>])? Semi;
 ----
 
-Since math:[$varDecl(s)$] are ``VariableStatement``s as described in <<Var_Statement>>, the declared variables can be type annotated.
+Since math:[$varDecl(s)$] are `VariableStatement`s as described in <<_variable-statement,Var Statement>>, the declared variables can be type annotated.
 
-TIP: Using for-in is not recommended, instead `pass:[_each]` should be used.
+TIP: Using for-in is not recommended, instead ``pass:[_each]`` should be used.
 
+[discrete]
 ==== Semantics [[iterations-statements-semantics]]
 
 There are no specific constraints defined for the condition, the
@@ -287,6 +294,7 @@ string, i.e. any): math:[\[\begin{aligned}
 
 === Return Statement
 
+[discrete]
 ==== Syntax [[return-statement-syntax]]
 
 The returns statement is defined as in cite:[ECMA11a(S12.9,p.93)] with
@@ -297,6 +305,7 @@ ReturnStatement <Yield>:
     'return' (expression=Expression<In=true,Yield>)? Semi;
 ----
 
+[discrete]
 ==== Semantics [[return-statement-semantics]]
 
 .Return statement
@@ -323,6 +332,7 @@ statement, for example, must not be a top-level statement.
 
 === With Statement
 
+[discrete]
 ==== Syntax [[with-statement-syntax]]
 
 The with statement is not allowed in N4JS, thus an error is issued.
@@ -334,6 +344,7 @@ WithStatement <Yield>:
     statement=Statement<Yield>;
 ----
 
+[discrete]
 ==== Semantics [[with-statement-semantics]]
 
 N4JS is based on strict mode and the with statement is not allowed in
@@ -347,6 +358,7 @@ With statements are not allowed in N4JS or strict mode.
 
 === Switch Statement
 
+[discrete]
 ==== Syntax [[switch-statement-syntax]]
 
 Cf. cite:[ECMA11a(S12.11,p.94ff)]
@@ -364,6 +376,7 @@ CaseClause <Yield>: 'case' expression=Expression<In=true,Yield> ':' (statements+
 DefaultClause <Yield>: {DefaultClause} 'default' ':' (statements+=Statement<Yield>)*;
 ----
 
+[discrete]
 ==== Semantics [[switch-statement-semantics]]
 
 .Switch Constraints
@@ -378,6 +391,7 @@ the constraints defined in <<Equality Expression>>.
 
 === Throw, Try, and Catch Statements
 
+[discrete]
 ==== Syntax [[throw-try-catch-syntax]]
 
 Cf. cite:[ECMA11a(S12.13/14,p.96ff)]
@@ -405,6 +419,7 @@ FinallyBlock <Yield>: {FinallyBlock} 'finally' block=Block<Yield>;
 There must be not type annotation for the catch variable, as this would
 lead to the wrong assumption that a type can be specified.
 
+[discrete]
 ==== Type Inference [[throw-try-catch-type-inference]]
 
 The type of the catch variable is always assumed to be .
@@ -414,6 +429,7 @@ math:[\[\begin{aligned}
 === Debugger Statement
 
 
+[discrete]
 ==== Syntax [[debugger-statement-syntax]]
 
 Cf. cite:[ECMA11a(S12.15,p.97ff)])
@@ -423,6 +439,7 @@ Cf. cite:[ECMA11a(S12.15,p.97ff)])
 DebuggerStatement: {DebuggerStatement} 'debugger' Semi;
 ----
 
+[discrete]
 ==== Semantics [[debugger-statement--semantics]]
 
 na
@@ -434,11 +451,11 @@ differences which are elaborated on below.
 
 === Let
 
-Cf. cite:[ECMA11a(13.2.1)], also http://www.2ality.com/2015/02/es6-scoping.html[Rauschmayer, 2ality: ``Variables and scoping in ECMAScript 6``]
+Cf. cite:[ECMA11a(13.2.1)], also http://www.2ality.com/2015/02/es6-scoping.html[Rauschmayer, 2ality: *Variables and scoping in ECMAScript 6*]
 
 === Const
 
-Cf. cite:[ECMA15a(13.2.1)], also http://www.2ality.com/2015/02/es6-scoping.html[Rauschmayer, 2ality: ``Variables and scoping in ECMAScript 6``]
+Cf. cite:[ECMA15a(13.2.1)], also http://www.2ality.com/2015/02/es6-scoping.html[Rauschmayer, 2ality: *Variables and scoping in ECMAScript 6*]
 
 Additionally to the `var` statement, the `const` statement is supported. It allows for
 declaring variables which must be assigned to a value in the declaration
@@ -452,12 +469,13 @@ ConstStatement returns VariableStatement: 'const' varDecl+=ConstDeclaration ( ',
 ConstDeclaration returns VariableDeclaration: typeRef=TypeRef? name=IDENTIFIER const?='=' expression=AssignmentExpression;
 ----
 
+[discrete]
 ==== Semantics [[const-semantics]]
 
 A const variable statement is more or less a normal variable statement
-(see <<Variable Statement>>), except that all variables declared by that statement are not
-writable (cf. <<req:Write_Acccess>>). This is similar to constant data
-fields (cf. <<Assignment_Modifiers>>).
+(see <<_variable-statement,Variable Statement>>), except that all variables declared by that statement are not
+writable (cf. <<IDE-121,requirement: Write-Acccess>>). This is similar to constant data
+fields (cf. <<_assignment-modifiers>>).
 
 .Writability of const variables
 [req,id=IDE-133,version=1]
@@ -469,12 +487,14 @@ math:[$constStmt$] are not writeable: math:[\[\begin{aligned}
 
 === for ... of statement
 
-ES6 introduced a new form of `for` statement: `for ... of` to iterate over the elements of an  `Iterable`, cf. <<Iterable_Object_Type>>.
+ES6 introduced a new form of `for` statement: `for ... of` to iterate over the elements of an  `Iterable`, cf. <<_iterablen>>.
 
+[discrete]
 ==== Syntax [[for-of-statement-syntax]]
 
-See <<Iteration Statements>>
+See <<_iteration-statements,Iteration Statements>>
 
+[discrete]
 ==== Semantics [[for-of-statement-semantics]]
 
 .for ... of statement
@@ -507,9 +527,9 @@ different versions of V8). Older implementations require an `Iterator` or accept
 both `Iterator` an or `Iterable`.
 
 Requiring an `Iterable` and not accepting a plain `Iterator` seems to be the final decision (as of Dec. 2014). For reference, see abstract operations
-``GetIterator`` in cite:[ECMA15a(S7.4.2)] and "CheckIterable"
-cite:[ECMA15a(S7.4.1)] and their application in "ForIn/OfExpressionEvaluation" cite:[ECMA15a(S13.6.4.8)] and ``CheckIterable`` and their application in
-``ForIn/OfExpressionEvaluation`` . See also a related blog
+`GetIterator` in cite:[ECMA15a(S7.4.2)] and "CheckIterable"
+cite:[ECMA15a(S7.4.1)] and their application in "ForIn/OfExpressionEvaluation" cite:[ECMA15a(S13.6.4.8)] and `CheckIterable` and their application in
+`ForIn/OfExpressionEvaluation` . See also a related blog
 post
 footnote:[available at: http://www.2ality.com/2013/06/iterators-generators.html] that is kept up
 to date with changes to ECMAScript 6: _"ECMAScript 6 has a new loop,
@@ -517,7 +537,7 @@ for-of. That loop works with iterables. Before we can use it with
 createArrayIterator(), we need to turn the result into an iterable"_.
 
 An array or object destructuring pattern may be used left of the `of`.
-This is used to destructure the elements of the `Iterable` on the right-hand side (not the `Iterable` itself). For detais, see <<Destructuring>>.
+This is used to destructure the elements of the `Iterable` on the right-hand side (not the `Iterable` itself). For detais, see <<_array-and-object-destructuring>>.
 
 --
 
@@ -525,6 +545,7 @@ This is used to destructure the elements of the `Iterable` on the right-hand sid
 
 Cf. ES6 import cite:[ECMA15a(15.2.2)], see also https://babeljs.io/docs/usage/modules/
 
+[discrete]
 ==== Syntax [[import-statement-syntax]]
 
 The grammar of import declarations is defined as follows:
@@ -569,10 +590,10 @@ ModuleSpecifier: STRING;
 These are the properties of import declaration which can be specified by
 the user:
 
-``annotations`` ::
+`annotations` ::
 Arbitrary annotations, see <<Annotations>> and below for details.
 
-``importSpecifiers`` ::
+`importSpecifiers` ::
 The elements to be imported with their names.
 
 ////
@@ -602,6 +623,7 @@ import {A as H, B as I} from "p/H"
 ----
 --
 
+[discrete]
 ==== Semantics [[import-statement-semantics]]
 
 Import statements are used to import identifiable elements from another
@@ -616,7 +638,7 @@ The module to import from is identified by the string literal following
 keyword `from`. This string must be a valid
 
 * complete module specifier footnote:[For more details on module
-specifiers, see <<Qualified_Names>>.]:
+specifiers, see <<_qualified-names>>.]:
 +
 [source]
 ----
@@ -631,7 +653,7 @@ specifiers, see <<Qualified_Names>>.]:
 
 ----
 * or project name only, assuming the project defines a main module in
-its manifest (using the `MainModule` manifest property, <<Manifest_Properties>>):
+its manifest (using the `MainModule` manifest property, <<_properties-8>>):
 +
 [source]
 ----
@@ -860,8 +882,8 @@ of an assignment expression (this also includes any level in a
 destructuring pattern on the left-hand side),
 * math:[$i$] as a direct argument of a postfix operator (/),
 * math:[$i$] as a direct argument of a operator,
-* math:[$i$] as a direct argument of the ``increment`` or
-``decrement`` unary operator (/)
+* math:[$i$] as a direct argument of the `increment` or
+`decrement` unary operator (/)
 
 --
 
@@ -870,6 +892,7 @@ task:IDE-1302[]
 
 Cf. ES6 import cite:[ECMA15a(15.2.3)]
 
+[discrete]
 ==== Syntax [[export-statement-syntax]]
 
 Grammar of export declarations is defined as follows:
@@ -916,7 +939,7 @@ ExportableElement:
 This are the properties of export declaration, which can be specified by
 the user:
 
-``exportedElement`` ::
+`exportedElement` ::
 The element to be exported, can be a declaration or a variable/const
 statement.
 
@@ -935,6 +958,7 @@ export const c="Hello";
 
 --
 
+[discrete]
 ==== Semantics [[export-statement-semantics]]
 
 
@@ -948,10 +972,10 @@ Imported namespaces cannot be exported.
 
 Declared elements (types, variables, functions) are usually only visible
 outside the declaring module if the elements are exported and imported
-(by the using module, cf. <<Import_Statement>>>>).
+(by the using module, cf. <<_import-statement,Import Statement>>).
 
-Some special components (runtime environment and libraries, cf. <<Runtime_Environment_Libraries>>, may export elements globally. This is done by annotating the export (or the
-whole module) with `@Global`, see <<Global_Definitions>> for details.
+Some special components (runtime environment and libraries, cf. <<_runtime-environment-and-runtime-libraries>>, may export elements globally. This is done by annotating the export (or the
+whole module) with `@Global`, see <<_global-definitions>> for details.
 
 By adding `default` after the keyword `export`, the identifiable element can be exported as ’the default’. This can then be imported from other modules via
-default imports (see <<Import_Statement>>).
+default imports (see <<_import-statement>>).

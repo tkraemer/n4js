@@ -56,7 +56,7 @@ Libraries::
 These components are described in detail later.
 
 A component is similar to a single project in the N4JS IDE. It is
-shipped as NFAR archive and contains:
+shipped as <<_numberfour-archives-nfar,NFAR>> archive and contains:
 
 Manifest::
   The manifest describing the components, dependencies and metadata.
@@ -81,9 +81,8 @@ image::fig/cmpd_component_content.png[title="Content of a Component"]
 
 
 Different N4JS component types are described in this section. At compile
-time and runtime, dependent components have to be available. This is the
-responsibility of the user interface ( or ) and described in the
-specification.
+time and runtime, dependent components have to be available.
+This is the responsibility of the user interface (<<AC,IDE>> or <<AC,CLI>>) and described in the <<AC,N4IDE>> specification.
 
 === Apps
 
@@ -138,7 +137,7 @@ used to bridge execution environment inconsistencies. When browser API
 differences are adapted by a library, this is called a __polyfil__.
 Other adaptations, such as enabling ECMSScript 6 object types in
 ECMAScript 5 environments, are known as __shim__. Instead of directly
-supporting these kind of ``hacks``, other components specify which
+supporting these kind of `hacks`, other components specify which
 runtime environment and libraries they depend on by specifying unique
 runtime ids. Possible shims (in case of environments) or polyfils (in
 case of libraries) are transparently provided by the execution
@@ -439,10 +438,10 @@ four digits.
 ////
 
 MainModule ::
-(optional) A plain module specifier defining the project’s ``main
-module``. If this property is defined, other projects can import from
+(optional) A plain module specifier defining the project’s `main
+module`. If this property is defined, other projects can import from
 this project using imports where the string following keyword `from` states the
-project name and not the complete module specifier (see <<Imprt_Statement_Semantics>>).
+project name and not the complete module specifier (see <<import-statement-semantics,Import Statement Semantics>>).
 
 CompatibleWith ::
 In the case of a runtime environment or library, this specifies to which
@@ -489,10 +488,10 @@ Output ::
 Path to output folder, compilers may use subfolders inside this folder.
 
 Libraries ::
-List of paths to libraries, that is, folders in which nfars are found.
+List of paths to libraries, that is, folders in which <<_numberfour-archives-nfar,NFARs>> are found.
 
 Resources ::
-List of paths to resources, that is, folders in which images, css etc.
+List of paths to resources, that is, folders in which images, CSS etc.
 is found.
 
 Sources ::
@@ -514,7 +513,7 @@ type. There exist three different source fragment types:
 * *external*: Implementation of modules defined in definition files (n4jsd). These
   implementations are never validated nor fully compiled. Instead, they
   are only wrapped into module definitions and copied to the output
-  folder. See <<External_Declarations>> and <<Implementation_of_External_Declarations>> for details.
+  folder. See <<_external-declarations,External Declarations>> and <<_implementation-of-external-declarations,Implementation of External Declarations>> for details.
 
 
 Filters for fine-tuning the validator and compiler. A filter is applied
@@ -545,14 +544,14 @@ commonjs::
   modules are referenced in generated code (i.e. when importing from
   these modules), the module specifier will be prefixed with ``@@cjs/``.
 node_builtin::
-  Modules in this component represent node built-in modules such as ``fs``
-  or ``https``. When these modules are referenced in generated code
+  Modules in this component represent node built-in modules such as `fs`
+  or `https`. When these modules are referenced in generated code
   (i.e. when importing from these modules), the module specifier will be
-  prefixed with ``@node/``.
+  prefixed with `@node/`.
 
 Validation or module-wrapping can be turned off for certain files or
-folders via the manifest properties ``no-validate`` and
-``no-module-wrapping``. While this is mostly intended for external
+folders via the manifest properties `no-validate` and
+`no-module-wrapping`. While this is mostly intended for external
 implementation modules below the source-external folder, it is also
 allowed for math:[$.js$] and math:[$.n4js$] files in the
 source folder.
@@ -627,8 +626,8 @@ navigation.
 extensions will then be used to match the file).
 --
 
-Examples of using external source fragments and filters are given in (<<External_Definitions_and_Their_Implementations>>).
-<<Implementation_of_External_Declarations>>
+Examples of using external source fragments and filters are given in (<<_implementation-of-external-declarations>>).
+<<_implementation-of-external-declarations,Implementation of External Declarations>>
 
 .No validation and module wrapping example
 [example]
@@ -689,7 +688,7 @@ provide::
   other _Runtime Environments_ (which means they provide the same
   runtime libraries as the extended environments and the same base
   types).
-  * _SysLibs_ implement (``provide implementations`` of) _APIs_
+  * _SysLibs_ implement (`provide implementations` of) _APIs_
 
 === Runtime Environment Resolution
 
@@ -724,8 +723,6 @@ E.providedRTLibs^* & = E.providedRTLibs \\
                     & \bigcup_{ES \in E.extendedRTEnvs} ES.E.providedRTLibs^*\end{aligned}\]]
 
 ////
-
-// TODO - fix math
 --
 
 
@@ -779,11 +776,11 @@ declaration, or N4 type declaration defined and exported by another
 module into the current module under the given alias (which is similar
 to the original name if no alias is defined). The name of the module is
 its project’s source folder’s relative path without any extension, see
-for details.
+<<_qualified-names,Qualified Names>> for details.
 
 This are the properties of script, which can be specified by the user:
 
-Arbitrary annotations, see and below for details.
+Arbitrary annotations, see <<_annotations,Annotations>> and below for details.
 
 The content of the script.
 
@@ -901,11 +898,11 @@ formatted file with the following structure:
 
 Properties files have the file extension `properties` and describe how
 to localize text in a project. They basically define keys
-<<Primitive_Pathselector__I18nKey>> with their
+<<_primitive-pathselector-and-i18nkey,Primitive Pathselector I18nKey>> with their
 values. The key is used during runtime to retrieve text localized to the
 user’s locale.
 
-=== Syntax [[N4 Deployment Descriptor Syntax]]
+=== Syntax [[n4-deployment-descriptor-syntax]]
 
 The syntax of a resource file is defined as:
 
@@ -1028,13 +1025,13 @@ show an error.
 Having found an implementation project math:[$I_n$] for each API
 project math:[$A_n$], launch as usual except that whenever
 math:[$A_n$]’s output folder would be used, use math:[$I_n$]’s
-output folder (esp. when constructing a ``class path``) and when loading
+output folder (esp. when constructing a `class path`) and when loading
 or importing a type from math:[$A_n$] return the corresponding type
 with the same fully-qualified name from math:[$I_n$].
 
 == API and Implementation With DI
 
-API projects may use N4JS DI (<<Dependency_Injection>>) language features which require
+API projects may use N4JS DI (<<_dependency-injection,Dependency Injection>>) language features which require
 Implementation projects to provide DI-compatible behaviour in order to
 allow a Client (implemented against an API project) to be executed with
 a given Implementation project. This is essential for normal execution

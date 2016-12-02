@@ -18,7 +18,8 @@ Require-Bundle: eu.numberfour.n4js,
  com.google.guava,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
- org.eclipse.emf.mwe2.launch;resolution:=optional
+ org.eclipse.emf.mwe2.launch;resolution:=optional,
+ eu.numberfour.n4jsx.model
 Export-Package: eu.numberfour.n4js.transpiler,
  eu.numberfour.n4js.transpiler.assistants,
  eu.numberfour.n4js.transpiler.im,

@@ -128,7 +128,7 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 	override shouldBeCompiled(Resource input, CancelIndicator monitor) {
 		val autobuildEnabled = isActive(input)
 		return (autobuildEnabled
-			&& input.hasValidFileExtension
+			&& (input.hasValidFileExtension || "n4jsx".equals(input.URI.fileExtension)) // TODO IDE-2416
 			&& projectUtils.isSource(input.URI)
 			&& (projectUtils.isNoValidate(input.URI) 
 				|| projectUtils.isExternal(input.URI) 

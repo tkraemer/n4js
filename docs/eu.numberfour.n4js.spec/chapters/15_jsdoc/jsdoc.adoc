@@ -64,7 +64,7 @@ Link to type (maybe a function) or member tested by the test.
 ..  methods annotated with `@Test`
 ..  classes in test projects or folders, cf. <<jsdoc_tag__testeeFromType>>.
 .  Tag requires a single argument, which is a fully qualified name to a type, including the module specifier.
-The format is as follows: `pass:[moduleSpecifier '.' typeName ( ('.'|'#') memberName)?]`
+The format is as follows: ``pass:[moduleSpecifier '.' typeName ( ('.'|'#') memberName)?]``
 .  Tag is _not_ repeatable, that is a single test method (or class) can refer to only one testee. task:IDEBUG-635[]
 .  Tag precedes the `reqid` tag, i.e., if a `@testee` is specified, the `reqid` will be ignored.
 
@@ -125,7 +125,7 @@ class TestC extends Base {}
 ----
 --
 
-Note that the resulting spec has to be double-checked for consistency
+NOTE: The resulting spec has to be double-checked for consistency
 since it is easily possible that too many constraints are generated.
 
 
@@ -143,9 +143,10 @@ They enable the separation of a test related to a specific member and the concre
 The `@testeeType` is to defined in the test class JSDoc (actually, it is not
 recognized when defined in a member JSDoc). The `@testeeMember` is specified in the test method JSDoc. The "real" testee is then computed from the testee type and the testee method.
 
-This only works for instance members, so far! Note: There is no
-validation for invalid combinations!
+NOTE: 1. This only works for instance members, so far! +
+2. There is no validation for invalid combinations!
 
+[[ex:testeetype-and-testeemethod]]
 .testeeType and testeeMethod
 [example]
 --
@@ -197,22 +198,20 @@ exporter:
 ``ATest``'s JSDoc `@testeeType` + ``ATest.testBar``'s JSDoc `@testeeMember` = testee `A.A.bar`
 2. `testBar` for a receiver of type `B`:
 +
-``BTest``'s JSDoc ``@testeeType`` + ``ATest.testBar``'s JSDoc ``@testeeMember`` = testee ``B.B.bar``
+``BTest``'s JSDoc `@testeeType` + ``ATest.testBar``'s JSDoc `@testeeMember` = testee `B.B.bar`
 
-Note that in all cases when `@testeeFromType` or ``@testeeType``/``@testeeMember`` is used, the resulting spec has to be
+NOTE: In all cases when `@testeeFromType` or ``@testeeType``/``@testeeMember`` is used, the resulting spec has to be
 double-checked for consistency. Consider if the multiplication of spec
 constraints is truly required, in particular if the original semantics
 of a method is not changed. Remember: It is possible to write API tests
 and omit the spec constraint generation simply by not adding the testee
 links.
 
-// TODO: Example
-
 .testeeType and testeeMethod with omitted constraints
 [example]
 --
 
-Assume testees similar as in <<ex:testeeType_and_testeeMethod>>. Since the semantics of `bar` is not changed in `B`, it is probably not necessary to generate the same constraint in the documentation for `bar` twice (one in the section for class `A` and another one in the section of class `B`).
+Assume testees similar as in <<ex:testeetype-and-testeemethod>>. Since the semantics of `bar` is not changed in `B`, it is probably not necessary to generate the same constraint in the documentation for `bar` twice (one in the section for class `A` and another one in the section of class `B`).
 Still, we want the test to be executed for both receivers. This is how it is achieved:
 
 [source,n4js]
@@ -242,8 +241,8 @@ class BTest extends BaseTest {
 This actually defines two tests as in the previous example. Only one
 constraint is created in the spec by the spec exporter:
 
-1. ``testBar`` for a receiver of type ``A``: +
-``ATest``'s JSDoc ``@testeeType`` + ``BaseTest.testBar``'s JSDoc ``@testeeMember`` = testee ``A.A.bar``
+1. `testBar` for a receiver of type `A`: +
+``ATest``'s JSDoc `@testeeType` + ``BaseTest.testBar``'s JSDoc `@testeeMember` = testee `A.A.bar`
 
 Although a test for receiver of type `B` is run, no additional constraint is
 created since there is no `@testeeType` available neither in `BTest` nor in `BaseTest`.
@@ -255,6 +254,8 @@ created since there is no `@testeeType` available neither in `BTest` nor in `Bas
 ID of feature used in LaTeX-code for the requirements section. If no
 testee (via one of the tags above) is given, then the test is linked to
 the requirement with given id.
+
+// TODO: LaTeX reference, deprecated in regards to this document.
 
 == N4JSDoc for API and Implementation Projects
 task:IDE-1509[]
