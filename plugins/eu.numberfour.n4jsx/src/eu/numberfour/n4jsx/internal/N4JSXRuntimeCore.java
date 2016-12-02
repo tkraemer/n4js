@@ -17,7 +17,6 @@ import com.google.inject.Singleton;
 import eu.numberfour.n4js.internal.FileBasedWorkspace;
 import eu.numberfour.n4js.internal.N4JSModel;
 import eu.numberfour.n4js.internal.N4JSRuntimeCore;
-import eu.numberfour.n4js.utils.ResourceType;
 import eu.numberfour.n4jsx.validation.N4JSXJavaScriptVariantHelper.N4JSXResourceType;
 
 /**
@@ -47,6 +46,6 @@ public class N4JSXRuntimeCore extends N4JSRuntimeCore {
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
 			return false;
 		}
-		return resourceType.equals(ResourceType.JS);
+		return super.isJsFile(uri);
 	}
 }
