@@ -18,5 +18,5 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: eu.numberfour.n4js.common.unicode,
- eu.numberfour.n4js.common.unicode.services,
- eu.numberfour.n4js.common.unicode.parseTreeConstruction
+ eu.numberfour.n4js.common.unicode.serializer,
+ eu.numberfour.n4js.common.unicode.services
