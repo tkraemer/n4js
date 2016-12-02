@@ -21,7 +21,8 @@ import eu.numberfour.n4js.utils.ResourceType;
 import eu.numberfour.n4js.validation.DefaultJavaScriptVariantHelper;
 
 /**
- * This class defines the constraints to be checked for different variants including N4JSX and JSX sub-languages
+ * This class provides the constraints to be checked for N4JSX and JSX sub-languages. If the files do not end with
+ * .n4jsx or .jsx, the behavior the same as N4JS's default behavior defined in {@link DefaultJavaScriptVariantHelper}
  */
 @Singleton
 public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper {
@@ -30,10 +31,15 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 * This enum represents resource types for N4JSX language
 	 */
 	public enum N4JSXResourceType {
-		N4JSX, JSX, OTHER;
+		/** Raw file has extension <code>.n4jsx</code> or <code>.n4jsx.xt</code> */
+		N4JSX,
+		/** Raw file has extension <code>.jsx</code> or <code>.jsx.xt</code> */
+		JSX,
+		/** Raw file has other extension */
+		OTHER;
 
 		/**
-		 * Retrieve the resource type of an EObject, either N4JSX, JSX or OTHER
+		 * Retrieve the resource type of an URI, either N4JSX, JSX or OTHER
 		 */
 		public static N4JSXResourceType getResourceType(URI uri) {
 			if (uri == null)

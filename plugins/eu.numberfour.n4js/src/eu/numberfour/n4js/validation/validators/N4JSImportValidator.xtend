@@ -24,7 +24,6 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.utils.Log
-import eu.numberfour.n4js.utils.ResourceType
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.validation.JavaScriptVariantHelper

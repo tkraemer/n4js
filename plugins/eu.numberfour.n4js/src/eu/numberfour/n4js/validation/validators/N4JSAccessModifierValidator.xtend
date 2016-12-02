@@ -51,7 +51,6 @@ import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.utils.ContainerTypesHelper
-import eu.numberfour.n4js.utils.ResourceType
 import eu.numberfour.n4js.utils.StructuralTypesHelper
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.JavaScriptVariantHelper

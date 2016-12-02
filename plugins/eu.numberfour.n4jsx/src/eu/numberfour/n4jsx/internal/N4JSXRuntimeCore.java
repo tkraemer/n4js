@@ -12,6 +12,7 @@ package eu.numberfour.n4jsx.internal;
 
 import org.eclipse.emf.common.util.URI;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.internal.FileBasedWorkspace;
@@ -20,13 +21,15 @@ import eu.numberfour.n4js.internal.N4JSRuntimeCore;
 import eu.numberfour.n4jsx.validation.N4JSXJavaScriptVariantHelper.N4JSXResourceType;
 
 /**
+ * This class overrides the isJsFile method of {@link N4JSRuntimeCore} to consider JSX files as plain JS files
  */
 @Singleton
 public class N4JSXRuntimeCore extends N4JSRuntimeCore {
 
 	/**
-	 * Constructor
+	 * Public for testing purpose.
 	 */
+	@Inject
 	public N4JSXRuntimeCore(FileBasedWorkspace workspace, N4JSModel model) {
 		super(workspace, model);
 	}
@@ -36,7 +39,7 @@ public class N4JSXRuntimeCore extends N4JSRuntimeCore {
 	 *
 	 * @param uri
 	 *            to test
-	 * @boolean if ends in .js or .js.xt
+	 * @boolean if ends in .jsx or .jsx.xt or .js or .js.xt
 	 */
 	@Override
 	protected boolean isJsFile(URI uri) {

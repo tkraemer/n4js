@@ -33,7 +33,6 @@ import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TypeAccessModifier
 import eu.numberfour.n4js.ts.types.TypesFactory
 import eu.numberfour.n4js.ts.utils.TypeUtils
-import eu.numberfour.n4js.utils.ResourceType
 import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import java.util.Collection
 import java.util.List
