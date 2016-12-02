@@ -55,7 +55,9 @@ public abstract class AbstractMemberScope extends AbstractScope {
 	 */
 	protected final boolean staticAccess;
 
-	// @Inject
+	/**
+	 * Java script variant helper used for determined the kind of constraints to check
+	 */
 	protected final JavaScriptVariantHelper jsVariantHelper;
 
 	/**

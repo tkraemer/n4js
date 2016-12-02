@@ -1,0 +1,30 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "react.n4jsd" {}
+	}
+
+	END_SETUP
+*/
+
+
+import * as React from "react"
+
+function MyReactFuncComponent(props: ~React.ComponentProps with {myProp: string}): React.Element {
+	return (<div></div>);
+}
+
+//XPECT type of '<MyReactFuncComponent myProp="Hello"/>' --> Element
+var a = <MyReactFuncComponent myProp="Hello"/>;
+
+
+class C extends React.Component<~Object with {prop: int}, Object> {
+	@Override
+	public render(): React.Element {
+		return <button/>
+	}
+}
+
+//XPECT type of b --> Element
+var b = <C prop={5}/>

@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "react.n4jsd" {}
+	}
+
+	END_SETUP
+*/
+
+//import * as React from "react"
+//XPECT noerrors
+var a = <h1></h1>
+
+//there is no closing element XPECT noerrors
+var b = <div/>
+
+//XPECT errors --> "Opening element h1 does not match with closing element h2." at "h2"
+var c = <h1></h2>
+

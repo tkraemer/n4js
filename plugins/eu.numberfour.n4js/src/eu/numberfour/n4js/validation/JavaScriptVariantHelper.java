@@ -13,7 +13,12 @@ package eu.numberfour.n4js.validation;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * This class defines the JavaScriptVariant features
+ * The N4JS type system and validation is used not only for pure N4JS, but in the context of certain variants as plain
+ * JavaScript in unrestricted or strict mode, type definition files (N4JSD) etc. It also is re-used by sublanguage (such
+ * as JSX). Instead of replacing the validators (or other components) for these variants (which may be an additional
+ * technique), the variant helper allows fine-grained control of what kind of constraints to check. An instance of the
+ * helper is to be provided by the injector; N4Js uses the {@link DefaultJavaScriptVariantHelper}, sub-languages may
+ * bind to a different implementation.
  */
 public interface JavaScriptVariantHelper {
 

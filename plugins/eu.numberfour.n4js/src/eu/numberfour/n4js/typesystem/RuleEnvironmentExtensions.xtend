@@ -112,7 +112,7 @@ class RuleEnvironmentExtensions {
 	 *
 	 * @param context must not be null!
 	 */
-	public def static newRuleEnvironment(EObject context) {
+	public def static RuleEnvironment newRuleEnvironment(EObject context) {
 		var res = context.eResource;
 		if (res === null) {
 			if (context instanceof BoundThisTypeRef) {
@@ -130,7 +130,7 @@ class RuleEnvironmentExtensions {
 	/**
 	 * Returns a new {@code RuleEnvironment} with a given resource to provide context information and xtext index access.
 	 */
-	public def static newRuleEnvironment(Resource resource) {
+	public def static RuleEnvironment newRuleEnvironment(Resource resource) {
 		var G = new RuleEnvironment();
 		G.setPredefinedTypesFromObjectsResourceSet(resource.resourceSet);
 		G.add(Resource, resource)
@@ -143,7 +143,7 @@ class RuleEnvironmentExtensions {
 	 * IMPORTANT: key/value pairs from G will not be available in the returned rule environment! Compare this with
 	 * method {@link #wrap(RuleEnvironment)}.
 	 */
-	public def static newRuleEnvironment(RuleEnvironment G) {
+	public def static RuleEnvironment newRuleEnvironment(RuleEnvironment G) {
 		var Gnew = new RuleEnvironment();
 		Gnew.setPredefinedTypes(G.getPredefinedTypes());
 		Gnew.add(Resource,G.get(Resource));
@@ -154,7 +154,7 @@ class RuleEnvironmentExtensions {
 	 * Return a new rule environment wrapping the given rule environment 'G', i.e. the all key/value pairs of 'G'
 	 * will be readable in the returned environment, but changes to the returned environment will not affect 'G'.
 	 */
-	public def static wrap(RuleEnvironment G) {
+	public def static RuleEnvironment wrap(RuleEnvironment G) {
 		new RuleEnvironment(G);
 	}
 
