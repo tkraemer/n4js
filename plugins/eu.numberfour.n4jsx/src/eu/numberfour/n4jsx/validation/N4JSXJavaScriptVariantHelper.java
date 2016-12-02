@@ -40,15 +40,15 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	private final static String END_JSX_XT = "." + EXT_JSX + "." + EXT_XT;
 
 	/**
-	 * No dynamic pseudo scope for N4JSX
+	 * Activate dynamic pseudo scope for JSX
 	 */
 	@Override
 	public boolean activateDynamicPseudoScope(EObject eobj) {
-		return super.activateDynamicPseudoScope(eobj) || !getResourceType(eobj).equals(N4JSXResourceType.N4JSX);
+		return getResourceType(eobj).equals(N4JSXResourceType.JSX) || super.activateDynamicPseudoScope(eobj);
 	}
 
 	/**
-	 * N4JSX does not allow missing implementation
+	 * Only N4JSD allows missing implementation
 	 */
 	@Override
 	public boolean allowMissingImplementation(EObject eobj) {
@@ -56,221 +56,220 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	}
 
 	/**
-	 * Override annotation should be checked for N4JSX
+	 * Activate checking override annotation N4JSX
 	 */
 	@Override
 	public boolean checkOverrideAnnotation(EObject eobj) {
-		return super.checkOverrideAnnotation(eobj) && !getResourceType(eobj).equals(N4JSXResourceType.JSX);
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.checkOverrideAnnotation(eobj);
 	}
 
 	/**
-	 * Type declaration should be checked for N4JSX
+	 * Activate checking type declaration for N4JSX
 	 */
 	@Override
 	public boolean checkTypeDeclaration(EObject eobj) {
-		return true;
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.checkTypeDeclaration(eobj);
 	}
 
 	/**
-	 * Type declaration should be checked for N4JSX
+	 * Activate checking type declaration for N4JSX
 	 */
 	@Override
 	public boolean checkMemberDeclaration(EObject eobj) {
-		return true;
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.checkMemberDeclaration(eobj);
 	}
 
 	/**
-	 * Variable declaration should be checked for N4JSX
+	 * Activate checking variable declaration for N4JSX
 	 */
 	@Override
 	public boolean checkVariable(EObject eobj) {
-		return true;
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.checkVariable(eobj);
 	}
 
 	/**
-	 * Method reference should be checked for N4JSX
+	 * Activate checking method reference for N4JSX
 	 */
 	@Override
 	public boolean checkMethodReference(EObject eobj) {
-		return true;
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.checkMethodReference(eobj);
 	}
 
 	/**
-	 * Call expression should be checked for N4JSX
+	 * Activate checking call expression for N4JSX
 	 */
 	@Override
 	public boolean checkCallExpression(EObject eobj) {
-		return true;
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.checkCallExpression(eobj);
 	}
 
 	/**
-	 * New expression should be checked for N4JSX
+	 * Activate checking new expression for N4JSX
 	 */
 	@Override
 	public boolean requireCheckNewExpression(EObject eobj) {
-		return true;
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requireCheckNewExpression(eobj);
 	}
 
 	/**
-	 * Indexed access expression should be checked for N4JSX
+	 * Activate checking indexed access expression for N4JSX
 	 */
 	@Override
 	public boolean requireCheckIndexedAccessExpression(EObject eobj) {
-		return true;
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requireCheckIndexedAccessExpression(eobj);
 	}
 
 	/**
-	 * Function name should be checked for N4JSX
+	 * Activate checking function name for N4JSX
 	 */
 	@Override
 	public boolean requireCheckFunctionName(EObject eobj) {
-		return true;
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requireCheckFunctionName(eobj);
 	}
 
 	/**
-	 * Function return should be checked for N4JSX
+	 * Activate checking function return for N4JSX
 	 */
 	@Override
 	public boolean requireCheckFunctionReturn(EObject eobj) {
-		return true;
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requireCheckFunctionReturn(eobj);
 	}
 
 	/**
-	 * Function expression in expression statement should NOT be checked for N4JSX
+	 * Activate function expression in expression statement for N4JSX
 	 */
 	@Override
 	public boolean requireCheckFunctionExpressionInExpressionStatement(EObject eobj) {
-		return false;
+		return getResourceType(eobj).equals(N4JSXResourceType.JSX)
+				|| super.requireCheckFunctionExpressionInExpressionStatement(eobj);
 	}
 
 	/**
-	 * Constant declaration has an initializer in N4JSX
+	 * Constant declaration has an initializer should be checked in all modes except N4JSD
 	 */
 	@Override
 	public boolean constantHasInitializer(EObject eobj) {
-		return true;
+		return super.constantHasInitializer(eobj);
 	}
 
 	/**
-	 * No N4JSX in runtime environment or lib should be checked
+	 * Activate checking no N4JS in runtime environment or lib for N4JSX
 	 */
 	@Override
 	public boolean requirecheckNoN4jsInRuntimeEnvOrLib(EObject eobj) {
-		return true;
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requirecheckNoN4jsInRuntimeEnvOrLib(eobj);
 	}
 
 	/**
-	 * Wrong read/write should NOT be allowed for N$JSX
+	 * Allow wrong read/write for JSX
 	 */
 	@Override
 	public boolean allowWrongReadWrite(EObject eobj) {
-		return false;
+		return getResourceType(eobj).equals(N4JSXResourceType.JSX) || super.allowWrongReadWrite(eobj);
 	}
 
 	/**
-	 * Type inference should NOT be doomed for N4JSX
+	 * Allow doomed type inference for JSX
 	 */
 	@Override
 	public boolean doomTypeInference(EObject eobj) {
-		return false;
+		return getResourceType(eobj).equals(N4JSXResourceType.JSX) || super.doomTypeInference(eobj);
 	}
 
 	/**
-	 * Annotation should be allowed for N4JSX
+	 * Allow annotation for N4JSX
 	 */
 	@Override
 	public boolean allowAnnotation(EObject eobj) {
-		return true;
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.allowAnnotation(eobj);
 	}
 
 	/**
-	 * It must be checked that a final field is initialized for N4JSX
+	 * Activate checking final field is initialized for N4JSX
 	 */
 	@Override
 	public boolean requireCheckFinalFieldIsInitialized(EObject eobj) {
-		return true;
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requireCheckFinalFieldIsInitialized(eobj);
 	}
 
 	/**
-	 * It must be checked if a name starts with dollar for N4JSX
+	 * Activate checking name starts with dollar N4JSX
 	 */
 	@Override
 	public boolean requireCheckNameStartsWithDollar(EObject eobj) {
-		return true;
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requireCheckNameStartsWithDollar(eobj);
 	}
 
 	/**
-	 * It is required to check if body of a member is missing for N4JSX
+	 * Activate checking missing body for N4JSX
 	 */
 	@Override
 	public boolean requireCheckForMissingBody(EObject eobj) {
-		return true;
+		return super.requireCheckForMissingBody(eobj);
 	}
 
 	/**
-	 * It is required to check type matches for N4JSX
+	 * Activate checking type matches for N4JSX
 	 */
 	@Override
 	public boolean requireCheckTypeMatchesExpectedType(EObject eobj) {
-		return true;
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requireCheckTypeMatchesExpectedType(eobj);
 	}
 
 	/**
-	 * Do NOT enforce dynamic types in call cases even without explicit modifier in N4JSX
+	 * Enforce dynamic types for JSX
 	 */
 	@Override
 	public boolean enforceDynamicTypes(EObject eobj) {
-		return false;
+		return getResourceType(eobj).equals(N4JSXResourceType.JSX) || super.enforceDynamicTypes(eobj);
 	}
 
 	/**
-	 * The variant N4JSX is type aware
+	 * N4JSX is type aware
 	 */
 	@Override
 	public boolean isTypeAware(EObject eobj) { // e.g. in N4JS
-		return true;
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.isTypeAware(eobj);
 	}
 
 	/**
-	 * The variant N4JSX does NOT have global object
+	 * JSX has global scope
 	 */
 	@Override
 	public boolean hasGlobalObject(EObject eobj) { // e.g. in unrestricted
 													// ECMAScript mode
-		return false;
+		return getResourceType(eobj).equals(N4JSXResourceType.JSX) || super.hasGlobalObject(eobj);
 	}
 
 	/**
-	 * The mode N4JSX is NOT unrestricted
+	 * JSX is unrestricted mode
 	 */
 	@Override
 	public boolean isUnrestrictedMode(EObject eobj) {
-		return false;
+		return getResourceType(eobj).equals(N4JSXResourceType.JSX) || super.isUnrestrictedMode(eobj);
 	}
 
 	/**
-	 * The N4JSX mode is NOT external
+	 * N4JSD is external mode
 	 */
 	@Override
 	public boolean isExternalMode(EObject eobj) {
-		return false;
+		return super.isExternalMode(eobj);
 	}
 
 	/**
-	 * Check if we are in N4JS code mode (N4JSX is considered as N4JS)
+	 * Consider N4JSX as N4JS mode
 	 */
 	@Override
 	public boolean isN4JSMode(EObject eobj) {
-		// TODO: This method re-implements the logics in class ResourceType,
-		// consider refactor ResourceType to make it more extensible
 		if (eobj == null)
 			return super.isN4JSMode(eobj);
 
-		return super.isN4JSMode(eobj) || getResourceType(eobj).equals(N4JSXResourceType.N4JSX);
+		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.isN4JSMode(eobj);
 	}
 
 	/**
-	 * Check the file extension
+	 * Retrieve the resource type of an EObject: N4JSX, JSX or OTHER
 	 */
 	private N4JSXResourceType getResourceType(EObject eobj) {
 		if (eobj == null)
@@ -336,7 +335,14 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public String variantMode(EObject eobj) {
-		return "n4jsx";
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return "n4jsx";
+		} else if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return "jsx";
+		} else {
+			return super.variantMode(eobj);
+		}
 	}
 
 }
