@@ -26,8 +26,79 @@ import eu.numberfour.n4js.validation.DefaultJavaScriptVariantHelper;
 @Singleton
 public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper {
 
-	enum N4JSXResourceType {
-		N4JSX, JSX, OTHER
+	/**
+	 * This enum represents resource types for N4JSX language
+	 */
+	public enum N4JSXResourceType {
+		N4JSX, JSX, OTHER;
+
+		/**
+		 * Retrieve the resource type of an EObject, either N4JSX, JSX or OTHER
+		 */
+		public static N4JSXResourceType getResourceType(URI uri) {
+			if (uri == null)
+				return N4JSXResourceType.OTHER;
+
+			ResourceType resourceType = ResourceType.getResourceType(uri);
+			if (resourceType != ResourceType.UNKOWN && resourceType != ResourceType.XT) {
+				return N4JSXResourceType.OTHER;
+			} else {
+				String fileExtension = uri.fileExtension();
+
+				if (fileExtension == null) {
+					LOGGER.info("URI has no file extension " + uri);
+					return N4JSXResourceType.OTHER;
+				} else {
+					fileExtension = fileExtension.toLowerCase();
+				}
+
+				switch (fileExtension) {
+				case EXT_N4JSX:
+					return N4JSXResourceType.N4JSX;
+				case EXT_JSX:
+					return N4JSXResourceType.JSX;
+				case EXT_XT:
+					N4JSXResourceType resourceTypeWithinXT = getXtHiddenType(uri);
+					if (resourceTypeWithinXT.equals(N4JSXResourceType.OTHER))
+						return N4JSXResourceType.OTHER;
+					else
+						return resourceTypeWithinXT;
+				default:
+					return N4JSXResourceType.OTHER;
+				}
+			}
+		}
+
+		/**
+		 * Retrieve the resource type of an EObject, either N4JSX, JSX or OTHER
+		 */
+		public static N4JSXResourceType getResourceType(EObject eobj) {
+			if (eobj == null)
+				return N4JSXResourceType.OTHER;
+
+			Resource resource = eobj.eResource();
+			if (resource == null)
+				return N4JSXResourceType.OTHER;
+			URI uri = resource.getURI();
+			return getResourceType(uri);
+		}
+
+		/**
+		 * For Xpect resources return type hidden by the xt extension.
+		 */
+		private static N4JSXResourceType getXtHiddenType(URI uri) {
+			if (uri == null) {
+				return N4JSXResourceType.OTHER;
+			}
+
+			String uriAsString = uri.toString().toLowerCase();
+			if (uriAsString.endsWith(END_JSX_XT)) {
+				return N4JSXResourceType.JSX;
+			} else if (uriAsString.endsWith(END_N4JSX_XT)) {
+				return N4JSXResourceType.N4JSX;
+			} else
+				return N4JSXResourceType.OTHER;
+		}
 	}
 
 	private static Logger LOGGER = Logger.getLogger(ResourceType.class);
@@ -43,7 +114,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean activateDynamicPseudoScope(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return true;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -57,7 +128,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean allowMissingImplementation(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX) || resourceType.equals(N4JSXResourceType.N4JSX)) {
 			return false;
 		}
@@ -69,7 +140,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean checkOverrideAnnotation(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -83,7 +154,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean checkTypeDeclaration(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -97,7 +168,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean checkMemberDeclaration(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -111,7 +182,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean checkVariable(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -125,7 +196,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean checkMethodReference(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -139,7 +210,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean checkCallExpression(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -153,7 +224,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckNewExpression(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -167,7 +238,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckIndexedAccessExpression(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -181,7 +252,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckFunctionName(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -195,7 +266,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckFunctionReturn(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -209,7 +280,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckFunctionExpressionInExpressionStatement(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return true;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -224,7 +295,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean constantHasInitializer(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX) || resourceType.equals(N4JSXResourceType.N4JSX)) {
 			return true;
 		}
@@ -236,7 +307,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requirecheckNoN4jsInRuntimeEnvOrLib(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -250,7 +321,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean allowWrongReadWrite(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return true;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -264,7 +335,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean doomTypeInference(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return true;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -278,7 +349,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean allowAnnotation(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -292,7 +363,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckFinalFieldIsInitialized(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -306,7 +377,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckNameStartsWithDollar(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -320,7 +391,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckForMissingBody(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -334,7 +405,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckTypeMatchesExpectedType(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -348,7 +419,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean enforceDynamicTypes(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return true;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -362,7 +433,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean isTypeAware(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -376,7 +447,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean hasGlobalObject(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return true;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -386,11 +457,25 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	}
 
 	/**
+	 * Activate checking exported when visibility higher than private for N4JSX but deactivate for JSX
+	 */
+	@Override
+	public boolean requireCheckExportedWhenVisibilityHigherThanPrivate(EObject eobj) {
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.requireCheckExportedWhenVisibilityHigherThanPrivate(eobj);
+	}
+
+	/**
 	 * JSX is unrestricted mode
 	 */
 	@Override
 	public boolean isUnrestrictedMode(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return true;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -404,7 +489,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean isExternalMode(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX) || resourceType.equals(N4JSXResourceType.N4JSX)) {
 			return false;
 		}
@@ -416,7 +501,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean isN4JSMode(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.JSX)) {
 			return false;
 		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
@@ -426,64 +511,18 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	}
 
 	/**
-	 * Retrieve the resource type of an EObject, either N4JSX, JSX or OTHER
+	 * Return true if the script is a plain JS
+	 *
 	 */
-	private N4JSXResourceType getResourceType(EObject eobj) {
-		if (eobj == null)
-			return N4JSXResourceType.OTHER;
-
-		Resource resource = eobj.eResource();
-		if (resource == null)
-			return N4JSXResourceType.OTHER;
-		URI uri = resource.getURI();
-		if (uri == null)
-			return N4JSXResourceType.OTHER;
-
-		ResourceType resourceType = ResourceType.getResourceType(uri);
-		if (resourceType != ResourceType.UNKOWN && resourceType != ResourceType.XT) {
-			return N4JSXResourceType.OTHER;
-		} else {
-			String fileExtension = uri.fileExtension();
-
-			if (fileExtension == null) {
-				LOGGER.info("URI has no file extension " + uri);
-				return N4JSXResourceType.OTHER;
-			} else {
-				fileExtension = fileExtension.toLowerCase();
-			}
-
-			switch (fileExtension) {
-			case EXT_N4JSX:
-				return N4JSXResourceType.N4JSX;
-			case EXT_JSX:
-				return N4JSXResourceType.JSX;
-			case EXT_XT:
-				N4JSXResourceType resourceTypeWithinXT = getXtHiddenType(uri);
-				if (resourceTypeWithinXT.equals(N4JSXResourceType.OTHER))
-					return N4JSXResourceType.OTHER;
-				else
-					return resourceTypeWithinXT;
-			default:
-				return N4JSXResourceType.OTHER;
-			}
+	@Override
+	public boolean isPlainJS(EObject eobj) {
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return true;
 		}
-	}
-
-	/**
-	 * For Xpect resources return type hidden by the xt extension.
-	 */
-	private N4JSXResourceType getXtHiddenType(URI uri) {
-		if (uri == null) {
-			return N4JSXResourceType.OTHER;
-		}
-
-		String uriAsString = uri.toString().toLowerCase();
-		if (uriAsString.endsWith(END_JSX_XT)) {
-			return N4JSXResourceType.JSX;
-		} else if (uriAsString.endsWith(END_N4JSX_XT)) {
-			return N4JSXResourceType.N4JSX;
-		} else
-			return N4JSXResourceType.OTHER;
+		return super.isPlainJS(eobj);
 	}
 
 	/**
@@ -491,7 +530,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public String variantMode(EObject eobj) {
-		N4JSXResourceType resourceType = getResourceType(eobj);
+		N4JSXResourceType resourceType = N4JSXResourceType.getResourceType(eobj);
 		if (resourceType.equals(N4JSXResourceType.N4JSX)) {
 			return "n4jsx";
 		} else if (resourceType.equals(N4JSXResourceType.JSX)) {

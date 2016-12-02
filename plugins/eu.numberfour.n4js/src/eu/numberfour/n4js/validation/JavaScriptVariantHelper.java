@@ -138,32 +138,43 @@ public interface JavaScriptVariantHelper {
 	public boolean enforceDynamicTypes(EObject eobj);
 
 	/**
-	 * Returns true if the variant is type aware
+	 * Return true if the variant is type aware
 	 */
 	public boolean isTypeAware(EObject eobj);
 
 	/**
-	 * Returns true if the variant has global object
+	 * Return true if the variant has global object
 	 */
 	public boolean hasGlobalObject(EObject eobj);
 
 	/**
-	 * Returns true if the mode is unrestricted
+	 * Return true if exported when visibility higher than private should be checked
+	 */
+	public boolean requireCheckExportedWhenVisibilityHigherThanPrivate(EObject eobj);
+
+	/**
+	 * Return true if the mode is unrestricted
 	 */
 	public boolean isUnrestrictedMode(EObject eobj);
 
 	/**
-	 * Returns true if the script is defined in a N4JSD module (external mode)
+	 * Return true if the script is defined in a N4JSD module (external mode)
 	 */
 	public boolean isExternalMode(EObject eobj);
 
 	/**
-	 * Returns true if the script is defined in a N4JS module
+	 * Return true if the script is defined in a N4JS module
 	 */
 	public boolean isN4JSMode(EObject eobj);
 
 	/**
-	 * Returns the variant mode
+	 * Return true if the script is a plain JS
+	 *
+	 */
+	public boolean isPlainJS(EObject eobj);
+
+	/**
+	 * Return the variant mode
 	 */
 	public String variantMode(EObject eobj);
 

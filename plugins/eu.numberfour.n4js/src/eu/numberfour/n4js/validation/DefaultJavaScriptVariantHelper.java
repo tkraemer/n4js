@@ -12,6 +12,8 @@ package eu.numberfour.n4js.validation;
 
 import org.eclipse.emf.ecore.EObject;
 
+import eu.numberfour.n4js.utils.ResourceType;
+
 /**
  * This class defines the constraints to be checked for different variants. N4JS uses this default implementation
  * Sub-language can either override this implementation or provides a new implementation by implementing the
@@ -221,6 +223,14 @@ public class DefaultJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	}
 
 	/**
+	 * Return true if exported when visibility higher than private should be checked (not true for JS files)
+	 */
+	@Override
+	public boolean requireCheckExportedWhenVisibilityHigherThanPrivate(EObject eobj) {
+		return JavaScriptVariant.n4js.isActive(eobj) || JavaScriptVariant.external.isActive(eobj);
+	}
+
+	/**
 	 * Returns true if the mode is unrestricted
 	 */
 	@Override
@@ -242,6 +252,15 @@ public class DefaultJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	@Override
 	public boolean isN4JSMode(EObject eobj) {
 		return JavaScriptVariant.getVariant(eobj) == JavaScriptVariant.n4js;
+	}
+
+	/**
+	 * Return true if the script is a plain JS
+	 *
+	 */
+	@Override
+	public boolean isPlainJS(EObject eobj) {
+		return ResourceType.getResourceType(eobj).equals(ResourceType.JS);
 	}
 
 	/**

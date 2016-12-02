@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -14,17 +14,20 @@ import eu.numberfour.n4js.n4JS.EmptyStatement
 import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.ImportDeclaration
 import eu.numberfour.n4js.n4JS.ImportSpecifier
+import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.NamedImportSpecifier
 import eu.numberfour.n4js.n4JS.NamespaceImportSpecifier
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.organize.imports.ImportProvidedElement
 import eu.numberfour.n4js.organize.imports.ImportStateCalculator
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.utils.Log
+import eu.numberfour.n4js.utils.ResourceType
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4js.validation.IssueCodes
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import java.util.List
 import java.util.Map
 import javax.inject.Inject
@@ -34,9 +37,8 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.validation.IssueCodes.*
+
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
-import eu.numberfour.n4js.n4JS.N4JSPackage
-import eu.numberfour.n4js.utils.ResourceType
 
 /**
  */
@@ -46,9 +48,12 @@ class N4JSImportValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject
 	ImportStateCalculator importStateCalculator;
 
+	@Inject
+	private JavaScriptVariantHelper jsVariantHelper;
+
 	/**
 	 * NEEEDED
-	 *
+	 * 
 	 * when removed check methods will be called twice once by N4JSValidator, and once by
 	 * AbstractDeclarativeN4JSValidator
 	 */
@@ -59,8 +64,9 @@ class N4JSImportValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def checkMultipleDefaultExports(Script script) {
 		val defaultExports = script.eAllContents.filter(ExportDeclaration).filter[isDefaultExport].toList;
-		defaultExports.tail.forEach[
-			addIssue(getMessageForIMP_DUPLICATE_DEFAULT_EXPORT, it, N4JSPackage.eINSTANCE.exportDeclaration_DefaultExport, IMP_DUPLICATE_DEFAULT_EXPORT);
+		defaultExports.tail.forEach [
+			addIssue(getMessageForIMP_DUPLICATE_DEFAULT_EXPORT, it,
+				N4JSPackage.eINSTANCE.exportDeclaration_DefaultExport, IMP_DUPLICATE_DEFAULT_EXPORT);
 		]
 	}
 
@@ -77,26 +83,22 @@ class N4JSImportValidator extends AbstractN4JSDeclarativeValidator {
 		val type = importSpecifier.definedType;
 		if (type instanceof ModuleNamespaceVirtualType) {
 			if (type.module !== null) {
-				val resType = ResourceType.getResourceType(type.module);
-
 				if (importSpecifier.declaredDynamic) {
-					if (resType===ResourceType.N4JS) {
-						addIssue(
-							getMessageForIMP_DYNAMIC_NAMESPACE_IMPORT_N4JS(type.module.moduleSpecifier),
+					if (jsVariantHelper.isN4JSMode(type.module)) {
+						addIssue(getMessageForIMP_DYNAMIC_NAMESPACE_IMPORT_N4JS(type.module.moduleSpecifier),
 							importSpecifier, IMP_DYNAMIC_NAMESPACE_IMPORT_N4JS);
-					} else if (resType===ResourceType.N4JSD) {
-						addIssue(
-							getMessageForIMP_DYNAMIC_NAMESPACE_IMPORT_N4JSD(type.module.moduleSpecifier),
+					} else if (jsVariantHelper.isExternalMode(type.module)) {
+						addIssue(getMessageForIMP_DYNAMIC_NAMESPACE_IMPORT_N4JSD(type.module.moduleSpecifier),
 							importSpecifier, IMP_DYNAMIC_NAMESPACE_IMPORT_N4JSD);
 					}
 				} else {
-					if (resType===ResourceType.JS) {
-						addIssue(
-							getMessageForIMP_STATIC_NAMESPACE_IMPORT_PLAIN_JS(type.module.moduleSpecifier),
+					if (jsVariantHelper.isPlainJS(type.module)) {
+						addIssue(getMessageForIMP_STATIC_NAMESPACE_IMPORT_PLAIN_JS(type.module.moduleSpecifier),
 							importSpecifier, IMP_STATIC_NAMESPACE_IMPORT_PLAIN_JS);
 					}
 				}
 			}
+
 		}
 	}
 
@@ -192,7 +194,8 @@ class N4JSImportValidator extends AbstractN4JSDeclarativeValidator {
 		var boolean stillInHeader = true
 		for (se : script.scriptElements) {
 			if (stillInHeader) {
-				if (! ( se instanceof ImportDeclaration || se instanceof EmptyStatement || se.isStringLiteralExpression )) stillInHeader = false;
+				if (! ( se instanceof ImportDeclaration || se instanceof EmptyStatement ||
+					se.isStringLiteralExpression )) stillInHeader = false;
 			} else {
 				if (se instanceof ImportDeclaration) handleScatteredImport(se)
 			}
@@ -290,14 +293,14 @@ class N4JSImportValidator extends AbstractN4JSDeclarativeValidator {
 					firstImportSpecifier.alias ?: entryName
 				}
 			}
-			val firstImportIsDefault = if(firstImportSpecifier instanceof NamedImportSpecifier) {
-				firstImportSpecifier.isDefaultImport
-			};
+			val firstImportIsDefault = if (firstImportSpecifier instanceof NamedImportSpecifier) {
+					firstImportSpecifier.isDefaultImport
+				};
 
 			imports.tail.forEach [ dupe |
 				val duplicateImportSpecifier = dupe.importSpec
-				val isLegalCombinationDefaultNamespaceImport =
-					firstImportIsDefault && duplicateImportSpecifier instanceof NamespaceImportSpecifier;
+				val isLegalCombinationDefaultNamespaceImport = firstImportIsDefault &&
+					duplicateImportSpecifier instanceof NamespaceImportSpecifier;
 				if (isLegalCombinationDefaultNamespaceImport) {
 					return;
 				}
@@ -385,11 +388,11 @@ class N4JSImportValidator extends AbstractN4JSDeclarativeValidator {
 
 	/** TODO refactor
 	 * COPY FROM ImportStateCalculator, refactor
-	 *
+	 * 
 	 * Computes 'actual' name of the namespace for {@link ImportProvidedElement} entry.
 	 * If processed namespace refers to unresolved module, will return dummy name,
 	 * otherwise returns artificial name composed of prefix and target module qualified name
-	 *
+	 * 
 	 */
 	private def String computeNamespaceActualName(NamespaceImportSpecifier specifier) {
 		if (specifier.importedModule.eIsProxy) {
@@ -422,24 +425,9 @@ class N4JSImportValidator extends AbstractN4JSDeclarativeValidator {
 	private def addIssueDuplicateNamespaceImportDeclaration(NamespaceImportSpecifier specifier,
 		NamespaceImportSpecifier duplicate, ImportDeclaration duplicateImportDeclaration,
 		Map<EObject, String> eObjectToIssueCode) {
-		val String issueCode = IssueCodes.IMP_STMT_DUPLICATE_NAMESPACE
-		if (eObjectToIssueCode.get(specifier) === null) {
-			val message = IssueCodes.getMessageForIMP_STMT_DUPLICATE_NAMESPACE(specifier.alias,
-				duplicate.importedModule.qualifiedName)
-			addIssue(message, duplicateImportDeclaration, issueCode)
-		}
-
-		duplicateImportDeclaration.importSpecifiers.forEach [ is |
-			eObjectToIssueCode.put(specifier, issueCode)
-		]
-	}
-
-	private def addIssueDuplicateNamedImportDeclaration(NamedImportSpecifier specifier,
-		NamedImportSpecifier duplicate, ImportDeclaration duplicateImportDeclaration,
-		Map<EObject, String> eObjectToIssueCode) {
-			val String issueCode = IssueCodes.IMP_STMT_DUPLICATE_NAMED
+			val String issueCode = IssueCodes.IMP_STMT_DUPLICATE_NAMESPACE
 			if (eObjectToIssueCode.get(specifier) === null) {
-				val message = IssueCodes.getMessageForIMP_STMT_DUPLICATE_NAMED(specifier.usedName,
+				val message = IssueCodes.getMessageForIMP_STMT_DUPLICATE_NAMESPACE(specifier.alias,
 					duplicate.importedModule.qualifiedName)
 				addIssue(message, duplicateImportDeclaration, issueCode)
 			}
@@ -447,62 +435,78 @@ class N4JSImportValidator extends AbstractN4JSDeclarativeValidator {
 			duplicateImportDeclaration.importSpecifiers.forEach [ is |
 				eObjectToIssueCode.put(specifier, issueCode)
 			]
-	}
-
-	private def addIssueDuplicateNamespace(NamespaceImportSpecifier duplicateImportSpecifier,
-		NamespaceImportSpecifier firstImportSpecifier, Map<EObject, String> eObjectToIssueCode) {
-		if (eObjectToIssueCode.get(duplicateImportSpecifier) === null) {
-			val issueCode = IssueCodes.IMP_DUPLICATE_NAMESPACE
-			val msg = IssueCodes.getMessageForIMP_DUPLICATE_NAMESPACE(
-				firstImportSpecifier.importedModule.qualifiedName, firstImportSpecifier.alias)
-			addIssue(msg, duplicateImportSpecifier, issueCode)
-			eObjectToIssueCode.put(duplicateImportSpecifier, issueCode)
 		}
-	}
 
-	private def addIssueDuplicate(ImportSpecifier specifier, String actualName, TModule module,
-		String firstImportName, Map<EObject, String> eObjectToIssueCode) {
-		var String issueCode = IssueCodes.IMP_DUPLICATE
-		if (eObjectToIssueCode.get(specifier) === null) {
-			val message = IssueCodes.getMessageForIMP_DUPLICATE(actualName, module.qualifiedName,
-				firstImportName)
-			addIssue(message, specifier, issueCode)
-			eObjectToIssueCode.put(specifier, issueCode)
+		private def addIssueDuplicateNamedImportDeclaration(NamedImportSpecifier specifier,
+			NamedImportSpecifier duplicate, ImportDeclaration duplicateImportDeclaration,
+			Map<EObject, String> eObjectToIssueCode) {
+				val String issueCode = IssueCodes.IMP_STMT_DUPLICATE_NAMED
+				if (eObjectToIssueCode.get(specifier) === null) {
+					val message = IssueCodes.getMessageForIMP_STMT_DUPLICATE_NAMED(specifier.usedName,
+						duplicate.importedModule.qualifiedName)
+					addIssue(message, duplicateImportDeclaration, issueCode)
+				}
+
+				duplicateImportDeclaration.importSpecifiers.forEach [ is |
+					eObjectToIssueCode.put(specifier, issueCode)
+				]
+			}
+
+			private def addIssueDuplicateNamespace(NamespaceImportSpecifier duplicateImportSpecifier,
+				NamespaceImportSpecifier firstImportSpecifier, Map<EObject, String> eObjectToIssueCode) {
+				if (eObjectToIssueCode.get(duplicateImportSpecifier) === null) {
+					val issueCode = IssueCodes.IMP_DUPLICATE_NAMESPACE
+					val msg = IssueCodes.getMessageForIMP_DUPLICATE_NAMESPACE(
+						firstImportSpecifier.importedModule.qualifiedName, firstImportSpecifier.alias)
+					addIssue(msg, duplicateImportSpecifier, issueCode)
+					eObjectToIssueCode.put(duplicateImportSpecifier, issueCode)
+				}
+			}
+
+			private def addIssueDuplicate(ImportSpecifier specifier, String actualName, TModule module,
+				String firstImportName, Map<EObject, String> eObjectToIssueCode) {
+				var String issueCode = IssueCodes.IMP_DUPLICATE
+				if (eObjectToIssueCode.get(specifier) === null) {
+					val message = IssueCodes.getMessageForIMP_DUPLICATE(actualName, module.qualifiedName,
+						firstImportName)
+					addIssue(message, specifier, issueCode)
+					eObjectToIssueCode.put(specifier, issueCode)
+				}
+			}
+
+			private def addIssueUnresolved(ImportSpecifier specifier, Map<EObject, String> eObjectToIssueCode) {
+				var String issueCode = IssueCodes.IMP_UNRESOLVED
+				if (eObjectToIssueCode.get(specifier) === null) {
+					val message = IssueCodes.getMessageForIMP_UNRESOLVED(computeUnusedOrUnresolvedMessage(specifier))
+					addIssue(message, specifier, issueCode)
+					eObjectToIssueCode.put(specifier, issueCode)
+				}
+			}
+
+			private def addIssueUnusedImport(ImportSpecifier specifier, Map<EObject, String> eObjectToIssueCode) {
+				val issueCode = IssueCodes.IMP_UNUSED_IMPORT
+				if (eObjectToIssueCode.get(specifier) === null) {
+					val message = IssueCodes.getMessageForIMP_UNUSED_IMPORT(computeUnusedOrUnresolvedMessage(specifier))
+					addIssue(message, specifier, issueCode)
+					eObjectToIssueCode.put(specifier, issueCode)
+				}
+			}
+
+			private def String computeUnusedOrUnresolvedMessage(ImportSpecifier specifier) {
+				switch (specifier) {
+					NamedImportSpecifier: specifier.importedElementErrorName
+					NamespaceImportSpecifier: "* as " + specifier.alias + " from " + computeModuleSpecifier(specifier)
+				}
+			}
+
+			private def String computeModuleSpecifier(NamespaceImportSpecifier specifier) {
+				val importedModule = specifier.importedModule
+				if (importedModule !== null && !importedModule.eIsProxy) {
+					importedModule.moduleSpecifier
+				} else {
+					"module was a proxy"
+				}
+			}
+
 		}
-	}
-
-	private def addIssueUnresolved(ImportSpecifier specifier, Map<EObject, String> eObjectToIssueCode) {
-		var String issueCode = IssueCodes.IMP_UNRESOLVED
-		if (eObjectToIssueCode.get(specifier) === null) {
-			val message = IssueCodes.getMessageForIMP_UNRESOLVED(computeUnusedOrUnresolvedMessage(specifier))
-			addIssue(message, specifier, issueCode)
-			eObjectToIssueCode.put(specifier, issueCode)
-		}
-	}
-
-	private def addIssueUnusedImport(ImportSpecifier specifier, Map<EObject, String> eObjectToIssueCode) {
-		val issueCode = IssueCodes.IMP_UNUSED_IMPORT
-		if (eObjectToIssueCode.get(specifier) === null) {
-			val message = IssueCodes.getMessageForIMP_UNUSED_IMPORT(computeUnusedOrUnresolvedMessage(specifier))
-			addIssue(message, specifier, issueCode)
-			eObjectToIssueCode.put(specifier, issueCode)
-		}
-	}
-
-	private def String computeUnusedOrUnresolvedMessage(ImportSpecifier specifier) {
-		switch (specifier) {
-			NamedImportSpecifier: specifier.importedElementErrorName
-			NamespaceImportSpecifier: "* as " + specifier.alias + " from " + computeModuleSpecifier(specifier)
-		}
-	}
-
-	private def String computeModuleSpecifier(NamespaceImportSpecifier specifier) {
-		val importedModule = specifier.importedModule
-		if (importedModule !== null && !importedModule.eIsProxy) {
-			importedModule.moduleSpecifier
-		} else {
-			"module was a proxy"
-		}
-	}
-
-}
+		
