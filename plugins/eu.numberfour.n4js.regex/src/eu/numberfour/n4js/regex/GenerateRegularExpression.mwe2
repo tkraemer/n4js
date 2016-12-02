@@ -58,7 +58,7 @@ Workflow {
 			// generates Java API for the generated EPackages
 			fragment = ecore.EMFGeneratorFragment2 {
 				// this seems to be the youngest version available an maven central
-				emfRuntimeVersion = "2.10"
+				emfRuntimeVersion = "2.11"
 			}
 
 			// serializer 2.0
