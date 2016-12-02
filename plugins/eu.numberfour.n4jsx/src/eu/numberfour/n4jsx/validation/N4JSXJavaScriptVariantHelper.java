@@ -21,8 +21,7 @@ import eu.numberfour.n4js.utils.ResourceType;
 import eu.numberfour.n4js.validation.DefaultJavaScriptVariantHelper;
 
 /**
- * This class defines the constraints to be checked for different variants for N4JSX sub-language TODO: This should be
- * improved to support .JSX files as well
+ * This class defines the constraints to be checked for different variants including N4JSX and JSX sub-languages
  */
 @Singleton
 public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper {
@@ -44,7 +43,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean activateDynamicPseudoScope(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.JSX) || super.activateDynamicPseudoScope(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return true;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return false;
+		}
+		return super.activateDynamicPseudoScope(eobj);
 	}
 
 	/**
@@ -52,6 +57,10 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean allowMissingImplementation(EObject eobj) {
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX) || resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return false;
+		}
 		return super.allowMissingImplementation(eobj);
 	}
 
@@ -60,7 +69,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean checkOverrideAnnotation(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.checkOverrideAnnotation(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.checkOverrideAnnotation(eobj);
 	}
 
 	/**
@@ -68,7 +83,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean checkTypeDeclaration(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.checkTypeDeclaration(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.checkTypeDeclaration(eobj);
 	}
 
 	/**
@@ -76,7 +97,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean checkMemberDeclaration(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.checkMemberDeclaration(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.checkMemberDeclaration(eobj);
 	}
 
 	/**
@@ -84,7 +111,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean checkVariable(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.checkVariable(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.checkVariable(eobj);
 	}
 
 	/**
@@ -92,7 +125,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean checkMethodReference(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.checkMethodReference(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.checkMethodReference(eobj);
 	}
 
 	/**
@@ -100,7 +139,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean checkCallExpression(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.checkCallExpression(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.checkCallExpression(eobj);
 	}
 
 	/**
@@ -108,7 +153,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckNewExpression(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requireCheckNewExpression(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.requireCheckNewExpression(eobj);
 	}
 
 	/**
@@ -116,7 +167,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckIndexedAccessExpression(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requireCheckIndexedAccessExpression(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.requireCheckIndexedAccessExpression(eobj);
 	}
 
 	/**
@@ -124,7 +181,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckFunctionName(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requireCheckFunctionName(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.requireCheckFunctionName(eobj);
 	}
 
 	/**
@@ -132,7 +195,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckFunctionReturn(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requireCheckFunctionReturn(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.requireCheckFunctionReturn(eobj);
 	}
 
 	/**
@@ -140,8 +209,14 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckFunctionExpressionInExpressionStatement(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.JSX)
-				|| super.requireCheckFunctionExpressionInExpressionStatement(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return true;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return false;
+		}
+
+		return super.requireCheckFunctionExpressionInExpressionStatement(eobj);
 	}
 
 	/**
@@ -149,6 +224,10 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean constantHasInitializer(EObject eobj) {
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX) || resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
 		return super.constantHasInitializer(eobj);
 	}
 
@@ -157,7 +236,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requirecheckNoN4jsInRuntimeEnvOrLib(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requirecheckNoN4jsInRuntimeEnvOrLib(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.requirecheckNoN4jsInRuntimeEnvOrLib(eobj);
 	}
 
 	/**
@@ -165,7 +250,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean allowWrongReadWrite(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.JSX) || super.allowWrongReadWrite(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return true;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return false;
+		}
+		return super.allowWrongReadWrite(eobj);
 	}
 
 	/**
@@ -173,7 +264,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean doomTypeInference(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.JSX) || super.doomTypeInference(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return true;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return false;
+		}
+		return super.doomTypeInference(eobj);
 	}
 
 	/**
@@ -181,7 +278,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean allowAnnotation(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.allowAnnotation(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.allowAnnotation(eobj);
 	}
 
 	/**
@@ -189,7 +292,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckFinalFieldIsInitialized(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requireCheckFinalFieldIsInitialized(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.requireCheckFinalFieldIsInitialized(eobj);
 	}
 
 	/**
@@ -197,7 +306,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckNameStartsWithDollar(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requireCheckNameStartsWithDollar(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.requireCheckNameStartsWithDollar(eobj);
 	}
 
 	/**
@@ -205,6 +320,12 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckForMissingBody(EObject eobj) {
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
 		return super.requireCheckForMissingBody(eobj);
 	}
 
@@ -213,7 +334,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean requireCheckTypeMatchesExpectedType(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.requireCheckTypeMatchesExpectedType(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.requireCheckTypeMatchesExpectedType(eobj);
 	}
 
 	/**
@@ -221,24 +348,41 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean enforceDynamicTypes(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.JSX) || super.enforceDynamicTypes(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return true;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return false;
+		}
+		return super.enforceDynamicTypes(eobj);
 	}
 
 	/**
 	 * N4JSX is type aware
 	 */
 	@Override
-	public boolean isTypeAware(EObject eobj) { // e.g. in N4JS
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.isTypeAware(eobj);
+	public boolean isTypeAware(EObject eobj) {
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.isTypeAware(eobj);
 	}
 
 	/**
 	 * JSX has global scope
 	 */
 	@Override
-	public boolean hasGlobalObject(EObject eobj) { // e.g. in unrestricted
-													// ECMAScript mode
-		return getResourceType(eobj).equals(N4JSXResourceType.JSX) || super.hasGlobalObject(eobj);
+	public boolean hasGlobalObject(EObject eobj) {
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return true;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return false;
+		}
+		return super.hasGlobalObject(eobj);
 	}
 
 	/**
@@ -246,7 +390,13 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean isUnrestrictedMode(EObject eobj) {
-		return getResourceType(eobj).equals(N4JSXResourceType.JSX) || super.isUnrestrictedMode(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return true;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return false;
+		}
+		return super.isUnrestrictedMode(eobj);
 	}
 
 	/**
@@ -254,6 +404,10 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean isExternalMode(EObject eobj) {
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX) || resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return false;
+		}
 		return super.isExternalMode(eobj);
 	}
 
@@ -262,14 +416,17 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	 */
 	@Override
 	public boolean isN4JSMode(EObject eobj) {
-		if (eobj == null)
-			return super.isN4JSMode(eobj);
-
-		return getResourceType(eobj).equals(N4JSXResourceType.N4JSX) || super.isN4JSMode(eobj);
+		N4JSXResourceType resourceType = getResourceType(eobj);
+		if (resourceType.equals(N4JSXResourceType.JSX)) {
+			return false;
+		} else if (resourceType.equals(N4JSXResourceType.N4JSX)) {
+			return true;
+		}
+		return super.isN4JSMode(eobj);
 	}
 
 	/**
-	 * Retrieve the resource type of an EObject: N4JSX, JSX or OTHER
+	 * Retrieve the resource type of an EObject, either N4JSX, JSX or OTHER
 	 */
 	private N4JSXResourceType getResourceType(EObject eobj) {
 		if (eobj == null)
@@ -278,13 +435,12 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 		Resource resource = eobj.eResource();
 		if (resource == null)
 			return N4JSXResourceType.OTHER;
-
 		URI uri = resource.getURI();
 		if (uri == null)
 			return N4JSXResourceType.OTHER;
 
 		ResourceType resourceType = ResourceType.getResourceType(uri);
-		if (resourceType != ResourceType.UNKOWN) {
+		if (resourceType != ResourceType.UNKOWN && resourceType != ResourceType.XT) {
 			return N4JSXResourceType.OTHER;
 		} else {
 			String fileExtension = uri.fileExtension();
