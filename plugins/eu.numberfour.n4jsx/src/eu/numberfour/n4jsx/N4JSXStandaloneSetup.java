@@ -14,11 +14,15 @@ import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 
 /**
- * Initialization support for running Xtext languages without equinox extension
- * registry
+ * Initialization support for running Xtext languages without equinox extension registry
  */
 public class N4JSXStandaloneSetup extends N4JSXStandaloneSetupGenerated {
 
+	/**
+	 * Performs the setup and populates the EMF registers in the stand-alone environment.
+	 *
+	 * @see #createInjectorAndDoEMFRegistration()
+	 */
 	public static void doSetup() {
 		new N4JSXStandaloneSetup().createInjectorAndDoEMFRegistration();
 	}

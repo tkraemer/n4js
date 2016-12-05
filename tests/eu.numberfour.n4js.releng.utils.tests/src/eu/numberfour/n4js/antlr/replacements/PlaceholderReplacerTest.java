@@ -82,7 +82,7 @@ public class PlaceholderReplacerTest {
 		PlaceholderReplacer pr = new PlaceholderReplacer(pattern, "");
 
 		try {
-			String actualOutput = pr.replaceExactlyOnce(in);
+			pr.replaceExactlyOnce(in);
 			fail("Pattern '" + pattern + "' was found, did not expected that.");
 		} catch (IllegalStateException ex) {
 			assertTrue(ex.getMessage().startsWith("Pattern not found!"));

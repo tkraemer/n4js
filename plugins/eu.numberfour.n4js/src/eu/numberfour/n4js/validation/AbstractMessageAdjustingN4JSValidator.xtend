@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.validation;
 
-import com.google.inject.Inject
 import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.n4JS.AnnotableElement
 import eu.numberfour.n4js.utils.validation.DelegatingValidationMessageAcceptor

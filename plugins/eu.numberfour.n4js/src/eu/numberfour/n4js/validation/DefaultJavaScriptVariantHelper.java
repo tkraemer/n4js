@@ -13,7 +13,9 @@ package eu.numberfour.n4js.validation;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * This class defines validation features for N4JS language
+ * This class defines the constraints to be checked for different variants. N4JS uses this default implementation
+ * Sub-language can either override this implementation or provides a new implementation by implementing the
+ * {@link JavaScriptVariantHelper} interface
  */
 public class DefaultJavaScriptVariantHelper implements JavaScriptVariantHelper {
 

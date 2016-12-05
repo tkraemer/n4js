@@ -1,0 +1,45 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "react.n4jsd" {}
+	}
+
+	END_SETUP
+*/
+
+import * as React from "react"
+
+class MyProps implements React.ComponentProps  {
+	public x: int;
+	public y: string;
+	private z: string;
+}
+
+function MyReactFuncComponent(props: ~MyProps): React.Element {
+	return (
+		<div>{props.x}</div>,
+		<div>{props.y}</div>
+	);
+}
+
+//XPECT warnings --> "Non-optional property x should be specified." at "MyReactFuncComponent"
+<MyReactFuncComponent y="Hi"/>;
+
+//XPECT errors --> "field z is not available for structurally referenced type ~MyProps." at "z"
+<MyReactFuncComponent x={1} y="Hello" z="I am private property"/>
+
+function MyOtherReactFuncComponent(props: ~React.ComponentProps with {a: int, b: string?}): React.Element {
+	return (
+		<div>{props.a}</div>,
+		<div>{props.b}</div>
+	);
+}
+
+//b is an optional property and needs not be specified
+//XPECT noerrors
+<MyOtherReactFuncComponent a={5}/>;
+
+
+
+

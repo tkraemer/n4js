@@ -1,0 +1,26 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "react.n4jsd" {}
+	}
+
+	END_SETUP
+*/
+
+
+import * as React from "react"
+
+class C extends React.Component<~Object with {prop: int}, Object> {
+	@Override
+	public render(): React.Element {
+		return <button/>
+	}
+}
+
+//XPECT errors --> "JSX element is expected to bind to either a function or class, but bind to type [unknown] instead." at "MyProp"
+<MyProp/>
+
+const D = 10;
+//XPECT errors --> "JSX element is expected to bind to either a function or class, but bind to type int instead." at "D"
+<D/>

@@ -2,39 +2,13 @@
 
 	ResourceSet {
 		ThisFile {}
-		File "Blob.n4jsd" {}
-		File "ClientRect.n4jsd" {}
-		File "ClipboardEvent.n4jsd" {}
-		File "console.n4jsd" {}
-		File "CSSStyleDeclaration.n4jsd" {}
-		File "Document.n4jsd" {}
-		File "DOMTokenList.n4jsd" {}
-		File "Element.n4jsd" {}
-		File "Event.n4jsd" {}
-		File "EventTarget.n4jsd" {}
-		File "FormData.n4jsd" {}
-		File "HTMLCanvasElement.n4jsd" {}
-		File "HTMLDialogElement.n4jsd" {}
-		File "HTMLElement.n4jsd" {}
-		File "HTMLInputElement.n4jsd" {}
-		File "KeyboardEvent.n4jsd" {}
-		File "Location.n4jsd" {}
-		File "MouseEvent.n4jsd" {}
-		File "NamedNodeMap.n4jsd" {}
-		File "Navigator.n4jsd" {}
-		File "Node.n4jsd" {}
-		File "NodeList.n4jsd" {}
-
 		File "react.n4jsd" {}
-		File "react-dom.n4jsd" {}
 	}
 
-    END_SETUP
+	END_SETUP
 */
 
-
-import * as React from "react"
-import * as ReactDOM from "react-dom"
+import * as React from "react";
 
 class ~Props  {
 	public myProp: string;
@@ -79,7 +53,7 @@ class MyComponent extends
 	}
 }
 
-class MyHigherLevelComponent extends
+class MyHigherComponent extends
 	React.Component<~Object with {someCondition: Number}, ~Object with {aStateProp: Boolean}> {
 
 	@Override
@@ -97,5 +71,3 @@ class MyHigherLevelComponent extends
        }>{d}</MyComponent>);
 	}
 }
-
-ReactDOM.render(<MyHigherLevelComponent/>, document.getElementById("#rootDomNode"));

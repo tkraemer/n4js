@@ -8,11 +8,13 @@
 	END_SETUP
 */
 
-import * as React from "react"
-
-const MyComp = (props: React.ComponentProps+): React.Element => {
-	return <div foo={props.bar} />
-};
 
 //XPECT noerrors
-<MyComp/>
+var a = <div/>;
+a;
+
+//XPECT warnings --> "Tag divBlah is an unknown HTML tag." at "divBlah"
+var b = <divBlah/>;
+b;
+
+var c =<div someProperty="10"/>

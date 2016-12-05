@@ -1,0 +1,30 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "react.n4jsd" {}
+	}
+
+	END_SETUP
+*/
+
+
+import * as React from "react"
+
+function myReactFuncComponent(props: ~React.ComponentProps with {myProp: string}): React.Element {
+	return (<div>{props.myProp}</div>);
+}
+//XPECT errors --> "React functional component myReactFuncComponent cannot start with lower case." at "myReactFuncComponent"
+<myReactFuncComponent myProp="My prop"/>
+
+
+//XPECT warnings --> "Class names should start with upper case letter." at "c"
+class c extends React.Component<~Object with {prop: int}, Object> {
+	@Override
+	public render(): React.Element {
+		return <button/>
+	}
+}
+
+//XPECT errors --> "React class component c cannot start with lower case." at "c"
+var a = <c prop={5}/>;

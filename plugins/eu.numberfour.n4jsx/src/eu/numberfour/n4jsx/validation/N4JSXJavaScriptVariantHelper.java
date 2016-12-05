@@ -15,12 +15,16 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
+import com.google.inject.Singleton;
+
 import eu.numberfour.n4js.utils.ResourceType;
 import eu.numberfour.n4js.validation.DefaultJavaScriptVariantHelper;
 
 /**
- * This class defines validation features N4JSX language
+ * This class defines the constraints to be checked for different variants for N4JSX sub-language TODO: This should be
+ * improved to support .JSX files as well
  */
+@Singleton
 public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper {
 
 	private static Logger LOGGER = Logger.getLogger(ResourceType.class);
@@ -126,8 +130,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	}
 
 	/**
-	 * Function expression in expression statement should NOT be checked for
-	 * N4JSX
+	 * Function expression in expression statement should NOT be checked for N4JSX
 	 */
 	@Override
 	public boolean requireCheckFunctionExpressionInExpressionStatement(EObject eobj) {
@@ -207,8 +210,7 @@ public class N4JSXJavaScriptVariantHelper extends DefaultJavaScriptVariantHelper
 	}
 
 	/**
-	 * Do NOT enforce dynamic types in call cases even without explicit modifier
-	 * in N4JSX
+	 * Do NOT enforce dynamic types in call cases even without explicit modifier in N4JSX
 	 */
 	@Override
 	public boolean enforceDynamicTypes(EObject eobj) {
