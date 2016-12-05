@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.typesbuilder
 
+import com.google.inject.Inject
 import com.google.inject.Singleton
 import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.n4JS.AnnotableElement
@@ -32,13 +33,15 @@ import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TypeAccessModifier
 import eu.numberfour.n4js.ts.types.TypesFactory
 import eu.numberfour.n4js.ts.utils.TypeUtils
-import eu.numberfour.n4js.utils.ResourceType
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import java.util.Collection
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 @Singleton
 package class N4JSTypesBuilderHelper {
+		
+	@Inject	private JavaScriptVariantHelper jsVariantHelper;
 
 	def package List<Annotation> getAllAnnotations(AnnotableElement annotableElement) {
 		val annotations = <Annotation>newArrayList
@@ -50,10 +53,9 @@ package class N4JSTypesBuilderHelper {
 		annotations
 	}
 
-	def package void setTypeAccessModifier(EObject eo, (TypeAccessModifier) => void typeAccessModifierAssignment, Collection<? extends N4Modifier> modifiers, List<Annotation> annotations) {
-		val resType = ResourceType.getResourceType(eo);
-		val isPlainJS = resType === ResourceType.JS
-
+	def package void setTypeAccessModifier(EObject eo, (TypeAccessModifier)=>void typeAccessModifierAssignment,
+		Collection<? extends N4Modifier> modifiers, List<Annotation> annotations) {
+		val isPlainJS = jsVariantHelper.isPlainJS(eo);
 		// IDEBUG-861 assume public visibility if plain JS
 		if (isPlainJS) {
 			typeAccessModifierAssignment.apply(TypeAccessModifier.PUBLIC);

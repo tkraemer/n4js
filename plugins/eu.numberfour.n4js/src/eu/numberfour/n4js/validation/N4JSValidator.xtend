@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -49,7 +49,7 @@ import org.eclipse.xtext.validation.ComposedChecks
 
 /**
  * Validation rules for N4 JS.
- *
+ * 
  * Validation of type expression is defined in
  * {@link TypesValidator}. However, some context
  * sensitive validations such as type ref of formal parameters or return types
@@ -59,18 +59,18 @@ import org.eclipse.xtext.validation.ComposedChecks
  * It is required to override
  * <pre>
  * override register(EValidatorRegistrar registrar) {
- *		// not needed for classes used as ComposedCheck
- *	}
+ * 	// not needed for classes used as ComposedCheck
+ * }
  * </pre>
  * since otherwise they will check everything twice!
- *
+ * 
  * @see http://www.eclipse.org/Xtext/documentation.html#validation
  * @see <a name="N4JSSpec">[N4JSSpec]</a> N4JS Specification / NumberFour AG. Berlin, 2013 <a href="https://github.com/NumberFour/specs/">[GitHub]</a>
  * @see TypesValidator
  */
 @ComposedChecks(validators=#[
 	IDEBUGValidator,
-	//N4JSStrictValidator,
+	// N4JSStrictValidator,
 	N4JSNameValidator,
 	N4JSClassifierValidator,
 	N4JSMemberRedefinitionValidator,
@@ -100,12 +100,11 @@ import org.eclipse.xtext.validation.ComposedChecks
 @Log
 class N4JSValidator extends InternalTypeSystemValidator {
 
-
 	// validations are defined in composed validator classes
 	/**
 	 * Override to improve error message in case of abnormal termination of validation.
 	 */
-	override MethodWrapperCancelable createMethodWrapper(AbstractDeclarativeValidator instanceToUse, Method method) {
+	     override MethodWrapperCancelable createMethodWrapper(AbstractDeclarativeValidator instanceToUse, Method method) {
 		return new MethodWrapperCancelable(instanceToUse, method) {
 
 			override handleInvocationTargetException(Throwable targetException, State state) {
