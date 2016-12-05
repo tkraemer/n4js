@@ -23,158 +23,248 @@ import org.eclipse.emf.ecore.EObject;
 public interface JavaScriptVariantHelper {
 
 	/**
-	 * Return true if dynamic pseudo scope should be activated
+	 * Return true if dynamic pseudo scope should be activated.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean activateDynamicPseudoScope(EObject eobj);
 
 	/**
-	 * Return true if missing implementation is allowed, for instance in external mode
+	 * Return true if missing implementation is allowed, for instance in external mode.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean allowMissingImplementation(EObject eobj);
 
 	/**
-	 * Return true if override annotation should be checked, e.g. if mode is N4JS
+	 * Return true if override annotation should be checked, e.g. if mode is N4JS.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean checkOverrideAnnotation(EObject eobj);
 
 	/**
-	 * Return true if type declaration should be checked, e.g. if the mode is N4JS
+	 * Return true if type declaration should be checked, e.g. if the mode is N4JS.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean checkTypeDeclaration(EObject eobj);
 
 	/**
-	 * Return true if type declaration should be checked, e.g. if the mode is N4JS
+	 * Return true if type declaration should be checked, e.g. if the mode is N4JS.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean checkMemberDeclaration(EObject eobj);
 
 	/**
-	 * Return true if variable declaration should be checked, e.g. if the mode is N4JS
+	 * Return true if variable declaration should be checked, e.g. if the mode is N4JS.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean checkVariable(EObject eobj);
 
 	/**
-	 * Return true if method reference should be checked
+	 * Return true if method reference should be checked.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean checkMethodReference(EObject eobj);
 
 	/**
-	 * Return true if call expression should be checked
+	 * Return true if call expression should be checked.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean checkCallExpression(EObject eobj);
 
 	/**
-	 * Return true if new expression should be checked
+	 * Return true if new expression should be checked.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean requireCheckNewExpression(EObject eobj);
 
 	/**
-	 * Return true if indexed access expression should be checked, only in N4JS mode
+	 * Return true if indexed access expression should be checked, only in N4JS mode.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean requireCheckIndexedAccessExpression(EObject eobj);
 
 	/**
-	 * Return true if function name should be checked
+	 * Return true if function name should be checked.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean requireCheckFunctionName(EObject eobj);
 
 	/**
-	 * Return true if function return should be checked
+	 * Return true if function return should be checked.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean requireCheckFunctionReturn(EObject eobj);
 
 	/**
-	 * Return true if function expression in expression statement should be checked
+	 * Return true if function expression in expression statement should be checked.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean requireCheckFunctionExpressionInExpressionStatement(EObject eobj);
 
 	/**
-	 * Return true if a constant declaration has an initializer
+	 * Return true if a constant declaration has an initializer.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean constantHasInitializer(EObject eobj);
 
 	/**
-	 * Return true if it should be check that no N4JS in runtime environment or lib
+	 * Return true if it should be check that no N4JS in runtime environment or lib.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean requirecheckNoN4jsInRuntimeEnvOrLib(EObject eobj);
 
 	/**
-	 * Return true if it should be check that no N4JS in runtime environment or lib
+	 * Return true if wrong read/write should be allowed.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean allowWrongReadWrite(EObject eobj);
 
 	/**
-	 * Return true if type inference should be doomed
+	 * Return true if type inference should be doomed.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean doomTypeInference(EObject eobj);
 
 	/**
-	 * Return true if annotation should be allowed
+	 * Return true if annotation should be allowed.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean allowAnnotation(EObject eobj);
 
 	/**
-	 * Return true if it must be checked that a final field is initialized
+	 * Return true if it must be checked that a final field is initialized.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean requireCheckFinalFieldIsInitialized(EObject eobj);
 
 	/**
-	 * Return true if it must be checked if a name starts with dollar
+	 * Return true if it must be checked if a name starts with dollar.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean requireCheckNameStartsWithDollar(EObject eobj);
 
 	/**
-	 * Return true if it is required to check if body of a member is missing
+	 * Return true if it is required to check if body of a member is missing.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean requireCheckForMissingBody(EObject eobj);
 
 	/**
-	 * Return true if it is required to check type matches
+	 * Return true if it is required to check type matches.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean requireCheckTypeMatchesExpectedType(EObject eobj);
 
 	/**
-	 * Enforce dynamic types in call cases even without explicit modifier. This is usually the case for plain ECMAScript
+	 * Enforce dynamic types in call cases even without explicit modifier. This is usually the case for plain
+	 * ECMAScript.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean enforceDynamicTypes(EObject eobj);
 
 	/**
-	 * Return true if the variant is type aware
+	 * Return true if the variant is type aware, e.g. N4JS is type are but plain JS is not.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean isTypeAware(EObject eobj);
 
 	/**
-	 * Return true if the variant has global object
+	 * Return true if the variant has global object.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean hasGlobalObject(EObject eobj);
 
 	/**
-	 * Return true if exported when visibility higher than private should be checked
+	 * Return true if exported elements should be checked in case of visibility higher than private.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean requireCheckExportedWhenVisibilityHigherThanPrivate(EObject eobj);
 
 	/**
-	 * Return true if the mode is unrestricted
+	 * Return true if the mode is unrestricted.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean isUnrestrictedMode(EObject eobj);
 
 	/**
-	 * Return true if the script is defined in a N4JSD module (external mode)
+	 * Return true if the script is defined in a N4JSD module (external mode).
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean isExternalMode(EObject eobj);
 
 	/**
-	 * Return true if the script is defined in a N4JS module
+	 * Return true if the script is defined in a N4JS module.
 	 */
 	public boolean isN4JSMode(EObject eobj);
 
 	/**
-	 * Return true if the script is a plain JS
+	 * Return true if the script is a plain JS.
 	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
 	 */
 	public boolean isPlainJS(EObject eobj);
 
 	/**
-	 * Return the variant mode
+	 * Return the variant mode.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context to find out the variant mode.
 	 */
 	public String variantMode(EObject eobj);
 

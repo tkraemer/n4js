@@ -18,7 +18,7 @@ import com.google.inject.Singleton;
 import eu.numberfour.n4js.internal.FileBasedWorkspace;
 import eu.numberfour.n4js.internal.N4JSModel;
 import eu.numberfour.n4js.internal.N4JSRuntimeCore;
-import eu.numberfour.n4jsx.validation.N4JSXJavaScriptVariantHelper.N4JSXResourceType;
+import eu.numberfour.n4jsx.validation.N4JSXResourceType;
 
 /**
  * This class overrides the isJsFile method of {@link N4JSRuntimeCore} to consider JSX files as plain JS files
