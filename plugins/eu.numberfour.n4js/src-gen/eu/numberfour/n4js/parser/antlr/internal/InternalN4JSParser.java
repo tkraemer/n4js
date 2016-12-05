@@ -28002,7 +28002,6 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
     }
     public final EObject rulePrimaryExpression() throws RecognitionException {
         EObject current = null;
-
         EObject this_ThisLiteral_0 = null;
 
         EObject this_SuperLiteral_1 = null;
@@ -28028,9 +28027,10 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
         EObject this_N4ClassExpression_11 = null;
 
         EObject this_TemplateLiteral_12 = null;
-        
-        	enterRule();
 
+
+
+        enterRule();
         try { 
         	{
             int alt240=13;

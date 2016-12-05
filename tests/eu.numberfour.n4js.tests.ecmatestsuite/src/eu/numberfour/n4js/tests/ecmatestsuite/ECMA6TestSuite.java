@@ -125,7 +125,7 @@ public class ECMA6TestSuite extends AbstractECMATestSuiteBase {
 			// by using the proper file extension
 			uri = uri.trimFileExtension().appendFileExtension("n4js");
 		}
-		Script script = this.parserN4JS.parse(code, uri, resourceSet);
+		Script script = doParse(code, uri, resourceSet, analyser);
 		if (config.isValidator()) {
 			// validation flag is bogus since it will produce linking issues
 			// thus the negative tests will likely succeed for bogus reasons

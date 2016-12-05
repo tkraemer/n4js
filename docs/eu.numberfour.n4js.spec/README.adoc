@@ -1,27 +1,21 @@
-= N4JS Language Specification Conversion
+= N4JS Language Specification
 
-Build PDF ::
+Build PDF, HTML and launch in browser: ::
 [source,bash]
-asciispec -fop N4JSSpec.adoc
+----
+./build.sh -l
+----
 
-Build HTML ::
-[source,bash]
-asciispec N4JSSpec.adoc
+== Prerequisites
+
+AsciiSpec ::
+https://github.numberfour.eu/NumberFour/asciispec
 
 == Known Issues
 
-- [ ] Bibliography macro currently duplicates entries per citation count (biblio temporarily disabled)
-- [ ] Custom Math sytax not yet implemented
-
-== Formatting / TODO
-
-- [ ] Conventions for xrefs to be decided upon
+- [ ] Custom Math syntax not yet implemented
 - [ ] Tasks create empty space between paras in PDF
-- [ ] Cover to be added / fixed
-
-=== Low-prio
-
-- Inline source code formatted as monospace
+- [ ] Cover to be added to PDF
 
 == Reporting Bugs
 

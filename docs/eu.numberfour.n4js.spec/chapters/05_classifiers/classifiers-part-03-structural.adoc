@@ -18,13 +18,12 @@ typing. That is, a thing that can swim and quacks like a duck, is a
 duck.
 
 Interfaces or classes can be used for this purpose with a _typing
-strategy modifier_ . Given a type math:[$T$], the simple `pass:[~]` (tilde)
+strategy modifier_ . Given a type math:[$T$], the simple ``pass:[~]`` (tilde)
 can be added to its declaration (on definition-site) or in a reference (on
 use-site) to indicate that the type system should use structural typing
-rather than nominal typing.footnote:[This kind of typing is used by
-TypeScript only. By defining a structural typed classifier or reference,
-it basically behaves as it would behave – without that modifier – in
-TypeScript.] This means that some other type must provide the same
+rather than nominal typing.
+footnote:[This kind of typing is used by TypeScript only. By defining a structural typed classifier or reference, it basically behaves as it would behave – without that modifier – in TypeScript.]
+This means that some other type must provide the same
 members as type math:[$T$] to be deemed a structural subtype.
 However, the operator cannot be used anymore with the type or reference
 as this operator relies on the declaration information (or at least the
@@ -37,12 +36,11 @@ variable passed to the constructor. In that case, the type can be
 modified with ``pass:[~~]`` (two tildes). This is only possible on use-site, i.e.
 on type references. Furthermore, only on the use-site, it is possible to
 consider only either readable or writable or fields by using the
-read-only ``r `` or write-only ``w `` structural field typing. For
+read-only ``pass:[r~]`` or write-only ``pass:[w~]`` structural field typing. For
 initialization blocks, it is even possible to use structural initializer
-field typing via the ``i `` operator.
+field typing via the ``pass:[i~]`` operator.
 
 == Syntax
-
 
 Structural typing is specified using the typing strategy modifier. There
 are two modifiers defined; one for definition-site and one for use-site
@@ -127,7 +125,7 @@ defined type must not be inherited from math:[\[\begin{aligned}
 [example]
 --
 The following snippet demonstrates the effect of definition-site structural types by comparing them to
-nominal declared types: [[lst:Declaration Site Structural Typing]]
+nominal declared types: [[ex:declaration-site-structural-typing]]
 
 .Declaration Site Structural Typing
 [source,n4js,caption="Declaration Site Structural Typing"]
@@ -164,11 +162,10 @@ with `C`!
 
 == Use-Site Structural Typing
 
-
 Use-site structural typing offers several typing strategy modifiers to
 define the accessability of public properties of classes and interfaces.
-They can be used e.g. on variable declarations like this: `pass:[var c : ~C]` .
-The table <<tab:Available_Fields_of_Structural_Types>> shows which properties
+They can be used e.g. on variable declarations like this: ``pass:[var c : ~C]``.
+The table <<tab:available-fields-of-structural-types>> shows which properties
 of structural types can be accessed in the different type strategies.
 For example, when using the write-only structural strategy (i.e.
 math:[$\tsWoFld X$]), only the writeable fields, can be accessed
@@ -180,10 +177,7 @@ available. The initializer structural typing provides readable fields
 for every writeable field of the references type.
 
 
-[[tab:Available Fields of Structural Types]]
-
-//TODO: Fix table
-
+[[tab:available-fields-of-structural-types]]
 .Available Fields of Structural Types
 [cols="<,^,^,^,^,^"]
 |===
@@ -202,8 +196,9 @@ for every writeable field of the references type.
 
 Multiple structural typing strategies can be nested when there are
 multiple use sites, like in the
-example <<ex:Nested Structural Typing Strategies>> below at the locations
+example <<ex:nested-structural-typing-strategies,Nested Structural Typing Strategies>> below at the locations
 ST1 and ST2. In the example, the datafield `a.field` has the nested structural
+//TODO: check formatting below
 type `{\tsInitFld A}` and thus the datafield `a.field.df` is
 readable. Nested structural types are evaluated on the fly when doing
 subtype checks.
@@ -211,6 +206,7 @@ subtype checks.
 // todo{Not implemented yet. See GH-12, subtask 2}
 task:GH-12[]
 
+[[ex:nested-structural-typing-strategies]]
 .Nested Structural Typing Strategies
 [example]
 --
@@ -417,16 +413,16 @@ foo(c: ~~C, i: ~~I) {
 ^h| Type ^h| Structural Type ^h| Structural Field Type
 |===
 
-* If a type is referenced with the structural type modifier `pass:[~]` , the
+* If a type is referenced with the structural type modifier ``pass:[~]`` , the
 property math:[$T.refStructural$] is true. If a type is referenced
-with the structural field type modifier `pass:[~~]`, the property
+with the structural field type modifier ``pass:[~~]``, the property
 math:[$T.refStructuralField$] is true.
 * If a type is referenced with
-the structural read-only field type modifier `pass:[~r~]`, the property
+the structural read-only field type modifier ``pass:[~r~]``, the property
 math:[$T.refStructuralReadOnlyField$] is true.
-* If a type is referenced with the structural write-only field type modifier `pass:[~w~]`, then the property math:[$T.refStructuralWriteOnlyField$] is true.
+* If a type is referenced with the structural write-only field type modifier ``pass:[~w~]``, then the property math:[$T.refStructuralWriteOnlyField$] is true.
 If a type is referenced with the structural initializer field type
-modifier `pass:[~i~]`, then the property
+modifier ``pass:[~i~]``, then the property
 math:[$T.refStructuralInitField$] is true.
 
 We call math:[$T$] the (nominal) type T, math:[$\tsStr T$] the
@@ -461,7 +457,7 @@ hand side of the `instanceof` operator: math:[\[\begin{aligned}
 & \hspace{6em}\lor T.refStructuralReadOnlyField \\
 & \hspace{6em}\lor T.refStructuralWriteOnlyField \\
 & \hspace{6em}\lor T.refStructuralInitField)\end{aligned}\]] That is,
-the following code will always issue an error: `pass:[x instanceof ~T]`.
+the following code will always issue an error: ``pass:[x instanceof ~T]``.
 footnote:[Since this is already prevented by the parser (the tilde is interpreted as an unary operator), error messages are likely to look a little strange.]
 6.  A type math:[$X$] is a subtype of a structural version of a
 type math:[$\tsStr T$], if it contains all public, non-static
@@ -533,7 +529,7 @@ footnote:[This is already constrained by the grammar.]
 --
 
 Note that all members of `N4Object` are excluded. This implies that extended
-reflective features (cf. <<reflection_meta-information>> ) are not available in the context of structural typing. The `instanceof` operator is still working as described in <<Relational_Expression>>, in
+reflective features (cf. <<_reflection-meta-information,Reflection Meta Information>> ) are not available in the context of structural typing. The `instanceof` operator is still working as described in <<_relational-expression,Relational Expression>>, in
 that it can be used to check the type of an instance.
 
 If a type math:[$X$] is a (nominal) subtype of T, it is, of course,
@@ -545,7 +541,7 @@ This is only a shortcut for the type inference defined above.
 [req,id=IDE-77,version=1]
 --
 If a type is structurally typed on both definition and use-site, the rules for
-use-site structural typing (<<req:Use_Site_Structural_Typing>>) are
+use-site structural typing (<<IDE-76,Use-Site Structural Typing>>) are
 applied.
 
 
@@ -603,7 +599,7 @@ math:[$\tsInitFld X$].
 
 [cols="<2m,^,^,^,^"]
 |===
-h|Member of type __X__ | `pass:[~~X]` |`pass:[~r~X]` |`pass:[~w~X]` |`pass:[~i~X]`
+h|Member of type __X__ | ``pass:[~~X]`` |``pass:[~r~X]`` |``pass:[~w~X]`` |``pass:[~i~X]``
 
 | private m0; | -- | -- | -- | --
 | public set m1(m) { } |write | -- | write |read
@@ -707,7 +703,7 @@ h| pass:[~r~A5]|  |  |  |  |  |  |  |✓ |  |  |✓ |✓ |  |  |  |✓ |✓ |
 
 --
 
-// TODO: fonts must be smaller here to prevent overlapping in HTML & PDF
+// TODO: fonts must be smaller here to prevent overlapping in PDF
 
 == Public Setter Annotated With `ProvidesInitializer`
 
@@ -896,7 +892,7 @@ It is only possible to add additional members to a type if use-site structural
 typing is used. The following constraints must hold:
 
 1.  For all additional members defined in a structural type reference,
-the constraints for member overriding (<<req:Overriding_Members>>) apply
+the constraints for member overriding (<<IDE-72,requirement Overriding Members>>) apply
 as well.
 2.  All additional members have the access modifier set to
 math:[$\lenum{public}$].
@@ -904,7 +900,7 @@ math:[$\lenum{public}$].
 members.
 
 Additional fields may be declared optional in the same way as fields in
-classes. The rules given in <<Structural Types With Optional Fields>> apply accordingly. Consider the following example:
+classes. The rules given in <<_structural-types-with-optional-fields,Structural Types With Optional Fields>> apply accordingly. Consider the following example:
 
 --
 

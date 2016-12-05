@@ -24,9 +24,9 @@ A function type is modeled as (see cite:[ECMA11a(S13,p.98)] in ECMAScript.
 
 Function types can be defined by means of;
 
-* A function object (<<Function_Object_Type>>).
-* A function type expression (<<Type_Expressions>>).
-* A function declaration (<<Function_Definition>>).
+* A function object (<<_function-object-type,Function Object Type>>).
+* A function type expression (<<_type-expressions,Type Expressions>>).
+* A function declaration (<<_function-declaration,Function Definition>>).
 * A method declaration (<<Methods>>).
 
 === Properties
@@ -35,21 +35,21 @@ In any case, a function type declares the signature of a function and
 allows validation of calls to that function. A function type has the
 following properties:
 
-``typePars`` ::
+`typePars`  ::
 (0-indexed) list of type parameters (i.e. type variables) for generic
 functions.
 
-``fpars`` ::
+`fpars`  ::
 (0-indexed) list of formal parameters.
 
-``returnType`` ::
+`returnType` ::
 (possibly inferred) return type (expression) of the function or method.
 
-``name`` ::
+`name` ::
 Name of function or method, may be empty or automatically generated (for
 messages).
 
-``body`` ::
+`body` ::
 The body of the function, it contains statements math:[$stmts$].
 The body is null if a function type is defined in a type expression, and
 it is the last argument in case of a function object constructor, or the
@@ -57,12 +57,12 @@ content of the function definition body.
 
 Additionally, the following pseudo properties for functions are defined:
 
-``thisTypeRef`` ::
+`thisTypeRef` ::
 The this type ref is the type to which the `this`-keyword would be evaluated
 if used inside the function or member. The inference rules are described
-in <<This_Keyword>>.
+in <<_this-keyword,This Keyword>>.
 
-``fpars`` ::
+`fpars` ::
 List of formal parameters and the this type ref. This is only used for
 sub typing rules. If `this` is not used inside the function, then `any` is set
 instead of the inferred thisTypeRef to allow for more usages. The
@@ -130,7 +130,10 @@ math:[\[\begin{aligned}
 
 === Type Inference [[function-type-inference]]
 
-.Function Type Conformance, Non-Parameterized
+// TODO - definition title needs comma like so: ".Function Type Conformance, Non-Parameterized"
+// comma currently breaks FOP PDF build, see https://github.numberfour.eu/NumberFour/asciispec/issues/53
+
+.Function Type Conformance Non-Parameterized
 [def]
 --
 For the given non-parameterized function types +
@@ -324,18 +327,21 @@ math:[$F_{right}.tfpars=R_0, R_1, ... R_n$], +
 we say math:[$F_{left}$] conforms to math:[$F_{right}$],
 written as math:[$F_{left} <: F_{right}$], if and only if:
 
+function_type_conformance_non_parameterized
+
+
 * if math:[$|F_{left}.typePars|=|F_{right}.typePars|=0$]:
 ** math:[$F_{left} <: F_{right}$]
-(cf. <<def:Function_Type_Conformance_NonParameterized>>)
+(cf. <<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>>)
 * else if
 math:[$|F_{left}.typePars|>0 \land |F_{right}.typePars|=0$]:
 ** math:[$\exists \typeSubs: ( \typeEnvAdd \typeSubs ) \entails F_{left} <: F_{right}$]
-(cf. <<def:Function_Type_Conformance_NonParameterized>>)
+(cf. <<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>>)
 +
 (i.e. there exists a substitution math:[$\typeSubs$] of type
 variables in math:[$F_{left}$] so that after substitution it
 becomes a subtype of math:[$F_{right}$] as defined by
-<<def:Function_Type_Conformance_NonParameterized>>)
+<<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>>)
 * else if math:[$|F_{left}.typePars|=|F_{right}.typePars|$]:
 ** math:[$\typeEnvAdd \{ V^r_i \leftarrow V^l_i | 0 \leq i \leq n \} \entails F_{left} <: F_{right}$]
 ( accordingly)
@@ -346,7 +352,7 @@ with math:[$F_{left}.typePars=V^l_0, V^l_1, ... V^l_n$] and
 math:[$F_{right}.typePars=V^r_0, V^r_1, ... V^r_n$] +
 (i.e. we replace each type variable in math:[$F_{right}$] by the
 corresponding type variable at the same index in math:[$F_{left}$]
-and check the constraints from<<def:Function_Type_Conformance_NonParameterized>> as if math:[$F_{left}$] and
+and check the constraints from<<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>> as if math:[$F_{left}$] and
 math:[$F_{right}$] were non-parameterized functions and, in
 addition, the upper bounds on the left side need to be supertypes of the
 upper bounds on the right side).
@@ -381,10 +387,10 @@ Method `m` in `Y` may return an `A`, thus breaking the contract of m in `X`, but
 
 The subtype relation for function types is also applied for method
 overriding to ensure that an overriding method’s signature conforms to
-that of the overridden method, see <<req:Overriding_Members>> (applies to
+that of the overridden method, see <<IDE-72,requirement: Overriding Members>> (applies to
 method comnsumption and implementation accordingly, see
-<<req:Consumption_of_Interface_Members>> and
-<<req:Implementation_of_Interface_Members>>). Note that this is very
+<<IDE-73,requirement: Consumption of Interface Members>> and
+<<IDE-74,requirement: Implementation of Interface Members>>). Note that this is very
 different from Java which is far more restrictive when checking
 overriding methods. As Java also supports method overloading: given two
 types math:[$A, B$] with math:[$B <: A$] and a super class
@@ -456,7 +462,7 @@ task:IDE-662[]
 A special arguments object is defined within the body of a function. It
 is accessible through the implicitly-defined local variable named ,
 unless it is shadowed by a local variable, a formal parameter or a
-function named ``arguments`` or in the rare case that the function
+function named `arguments` or in the rare case that the function
 itself is called ’arguments’ cite:[ECMA11a(S10.5,pp59)]. The argument object has array-like behavior even though it is not of type `array`:
 
 * All actual passed-in parameters of the current execution context can
@@ -483,8 +489,8 @@ prohibited.
 .arguments as formal parameter name
 [req,id=IDE-82,version=1]
 --
-In N4JS, the formal parameters of the function cannot be named `arguments`. This applies to all variable execution environments like field accessors (getter/setter, <<Field_Accessor>>), methods (<<Methods>>) and
-constructors (<<Constructor>>), where `FormalParameter` type is used.
+In N4JS, the formal parameters of the function cannot be named `arguments`. This applies to all variable execution environments like field accessors (getter/setter, <<_field-accessors-getter-setter>>), methods (<<Methods>>) and
+constructors (<<_constructor-and-classifier-type,Constructor>>), where `FormalParameter` type is used.
 
 .Usage of arguments object
 [example]
@@ -579,7 +585,7 @@ fragment FunctionBody <Yield, Expression>*:
 ----
 
 Properties of the function declaration and expression are described in
-in <<Function Type>>.
+in <<_function-type,Function Type>>.
 
 For this specification, we introduce a supertype
 math:[$FunctionDefinition$] for both,
@@ -605,8 +611,8 @@ task:IDE-224[]
 
 A function defined in a class’s method (or method modifier) builder is a
 method, see <<Methods>> for details and additional constraints.
-The metatype of a function definition is function type (<<Function Type>>), as a function declaration is only a different syntax for creating a object.
-Constraints for function type are described in <<Function Type>>. Another consequence is that the inferred type of a function definition math:[$fdecl$] is simply its function type
+The metatype of a function definition is function type (<<_function-type,Function Type>>), as a function declaration is only a different syntax for creating a object.
+Constraints for function type are described in <<_function-type,Function Type>>. Another consequence is that the inferred type of a function definition math:[$fdecl$] is simply its function type
 math:[$F$]. math:[\[\begin{aligned}
 \infer{\infType{F}}{\infType{fdecl}}\end{aligned}\]] Note that the type
 of a function definition is different from its return type
@@ -625,7 +631,7 @@ supported by most JavaScript engines, only a warning is issued.
 === Function Expression
 
 A function expression cite:[ECMA11a(S11.2.5)] is quite similar to a function declaration. Thus,
-most details are explained in .
+most details are explained in <<_ecmascript-5-function-definition,Function Definition>>.
 
 ==== Syntax [[function-expression-syntax]]
 
@@ -641,7 +647,7 @@ FunctionExpression:
 ==== Semantics and Type Inference
 
 In general, the inferred type of a function expression simply is the
-function type as described in <<Function Type>>. Often, the signature of a function
+function type as described in <<_function-type,Function Type>>. Often, the signature of a function
 expression is not explicitly specified but it can be inferred from the
 context. The following context information is used to infer the full
 signature:
@@ -663,7 +669,7 @@ the next example.
 .Inference Of Function Expression’s Signature
 [example]
 --
-In general, `{function():any}` is a subtype of `{function():void}` (cf. <<Function Type>>). When the return type of a function
+In general, `{function():any}` is a subtype of `{function():void}` (cf. <<_function-type,Function Type>>). When the return type of a function
 expression is inferred, this relation is taken into account which may
 lead to unexpected results as shown in the following code snippet:
 
@@ -781,7 +787,7 @@ To improve language-level support for asynchronous code, there exists an
 ECMAScript proposal
 footnote:[see http://tc39.github.io/ecmascript-asyncawait/] based on Promises which are provided by ES6 as built-in types.
 N4JS implements this proposal.
-This concept is supported for declared functions and methods (<<Asynchronous_Methods>>) as well
+This concept is supported for declared functions and methods (<<_asynchronous-methods>>) as well
 as for function expressions and arrow functions (<<Asynchronous Arrow Functions>>).
 
 ==== Syntax [[asynchronous-functions-syntax]]
@@ -1054,7 +1060,7 @@ footnote:[Even in this case, the function will actually be called with the callb
 
 --
 
-According to <<req:Promisifiable>>, a promisifiable function or method may
+According to <<IDE-87,requirement: Promisifiable>>, a promisifiable function or method may
 or may not have a non-void return type, and that only the first
 parameter of the callback is allowed to be of type `Error`, all other
 parameters must be of other types.
@@ -1063,7 +1069,7 @@ parameters must be of other types.
 [req,id=IDE-88,version=1]
 --
 A promisifiable function math:[$f$] with one of the two valid
-signatures given in <<req:Promisifiable>> can be promisified with `Promisify` or
+signatures given in <<IDE-87,requirement: Promisifiable>> can be promisified with `Promisify` or
 used with `await`, if and only if the following constraints hold:
 
 1.  Function math:[$f$] must be annotated with `@Promisifiable`.

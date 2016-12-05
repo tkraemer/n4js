@@ -290,7 +290,7 @@ class DestructureHelper {
 	 * Iterable or IterableN interfaces. Usually never returns a result longer than {@link BuiltInTypeScope#ITERABLE_N__MAX_LEN},
 	 * but if there are invalid type references with too many arguments, this might happen.
 	 */
-	public def Iterable<TypeArgument> extractIterableElementTypes(RuleEnvironment G, TypeRef typeRef) {
+	public def Iterable<? extends TypeArgument> extractIterableElementTypes(RuleEnvironment G, TypeRef typeRef) {
 		return extractIterableElementTypes(G, typeRef, true);
 	}
 
@@ -311,19 +311,7 @@ class DestructureHelper {
 		return extractIterableElementTypes(G, typeRef, false).head;
 	}
 
-	private def Iterable<TypeArgument> extractIterableElementTypes(RuleEnvironment G, TypeRef typeRef, boolean includeIterableN) {
-		val result = prim_extractIterableElementTypes(G, typeRef, includeIterableN);
-		if(result===null || result.empty) {
-			return #[];
-		}
-		// substitute type variables in result
-		val G2 = G.wrap;
-		tsh.addSubstitutions(G2,typeRef);
-		val resultSubst = result.map[ts.substTypeVariables(G2,it).value];
-		return resultSubst;
-	}
-
-	private def Iterable<? extends TypeRef> prim_extractIterableElementTypes(RuleEnvironment G, TypeRef typeRef, boolean includeIterableN) {
+	private def Iterable<? extends TypeRef> extractIterableElementTypes(RuleEnvironment G, TypeRef typeRef, boolean includeIterableN) {
 		var Iterable<? extends TypeRef> result = null;
 		val declType = typeRef?.declaredType;
 		if(declType===G.iterableType || (includeIterableN && G.isIterableN(declType))) {
@@ -343,7 +331,7 @@ class DestructureHelper {
 		} else if(typeRef instanceof ComposedTypeRef) {
 			val results = newArrayList;
 			for(containedTypeRef : typeRef.typeRefs) {
-				val currResult = prim_extractIterableElementTypes(G, containedTypeRef, includeIterableN);
+				val currResult = extractIterableElementTypes(G, containedTypeRef, includeIterableN);
 				if(currResult.empty) {
 					// one of the types in the ComposedTypeRef does not implement Iterable/IterableN at all
 					// -> the entire composed type ref must be treated as if it did not implement them at all
@@ -399,7 +387,12 @@ class DestructureHelper {
 		if(result===null || result.empty) {
 			return #[];
 		}
-		return result;
+		// substitute type variables in result
+		val G2 = G.wrap;
+		tsh.addSubstitutions(G2,typeRef);
+		val resultSubst = result.map[ts.substTypeVariables(G2,it).value]
+				.filter(TypeRef); // note the invariant of judgment 'substTypeVariables': if you put TypeRefs in, you'll get TypeRefs back
+		return resultSubst;
 	}
 
 	private def Iterable<TypeRef> toUpperBounds(Iterable<TypeArgument> typeArgs, RuleEnvironment G) {

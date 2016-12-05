@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -41,7 +41,7 @@ import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.utils.PromisifyHelper
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import java.util.HashSet
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
@@ -54,7 +54,6 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static eu.numberfour.n4js.AnnotationDefinition.*
 import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
-import static eu.numberfour.n4js.validation.JavaScriptVariant.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
@@ -75,9 +74,12 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject
 	private N4JSTypeSystem ts;
 
+	@Inject
+	private JavaScriptVariantHelper jsVariantHelper;
+
 	/**
 	 * NEEEDED
-	 *
+	 * 
 	 * when removed check methods will be called twice once by N4JSValidator, and once by
 	 * AbstractDeclarativeN4JSValidator
 	 */
@@ -90,11 +92,7 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def void checkAnnotations(AnnotableElement annotableElement) {
-
-		val currentVariant = getVariant(annotableElement)
-
-		if (!( currentVariant === n4js || currentVariant === external )) {
-
+		if (!jsVariantHelper.allowAnnotation(annotableElement)) {
 			// Annotation not allowed in other then N4JS modes:
 			if (annotableElement.annotations.size > 0) {
 				addIssue(messageForANN__ONLY_IN_N4JS, annotableElement, annotableElement.annoFeature, ANN__ONLY_IN_N4JS)
@@ -114,8 +112,9 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 				} else {
 					if (def.repeatable) {
 						if (foundNames.add(a.name)) {
-							internalCheckRepeatableAnnotations(def,
-								annotableElement.annotations.filter[e|e.name == a.name]);
+							internalCheckRepeatableAnnotations(def, annotableElement.annotations.filter [e|
+								e.name == a.name
+							]);
 						}
 					} else {
 						if (! foundNames.add(a.name)) {
@@ -171,7 +170,6 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
-
 	private def checkUnnecessaryAnnotation(AnnotationDefinition definition, Annotation annotation) {
 		if (definition.transitive && !definition.repeatable) {
 			if (definition.hasAnnotation(
@@ -189,14 +187,14 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 
 		if (variadic) {
 
-			//less actual arguments than specified in the definition
+			// less actual arguments than specified in the definition
 			if (expectedSize - actualSize >= 2) {
 				addIssue(getMessageForANN_WRONG_NUMBER_OF_ARGUMENTS(definition.name, expectedSize - 1, actualSize),
 					annotation, ANNOTATION__NAME, ANN_WRONG_NUMBER_OF_ARGUMENTS);
-					return false;
+				return false;
 			}
 
-			//missing last argument due to variadic arguments or equal size
+			// missing last argument due to variadic arguments or equal size
 			if (1 == expectedSize - actualSize || expectedSize == actualSize) {
 				return validateArgumentTypes(definition, annotation);
 			}
@@ -204,7 +202,8 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 			var valid = true
 			for (var i = 0; i < actualSize; i++) {
 				val arg = annotation.args.get(i).value();
-				val argType = if (i + 1 > definition.argtypes.length) definition.argtypes.last else definition.argtypes.get(i);
+				val argType = if (i + 1 > definition.argtypes.length) definition.argtypes.last else definition.argtypes.
+						get(i);
 				if (!argType.isInstance(arg)) {
 					addIssue(getMessageForANN_WRONG_ARGUMENT_TYPE(definition.name, argType.name), annotation,
 						ANNOTATION__ARGS, i, ANN_WRONG_ARGUMENT_TYPE);
@@ -214,8 +213,7 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 			return valid;
 
 		} else {
-			if (actualSize > expectedSize ||
-				(!definition.argsOptional && actualSize !== expectedSize)) {
+			if (actualSize > expectedSize || (!definition.argsOptional && actualSize !== expectedSize)) {
 				addIssue(getMessageForANN_WRONG_NUMBER_OF_ARGUMENTS(definition.name, expectedSize, actualSize),
 					annotation, ANNOTATION__NAME, ANN_WRONG_NUMBER_OF_ARGUMENTS);
 				return false;
@@ -253,17 +251,16 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 		if (element === null) {
 			return true; // robustness
 		}
-		val isElementAmongValidTargets =
-				definition.targets.exists[it.isInstance(element)] ||
-				definition.targetsWithCustomError.exists[it.isInstance(element)];
+		val isElementAmongValidTargets = definition.targets.exists[it.isInstance(element)] ||
+			definition.targetsWithCustomError.exists[it.isInstance(element)];
 		if (!isElementAmongValidTargets) {
 			// second chance:
 			// if we have an ExportDeclaration, it is sufficient if the exported element is among the valid targets
-			val exportedElement = if(element instanceof ExportDeclaration) element.exportedElement else null;
-			val isExportedElementAmongValidTargets = exportedElement!==null && (
+			val exportedElement = if (element instanceof ExportDeclaration) element.exportedElement else null;
+			val isExportedElementAmongValidTargets = exportedElement !== null && (
 					definition.targets.exists[it.isInstance(exportedElement)] ||
-					definition.targetsWithCustomError.exists[it.isInstance(exportedElement)]);
-			if(!isExportedElementAmongValidTargets) {
+				definition.targetsWithCustomError.exists[it.isInstance(exportedElement)]);
+			if (!isExportedElementAmongValidTargets) {
 				addWrongLocationIssue(annotation);
 				return false;
 			}
@@ -313,15 +310,15 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 				return;
 			}
 			// constraint #2: declared this type must be subtype of the containing type
-			val declThisTypeRef = switch(tMember) {
+			val declThisTypeRef = switch (tMember) {
 				TMethod: tMember.declaredThisType
 				FieldAccessor: tMember.declaredThisType
 			};
-			val containingTypeRef = if(tMember.static) {
-				TypeUtils.createTypeTypeRef(TypeUtils.createTypeRef(containingType), false)
-			} else {
-				TypeUtils.createTypeRef(containingType, TypingStrategy.DEFAULT, true)
-			};
+			val containingTypeRef = if (tMember.static) {
+					TypeUtils.createTypeTypeRef(TypeUtils.createTypeRef(containingType), false)
+				} else {
+					TypeUtils.createTypeRef(containingType, TypingStrategy.DEFAULT, true)
+				};
 			val G = element.newRuleEnvironment;
 			if (!ts.subtypeSucceeded(G, declThisTypeRef, containingTypeRef)) {
 				val msg = getMessageForANN_THIS_NOT_SUBTYPE_OF_CONTAINING_TYPE(tMember.description,
@@ -339,15 +336,15 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 		if (element === null) {
 			return
 		}
-		if (! JavaScriptVariant.external.isActive(element)) {
+		if (!jsVariantHelper.isExternalMode(element)) {
 			addIssue(getMessageForANN_DISALLOWED_IN_NONDEFINTION_FILE(annotation.name), annotation, ANNOTATION__NAME,
 				ANN_DISALLOWED_IN_NONDEFINTION_FILE);
 			return
 		}
 		val projectType = n4jsCore.findProject(element.eResource.URI).get?.projectType;
 		if (projectType !== ProjectType.RUNTIME_ENVIRONMENT && projectType !== ProjectType.RUNTIME_LIBRARY) {
-			addIssue(getMessageForANN_DISALLOWED_IN_NON_RUNTIME_COMPONENT(annotation.name), annotation, ANNOTATION__NAME,
-				ANN_DISALLOWED_IN_NON_RUNTIME_COMPONENT);
+			addIssue(getMessageForANN_DISALLOWED_IN_NON_RUNTIME_COMPONENT(annotation.name), annotation,
+				ANNOTATION__NAME, ANN_DISALLOWED_IN_NON_RUNTIME_COMPONENT);
 			return
 		}
 	}
@@ -360,7 +357,7 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 		if (element === null) {
 			return
 		}
-		if (! JavaScriptVariant.external.isActive(element)) {
+		if (!jsVariantHelper.isExternalMode(element)) {
 			addIssue(getMessageForANN_DISALLOWED_IN_NONDEFINTION_FILE(annotation.name), annotation, ANNOTATION__NAME,
 				ANN_DISALLOWED_IN_NONDEFINTION_FILE);
 			return
@@ -376,58 +373,61 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 			return
 		}
 
-		if( ! ( element instanceof Script ) ) { return ; }
+		if (! ( element instanceof Script )) {
+			return;
+		}
 		val Script script = element as Script
 
 		// mutual exclusive with poly-fill aware.
-		if( script.isContainedInStaticPolyfillAware ) {
-			addIssue( messageForANN_POLY_AWARE_AND_MODULE_MUTUAL_EXCLUSIVE, annotation, ANNOTATION__NAME, ANN_POLY_AWARE_AND_MODULE_MUTUAL_EXCLUSIVE )
+		if (script.isContainedInStaticPolyfillAware) {
+			addIssue(messageForANN_POLY_AWARE_AND_MODULE_MUTUAL_EXCLUSIVE, annotation, ANNOTATION__NAME,
+				ANN_POLY_AWARE_AND_MODULE_MUTUAL_EXCLUSIVE)
 			return
 		}
-
-
 
 		val moduleQN = qnProvider.getFullyQualifiedName(script.module)
 		// check
-		if( ! N4TSQualifiedNameProvider.isModulePolyfill( moduleQN) ) {
-			println("### strange should start with '!MPOLY' for "+script?.module?.eResource?.URI);
+		if (! N4TSQualifiedNameProvider.isModulePolyfill(moduleQN)) {
+			println("### strange should start with '!MPOLY' for " + script?.module?.eResource?.URI);
 			return
 		}
 
-
-		if( moduleQN === null ) return;
+		if (moduleQN === null) return;
 
 		val currentProject = n4jsCore.findProject(script.eResource.URI).orNull
-		if( currentProject === null ) {
+		if (currentProject === null) {
 			return
 		}
 
-		val index = indexAccess.getResourceDescriptions( script.eResource.resourceSet )
+		val index = indexAccess.getResourceDescriptions(script.eResource.resourceSet)
 
-		val currentResDesc = index.getResourceDescription( script.eResource.URI );
+		val currentResDesc = index.getResourceDescription(script.eResource.URI);
 
-		val sameResdesc = index.getExportedObjectsByType( TypesPackage.Literals.TMODULE )
-		.filter[ it.qualifiedName !== null && it.qualifiedName.startsWith(moduleQN)]
-		.map[ it.EObjectURI ]
-		.map[ it.trimFragment ]
-		.map[ index.getResourceDescription(it)]
-		.filter[ currentResDesc != it ] // not me
-		.filter[ val prj = n4jsCore.findProject(it.URI).orNull; currentProject == prj  ] // same Project
+		val sameResdesc = index.getExportedObjectsByType(TypesPackage.Literals.TMODULE).filter [
+			it.qualifiedName !== null && it.qualifiedName.startsWith(moduleQN)
+		].map[it.EObjectURI].map[it.trimFragment].map[index.getResourceDescription(it)].filter[currentResDesc != it] // not me
+		.filter[val prj = n4jsCore.findProject(it.URI).orNull; currentProject == prj] // same Project
 		.toList
 
-		if( ! sameResdesc.empty ) {
+		if (! sameResdesc.empty) {
 			// multiple Resources with Static Polyfill Module.
-			val msg_prefix = "module"+(if(sameResdesc.size>1) "s"else"")+" in "
-			val clashes = Joiner.on(", ").join(sameResdesc.map[
-				val srcCon = n4jsCore.findN4JSSourceContainer( it.URI );
-				if( srcCon.isPresent ) {srcCon.get.relativeLocation} else {it.URI.toString}	])
-			addIssue( getMessageForPOLY_CLASH_IN_STATIC_POLYFILL_MODULE(msg_prefix+clashes), annotation, ANNOTATION__NAME, POLY_CLASH_IN_STATIC_POLYFILL_MODULE )
+			val msg_prefix = "module" + (if (sameResdesc.size > 1) "s" else "") + " in "
+			val clashes = Joiner.on(", ").join(sameResdesc.map [
+				val srcCon = n4jsCore.findN4JSSourceContainer(it.URI);
+				if (srcCon.isPresent) {
+					srcCon.get.relativeLocation
+				} else {
+					it.URI.toString
+				}
+			])
+			addIssue(getMessageForPOLY_CLASH_IN_STATIC_POLYFILL_MODULE(msg_prefix + clashes), annotation,
+				ANNOTATION__NAME, POLY_CLASH_IN_STATIC_POLYFILL_MODULE)
 		}
 	}
 
 	/**
 	 * Constraints 139 (static polyfill layout)  §139
-	 *
+	 * 
 	 */
 	private def internalCheckStaticPolyfill(Annotation annotation) {
 		val AnnotableElement element = annotation.annotatedElement as AnnotableElement;
@@ -436,57 +436,58 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 		}
 
 		// inside a static-polyfill module (IDE-1735)
-		if( ! element.isContainedInStaticPolyfillModule ) { //transitively inherited
-			// not in a polyfill-module
-			addIssue( messageForANN_POLY_STATIC_POLY_ONLY_IN_POLYFILL_MODULE, annotation, ANNOTATION__NAME, ANN_POLY_STATIC_POLY_ONLY_IN_POLYFILL_MODULE )
+		if (! element.isContainedInStaticPolyfillModule) { // transitively inherited
+		// not in a polyfill-module
+			addIssue(messageForANN_POLY_STATIC_POLY_ONLY_IN_POLYFILL_MODULE, annotation, ANNOTATION__NAME,
+				ANN_POLY_STATIC_POLY_ONLY_IN_POLYFILL_MODULE)
 			return
 		}
 
 		var EObject annoTarget = element
-		if( element instanceof ExportDeclaration ) {
+		if (element instanceof ExportDeclaration) {
 			annoTarget = element.exportedElement
 		}
 
-
 		// only classes can be polyfilled (class expressions not supported)
-		if( ! ( annoTarget instanceof N4ClassDeclaration) ) {
+		if (! ( annoTarget instanceof N4ClassDeclaration)) {
 			// n.t.d.
 			// annotation-definition only allowes StaticPolyFill on N4ClassDeclarations.
 		}
 
-		// val N4ClassDeclaration classDecl = annoTarget as N4ClassDeclaration
-
-		// §139.4 class must be top-level:
-		//  -  is ensured due to Annotation-definition restricted to N4ClassDeclarations.
-
+	// val N4ClassDeclaration classDecl = annoTarget as N4ClassDeclaration
+	// §139.4 class must be top-level:
+	// -  is ensured due to Annotation-definition restricted to N4ClassDeclarations.
 	}
-
 
 	@Check
 	def checkPromisifiableMethod(FunctionDeclaration methodDecl) {
-		if(PROMISIFIABLE.hasAnnotation(methodDecl)) {
+		if (PROMISIFIABLE.hasAnnotation(methodDecl)) {
 			holdsPromisifiablePreconditions(methodDecl);
 		}
 	}
+
 	@Check
 	def checkPromisifiableMethod(N4MethodDeclaration methodDecl) {
-		if(PROMISIFIABLE.hasAnnotation(methodDecl)) {
+		if (PROMISIFIABLE.hasAnnotation(methodDecl)) {
 			holdsPromisifiablePreconditions(methodDecl);
 		}
 	}
 
 	def private boolean holdsPromisifiablePreconditions(FunctionDefinition funDef) {
-		return switch(promisifyHelper.checkPromisifiablePreconditions(funDef)) {
+		return switch (promisifyHelper.checkPromisifiablePreconditions(funDef)) {
 			case MISSING_CALLBACK: {
-				addIssue(getMessageForANN_PROMISIFIABLE_MISSING_CALLBACK, PROMISIFIABLE.getAnnotation(funDef), ANN_PROMISIFIABLE_MISSING_CALLBACK);
+				addIssue(getMessageForANN_PROMISIFIABLE_MISSING_CALLBACK, PROMISIFIABLE.getAnnotation(funDef),
+					ANN_PROMISIFIABLE_MISSING_CALLBACK);
 				false
 			}
 			case BAD_CALLBACK__MORE_THAN_ONE_ERROR: {
-				addIssue(getMessageForANN_PROMISIFIABLE_BAD_CALLBACK_MORE_THAN_ONE_ERROR, PROMISIFIABLE.getAnnotation(funDef), ANN_PROMISIFIABLE_BAD_CALLBACK_MORE_THAN_ONE_ERROR);
+				addIssue(getMessageForANN_PROMISIFIABLE_BAD_CALLBACK_MORE_THAN_ONE_ERROR,
+					PROMISIFIABLE.getAnnotation(funDef), ANN_PROMISIFIABLE_BAD_CALLBACK_MORE_THAN_ONE_ERROR);
 				false
 			}
 			case BAD_CALLBACK__ERROR_NOT_FIRST_ARG: {
-				addIssue(getMessageForANN_PROMISIFIABLE_BAD_CALLBACK_ERROR_NOT_FIRST_ARG, PROMISIFIABLE.getAnnotation(funDef), ANN_PROMISIFIABLE_BAD_CALLBACK_ERROR_NOT_FIRST_ARG);
+				addIssue(getMessageForANN_PROMISIFIABLE_BAD_CALLBACK_ERROR_NOT_FIRST_ARG,
+					PROMISIFIABLE.getAnnotation(funDef), ANN_PROMISIFIABLE_BAD_CALLBACK_ERROR_NOT_FIRST_ARG);
 				false
 			}
 			case OK: {

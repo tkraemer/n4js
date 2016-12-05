@@ -15,3 +15,4 @@ Require-Bundle: org.junit,
  org.apache.log4j,
  eu.numberfour.n4js.ui.tests.helper,
  eu.numberfour.n4js.ui
+Export-Package: eu.numberfour.n4js.tests.ecmatestsuite

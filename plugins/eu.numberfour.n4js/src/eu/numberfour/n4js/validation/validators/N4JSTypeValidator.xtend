@@ -71,7 +71,7 @@ import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
-import eu.numberfour.n4js.validation.JavaScriptVariant
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleEnvironment
 import it.xsemantics.runtime.validation.XsemanticsValidatorErrorGenerator
@@ -108,6 +108,9 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
 	private ContainerTypesHelper containerTypesHelper;
+	
+	@Inject
+	private JavaScriptVariantHelper jsVariantHelper;
 
 
 	/**
@@ -419,7 +422,7 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def void checkTypeMatchesExpectedType(Expression expression) {
 
-		if(JavaScriptVariant.getVariant(expression) == JavaScriptVariant.unrestricted) {
+		if(!jsVariantHelper.requireCheckTypeMatchesExpectedType(expression)) {
 			return;
 		}
 

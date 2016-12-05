@@ -95,11 +95,15 @@ import eu.numberfour.n4js.ts.scoping.builtin.ResourceSetWithBuiltInScheme;
 import eu.numberfour.n4js.ts.validation.TypesKeywordProvider;
 import eu.numberfour.n4js.typesbuilder.N4JSTypesBuilder;
 import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem;
+import eu.numberfour.n4js.typesystem.DefaultUnsupportedExpressionTypeHelper;
 import eu.numberfour.n4js.typesystem.N4JSStringRepresenation;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSValidatorErrorGenerator;
+import eu.numberfour.n4js.typesystem.UnsupportedExpressionTypeHelper;
 import eu.numberfour.n4js.utils.di.scopes.ScopeManager;
 import eu.numberfour.n4js.utils.di.scopes.TransformationScoped;
+import eu.numberfour.n4js.validation.DefaultJavaScriptVariantHelper;
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
 import eu.numberfour.n4js.validation.N4JSDiagnostician;
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider;
 import eu.numberfour.n4js.validation.N4JSIssueSeveritiesProvider;
@@ -515,5 +519,20 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 				.bind(IPreferenceValuesProvider.class)
 				.annotatedWith(FormatterPreferences.class)
 				.to(N4JSSimpleFormattingPreferenceProvider.class);
+	}
+
+	/**
+	 * Bind JavaScriptVariantHelper
+	 */
+	public Class<? extends JavaScriptVariantHelper> bindJavaScriptVariantHelper() {
+		return DefaultJavaScriptVariantHelper.class;
+	}
+
+	/**
+	 * Bind a helper for typing expression types which are unknown in N4JS. This is a variation point for sub languages
+	 * that need to extend N4JS's type system.
+	 */
+	public Class<? extends UnsupportedExpressionTypeHelper> bindUnsupportedExpressionTypeHelper() {
+		return DefaultUnsupportedExpressionTypeHelper.class;
 	}
 }

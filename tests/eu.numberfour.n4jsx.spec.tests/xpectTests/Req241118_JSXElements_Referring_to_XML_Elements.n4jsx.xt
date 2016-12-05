@@ -1,0 +1,20 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "react.n4jsd" {}
+	}
+
+	END_SETUP
+*/
+
+
+//XPECT noerrors
+var a = <div/>;
+a;
+
+//XPECT warnings --> "Tag divBlah is an unknown HTML tag." at "divBlah"
+var b = <divBlah/>;
+b;
+
+var c =<div someProperty="10"/>

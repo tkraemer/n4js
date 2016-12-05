@@ -27,8 +27,7 @@ import eu.numberfour.n4js.utils.ResourceType;
  * <p>
  * Note that the variants are mutually exclusive. There is a precedence of the variants: n4js precedes strict precedes
  * unrestricted. That is, even if a script in a file with extension ".n4js" contains strict mode literals ("use strict")
- * the mode is always n4js.
- *
+ * the mode is always n4js. This class is used by {@link JavaScriptVariantHelper}
  *
  * @see <a href=
  *      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode">MDN

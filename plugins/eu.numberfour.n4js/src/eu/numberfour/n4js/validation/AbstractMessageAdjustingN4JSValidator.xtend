@@ -12,24 +12,23 @@ package eu.numberfour.n4js.validation;
 
 import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.n4JS.AnnotableElement
-import eu.numberfour.n4js.validation.validators.IDEBUGValidator
 import eu.numberfour.n4js.utils.validation.DelegatingValidationMessageAcceptor
+import eu.numberfour.n4js.validation.validators.IDEBUGValidator
+import java.lang.reflect.Method
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.diagnostics.Severity
-import org.eclipse.xtext.validation.CancelableDiagnostician
 import org.eclipse.xtext.util.CancelIndicator
-import org.eclipse.xtext.validation.AbstractDeclarativeValidator.State
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
-import java.lang.reflect.Method
+import org.eclipse.xtext.validation.CancelableDiagnostician
 
 /**
  */
 public class AbstractMessageAdjustingN4JSValidator extends AbstractN4JSValidator {
-
+	
 	/**
 	 * This class introduces for reuse the utility method {@link #isCanceled}
 	 */
@@ -112,7 +111,7 @@ public class AbstractMessageAdjustingN4JSValidator extends AbstractN4JSValidator
 
 		}
 	}
-
+	
 	override protected List<EPackage> getEPackages() {
 		val List<EPackage> result = super.EPackages;
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.numberfour.eu/ide/utils/Validation"));

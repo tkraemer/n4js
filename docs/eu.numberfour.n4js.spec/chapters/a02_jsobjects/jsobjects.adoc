@@ -16,15 +16,17 @@ cite:[ECMA11a(S15,pp.102)] are supported and their properties are annotated with
 == Object
 
 `Object` is the super type of all declared types and `N4Object`. It is almost similar to the JavaScript type `Object` except that no properties may be dynamically added to it. In order to declare a variable to which properties can be dynamically added, the `Object+` type has to be declared (cf.
-<<Type_Modifiers_Dynamic>>).
+<<_dynamic>>).
 //TODO : fix xref above
 
+[discrete]
 === Attributes
 
 `constructor:Object`: ::
 Returns a reference to the Object function that created the instance’s
 prototype.
 
+[discrete]
 === Methods
 
 `toString():Object`: ::
@@ -50,6 +52,7 @@ prototype chain of the object this method is called upon.
 Returns a boolean indicating if the internal ECMAScript DontEnum
 attribute is set.
 
+[discrete]
 === Static Methods
 
 `getPrototypeOf(object:Object):Object`: ::
@@ -101,11 +104,13 @@ prototype chain as well).
 String is a global object that may be used to construct String
 instances and is a sub class of Object.
 
+[discrete]
 === Attributes [[string-attributes]]
 
 `number: length` ::
 The length of a string.
 
+[discrete]
 === Methods [[methods-1]]
 
 `String(thing:Object=)`
@@ -208,6 +213,7 @@ Returns a string in uppercase letters.
 Returns the primitive value of a String object.
 
 
+[discrete]
 === Static Methods [[static-methods-1]]
 
 `String(value:Object=)`: ::
@@ -217,6 +223,7 @@ Static constructor.
 
 `Boolean` does not have a super class.
 
+[discrete]
 === Static Methods [[static-methods-2]]
 
 `Boolean(value:Object=):Boolean`
@@ -242,6 +249,7 @@ Special value representing negative infinity, returned on overflow.
 `POSITIVE\_INFINITY:Number`: ::
 Special value representing infinity, returned on overflow.
 
+[discrete]
 === Methods [[methods-2]]
 
 `toExponential(numberOfDecimals:Number=):String`: ::
@@ -260,6 +268,7 @@ Returns the primitive value of a Number object.
 Returns a String value for this object. The toString method parses its first argument and attempts to return a string representation in the specified radix (base).
 
 
+[discrete]
 === Static Methods [[static-methods-3]]
 
 `Number(value:Object=):Number`: ::
@@ -269,6 +278,7 @@ Static constructor.
 
 `Function` does not have a super class.
 
+[discrete]
 === Attributes [[attributes-2]]
 
 `prototype:Object`: ::
@@ -278,6 +288,7 @@ Allows the addition of properties to the instance of the object created by the c
 Specifies the number of arguments expected by the functio
 
 
+[discrete]
 === Methods [[methods-3]]
 
 `apply(thisArg,argsArray:Array=):Object`: ::
@@ -294,6 +305,7 @@ Creates a new function that, when called, itself calls this function in the cont
 `Error` does not have a super class.
 
 
+[discrete]
 === Attributes [[attributes-3]]
 
 `name:String`: ::
@@ -303,6 +315,7 @@ Error name.
 Error message.
 
 
+[discrete]
 === Static Methods [[static-methods-4]]
 
 `Error(message:Object=):Error`: ::
@@ -314,6 +327,7 @@ Static Constructor.
 
 `Array` is a generic type with the type parameter `E` and  does not have a super class.
 
+[discrete]
 === Methods [[methods-4]]
 
 `concat(array...):Array<E>)`: ::
@@ -376,6 +390,7 @@ Returns a String value for Array.
 Adds one or more elements to the beginning of an array and returns the new length.
 
 [[static-methods-5]]
+[discrete]
 === Static Methods
 
 `Array(item:Object...)`: ::
@@ -386,6 +401,7 @@ Static constructor.
 `Date` does not have a super class.
 
 [[static-methods-6]]
+[discrete]
 === Static Methods
 
 `Date():Date`: ::
@@ -413,6 +429,7 @@ Returns the numeric value corresponding to the current time.
 UTC takes comma-delimited date parameters and returns the number of milliseconds between January 1, 1970, 00:00:00, Universal Time and the time you specified.
 
 [[methods-5]]
+[discrete]
 === Methods
 
 `getDate():Number`: ::
@@ -574,6 +591,7 @@ Square root of 1/2; equivalently, 1 over the square root of 2, approximately 0.7
 `SQRT2:Number`: ::
 Square root of 2, approximately 1.414.
 
+[discrete]
 === Static Methods [[static-methods-7]]
 
 `abs(x):Number`: ::
@@ -636,6 +654,7 @@ Returns the tangent of a number.
 `RegExp` does not have a super class.
 
 
+[discrete]
 === Attributes [[attributes-4]]
 
 `global:Boolean`: ::
@@ -653,6 +672,7 @@ Whether or not to search in strings across multiple lines.
 `source:String`: ::
 The text of the pattern.
 
+[discrete]
 === Methods [[methods-6]]
 
 `exec(str:String):Array`: ::
@@ -667,14 +687,17 @@ Tests for a match in its string parameter.
 `JSON` is a global object and a subclass of `Object`. Its functionality is provided by two static methods.
 It is not possible to create new instances of type JSON.
 
+[discrete]
 === Attributes [[attributes-5]]
 
 The JSON object does not define own properties.
 
+[discrete]
 === Methods [[methods-7]]
 
 The JSON object does not define own methods.
 
+[discrete]
 === Static Methods [[static-methods-8]]
 
 The parse function parses a JSON text (a JSON-formatted String) and

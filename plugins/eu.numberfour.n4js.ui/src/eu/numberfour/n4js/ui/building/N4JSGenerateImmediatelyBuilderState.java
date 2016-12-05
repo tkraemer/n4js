@@ -43,8 +43,6 @@ import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionDelta;
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsData;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -56,7 +54,6 @@ import eu.numberfour.n4js.ui.building.BuilderStateLogger.BuilderState;
 import eu.numberfour.n4js.ui.building.instructions.IBuildParticipantInstruction;
 import eu.numberfour.n4js.ui.internal.ContributingResourceDescriptionPersister;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
-import eu.numberfour.n4js.utils.Arrays2;
 
 /**
  * Produces the compiled js files immediately after the validation in order save CPU cycles, e.g. the file is already
@@ -197,7 +194,14 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 		return modifiedDeltas;
 	}
 
+	@SuppressWarnings("unused")
 	private void logBuildData(BuildData buildData, String... tags) {
+		// This log call sometimes yields a ConcurrentModificationException (see GH-296)
+		// We disable it as a temporary fix only until GH-296 is resolved.
+		// TODO Uncomment the following code when GH-296 is resolved and remove the SuppressWarnings annotation.
+
+		/* @formatter:off */
+		/*
 		String tag = Arrays2.isEmpty(tags) ? "" : Joiner.on(" - ").join(tags);
 		String header = "---------------------- Build data" + tag + " --------------------------------------";
 		builderStateLogger.log(header);
@@ -207,6 +211,8 @@ public class N4JSGenerateImmediatelyBuilderState extends ClusteringBuilderState 
 		builderStateLogger.log("URI queue: " + buildData.getURIQueue());
 		builderStateLogger.log("All remaining URIs: " + buildData.getAllRemainingURIs());
 		builderStateLogger.log(Strings.repeat("-", header.length()) + "\n");
+		*/
+		/* @formatter:on */
 	}
 
 	@Override

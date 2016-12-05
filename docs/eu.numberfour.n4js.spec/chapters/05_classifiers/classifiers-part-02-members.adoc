@@ -17,7 +17,7 @@ implicitly define an accessor field. Similar to object literals, there
 must be no data field with the same name as a getter or setter.
 
 Redefinition of members (overriding, implementation and consumption) is
-described in <<Redefinition_of_Members>>.
+described in <<_redefinition-of-members,Redefinition of Members>>.
 
 == Syntax
 
@@ -33,50 +33,50 @@ N4MemberDeclaration: N4MethodDeclaration | N4FieldDeclaration | N4GetterDeclarat
 
 Members share the following properties:
 
-``annotations`` ::
+`annotations` ::
 Arbitrary annotations, see <<Annotations>> for details.
 
-``accessModifier$`` ::
+`accessModifier$` ::
 N4JS member access modifier: `private`, `project`, `potected`, or `public`; the latter two can be combined with `@Internal`; default is `project` for classes and private interfaces. For a non-private interface defaults to the interface’s visibility. task:IDE-84[]
 
-``name`` ::
-The simple name of the member, that is an identifier name (cf. <<Valid_Names>>).
+`name` ::
+The simple name of the member, that is an identifier name (cf. <<_valid-names,Valid Names>>).
 
-``static`` ::
-Boolean property to distinguish instance from classifier members, see <<Static Members>>.
+`static` ::
+Boolean property to distinguish instance from classifier members, see <<_static-members,Static Members>>.
 
 
 The following pseudo properties are defined via annotations:
 
-``deprecated`` ::
+`deprecated` ::
 Boolean property set to true if annotation `@Deprecated` is set.
 //version{0.4}{not implemented in version 0.3}
 task:IDE-138[]
 
 And we additionally define the following pseudo properties:
 
-``acc`` ::
-Member access modifier as described in <<Accessibility_of_Members>>, it is the aggregated value of
+`acc` ::
+Member access modifier as described in <<_accessibility-of-members,Accessibility of Members>>, it is the aggregated value of
 the math:[$accessModifier$] and the math:[$export$] property.
 
-``owner`` ::
+`owner` ::
 Owner classifier of the member.
 
-``typeRef`` ::
+`typeRef` ::
 Type of the member—this is the type of a field or the type of the method
 which is a function type (and not the return type).
 
-``assignability`` ::
+`assignability` ::
 Enumeration, may be one of the following values: +
 +
-``set``:  Member may only be set, i.e. it could only be used on the left hand
+`set`:  Member may only be set, i.e. it could only be used on the left hand
   side of an assignment. +
 +
-``get``:
+`get`:
   Member may only be retrieved, i.e. it could only be used on the right
   hand side of an assignment. This is the default setting for methods.
 +
-``any``:
+`any`:
   Member may be set or retrieved, i.e. it could only be used on the left
   or right hand side of an assignment. This is the default setting for
   fields.
@@ -87,7 +87,7 @@ enumeration as follows: math:[\[\begin{aligned}
     <(l,r) & ::= & \{ (\lenum{set}, \lenum{any}), (\lenum{get}, \lenum{any})  \}
     \end{aligned}\]]
 
-``abstract`` ::
+`abstract` ::
 All members have a flag math:[$abstract$], which is user-defined
 for methods, getters and setter, but which is always false for fields.
 
@@ -95,7 +95,7 @@ for methods, getters and setter, but which is always false for fields.
 The following pseudo property is set to make fields compatible with
 properties of an object literal, however it cannot be changed:
 
-``configurable`` ::
+`configurable` ::
 Boolean flag reflecting the property descriptor
 math:[$configurable$], this is always set to false for members.
 
@@ -112,20 +112,17 @@ task:IDE-550[] task:IDE-551[]
 1.  No two members may have the same name, except one is static and the
 other is non-static:
 math:[$\forall m_1,m_2 \in C.ownedMembers, m_1\neq m_2: m_1.name\neq m_2.name \lor m_1.static\neq m_2.static$]
-2.  The member name must be a valid identifier name, see .
+2.  The member name must be a valid identifier name, see <<_identifier-names-and-identifiers,Identifier Grammar>>.
 
 --
 
-//TODO missing xref above
 
-Thus, over_loading_ of methods is not supported footnote:[In order to
-emulate method overloading, union types are to be used.] and no field
-may have the same name as a method. However, over_riding_ of methods,
-getters, and setters are possible, see <<Redefinition of Members>>. Static members may also have the same name as non-static members
-footnote:[ cite[ECMA15a(p214)], ``ClassBody : ClassElementList`` indicates that it is possible to have the same name for instance and static members.].
 
-The dollar character `$` is not allowed for user-defined member
-identifier, as the dollar sign is used for rewriting private members.
+Thus, over__loading__ of methods is not supported footnote:[In order to emulate method overloading, union types are to be used.] and no field may have the same name as a method.
+However, over__riding__ of methods, getters, and setters are possible, see <<_redefinition-of-members,Redefinition of Members>>.
+Static members may also have the same name as non-static members footnote:[ cite[ECMA15a(p214)], `ClassBody : ClassElementList` indicates that it is possible to have the same name for instance and static members.].
+
+The dollar character `$` is not allowed for user-defined member identifiers as the dollar sign is used for rewriting private members.
 
 == Methods
 task:IDE-8[] task:IDE-12[]
@@ -183,7 +180,7 @@ IdentifierName: IDENTIFIER | ReservedWord | N4Keyword;
 NumericLiteralAsString: DOUBLE | INT | OCTAL_INT | HEX_INT | SCIENTIFIC_INT;
 StringLiteralAsName: STRING;
 
-// see ~\autoref{sec:Asynchronous_Functions}~
+// see ~\autoref{sec:_asynchronous-functions}~
 fragment AsyncNoTrailingLineBreak *: (declaredAsync?='async' NoLineTerminator)?;
 
 fragment StrictFormalParameters <Yield>*:
@@ -216,45 +213,45 @@ fragment ColonSepTypeRef*:
 Methods have all the properties of members and the following additional
 properties can be explicitly defined:
 
-``abstract`` ::
+`abstract` ::
 Method is declared but not defined.
 
-``typePars`` ::
+`typePars` ::
 Collection of type parameters of a generic method; empty by default.
 
-``returnTypeRef`` ::
+`returnTypeRef` ::
 Return type of the method, default return type is
 math:[$\mathit{Void}$]. The type of the method as a member of the
 owning classifier is not the method’s return type but is instead a
 function type.
 
-``fpars`` ::
+`fpars` ::
 List of formal parameters, may be left empty.
 
-``body`` ::
+`body` ::
 The body of the method (this is not available in the pure types model)
 
 The following pseudo properties are defined via annotations:
 
-``final`` ::
-Boolean flag set to true if annotation ``@Final`` is set. Flag indicates that
-method must not be overridden in subclasses; see <<Final_Methods>>.
+`final` ::
+Boolean flag set to true if annotation `@Final` is set. Flag indicates that
+method must not be overridden in subclasses; see <<_final-methods,Final Methods>>.
 
-``declaresOverride`` ::
-Flag set to true if annotation ``@Overrides`` is set. Flag indicates that method must
-override a method of a superclass; see , .
+`declaresOverride` ::
+Flag set to true if annotation `@Overrides` is set. Flag indicates that method must
+override a method of a superclass; see <<_overriding-of-members,Overriding of Members>>.
 
 Additionally, we define the following pseudo properties:
 
-``overrides`` ::
+`overrides` ::
 True if method overrides a super method or implements an interface
 method, false otherwise.
 
-``typeRef`` ::
+`typeRef` ::
 Type of the method. This is, in fact, a function type (and not the
 return type).
 
-``enumerable`` ::
+`enumerable` ::
 The following pseudo property is set to make methods compatible with
 properties of an object literal, however it cannot be changed:
 
@@ -264,37 +261,37 @@ math:[$enumerable$], this is always set to false for methods.
 === Semantics
 
 Since methods are ECMAScript functions, all constraints specified in
-<<Function_Type>> apply to methods as well. This section describes default values and
+<<_function-type,Function Type>> apply to methods as well. This section describes default values and
 function type conformance which is required for overriding and
 implementing methods.
 
 In addition, method declarations and definitions have to comply with the
-constraints for naming members of classifiers (cf. <<Member_Names>>)
+constraints for naming members of classifiers (cf. <<IDE-52,Member Names>>)
 and with the constraints detailed in the following sections on final
-methods (<<Final_Methods>>), abstract methods (<<Abstract_Methods>>
-and method overriding and implementation (<<Overriding of Members>>, <<Implementation of Members>>).
+methods (<<_final-methods,Final Methods>>), abstract methods (<<_abstract-methods,Abstract Methods>>
+and method overriding and implementation (<<_overriding-of-members,Overriding of Members>>, <<_implementation-of-members,Implementation of Members>>).
 
 The following constraints are defined for methods in ECMAScript 6 cite:[ECMA15a(207)]
 
 .Method Definition ECMAScript 6
 [req,id=IDE-53,version=1]
 --
-* ``It is a Syntax Error if any element of the BoundNames of
+* It is a Syntax Error if any element of the BoundNames of
 StrictFormalParameters also occurs in the VarDeclaredNames of
-FunctionBody.``
-* ``It is a Syntax Error if any element of the BoundNames of
+FunctionBody.
+* It is a Syntax Error if any element of the BoundNames of
 StrictFormalParameters also occurs in the LexicallyDeclaredNames of
-FunctionBody.``
+FunctionBody.
 --
 
 Methods – like functions – define a variable execution environment and
 therefore provide access to the actual passed-in parameters through the
-implicit variable inside of their bodies (c.f. <<Arguments_Objects>>).
+implicit variable inside of their bodies (c.f. <<_arguments-object,Arguments Objects>>).
 
 Methods are similar to function definitions but they must not be
 assigned to or from variables. The following code issues an error
 although the type of the method would be compatible to the type of the
-variable :
+variable `v`:
 
 [source,n4js]
 ----
@@ -307,10 +304,10 @@ var v: {function():void} = new C().m;
 .Method Assignment
 [req,id=IDE-54,version=1]
 --
-.  Different from ECMAScript 2015, methods are defined as readonly,
+. In contrast to ECMAScript 2015, methods are defined as readonly,
 that is, it is not possible to dynamically re-assign a property defined
 as method with a new value. This is because assigning or re-assigning a
-method breaks encapsulation. Methods are the <<AC,API>> of a class, their
+method breaks encapsulation. Methods are the <<Acronyms,API>> of a class, their
 implementation is internal to the class.
 .  When assigning a method to a variable, a warning is issued since
 this would lead to an detached this reference inside the method when it
@@ -422,11 +419,11 @@ By default, methods can be overridden. To prevent a method from being
 overridden, it must be annotated with `@Final`.
 
 Of course, a method cannot be declared both abstract and final
-(cf. <<Abstract_Member>>). Private methods are implicitly declared
+(cf. <<IDE-46,Abstract Member>>). Private methods are implicitly declared
 final. Because static methods can be overridden in subclasses (which is
 different to Java), they also can be marked as final.
 
-Default methods in interfaces, cf. <<sec:Default_Methods_in_Interfaces>>, may also be declared `@Final`.
+Default methods in interfaces, cf. <<_default-methods-in-interfaces,Default Methods in Interfaces>>, may also be declared `@Final`.
 
 
 .Final Methods in Interfaces
@@ -462,11 +459,11 @@ A method can be declared without defining it, i.e. without providing a
 method body, and is then called an __abstract method__. Such methods
 must be declared with modifier `abstract` and have their property
 math:[$abstract$] set to true. Constraints for abstract methods are
-covered in <<Abstract_Member>> (see <<Abstract_Classes>>).
+covered in <<IDE-46,Abstract Member>> (see <<_abstract-classes,Abstract Classes>>).
 
 In interfaces, methods are always abstract by default and they do not
 have to be marked as abstract. If a method in an interface provides a
-body, then this is the default implementation. See <<Implementation of Members>> about how the default implementation may be mixed in the consumer.
+body, then this is the default implementation. See <<_implementation-of-members,Implementation-of-Members>> about how the default implementation may be mixed in the consumer.
 
 === Generic Methods
 task:IDE-38[] task:IDE-39[]
@@ -477,7 +474,7 @@ are used similarly to predefined or declared types. Additionally,
 methods may be declared generic independently from their containing
 class. That is to say that type parameters (with type variables) can be
 defined for methods as well, just like for generic functions (see
-<<Generic Functions>>).
+<<_generic-functions,Generic Functions>>).
 
 .Type variable names for generic methods
 [req,id=IDE-55,version=1]
@@ -511,15 +508,15 @@ so-called _default implementation_ and the method is called a __default
 method__. This will be mixed into an implementor of the interface if,
 and only if, neither the implementing class nor any of its direct or
 indirect superclasses already provides an implementation for this
-method; for details see <<Member Consumption>>. Since the implementor is not known, some constraints exist for the body. I.e., no access to super is possible,
-cf. <<req:Access_Super_Member_with_Super_Literal>>.
+method; for details see <<_member-consumption,Member Consumption>>. Since the implementor is not known, some constraints exist for the body. I.e., no access to super is possible,
+cf. <<IDE-124,Access Super Member with Super Literal>>.
 
 In order to declare an interface to provide a default implementation in
 a definition file, annotation `@ProvidesDefaultImplementation` can be used, cf.
-<<req:External_class_interface_members>>.
+<<IDE-167,External Class/Interface Members>>.
 
 When a method in an interface is provided with a default implementation,
-it may even be declared `@Final`, see <<Final_Methods>>.
+it may even be declared `@Final`, see <<_final-methods,Final Methods>>.
 
 //todo{it is currently unclear whether default methods are allowed in structural interfaces; see task IDE-1666 for details} task:IDE-1666[]
 
@@ -529,7 +526,7 @@ N4JS implements the async/await concept proposed for ECMAScript 7, which
 provides a more convenient and readable syntax for writing asynchronous
 code compared to using built-in type Promise directly. This concept can
 be applied to methods in exactly the same way as to declared functions.
-See <<Asynchronous_Functions>> and <<Asynchronous_Arrow_Functions>> for details.
+See <<_asynchronous-functions,Asynchronous Functions>> and <<_asynchronous-arrow-functions,Asynchronous Arrow Functions>> for details.
 
 == Constructors
 task:IDE-159[]
@@ -570,7 +567,7 @@ class C {
 
 Constructors define a variable execution environment and therefore
 provide access to the actual passed-in parameters through the implicit
-variable inside of their bodies (c.f. <<Arguments_Object>>).
+variable inside of their bodies (c.f. <<_arguments-object>>).
 
 .Defining and Calling Constructors
 [req,id=IDE-56,version=1]
@@ -613,7 +610,7 @@ Note on syntax: ECMAScript 6 defines constructors similarly, cite:[ECMA15a(S13.5
 ECMAScript 6 the super constructor is not called automatically as well.
 
 The super literal used in order to call super methods is further
-described in <<Super_keyword>>.
+described in <<_the-super-keyword>>.
 
 
 === Structural This Type in Constructor and Spec Parameter
@@ -641,8 +638,8 @@ class A{
 Remarks:
 
 * The type of the formal parameter `this` refers to the
-structural field type, see for details on structural typing. It contains
-all public fields of the type.
+structural field type, see <<_structural-typing,Structural Typing>> for details on structural typing.
+It contains all public fields of the type.
 * Subclasses may override the constructor and introduce additional
 parameters. They have to call the super constructor explicitly, however,
 providing a parameter with at least all required attributes of the
@@ -700,8 +697,7 @@ name as math:[$SM$]: math:[\[\begin{aligned}
 [example]
 --
 
-The situation described in <<req:Fields_and_constructor_this_type_members>> is
-demonstrated in the following code fragment:
+The situation described in <<IDE-58,Names of additional members of structural this type in constructor>> is demonstrated in the following code fragment:
 
 [source]
 ----
@@ -725,7 +721,8 @@ The tedious process of copying the members of the parameter to the
 fields of the class can be automated via the annotation if the argument
 has math:[$\nfjstilde i \nfjstilde\lstnfjs{this}$] structural
 initializer field typing. For more details about this typing can be
-found in <<sec:Structural_Read_only_Write_only_and_Initializer_Field_Typing>>. This can be used as shown in the following listing:
+found in <<_structural-read-only-write-only-and-initializer-field-typing,Structural Read-only, Write-only and Initializer Field Typing>>.
+This can be used as shown in the following listing:
 
 [source]
 ----
@@ -747,7 +744,7 @@ math:[$\nfjstilde i \nfjstilde\lstnfjs{this}$] (i.e. use-site
 structurally typed math:[$\lstnfjs{this}$]).
 4.  Fields provided by the parameter, but not defined in the structural
 field type, are _not_ used to set fields.
-5.  Non-``public`` fields explicitly added to the spec
+5.  Non-`public` fields explicitly added to the spec
 parameter are copied as well. task:IDEBUG-134[]
 6.  Even if the `@Spec` annotation is used, the super constructor must be called
 accordingly.
@@ -764,7 +761,6 @@ public, non-static, non-optional writable fields,
 math:[$\nfjstilde i \nfjstilde\lstnfjs{this}$] constructor accepts
 those properties provided by an object literal which has the
 corresponding readble fields. These properties will be initialzed.
-// TODO: check if math above is necessary or if ~ this can be enclosed in backticks ``
 
 --
 
@@ -841,7 +837,7 @@ class E extends A3 {
 ----
 
 The last case (class E) demonstrates a special feature of the typing
-strategy modifier in combination with the `tihs` type, see <<Structural_Typing>> for details.
+strategy modifier in combination with the `this` type, see <<_structural-typing,Structural Typing>> for details.
 
 
 The constructor in class `B` contains an error because the super constructor
@@ -905,12 +901,12 @@ The `@CovariantConstructor` annotation may be applied to the constructor, the co
 classifier, or both. It can also be used for interfaces; in fact,
 constructors are allowed in interfaces only if they themselves or the
 interface is annotated with `@CovariantConstructor` (see
-<<req:Defining_and_Calling_Constructors>>).
+<<IDE-60,Requirement: Covariant Constructors>>).
 
 .Covariant Constructor
 [def]
 --
-A classifier math:[$C$] is said to ``__have a covariant constructor__`` if and
+A classifier math:[$C$] is said to `__have a covariant constructor__` if and
 only if one of the following applies:
 
 1.  math:[$C$] has a direct super class math:[$C'$] and
@@ -919,7 +915,7 @@ math:[$C'$] is annotated with `@CovariantConstructor` or math:[$C'$] has a const
 and math:[$I$] is annotated with  `@CovariantConstructor` or math:[$I$] has a
 constructor annotated with `@CovariantConstructor`.
 3.  math:[$C$] has a direct super class or directly implemented
-interface that ``__has a covariant constructor__`` (as defined here).
+interface that `__has a covariant constructor__` (as defined here).
 --
 
 Note that math:[$C$] does not need to have an owned(!) constructor;
@@ -936,7 +932,7 @@ constructors. Annotating a constructor with this annotation, or its
 containing classifier, or both have all the same effect.
 .  Given a class math:[$C$] with an owned constructor
 math:[$ctor$] and a super class math:[$Sup$] that has a
-covariant constructor (owned or inherited, see ), then
+covariant constructor (owned or inherited, see <<covariant_constructor,Covariant Constructor>>), then
 ..  math:[$Sup.constructor$] must be accessible from
 math:[$C$],
 ..  math:[$ctor$] must be override compatible with
@@ -944,22 +940,21 @@ math:[$S.constructor$]: math:[\[\begin{aligned}
         overrideCompatible(ctor, S.constructor)
         \end{aligned}\]]
 +
-This constraint corresponds to <<req:Overriding_Members>> except for the `Override`
-annotation, which is not required, here.
+This constraint corresponds to <<IDE-72,requirement: Overriding Members>> except for the `Override` annotation which is not required here.
 .  Given a classifier math:[$C$] implementing interface
 math:[$I$] and math:[$I$] has a covariant constructor (owned
-or inherited, see <<def:Covariant_Constructors>>), we require
+or inherited, see <<covariant_constructor,Covariant Constructor>>), we require
 ..  math:[$I.constructor$] must be accessible from math:[$C$],
 ..  an implementation-compatible constructor math:[$ctor$] must be
 defined in C with math:[\[\begin{aligned}
         overrideCompatible(ctor, I.constructor)
         \end{aligned}\]]
 +
-This constraint corresponds to <<req:Implementation_of_Interface_Members>>
+This constraint corresponds to <<IDE-74,Implementation of Interface Members>>
 except for the `@Override` annotation, which is not required, here.
 ..  Given a classifier math:[$C$] without an owned constructor and
 an extended class or interface math:[$Sup$] that has a covariant
-constructor (owned or inherited, see <<def:Covariant_Constructors>>), we require the inherited constructor math:[$ctor$] of math:[$C$] within the context of
+constructor (owned or inherited, see <<covariant_constructor, definition: Covariant Constructor>>), we require the inherited constructor math:[$ctor$] of math:[$C$] within the context of
 math:[$C$] to be override compatible to itself in the context of
 math:[$Sup$]. Using notation math:[$m[T]$] to denote that a
 member math:[$m$] is to be treated as defined in container type
@@ -974,6 +969,7 @@ constructors. It shows a small class hierarchy using covariant
 constructors, `Cls` and `Cls2`, together with a helper function `createAnother` that creates and returns a new instance of the same type as its argument `value`.
 --
 
+[[ex:covariant-constructors]]
 .Covariant Constructors
 [example]
 ====
@@ -1005,7 +1001,7 @@ y = createAnother(x, new B());
 
 ====
 
-In the code of <<ex:Covariant_Constructors>> we would get an error if we changed the type of parameter `p` in the constructor of `Cls2` to some other type that is not a super type of `B`,
+In the code of <<ex:covariant-constructors,Covariant Constructors example>>, we would get an error if we changed the type of parameter `p` in the constructor of `Cls2` to some other type that is not a super type of `B`,
 i.e. the type of the corresponding parameter of `Cls`’s constructor. If we
 removed the `@CovariantConstructor` annotation on `Cls`, we would get an error in the new expression inside function `createAnother`.
 
@@ -1034,13 +1030,10 @@ class D extends C {
 
 ====
 
-Interface `I` declares a covariant constructor expecting a single parameter
-of type `number`. Even though class `C` implements `I`, it does not need to define an
-owned constructor with such a parameter. According to
-<<req:Covariant_Constructors>>, it is enough for `C` to have a constructor,
-either owned or inherited, that is override compatible with the one
-declared by `I`. Class `C` inherits the default constructor from `N4Object`, which does not have any arguments and is thus override compatible to `I`’s
-constructor.
+Interface `I` declares a covariant constructor expecting a single parameter of type `number`.
+Even though class `C` implements `I`, it does not need to define an owned constructor with such a parameter.
+According to <<IDE-60,requirement Covariant Constructor>>, it is enough for `C` to have a constructor,
+either owned or inherited, that is override compatible with the one declared by `I`. Class `C` inherits the default constructor from `N4Object`, which does not have any arguments and is thus override compatible to `I`’s constructor.
 
 In addition, subclasses are now required to have constructors which are
 override compatible with the constructor of class `C`, i.e. the one
@@ -1052,14 +1045,11 @@ during checking override compatibility.
 == Data Fields
 task:IDE-381[]
 
-A data field is a simple property of a class. There must be no getter or
-setter defined with the same name as the data field. In ECMAScript 6, a
-class has no explicit data fields. It is possible, however, to
-implicitly define a data field by simply assigning a value to a variable
-of the this element (e.g. `this.x = 10` implicitly defines a field `x`).
-Data fields in N4JS are similar to these implicit fields in ECMAScript 6 except that
-they are defined explicitly in order to simplify validation and user
-assistance.
+A data field is a simple property of a class.
+There must be no getter or setter defined with the same name as the data field.
+In ECMAScript 6, a class has no explicit data fields.
+It is possible, however, to implicitly define a data field by simply assigning a value to a variable of the this element (e.g. `this.x = 10` implicitly defines a field `x`).
+Data fields in N4JS are similar to these implicit fields in ECMAScript 6 except that they are defined explicitly in order to simplify validation and user assistance.
 
 === Syntax [[data-fields-syntax]]
 
@@ -1083,54 +1073,53 @@ fragment FieldDeclarationImpl <Yield>*:
 
 Fields have the following properties which can be explicitly defined:
 
-``typeRef`` ::
+`typeRef` ::
 Type of the field; default value is math:[$Any$].
 
-``expr`` ::
+`expr` ::
 Initializer expression, i.e. sets default value.
 
-``static`` ::
+`static` ::
 Boolean flag set to true if field is a static field.
 
-``const`` ::
-Boolean flag set to true if field cannot be changed. Note that const
-fields are automatically static. Const fields need an initializer. Also
-see <<sec:Assignment_Modifiers>>.
+`const` ::
+Boolean flag set to true if field cannot be changed. Note that const fields are automatically static. Const fields need an initializer.
+Also see <<_assignment-modifiers,Assignment Modifiers>>.
 
-Note that math:[$const$] is _not_ the (reversed) value of the
-property descriptor math:[$writable$] as the latter is checked at
-runtime while const may or may not be checked at runtime.
+task:IDE-946[]
+
+Note that math:[$const$] is _not_ the (reversed) value of the property descriptor math:[$writable$] as the latter is checked at runtime while const may or may not be checked at runtime.
 
 
 The following pseudo properties are defined via annotations for setting
 the values of the property descriptor:
 
-``enumerable`` ::
+`enumerable` ::
 Boolean flag reflecting the property descriptor
 math:[$enumerable$], set via annotation `@Enumerable(true|false)`.
 The default value is math:[$\TRUE$].
 
-``declaredWriteable`` ::
+`declaredWriteable` ::
 Boolean flag reflecting the property descriptor math:[$writeable$],
 set via annotation `@Writeable(true|false)`. The default value is math:[$\TRUE$].
 
-``final`` ::
+`final` ::
 Boolean flag making the field read-only, and it must be set in the
-constructor. Also see <<Assignment_Modifiers>>.
+constructor. Also see <<_assignment-modifiers,Assignment Modifiers>>.
 
 // TODO: use the following formatting to allow for better readability?
 // #### Derived values for fields:
 Derived values for fields
 
-``readable`` ::
+`readable` ::
 Always true for fields.
 
-``abstract`` ::
+`abstract` ::
 Always false for fields.
 
-``writeable`` ::
+`writeable` ::
 Set to false if field is declared const or final. In the latter case, it
-may be set in the constructor (cf. <<Assignment Modifiers>>).
+may be set in the constructor (cf. <<_assignment-modifiers,Assignment Modifiers>>).
 
 ==== Semantics [[data-fields-semantics]]
 
@@ -1152,7 +1141,7 @@ If a subclass should set a different default value, this has to be done
 in the constructor of the subclass.
 
 For the relation of data fields and field accessors in the context of
-extending classes or implementing interfaces see <<Redefinition_of_Members>>.
+extending classes or implementing interfaces see <<_redefinition-of-members,Redefinition of Members>>.
 --
 
 ==== Type Inference [[data-fields-type-inference]]
@@ -1197,11 +1186,10 @@ keyword in the initializer expression of a constant field:
 math:[\[\begin{aligned}
     \nexists sub \in f.expr^*: sub="this"\end{aligned}\]]
 //*
-// TODO: fix syntax highlighting error above
 3.  A constant data field must not be annotated with `@Final`:
 math:[\[\begin{aligned}
     f.const \Rightarrow \lnot f.final\end{aligned}\]]
-4.  Constant data fields are not writeable (cf. <<req:Write_Acccess>>):
+4.  Constant data fields are not writeable (cf. <<IDE-68,requirement Write-Acccess>>):
 math:[\[\begin{aligned}
     f.const \Rightarrow \lnot f.writeable\end{aligned}\]]
 --
@@ -1215,13 +1203,11 @@ For a data field math:[$f$] marked as `@Final`, the following constraints must h
 math:[\[\begin{aligned}
     f.final \Rightarrow \lnot f.const \land \lnot f.declaredStatic\end{aligned}\]]
 2.  A final data field is not writeable: math:[\[\begin{aligned}
-    f.final \Rightarrow \lnot f.writeable\end{aligned}\]] A final field
-may, however, be set in the constructor. See <<req:Write_Acccess>> for
-details.
-3.  A final data field must be either initialized by an initializer
-expression or in the constructor. If the field is initialized in the
-constructor, this may be done either explicitly or via a spec-style
-constructor. task:IDEBUG-575[]
+    f.final \Rightarrow \lnot f.writeable\end{aligned}\]] A final field may, however, be set in the constructor.
+See <<IDE-68,requirement Write-Acccess>> for details.
+3.  A final data field must be either initialized by an initializer expression or in the constructor.
+If the field is initialized in the constructor, this may be done either explicitly or via a spec-styleconstructor.
+task:IDEBUG-575[]
 math:[\[\begin{aligned}
     & f.expr \neq \NULL \\
     & \lor (\exists assignExp: assignExpr.containingFunction = f.owner.constructor \\
@@ -1316,16 +1302,16 @@ class C {
 
 Derived values for field accessors:
 
-``readable`` ::
+`readable` ::
 True for getters and false for setters.
 
-``writable`` ::
+`writable` ::
 False for getters and true for setters.
 
 ==== Semantics [[field-accessors-semantics]]
 
 There must be no field or method with the same name as a field accessor
-(follows from <<req:Member_Names>>). In addition, the following
+(follows from <<IDE-52,requirement Member Names>>). In addition, the following
 constraints must hold:
 
 
@@ -1344,21 +1330,17 @@ define a setter math:[$s'$] with
 math:[$s'.name=g.name \land s'.static=g.static$]
 footnote:[This is required, because in Javascript a getter shadows a corresponding setter defined further up in the prototype chain; likewise a setter shadows a corresponding getter.].
 The same applies to setters, accordingly.
-* <<req:Overriding_Members>>, <<req:Consumption_of_Interface_Members>>, and
-<<req:Implementation_of_Interface_Members>> apply to field accessors
-accordingly (getter / setter overriding).
+* <<IDE-72,requirement Overriding Members>>, <<IDE-73,requirement Consumption of Interface Members>>, and <<IDE-74,Implementation of Interface Members>> apply to field accessors accordingly (getter / setter overriding).
 
-NOTE: A getter and setter with the same name need not have the same
-type, i.e. the getter’s return type need not be the same as a subtype of
-the type of the setter’s parameter (the types can be completely
-unrelated).
-footnote:[Thus, the type of one accessor is not used to infer the type of the other one. E.g., from `set x(string s)`, we cannot infer `get x()` to return ``string`` — instead, the getter is inferred to return `any`.]
+NOTE: A getter and setter with the same name need not have the same type, i.e. the getter’s return type need not be the same as a subtype of
+the type of the setter’s parameter (the types can be completely unrelated).
+footnote:[Thus, the type of one accessor is not used to infer the type of the other one. E.g., from `set x(string s)`, we cannot infer `get x()` to return `string` — instead, the getter is inferred to return `any`.]
 
 --
 
 Getters and setters – like functions – define a variable execution
 environment and therefore provide access to the actual passed-in
-parameters through the implicit `arguments` variable inside of their bodies (c.f. <<Arguments_Objects>>).
+parameters through the implicit `arguments` variable inside of their bodies (c.f. <<_arguments-object>>).
 
 == Static Members
 task:IDE-151[] task:IDE-505[]
@@ -1376,7 +1358,7 @@ possible that a static member has the same name as an instance member.
 Note that static members are not only allowed in classes but also in
 interfaces, but there are important differences (for example, no
 inheritance of static members of interfaces, cf. Section
-<<Static_Members_of_Interfaces>>) .
+<<_static-members-of-interfaces,Static Members of Interfaces>>) .
 
 .Static member not abstract
 [req,id=IDE-65,version=1]
@@ -1405,7 +1387,7 @@ via:
 
 1.  The class declaration instance, i.e. the classifier or constructor type, `constructor{C}`, i.e. `C.m`
 2.  The class declaration instance of a subtype, i.e. the classifier or constructor type, i.e. `D.m`, if `D` is a subclass of `C`.
-3.  `v.m`, if `v` is a variable of type `C` (i.e. classifier type as defined in <<Constructor_Type>>) or a subtype thereof.
+3.  `v.m`, if `v` is a variable of type `C` (i.e. classifier type as defined in <<_constructor-and-classifier-type>>) or a subtype thereof.
 4. `this.m` inside the body of any static method declared in `C` or any sub-class of `C`.
 5.  Via a type variable math:[$T$] which upper bound is a subclass
 of `C`, +
@@ -1441,11 +1423,12 @@ write-access is only possible via the defining type name `C.m`: . So in the
 list above, only the first line can be used when assigning values to a
 field. Note that this only applies to fields and
 set-accessors.
-footnote:[The technical reason for this rule is the way properties are stored in JavaScript. Take for an example subclass-write access : ``class C { static f="a";}`` with ``class D extends C { }``. Now the data field `f` on `C` can also be queried using `D` (``var q=D.f;``) but writing (``D.f="b";``) would introduce a newly created property `f` on class `D`, which differs from the one defined on `C`. It would do this without explicitly overriding the inherited property. Subsequent reads to `D.f` would route to this ’accidentally’ introduced property. Such a behavior would not be expected and therefore has been disallowed. Note that this write restriction applies to data-fields and to field setters.]
+footnote:[The technical reason for this rule is the way properties are stored in JavaScript. Take for an example subclass-write access : `class C { static f="a";}` with `class D extends C { }`. Now the data field `f` on `C` can also be queried using `D` (`var q=D.f;`) but writing (`D.f="b";`) would introduce a newly created property `f` on class `D`, which differs from the one defined on `C`. It would do this without explicitly overriding the inherited property. Subsequent reads to `D.f` would route to this ’accidentally’ introduced property. Such a behavior would not be expected and therefore has been disallowed. Note that this write restriction applies to data-fields and to field setters.]
 
 It is even possible to call a static field accessor or method of a class
 using dynamic polymorphism, as demonstrated in the following example:
 
+[[ex:Polymorphism_and_static_methods]]
 .Static members of classes, inheritance and polymorphism
 [example]
 --
@@ -1514,7 +1497,7 @@ method can, however, be declared generic. Generic static methods are
 defined similarly to generic instance methods. Since they cannot refer
 to type variables of a generic class, the constraint to avoid type
 variables with equal names (see
-<<req:Type_variable_names_for_generic_methods>>) does not need to hold for
+<<IDE-55,requirement Type Variable Names for Generic Methods>>) does not need to hold for
 generic static methods.
 
 === Static Members of Interfaces
@@ -1528,13 +1511,13 @@ static. A few restrictions apply:
 
 1.  Static members of interfaces may only be accessed directly via the
 containing interface’s type name task:IDEBUG-386[] (this means, of the four ways of
-accessing static members of classes defined in <<req:Accessing_Static_Members>> above, only the first one applies to static members of interfaces).
+accessing static members of classes defined in <<IDE-66,requirement Accessing Static Members>> above, only the first one applies to static members of interfaces).
 2.  The `this` literal may not be used in static methods or field accessors of
 interfaces and it may not be used in the initializer expression of
-static fields of interfaces. See <<req:ValidLocationForThisLiteral>>.
+static fields of interfaces. See <<IDE-173,requirement Valid location for this literal>>.
 3.  The `super` literal may not be used in static methods or field accessors of
 interfaces (in fact, it may not be used in interfaces at all,
-cf. <<req:Access_Super_Member_with_Super_Literal>>).
+cf. <<IDE-123,requirement Access Super Constructor with Super Literal>>).
 
 --
 
@@ -1544,12 +1527,12 @@ instance methods and as an argument type only in constructors
 static interface methods in the constraints above.
 
 In general, static members may not be abstract,
-cf. <<req:Abstract_Member>>, which applies here as well. Static methods
+cf. <<IDE-46,requirement Abstract Member>>, which applies here as well. Static methods
 and field accessors of interfaces, therefore, always have to provide a
 body.
 
-Static members of interfaces are much more restricted than those of
-classes. Compare the following example to <<ex:Polymorphism_and_static_methods>> for classes above:
+Static members of interfaces are much more restricted than those of classes.
+Compare the following example to <<_polymorphism-and-static-methods,Polymorphism and Static Methods>> for classes above:
 
 .Static members of interfaces
 [example]
@@ -1826,7 +1809,7 @@ Methods defined in interfaces are automatically declared abstract if
 they do not provide a default implementation. This can also be expressed
 explicitly via adding the `abstract` modifier. If a class implementing an abstract
 interface does not implement a method declared in the interface, the
-class needs to be declared abstract (cf. <<Abstract_Classes>>).
+class needs to be declared abstract (cf. <<_abstract-classes,Abstract Classes>>).
 
 Consequences for method implementation:
 
@@ -1839,7 +1822,7 @@ math:[\[\begin{aligned}
         & \forall M \in C.methods, M' \in I_i.methods (i=1\dots n): \\
         & \hspace{2em} M.name=M'.name \Rightarrow M.acc \neq private \to M.acc \geq M'.acc
     \end{aligned}\]]
-3.  Methods in the implementor must be a supertype footnote:[As defined in <<Function_Type>> for function types.] of methods from implemented interfaces.
+3.  Methods in the implementor must be a supertype footnote:[As defined in <<_function-type,Function Type>> for function types.] of methods from implemented interfaces.
 That is to say the implemented methods are override-compatible.
 4.  There may be several methods math:[$M_1, ..., M_n$] defined in
 different implemented interfaces and a single owned method
@@ -1904,8 +1887,6 @@ Consuming Field Initializers :: [[consuming-field-initializers]]
 Aside from the fields themselves, an implementor _always_ consumes the
 field initialization if the field is consumed – this is how the
 consumption is noticed at runtime.
-
-// TODO Example Block
 
 .Field and Field Initializer Consumption
 [example]

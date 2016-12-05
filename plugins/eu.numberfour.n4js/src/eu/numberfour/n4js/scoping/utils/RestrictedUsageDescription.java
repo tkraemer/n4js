@@ -13,14 +13,13 @@ package eu.numberfour.n4js.scoping.utils;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 import eu.numberfour.n4js.validation.IssueCodes;
-import eu.numberfour.n4js.validation.JavaScriptVariant;
 
 /**
  * This description wraps an invisible member.
  */
 public class RestrictedUsageDescription extends AbstractDescriptionWithError {
 
-	private final JavaScriptVariant jsVariant;
+	private final String jsVariant;
 
 	/**
 	 * Creates a new instance of this wrapping description.
@@ -30,7 +29,7 @@ public class RestrictedUsageDescription extends AbstractDescriptionWithError {
 	 * @param jsVariant
 	 *            Variant in which the restriction appeared.
 	 */
-	public RestrictedUsageDescription(IEObjectDescription delegate, JavaScriptVariant jsVariant) {
+	public RestrictedUsageDescription(IEObjectDescription delegate, String jsVariant) {
 		super(delegate);
 		this.jsVariant = jsVariant;
 

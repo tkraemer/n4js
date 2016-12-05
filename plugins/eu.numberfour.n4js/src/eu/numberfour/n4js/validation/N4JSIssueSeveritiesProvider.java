@@ -25,12 +25,15 @@ import com.google.inject.Inject;
  */
 @SuppressWarnings("restriction")
 public class N4JSIssueSeveritiesProvider extends IssueSeveritiesProvider {
+	@SuppressWarnings("javadoc")
 	@Inject
-	private IPreferenceValuesProvider valuesProvider;
+	protected IPreferenceValuesProvider valuesProvider;
+	@SuppressWarnings("javadoc")
 	@Inject
-	private ConfigurableIssueCodesProvider issueCodesProvider;
+	protected ConfigurableIssueCodesProvider issueCodesProvider;
+	@SuppressWarnings("javadoc")
 	@Inject
-	private SeverityConverter severityConverter;
+	protected SeverityConverter severityConverter;
 
 	@Override
 	protected IPreferenceValuesProvider getValuesProvider() {
