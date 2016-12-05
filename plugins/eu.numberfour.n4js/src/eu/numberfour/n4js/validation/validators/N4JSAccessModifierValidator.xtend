@@ -51,7 +51,6 @@ import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.utils.ContainerTypesHelper
-import eu.numberfour.n4js.utils.ResourceType
 import eu.numberfour.n4js.utils.StructuralTypesHelper
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.JavaScriptVariantHelper
@@ -91,10 +90,8 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	@Check
-	def checkExportedWhenVisibilityHigherThanPrivate(TypeDefiningElement typeDefiningElement) {
-		val resType = ResourceType.getResourceType(typeDefiningElement);
-		val isPlainJS = resType === ResourceType.JS
-		if (isPlainJS) {
+	def checkExportedWhenVisibilityHigherThanPrivate(TypeDefiningElement typeDefiningElement) {		
+		if (!jsVariantHelper.requireCheckExportedWhenVisibilityHigherThanPrivate(typeDefiningElement)) {
 			return; // does not apply to plain JS files
 		}
 

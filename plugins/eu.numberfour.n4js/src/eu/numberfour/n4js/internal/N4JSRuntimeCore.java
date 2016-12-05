@@ -196,7 +196,7 @@ public class N4JSRuntimeCore extends AbstractN4JSCore implements IN4JSRuntimeCor
 	 *            to test
 	 * @boolean if ends in .js or .js.xt
 	 */
-	private boolean isJsFile(URI uri) {
+	protected boolean isJsFile(URI uri) {
 		ResourceType resourceType = ResourceType.getResourceType(uri);
 		return resourceType.equals(ResourceType.JS);
 	}

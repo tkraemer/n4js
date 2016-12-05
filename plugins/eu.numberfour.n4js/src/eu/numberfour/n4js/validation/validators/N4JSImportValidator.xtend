@@ -14,17 +14,19 @@ import eu.numberfour.n4js.n4JS.EmptyStatement
 import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.ImportDeclaration
 import eu.numberfour.n4js.n4JS.ImportSpecifier
+import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.NamedImportSpecifier
 import eu.numberfour.n4js.n4JS.NamespaceImportSpecifier
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.organize.imports.ImportProvidedElement
 import eu.numberfour.n4js.organize.imports.ImportStateCalculator
-import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
-import eu.numberfour.n4js.validation.IssueCodes
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.ModuleNamespaceVirtualType
 import eu.numberfour.n4js.ts.types.TModule
 import eu.numberfour.n4js.utils.Log
+import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
+import eu.numberfour.n4js.validation.IssueCodes
+import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import java.util.List
 import java.util.Map
 import javax.inject.Inject
@@ -34,9 +36,8 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.validation.IssueCodes.*
+
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
-import eu.numberfour.n4js.n4JS.N4JSPackage
-import eu.numberfour.n4js.utils.ResourceType
 
 /**
  */
@@ -45,6 +46,9 @@ class N4JSImportValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Inject
 	ImportStateCalculator importStateCalculator;
+	
+	@Inject 
+	private JavaScriptVariantHelper jsVariantHelper;
 
 	/**
 	 * NEEEDED
@@ -77,20 +81,18 @@ class N4JSImportValidator extends AbstractN4JSDeclarativeValidator {
 		val type = importSpecifier.definedType;
 		if (type instanceof ModuleNamespaceVirtualType) {
 			if (type.module !== null) {
-				val resType = ResourceType.getResourceType(type.module);
-
 				if (importSpecifier.declaredDynamic) {
-					if (resType===ResourceType.N4JS) {
+					if (jsVariantHelper.isN4JSMode(type.module)) {
 						addIssue(
 							getMessageForIMP_DYNAMIC_NAMESPACE_IMPORT_N4JS(type.module.moduleSpecifier),
 							importSpecifier, IMP_DYNAMIC_NAMESPACE_IMPORT_N4JS);
-					} else if (resType===ResourceType.N4JSD) {
+					} else if (jsVariantHelper.isExternalMode(type.module)) {
 						addIssue(
 							getMessageForIMP_DYNAMIC_NAMESPACE_IMPORT_N4JSD(type.module.moduleSpecifier),
 							importSpecifier, IMP_DYNAMIC_NAMESPACE_IMPORT_N4JSD);
 					}
 				} else {
-					if (resType===ResourceType.JS) {
+					if (jsVariantHelper.isPlainJS(type.module)) {
 						addIssue(
 							getMessageForIMP_STATIC_NAMESPACE_IMPORT_PLAIN_JS(type.module.moduleSpecifier),
 							importSpecifier, IMP_STATIC_NAMESPACE_IMPORT_PLAIN_JS);

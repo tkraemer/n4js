@@ -52,7 +52,6 @@ import eu.numberfour.n4js.findReferences.InferredElementsTargetURICollector;
 import eu.numberfour.n4js.formatting2.N4JSSimpleFormattingPreferenceProvider;
 import eu.numberfour.n4js.internal.FileBasedWorkspace;
 import eu.numberfour.n4js.internal.InternalN4JSWorkspace;
-import eu.numberfour.n4js.internal.N4JSRuntimeCore;
 import eu.numberfour.n4js.naming.N4JSImportedNamesAdapter;
 import eu.numberfour.n4js.naming.N4JSQualifiedNameConverter;
 import eu.numberfour.n4js.naming.N4JSQualifiedNameProvider;
@@ -97,6 +96,7 @@ import eu.numberfour.n4js.validation.N4JSDiagnostician;
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider;
 import eu.numberfour.n4js.validation.N4JSResourceValidator;
 import eu.numberfour.n4js.xsemantics.InternalTypeSystem;
+import eu.numberfour.n4jsx.internal.N4JSXRuntimeCore;
 import eu.numberfour.n4jsx.parser.N4JSXSemicolonInjectingParser;
 import eu.numberfour.n4jsx.parser.RegExLiteralAwareLexer;
 import eu.numberfour.n4jsx.parser.antlr.lexer.InternalN4JSXLexer;
@@ -361,7 +361,7 @@ public class N4JSXRuntimeModule extends eu.numberfour.n4jsx.AbstractN4JSXRuntime
 	 * Configure the IN4JSCore instance to use the implementation that is backed by {@link java.io.File files}.
 	 */
 	public Class<? extends IN4JSCore> bindN4JSCore() {
-		return N4JSRuntimeCore.class;
+		return N4JSXRuntimeCore.class;
 	}
 
 	/**
