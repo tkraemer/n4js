@@ -26,7 +26,7 @@ Workflow {
 	component = XtextGenerator {
 		configuration = N4JSGeneratorModule {
 			project = StandardProjectConfig {
-				baseName = "eu.numberfour.n4js"
+				baseName = runtimeProjectName
 				rootPath = rootPath
 				genericIde = {
 					enabled = true
@@ -95,6 +95,13 @@ Workflow {
 			fragment = exporting.SimpleNamesFragment2 {}
 			
 			fragment = builder.BuilderIntegrationFragment2 {}
+			
+			// generator API
+			fragment = generator.GeneratorFragment2 {
+				generateMwe = false
+				generateJavaMain = false
+				generateStub = false
+			}
 			
 			// formatter API
 			fragment = formatting.Formatter2Fragment2 {

@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.text.rules.IPartitionTokenScanner;
@@ -145,16 +143,9 @@ public class N4JSUiModule extends eu.numberfour.n4js.ui.AbstractN4JSUiModule {
 	/**
 	 * Bind the {@link IXtextBuilderParticipant} being aware of generating the Javascript files in the output directory.
 	 */
+	@Override
 	public Class<? extends IXtextBuilderParticipant> bindIXtextBuilderParticipant() {
 		return N4JSBuilderParticipant.class;
-	}
-
-	/**
-	 * Formerly contributed by org.eclipse.xtext.generator.generator.GeneratorFragment. Needed for some tests, like
-	 * 'EclipseArchivePluginTest', EclipseBasedInternalWorkspacePluginTest, and others.
-	 */
-	public IWorkspaceRoot bindIWorkspaceRootToInstance() {
-		return ResourcesPlugin.getWorkspace().getRoot();
 	}
 
 	/**
@@ -296,6 +287,7 @@ public class N4JSUiModule extends eu.numberfour.n4js.ui.AbstractN4JSUiModule {
 	 * custom builder preferences initializer that iterates over all default configurations provided by the sub
 	 * generators contained in the found composite generators.
 	 */
+	@Override
 	public void configureBuilderPreferenceStoreInitializer(com.google.inject.Binder binder) {
 		binder.bind(org.eclipse.xtext.ui.editor.preferences.IPreferenceStoreInitializer.class)
 				.annotatedWith(com.google.inject.name.Names.named("builderPreferenceInitializer"))
