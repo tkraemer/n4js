@@ -60,7 +60,7 @@ class MyHigherComponent extends
 	public render(): React.Element {
 		let d = this.state.aStateProp;
 		//XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'simplePropForMyComponent'." at "simplePropForMyComponent"
-		return (<MyComponent aProp={5} simplePropForMyComponent={
+		return (<MyComponent aProp="A text" simplePropForMyComponent={
          (() => {
          	//XPECT noerrors
            if (this.props.someCondition) {

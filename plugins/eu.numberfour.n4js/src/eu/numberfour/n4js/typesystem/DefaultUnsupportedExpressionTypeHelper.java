@@ -10,6 +10,8 @@
  */
 package eu.numberfour.n4js.typesystem;
 
+import org.eclipse.emf.ecore.EObject;
+
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import it.xsemantics.runtime.RuleEnvironment;
@@ -23,5 +25,11 @@ public class DefaultUnsupportedExpressionTypeHelper implements UnsupportedExpres
 	@Override
 	public TypeRef typeExpression(Expression expression, RuleEnvironment G) {
 		throw new UnsupportedOperationException("Cannot determine the type of expression: " + expression);
+	}
+
+	@Override
+	public TypeRef expectedExpressionTypeInContainer(EObject container, Expression expression, RuleEnvironment G) {
+		throw new UnsupportedOperationException(
+				"Cannot determine the expected type of expression: " + expression + " in container " + container);
 	}
 }
