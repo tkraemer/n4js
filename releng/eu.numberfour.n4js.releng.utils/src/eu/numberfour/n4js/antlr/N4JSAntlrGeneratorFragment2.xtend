@@ -13,7 +13,6 @@ package eu.numberfour.n4js.antlr
 import com.google.common.io.Files
 import com.google.inject.Inject
 import eu.numberfour.n4js.antlr.n4js.NoLineTerminatorHandlingInjector
-import eu.numberfour.n4js.generation.N4AntlrGeneratorFragment2
 import java.io.File
 import java.io.IOException
 import java.nio.charset.Charset

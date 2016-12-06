@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.generation
+package eu.numberfour.n4js.antlr
 
 import com.google.common.base.Charsets
 import com.google.common.io.Files

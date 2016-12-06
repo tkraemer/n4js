@@ -69,7 +69,7 @@ Workflow {
 			fragment = resourceFactory.ResourceFactoryFragment2 {}
 
 			// The antlr parser generator fragment.
-			fragment = N4AntlrGeneratorFragment2 {
+			fragment = eu.numberfour.n4js.antlr.N4AntlrGeneratorFragment2 {
 				antlrParam = "-Xconversiontimeout"
 				antlrParam = "20000"
 				combinedGrammar = false

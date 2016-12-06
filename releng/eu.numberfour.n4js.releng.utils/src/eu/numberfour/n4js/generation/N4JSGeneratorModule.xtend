@@ -13,6 +13,8 @@ package eu.numberfour.n4js.generation
 import com.google.inject.Binder
 import com.google.inject.Inject
 import com.google.inject.Module
+import eu.numberfour.n4js.antlr.N4JSAntlrContentAssistGrammarGenerator
+import eu.numberfour.n4js.antlr.N4JSAntlrGrammarGenerator
 import org.eclipse.xtext.Grammar
 import org.eclipse.xtext.xtext.generator.DefaultGeneratorModule
 import org.eclipse.xtext.xtext.generator.XtextGeneratorNaming

@@ -67,7 +67,7 @@ Workflow {
 			
 			fragment = resourceFactory.ResourceFactoryFragment2 {}
 			
-			fragment = antlr.N4JSAntlrGeneratorFragment2 {
+			fragment = eu.numberfour.n4js.antlr.N4JSAntlrGeneratorFragment2 {
 				combinedGrammar = false
 				debugGrammar = true
 				options = auto-inject {
