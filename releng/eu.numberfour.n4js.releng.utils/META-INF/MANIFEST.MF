@@ -15,8 +15,8 @@ Export-Package: de.itemis.xcore2java,
  eu.numberfour.filechecker,
  eu.numberfour.n4js.antlr,
  eu.numberfour.n4js.antlr.compressor,
- eu.numberfour.n4js.antlr.generator,
  eu.numberfour.n4js.antlr.n4js,
  eu.numberfour.n4js.antlr.replacements,
  eu.numberfour.n4js.antlr.syntaxcoloring,
- eu.numberfour.n4js.generation
+ eu.numberfour.n4js.generation,
+ eu.numberfour.n4js.generation.xcore
