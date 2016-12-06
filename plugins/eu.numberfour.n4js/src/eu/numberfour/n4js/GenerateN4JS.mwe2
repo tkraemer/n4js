@@ -143,20 +143,6 @@ Workflow {
 				}
 			}
 			
-			fragment = org.eclipse.xtext.generator.adapter.FragmentAdapter {
-				// this fragment is still kept for validation purposes in order to reveal potential bugs in the 
-				//  new highlighting parser grammar generator
-				// can be removed without any functional impact
-				fragment = eu.numberfour.n4js.antlr.syntaxcoloring.HighlightingParserGeneratorFragment auto-inject {
-					antlrParam = "-Xconversiontimeout"
-					antlrParam = "30000"
-					options = auto-inject {
-						keptBitSetName = "FOLLOW_ruleExpression_in_ruleExpressionStatement"
-						keptBitSetsPattern = "FOLLOW_norm1_Expression_in_ruleExpressionStatement.*"
-					}
-				}
-			}
-			
 			fragment = eu.numberfour.n4js.antlr.compressor.ParserCompressorFragment2 auto-inject {
 				grammarFile = "${runtimeProjectPath}.ui/src-gen/eu/numberfour/n4js/ui/editor/syntaxcoloring/InternalN4JSParser.java"
 				grammarFile = "${runtimeProjectPath}/src-gen/eu/numberfour/n4js/parser/antlr/internal/InternalN4JSParser.java"
