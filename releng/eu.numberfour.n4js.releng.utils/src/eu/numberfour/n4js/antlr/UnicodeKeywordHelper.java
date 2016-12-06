@@ -17,7 +17,7 @@ import static com.ibm.icu.lang.UCharacterEnums.ECharacterCategory.OTHER_LETTER;
 import static com.ibm.icu.lang.UCharacterEnums.ECharacterCategory.TITLECASE_LETTER;
 import static com.ibm.icu.lang.UCharacterEnums.ECharacterCategory.UPPERCASE_LETTER;
 
-import org.eclipse.xtext.generator.parser.antlr.AntlrGrammarGenUtil;
+import org.eclipse.xtext.xtext.generator.parser.antlr.AntlrGrammarGenUtil;
 
 import com.google.common.base.Strings;
 import com.ibm.icu.lang.UCharacter;
@@ -26,6 +26,7 @@ import com.ibm.icu.lang.UCharacter;
  * A keyword helper that produces lexer rules with support for unicode escapes. Used by Xtend 1 extension
  * UnicodeKeywordHelper.ext.
  */
+@SuppressWarnings("restriction")
 public class UnicodeKeywordHelper {
 
 	/**

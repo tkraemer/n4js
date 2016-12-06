@@ -5,7 +5,7 @@ Bundle-SymbolicName: eu.numberfour.n4js.releng.utils
 Bundle-Version: 0.0.1.qualifier
 Bundle-Vendor: NumberFour AG
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.eclipse.xtext.generator,
+Require-Bundle: com.ibm.icu,
  org.eclipse.xtext.xtext.generator,
  org.eclipse.emf.ecore.xcore,
  org.eclipse.emf.ecore,
@@ -15,9 +15,7 @@ Export-Package: de.itemis.xcore2java,
  eu.numberfour.filechecker,
  eu.numberfour.n4js.antlr,
  eu.numberfour.n4js.antlr.compressor,
- eu.numberfour.n4js.antlr.delimiters,
  eu.numberfour.n4js.antlr.generator,
- eu.numberfour.n4js.antlr.internal,
  eu.numberfour.n4js.antlr.n4js,
  eu.numberfour.n4js.antlr.replacements,
  eu.numberfour.n4js.antlr.syntaxcoloring,
