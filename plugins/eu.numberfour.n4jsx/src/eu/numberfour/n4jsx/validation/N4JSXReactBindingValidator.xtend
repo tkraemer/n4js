@@ -37,7 +37,6 @@ import it.xsemantics.runtime.Result
 import java.util.Arrays
 import java.util.List
 import org.eclipse.emf.ecore.EReference
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
@@ -303,27 +302,27 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	
 	/**
 	 * Check if there is any attribute in spread operator that is not declared in props
-	 * Notes: this is not used for now since the Stdlib team is still arguing about if this check makes sense
+	 * Notes: this is not commented out but not deleted for now since the Stdlib team is still arguing about if this check makes sense
 	 */
-	def private checkUnknownAttributeInSpreadOperator(JSXSpreadAttribute spreadAttribute, JSXElement jsxElem, Iterable<TMember> attributesInSpreadOperatorType, Iterable<TMember> fieldsOrGettersInProps) {
-		attributesInSpreadOperatorType.forEach [ attributeInSpreadOperator |
-			//Look for the field/getter in props that corresponding the spread operator's attribute
-			val fieldOrGetterInProps = fieldsOrGettersInProps.findFirst[fieldOrGetter | attributeInSpreadOperator.name == fieldOrGetter.name];
-			if (fieldOrGetterInProps === null) {
-				val message = IssueCodes.getMessageForJSXSPREADATTRIBUTE_NOT_DECLARED_IN_PROPS(attributeInSpreadOperator.name, 
-					 	jsxElem?.jsxElementName?.expression?.refName
-					 );
-						addIssue(
-							message,
-							spreadAttribute,
-							N4JSXPackage.Literals.JSX_SPREAD_ATTRIBUTE__EXPRESSION,
-							IssueCodes.JSXSPREADATTRIBUTE_NOT_DECLARED_IN_PROPS
-						);	
-			}
-			
-		];
-			
-	}
+//	def private checkUnknownAttributeInSpreadOperator(JSXSpreadAttribute spreadAttribute, JSXElement jsxElem, Iterable<TMember> attributesInSpreadOperatorType, Iterable<TMember> fieldsOrGettersInProps) {
+//		attributesInSpreadOperatorType.forEach [ attributeInSpreadOperator |
+//			//Look for the field/getter in props that corresponding the spread operator's attribute
+//			val fieldOrGetterInProps = fieldsOrGettersInProps.findFirst[fieldOrGetter | attributeInSpreadOperator.name == fieldOrGetter.name];
+//			if (fieldOrGetterInProps === null) {
+//				val message = IssueCodes.getMessageForJSXSPREADATTRIBUTE_NOT_DECLARED_IN_PROPS(attributeInSpreadOperator.name, 
+//					 	jsxElem?.jsxElementName?.expression?.refName
+//					 );
+//						addIssue(
+//							message,
+//							spreadAttribute,
+//							N4JSXPackage.Literals.JSX_SPREAD_ATTRIBUTE__EXPRESSION,
+//							IssueCodes.JSXSPREADATTRIBUTE_NOT_DECLARED_IN_PROPS
+//						);	
+//			}
+//			
+//		];
+//			
+//	}
 	
 	/**
 	 * Returns the type of a field or return type of a getter
