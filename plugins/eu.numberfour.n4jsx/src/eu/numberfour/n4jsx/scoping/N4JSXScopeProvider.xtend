@@ -33,8 +33,11 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 				val checkVisibility = true;
 				val staticAccess = false;
 				if (propsTypeRef !== null) {
-					return memberScopingHelper.createMemberScopeFor(propsTypeRef, context,
+					// Prevent "Cannot resolve to element" error message of unknown attributes since
+					// we want to issue a warning instead
+					val memberScope = memberScopingHelper.createMemberScopeFor(propsTypeRef, context,
 					checkVisibility, staticAccess);
+					return new DynamicPseudoScope(memberScope);
 				} else {
 					val scope = super.getScope(context, reference);
 					return new DynamicPseudoScope(scope);
