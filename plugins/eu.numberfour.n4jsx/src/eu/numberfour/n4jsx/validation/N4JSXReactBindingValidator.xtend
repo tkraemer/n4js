@@ -19,6 +19,7 @@ import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
+import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TMember
@@ -32,9 +33,11 @@ import eu.numberfour.n4jsx.n4JSX.JSXElement
 import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute
 import eu.numberfour.n4jsx.n4JSX.JSXSpreadAttribute
 import eu.numberfour.n4jsx.n4JSX.N4JSXPackage
+import it.xsemantics.runtime.Result
 import java.util.Arrays
 import java.util.List
 import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
@@ -224,15 +227,42 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 			addIssue(message, expr, IssueCodes.REACT_ELEMENT_CLASS_NOT_REACT_ELEMENT_ERROR);
 		}
 	}
+	
+	@Check
+	def public void checkUnknownJSXPropertyAttribute(JSXPropertyAttribute propertyAttribute) {
+		val jsxElem = propertyAttribute.eContainer as JSXElement;
+		val TypeRef exprTypeRef = reactHelper.getJSXElementBindingType(jsxElem);
+		var isFunction = exprTypeRef instanceof FunctionTypeExprOrRef;
+		var isClass = exprTypeRef instanceof TypeTypeRef && (exprTypeRef as TypeTypeRef).constructorRef;
+		
+		if (!isFunction && !isClass) {
+			return;
+		}
+					
+		val G = propertyAttribute.newRuleEnvironment;
+		val Result<TypeRef> result = ts.type(G, propertyAttribute.property);
+		if (result.value instanceof UnknownTypeRef) {
+			val message = IssueCodes.getMessageForJSXSPROPERTYATTRIBUTE_NOT_DECLARED_IN_PROPS(propertyAttribute.propertyAsText, 
+				jsxElem?.jsxElementName?.expression?.refName);
+					addIssue(
+						message,
+						propertyAttribute,
+						N4JSXPackage.Literals.JSX_PROPERTY_ATTRIBUTE__PROPERTY,
+						IssueCodes.JSXSPROPERTYATTRIBUTE_NOT_DECLARED_IN_PROPS
+					);
+		}
+		
+	}
 
 	/**
 	 * Check the type conformity of types of spread operator's attributes against "props" types
 	 * See Req. IDE-241119
 	 */
 	@Check
-	def public void checkTypeConformityOFJSXSpreadAttribute(JSXSpreadAttribute spreadAttribute) {
-		val expr = spreadAttribute.expression;
-		val propsType = (spreadAttribute.eContainer as JSXElement).propsType
+	def public void checkAttributeAndTypeConformityInJSXSpreadAttribute(JSXSpreadAttribute spreadAttribute) {
+		val expr = spreadAttribute?.expression;
+		val jsxElem =  spreadAttribute?.eContainer as JSXElement;
+		val propsType = jsxElem?.propsType
 		if (propsType === null) 
 			return;
 		
@@ -245,11 +275,12 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		if (exprTypeResult.failed)
 			return;
 		// Retrieve attributes (either field or getter) in spread operator type	
-		val attributessInSpreadOperatorType = tsh.structuralTypesHelper.collectStructuralMembers(G, exprTypeResult.value,
+		val attributesInSpreadOperatorType = tsh.structuralTypesHelper.collectStructuralMembers(G, exprTypeResult.value,
 				TypingStrategy.STRUCTURAL).filter[m | (m instanceof TField) || (m instanceof TGetter)];
-
+		
+		//spreadAttribute.checkUnknownAttributeInSpreadOperator(jsxElem, attributesInSpreadOperatorType, fieldsOrGettersInProps);
 		// Type check each attribute in spreader operator against the corresponding props type's field/getter
-		attributessInSpreadOperatorType.forEach [ attributeInSpreadOperator |
+		attributesInSpreadOperatorType.forEach [ attributeInSpreadOperator |
 			val attributeInSpreadOperatorTypeRef = attributeInSpreadOperator.typeRefOfFieldOrGetter;
 			val fieldOrGetterInProps = fieldsOrGettersInProps.findFirst[fieldOrGetter | attributeInSpreadOperator.name == fieldOrGetter.name];
 			
@@ -268,6 +299,30 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 				}
 			}
 		];
+	}
+	
+	/**
+	 * Check if there is any attribute in spread operator that is not declared in props
+	 * Notes: this is not used for now since the Stdlib team is still arguing about if this check makes sense
+	 */
+	def private checkUnknownAttributeInSpreadOperator(JSXSpreadAttribute spreadAttribute, JSXElement jsxElem, Iterable<TMember> attributesInSpreadOperatorType, Iterable<TMember> fieldsOrGettersInProps) {
+		attributesInSpreadOperatorType.forEach [ attributeInSpreadOperator |
+			//Look for the field/getter in props that corresponding the spread operator's attribute
+			val fieldOrGetterInProps = fieldsOrGettersInProps.findFirst[fieldOrGetter | attributeInSpreadOperator.name == fieldOrGetter.name];
+			if (fieldOrGetterInProps === null) {
+				val message = IssueCodes.getMessageForJSXSPREADATTRIBUTE_NOT_DECLARED_IN_PROPS(attributeInSpreadOperator.name, 
+					 	jsxElem?.jsxElementName?.expression?.refName
+					 );
+						addIssue(
+							message,
+							spreadAttribute,
+							N4JSXPackage.Literals.JSX_SPREAD_ATTRIBUTE__EXPRESSION,
+							IssueCodes.JSXSPREADATTRIBUTE_NOT_DECLARED_IN_PROPS
+						);	
+			}
+			
+		];
+			
 	}
 	
 	/**

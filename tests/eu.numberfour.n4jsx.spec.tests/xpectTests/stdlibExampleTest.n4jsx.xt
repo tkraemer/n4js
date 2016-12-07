@@ -59,7 +59,7 @@ class MyHigherComponent extends
 	@Override
 	public render(): React.Element {
 		let d = this.state.aStateProp;
-		//XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'simplePropForMyComponent'." at "simplePropForMyComponent"
+		//XPECT warnings --> "Attribute simplePropForMyComponent is not a declared property in the props of MyComponent." at "simplePropForMyComponent"
 		return (<MyComponent aProp="A text" simplePropForMyComponent={
          (() => {
          	//XPECT noerrors

@@ -33,7 +33,7 @@ class Box extends React.Component<BoxProps, Object> {
 	};
     @Override public render(): React.Element {
         return <div>
-        	//XPECT errors --> "Field p1 has wrong type because int not subtype of string." at "this.obj"
+        	//XPECT errors --> "Attribute p1 has wrong type because int not subtype of string." at "this.obj"
             <BigLabel {...this.obj} />
         </div>
     }
@@ -66,7 +66,6 @@ class Box3 extends React.Component<BoxProps, Object> {
 interface ~Box4Props extends React.ComponentProps {
     public p1: string
     public p2: string
-    public p3: string
 }
 
 class Box4 extends React.Component<Box4Props, Object> {
@@ -90,6 +89,29 @@ class Box5 extends React.Component<BoxProps, Object> {
         return <div>
         	//XPECT noerrors
             <BigLabel {...this.obj} />
+        </div>
+    }
+}
+
+
+interface ~Box6Props extends React.ComponentProps {
+    public p1: string
+    public p2: string
+    public p3: int
+}
+
+
+class Box6 extends React.Component<Box6Props, Object> {
+	/*
+	private obj = {
+		get p1():string {return "blah";},
+		p2: "Some text"
+	};
+	*/
+    @Override public render(): React.Element {
+        return <div>
+        	//It is OK to provide more properties than needed in spread operator XPECT noerrors
+            <BigLabel {...this.props} />
         </div>
     }
 }
