@@ -295,6 +295,7 @@
         url="http://andrei.gmxhome.de/eclipse/"/>
   </setupTask>
   <setupTask
+      disabled="true"
       xsi:type="setup.p2:P2Task"
       label="Grep Console">
     <requirement
