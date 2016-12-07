@@ -52,7 +52,7 @@ import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
 package abstract class AbstractProcessor {
 
 	val private static DEBUG_LOG = false;
-	val private static DEBUG_LOG_RESULT = true;
+	val private static DEBUG_LOG_RESULT = false;
 	val private static DEBUG_RIGID = false; // if true, more consistency checks are performed and exceptions thrown if wrong
 
 	@Inject
