@@ -11,6 +11,7 @@ Contributors:
 ////
 
 == JSX Support
+N4JS scripts with file extension "n4jsx" support the special https://facebook.github.io/jsx/[JSX syntax]. Files ending with "jsx" are considered as plain Javascript.
 
 task:IDE-2411[]
 
@@ -20,25 +21,25 @@ task:IDE-2411[]
 There are two ways of defining a React component:
 
 * functional component: A function is a React component, iff
-** is return type is React.Element
-** the function has no parameter, of it defines a single (optional) parameter, and its type only has public fields (or methods defined by Object). The fields may be defined as optional.
+** its return type is React.Element
+** the function has at least one parameter. This first parameter is considered as the ``props`` property. The type of the first parameter only has public fields (or methods defined by Object). The fields may be defined as optional.
 * class component: A class is a React component, iff
 ** it extends React.Component.
 ** the type parameters must be structural types.
-*** The first parameter defines the properties type, it must only define public fields (or methods defined by Object)
-*** The second parameter defines the state type, it must only define public fields (or methods defined by Object)
+*** The first parameter defines the ``props`` type, it must only define public fields (or methods defined by Object)
+*** The second parameter defines the ``state`` type, it must only define public fields (or methods defined by Object)
 
 In both cases, the name must be capitalized (i.e., start with an upper case letter).
 --
 
 Component must be written capitalized (i.e. first letter upper case), html (or other xml elements) must be written lower case.
 
-N4JS scripts with file extension "n4jsx" support the special https://facebook.github.io/jsx/[JSX syntax].
+task:IDE-2411[]
 
 .JSX Basic Syntax
 [req,id=IDE-241102,version=1]
 --
-task:IDE-2411[]
+
 The following JSX syntax is supported (EBNF with model element assignments as used in Xtext). All other ECMAScript 2015 and N4JS syntax constructs are unaffected by this addition.
 ----
 PrimaryExpression <Yield> returns n4js::Expression:
@@ -99,11 +100,11 @@ Remarks on differences between the syntax defined in <<IDE-241102>> and https://
 * The different types of JSXElementName are defined by means of JSXElementNameExpression which is a simple expression, reusing the existing rules IdentifierRef and ParameterizedPropertyAccessExpression to model JSXIdentifer and JSXMemberExpression respectively
 * JSXPropertyAttribute models the JSX non-spread JSXAttribute definition; again existing rules (IdentifierName, StringLiteral) are used to model JSX specific ones (JSXAttributeName, JSXDoubleStringCharacters, JSXSingleStringCharacters)
 
+task:IDE-2414[]
 
 .JSX Syntax With Free Text
 [req,id=IDE-241401,version=1]
 --
-task:IDE-2414[]
 ----
 JSXChild:
 	JSXElement | JSXExpression | JSXText
@@ -160,6 +161,7 @@ If the tag binds to a component, the following constraints must hold:
 
 * The attribute must be a non-private field of the properties type.
 * The tag should define attributes for all non-optional fields of the properties type. If no attribute is defined for a non-optional field, a warning is issued.
+* The type of the attribute expression must be conform to the type of the corresponding ``props``'s property
 --
 
 .JSXElements referring to XML elements
@@ -168,5 +170,14 @@ If the tag binds to a component, the following constraints must hold:
 If the lower-case tag does not bind to a function or class declaration, the following constraints must be hold:
 
 * If the tag is not a pre-defined html tag, a warning is issued.
-* If an attribute of the tag is not a pre-defined property of the html tag or react specific attribtues, a warning is issued.
+* If an attribute of the tag is not a pre-defined property of the html tag or react specific attribtues, a warning is issued. This requirement is currently NOT supported.
+--
+
+.JSXSpreadAttribute behavior
+[req,id=IDE-241119,version=1]
+--
+The use of spread operators within an JSX element for specifying multiple attributes should be allowed. In this case, all constraints regarding type conformity checking and non-optional properties mentioned in <<IDE-241117>> apply to the attributes specified in the spread operator. In particular,
+
+* The type of each attribute specified in spread operator must be conform to the type of the corresponding property of ``props``.
+* If a non-optional property of ``props`` is specified neither as attribute nor in a spread operator, a warning is issued.
 --
