@@ -573,15 +573,6 @@ public interface ImPackage extends EPackage {
 	int IDENTIFIER_REF_IM__STRICT_MODE = N4JSPackage.IDENTIFIER_REF__STRICT_MODE;
 
 	/**
-	 * The feature id for the '<em><b>Requested Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IDENTIFIER_REF_IM__REQUESTED_VERSION = N4JSPackage.IDENTIFIER_REF__REQUESTED_VERSION;
-
-	/**
 	 * The feature id for the '<em><b>Id</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -618,22 +609,13 @@ public interface ImPackage extends EPackage {
 	int IDENTIFIER_REF_IM_FEATURE_COUNT = N4JSPackage.IDENTIFIER_REF_FEATURE_COUNT + 1;
 
 	/**
-	 * The operation id for the '<em>Has Requested Version</em>' operation.
+	 * The operation id for the '<em>Get Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF_IM___HAS_REQUESTED_VERSION = N4JSPackage.IDENTIFIER_REF___HAS_REQUESTED_VERSION;
-
-	/**
-	 * The operation id for the '<em>Get Requested Version Or Zero</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IDENTIFIER_REF_IM___GET_REQUESTED_VERSION_OR_ZERO = N4JSPackage.IDENTIFIER_REF___GET_REQUESTED_VERSION_OR_ZERO;
+	int IDENTIFIER_REF_IM___GET_VERSION = N4JSPackage.IDENTIFIER_REF___GET_VERSION;
 
 	/**
 	 * The operation id for the '<em>Is Valid Simple Assignment Target</em>' operation.
@@ -643,15 +625,6 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int IDENTIFIER_REF_IM___IS_VALID_SIMPLE_ASSIGNMENT_TARGET = N4JSPackage.IDENTIFIER_REF___IS_VALID_SIMPLE_ASSIGNMENT_TARGET;
-
-	/**
-	 * The operation id for the '<em>Get Version</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IDENTIFIER_REF_IM___GET_VERSION = N4JSPackage.IDENTIFIER_REF___GET_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Original Target Of Rewired Target</em>' operation.
@@ -908,15 +881,6 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_IM__DYNAMIC = TypeRefsPackage.PARAMETERIZED_TYPE_REF__DYNAMIC;
 
 	/**
-	 * The feature id for the '<em><b>Requested Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_IM__REQUESTED_VERSION = TypeRefsPackage.PARAMETERIZED_TYPE_REF__REQUESTED_VERSION;
-
-	/**
 	 * The feature id for the '<em><b>Declared Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1070,6 +1034,15 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_IM___GET_STRUCTURAL_MEMBERS = TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_STRUCTURAL_MEMBERS;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_IM___GET_VERSION = TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1077,24 +1050,6 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_IM___GET_MODIFIERS_AS_STRING = TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_MODIFIERS_AS_STRING;
-
-	/**
-	 * The operation id for the '<em>Has Requested Version</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_IM___HAS_REQUESTED_VERSION = TypeRefsPackage.PARAMETERIZED_TYPE_REF___HAS_REQUESTED_VERSION;
-
-	/**
-	 * The operation id for the '<em>Get Requested Version Or Zero</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_IM___GET_REQUESTED_VERSION_OR_ZERO = TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_REQUESTED_VERSION_OR_ZERO;
 
 	/**
 	 * The operation id for the '<em>Get Typing Strategy</em>' operation.
@@ -1176,15 +1131,6 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_IM___IS_DEF_SITE_STRUCTURAL_TYPING = TypeRefsPackage.PARAMETERIZED_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
-
-	/**
-	 * The operation id for the '<em>Get Version</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_IM___GET_VERSION = TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Original Target Of Rewired Target</em>' operation.
@@ -1276,15 +1222,6 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__DYNAMIC = PARAMETERIZED_TYPE_REF_IM__DYNAMIC;
-
-	/**
-	 * The feature id for the '<em><b>Requested Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__REQUESTED_VERSION = PARAMETERIZED_TYPE_REF_IM__REQUESTED_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type</b></em>' reference.
@@ -1467,6 +1404,15 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___IS_BOTTOM_TYPE = PARAMETERIZED_TYPE_REF_IM___IS_BOTTOM_TYPE;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___GET_VERSION = PARAMETERIZED_TYPE_REF_IM___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1474,24 +1420,6 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___GET_MODIFIERS_AS_STRING = PARAMETERIZED_TYPE_REF_IM___GET_MODIFIERS_AS_STRING;
-
-	/**
-	 * The operation id for the '<em>Has Requested Version</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___HAS_REQUESTED_VERSION = PARAMETERIZED_TYPE_REF_IM___HAS_REQUESTED_VERSION;
-
-	/**
-	 * The operation id for the '<em>Get Requested Version Or Zero</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___GET_REQUESTED_VERSION_OR_ZERO = PARAMETERIZED_TYPE_REF_IM___GET_REQUESTED_VERSION_OR_ZERO;
 
 	/**
 	 * The operation id for the '<em>Contains Wildcards</em>' operation.
@@ -1555,15 +1483,6 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___IS_DEF_SITE_STRUCTURAL_TYPING = PARAMETERIZED_TYPE_REF_IM___IS_DEF_SITE_STRUCTURAL_TYPING;
-
-	/**
-	 * The operation id for the '<em>Get Version</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___GET_VERSION = PARAMETERIZED_TYPE_REF_IM___GET_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Original Target Of Rewired Target</em>' operation.

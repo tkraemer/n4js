@@ -40,7 +40,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface ParameterizedTypeRef extends BaseTypeRef, VersionedReference {
+public interface ParameterizedTypeRef extends BaseTypeRef {
 	/**
 	 * Returns the value of the '<em><b>Declared Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -248,14 +248,5 @@ public interface ParameterizedTypeRef extends BaseTypeRef, VersionedReference {
 	 * @generated
 	 */
 	boolean isDefSiteStructuralTyping();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='int _xifexpression = (int) 0;\nboolean _hasRequestedVersion = this.hasRequestedVersion();\nif (_hasRequestedVersion)\n{\n\t<%java.math.BigDecimal%> _requestedVersion = this.getRequestedVersion();\n\t_xifexpression = _requestedVersion.intValue();\n}\nelse\n{\n\t_xifexpression = super.getVersion();\n}\nreturn _xifexpression;'"
-	 * @generated
-	 */
-	int getVersion();
 
 } // ParameterizedTypeRef

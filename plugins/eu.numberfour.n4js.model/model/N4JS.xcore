@@ -27,7 +27,6 @@ package eu.numberfour.n4js.n4JS
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefIterable
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
-import eu.numberfour.n4js.ts.typeRefs.VersionedReference
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TEnum
@@ -891,7 +890,7 @@ class ParenExpression extends PrimaryExpression {
 	}
 }
 
-class IdentifierRef extends PrimaryExpression, StrictModeRelevant, eu.numberfour.n4js.ts.typeRefs.Versionable, VersionedReference {
+class IdentifierRef extends PrimaryExpression, StrictModeRelevant, eu.numberfour.n4js.ts.typeRefs.Versionable {
 	refers IdentifiableElement ^id
 	transient String idAsText
 	/**
@@ -906,13 +905,6 @@ class IdentifierRef extends PrimaryExpression, StrictModeRelevant, eu.numberfour
 			return idAsText !== null && 'arguments' != idAsText && 'eval' != idAsText
 		}
 		return true
-	}
-	
-	/*
-	 * Override VersionedElement#getVersion() to return the declared version.
-	 */
-	op int getVersion() {
-		return requestedVersionOrZero
 	}
 }
 

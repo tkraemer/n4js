@@ -1249,7 +1249,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result.getFirst(), TypeRef.class);
     rawT = (TypeRef) result.getFirst();
     
-    TypeRef _resolveVersion = this.versionResolver.<TypeRef>resolveVersion(rawT, rawT);
+    TypeRef _resolveVersion = this.versionResolver.<TypeRef, TypeRef>resolveVersion(rawT, rawT);
     rawT = _resolveVersion;
     TypeRef _enforceNominalTyping = TypeUtils.enforceNominalTyping(rawT);
     T = _enforceNominalTyping;
@@ -1393,7 +1393,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     checkAssignableTo(result.getFirst(), TypeRef.class);
     T = (TypeRef) result.getFirst();
     
-    TypeRef _resolveVersion = this.versionResolver.<TypeRef>resolveVersion(T, idref);
+    TypeRef _resolveVersion = this.versionResolver.<TypeRef, IdentifierRef>resolveVersion(T, idref);
     T = _resolveVersion;
     if (((idref.eContainer() instanceof ParameterizedCallExpression) && (idref.eContainmentFeature() == N4JSPackage.eINSTANCE.getParameterizedCallExpression_Target()))) {
       final TMethod callableCtorFunction = this.typeSystemHelper.getCallableClassConstructorFunction(G, T);
@@ -2404,7 +2404,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         checkAssignableTo(result_2.getFirst(), TypeRef.class);
         T = (TypeRef) result_2.getFirst();
         
-        TypeRef _resolveVersion = this.versionResolver.<TypeRef>resolveVersion(T, receiverTypeRef);
+        TypeRef _resolveVersion = this.versionResolver.<TypeRef, TypeRef>resolveVersion(T, receiverTypeRef);
         T = _resolveVersion;
         if (((expr.getTarget() instanceof SuperLiteral) && (T instanceof FunctionTypeExprOrRef))) {
           final FunctionTypeExprOrRef F = ((FunctionTypeExprOrRef) T);
@@ -2567,7 +2567,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
           checkAssignableTo(result_2.getFirst(), TypeRef.class);
           T = (TypeRef) result_2.getFirst();
           
-          TypeRef _resolveVersion = this.versionResolver.<TypeRef>resolveVersion(T, F);
+          TypeRef _resolveVersion = this.versionResolver.<TypeRef, FunctionTypeExprOrRef>resolveVersion(T, F);
           T = _resolveVersion;
           if (((T instanceof BoundThisTypeRef) && (!((expr.getReceiver() instanceof ThisLiteral) || (expr.getReceiver() instanceof SuperLiteral))))) {
             /* G2 |~ T /\ T */

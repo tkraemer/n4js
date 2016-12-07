@@ -16,13 +16,10 @@ import eu.numberfour.n4js.n4JS.StrictModeRelevant;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.typeRefs.Versionable;
-import eu.numberfour.n4js.ts.typeRefs.VersionedReference;
 
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 
 import java.lang.reflect.InvocationTargetException;
-
-import java.math.BigDecimal;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -42,7 +39,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.IdentifierRefImpl#isStrictMode <em>Strict Mode</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.IdentifierRefImpl#getRequestedVersion <em>Requested Version</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.IdentifierRefImpl#getId <em>Id</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.IdentifierRefImpl#getIdAsText <em>Id As Text</em>}</li>
  * </ul>
@@ -69,26 +65,6 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 	 * @ordered
 	 */
 	protected boolean strictMode = STRICT_MODE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getRequestedVersion() <em>Requested Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getRequestedVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final BigDecimal REQUESTED_VERSION_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getRequestedVersion() <em>Requested Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getRequestedVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected BigDecimal requestedVersion = REQUESTED_VERSION_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getId() <em>Id</em>}' reference.
@@ -158,27 +134,6 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 		strictMode = newStrictMode;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.IDENTIFIER_REF__STRICT_MODE, oldStrictMode, strictMode));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public BigDecimal getRequestedVersion() {
-		return requestedVersion;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setRequestedVersion(BigDecimal newRequestedVersion) {
-		BigDecimal oldRequestedVersion = requestedVersion;
-		requestedVersion = newRequestedVersion;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.IDENTIFIER_REF__REQUESTED_VERSION, oldRequestedVersion, requestedVersion));
 	}
 
 	/**
@@ -259,35 +214,7 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 	 * @generated
 	 */
 	public int getVersion() {
-		return this.getRequestedVersionOrZero();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean hasRequestedVersion() {
-		BigDecimal _requestedVersion = this.getRequestedVersion();
-		return (_requestedVersion != null);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public int getRequestedVersionOrZero() {
-		int _xifexpression = (int) 0;
-		boolean _hasRequestedVersion = this.hasRequestedVersion();
-		if (_hasRequestedVersion) {
-			BigDecimal _requestedVersion = this.getRequestedVersion();
-			_xifexpression = _requestedVersion.intValue();
-		}
-		else {
-			_xifexpression = 0;
-		}
-		return _xifexpression;
+		return 0;
 	}
 
 	/**
@@ -300,8 +227,6 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 		switch (featureID) {
 			case N4JSPackage.IDENTIFIER_REF__STRICT_MODE:
 				return isStrictMode();
-			case N4JSPackage.IDENTIFIER_REF__REQUESTED_VERSION:
-				return getRequestedVersion();
 			case N4JSPackage.IDENTIFIER_REF__ID:
 				if (resolve) return getId();
 				return basicGetId();
@@ -321,9 +246,6 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 		switch (featureID) {
 			case N4JSPackage.IDENTIFIER_REF__STRICT_MODE:
 				setStrictMode((Boolean)newValue);
-				return;
-			case N4JSPackage.IDENTIFIER_REF__REQUESTED_VERSION:
-				setRequestedVersion((BigDecimal)newValue);
 				return;
 			case N4JSPackage.IDENTIFIER_REF__ID:
 				setId((IdentifiableElement)newValue);
@@ -346,9 +268,6 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 			case N4JSPackage.IDENTIFIER_REF__STRICT_MODE:
 				setStrictMode(STRICT_MODE_EDEFAULT);
 				return;
-			case N4JSPackage.IDENTIFIER_REF__REQUESTED_VERSION:
-				setRequestedVersion(REQUESTED_VERSION_EDEFAULT);
-				return;
 			case N4JSPackage.IDENTIFIER_REF__ID:
 				setId((IdentifiableElement)null);
 				return;
@@ -369,8 +288,6 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 		switch (featureID) {
 			case N4JSPackage.IDENTIFIER_REF__STRICT_MODE:
 				return strictMode != STRICT_MODE_EDEFAULT;
-			case N4JSPackage.IDENTIFIER_REF__REQUESTED_VERSION:
-				return REQUESTED_VERSION_EDEFAULT == null ? requestedVersion != null : !REQUESTED_VERSION_EDEFAULT.equals(requestedVersion);
 			case N4JSPackage.IDENTIFIER_REF__ID:
 				return id != null;
 			case N4JSPackage.IDENTIFIER_REF__ID_AS_TEXT:
@@ -397,12 +314,6 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 				default: return -1;
 			}
 		}
-		if (baseClass == VersionedReference.class) {
-			switch (derivedFeatureID) {
-				case N4JSPackage.IDENTIFIER_REF__REQUESTED_VERSION: return TypeRefsPackage.VERSIONED_REFERENCE__REQUESTED_VERSION;
-				default: return -1;
-			}
-		}
 		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
 	}
 
@@ -421,12 +332,6 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 		}
 		if (baseClass == Versionable.class) {
 			switch (baseFeatureID) {
-				default: return -1;
-			}
-		}
-		if (baseClass == VersionedReference.class) {
-			switch (baseFeatureID) {
-				case TypeRefsPackage.VERSIONED_REFERENCE__REQUESTED_VERSION: return N4JSPackage.IDENTIFIER_REF__REQUESTED_VERSION;
 				default: return -1;
 			}
 		}
@@ -457,13 +362,6 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 				default: return -1;
 			}
 		}
-		if (baseClass == VersionedReference.class) {
-			switch (baseOperationID) {
-				case TypeRefsPackage.VERSIONED_REFERENCE___HAS_REQUESTED_VERSION: return N4JSPackage.IDENTIFIER_REF___HAS_REQUESTED_VERSION;
-				case TypeRefsPackage.VERSIONED_REFERENCE___GET_REQUESTED_VERSION_OR_ZERO: return N4JSPackage.IDENTIFIER_REF___GET_REQUESTED_VERSION_OR_ZERO;
-				default: return -1;
-			}
-		}
 		return super.eDerivedOperationID(baseOperationID, baseClass);
 	}
 
@@ -479,10 +377,6 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 				return isValidSimpleAssignmentTarget();
 			case N4JSPackage.IDENTIFIER_REF___GET_VERSION:
 				return getVersion();
-			case N4JSPackage.IDENTIFIER_REF___HAS_REQUESTED_VERSION:
-				return hasRequestedVersion();
-			case N4JSPackage.IDENTIFIER_REF___GET_REQUESTED_VERSION_OR_ZERO:
-				return getRequestedVersionOrZero();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
@@ -499,8 +393,6 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (strictMode: ");
 		result.append(strictMode);
-		result.append(", requestedVersion: ");
-		result.append(requestedVersion);
 		result.append(", idAsText: ");
 		result.append(idAsText);
 		result.append(')');

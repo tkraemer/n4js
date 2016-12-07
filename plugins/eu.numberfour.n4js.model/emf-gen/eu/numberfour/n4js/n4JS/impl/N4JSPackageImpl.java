@@ -3327,15 +3327,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getIdentifierRef__GetVersion() {
-		return identifierRefEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getStrictModeRelevant() {
 		return strictModeRelevantEClass;
 	}
@@ -6307,7 +6298,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEReference(identifierRefEClass, IDENTIFIER_REF__ID);
 		createEAttribute(identifierRefEClass, IDENTIFIER_REF__ID_AS_TEXT);
 		createEOperation(identifierRefEClass, IDENTIFIER_REF___IS_VALID_SIMPLE_ASSIGNMENT_TARGET);
-		createEOperation(identifierRefEClass, IDENTIFIER_REF___GET_VERSION);
 
 		strictModeRelevantEClass = createEClass(STRICT_MODE_RELEVANT);
 		createEAttribute(strictModeRelevantEClass, STRICT_MODE_RELEVANT__STRICT_MODE);
@@ -6827,7 +6817,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		identifierRefEClass.getESuperTypes().add(this.getPrimaryExpression());
 		identifierRefEClass.getESuperTypes().add(this.getStrictModeRelevant());
 		identifierRefEClass.getESuperTypes().add(theTypeRefsPackage.getVersionable());
-		identifierRefEClass.getESuperTypes().add(theTypeRefsPackage.getVersionedReference());
 		superLiteralEClass.getESuperTypes().add(this.getPrimaryExpression());
 		thisLiteralEClass.getESuperTypes().add(this.getPrimaryExpression());
 		thisLiteralEClass.getESuperTypes().add(this.getStrictModeRelevant());
@@ -7282,8 +7271,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEAttribute(getIdentifierRef_IdAsText(), theEcorePackage.getEString(), "idAsText", null, 0, 1, IdentifierRef.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getIdentifierRef__IsValidSimpleAssignmentTarget(), theEcorePackage.getEBoolean(), "isValidSimpleAssignmentTarget", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-		initEOperation(getIdentifierRef__GetVersion(), theEcorePackage.getEInt(), "getVersion", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(strictModeRelevantEClass, StrictModeRelevant.class, "StrictModeRelevant", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStrictModeRelevant_StrictMode(), theEcorePackage.getEBoolean(), "strictMode", null, 0, 1, StrictModeRelevant.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);

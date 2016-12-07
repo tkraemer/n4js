@@ -1014,6 +1014,13 @@ public class TypeUtils {
 	}
 
 	/**
+	 * Same as {@link #copy(EObject)}, but creates a subtype of the given TypeRef.
+	 */
+	public static final <T extends EObject> T copy(T source, EClass eclass) {
+		return copy(source, true, false, eclass);
+	}
+
+	/**
 	 * Same as {@link EcoreUtil2#cloneIfContained(EObject)}, but takes care of special copy semantics for TypeRefs. See
 	 * {@link #copy(EObject)}.
 	 */

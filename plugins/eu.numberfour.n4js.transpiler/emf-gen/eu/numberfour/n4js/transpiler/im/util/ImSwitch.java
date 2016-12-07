@@ -49,7 +49,6 @@ import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.Versionable;
-import eu.numberfour.n4js.ts.typeRefs.VersionedReference;
 import eu.numberfour.n4js.ts.types.TypableElement;
 
 import org.eclipse.emf.ecore.EObject;
@@ -179,7 +178,6 @@ public class ImSwitch<T> extends Switch<T> {
 				if (result == null) result = casePrimaryExpression(identifierRef_IM);
 				if (result == null) result = caseStrictModeRelevant(identifierRef_IM);
 				if (result == null) result = caseVersionable(identifierRef_IM);
-				if (result == null) result = caseVersionedReference(identifierRef_IM);
 				if (result == null) result = caseReferencingElement_IM(identifierRef_IM);
 				if (result == null) result = caseExpression(identifierRef_IM);
 				if (result == null) result = caseTypableElement(identifierRef_IM);
@@ -204,7 +202,6 @@ public class ImSwitch<T> extends Switch<T> {
 				if (result == null) result = caseParameterizedTypeRef(parameterizedTypeRef_IM);
 				if (result == null) result = caseReferencingElement_IM(parameterizedTypeRef_IM);
 				if (result == null) result = caseBaseTypeRef(parameterizedTypeRef_IM);
-				if (result == null) result = caseVersionedReference(parameterizedTypeRef_IM);
 				if (result == null) result = caseStaticBaseTypeRef(parameterizedTypeRef_IM);
 				if (result == null) result = caseTypeRef(parameterizedTypeRef_IM);
 				if (result == null) result = caseTypeArgument(parameterizedTypeRef_IM);
@@ -221,7 +218,6 @@ public class ImSwitch<T> extends Switch<T> {
 				if (result == null) result = caseReferencingElement_IM(parameterizedTypeRefStructural_IM);
 				if (result == null) result = caseStructuralTypeRef(parameterizedTypeRefStructural_IM);
 				if (result == null) result = caseBaseTypeRef(parameterizedTypeRefStructural_IM);
-				if (result == null) result = caseVersionedReference(parameterizedTypeRefStructural_IM);
 				if (result == null) result = caseStaticBaseTypeRef(parameterizedTypeRefStructural_IM);
 				if (result == null) result = caseTypeRef(parameterizedTypeRefStructural_IM);
 				if (result == null) result = caseTypeArgument(parameterizedTypeRefStructural_IM);
@@ -720,21 +716,6 @@ public class ImSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseVersionable(Versionable object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Versioned Reference</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Versioned Reference</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseVersionedReference(VersionedReference object) {
 		return null;
 	}
 

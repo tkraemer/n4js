@@ -11,8 +11,6 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
-import eu.numberfour.n4js.ts.typeRefs.Versionable;
-import eu.numberfour.n4js.ts.typeRefs.VersionedReference;
 
 import eu.numberfour.n4js.ts.types.TN4Classifier;
 import eu.numberfour.n4js.ts.types.TStructuralType;
@@ -21,8 +19,6 @@ import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypingStrategy;
 
 import java.lang.reflect.InvocationTargetException;
-
-import java.math.BigDecimal;
 
 import java.util.Collection;
 
@@ -53,7 +49,6 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefImpl#getRequestedVersion <em>Requested Version</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefImpl#getDeclaredType <em>Declared Type</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefImpl#getTypeArgs <em>Type Args</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefImpl#isArrayTypeLiteral <em>Array Type Literal</em>}</li>
@@ -63,26 +58,6 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * @generated
  */
 public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements ParameterizedTypeRef {
-	/**
-	 * The default value of the '{@link #getRequestedVersion() <em>Requested Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getRequestedVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final BigDecimal REQUESTED_VERSION_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getRequestedVersion() <em>Requested Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getRequestedVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected BigDecimal requestedVersion = REQUESTED_VERSION_EDEFAULT;
-
 	/**
 	 * The cached value of the '{@link #getDeclaredType() <em>Declared Type</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -160,27 +135,6 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 	@Override
 	protected EClass eStaticClass() {
 		return TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public BigDecimal getRequestedVersion() {
-		return requestedVersion;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setRequestedVersion(BigDecimal newRequestedVersion) {
-		BigDecimal oldRequestedVersion = requestedVersion;
-		requestedVersion = newRequestedVersion;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.PARAMETERIZED_TYPE_REF__REQUESTED_VERSION, oldRequestedVersion, requestedVersion));
 	}
 
 	/**
@@ -428,52 +382,6 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getVersion() {
-		int _xifexpression = (int) 0;
-		boolean _hasRequestedVersion = this.hasRequestedVersion();
-		if (_hasRequestedVersion) {
-			BigDecimal _requestedVersion = this.getRequestedVersion();
-			_xifexpression = _requestedVersion.intValue();
-		}
-		else {
-			_xifexpression = super.getVersion();
-		}
-		return _xifexpression;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean hasRequestedVersion() {
-		BigDecimal _requestedVersion = this.getRequestedVersion();
-		return (_requestedVersion != null);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public int getRequestedVersionOrZero() {
-		int _xifexpression = (int) 0;
-		boolean _hasRequestedVersion = this.hasRequestedVersion();
-		if (_hasRequestedVersion) {
-			BigDecimal _requestedVersion = this.getRequestedVersion();
-			_xifexpression = _requestedVersion.intValue();
-		}
-		else {
-			_xifexpression = 0;
-		}
-		return _xifexpression;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -491,8 +399,6 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__REQUESTED_VERSION:
-				return getRequestedVersion();
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__DECLARED_TYPE:
 				if (resolve) return getDeclaredType();
 				return basicGetDeclaredType();
@@ -515,9 +421,6 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__REQUESTED_VERSION:
-				setRequestedVersion((BigDecimal)newValue);
-				return;
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__DECLARED_TYPE:
 				setDeclaredType((Type)newValue);
 				return;
@@ -543,9 +446,6 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__REQUESTED_VERSION:
-				setRequestedVersion(REQUESTED_VERSION_EDEFAULT);
-				return;
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__DECLARED_TYPE:
 				setDeclaredType((Type)null);
 				return;
@@ -570,8 +470,6 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__REQUESTED_VERSION:
-				return REQUESTED_VERSION_EDEFAULT == null ? requestedVersion != null : !REQUESTED_VERSION_EDEFAULT.equals(requestedVersion);
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__DECLARED_TYPE:
 				return declaredType != null;
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_ARGS:
@@ -590,50 +488,12 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 	 * @generated
 	 */
 	@Override
-	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == VersionedReference.class) {
-			switch (derivedFeatureID) {
-				case TypeRefsPackage.PARAMETERIZED_TYPE_REF__REQUESTED_VERSION: return TypeRefsPackage.VERSIONED_REFERENCE__REQUESTED_VERSION;
-				default: return -1;
-			}
-		}
-		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == VersionedReference.class) {
-			switch (baseFeatureID) {
-				case TypeRefsPackage.VERSIONED_REFERENCE__REQUESTED_VERSION: return TypeRefsPackage.PARAMETERIZED_TYPE_REF__REQUESTED_VERSION;
-				default: return -1;
-			}
-		}
-		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
 		if (baseClass == TypeArgument.class) {
 			switch (baseOperationID) {
 				case TypeRefsPackage.TYPE_ARGUMENT___GET_TYPE_REF_AS_STRING: return TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_TYPE_REF_AS_STRING;
 				case TypeRefsPackage.TYPE_ARGUMENT___CONTAINS_WILDCARDS: return TypeRefsPackage.PARAMETERIZED_TYPE_REF___CONTAINS_WILDCARDS;
 				case TypeRefsPackage.TYPE_ARGUMENT___CONTAINS_UNBOUND_TYPE_VARIABLES: return TypeRefsPackage.PARAMETERIZED_TYPE_REF___CONTAINS_UNBOUND_TYPE_VARIABLES;
-				default: return super.eDerivedOperationID(baseOperationID, baseClass);
-			}
-		}
-		if (baseClass == Versionable.class) {
-			switch (baseOperationID) {
-				case TypeRefsPackage.VERSIONABLE___GET_VERSION: return TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_VERSION;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -646,15 +506,7 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 				case TypeRefsPackage.TYPE_REF___GET_TYPING_STRATEGY: return TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_TYPING_STRATEGY;
 				case TypeRefsPackage.TYPE_REF___IS_USE_SITE_STRUCTURAL_TYPING: return TypeRefsPackage.PARAMETERIZED_TYPE_REF___IS_USE_SITE_STRUCTURAL_TYPING;
 				case TypeRefsPackage.TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING: return TypeRefsPackage.PARAMETERIZED_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
-				case TypeRefsPackage.TYPE_REF___GET_VERSION: return TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_VERSION;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
-			}
-		}
-		if (baseClass == VersionedReference.class) {
-			switch (baseOperationID) {
-				case TypeRefsPackage.VERSIONED_REFERENCE___HAS_REQUESTED_VERSION: return TypeRefsPackage.PARAMETERIZED_TYPE_REF___HAS_REQUESTED_VERSION;
-				case TypeRefsPackage.VERSIONED_REFERENCE___GET_REQUESTED_VERSION_OR_ZERO: return TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_REQUESTED_VERSION_OR_ZERO;
-				default: return -1;
 			}
 		}
 		return super.eDerivedOperationID(baseOperationID, baseClass);
@@ -686,12 +538,6 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 				return isUseSiteStructuralTyping();
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING:
 				return isDefSiteStructuralTyping();
-			case TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_VERSION:
-				return getVersion();
-			case TypeRefsPackage.PARAMETERIZED_TYPE_REF___HAS_REQUESTED_VERSION:
-				return hasRequestedVersion();
-			case TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_REQUESTED_VERSION_OR_ZERO:
-				return getRequestedVersionOrZero();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
@@ -706,9 +552,7 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (requestedVersion: ");
-		result.append(requestedVersion);
-		result.append(", arrayTypeLiteral: ");
+		result.append(" (arrayTypeLiteral: ");
 		result.append(arrayTypeLiteral);
 		result.append(", definedTypingStrategy: ");
 		result.append(definedTypingStrategy);

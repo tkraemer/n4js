@@ -18,6 +18,11 @@ import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
  */
 public class N4JSVersionResolver implements VersionResolver {
 	@Override
+	public <T extends TypeArgument, S> T resolveVersion(T typeRef, S versionedReference) {
+		return typeRef;
+	}
+
+	@Override
 	public <T extends TypeArgument> T resolveVersion(T typeRef, int contextVersion) {
 		return typeRef;
 	}
