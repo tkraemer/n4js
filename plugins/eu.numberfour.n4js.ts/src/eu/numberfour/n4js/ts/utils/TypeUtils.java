@@ -232,6 +232,21 @@ public class TypeUtils {
 	}
 
 	/**
+	 * Creates a structural type reference for the given, programmatically generated members. Use this method only as a
+	 * last resort, as explained {@link StructuralTypeRef here}.
+	 * <p>
+	 * For important details on structural type references, see {@link StructuralTypeRef}.
+	 */
+	public static ParameterizedTypeRefStructural test(Type declaredType,
+			TypingStrategy typingStrategy, List<TStructMember> members) {
+		final ParameterizedTypeRefStructural ref = TypeRefsFactory.eINSTANCE.createParameterizedTypeRefStructural();
+		ref.setDeclaredType(declaredType);
+		ref.setDefinedTypingStrategy(typingStrategy);
+		ref.getGenStructuralMembers().addAll(members);
+		return ref;
+	}
+
+	/**
 	 * Creates new {@link TypeTypeRef} for the given type.
 	 */
 	public static TypeTypeRef createTypeTypeRef(Type type, boolean isConstructorRef) {

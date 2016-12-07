@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4jsx.validation;
 
+import com.google.common.collect.Lists
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.IdentifierRef
@@ -19,6 +20,8 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.types.TField
+import eu.numberfour.n4js.ts.types.TGetter
+import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
@@ -27,6 +30,7 @@ import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4jsx.helpers.ReactHelper
 import eu.numberfour.n4jsx.n4JSX.JSXElement
 import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute
+import eu.numberfour.n4jsx.n4JSX.JSXSpreadAttribute
 import eu.numberfour.n4jsx.n4JSX.N4JSXPackage
 import java.util.Arrays
 import java.util.List
@@ -44,26 +48,29 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject private TypeSystemHelper tsh
 	@Inject private extension ReactHelper reactHelper;
 
-	//Source: http://www.w3schools.com/tags/
+	// Source: http://www.w3schools.com/tags/
 	private static final List<String> htmlTags = Arrays.asList(
-		"a","abbr",	"address", "area", "article", "aside", "audio", 	
-		"b", "base", "bdi", "bdo", "blockquote", "body", "br", "button",
-		"canvas", "caption", "cite", "code", "col", "colgroup", 
-		"datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "dt", 
-		"em", "embed", 
-		"fieldset", "figcaption", "figure", "footer", "form",
-		"h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hr", "html",
-		"i", "iframe", "img", "input", "ins", 
-		"kbd", "keygen", 
-		"label", "legend", "li", "link", 
-		"main", "map", "mark", "menu", "menuitem", "meta", "meter",
-		"nav", "noscript", 
-		"object", "ol", "optgroup", "option", 
-		"p", "param", "pre", "progress", "q", "rp", "rt", "ruby", 
-		"s", "samp", "script", "section", "select", "small", "source", "span",
-		"strong", "style", "sub", "summary", "sup", 
-		"table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track",
-		"u", "ul", "var", "video", "wbr"
+		"a","abbr","address","area","article","aside","audio",
+		"b","base","bdi","bdo","blockquote","body","br","button",
+		"canvas","caption","cite","code","col","colgroup",
+		"datalist","dd","del","details","dfn","dialog","div","dl","dt",
+		"em","embed","fieldset",
+		"figcaption","figure","footer","form","h1","h2","h3","h4","h5","h6","head","header","hr","html",
+		"i","iframe","img","input","ins",
+		"kbd","keygen",
+		"label","legend","li","link",
+		"main","map","mark","menu","menuitem","meta","meter",
+		"nav","noscript",
+		"object","ol","optgroup","option",
+		"p","param","pre","progress",
+		"q","rp","rt","ruby",
+		"s","samp",
+		"script","section","select",
+		"small","source","span","strong","style","sub","summary","sup",
+		"table","tbody","td","textarea","tfoot","th","thead","time","title","tr","track",
+		"u","ul",
+		"var","video",
+		"wbr"
 	)
 
 	/**
@@ -85,9 +92,10 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		val openingName = jsxElem?.jsxElementName?.expression?.refName;
 		val closingName = jsxElem?.jsxClosingName?.expression?.refName;
 
-		if ((jsxElem.jsxClosingName !==null) && !(openingName == closingName)) {
-			//Only check if the closing element exists, e.g. not null
-			val message = IssueCodes.getMessageForJSXELEMENT_OPENING_CLOSING_ELEMENT_NOT_MATCH(openingName, closingName);
+		if ((jsxElem.jsxClosingName !== null) && !(openingName == closingName)) {
+			// Only check if the closing element exists, e.g. not null
+			val message = IssueCodes.
+				getMessageForJSXELEMENT_OPENING_CLOSING_ELEMENT_NOT_MATCH(openingName, closingName);
 			addIssue(
 				message,
 				jsxElem,
@@ -221,27 +229,102 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	/**
+	 * Check the type conformity of types of spread operator's attributes against "props" types
+	 * See Req. IDE-241119
+	 */
+	@Check
+	def public void checkTypeConformityOFJSXSpreadAttribute(JSXSpreadAttribute spreadAttribute) {
+		val expr = spreadAttribute.expression;
+		val propsType = (spreadAttribute.eContainer as JSXElement).propsType
+		if (propsType === null) 
+			return;
+		
+		val G = spreadAttribute.newRuleEnvironment
+		// Retrieve fields or getters in props type
+		val fieldsOrGettersInProps = tsh.structuralTypesHelper.collectStructuralMembers(G, propsType,
+			TypingStrategy.STRUCTURAL).filter[m | (m instanceof TField) || (m instanceof TGetter)];
+
+		val exprTypeResult = ts.type(G, expr);
+		if (exprTypeResult.failed)
+			return;
+		// Retrieve attributes (either field or getter) in spread operator type	
+		val attributessInSpreadOperatorType = tsh.structuralTypesHelper.collectStructuralMembers(G, exprTypeResult.value,
+				TypingStrategy.STRUCTURAL).filter[m | (m instanceof TField) || (m instanceof TGetter)];
+
+		// Type check each attribute in spreader operator against the corresponding props type's field/getter
+		attributessInSpreadOperatorType.forEach [ attributeInSpreadOperator |
+			val attributeInSpreadOperatorTypeRef = attributeInSpreadOperator.typeRefOfFieldOrGetter;
+			val fieldOrGetterInProps = fieldsOrGettersInProps.findFirst[fieldOrGetter | attributeInSpreadOperator.name == fieldOrGetter.name];
+			
+			if (fieldOrGetterInProps !== null) {
+				val fieldOrGetterInPropsTypeRef = fieldOrGetterInProps.typeRefOfFieldOrGetter;
+				val result = ts.subtype(G, attributeInSpreadOperatorTypeRef, fieldOrGetterInPropsTypeRef);
+				if (result.failed) {
+					val message = IssueCodes.getMessageForJSXSPREADATTRIBUTE_WRONG_SUBTYPE(attributeInSpreadOperator.name,
+						attributeInSpreadOperatorTypeRef.typeRefAsString, fieldOrGetterInPropsTypeRef.typeRefAsString);
+					addIssue(
+						message,
+						spreadAttribute,
+						N4JSXPackage.Literals.JSX_SPREAD_ATTRIBUTE__EXPRESSION,
+						IssueCodes.JSXSPREADATTRIBUTE_WRONG_SUBTYPE
+					);
+				}
+			}
+		];
+	}
+	
+	/**
+	 * Returns the type of a field or return type of a getter
+	 */
+	def private typeRefOfFieldOrGetter(TMember member) {
+		if (member instanceof TField) {
+			return member.typeRef;
+		} else if (member instanceof TGetter) {
+			return member.declaredTypeRef;
+		} else {
+			throw new IllegalArgumentException(member + " must be either a TField or TGetter");
+		}
+	}
+
+	/**
 	 * Check that non-optional fields of "props" should be specified in JSX element
 	 * See Req. IDE-241117
 	 */
 	def private void checkAllNonOptionalFieldsAreSpecified(JSXElement jsxElem, TypeRef exprTypeRef) {
 		val jsxPropertyAttributes = jsxElem.jsxAttributes;
-		val properties = jsxPropertyAttributes.map[a|(a as JSXPropertyAttribute).property];
+		// First, collect all normal properties in JSX element 
+		val allAttributesInJSXElement = Lists.newArrayList(jsxPropertyAttributes.filter(typeof(JSXPropertyAttribute)).map[a | a.property]);
 		val propsType = jsxElem.propsType;
 		if (propsType === null)
 			return;
 
 		val G = jsxElem.newRuleEnvironment;
-		val nonOptionalFieldsInPropsType = tsh.structuralTypesHelper.collectStructuralMembers(G, propsType,
-			TypingStrategy.STRUCTURAL).filter[m|(m instanceof TField) && !m.isOptional];
+		// Then collect attributes in spread operators
+		val attributesInSpreadOperator = Lists.newArrayList(jsxPropertyAttributes.filter(typeof(JSXSpreadAttribute)).map [ spreadAttribute |
+			val exprTypeRefResult = ts.type(G, spreadAttribute.expression);
+			if (!exprTypeRefResult.failed) {
+				return tsh.structuralTypesHelper.collectStructuralMembers(G, exprTypeRefResult.value, TypingStrategy.STRUCTURAL).filter [ m |
+					(m instanceof TField) || (m instanceof TGetter)
+				]
+			} else {
+				Lists.newArrayList
+			}
+		]).flatten;
+		allAttributesInJSXElement.addAll(attributesInSpreadOperator)
+		
+		// Retrieve all non-optional fields or getters in "props" type
+		val nonOptionalFieldsOrGettersInProps = 
+				tsh.structuralTypesHelper.collectStructuralMembers(G, propsType, TypingStrategy.STRUCTURAL).filter[m | 
+					(m instanceof TField || m instanceof TGetter) && !m.isOptional
+				];
+		//Calculate the set of unspecified non-optional properties 	
+		val String missingFieldsStringRep = nonOptionalFieldsOrGettersInProps.filter [ fieldOrGetter |
+			!(allAttributesInJSXElement.exists[attribute | attribute.name == fieldOrGetter.name])
+		].map [ fieldOrGetter |	fieldOrGetter.name ].join(",");
 
-		val String missingFields = nonOptionalFieldsInPropsType.filter[field|!(properties.contains(field))].map [ field |
-			field.name
-		].join(",")
-
-		if (!missingFields.isEmpty) {
+		if (!missingFieldsStringRep.isEmpty) {
 			val message = IssueCodes.
-				getMessageForJSXPROPERTY_ATTRIBUTE_NON_OPTIONAL_PROPERTY_NOT_SPECIFIED(missingFields);
+				getMessageForJSXPROPERTY_ATTRIBUTE_NON_OPTIONAL_PROPERTY_NOT_SPECIFIED(missingFieldsStringRep);
 			addIssue(
 				message,
 				jsxElem,

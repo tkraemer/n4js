@@ -1,0 +1,95 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "react.n4jsd" {}
+	}
+
+	END_SETUP
+*/
+
+import * as React from "react";
+
+interface ~BigLabelProps extends React.ComponentProps {
+    public p1: string
+    public p2: string
+}
+
+class BigLabel extends React.Component<BigLabelProps, Object> {
+    @Override public render(): React.Element {
+        return <h1></h1>
+    }
+}
+
+interface ~BoxProps extends React.ComponentProps {
+    public b1: int
+    public b2: Array<String>
+}
+
+class Box extends React.Component<BoxProps, Object> {
+	private obj = {
+		p1: 10,
+		p2: "Some text"
+	};
+    @Override public render(): React.Element {
+        return <div>
+        	//XPECT errors --> "Field p1 has wrong type because int not subtype of string." at "this.obj"
+            <BigLabel {...this.obj} />
+        </div>
+    }
+}
+
+class Box2 extends React.Component<BoxProps, Object> {
+	private obj = {
+		p1: "Hi"
+	};
+    @Override public render(): React.Element {
+        return <div>
+        	//XPECT warnings --> "Non-optional property p2 should be specified." at "BigLabel"
+            <BigLabel {...this.obj} />
+        </div>
+    }
+}
+
+class Box3 extends React.Component<BoxProps, Object> {
+	private obj = {
+		p1: "Hi"
+	};
+    @Override public render(): React.Element {
+        return <div>
+        	//XPECT noerrors
+            <BigLabel {...this.obj} p2="Some text" />
+        </div>
+    }
+}
+
+interface ~Box4Props extends React.ComponentProps {
+    public p1: string
+    public p2: string
+    public p3: string
+}
+
+class Box4 extends React.Component<Box4Props, Object> {
+	private obj = {
+		p1: "Hi"
+	};
+    @Override public render(): React.Element {
+        return <div>
+        		//XPECT noerrors
+            <BigLabel {...this.props} />
+        </div>
+    }
+}
+
+class Box5 extends React.Component<BoxProps, Object> {
+	private obj = {
+		get p1():string {return "Hi";},
+		p2: "Some text"
+	};
+    @Override public render(): React.Element {
+        return <div>
+        	//XPECT noerrors
+            <BigLabel {...this.obj} />
+        </div>
+    }
+}

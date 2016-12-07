@@ -14,12 +14,17 @@ import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
+import eu.numberfour.n4js.ts.types.TField
+import eu.numberfour.n4js.ts.types.TypingStrategy
+import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.DefaultUnsupportedExpressionTypeHelper
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4jsx.helpers.ReactHelper
 import eu.numberfour.n4jsx.n4JSX.JSXElement
 import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute
+import eu.numberfour.n4jsx.n4JSX.JSXSpreadAttribute
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EObject
@@ -29,8 +34,9 @@ import org.eclipse.emf.ecore.EReference
  * This class adds typing rules for JSX elements. Consider to define these typing rules in an Xsemantics for N4JSX 
  */
 class N4JSXUnsupportedExpressionTypeHelper extends DefaultUnsupportedExpressionTypeHelper {
-	@Inject ReactHelper reactLookupHelper;
+	@Inject extension ReactHelper reactLookupHelper;
 	@Inject N4JSTypeSystem ts;
+	@Inject TypeSystemHelper tsh;
 
 	/**
 	 * Return the type of JSX element as React.Element
@@ -70,10 +76,10 @@ class N4JSXUnsupportedExpressionTypeHelper extends DefaultUnsupportedExpressionT
 	override public TypeRef expectedExpressionTypeInContainer(EObject container, Expression expression,
 		RuleEnvironment G) {
 		if (container instanceof JSXPropertyAttribute) {
-			val property = container.property;
-			val Result<TypeRef> result = ts.type(G, property);
+			val Result<TypeRef> result = ts.type(G, container.property);
 			return result.value;
-		} else {
+		}		
+		else {
 			return null;
 		}
 	}
