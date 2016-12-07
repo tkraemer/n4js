@@ -92,7 +92,6 @@ public enum ResourceType {
 		switch (fileExtension) {
 		case EXT_JS:
 			return ResourceType.JS;
-		case "n4idl":
 		case EXT_N4JS:
 			return ResourceType.N4JS;
 		case EXT_N4JSD:
