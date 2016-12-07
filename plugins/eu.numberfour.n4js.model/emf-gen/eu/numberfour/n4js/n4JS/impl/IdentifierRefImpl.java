@@ -15,7 +15,7 @@ import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.StrictModeRelevant;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
-import eu.numberfour.n4js.ts.typeRefs.VersionProvider;
+import eu.numberfour.n4js.ts.typeRefs.Versionable;
 import eu.numberfour.n4js.ts.typeRefs.VersionedReference;
 
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
@@ -392,7 +392,7 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 				default: return -1;
 			}
 		}
-		if (baseClass == VersionProvider.class) {
+		if (baseClass == Versionable.class) {
 			switch (derivedFeatureID) {
 				default: return -1;
 			}
@@ -419,7 +419,7 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 				default: return -1;
 			}
 		}
-		if (baseClass == VersionProvider.class) {
+		if (baseClass == Versionable.class) {
 			switch (baseFeatureID) {
 				default: return -1;
 			}
@@ -451,9 +451,9 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 				default: return -1;
 			}
 		}
-		if (baseClass == VersionProvider.class) {
+		if (baseClass == Versionable.class) {
 			switch (baseOperationID) {
-				case TypeRefsPackage.VERSION_PROVIDER___GET_VERSION: return N4JSPackage.IDENTIFIER_REF___GET_VERSION;
+				case TypeRefsPackage.VERSIONABLE___GET_VERSION: return N4JSPackage.IDENTIFIER_REF___GET_VERSION;
 				default: return -1;
 			}
 		}

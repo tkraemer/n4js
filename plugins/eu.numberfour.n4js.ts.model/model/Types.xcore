@@ -36,7 +36,6 @@ import java.util.List
 import org.eclipse.emf.ecore.EMap
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
-import eu.numberfour.n4js.ts.typeRefs.VersionProvider
 
 type IterableOfTClassifier wraps Iterable<? extends TClassifier>
 type Variance wraps Variance
@@ -488,7 +487,7 @@ enum MemberAccessModifier {
  * </p>
  */
 //TODO why not abstract (doesn't work when it is abstract, but why?)
-class Type extends TExportableElement, TAnnotableElement, VersionProvider {
+class Type extends TExportableElement, TAnnotableElement, eu.numberfour.n4js.ts.typeRefs.Versionable {
 
 	/**
 	 * Returns true if type's implementation is provided by runtime. Default implementation returns true, overridden in user-defined (meta) types.

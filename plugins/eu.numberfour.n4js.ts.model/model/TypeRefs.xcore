@@ -63,10 +63,10 @@ type ParameterizedTypeRefIterable wraps Iterable<ParameterizedTypeRef>
  * the explicitly requested version if the user provided one, otherwise it returns 0. For an N4IDLClassDeclaration, 
  * getVersion returns the version that was declared by the user for that class.
  * 
- * It was decided that TypeRef and Type should extend VersionProvider to avoid switching on the type of a the Type or 
+ * It was decided that TypeRef and Type should extend Versionable to avoid switching on the type of a the Type or 
  * TypeRef instance under consideration. This is possible since 0 is a sensible default for unversioned objects.
  */
-abstract class VersionProvider {
+abstract class Versionable {
 	op int getVersion() {
 		return 0
 	}
@@ -103,7 +103,7 @@ abstract class VersionedReference {
 /*
  * Base class for all type references
  */
-abstract class TypeRef extends TypeArgument, VersionProvider {
+abstract class TypeRef extends TypeArgument, Versionable {
 	NullModifier nullModifier
 	UndefModifier undefModifier
 	/**

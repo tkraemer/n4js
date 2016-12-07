@@ -8,7 +8,7 @@
 package eu.numberfour.n4js.ts.types;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
-import eu.numberfour.n4js.ts.typeRefs.VersionProvider;
+import eu.numberfour.n4js.ts.typeRefs.Versionable;
 
 import eu.numberfour.n4js.ts.types.util.Variance;
 
@@ -32,7 +32,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Type extends TExportableElement, TAnnotableElement, VersionProvider {
+public interface Type extends TExportableElement, TAnnotableElement, Versionable {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -8,7 +8,7 @@
 package eu.numberfour.n4js.ts.typeRefs.impl;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
-import eu.numberfour.n4js.ts.typeRefs.VersionProvider;
+import eu.numberfour.n4js.ts.typeRefs.Versionable;
 
 import eu.numberfour.n4js.utils.emf.ProxyResolvingEObjectImpl;
 
@@ -20,18 +20,18 @@ import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Version Provider</b></em>'.
+ * An implementation of the model object '<em><b>Versionable</b></em>'.
  * <!-- end-user-doc -->
  *
  * @generated
  */
-public abstract class VersionProviderImpl extends ProxyResolvingEObjectImpl implements VersionProvider {
+public abstract class VersionableImpl extends ProxyResolvingEObjectImpl implements Versionable {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected VersionProviderImpl() {
+	protected VersionableImpl() {
 		super();
 	}
 
@@ -42,7 +42,7 @@ public abstract class VersionProviderImpl extends ProxyResolvingEObjectImpl impl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return TypeRefsPackage.Literals.VERSION_PROVIDER;
+		return TypeRefsPackage.Literals.VERSIONABLE;
 	}
 
 	/**
@@ -62,10 +62,10 @@ public abstract class VersionProviderImpl extends ProxyResolvingEObjectImpl impl
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case TypeRefsPackage.VERSION_PROVIDER___GET_VERSION:
+			case TypeRefsPackage.VERSIONABLE___GET_VERSION:
 				return getVersion();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
 
-} //VersionProviderImpl
+} //VersionableImpl

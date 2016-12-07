@@ -9,7 +9,7 @@ package eu.numberfour.n4js.n4JS.util;
 
 import eu.numberfour.n4js.n4JS.*;
 
-import eu.numberfour.n4js.ts.typeRefs.VersionProvider;
+import eu.numberfour.n4js.ts.typeRefs.Versionable;
 import eu.numberfour.n4js.ts.typeRefs.VersionedReference;
 
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
@@ -719,8 +719,8 @@ public class N4JSAdapterFactory extends AdapterFactoryImpl {
 				return createIdentifiableElementAdapter();
 			}
 			@Override
-			public Adapter caseVersionProvider(VersionProvider object) {
-				return createVersionProviderAdapter();
+			public Adapter caseVersionable(Versionable object) {
+				return createVersionableAdapter();
 			}
 			@Override
 			public Adapter caseVersionedReference(VersionedReference object) {
@@ -2987,16 +2987,16 @@ public class N4JSAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.typeRefs.VersionProvider <em>Version Provider</em>}'.
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.typeRefs.Versionable <em>Versionable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see eu.numberfour.n4js.ts.typeRefs.VersionProvider
+	 * @see eu.numberfour.n4js.ts.typeRefs.Versionable
 	 * @generated
 	 */
-	public Adapter createVersionProviderAdapter() {
+	public Adapter createVersionableAdapter() {
 		return null;
 	}
 

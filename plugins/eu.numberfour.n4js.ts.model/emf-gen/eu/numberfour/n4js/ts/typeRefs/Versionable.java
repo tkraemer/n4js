@@ -11,7 +11,7 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Version Provider</b></em>'.
+ * A representation of the model object '<em><b>Versionable</b></em>'.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -34,16 +34,16 @@ import org.eclipse.emf.ecore.EObject;
  * the explicitly requested version if the user provided one, otherwise it returns 0. For an N4IDLClassDeclaration,
  * getVersion returns the version that was declared by the user for that class.
  * 
- * It was decided that TypeRef and Type should extend VersionProvider to avoid switching on the type of a the Type or
+ * It was decided that TypeRef and Type should extend Versionable to avoid switching on the type of a the Type or
  * TypeRef instance under consideration. This is possible since 0 is a sensible default for unversioned objects.
  * <!-- end-model-doc -->
  *
  *
- * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getVersionProvider()
+ * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getVersionable()
  * @model abstract="true"
  * @generated
  */
-public interface VersionProvider extends EObject {
+public interface Versionable extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -53,4 +53,4 @@ public interface VersionProvider extends EObject {
 	 */
 	int getVersion();
 
-} // VersionProvider
+} // Versionable

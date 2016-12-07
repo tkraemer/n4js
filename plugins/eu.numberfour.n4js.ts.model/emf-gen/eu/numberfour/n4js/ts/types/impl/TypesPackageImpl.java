@@ -3250,7 +3250,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		tFunctionEClass.getESuperTypes().add(this.getSyntaxRelatedTElement());
 		typeEClass.getESuperTypes().add(this.getTExportableElement());
 		typeEClass.getESuperTypes().add(this.getTAnnotableElement());
-		typeEClass.getESuperTypes().add(theTypeRefsPackage.getVersionProvider());
+		typeEClass.getESuperTypes().add(theTypeRefsPackage.getVersionable());
 		declaredTypeWithAccessModifierEClass.getESuperTypes().add(this.getType());
 		declaredTypeWithAccessModifierEClass.getESuperTypes().add(this.getAccessibleTypeElement());
 		containerTypeEClass.getESuperTypes().add(this.getType());

@@ -31,7 +31,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeVariableMapping;
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.VersionProvider;
+import eu.numberfour.n4js.ts.typeRefs.Versionable;
 import eu.numberfour.n4js.ts.typeRefs.VersionedReference;
 import eu.numberfour.n4js.ts.typeRefs.Wildcard;
 
@@ -63,7 +63,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass versionProviderEClass = null;
+	private EClass versionableEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -311,8 +311,8 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getVersionProvider() {
-		return versionProviderEClass;
+	public EClass getVersionable() {
+		return versionableEClass;
 	}
 
 	/**
@@ -320,8 +320,8 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getVersionProvider__GetVersion() {
-		return versionProviderEClass.getEOperations().get(0);
+	public EOperation getVersionable__GetVersion() {
+		return versionableEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -1729,8 +1729,8 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		isCreated = true;
 
 		// Create classes and their features
-		versionProviderEClass = createEClass(VERSION_PROVIDER);
-		createEOperation(versionProviderEClass, VERSION_PROVIDER___GET_VERSION);
+		versionableEClass = createEClass(VERSIONABLE);
+		createEOperation(versionableEClass, VERSIONABLE___GET_VERSION);
 
 		versionedReferenceEClass = createEClass(VERSIONED_REFERENCE);
 		createEAttribute(versionedReferenceEClass, VERSIONED_REFERENCE__REQUESTED_VERSION);
@@ -1945,7 +1945,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 
 		// Add supertypes to classes
 		typeRefEClass.getESuperTypes().add(this.getTypeArgument());
-		typeRefEClass.getESuperTypes().add(this.getVersionProvider());
+		typeRefEClass.getESuperTypes().add(this.getVersionable());
 		staticBaseTypeRefEClass.getESuperTypes().add(this.getTypeRef());
 		baseTypeRefEClass.getESuperTypes().add(this.getStaticBaseTypeRef());
 		composedTypeRefEClass.getESuperTypes().add(this.getStaticBaseTypeRef());
@@ -1972,9 +1972,9 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		deferredTypeRefEClass.getESuperTypes().add(this.getTypeRef());
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(versionProviderEClass, VersionProvider.class, "VersionProvider", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(versionableEClass, Versionable.class, "Versionable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEOperation(getVersionProvider__GetVersion(), theEcorePackage.getEInt(), "getVersion", 0, 1, !IS_UNIQUE, IS_ORDERED);
+		initEOperation(getVersionable__GetVersion(), theEcorePackage.getEInt(), "getVersion", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(versionedReferenceEClass, VersionedReference.class, "VersionedReference", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getVersionedReference_RequestedVersion(), theEcorePackage.getEBigDecimal(), "requestedVersion", null, 0, 1, VersionedReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

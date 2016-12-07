@@ -11,7 +11,7 @@ import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
-import eu.numberfour.n4js.ts.typeRefs.VersionProvider;
+import eu.numberfour.n4js.ts.typeRefs.Versionable;
 import eu.numberfour.n4js.ts.typeRefs.VersionedReference;
 
 import eu.numberfour.n4js.ts.types.TN4Classifier;
@@ -631,9 +631,9 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
-		if (baseClass == VersionProvider.class) {
+		if (baseClass == Versionable.class) {
 			switch (baseOperationID) {
-				case TypeRefsPackage.VERSION_PROVIDER___GET_VERSION: return TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_VERSION;
+				case TypeRefsPackage.VERSIONABLE___GET_VERSION: return TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_VERSION;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}

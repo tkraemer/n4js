@@ -15,7 +15,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.typeRefs.TypeVariableMapping;
-import eu.numberfour.n4js.ts.typeRefs.VersionProvider;
+import eu.numberfour.n4js.ts.typeRefs.Versionable;
 
 import eu.numberfour.n4js.ts.types.TN4Classifier;
 import eu.numberfour.n4js.ts.types.TStructMember;
@@ -613,9 +613,9 @@ public class BoundThisTypeRefImpl extends ThisTypeRefImpl implements BoundThisTy
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
-		if (baseClass == VersionProvider.class) {
+		if (baseClass == Versionable.class) {
 			switch (baseOperationID) {
-				case TypeRefsPackage.VERSION_PROVIDER___GET_VERSION: return TypeRefsPackage.BOUND_THIS_TYPE_REF___GET_VERSION;
+				case TypeRefsPackage.VERSIONABLE___GET_VERSION: return TypeRefsPackage.BOUND_THIS_TYPE_REF___GET_VERSION;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}

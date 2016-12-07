@@ -9,7 +9,7 @@ package eu.numberfour.n4js.n4JS.util;
 
 import eu.numberfour.n4js.n4JS.*;
 
-import eu.numberfour.n4js.ts.typeRefs.VersionProvider;
+import eu.numberfour.n4js.ts.typeRefs.Versionable;
 import eu.numberfour.n4js.ts.typeRefs.VersionedReference;
 
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
@@ -696,7 +696,7 @@ public class N4JSSwitch<T> extends Switch<T> {
 				T result = caseIdentifierRef(identifierRef);
 				if (result == null) result = casePrimaryExpression(identifierRef);
 				if (result == null) result = caseStrictModeRelevant(identifierRef);
-				if (result == null) result = caseVersionProvider(identifierRef);
+				if (result == null) result = caseVersionable(identifierRef);
 				if (result == null) result = caseVersionedReference(identifierRef);
 				if (result == null) result = caseExpression(identifierRef);
 				if (result == null) result = caseTypableElement(identifierRef);
@@ -4061,17 +4061,17 @@ public class N4JSSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Version Provider</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Versionable</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Version Provider</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Versionable</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseVersionProvider(VersionProvider object) {
+	public T caseVersionable(Versionable object) {
 		return null;
 	}
 

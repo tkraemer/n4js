@@ -7,7 +7,7 @@
  */
 package eu.numberfour.n4js.n4JS;
 
-import eu.numberfour.n4js.ts.typeRefs.VersionProvider;
+import eu.numberfour.n4js.ts.typeRefs.Versionable;
 import eu.numberfour.n4js.ts.typeRefs.VersionedReference;
 
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
@@ -29,7 +29,7 @@ import eu.numberfour.n4js.ts.types.IdentifiableElement;
  * @model
  * @generated
  */
-public interface IdentifierRef extends PrimaryExpression, StrictModeRelevant, VersionProvider, VersionedReference {
+public interface IdentifierRef extends PrimaryExpression, StrictModeRelevant, Versionable, VersionedReference {
 	/**
 	 * Returns the value of the '<em><b>Id</b></em>' reference.
 	 * <!-- begin-user-doc -->

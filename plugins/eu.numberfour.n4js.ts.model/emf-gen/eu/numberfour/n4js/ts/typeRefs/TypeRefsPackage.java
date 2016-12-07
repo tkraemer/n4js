@@ -75,23 +75,23 @@ public interface TypeRefsPackage extends EPackage {
 	TypeRefsPackage eINSTANCE = eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.VersionProviderImpl <em>Version Provider</em>}' class.
+	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.VersionableImpl <em>Versionable</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see eu.numberfour.n4js.ts.typeRefs.impl.VersionProviderImpl
-	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getVersionProvider()
+	 * @see eu.numberfour.n4js.ts.typeRefs.impl.VersionableImpl
+	 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getVersionable()
 	 * @generated
 	 */
-	int VERSION_PROVIDER = 0;
+	int VERSIONABLE = 0;
 
 	/**
-	 * The number of structural features of the '<em>Version Provider</em>' class.
+	 * The number of structural features of the '<em>Versionable</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VERSION_PROVIDER_FEATURE_COUNT = 0;
+	int VERSIONABLE_FEATURE_COUNT = 0;
 
 	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
@@ -100,16 +100,16 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VERSION_PROVIDER___GET_VERSION = 0;
+	int VERSIONABLE___GET_VERSION = 0;
 
 	/**
-	 * The number of operations of the '<em>Version Provider</em>' class.
+	 * The number of operations of the '<em>Versionable</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VERSION_PROVIDER_OPERATION_COUNT = 1;
+	int VERSIONABLE_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.VersionedReferenceImpl <em>Versioned Reference</em>}' class.
@@ -6123,24 +6123,24 @@ public interface TypeRefsPackage extends EPackage {
 
 
 	/**
-	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.VersionProvider <em>Version Provider</em>}'.
+	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.Versionable <em>Versionable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Version Provider</em>'.
-	 * @see eu.numberfour.n4js.ts.typeRefs.VersionProvider
+	 * @return the meta object for class '<em>Versionable</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.Versionable
 	 * @generated
 	 */
-	EClass getVersionProvider();
+	EClass getVersionable();
 
 	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.VersionProvider#getVersion() <em>Get Version</em>}' operation.
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.Versionable#getVersion() <em>Get Version</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Version</em>' operation.
-	 * @see eu.numberfour.n4js.ts.typeRefs.VersionProvider#getVersion()
+	 * @see eu.numberfour.n4js.ts.typeRefs.Versionable#getVersion()
 	 * @generated
 	 */
-	EOperation getVersionProvider__GetVersion();
+	EOperation getVersionable__GetVersion();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.VersionedReference <em>Versioned Reference</em>}'.
@@ -7732,14 +7732,14 @@ public interface TypeRefsPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.VersionProviderImpl <em>Version Provider</em>}' class.
+		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.VersionableImpl <em>Versionable</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see eu.numberfour.n4js.ts.typeRefs.impl.VersionProviderImpl
-		 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getVersionProvider()
+		 * @see eu.numberfour.n4js.ts.typeRefs.impl.VersionableImpl
+		 * @see eu.numberfour.n4js.ts.typeRefs.impl.TypeRefsPackageImpl#getVersionable()
 		 * @generated
 		 */
-		EClass VERSION_PROVIDER = eINSTANCE.getVersionProvider();
+		EClass VERSIONABLE = eINSTANCE.getVersionable();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Version</b></em>' operation.
@@ -7747,7 +7747,7 @@ public interface TypeRefsPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation VERSION_PROVIDER___GET_VERSION = eINSTANCE.getVersionProvider__GetVersion();
+		EOperation VERSIONABLE___GET_VERSION = eINSTANCE.getVersionable__GetVersion();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.VersionedReferenceImpl <em>Versioned Reference</em>}' class.
