@@ -43,12 +43,10 @@ class N4JSXUnsupportedExpressionTypeHelper extends DefaultUnsupportedExpressionT
 	override public typeExpression(Expression expression, RuleEnvironment G) {
 		if (expression instanceof JSXElement) {
 			val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
-			val classifierReactElement = reactLookupHelper.lookUpReactClassifier(expression, reference,
-				ReactHelper.REACT_ELEMENT, ReactHelper.REACT_MODULE);
-
+			val classifierReactElement = reactLookupHelper.lookUpReactClassifier(expression, reference, ReactHelper.REACT_ELEMENT, ReactHelper.REACT_MODULE);
+			
 			if (classifierReactElement === null) {
-				throw new IllegalStateException(ReactHelper.REACT_MODULE + "." + ReactHelper.REACT_ELEMENT +
-					" not found");
+				throw new IllegalStateException(ReactHelper.REACT_MODULE + "." + ReactHelper.REACT_ELEMENT +  " not found");			
 			}
 			val typeRef = TypeUtils.createTypeRef(classifierReactElement)
 			return typeRef
@@ -67,14 +65,14 @@ class N4JSXUnsupportedExpressionTypeHelper extends DefaultUnsupportedExpressionT
 	 * 
 	 * @return the expected of the expression if the container is a JSX property attribute node and null otherwise
 	 */
-	override public TypeRef expectedExpressionTypeInContainer(EObject container, Expression expression,
+	override public TypeRef expectedExpressionTypeInEObject(EObject container, Expression expression,
 		RuleEnvironment G) {
 		if (container instanceof JSXPropertyAttribute) {
 			val Result<TypeRef> result = ts.type(G, container.property);
 			return result.value;
 		}		
 		else {
-			return null;
+			return super.expectedExpressionTypeInEObject(container, expression, G);
 		}
 	}
 }

@@ -5971,8 +5971,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleExpectedTypeInUnsupportedContainer(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EObject container, final Expression expr) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    TypeRef _expectedExpressionTypeInContainer = this.expressionTypeHelper.expectedExpressionTypeInContainer(container, expr, G);
-    T = _expectedExpressionTypeInContainer;
+    TypeRef _expectedExpressionTypeInEObject = this.expressionTypeHelper.expectedExpressionTypeInEObject(container, expr, G);
+    T = _expectedExpressionTypeInEObject;
     return new Result<TypeRef>(T);
   }
   

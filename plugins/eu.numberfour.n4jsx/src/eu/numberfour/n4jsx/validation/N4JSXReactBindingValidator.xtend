@@ -91,10 +91,9 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		val openingName = jsxElem?.jsxElementName?.expression?.refName;
 		val closingName = jsxElem?.jsxClosingName?.expression?.refName;
 
-		if ((jsxElem.jsxClosingName !== null) && !(openingName == closingName)) {
-			// Only check if the closing element exists, e.g. not null
-			val message = IssueCodes.
-				getMessageForJSXELEMENT_OPENING_CLOSING_ELEMENT_NOT_MATCH(openingName, closingName);
+		if ((jsxElem.jsxClosingName !==null) && !(openingName == closingName)) {
+			//Only check if the closing element exists, e.g. not null
+			val message = IssueCodes.getMessageForJSXELEMENT_OPENING_CLOSING_ELEMENT_NOT_MATCH(openingName, closingName);
 			addIssue(
 				message,
 				jsxElem,
@@ -233,13 +232,15 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		val TypeRef exprTypeRef = reactHelper.getJSXElementBindingType(jsxElem);
 		var isFunction = exprTypeRef instanceof FunctionTypeExprOrRef;
 		var isClass = exprTypeRef instanceof TypeTypeRef && (exprTypeRef as TypeTypeRef).constructorRef;
-		
 		if (!isFunction && !isClass) {
 			return;
 		}
 					
 		val G = propertyAttribute.newRuleEnvironment;
 		val Result<TypeRef> result = ts.type(G, propertyAttribute.property);
+		//TODO: it's not nice that we get an UnknownTypeRef, here; 
+		//they are mainly intended for error cases, not valid code. Probably it should be any+ instead.
+		//This requires refactoring else where
 		if (result.value instanceof UnknownTypeRef) {
 			val message = IssueCodes.getMessageForJSXSPROPERTYATTRIBUTE_NOT_DECLARED_IN_PROPS(propertyAttribute.propertyAsText, 
 				jsxElem?.jsxElementName?.expression?.refName);
@@ -250,7 +251,6 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 						IssueCodes.JSXSPROPERTYATTRIBUTE_NOT_DECLARED_IN_PROPS
 					);
 		}
-		
 	}
 
 	/**
@@ -302,7 +302,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	
 	/**
 	 * Check if there is any attribute in spread operator that is not declared in props
-	 * Notes: this is not commented out but not deleted for now since the Stdlib team is still arguing about if this check makes sense
+	 * Notes: this is commented out but not deleted for now since the Stdlib team is still arguing about if this check makes sense
 	 */
 //	def private checkUnknownAttributeInSpreadOperator(JSXSpreadAttribute spreadAttribute, JSXElement jsxElem, Iterable<TMember> attributesInSpreadOperatorType, Iterable<TMember> fieldsOrGettersInProps) {
 //		attributesInSpreadOperatorType.forEach [ attributeInSpreadOperator |

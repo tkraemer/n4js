@@ -36,7 +36,7 @@ public interface UnsupportedExpressionTypeHelper {
 	 *            the rule environment
 	 * @return a type reference
 	 */
-	public TypeRef expectedExpressionTypeInContainer(EObject container, Expression expression, RuleEnvironment G);
+	public TypeRef expectedExpressionTypeInEObject(EObject container, Expression expression, RuleEnvironment G);
 
 	/**
 	 * Types an expression.

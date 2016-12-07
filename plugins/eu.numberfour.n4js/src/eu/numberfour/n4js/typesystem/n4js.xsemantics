@@ -2248,12 +2248,15 @@ from {
 	}
 }
 /*
- * This rule defines a variant point for for defining expected type for an expression in a new sub-language
+ * This rule defines a variant point for defining expected type for new kinds of expressions in a new sub-language.
+ * By doing this, subtype checking is done automatically by N4JS infrastructure for these new expressions as well 
+ * 
+ * Other extension point is the rule typeUnsupportedExpression 
  */
 rule expectedTypeInUnsupportedContainer
 	G |- EObject container |> Expression expr: TypeRef T
 from {
-	T = expressionTypeHelper.expectedExpressionTypeInContainer(container, expr, G)	
+	T = expressionTypeHelper.expectedExpressionTypeInEObject(container, expr, G)	
 }
 
  

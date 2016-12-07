@@ -27,9 +27,11 @@ public class DefaultUnsupportedExpressionTypeHelper implements UnsupportedExpres
 		throw new UnsupportedOperationException("Cannot determine the type of expression: " + expression);
 	}
 
+	/**
+	 * This is the equivalence of the axiom expectedTypeNone that has been commented out in n4js.xsemantics
+	 */
 	@Override
-	public TypeRef expectedExpressionTypeInContainer(EObject container, Expression expression, RuleEnvironment G) {
-		throw new UnsupportedOperationException(
-				"Cannot determine the expected type of expression: " + expression + " in container " + container);
+	public TypeRef expectedExpressionTypeInEObject(EObject container, Expression expression, RuleEnvironment G) {
+		return null;
 	}
 }
