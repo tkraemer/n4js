@@ -1056,6 +1056,13 @@ from {
  	T = this.applyRuleTypeTypeDefiningElement(G, _trace_, e).value;
 }
 
+/*
+ * This rule introduces a variation point to the type system. 
+ * In particular, it allows sub languages to type newly introduced 
+ * expression types that are unknown to N4JS. To use the variation point, 
+ * a sub language can use dependency injection to inject a custom implementation 
+ * of UnsupportedExpressionTypeHelper
+ */
 rule typeUnsupportedExpression
 	G |- Expression e: TypeRef T
 from {
@@ -1793,8 +1800,9 @@ from {
 // **********************************************************************
 
 
-axiom expectedTypeNone
-	G |- EObject o |> Expression e : (null as TypeRef) // null is the default and means 'no type expectation' (even void is allowed!)
+//This axiom is commented out because its logic is now delegated to the method expectedExpressionTypeInContainer of {@link UnsupportedExpressionTypeHelper}
+//axiom expectedTypeNone
+//	G |- EObject o |> Expression e : (null as TypeRef) // null is the default and means 'no type expectation' (even void is allowed!)
 
 rule expectedTypeOfArgument
 	G |- Argument argument |> Expression argumentExpression: TypeRef T
@@ -2248,7 +2256,19 @@ from {
 		T = G.anyTypeRef
 	}
 }
+/*
+ * This rule defines a variant point for defining expected type for new kinds of expressions in a new sub-language.
+ * By doing this, subtype checking is done automatically by N4JS infrastructure for these new expressions as well 
+ * 
+ * Other extension point is the rule typeUnsupportedExpression 
+ */
+rule expectedTypeInUnsupportedContainer
+	G |- EObject container |> Expression expr: TypeRef T
+from {
+	T = expressionTypeHelper.expectedExpressionTypeInEObject(container, expr, G)	
+}
 
+ 
 
 // **********************************************************************
 // Judgment upperBound (extends)
