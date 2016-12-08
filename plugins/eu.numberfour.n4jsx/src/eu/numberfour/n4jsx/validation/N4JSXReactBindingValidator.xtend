@@ -67,9 +67,9 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		"object", "ol", "optgroup", "option", 
 		"p", "param", "pre", "progress", "q", "rp", "rt", "ruby", 
 		"s", "samp", "script", "section", "select", "small", "source", "span",
-		"strong", "style", "sub", "summary", "sup", 
+		"strong", "style", "sub", "summary", "sup", "svg", 
 		"table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track",
-		"u", "ul", "var", "video", "wbr"
+		"u", "ul", "use", "var", "video", "wbr"
 	)
 
 	/**
@@ -277,14 +277,17 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		val attributesInSpreadOperatorType = tsh.structuralTypesHelper.collectStructuralMembers(G, exprTypeResult.value,
 				TypingStrategy.STRUCTURAL).filter[m | (m instanceof TField) || (m instanceof TGetter)];
 		
+		//commented out but not deleted for now since the Stdlib team is still arguing about if this check makes sense
 		//spreadAttribute.checkUnknownAttributeInSpreadOperator(jsxElem, attributesInSpreadOperatorType, fieldsOrGettersInProps);
+		
 		// Type check each attribute in spreader operator against the corresponding props type's field/getter
 		attributesInSpreadOperatorType.forEach [ attributeInSpreadOperator |
 			val attributeInSpreadOperatorTypeRef = attributeInSpreadOperator.typeRefOfFieldOrGetter;
 			val fieldOrGetterInProps = fieldsOrGettersInProps.findFirst[fieldOrGetter | attributeInSpreadOperator.name == fieldOrGetter.name];
 			
 			if (fieldOrGetterInProps !== null) {
-				val fieldOrGetterInPropsTypeRef = fieldOrGetterInProps.typeRefOfFieldOrGetter;
+				//Reason for using tau: Consider type arguments by calculating the property of within the context of "props" type
+				val fieldOrGetterInPropsTypeRef = ts.tau(fieldOrGetterInProps, propsType);
 				val result = ts.subtype(G, attributeInSpreadOperatorTypeRef, fieldOrGetterInPropsTypeRef);
 				if (result.failed) {
 					val message = IssueCodes.getMessageForJSXSPREADATTRIBUTE_WRONG_SUBTYPE(attributeInSpreadOperator.name,
@@ -324,18 +327,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 //			
 //	}
 	
-	/**
-	 * Returns the type of a field or return type of a getter
-	 */
-	def private typeRefOfFieldOrGetter(TMember member) {
-		if (member instanceof TField) {
-			return member.typeRef;
-		} else if (member instanceof TGetter) {
-			return member.declaredTypeRef;
-		} else {
-			throw new IllegalArgumentException(member + " must be either a TField or TGetter");
-		}
-	}
+	
 
 	/**
 	 * Check that non-optional fields of "props" should be specified in JSX element
