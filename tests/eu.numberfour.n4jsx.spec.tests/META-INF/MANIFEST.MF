@@ -4,7 +4,6 @@ Bundle-Name: eu.numberfour.n4jsx.spec.tests
 Bundle-SymbolicName: eu.numberfour.n4jsx.spec.tests;singleton:=true
 Bundle-Vendor: NumberFour AG
 Bundle-Version: 0.0.1.qualifier
-Fragment-Host: eu.numberfour.n4jsx
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.eclipse.xtext.generator;resolution:=optional,
