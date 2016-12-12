@@ -16,9 +16,11 @@ import eu.numberfour.n4js.conversion.IdentifierValueConverter
 import eu.numberfour.n4js.n4JS.AbstractAnnotationList
 import eu.numberfour.n4js.n4JS.AnnotableElement
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
+import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.FunctionDefinition
+import eu.numberfour.n4js.n4JS.IndexedAccessExpression
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4EnumLiteral
@@ -29,10 +31,12 @@ import eu.numberfour.n4js.n4JS.N4MemberAnnotationList
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.NumericLiteral
+import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.PropertyAssignmentAnnotationList
 import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
 import eu.numberfour.n4js.n4JS.Script
+import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
@@ -52,6 +56,7 @@ import eu.numberfour.n4js.ts.types.MemberAccessModifier
 import eu.numberfour.n4js.ts.types.TAnnotableElement
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
+import eu.numberfour.n4js.ts.types.TEnumLiteral
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TMember
@@ -598,5 +603,41 @@ class N4JSLanguageUtils {
 	 */
 	def static TypeRef getTypeVariableImplicitUpperBound(RuleEnvironment G) {
 		return G.anyTypeRef;
+	}
+
+	/**
+	 * Tells if the given expression is valid as an index within an {@link IndexedAccessExpression}.
+	 */
+	def static boolean isValidIndexExpression(RuleEnvironment G, Expression indexExpr) {
+		if(indexExpr instanceof NumericLiteral || indexExpr instanceof StringLiteral) {
+			return true;
+		} else if(G.getAccessedBuiltInSymbol(indexExpr)!==null) {
+			return true;
+		} else if(indexExpr instanceof ParameterizedPropertyAccessExpression) {
+			return indexExpr.property instanceof TEnumLiteral;
+		}
+		return false;
+	}
+	/**
+	 * If the given expression is a {@link #isValidIndexExpression(RuleEnvironment, Expression) valid index expression}
+	 * but is *not* numerical, then this method will return the name of the member the index access expression is
+	 * referring to. Returns <code>null</code> if the expression is invalid or numerical.
+	 */
+	def static String getMemberNameForIndexExpression(RuleEnvironment G, Expression indexExpr) {
+		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(indexExpr);
+		if(accessedBuiltInSymbol!==null) {
+			return SYMBOL_IDENTIFIER_PREFIX + accessedBuiltInSymbol.name;
+		} else {
+			return switch(indexExpr) {
+				StringLiteral:
+					indexExpr.value
+				ParameterizedPropertyAccessExpression: {
+					val prop = indexExpr.property;
+					if(prop instanceof TEnumLiteral) {
+						prop.valueOrName
+					}
+				}
+			};
+		}
 	}
 }

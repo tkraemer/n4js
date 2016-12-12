@@ -10826,13 +10826,22 @@ public interface TypesPackage extends EPackage {
 	int TENUM_LITERAL___GET_CONTAINING_MODULE = SYNTAX_RELATED_TELEMENT_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Get Value Or Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TENUM_LITERAL___GET_VALUE_OR_NAME = SYNTAX_RELATED_TELEMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>TEnum Literal</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TENUM_LITERAL_OPERATION_COUNT = SYNTAX_RELATED_TELEMENT_OPERATION_COUNT + 1;
+	int TENUM_LITERAL_OPERATION_COUNT = SYNTAX_RELATED_TELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl <em>TVariable</em>}' class.
@@ -13541,6 +13550,16 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTEnumLiteral_Value();
 
 	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TEnumLiteral#getValueOrName() <em>Get Value Or Name</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Value Or Name</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TEnumLiteral#getValueOrName()
+	 * @generated
+	 */
+	EOperation getTEnumLiteral__GetValueOrName();
+
+	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.SyntaxRelatedTElement <em>Syntax Related TElement</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15735,6 +15754,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TENUM_LITERAL__VALUE = eINSTANCE.getTEnumLiteral_Value();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Value Or Name</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TENUM_LITERAL___GET_VALUE_OR_NAME = eINSTANCE.getTEnumLiteral__GetValueOrName();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.impl.SyntaxRelatedTElementImpl <em>Syntax Related TElement</em>}' class.
