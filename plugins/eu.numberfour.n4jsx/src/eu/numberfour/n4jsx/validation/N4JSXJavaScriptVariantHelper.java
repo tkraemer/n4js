@@ -10,6 +10,8 @@
  */
 package eu.numberfour.n4jsx.validation;
 
+import org.eclipse.emf.ecore.EObject;
+
 import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.validation.BaseJavaScriptVariantHelper;
@@ -94,8 +96,8 @@ public class N4JSXJavaScriptVariantHelper extends BaseJavaScriptVariantHelper {
 		this.addEntry(EXT_N4JSX, CHECK_MISSING_BODY, true);
 		this.addEntry(EXT_JSX, CHECK_MISSING_BODY, false);
 
-		this.addEntry(EXT_N4JSX, CHECK_TYPE_MATCHES_EXPECTED_TYPE, true);
-		this.addEntry(EXT_JSX, CHECK_TYPE_MATCHES_EXPECTED_TYPE, false);
+		// this.addEntry(EXT_N4JSX, CHECK_TYPE_MATCHES_EXPECTED_TYPE, true);
+		// this.addEntry(EXT_JSX, CHECK_TYPE_MATCHES_EXPECTED_TYPE, false);
 
 		this.addEntry(EXT_N4JSX, ENFORCE_DYNAMIC_TYPES, false);
 		this.addEntry(EXT_JSX, ENFORCE_DYNAMIC_TYPES, true);
@@ -103,14 +105,14 @@ public class N4JSXJavaScriptVariantHelper extends BaseJavaScriptVariantHelper {
 		this.addEntry(EXT_N4JSX, TYPE_AWARE, true);
 		this.addEntry(EXT_JSX, TYPE_AWARE, false);
 
-		this.addEntry(EXT_N4JSX, HAS_GLOBAL_OBJECT, false);
-		this.addEntry(EXT_JSX, HAS_GLOBAL_OBJECT, true);
+		// this.addEntry(EXT_N4JSX, HAS_GLOBAL_OBJECT, false);
+		// this.addEntry(EXT_JSX, HAS_GLOBAL_OBJECT, true);
 
 		this.addEntry(EXT_N4JSX, CHECK_EXPORTED_WHEN_VISIBILITY_HIGHER_THAN_PRIVATE, true);
 		this.addEntry(EXT_JSX, CHECK_EXPORTED_WHEN_VISIBILITY_HIGHER_THAN_PRIVATE, false);
 
-		this.addEntry(EXT_N4JSX, UNRESTRICTED_MODE, false);
-		this.addEntry(EXT_JSX, UNRESTRICTED_MODE, true);
+		// this.addEntry(EXT_N4JSX, UNRESTRICTED_MODE, false);
+		// this.addEntry(EXT_JSX, UNRESTRICTED_MODE, true);
 
 		this.addEntry(EXT_N4JSX, EXTERNAL_MODE, false);
 		this.addEntry(EXT_JSX, EXTERNAL_MODE, false);
@@ -123,6 +125,19 @@ public class N4JSXJavaScriptVariantHelper extends BaseJavaScriptVariantHelper {
 
 		this.addEntry(EXT_N4JSX, VARIANT_MODE_STRINGREP, EXT_N4JSX);
 		this.addEntry(EXT_JSX, VARIANT_MODE_STRINGREP, EXT_JSX);
+	}
+
+	/**
+	 * Return true in strict mode
+	 */
+	@Override
+	protected boolean isStrictMode(EObject eobj) {
+		String fileExt = fileExtensionCalculator.getXpectAwareFileExtension(eobj);
+		if (EXT_N4JSX.equals(fileExt)) {
+			return true;
+		} else {
+			return super.isStrictMode(eobj);
+		}
 	}
 
 }

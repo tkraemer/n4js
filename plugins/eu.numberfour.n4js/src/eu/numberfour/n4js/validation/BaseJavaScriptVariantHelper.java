@@ -13,10 +13,18 @@ package eu.numberfour.n4js.validation;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.EcoreUtil2;
 
 import com.google.inject.Inject;
 
+import eu.numberfour.n4js.n4JS.Block;
+import eu.numberfour.n4js.n4JS.Expression;
+import eu.numberfour.n4js.n4JS.ExpressionStatement;
+import eu.numberfour.n4js.n4JS.FunctionDefinition;
+import eu.numberfour.n4js.n4JS.Script;
+import eu.numberfour.n4js.n4JS.StringLiteral;
 import eu.numberfour.n4js.resource.XpectAwareFileExtensionCalculator;
 
 /**
@@ -28,6 +36,11 @@ import eu.numberfour.n4js.resource.XpectAwareFileExtensionCalculator;
  * to a different implementation.
  */
 public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
+
+	/**
+	 * Literal value to indicate strict mode: "use strict" (or 'use strict')
+	 */
+	public final static String STRICT_MODE_LITERAL_VALUE = "use strict";
 
 	/**
 	 * Default variant mode: JS
@@ -44,9 +57,22 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 * This class defines all validation features
 	 */
 	private static class ValidationFeatureBase {
+		// This empty class allows for defining validation features as classes instead of enums
+		// so that we can
 	}
 
 	static class ValidationFeature<T> extends ValidationFeatureBase {
+		private final T defaultValue;
+
+		public ValidationFeature(T defaultValue) {
+			this.defaultValue = defaultValue;
+		}
+
+		public T getDefaultValue() {
+			return this.defaultValue;
+		}
+
+		@SuppressWarnings("unchecked")
 		public T get(Map<FileExtensionValidationFeaturePair, Object> table, String extension) {
 			return (T) table.get(new FileExtensionValidationFeaturePair(extension, this));
 		}
@@ -55,127 +81,129 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	/**
 	 * Dynamic pseudo scope should be activated?
 	 */
-	public static final ValidationFeature<Boolean> DYNAMIC_PSEUDO_SCOPE = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> DYNAMIC_PSEUDO_SCOPE = new ValidationFeature<>(true);
 	/**
 	 * Missing implementation is allowed?
 	 */
-	public static final ValidationFeature<Boolean> ALLOW_MISSING_IMPLEMENTATION = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> ALLOW_MISSING_IMPLEMENTATION = new ValidationFeature<>(false);
 	/**
 	 * Override annotation should be checked?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_OVERRIDE_ANNOTATION = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_OVERRIDE_ANNOTATION = new ValidationFeature<>(false);
 	/**
 	 * Type declaration should be checked?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_TYPE_DECLARATION = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_TYPE_DECLARATION = new ValidationFeature<>(false);
 	/**
 	 * Member declaration should be checked?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_MEMBER_DECLARATION = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_MEMBER_DECLARATION = new ValidationFeature<>(false);
 	/**
 	 * Variable should be checked?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_VARIABLE = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_VARIABLE = new ValidationFeature<>(false);
 	/**
 	 * Method reference should be checked?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_METHOD_REFERENCE = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_METHOD_REFERENCE = new ValidationFeature<>(false);
 	/**
 	 * Call expression should be checked?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_CALL_EXPRESSION = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_CALL_EXPRESSION = new ValidationFeature<>(false);
 	/**
 	 * New expression should be checked?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_NEW_EXPRESSION = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_NEW_EXPRESSION = new ValidationFeature<>(false);
 	/**
 	 * Indexed access expression should be checked?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_INDEXED_ACCESS_EXPRESSION = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_INDEXED_ACCESS_EXPRESSION = new ValidationFeature<>(false);
 	/**
 	 * Function name should be checked?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_FUNCTION_NAME = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_FUNCTION_NAME = new ValidationFeature<>(false);
 	/**
 	 * Function return should be checked?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_FUNCTION_RETURN = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_FUNCTION_RETURN = new ValidationFeature<>(false);
 	/**
 	 * Function expression in expression statement should be checked?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_FUNCTION_EXPRESSION_IN_EXRESSION_STATEMENTMEMBER_DECLARATION = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_FUNCTION_EXPRESSION_IN_EXRESSION_STATEMENTMEMBER_DECLARATION = new ValidationFeature<>(
+			true);
 	/**
 	 * Constant has initializer?
 	 */
-	public static final ValidationFeature<Boolean> CONSTANT_HAS_INITIALIZER = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CONSTANT_HAS_INITIALIZER = new ValidationFeature<>(false);
 	/**
 	 * No N4JS in runtime or lib should be checked?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_NO_N4JS_IN_RUNTIME_ENV_OR_LIB = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_NO_N4JS_IN_RUNTIME_ENV_OR_LIB = new ValidationFeature<>(false);
 	/**
 	 * Wrong read/write should be allowed?
 	 */
-	public static final ValidationFeature<Boolean> ALLOW_WRONG_READ_WRITE = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> ALLOW_WRONG_READ_WRITE = new ValidationFeature<>(true);
 	/**
 	 * Type inference should be doomed
 	 */
-	public static final ValidationFeature<Boolean> DOOM_TYPE_INTERFENCE = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> DOOM_TYPE_INTERFENCE = new ValidationFeature<>(true);
 	/**
 	 * Annotation should be allowed
 	 */
-	public static final ValidationFeature<Boolean> ALLOW_ANNOTATION = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> ALLOW_ANNOTATION = new ValidationFeature<>(false);
 	/**
 	 * Final fields has initializer?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_FINAL_FIELDS_IS_INITIALIZED = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_FINAL_FIELDS_IS_INITIALIZED = new ValidationFeature<>(false);
 	/**
 	 * Name start with dollar should be checked?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_NAME_START_WITH_DOLLAR = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_NAME_START_WITH_DOLLAR = new ValidationFeature<>(false);
 	/**
 	 * Missing body should be checked?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_MISSING_BODY = new ValidationFeature<>();
-	/**
-	 * Type matches should be checked?
-	 */
-	public static final ValidationFeature<Boolean> CHECK_TYPE_MATCHES_EXPECTED_TYPE = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_MISSING_BODY = new ValidationFeature<>(true);
+	// /**
+	// * Type matches should be checked?
+	// */
+	// public static final ValidationFeature<Boolean> CHECK_TYPE_MATCHES_EXPECTED_TYPE = new ValidationFeature<>(false);
 	/**
 	 * Dynamic types should be enforced?
 	 */
-	public static final ValidationFeature<Boolean> ENFORCE_DYNAMIC_TYPES = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> ENFORCE_DYNAMIC_TYPES = new ValidationFeature<>(true);
 	/**
 	 * The variant is type aware?
 	 */
-	public static final ValidationFeature<Boolean> TYPE_AWARE = new ValidationFeature<>();
-	/**
-	 * The variant has global objecT?
-	 */
-	public static final ValidationFeature<Boolean> HAS_GLOBAL_OBJECT = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> TYPE_AWARE = new ValidationFeature<>(false);
+	// /**
+	// * The variant has global objecT?
+	// */
+	// public static final ValidationFeature<Boolean> HAS_GLOBAL_OBJECT = new ValidationFeature<>(true);
 	/**
 	 * Exported elements with visibility higher than private should be checked?
 	 */
-	public static final ValidationFeature<Boolean> CHECK_EXPORTED_WHEN_VISIBILITY_HIGHER_THAN_PRIVATE = new ValidationFeature<>();
-	/**
-	 * Variant is unrestricted mode?
-	 */
-	public static final ValidationFeature<Boolean> UNRESTRICTED_MODE = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> CHECK_EXPORTED_WHEN_VISIBILITY_HIGHER_THAN_PRIVATE = new ValidationFeature<>(
+			false);
+	// /**
+	// * Variant is unrestricted mode?
+	// */
+	// public static final ValidationFeature<Boolean> UNRESTRICTED_MODE = new ValidationFeature<>(true);
 	/**
 	 * Variant is external mode?
 	 */
-	public static final ValidationFeature<Boolean> EXTERNAL_MODE = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> EXTERNAL_MODE = new ValidationFeature<>(false);
 	/**
 	 * Variant is N4JS mode?
 	 */
-	public static final ValidationFeature<Boolean> IS_N4JS_MODE = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> IS_N4JS_MODE = new ValidationFeature<>(false);
 	/**
 	 * Variant is plain JS mode?
 	 */
-	public static final ValidationFeature<Boolean> IS_PLAIN_JS = new ValidationFeature<>();
+	public static final ValidationFeature<Boolean> IS_PLAIN_JS = new ValidationFeature<>(true);
 	/**
 	 * String representation of variant mode, e.g. "n4js", "js"
 	 */
-	public static final ValidationFeature<String> VARIANT_MODE_STRINGREP = new ValidationFeature<>();
+	public static final ValidationFeature<String> VARIANT_MODE_STRINGREP = new ValidationFeature<>(EXT_JS);
 
 	/**
 	 * This class encapsulates a pair of file extension and validation feature and should serve as keys for
@@ -240,8 +268,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 		if (next != null) {
 			return next.get(fileExtension, feature);
 		}
-		return null;
-		// throw new RuntimeException("Cannot process this request");
+		return feature.getDefaultValue();
 	}
 
 	/**
@@ -252,8 +279,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean activateDynamicPseudoScope(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), DYNAMIC_PSEUDO_SCOPE);
-		return r == null ? true : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), DYNAMIC_PSEUDO_SCOPE);
 	}
 
 	/**
@@ -264,8 +290,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean allowMissingImplementation(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), ALLOW_MISSING_IMPLEMENTATION);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), ALLOW_MISSING_IMPLEMENTATION);
 	}
 
 	/**
@@ -276,8 +301,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean checkOverrideAnnotation(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), ALLOW_MISSING_IMPLEMENTATION);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_OVERRIDE_ANNOTATION);
 	}
 
 	/**
@@ -288,8 +312,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean checkTypeDeclaration(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_TYPE_DECLARATION);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_TYPE_DECLARATION);
 	}
 
 	/**
@@ -300,8 +323,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean checkMemberDeclaration(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_MEMBER_DECLARATION);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_MEMBER_DECLARATION);
 	}
 
 	/**
@@ -312,8 +334,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean checkVariable(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_VARIABLE);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_VARIABLE);
 	}
 
 	/**
@@ -324,8 +345,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean checkMethodReference(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_METHOD_REFERENCE);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_METHOD_REFERENCE);
 	}
 
 	/**
@@ -336,8 +356,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean checkCallExpression(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_CALL_EXPRESSION);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_CALL_EXPRESSION);
 	}
 
 	/**
@@ -348,8 +367,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean requireCheckNewExpression(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_NEW_EXPRESSION);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_NEW_EXPRESSION);
 	}
 
 	/**
@@ -360,8 +378,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean requireCheckIndexedAccessExpression(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_INDEXED_ACCESS_EXPRESSION);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_INDEXED_ACCESS_EXPRESSION);
 	}
 
 	/**
@@ -372,8 +389,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean requireCheckFunctionName(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_FUNCTION_NAME);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_FUNCTION_NAME);
 	}
 
 	/**
@@ -384,8 +400,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean requireCheckFunctionReturn(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_FUNCTION_RETURN);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_FUNCTION_RETURN);
 	}
 
 	/**
@@ -396,9 +411,8 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean requireCheckFunctionExpressionInExpressionStatement(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj),
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj),
 				CHECK_FUNCTION_EXPRESSION_IN_EXRESSION_STATEMENTMEMBER_DECLARATION);
-		return r == null ? true : r;
 	}
 
 	/**
@@ -409,8 +423,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean constantHasInitializer(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CONSTANT_HAS_INITIALIZER);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CONSTANT_HAS_INITIALIZER);
 	}
 
 	/**
@@ -421,8 +434,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean requirecheckNoN4jsInRuntimeEnvOrLib(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_NO_N4JS_IN_RUNTIME_ENV_OR_LIB);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_NO_N4JS_IN_RUNTIME_ENV_OR_LIB);
 	}
 
 	/**
@@ -433,8 +445,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean allowWrongReadWrite(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), ALLOW_WRONG_READ_WRITE);
-		return r == null ? true : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), ALLOW_WRONG_READ_WRITE);
 	}
 
 	/**
@@ -445,8 +456,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean doomTypeInference(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), DOOM_TYPE_INTERFENCE);
-		return r == null ? true : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), DOOM_TYPE_INTERFENCE);
 	}
 
 	/**
@@ -457,8 +467,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean allowAnnotation(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), ALLOW_ANNOTATION);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), ALLOW_ANNOTATION);
 	}
 
 	/**
@@ -469,8 +478,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean requireCheckFinalFieldIsInitialized(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_FINAL_FIELDS_IS_INITIALIZED);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_FINAL_FIELDS_IS_INITIALIZED);
 	}
 
 	/**
@@ -481,8 +489,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean requireCheckNameStartsWithDollar(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_NAME_START_WITH_DOLLAR);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_NAME_START_WITH_DOLLAR);
 	}
 
 	/**
@@ -493,8 +500,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean requireCheckForMissingBody(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_MISSING_BODY);
-		return r == null ? true : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_MISSING_BODY);
 	}
 
 	/**
@@ -505,8 +511,8 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean requireCheckTypeMatchesExpectedType(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_TYPE_MATCHES_EXPECTED_TYPE);
-		return r == null ? false : r;
+		// return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_TYPE_MATCHES_EXPECTED_TYPE);
+		return !isUnrestrictedMode(eobj);
 	}
 
 	/**
@@ -518,8 +524,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean enforceDynamicTypes(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), ENFORCE_DYNAMIC_TYPES);
-		return r == null ? true : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), ENFORCE_DYNAMIC_TYPES);
 	}
 
 	/**
@@ -530,8 +535,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean isTypeAware(EObject eobj) { // e.g. in N4JS
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), TYPE_AWARE);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), TYPE_AWARE);
 	}
 
 	/**
@@ -542,8 +546,8 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean hasGlobalObject(EObject eobj) { // e.g. in unrestricted ECMAScript mode
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), HAS_GLOBAL_OBJECT);
-		return r == null ? true : r;
+		// return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), HAS_GLOBAL_OBJECT);
+		return isUnrestrictedMode(eobj);
 	}
 
 	/**
@@ -555,9 +559,8 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean requireCheckExportedWhenVisibilityHigherThanPrivate(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj),
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj),
 				CHECK_EXPORTED_WHEN_VISIBILITY_HIGHER_THAN_PRIVATE);
-		return r == null ? false : r;
 	}
 
 	/**
@@ -565,8 +568,16 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean isUnrestrictedMode(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), UNRESTRICTED_MODE);
-		return r == null ? true : r;
+		// return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), UNRESTRICTED_MODE);
+		// return JavaScriptVariant.getVariant(eobj) == JavaScriptVariant.unrestricted;
+		return !isStrictMode(eobj);
+	}
+
+	/**
+	 * Return true if "use strict" is declared
+	 */
+	protected boolean isStrictMode(EObject eobj) {
+		return isContainedInStrictFunctionOrScript(eobj);
 	}
 
 	/**
@@ -577,8 +588,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean isExternalMode(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), EXTERNAL_MODE);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), EXTERNAL_MODE);
 	}
 
 	/**
@@ -589,8 +599,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean isN4JSMode(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), IS_N4JS_MODE);
-		return r == null ? false : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), IS_N4JS_MODE);
 	}
 
 	/**
@@ -602,8 +611,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean isPlainJS(EObject eobj) {
-		Boolean r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), IS_PLAIN_JS);
-		return r == null ? true : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), IS_PLAIN_JS);
 	}
 
 	/**
@@ -614,8 +622,43 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public String variantMode(EObject eobj) {
-		String r = get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), VARIANT_MODE_STRINGREP);
-		return r == null ? EXT_JS : r;
+		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), VARIANT_MODE_STRINGREP);
+	}
+
+	private static boolean isContainedInStrictFunctionOrScript(EObject eobj) {
+		if (eobj == null) {
+			return false;
+		}
+		FunctionDefinition functionDef = EcoreUtil2.getContainerOfType(eobj, FunctionDefinition.class);
+		if (functionDef != null) {
+			Block block = functionDef.getBody();
+			if (block != null && startsWithStrictMode(block.getStatements())) {
+				return true;
+			}
+			return isContainedInStrictFunctionOrScript(functionDef.eContainer());
+		}
+		Script script = EcoreUtil2.getContainerOfType(eobj, Script.class);
+		if (script != null) {
+			if (startsWithStrictMode(script.getScriptElements())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean startsWithStrictMode(EList<? extends EObject> eList) {
+		if (eList == null || eList.isEmpty()) {
+			return false;
+		}
+		EObject first = eList.get(0);
+		if (first instanceof ExpressionStatement) {
+			Expression expr = ((ExpressionStatement) first).getExpression();
+			if (expr instanceof StringLiteral) {
+				boolean equalsStrictLiteral = STRICT_MODE_LITERAL_VALUE.equals(((StringLiteral) expr).getValue());
+				return equalsStrictLiteral;
+			}
+		}
+		return false;
 	}
 
 }
