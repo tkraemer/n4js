@@ -1,3 +1,4 @@
+
 = N4JS Specific Classifiers
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -23,6 +24,7 @@ All of these metatypes can be marked with type access modifiers:
 enum N4JSTypeAccessModifier: project | public;
 ----
 
+[.language-n4js]
 == Properties
 
 *Properties defined by syntactic elements:*
@@ -98,6 +100,7 @@ class or interface extended or interface implemented is called __super
 classifier__. We distinguish the directly subtyped classifiers and from
 the transitive closure of supertypes math:[$superClassifiers^*$]
 
+[.language-n4js]
 == Common Semantics of Classifiers
 
 .Subtyping of Classifiers
@@ -131,6 +134,7 @@ different and further constraint (cf. <<_redefinition-of-members,Redefinition of
 members inherited from their supertypes.
 --
 
+[.language-n4js]
 == Classes
 
 === Definition of Classes
@@ -463,6 +467,7 @@ if the owning classes are not directly accessible to a class. The
 member-specific access control is not changed.
 --
 
+[.language-n4js]
 == Interfaces
 task:IDE-12[] task:IDE-169[] task:IDE-328[] task:IDE-1236[]
 
@@ -679,6 +684,7 @@ math:[$I_i$]).
 
 For default methods in interfaces, see <<_default-methods-in-interfaces,Default Methods in Interfaces>>.
 
+[.language-n4js]
 == Generic Classifiers
 task:IDE-38[] task:IDE-39[]
 
@@ -826,6 +832,7 @@ variable definition.
 
 --
 
+[.language-n4js]
 == Definition-Site Variance
 
 In addition to use-site declaration of variance in the form of Java-like
@@ -934,7 +941,7 @@ function getNameOfFirstPerson(list: List<? extends Person>): string {
 
 Function `getNameOfFirstPerson` below takes a list and returns the name of the first person in
 the list. Since it never adds new elements to the given list, it could
-accept `List`s of any subtype of `Person`, for example a `List<Employee>`. To allow this, its formal
+accept ``List``s of any subtype of `Person`, for example a `List<Employee>`. To allow this, its formal
 parameter has a type of `List<? extends Person>` instead of `List<Person>`. Such use-site variance is useful whenever an invariant type, like `List` above, is being used in a way such that it can be treated as if it were co- or contravariant.
 
 Sometimes, however, we are dealing with types that are inherently

@@ -1,3 +1,4 @@
+
 = Grammar
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -10,6 +11,7 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
+[.language-n4js]
 == Lexical Conventions
 
 task:IDE-7[]

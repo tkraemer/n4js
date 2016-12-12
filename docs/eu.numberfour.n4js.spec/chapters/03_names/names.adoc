@@ -1,3 +1,4 @@
+
 = Names
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -20,6 +21,7 @@ _Extensibility_ refers to whether a given type can be subtyped, or in
 the case of members, whether they can be overridden. Access control is a
 prerequisite for extensibility which is further explained in <<_n4js-specific-classifiers,N4JS Specific Classifiers>>
 
+[.language-n4js]
 == Access Control
 task:IDE-84[] task:IDE-556[]
 
@@ -47,6 +49,7 @@ Accessibility is defined by modifiers on types and members, e.g , via
 the statement, and by the annotation. Extensibility is defined by the
 annotation respectively.
 
+[.language-n4js]
 == Accessibility of Types, Top-Level Variables and Function Declarations
 task:IDE-84[] task:IDE-556[] task:IDE-707[]
 

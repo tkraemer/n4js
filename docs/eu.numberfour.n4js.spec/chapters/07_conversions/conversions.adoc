@@ -1,3 +1,4 @@
+
 = Conversions and Reflection
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -10,6 +11,7 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
+[.language-n4js]
 == Autoboxing and Coercing
 
 Coercing is the ability to implicitly cast one (primitive) type to another.
@@ -114,6 +116,7 @@ see <<_function-type,Function Type>> for details.
 Still, it is always possible to call members of `Function`, e.g.,
 `function(){}.length()`.
 
+[.language-n4js]
 == Auto-Conversion of Objects
 
 === Auto-Conversion of Class Instances
@@ -184,6 +187,7 @@ ECMAScript math:[$Object$] and math:[$Function$]. They have a
 custom math:[$toString$] method which returns the name of the
 enumeration value.
 
+[.language-n4js]
 == Type Cast and Type Check
 
 === Type Cast
@@ -346,6 +350,7 @@ var x = new Sub();
 | x instanceof I  | false   | true
 |===
 
+[.language-n4js]
 == Reflection meta-information
 task:IDE-155[] task:IDE-561[] task:IDE-137[] task:IDE-980[]
 
@@ -501,6 +506,7 @@ The meta-information for enumerations is available by means of the getter `n4cla
 instance getter) via a literal.
 Calling `isEnum` on the returned `N4Class` instance will return true.
 
+[.language-n4js]
 == Conversion of primitive types
 
 Conversion between primitives is given as follows:

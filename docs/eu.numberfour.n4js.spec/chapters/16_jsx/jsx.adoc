@@ -1,3 +1,4 @@
+
 = JSX
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -10,6 +11,7 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
+[.language-jsx]
 == JSX Support
 N4JS scripts with file extension "n4jsx" support the special https://facebook.github.io/jsx/[JSX syntax]. Files ending with "jsx" are considered as plain Javascript.
 
@@ -41,6 +43,8 @@ task:IDE-2411[]
 --
 
 The following JSX syntax is supported (EBNF with model element assignments as used in Xtext). All other ECMAScript 2015 and N4JS syntax constructs are unaffected by this addition.
+
+[source,jsx]
 ----
 PrimaryExpression <Yield> returns n4js::Expression:
 	... // as in N4JS
@@ -101,10 +105,11 @@ Remarks on differences between the syntax defined in <<IDE-241102>> and https://
 * JSXPropertyAttribute models the JSX non-spread JSXAttribute definition; again existing rules (IdentifierName, StringLiteral) are used to model JSX specific ones (JSXAttributeName, JSXDoubleStringCharacters, JSXSingleStringCharacters)
 
 task:IDE-2414[]
-
-.JSX Syntax With Free Text
+SX Syntax With Free Text
+.J
 [req,id=IDE-241401,version=1]
 --
+[source,jsx]
 ----
 JSXChild:
 	JSXElement | JSXExpression | JSXText
@@ -134,6 +139,8 @@ The type of a JSX expression is React.Element.
 --
 
 If a JSX literal is used, it is an error if the React symbol is not imported via
+
+[source,jsx]
 ----
 import React from "react"
 ----

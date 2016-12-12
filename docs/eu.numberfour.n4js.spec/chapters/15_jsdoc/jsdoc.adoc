@@ -1,3 +1,4 @@
+
 = JSDoc
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -10,10 +11,12 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
+[.language-n4js]
 In N4JS, comments starting with two asterisks (in ``pass:[/** .. */]``) are interpreted as
 documentation comments. The format is similar to JavaDoc or Google
 Closure annotations.
 
+[.language-n4js]
 == General N4JSDoc Features
 
 We distinguish between line and inline tags.
@@ -31,6 +34,7 @@ Small code snippet, not validated yet.
 
 Link to a type of element, not validated or supported in navigation yet.
 
+[.language-n4js]
 == N4JSdoc for User Projects
 
 === Standard Tags
@@ -257,6 +261,7 @@ the requirement with given id.
 
 // TODO: LaTeX reference, deprecated in regards to this document.
 
+[.language-n4js]
 == N4JSDoc for API and Implementation Projects
 task:IDE-1509[]
 

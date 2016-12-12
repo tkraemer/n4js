@@ -1,3 +1,4 @@
+
 = Expressions
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -10,6 +11,8 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
+[.language-n4js]
+--
 For all expressions, we define the following pseudo properties:
 
 `containingExpression` ::
@@ -34,7 +37,7 @@ is the classifier type `type{type}`.
 
 `container` ::
 The direct owner of the expression.
-
+--
 ////
 \todo[JvP,LB]{How to best model that the inferred type must always be "conform" to a declared type if present?}
 \todo[JvP,LB]{Autoconversion: See chapter conversions}
@@ -45,6 +48,7 @@ constructs available in the 5th edition of ECMA-262, referred to as
 cite:[ECMA11a] in the following. It is worth noting that the grammar snippets already use
 newer constructs in some cases.
 
+[.language-n4js]
 == ECMAScript 5 Expressions
 task:IDE-232[]
 
@@ -190,11 +194,13 @@ class A {
 NOTE: In N4JS classes, `this` is always bound to the instance when used in
 field initialization.
 
+
 [discrete]
 ==== Type Inference
 task:IDE-244[]
 
-
+[.language-n4js]
+--
 The type is inferred from the `this` type is bound to. The inference,
 therefore, has to consider the original semantics as described in cite:[ECMA11a(10.4.,10.4.3,p.58)].
 In ECMAScript the type of this is unfortunately determined by the function call and not by the function definition:
@@ -212,7 +218,7 @@ Actually, `this` is bound to the newly created object if a function is called
 with the `new` operator. If a function is known to be invoked with an explicit
 math:[$thisArg$] (`apply()` etc.), the `@This` annotation can be used to explicitly set the this type. This annotation has precedence over otherwise
 inferred bindings. task:IDE-1010[]
-
+--
 .Type Inference Heuristic for This-Keyword
 [req,id=IDE-90,version=1]
 --
@@ -1392,7 +1398,9 @@ enum PostfixOperator: inc='++' | dec='--';
 [discrete]
 ==== Semantics and Type Inference [[semantics-and-type-inference]]
 
-The type inference and constraints for postfix operators ```` and
+// TODO missing notation
+
+The type inference and constraints for postfix operators and
 ``math:[$--$]``, cf.
 cite:[ECMA11a(S11.3.1,p.70)], cite:[ECMA11a(S11.3.1,p.70)], are defined similarly to their prefix
 variants (unary expressions), see <<Unary Expression>>.
@@ -1417,7 +1425,7 @@ math:[$set$] math:[$p$] must be defined. task:IDE-737[]
 [discrete]
 ==== Syntax [[unary-expression-syntax]]
 
-We define the following unary operators and expression, similar to cite:[ECMA11a(p.70ff)]::
+We define the following unary operators and expression, similar to cite:[ECMA11a(p.70ff)]:
 
 [source,n4js]
 ----
@@ -1518,6 +1526,8 @@ The following operators have fixed types independent of their operand
 types:
 task:IDE-244[] task:IDE-345[]
 
+//TODO fix math
+[source,adoc]
 ----
 math:[\[\begin{aligned}
 &\infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{}     \tag{\S 11.4.1}\\
@@ -1596,10 +1606,11 @@ math:[\[\begin{aligned}
     {e.op \neq AdditiveOperator.ADD}\end{aligned}\]]
 --
 
-[discrete]
+
 ==== Type Inference [[type-inference-10]]
 task:IDE-244[] task:IDE-345[]
 
+[.language-n4js]
 The type of an additive expression is usually inferred to `number`. The result
 for the addition operator may only be a number if both operands are
 numbers, booleans, or one is boolean or number and the other is
@@ -1620,7 +1631,7 @@ follows: math:[\[\begin{aligned}
 &\infer{\tee e: \type{number}}{}\\\end{aligned}\]]
 
 .Type of addition expression
-[source,n4js]
+[source,bash]
 ----
 1+2;            // number 3
 "1"+"2";        // string "12"
@@ -2210,6 +2221,7 @@ The type of a comma expression math:[$cexpr$] is inferred to the
 last expression: math:[\[\begin{aligned}
 \infer{\tee cexpr: T}{n=|cexpr.exprs|, \tee cexpr.exprs_n:T} \tag{\S11.14}\end{aligned}\]]
 
+[.language-n4js]
 == ECMAScript 6 Expressions
 
 === The super Keyword
@@ -2399,7 +2411,7 @@ preserved, i.e. `B` coming from line 19.
 --
 
 
-
+[.language-n4js]
 == ECMAScript 7 Expressions
 
 === Await Expression
@@ -2410,6 +2422,7 @@ In N4JS, `await` is implemented as a unary operator with the same precedence as
 
 Constraints governing the use of `await` are given together with those for `async` in <<_asynchronous-functions>>.
 
+[.language-n4js]
 == N4JS Specific Expressions
 
 === Class Expression

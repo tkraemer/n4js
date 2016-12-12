@@ -1,3 +1,4 @@
+
 = Introduction
 
 This specification defines the N4JS language.
@@ -6,6 +7,7 @@ In general, the N4 JavaScript dialect used is identical to the standard
 ECMAScript as defined in the 6th edition of ECMA-262, also known as
 ECMAScript 2015, referred to as cite:[ECMA15a].
 
+[.language-n4js]
 == Notation
 
 === Grammar Notation
@@ -147,6 +149,7 @@ A pseudo property for elements with a math:[$declaredType$]
 property. It is similar to the inferred type, i.e.
 math:[$e.type = \infType{e}$]
 
+[.language-n4js]
 == Auxiliary Functions
 
 This section describes some auxiliary functions required for definition

@@ -1,3 +1,4 @@
+
 = Functions
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -17,6 +18,7 @@ constraints. Function definitions and expressions are then introduced in
 terms of statements and expressions. Method definitions and special
 usages are described in <<Methods>>
 
+[.language-n4js]
 == Function Type
 task:IDE-12[]
 
@@ -533,6 +535,7 @@ function z(){
 --
 --
 
+[.language-n4js]
 == ECMAScript 5 Function Definition
 
 === Function Declaration
@@ -689,6 +692,7 @@ The contract of arguments states that the type of the argument is a subtype
 of the type of the formal parameter. This is what the inferencer takes
 into account!
 
+[.language-n4js]
 == ECMAScript 2015 Function Definition
 
 === Generator Functions
@@ -778,6 +782,7 @@ In N4JS, a top-level arrow function can’t refer to `this` as there’s no oute
 In N4JS, a top-level arrow function can’t include usages of `arguments` in its body, again because of the missing binding for it.
 --
 
+[.language-n4js]
 == ECMAScript Proposals Function Definition
 
 === Asynchronous Functions
@@ -950,6 +955,7 @@ in the body of a non-async arrow function. The semantics here are
 intentional and are in line with similar constraint for function
 expressions.
 
+[.language-n4js]
 == N4JS Extended Function Definition
 
 === Generic Functions

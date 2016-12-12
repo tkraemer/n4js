@@ -1,5 +1,7 @@
+
 = Members
 task:IDE-12[] task:IDE-381[]
+
 ////
 Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
@@ -19,6 +21,7 @@ must be no data field with the same name as a getter or setter.
 Redefinition of members (overriding, implementation and consumption) is
 described in <<_redefinition-of-members,Redefinition of Members>>.
 
+[.language-n4js]
 == Syntax
 
 .Syntax N4JS member access modifier
@@ -124,6 +127,7 @@ Static members may also have the same name as non-static members footnote:[ cite
 
 The dollar character `$` is not allowed for user-defined member identifiers as the dollar sign is used for rewriting private members.
 
+[.language-n4js]
 == Methods
 task:IDE-8[] task:IDE-12[]
 
@@ -207,7 +211,7 @@ fragment ColonSepTypeRef*:
 ----
 
 
-
+[.language-n4js]
 === Properties
 
 Methods have all the properties of members and the following additional
@@ -345,7 +349,7 @@ method assumes this to be bound to the class in which it is defined.
 This may work in some cases, but will cause problems in particular in
 combination with method overriding:
 
-[source]
+[source,n4js]
 ----
 var v1: {@This(C)function():void} = c.m;
 var v2: {@This(C)function():void} = d.m;
@@ -380,7 +384,7 @@ are severe but would be necessary to avoid unexpected runtime problems.
 The following example shows a problem with breaking the encapsulation of
 a class.
 
-[source]
+[source,n4js]
 ----
 class C {
     x: any = "";
@@ -465,6 +469,7 @@ In interfaces, methods are always abstract by default and they do not
 have to be marked as abstract. If a method in an interface provides a
 body, then this is the default implementation. See <<_implementation-of-members,Implementation-of-Members>> about how the default implementation may be mixed in the consumer.
 
+[.language-n4js]
 === Generic Methods
 task:IDE-38[] task:IDE-39[]
 
@@ -528,6 +533,7 @@ code compared to using built-in type Promise directly. This concept can
 be applied to methods in exactly the same way as to declared functions.
 See <<_asynchronous-functions,Asynchronous Functions>> and <<_asynchronous-arrow-functions,Asynchronous Arrow Functions>> for details.
 
+[.language-n4js]
 == Constructors
 task:IDE-159[]
 
@@ -1042,6 +1048,7 @@ repeating the exact same constructor signature from interface `I`, because
 that constructor now appears on the other side of the subtype test
 during checking override compatibility.
 
+[.language-n4js]
 == Data Fields
 task:IDE-381[]
 
@@ -1631,6 +1638,7 @@ is the following constraint must hold: math:[\[\begin{aligned}
 
 --
 
+[.language-n4js]
 === Overriding of Members
 task:IDE-12[] task:IDE-158[]
 
@@ -1767,6 +1775,7 @@ math:[\[\begin{aligned}
 
 --
 
+[.language-n4js]
 ==== Member Implementation
 
 .Implementation of Interface Members

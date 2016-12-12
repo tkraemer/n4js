@@ -1,3 +1,4 @@
+
 = Statements
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -12,6 +13,8 @@ Contributors:
 
 For all statements, we define the following pseudo properties:
 
+[.language-n4js]
+--
 `containingFunction` ::
 The function or method in which the statement is (indirectly) contained,
 this may be null.
@@ -19,11 +22,12 @@ this may be null.
 `containingClass` ::
 The class in which the statement is (indirectly) contained, this may be
 null.
-
+--
 The expressions and statements are ordered, at first describing the
 constructs available in the 5th edition of ECMA-262 referred to as  cite:[ECMA11a] in the following.
 The grammar snippets already use newer constructs in some cases.
 
+[.language-n4js]
 == ECMAScript 5 Statements
 
 N4JS supports the same statements as
@@ -65,7 +69,7 @@ A var statement can declare the type of the variable with a type
 reference. This is described with the following grammar similar to
 cite:[ECMA11a(S12.2,p.87)]:
 
-[source]
+[source,n4js]
 ----
 VariableStatement <In, Yield>:
     =>({VariableStatement}
@@ -102,7 +106,7 @@ fragment VariableDeclarationImpl <In, Yield, AllowType>*:
 ;
 ----
 
-[source]
+[source,n4js]
 ----
 var any: any;
 // any.type := any
@@ -144,7 +148,7 @@ initialized or the function is not immediately invoked. In these cases,
 the code is executed later and the self-reference is not a problem. +
 To clarify: `should not` means that only a warning will be produced.
 
-[source]
+[source,n4js]
 ----
 // not ok (simple case)
 var n = n + 1;
@@ -185,6 +189,7 @@ math:[\[\begin{aligned}
 
 // \todo{known limitation: if the initializer expression is an ObjectLiteral or FunctionExpression, the variable type will be inferred to \lstnfjs{any}.task:IDE-865[]
 
+[.language-n4js]
 === If Statement
 
 [discrete]
@@ -192,7 +197,7 @@ math:[\[\begin{aligned}
 
 Cf. cite:[ECMA11a(S12.5,p.89)]
 
-[source]
+[source,n4js]
 ----
 IfStatement <Yield>:
     'if' '(' expression=Expression<In=true,Yield> ')'
@@ -223,7 +228,7 @@ Cf. cite:[ECMA11a(S12.6,p.90ff)]
 
 The syntax already considers the for-of style described in <<_for-of-statement,For ... of Statement>>.
 
-[source]
+[source,n4js]
 ----
 IterationStatement <Yield>:
         DoStatement<Yield>
@@ -291,7 +296,7 @@ string, i.e. any): math:[\[\begin{aligned}
 \lor & (f.initExp \neq null \land  \tee \type{string} \subtype f.initExpr)\end{aligned}\]]
 
 --
-
+[.language-n4js]
 === Return Statement
 
 [discrete]
@@ -444,6 +449,7 @@ DebuggerStatement: {DebuggerStatement} 'debugger' Semi;
 
 na
 
+[.language-n4js]
 == ECMAScript 6 Statements
 
 N4JS export and import statements are similar to ES6 with some minor

@@ -1,3 +1,4 @@
+
 = JSObjects
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -13,6 +14,7 @@ Contributors:
 The built-in ECMAScript Objects
 cite:[ECMA11a(S15,pp.102)] are supported and their properties are annotated with types as described in this chapter. The semantics of these properties do not change. The short description is copied from cite:[ECMA11a] repeated here for convenience.
 
+[.language-n4js]
 == Object
 
 `Object` is the super type of all declared types and `N4Object`. It is almost similar to the JavaScript type `Object` except that no properties may be dynamically added to it. In order to declare a variable to which properties can be dynamically added, the `Object+` type has to be declared (cf.
@@ -99,6 +101,7 @@ object in the same order as that provided by a for-in loop (the
 difference being that a for-in loop enumerates properties in the
 prototype chain as well).
 
+[.language-n4js]
 == String
 
 String is a global object that may be used to construct String
@@ -219,6 +222,7 @@ Returns the primitive value of a String object.
 `String(value:Object=)`: ::
 Static constructor.
 
+[.language-n4js]
 == Boolean
 
 `Boolean` does not have a super class.
@@ -228,6 +232,7 @@ Static constructor.
 
 `Boolean(value:Object=):Boolean`
 
+[.language-n4js]
 == Number
 
 `Number` does not have a super class.
@@ -274,6 +279,7 @@ Returns a String value for this object. The toString method parses its first arg
 `Number(value:Object=):Number`: ::
 Static constructor.
 
+[.language-n4js]
 == Function [[function]]
 
 `Function` does not have a super class.
@@ -300,6 +306,7 @@ Calls (executes) a method of another object in the context of a different object
 `bind(thisArg:Object,arg...):Function`: ::
 Creates a new function that, when called, itself calls this function in the context of the provided this value with a given sequence of arguments preceding any provided when the new function was called.
 
+[.language-n4js]
 == Error
 
 `Error` does not have a super class.
@@ -321,7 +328,7 @@ Error message.
 `Error(message:Object=):Error`: ::
 Static Constructor.
 
-
+[.language-n4js]
 == Array
 
 
@@ -396,6 +403,7 @@ Adds one or more elements to the beginning of an array and returns the new lengt
 `Array(item:Object...)`: ::
 Static constructor.
 
+[.language-n4js]
 == Date
 
 `Date` does not have a super class.
@@ -561,6 +569,7 @@ Returns the time portion of a Date object in readable form.
 `toUTCString():String`: ::
 Converts a Date object, according to Universal Time, to a string.
 
+[.language-n4js]
 == Math
 
 `Math` is not instantiable and only provides static properties and methods.
@@ -648,11 +657,10 @@ Returns the positive square root of a number.
 `tan(x:Number):Number`: ::
 Returns the tangent of a number.
 
+[.language-n4js]
 == RegExp
 
-
 `RegExp` does not have a super class.
-
 
 [discrete]
 === Attributes [[attributes-4]]
@@ -681,6 +689,7 @@ Executes a search for a match in its string parameter.
 `test(str:String):Boolean`: ::
 Tests for a match in its string parameter.
 
+[.language-n4js]
 == JSON
 
 

@@ -1,3 +1,4 @@
+
 = Extended Fetaures
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -10,6 +11,7 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
+[.language-n4js]
 == Array and Object Destructuring
 
 N4JS supports array and object destructuring as provided in ES6. This is
@@ -136,6 +138,7 @@ We can make this more readable:
 var {propOfOl: newVar: typeOfNewVar} = ol
 ----
 
+[.language-n4js]
 == Dependency Injection
 
 This chapter describes <<Acronyms,DI>> mechanisms for N4JS. This includes compiler,
@@ -1173,6 +1176,7 @@ arguments::
 In the case of annotating a class `S` with `@Singleton` on the definition-site, the
 singleton scope will be used as described in <<Singleton Scope>>.
 
+[.language-n4js]
 == Test Support
 
 N4JS provides some annotations for testing. Most of these annotations
@@ -1194,6 +1198,7 @@ at the moment.
 --
 
 
+[.language-n4js]
 == Polyfill Definitions
 task:IDE-1142[]
 

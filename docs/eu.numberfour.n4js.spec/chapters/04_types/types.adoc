@@ -1,3 +1,4 @@
+
 = Types
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -10,6 +11,7 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
+[.language-n4js]
 == Overview
 
 N4JS is essentially ECMAScript with the inclusion of
@@ -138,6 +140,7 @@ class G<T> {
 
 --
 
+[.language-n4js]
 == Type Expressions
 
 In contrast to ECMAScript, N4JS defines static
@@ -298,6 +301,7 @@ Type expressions are used to explicitly declare the type of a variable,
 parameter and return type of a function or method, fields (and object
 literal properties).
 
+[.language-n4js]
 == Type Inference
 
 If no type is explicitly declared, it is inferred based on the given
@@ -333,6 +337,7 @@ Type of `x` is declared as `any` in line 1. Although a number is assigned to `x`
 //TODO: the following should be in a 'TODO' block
 At the moment, N4JS does not support type guards or, more general, effect system (cf. cite:[Nielson99a]).
 
+[.language-n4js]
 == Generic and Parameterized Types
 
 
@@ -912,6 +917,7 @@ interface I2<T extends J> {
 ----
 ====
 
+[.language-n4js]
 == Primitive ECMAScript Types
 
 task:IDE-40[]
@@ -1125,6 +1131,7 @@ without any restrictions, the only value of this type available in N4JS
 is the built-in symbol `Symbol.iterator`. Other built-in symbols from ECMAScript 6 and the creation of new symbols are not supported.
 For more details, see <<_symbol,Primitive Symbol Type Object Type>>.
 
+[.language-n4js]
 == Primitive N4JS Types
 
 Additionally to the primitive ECMAScript types, the following
@@ -1256,6 +1263,7 @@ Note that this validation cannot be applied for more complicated
 expressions with parts which cannot be evaluated at compile time. For
 example, ``"some.path."+segment+".prop"`` cannot be evaluated at compile time.
 
+[.language-n4js]
 == Built-in ECMAScript Object Types
 
 task:IDE-40[]
@@ -1426,6 +1434,7 @@ Note that this interface’s method is special in that a symbol is used as
 identifier. You can use the ordinary syntax for computed property names
 in ECMAScript 6 for overriding / implementing or invoking this method.
 
+[.language-n4js]
 == Built-In N4JS Types
 
 N4JS additionally provides some built-in classes which are always available with the need to explicitly import them.
@@ -1457,6 +1466,7 @@ They are mainly intended for type system support of array destructuring literals
 
 NOTE: This is not documented in detail yet, because we want to gain experience with the current solution first, major refinement may be incoming.
 
+[.language-n4js]
 == Type Modifiers
 
 Type expressions can be further described with type
@@ -1547,6 +1557,7 @@ arguments are passed at runtime.
 
 For more constraints on using the variadic modifier, see <<_function-object-type,Function Object Type>>.
 
+[.language-n4js]
 == Union and Intersection Type (Composed Types)
 
 Given two or more existing types, it is possible to compose a new type
@@ -2253,6 +2264,7 @@ types of the merged methods.
 * A method parameter’s type is the _union_ type of the merged parameters
 types.
 
+[.language-n4js]
 == Constructor and Classifier Type
 
 A class definition as described in <<Classes>> declares types. Often, it is
@@ -2272,6 +2284,7 @@ metatypes is similar to ECMAScript 2015 cite:[ECMA15a(14.5)]..
 
 === Syntax
 
+[source]
 ----
 ConstructorTypeRef returns ConstructorTypeRef: 'constructor' '{' typeArg = [TypeArgument] '}';
 
@@ -2462,6 +2475,7 @@ Base classes in the above sense are not available in N4JS. If an N4JS
 class does not provide an `extends` clause, it will implicitly inherit from
 built-in class `N4Object`, if it provides an `extends` clause stating `Object` as its super type, then it corresponds to what is shown in <<fig-constructors-and-prototypes,Constructors and prototypes>> with the red dashed arrow.
 
+[.language-n4js]
 == This Type
 task:IDE-377[] task:IDE-785[] task:IDEBUG-228[]
 
@@ -2718,6 +2732,7 @@ N4EnumLiteral:
         name=IDENTIFIER (':' value=StringLiteral)?
 ----
 
+[.language-n4js]
 ==== Semantics [[enums-semantics]]
 
 The enum declaration math:[$E$] is of type `type{E}` and every enumeration is
@@ -2751,7 +2766,7 @@ literals are not objects: math:[\[\begin{aligned}
 
 The base enumeration type is defined as follows footnote:[This is pseudo N4JS code as it is not possible to infer from `any` or define abstract static methods.]
 
-[source]
+[source,n4js]
 ----
 /**
  * Base class for all enumeration, literals are assumed to be static constant fields of concrete subclasses.

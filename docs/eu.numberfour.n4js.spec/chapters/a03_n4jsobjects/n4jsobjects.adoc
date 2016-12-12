@@ -1,3 +1,4 @@
+
 = N4JS Objects
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -385,6 +386,7 @@ export public class N4Object {
 
 N4JS provides additional Error types as subtypes of `Error`.
 
+[.language-n4js]
 === N4ApiNotImplemented
 task:IDE-1510[]
 

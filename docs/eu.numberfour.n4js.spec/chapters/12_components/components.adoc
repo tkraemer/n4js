@@ -1,3 +1,4 @@
+
 = Components
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -10,6 +11,7 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
+[.language-n4js]
 == N4JS Platform Architecture
 
 === Overview
@@ -77,6 +79,7 @@ component.
 
 image::fig/cmpd_component_content.png[title="Content of a Component"]
 
+[.language-n4js]
 == Component Types
 
 
@@ -162,6 +165,7 @@ words, other components must not depend on test components.
 In a test project, the tested projects can be specified via `testee`.
 --
 
+[.language-n4js]
 == Component Content
 
 
@@ -175,6 +179,7 @@ For build and production purposes, other files such as `pom.xml` or
 `.project` files are automatically derived from the . These files are
 not to be added manually.
 
+[.language-n4js]
 == Component Manifest
 task:IDE-18[]
 
@@ -671,6 +676,7 @@ ModuleFilters {
 
 ====
 
+[.language-n4js]
 == Component Dependencies
 
 
@@ -741,6 +747,7 @@ that all APIs are implemented:
 math:[\[\begin{aligned} \forall S \in C.requiredAPIs^*: \exists I: S \in I.implementedAPIs \land E \models I\end{aligned}\]]
 --
 
+[.language-n4js]
 == Modules
 task:IDE-8[]
 
@@ -812,6 +819,7 @@ math:[$loadtimeDeps$] at the front.
 
 Pseudo properties to be set via annotations are explained in .
 
+[.language-n4js]
 == NumberFour Archives (NFAR)
 task:IDE-19[] task:IDE-37[] task:IDE-46[]
 
@@ -892,6 +900,7 @@ formatted file with the following structure:
 }
 ----
 
+[.language-n4js]
 == Properties Files
 
 //\todo{review}
@@ -935,6 +944,7 @@ The resource files of a project are automatically loaded. To access a
 resource key `key` stored in a resource file `my.properties`, you have
 to use the file name as a prefix (e.g. you have to use the key `my.key`).
 
+[.language-n4js]
 == API and Implementation Components
 
 Instead of providing an implementation, N4JS components may only define
@@ -1029,6 +1039,7 @@ output folder (esp. when constructing a `class path`) and when loading
 or importing a type from math:[$A_n$] return the corresponding type
 with the same fully-qualified name from math:[$I_n$].
 
+[.language-n4js]
 == API and Implementation With DI
 
 API projects may use N4JS DI (<<_dependency-injection,Dependency Injection>>) language features which require

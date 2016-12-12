@@ -1,3 +1,5 @@
+
+
 = Structural Typing
 task:IDE-673[] task:IDE-680[] task:IDE-688[] task:IDE-691[]
 ////
@@ -17,6 +19,7 @@ with external APIs, it is more convenient to use structural or duck
 typing. That is, a thing that can swim and quacks like a duck, is a
 duck.
 
+[.language-n4js]
 Interfaces or classes can be used for this purpose with a _typing
 strategy modifier_ . Given a type math:[$T$], the simple ``pass:[~]`` (tilde)
 can be added to its declaration (on definition-site) or in a reference (on
@@ -30,6 +33,7 @@ as this operator relies on the declaration information (or at least the
 closest thing available at runtime). In this case, math:[$T$] is,
 therefore, always a structural subtype of math:[$~T$].
 
+[.language-n4js]
 Sometimes it is convenient to refer only to the fields of a classifier,
 for example when the initial field values are to be provided in a
 variable passed to the constructor. In that case, the type can be
@@ -74,6 +78,7 @@ ThisTypeRefStructural returns ThisTypeRefStructural:
 ;
 ----
 
+[.language-n4js]
 == Definition Site Structural Typing
 
 An interface or class can be defined to be used with structural typing
@@ -393,8 +398,8 @@ class C {..}
 interface I {..}
 
 foo(c: ~C, i: ~I) {
-    °\color{red}{\underline{c}}° instanceof C; // error
-    °\color{red}{\underline{c}}° instanceof I; // error
+    c instanceof C; // error
+    c instanceof I; // error
 }
 ----
 
@@ -405,8 +410,8 @@ class C {..}
 interface I {..}
 
 foo(c: ~~C, i: ~~I) {
-    °\color{red}{\underline{c}}° instanceof C; // error
-    °\color{red}{\underline{c}}° instanceof I; // error
+    c instanceof C; // error
+    C instanceof I; // error
 }
 ----
 
@@ -597,6 +602,7 @@ typing scenarios. Such as math:[$\tsFld X$],
 math:[$\tsRoFld X$], math:[$\tsWoFld X$] and
 math:[$\tsInitFld X$].
 
+[.language-n4js]
 [cols="<2m,^,^,^,^"]
 |===
 h|Member of type __X__ | ``pass:[~~X]`` |``pass:[~r~X]`` |``pass:[~w~X]`` |``pass:[~i~X]``
@@ -705,6 +711,7 @@ h| pass:[~r~A5]|  |  |  |  |  |  |  |✓ |  |  |✓ |✓ |  |  |  |✓ |✓ |
 
 // TODO: fonts must be smaller here to prevent overlapping in PDF
 
+[.language-n4js]
 == Public Setter Annotated With `ProvidesInitializer`
 
 Public setters with `ProvidesInitializer` annotation can declare optional fields implemented by means of field accessors instead of data fields. Data fields with an
@@ -796,6 +803,7 @@ g(new C()); // ok: C is a (structural) subtype of ~F
 
 --
 
+[.language-n4js]
 == Structural Types With Access Modifier
 
 The access modifier of the subtype have to provide equal or higher
@@ -822,6 +830,7 @@ g(new C()); // ok: C is a (structural) subtype of ~D, as visibility of s in C is
 
 --
 
+[.language-n4js]
 == Structural Types With Additional Members
 
 It is possible to add additional members when structurally referencing a

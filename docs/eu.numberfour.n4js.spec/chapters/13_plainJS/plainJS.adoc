@@ -1,3 +1,4 @@
+
 = PlainJS
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -28,6 +29,7 @@ programming which may conflict with other plain JavaScript solutions.
 To overcome these problems, N4JS provides a couple of techniques
 summarized in this chapter.
 
+[.language-n4js]
 == Type Inference and Validation for Plain JS
 task:IDEBUG-45[]
 
@@ -45,6 +47,7 @@ arguments of type `any+`.
 Note that this essentially disables all validation particularly since
 methods such as the ’import’-like function `require` are unknown.
 
+[.language-n4js]
 == External Declarations
 task:IDE-572[] task:IDE-1236[]
 
@@ -306,6 +309,7 @@ export external public class Circle implements Scalable {
 ----
 --
 
+[.language-n4js]
 == Global Definitions
 task:IDE-1036[]
 
@@ -351,6 +355,7 @@ math:[\[\begin{aligned}
 
 --
 
+[.language-n4js]
 == Runtime Definitions
 task:IDE-1036[]
 
@@ -399,6 +404,7 @@ math:[$\lenum{runtimeLibrary}$].
 definition module if annotation is defined for a whole module. task:IDE-1084[]
 --
 
+[.language-n4js]
 == Applying Polyfills
 task:IDE-1142[]
 
