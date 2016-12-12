@@ -76,6 +76,7 @@ import eu.numberfour.n4js.resource.N4JSResourceDescriptionStrategy;
 import eu.numberfour.n4js.resource.N4JSUnloader;
 import eu.numberfour.n4js.resource.PostProcessingAwareResource.PostProcessor;
 import eu.numberfour.n4js.resource.UserdataMapper;
+import eu.numberfour.n4js.resource.XpectAwareFileExtensionCalculator;
 import eu.numberfour.n4js.scoping.N4JSGlobalScopeProvider;
 import eu.numberfour.n4js.scoping.builtin.ScopeRegistrar;
 import eu.numberfour.n4js.scoping.imports.N4JSImportedNamespaceAwareLocalScopeProvider;
@@ -539,5 +540,12 @@ public class N4JSXRuntimeModule extends eu.numberfour.n4jsx.AbstractN4JSXRuntime
 	 */
 	public Class<? extends UnsupportedExpressionTypeHelper> bindUnsupportedExpressionTypeHelper() {
 		return N4JSXUnsupportedExpressionTypeHelper.class;
+	}
+
+	/**
+	 * Bind file extension calculator
+	 */
+	public Class<? extends XpectAwareFileExtensionCalculator> bindXpectAwareFileExtensionCalculator() {
+		return XpectAwareFileExtensionCalculator.class;
 	}
 }

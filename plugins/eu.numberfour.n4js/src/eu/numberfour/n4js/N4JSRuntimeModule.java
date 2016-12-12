@@ -85,6 +85,7 @@ import eu.numberfour.n4js.resource.N4JSResourceDescriptionStrategy;
 import eu.numberfour.n4js.resource.N4JSUnloader;
 import eu.numberfour.n4js.resource.PostProcessingAwareResource.PostProcessor;
 import eu.numberfour.n4js.resource.UserdataMapper;
+import eu.numberfour.n4js.resource.XpectAwareFileExtensionCalculator;
 import eu.numberfour.n4js.scoping.N4JSGlobalScopeProvider;
 import eu.numberfour.n4js.scoping.N4JSScopeProvider;
 import eu.numberfour.n4js.scoping.builtin.ScopeRegistrar;
@@ -104,11 +105,11 @@ import eu.numberfour.n4js.typesystem.UnsupportedExpressionTypeHelper;
 import eu.numberfour.n4js.typesystem.VersionResolver;
 import eu.numberfour.n4js.utils.di.scopes.ScopeManager;
 import eu.numberfour.n4js.utils.di.scopes.TransformationScoped;
-import eu.numberfour.n4js.validation.DefaultJavaScriptVariantHelper;
 import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
 import eu.numberfour.n4js.validation.N4JSDiagnostician;
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider;
 import eu.numberfour.n4js.validation.N4JSIssueSeveritiesProvider;
+import eu.numberfour.n4js.validation.N4JSJavaScriptVariantHelper;
 import eu.numberfour.n4js.validation.N4JSResourceValidator;
 import eu.numberfour.n4js.xsemantics.InternalTypeSystem;
 import it.xsemantics.runtime.StringRepresentation;
@@ -528,7 +529,7 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 	 * Bind JavaScriptVariantHelper
 	 */
 	public Class<? extends JavaScriptVariantHelper> bindJavaScriptVariantHelper() {
-		return DefaultJavaScriptVariantHelper.class;
+		return N4JSJavaScriptVariantHelper.class;
 	}
 
 	/**
@@ -545,5 +546,12 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 	 */
 	public Class<? extends UnsupportedExpressionTypeHelper> bindUnsupportedExpressionTypeHelper() {
 		return DefaultUnsupportedExpressionTypeHelper.class;
+	}
+
+	/**
+	 * Bind file extension calculator
+	 */
+	public Class<? extends XpectAwareFileExtensionCalculator> bindXpectAwareFileExtensionCalculator() {
+		return XpectAwareFileExtensionCalculator.class;
 	}
 }
