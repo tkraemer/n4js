@@ -1367,7 +1367,6 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * 7.1.7. Property Accessors, Constraints 69 (Index Access).
-	 * 
 	 */
 	@Check
 	def void checkIndexedAccessExpression(IndexedAccessExpression indexedAccess) {
@@ -1397,9 +1396,9 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return; // error otherwise or corrupt AST
 		}
 		val receiverTypeRef = ts.resolveType(G, receiverTypeRefRaw);
-		val isComputedName = N4JSLanguageUtils.isValidIndexExpression(indexedAccess.index);
-		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(indexedAccess.index);
+		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(index);
 		val accessedStaticType = if(receiverTypeRef instanceof TypeTypeRef) tsh.getStaticType(G, receiverTypeRef);
+		val isComputedName = !(index instanceof NumericLiteral) && accessedBuiltInSymbol===null && N4JSLanguageUtils.isValidIndexExpression(G, index);
 		if (accessedBuiltInSymbol !== null
 			&& (receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef instanceof ThisTypeRef)) {
 			// we have something like: myObj[Symbol.iterator]
@@ -1408,7 +1407,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		} else if (receiverTypeRef.declaredType instanceof TN4Classifier) { // Constraints 69.1
 			if (isComputedName) {
 				// custom error message for computed-name access
-				internalCheckComputedIndexedAccess(indexedAccess, receiverTypeRef)
+				internalCheckComputedIndexedAccess(G, indexedAccess, receiverTypeRef)
 			} else {
 				if (!receiverTypeRef.isDynamic()) {
 					addIssue(
@@ -1429,7 +1428,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 				addIssue(
 					getMessageForEXP_INDEXED_ACCESS_ARRAY(receiverTypeRef.declaredType.name,
 						foundIndexType),
-					indexedAccess.index,
+					index,
 					EXP_INDEXED_ACCESS_ARRAY
 				);
 			}
@@ -1441,7 +1440,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 				addIssue(
 					getMessageForEXP_INDEXED_ACCESS_STRING(receiverTypeRef.declaredType.name,
 						foundIndexType),
-					indexedAccess.index,
+					index,
 					EXP_INDEXED_ACCESS_STRING
 				);
 			}
@@ -1450,7 +1449,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			// allowed: index into exact-type Object instance (not subtype thereof)
 			return
 		} else if (isComputedName) {
-			internalCheckComputedIndexedAccess(indexedAccess, receiverTypeRef)
+			internalCheckComputedIndexedAccess(G, indexedAccess, receiverTypeRef)
 			return
 		} else {
 			addIssue(messageForEXP_INDEXED_ACCESS_FORBIDDEN, indexedAccess,
@@ -1463,9 +1462,9 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	 * 
 	 * @return true if allowed, false otherwise.
 	 */
-	def private void internalCheckComputedIndexedAccess(IndexedAccessExpression indexedAccess,
+	def private void internalCheckComputedIndexedAccess(RuleEnvironment G, IndexedAccessExpression indexedAccess,
 		TypeRef receiverTypeRef) {
-		val memberName = N4JSLanguageUtils.getMemberNameForIndexExpression(indexedAccess.index);
+		val memberName = N4JSLanguageUtils.getMemberNameForIndexExpression(G, indexedAccess.index);
 		if (ComputedPropertyNameValueConverter.SYMBOL_ITERATOR_MANGLED == memberName) {
 			// Implementation restriction: member name clashes with compiler-internal, synthetic, mangled name.
 			addIssue(getMessageForEXP_INDEXED_ACCESS_IMPL_RESTRICTION(), indexedAccess,

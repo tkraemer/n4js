@@ -2102,7 +2102,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleTypeIndexedAccessExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final IndexedAccessExpression expr) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    /* { expr.target instanceof SuperLiteral T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } or { G |- expr.target : var TypeRef targetTypeRef targetTypeRef = typeSystemHelper.resolveType(G, targetTypeRef); val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(expr.index); val memberName = N4JSLanguageUtils.getMemberNameForIndexExpression(expr.index); val elementType = targetTypeRef.declaredType?.elementType if (accessedBuiltInSymbol!==null) { val declType = targetTypeRef.declaredType; if(declType instanceof ContainerType<?>) { val symbolMemberName = '#' + accessedBuiltInSymbol.name; val member = containerTypesHelper.fromContext(expr).findMember(declType,symbolMemberName,false,false); if(member!==null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else { T = G.anyTypeRef } } else if (memberName!==null) { val staticAccess = (targetTypeRef instanceof TypeTypeRef) val checkVisibility = false val scope = memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess) val member = memberScopingHelper.findUniqueMemberForName(scope, memberName, staticAccess) if(member != null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else if (elementType !== null) { val declaredType = targetTypeRef.declaredType if (declaredType.generic && targetTypeRef.typeArgs.isEmpty) { T = G.anyTypeRef } else { val G2 = G.wrap typeSystemHelper.addSubstitutions(G2, targetTypeRef) G2.addThisType(targetTypeRef) G2 |- elementType ~> T } } else if (targetTypeRef.dynamic) { T = G.anyTypeRefDynamic } else { T = G.anyTypeRef } } */
+    /* { expr.target instanceof SuperLiteral T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } or { G |- expr.target : var TypeRef targetTypeRef targetTypeRef = typeSystemHelper.resolveType(G, targetTypeRef); val memberName = N4JSLanguageUtils.getMemberNameForIndexExpression(G, expr.index); val elementType = targetTypeRef.declaredType?.elementType if (memberName!==null && memberName.startsWith(N4JSLanguageUtils.SYMBOL_IDENTIFIER_PREFIX)) { val declType = targetTypeRef.declaredType; if(declType instanceof ContainerType<?>) { val member = containerTypesHelper.fromContext(expr).findMember(declType,memberName,false,false); if(member!==null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else { T = G.anyTypeRef } } else if (memberName!==null) { val staticAccess = (targetTypeRef instanceof TypeTypeRef) val checkVisibility = false val scope = memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess) val member = memberScopingHelper.findUniqueMemberForName(scope, memberName, staticAccess) if(member != null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else if (elementType !== null) { val declaredType = targetTypeRef.declaredType if (declaredType.generic && targetTypeRef.typeArgs.isEmpty) { T = G.anyTypeRef } else { val G2 = G.wrap typeSystemHelper.addSubstitutions(G2, targetTypeRef) G2.addThisType(targetTypeRef) G2 |- elementType ~> T } } else if (targetTypeRef.dynamic) { T = G.anyTypeRefDynamic } else { T = G.anyTypeRef } } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -2125,22 +2125,18 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         TypeRef _resolveType = this.typeSystemHelper.resolveType(G, targetTypeRef);
         targetTypeRef = _resolveType;
         Expression _index = expr.getIndex();
-        final TField accessedBuiltInSymbol = RuleEnvironmentExtensions.getAccessedBuiltInSymbol(G, _index);
-        Expression _index_1 = expr.getIndex();
-        final String memberName = N4JSLanguageUtils.getMemberNameForIndexExpression(_index_1);
+        final String memberName = N4JSLanguageUtils.getMemberNameForIndexExpression(G, _index);
         Type _declaredType = targetTypeRef.getDeclaredType();
         TypeRef _elementType = null;
         if (_declaredType!=null) {
           _elementType=_declaredType.getElementType();
         }
         final TypeRef elementType = _elementType;
-        if ((accessedBuiltInSymbol != null)) {
+        if (((memberName != null) && memberName.startsWith(N4JSLanguageUtils.SYMBOL_IDENTIFIER_PREFIX))) {
           final Type declType = targetTypeRef.getDeclaredType();
           if ((declType instanceof ContainerType<?>)) {
-            String _name = accessedBuiltInSymbol.getName();
-            final String symbolMemberName = ("#" + _name);
             ContainerTypesHelper.MemberCollector _fromContext = this.containerTypesHelper.fromContext(expr);
-            final TMember member = _fromContext.findMember(((ContainerType<?>)declType), symbolMemberName, false, false);
+            final TMember member = _fromContext.findMember(((ContainerType<?>)declType), memberName, false, false);
             if ((member != null)) {
               /* G |- member : var TypeRef memberTypeRef */
               TypeRef memberTypeRef = null;

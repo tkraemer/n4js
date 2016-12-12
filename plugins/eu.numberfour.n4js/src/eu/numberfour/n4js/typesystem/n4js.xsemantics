@@ -615,15 +615,14 @@ from {
 		G |- expr.target : var TypeRef targetTypeRef
 		targetTypeRef = typeSystemHelper.resolveType(G, targetTypeRef);
 
-		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(expr.index);
-		val memberName = N4JSLanguageUtils.getMemberNameForIndexExpression(expr.index);
+		val memberName = N4JSLanguageUtils.getMemberNameForIndexExpression(G, expr.index);
 		val elementType = targetTypeRef.declaredType?.elementType
 
-		if (accessedBuiltInSymbol!==null) {
+		if (memberName!==null && memberName.startsWith(N4JSLanguageUtils.SYMBOL_IDENTIFIER_PREFIX)) {
+			// the index (inside the []) is a symbol
 			val declType = targetTypeRef.declaredType;
 			if(declType instanceof ContainerType<?>) {
-				val symbolMemberName = '#' + accessedBuiltInSymbol.name;
-				val member = containerTypesHelper.fromContext(expr).findMember(declType,symbolMemberName,false,false); // TODO support for static access?
+				val member = containerTypesHelper.fromContext(expr).findMember(declType,memberName,false,false); // TODO support for static access?
 				if(member!==null) {
 					G |- member : var TypeRef memberTypeRef
 

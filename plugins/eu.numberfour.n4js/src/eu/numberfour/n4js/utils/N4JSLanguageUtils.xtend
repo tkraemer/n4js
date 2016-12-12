@@ -608,8 +608,10 @@ class N4JSLanguageUtils {
 	/**
 	 * Tells if the given expression is valid as an index within an {@link IndexedAccessExpression}.
 	 */
-	def static boolean isValidIndexExpression(Expression indexExpr) {
+	def static boolean isValidIndexExpression(RuleEnvironment G, Expression indexExpr) {
 		if(indexExpr instanceof NumericLiteral || indexExpr instanceof StringLiteral) {
+			return true;
+		} else if(G.getAccessedBuiltInSymbol(indexExpr)!==null) {
 			return true;
 		} else if(indexExpr instanceof ParameterizedPropertyAccessExpression) {
 			return indexExpr.property instanceof TEnumLiteral;
@@ -617,18 +619,25 @@ class N4JSLanguageUtils {
 		return false;
 	}
 	/**
-	 * FIXME
-	 * NOTE: does not cover Symbols!
+	 * If the given expression is a {@link #isValidIndexExpression(RuleEnvironment, Expression) valid index expression}
+	 * but is *not* numerical, then this method will return the name of the member the index access expression is
+	 * referring to. Returns <code>null</code> if the expression is invalid or numerical.
 	 */
-	def static String getMemberNameForIndexExpression(Expression indexExpr) {
-		return switch(indexExpr) {
-			StringLiteral: indexExpr.value
-			ParameterizedPropertyAccessExpression: {
-				val prop = indexExpr.property;
-				if(prop instanceof TEnumLiteral) {
-					prop.valueOrName
+	def static String getMemberNameForIndexExpression(RuleEnvironment G, Expression indexExpr) {
+		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(indexExpr);
+		if(accessedBuiltInSymbol!==null) {
+			return SYMBOL_IDENTIFIER_PREFIX + accessedBuiltInSymbol.name;
+		} else {
+			return switch(indexExpr) {
+				StringLiteral:
+					indexExpr.value
+				ParameterizedPropertyAccessExpression: {
+					val prop = indexExpr.property;
+					if(prop instanceof TEnumLiteral) {
+						prop.valueOrName
+					}
 				}
-			}
-		};
+			};
+		}
 	}
 }
