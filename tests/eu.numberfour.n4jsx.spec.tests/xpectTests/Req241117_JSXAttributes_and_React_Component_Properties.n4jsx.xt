@@ -42,5 +42,12 @@ function MyOtherReactFuncComponent(props: ~React.ComponentProps with {a: int, b:
 <MyOtherReactFuncComponent a={5}/>;
 
 
-
+const MyThirdrReactFuncComponent = (props: ~MyProps): React.Element =>  {
+	return (
+		<div>{props.x}</div>,
+		<div>{props.y}</div>
+	);
+}
+//XPECT errors --> "boolean is not a subtype of int." at "true"
+<MyThirdrReactFuncComponent a={1} x={true} y="Some text" />
 

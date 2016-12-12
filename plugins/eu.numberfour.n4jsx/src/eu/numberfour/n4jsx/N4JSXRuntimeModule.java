@@ -100,6 +100,7 @@ import eu.numberfour.n4jsx.internal.N4JSXRuntimeCore;
 import eu.numberfour.n4jsx.parser.N4JSXSemicolonInjectingParser;
 import eu.numberfour.n4jsx.parser.RegExLiteralAwareLexer;
 import eu.numberfour.n4jsx.parser.antlr.lexer.InternalN4JSXLexer;
+import eu.numberfour.n4jsx.resource.N4JSXLinker;
 import eu.numberfour.n4jsx.scoping.N4JSXScopeProvider;
 import eu.numberfour.n4jsx.typesystem.N4JSXUnsupportedExpressionTypeHelper;
 import eu.numberfour.n4jsx.validation.N4JSXIssueSeveritiesProvider;
@@ -189,7 +190,7 @@ public class N4JSXRuntimeModule extends eu.numberfour.n4jsx.AbstractN4JSXRuntime
 	 */
 	@Override
 	public Class<? extends ILinker> bindILinker() {
-		return N4JSLinker.class;
+		return N4JSXLinker.class;
 	}
 
 	/**

@@ -376,8 +376,6 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   public final static String EQUALTYPETYPEREF = "eu.numberfour.n4js.xsemantics.EqualTypeTypeRef";
   
-  public final static String EXPECTEDTYPENONE = "eu.numberfour.n4js.xsemantics.ExpectedTypeNone";
-  
   public final static String EXPECTEDTYPEOFARGUMENT = "eu.numberfour.n4js.xsemantics.ExpectedTypeOfArgument";
   
   public final static String EXPECTEDTYPEINPOSTFIXEXPRESSION = "eu.numberfour.n4js.xsemantics.ExpectedTypeInPostfixExpression";
@@ -415,6 +413,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   public final static String EXPECTEDTYPEINFORSTATEMENT = "eu.numberfour.n4js.xsemantics.ExpectedTypeInForStatement";
   
   public final static String EXPECTEDTYPEINAWAITEXPRESSION = "eu.numberfour.n4js.xsemantics.ExpectedTypeInAwaitExpression";
+  
+  public final static String EXPECTEDTYPEINUNSUPPORTEDCONTAINER = "eu.numberfour.n4js.xsemantics.ExpectedTypeInUnsupportedContainer";
   
   public final static String UPPERBOUNDTYPEREF = "eu.numberfour.n4js.xsemantics.UpperBoundTypeRef";
   
@@ -4896,34 +4896,6 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     return new Result<Boolean>(true);
   }
   
-  protected Result<TypeRef> expectedTypeInImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EObject o, final Expression e) throws RuleFailedException {
-    try {
-    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<TypeRef> _result_ = applyRuleExpectedTypeNone(G, _subtrace_, o, e);
-    	addToTrace(_trace_, new Provider<Object>() {
-    		public Object get() {
-    			return ruleName("expectedTypeNone") + stringRepForEnv(G) + " |- " + stringRep(o) + " |> " + stringRep(e) + " : " + stringRep(_result_.getFirst());
-    		}
-    	});
-    	addAsSubtrace(_trace_, _subtrace_);
-    	return _result_;
-    } catch (Exception e_applyRuleExpectedTypeNone) {
-    	expectedTypeInThrowException(ruleName("expectedTypeNone") + stringRepForEnv(G) + " |- " + stringRep(o) + " |> " + stringRep(e) + " : " + "TypeRef",
-    		EXPECTEDTYPENONE,
-    		e_applyRuleExpectedTypeNone, o, e, new ErrorInformation[] {new ErrorInformation(o), new ErrorInformation(e)});
-    	return null;
-    }
-  }
-  
-  protected Result<TypeRef> applyRuleExpectedTypeNone(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EObject o, final Expression e) throws RuleFailedException {
-    
-    return new Result<TypeRef>(_applyRuleExpectedTypeNone_2(G, o, e));
-  }
-  
-  private TypeRef _applyRuleExpectedTypeNone_2(final RuleEnvironment G, final EObject o, final Expression e) throws RuleFailedException {
-    return ((TypeRef) null);
-  }
-  
   protected Result<TypeRef> expectedTypeInImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Argument argument, final Expression argumentExpression) throws RuleFailedException {
     try {
     	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
@@ -5975,6 +5947,32 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
       ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
       T = _anyTypeRef;
     }
+    return new Result<TypeRef>(T);
+  }
+  
+  protected Result<TypeRef> expectedTypeInImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EObject container, final Expression expr) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<TypeRef> _result_ = applyRuleExpectedTypeInUnsupportedContainer(G, _subtrace_, container, expr);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("expectedTypeInUnsupportedContainer") + stringRepForEnv(G) + " |- " + stringRep(container) + " |> " + stringRep(expr) + " : " + stringRep(_result_.getFirst());
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleExpectedTypeInUnsupportedContainer) {
+    	expectedTypeInThrowException(ruleName("expectedTypeInUnsupportedContainer") + stringRepForEnv(G) + " |- " + stringRep(container) + " |> " + stringRep(expr) + " : " + "TypeRef",
+    		EXPECTEDTYPEINUNSUPPORTEDCONTAINER,
+    		e_applyRuleExpectedTypeInUnsupportedContainer, container, expr, new ErrorInformation[] {new ErrorInformation(container), new ErrorInformation(expr)});
+    	return null;
+    }
+  }
+  
+  protected Result<TypeRef> applyRuleExpectedTypeInUnsupportedContainer(final RuleEnvironment G, final RuleApplicationTrace _trace_, final EObject container, final Expression expr) throws RuleFailedException {
+    TypeRef T = null; // output parameter
+    TypeRef _expectedExpressionTypeInEObject = this.expressionTypeHelper.expectedExpressionTypeInEObject(container, expr, G);
+    T = _expectedExpressionTypeInEObject;
     return new Result<TypeRef>(T);
   }
   

@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4jsx.validation;
 
+import com.google.common.collect.Lists
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.IdentifierRef
@@ -18,7 +19,9 @@ import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
+import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.types.TField
+import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
@@ -27,7 +30,9 @@ import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4jsx.helpers.ReactHelper
 import eu.numberfour.n4jsx.n4JSX.JSXElement
 import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute
+import eu.numberfour.n4jsx.n4JSX.JSXSpreadAttribute
 import eu.numberfour.n4jsx.n4JSX.N4JSXPackage
+import it.xsemantics.runtime.Result
 import java.util.Arrays
 import java.util.List
 import org.eclipse.emf.ecore.EReference
@@ -44,7 +49,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject private TypeSystemHelper tsh
 	@Inject private extension ReactHelper reactHelper;
 
-	//Source: http://www.w3schools.com/tags/
+	// Source: http://www.w3schools.com/tags/
 	private static final List<String> htmlTags = Arrays.asList(
 		"a","abbr",	"address", "area", "article", "aside", "audio", 	
 		"b", "base", "bdi", "bdo", "blockquote", "body", "br", "button",
@@ -61,9 +66,9 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 		"object", "ol", "optgroup", "option", 
 		"p", "param", "pre", "progress", "q", "rp", "rt", "ruby", 
 		"s", "samp", "script", "section", "select", "small", "source", "span",
-		"strong", "style", "sub", "summary", "sup", 
+		"strong", "style", "sub", "summary", "sup", "svg", 
 		"table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track",
-		"u", "ul", "var", "video", "wbr"
+		"u", "ul", "use", "var", "video", "wbr"
 	)
 
 	/**
@@ -219,6 +224,109 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 			addIssue(message, expr, IssueCodes.REACT_ELEMENT_CLASS_NOT_REACT_ELEMENT_ERROR);
 		}
 	}
+	
+	@Check
+	def public void checkUnknownJSXPropertyAttribute(JSXPropertyAttribute propertyAttribute) {
+		val jsxElem = propertyAttribute.eContainer as JSXElement;
+		val TypeRef exprTypeRef = reactHelper.getJSXElementBindingType(jsxElem);
+		var isFunction = exprTypeRef instanceof FunctionTypeExprOrRef;
+		var isClass = exprTypeRef instanceof TypeTypeRef && (exprTypeRef as TypeTypeRef).constructorRef;
+		if (!isFunction && !isClass) {
+			return;
+		}
+					
+		val G = propertyAttribute.newRuleEnvironment;
+		val Result<TypeRef> result = ts.type(G, propertyAttribute.property);
+		//TODO: it's not nice that we get an UnknownTypeRef, here; 
+		//they are mainly intended for error cases, not valid code. Probably it should be any+ instead.
+		//This requires refactoring else where
+		if (result.value instanceof UnknownTypeRef) {
+			val message = IssueCodes.getMessageForJSXSPROPERTYATTRIBUTE_NOT_DECLARED_IN_PROPS(propertyAttribute.propertyAsText, 
+				jsxElem?.jsxElementName?.expression?.refName);
+					addIssue(
+						message,
+						propertyAttribute,
+						N4JSXPackage.Literals.JSX_PROPERTY_ATTRIBUTE__PROPERTY,
+						IssueCodes.JSXSPROPERTYATTRIBUTE_NOT_DECLARED_IN_PROPS
+					);
+		}
+	}
+
+	/**
+	 * Check the type conformity of types of spread operator's attributes against "props" types
+	 * See Req. IDE-241119
+	 */
+	@Check
+	def public void checkAttributeAndTypeConformityInJSXSpreadAttribute(JSXSpreadAttribute spreadAttribute) {
+		val expr = spreadAttribute?.expression;
+		val jsxElem =  spreadAttribute?.eContainer as JSXElement;
+		val propsType = jsxElem?.propsType
+		if (propsType === null) 
+			return;
+		
+		val G = spreadAttribute.newRuleEnvironment
+		// Retrieve fields or getters in props type
+		val fieldsOrGettersInProps = tsh.structuralTypesHelper.collectStructuralMembers(G, propsType,
+			TypingStrategy.STRUCTURAL).filter[m | (m instanceof TField) || (m instanceof TGetter)];
+
+		val exprTypeResult = ts.type(G, expr);
+		if (exprTypeResult.failed)
+			return;
+		// Retrieve attributes (either field or getter) in spread operator type	
+		val attributesInSpreadOperatorType = tsh.structuralTypesHelper.collectStructuralMembers(G, exprTypeResult.value,
+				TypingStrategy.STRUCTURAL).filter[m | (m instanceof TField) || (m instanceof TGetter)];
+		
+		//commented out but not deleted for now since the Stdlib team is still arguing about if this check makes sense
+		//spreadAttribute.checkUnknownAttributeInSpreadOperator(jsxElem, attributesInSpreadOperatorType, fieldsOrGettersInProps);
+		
+		// Type check each attribute in spreader operator against the corresponding props type's field/getter
+		attributesInSpreadOperatorType.forEach [ attributeInSpreadOperator |
+			val attributeInSpreadOperatorTypeRef = attributeInSpreadOperator.typeRefOfFieldOrGetter;
+			val fieldOrGetterInProps = fieldsOrGettersInProps.findFirst[fieldOrGetter | attributeInSpreadOperator.name == fieldOrGetter.name];
+			
+			if (fieldOrGetterInProps !== null) {
+				//Reason for using tau: Consider type arguments by calculating the property of within the context of "props" type
+				val fieldOrGetterInPropsTypeRef = ts.tau(fieldOrGetterInProps, propsType);
+				val result = ts.subtype(G, attributeInSpreadOperatorTypeRef, fieldOrGetterInPropsTypeRef);
+				if (result.failed) {
+					val message = IssueCodes.getMessageForJSXSPREADATTRIBUTE_WRONG_SUBTYPE(attributeInSpreadOperator.name,
+						attributeInSpreadOperatorTypeRef.typeRefAsString, fieldOrGetterInPropsTypeRef.typeRefAsString);
+					addIssue(
+						message,
+						spreadAttribute,
+						N4JSXPackage.Literals.JSX_SPREAD_ATTRIBUTE__EXPRESSION,
+						IssueCodes.JSXSPREADATTRIBUTE_WRONG_SUBTYPE
+					);
+				}
+			}
+		];
+	}
+	
+	/**
+	 * Check if there is any attribute in spread operator that is not declared in props
+	 * Notes: this is commented out but not deleted for now since the Stdlib team is still arguing about if this check makes sense
+	 */
+//	def private checkUnknownAttributeInSpreadOperator(JSXSpreadAttribute spreadAttribute, JSXElement jsxElem, Iterable<TMember> attributesInSpreadOperatorType, Iterable<TMember> fieldsOrGettersInProps) {
+//		attributesInSpreadOperatorType.forEach [ attributeInSpreadOperator |
+//			//Look for the field/getter in props that corresponding the spread operator's attribute
+//			val fieldOrGetterInProps = fieldsOrGettersInProps.findFirst[fieldOrGetter | attributeInSpreadOperator.name == fieldOrGetter.name];
+//			if (fieldOrGetterInProps === null) {
+//				val message = IssueCodes.getMessageForJSXSPREADATTRIBUTE_NOT_DECLARED_IN_PROPS(attributeInSpreadOperator.name, 
+//					 	jsxElem?.jsxElementName?.expression?.refName
+//					 );
+//						addIssue(
+//							message,
+//							spreadAttribute,
+//							N4JSXPackage.Literals.JSX_SPREAD_ATTRIBUTE__EXPRESSION,
+//							IssueCodes.JSXSPREADATTRIBUTE_NOT_DECLARED_IN_PROPS
+//						);	
+//			}
+//			
+//		];
+//			
+//	}
+	
+	
 
 	/**
 	 * Check that non-optional fields of "props" should be specified in JSX element
@@ -226,22 +334,39 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	def private void checkAllNonOptionalFieldsAreSpecified(JSXElement jsxElem, TypeRef exprTypeRef) {
 		val jsxPropertyAttributes = jsxElem.jsxAttributes;
-		val properties = jsxPropertyAttributes.map[a|(a as JSXPropertyAttribute).property];
+		// First, collect all normal properties in JSX element 
+		val allAttributesInJSXElement = Lists.newArrayList(jsxPropertyAttributes.filter(typeof(JSXPropertyAttribute)).map[a | a.property]);
 		val propsType = jsxElem.propsType;
 		if (propsType === null)
 			return;
 
 		val G = jsxElem.newRuleEnvironment;
-		val nonOptionalFieldsInPropsType = tsh.structuralTypesHelper.collectStructuralMembers(G, propsType,
-			TypingStrategy.STRUCTURAL).filter[m|(m instanceof TField) && !m.isOptional];
+		// Then collect attributes in spread operators
+		val attributesInSpreadOperator = Lists.newArrayList(jsxPropertyAttributes.filter(typeof(JSXSpreadAttribute)).map [ spreadAttribute |
+			val exprTypeRefResult = ts.type(G, spreadAttribute.expression);
+			if (!exprTypeRefResult.failed) {
+				return tsh.structuralTypesHelper.collectStructuralMembers(G, exprTypeRefResult.value, TypingStrategy.STRUCTURAL).filter [ m |
+					(m instanceof TField) || (m instanceof TGetter)
+				]
+			} else {
+				Lists.newArrayList
+			}
+		]).flatten;
+		allAttributesInJSXElement.addAll(attributesInSpreadOperator)
+		
+		// Retrieve all non-optional fields or getters in "props" type
+		val nonOptionalFieldsOrGettersInProps = 
+				tsh.structuralTypesHelper.collectStructuralMembers(G, propsType, TypingStrategy.STRUCTURAL).filter[m | 
+					(m instanceof TField || m instanceof TGetter) && !m.isOptional
+				];
+		//Calculate the set of unspecified non-optional properties 	
+		val String missingFieldsStringRep = nonOptionalFieldsOrGettersInProps.filter [ fieldOrGetter |
+			!(allAttributesInJSXElement.exists[attribute | attribute.name == fieldOrGetter.name])
+		].map [ fieldOrGetter |	fieldOrGetter.name ].join(",");
 
-		val String missingFields = nonOptionalFieldsInPropsType.filter[field|!(properties.contains(field))].map [ field |
-			field.name
-		].join(",")
-
-		if (!missingFields.isEmpty) {
+		if (!missingFieldsStringRep.isEmpty) {
 			val message = IssueCodes.
-				getMessageForJSXPROPERTY_ATTRIBUTE_NON_OPTIONAL_PROPERTY_NOT_SPECIFIED(missingFields);
+				getMessageForJSXPROPERTY_ATTRIBUTE_NON_OPTIONAL_PROPERTY_NOT_SPECIFIED(missingFieldsStringRep);
 			addIssue(
 				message,
 				jsxElem,

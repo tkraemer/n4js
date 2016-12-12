@@ -272,6 +272,8 @@ public class N4JSLinker extends LazyLinker {
 				((ParameterizedPropertyAccessExpression) obj).setPropertyAsText((String) value);
 			} else if (obj instanceof NamedImportSpecifier && value instanceof String) {
 				((NamedImportSpecifier) obj).setImportedElementAsText((String) value);
+			} else {
+				setOtherElementAsText(tokenText, obj, value);
 			}
 		} catch (BadEscapementException e) {
 			diagnosticProducer.addDiagnostic(new DiagnosticMessage(e.getMessage(), e.getSeverity(), e.getIssueCode(),
@@ -284,6 +286,21 @@ public class N4JSLinker extends LazyLinker {
 					vcwve.getIssueCode(), Strings.EMPTY_ARRAY));
 		}
 		return proxy;
+	}
+
+	/**
+	 * Extension point for subclasses for providing further methods for setting elements as text.
+	 *
+	 *
+	 * @param tokenText
+	 *            The token text of the node
+	 * @param obj
+	 *            the object whose string as text should be set
+	 * @param value
+	 *            the value to be set
+	 */
+	protected void setOtherElementAsText(String tokenText, EObject obj, Object value) {
+		// Do nothing, subclasses can add further setElementAsText here
 	}
 
 	@Override
