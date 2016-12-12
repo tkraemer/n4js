@@ -1474,6 +1474,10 @@ class TEnum extends DeclaredTypeWithAccessModifier, SyntaxRelatedTElement {
  */
 class TEnumLiteral extends SyntaxRelatedTElement, IdentifiableElement {
 	String value
+	
+	op String getValueOrName() {
+		return value ?: name;
+	}
 }
 
 /*

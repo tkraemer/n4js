@@ -1374,6 +1374,20 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		if (!jsVariantHelper.requireCheckIndexedAccessExpression(indexedAccess)) {
 			return
 		}
+		val index = indexedAccess?.index;
+		if (index===null) {
+			return; // broken AST
+		}
+		if (index instanceof IdentifierRef) {
+			if(index.id===null || index.id.eIsProxy) {
+				return; // avoid duplicate error messages
+			}
+		}
+		if (index instanceof ParameterizedPropertyAccessExpression) {
+			if(index.property===null || index.property.eIsProxy) {
+				return; // avoid duplicate error messages
+			}
+		}
 		if (indexedAccess.target instanceof SuperLiteral) {
 			return; // avoid duplicate error messages
 		}
@@ -1383,11 +1397,11 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return; // error otherwise or corrupt AST
 		}
 		val receiverTypeRef = ts.resolveType(G, receiverTypeRefRaw);
-		val isComputedName = (indexedAccess.index instanceof StringLiteral)
+		val isComputedName = N4JSLanguageUtils.isValidIndexExpression(indexedAccess.index);
 		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(indexedAccess.index);
 		val accessedStaticType = if(receiverTypeRef instanceof TypeTypeRef) tsh.getStaticType(G, receiverTypeRef);
-		if (accessedBuiltInSymbol !== null && (
-receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef instanceof ThisTypeRef)) {
+		if (accessedBuiltInSymbol !== null
+			&& (receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef instanceof ThisTypeRef)) {
 			// we have something like: myObj[Symbol.iterator]
 			internalCheckIndexedAccessWithSymbol(G, indexedAccess, receiverTypeRef,
 				accessedBuiltInSymbol);
@@ -1409,8 +1423,8 @@ receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef inst
 			// allowed: indexing into dynamic receiver
 			return
 		} else if (#[G.arrayType, G.argumentsType].contains(receiverTypeRef.declaredType)) { // Constraints 69.3
-		// allowed: index into array-like provided index is numeric
-			val foundIndexType = getInvalidIndexType(G, indexedAccess)
+			// allowed: index into array-like provided index is numeric
+			val foundIndexType = getInvalidIndexType(G, indexedAccess);
 			if (null !== foundIndexType) {
 				addIssue(
 					getMessageForEXP_INDEXED_ACCESS_ARRAY(receiverTypeRef.declaredType.name,
@@ -1419,10 +1433,10 @@ receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef inst
 					EXP_INDEXED_ACCESS_ARRAY
 				);
 			}
-		} else if (ts.subtypeSucceeded(G, receiverTypeRef, G.stringTypeRef) ||
-			ts.subtypeSucceeded(G, receiverTypeRef, G.stringObjectTypeRef)) { // Constraints 69.4, IDE-837
-		// allowed: index into string-like provided index is numeric
-			val foundIndexType = getInvalidIndexType(G, indexedAccess)
+		} else if (ts.subtypeSucceeded(G, receiverTypeRef, G.stringTypeRef)
+			|| ts.subtypeSucceeded(G, receiverTypeRef, G.stringObjectTypeRef)) { // Constraints 69.4, IDE-837
+			// allowed: index into string-like provided index is numeric
+			val foundIndexType = getInvalidIndexType(G, indexedAccess);
 			if (null !== foundIndexType) {
 				addIssue(
 					getMessageForEXP_INDEXED_ACCESS_STRING(receiverTypeRef.declaredType.name,
@@ -1431,8 +1445,8 @@ receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef inst
 					EXP_INDEXED_ACCESS_STRING
 				);
 			}
-		} else if (G.objectType === receiverTypeRef.declaredType &&
-			!(receiverTypeRef.useSiteStructuralTyping)) {
+		} else if (G.objectType === receiverTypeRef.declaredType
+			&& !(receiverTypeRef.useSiteStructuralTyping)) {
 			// allowed: index into exact-type Object instance (not subtype thereof)
 			return
 		} else if (isComputedName) {
@@ -1449,9 +1463,9 @@ receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef inst
 	 * 
 	 * @return true if allowed, false otherwise.
 	 */
-	private def void internalCheckComputedIndexedAccess(IndexedAccessExpression indexedAccess,
+	def private void internalCheckComputedIndexedAccess(IndexedAccessExpression indexedAccess,
 		TypeRef receiverTypeRef) {
-		val memberName = (indexedAccess.index as StringLiteral).value;
+		val memberName = N4JSLanguageUtils.getMemberNameForIndexExpression(indexedAccess.index);
 		if (ComputedPropertyNameValueConverter.SYMBOL_ITERATOR_MANGLED == memberName) {
 			// Implementation restriction: member name clashes with compiler-internal, synthetic, mangled name.
 			addIssue(getMessageForEXP_INDEXED_ACCESS_IMPL_RESTRICTION(), indexedAccess,
@@ -1478,7 +1492,7 @@ receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef inst
 	/**
 	 * In case the index-expression can be determined to be non-numeric, return its type; null otherwise.
 	 */
-	private def String getInvalidIndexType(RuleEnvironment G, IndexedAccessExpression indexedAccess) {
+	def private String getInvalidIndexType(RuleEnvironment G, IndexedAccessExpression indexedAccess) {
 		val indexType = ts.type(G, indexedAccess.index).value
 		if (indexType !== null) {
 			val rs = ts.subtype(G, indexType, G.numberTypeRef);
@@ -1489,7 +1503,7 @@ receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef inst
 		return null
 	}
 
-	def boolean internalCheckIndexedAccessWithSymbol(RuleEnvironment G,
+	def private boolean internalCheckIndexedAccessWithSymbol(RuleEnvironment G,
 		IndexedAccessExpression indexedAccess, TypeRef receiverTypeRef, TField accessedBuiltInSymbol) {
 		// check valid symbol (currently only 'iterator')
 		if (accessedBuiltInSymbol !== G.symbolObjectType.ownedMembers.findFirst[name == "iterator"]) {

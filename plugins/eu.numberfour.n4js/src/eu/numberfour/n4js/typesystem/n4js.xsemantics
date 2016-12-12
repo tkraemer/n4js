@@ -616,13 +616,14 @@ from {
 		targetTypeRef = typeSystemHelper.resolveType(G, targetTypeRef);
 
 		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(expr.index);
+		val memberName = N4JSLanguageUtils.getMemberNameForIndexExpression(expr.index);
 		val elementType = targetTypeRef.declaredType?.elementType
 
 		if (accessedBuiltInSymbol!==null) {
 			val declType = targetTypeRef.declaredType;
 			if(declType instanceof ContainerType<?>) {
-				val memberName = '#' + accessedBuiltInSymbol.name;
-				val member = containerTypesHelper.fromContext(expr).findMember(declType,memberName,false,false); // TODO support for static access?
+				val symbolMemberName = '#' + accessedBuiltInSymbol.name;
+				val member = containerTypesHelper.fromContext(expr).findMember(declType,symbolMemberName,false,false); // TODO support for static access?
 				if(member!==null) {
 					G |- member : var TypeRef memberTypeRef
 
@@ -638,22 +639,11 @@ from {
 			else {
 				T = G.anyTypeRef
 			}
-		} else if (elementType !== null) {
-			val declaredType = targetTypeRef.declaredType
-			if (declaredType.generic && targetTypeRef.typeArgs.isEmpty) {
-				T = G.anyTypeRef // later: evaluate name if possible, we may even want to return smth like intersect(allProperties)
-			} else {
-				val G2 = G.wrap
-				typeSystemHelper.addSubstitutions(G2, targetTypeRef)
-				G2.addThisType(targetTypeRef)
-				G2 |- elementType ~> T
-			}
-		} else if (expr.index instanceof StringLiteral) {
+		} else if (memberName!==null) {
 			// indexing via constant computed-name, sub-cases: static or instance member, for the latter nominally-typed or structurally-typed receiver
 			val staticAccess = (targetTypeRef instanceof TypeTypeRef)
 			val checkVisibility = false // access modifiers checked in validation
 			val scope = memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess)
-			val memberName = (expr.index as StringLiteral).value;
 			val member = memberScopingHelper.findUniqueMemberForName(scope, memberName, staticAccess)
 			if(member != null) {
 				G |- member : var TypeRef memberTypeRef
@@ -663,6 +653,16 @@ from {
 				G2 |- memberTypeRef ~> T
 			} else {
 				T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef
+			}
+		} else if (elementType !== null) {
+			val declaredType = targetTypeRef.declaredType
+			if (declaredType.generic && targetTypeRef.typeArgs.isEmpty) {
+				T = G.anyTypeRef // later: evaluate name if possible, we may even want to return smth like intersect(allProperties)
+			} else {
+				val G2 = G.wrap
+				typeSystemHelper.addSubstitutions(G2, targetTypeRef)
+				G2.addThisType(targetTypeRef)
+				G2 |- elementType ~> T
 			}
 		} else if (targetTypeRef.dynamic) {
 			T = G.anyTypeRefDynamic

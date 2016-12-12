@@ -146,6 +146,23 @@ public class TEnumLiteralImpl extends SyntaxRelatedTElementImpl implements TEnum
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getValueOrName() {
+		String _elvis = null;
+		String _value = this.getValue();
+		if (_value != null) {
+			_elvis = _value;
+		} else {
+			String _name = this.getName();
+			_elvis = _name;
+		}
+		return _elvis;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TModule getContainingModule() {
 		return EcoreUtil2.<TModule>getContainerOfType(this, TModule.class);
 	}
@@ -289,6 +306,8 @@ public class TEnumLiteralImpl extends SyntaxRelatedTElementImpl implements TEnum
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
+			case TypesPackage.TENUM_LITERAL___GET_VALUE_OR_NAME:
+				return getValueOrName();
 			case TypesPackage.TENUM_LITERAL___GET_CONTAINING_MODULE:
 				return getContainingModule();
 		}
