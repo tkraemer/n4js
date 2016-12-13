@@ -13,27 +13,18 @@ package eu.numberfour.n4js.validation;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.EcoreUtil2;
 
 import com.google.inject.Inject;
 
-import eu.numberfour.n4js.n4JS.Block;
-import eu.numberfour.n4js.n4JS.Expression;
-import eu.numberfour.n4js.n4JS.ExpressionStatement;
-import eu.numberfour.n4js.n4JS.FunctionDefinition;
-import eu.numberfour.n4js.n4JS.Script;
-import eu.numberfour.n4js.n4JS.StringLiteral;
 import eu.numberfour.n4js.resource.XpectAwareFileExtensionCalculator;
 
 /**
- * The N4JS type system and validation is used not only for pure N4JS, but in the context of certain variants as plain
- * JavaScript in unrestricted or strict mode, type definition files (N4JSD) etc. It also is re-used by sublanguage (such
- * as JSX). Instead of replacing the validators (or other components) for these variants (which may be an additional
- * technique), the variant helper allows fine-grained control of what kind of constraints to check. An instance of the
- * helper is to be provided by the injector; N4Js uses the {@link N4JSJavaScriptVariantHelper}, sub-languages may bind
- * to a different implementation.
+ * This class provides the base implementation for {@link JavaScriptVariantHelper} following chain of responsibility
+ * pattern. For a Javascript sub-language/variant with new file extension, a subclass should extend this class and
+ * defines the validations for that should be activated or activated for that file extension. This can be done by
+ * calling the method {@link BaseJavaScriptVariantHelper#addEntry(String, ValidationFeature, Object)} in the
+ * constructor.
  */
 public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 
@@ -54,7 +45,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	protected XpectAwareFileExtensionCalculator fileExtensionCalculator;
 
 	/**
-	 * This class defines all validation features
+	 * This class defines all validation features.
 	 */
 	private static class ValidationFeatureBase {
 		// This empty class allows for defining validation features as classes instead of enums
@@ -163,10 +154,6 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 * Missing body should be checked?
 	 */
 	public static final ValidationFeature<Boolean> CHECK_MISSING_BODY = new ValidationFeature<>(true);
-	// /**
-	// * Type matches should be checked?
-	// */
-	// public static final ValidationFeature<Boolean> CHECK_TYPE_MATCHES_EXPECTED_TYPE = new ValidationFeature<>(false);
 	/**
 	 * Dynamic types should be enforced?
 	 */
@@ -175,19 +162,11 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 * The variant is type aware?
 	 */
 	public static final ValidationFeature<Boolean> TYPE_AWARE = new ValidationFeature<>(false);
-	// /**
-	// * The variant has global objecT?
-	// */
-	// public static final ValidationFeature<Boolean> HAS_GLOBAL_OBJECT = new ValidationFeature<>(true);
 	/**
 	 * Exported elements with visibility higher than private should be checked?
 	 */
 	public static final ValidationFeature<Boolean> CHECK_EXPORTED_WHEN_VISIBILITY_HIGHER_THAN_PRIVATE = new ValidationFeature<>(
 			false);
-	// /**
-	// * Variant is unrestricted mode?
-	// */
-	// public static final ValidationFeature<Boolean> UNRESTRICTED_MODE = new ValidationFeature<>(true);
 	/**
 	 * Variant is external mode?
 	 */
@@ -199,7 +178,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	/**
 	 * Variant is plain JS mode?
 	 */
-	public static final ValidationFeature<Boolean> IS_PLAIN_JS = new ValidationFeature<>(true);
+	public static final ValidationFeature<Boolean> IS_PLAIN_JS = new ValidationFeature<>(false);
 	/**
 	 * String representation of variant mode, e.g. "n4js", "js"
 	 */
@@ -247,6 +226,14 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 * Next element in the chain of responsibility
 	 */
 	protected BaseJavaScriptVariantHelper next;
+
+	/**
+	 * This constructor registers file extension ".js" as plain JS mode Constructor of sub-classes must call super() for
+	 * ".js" to be recognized as plain JS
+	 */
+	protected BaseJavaScriptVariantHelper() {
+		this.addEntry(EXT_JS, IS_PLAIN_JS, true);
+	}
 
 	/**
 	 * Add maps (file extension, validation feature) -> value
@@ -511,7 +498,6 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean requireCheckTypeMatchesExpectedType(EObject eobj) {
-		// return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), CHECK_TYPE_MATCHES_EXPECTED_TYPE);
 		return !isUnrestrictedMode(eobj);
 	}
 
@@ -546,7 +532,6 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean hasGlobalObject(EObject eobj) { // e.g. in unrestricted ECMAScript mode
-		// return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), HAS_GLOBAL_OBJECT);
 		return isUnrestrictedMode(eobj);
 	}
 
@@ -568,16 +553,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 */
 	@Override
 	public boolean isUnrestrictedMode(EObject eobj) {
-		// return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), UNRESTRICTED_MODE);
-		// return JavaScriptVariant.getVariant(eobj) == JavaScriptVariant.unrestricted;
 		return !isStrictMode(eobj);
-	}
-
-	/**
-	 * Return true if "use strict" is declared
-	 */
-	protected boolean isStrictMode(EObject eobj) {
-		return isContainedInStrictFunctionOrScript(eobj);
 	}
 
 	/**
@@ -625,40 +601,10 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 		return get(fileExtensionCalculator.getXpectAwareFileExtension(eobj), VARIANT_MODE_STRINGREP);
 	}
 
-	private static boolean isContainedInStrictFunctionOrScript(EObject eobj) {
-		if (eobj == null) {
-			return false;
-		}
-		FunctionDefinition functionDef = EcoreUtil2.getContainerOfType(eobj, FunctionDefinition.class);
-		if (functionDef != null) {
-			Block block = functionDef.getBody();
-			if (block != null && startsWithStrictMode(block.getStatements())) {
-				return true;
-			}
-			return isContainedInStrictFunctionOrScript(functionDef.eContainer());
-		}
-		Script script = EcoreUtil2.getContainerOfType(eobj, Script.class);
-		if (script != null) {
-			if (startsWithStrictMode(script.getScriptElements())) {
-				return true;
-			}
-		}
-		return false;
+	/**
+	 * Return true if "use strict" is declared. Override this method for sub-languages!
+	 */
+	protected boolean isStrictMode(EObject eobj) {
+		return JavaScriptVariant.isContainedInStrictFunctionOrScript(eobj);
 	}
-
-	private static boolean startsWithStrictMode(EList<? extends EObject> eList) {
-		if (eList == null || eList.isEmpty()) {
-			return false;
-		}
-		EObject first = eList.get(0);
-		if (first instanceof ExpressionStatement) {
-			Expression expr = ((ExpressionStatement) first).getExpression();
-			if (expr instanceof StringLiteral) {
-				boolean equalsStrictLiteral = STRICT_MODE_LITERAL_VALUE.equals(((StringLiteral) expr).getValue());
-				return equalsStrictLiteral;
-			}
-		}
-		return false;
-	}
-
 }

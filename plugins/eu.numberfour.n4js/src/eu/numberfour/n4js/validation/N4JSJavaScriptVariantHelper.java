@@ -13,9 +13,8 @@ package eu.numberfour.n4js.validation;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * This class defines the constraints to be checked for different variants. N4JS uses this default implementation
- * Sub-language can either override this implementation or provides a new implementation by implementing the
- * {@link JavaScriptVariantHelper} interface
+ * This class defines the constraints to be checked N4JS and N4JSD.
+ *
  */
 public class N4JSJavaScriptVariantHelper extends BaseJavaScriptVariantHelper {
 
@@ -89,23 +88,14 @@ public class N4JSJavaScriptVariantHelper extends BaseJavaScriptVariantHelper {
 		this.addEntry(EXT_N4JS, CHECK_MISSING_BODY, true);
 		this.addEntry(EXT_N4JSD, CHECK_MISSING_BODY, false);
 
-		// this.addEntry(EXT_N4JS, CHECK_TYPE_MATCHES_EXPECTED_TYPE, true);
-		// this.addEntry(EXT_N4JSD, CHECK_TYPE_MATCHES_EXPECTED_TYPE, true);
-
 		this.addEntry(EXT_N4JS, ENFORCE_DYNAMIC_TYPES, false);
 		this.addEntry(EXT_N4JSD, ENFORCE_DYNAMIC_TYPES, false);
 
 		this.addEntry(EXT_N4JS, TYPE_AWARE, true);
 		this.addEntry(EXT_N4JSD, TYPE_AWARE, false);
 
-		// this.addEntry(EXT_N4JS, HAS_GLOBAL_OBJECT, false);
-		// this.addEntry(EXT_N4JSD, HAS_GLOBAL_OBJECT, false);
-
 		this.addEntry(EXT_N4JS, CHECK_EXPORTED_WHEN_VISIBILITY_HIGHER_THAN_PRIVATE, true);
 		this.addEntry(EXT_N4JSD, CHECK_EXPORTED_WHEN_VISIBILITY_HIGHER_THAN_PRIVATE, true);
-
-		// this.addEntry(EXT_N4JS, UNRESTRICTED_MODE, false);
-		// this.addEntry(EXT_N4JSD, UNRESTRICTED_MODE, false);
 
 		this.addEntry(EXT_N4JS, EXTERNAL_MODE, false);
 		this.addEntry(EXT_N4JSD, EXTERNAL_MODE, true);
@@ -121,12 +111,13 @@ public class N4JSJavaScriptVariantHelper extends BaseJavaScriptVariantHelper {
 	}
 
 	/**
-	 * Return true if in strict mode, e.g. "use strict" is declared
+	 * Return true if in strict mode
 	 */
 	@Override
 	protected boolean isStrictMode(EObject eobj) {
 		String fileExt = fileExtensionCalculator.getXpectAwareFileExtension(eobj);
 		if (EXT_N4JS.equals(fileExt) || EXT_N4JSD.equals(fileExt)) {
+			// Both N4JS and N4JSD are strict mode
 			return true;
 		} else
 			return super.isStrictMode(eobj);
