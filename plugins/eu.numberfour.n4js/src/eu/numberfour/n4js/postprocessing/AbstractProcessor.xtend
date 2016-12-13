@@ -150,10 +150,35 @@ package abstract class AbstractProcessor {
 			if(tFunction instanceof TFunction) {
 				val innerReturnTypeRef = tFunction.returnTypeRef;
 				if(innerReturnTypeRef!==null && !(innerReturnTypeRef instanceof DeferredTypeRef)) {
-					val outerReturnTypeRef = TypeUtils.createPromiseTypeRef(G.builtInTypeScope, innerReturnTypeRef, null);
-					EcoreUtilN4.doWithDeliver(false, [
-						tFunction.returnTypeRef = outerReturnTypeRef;
-					], tFunction);
+					val scope = G.builtInTypeScope;
+				    if (!TypeUtils.isPromise(innerReturnTypeRef, scope)) {
+						val outerReturnTypeRef = TypeUtils.createPromiseTypeRef(scope, innerReturnTypeRef, null);
+						EcoreUtilN4.doWithDeliver(false, [
+							tFunction.returnTypeRef = outerReturnTypeRef;
+						], tFunction);
+					}
+				}
+			}
+		}
+	}
+
+
+	/**
+	 */
+	def protected void handleGeneratorFunctionDefinition(RuleEnvironment G, FunctionDefinition funDef, ASTMetaInfoCache cache) {
+		if(funDef.isGenerator) {
+			val tFunction = funDef.definedType;
+			if(tFunction instanceof TFunction) {
+				val innerReturnTypeRef = tFunction.returnTypeRef;
+				if (innerReturnTypeRef !== null && !(innerReturnTypeRef instanceof DeferredTypeRef)) {
+					val scope = G.builtInTypeScope;
+				    if (!TypeUtils.isGenerator(innerReturnTypeRef, scope)) {
+						val tYield = innerReturnTypeRef;
+					    val outerReturnTypeRef = TypeUtils.createGeneratorTypeRef(scope, tYield, null, null);
+						EcoreUtilN4.doWithDeliver(false, [
+							tFunction.returnTypeRef = outerReturnTypeRef;
+						], tFunction);
+				    }
 				}
 			}
 		}

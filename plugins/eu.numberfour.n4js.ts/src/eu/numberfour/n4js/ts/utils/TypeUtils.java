@@ -1186,6 +1186,16 @@ public class TypeUtils {
 	}
 
 	/**
+	 * Returns true iff the {@link TypeRef} is a generator.
+	 */
+	public static boolean isGenerator(TypeRef ref, BuiltInTypeScope scope) {
+		if (ref instanceof ParameterizedTypeRef) {
+			return ref.getDeclaredType() == scope.getGeneratorType();
+		}
+		return false;
+	}
+
+	/**
 	 * For the given success and failure value types, this method returns a Promise<R,?> type reference. The failure
 	 * type is optional (i.e. may be <code>null</code>). A success value type of <code>void</code> will be changed to
 	 * type <code>undefined</code>, because <code>void</code> is not a valid type argument.
@@ -1194,12 +1204,30 @@ public class TypeUtils {
 	 */
 	public static ParameterizedTypeRef createPromiseTypeRef(BuiltInTypeScope scope, TypeArgument successType,
 			TypeArgument failureTypeOrNull) {
+
 		Objects.requireNonNull(successType);
-		return createTypeRef(
-				scope.getPromiseType(),
-				isVoid(successType) ? scope.getUndefinedTypeRef() : TypeUtils.copyWithProxies(successType),
-				failureTypeOrNull != null ? TypeUtils.copyWithProxies(failureTypeOrNull)
-						: TypeRefsFactory.eINSTANCE.createWildcard());
+		TypeArgument successTypeArg = isVoid(successType) ? scope.getUndefinedTypeRef()
+				: TypeUtils.copyWithProxies(successType);
+		TypeArgument failureTypeArg = failureTypeOrNull != null ? TypeUtils.copyWithProxies(failureTypeOrNull)
+				: TypeRefsFactory.eINSTANCE.createWildcard();
+
+		return createTypeRef(scope.getPromiseType(), successTypeArg, failureTypeArg);
+	}
+
+	/**
+	 */
+	public static ParameterizedTypeRef createGeneratorTypeRef(BuiltInTypeScope scope, TypeArgument tYieldOrg,
+			TypeArgument tReturnOrg, TypeArgument tNextOrg) {
+
+		Objects.requireNonNull(tYieldOrg);
+		TypeArgument tYield = isVoid(tYieldOrg) ? scope.getUndefinedTypeRef()
+				: TypeUtils.copyWithProxies(tYieldOrg);
+		TypeArgument tReturn = tReturnOrg != null ? TypeUtils.copyWithProxies(tReturnOrg)
+				: scope.getUndefinedTypeRef();
+		TypeArgument tNext = tNextOrg != null ? TypeUtils.copyWithProxies(tNextOrg)
+				: scope.getAnyTypeRef();
+
+		return createTypeRef(scope.getGeneratorType(), tYield, tReturn, tNext);
 	}
 
 	/**

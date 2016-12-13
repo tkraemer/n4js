@@ -98,18 +98,6 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 
 
 	@Check
-	def void checkGeneratorFunction(FunctionDefinition f) {
-		if(f.isGenerator) {
-			unsupported("generator functions", f, f.nameFeature);
-		}
-	}
-	@Check
-	def void checkYield(YieldExpression yieldExpr) {
-		unsupported("yield", yieldExpr);
-	}
-
-
-	@Check
 	def void checkTaggedTemplateLiteral(TaggedTemplateString tts) {
 		unsupported("tagged template literals", tts, N4JSPackage.eINSTANCE.taggedTemplateString_Target);
 	}
