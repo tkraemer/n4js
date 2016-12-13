@@ -1,5 +1,6 @@
 
 = Types
+:find:
 ////
 Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
@@ -31,11 +32,11 @@ Types are related to each other by the subtype relation.
 .Subtype Relation
 [def]
 --
-We use math:[subtype$]
+We use math:[subtype]
 for the general subtype relation or type conformance. In nominal typing,
 math:[\[T\subtype S\]] means that math:[$S$] is a (transitive)
-supertype of math:[$T$]. Generally in structural typing, this means
-that math:[$T$] conforms to math:[$S$]. math:[$\subtype$]
+supertype of _T_. Generally in structural typing, this means
+that _T_ conforms to math:[$S$]. math:[$\subtype$]
 is defined transitive reflexive by default. We write math:[$<$] to
 refer to the transitive non-reflexive relation, that is
 math:[\[T < S \iff T \subtype S \land T \neq S\]]
@@ -46,7 +47,7 @@ of the type or the reference. This is explained further in <<_structural-typing,
 
 For convenience reasons, we sometimes revert the operator, that is
 math:[\[T \subtype S \iff S :> T\]] We write
-math:[$T \notsubtype S$] if math:[$T$] is not type conforming
+math:[$T \notsubtype S$] if _T_ is not type conforming
 to math:[$S$]. (cf. cite:[Gosling12a(S4.10)])
 
 Join and meet are defined as follows:
@@ -55,18 +56,19 @@ Join and meet are defined as follows:
 [def]
 --
 A type math:[$J$] is called a _join_ (or least common supertype, ) of a pair of types math:[$S$]
-and math:[$T$], written math:[$S \join T = J$], if +
-math:[\[\begin{aligned}
-& S \subtype J\\
+and _T_, written math:[$S \join T = J$], if +
+
+$$& S \subtype J\\
 & T \subtype J\\
-& \forall L: (S\subtype L) \land (T\subtype L) \to J\subtype L\end{aligned}\]]
+& \forall L: (S\subtype L) \land (T\subtype L) \to J\subtype L$$
+
 Similarly, we say that a type math:[$M$] is a _meet_ (or greatest
-common subtype, ) of math:[$S$] and math:[$T$], written
+common subtype, ) of math:[$S$] and _T_, written
 math:[$S \meet T = M$], if +
-math:[\[\begin{aligned}
-& M \subtype  S\\
+
+$$& M \subtype  S\\
 & M \subtype  T\\
-& \forall L: (L\subtype S) \land (L\subtype T) \to L\subtype M\end{aligned}\]]
+& \forall L: (L\subtype S) \land (L\subtype T) \to L\subtype M$$
 --
 
 Note that this declarative definition needs to be specified in detail
@@ -82,9 +84,9 @@ This type hierarchy shows `any` and `undefined` as the top and bottom type (cf. 
 [def]
 --
 We call math:[$Top$]
-the top type, if for all types math:[$T$] the relation
+the top type, if for all types _T_ the relation
 math:[$T \subtype  Top$] is true. We call math:[$Bot$] the
-bottom type, if for all types math:[$T$] the relation
+bottom type, if for all types _T_ the relation
 math:[$Bot<:T$] is true. In N4JS, math:[$Top=`any}$], the
 bottom type math:[$Bot=`undefined}$].
 --
@@ -93,7 +95,7 @@ bottom type math:[$Bot=`undefined}$].
 `null` is almost similar to math:[$Bot$], except that it is not a subtype
 of `undefined`.[[fig-cd-predefined-type-hierarchy]]
 
-image::fig/cdPredefinedTypesHierarchy.png[title="Predefined Types Hierarchy"]
+image::{find}fig/cdPredefinedTypesHierarchy.png[title="Predefined Types Hierarchy"]
 
 For every primitive type there is a corresponding built-in type as
 defined in cite:[ECMA11a], e.g. `string` and `String`. There is no inheritance supported for
@@ -227,17 +229,19 @@ into the constructor by the N4JS transpiler.
 Besides the properties indirectly defined by the grammar, the following
 pseudo properties are used for type expressions:
 
+[hprizontal]
 Properties of ``TypeExpression``::
 
+[horizontal]
 `var` ::
 If true, variable of that type is variadic. This is only allowed for
-parameters. Default value: math:[$false$].
+parameters. Default value: `false`.
 
 `opt` ::
 If true, variable of that type is optional. This is only allowed for
 parameters and return types. This actually means that the type
-math:[$T$] actually is a union type of `Undef|$T$`. Default value:
-math:[$false$].
+_T_ actually is a union type of `Undef|_T_`. Default value:
+`false`.
 
 `optvar` ::
 math:[$optvar=var \lor opt$], reflect the facts that a variadic
@@ -271,6 +275,7 @@ be visible in the given scope.
 [discrete]
 ==== ECMAScript Types
 
+[horizontal]
 Predefined Type::
   Predefined types, such as String, Number, or Object; and .
 Array Type::
@@ -283,6 +288,7 @@ Any Type::
 [discrete]
 ==== N4Types
 
+[horizontal]
 Declared Type::
   (Unparameterized) Reference to defined class <<Classes>> or enum <<Enums>>.
 Parameterized Type::
@@ -343,6 +349,7 @@ At the moment, N4JS does not support type guards or, more general, effect system
 
 Some notes on terminology:
 
+[horizontal]
 Type Parameter vs. Type Argument::
 A type parameter is a declaration containing type variables. A type
 argument is a binding of a type parameter to a concrete type or to
@@ -519,8 +526,8 @@ math:[\[`(T extends B)} <: `A}\]] in which T is an
 unbound type variable and A, B two classes with math:[$B <: A$].
 3.  In all other cases the result is false. +
 This includes cases such as +
-math:[\[`B} <: `(T extends A)}\]] which is always
-false, even if math:[$B <: A$] or +
+$$\[`B} <: `(T extends A)}\]$$
+which is always false, even if math:[$B <: A$] or +
 math:[\[`(T extends A)} <: `(S extends B)}\]] which
 is always false, even if math:[$A = B$].
 
@@ -531,9 +538,9 @@ We thus obtain the following defintion:
 --
 For two types math:[$T, S$] of which at least one is a type variable, we define
 
-* if both math:[$T$] and math:[$S$] are type variables:
+* if both _T_ and math:[$S$] are type variables:
 math:[\[\infer{T <: S}{T = S}\]]
-* if math:[$T$] is a type variable and math:[$S$] is not:
+* if _T_ is a type variable and math:[$S$] is not:
 math:[\[\infer{T <: S}{
         {T.\mathit{declaredUpperBounds}.\mathit{size} > 0} {\ \land\ \forall t \in T.\mathit{declaredUpperBounds}: t <: S}}\]]
 
@@ -581,6 +588,7 @@ Wildcard returns Wildcard:
 
 Properties of parameterized type references (nominal or structural):
 
+[horizontal]
 `declaredType` ::
 Referenced type by type reference name (either the simple name or a
 qualified name, e.g. in case of namespace imports).
@@ -599,6 +607,7 @@ the structural type, see <<_structural-typing,Structural Typing>> for details.
 
 *Pseudo Properties:*
 
+[horizontal]
 `importSpec` ::
 The `ImportSpecifier`, may be null if this is a local type reference. Note that this may
 be a `NamedImportSpecifier`. See <<_import-statement,Import Statement>> for details for details.
@@ -629,23 +638,27 @@ math:[$G=R.declaredType$], the following constraints must hold:
 
 * The actual type arguments must conform to the type parameters, that
 is: +
-math:[\[\begin{aligned}
-      & |G.typePars|=|R.typeArgs|\\
-    &\land \forall\ i, 0<i<|R.typeArgs|: \infType{R.typeArgs_i} <: \infType{R.typePars_i} \\\end{aligned}\]]
+
+[math]
+--
+& |G.typePars|=|R.typeArgs|\\
+&\land \forall\ i, 0<i<|R.typeArgs|: \infType{R.typeArgs_i} <: \infType{R.typePars_i} \\
+--
+
 
 --
 
-We define type erasure similar to Java cite:[Gosling12a(S4.6)] as a "mapping from types (possibly including parameterized types and type variables) to types (that are never parameterized types or type variables)". We write $T°$ for the erasure of type $T$.\ footnote:[The notation $|T|$ used in cite:[Gosling12a] conflicts with the notation of cardinality of sets, which we use in case of union or intersection types for types as well. The notation used here is inspired by cite:[Crary02a], in which  a mapping is defined between a typed language $\lambda$ to an untyped language $\lambda°$.]
+We define type erasure similar to Java cite:[Gosling12a(S4.6)] as a "mapping from types (possibly including parameterized types and type variables) to types (that are never parameterized types or type variables)". We write $T°$ for the erasure of type _T_.\ footnote:[The notation $|T|$ used in cite:[Gosling12a] conflicts with the notation of cardinality of sets, which we use in case of union or intersection types for types as well. The notation used here is inspired by cite:[Crary02a], in which  a mapping is defined between a typed language $\lambda$ to an untyped language $\lambda°$.]
 
 .Parameterized Type
 [def]
 --
 A parameterized type reference math:[$R$] defines a parameterized type
-math:[$T$], in which all type parameters of
+_T_, in which all type parameters of
 math:[$R.declaredTpe$] are substituted with the actual values of
 the type arguments. We call the type math:[$T^0$], in which all
 type parameters of math:[$R.declaredType$] are ignored, the _raw
-type_ or _erasure_ of math:[$T$].
+type_ or _erasure_ of _T_.
 
 We define for types in general:
 
@@ -719,17 +732,27 @@ We define type conformance for non-primitive type references as follows:
 
 * For two non-parameterized types math:[$T^0$] and
 math:[$S^0$],
-math:[\[\begin{aligned}\infer{T^0 <: S^0}{S^0 \in T^0.sup^* \cup T^0.interfaces^*}    \end{aligned}\]]
+
+[math]
+--
+\infer{ T^0 <: S^0}{S^0 \in T^0.sup^* \cup T^0.interfaces^* }
+--
+
 * For two parameterized types
 math:[$T<T_1,...,T_n>$] and
 math:[$S<S_1,...,S_m>$]
-math:[\[\begin{aligned}
+
+[math]
+--
+
     \infer{\hspace{10em}T <: S\hspace{10em}}{
         {T^0<:S^0} \\
         {(n=0 \lor m=0 \lor (n=m \to \forall i:}\\
         \hspace{2em} {T_i.upperBound <: S_i.upperBound} \\
         \hspace{1em} \land {T_i.lowerBound :> S_i.lowerBound}))}
-    \end{aligned}\]]
+
+--
+
 
 --
 
@@ -769,7 +792,7 @@ G<? extends A> <: G<?>              -> true
 The figure <<cdVarianceChart>> shows the subtype relations of parameterized types (of a single generic type), which can be used as a cheat sheet.
 
 [[cdVarianceChart]]
-image::fig/cdVarianceChart.png[title="Cheat Sheet: Subtype Relation of Parameterized Types"]
+image::{find}fig/cdVarianceChart.png[title="Cheat Sheet: Subtype Relation of Parameterized Types"]
 
 
 .Subtyping between different generic types
@@ -783,7 +806,7 @@ class G<T> {}
 class H<T> extends G<T> {}
 ----
 
-Given a simple, non-parameterized class math:[$A$], the following
+Given a simple, non-parameterized class _A_, the following
 subtype relations are evaluated as indicated:
 
 [source]
@@ -852,9 +875,14 @@ arguments and the meet of the lower bounds of the type arguments.
 
 For all type rules, we assume that the upper and lower bounds of a
 non-generic type, including type variables, simply equal the type
-itself, that is for a given type math:[$T$], the following
-constraints hold: math:[\[\begin{aligned}
-upper(T) = lower(T) = T\end{aligned}\]]
+itself, that is for a given type _T_, the following
+constraints hold:
+[math]
+--
+
+upper(T) = lower(T) = T
+--
+
 
 --
 
@@ -979,9 +1007,14 @@ undef = 1; // will issue an error!
 ----
 
 The type `undefined` is a subtype of all types. That is,
-math:[\[\begin{aligned}
-\infer{\tee `undefined` <: T }{}\end{aligned}\]] is an axiom and
-true for all types math:[$T$].
+
+[math]
+--
+\infer{\tee `undefined` <: T }{}
+--
+is an axiom and
+true for all types _T_.
+
 ====
 
 === Null Type
@@ -1003,7 +1036,12 @@ Original LaTeX math:
 \infer{\tee \type{null}\ left <: \type{Type} right}{right \neq \type{undefined}} &
 \end{align*}
 ////
-math:[\[\begin{aligned} \infer{\tee `null}\ left <: `Type} right}{right \neq `undefined` &\end{aligned}\]]
+
+[math]
+--
+\infer{\tee `null}\ left <: `Type} right}{right \neq `undefined` &
+--
+
 
 Please note that
 
@@ -1048,7 +1086,12 @@ var b = false; console.log(b == 0) | prints true
 ==== Semantics [[primitive-boolean-type-semantics]]
 
 The type is subtype of :
-math:[\[\begin{aligned} \infer{\type{boolean} <: \type{any}}{}\end{aligned}\]]
+
+[math]
+--
+\infer{\type{boolean} <: \type{any}}{}
+--
+
 
 Variables of type `boolean` can be auto-converted (coerced) to `Boolean`, as described in <<_autoboxing-and-coercing,Autoboxing and Coercing>>.
 
@@ -1085,7 +1128,12 @@ are never interpreted as a special character.
 
 The `string` type is a subtype of `any`:
 
-math:[\[\begin{aligned} \infer{\type{string} <: \type{any}}{}\end{aligned}\]]
+
+[math]
+--
+\infer{\type{string} <: \type{any}}{}
+--
+
 
 It is supertype of the N4JS primitive type `pathselector`, and `i18nKey`.
 <<_primitive-pathselector-and-i18nkey,Primitive Pathselector and I18nKey>>
@@ -1104,7 +1152,12 @@ With prefix `0` you indicate that the number is octal based and with prefix `0x`
 ==== Semantics [[primitive-number-type-semantics]]
 
 The type `number` is subtype of `any`:
-math:[\[\begin{aligned} \infer{`number} <: `any}}{} \\\end{aligned}\]]
+
+[math]
+--
+\infer{`number} <: `any}}{} \\
+--
+
 
 However, variables of type `number` can be auto-converted (coerced) to `Number`, as
 described in <<_integer-literals,Integer Literals>> .
@@ -1153,7 +1206,12 @@ assigned to a variable of type `any`, but a variable declared  `any` can only be
 ==== Semantics [[any-type-semantics]]
 
 `any` is supertype of all other types. That is,
-math:[\[\begin{aligned} \infer{\tee `Type` left \subtype `any}}{}\end{aligned}\]
+
+[math]
+--
+\infer{\tee `Type` left \subtype `any}}{}\end{aligned}\` ]
+--
+
 is an axiom and true for all types.
 
 ==== Type Inference [[any-type-type-inference]]
@@ -1189,22 +1247,32 @@ function or method as `void` in order to state that the function does not return
 
 .Void Type
 [req,id=IDE-13,version=1]
---
+---
 * The type `void` may only be used to declare the return type of a function or method.
 * If a function math:[$f$] is declared to return `void`, an error is created if a return statement contains an expression:
-math:[\[\begin{aligned}
-    & f.returnType=\type{void} \to\\
-    & \forall r, \mu(r)=\type{ReturnStatement}, r.containingFunction=f: r.expression=\NULL
-    \end{aligned}\]]
-* If a function math:[$f$] is declared to return `void`, an error is issued if the function is called in any statement or expression but an expression statement directly: math:[\[\begin{aligned}
-    &f.returnType=\type{void} \to \\
-    & \forall e, bind(e, f): \mu(e.container)=\type{ExpressionStatement}
-    \end{aligned}\]]
+
+[math]
 --
+& f.returnType=\type{void} \to\\
+& \forall r, \mu(r)=\type{ReturnStatement}, r.containingFunction=f: r.expression=\NULL
+--
+
+* If a function math:[$f$] is declared to return `void`, an error is issued if the function is called in any statement or expression but an expression statement directly:
+[math]
+--
+&f.returnType=\type{void} \to \\
+& \forall e, bind(e, f): \mu(e.container)=\type{ExpressionStatement}
+--
+---
 
 The following type hierarchy is defined: `void` is only a subtype of itself but
 not of any other type and no other type is a subtype of void.
-math:[\[\begin{aligned} \infer{\type{void} <: \type{void}}{}\end{aligned}\]]
+
+[math]
+--
+\infer{\type{void} <: \type{void}}{}
+--
+
 Since `void` cannot be
 used as the type of variables, fields, formal parameters, etc., a
 function or method with a return type of void cannot be used as an
@@ -1254,8 +1322,13 @@ project depending on it.
 The N4JS primitive types `i18nKey` and `pathSelector<T>` are basically only marker types of strings
 for enabling additional validation. Thus, they are completely
 interchangeable with string types:
-math:[\[\begin{aligned}\infer{\type{i18nKey} <: \type{string}}{}             && \infer{\type{string} <: \type{i18nKey}}{}        \\
-\infer{\type{pathSelector<T>} <: \type{string}}{}   && \infer{\type{string} <: \type{pathSelector<T>}}{}\end{aligned}\]]
+
+[math]
+--
+\infer{\type{i18nKey} <: \type{string}}{}             && \infer{\type{string} <: \type{i18nKey}}{}        \\
+\infer{\type{pathSelector<T>} <: \type{string}}{}   && \infer{\type{string} <: \type{pathSelector<T>}}{}
+--
+
 
 As special literals for these N4JS types do not exist, the type has to
 be explicitly specified in order to enable the additional validation.
@@ -1335,7 +1408,7 @@ returning the item type of an array.
 .Array Type
 [req,id=IDE-14,version=1]
 --
-For an array type math:[$A$], the following conditions must be true:
+For an array type _A_, the following conditions must be true:
 
 * math:[$|A.typeArgs|=1$]
 --
@@ -1448,8 +1521,13 @@ subtype of `Object`.
 
 ==== Semantics [[N4Object-semantics]]
 
-math:[\[\begin{aligned}
-\infer{`N4Object` <: `Object`}{}\end{aligned}\]]
+
+[math]
+--
+
+\infer{`N4Object` <: `Object`}{}
+--
+
 
 === N4Class
 
@@ -1538,7 +1616,7 @@ math:[$...Type$], but not math:[$...Type=$]
 --
 
 
-Declaring a variadic method parameter of type math:[$T$] causes the
+Declaring a variadic method parameter of type _T_ causes the
 type of the method parameter to become `Array<T>`. That is, declaring `function(string ..tags)` causes `tags` to be
 an `Array<string>` and not just a scalar `string` value.
 
@@ -1612,28 +1690,41 @@ math:[$ \forall T \in U.typeRefs \to \lnot T.opt  $]
 Let math:[$U$] be an union type.
 
 * The union type is a common supertype of all its element types:
-math:[\[\begin{aligned}
-    \infer{T <: U}{T \in U.typeRefs}
-    \end{aligned}\]]
+
+[math]
+--
+\infer{T <: U}{T \in U.typeRefs}
+--
+
 * More generally, a type is a subtype of a union type, if it is a
 subtype of at least one type contained in the union:
-math:[\[\begin{aligned}
-    \infer{S <: U}{\exists T \in U.typeRefs: S <: T}
-    \end{aligned}\]]
+
+[math]
+--
+\infer{S <: U}{\exists T \in U.typeRefs: S <: T}
+--
+
 * A union type is a subtype of a type math:[$S$], if all types of
 the union are subtypes of that type. footnote:[This rule is a
 generalization of the sub typing rules given in cite:[Igarashi07a(p.40)]}]
-math:[\[\begin{aligned}
-    \infer{U <: S}{\forall T \in U.typeRefs: T <: S}
-    \end{aligned}\]]
+
+[math]
+--
+\infer{U <: S}{\forall T \in U.typeRefs: T <: S}
+--
+
 * Commutativity: The order of element does not matter:
 math:[$\union{A,B} = \union{B,A}$]
 * Associativity:
 math:[$\union{A,\union{B,C}} = \union{\union{A,B},C}$]
 * Uniqueness of elements: A union type may not contain duplicates
-(similar to sets): math:[\[\begin{aligned}
-    & \forall 1\leq i < k \leq n, \union{T_1,\dots,T_n}: T_i \neq T_k
-    \end{aligned}\]]
+(similar to sets):
+
+[math]
+--
+& \forall 1\leq i < k \leq n, \union{T_1,\dots,T_n}: T_i \neq T_k
+--
+
 --
 
 .Implicit simplification of union types
@@ -1644,31 +1735,46 @@ are always automatically applied to union types.
 
 * Simplification of union type with one element: If a union type
 contains only one element, it is reduced to the element:
-math:[\[\begin{aligned}
-    \infer{T}{\union{T}}
-    \end{aligned}\]]
+
+[math]
+--
+\infer{T}{\union{T}}
+--
+
 * Simplification of union types of union types: A union type
 math:[$U$] containing another union types math:[$V$] is
 reduced to a single union type math:[$W$], with
 math:[$W.typeRefs = U.typeRefs \cup V.typeRefs$]:
-math:[\[\begin{aligned}
-    \infer{\union{S_1,\dots,S_{k-1},T_1,\dots,T_m,S_{k+1},\dots,S_n}}
-          {\union{S_1,\dots,S_{k-1},\union{T_1,\dots,T_m},S_{k+1},\dots,S_n}}
-    \end{aligned}\]]
+
+[math]
+--
+\infer{\union{S_1,\dots,S_{k-1},T_1,\dots,T_m,S_{k+1},\dots,S_n}}
+{\union{S_1,\dots,S_{k-1},\union{T_1,\dots,T_m},S_{k+1},\dots,S_n}}
+--
+
 * Simplification of union type with undefined or null: Since undefined
 is the bottom type, and null is kind of a second button type, they are
-removed from the union: math:[\[\begin{aligned}
-    \infer{\union{T_1,\dots,T_{k-1},`undefined},T_k,\dots,T_n}}
-          {\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}} \\
-    \infer{\union{T_1,\dots,T_{k-1},`null},T_k,\dots,T_n}}
-          {\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}} \\
-    \end{aligned}\]] Note that the simplification rules for union types
+removed from the union:
++
+[math]
+--
+\infer{\union{T_1,\dots,T_{k-1},`undefined},T_k,\dots,T_n}}
+{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}} \\
+\infer{\union{T_1,\dots,T_{k-1},`null},T_k,\dots,T_n}}
+{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}} \\
+--
+
+NOTE: simplification rules for union types
 with one element are applied first.
+
 * The structural typing strategy is propagated to the types of the
-union: math:[\[\begin{aligned}
-    \infer{\union{\tsStr T_1, \ldots, \tsStr T_n}}
-          {\tsStr \union{T_1, \dots, T_n}}
-    \end{aligned}\]]
+union:
+[math]
+--
+\infer{\union{\tsStr T_1, \ldots, \tsStr T_n}}
+{\tsStr \union{T_1, \dots, T_n}}
+--
+
 --
 
 
@@ -1681,7 +1787,7 @@ equivalent, however: math:[$A <:= U$] and
 math:[$U <:= A$].
 
 footnote:[This is different from Ceylon ( cite:[King13a(3.2.3)]), in
-which the union is defined to be `the same type as` math:[$A$].
+which the union is defined to be `the same type as` _A_.
 Although the meaning of `same` is not clear, it is possibly used as a
 synonym for `equivalent`.]
 
@@ -1763,8 +1869,13 @@ This finding is the foundation of the definition of join of a (non-union) type w
 [req,id=IDE-22,version=1]
 --
 The join math:[$J$] of a union type math:[$U$] with a type
-math:[$T$] is the union of both types:
-math:[\[\begin{aligned} & \infer {(U \join T) = J}{J=U \cup T}\end{aligned}\]]
+_T_ is the union of both types:
+
+[math]
+--
+& \infer {(U \join T) = J}{J=U \cup T}
+--
+
 
 Remarks: ::
 
@@ -1779,11 +1890,16 @@ above.
 [req,id=IDE-23,version=1]
 --
 The meet of union types is defined as the meet of the elements.
-That is math:[\[\begin{aligned}
+That is
+
+[math]
+--
 & \infer{\union{T_1,\dots,T_n} \meet S }
         {T_1 \meet S \meet \dots \meet T_n \meet S}\\
 & \infer{\union{T_1,\dots,T_n} \meet \union{S_1,\dots,S_m} }
-        {T_1 \meet S_1,\dots,T_1 \meet S_m, \dots,  T_n \meet S_1,\dots,T_n \meet S_m}\end{aligned}\]]
+        {T_1 \meet S_1,\dots,T_1 \meet S_m, \dots,  T_n \meet S_1,\dots,T_n \meet S_m}
+--
+
 
 Remarks:
 
@@ -1791,7 +1907,7 @@ Remarks:
 This gets clear when looking at the definition of meet and union type.
 While for a given math:[$U=\union{A,B}$], math:[$A<:U$] and
 math:[$B<:U$], the opposite math:[$U<:A$] is usually not true
-(unless math:[$U$] can be simplified to math:[$A$]). So, for
+(unless math:[$U$] can be simplified to _A_). So, for
 math:[$A \meet U$], usually math:[$U$] cannot be the meet.
 --
 
@@ -1801,9 +1917,13 @@ math:[$A \meet U$], usually math:[$U$] cannot be the meet.
 task:IDEBUG-260[]
 The upper and lower bound of a union type math:[$U$] is a union type math:[$U'$]
 containing the upper and lower bound of the elements of math:[$U$]:
-math:[\[\begin{aligned}
+
+[math]
+--
 upper(\union{T_1, \dots, T_n}) := \union{upper(T_1), \dots, upper(T_1)} \\
-lower(\union{T_1, \dots, T_n}) := \union{lower(T_1), \dots, lower(T_1)} \\\end{aligned}\]]
+lower(\union{T_1, \dots, T_n}) := \union{lower(T_1), \dots, lower(T_1)} \\
+--
+
 --
 
 ==== Warnings
@@ -1821,7 +1941,12 @@ since documentation can also be done in a comment.
 [req,id=IDE-25,version=1]
 --
 No union type shall conatin an type:
-math:[\[\begin{aligned} \not \exists any \in U.typeRefs\end{aligned}\]]
+
+[math]
+--
+\not \exists any \in U.typeRefs
+--
+
 
 Similar to the documentary purpose of using specific classes along with
 the `any` type is the following case. When two types are used, one of them a
@@ -1838,9 +1963,14 @@ supertypes of any classes or interfaces.
 Union types shall not
 contain class or interface types which are a subtype of another class or
 interface type that also is contained in the union type.
-math:[\[\begin{aligned} \not \exists TT \in U.typeRefs :
+
+[math]
+--
+ \not \exists TT \in U.typeRefs :
 \exists T \in U.typeRefs : \\
-(TT <: T \wedge isClassOrInterface(T) \wedge isClassOrInterface(TT))\end{aligned}\]]
+(TT <: T \wedge isClassOrInterface(T) \wedge isClassOrInterface(TT))
+--
+
 --
 
 === Intersection Type
@@ -1905,13 +2035,23 @@ generalization of the subtyping rules given in
 
 cite:[Laurent12a]Table 2, $\cap^1_l$ and $\cap^2_l$
 
-math:[\[\begin{aligned} \infer{I <: S}{\exists T \in I.typeRefs: T <: S} \end{aligned}\]]
+
+[math]
+--
+\infer{I <: S}{\exists T \in I.typeRefs: T <: S}
+--
+
 
 * A type is a subtype of an intersection type, if it is a subtype of all
 types contained in the intersection type: footnote:[This rule is a
 generalization of the subtyping rules given in cite:[Laurent12a]Table 2, $\cap^1_l$ and $\cap^2_l$
 
-math:[\[\begin{aligned} \infer{S <: I}{\forall T \in I.typeRefs: S <: T} \end{aligned}\]]
+
+[math]
+--
+\infer{S <: I}{\forall T \in I.typeRefs: S <: T}
+--
+
 
 * Non-optional elements:
 math:[$ \forall T \in I.typeRefs \to \lnot T.opt  $]
@@ -1925,10 +2065,15 @@ intersection type. The following simplification rules are always
 automatically applied to intersection types.
 
 * The structural typing strategy is propagated to the types of the
-intersection: math:[\[\begin{aligned}
+intersection:
+[math]
+--
+
     \infer{\intersection{\tsStr T_1, \ldots, \tsStr T_n}}
           {\tsStr \intersection{T_1, \dots, T_n}}
-    \end{aligned}\]]
+
+--
+
 
 --
 
@@ -1979,26 +2124,36 @@ intersection{A,Any} <: A                        -> true
 [req,id=IDE-29,version=1]
 --
 The join of intersection types is defined as the join of the elements. That is
-math:[\[\begin{aligned}
+
+[math]
+--
+
 & \infer{\intersection{T_1,\dots,T_n} \join S }
         { T_1 \join S \join \dots \join T_n \join S}\\
 & \infer{\intersection{T_1,\dots,T_n} \join \intersection{S_1,\dots,S_m} }
         {T_1 \join S_1,\dots,T_1 \join S_m,
          \dots,
-        T_n \join S_1,\dots,T_n \join S_m} \end{aligned}\]]
+        T_n \join S_1,\dots,T_n \join S_m}
+--
+
 --
 
 .Meet with intersection Type
 [req,id=IDE-30,version=1]
 --
 The meet of intersection types is defined over their elements. That is
-math:[\[\begin{aligned}
+
+[math]
+--
+
 &\infer{\intersection{T_1,\dots,T_n} \meet S}
         {\intersection{T_1 \meet S,\dots,T_n \meet S}}\\
 &\infer{\intersection{T_1,\dots,T_n} \meet \intersection{S_1,\dots,S_m}}
         {\intersection{T_1\meet S_1,\dots,T_1\meet S_m,
                         \quad \dots,
-                        \quad T_n\meet S_1,\dots,T_n\meet S_m}}\end{aligned}\]]
+                        \quad T_n\meet S_1,\dots,T_n\meet S_m}}
+--
+
 --
 //TODO  {review meet with intersection type, same as with join}
 
@@ -2008,9 +2163,14 @@ math:[\[\begin{aligned}
 task:IDEBUG-260[]
 The upper and lower bound of an intersection type math:[$I$] is a union type
 math:[$I'$] containing the upper and lower bound of the elements of
-math:[$I$]: math:[\[\begin{aligned}
+math:[$I$]:
+[math]
+--
+
 upper(\intersection{T_1, \dots, T_n}) := \intersection{upper(T_1), \dots, upper(T_1)} \\
-lower(\intersection{T_1, \dots, T_n}) := \intersection{lower(T_1), \dots, lower(T_1)} \\\end{aligned}\]]
+lower(\intersection{T_1, \dots, T_n}) := \intersection{lower(T_1), \dots, lower(T_1)} \\
+--
+
 --
 
 ==== Warnings
@@ -2027,7 +2187,12 @@ and since it always can be omitted.
 [req,id=IDE-32,version=1]
 --
 No intersection type shall conatin an type:
-math:[\[\begin{aligned}\not \exists any \in I.typeRefs\end{aligned}\]]
+
+[math]
+--
+\not \exists any \in I.typeRefs
+--
+
 --
 
 The use of the `any` type in an intersection type is similar to the following
@@ -2042,10 +2207,15 @@ supertypes of any classes or interfaces.
 --
 Intersection types shall not contain class or interface types which are a supertype of
 another class or interface type that also is contained in the
-intersection type. math:[\[\begin{aligned}
+intersection type.
+[math]
+--
+
 \not \exists T \in I.typeRefs :
 \exists TT \in I.typeRefs : \\
-(TT <: T \wedge isClassOrInterface(T) \wedge isClassOrInterface(TT))\end{aligned}\]]
+(TT <: T \wedge isClassOrInterface(T) \wedge isClassOrInterface(TT))
+--
+
 --
 
 === Composed Types in Wildcards
@@ -2098,51 +2268,60 @@ For a given union type math:[$U=T_1|T_2$], the following
 constraints for its members must hold:
 
 math:[$\forall\ a \in U.attributes:$]
-math:[\[\begin{aligned}
-    &\forall\ k\in\{1,2\}: \exists\ a_k\in T_k.attributes: a_k.acc > private\\
-    &\land a.acc = min(a_1.acc, a_2.acc)\\
-    &\land a.name=a_1.name=a_2.name\\
-    &\land a.typeRef = a_1.typeRef = a_2.typeRef
-\end{aligned}\]]
+
+[math]
+--
+
+&\forall\ k\in\{1,2\}: \exists\ a_k\in T_k.attributes: a_k.acc > private\\
+&\land a.acc = min(a_1.acc, a_2.acc)\\
+&\land a.name=a_1.name=a_2.name\\
+&\land a.typeRef = a_1.typeRef = a_2.typeRef
+
+--
+
 
 math:[$\forall\ m \in U.methods:$]
-math:[\[\begin{aligned}
-    &\exists\ m_1 \in T_1.methods, m_2 \in T_2.methods,\\
-    &\hspace{2em} \mbox{with}\ p=m.fpars \land p'=m_1.fpars \land p''=m_2.fpars, \mbox{\acs{WLOG}}\ |p'|\leq |p''|:\\
-    &\hspace{1.2em} \forall k\in\{1,2\}: m_k.acc > private\\
-    &\land m.acc = min(m_1.acc, m_2.acc)\\
-    &\land m.name=m_1.name=m_2.name\\
-    &\land m.typeRef = m_1.typeRef|m_2.typeRef \\
-    &\land \forall\ i<|p''|: p_i \ \mbox{exists with} \\
-    &\hspace{2em} p_i.name =
-            \begin{cases}
-                {p''}_i.name                        & i \geq |p'| \lor {p'}_i.name={p''}_i.name \\
-                {p'}_i.name + \mbox{"\_"} + {p''}_i.name
-                                                & \mbox{else}
-            \end{cases}\\
-    &\hspace{2em} p_i.typeRef =
-            \begin{cases}
-                {p'}_i.typeRef\&{p''}_i.typeRef         & i < |p'|\\
-                {p'}_{|p'|-1}.typeRef\&{p''}_i.typeRef  & i \geq |p'| \land {p'}_{|p'|-1}.var\\
-                {p''}_i.typeRef                     & \mbox{else}
-            \end{cases}\\
-    &\hspace{2em} p_i.opt =
-            \begin{cases}
-                ({p'}_i.opt\land{p''}_i.opt)    & i < |p'|\\
-                {p''}_i.opt                         & \mbox{else}
-            \end{cases}\\
-    &\hspace{2em} p_i.var =
-            \begin{cases}
-                {p'}_i.var\land{p''}_i.var  & i < |p'| \land i=|p''|-1\\
-                {p''}_i.var                     & i \geq |p'| \land i=|p''|-1 \\
-                false                       & \mbox{else}
-            \end{cases}\\
-    &\land (l=|p'|=|p''| \land \lnot({p'}_{l-1}.opt\land{p''}_{l-1}.opt) \land \exists v\in\{p'_{l-1}, p''_{l-1}\} {v}.var: p_l\ \mbox{exists with} \\
-    &\hspace{2em} p_l.name = v.name \\
-    &\hspace{2em} p_i.typeRef = v.typeRef \\
-    &\hspace{2em} p_i.opt = true \\
-    &\hspace{2em} p_i.var  = true
-    \end{aligned}\]]
+
+[math]
+--
+&\exists\ m_1 \in T_1.methods, m_2 \in T_2.methods,\\
+&\hspace{2em} \mbox{with}\ p=m.fpars \land p'=m_1.fpars \land p''=m_2.fpars, \mbox{\acs{WLOG}}\ |p'|\leq |p''|:\\
+&\hspace{1.2em} \forall k\in\{1,2\}: m_k.acc > private\\
+&\land m.acc = min(m_1.acc, m_2.acc)\\
+&\land m.name=m_1.name=m_2.name\\
+&\land m.typeRef = m_1.typeRef|m_2.typeRef \\
+&\land \forall\ i<|p''|: p_i \ \mbox{exists with} \\
+&\hspace{2em} p_i.name =
+        \begin{cases}
+            {p''}_i.name                        & i \geq |p'| \lor {p'}_i.name={p''}_i.name \\
+            {p'}_i.name + \mbox{"\_"} + {p''}_i.name
+                                            & \mbox{else}
+        \end{cases}\\
+&\hspace{2em} p_i.typeRef =
+        \begin{cases}
+            {p'}_i.typeRef\&{p''}_i.typeRef         & i < |p'|\\
+            {p'}_{|p'|-1}.typeRef\&{p''}_i.typeRef  & i \geq |p'| \land {p'}_{|p'|-1}.var\\
+            {p''}_i.typeRef                     & \mbox{else}
+        \end{cases}\\
+&\hspace{2em} p_i.opt =
+        \begin{cases}
+            ({p'}_i.opt\land{p''}_i.opt)    & i < |p'|\\
+            {p''}_i.opt                         & \mbox{else}
+        \end{cases}\\
+&\hspace{2em} p_i.var =
+        \begin{cases}
+            {p'}_i.var\land{p''}_i.var  & i < |p'| \land i=|p''|-1\\
+            {p''}_i.var                     & i \geq |p'| \land i=|p''|-1 \\
+            false                       & \mbox{else}
+        \end{cases}\\
+&\land (l=|p'|=|p''| \land \lnot({p'}_{l-1}.opt\land{p''}_{l-1}.opt) \land \exists v\in\{p'_{l-1}, p''_{l-1}\} {v}.var: p_l\ \mbox{exists with} \\
+&\hspace{2em} p_l.name = v.name \\
+&\hspace{2em} p_i.typeRef = v.typeRef \\
+&\hspace{2em} p_i.opt = true \\
+&\hspace{2em} p_i.var  = true
+
+--
+
 --
 
 Remarks on union type’s members:
@@ -2182,78 +2361,85 @@ regards to properties has to be answered.
 
 .Members of an Intersection Type
 [req,id=IDE-36,version=1]
---
+---
 For a given intersection type math:[$I=T_1\&T_2$], the following
 constraints for its members must hold:
-math:[$\forall a \in I.attributes:$] math:[\[\begin{aligned}
-    &(\exists a_1\in T_1.attributes, a_1.acc>private) \lor (\exists a_2\in T_2.attributes, a_2.acc>private) \\
-    &\land a.name =
-            \begin{cases}
-                a_1.name            & a_1\neq null \land (a_2=null \lor a_2.name=a_1.name) \\
-                a_2.name            & \mbox{else}
-            \end{cases}\\
-    &\land a.acc =
-            \begin{cases}
-                a_1.acc         & a_1\neq null \land (a_2=null \lor a_2.acc \leq a_1.acc) \\
-                a_2.acc         & \mbox{else}
-            \end{cases}\\
-    &\land a.typeRef =
-            \begin{cases}
-                a_1.typeRef\&a_2.typeRef    & a_1\neq null \land a_2\neq null \\
-                a_1.typeRef             & a_1\neq null \\
-                a_2.typeRef             & \mbox{else} (a_2\neq null)
-            \end{cases}     \end{aligned}\]]
+math:[$\forall a \in I.attributes:$]
+[math]
+--
+&(\exists a_1\in T_1.attributes, a_1.acc>private) \lor (\exists a_2\in T_2.attributes, a_2.acc>private) \\
+&\land a.name =
+        \begin{cases}
+            a_1.name            & a_1\neq null \land (a_2=null \lor a_2.name=a_1.name) \\
+            a_2.name            & \mbox{else}
+        \end{cases}\\
+&\land a.acc =
+        \begin{cases}
+            a_1.acc         & a_1\neq null \land (a_2=null \lor a_2.acc \leq a_1.acc) \\
+            a_2.acc         & \mbox{else}
+        \end{cases}\\
+&\land a.typeRef =
+        \begin{cases}
+            a_1.typeRef\&a_2.typeRef    & a_1\neq null \land a_2\neq null \\
+            a_1.typeRef             & a_1\neq null \\
+            a_2.typeRef             & \mbox{else} (a_2\neq null)
+        \end{cases}
+--
+
 
 math:[$\forall m \in I.methods:$]
-math:[\[\begin{aligned}
-    & (\exists m_1 \in T_1.methods, m_1.acc>private) \lor (\exists m_2 \in T_1.methods, m_2.acc>private): \\
-    &\hspace{2em} \mbox{with}\ p=m.fpars\\
-    &\hspace{3em} \land \mbox{if}\ m_1\ \mbox{exists}\ p'=m_1.fpars\ \mbox{(else $p'=\emptyset$)},\\
-    &\hspace{3em} \land \mbox{if}\ m_2\ \mbox{exists}\ p''=m_2.fpars\ \mbox{(else $p''=\emptyset$)}, \mbox{\acs{WLOG}} |p'|\leq |p''|:\\
-    &\hspace{1em} m.name =
-            \begin{cases}
-                m_1.name            & m_1\neq null \land (m_2=null \lor m_2.name=m_1.name)\\
-                m_2.name            & \mbox{else}
-            \end{cases}\\
-    &\land m.acc =
-            \begin{cases}
-                m_1.acc         & m_1\neq null \land (m_2=null \lor m_2.acc \leq m_1.acc)\\
-                m_2.acc         & \mbox{else}
-            \end{cases}\\
-    &\land m.typeRef =
-            \begin{cases}
-                m_1.typeRef\&m_2.typeRef    & m_1\neq null \land m_2\neq null \\
-                m_1.typeRef         & m_1\neq null \\
-                m_2.typeRef         & \mbox{else} (m_2\neq null)
-            \end{cases}\\
-    &\land \forall\ i<|p''|: p_i \ \mbox{exists with} \\
-    &\hspace{2em} p_i.name =
-            \begin{cases}
-                {p''}_i.name                        & i \geq |p'| \lor {p''}_i.name={p'}_i.name \\
-                {p'}_i.name + \mbox{"\_"} + {p''}_i.name
-                                                & \mbox{else}
-            \end{cases}\\
-    &\hspace{2em} p_i.typeRef =
-            \begin{cases}
-                {p'}_i.typeRef|{p''}_i.typeRef      & i < |p'|\\
-                {p'}_{|p'|-1}.typeRef|{p''}_i.typeRef   & i \geq |p'| \land {p'}_{|p'|-1}.var\\
-                {p''}_i.typeRef                     & \mbox{else}
-            \end{cases}\\
-    &\hspace{2em} p_i.opt =
-            (\exists k \leq min(|p'|-1, i): p'_k.opt) \lor (\exists k \leq i: p''_k.opt)\\
-    &\hspace{2em} p_i.var =
-            \begin{cases}
-                p_i.opt \lor ({p'}_i.var\lor{p''}_i.var)    & i < |p'| \land i=|p''|-1\\
-                {p''}_i.var                     & i \geq |p'| \land i=|p''|-1 \\
-                false                       & \mbox{else}
-            \end{cases} \\
-    &\land (l=|p'|=|p''| \land l>0 \land \lnot({p}_{l-1}.opt) \land \exists v\in\{p'_{l-1}, p''_{l-1}\} {v}.var: p_l\ \mbox{exists with} \\
-    &\hspace{2em} p_l.name = v.name \\
-    &\hspace{2em} p_i.typeRef = v.typeRef \\
-    &\hspace{2em} p_i.opt = true \\
-    &\hspace{2em} p_i.var  = true
-\end{aligned}\]]
+
+[math]
 --
+& (\exists m_1 \in T_1.methods, m_1.acc>private) \lor (\exists m_2 \in T_1.methods, m_2.acc>private): \\
+&\hspace{2em} \mbox{with}\ p=m.fpars\\
+&\hspace{3em} \land \mbox{if}\ m_1\ \mbox{exists}\ p'=m_1.fpars\ \mbox{(else $p'=\emptyset$)},\\
+&\hspace{3em} \land \mbox{if}\ m_2\ \mbox{exists}\ p''=m_2.fpars\ \mbox{(else $p''=\emptyset$)}, \mbox{\acs{WLOG}} |p'|\leq |p''|:\\
+&\hspace{1em} m.name =
+        \begin{cases}
+            m_1.name            & m_1\neq null \land (m_2=null \lor m_2.name=m_1.name)\\
+            m_2.name            & \mbox{else}
+        \end{cases}\\
+&\land m.acc =
+        \begin{cases}
+            m_1.acc         & m_1\neq null \land (m_2=null \lor m_2.acc \leq m_1.acc)\\
+            m_2.acc         & \mbox{else}
+        \end{cases}\\
+&\land m.typeRef =
+        \begin{cases}
+            m_1.typeRef\&m_2.typeRef    & m_1\neq null \land m_2\neq null \\
+            m_1.typeRef         & m_1\neq null \\
+            m_2.typeRef         & \mbox{else} (m_2\neq null)
+        \end{cases}\\
+&\land \forall\ i<|p''|: p_i \ \mbox{exists with} \\
+&\hspace{2em} p_i.name =
+        \begin{cases}
+            {p''}_i.name                        & i \geq |p'| \lor {p''}_i.name={p'}_i.name \\
+            {p'}_i.name + \mbox{"\_"} + {p''}_i.name
+                                            & \mbox{else}
+        \end{cases}\\
+&\hspace{2em} p_i.typeRef =
+        \begin{cases}
+            {p'}_i.typeRef|{p''}_i.typeRef      & i < |p'|\\
+            {p'}_{|p'|-1}.typeRef|{p''}_i.typeRef   & i \geq |p'| \land {p'}_{|p'|-1}.var\\
+            {p''}_i.typeRef                     & \mbox{else}
+        \end{cases}\\
+&\hspace{2em} p_i.opt =
+        (\exists k \leq min(|p'|-1, i): p'_k.opt) \lor (\exists k \leq i: p''_k.opt)\\
+&\hspace{2em} p_i.var =
+            \begin{cases}
+            p_i.opt \lor ({p'}_i.var\lor{p''}_i.var)    & i < |p'| \land i=|p''|-1\\
+            {p''}_i.var                     & i \geq |p'| \land i=|p''|-1 \\
+            false                       & \mbox{else}
+        \end{cases} \\
+&\land (l=|p'|=|p''| \land l>0 \land \lnot({p}_{l-1}.opt) \land \exists v\in\{p'_{l-1}, p''_{l-1}\} {v}.var: p_l\ \mbox{exists with} \\
+&\hspace{2em} p_l.name = v.name \\
+&\hspace{2em} p_i.typeRef = v.typeRef \\
+&\hspace{2em} p_i.opt = true \\
+&\hspace{2em} p_i.var  = true
+--
+
+---
 
 Remarks on intersection type’s methods:
 
@@ -2294,49 +2480,52 @@ ClassifierTypeRef returns ClassifierTypeRef: 'type' '{' typeArg = [TypeRef] '}';
 === Semantics
 
 task:IDE-786[]
+// TODO missing xrefs here
 
-1.  Static members of a type math:[$T$] are actually members of the
+. Static members of a type _T_ are actually members of the
 classifier type .
-2.  The keyword in a static method of a type math:[$T$] actually
+. The keyword in a static method of a type _T_ actually
 binds to the classifier type .
-3.  The constructor type is a subtype of the classifier type :
-math:[\[\begin{aligned} \forall T: `constructor\{$T$\}` <: `type\{$T$\}` \end{aligned}\]]
-4.  If a class math:[$B$] is a subtype (subclass) of a class
-math:[$A$], then the classifier type also is a subtype of :
-math:[\[\begin{aligned}\infer{`type\{$B$\}` <: `type\{$A$\}`} {B <: A}\end{aligned}\]]
-5.  If a class math:[$B$] is a subtype (subclass) of a class
-math:[$A$], and if the constructor function of math:[$B$] is a
-subtype of the constructor function of math:[$A$], then the
+. The constructor type is a subtype of the classifier type : +
+$\forall T: `constructor\{_T_\}` <: `type\{_T_\}`$
+. If a class _B_ is a subtype (subclass) of a class
+_A_, then the classifier type also is a subtype of :
+$\infer{`type\{$B$\}` <: `type\{$A$\}`} {B <: A}$
+.  If a class _B_ is a subtype (subclass) of a class
+_A_, and if the constructor function of _B_ is a
+subtype of the constructor function of _A_, then the
 classifier type also is a subtype of :
-math:[\[\begin{aligned} \infer{`constructor\{$B$\}` <: `constructor\{$A$\`}}{   {B <: A} & {B.ctor <: A.ctor} }\end{aligned}\]]
+$$\infer{`constructor\{$B$\}` <: `constructor\{$A$\`}}{   {B <: A} & {B.ctor <: A.ctor} }$$
 The subtype relation of the constructor function is
 defined in . In the case of the default constructor, the type of the
 object literal argument depends on required attributes.
 +
 This subtype relation for the constructor type is enforced if the
 constructor of the super class is marked as `final`, see <<_constructor-and-classifier-type,Constructor>> for details.
-6.  The type of a classifier declaration or classifier expression is the
+.  The type of a classifier declaration or classifier expression is the
 constructor of that class:
-math:[\[\begin{aligned} \infer{\tee C: \lstnfjs{constructor[$C$]}}
-            {\mu(C) \in \{ \type{classifierDefinition} \} }
-\end{aligned}\]]
-7.  A class cannot be called as a function in ECMAScript. Thus, the
+$$\infer{\tee C: \lstnfjs{constructor[$C$]}}
+{\mu(C) \in \{ \type{classifierDefinition} \} }$$
+.  A class cannot be called as a function in ECMAScript. Thus, the
 constructor and type type are only subtype of :
-math:[\[\begin{aligned}
+$$        \forall T: \\
         \forall T: \\
-        \forall T: \\
-        & \lstnfjs{constructor\{$T$\}} <: \type{Object} \\
-        & \lstnfjs{type\{$T$\}} <: \type{Object} \\
-    \end{aligned}\]]
-8.  If the type argument of the constructor is not a declared type
+        & \lstnfjs{constructor\{_T_\}} <: \type{Object} \\
+        & \lstnfjs{type\{_T_\}} <: \type{Object} \\$$
+.  If the type argument of the constructor is not a declared type
 (i.e., a wildcard or a type variable with bounds), the constructor
 cannot be used in a new expression. Thus, the constructor function
 signature becomes irrelevant for subtype checking. In that case, the
 following rules apply: task:GH-221[]
-math:[\[\begin{aligned}
-\infer{\lstnfjs{constructor\{$S$\}} <: \lstnfjs{constructor\{$T$\}}}
+
+[math]
+--
+
+\infer{\lstnfjs{constructor\{$S$\}} <: \lstnfjs{constructor\{_T_\}}}
             {S.upper <: T.upper &&  T.lower <: S.lower && \mu(T) \neq \type{DeclaredTypeWithAccessModifier}}
-\end{aligned}\]]
+
+--
+
 
 Note that this is only true for the right hand side
 of the subtyping rule. A constructor type with a wildcard is never a
@@ -2345,7 +2534,7 @@ subtype of a constructor type without a wildcard.
 The figure <<cdConstructorClassifierType>> shows the subtype relations defined by the preceding rules.
 
 [[cdConstructorClassifierType]]
-image::fig/cdConstructorClassifierType.png[title="Classifier and Constructor Type Subtype Relations"]
+image::{find}fig/cdConstructorClassifierType.png[title="Classifier and Constructor Type Subtype Relations"]
 
 Consequences:
 
@@ -2469,7 +2658,7 @@ defined `A` as `class A extends Object {}` in the listing above, then the constr
 arrow), which would make a more consistent overall picture.
 
 [[fig-constructors-and-prototypes]]
-image::fig/ctorsProtosInES6.png[title="Constructors and prototypes for two classes A and B in ECMAScript 2015 (not N4JS!)"]
+image::{find}fig/ctorsProtosInES6.png[title="Constructors and prototypes for two classes A and B in ECMAScript 2015 (not N4JS!)"]
 
 Base classes in the above sense are not available in N4JS. If an N4JS
 class does not provide an `extends` clause, it will implicitly inherit from
@@ -2520,6 +2709,7 @@ the declaring class (i.e. this type used in a class `{A}` actually means `<? ext
 
 === Syntax [[this-type-syntax]]
 
+[source]
 ----
 ThisTypeRef returns ThisTypeRef:
     ThisTypeRefNominal | ThisTypeRefStructural;
@@ -2671,6 +2861,7 @@ a2.store.value( a ) // RUNTIME ERROR, the types are all correct, but remember b.
 
 --
 
+[.language-n4js]
 == Enums
 task:IDE-327[] task:IDE-980[]
 
@@ -2690,6 +2881,7 @@ syntax.
 
 Definition and usage of an enumeration:
 
+[source]
 ----
 // assume this file to be contained in a package "myPackage"
 enum Color {
@@ -2719,6 +2911,7 @@ console.log(us.toString()); // --> 840
 ==== Syntax [[enums-syntax]]
 task:IDE-8[] task:IDE-327[]
 
+[source]
 ----
 N4EnumDeclaration:
         annotations+=Annotation*
@@ -2748,21 +2941,37 @@ This leads to the following typing rules:
 For a given enumeration declaration math:[$E$] with literals math:[$L$], the following
 type rules are defined:
 
-1.  Every enumeration math:[$E$] is a subtype of the base type :
-math:[\[\begin{aligned}
-        \infer{\tee `type\{E\}} \subtype `type\{N4Enum\}}}{}
-    \end{aligned}\]]
+1. Every enumeration math:[$E$] is a subtype of the base type :
+[math]
+--
+\infer{\tee `type\{E\}} \subtype `type\{N4Enum\}}}{}
+--
 2.  Every literal math:[$L$] of an enumeration math:[$E$] is
-of the type of the enumeration: math:[\[\begin{aligned}
-        \infer{\tee L: E}{L \in E.literals}
-    \end{aligned}\]] That means that every literal is a subtype of :
-math:[\[\begin{aligned}
-        \infer{\tee L \subtype `N4Enum` }{L \in E.literals}
-    \end{aligned}\]]
+of the type of the enumeration:
+[math]
+--
+\infer{\tee L: E}{L \in E.literals}
+
+--
+
+That means that every literal is a subtype of :
+
+// TODO missing type
+
+[math]
+--
+\infer{\tee L \subtype `N4Enum` }{L \in E.literals}
+
+--
+
 3.  Since the implementation of enumerations may vary per runtime, enum
-literals are not objects: math:[\[\begin{aligned}
-        \infer{\tee L \notsubtype `Object`}{L \in E.literals}
-    \end{aligned}\]]
+literals are not objects:
+[math]
+--
+\infer{\tee L \notsubtype `Object`}{L \in E.literals}
+
+--
+
 
 The base enumeration type is defined as follows footnote:[This is pseudo N4JS code as it is not possible to infer from `any` or define abstract static methods.]
 
@@ -2840,7 +3049,12 @@ Literal names have to be unique.
 [req,id=IDE-40,version=1]
 --
 Enum literals are singletons:
-math:[\[\begin{aligned} \forall e_1,e_2, \mu(e_1)=\mu(e_2)=`N4EnumLiteral` \land \tee e_1 = \tee e_2: e_1`==}e_2 \iff e_1`===}e_2\end{aligned}\]]
+
+[math]
+--
+ \forall e_1,e_2, \mu(e_1)=\mu(e_2)=`N4EnumLiteral` \land \tee e_1 = \tee e_2: e_1`==}e_2 \iff e_1`===}e_2
+--
+
 
 .Enumeration List
 [example]
@@ -2907,12 +3121,21 @@ base type `N4StringBasedEnum`: math:[\[\begin{gathered}\infer{ \tee \type{type\{
          \infer{ \type{N4Enum} \notsubtype \type{N4StringBasedEnum} }{}
     \end{gathered}\]]
 .  `N4StringBasedEnum` is a subtype of `string`
-math:[\[\begin{aligned}\infer{ \type{N4StringBasedEnum} \subtype \type{string} }{}\end{aligned}\]]
+
+[math]
+--
+\infer{ \type{N4StringBasedEnum} \subtype \type{string} }{}
+--
+
 .  Each literal in math:[$L_S$] of a string-based enumeration
 math:[$E_S$] is of the type of the string-based enumeration.
-math:[\[\begin{aligned}
-        \infer{ \tee l \subtype E_S }{l \in E_S.L_S}
-    \end{aligned}\]]
+
+[math]
+--
+\infer{ \tee l \subtype E_S }{l \in E_S.L_S}
+
+--
+
 .  <<IDE-39,requirement: Unique Literal Names>> also applies for `N4StringBasedEnum`.
 .  [<<IDE-40,requirement: Enum Literals are Singletons>>]
 also applies for `N4StringBasedEnum`.

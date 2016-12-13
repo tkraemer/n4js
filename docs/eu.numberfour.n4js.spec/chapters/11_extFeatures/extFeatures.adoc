@@ -1,5 +1,6 @@
 
 = Extended Fetaures
+:find:
 ////
 Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
@@ -153,7 +154,7 @@ support) it is difficult for nontrivial applications. The solutions that <<Acron
 provides should empower N4JS users to achieve the above goals without
 the burden of maintaining so-called ’boilerplate’ code.
 
-image::fig/diTerms.PNG[title="DI Terms"]
+image::{find}fig/diTerms.PNG[title="DI Terms"]
 
 _key: pass the dependency instead of letting the client create or find it_
 
@@ -313,7 +314,7 @@ NOTE: Although subtype notation math:[$<:$] is used here it does *not* imply act
 A complex Child-Parent relation between components is depicted in DIC Parent Child diagram and
 <<ex:complex-dicomponents-relations,Complex DIComponent Relations example>> below.
 
-image::fig/diagDICParentChild.png[title="Complex DIComponents Relations",align=center]
+image::{find}fig/diagDICParentChild.png[title="Complex DIComponents Relations",align=center]
 
 --
 
@@ -400,8 +401,9 @@ parameter to be injected. In that case, the math:[$target$] equals
 the math:[$key$]. task:IDEBUG-484[]
 
 A provider method math:[$M$] (in the binder) defines a binding
-math:[\[\begin{aligned}
-bind(M.returnType, X)\end{aligned}\]] (in which math:[$X$] is an
+
+$$bind(M.returnType, X)$$
+ (in which math:[$X$] is an
 existential type with
 math:[$\exists X \subtype target.returnType$]).
 
@@ -693,7 +695,7 @@ class B { @Inject a: A; }
 ----
 
 
-image::fig/injectionGraph_cycleField.png[title="Field Cycle",align=center]
+image::{find}fig/injectionGraph_cycleField.png[title="Field Cycle",align=center]
 
 [source,n4js]
 ----
@@ -702,7 +704,7 @@ class D { @Inject c: C; }
 ----
 
 
-image::fig/injectionGraph_cycleCtorField.png[title="Ctor Field Cycle",align=center]
+image::{find}fig/injectionGraph_cycleCtorField.png[title="Ctor Field Cycle",align=center]
 
 [source,n4js]
 ----
@@ -710,7 +712,7 @@ class E { @Inject constructor(f: F) {} }
 class F { @Inject constructor(e: E) {} }
 ----
 
-image::fig/injectionGraph_cycleCtor.png[title="Ctor Cycle",align=center]
+image::{find}fig/injectionGraph_cycleCtor.png[title="Ctor Cycle",align=center]
 
 
 The injector needs to detect these cycles and resolve them.
@@ -969,6 +971,7 @@ Following annotations describe API used to configure N4JSDI.
 
 ==== N4JS DI @GenerateInjector
 
+[horizontal]
 name::
   @GenerateInjector
 targets::
@@ -988,6 +991,7 @@ its dependencies.
 
 ==== N4JS DI @WithParentInjector
 
+[horizontal]
 name::
   @WithParentInjector
 targets::
@@ -1019,6 +1023,7 @@ Additional _WithParentInjector_ constraints:
 
 ==== N4JS DI @UseBinder
 
+[horizontal]
 name::
   @UseBinder
 targets::
@@ -1044,6 +1049,7 @@ arguments are optional::
 
 ==== N4JS DI @Binder
 
+[horizontal]
 name::
   @Binder
 targets::
@@ -1071,6 +1077,7 @@ That can be either annotations on itself or its factory methods annotated with `
 
 ==== N4JS DI @Bind
 
+[horizontal]
 name::
   @Bind
 targets::
@@ -1099,7 +1106,7 @@ See also <<_validation-of-callsites-targeting-n4injector-methods,Callsites>> for
 
 ==== N4JS DI @Provides
 
-
+[horizontal]
 name::
   @Provides
 targets::
@@ -1130,7 +1137,7 @@ described in _injectable values_  <<_validation-of-callsites-targeting-n4injecto
 
 ==== N4JS DI @Inject
 
-
+[horizontal]
 name::
   @Inject
 targets::
@@ -1159,7 +1166,7 @@ used. Class fields, methods and constructors can be annotated. See <<_injection-
 ==== N4JS DI @Singleton
 
 
-
+[horizontal]
 name::
   @Singleton
 targets::
@@ -1237,45 +1244,52 @@ to distinguish between normal (sub-) classes and polyfill classes.
 For a polyfill class math:[$P$] annotated with `@Polyfill` or  `@StaticPolyfill`, that is
 math:[$P.polyfill=\TRUE$], all the following constraints must hold:
 
-1.  math:[$P$] must extend a class math:[$F$], math:[$F$]
-is called the filled class: math:[\[\begin{aligned}
-    P.super = F
-    \end{aligned}\]]
-2.  math:[$P$]’s name equals the name of the filled class and is
+.  math:[$P$] must extend a class math:[$F$], math:[$F$]
+is called the filled class:
++
+$$-
+P.super = F
+---
+. math:[$P$]’s name equals the name of the filled class and is
 contained in a module with same qualified name (specifier or global):
-math:[\[\begin{aligned}
-    & P.name = F.name \\
++
+$$-
+& P.name = F.name \\
     & \land P.containedModule.global=F.containedModule.global \\
     & \land (P.containedModule.global \\
         & \hspace{3em} \lor P.containedModule.specifier=F.containedModule.specifier) \\
-    \end{aligned}\]]
-3.  Both the polyfill and filled class must be top-level declarations
-(i.e., no class expression): math:[\[\begin{aligned}
-        & P.topLevel = \TRUE \land F.topLevel = \TRUE
-    \end{aligned}\]]
-4.  math:[$P$] must not implement any interfaces:
-math:[\[\begin{aligned}
-    P.implementedInterfaces=\emptyset
-    \end{aligned}\]]
-5.  math:[$P$] must have the same access modifier (access,
-abstract, final) as the filled class: math:[\[\begin{aligned}
-    & P.accessModifier=F.accessModifier \\
-    & P.abstract = F.abstract \\
-    & P.final = F.final
-    \end{aligned}\]]
-6.  If math:[$P$] declares a constructor, it must be override
+---
+. Both the polyfill and filled class must be top-level declarations
+(i.e., no class expression):
+$$-
+& P.topLevel = \TRUE \land F.topLevel = \TRUE
+---
+. math:[$P$] must not implement any interfaces:
+$$P.implementedInterfaces=\emptyset$$
++
+. math:[$P$] must have the same access modifier (access,
+abstract, final) as the filled class:
++
+$$
+& P.accessModifier=F.accessModifier \\
+& P.abstract = F.abstract \\
+& P.final = F.final
+$$
++
+.  If math:[$P$] declares a constructor, it must be override
 compatible with the constructor of the filled class:
-math:[\[\begin{aligned}
-    \exists P.ownedCtor: P.ownedCtor <: F.ctor
-    \end{aligned}\]]
-7.  math:[$P$] must define the same type variables as the filled
++
+$$
+\exists P.ownedCtor: P.ownedCtor <: F.ctor
+$$
+. math:[$P$] must define the same type variables as the filled
 class math:[$F$] and the arguments must be in the same order as the
-parameters (with no further modifications): math:[\[\begin{aligned}
-    & \forall i, 0 \leq i<|P.typePars|:\\
-    &   \hspace{3em} P.typePars_i=F.typePars_i \\
-    &   \hspace{3em} \land P.typePars_i.name=P.super.typeArgs_i.name \\
-    \end{aligned}\]]
-8.  All constraints related to member redefinition (cf. <<_redefinition-of-members,Redefinition of Members>>) have to hold.
+parameters (with no further modifications):
+$$
+& \forall i, 0 \leq i<|P.typePars|:\\
+&   \hspace{3em} P.typePars_i=F.typePars_i \\
+&   \hspace{3em} \land P.typePars_i.name=P.super.typeArgs_i.name \\$$
+. All constraints related to member redefinition (cf. <<_redefinition-of-members,Redefinition of Members>>) have to hold.
 In the case of polyfills, this is true for constructors (cf.
 <<IDE-72,requirement: Overriding Members>>) and private members.
 --
@@ -1301,9 +1315,9 @@ must hold in addition to :
 (annotated with `@ProvidedByRuntime`+
 ):
 footnote:[This restriction has two reasons: Firstly, user-defined types with implementations would require to ’bootstrap’ the polyfill, which is impossible to do automatically without serious constraints on bootstrap code in general. Secondly, instead of filling user-defined types, they can be subclasses. Mechanisms such as dependency injection could then solve almost all remaining problems.]
-math:[\[\begin{aligned}
-    & P.providedByRuntime = \TRUE \land F.providedByRuntime = \TRUE
-    \end{aligned}\]]
+
+$$& P.providedByRuntime = \TRUE \land F.providedByRuntime = \TRUE$$
+
 --
 
 .Applying Polyfills
@@ -1314,9 +1328,7 @@ A polyfill is
 automatically applied if a runtime library or environment required by
 the current project provides it. In this case, the following constraints
 must hold:
-
 1.  No member must be filled by more than one polyfill.
-
 --
 
 === Static Polyfill Definitions
@@ -1366,28 +1378,24 @@ hold in addition to <<IDE-152,requirement: Polyfill Class>>:
 
 1.  math:[$P$]’s name equals the name of the filled class and is
 contained in a module with the same qualified name:
-math:[\[\begin{aligned}
-    & P.name = F.name \\
-    & \land P.containedModule.specifier=F.containedModule.specifier \\
-    \end{aligned}\]]
++
+$$& P.name = F.name \\
+    & \land P.containedModule.specifier=F.containedModule.specifier \\ $$
 2.  Both the static polyfill and the filled class are part of the same
-project: math:[\[\begin{aligned}
-    & P.project = F.project
-    \end{aligned}\]]
+project:
+$$& P.project = F.project$$
++
 3.  The filled class must be contained in a module annotated with `@StaticPolyfillAware`:
-math:[\[\begin{aligned}
-    & F.containedModule.staticPolyfillAware = \TRUE
-    \end{aligned}\]]
+$$& F.containedModule.staticPolyfillAware = \TRUE$$
++
 4.  The static polyfill and the filled type must both be declared in an
 n4js file or both in an n4jsd file.
 5.  The filling class must be contained in a module annotated with :
-math:[\[\begin{aligned}
-    & P.containedModule.staticPolyfillModule = \TRUE
-    \end{aligned}\]]
-6.  For a statically-filled class math:[$F$] there is at most one
-static polyfill: math:[\[\begin{aligned}
-    (P_1 \text{ is static polyfill of } F \land P_2 \text{ is static polyfill of } F) \rightarrow P_1=P_2
-    \end{aligned}\]]
+$$& P.containedModule.staticPolyfillModule = \TRUE $$
++
+6. For a statically-filled class math:[$F$] there is at most one
+static polyfill:
+$$(P_1 \text{ is static polyfill of } F \land P_2 \text{ is static polyfill of } F) \rightarrow P_1=P_2$$
 --
 
 
@@ -1398,18 +1406,18 @@ static polyfill: math:[\[\begin{aligned}
 For a static polyfilling module math:[$M_P$] the following must hold:
 
 1.  All top-level elements are static polyfills:
-math:[\[\begin{aligned}
-    & \infer{T.staticPolyfill = \TRUE}{\forall T \in M_P \land T.topLevel = \TRUE}
-    \end{aligned}\]]
+$$& \infer{T.staticPolyfill = \TRUE}{\forall T \in M_P \land T.topLevel = \TRUE}$$
++
 2.  It exists exactly one filled module math:[$M_F$] annotated with
 math:[$staticPolyfillAware$] in the same project.
 3.  It is an error if two static polyfill modules for the same filled
-module exist in the same project: math:[\[\begin{aligned}
-    \infer{M_1 = M_2}{
-     M_1.specifier = M_2.specifier
-     \land M_1.project = M_2.project \\
-     \land M_1.staticPolyfillModul = M_2.staticPolyfillModul = \TRUE }
-    \end{aligned}\]]
+module exist in the same project:
+$$\infer{M_1 = M_2}{
+M_1.specifier = M_2.specifier
+\land M_1.project = M_2.project \\
+\land M_1.staticPolyfillModul = M_2.staticPolyfillModul = \TRUE }$$
+--
+
 
 .Static polyfill
 [example]
@@ -1433,7 +1441,6 @@ export public class B {
 ----
 
 
-
 [[ex:staticpolyfill-genmod]]
 [source,n4js]
 ----
@@ -1450,7 +1457,6 @@ export public class B extends B {
 }
 ----
 ====
---
 
 === Transpiling static polyfilled classes
 

@@ -1,5 +1,6 @@
 
 = Expressions
+:find:
 ////
 Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
@@ -15,6 +16,7 @@ Contributors:
 --
 For all expressions, we define the following pseudo properties:
 
+[horizontal]
 `containingExpression` ::
 The parent expression, in which an expression is contained, may be null.
 
@@ -226,12 +228,12 @@ In general, the actual this target can not be inferred from the context of the t
 keyword. A heuristic is defined, however, to compute the probable this
 type:
 
-1.  If the this keyword is used in some function annotated with an
+.  If the this keyword is used in some function annotated with an
 annotation , the type specified in the annotation is used. The inferred
-type is always nominal. math:[\[\begin{aligned}
-        \infer{\tee \lstnfbnf{"this"}: \tsNom T}{f=\lstnfbnf{"this"}.containingFunctionOrAccessor \\ f.hasAnnotation(\lstnfbnf{"@This"}) & T = f.annotation\lstnfjs{["@This"]}}\\
-        \end{aligned}\]]
-2.  If the this keyword is used in some _instance_ method of a
+type is always nominal.
+$$\infer{\tee \lstnfbnf{"this"}: \tsNom T}{f=\lstnfbnf{"this"}.containingFunctionOrAccessor \\ f.hasAnnotation(\lstnfbnf{"@This"}) & T = f.annotation\lstnfjs{["@This"]}}\\$$
++
+.  If the this keyword is used in some _instance_ method of a
 classifier or in an _instance_ field initializer, is bound to the
 itself. If the this keyword is used in some _static_ method of a
 classifier or in a _static_ field initializer, the prototype type (or
@@ -241,15 +243,14 @@ this keyword is used in a function expression assigned to an property of
 an object literal, the type of the object literal is used. Note that
 usually this is the type in instance methods, and the type in static
 methods.task:IDE-785[]
- math:[\[\begin{aligned}
-        \infer{\tee \lstnfbnf{"this"}: \tsNom T}{T=\lstnfbnf{"this"}.probableThisTarget & T\neq\NULL}\\
-        \end{aligned}\]]
-3.  task:IDE-185[] In all other cases: Non-strict mode: math:[\[\begin{aligned}
-        \infer{\tee \lstnfbnf{"this"}: \type{global}}{mode=\lenum{unrestricted}}\\
-        \end{aligned}\]] Strict mode and N4JS mode:
-math:[\[\begin{aligned}
-        \infer{\tee \lstnfbnf{"this"}: \type{global} \type{undefined}}{mode\neq\lenum{unrestricted}}\\
-        \end{aligned}\]]
+
+$$\infer{\tee \lstnfbnf{"this"}: \tsNom T}{T=\lstnfbnf{"this"}.probableThisTarget & T\neq\NULL}\\$$
+. task:IDE-185[] In all other cases: Non-strict mode:
+$$\infer{\tee \lstnfbnf{"this"}: \type{global}}{mode=\lenum{unrestricted}}\\$$
+
+Strict mode and N4JS mode:
+
+$$\infer{\tee \lstnfbnf{"this"}: \type{global} \type{undefined}}{mode\neq\lenum{unrestricted}}\\$$
 
 --
 
@@ -450,7 +451,7 @@ object literals or members of a class are referenced via
 math:[$PropertyAccess-Expression.property$] (see <<_property-accessors,Property Accessors>>).
 
 [[fig:scopes]]
-image::fig/scopes.png[title="Scopes",align=center]
+image::{find}fig/scopes.png[title="Scopes",align=center]
 
 An identifier may be bound to a variable (global or local variable,
 parameter, variable defined in a function’s closure), or to a property
@@ -462,14 +463,14 @@ described in <<_property-accessors,Property Accessors>>.
 --
 If an identifier math:[$i$] is accessed, the bound declared element
 math:[$D$] must be readable if it is not used on the left-hand side
-of an assignment expression. math:[\[\begin{aligned}
-& bind(i, D) \\
+of an assignment expression.
+$$& bind(i, D) \\
 
 & \hspace{2em}\land \not\exists\ \type{AssignmentExpression}\ ae \in i.container^*: \\
 //*
 & \hspace{3em} ae.left = i \\
 & \hspace{4em}\lor (\mu(ae.left)=\type{PropertyAccessExpression} \land ae.left.property=i): \\
-& \Rightarrow D.readable \\\end{aligned}\]]
+& \Rightarrow D.readable \\$$
 
 --
 
@@ -481,9 +482,10 @@ task:IDE-244[]
 An identifier reference math:[$i$] is bound to an identifiable
 element math:[$i.id$], which is expressed with the function
 math:[$bind(i, i.id)$]. The type of the reference is then inferred
-as follows: math:[\[\begin{aligned}
-\infer{\typeEnv \entails \type{IdentifierRef}\ idref: T}
-    {\typeEnv \entails idref.id: T}\end{aligned}\]]
+as follows:
+$$\infer{\typeEnv \entails \type{IdentifierRef}\ idref: T}
+    {\typeEnv \entails idref.id: T}$$
+
 
 === Literals
 
@@ -496,12 +498,13 @@ cf. cite:[ECMA11a(S11.1.3p.63,S7.8p.19ff)].
 The type of a literal can directly be derived from the grammar. The
 following axioms are defined for literals:
 
-math:[\[\begin{aligned}
-&\infer{\type{NullLiteral}: \type{null}}{}          \tag{\S7.8.1}\\
+
+$$&\infer{\type{NullLiteral}: \type{null}}{}          \tag{\S7.8.1}\\
 &\infer{\type{BooleanLiteral}: \type{boolean}}{}        \tag{\S7.8.2}\\
 &\infer{\type{NumericLiteral}: \type{int} or \type{number}}{}       \tag{\S7.8.3}\\
 &\infer{\type{StringLiteral}: \type{string}}{}      \tag{\S7.8.4}\\
-&\infer{\type{RegularExpressionLiteral}: \type{RegExpr}}{} \tag{\S7.8.5}\end{aligned}\]]
+&\infer{\type{RegularExpressionLiteral}: \type{RegExpr}}{} \tag{\S7.8.5}$$
+
 
 Note that there are no literals specific for `pathSelector` or `i18nkey`.
 
@@ -589,18 +592,20 @@ ArrayElement <Yield> returns ArrayElement: {ArrayElement} spread?='...'? express
 task:IDE-244[] task:IDE-342[]
 
 In general, an array literal is inferred as
-math:[$\type{Array<T>}$] (similar to the type of `new Array()`).
+`Array<T>` (similar to the type of `new Array()`).
 The interesting question is the binding of the type variable math:[$T$].
 
-The type of an array padding math:[$p$] is inferred as follows:
-math:[\[\begin{aligned}
-&\infer{\tee p: \type{undefined}}{} \\\end{aligned}\]]
+The type of an array padding _p_ is inferred as follows:
+
+$$&\infer{\tee p: \type{undefined}}{} \\$$
+
 
 The element type of an array literal is simply inferred as the
 (simplified) union of the type elements of the array. Thus, the type of
 an array literal math:[$a$] is inferred as follows:
-math:[\[\begin{aligned}
-&\infer{\tee(a): Array<T>}{\tee a.\seq{elements}: \seq{T_e} &  T = \bigcup \seq{T_e}} \end{aligned}\]]
+
+$$&\infer{\tee(a): Array<T>}{\tee a.\seq{elements}: \seq{T_e} &  T = \bigcup \seq{T_e}} $$
+
 
 In other languages not supporting union types, the element type is often
 inferred as the join (<<Acronyms,LCST>>) of the element types. Using a union type here
@@ -736,6 +741,7 @@ var simple = {name: "Walter", age: 72, address: new Address()};
 PropertyAssignments have common properties of PropertyNameValuePair,
 PropertyGetterDeclaration, and PropertySetterDeclaration:
 
+[horizontal]
 `annotations` ::
 The annotations of the property assignment.
 
@@ -753,17 +759,18 @@ derived from the declared type of the setter’s formal parameter.
 Additionally, we introduce the following pseudo properties to simplify
 constraints:
 
+[horizontal]
 `isAccessor` ::
 The read-only boolean property. This is true if the property assignment
 is a setter or getter declaration. This is comparable to ECMAScript’s
 spec function `IsAccessoprDescriptor`.
-For a given property assignment math:[$p$] this is
+For a given property assignment _p_ this is
 semantically equivalent to
 math:[$\mu(p)=\type{PropertyGetterDeclaration} \lor \mu(p)=\type{PropertySetterDeclaration}$].
 
 `isData` ::
 The read-only boolean property. This is true if the property assignment
-is a name value pair. For a given property assignment math:[$p$]
+is a name value pair. For a given property assignment _p_
 this is semantically equivalent to
 math:[$\mu(p)=\type{PropertyNameValuePair}$]. It is comparable to
 ECMAScript’s spec function `isDataDescriptor`. The equation
@@ -779,26 +786,22 @@ For a given object literal math:[$ol$] the
 following constraints must hold (cf. cite:[ECMA11a(p.66)]:
 
 * Object literal may not have two PropertyNameValuePairs with the same
-name in strict mode (cf. 4.a): math:[\[\begin{aligned}
-        mode=\lenum{strict} \to & \forall pa \in ol.propertyAssignments, pa.isData:\\
-        & \nexists pa' \in ol.propertyAssignments:\\
-        & pa'.isAccessor \land pa'.name = pa.name
-    \end{aligned}\]]
+name in strict mode (cf. 4.a):
+$$mode=\lenum{strict} \to & \forall pa \in ol.propertyAssignments, pa.isData:\\
+& \nexists pa' \in ol.propertyAssignments:\\
+& pa'.isAccessor \land pa'.name = pa.name$$
+
 * Object literal may not have PropertyNameValuePair and
 PropertyGetterDeclaration/PropertySetterDeclaration with the same name
 (cf. 4.b/c): +
-math:[\[\begin{aligned}
-        \forall & pa \in ol.propertyAssignments, pa.isData:\\
-        \nexists & pgsd \in ol.propertyAssignments: \\
-        & \mu(pgsd)\neq\type{PropertyNameValuePair} \land pgsd.name = pa.name
-    \end{aligned}\]]
+$$\forall & pa \in ol.propertyAssignments, pa$$\nexists & pgsd \in ol.propertyAssig$$& \mu(pgsd)\neq\type{PropertyNameValuePair} \land pgsd.name = pa.name$$
++
 * Object literal may not have multiple PropertyGetterDeclaration or
 PropertySetterDeclaration with the same name (cf. 4.d):
-math:[\[\begin{aligned}
-        \forall & pg \in ol.propertyAssignments, pg.isAccessor:\\
-        \nexists & pg' \in ol.propertyAssignments\{pg\}: \\
-        & \mu(pg')=\mu(pg) \land pg'.name = pg.name
-    \end{aligned}\]]
+$$\forall & pg \in ol.propertyAssignments, pg.isAccessor:\\
+\nexists & pg' \in ol.propertyAssignments\{pg\}: \\
+& \mu(pg')=\mu(pg) \land pg'.name = pg.name$$
++
 * It is a SyntaxError if the Identifier `eval` or the Identifier
 `arguments` occurs as the Identifier in a PropertySetParameterList of
 a PropertyAssignment that is contained in strict code or if its
@@ -811,11 +814,8 @@ all assignments must be type of probably declared types and if the types
 are explicitly declared, they must be equal.
 //todo[JvP, LB]{How to express that?}
 * In N4JS mode, the name of a property must be a valid N4JSIdentifier:
-math:[\[\begin{aligned}
-        mode=\lenum{n4js} \to & \forall pa \in ol.propertyAssignments:\\
-        & \mu(pa.name)=\type{N4JSIdentifier}
-    \end{aligned}\]]
-
+$$mode=\lenum{n4js} \to & \forall pa \in ol.propertyAssignments:\\
+& \mu(pa.name)=\type{N4JSIdentifier}$$
 --
 
 
@@ -885,9 +885,8 @@ The type of the grouping operator simply is the type of its nested
 expression. The type if a parenthesized expression math:[$pe$] is
 inferred as follows:
 
-math:[\[\begin{aligned}
-& \infer{\tee \lstnfbnf{'('} e \lstnfbnf{')'}: T}
-        {\tee e: T}                                             \tag{\S11.1.6}\end{aligned}\]]
+$$& \infer{\tee \lstnfbnf{'('} e \lstnfbnf{')'}: T}
+        {\tee e: T}                                             \tag{\S11.1.6}$$
 
 .Parenthesized Expression Type Examples
 [example]
@@ -947,7 +946,7 @@ Note that in cite:[ECMA11a], the `index access` is called `__bracket notation__`
 
 We define the following properties:
 
-
+[horizontal]
 `target` ::
 The receiver of the property access.
 
@@ -962,7 +961,7 @@ interpreted as property name).
 
 We define the following pseudo properties:
 
-
+[horizontal]
 `isDotAccess` ::
 Read-only boolean property, returns true for non-index access expression
 (similar to math:[$\mu(p) \neq\type{IndexedAccessExpression}$].
@@ -992,16 +991,14 @@ introduced (cf. ). The constraints are basically similar.
 
 1.  If dot notation is used in N4JS mode, the referenced property must
 exist unless receiver is a dynamic type: task:IDE-422[] +
-math:[\[\begin{aligned}
-         & pae.isDotAccess \land \lnot R.dyn \to \\
-         & \exists m \in pae.target.type.properties: m.name=pae.name
-        \end{aligned}\]]
+$$& pae.isDotAccess \land \lnot R.dyn \to \\
+& \exists m \in pae.target.type.properties: m.name=pae.name$$
++
 2.  If dot notation is used and the referenced property exists, then the
 property must be accessible: +
-math:[\[\begin{aligned}
-        & pae.isDotAccess \land \lnot R.dyn \to\\
-        & (\exists m \in pae.target.type.properties : m.name=pae.name) \to  \alpha(pae, m)
-        \end{aligned}\]]
+$$& pae.isDotAccess \land \lnot R.dyn \to\\
+& (\exists m \in pae.target.type.properties : m.name=pae.name) \to  \alpha(pae, m)$$
++
 3.  If dot notation is used and the referenced property exists and this
 property is a member with a declared `@This` type (only possible for methods or
 field accessors), then the receiver must be a subtype of the declared `@This`
@@ -1029,38 +1026,34 @@ or subtypes, for (not including subtypes of and not for and ), and for
 dynamic types. It is not allowed to access members of enums in
 particular. That is to say, for an indexed-access expression
 math:[$iae$], the following constraint must hold:
-math:[\[\begin{aligned}
-    &\tee ia.target \subtype T, T \in \types{Array, ArgumentType, string, String, Iterable} \\
-    &\lor\\
-    &\tee ia.target = \type{Object}
-    \end{aligned}\]]
+$$
+&\tee ia.target \subtype T, T \in \types{Array, ArgumentType, string, String, Iterable} \\
+&\lor\\
+&\tee ia.target = \type{Object}$$
++
 3.  In N4JS mode, if the receiver is an array and is not dynamic, in
 case of index access the index expression must be a number: +
-math:[\[\begin{aligned}
-        & mode=\lenum{n4js} \land pae.target.type=\type{Array} \land pae.isIndexAccess \\
-        & \Rightarrow \tee pae.index \subtype[number]
-        \end{aligned}\]]
+$$& mode=\lenum{n4js} \land pae.target.type=\type{Array} \land pae.isIndexAccess \\
+& \Rightarrow \tee pae.index \subtype[number]$$
++
 4.  In N4JS mode, if the receiver is a subtype of types or and is not
 dynamic, in case of index access the index expression must be a
 number:  task:IDE-837[] +
-math:[\[\begin{aligned}
-        & mode=\lenum{n4js} \\
-        & \hspace{3em} \land (\tee pae.target\subtype {string} \lor \tee pae.target \subtype {String}) \\
-        & \hspace{3em} \land pae.isIndexAccess \\
-        & \Rightarrow \tee pae.index \subtype{number}
-        \end{aligned}\]]
+$$& mode=\lenum{n4js} \\
+& \hspace{3em} \land (\tee pae.target\subtype {string} \lor \tee pae.target \subtype {String}) \\
+& \hspace{3em} \land pae.isIndexAccess \\
+& \Rightarrow \tee pae.index \subtype{number}$$
++
 5.  In N4JS mode, if the receiver is an iterable and is not dynamic, in
 case of index access the index expression must be a property access
 expression to the built-in symbol : +
-math:[\[\begin{aligned}
-        & mode=\lenum{n4js} \land pae.target.type=\type{Iterable} \land pae.isIndexAccess \\
-        & \Rightarrow \\
-        & \hspace{3em} \mu(pae.index)=\type{IndexedAccessExpression} \\
-        & \hspace{3em} \land pae.index.isDotAccess \\
-        & \hspace{3em} \land pae.index.target = \type{Symbol} \\
-        & \hspace{3em} \land pae.index.property = "iterator" \\
-        \end{aligned}\]]
-
+$$
+& mode=\lenum{n4js} \land pae.target.type=\type{Iterable} \land pae.isIndexAccess \\
+& \Rightarrow \\
+& \hspace{3em} \mu(pae.index)=\type{IndexedAccessExpression} \\
+& \hspace{3em} \land pae.index.isDotAccess \\
+& \hspace{3em} \land pae.index.target = \type{Symbol} \\
+& \hspace{3em} \land pae.index.property = "iterator" \\ $$
 --
 
 Although index access is very limited, it is still possible to use
@@ -1068,7 +1061,7 @@ immediate instances of `Object` in terms of a map (but this applies only to inde
 
 .Object as Map
 [example]
---
+====
 
 
 [source,n4js]
@@ -1078,8 +1071,7 @@ map["Kant"] = "Imperative";
 map["Hegel"] = "Dialectic";
 map.spinoza = "Am I?";  // error: Couldn't resolve reference to IdentifiableElement 'spinoza'.
 ----
-
---
+====
 
 .Parameterized Property Access
 [req,id=IDE-99,version=1]
@@ -1091,9 +1083,8 @@ following constraints must hold:
 math:[$pae.target.type \subtype \type{Function}$]
 2.  The number of type arguments must match the number of type
 parameters of the generic function or method:
-math:[\[\begin{aligned}
-        |pae.typeArgs|=|pae.target.typeVars|
-    \end{aligned}\]]
+$$|pae.typeArgs|=|pae.target.typeVars|$$
++
 3.  The type arguments of a parameterized property access expression
 must be subtypes of the boundaries of the parameters of the called
 generic method.
@@ -1106,29 +1097,31 @@ Also see constraints on read (<<IDE-93,requirement: Read Access to Identifier>>)
 
 [discrete]
 ==== Type Inference [[type-inference-5]]
+
 task:IDE-244[] task:IDE-182[] task:IDE-183[]
 
 Cf. cite:[ECMA11a(S11.2.1,p.67ff)]
 
 We define the following type inferencing rules for property accessors:
 
-* The type of an indexed-access expression math:[$p$] is inferred
-as follows task:IDE-342]: math:[\[\begin{aligned}
-    & \infer{\tee p: T}{\lnot p.target.dyn \lor p.index.type \subtype[number] & \tee p.target: \type{Array<T>}} \\
-    & \infer{\tee p: \type{any}}{else}
-    \end{aligned}\]]
+* The type of an indexed-access expression _p_ is inferred
+as follows task:IDE-342]:
+$$& \infer{\tee p: T}{\lnot p.target.dyn \lor p.index.type \subtype[number] & \tee p.target: \type{Array<T>}} \\
+& \infer{\tee p: \type{any}}{else}$$
+
 * The type of a property access expression is inferred as follows:
-math:[\[\begin{aligned}
-    \infer{\type{PropertyAccessExpression}\ expr: T}
-          {\typeEnvAdd \typeSubs(R) \entails expr.target : R & \typeEnv \entails expr.property : T}
-    \end{aligned}\]]
-* The type of a parameterized access expression math:[$p$] is
-inferred as follows: math:[\[\begin{aligned}
-    & \infer{\tee p: T}{\exists m \in p.target: m.name=p.name & \tee m: T}
-    & \infer{\tee p: \type{any}}{}
-    \end{aligned}\]]
+$$\infer{\type{PropertyAccessExpression}\ expr: T}
+{\typeEnvAdd \typeSubs(R) \entails expr.target : R & \typeEnv \entails expr.property : T}$$
+
+* The type of a parameterized access expression _p_ is
+inferred as follows:
+
+$$& \infer{\tee p: T}{\exists m \in p.target: m.name=p.name & \tee m: T}
+& \infer{\tee p: \type{any}}{}$$
+
 
 === New Expression
+
 task:IDE-192[] task:IDE-204[]
 
 cf. cite:[ECMA11a(S11.2.2,p.68)]
@@ -1136,11 +1129,13 @@ cf. cite:[ECMA11a(S11.2.2,p.68)]
 [discrete]
 ==== Syntax [[new-expression-syntax]]
 
+[source]
 ----
 NewExpression: 'new' callee=MemberExpression<Yield> (-> TypeArguments)?
         (=> withArgs?='(' Arguments<Yield>? ')' )?
 ----
 
+[source]
 ----
 import Address from "my/Address";
 
@@ -1178,6 +1173,7 @@ In particular, it must not refer to a primitive type or a defined
 functions (i.e., subtypes of ) cannot be used in new-expressions in
 N4JS.
 
+// TODO fix missing ref here
 --
 
 Remarks:
@@ -1230,8 +1226,12 @@ foo(B);
 ==== Type Inference [[type-inference-6]]
 
 The type of a new expression math:[$ne$] is inferred as follows:
-math:[\[\begin{aligned}
-& \infer{\tee ne: C}{\tee ne.callee: \type{constructor\{C\}}} \end{aligned}\]]
+
+$$
+
+& \infer{\tee ne: C}{\tee ne.callee: \type{constructor\{C\}}}
+--
+
 
 For classes, constructors are described in <<_constructor-and-classifier-type,Constructor>>.
 
@@ -1335,8 +1335,12 @@ task:IDE-244[]
 A call expression math:[$expr$] is bound to a method (<<Methods>>) or function
 declaration (which may be part of a function definition (<<_function-declaration,Function Definition>> or specified via a function type <<_function-type>>) math:[$F$] (via evaluation of `MemberExpression`. The type of the call is inferred from the function declaration or type math:[$F$] as follows:
 
-math:[\[\begin{aligned}
-\infer{\tee expr: T}{bind(expr.target, F) & F.returnType: T}\end{aligned}\]]
+
+$$
+
+\infer{\tee expr: T}{bind(expr.target, F) & F.returnType: T}
+--
+
 
 task:IDE-205[]
 
@@ -1416,8 +1420,8 @@ the following constraints must hold:
 number. +
 * If
 math:[$u.expression = PropertyAccess \; pa(p)  \land  pa.isDotAccess$]
-math:[$\to$] both math:[$get$] math:[$p$] and
-math:[$set$] math:[$p$] must be defined. task:IDE-737[]
+math:[$\to$] both math:[$get$] _p_ and
+math:[$set$] _p_ must be defined. task:IDE-737[]
 --
 
 === Unary Expression
@@ -1455,7 +1459,6 @@ bound target must not be a variable).
 * In N4JS mode, the referenced property or member must not be declared
 in the containing type and the containing type reference must be
 declared dynamic.
-
 --
 
 .Void Operator Constraints
@@ -1463,14 +1466,13 @@ declared dynamic.
 --
 There are no specific constraints defined for with math:[$u.op=\lstnfjs{void}$]
 task:IDE-345[]
-
 --
+
 .Typeof Operator Constraints
 [req,id=IDE-106,version=1]
 --
 There are no specific constraints defined for unary expression math:[$u$]
 with math:[$u.op=\lstnfjs{typeof}$]. task:IDE-345[]
-
 --
 
 
@@ -1482,12 +1484,13 @@ math:[$u.op \in \{++,--\}$] and math:[$u.expression.type: T$],
 the following constraints must hold:
 
 * If mode is N4JS, task:IDE-345[] the type math:[$T$] of the expression must be a
-number math:[\[\begin{aligned}
-& \infer{\tee \type{UnaryExpression} \expectType \type{Expression}: \type{number}}{}\end{aligned}\]]
+number
+$$& \infer{\tee \type{UnaryExpression} \expectType \type{Expression}: \type{number}}{}$$
+
 * If
 math:[$u.expression = PropertyAccess \; pa(p)  \land  pa.isDotAccess$]
-math:[$\to$] both math:[$get$] math:[$p$] and
-math:[$set$] math:[$p$] must be defined. task:IDE-768[]
+math:[$\to$] both math:[$get$] _p_ and
+math:[$set$] _p_ must be defined. task:IDE-768[]
 
 --
 
@@ -1499,8 +1502,9 @@ math:[$u.op \in \{+,-,\sim\}$] and
 math:[$u.expression.type: T$], the following constraints must hold: task:IDE-345[]
 
 * In N4JS mode, the type T of the expression must be a number:
-math:[\[\begin{aligned}
-& \infer{\tee \type{UnaryExpression} \expectType \type{Expression}: \type{number}}{}\end{aligned}\]]
+
+$$& \infer{\tee \type{UnaryExpression} \expectType \type{Expression}: \type{number}}{}$$
+
 
 --
 
@@ -1526,16 +1530,13 @@ The following operators have fixed types independent of their operand
 types:
 task:IDE-244[] task:IDE-345[]
 
-//TODO fix math
-[source,adoc]
-----
-math:[\[\begin{aligned}
-&\infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{}     \tag{\S 11.4.1}\\
+$$&\infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{}     \tag{\S 11.4.1}\\
 &\infer{\tee \lstnfbnf{'void'}\ expression: \type{undefined}}{}     \tag{\S 11.4.2}\\
 &\infer{\tee \lstnfbnf{'typeof'}\ expression: \type{string}}{}  \tag{\S 11.4.3}\\
 &\infer{\tee \lstnfbnf{('++'|'$--$'|'+'|'$-$'|'~')}\ expression: \type{number}}{}   \tag{\S 11.4.4-8}\\
-&\infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{}  \tag{\S 11.4.9}\end{aligned}\]]
-----
+&\infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{}  \tag{\S 11.4.9}$$
+
+// ~
 
 === Multiplicative Expression
 
@@ -1562,9 +1563,7 @@ For a given multiplicative expression the following constraints must hold in N4J
 mode task:IDE-345[]:
 
 * The types of the operands must be subtypes of number:
-math:[\[\begin{aligned}
-\infer{\typeEnv \entails \type{MultiplicativeExpression} \expectType \type{Expression}: \type{number}}{}\end{aligned}\]]
-
+$$\infer{\typeEnv \entails \type{MultiplicativeExpression} \expectType \type{Expression}: \type{number}}{}$$
 --
 
 [discrete]
@@ -1572,8 +1571,8 @@ math:[\[\begin{aligned}
 task:IDE-244[] task:IDE-345[] [[type-inference-9]]
 
 The inferred type of a multiplicative expression always is number:
-math:[\[\begin{aligned}
-\infer{\typeEnv \entails \type{MultiplicativeExpression}: \type{number}}{}\end{aligned}\]]
+
+$$\infer{\typeEnv \entails \type{MultiplicativeExpression}: \type{number}}{}$$
 
 === Additive Expression
 
@@ -1601,9 +1600,10 @@ N4JS mode:
 
 * The types of the operands must be subtypes of number if the operator
 is not ’+’, otherwise, any type could be used:
-math:[\[\begin{aligned}
-\infer{\typeEnv \entails \type{AdditiveExpression}\ e \expectType \type{Expression}: \type{number}}
-    {e.op \neq AdditiveOperator.ADD}\end{aligned}\]]
+
+$$\infer{\typeEnv \entails \type{AdditiveExpression}\ e \expectType \type{Expression}: \type{number}}
+{e.op \neq AdditiveOperator.ADD}$$
+
 --
 
 
@@ -1619,16 +1619,20 @@ undefined or null.
 We first define two helper rules to simplify the addition operator
 condition:
 
-math:[\[\begin{aligned}
+
+$$
 &\infer[nb]{nb(T)}{T = \type{number} \lor T = \type{boolean}}
 &\infer[nb]{nb(expr)}{nb\tee expr}\\
 &\infer[un]{un(T)}{T = \type{undefined} \lor T = \type{null}}
-&\infer[un]{un(expr)}{un\tee expr.lhs \lor un\tee expr.rhs}\end{aligned}\]]
+&\infer[un]{un(expr)}{un\tee expr.lhs \lor un\tee expr.rhs}$$
+
 
 The type of an additive expression math:[$e$] is inferred as
-follows: math:[\[\begin{aligned}
-&\infer{\tee e: \type{string}}{e.op='+' & \lnot(nb(e.lhs)\land nb(e.rhs)) & \lnot(un(e) \land (nb(e.lhs)\lor nb(e.rhs))}\\
-&\infer{\tee e: \type{number}}{}\\\end{aligned}\]]
+follows:
+$$\infer{\tee e: \type{string}}{e.op='+' & \lnot(nb(e.lhs)\land nb(e.rhs)) & \lnot(un(e) \land (nb(e.lhs)\lor nb(e.rhs))}\\
+&\infer{\tee e: \type{number}}{}\\
+$$
+
 
 .Type of addition expression
 [source,bash]
@@ -1671,10 +1675,8 @@ ShiftOperator returns ShiftOperator:
 [req,id=IDE-112,version=1]
 --
 For a given bitwise shift expression math:[$e$] the following constraints must hold in N4JS mode: task:IDE-345[] task:IDE-771[]
-
 * The types of the operands must be both number.
-math:[\[\begin{aligned}
-\infer{\tee \type{BitwiseShiftExpression}\ \expectType\ \type{Expression}: \type{number}}{}\end{aligned}\]]
+$$\infer{\tee \type{BitwiseShiftExpression}\ \expectType\ \type{Expression}: \type{number}}{}$$
 --
 
 [discrete]
@@ -1683,8 +1685,8 @@ task:IDE-244[] task:IDE-345[]
 
 The type returned by a bitwise shift expression is always `boolean`:
 
-math:[\[\begin{aligned}
-&\infer{\tee\ (\lstnfbnf{Expression ('<<'|'>>'|'>>>')\ Expression}): \type{number}}{}   \tag{\S 11.7.1/2} \\\end{aligned}\]]
+$$&\infer{\tee\ (\lstnfbnf{Expression ('<<'|'>>'|'>>>')\ Expression}): \type{number}}{}   \tag{\S 11.7.1/2} \\$$
+
 
 === Relational Expression
 
@@ -1720,15 +1722,16 @@ math:[$e.op \in \{ \lstnfjs{<}, \lstnfjs{>}, \lstnfjs{<=}, \lstnfjs{>=} \}$]
 in N4JS mode, the following constraints must hold:
 
 * The operands must have the same type and the type must be either a
-number, string, or boolean: math:[\[\begin{aligned}
-&\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}
+number, string, or boolean:
+$$&\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}
         { \tee rhs: T & T\in \{\type{number,string,boolean}\}} \\
 &\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}
         { \tee rhs: O & O \not\in \{\type{number,string,boolean}\} & T=\type{\union{number,string,boolean}}  } \\
 &\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ rhs: T}
         { \tee lhs: T & T\in \{\type{number,string,boolean}\}} \\
 &\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ rhs: T}
-        { \tee lhs: O & O \not\in \{\type{number,string,boolean}\} & T=\type{\union{number,string,boolean}}  } \\\end{aligned}\]]
+        { \tee lhs: O & O \not\in \{\type{number,string,boolean}\} & T=\type{\union{number,string,boolean}}  } \\$$
+
 
 --
 
@@ -1743,17 +1746,19 @@ must hold:
 footnote:[Only `Function` implements the ECMAScript specification property math:[$[[hasInstance]]$].
 Thus instanceof expressions are rewritten by the compiler for other types.
 Note that a reference to a class returns the constructor type, which actually is a function itself.
-In other words, math:[\[\begin{aligned}
-&\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{Class\}}}{} \\\end{aligned}\]]
+In other words,
+$$&\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{Class\}}}{} \\$$
+
 is contained in the the first type rule.] task:IDE-652[]
-, an object type
-reference
+// TODO check for missing reference
+, an object type reference
 footnote:[Includes interfaces, since an interface type reference is a subtype of object type reference: math:[$\type{type\{Interface\}} <: \type{type\{Object\}}$]]
 or an enum type reference. task:IDE-681[] task:IDEBUG-631[]    +
-math:[\[\begin{aligned}
-&\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{Function}}{} \\
+
+$$&\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{Function}}{} \\
 &\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{Object\}}}{} \\
-&\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{N4Enum\}}}{}\end{aligned}\]]
+&\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{N4Enum\}}}{}$$
+
 
 The type of a definition site structural classifier math:[$C$] is
 not of type `C`. Thus, the `instanceof` operator cannot be used for structural types.
@@ -1770,21 +1775,16 @@ For a given relational expression math:[$e$] with
 math:[$e.op = \lstnfjs{in}$], the following constraints must hold:
 
 1.  The right operand of the in operator must be an `Object`: +
-math:[\[\begin{aligned}
-&\infer{\tee lhs\ \lstnfbnf{'in'}\  rhs\  \expectType\ rhs: \type{Object}}{}\end{aligned}\]]
+$$&\infer{\tee lhs\ \lstnfbnf{'in'}\  rhs\  \expectType\ rhs: \type{Object}}{}$$
 2.  In N4JS mode,the left operand is restricted to be of type `string` or `number`:
-math:[\[\begin{aligned}
-&\infer{\tee  lhs\ \lstnfbnf{'in'}\ rhs\  \expectType\ lhs: \type{\union{string,number}}}{}\end{aligned}\]]
-
+$$&\infer{\tee  lhs\ \lstnfbnf{'in'}\ rhs\  \expectType\ lhs: \type{\union{string,number}}}{}$$
 --
 
 A special feature of N4JS is support for interface type references in
 combination with the `instance of` operator. The compiler rewrites the code to make this work. task:IDE-561[]
-
 .`instanceof` with Interface
 [example]
 --
-
 The following example demonstrates the use of the operator with an interface. This is, of course, not working in pure ECMAScript.
 
 //% see /eu.numberfour.ide.n4js.transpiler.es5.tests/testdata/spec_chap_07_01_16/Ex72_instanceof_with_interfaces.n4js.xt
@@ -1823,8 +1823,9 @@ B is instance of I
 task:IDE-244[] task:IDE-345[]
 
 The type of a relational expression always is `boolean`;
-math:[\[\begin{aligned}
-&\infer{\tee lhs\ \lstnfbnf{('<'|'<='|'>'|'>='|'instanceof'|'in')}\ rhs\ : \type{boolean}}{}    \tag{\S 11.8.1-6} \end{aligned}\]]
+
+$$&\infer{\tee lhs\ \lstnfbnf{('<'|'<='|'>'|'>='|'instanceof'|'in')}\ rhs\ : \type{boolean}}{}    \tag{\S 11.8.1-6}$$
+
 
 === Equality Expression
 
@@ -1882,8 +1883,7 @@ task:IDE-244[] task:IDE-345[]
 In N4JSmode, using the non-strict equality operators `'=='|'!='` is only allowed for internal developers. External developers have to use the strict equality
 operators `'==='|'!=='`. The inferred type of an equality expression always is `boolean`.
 
-math:[\[\begin{aligned}
-&\infer{\tee lhs\ \lstnfbnf{('=='|'!='|'==='|'!==')}\ rhs\ : \type{boolean}}{}  \tag{\S 11.9} \end{aligned}\]]
+$$&\infer{\tee lhs\ \lstnfbnf{('=='|'!='|'==='|'!==')}\ rhs\ : \type{boolean}}{}  \tag{\S 11.9}$$
 
 === Binary Bitwise Expression
 
@@ -1919,14 +1919,12 @@ BitwiseORExpressionNoIn returns Expression: BitwiseXORExpressionNoIn
 .Bitwise Bitwise Expression Constraints
 [req,id=IDE-116,version=1]
 --
-
-task:IDE-345[] For a given bitwise bitwise expression math:[$e$] the following constraints must hold
-in N4JS mode:
+For a given bitwise bitwise expression math:[$e$] the following constraints must hold
+in N4JS mode: task:IDE-345[]
 
 * The types of the operands must be both number.
-math:[\[\begin{aligned}
-\infer{\tee \type{BitwiseBitwiseExpression}\ \expectType\ \type{Expression}: \type{number}}{}\end{aligned}\]]
 
+$$\infer{\tee \type{BitwiseBitwiseExpression}\ \expectType\ \type{Expression}: \type{number}}{}$$
 --
 
 [discrete]
@@ -1934,8 +1932,8 @@ math:[\[\begin{aligned}
 task:IDE-244[] task:IDE-345[]
 
 The type returned by a binary bitwise expression is always :
-math:[\[\begin{aligned}
-&\infer{\tee\ (\lstnfbnf{Expression ('&'|'^'|'|')\ Expression}): \type{number}}{}   \tag{\S 11.10} \end{aligned}\]]
+
+$$&\infer{\tee\ (\lstnfbnf{Expression ('&'|'^'|'|')\ Expression}): \type{number}}{}   \tag{\S 11.10}$$
 
 === Binary Logical Expression
 
@@ -1979,8 +1977,7 @@ the inferred type usually is not `boolean` ((cf. cite:[ECMA11a(S11.11.,p.83ff)] 
 The type inference does not take this short-circuit evaluation strategy into account, as it will
 affect the result in case one of the types is `null` either or `undefined`, which is not allowed in N4JS mode.
 
-math:[\[\begin{aligned}
-& \infer{\tee\ lhs\ \lstnfbnf{'&&'|'||'}\ rhs: \type{\union*}\tee lhs, \tee rhs \type{\}}}{} \end{aligned}\]]
+$$& \infer{\tee\ lhs\ \lstnfbnf{'&&'|'||'}\ rhs: \type{\union*}\tee lhs, \tee rhs \type{\}}}{}$$
 
 === Conditional Expression
 
@@ -2005,11 +2002,12 @@ task:IDE-776[]
 .Conditional Expression Constraints
 [req,id=IDE-118,version=1]
 --
-For a given conditional expression math:[$e$] with math:[\[\begin{aligned}
-e.expression.type: C,
+For a given conditional expression math:[$e$] with
+$$e.expression.type: C,
 e.trueExpression.type: T,
-e.false\-Expression.type: F \end{aligned}\]] the following constraints
-must hold:
+e.false\-Expression.type: F$$
+
+the following constraints must hold:
 
 * A warning will be issued in N4JSmode if math:[$e.expression$]
 evaluates to a constant value. That is to say
@@ -2019,7 +2017,6 @@ math:[$C \in \{ \type{void},\type{undefined} \}$].
 
 There are no specific constraints defined for the condition. The
 ECMAScript operation `ToBoolean` cite:[ECMA11a(S9.2,p.43)] is used to convert any type to boolean.
-
 --
 
 [discrete]
@@ -2027,9 +2024,10 @@ ECMAScript operation `ToBoolean` cite:[ECMA11a(S9.2,p.43)] is used to convert an
 task:IDE-348[]
 
 The inferred type of a conditional expression is the union of the true
-and false expression (cf. cite:[ECMA11a(S11.12,p.84)]   (): math:[\[\begin{aligned}
-\infer{\tee cond\ \lstnfbnf{'?'} et\ \lstnfbnf{':'} ef : T}
-    {T = \union{ \tee et, \tee ef}}\end{aligned}\]]
+and false expression (cf. cite:[ECMA11a(S11.12,p.84)]   ():
+$$\infer{\tee cond\ \lstnfbnf{'?'} et\ \lstnfbnf{':'} ef : T}
+    {T = \union{ \tee et, \tee ef}}$$
+
 
 
 .Type of Conditional Expressions
@@ -2091,18 +2089,20 @@ task:IDE-349[]
 [req,id=IDE-119,version=1]
 --
 For a given assignment math:[$assignment$]
-with math:[\[\begin{aligned}
-assignment.op=\lstnfbnf{'='}\end{aligned}\]] the following constraints
-must hold:
+with
 
-1.  math:[$\infType{assignment.lhs} \subtype \infType{assignment.rhs}$]
+$$assignment.op=\lstnfbnf{'='}$$
+
+the following constraints must hold:
 
 //\todo[jvp infer type of left and even right-hand side of assignments]{Cf. pathSelectors: even the return type of a generic method may be inferred, that is, the assignment operator inference rules are a bit more complicated. Cf. generics.}
 
+1.  math:[$\infType{assignment.lhs} \subtype \infType{assignment.rhs}$]
+
 In the following inference rule and the constraint, ’@’ is to be
 replaced with the right part of one of the assignment operators listed
-above, that is, +
-math:[$@ \in \{\lstnfbnf{'*', '/', '\%', '+', '-', '<<', '>>', '>>>', '&', '^', '|'}\}$]
+above, that is,
+$$@ \in \{\lstnfbnf{'*', '/', '\%', '+', '-', '<<', '>>', '>>>', '&', '^', '|'}\}$$
 
 --
 
@@ -2123,7 +2123,6 @@ That means that the right-hand side can be of `any` type.
 
 The expected type for the left-hand side is `union{number,string}`.
 
-
 The basic idea behind these constraints is that the type of the
 left-hand side is not to be changed by the compound assignment.
 
@@ -2137,13 +2136,15 @@ For a given assignment expression
 math:[$assignExpr$], the left-hand side must be writeable or a
 final data field and the assignment must be in the constructor. Let
 math:[$v$] be the bound variable (or field) with
-math:[$bind(assignExpr.left, v)$] math:[\[\begin{aligned}
+math:[$bind(assignExpr.left, v)$]
+$$
 v.writeable \lor
     v.final \land
     & \hspace{2em} v.expr = \NULL \\
     & \hspace{2em} \land assignExpr.containingFunction = v.owner.constructor \\
     & \hspace{2em} \land \mu(assignExpr.left)=\type{PropertyAccess} \\
-    & \hspace{4em} \land assignExpr.left.target = \lstnfjs{"this"}\end{aligned}\]]
+    & \hspace{4em} \land assignExpr.left.target = \lstnfjs{"this"}$$
+
 
 The value of writeable is true for setters and usually for variables and
 data fields. Assignability of variables and data fields can be
@@ -2165,16 +2166,16 @@ Similarly to cite:[ECMA11a(S11.1,p.84ff)], we define type inference for simple a
 
 The type of the assignment is simply the type of the right-hand side:
 
-math:[\[\begin{aligned}
-&\infer{\tee left\ \lstnfbnf{'='} right: T}{\tee right: T}  \tag{\S 11.13.1} \end{aligned}\]]
+
+$$&\infer{\tee left\ \lstnfbnf{'='} right: T}{\tee right: T}  \tag{\S 11.13.1}$$
 
 Compound assignments are reduced to the former by splitting an operator
-’@=’, in which ’@’ is a simple operator, into a simple operator
-expression with operator ’@’ and a simple assignment ’=’. Since the type
+`@=`, in which `@` is a simple operator, into a simple operator
+expression with operator `@` and a simple assignment `=`. Since the type
 of the latter is the right-hand side, we can define:
 
-math:[\[\begin{aligned}
-\infer{\tee left\ \lstnfbnf{'@='} right: T}{\tee left\ \lstnfbnf{'@'} right: T} \tag{\S 11.13.1} \end{aligned}\]]
+$$\infer{\tee left\ \lstnfbnf{'@='} right: T}{\tee left\ \lstnfbnf{'@'} right: T} \tag{\S 11.13.1}$$
+
 
 === Comma Expression
 
@@ -2218,8 +2219,8 @@ task:IDE-244[]
 Cf. cite:[ECMA11a(S11.14,p.85)]
 
 The type of a comma expression math:[$cexpr$] is inferred to the
-last expression: math:[\[\begin{aligned}
-\infer{\tee cexpr: T}{n=|cexpr.exprs|, \tee cexpr.exprs_n:T} \tag{\S11.14}\end{aligned}\]]
+last expression:
+$$\infer{\tee cexpr: T}{n=|cexpr.exprs|, \tee cexpr.exprs_n:T} \tag{\S11.14}$$
 
 [.language-n4js]
 == ECMAScript 6 Expressions
@@ -2276,8 +2277,9 @@ syntax and semantics are defined in conjunction of member access.]
 --
 The type referenced with the super literal is always nominal. This is a
 consequence of references to types in extend clauses to be nominal.
-math:[\[\begin{aligned}
-    \tee \lstnfjs{super}: T \land T.typingStrategy = \lenum{nominal}\end{aligned}\]]
+
+$$\tee \lstnfjs{super}: T \land T.typingStrategy = \lenum{nominal}$$
+
 --
 
 .Access Super Constructor with Super Literal
@@ -2287,18 +2289,17 @@ If the super literal math:[$s$] is used to access the super constructor of a
 class, all of the following constraints must hold:
 
 1.  The super constructor access must be a call expression:
-math:[\[\begin{aligned}
-             \mu(cexpr)=\type{CallExpression} \land c.target = cexpr
-        \end{aligned}\]]
+$$\mu(cexpr)=\type{CallExpression} \land c.target = cexpr$$
++
 2.  The super constructor call must be the expression of an expression
-statement math:[$exprStmt$]: math:[\[\begin{aligned}
-            exprStmt = cexpr.container \land \mu(cexpr.container) = \type{ExpressionStatement}
-        \end{aligned}\]]
+statement math:[$exprStmt$]:
+$$exprStmt = cexpr.container \land \mu(cexpr.container) = \type{ExpressionStatement}$$
++
 3.  The containing statement math:[$stmtExpr$] must be directly
-contained in a constructor body: math:[\[\begin{aligned}
-            &\mu(exprStmt.containingFunction)=\type{Constructor}) \\
-            &\land exprStmt.container = exprStmt.containingFunction.body
-        \end{aligned}\]]
+contained in a constructor body:
+$$&\mu(exprStmt.containingFunction)=\type{Constructor}) \\
+&\land exprStmt.container = exprStmt.containingFunction.body$$
++
 4.  task:IDEBUG-147[] There must be no access to and not return statement before the
 containing statement math:[$exprStmt$]. +
 Let math:[$si$] be the index of math:[$exprStmt$] in the
@@ -2307,10 +2308,9 @@ math:[$exprStmt.container.stmts_{si}=exprStmt$]. +
 Then, the following constraint must
 holdfootnote:[math:[$e \in^* c$] is the transitive version of
 math:[$e \in c$], that is, it math:[$e$] directly or
-indirectly contained in math:[$c$].] math:[\[\begin{aligned}
-        &\forall i<si: \nexists element \in^* exprStmt.container.stmts_{i}:\\
-        &\hspace{3em} \mu(i) \in \types{ThisLiteral, ReturnStatement}
-        \end{aligned}\]]
+indirectly contained in math:[$c$].]
+$$&\forall i<si: \nexists element \in^* exprStmt.container.stmts_{i}:\\
+&\hspace{3em} \mu(i) \in \types{ThisLiteral, ReturnStatement}$$
 
 Further constraints with regard to super constructor calls are described
 in <<_constructor-and-classifier-type,Constructor>>.
@@ -2326,27 +2326,22 @@ the following constraints must hold, with
 math:[$c=s.container.container$]
 
 1.  The super literal must be the receiver of a method call (cf. remarks
-below): math:[\[\begin{aligned}
-                & \mu(c)=\type{CallExpression}\\
-            \land & c.target = \type{PropertyAccessExpression} \\
-            \land & c.target.target=s
-        \end{aligned}\]]
+below):
+$$& \mu(c)=\type{CallExpression}\\
+\land & c.target = \type{PropertyAccessExpression} \\
+\land & c.target.target=s$$
 2.  The super literal is used in a method or field accessor of a class:
 task:IDEBUG-386[]
-math:[\[\begin{aligned}
-            \mu(s..containingClass) = \type{Class}
-        \end{aligned}\]]
+$$\mu(s..containingClass) = \type{Class}$$
+
 3.  The super literal must not be used in a nested function expression:
-math:[\[\begin{aligned}
-            \mu(s.containingFunction=s.containingMethodOrFieldAccessor
-        \end{aligned}\]]
+$$\mu(s.containingFunction=s.containingMethodOrFieldAccessor$$
+
 4.  If the return type of the method access via super is this, the
 actually bound this type will be the type of the calling class (and not
-of the class defining the method). math:[\[\begin{aligned}
-            \infer{\type{function():T} \subtype s.m}
-            {s.containingClass=T & \mu(m)=\type{Method} & m.returnType=\type{this}}
-        \end{aligned}\]]
-
+of the class defining the method).
+$$\infer{\type{function():T} \subtype s.m}
+{s.containingClass=T & \mu(m)=\type{Method} & m.returnType=\type{this}}$$
 --
 
 .Super Literal Usage
@@ -2465,8 +2460,9 @@ TypeRefForCast returns StaticBaseTypeRef:
 === Semantics and Type Inference [[cast-as-expression-semantics-type-inference]]
 
 The inferred type of the type cast expression is the target type:
-math:[\[\begin{aligned}
-\infer{\tee expr\ \lstnfbnf{"as"}\ T: T}{}\end{aligned}\]]
+
+$$\infer{\tee expr\ \lstnfbnf{"as"}\ T: T}{}$$
+
 
 The type cast returns the expression without further modifications. Type
 casts are simply removed during compilation so there will be no

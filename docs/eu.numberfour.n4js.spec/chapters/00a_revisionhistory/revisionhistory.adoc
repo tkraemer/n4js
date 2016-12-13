@@ -15,7 +15,7 @@ Contributors:
 ////
 
 [.language-n4js]
-[cols="^e,^,^,<"]
+[cols="^1e,^1,^1s,<4"]
 |===
 |Date |Tasks |Author |Description
 
@@ -26,4 +26,5 @@ cf. <<_definition-site-variance,Definition-site Variance>>
 |2016-07-18 | task:GH-107[] |mor |rename manifest property `artifactId` to `projectId`; remove `projectName`
 |2016-09-09 | task:IDE-2314[] |mor |add `@CovariantConstructor`, cf. <<_covariant-constructors,Covariant Constructors>>, plus related
 adjustments
+|2016-11-9 | task:IDE-2402[] |bsmith |convert from `LaTeX` to AsciiDoc
 |===

@@ -1,5 +1,6 @@
 
 = PlainJS
+:find:
 ////
 Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
@@ -234,7 +235,7 @@ provided in `Sources`, math:[$n4jsd$] files in the folder tree
 below source folders will be related to modules of the same name in the
 external folders. This is shown in External Class Implementation Naming below.
 
-image::fig/externalClassImplementation_naming.png[title="External Class Implementation, Naming Convention"]
+image::{find}fig/externalClassImplementation_naming.png[title="External Class Implementation, Naming Convention"]
 
 ====
 
@@ -346,12 +347,17 @@ For a declaration math:[$D$] with math:[$D.global=\TRUE$], not a polyfill
 (`string`, `number` etc.), `any`, or an built-in N4 type (`N4Object` etc.).
 2.  If the name of the definition equals a basic runtime time Object
 Type then the project must be a runtime environment:
-math:[\[\begin{aligned}
+
+[math]
+--
+
 &D.name \in \{ \\
 &\hspace{3em} 'Object', 'Function', 'Array', 'String', 'Boolean'\\
 &\hspace{3em} 'Number', 'Math', 'Date', 'RegExp', 'Error', 'JSON' \\
 &\}\\
-&\Rightarrow D.containingProject.type=\lenum{runtimeEnvironment}\end{aligned}\]]
+&\Rightarrow D.containingProject.type=\lenum{runtimeEnvironment}
+--
+
 
 --
 

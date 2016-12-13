@@ -1,5 +1,6 @@
 
 = Components
+:find:
 ////
 Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
@@ -16,15 +17,17 @@ Contributors:
 
 === Overview
 
-shows the N4JS components described in detail in this
+<<fig-cmpd_components_in_n4js,Fig. Components in N4JS>> shows the N4JS components described in detail in this
 chapter.
 footnote:[Note that this diagram does not necessarily reflect the actual internal implementation but only the external view.]
 
-image::fig/cmpd_components_in_n4js.png[title="N4JS Component Overview"]
+[[fig-cmpd_components_in_n4js]]
+image::{find}fig/cmpd_components_in_n4js.png[title="N4JS Component Overview"]
 
 The N4JS platform distinguishes several types of components. The
 following components can only be created by internal developers:
 
+[horizontal]
 Runtime Environment::
   Definition of a runtime environment such as ECMAScript 5. A Runtime
   Environment describes the base types provided by the runtime directly
@@ -36,7 +39,7 @@ Runtime Library::
   collection classes are already provided by some environments otherwise
   only supporting ECMAScript 5. The collections are defined in terms of
   a runtime library which can then be provided by these environments.
-  Runtime libraries may also contain polyfills to alter types predefined
+  Runtime libraries may also contain polyfils to alter types predefined
   in the environment.
 Test Environment::
   Not yet clear. Environments defined for tests
@@ -47,6 +50,7 @@ Test Library::
 
 The following components can be created by external developers:
 
+[horizontal]
 Apps::
   User-written N4JS applications running in a web browser (the reference
   browser is Chrome).
@@ -60,6 +64,7 @@ These components are described in detail later.
 A component is similar to a single project in the N4JS IDE. It is
 shipped as <<_numberfour-archives-nfar,NFAR>> archive and contains:
 
+[horizontal]
 Manifest::
   The manifest describing the components, dependencies and metadata.
 Resources::
@@ -74,10 +79,11 @@ Tests::
 Source Maps::
   Optional source maps.
 
-Components contain modules. describes what can be contained in a
+Components contain modules. <<fig-component_content,Component Content>> describes what can be contained in a
 component.
 
-image::fig/cmpd_component_content.png[title="Content of a Component"]
+[[fig-component_content]]
+image::{find}fig/cmpd_component_content.png[title="Content of a Component"]
 
 [.language-n4js]
 == Component Types
@@ -394,6 +400,7 @@ enum ModuleLoader:
 
 The manifest, called `manifest.n4mf`, specifies the following information:
 
+[horizontal]
 ProjectId ::
 Compare to Maven pom / manifest symbolic name.
 
@@ -414,6 +421,7 @@ lib::
 test::
 
 api::
+-
 runtimeEnvironment::
   Runtime Environment
 runtimeLibrary::
@@ -431,7 +439,7 @@ micro version. The syntax of the version is given by:
 
 ----
 
-We use math:[$qualifier=SNAPSHOT$] in our Maven builds so that each
+We use `qualifier=SNAPSHOT` in our Maven builds so that each
 build uses the latest available version of a project. The qualifier is
 only supported for this tooling and is removed during deployment. The
 lengths of the major, minor and micro numbers is additionally limited to
@@ -442,6 +450,7 @@ four digits.
   \todo[jr: qualifier]{Do we need support for distinction of build numbers and qualifier?}
 ////
 
+[horizontal]
 MainModule ::
 (optional) A plain module specifier defining the project’s `main
 module`. If this property is defined, other projects can import from
@@ -476,7 +485,7 @@ infinity) is assumed. If only one version (e.g. 1.0) is given this is
 interpreted as [1.0, infinity]. Writing (1.0) means (1.0, infinity).
 * The _scope_ of the dependency. The scopes are inspired by Maven cite:[MavenDependencies] and
 the following scopes are supported:
-+
+
 compile::
   This dependency is needed for compilation of the project _and_ it
   needs to exist on the environment when deploying it.
@@ -499,6 +508,7 @@ Resources ::
 List of paths to resources, that is, folders in which images, CSS etc.
 is found.
 
+[horizontal]
 Sources ::
 List of source fragments. A source fragment is a path to sources (n4js
 or js), which are typically compiled to the output path, with a given
@@ -526,39 +536,41 @@ to modules matching the given module specifier which may contain
 wildcards, optionally restricted to modules defined in a specific source
 path. The following filters are supported:
 
+[horizontal]
 noValidate::
-  Modules matching this filter are not semantically validated. That is,
-  they are still syntactically validated. If they are contained in
-  source or test source fragments, it must be possible to bind
-  references to declarations inside these modules. Note that switching
-  off validation for n4js files is disallowed.
+Modules matching this filter are not semantically validated. That is,
+they are still syntactically validated. If they are contained in
+source or test source fragments, it must be possible to bind
+references to declarations inside these modules. Note that switching
+off validation for n4js files is disallowed.
 noModuleWrap::
-  Files matching this filter are not wrapped into modules and they are
-  not semantically validated. Since they are assumed to be wrapped into
-  modules, declarations inside these modules cannot be referenced by
-  n4js code.
+Files matching this filter are not wrapped into modules and they are
+not semantically validated. Since they are assumed to be wrapped into
+modules, declarations inside these modules cannot be referenced by
+n4js code.
 
 Optional property that defines what module loader are supported by the
 modules in this component. Possible values are
 
+[horizontal]
 n4js::
-  (default) The modules in this component can be loaded with SystemJS or
-  with CommonJS.
+(default) The modules in this component can be loaded with SystemJS or
+with CommonJS.
 commonjs::
-  Modules in this component must be loaded with CommonJS. When these
-  modules are referenced in generated code (i.e. when importing from
-  these modules), the module specifier will be prefixed with ``@@cjs/``.
+Modules in this component must be loaded with CommonJS. When these
+modules are referenced in generated code (i.e. when importing from
+these modules), the module specifier will be prefixed with ``@@cjs/``.
 node_builtin::
-  Modules in this component represent node built-in modules such as `fs`
-  or `https`. When these modules are referenced in generated code
-  (i.e. when importing from these modules), the module specifier will be
-  prefixed with `@node/`.
+Modules in this component represent node built-in modules such as `fs`
+or `https`. When these modules are referenced in generated code
+(i.e. when importing from these modules), the module specifier will be
+prefixed with `@node/`.
 
 Validation or module-wrapping can be turned off for certain files or
 folders via the manifest properties `no-validate` and
 `no-module-wrapping`. While this is mostly intended for external
 implementation modules below the source-external folder, it is also
-allowed for math:[$.js$] and math:[$.n4js$] files in the
+allowed for `.js` and `.n4js` files in the
 source folder.
 
 
@@ -566,8 +578,6 @@ source folder.
 .GeneralConstraints
 [req,id=IDE-158,version=1]
 --
-
-
 1.  The projectId used in the manifest file have to match the project
 name in file system as well as project name in the Eclipse workspace.
 2.  There must be an output directory specified so the compiler(s) can
@@ -682,19 +692,18 @@ ModuleFilters {
 
 There are several dependencies between components. We can distinguish
 between `require` dependencies and `provide` dependencies.
-
+[horizontal]
 require::
   _N4JS Components_ require:
-  +
-  * _APIs_
-  * _RuntimeLiberaries_ and
-  * _Libraries_
+* _APIs_
+* _RuntimeLiberaries_ and
+* _Libraries_
 provide::
-  * _Runtime Environments_ provide _Runtime Libraries_ and maybe extend
-  other _Runtime Environments_ (which means they provide the same
-  runtime libraries as the extended environments and the same base
-  types).
-  * _SysLibs_ implement (`provide implementations` of) _APIs_
+* _Runtime Environments_ provide _Runtime Libraries_ and maybe extend
+other _Runtime Environments_ (which means they provide the same
+runtime libraries as the extended environments and the same base
+types).
+* _SysLibs_ implement (`provide implementations` of) _APIs_
 
 === Runtime Environment Resolution
 
@@ -712,21 +721,31 @@ libraries provided by an environment.
 --
 We defined the following transitive closures of dependencies:
 
-For a given N4JS Component math:[$C$] we define
+For a given N4JS Component `C` we define
 ////
-math:[\[\begin{aligned} C.requiredAPIs^* & = C.requiredPIs \\
+
+[math]
+--
+ C.requiredAPIs^* & = C.requiredPIs \\
                     & \hspace{4em} \cup \\
                     & \bigcup_{L \in C.requiredLibs}C.requiredPIs^* \\
                     & \hspace{4em} \cup \\
                     & \bigcup_{S \in C.requiredAPIs}S.requiredAPIs^* \\
 C.requiredLibs^*    & = C.requiredRTLibs \\
                     & \hspace{4em} \cup \\
-                    & \bigcup_{L \in C.requiredLibs}L.requiredRTLibs^*\end{aligned}\]]
-For a given Runtime Environment math:[$E$] we define
-math:[\[\begin{aligned}
+                    & \bigcup_{L \in C.requiredLibs}L.requiredRTLibs^*
+--
+
+For a given Runtime Environment `E` we define
+
+[math]
+--
+
 E.providedRTLibs^* & = E.providedRTLibs \\
                     & \hspace{4em} \cup \\
-                    & \bigcup_{ES \in E.extendedRTEnvs} ES.E.providedRTLibs^*\end{aligned}\]]
+                    & \bigcup_{ES \in E.extendedRTEnvs} ES.E.providedRTLibs^*
+--
+
 
 ////
 --
@@ -735,16 +754,19 @@ E.providedRTLibs^* & = E.providedRTLibs \\
 .Runtime Environment Resolution
 [req,id=IDE-162,version=1]
 --
-An N4JS Component math:[$C$] can be executed in an runtime environment
-math:[$E$], written as math:[\[\begin{aligned}
-E \models C\end{aligned}\]] if the following constraints hold:
+An N4JS Component `C` can be executed in an runtime environment
+`E`, written as
+$$E \models C$$
+if the following constraints hold:
 
-1.  The environment must provide all runtime libraries transitively
+. The environment must provide all runtime libraries transitively
 required by the component:
-math:[\[\begin{aligned} \forall R \in C.requiredRTLibs^*: R \in E.providedRTLibs^*\end{aligned}\]]
-2.  There exist libraries which can be executed by the environment, so
+$$\forall R \in C.requiredRTLibs^*: R \in E.providedRTLibs^ *$$
++
+. There exist libraries which can be executed by the environment, so
 that all APIs are implemented:
-math:[\[\begin{aligned} \forall S \in C.requiredAPIs^*: \exists I: S \in I.implementedAPIs \land E \models I\end{aligned}\]]
++
+$$\forall S \in C.requiredAPIs^*: \exists I: S \in I.implementedAPIs \land E \models I$$
 --
 
 [.language-n4js]
@@ -795,7 +817,7 @@ And we additionally define the following pseudo properties:
 
 File system path (path delimiter is always `’/’`) relative to the source
 fragment of the file without the extension. E.g.: given a source folder
-`src`, math:[$path$] of a module located at:
+`src`, `path` of a module located at:
 
 * `src/n4/lang/List.js` is `n4/lang/List`
 * `src/n4/lang/Objects.prototypes` is `n4/lang/Objects`
@@ -805,7 +827,7 @@ module followed by the path, the concrete syntax is: +
 `<project.name>-<project.version>/<module.path>`, +
 where project version includes all version parts except the qualifier. +
 E.g. given a module with path `n4/lang/List` in a project `lib` with
-version `1.0.0`, the math:[$expandedPath$] is
+version `1.0.0`, the `expandedPath` is
 `lib-1.0.0/n4/lang/List`.
 
 Pseudo property contains all load time dependencies of this module.
@@ -813,9 +835,9 @@ Pseudo property contains all load time dependencies of this module.
 Pseudo property contains all runtime dependencies of this module.
 
 Pseudo property contains all dependencies of this module. This is the
-union of math:[$loadtimeDeps$] and math:[$runtimeDeps$] which
+union of `loadtimeDeps` and `runtimeDeps` which
 maintains the ordering of both lists, with the
-math:[$loadtimeDeps$] at the front.
+`loadtimeDeps` at the front.
 
 Pseudo properties to be set via annotations are explained in .
 
@@ -833,6 +855,7 @@ to:
 
 A nfar archive has the following structure:
 
+[horizontal]
 /resources/::
   contains all resources such as images and css files
 /src/::
@@ -857,7 +880,7 @@ package.json::
 
 //todo[N4 Deployment Descriptor]{Why is it needed? Where is it generated? Does it has to be changed?
 
-The N4 deployment descriptor of a project math:[$p$] is a NFON
+The N4 deployment descriptor of a project `p` is a NFON
 formatted file with the following structure:
 
 [source]
@@ -911,7 +934,8 @@ to localize text in a project. They basically define keys
 values. The key is used during runtime to retrieve text localized to the
 user’s locale.
 
-=== Syntax [[n4-deployment-descriptor-syntax]]
+[[n4-deployment-descriptor-syntax]]
+=== Syntax
 
 The syntax of a resource file is defined as:
 
@@ -928,7 +952,7 @@ KeyIdentifier:  LETTER (DIGIT | LETTER | '.')*;
 
 Properties files have to be stored in source fragment of type source.
 The _base folder_ for storing the properties files of a project
-math:[$p$] is math:[$p.name\lstnfjs{/nls}$]. The
+`p` is math:[$p.name\lstnfjs{/nls}$]. The
 language-specific resource files are stored in subfolders of the base
 folder. The base language (normally english) has to be located in a
 subfolder of the base folder. The resource files for other languages
@@ -999,27 +1023,27 @@ change.
 to the JSDoc in the source code using the special tag @apiNote. API /
 Implementation tool support should extract and present this information
 to the user in an appropriate form.
-* If an API class math:[$C$] implements an interface
-math:[$I$], it has to explicitly (re-) declare all members of
-math:[$I$] similar to the implementation. This is necessary for
+* If an API class `C` implements an interface
+`I`, it has to explicitly (re-) declare all members of
+`I` similar to the implementation. This is necessary for
 abstract classes anyway in order to distinguish the implemented methods
 from the non-implemented ones. For concrete classes, we want all members
-in math:[$C$] in order to be complete and avoid problems when the
-interface is changed or math:[$C$] is made abstract.
+in `C` in order to be complete and avoid problems when the
+interface is changed or `C` is made abstract.
 
 === Execution of API and Implementation Components
 
 
-When launching an N4JS component math:[$C$] under runtime
-environment math:[$RE$], the user may(!) provide an implementation
+When launching an N4JS component `C` under runtime
+environment <<AC,RE>>, the user may(!) provide an implementation
 ID math:[$I\!I\!D$] to run. Then, for each API project
-math:[$A$] in the direct or indirect dependencies of
-math:[$C$] an implementation project is chosen as follows:
+`A` in the direct or indirect dependencies of
+`C` an implementation project is chosen as follows:
 
-. Collect all implementation projects for math:[$A$]
-(i.e. projects that specify math:[$A$] in their manifest under `ImplementedProjects`).
+. Collect all implementation projects for `A`
+(i.e. projects that specify `A` in their manifest under `ImplementedProjects`).
 . Remove implementation projects that cannot be run under runtime
-environment math:[$RE$], using the same logic as for running
+environment <<AC,RE>>, using the same logic as for running
 ordinary N4JS components (this step is not implemented yet!).
 .  If there are no implementation projects left, show an error.
 .  If math:[$I\!I\!D$] is defined (i.e. user specified an
@@ -1049,7 +1073,7 @@ a given Implementation project. This is essential for normal execution
 and for test execution. Figure <<diag_APITestsDI_Overview>> shows some of those considerations from test client point of view.
 
 [[diag_APITestsDI_Overview]]
-image::fig/diag_ApiTestsDI_Overview.png[title="Overview of API tests with DI"]
+image::{find}fig/diag_ApiTestsDI_Overview.png[title="Overview of API tests with DI"]
 
 Static DI mechanisms in N4JS allow an API project to enforce
 Implementation projects to provide all necessary information. This
@@ -1058,7 +1082,7 @@ specific knowledge about them or without relying on extra tools for
 proper project wiring. Figure <<diag_ApiTestsDI_StaticDI>> shows how API project defines project wiring and enforces certain level of testability.
 
 [[diag_ApiTestsDI_StaticDI]]
-image::fig/diag_ApiTestsDI_StaticDI.png[title="API tests with static DI"]
+image::{find}fig/diag_ApiTestsDI_StaticDI.png[title="API tests with static DI"]
 
 During Client execution, weather it is test execution or not, N4JS
 mechanisms will replace the API project with a proper Implementation
@@ -1067,5 +1091,5 @@ instances of implantation types.
 Figure <<diag_ApiTestsDI_Views>> shows Types View perspective of the client, and Instances View perspective of the client.
 
 [[diag_ApiTestsDI_Views]]
-image::fig/diag_ApiTestsDI_Views.png[title="Types view and Instances view"]
+image::{find}fig/diag_ApiTestsDI_Views.png[title="Types view and Instances view"]
 

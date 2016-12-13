@@ -18,8 +18,8 @@ function), a data field, or a getter or a setter. The latter two
 implicitly define an accessor field. Similar to object literals, there
 must be no data field with the same name as a getter or setter.
 
-Redefinition of members (overriding, implementation and consumption) is
-described in <<_redefinition-of-members,Redefinition of Members>>.
+$$ (overriding, implementation and consumption) is
+described in <<_redefinition-of-members,$$>>.
 
 [.language-n4js]
 == Syntax
@@ -35,7 +35,7 @@ N4MemberDeclaration: N4MethodDeclaration | N4FieldDeclaration | N4GetterDeclarat
 === Properties
 
 Members share the following properties:
-
+[horizontal]
 `annotations` ::
 Arbitrary annotations, see <<Annotations>> for details.
 
@@ -51,13 +51,14 @@ Boolean property to distinguish instance from classifier members, see <<_static-
 
 The following pseudo properties are defined via annotations:
 
+[horizontal]
 `deprecated` ::
 Boolean property set to true if annotation `@Deprecated` is set.
 //version{0.4}{not implemented in version 0.3}
 task:IDE-138[]
 
 And we additionally define the following pseudo properties:
-
+[horizontal]
 `acc` ::
 Member access modifier as described in <<_accessibility-of-members,Accessibility of Members>>, it is the aggregated value of
 the math:[$accessModifier$] and the math:[$export$] property.
@@ -86,10 +87,13 @@ Enumeration, may be one of the following values: +
 
 NOTE: math:[$assignability$] is related but not equal to
 writable modifiers used for fields. We define a partial order on this
-enumeration as follows: math:[\[\begin{aligned}
-    <(l,r) & ::= & \{ (\lenum{set}, \lenum{any}), (\lenum{get}, \lenum{any})  \}
-    \end{aligned}\]]
+enumeration as follows:
+$$
+<(l,r) & ::= & \{ (\lenum{set}, \lenum{any}), (\lenum{get}, \lenum{any})  \}
+   $$
 
+
+[horizontal]
 `abstract` ::
 All members have a flag math:[$abstract$], which is user-defined
 for methods, getters and setter, but which is always false for fields.
@@ -98,13 +102,14 @@ for methods, getters and setter, but which is always false for fields.
 The following pseudo property is set to make fields compatible with
 properties of an object literal, however it cannot be changed:
 
+[horizontal]
 `configurable` ::
 Boolean flag reflecting the property descriptor
 math:[$configurable$], this is always set to false for members.
 
 === Semantics
 
-The members of a given classifier math:[$C$] must be named such
+The members of a given classifier `C` must be named such
 that the following constraints are met:
 
 task:IDE-550[] task:IDE-551[]
@@ -119,13 +124,11 @@ math:[$\forall m_1,m_2 \in C.ownedMembers, m_1\neq m_2: m_1.name\neq m_2.name \l
 
 --
 
-
-
 Thus, over__loading__ of methods is not supported footnote:[In order to emulate method overloading, union types are to be used.] and no field may have the same name as a method.
-However, over__riding__ of methods, getters, and setters are possible, see <<_redefinition-of-members,Redefinition of Members>>.
+However, over__riding__ of methods, getters, and setters are possible, see <<_redefinition-of-members,$$>>.
 Static members may also have the same name as non-static members footnote:[ cite[ECMA15a(p214)], `ClassBody : ClassElementList` indicates that it is possible to have the same name for instance and static members.].
 
-The dollar character `$` is not allowed for user-defined member identifiers as the dollar sign is used for rewriting private members.
+The dollar character `\$` is not allowed for user-defined member identifiers as the dollar sign is used for rewriting private members.
 
 [.language-n4js]
 == Methods
@@ -217,6 +220,7 @@ fragment ColonSepTypeRef*:
 Methods have all the properties of members and the following additional
 properties can be explicitly defined:
 
+[horizontal]
 `abstract` ::
 Method is declared but not defined.
 
@@ -237,6 +241,7 @@ The body of the method (this is not available in the pure types model)
 
 The following pseudo properties are defined via annotations:
 
+[horizontal]
 `final` ::
 Boolean flag set to true if annotation `@Final` is set. Flag indicates that
 method must not be overridden in subclasses; see <<_final-methods,Final Methods>>.
@@ -247,6 +252,7 @@ override a method of a superclass; see <<_overriding-of-members,Overriding of Me
 
 Additionally, we define the following pseudo properties:
 
+[horizontal]
 `overrides` ::
 True if method overrides a super method or implements an interface
 method, false otherwise.
@@ -484,7 +490,7 @@ defined for methods as well, just like for generic functions (see
 .Type variable names for generic methods
 [req,id=IDE-55,version=1]
 --
-For a given generic method math:[$m$] of a class math:[$C$], the following
+For a given generic method `M` of a class `C`, the following
 constraint must hold: +
 math:[$\forall\ tp_m \in m.typePars, tp_C \in C.typePars: tp_m.name \neq  tp_C.name$]
 --
@@ -542,20 +548,20 @@ instance of that class. The constructor looks like a normal method with
 name "constructor". The constructor can be defined explicitly or
 implicitly and every class has an (implicit) constructor.
 
-For a given a class math:[$C$], the constructor is available via
+For a given a class `C`, the constructor is available via
 two properties:
 
 the explicitly defined constructor (if any).
 
 the explicit or implicit constructor.
 
-If math:[$C$] is provided with an explicit constructor, we have
+If `C` is provided with an explicit constructor, we have
 math:[$C.ctor = C.ownedCtor$] and
 math:[$C.ownedCtor \in C.ownedMembers$]. Note that
 math:[$C.ctor \notin C.ownedMethods$] in all cases.
 
-The return type of the constructor of a class math:[$C$] is
-math:[$C$]. If math:[$C$] has type parameters
+The return type of the constructor of a class `C` is
+`C`. If `C` has type parameters
 math:[$T_1,...T_n$], then the return type is
 math:[$C<T_1,...,T_n>$]. The constructor is called with the
 operator. Since the return type of a constructor is implicitly defined
@@ -578,7 +584,7 @@ variable inside of their bodies (c.f. <<_arguments-object>>).
 .Defining and Calling Constructors
 [req,id=IDE-56,version=1]
 --
-For a constructor math:[$ctor$] of a class math:[$C$], the following conditions
+For a constructor math:[$ctor$] of a class `C`, the following conditions
 must hold:
 
 .  math:[$ctor$] must neither be abstract nor static nor final and
@@ -681,22 +687,24 @@ task:IDEBUG-81[]
 [req,id=IDE-58,version=1]
 --
 If the structural this type is used in a constructor of a class
-math:[$C$], and if this structural reference contains an additional
+`C`, and if this structural reference contains an additional
 structural member math:[$SM$], the following constraints must hold
 true:
 
-1.  For any subclass math:[$S$] of math:[$C$], with
+1.  For any subclass `S` of `C`, with
 math:[$S.ctor=C.ctor$] (the subclass does not define its own
-constructor), math:[$S$] must not contain a public member with same
-name as math:[$SM$]: math:[\[\begin{aligned}
-    &S <: C, S.ctor = C.ctor \\
+constructor), `S` must not contain a public member with same
+name as math:[$SM$]:
+$$&S <: C, S.ctor = C.ctor \\
     &\hspace{3em}\to \nexists M \in S.members: \\
     &\hspace{5em}M.acc=\lenum{public} \land M.name = SM.name
-    \end{aligned}\]]
-2.  math:[$C$] itself must not contain a public member with same
-name as math:[$SM$]: math:[\[\begin{aligned}
-    \nexists M \in C.members: M.acc=\lenum{public} \land M.name = SM.name
-    \end{aligned}\]]
+    $$
+
+2.  `C` itself must not contain a public member with same
+name as math:[$SM$]:
+$$\nexists M \in C.members: M.acc=\lenum{public} \land M.name = SM.name
+    $$
+
 --
 
 .Field name conflicts with structural member name
@@ -755,9 +763,13 @@ parameter are copied as well. task:IDEBUG-134[]
 6.  Even if the `@Spec` annotation is used, the super constructor must be called
 accordingly.
 7.  The type of an additional member which match owned non-public field
-must be subtype of the field’s type: math:[\[\begin{aligned}
+must be subtype of the field’s type:
+$$
+
 \forall s \in ctor.fpar.structuralMembers, ctor.fpar.spec: \\
-\hspace{2em}\exists f \in ctor.owner.ownedFields \Rightarrow \tee s \subtype f\end{aligned}\]]
+\hspace{2em}\exists f \in ctor.owner.ownedFields \Rightarrow \tee s \subtype f
+--
+
 8.  math:[$\nfjstilde i \nfjstilde\lstnfjs{this}$] constructor
 ignores superfluous properties provided by an object literal. These
 ignored properties are _not_ used to set
@@ -912,19 +924,19 @@ interface is annotated with `@CovariantConstructor` (see
 .Covariant Constructor
 [def]
 --
-A classifier math:[$C$] is said to `__have a covariant constructor__` if and
+A classifier `C` is said to `__have a covariant constructor__` if and
 only if one of the following applies:
 
-1.  math:[$C$] has a direct super class math:[$C'$] and
+1.  `C` has a direct super class math:[$C'$] and
 math:[$C'$] is annotated with `@CovariantConstructor` or math:[$C'$] has a constructor annotated with `@CovariantConstructor`.
-2.  math:[$C$] has a directly implemented interface math:[$I$]
-and math:[$I$] is annotated with  `@CovariantConstructor` or math:[$I$] has a
+2.  `C` has a directly implemented interface `I
+and `I` is annotated with  `@CovariantConstructor` or `I` has a
 constructor annotated with `@CovariantConstructor`.
-3.  math:[$C$] has a direct super class or directly implemented
+3.  `C` has a direct super class or directly implemented
 interface that `__has a covariant constructor__` (as defined here).
 --
 
-Note that math:[$C$] does not need to have an owned(!) constructor;
+Note that `C` does not need to have an owned(!) constructor;
 also a constructor inherited from a super class can be declared
 covariant.
 
@@ -936,44 +948,46 @@ The following rules apply to covariant constructors.
 .  Annotation `@CovariantConstructor` may only be applied to classes, interfaces, and
 constructors. Annotating a constructor with this annotation, or its
 containing classifier, or both have all the same effect.
-.  Given a class math:[$C$] with an owned constructor
+.  Given a class `C` with an owned constructor
 math:[$ctor$] and a super class math:[$Sup$] that has a
 covariant constructor (owned or inherited, see <<covariant_constructor,Covariant Constructor>>), then
 ..  math:[$Sup.constructor$] must be accessible from
-math:[$C$],
+`C`,
 ..  math:[$ctor$] must be override compatible with
-math:[$S.constructor$]: math:[\[\begin{aligned}
-        overrideCompatible(ctor, S.constructor)
-        \end{aligned}\]]
+math:[$S.constructor$]:
++
+$$overrideCompatible(ctor, S.constructor)$$
 +
 This constraint corresponds to <<IDE-72,requirement: Overriding Members>> except for the `Override` annotation which is not required here.
-.  Given a classifier math:[$C$] implementing interface
-math:[$I$] and math:[$I$] has a covariant constructor (owned
+.  Given a classifier `C` implementing interface
+`I` and `I` has a covariant constructor (owned
 or inherited, see <<covariant_constructor,Covariant Constructor>>), we require
-..  math:[$I.constructor$] must be accessible from math:[$C$],
+..  math:[$I.constructor$] must be accessible from `C`,
 ..  an implementation-compatible constructor math:[$ctor$] must be
-defined in C with math:[\[\begin{aligned}
-        overrideCompatible(ctor, I.constructor)
-        \end{aligned}\]]
+defined in C with
++
+$$overrideCompatible(ctor, I.constructor)$$
 +
 This constraint corresponds to <<IDE-74,Implementation of Interface Members>>
 except for the `@Override` annotation, which is not required, here.
-..  Given a classifier math:[$C$] without an owned constructor and
+..  Given a classifier `C` without an owned constructor and
 an extended class or interface math:[$Sup$] that has a covariant
-constructor (owned or inherited, see <<covariant_constructor, definition: Covariant Constructor>>), we require the inherited constructor math:[$ctor$] of math:[$C$] within the context of
-math:[$C$] to be override compatible to itself in the context of
+constructor (owned or inherited, see <<covariant_constructor, definition: Covariant Constructor>>), we require the inherited constructor math:[$ctor$] of `C` within the context of
+`C` to be override compatible to itself in the context of
 math:[$Sup$]. Using notation math:[$m[T]$] to denote that a
-member math:[$m$] is to be treated as defined in container type
-math:[$T$], which means the this-binding is set to math:[$T$],
-we can write: math:[\[\begin{aligned}
-    overrideCompatible(ctor[C], ctor[Sup])
-    \end{aligned}\]] This constraint does not correspond to any of the
+member `M` is to be treated as defined in container type
+`T`, which means the this-binding is set to `T`,
+we can write:
++
+$$overrideCompatible(ctor[C], ctor[Sup])$$
+This constraint does not correspond to any of the
 constraints for the redefinition of ordinary members.
+--
 
 The following example demonstrates a use case for covariant
 constructors. It shows a small class hierarchy using covariant
 constructors, `Cls` and `Cls2`, together with a helper function `createAnother` that creates and returns a new instance of the same type as its argument `value`.
---
+
 
 [[ex:covariant-constructors]]
 .Covariant Constructors
@@ -1080,6 +1094,7 @@ fragment FieldDeclarationImpl <Yield>*:
 
 Fields have the following properties which can be explicitly defined:
 
+[horizontal]
 `typeRef` ::
 Type of the field; default value is math:[$Any$].
 
@@ -1101,6 +1116,7 @@ Note that math:[$const$] is _not_ the (reversed) value of the property descripto
 The following pseudo properties are defined via annotations for setting
 the values of the property descriptor:
 
+[horizontal]
 `enumerable` ::
 Boolean flag reflecting the property descriptor
 math:[$enumerable$], set via annotation `@Enumerable(true|false)`.
@@ -1118,6 +1134,7 @@ constructor. Also see <<_assignment-modifiers,Assignment Modifiers>>.
 // #### Derived values for fields:
 Derived values for fields
 
+[horizontal]
 `readable` ::
 Always true for fields.
 
@@ -1134,44 +1151,55 @@ may be set in the constructor (cf. <<_assignment-modifiers,Assignment Modifiers>
 [req,id=IDE-61,version=1]
 --
 For any attribute math:[$a$] if a
-class math:[$C$], the following constraints must hold:
+class `C`, the following constraints must hold:
 
 1.  A required data field must not define an initializer: +
 math:[$a.required \to a.init=null$]
 2.  There must be no other member with the same name of a data field
-math:[$f$]. In particular, there must be no getter or setter
-defined with the same name: math:[\[\begin{aligned}
-        & \forall\ m \in f.owner.members : m \neq f \to m.name \neq f.name
-    \end{aligned}\]]
+`f`. In particular, there must be no getter or setter
+defined with the same name:
+$$
+& \forall\ m \in f.owner.members : m \neq f \to m.name \neq f.name
+
+--
+
 
 If a subclass should set a different default value, this has to be done
 in the constructor of the subclass.
 
 For the relation of data fields and field accessors in the context of
-extending classes or implementing interfaces see <<_redefinition-of-members,Redefinition of Members>>.
+extending classes or implementing interfaces see <<_redefinition-of-members,$$>>.
 --
 
 ==== Type Inference [[data-fields-type-inference]]
 
 The type of a field is the type of its declaration:
-math:[\[\begin{aligned}
-& \infer{\tee f: \tee d}{} \\\end{aligned}\]]
+
+$$
+& \infer{\tee f: \tee d}{} \\$$
+
 
 The type of a field declaration is either the declared type or the
 inferred type of the initializer expression:
-math:[\[\begin{aligned}
+
+$$
+
 & \infer{\tee d: T}{d.declaredType \neq \NULL & T = d.declaredType} \\
 & \infer{\tee d: T}{
     d.declaredType = \NULL & d.expression \neq \NULL \\
     E = \tee d.expression & E \not\in \{\type{null, undefined}\} & T = E} \\
-& \infer{\tee d: \type{any}}{else}\end{aligned}\]]
+& \infer{\tee d: \type{any}}{else}$$
+
 
 If the type contains type variables they are substituted according to
 type parameters which are provided by the reference:
 
-math:[\[\begin{aligned}
+
+$$
+
 \infer{\typeEnv \entails \type{TField}\ tfield: T}
-        {\typeEnv \entails tfield.typeRef: T}\end{aligned}\]]
+        {\typeEnv \entails tfield.typeRef: T}$$
+
 
 === Assignment Modifiers
 task:IDE-946[]
@@ -1182,47 +1210,46 @@ Assignment of data fields can be modified by the assignment modifiers
 .Const Data Fields
 [req,id=IDE-62,version=1]
 --
-For a data field math:[$f$] marked as `const`, the following constraints must hold:
+For a data field `f` marked as `const`, the following constraints must hold:
 
-1.  An initializer expression must be provided in the declaration
-(except in n4jsd files): math:[\[\begin{aligned}
-    f.expr \neq \NULL\end{aligned}\]]
-2.  A constant data field is implicitly static and must be accessed only
+.  An initializer expression must be provided in the declaration
+(except in n4jsd files):
++
+$$f.expr \neq \NULL$$
+.  A constant data field is implicitly static and must be accessed only
 via the classifier type. It is not possible, therefore, to use the `this`
 keyword in the initializer expression of a constant field:
-math:[\[\begin{aligned}
-    \nexists sub \in f.expr^*: sub="this"\end{aligned}\]]
-//*
-3.  A constant data field must not be annotated with `@Final`:
-math:[\[\begin{aligned}
-    f.const \Rightarrow \lnot f.final\end{aligned}\]]
-4.  Constant data fields are not writeable (cf. <<IDE-68,requirement Write-Acccess>>):
-math:[\[\begin{aligned}
-    f.const \Rightarrow \lnot f.writeable\end{aligned}\]]
++
+$$\nexists sub \in f.expr^*: sub="this"$$
+.  A constant data field must not be annotated with `@Final`:
+$$f.const \Rightarrow \lnot f.final$$
+. Constant data fields are not writeable (cf. <<IDE-68,requirement Write-Acccess>>):
+$$f.const \Rightarrow \lnot f.writeable$$
 --
 
 .Final Data Fields
 [req,id=IDE-63,version=1]
 --
-For a data field math:[$f$] marked as `@Final`, the following constraints must hold:
+For a data field `f` marked as `@Final`, the following constraints must hold:
 
-1.  A final data field must not be modified with `const` or `static`:
-math:[\[\begin{aligned}
-    f.final \Rightarrow \lnot f.const \land \lnot f.declaredStatic\end{aligned}\]]
-2.  A final data field is not writeable: math:[\[\begin{aligned}
-    f.final \Rightarrow \lnot f.writeable\end{aligned}\]] A final field may, however, be set in the constructor.
+.  A final data field must not be modified with `const` or `static`:
+$$f.final \Rightarrow \lnot f.const \land \lnot f.declaredStatic$$
++
+.  A final data field is not writeable:
+$$f.final \Rightarrow \lnot f.writeable$$
+A final field may, however, be set in the constructor.
 See <<IDE-68,requirement Write-Acccess>> for details.
-3.  A final data field must be either initialized by an initializer expression or in the constructor.
+.  A final data field must be either initialized by an initializer expression or in the constructor.
 If the field is initialized in the constructor, this may be done either explicitly or via a spec-styleconstructor.
 task:IDEBUG-575[]
-math:[\[\begin{aligned}
-    & f.expr \neq \NULL \\
-    & \lor (\exists assignExp: assignExpr.containingFunction = f.owner.constructor \\
-    & \hspace{3em} \land assignExpr.left.target = \lstnfjs{"this"} \\
-    & \hspace{3em} \land bind(assignExpr.left.property, f)) \\
-    & \lor (f.public \land \exists fpar \in f.owner.constructor.fpars: \\
-    & \hspace{3em} fpar.spec \land \exists sm \in structuralMembers: sm.name=f.name)\end{aligned}\]]
-
+$$-
+& f.expr \neq \NULL \\
+& \lor (\exists assignExp: assignExpr.containingFunction = f.owner.constructor \\
+& \hspace{3em} \land assignExpr.left.target = \lstnfjs{"this"} \\
+& \hspace{3em} \land bind(assignExpr.left.property, f)) \\
+& \lor (f.public \land \exists fpar \in f.owner.constructor.fpars: \\
+& \hspace{3em} fpar.spec \land \exists sm \in structuralMembers: sm.name=f.name)
+---
 --
 // todo{Constraints for final assignment are not completely implemented yet, also they have some problems here (e.g., not all control flows are required to assign a value). They will be implemented in the progress of adding more powerful program analysis in general}
 
@@ -1309,6 +1336,7 @@ class C {
 
 Derived values for field accessors:
 
+[horizontal]
 `readable` ::
 True for getters and false for setters.
 
@@ -1329,10 +1357,10 @@ constraints must hold:
 * The return type of a getter must not be `void`.
 * The type of the parameter of a setter must not be `void`.
 * If a getter math:[$g$] is defined or consumed (from an interface)
-or merged-in (via static polyfill) in a class math:[$C$] and a
-setter math:[$s$] with
+or merged-in (via static polyfill) in a class `C` and a
+setter `S` with
 math:[$s.name=g.name \land s.static=g.static$] is inherited by
-math:[$C$] from one of its super classes, then math:[$C$] must
+`C` from one of its super classes, then `C` must
 define a setter math:[$s'$] with
 math:[$s'.name=g.name \land s'.static=g.static$]
 footnote:[This is required, because in Javascript a getter shadows a corresponding setter defined further up in the prototype chain; likewise a setter shadows a corresponding getter.].
@@ -1371,7 +1399,7 @@ inheritance of static members of interfaces, cf. Section
 [req,id=IDE-65,version=1]
 --
 For a static field accessor or method
-math:[$s$], the following constraint must hold:
+`S`, the following constraint must hold:
 
 * math:[$s.static \iff \lnot s.abstract$]
 
@@ -1388,15 +1416,15 @@ The very same override constraints are valid in this case as well.
 [req,id=IDE-66,version=1]
 --
 
-Let math:[$m$] be a static member of class `C`. Except for write-access to
-fields, which will be explained later, you can access math:[$m$]
+Let `M` be a static member of class `C`. Except for write-access to
+fields, which will be explained later, you can access `M`
 via:
 
 1.  The class declaration instance, i.e. the classifier or constructor type, `constructor{C}`, i.e. `C.m`
 2.  The class declaration instance of a subtype, i.e. the classifier or constructor type, i.e. `D.m`, if `D` is a subclass of `C`.
 3.  `v.m`, if `v` is a variable of type `C` (i.e. classifier type as defined in <<_constructor-and-classifier-type>>) or a subtype thereof.
 4. `this.m` inside the body of any static method declared in `C` or any sub-class of `C`.
-5.  Via a type variable math:[$T$] which upper bound is a subclass
+5.  Via a type variable `T` which upper bound is a subclass
 of `C`, +
 e.g., `function <T extends C> f(){T.m}` task:GH-222[]
 
@@ -1416,7 +1444,7 @@ particular for type variables defined by a generic classifier.
 --
 
 task:IDE-1071[] task:IDEBUG-442[]
-For static data fields and static setter math:[$f$] the following constraint must hold:
+For static data fields and static setter `f` the following constraint must hold:
 
 * For every assign expression math:[$assignExpr$] with
 math:[$f.static \land assignExpr.left = T.f \rightarrow T=f.owner$].
@@ -1425,7 +1453,7 @@ math:[$u.op \in \{++,--\}  \land   f.static \land  u.expression = T.f \rightarro
 
 --
 
-In the special case of math:[$m$] being a static data field,
+In the special case of `M` being a static data field,
 write-access is only possible via the defining type name `C.m`: . So in the
 list above, only the first line can be used when assigning values to a
 field. Note that this only applies to fields and
@@ -1571,7 +1599,6 @@ interfaces.
 
 == Redefinition of Members
 
-
 Members defined in classes or interfaces can be redefined by means of
 being overridden or implemented in subclasses, sub-interfaces, or
 implementing classes. Fields and methods with default implementation
@@ -1581,39 +1608,29 @@ restrictions apply.
 .Override Compatible
 [req,id=IDE-70,version=1]
 --
-] A member math:[$M$] is
-_override compatible_ to a member math:[$S$] if and only if the
+A member `M` is _override compatible_ to a member `S` if and only if the
 following constraints hold:
 
-1.  The name and static modifiers are equal:
-math:[\[\begin{aligned}
-    M.name=S.name \land M.static=S.static
-    \end{aligned}\]]
-2.  The metatypes are compatible: math:[\[\begin{aligned}
-    \mu(S)=\type{Method} & \Rightarrow \mu(M) = \type{Method} \\
-    \mu(S)=\type{Field}  & \Rightarrow \mu(M) \in \type{Field, Getter, Setter} \\
-    \mu(S)=\type{Getter} & \Rightarrow \mu(M) \in \type{Field, Getter} \\
-    \mu(S)=\type{Setter} & \Rightarrow \mu(M) \in \type{Field, Setter} \\
-    \end{aligned}\]]
-3.  The overridden member must not be declared final:
-math:[\[\begin{aligned}
-    \lnot S.final
-    \end{aligned}\]]
+.  The name and static modifiers are equal:
+$$M.name=S.name \land M.static=S.static$$
+.  The metatypes are compatible:
+$$\mu(S)=\type{Method} & \Rightarrow \mu(M) = \type{Method} \\
+\mu(S)=\type{Field}  & \Rightarrow \mu(M) \in \type{Field, Getter, Setter} \\
+\mu(S)=\type{Getter} & \Rightarrow \mu(M) \in \type{Field, Getter} \\
+\mu(S)=\type{Setter} & \Rightarrow \mu(M) \in \type{Field, Setter} \\$$
+. The overridden member must not be declared final:
+$$\lnot S.final$$
 4.  Overridden member declared const can only be overridden (redefined)
-by const members: math:[\[\begin{aligned}
-    S.const \Leftrightarrow M.const
-    \end{aligned}\]]
+by const members:
+$$S.const \Leftrightarrow M.const$$
 5.  It is not possible to override a non-abstract member with an
-abstract one: math:[\[\begin{aligned}
-    \lnot M.abstract \lor S.abstract
-    \end{aligned}\]]
-6.  The types are compatible: math:[\[\begin{aligned}
-    (\mu(M) \in \types{Method, Getter, Field} \land \mu(S)\neq\type{Setter}) &  \Rightarrow \tee M \subtype S \\
-    (\mu(M) \in \type{Setter, Field}         \land \mu(S)\neq\type{Getter} \land \lnot S.const) &   \Rightarrow \tee S \subtype M \\
-    \end{aligned}\]]
-7.  The access modifier is compatible: math:[\[\begin{aligned}
-    M.acc \geq S.acc
-    \end{aligned}\]]
+abstract one:
+$$\lnot M.abstract \lor S.abstract$$
+6.  The types are compatible:
+$$(\mu(M) \in \types{Method, Getter, Field} \land \mu(S)\neq\type{Setter}) &  \Rightarrow \tee M \subtype S \\
+    (\mu(M) \in \type{Setter, Field}         \land \mu(S)\neq\type{Getter} \land \lnot S.const) &   \Rightarrow \tee S \subtype M \\$$
+7.  The access modifier is compatible:
+$$M.acc \geq S.acc$$
 
 --
 
@@ -1626,15 +1643,18 @@ declared as override.
 .Non-Override Declaration
 [req,id=IDE-71,version=1]
 --
-If and only if a member math:[$M$] of a class math:[$C$] (extending a class
-math:[$S$] and interfaces math:[$I_i$]) does not override or
+If and only if a member `M` of a class `C` (extending a class
+`S` and interfaces math:[$I_i$]) does not override or
 implement another member, then it must not be declared as override. That
-is the following constraint must hold: math:[\[\begin{aligned}
+is the following constraint must hold:
+$$
+
 & \lnot M.override\\
 & \land \\
 & \nexists M' \in C.super.members \cup \bigcup^{n}_{i=1}I_i.members:\\
 &  M'.name=M.name \land M'.static=M.static \\
-& \land M'.acc>\lenum{private} \\\end{aligned}\]]
+& \land M'.acc>\lenum{private} \\$$
+
 
 --
 
@@ -1651,31 +1671,27 @@ math:[$C.ctor \notin C.ownedMethods$].
 [req,id=IDE-72,version=1]
 --
 Given a class
-math:[$C$] and a superclass math:[$Sup$]. If for an instance
-or static member math:[$M$] defined in math:[$C$] a member
-math:[$S$] exists with math:[\[\begin{aligned}
-    & \exists S \in Sup.members:  M.name=S.name \land M.static=S.static
-    \end{aligned}\]] then we call math:[$M$] the overriding member
-and math:[$S$] the overridden member. In that case the following
+`C` and a superclass math:[$Sup$]. If for an instance
+or static member `M` defined in `C` a member
+`S` exists with
+$$& \exists S \in Sup.members:  M.name=S.name \land M.static=S.static$$
+then we call `M` the overriding member
+and `S` the overridden member. In that case the following
 constraints must hold:
 
-1.  math:[$S$] must be accessible from math:[$C$]
-2.  math:[$M$] must be override compatible with math:[$S$]:
-math:[\[\begin{aligned}
-    overrideCompatible(M, S)
-    \end{aligned}\]]
-3.  If math:[$S$] is a field and math:[$M$] is an accessor,
+1.  `S` must be accessible from `C`
+2.  `M` must be override compatible with `S`:
+
+$$overrideCompatible(M, S)$$
+3.  If `S` is a field and `M` is an accessor,
 then an additional accessor math:[$M'$] must exists so that
-math:[$M, M'$] are an accessor pair for math:[$S$]:
-math:[\[\begin{aligned}
-    &\mu(S)=\type{Field} \land \mu(M)={Accessor} \\
+math:[$M, M'$] are an accessor pair for `S`:
+
+$$&\mu(S)=\type{Field} \land \mu(M)={Accessor} \\
     & \Rightarrow \exists M'\in C.member: \\
-    & \hspace{4em} overrideCompatible(M',S) \land \{\mu(M),\mu(M')\}=\types{Getter,Setter}
-    \end{aligned}\]]
-4.  math:[$M$] must be declared as override:
-math:[\[\begin{aligned}
-    M.override
-    \end{aligned}\]]
+    & \hspace{4em} overrideCompatible(M',S) \land \{\mu(M),\mu(M')\}=\types{Getter,Setter}$$
+4.  `M` must be declared as override:
+`M.override`
 --
 
 Remarks:
@@ -1700,10 +1716,12 @@ task:IDE-12[] task:IDE-158[] task:IDE-700[] task:IDE-1236[]
 --
 For the following constraints, we define two helper sets
 math:[$M_C$] and math:[$M_I$] as follows: Given a
-math:[$C$], and interface math:[$I_1,..., I_n$], implemented
-by math:[$C$], with math:[\[\begin{aligned}
-M_C & =  C.ownedMembers \cup \{ m \in C.superType.members | m.acc > \lenum{private}\}\\
-M_I & = \bigcup^{n}_{i=1}I_i.members \\\end{aligned}\]] Note that these
+`C`, and interface math:[$I_1,..., I_n$], implemented
+by `C`, with
+$$M_C & =  C.ownedMembers \cup \{ m \in C.superType.members | m.acc > \lenum{private}\}\\
+M_I & = \bigcup^{n}_{i=1}I_i.members \\$$
+
+Note that these
 sets already contain only non-private data fields.
 --
 
@@ -1712,12 +1730,12 @@ sets already contain only non-private data fields.
 
 .Member Consumption and Implementation
 [def]
---
-A member math:[$M$] defined in an interface math:[$I$] is _consumed_ by
-an implementor math:[$C$], if it becomes a member of the class,
+---
+A member `M` defined in an interface `I` is _consumed_ by
+an implementor `C`, if it becomes a member of the class,
 that is, math:[$M \in C.members$].
 
-A member math:[$M$] is consumed if there is no member defined in
+A member `M` is consumed if there is no member defined in
 the implementor with the same name and if there is no non-private
 non-abstract member with that name inherited by the implementor from its
 superclass.footnote:[There had been the idea of preventing static
@@ -1738,42 +1756,43 @@ generally assume semantic differences which the consumer has to be aware
 of. Data fields defined in interfaces, in particular, are assumed to be
 concrete. It is not, therefore, possible to consume a field defined in
 two implemented interfaces.
---
+---
 
 .Consumption of Interface Members
 [req,id=IDE-73,version=1]
---
-Given a classifier math:[$C$] footnote:[math:[$C$] could either be a class or an interface.], and interfaces math:[$I_1,..., I_n$]
-implemented (or extended) by math:[$C$], and sets math:[$M_C$]
+---
+Given a classifier `C` footnote:[`C` could either be a class or an interface.], and interfaces math:[$I_1,..., I_n$]
+implemented (or extended) by `C`, and sets math:[$M_C$]
 and math:[$M_I$] as defined in . A non-static member
-math:[$M$] defined in any interface math:[$I_i$] is merged
-into the consumer (math:[$C$]), if for all other (possible) members
-math:[$M'$] of math:[$C$] math:[\[\begin{aligned}
-    \forall M' \in M_C\cup M_I \setminus \{M\} :  M.name=M'.name \land \neg M'.static
-    \end{aligned}\]] the following constraints hold:
+`M` defined in any interface math:[$I_i$] is merged
+into the consumer (`C`), if for all other (possible) members
+math:[$M'$] of `C`
+$$
+\forall M' \in M_C\cup M_I \setminus \{M\} :  M.name=M'.name \land \neg M'.static$$
+
+the following constraints hold:
 
 .  The other member’s meta type matches the meta type of the merge
-candiate: math:[\[\begin{aligned}
-            \mu(M)=\type{Method}    & \Rightarrow \mu(M') = \type{Method} \\
-            \mu(M)\neq\type{Method} & \Rightarrow \mu(M') \in \types{Field, FieldAccessor} % Field, Accessor
-        \end{aligned}\]]
-.  The other member is abstract and not owned by the consumer:
-math:[\[\begin{aligned}
-            & \mu(M)=\mu(M') \lor \mu(M)=\type{Field} \\ % getter does no effect setter and vice versa
-            & \hspace{2em}\Rightarrow M'.abstract \land M' \not\in C.ownedMembers
-        \end{aligned}\]]
-.  The merge candidate’s access modifier is not less than the modifier
-of the other member: math:[\[\begin{aligned}
-                & \mu(M)=\mu(M') \lor \mu(M)=\type{Field} \\ % getter does no effect setter and vice versa
-                & \hspace{2em} \Rightarrow M.acc \geq M'.acc
-            \end{aligned}\]]
-.  The merge candidate’s type compatible with the other member:
-math:[\[\begin{aligned}
-            \mu(M) \in \types{Method, Getter, Field} \land \mu(M') \neq \type{Setter}   & \Rightarrow \tee M \subtype M' \\
-            \mu(M) \in \types{Setter, Field} \land \mu(M') \neq \type{Getter}           & \Rightarrow \tee M' \subtype M
-        \end{aligned}\]]
+candiate:
+$$
+\mu(M)=\type{Method}    & \Rightarrow \mu(M') = \type{Method} \\
+\mu(M)\neq\type{Method} & \Rightarrow \mu(M') \in \types{Field, FieldAccessor} % Field, Accessor$$
 
---
+.  The other member is abstract and not owned by the consumer:
+$$& \mu(M)=\mu(M') \lor \mu(M)=\type{Field} \\ % getter does no effect setter and vice versa
+& \hspace{2em}\Rightarrow M'.abstract \land M' \not\in C.ownedMembers$$
+
+.  The merge candidate’s access modifier is not less than the modifier
+of the other member:
+$$
+& \mu(M)=\mu(M') \lor \mu(M)=\type{Field} \\ % getter does no effect setter and vice versa
+& \hspace{2em} \Rightarrow M.acc \geq M'.acc$$
+.  The merge candidate’s type compatible with the other member:
+
+$$
+\mu(M) \in \types{Method, Getter, Field} \land \mu(M') \neq \type{Setter}   & \Rightarrow \tee M \subtype M' \\
+\mu(M) \in \types{Setter, Field} \land \mu(M') \neq \type{Getter}           & \Rightarrow \tee M' \subtype M$$
+---
 
 [.language-n4js]
 ==== Member Implementation
@@ -1781,27 +1800,27 @@ math:[\[\begin{aligned}
 .Implementation of Interface Members
 [req,id=IDE-74,version=1]
 --
-For any non-static abstract member math:[$M$] defined in an interface math:[$I$]
-implemented (or extended) by a classifier math:[$C$],
-math:[$M$] must be accessible from math:[$C$] and one or two
-member(s) in math:[$C$] must exist which are
-implementation-compatible with math:[$M$]. The implementing
+For any non-static abstract member `M` defined in an interface `I
+implemented (or extended) by a classifier `C`,
+`M` must be accessible from `C` and one or two
+member(s) in `C` must exist which are
+implementation-compatible with `M`. The implementing
 member(s) must be declared as override if they are directly defined in
 the consumer.
 
-.  math:[$M$] must be accessible from math:[$C$].
+.  `M` must be accessible from `C`.
 .  An implementation-compatible member math:[$M'$] must exist in
-math:[$C$]:
-..  if math:[$M$] is not a field: math:[\[\begin{aligned}
-        \mu(M) \neq\type{Field} & \Rightarrow \\
+`C`:
+..  if `M` is not a field:
+$$    \mu(M) \neq\type{Field} & \Rightarrow \\
                         & \exists M' \in C.members: \\
                             & \hspace{3em} overrideCompatible(M',M) \\
-                            & \hspace{3em} \land (M' \in C.ownedMembers \Rightarrow M'.override)
-        \end{aligned}\]]
-..  if math:[$M$] is a field, then either an
+                            & \hspace{3em} \land (M' \in C.ownedMembers \Rightarrow M'.override)$$
+
+..  if `M` is a field, then either an
 implementation-compatible field math:[$F'$] or accessor pair
-math:[$G', S'$] must exist: math:[\[\begin{aligned}
-        \mu(M)=\type{Field} & \Rightarrow \\
+math:[$G', S'$] must exist:
+$$    \mu(M)=\type{Field} & \Rightarrow \\
                         & \exists F' \in C.fields: \\
                             & \hspace{3em} overrideCompatible(F',M) \\
                             & \hspace{3em} \land (F' \in C.ownedMembers \Rightarrow F'.override) \\
@@ -1810,8 +1829,8 @@ math:[$G', S'$] must exist: math:[\[\begin{aligned}
                             & \hspace{3em} overrideCompatible(G',M) \\
                             & \hspace{3em} \land overrideCompatible(S',M) \\
                             & \hspace{3em} \land (G' \in C.ownedMembers \Rightarrow G'.override) \\
-                            & \hspace{3em} \land (S' \in C.ownedMembers \Rightarrow S'.override)
-        \end{aligned}\]]
+                            & \hspace{3em} \land (S' \in C.ownedMembers \Rightarrow S'.override)$$
+
 --
 
 Methods defined in interfaces are automatically declared abstract if
@@ -1827,10 +1846,11 @@ order to solve type conflicts produced by methods of different
 interfaces with same name but different signatures.
 2.  Methods in an implementor cannot decrease the accessibility of
 methods from implemented interfaces, that is
-math:[\[\begin{aligned}
-        & \forall M \in C.methods, M' \in I_i.methods (i=1\dots n): \\
+
+$$    & \forall M \in C.methods, M' \in I_i.methods (i=1\dots n): \\
         & \hspace{2em} M.name=M'.name \Rightarrow M.acc \neq private \to M.acc \geq M'.acc
-    \end{aligned}\]]
+    $$
+
 3.  Methods in the implementor must be a supertype footnote:[As defined in <<_function-type,Function Type>> for function types.] of methods from implemented interfaces.
 That is to say the implemented methods are override-compatible.
 4.  There may be several methods math:[$M_1, ..., M_n$] defined in

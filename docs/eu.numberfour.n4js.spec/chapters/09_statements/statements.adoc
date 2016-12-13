@@ -175,17 +175,27 @@ patterns, see <<_array-and-object-destructuring>> for details.
 ==== Type Inference [[variable-statement-type-inference]]
 
 The type of a variable is the type of its declaration:
-math:[\[\begin{aligned}
-& \infer{\tee v: \tee d}{} \\\end{aligned}\]]
+
+[math]
+--
+
+& \infer{\tee v: \tee d}{} \\
+--
+
 
 The type of a variable declaration is either the declared type or the
 inferred type of the initializer expression:
-math:[\[\begin{aligned}
+
+[math]
+--
+
 & \infer{\tee d: T}{d.declaredType \neq \NULL & T = d.declaredType} \\
 & \infer{\tee d: T}{
     d.declaredType = \NULL & d.expression \neq \NULL \\
     E = \tee d.expression & E \not\in \{\type{null, undefined}\} & T = E} \\
-& \infer{\tee d: \type{any}}{else}\end{aligned}\]]
+& \infer{\tee d: \type{any}}{else}
+--
+
 
 // \todo{known limitation: if the initializer expression is an ObjectLiteral or FunctionExpression, the variable type will be inferred to \lstnfjs{any}.task:IDE-865[]
 
@@ -291,9 +301,14 @@ math:[$\tee f.expression <: \type{union\{Object,string,ArgumentType\}}$]
 provided as init expression: +
 math:[$f.varDecl \neq null \lor (f.initExpr \neq null \land isRValue(f.initExpr))$]
 * The type of the loop variable must be a string (or a super type of
-string, i.e. any): math:[\[\begin{aligned}
+string, i.e. any): 
+[math]
+--
+
 & (f.varDecl \neq null \land  \tee f.varDecl \subtype \type{string} ) \\
-\lor & (f.initExp \neq null \land  \tee \type{string} \subtype f.initExpr)\end{aligned}\]]
+\lor & (f.initExp \neq null \land  \tee \type{string} \subtype f.initExpr)
+--
+
 
 --
 [.language-n4js]
@@ -318,10 +333,15 @@ ReturnStatement <Yield>:
 --
 1.  Expected type of expression in a return statement must be a sub type
 of the return type of the enclosing function:
-math:[\[\begin{aligned}
+
+[math]
+--
+
     \infer{\tee returnStmt \expectType expression: T}
           {\tee returnStmt.containingFunction: FT & T=FT.returnType}
-    \end{aligned}\]] Note that the expression may be evaluated to `void`.
+    
+--
+ Note that the expression may be evaluated to `void`.
 2.  If enclosing function is declared to return `void`, then either
 * no return statement must be defined
 * return statement has no expression
@@ -428,8 +448,13 @@ lead to the wrong assumption that a type can be specified.
 ==== Type Inference [[throw-try-catch-type-inference]]
 
 The type of the catch variable is always assumed to be .
-math:[\[\begin{aligned}
-\infer{\tee catchBlock.catchVariable: \type{any}}{}\end{aligned}\]]
+
+[math]
+--
+
+\infer{\tee catchBlock.catchVariable: \type{any}}{}
+--
+
 
 === Debugger Statement
 
@@ -487,8 +512,13 @@ fields (cf. <<_assignment-modifiers>>).
 [req,id=IDE-133,version=1]
 --
 All variable declarations of a const variable statement
-math:[$constStmt$] are not writeable: math:[\[\begin{aligned}
-    \forall vdecl \in constStmt.varDecl: \lnot vdecl.writable\end{aligned}\]]
+math:[$constStmt$] are not writeable: 
+[math]
+--
+
+    \forall vdecl \in constStmt.varDecl: \lnot vdecl.writable
+--
+
 --
 
 === for ... of statement

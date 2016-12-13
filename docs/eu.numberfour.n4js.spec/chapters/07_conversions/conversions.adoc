@@ -29,16 +29,25 @@ In cite:[ECMA11a], coercing is defined by means of the abstract specification me
 
 We express absence of automatic coercion here by means of subtype
 relations:
-math:[\[\begin{aligned} \infer{\tee \type{Boolean} \notsubtype{\type{boolean}}}{} | \infer{\tee \type{boolean} \notsubtype{\type{Boolean}}}{} \\
+
+[math]
+--
+\infer{\tee \type{Boolean} \notsubtype{\type{boolean}}}{} | \infer{\tee \type{boolean} \notsubtype{\type{Boolean}}}{} \\
 \infer{\tee \type{Number} \notsubtype{\type{number}}}{} | \infer{\tee \type{number} \notsubtype{\type{Number}}}{}  \\
 \infer{\tee \type{String} \notsubtype{\type{string}}}{} | \infer{\tee \type{string} \notsubtype{\type{String}}}{}
-\\\end{aligned}\]]
+\\
+--
+
 
 and for the N4JS specific types:
-math:[\[\begin{aligned}
+
+[math]
+--
 \infer{\tee \type{pathSelector<T>} \subtype{\type{string}}}{} \\
 \infer{\tee \type{i18nKey} \subtype{\type{string}}}{}
-\\\end{aligned}\]]
+\\
+--
+
 
 If a conversion between primitive and object type is desired, we require
 the user of N4JS to actively convert the values. The reason for that is
@@ -89,6 +98,7 @@ virtually have the same members as their corresponding object types. It
 is then possible to use the Autoboxing feature when calling a member.
 In general, Autoboxing is only supported for accessing built-in
 read-only (immutable) properties. For example, `"some string value".split(" ");` is supported but `"some string value".foo=1;` will be rejected as String does not allow properties to be added (cf. vs. , see <<_dynamic,Dynamic Type Modifiers>>).
+// TODO missing references
 
 Autoboxing often leads to problems, in particular in combination with
 dynamic types – this is why it is not directly supported in N4JS. For
@@ -183,7 +193,7 @@ The auto-conversion rules described in <<_auto-conversion-of-class-instances,Aut
 === Auto-Conversion of Enum Literals
 
 Enumeration values are objects and thus follow the behavior for
-ECMAScript math:[$Object$] and math:[$Function$]. They have a
+ECMAScript `Object` and `Function`. They have a
 custom math:[$toString$] method which returns the name of the
 enumeration value.
 
@@ -198,65 +208,67 @@ task:IDE-161[] task:IDE-928[] (IDEBUG-56): Casting to TypeVars
 Type casts are expressed with the cast expression (`as`), see <<_cast-as-expression,As Expression>> for details.
 
 We first define helper rules for the type cast constraints as follows:
-math:[\[\begin{aligned}
+
+[math]
+--
 |\infer{isCPOE(T)}{\mu(T) \in \{ \type{TEnum}, \type{Class}, \type{Primitive}, \type{ObjectType}\}}\\
 |\infer{isCPOE(T)}{\mu{T} \in\{\type{ClassifierType}, \type{TypeType} \} \land \mu(T.typeRef) \neq \type{TypeVariable} }\\
 |\infer{isInterface(T)}{\mu(T) \in \{ \type{Interface} \}}\\
 |\infer{isBoundTypeVar(T)}{\mu(T)=\type{TypeVariable}  \land T.upperBounds \neq  \emptyset }\\
-|\infer{isFinalByType(T)}{\mu(T) \in \{\ \type{TEnum}, \type{Primitive} \} \lor (\mu(T)=\type{Class} \land T.extensibility=\lenum{final} \})}\end{aligned}\]]
+|\infer{isFinalByType(T)}{\mu(T) \in \{\ \type{TEnum}, \type{Primitive} \} \lor (\mu(T)=\type{Class} \land T.extensibility=\lenum{final} \})}
+--
+
 
 
 .Cast Validation At Compile Time]]
 [req,id=IDE-89,version=1]
 --
-Given a type cast expression math:[$e$] in which
-math:[$\tee e.expr: S$] and and target type math:[$T$], the
+Given a type cast expression `e` in which
+math:[$\tee e.expr: S$] and and target type `T`, the
 following constraints must hold:
 
-1.  math:[$T$] must be a classifier, enum, primitive, function type
+1.  `T` must be a classifier, enum, primitive, function type
 expression, classifier type, type variable, union or intersection type:
-math:[\[\begin{aligned}
-    \mu(T) \in & \{ \type{any}, \type{Class}, \type{Interface}, \type{Enum}, \type{Primitive}, \type{ObjectType}, \\
-        & \type{FunctionTypeExpression}, \type{ClassifierType}, \type{TypeVariable}, \type{Union}, \type{Intersection} \}
-    \end{aligned}\]]
-2.  If math:[$S$] is a subtype of math:[$T$], the cast is
-unnecessary and a warning will be generated.
-3.  If math:[$S$] and math:[$T$] are classes, enums or
-primitive types, then math:[$T$] must be a subtype of
-math:[$S$]. This is also true if math:[$T$] is an interface
-and the type of math:[$S$] cannot have subtypes, or vice versa.
+$$
+\mu(T) \in & \{ \type{any}, \type{Class}, \type{Interface}, \type{Enum}, \type{Primitive}, \type{ObjectType}, \\
+& \type{FunctionTypeExpression}, \type{ClassifierType}, \type{TypeVariable}, \type{Union}, \type{Intersection} \}$$
 +
-math:[\[\begin{aligned}
-            (   & (isCPOE(T) \\
-            & \hspace{2em}\land (isCPOE(S) \\
-            & \hspace{4em}\lor (\mu(S)=\type{Intersection} \land \exists S' \in S: isCPOE(S'))) \\
-            & \lor (isInterface(T)  \land isFinalByType(S) ) \\
-            & \lor (isFinalByType(T) \land isInterface(S) )  ) \to \tee T <: S
-    \end{aligned}\]]
+2. `S` is a subtype of `T`, the cast is
+unnecessary and a warning will be generated.
+3.  `S` and `T` are classes, enums or
+primitive types, then `T` must be a subtype of
+`S`. This is also true if `T` is an interface
+and the type of `S` cannot have subtypes, or vice versa.
+$$(   & (isCPOE(T) \\
+& \hspace{2em}\land (isCPOE(S) \\
+& \hspace{4em}\lor (\mu(S)=\type{Intersection} \land \exists S' \in S: isCPOE(S'))) \\
+& \lor (isInterface(T)  \land isFinalByType(S) ) \\
+& \lor (isFinalByType(T) \land isInterface(S) )  ) \to \tee T <: S $$
++
 // Doesn't work for daimond-relationships with S and T on left and right. --> limit to classes only.
-4.  If math:[$S$] is a class, enum or primitive type and
-math:[$T$] is a type-variable, then for each given boundary
-math:[$T^{up}_i$] of math:[$T$] of type class, enum or
-primitive math:[$S$] must be a member of the type hierarchy:
-footnote:[math:[$i$] iterates over all boundaries]
-math:[\[\begin{aligned}
-               & (isBoundTypeVar(T) \land isCPOE(S) ) \\
-               & \to  \forall_{T^{up}_i \in T.upperBounds} (isCPOE({T^{up}_i}) \to \tee ( {T^{up}_i} <: S \lor  {T^{up}_i} :> S ) )
-    \end{aligned}\]]
-5.  If math:[$S$] is a union or intersection type, then the type
+4.  `S` is a class, enum or primitive type and
+`T` is a type-variable, then for each given boundary
+math:[$T^{up}_i$] of `T` of type class, enum or
+primitive `S` must be a member of the type hierarchy:
+footnote:[`i` iterates over all boundaries]
+$$& (isBoundTypeVar(T) \land isCPOE(S) ) \\
+& \to  \forall_{T^{up}_i \in T.upperBounds} (isCPOE({T^{up}_i}) \to \tee ( {T^{up}_i} <: S \lor  {T^{up}_i} :> S ) )$$
++
+5.  `S` is a union or intersection type, then the type
 cast is valid if it is valid for at least one element of
-math:[$S$].
-6.  If math:[$S$] and math:[$T$] are generics, and if
+`S`.
+6.  `S` and `T` are generics, and if
 math:[$S^0=T^0$], a cast is possible if type arguments are sub- or
-supertypes of each other: footnote:[math:[$i$] iterates over all
-type args] math:[\[\begin{aligned}
-               & \mu(S)=\type{Classifier} \land \mu(T)=\type{Classifier} \land S^0=T^0 \to \\
-               & \hspace{2em} (\forall\ S.typeArg_i <: T.typeArg_i) \lor (\forall\ T.typeArg_i <: S.typeArg_i)
-    \end{aligned}\]]
-7.  It math:[$T$] is a union type, then the type cast is valid if
-it is valid for at least one element of math:[$T$].
-8.  It math:[$T$] is an intersection type, then the type cast is
-valid if it is valid for all elements of math:[$T$].
+supertypes of each other: footnote:[`i` iterates over all
+type args]
+$$
+& \mu(S)=\type{Classifier} \land \mu(T)=\type{Classifier} \land S^0=T^0 \to \\
+& \hspace{2em} (\forall\ S.typeArg_i <: T.typeArg_i) \lor (\forall\ T.typeArg_i <: S.typeArg_i)$$
++
+7.  If `T` is a union type, then the type cast is valid if
+it is valid for at least one element of `T`.
+8.  If `T` is an intersection type, then the type cast is
+valid if it is valid for all elements of `T`.
 
 NOTE: `any` is a supertype of all other types, thus it is always possible
 to cast a variable of type `any` to other (non-composed) types.
@@ -365,7 +377,7 @@ from instances as well.
 
 This getter is of type `N4Class` which is a built-in type just like `N4Object`. It contains the following members:
 
-
+[horizontal]
 `fqn` ::
 The math:[$FQN$] of the type.
 
@@ -491,7 +503,7 @@ console.log(N4EnumType.of(e).fqn);
 task:IDE-980[]
 
 
-The meta-information of an interface math:[$X$] is available via
+The meta-information of an interface `X` is available via
 getter `n4class` defined in the `type{X}`. This field is of type `N4Class` as well. Since an interface cannot have a super classs, the property `n4superTypes` will always be empty.
 Calling `isInterface` respectively on the returned `N4Class` instance will return true.
 

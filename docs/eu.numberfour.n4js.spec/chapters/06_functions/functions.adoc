@@ -69,11 +69,16 @@ List of formal parameters and the this type ref. This is only used for
 sub typing rules. If `this` is not used inside the function, then `any` is set
 instead of the inferred thisTypeRef to allow for more usages. The
 property is computed as follows: +
-math:[\[\begin{aligned}
+
+[math]
+--
+
     tfpars = \lif & \ \mbox{this is used or explicitly declared}\ \\
     & \lthen thisTypeRef + fpars \\
     & \lelse any + fpars
-    \end{aligned}\]]
+
+--
+
 
 Parameters (in math:[$pars$]) have the following properties:
 
@@ -113,20 +118,30 @@ of the transitive closure of statements of the body must be a return
 statement:
 +
 ----
-math:[\[\begin{aligned}    F.typeRef \neq Undefined \to \\
+
+[math]
+--
+    F.typeRef \neq Undefined \to \\
         & |f.body.stmts|>0 \\
         & \land f.body.stmts^*_{|f.body.stmts^*|-1} isa\ \lstnfbnf{ReturnStatement}
-        \end{aligned}\]]
+
+--
+
 ----
 //TODO: fix syntax highlighting
 4.  If a function explicitly defines a return type, all return
 statements must return a type conform to that type:
-math:[\[\begin{aligned}
+
+[math]
+--
+
         & F.typeRef \neq Undefined \\
         & \iff \\
         & \forall r \in F.body.stmts, r\ isa\ \lstnfbnf{ReturnStatement}: \\
         & r.expr\neq null \land \infType{r.expr.typeRef} <: \infType{F.typeRef}
-        \end{aligned}\]]
+
+--
+
 
 --
 
@@ -165,7 +180,7 @@ else (math:[$k>n$]):
 <<cdVarianceFunctionChart>> shows a simple example with the function type conformance relations.
 
 [[cdVarianceFunctionChart]]
-image::fig/cdVarianceFunctionChart.png[title="Function Variance Chart"]
+image::{find}fig/cdVarianceFunctionChart.png[title="Function Variance Chart"]
 
 ``{function()} $<:$ {function(A)} $<:$ {function(A, A)}`` might be surprising for Java programmers. However, in JavaScript it is
 possible to call a function with any number of arguments independently
@@ -174,16 +189,26 @@ from how many formal parameters the function defines. task:IDE-433[]
 If a function does not define a return type, `any` is assumed if at least one
 of the (indirectly) contained return statements contains an expression.
 Otherwise is assumed. This is also true if there is an error due to
-other constraint violations. math:[\[\begin{aligned}
+other constraint violations.
+[math]
+--
+
 & \infer{\tee f \lstnfbnf{'('} arglist\ \lstnfbnf{')'}: \type{any}}
         {binds(f,F)&F.returnType=\NULL & \exists r \in returns(F): r.expression \neq \NULL} \\
 & \infer{\tee f \lstnfbnf{'('} arglist\ \lstnfbnf{')'}: \type{void}}
-        {binds(f,F)&F.returnType=\NULL & \forall r \in returns(F): r.expression \neq \NULL}\end{aligned}\]]
-with math:[\[\begin{aligned}
+        {binds(f,F)&F.returnType=\NULL & \forall r \in returns(F): r.expression \neq \NULL}
+--
+
+with
+[math]
+--
+
 & \infer{returns(F): RETS}
         {\{r \in F.body.statements | \mu(r)=\type{ReturnStatement}\} \cup \bigcup_{s\in F.body.statements} returns(s)} \\
 & \infer{returns(s): RETS}
-        {\{sub \in s.statements | \mu(sub)=\type{ReturnStatement}\} \cup \bigcup_{sub\in s.statements} returns(sub)} \end{aligned}\]]
+        {\{sub \in s.statements | \mu(sub)=\type{ReturnStatement}\} \cup \bigcup_{sub\in s.statements} returns(sub)}
+--
+
 --
 
 .Function type conformance
@@ -403,11 +428,21 @@ method `void m(B param)`, it is valid to override `m` as `void m(A param)` in N4
 [req,id=IDE-80,version=1]
 --
 The upper bound of a function type math:[$F$] is a function type with the lower bound types of the parameters and the upper bound of the return type:
-math:[\[\begin{aligned} upper(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( lower(P_1),\dots,lower(P_n) ): upper(R)\end{aligned}\]]
+
+[math]
+--
+ upper(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( lower(P_1),\dots,lower(P_n) ): upper(R)
+--
+
 The lower bound of a function type math:[$F$] is a function type
 with the upper bound types of the parameters and the lower bound of the
 return type:
-math:[\[\begin{aligned} lower(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( upper(P_1),\dots,upper(P_n) ): lower(R)\end{aligned}\]]
+
+[math]
+--
+ lower(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( upper(P_1),\dots,upper(P_n) ): lower(R)
+--
+
 
 --
 
@@ -616,8 +651,13 @@ A function defined in a class’s method (or method modifier) builder is a
 method, see <<Methods>> for details and additional constraints.
 The metatype of a function definition is function type (<<_function-type,Function Type>>), as a function declaration is only a different syntax for creating a object.
 Constraints for function type are described in <<_function-type,Function Type>>. Another consequence is that the inferred type of a function definition math:[$fdecl$] is simply its function type
-math:[$F$]. math:[\[\begin{aligned}
-\infer{\infType{F}}{\infType{fdecl}}\end{aligned}\]] Note that the type
+math:[$F$].
+[math]
+--
+
+\infer{\infType{F}}{\infType{fdecl}}
+--
+ Note that the type
 of a function definition is different from its return type
 math:[$f.decl$]!
 

@@ -103,7 +103,10 @@ math:[$x\ \lstnfjs{instanceof}\ T \Rightarrow \lnot T.defStructural$]
 .  A type math:[$X$] is a subtype of a structurally defined type
 math:[$T$] either
 ..  if it is not a subtype of `N4Object` footnote:[We enforce programmers of N4JS to use nominal typing, therefore, it is not possible to bypass that principle by declaring a type as structural for normally defined classes (except those explicitly derived from `N4Object`).] but it contains all public,
-non-static members of that type math:[\[\begin{aligned}
+non-static members of that type 
+[math]
+--
+
     \infer{\tee X \subtype T}{
         {X \notsubtype \type{N4Object} \hspace{3em} T.defStructural} \\
         {\forall m \in T.members, m.acc=\lenum{public}, \neg m.static, m\neq T.ctor:}\\
@@ -112,18 +115,35 @@ non-static members of that type math:[\[\begin{aligned}
         {\hspace{2em} \land \tee m' \subtype m}\\
         {\hspace{2em} \land \mu(m)=\type{Field} \to \tee m \subtype m'}
     }
-    \end{aligned}\]]or
+    
+--
+or
 ..  if it is a subtype of `N4Object` which explicitly extends or implements the
-structurally defined type. math:[\[\begin{aligned}
+structurally defined type. 
+[math]
+--
+
     \infer{\tee X \subtype T}{X \subtype \type{N4Object} & T.defStructural & {T \in X.superTypes^* }}
-    \end{aligned}\]]
+    
+--
+
 ..  A structurally defined type math:[$T$] is implicitly derived
 from `Object` if no other type is specified. In particular, a structurally
-defined type must not be inherited from math:[\[\begin{aligned}
+defined type must not be inherited from 
+[math]
+--
+
     \infer{\tee T \subtype \lstnfjs{Object}}{T.defStructural}
-    \end{aligned}\]] math:[\[\begin{aligned}
+    
+--
+ 
+[math]
+--
+
     T.defStructural \Rightarrow \tee T \notsubtype \lstnfjs{N4Object} \land \lstnfjs{N4Object} \not\in T.superTypes^*
-    \end{aligned}\]]
+    
+--
+
 --
 
 .Declaration Site Structural Typing
@@ -443,89 +463,144 @@ initializer field version of math:[$T$].
 [req,id=IDE-76,version=1]
 --
 1.  The structural version of a type is a supertype of the nominal type:
-math:[\[\begin{aligned}
-T \subtype \tsStr T\end{aligned}\]]
+
+[math]
+--
+
+T \subtype \tsStr T
+--
+
 2.  The structural field version of a type is a supertype of the
-structural type: math:[\[\begin{aligned}
-\tsStr T \subtype \tsFld T\end{aligned}\]]
+structural type: 
+[math]
+--
+
+\tsStr T \subtype \tsFld T
+--
+
 3.  The structural read-only field version of a type is a supertype of
-the structural field type: math:[\[\begin{aligned}
-\tsFld T \subtype \tsRoFld T\end{aligned}\]]
+the structural field type: 
+[math]
+--
+
+\tsFld T \subtype \tsRoFld T
+--
+
 4.  The structural write-only field version of a type is a supertype of
-the structural field type: math:[\[\begin{aligned}
-\tsFld T \subtype \tsWoFld T\end{aligned}\]]
+the structural field type: 
+[math]
+--
+
+\tsFld T \subtype \tsWoFld T
+--
+
 5.  The structural (field) version of a type cannot be used on the right
-hand side of the `instanceof` operator: math:[\[\begin{aligned}
+hand side of the `instanceof` operator: 
+[math]
+--
+
 & x\ \lstnfjs{instanceof}\ E \Rightarrow \tee E: T \\
 & \hspace{3em}\to \lnot (T.refStructural \\
 & \hspace{6em}\lor T.refStructuralField \\
 & \hspace{6em}\lor T.refStructuralReadOnlyField \\
 & \hspace{6em}\lor T.refStructuralWriteOnlyField \\
-& \hspace{6em}\lor T.refStructuralInitField)\end{aligned}\]] That is,
+& \hspace{6em}\lor T.refStructuralInitField)
+--
+ That is,
 the following code will always issue an error: ``pass:[x instanceof ~T]``.
 footnote:[Since this is already prevented by the parser (the tilde is interpreted as an unary operator), error messages are likely to look a little strange.]
 6.  A type math:[$X$] is a subtype of a structural version of a
 type math:[$\tsStr T$], if it contains all public, non-static
 members of the type math:[$T$]:
 footnote:[Note that due to this relaxed definition (compared with definition-site structural types) it is possible to pass an `N4Object` instance to a function of method with a declared structural type parameter.]
-math:[\[\begin{aligned}
+
+[math]
+--
+
 \infer{\tee X \subtype \tee \tsStr T}
     {{\forall m \in T.members, m.owner \not\in \types{N4Object}, m.acc=\lenum{public}, \neg m.static, m\neq T.ctor:}\\
     {\hspace{1em} \exists m' \in X.members:}\\
     {\hspace{2em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name}\\
-    {\hspace{2em} \land \tee m' \subtype \tee m}}\end{aligned}\]]
+    {\hspace{2em} \land \tee m' \subtype \tee m}}
+--
+
 7.  A type math:[$X$] is a subtype of a structural field version of
 a type math:[$\tsFld T$], if it contains all public, non-static and
 non-optional fields of the type math:[$T$]:
-math:[\[\begin{aligned}
+
+[math]
+--
+
 \infer{\tee X \subtype \tsFld T}
     {{\forall m \in T.fields, m.owner \not\in \types{N4Object}, m.acc=\lenum{public}, \neg m.static}\\
     {{\hspace{1em} \nexists m' \in X.fields}: m.optional}\\
     {\hspace{1em} \lor\ \exists m' \in X.fields:}\\
     {\hspace{3em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name}\\
     {\hspace{3em} \land \tee m': T_m \land \tee m: T_{m'} \land T_m=T_{m'}} \\
-    {\hspace{3em} \land m'.assignability\geq m.assignability}}\end{aligned}\]]
+    {\hspace{3em} \land m'.assignability\geq m.assignability}}
+--
+
 8.  A type math:[$X$] is a subtype of a structural read-only field
 version of a type math:[$\tsRoFld T$], if it contains all public,
 non-optional and non-static readable fields of the type math:[$T$]:
-math:[\[\begin{aligned}
+
+[math]
+--
+
 \infer{\tee X \subtype \tsRoFld T}
     {{\forall m \in T.fields \cup T.getters, m.owner \not\in \types{N4Object}, m.acc=\lenum{public}, \neg m.static}\\
     {{\hspace{1em} \nexists m' \in X.fields \cup X.getters}: m.optional}\\
     {\hspace{1em} \lor\ \exists m' \in X.fields \cup X.getters:}\\
     {\hspace{3em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name}\\
     {\hspace{3em} \land \tee m': T_m \land \tee m: T_{m'} \land T_m=T_{m'}} \\
-    {\hspace{3em} \land m'.assignability\geq m.assignability}}\end{aligned}\]]
+    {\hspace{3em} \land m'.assignability\geq m.assignability}}
+--
+
 9.  A type math:[$X$] is a subtype of a structural write-only field
 version of a type math:[$\tsWoFld T$], if it contains all public,
 non-optional and non-static writable fields of the type math:[$T$]:
-math:[\[\begin{aligned}
+
+[math]
+--
+
 \infer{\tee X \subtype \tsWoFld T}
     {{\forall m \in T.fields \cup T.setters, m.owner \not\in \types{N4Object}, m.acc=\lenum{public}, \neg m.static, \neg m.final}\\
     {{\hspace{1em} \nexists m' \in X.fields \cup X.setters}: m.optional}\\
     {\hspace{1em} \lor\ \exists m' \in X.fields \cup X.setters:}\\
     {\hspace{3em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name}\\
     {\hspace{3em} \land \tee m': T_m \land \tee m: T_{m'} \land T_m=T_{m'}} \\
-    {\hspace{3em} \land m'.assignability\geq m.assignability}}\end{aligned}\]]
+    {\hspace{3em} \land m'.assignability\geq m.assignability}}
+--
+
 10. A type math:[$X$] is a subtype of a structural field version of
 a type math:[$\tsFld this$], if it contains all public, non-static
 and non-optional fields, either defined via data fields or field get
 accessors, of the inferred type of `this`. _All fields which have an
 initializer are handled as if they were optional._
-math:[\[\begin{aligned}
+
+[math]
+--
+
 \infer{\tee X \subtype \tsFld this}
     {{\tee this:  T} \\
     {\forall m \in T.fields \cup T.setters, m.owner \not\in \types{N4Object}, m.acc=\lenum{public}, \neg m.static}\\
     {{\hspace{1em} \nexists m' \in X.fields \cup X.getters}: m.optional \lor m.expr \neq \NULL} \\
     {\hspace{1em} \lor\ \exists m' \in X.fields \cup X.getters:}\\
     {\hspace{3em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name}\\
-    {\hspace{3em} \land \tee m' \subtype m} \land m'.assignability\geq m.assignability}\end{aligned}\]]
+    {\hspace{3em} \land \tee m' \subtype m} \land m'.assignability\geq m.assignability}
+--
+
 11. A structural field type math:[$\tsFld T$] is a subtype of a
 structural type math:[$\tsStr X$], if math:[$\tsStr X$] only
 contains fields (except methods inherited from `Object`) and if
-math:[$\tsFld T \subtype \tsFld X$]. math:[\[\begin{aligned}
+math:[$\tsFld T \subtype \tsFld X$]. 
+[math]
+--
+
 \infer{\tee \tsFld T \subtype \tsStr X}
-    {X.methods \setminus \lstnfjs{Object}.methods = \emptyset \land \tee \tsFld T \subtype \tsFld X}\end{aligned}\]]
+    {X.methods \setminus \lstnfjs{Object}.methods = \emptyset \land \tee \tsFld T \subtype \tsFld X}
+--
+
 12. Use-site structural typing cannot be used for declaring supertypes
 of classes or interfaces. That is to say that structural types cannot be
 used after `extends`, `implements` or `eith` in type declarations.
@@ -538,8 +613,13 @@ reflective features (cf. <<_reflection-meta-information,Reflection Meta Informat
 that it can be used to check the type of an instance.
 
 If a type math:[$X$] is a (nominal) subtype of T, it is, of course,
-also a subtype of math:[$\tsStr T$]: math:[\[\begin{aligned}
-\infer{\tee X \subtype \tee \tsStr T}{\tee X \subtype \tee T}\end{aligned}\]]
+also a subtype of math:[$\tsStr T$]: 
+[math]
+--
+
+\infer{\tee X \subtype \tee \tsStr T}{\tee X \subtype \tee T}
+--
+
 This is only a shortcut for the type inference defined above.
 
 .Definition and Use-Site Precedence

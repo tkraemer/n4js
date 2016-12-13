@@ -1,5 +1,6 @@
 
 = Names
+:find:
 ////
 Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
@@ -119,9 +120,9 @@ h|Modifier h|Module h| Project h| Vendor h| World
 |===
 
 math:[$TAM$] is a totally ordered set:
-math:[\[\begin{aligned}
-\lenum{private} < \lenum{project} < \lenum{public@Internal} < \lenum{public}
-\end{aligned}\]]
+
+$$\lenum{private} < \lenum{project} < \lenum{public@Internal} < \lenum{public}$$
+
 
 .Type Access Modifiers
 [req,id=IDE-3,version=1]
@@ -146,8 +147,13 @@ modifier is explicitly specified.
 .Type Accessibility T
 [def]
 --
-The function math:[\[\begin{aligned}
-\alpha_T: TypeReference \times TypeDeclaration \to Boolean\end{aligned}\]]
+The function
+[math]
+--
+
+\alpha_T: TypeReference \times TypeDeclaration \to Boolean
+--
+
 computes whether a given type, (top-level) variable or function
 reference can access the declaration that it references.
 math:[$\alpha_T$] is defined with .
@@ -155,12 +161,17 @@ math:[$\alpha_T$] is defined with .
 Formally, we define math:[$\alpha_T$] for a given reference
 math:[$r$] and a module top level variable, function or type
 declaration math:[$D$] as follows: footnote:[See for definitions of metatype properties.]
-math:[\[\begin{aligned}
+
+[math]
+--
+
 &\infer{\alpha_T(r, D)}{D.acc=\lenum{public} }\\
 &\infer{\alpha_T(r, D)}{D.acc=\lenum{public@Internal} & r.vendor=D.vendor}\\
 &\infer{\alpha_T(r, D)}{D.acc=\lenum{project} & r.project=D.project}\\
 &\infer{\alpha_T(r, D)}{D.acc=\lenum{private} & r.module=D.module}
-\end{aligned}\]]
+
+--
+
 If the type of the arguments is clear from the context, we simply write
 math:[$\alpha(r,D)$] instead of math:[$\alpha_T(r,D)$].
 
@@ -216,12 +227,17 @@ enum MemberAccessModifier:    private
 
 The modifiers and may be annotated with . Thus, we can define the
 following set of member access modifiers:
-math:[\[\begin{aligned}
+
+[math]
+--
+
 MAM &= \{ & \\
 &\lenum{private}, \lenum{protected@Internal}, \lenum{protected}, \\
 &\lenum{project}, \lenum{public@Internal}, \lenum{public}\\
 \}
-\end{aligned}\]]
+
+--
+
 `protected@Internal` and `public@Internal` are synthesized tags and were
 introduced as shorthand notation for the `@Internal` annotation together with `protected` or `public` access modifiers.
 The modifier is the default one and it can be omitted.
@@ -260,13 +276,22 @@ export @Internal public class C {
 
 math:[$MAM$] does not define a totally ordered set. However, its
 subset
-math:[\[\begin{aligned}
+
+[math]
+--
+
 MAM \backslash \{\lenum{public@Internal}\}
-\end{aligned}\]] is a totally
-ordered set footnote:[That is, for application developers not providing a library or a public API available to other vendors, member access modifiers behave almost similar to modifiers known from Java.] :
-math:[\[\begin{aligned}
+
+--
+is a totally ordered set footnote:[That is, for application developers not providing a library or a public API available to other vendors, member access modifiers behave almost similar to modifiers known from Java.] :
+
+[math]
+--
+
 \lenum{private} < \lenum{project} < \lenum{protected@Internal} < \lenum{protected} < \lenum{public}
-\end{aligned}\]]
+
+--
+
 
 <<tab:Member-Access-Controls,Table Member Access Controls>> shows which members are accessible from where.
 
@@ -288,18 +313,30 @@ math:[\[\begin{aligned}
 [def]
 --
 We define the relation
-math:[\[\begin{aligned} & = \hspace{1em}: \hspace{1em} TAM \times MAM\end{aligned}\]] as follows:
-math:[\[\begin{aligned}
+
+[math]
+--
+& = \hspace{1em}: \hspace{1em} TAM \times MAM
+--
+
+as follows:
+
+[math]
+--
 & = \hspace{1em}: \hspace{1em} TAM \times MAM
 \end{align*} as follows:
 \begin{align*}
-    = \hspace{1em} ::= \{ &     (\lenum{private}, \lenum{private} ), (\lenum{project}, \lenum{project} ),\\
-                    & (\lenum{public@Internal},\lenum{public@Internal}), (\lenum{public}, \lenum{public} ) \}
-\end{aligned}\]]
+= \hspace{1em} ::= \{ &     (\lenum{private}, \lenum{private} ), (\lenum{project}, \lenum{project} ),\\
+& (\lenum{public@Internal},\lenum{public@Internal}), (\lenum{public}, \lenum{public} ) \}
+--
+
 We further define the relation math:[$\geq : TAM \times MAM$] as follows:
-math:[\[\begin{aligned}
+
+[math]
+--
 \infer{tam \geq mam}{\exists mam'\in MAM: tam = mam' \land mam' \geq mam}
-\end{aligned}\]]
+--
+
 Less, greater then etc. are defined accordingly.
 --
 
@@ -328,14 +365,19 @@ declaration.]
 
 footnote:[Note, the Java-like access restriction for members of visibility `protected` or `protected@Internal` to code that is responsible for the implementation of that object. cite:[Gosling15a(S6.6.2,p.166)]]
 
- math:[\[\begin{aligned}
+
+[math]
+--
+
 &\infer{\alpha_m(r, M)}{M.acc = \lenum{public}}\\
 &\infer{\alpha_m(r, M)}{r.vendor = M.vendor & M.acc = \lenum{public@Internal}}\\
 &\infer{\alpha_m(r, M)}{r.owner \in r.receiver.super^* & M.acc = \lenum{protected}}\\
 &\infer{\alpha_m(r, M)}{r.owner \in r.receiver.super^* & r.vendor = M.vendor & M.acc = \lenum{protected@Internal}}\\
 &\infer{\alpha_m(r, M)}{r.project = M.project & M.acc = \lenum{project}}\\
 &\infer{\alpha_m(r, M)}{r.module = r.module & M.acc =\lenum{private}}\\
-\end{aligned}\]]
+
+--
+
 
 If the type of the arguments is clear from the context, we simply write
 math:[$\alpha(r,M)$] instead of math:[$\alpha_m(r,M)$].
@@ -673,7 +715,7 @@ footnote:[This conflicts with the implicit parameter arguments introduced by the
 The figure Forbidden Shadowing below shows nested lexical environments with named elements declared inside (all named `x` here), the forbidden cases are marked with arrows (the numbers at the left side refer to the numbers in <<IDE-8,Forbidden Shadowing>>.
 +
 .Forbidden Shadowing
-image::fig/shadowing.png[]
+image::{find}fig/shadowing.png[]
 
 Rationale:
 
