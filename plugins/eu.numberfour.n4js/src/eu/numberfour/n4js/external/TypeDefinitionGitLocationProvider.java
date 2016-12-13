@@ -32,8 +32,8 @@ public interface TypeDefinitionGitLocationProvider {
 	TypeDefinitionGitLocation getGitLocation();
 
 	/**
-	 * TypeDefinitionGitLocationProviderImpl implementation that points to the public Git repository with the type definitions. This repository is
-	 * accessible via HTTPS and requires no SSH session factory creation.
+	 * TypeDefinitionGitLocationProviderImpl implementation that points to the public Git repository with the type
+	 * definitions. This repository is accessible via HTTPS and requires no SSH session factory creation.
 	 */
 	public static final class TypeDefinitionGitLocationProviderImpl implements TypeDefinitionGitLocationProvider {
 
@@ -99,7 +99,8 @@ public interface TypeDefinitionGitLocationProvider {
 		/**
 		 * The default location for the type definition file. Used in the production code.
 		 */
-		PUBLIC_DEFINITION_LOCATION("n4jsd", "https://github.com/NumberFour/n4jsd.git"),
+		// TODO: Do NOT forget to change this before merging!
+		PUBLIC_DEFINITION_LOCATION("n4jsd", "https://github.com/kduske-n4/n4jsd.git"),
 
 		/**
 		 * Type definition location for testing purposes.
