@@ -17,8 +17,8 @@ import org.eclipse.emf.ecore.EObject;
  * JavaScript in unrestricted or strict mode, type definition files (N4JSD) etc. It also is re-used by sublanguage (such
  * as JSX). Instead of replacing the validators (or other components) for these variants (which may be an additional
  * technique), the variant helper allows fine-grained control of what kind of constraints to check. An instance of the
- * helper is to be provided by the injector; N4Js uses the {@link DefaultJavaScriptVariantHelper}, sub-languages may
- * bind to a different implementation.
+ * helper is to be provided by the injector; N4Js uses the {@link N4JSJavaScriptVariantHelper}, sub-languages may bind
+ * to a different implementation.
  */
 public interface JavaScriptVariantHelper {
 
