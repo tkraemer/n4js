@@ -20,7 +20,6 @@ import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4jsx.helpers.ReactHelper
 import eu.numberfour.n4jsx.n4JSX.JSXElement
 import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute
-import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
@@ -68,11 +67,13 @@ class N4JSXUnsupportedExpressionTypeHelper extends DefaultUnsupportedExpressionT
 	override public TypeRef expectedExpressionTypeInEObject(EObject container, Expression expression,
 		RuleEnvironment G) {
 		if (container instanceof JSXPropertyAttribute) {
-			val Result<TypeRef> result = ts.type(G, container.property);
-			return result.value;
+			val jsxElem = (container.eContainer) as JSXElement;
+			val propsType = jsxElem.propsType;
+			//Reason for using tau: Consider type arguments by calculating the property of within the context of "props" type 
+			return ts.tau(container.property, propsType);
 		}		
-		else {
-			return super.expectedExpressionTypeInEObject(container, expression, G);
-		}
+		
+		return super.expectedExpressionTypeInEObject(container, expression, G);
+		
 	}
 }

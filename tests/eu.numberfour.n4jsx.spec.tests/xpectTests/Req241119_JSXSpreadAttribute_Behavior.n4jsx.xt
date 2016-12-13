@@ -115,3 +115,29 @@ class Box6 extends React.Component<Box6Props, Object> {
         </div>
     }
 }
+
+// Test parameterized props type
+interface P<T> extends React.ComponentProps {
+    public t: T;
+}
+class C extends React.PureComponent<P<int>, undefined> {
+    @Override
+    public render(): React.Element {
+        return null;
+    }
+}
+
+// XPECT noerrors
+<C t={5} />
+
+function D(props: P<int>): React.Element {
+	return <div/>;
+}
+
+var obj = {
+	t: 5
+};
+
+// XPECT noerrors
+<D {...obj} />;
+

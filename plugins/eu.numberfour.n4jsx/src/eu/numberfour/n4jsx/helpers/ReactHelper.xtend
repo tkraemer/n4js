@@ -16,6 +16,9 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.types.TClassifier
+import eu.numberfour.n4js.ts.types.TField
+import eu.numberfour.n4js.ts.types.TGetter
+import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
@@ -135,5 +138,20 @@ class ReactHelper {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Return the type of a field or return type of a getter
+	 * 
+	 * @param member MUST be either a field or getter
+	 */
+	def public typeRefOfFieldOrGetter(TMember member) {
+		if (member instanceof TField) {
+			return member.typeRef;
+		} else if (member instanceof TGetter) {
+			return member.declaredTypeRef;
+		} else {
+			throw new IllegalArgumentException(member + " must be either a TField or TGetter");
+		}
 	}
 }
