@@ -658,4 +658,18 @@ public abstract class TranspilerComponent {
 		return getSymbolTableEntryInternal("require", true);
 	}
 
+	// ################################################################################################################
+	// JSX RELATED THINGS (TODO IDE-2416 remove this from n4js transpiler)
+
+	/** "React" - retrieve the internal symbol table entry for the symbol "React" */
+	public SymbolTableEntryInternal steFor_React() {
+
+		return getSymbolTableEntryInternal("React", true);
+	}
+
+	/** "createElement" - retrieve the internal symbol table entry for the symbol "createElement" */
+	public SymbolTableEntryInternal steFor_createElement() {
+
+		return getSymbolTableEntryInternal("createElement", true);
+	}
 }
