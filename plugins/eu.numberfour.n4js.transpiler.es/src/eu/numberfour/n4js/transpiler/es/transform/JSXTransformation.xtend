@@ -23,6 +23,7 @@ import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute
 import eu.numberfour.n4jsx.n4JSX.JSXSpreadAttribute
 
 import static eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 
 /**
  * 
@@ -81,7 +82,7 @@ class JSXTransformation extends Transformation {
 					attr.valueExpressionFromPropertyAttribute)
 			}
 			JSXSpreadAttribute:
-				throw new UnsupportedOperationException
+				_PropertyNameValuePair(N4JSLanguageUtils.SPREAD_IN_OJECT_LITERAL_WORK_AROUND, attr.expression)
 		}
 	}
 

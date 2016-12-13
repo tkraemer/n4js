@@ -659,6 +659,11 @@ import eu.numberfour.n4jsx.n4JSX.N4JSXPackage;
 
 	@Override
 	public Boolean casePropertyNameValuePair(PropertyNameValuePair original) {
+		if (N4JSLanguageUtils.SPREAD_IN_OJECT_LITERAL_WORK_AROUND.equals(original.getName())) {
+			write("... ");
+			process(original.getExpression());
+			return DONE;
+		}
 		processPropertyName(original);
 		write(": ");
 		process(original.getExpression());
