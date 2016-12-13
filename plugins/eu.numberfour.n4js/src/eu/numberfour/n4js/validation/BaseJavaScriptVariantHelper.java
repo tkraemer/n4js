@@ -12,6 +12,7 @@ package eu.numberfour.n4js.validation;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -48,8 +49,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 * This class defines all validation features.
 	 */
 	private static class ValidationFeatureBase {
-		// This empty class allows for defining validation features as classes instead of enums
-		// so that we can
+		// This empty class allows for defining validation features as classes instead of enums.
 	}
 
 	static class ValidationFeature<T> extends ValidationFeatureBase {
@@ -209,15 +209,15 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 		public boolean equals(Object obj) {
 			if (obj instanceof FileExtensionValidationFeaturePair) {
 				FileExtensionValidationFeaturePair otherKey = (FileExtensionValidationFeaturePair) obj;
-				return fileExtension.equals(otherKey.fileExtension)
-						&& validationFeature.equals(otherKey.validationFeature);
+				return Objects.equals(fileExtension, otherKey.fileExtension)
+						&& Objects.equals(validationFeature, otherKey.validationFeature);
 			}
 			return false;
 		}
 
 		@Override
 		public int hashCode() {
-			return fileExtension.hashCode() + 31 * validationFeature.hashCode();
+			return Objects.hash(fileExtension, validationFeature);
 		}
 	}
 
@@ -240,6 +240,9 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	 *
 	 */
 	protected <T> void addEntry(String fileExtension, ValidationFeature<T> feature, T value) {
+		Objects.requireNonNull(fileExtension);
+		Objects.requireNonNull(feature);
+		Objects.requireNonNull(value);
 		table.put(new FileExtensionValidationFeaturePair(fileExtension, feature), value);
 	}
 
