@@ -65,6 +65,11 @@ package final class N4JSPreProcessor {
 			if (target instanceof IdentifierRef) {
 				if (target.idAsText == 'Symbol') {
 					return ComputedPropertyNameValueConverter.SYMBOL_IDENTIFIER_PREFIX + expr.propertyAsText;
+				} else {
+					// this case implements support for literals of @StringBased enums
+					// (but here we cannot ensure that 'target' is actually a @StringBased enum, because that would require
+					// resolution of proxies which we are not allowed to do)
+					return expr.propertyAsText;
 				}
 			}
 		}

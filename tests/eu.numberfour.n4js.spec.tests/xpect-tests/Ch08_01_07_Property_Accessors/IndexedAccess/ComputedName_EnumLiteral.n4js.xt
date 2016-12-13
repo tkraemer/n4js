@@ -1,0 +1,63 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+@StringBased enum E1 {
+	A
+}
+@StringBased enum E2 {
+	LitA: 'A'
+}
+
+
+let obj = {
+	// XPECT noerrors -->
+	[E1.A]: "hello"
+};
+
+
+// we now test both read and write access via IndexedAccessExpressions using an enum literal as index:
+
+obj[E1.A] = "value 1";
+console.log(obj[E1.A]);
+console.log(obj[E2.LitA]);
+console.log(obj['A']);
+console.log(obj.A);
+
+console.log("===");
+
+obj["A"] = "value 2";
+console.log(obj[E1.A]);
+console.log(obj[E2.LitA]);
+console.log(obj['A']);
+console.log(obj.A);
+
+console.log("===");
+
+obj.A = "value 3";
+console.log(obj[E1.A]);
+console.log(obj[E2.LitA]);
+console.log(obj['A']);
+console.log(obj.A);
+
+
+/* XPECT output --- 
+<==
+stdout:
+value 1
+value 1
+value 1
+value 1
+===
+value 2
+value 2
+value 2
+value 2
+===
+value 3
+value 3
+value 3
+value 3
+stderr:
+==>
+--- */
+

@@ -55,4 +55,13 @@ public interface TEnumLiteral extends SyntaxRelatedTElement, IdentifiableElement
 	 */
 	void setValue(String value);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _elvis = null;\n<%java.lang.String%> _value = this.getValue();\nif (_value != null)\n{\n\t_elvis = _value;\n} else\n{\n\t<%java.lang.String%> _name = this.getName();\n\t_elvis = _name;\n}\nreturn _elvis;'"
+	 * @generated
+	 */
+	String getValueOrName();
+
 } // TEnumLiteral

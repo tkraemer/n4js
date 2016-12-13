@@ -2118,7 +2118,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleTypeIndexedAccessExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final IndexedAccessExpression expr) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    /* { expr.target instanceof SuperLiteral T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } or { G |- expr.target : var TypeRef targetTypeRef targetTypeRef = typeSystemHelper.resolveType(G, targetTypeRef); val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(expr.index); val elementType = targetTypeRef.declaredType?.elementType if (accessedBuiltInSymbol!==null) { val declType = targetTypeRef.declaredType; if(declType instanceof ContainerType<?>) { val memberName = '#' + accessedBuiltInSymbol.name; val member = containerTypesHelper.fromContext(expr).findMember(declType,memberName,false,false); if(member!==null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else { T = G.anyTypeRef } } else if (elementType !== null) { val declaredType = targetTypeRef.declaredType if (declaredType.generic && targetTypeRef.typeArgs.isEmpty) { T = G.anyTypeRef } else { val G2 = G.wrap typeSystemHelper.addSubstitutions(G2, targetTypeRef) G2.addThisType(targetTypeRef) G2 |- elementType ~> T } } else if (expr.index instanceof StringLiteral) { val staticAccess = (targetTypeRef instanceof TypeTypeRef) val checkVisibility = false val scope = memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess) val memberName = (expr.index as StringLiteral).value; val member = memberScopingHelper.findUniqueMemberForName(scope, memberName, staticAccess) if(member != null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else if (targetTypeRef.dynamic) { T = G.anyTypeRefDynamic } else { T = G.anyTypeRef } } */
+    /* { expr.target instanceof SuperLiteral T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } or { G |- expr.target : var TypeRef targetTypeRef targetTypeRef = typeSystemHelper.resolveType(G, targetTypeRef); val memberName = N4JSLanguageUtils.getMemberNameForIndexExpression(G, expr.index); val elementType = targetTypeRef.declaredType?.elementType if (memberName!==null && memberName.startsWith(N4JSLanguageUtils.SYMBOL_IDENTIFIER_PREFIX)) { val declType = targetTypeRef.declaredType; if(declType instanceof ContainerType<?>) { val member = containerTypesHelper.fromContext(expr).findMember(declType,memberName,false,false); if(member!==null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else { T = G.anyTypeRef } } else if (memberName!==null) { val staticAccess = (targetTypeRef instanceof TypeTypeRef) val checkVisibility = false val scope = memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess) val member = memberScopingHelper.findUniqueMemberForName(scope, memberName, staticAccess) if(member != null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else if (elementType !== null) { val declaredType = targetTypeRef.declaredType if (declaredType.generic && targetTypeRef.typeArgs.isEmpty) { T = G.anyTypeRef } else { val G2 = G.wrap typeSystemHelper.addSubstitutions(G2, targetTypeRef) G2.addThisType(targetTypeRef) G2 |- elementType ~> T } } else if (targetTypeRef.dynamic) { T = G.anyTypeRefDynamic } else { T = G.anyTypeRef } } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -2141,18 +2141,16 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         TypeRef _resolveType = this.typeSystemHelper.resolveType(G, targetTypeRef);
         targetTypeRef = _resolveType;
         Expression _index = expr.getIndex();
-        final TField accessedBuiltInSymbol = RuleEnvironmentExtensions.getAccessedBuiltInSymbol(G, _index);
+        final String memberName = N4JSLanguageUtils.getMemberNameForIndexExpression(G, _index);
         Type _declaredType = targetTypeRef.getDeclaredType();
         TypeRef _elementType = null;
         if (_declaredType!=null) {
           _elementType=_declaredType.getElementType();
         }
         final TypeRef elementType = _elementType;
-        if ((accessedBuiltInSymbol != null)) {
+        if (((memberName != null) && memberName.startsWith(N4JSLanguageUtils.SYMBOL_IDENTIFIER_PREFIX))) {
           final Type declType = targetTypeRef.getDeclaredType();
           if ((declType instanceof ContainerType<?>)) {
-            String _name = accessedBuiltInSymbol.getName();
-            final String memberName = ("#" + _name);
             ContainerTypesHelper.MemberCollector _fromContext = this.containerTypesHelper.fromContext(expr);
             final TMember member = _fromContext.findMember(((ContainerType<?>)declType), memberName, false, false);
             if ((member != null)) {
@@ -2179,49 +2177,46 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
             T = _anyTypeRef;
           }
         } else {
-          if ((elementType != null)) {
-            final Type declaredType = targetTypeRef.getDeclaredType();
-            if ((declaredType.isGeneric() && targetTypeRef.getTypeArgs().isEmpty())) {
-              ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
-              T = _anyTypeRef_1;
-            } else {
+          if ((memberName != null)) {
+            final boolean staticAccess = (targetTypeRef instanceof TypeTypeRef);
+            final boolean checkVisibility = false;
+            final IScope scope = this.memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess);
+            final TMember member_1 = this.memberScopingHelper.findUniqueMemberForName(scope, memberName, staticAccess);
+            boolean _notEquals = (!Objects.equal(member_1, null));
+            if (_notEquals) {
+              /* G |- member : var TypeRef memberTypeRef */
+              TypeRef memberTypeRef_1 = null;
+              Result<TypeRef> result_3 = typeInternal(G, _trace_, member_1);
+              checkAssignableTo(result_3.getFirst(), TypeRef.class);
+              memberTypeRef_1 = (TypeRef) result_3.getFirst();
+              
               final RuleEnvironment G2_1 = RuleEnvironmentExtensions.wrap(G);
               this.typeSystemHelper.addSubstitutions(G2_1, targetTypeRef);
               RuleEnvironmentExtensions.addThisType(G2_1, targetTypeRef);
-              /* G2 |- elementType ~> T */
-              Result<TypeArgument> result_3 = substTypeVariablesInternal(G2_1, _trace_, elementType);
-              checkAssignableTo(result_3.getFirst(), TypeRef.class);
-              T = (TypeRef) result_3.getFirst();
+              /* G2 |- memberTypeRef ~> T */
+              Result<TypeArgument> result_4 = substTypeVariablesInternal(G2_1, _trace_, memberTypeRef_1);
+              checkAssignableTo(result_4.getFirst(), TypeRef.class);
+              T = (TypeRef) result_4.getFirst();
               
+            } else {
+              UnknownTypeRef _createUnknownTypeRef_2 = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
+              T = _createUnknownTypeRef_2;
             }
           } else {
-            Expression _index_1 = expr.getIndex();
-            if ((_index_1 instanceof StringLiteral)) {
-              final boolean staticAccess = (targetTypeRef instanceof TypeTypeRef);
-              final boolean checkVisibility = false;
-              final IScope scope = this.memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess);
-              Expression _index_2 = expr.getIndex();
-              final String memberName_1 = ((StringLiteral) _index_2).getValue();
-              final TMember member_1 = this.memberScopingHelper.findUniqueMemberForName(scope, memberName_1, staticAccess);
-              boolean _notEquals = (!Objects.equal(member_1, null));
-              if (_notEquals) {
-                /* G |- member : var TypeRef memberTypeRef */
-                TypeRef memberTypeRef_1 = null;
-                Result<TypeRef> result_4 = typeInternal(G, _trace_, member_1);
-                checkAssignableTo(result_4.getFirst(), TypeRef.class);
-                memberTypeRef_1 = (TypeRef) result_4.getFirst();
-                
+            if ((elementType != null)) {
+              final Type declaredType = targetTypeRef.getDeclaredType();
+              if ((declaredType.isGeneric() && targetTypeRef.getTypeArgs().isEmpty())) {
+                ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
+                T = _anyTypeRef_1;
+              } else {
                 final RuleEnvironment G2_2 = RuleEnvironmentExtensions.wrap(G);
                 this.typeSystemHelper.addSubstitutions(G2_2, targetTypeRef);
                 RuleEnvironmentExtensions.addThisType(G2_2, targetTypeRef);
-                /* G2 |- memberTypeRef ~> T */
-                Result<TypeArgument> result_5 = substTypeVariablesInternal(G2_2, _trace_, memberTypeRef_1);
+                /* G2 |- elementType ~> T */
+                Result<TypeArgument> result_5 = substTypeVariablesInternal(G2_2, _trace_, elementType);
                 checkAssignableTo(result_5.getFirst(), TypeRef.class);
                 T = (TypeRef) result_5.getFirst();
                 
-              } else {
-                UnknownTypeRef _createUnknownTypeRef_2 = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
-                T = _createUnknownTypeRef_2;
               }
             } else {
               boolean _isDynamic = targetTypeRef.isDynamic();

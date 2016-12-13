@@ -18,9 +18,7 @@ ar[5]=42;
 // XPECT errors --> "Indexed access on Array requires numeric index: string is not a subtype of number." at ""hello""
 ar["hello"]="1";
 // XPECT errors --> "Indexed access on Array requires numeric index: string is not a subtype of number." at ""hello""
-ar["hello"]=
-// XPECT errors --> "int is not a subtype of string." at "1"
-	1;
+ar["hello"]=1;
 
 var ol = {
 	p1: "Hello",
