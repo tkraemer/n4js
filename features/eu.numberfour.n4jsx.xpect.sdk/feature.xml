@@ -10,10 +10,9 @@ Contributors:
   NumberFour AG - Initial API and implementation
 -->
 <feature
-      id="eu.numberfour.n4jsx.sdk"
-      label="N4JSX IDE SDK"
+      id="eu.numberfour.n4jsx.xpect.sdk"
+      label="N4JSX XPECT Tests"
       version="0.0.1.qualifier"
-      provider-name="NumberFour AG"
       license-feature="org.eclipse.license"
       license-feature-version="1.0.1.v20140414-1359">
 
@@ -34,14 +33,7 @@ NumberFour AG - Initial API and implementation
    </copyright>
 
    <plugin
-         id="eu.numberfour.n4jsx"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="eu.numberfour.n4jsx.ui"
+         id="eu.numberfour.n4jsx.xpect.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
