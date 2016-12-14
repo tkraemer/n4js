@@ -274,26 +274,36 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 			_rawTypeAsString=_declaredType.getRawTypeAsString();
 		}
 		String _xifexpression = null;
-		EList<TypeArgument> _typeArgs = this.getTypeArgs();
-		boolean _isEmpty = _typeArgs.isEmpty();
-		if (_isEmpty) {
-			_xifexpression = "";
+		int _version = this.getVersion();
+		boolean _greaterThan = (_version > 0);
+		if (_greaterThan) {
+			int _version_1 = this.getVersion();
+			_xifexpression = ("#" + Integer.valueOf(_version_1));
 		}
 		else {
-			EList<TypeArgument> _typeArgs_1 = this.getTypeArgs();
-			final Function1<TypeArgument, String> _function = new Function1<TypeArgument, String>() {
-				public String apply(final TypeArgument it) {
-					return it.getTypeRefAsString();
-				}
-			};
-			EList<String> _map = XcoreEListExtensions.<TypeArgument, String>map(_typeArgs_1, _function);
-			String _join = IterableExtensions.join(_map, ",");
-			String _plus = ("<" + _join);
-			_xifexpression = (_plus + ">");
+			String _xifexpression_1 = null;
+			EList<TypeArgument> _typeArgs = this.getTypeArgs();
+			boolean _isEmpty = _typeArgs.isEmpty();
+			if (_isEmpty) {
+				_xifexpression_1 = "";
+			}
+			else {
+				EList<TypeArgument> _typeArgs_1 = this.getTypeArgs();
+				final Function1<TypeArgument, String> _function = new Function1<TypeArgument, String>() {
+					public String apply(final TypeArgument it) {
+						return it.getTypeRefAsString();
+					}
+				};
+				EList<String> _map = XcoreEListExtensions.<TypeArgument, String>map(_typeArgs_1, _function);
+				String _join = IterableExtensions.join(_map, ",");
+				String _plus = ("<" + _join);
+				_xifexpression_1 = (_plus + ">");
+			}
+			String _plus_1 = ("" + _xifexpression_1);
+			String _modifiersAsString = this.getModifiersAsString();
+			_xifexpression = (_plus_1 + _modifiersAsString);
 		}
-		String _plus_1 = (_rawTypeAsString + _xifexpression);
-		String _modifiersAsString = this.getModifiersAsString();
-		return (_plus_1 + _modifiersAsString);
+		return (_rawTypeAsString + _xifexpression);
 	}
 
 	/**

@@ -389,19 +389,19 @@ ruleJSXPropertyAttribute
 	PropertyIdentifiableElementIdentifierNameParserRuleCall_0_0_1=ruleIdentifierName { announce($PropertyIdentifiableElementIdentifierNameParserRuleCall_0_0_1.start, $PropertyIdentifiableElementIdentifierNameParserRuleCall_0_0_1.stop, grammarAccess.getJSXPropertyAttributeAccess().getPropertyAssignment_0()); }
 
 )
-)
-	EqualsSignKeyword_1=EqualsSign 	 { announce($EqualsSignKeyword_1, grammarAccess.getJSXPropertyAttributeAccess().getEqualsSignKeyword_1()); }((
+)(
+	EqualsSignKeyword_1_0=EqualsSign 	 { announce($EqualsSignKeyword_1_0, grammarAccess.getJSXPropertyAttributeAccess().getEqualsSignKeyword_1_0()); }((
 (
-	JsxAttributeValueStringLiteralParserRuleCall_2_0_0=ruleStringLiteral { announce($JsxAttributeValueStringLiteralParserRuleCall_2_0_0.start, $JsxAttributeValueStringLiteralParserRuleCall_2_0_0.stop, grammarAccess.getJSXPropertyAttributeAccess().getJsxAttributeValueAssignment_2_0()); }
+	JsxAttributeValueStringLiteralParserRuleCall_1_1_0_0=ruleStringLiteral { announce($JsxAttributeValueStringLiteralParserRuleCall_1_1_0_0.start, $JsxAttributeValueStringLiteralParserRuleCall_1_1_0_0.stop, grammarAccess.getJSXPropertyAttributeAccess().getJsxAttributeValueAssignment_1_1_0()); }
 )
 )
     |(
-	LeftCurlyBracketKeyword_2_1_0=LeftCurlyBracket 	 { announce($LeftCurlyBracketKeyword_2_1_0, grammarAccess.getJSXPropertyAttributeAccess().getLeftCurlyBracketKeyword_2_1_0()); }(
+	LeftCurlyBracketKeyword_1_1_1_0=LeftCurlyBracket 	 { announce($LeftCurlyBracketKeyword_1_1_1_0, grammarAccess.getJSXPropertyAttributeAccess().getLeftCurlyBracketKeyword_1_1_1_0()); }(
 (
-	JsxAttributeValueAssignmentExpressionParserRuleCall_2_1_1_0=ruleAssignmentExpression { announce($JsxAttributeValueAssignmentExpressionParserRuleCall_2_1_1_0.start, $JsxAttributeValueAssignmentExpressionParserRuleCall_2_1_1_0.stop, grammarAccess.getJSXPropertyAttributeAccess().getJsxAttributeValueAssignment_2_1_1()); }
+	JsxAttributeValueAssignmentExpressionParserRuleCall_1_1_1_1_0=ruleAssignmentExpression { announce($JsxAttributeValueAssignmentExpressionParserRuleCall_1_1_1_1_0.start, $JsxAttributeValueAssignmentExpressionParserRuleCall_1_1_1_1_0.stop, grammarAccess.getJSXPropertyAttributeAccess().getJsxAttributeValueAssignment_1_1_1_1()); }
 )
 )
-	RightCurlyBracketKeyword_2_1_2=RightCurlyBracket 	 { announce($RightCurlyBracketKeyword_2_1_2, grammarAccess.getJSXPropertyAttributeAccess().getRightCurlyBracketKeyword_2_1_2()); })))
+	RightCurlyBracketKeyword_1_1_1_2=RightCurlyBracket 	 { announce($RightCurlyBracketKeyword_1_1_1_2, grammarAccess.getJSXPropertyAttributeAccess().getRightCurlyBracketKeyword_1_1_1_2()); })))?)
 ;
 
 

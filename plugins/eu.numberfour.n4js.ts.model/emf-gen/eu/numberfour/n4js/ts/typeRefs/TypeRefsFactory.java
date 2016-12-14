@@ -90,15 +90,6 @@ public interface TypeRefsFactory extends EFactory {
 	ParameterizedTypeRef createParameterizedTypeRef();
 
 	/**
-	 * Returns a new object of class '<em>Parameterized Type Ref With Version</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Parameterized Type Ref With Version</em>'.
-	 * @generated
-	 */
-	ParameterizedTypeRefWithVersion createParameterizedTypeRefWithVersion();
-
-	/**
 	 * Returns a new object of class '<em>Parameterized Type Ref Structural</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

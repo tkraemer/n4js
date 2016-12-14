@@ -609,6 +609,15 @@ public interface ImPackage extends EPackage {
 	int IDENTIFIER_REF_IM_FEATURE_COUNT = N4JSPackage.IDENTIFIER_REF_FEATURE_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IDENTIFIER_REF_IM___GET_VERSION = N4JSPackage.IDENTIFIER_REF___GET_VERSION;
+
+	/**
 	 * The operation id for the '<em>Is Valid Simple Assignment Target</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1025,13 +1034,13 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_IM___GET_STRUCTURAL_MEMBERS = TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_STRUCTURAL_MEMBERS;
 
 	/**
-	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * The operation id for the '<em>Get Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_IM___GET_REFERENCED_VERSION = TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_REFERENCED_VERSION;
+	int PARAMETERIZED_TYPE_REF_IM___GET_VERSION = TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
@@ -1395,13 +1404,13 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___IS_BOTTOM_TYPE = PARAMETERIZED_TYPE_REF_IM___IS_BOTTOM_TYPE;
 
 	/**
-	 * The operation id for the '<em>Get Referenced Version</em>' operation.
+	 * The operation id for the '<em>Get Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___GET_REFERENCED_VERSION = PARAMETERIZED_TYPE_REF_IM___GET_REFERENCED_VERSION;
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___GET_VERSION = PARAMETERIZED_TYPE_REF_IM___GET_VERSION;
 
 	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.

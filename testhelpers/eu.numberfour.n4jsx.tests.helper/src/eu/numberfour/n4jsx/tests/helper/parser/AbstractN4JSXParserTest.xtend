@@ -29,7 +29,7 @@ import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4jsx.n4JSX.JSXChild
 
 /**
- * N4IDL version of N4JS' AbstractParserTest 
+ * N4JSX version of N4JS' AbstractParserTest 
  */
 @RunWith(XtextRunner)
 @InjectWith(N4JSXInjectorProvider)
