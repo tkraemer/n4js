@@ -38,6 +38,7 @@ import eu.numberfour.n4js.transpiler.es.transform.ExpressionTransformation;
 import eu.numberfour.n4js.transpiler.es.transform.FormalParameterTransformation;
 import eu.numberfour.n4js.transpiler.es.transform.FunctionDeclarationTransformation;
 import eu.numberfour.n4js.transpiler.es.transform.InterfaceDeclarationTransformation;
+import eu.numberfour.n4js.transpiler.es.transform.JSXTransformation;
 import eu.numberfour.n4js.transpiler.es.transform.MemberPatchingTransformation;
 import eu.numberfour.n4js.transpiler.es.transform.ModuleWrappingTransformation;
 import eu.numberfour.n4js.transpiler.es.transform.SanitizeImportsTransformation;
@@ -92,6 +93,8 @@ public class EcmaScriptTranspiler extends AbstractTranspiler {
 	private Provider<ArrowFunction_Part1_Transformation> arrowFunction_Part1_TransformationProvider;
 	@Inject
 	private Provider<ArrowFunction_Part2_Transformation> arrowFunction_Part2_TransformationProvider;
+	@Inject
+	private Provider<JSXTransformation> jsxTransformationProvider;
 
 	@Inject
 	private ProjectUtils projectUtils;
@@ -108,6 +111,7 @@ public class EcmaScriptTranspiler extends AbstractTranspiler {
 	@Override
 	protected Transformation[] computeTransformationsToBeExecuted(TranspilerState state) {
 		return new Transformation[] {
+				jsxTransformationProvider.get(),
 				staticPolyfillTransformationProvider.get(),
 				memberPatchingTransformationProvider.get(),
 				apiImplStubGenerationTransformationProvider.get(),
