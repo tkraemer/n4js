@@ -37,6 +37,8 @@ import static org.eclipse.xtext.diagnostics.Severity.*
  */
 @Log
 abstract class AbstractSubGenerator implements ISubGenerator {
+	
+	private static final String EXT_XT = "xt";
 
 	@Accessors
 	private CompilerDescriptor compilerDescriptor = null
@@ -127,13 +129,16 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 
 	override shouldBeCompiled(Resource input, CancelIndicator monitor) {
 		val autobuildEnabled = isActive(input)
+		val isXPECTMode = EXT_XT.equals(input.URI.fileExtension.toLowerCase);
+		
 		return (autobuildEnabled
 			&& (input.hasValidFileExtension || "n4jsx".equals(input.URI.fileExtension)) // TODO IDE-2416
 			&& projectUtils.isSource(input.URI)
 			&& (projectUtils.isNoValidate(input.URI) 
 				|| projectUtils.isExternal(input.URI) 
-				// if platform is running the generator is called from the builder, hence cannot have any validation errors
-				|| (EMFPlugin.IS_ECLIPSE_RUNNING || hasNoErrors(input, monitor)) 
+				// if platform is running (but not in XPECT mode) the generator is called from the builder, hence cannot have any validation errors
+				// (note: XPECT swallows errors hence we cannot rely on Eclipse in case of .xt files)
+				|| ((EMFPlugin.IS_ECLIPSE_RUNNING && !isXPECTMode) || hasNoErrors(input, monitor)) 
 			))
 			&& (!input.isStaticPolyfillingModule) // compile driven by filled type
 			&& hasNoPolyfillErrors(input,monitor)
