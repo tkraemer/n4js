@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.generator.common
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.N4JSGlobals
 import eu.numberfour.n4js.generator.common.IGeneratorMarkerSupport.Severity
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.projectModel.IN4JSCore
@@ -38,8 +39,6 @@ import static org.eclipse.xtext.diagnostics.Severity.*
 @Log
 abstract class AbstractSubGenerator implements ISubGenerator {
 	
-	private static final String EXT_XT = "xt";
-
 	@Accessors
 	private CompilerDescriptor compilerDescriptor = null
 
@@ -129,7 +128,7 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 
 	override shouldBeCompiled(Resource input, CancelIndicator monitor) {
 		val autobuildEnabled = isActive(input)
-		val isXPECTMode = EXT_XT.equals(input.URI.fileExtension.toLowerCase);
+		val isXPECTMode = N4JSGlobals.XT_FILE_EXTENSION == input.URI.fileExtension.toLowerCase;
 		
 		return (autobuildEnabled
 			&& (input.hasValidFileExtension || "n4jsx".equals(input.URI.fileExtension)) // TODO IDE-2416

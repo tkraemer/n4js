@@ -5,3 +5,9 @@
  *
  * Contributors: NumberFour AG - Initial API and implementation
  */
+
+/**
+ * This package does not contain any code but simply registers file extensions .n4jsx.xt and .jsx.xt for menus for
+ * generating JIRA/GitHub tickets and for Xpect support. See plugin.xml.
+ *
+ */
