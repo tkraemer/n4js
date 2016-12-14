@@ -44,8 +44,7 @@ Contributors:
        </shortcut>
    </extension>
    
-
-       <extension
+   <extension
           point= "org.eclipse.debug.ui.launchShortcuts" >
        <shortcut
              class="eu.numberfour.n4js.xpect.ui.GenerateJiraBugReportShortcut"
@@ -99,13 +98,12 @@ Contributors:
        </shortcut>
    </extension>
    
-   
-       <extension
-             point="org.xpect.testSuite">
-          <testSuite
+   <extension
+      point="org.xpect.testSuite">
+         <testSuite
                 class="eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestClass"
                 fileExtension="n4jsx">
-          </testSuite>
-       </extension>
+         </testSuite>
+   </extension>
 
 </plugin>
