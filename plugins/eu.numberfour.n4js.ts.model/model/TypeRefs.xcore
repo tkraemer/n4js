@@ -44,9 +44,38 @@ import eu.numberfour.n4js.ts.types.internal.WildcardAsStringUtils
 type ParameterizedTypeRefIterable wraps Iterable<ParameterizedTypeRef>
 
 /*
+ * Base class for all things that can provide a version. The returned value will be 0 in any language that does not
+ * support versions. In those languages that do support versions, the return value depends on the semantics of the
+ * actual subclass and how it implements the getVersion method.
+ * 
+ * All type references and all types extend this class. In addition, some AST nodes such as IdentifierRef and
+ * N4IDLClassDeclaration also extend this class.
+ * 
+ * Type references generally delegate a call to getVersion to the type that they reference (via declaredType).
+ * Exceptions are BoundThisTypeRef, which delegates to actualThisTypeRef, and ParameterizedTypeRef, which will return
+ * the requested version if the user provided one.
+ * 
+ * Types usually return 0 unless they are explicitly versionable, in which case they return the declared version.
+ * In N4IDL, this only applies to TClassifier, which returns the version that was declared by the user (as set by the 
+ * types builder).
+ * 
+ * For AST nodes, the return value depends highly on the type of the node itself. For example, the IdentifierRef returns
+ * the explicitly requested version if the user provided one, otherwise it returns 0. For an N4IDLClassDeclaration, 
+ * getVersion returns the version that was declared by the user for that class.
+ * 
+ * It was decided that TypeRef and Type should extend Versionable to avoid switching on the type of a the Type or 
+ * TypeRef instance under consideration. This is possible since 0 is a sensible default for unversioned objects.
+ */
+abstract class Versionable {
+	op int getVersion() {
+		return 0
+	}
+}
+
+/*
  * Base class for all type references
  */
-abstract class TypeRef extends TypeArgument {
+abstract class TypeRef extends TypeArgument, Versionable {
 	NullModifier nullModifier
 	UndefModifier undefModifier
 	/**
@@ -200,16 +229,13 @@ abstract class TypeRef extends TypeArgument {
 	op boolean isDefSiteStructuralTyping() {
 		return false
 	}
-	
+
 	/*
-	 * The version of the type as specified by the reference, this is only available in languages derived from N4JS.
-	 * Note that this is the declared version of the reference, not of the declared type itself! By default, 0 is
-	 * returned which means that no specific version is requested.
+	 * Override Versioned#getVersion()
 	 */
-	op int getReferencedVersion() { 
-		return 0;
+	op int getVersion() {
+		if (declaredType !== null) declaredType.version else 0
 	}
-	
 }
 
 abstract class StaticBaseTypeRef extends TypeRef {
@@ -430,6 +456,13 @@ class BoundThisTypeRef extends ThisTypeRef, StructuralTypeRef {
 		return (if (structuralType !== null) structuralType.ownedMembers else if (!astStructuralMembers.empty) astStructuralMembers else genStructuralMembers).
 			unmodifiableView;
 	}
+	
+	/*
+	 * Override VersionedElement#getVersion() to return the version of the actual this type reference.
+	 */
+	op int getVersion() {
+		actualThisTypeRef.version
+	}
 }
 
 /**
@@ -443,11 +476,13 @@ class ParameterizedTypeRef extends BaseTypeRef {
 	refers Type declaredType
 	contains TypeArgument[] typeArgs
 	boolean arrayTypeLiteral = "false"
+
 	/*
 	 * The defined (declared or inferred) typing strategy on use site, nominal typing by default. Could be changed to structural or structural
 	 * field (via tilde or tilde-tilde operators).
 	 */
 	TypingStrategy definedTypingStrategy
+
 	/**
 	 * Returns the actual typing strategy, that is either the defined typing strategy, or the typing strategy of the declared type.
 	 */
@@ -469,11 +504,14 @@ class ParameterizedTypeRef extends BaseTypeRef {
 	 * Overrides {@link TypeRef#getTypeRefAsString()}
 	 */
 	op String getTypeRefAsString() {
-		return declaredType?.rawTypeAsString + (if (typeArgs.empty) {
+		return declaredType?.rawTypeAsString
+		+ if (version > 0) { "#" + version } else { "" }
+		+ (if (typeArgs.empty) {
 			""
 		} else {
 			"<" + typeArgs.map[typeRefAsString].join(",") + ">"
-		}) + getModifiersAsString();
+		})
+		+ getModifiersAsString(); 
 	}
 	/*
 	 * Convenience method, returns true if type reference contains type arguments.
@@ -521,27 +559,6 @@ class ParameterizedTypeRef extends BaseTypeRef {
 			return true;
 		}
 		return false
-	}
-}
-
-/*
- * Type reference with explicitly defined version. 
- */
-class ParameterizedTypeRefWithVersion extends ParameterizedTypeRef {
-	/*
-	 * The declared version of the reference, this is only available in languages derived from N4JS.
-	 * Note that this is the declared version of the reference, not of the declared type itself!
-	 */
-	BigDecimal declaredVersion
-	
-	/**
-	 * Overrides method declared in TypeRef, returns the declared version instead of the default value.
-	 */
-	op int getReferencedVersion() {
-		if (declaredVersion===null) {
-			return 0;
-		}
-		return declaredVersion.intValue;
 	}
 }
 
@@ -1027,7 +1044,7 @@ class FunctionTypeRef extends ParameterizedTypeRef, FunctionTypeExprOrRef {
  * <li>ordinary, self-contained function type expressions, in particular (i) non-generic
  *     <em>and</em> generic function type expressions that were created programmatically and
  *     (ii) AST nodes for non(!)-generic function type expressions (<b>standard use case</b>).
- * <li>those that are created by type system rule 'substTypeVarialbesInFunctionType[ExprOr]Ref'
+ * <li>those that are created by type system rule 'substTypeVariablesInFunctionType[ExprOr]Ref'
  *     as a copy of another
  *     <ol type="a">
  *     <li>FunctionTypeRef or
@@ -1044,7 +1061,7 @@ class FunctionTypeRef extends ParameterizedTypeRef, FunctionTypeExprOrRef {
  * <p>
  * Case 2 is only a work-around, because the FunctionTypeRef cannot hold bound references to the
  * function's parameters, and therefore a FunctionTypeExpression is created in the xsemantics rule
- * 'substTypeVarialbesInFunctionType[ExprOr]Ref' to represent the binding. In case 2.a only, the
+ * 'substTypeVariablesInFunctionType[ExprOr]Ref' to represent the binding. In case 2.a only, the
  * FunctionTypeExpression will have a 'declaredType' pointing to the TFunction of the original
  * FunctionTypeRef.
  * <p>
@@ -1102,7 +1119,7 @@ class FunctionTypeExpression extends FunctionTypeExprOrRef {
 	/*
 	 * Property 'unboundTypeVars' refers to type variables contained somewhere else. During type variable substitution,
 	 * we would have to substitute type variable in their upper bounds, but we cannot, of course, directly change them.
-	 * Thus, for the type variables in unboundTypeVars, rule 'substTypeVarialbesInFunctionType[ExprOr]Ref' will store
+	 * Thus, for the type variables in unboundTypeVars, rule 'substTypeVariablesInFunctionType[ExprOr]Ref' will store
 	 * the upper bounds here, but only if they are different from the type variables original upper bounds.
 	 */
 	contains TypeRef[] unboundTypeVarsUpperBounds

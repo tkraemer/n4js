@@ -76,6 +76,7 @@ import eu.numberfour.n4js.resource.N4JSResourceDescriptionStrategy;
 import eu.numberfour.n4js.resource.N4JSUnloader;
 import eu.numberfour.n4js.resource.PostProcessingAwareResource.PostProcessor;
 import eu.numberfour.n4js.resource.UserdataMapper;
+import eu.numberfour.n4js.resource.XpectAwareFileExtensionCalculator;
 import eu.numberfour.n4js.scoping.N4JSGlobalScopeProvider;
 import eu.numberfour.n4js.scoping.builtin.ScopeRegistrar;
 import eu.numberfour.n4js.scoping.imports.N4JSImportedNamespaceAwareLocalScopeProvider;
@@ -88,7 +89,9 @@ import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSStringRepresenation;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSValidatorErrorGenerator;
+import eu.numberfour.n4js.typesystem.N4JSVersionResolver;
 import eu.numberfour.n4js.typesystem.UnsupportedExpressionTypeHelper;
+import eu.numberfour.n4js.typesystem.VersionResolver;
 import eu.numberfour.n4js.utils.di.scopes.ScopeManager;
 import eu.numberfour.n4js.utils.di.scopes.TransformationScoped;
 import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
@@ -525,9 +528,24 @@ public class N4JSXRuntimeModule extends eu.numberfour.n4jsx.AbstractN4JSXRuntime
 	}
 
 	/**
+	 * Bind type version resolver (used in N4JS.xsemantics). This customization point is used in N4IDL to support
+	 * versions in the type system.
+	 */
+	public Class<? extends VersionResolver> bindVersionResolver() {
+		return N4JSVersionResolver.class;
+	}
+
+	/**
 	 * Bind a helper for typing expression types which are unknown in N4JS.
 	 */
 	public Class<? extends UnsupportedExpressionTypeHelper> bindUnsupportedExpressionTypeHelper() {
 		return N4JSXUnsupportedExpressionTypeHelper.class;
+	}
+
+	/**
+	 * Bind file extension calculator
+	 */
+	public Class<? extends XpectAwareFileExtensionCalculator> bindXpectAwareFileExtensionCalculator() {
+		return XpectAwareFileExtensionCalculator.class;
 	}
 }

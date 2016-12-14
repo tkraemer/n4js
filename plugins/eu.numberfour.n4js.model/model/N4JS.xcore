@@ -890,7 +890,7 @@ class ParenExpression extends PrimaryExpression {
 	}
 }
 
-class IdentifierRef extends PrimaryExpression, StrictModeRelevant {
+class IdentifierRef extends PrimaryExpression, StrictModeRelevant, eu.numberfour.n4js.ts.typeRefs.Versionable {
 	refers IdentifiableElement ^id
 	transient String idAsText
 	/**

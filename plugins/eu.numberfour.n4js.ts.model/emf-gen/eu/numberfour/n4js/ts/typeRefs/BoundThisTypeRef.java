@@ -172,4 +172,16 @@ public interface BoundThisTypeRef extends ThisTypeRef, StructuralTypeRef {
 	 */
 	EList<TStructMember> getStructuralMembers();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Override VersionedElement#getVersion() to return the version of the actual this type reference.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%> _actualThisTypeRef = this.getActualThisTypeRef();\nreturn _actualThisTypeRef.getVersion();'"
+	 * @generated
+	 */
+	int getVersion();
+
 } // BoundThisTypeRef

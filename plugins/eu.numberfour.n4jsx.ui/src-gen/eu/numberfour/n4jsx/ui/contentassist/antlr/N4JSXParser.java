@@ -41,7 +41,7 @@ public class N4JSXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getJSXElementAccess().getAlternatives_3(), "rule__JSXElement__Alternatives_3");
 					put(grammarAccess.getJSXChildAccess().getAlternatives(), "rule__JSXChild__Alternatives");
 					put(grammarAccess.getJSXAttributeAccess().getAlternatives(), "rule__JSXAttribute__Alternatives");
-					put(grammarAccess.getJSXPropertyAttributeAccess().getAlternatives_2(), "rule__JSXPropertyAttribute__Alternatives_2");
+					put(grammarAccess.getJSXPropertyAttributeAccess().getAlternatives_1_1(), "rule__JSXPropertyAttribute__Alternatives_1_1");
 					put(grammarAccess.getScriptElementAccess().getAlternatives(), "rule__ScriptElement__Alternatives");
 					put(grammarAccess.getAnnotatedScriptElementAccess().getAlternatives_1(), "rule__AnnotatedScriptElement__Alternatives_1");
 					put(grammarAccess.getAnnotatedScriptElementAccess().getAlternatives_1_3_0(), "rule__AnnotatedScriptElement__Alternatives_1_3_0");
@@ -151,7 +151,8 @@ public class N4JSXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getJSXElementNameExpressionAccess().getGroup_1(), "rule__JSXElementNameExpression__Group_1__0");
 					put(grammarAccess.getJSXSpreadAttributeAccess().getGroup(), "rule__JSXSpreadAttribute__Group__0");
 					put(grammarAccess.getJSXPropertyAttributeAccess().getGroup(), "rule__JSXPropertyAttribute__Group__0");
-					put(grammarAccess.getJSXPropertyAttributeAccess().getGroup_2_1(), "rule__JSXPropertyAttribute__Group_2_1__0");
+					put(grammarAccess.getJSXPropertyAttributeAccess().getGroup_1(), "rule__JSXPropertyAttribute__Group_1__0");
+					put(grammarAccess.getJSXPropertyAttributeAccess().getGroup_1_1_1(), "rule__JSXPropertyAttribute__Group_1_1_1__0");
 					put(grammarAccess.getScriptAccess().getGroup(), "rule__Script__Group__0");
 					put(grammarAccess.getAnnotatedScriptElementAccess().getGroup(), "rule__AnnotatedScriptElement__Group__0");
 					put(grammarAccess.getAnnotatedScriptElementAccess().getGroup_1_0(), "rule__AnnotatedScriptElement__Group_1_0__0");
@@ -628,8 +629,8 @@ public class N4JSXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getJSXAttributesAccess().getJsxAttributesAssignment(), "rule__JSXAttributes__JsxAttributesAssignment");
 					put(grammarAccess.getJSXSpreadAttributeAccess().getExpressionAssignment_2(), "rule__JSXSpreadAttribute__ExpressionAssignment_2");
 					put(grammarAccess.getJSXPropertyAttributeAccess().getPropertyAssignment_0(), "rule__JSXPropertyAttribute__PropertyAssignment_0");
-					put(grammarAccess.getJSXPropertyAttributeAccess().getJsxAttributeValueAssignment_2_0(), "rule__JSXPropertyAttribute__JsxAttributeValueAssignment_2_0");
-					put(grammarAccess.getJSXPropertyAttributeAccess().getJsxAttributeValueAssignment_2_1_1(), "rule__JSXPropertyAttribute__JsxAttributeValueAssignment_2_1_1");
+					put(grammarAccess.getJSXPropertyAttributeAccess().getJsxAttributeValueAssignment_1_1_0(), "rule__JSXPropertyAttribute__JsxAttributeValueAssignment_1_1_0");
+					put(grammarAccess.getJSXPropertyAttributeAccess().getJsxAttributeValueAssignment_1_1_1_1(), "rule__JSXPropertyAttribute__JsxAttributeValueAssignment_1_1_1_1");
 					put(grammarAccess.getScriptAccess().getAnnotationsAssignment_1(), "rule__Script__AnnotationsAssignment_1");
 					put(grammarAccess.getScriptAccess().getScriptElementsAssignment_2(), "rule__Script__ScriptElementsAssignment_2");
 					put(grammarAccess.getAnnotatedScriptElementAccess().getDeclaredModifiersAssignment_1_2_1_0_0(), "rule__AnnotatedScriptElement__DeclaredModifiersAssignment_1_2_1_0_0");

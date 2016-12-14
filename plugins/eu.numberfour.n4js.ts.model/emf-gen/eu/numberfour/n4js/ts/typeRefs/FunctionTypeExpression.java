@@ -28,7 +28,7 @@ import org.eclipse.emf.common.util.EList;
  * <li>ordinary, self-contained function type expressions, in particular (i) non-generic
  *     <em>and</em> generic function type expressions that were created programmatically and
  *     (ii) AST nodes for non(!)-generic function type expressions (<b>standard use case</b>).
- * <li>those that are created by type system rule 'substTypeVarialbesInFunctionType[ExprOr]Ref'
+ * <li>those that are created by type system rule 'substTypeVariablesInFunctionType[ExprOr]Ref'
  *     as a copy of another
  *     <ol type="a">
  *     <li>FunctionTypeRef or
@@ -45,7 +45,7 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * Case 2 is only a work-around, because the FunctionTypeRef cannot hold bound references to the
  * function's parameters, and therefore a FunctionTypeExpression is created in the xsemantics rule
- * 'substTypeVarialbesInFunctionType[ExprOr]Ref' to represent the binding. In case 2.a only, the
+ * 'substTypeVariablesInFunctionType[ExprOr]Ref' to represent the binding. In case 2.a only, the
  * FunctionTypeExpression will have a 'declaredType' pointing to the TFunction of the original
  * FunctionTypeRef.
  * <p>
@@ -210,7 +210,7 @@ public interface FunctionTypeExpression extends FunctionTypeExprOrRef {
 	 * <!-- begin-model-doc -->
 	 * Property 'unboundTypeVars' refers to type variables contained somewhere else. During type variable substitution,
 	 * we would have to substitute type variable in their upper bounds, but we cannot, of course, directly change them.
-	 * Thus, for the type variables in unboundTypeVars, rule 'substTypeVarialbesInFunctionType[ExprOr]Ref' will store
+	 * Thus, for the type variables in unboundTypeVars, rule 'substTypeVariablesInFunctionType[ExprOr]Ref' will store
 	 * the upper bounds here, but only if they are different from the type variables original upper bounds.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Unbound Type Vars Upper Bounds</em>' containment reference list.

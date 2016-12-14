@@ -175,6 +175,7 @@ import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesbuilder.N4JSFunctionDefinitionTypesBuilder
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.typesystem.UnsupportedExpressionTypeHelper
+import eu.numberfour.n4js.typesystem.VersionResolver
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.utils.PromisifyHelper
@@ -201,6 +202,7 @@ inject DestructureHelper destructureHelper
 inject MemberScopingHelper memberScopingHelper
 inject PromisifyHelper promisifyHelper
 inject JavaScriptVariantHelper jsVariantHelper
+inject VersionResolver versionResolver
 inject UnsupportedExpressionTypeHelper expressionTypeHelper
 
 judgments {
@@ -335,6 +337,8 @@ rule typeThisKeyword
 	G |- ThisLiteral t : TypeRef T
 from {
 	var TypeRef rawT; G |~ t ~> rawT
+	
+	rawT = versionResolver.resolveVersion(rawT, rawT)
 	T = TypeUtils.enforceNominalTyping(rawT)
 }
 
@@ -405,6 +409,8 @@ from {
 rule typeIdentifierRef G |- IdentifierRef idref: TypeRef T
 from  {
 	G |- idref.id : T
+
+	T = versionResolver.resolveVersion(T, idref);
 
 	if(idref.eContainer instanceof ParameterizedCallExpression
 		&& idref.eContainmentFeature===N4JSPackage.eINSTANCE.getParameterizedCallExpression_Target()) {
@@ -747,6 +753,7 @@ from {
 			propTypeRef = G.anyTypeRefDynamic;
 		}
 		else {
+			// TODO: Is wrapping really required here?
 			G2.wrap |- expr.property : propTypeRef
 
 			if(expr.parameterized) {
@@ -755,7 +762,8 @@ from {
 		}
 
 		G2 |- propTypeRef ~> T
-		
+		T = versionResolver.resolveVersion(T, receiverTypeRef);
+
 		if (expr.target instanceof SuperLiteral && T instanceof FunctionTypeExprOrRef ) { // super.foo(): this; cf. GH-95
 			val F = T as FunctionTypeExprOrRef;
 			if ((T as FunctionTypeExprOrRef).returnTypeRef instanceof BoundThisTypeRef) {
@@ -830,6 +838,7 @@ from {
 
 			typeSystemHelper.addSubstitutions(G2, expr, targetTypeRef);
 			G2 |- T ~> T
+			T = versionResolver.resolveVersion(T, F);
 
 			if (T instanceof BoundThisTypeRef && !(expr.receiver instanceof ThisLiteral || expr.receiver instanceof SuperLiteral)) {
 				// we've got something like "this[C]" as return type of a call expression of the form
@@ -2045,7 +2054,7 @@ axiom expectedTypeInBinaryLogicalExpression
 	G |- BinaryLogicalExpression e |> Expression expression : G.anyTypeRef
 
 /* @see [N4JS] 6.1.21. Assignment Expression */
-rule expectedTypeOfOperandInAssignmentExpression
+rule expectedTypeInAssignmentExpression
 	G |- AssignmentExpression expr |> Expression operand : TypeRef T
 from {
 	{

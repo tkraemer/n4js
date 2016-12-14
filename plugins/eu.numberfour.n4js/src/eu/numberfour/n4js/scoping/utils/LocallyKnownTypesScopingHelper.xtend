@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -26,6 +26,7 @@ import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.SingletonScope
 import org.eclipse.xtext.util.IResourceScopeCache
 import org.eclipse.xtext.scoping.impl.MapBasedScope
+import eu.numberfour.n4js.ts.types.TModule
 
 /**
  * Helper for {@link N4JSScopeProvider N4JSScopeProvider} using
@@ -96,15 +97,24 @@ class LocallyKnownTypesScopingHelper {
 	 * Returns scope with locally known types and (as parent) import scope; the result is cached.
 	 */
 	def IScope scopeWithLocallyKnownTypes(Script script, EReference reference, IScopeProvider delegate) {
-		return cache.get(script -> 'locallyKnownTypes', script.eResource) [ |
+		return cache.get(script -> 'locallyKnownTypes', script.eResource) [|
 			// all types in the index:
 			var parent = delegate.getScope(script, reference)
 			// but imported types are preferred (or maybe renamed with aliases):
 			val IScope importScope = importedElementsScopingHelper.getImportedTypes(parent, script)
-			val local = script.module
-			return MapBasedScope.createScope(importScope,
-				local.topLevelTypes.map[EObjectDescription.create(name, it)])
+			val TModule local = script.module
+			return buildMapBasedScope(importScope, local);
 		]
+	}
+
+	/**
+	 * Creates a map based scope for the locally known types in the given module and with the given import (parent) 
+	 * scope. This method may be overridden in sub classes.
+	 */
+	protected def IScope buildMapBasedScope(IScope importScope, TModule localModule) {
+		return MapBasedScope.createScope(importScope, localModule.topLevelTypes.map [ topLevelType |
+			EObjectDescription.create(topLevelType.name, topLevelType)
+		])
 	}
 
 	/**
@@ -113,8 +123,8 @@ class LocallyKnownTypesScopingHelper {
 	 * add the polyfillType itself. Instead, only its type variables are added, which are otherwise hidden in case of polyfills.
 	 * The result is not cached as this scope is needed only one time.
 	 */
-	def IScope scopeWithLocallyKnownTypesForPolyfillSuperRef(Script script, EReference reference, IScopeProvider delegate,
-		Type polyfillType) {
+	def IScope scopeWithLocallyKnownTypesForPolyfillSuperRef(Script script, EReference reference,
+		IScopeProvider delegate, Type polyfillType) {
 		var IScope parent = delegate.getScope(script, reference);
 
 		// imported and locally defined types are preferred (or maybe renamed with aliases):
@@ -122,8 +132,9 @@ class LocallyKnownTypesScopingHelper {
 
 		// locally defined types except polyfillType itself
 		val local = script.module
-		var IScope localTypesScope =  MapBasedScope.createScope(importScope,
-			local.topLevelTypes.filter[it !== polyfillType].map[EObjectDescription.create(name, it)]);
+		var IScope localTypesScope = MapBasedScope.createScope(importScope, local.topLevelTypes.filter [
+			it !== polyfillType
+		].map[EObjectDescription.create(name, it)]);
 
 		// type variables of polyfill
 		if (polyfillType.generic) {
