@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.resource
 
 import com.google.inject.Singleton
+import eu.numberfour.n4js.N4JSGlobals
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 
@@ -20,8 +21,6 @@ import org.eclipse.emf.ecore.EObject
  */
  @Singleton
 public class XpectAwareFileExtensionCalculator {
-	
-	private final static String EXT_XT = ".xt";
 	
 	def public String getXpectAwareFileExtension(EObject eob) {
 		if ((eob === null) || (eob.eResource === null)) {
@@ -42,9 +41,8 @@ public class XpectAwareFileExtensionCalculator {
 		return fileExt;
 	}
 	
-	
 	def private String getXpectAwareFileExtensionRec(String fileName) {
-		if (fileName.endsWith(EXT_XT)) {
+		if (fileName.endsWith(N4JSGlobals.XT_FILE_EXTENSION)) {
 			return fileName.substring(0, fileName.lastIndexOf('.')).xpectAwareFileExtensionRec
 		} else {
 			val i = fileName.lastIndexOf('.');
