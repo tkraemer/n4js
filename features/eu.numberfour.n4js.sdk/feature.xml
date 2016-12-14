@@ -76,11 +76,11 @@ NumberFour AG - Initial API and implementation
    <includes
          id="eu.numberfour.n4js.tester.sdk"
          version="0.0.0"/>
-         
+
    <includes
          id="eu.numberfour.n4jsx.sdk"
          version="0.0.0"/>
-         
+
    <includes
          id="eu.numberfour.n4jsx.xpect.sdk"
          version="0.0.0"/>
