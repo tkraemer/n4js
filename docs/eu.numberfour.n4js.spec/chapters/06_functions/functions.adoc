@@ -37,6 +37,7 @@ In any case, a function type declares the signature of a function and
 allows validation of calls to that function. A function type has the
 following properties:
 
+[horizontal]
 `typePars`  ::
 (0-indexed) list of type parameters (i.e. type variables) for generic
 functions.
@@ -59,6 +60,7 @@ content of the function definition body.
 
 Additionally, the following pseudo properties for functions are defined:
 
+[horizontal]
 `thisTypeRef` ::
 The this type ref is the type to which the `this`-keyword would be evaluated
 if used inside the function or member. The inference rules are described
@@ -70,18 +72,15 @@ sub typing rules. If `this` is not used inside the function, then `any` is set
 instead of the inferred thisTypeRef to allow for more usages. The
 property is computed as follows: +
 
-[math]
---
-
-    tfpars = \lif & \ \mbox{this is used or explicitly declared}\ \\
-    & \lthen thisTypeRef + fpars \\
-    & \lelse any + fpars
-
---
+$$
+tfpars = \lif & \ \mbox{this is used or explicitly declared}\ \\
+& \lthen thisTypeRef + fpars \\
+& \lelse any + fpars$$
 
 
 Parameters (in math:[$pars$]) have the following properties:
 
+[horizontal]
 `name` ::
 Name of the parameter.
 
@@ -117,31 +116,16 @@ math:[$F.fpars_i.variadic \to i = |F.fpars|-1$]
 of the transitive closure of statements of the body must be a return
 statement:
 +
-----
-
-[math]
---
-    F.typeRef \neq Undefined \to \\
-        & |f.body.stmts|>0 \\
-        & \land f.body.stmts^*_{|f.body.stmts^*|-1} isa\ \lstnfbnf{ReturnStatement}
-
---
-
-----
-//TODO: fix syntax highlighting
+$$F.typeRef \neq Undefined \to \\
+& |f.body.stmts|>0 \\
+& \land f.body.stmts^*_{|f.body.stmts^*|-1} isa\ \lstnfbnf{ReturnStatement}$$
 4.  If a function explicitly defines a return type, all return
 statements must return a type conform to that type:
 
-[math]
---
-
-        & F.typeRef \neq Undefined \\
-        & \iff \\
-        & \forall r \in F.body.stmts, r\ isa\ \lstnfbnf{ReturnStatement}: \\
-        & r.expr\neq null \land \infType{r.expr.typeRef} <: \infType{F.typeRef}
-
---
-
+$$& F.typeRef \neq Undefined \\
+& \iff \\
+& \forall r \in F.body.stmts, r\ isa\ \lstnfbnf{ReturnStatement}: \\
+& r.expr\neq null \land \infType{r.expr.typeRef} <: \infType{F.typeRef}$$
 
 --
 
@@ -428,22 +412,11 @@ method `void m(B param)`, it is valid to override `m` as `void m(A param)` in N4
 [req,id=IDE-80,version=1]
 --
 The upper bound of a function type math:[$F$] is a function type with the lower bound types of the parameters and the upper bound of the return type:
-
-[math]
---
- upper(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( lower(P_1),\dots,lower(P_n) ): upper(R)
---
-
+$$upper(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( lower(P_1),\dots,lower(P_n) ): upper(R)$$
 The lower bound of a function type math:[$F$] is a function type
 with the upper bound types of the parameters and the lower bound of the
 return type:
-
-[math]
---
- lower(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( upper(P_1),\dots,upper(P_n) ): lower(R)
---
-
-
+$$lower(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( upper(P_1),\dots,upper(P_n) ): lower(R)$$
 --
 
 === Autoboxing of Function Type
@@ -652,14 +625,9 @@ method, see <<Methods>> for details and additional constraints.
 The metatype of a function definition is function type (<<_function-type,Function Type>>), as a function declaration is only a different syntax for creating a object.
 Constraints for function type are described in <<_function-type,Function Type>>. Another consequence is that the inferred type of a function definition math:[$fdecl$] is simply its function type
 math:[$F$].
-[math]
---
+$$\infer{\infType{F}}{\infType{fdecl}}$$
 
-\infer{\infType{F}}{\infType{fdecl}}
---
- Note that the type
-of a function definition is different from its return type
-math:[$f.decl$]!
+Note that the type of a function definition is different from its return type math:[$f.decl$]!
 
 .Function Declaration only on Top-Level
 [req,id=IDE-83,version=1]
@@ -884,17 +852,18 @@ keyword, as shown in the next example.
 --
 [source,n4js]
 ----
-async  // <1>
+async
 function foo() {}
 // vs
-async function bar(); // <2>
+async function bar();
 ----
 
-<1> In this snippet, the `async` on line 1 is an identifier reference (referencing a
+* In this snippet, the `async` on line 1 is an identifier reference (referencing a
 variable or parameter) and the function defined on line 2 is a
 non-asynchronous function. The automatic semicolon insertion adds a
 semicolon after the reference on line 1.
-<2> In contrast, `async` on line 3 is
+
+* In contrast, `async` on line 3 is
 recognized as a modifier declaring the function as asynchronous.
 
 --

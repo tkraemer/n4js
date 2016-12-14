@@ -233,7 +233,7 @@ constraints have to hold:
 ..  Any class or interface can be created as root objects via an
 injector associated to a <<Acronyms,DIC>>: `var x: X = N4Injector.of(DIC).create(X);`
 in which `DIC` is a `ac{DIC}`. Of course, an appropriate binding must
-exist. footnote:[Usually, only the itself is created like that, e.g., `ar dic = N4Injector.of(DIC).create(DIC);}`]
+exist. footnote:[Usually, only the itself is created like that, e.g., [language-n4js]`ar dic = N4Injector.of(DIC).create(DIC);}`]
 ..  If a type has the injector being injected, e.g. via field injection
 `@Inject injector: N4Injector;`, then this injector can be used anytime in the control flow to create a new root object similar as above (using `create` method).
 ..  If a provider has been injected (i.e., an instance of `N4Provider}`), then its
@@ -456,7 +456,7 @@ math:[$b_1$]).
 N4JS \ac{DI} mechanisms don’t allow for injection of primitives or built-in
 types. Only user-defined N4Types can be used. In cases where a user
 needs to inject a primitive or a built-in type, the developer must wrap
-it into its own class.footnote:[Also cf. blog posting about
+it into its own class. footnote:[Also cf. blog posting about
 http://www.markhneedham.com/blog/2009/03/10/oo-micro-types/[micro
 types], http://darrenhobbs.com/2007/04/11/tiny-types/[tiny types]]. This
 is to say that none of the following metatypes can be bound: primitive
@@ -1247,23 +1247,18 @@ math:[$P.polyfill=\TRUE$], all the following constraints must hold:
 .  math:[$P$] must extend a class math:[$F$], math:[$F$]
 is called the filled class:
 +
-$$-
-P.super = F
----
+$$P.super = F$$
+
 . math:[$P$]’s name equals the name of the filled class and is
 contained in a module with same qualified name (specifier or global):
 +
-$$-
-& P.name = F.name \\
+$$& P.name = F.name \\
     & \land P.containedModule.global=F.containedModule.global \\
     & \land (P.containedModule.global \\
-        & \hspace{3em} \lor P.containedModule.specifier=F.containedModule.specifier) \\
----
+        & \hspace{3em} \lor P.containedModule.specifier=F.containedModule.specifier) \\$$
 . Both the polyfill and filled class must be top-level declarations
 (i.e., no class expression):
-$$-
-& P.topLevel = \TRUE \land F.topLevel = \TRUE
----
+$$& P.topLevel = \TRUE \land F.topLevel = \TRUE$$
 . math:[$P$] must not implement any interfaces:
 $$P.implementedInterfaces=\emptyset$$
 +

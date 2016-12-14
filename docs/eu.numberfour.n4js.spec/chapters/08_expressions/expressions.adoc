@@ -66,6 +66,7 @@ operators, type constraints are only defined for the binary operator
 version and the other variants are deduced to that binary version. E.g.,
 ’++’ and ’+=’ are deduced to ’+’ (and simple assignment).
 
+
 === The this Literal
 task:IDE-229[] task:IDE-505[]
 
@@ -221,6 +222,7 @@ with the `new` operator. If a function is known to be invoked with an explicit
 math:[$thisArg$] (`apply()` etc.), the `@This` annotation can be used to explicitly set the this type. This annotation has precedence over otherwise
 inferred bindings. task:IDE-1010[]
 --
+
 .Type Inference Heuristic for This-Keyword
 [req,id=IDE-90,version=1]
 --
@@ -1227,11 +1229,7 @@ foo(B);
 
 The type of a new expression math:[$ne$] is inferred as follows:
 
-$$
-
-& \infer{\tee ne: C}{\tee ne.callee: \type{constructor\{C\}}}
---
-
+$$& \infer{\tee ne: C}{\tee ne.callee: \type{constructor\{C\}}}$$
 
 For classes, constructors are described in <<_constructor-and-classifier-type,Constructor>>.
 
@@ -1336,10 +1334,7 @@ A call expression math:[$expr$] is bound to a method (<<Methods>>) or function
 declaration (which may be part of a function definition (<<_function-declaration,Function Definition>> or specified via a function type <<_function-type>>) math:[$F$] (via evaluation of `MemberExpression`. The type of the call is inferred from the function declaration or type math:[$F$] as follows:
 
 
-$$
-
-\infer{\tee expr: T}{bind(expr.target, F) & F.returnType: T}
---
+$$\infer{\tee expr: T}{bind(expr.target, F) & F.returnType: T}$$
 
 
 task:IDE-205[]
@@ -1405,7 +1400,7 @@ enum PostfixOperator: inc='++' | dec='--';
 // TODO missing notation
 
 The type inference and constraints for postfix operators and
-``math:[$--$]``, cf.
+``--``, cf.
 cite:[ECMA11a(S11.3.1,p.70)], cite:[ECMA11a(S11.3.1,p.70)], are defined similarly to their prefix
 variants (unary expressions), see <<Unary Expression>>.
 
@@ -1743,12 +1738,11 @@ task:IDE-345[] math:[$e.op = \lstnfjs{instanceof}$], the following constraints
 must hold:
 
 * The right operand of the instanceof operator must be a `Function`
-footnote:[Only `Function` implements the ECMAScript specification property math:[$[[hasInstance]]$].
+footnote:[Only [language-n4js]`Function` implements the ECMAScript specification property [language-n4js]`hasInstance`.
 Thus instanceof expressions are rewritten by the compiler for other types.
 Note that a reference to a class returns the constructor type, which actually is a function itself.
 In other words,
 $$&\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{Class\}}}{} \\$$
-
 is contained in the the first type rule.] task:IDE-652[]
 // TODO check for missing reference
 , an object type reference

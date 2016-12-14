@@ -104,9 +104,10 @@ export @Internal public function f3() {} // public@Internal
 export public function f2() {}      // public
 ----
 
-The access control levels are defined as listed in .
+The access control levels are defined as listed in <<tab:type-access-control,Table, Type Access Control>>.
 
-.Type Access Control
+[[tab:type-access-control]]
+.Table: Type Access Control
 [cols="^m,^,^,^,^"]
 |===
 5+^|*Type Access*
@@ -119,7 +120,7 @@ h|Modifier h|Module h| Project h| Vendor h| World
 |public |yes |yes |yes |yes
 |===
 
-math:[$TAM$] is a totally ordered set:
+`TAM` is a totally ordered set:
 
 $$\lenum{private} < \lenum{project} < \lenum{public@Internal} < \lenum{public}$$
 
@@ -148,29 +149,22 @@ modifier is explicitly specified.
 [def]
 --
 The function
-[math]
---
-
-\alpha_T: TypeReference \times TypeDeclaration \to Boolean
---
+$$\alpha_T: TypeReference \times TypeDeclaration \to Boolean$$
 
 computes whether a given type, (top-level) variable or function
 reference can access the declaration that it references.
 math:[$\alpha_T$] is defined with .
 
+//TODO missing ref here
+
 Formally, we define math:[$\alpha_T$] for a given reference
 math:[$r$] and a module top level variable, function or type
 declaration math:[$D$] as follows: footnote:[See for definitions of metatype properties.]
 
-[math]
---
-
-&\infer{\alpha_T(r, D)}{D.acc=\lenum{public} }\\
+$$&\infer{\alpha_T(r, D)}{D.acc=\lenum{public} }\\
 &\infer{\alpha_T(r, D)}{D.acc=\lenum{public@Internal} & r.vendor=D.vendor}\\
 &\infer{\alpha_T(r, D)}{D.acc=\lenum{project} & r.project=D.project}\\
-&\infer{\alpha_T(r, D)}{D.acc=\lenum{private} & r.module=D.module}
-
---
+&\infer{\alpha_T(r, D)}{D.acc=\lenum{private} & r.module=D.module}$$
 
 If the type of the arguments is clear from the context, we simply write
 math:[$\alpha(r,D)$] instead of math:[$\alpha_T(r,D)$].
@@ -274,15 +268,13 @@ export @Internal public class C {
 
 ====
 
-math:[$MAM$] does not define a totally ordered set. However, its
-subset
+`MAM` does not define a totally ordered set. However, its subset
 
 [math]
 --
-
 MAM \backslash \{\lenum{public@Internal}\}
-
 --
+
 is a totally ordered set footnote:[That is, for application developers not providing a library or a public API available to other vendors, member access modifiers behave almost similar to modifiers known from Java.] :
 
 [math]
@@ -363,7 +355,7 @@ follows:
 footnote:[See <<_n4js-specific-classifiers,N4-Specific Classifiers>> for definitions of metatype properties. Note that math:[$r.receiver$] always refers to a type declaration in the context of an expression as the receiver type of math:[$r$]. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member
 declaration.]
 
-footnote:[Note, the Java-like access restriction for members of visibility `protected` or `protected@Internal` to code that is responsible for the implementation of that object. cite:[Gosling15a(S6.6.2,p.166)]]
+footnote:[Note, the Java-like access restriction for members of visibility [language-n4js]`protected` or [language-n4js]`protected@Internal` to code that is responsible for the implementation of that object. cite:[Gosling15a(S6.6.2,p.166)]]
 
 
 [math]
@@ -574,8 +566,9 @@ method)
 --
 In N4JS mode, warnings are generated in the following cases:
 
+
 .  The name of a member (of a non external type)
-..  equals the name of a base type footnote:[`string, boolean, number, any, null`] but the type of the variable is different from that type
+..  equals the name of a base type footnote:[[.language-n4js]`string, boolean, number, any, null`] but the type of the variable is different from that type
 ..  is not static nor const but starts with an upper case letter
 .  The name of a non-external n4 types (class, interface, enum) starts
 with a lower case letter

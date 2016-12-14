@@ -13,8 +13,8 @@ Contributors:
 
 For all statements, we define the following pseudo properties:
 
-[.language-n4js]
---
+
+[horizontal]
 `containingFunction` ::
 The function or method in which the statement is (indirectly) contained,
 this may be null.
@@ -22,7 +22,7 @@ this may be null.
 `containingClass` ::
 The class in which the statement is (indirectly) contained, this may be
 null.
---
+
 The expressions and statements are ordered, at first describing the
 constructs available in the 5th edition of ECMA-262 referred to as  cite:[ECMA11a] in the following.
 The grammar snippets already use newer constructs in some cases.
@@ -301,16 +301,11 @@ math:[$\tee f.expression <: \type{union\{Object,string,ArgumentType\}}$]
 provided as init expression: +
 math:[$f.varDecl \neq null \lor (f.initExpr \neq null \land isRValue(f.initExpr))$]
 * The type of the loop variable must be a string (or a super type of
-string, i.e. any): 
-[math]
+string, i.e. any):
+$$& (f.varDecl \neq null \land  \tee f.varDecl \subtype \type{string} ) \\
+\lor & (f.initExp \neq null \land  \tee \type{string} \subtype f.initExpr)$$
 --
 
-& (f.varDecl \neq null \land  \tee f.varDecl \subtype \type{string} ) \\
-\lor & (f.initExp \neq null \land  \tee \type{string} \subtype f.initExpr)
---
-
-
---
 [.language-n4js]
 === Return Statement
 
@@ -333,14 +328,8 @@ ReturnStatement <Yield>:
 --
 1.  Expected type of expression in a return statement must be a sub type
 of the return type of the enclosing function:
-
-[math]
---
-
-    \infer{\tee returnStmt \expectType expression: T}
-          {\tee returnStmt.containingFunction: FT & T=FT.returnType}
-    
---
+$$\infer{\tee returnStmt \expectType expression: T}
+{\tee returnStmt.containingFunction: FT & T=FT.returnType}$$
  Note that the expression may be evaluated to `void`.
 2.  If enclosing function is declared to return `void`, then either
 * no return statement must be defined
@@ -512,16 +501,11 @@ fields (cf. <<_assignment-modifiers>>).
 [req,id=IDE-133,version=1]
 --
 All variable declarations of a const variable statement
-math:[$constStmt$] are not writeable: 
-[math]
+math:[$constStmt$] are not writeable:
+$$\forall vdecl \in constStmt.varDecl: \lnot vdecl.writable$$
 --
 
-    \forall vdecl \in constStmt.varDecl: \lnot vdecl.writable
---
-
---
-
-=== for ... of statement
+=== `for ... of` statement
 
 ES6 introduced a new form of `for` statement: `for ... of` to iterate over the elements of an  `Iterable`, cf. <<_iterablen>>.
 
@@ -626,6 +610,7 @@ ModuleSpecifier: STRING;
 These are the properties of import declaration which can be specified by
 the user:
 
+[horizontal]
 `annotations` ::
 Arbitrary annotations, see <<Annotations>> and below for details.
 

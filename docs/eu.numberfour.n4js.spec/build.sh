@@ -21,6 +21,12 @@ asciispec -a data-uri=true -D $GEN_FOLDER/ N4JSSpec.adoc
 
 echo INFO: AsciiSpec HTML conversion Done
 
+# running "./build.sh -p" (preview) will skip PDF and launch index.html
+if [ "${1}" == "--preview" ] || [ "${1}" == "-p" ]; then
+open ./$GEN_FOLDER/N4JSSpec.html
+exit 0
+fi
+
 ####### Build PDF for gh-pages download #######
 echo INFO: AsciiSpec Generating PDF
 asciispec -fop N4JSSpec.adoc
