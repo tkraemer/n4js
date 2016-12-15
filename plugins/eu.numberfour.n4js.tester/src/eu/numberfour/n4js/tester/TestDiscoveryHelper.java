@@ -413,7 +413,9 @@ public class TestDiscoveryHelper {
 	}
 
 	private boolean isN4jsFile(final URI uri) {
-		return null != uri && nullToEmpty(uri.lastSegment()).endsWith("." + N4JS_FILE_EXTENSION);
+		return null != uri && (nullToEmpty(uri.lastSegment()).endsWith("." + N4JS_FILE_EXTENSION)
+				|| nullToEmpty(uri.lastSegment()).endsWith("." + "n4jsx")); // TODO: Refactor so that this bundle is
+																			// agnostic of N4JSX! IDE-2453
 	}
 
 	private boolean isTestModule(final ResourceSet resourceSet, final IResourceDescription module) {
