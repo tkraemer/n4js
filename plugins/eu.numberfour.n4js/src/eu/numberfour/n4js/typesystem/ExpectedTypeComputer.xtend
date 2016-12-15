@@ -24,7 +24,6 @@ import org.eclipse.xtext.EcoreUtil2
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import eu.numberfour.n4js.n4JS.YieldExpression
-import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 
 /**
  * Contains helper methods used by the rules of the 'expectedTypeIn' judgment.

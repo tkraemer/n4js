@@ -102,10 +102,9 @@ class N4JSLanguageUtils {
 	 * Otherwise, returns given return type unchanged. A return type of <code>void</code> is changed to
 	 * <code>undefined</code>.
 	 */
-	def static TypeRef makePromiseIfAsync(FunctionDefinition functionDef, TypeRef returnTypeRef,
-			BuiltInTypeScope builtInTypeScope) {
-		if (functionDef !== null && returnTypeRef !== null) {
-			if (functionDef.isAsync()) {
+	def static TypeRef makePromiseIfAsync(FunctionDefinition funDef, TypeRef returnTypeRef,	BuiltInTypeScope builtInTypeScope) {
+		if (funDef !== null && returnTypeRef !== null) {
+			if (funDef.isAsync()) {
 				// for async functions with declared return type R: actual return type is Promise<R,?>
 				return TypeUtils.createPromiseTypeRef(builtInTypeScope, returnTypeRef, null);
 			}
@@ -119,13 +118,11 @@ class N4JSLanguageUtils {
 	 * Otherwise, returns given return type unchanged. A return type of <code>void</code> is changed to
 	 * <code>undefined</code>.
 	 */
-	def static TypeRef makeGeneratorIfGeneratorFunction(FunctionDefinition functionDef, TypeRef returnTypeRef,
-			BuiltInTypeScope builtInTypeScope) {
-		
-		if (functionDef !== null && returnTypeRef !== null) {
-			if (functionDef.isGenerator()) {
+	def static TypeRef makeGeneratorIfGeneratorFunction(FunctionDefinition funDef, TypeRef returnTypeRef, BuiltInTypeScope builtInTypeScope) {
+		if (funDef !== null && returnTypeRef !== null) {
+			if (funDef.isGenerator()) {
 				// for generator functions with declared return type R: actual return type is Generator<R,R,any>
-				return TypeUtils.createGeneratorTypeRef(builtInTypeScope, returnTypeRef, returnTypeRef, null);
+				return TypeUtils.createGeneratorTypeRef(builtInTypeScope, funDef);
 			}
 			return returnTypeRef;
 		}

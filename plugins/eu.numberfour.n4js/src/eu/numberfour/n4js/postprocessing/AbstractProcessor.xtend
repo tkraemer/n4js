@@ -176,21 +176,7 @@ package abstract class AbstractProcessor {
 				if (innerReturnTypeRef !== null && !(innerReturnTypeRef instanceof DeferredTypeRef)) {
 					val scope = G.builtInTypeScope;
 					if (!TypeUtils.isGenerator(innerReturnTypeRef, scope)) {
-						val definedReturn = funDef.returnTypeRef;
-						var TypeArgument tYield;
-						var TypeArgument tReturn = inferReturnTypeFromReturns(funDef, scope);
-						val TypeArgument tNext = scope.anyTypeRef;
-						
-						if (definedReturn === null) {
-							tYield = inferYieldExpressionTypeFromYields(funDef, scope);
-				    	} else {
-							tYield = innerReturnTypeRef;
-							if (TypeUtils.isVoid(definedReturn)) {
-								tReturn = scope.getUndefinedTypeRef();
-							}
-				    	}
-						
-					    val outerReturnTypeRef = TypeUtils.createGeneratorTypeRef(scope, tYield, tReturn, tNext);
+					    val outerReturnTypeRef = TypeUtils.createGeneratorTypeRef(scope, funDef);
 						EcoreUtilN4.doWithDeliver(false, [
 							tFunction.returnTypeRef = outerReturnTypeRef;
 						], tFunction);
@@ -200,23 +186,6 @@ package abstract class AbstractProcessor {
 		}
 	}
 	
-	def private ParameterizedTypeRef inferYieldExpressionTypeFromYields(FunctionDefinition definition, BuiltInTypeScope builtInTypeScope) {
-		val hasNonVoidReturn = definition.body!==null && definition.body.hasNonVoidYield;
-		if (hasNonVoidReturn) {
-			return builtInTypeScope.anyTypeRef
-		} else {
-			return builtInTypeScope.voidTypeRef
-		}
-	}
-	def private ParameterizedTypeRef inferReturnTypeFromReturns(FunctionDefinition definition, BuiltInTypeScope builtInTypeScope) {
-		val hasNonVoidReturn = definition.body!==null && definition.body.hasNonVoidReturn;
-		if (hasNonVoidReturn) {
-			return builtInTypeScope.anyTypeRef
-		} else {
-			return builtInTypeScope.voidTypeRef
-		}
-	}
-
 	def protected static String getObjectInfo(EObject obj) {
 		if (obj === null) {
 			"<null>"

@@ -218,6 +218,9 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 					
 					if (functionOrFieldAccessor.isAsync) {
 						typeRef = functionOrFieldAccessor.returnTypeRef
+						if (TypeUtils.isUndefined(typeRef)) {
+							typeRef = newRuleEnvironment(functionOrFieldAccessor).voidTypeRef;
+						}
 					}
 					
 					if (functionOrFieldAccessor.isGenerator) {

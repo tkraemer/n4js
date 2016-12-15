@@ -36,6 +36,7 @@ import org.eclipse.xtext.EcoreUtil2;
 
 import com.google.common.collect.Iterables;
 
+import eu.numberfour.n4js.n4JS.FunctionDefinition;
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope;
 import eu.numberfour.n4js.ts.scoping.builtin.N4Scheme;
 import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef;
@@ -1216,30 +1217,54 @@ public class TypeUtils {
 
 	/**
 	 */
-	public static ParameterizedTypeRef createGeneratorTypeRef(BuiltInTypeScope scope, TypeArgument tYieldOrg,
-			TypeArgument tReturnOrg, TypeArgument tNextOrg) {
+	public static ParameterizedTypeRef createGeneratorTypeRef(BuiltInTypeScope scope, FunctionDefinition funDef) {
+		Objects.requireNonNull(scope);
+		Objects.requireNonNull(funDef);
 
-		Objects.requireNonNull(tYieldOrg);
-		Objects.requireNonNull(tReturnOrg);
+		TypeRef definedReturn = funDef.getReturnTypeRef();
+		TypeArgument tYield;
+		TypeArgument tReturn = inferReturnTypeFromReturns(funDef, scope);
 
-		// defaults
-		TypeArgument tYield = TypeUtils.copyWithProxies(tYieldOrg);
-		TypeArgument tReturn = TypeUtils.copyWithProxies(tReturnOrg);
-		TypeArgument tNext = scope.getAnyTypeRef();
-
-		// override when tYield is void
-		if (isVoid(tYieldOrg)) {
-			tYield = scope.getUndefinedTypeRef();
-		}
-		if (isVoid(tReturnOrg)) {
-			tReturn = scope.getUndefinedTypeRef();
+		if (definedReturn == null) {
+			tYield = inferYieldExprTypeFromYields(funDef, scope);
+		} else {
+			tYield = ((TFunction) funDef.getDefinedType()).getReturnTypeRef();
+			if (TypeUtils.isVoid(definedReturn)) {
+				tReturn = scope.getUndefinedTypeRef();
+			}
 		}
 
-		// set to given types
-		if (tNextOrg != null)
-			tNext = TypeUtils.copyWithProxies(tNextOrg);
+		ParameterizedTypeRef generatorTypeRef = createGeneratorTypeRef(scope, tYield, tReturn, null);
+		return generatorTypeRef;
+	}
 
-		return createTypeRef(scope.getGeneratorType(), tYield, tReturn, tNext);
+	/***/
+	public static ParameterizedTypeRef createGeneratorTypeRef(BuiltInTypeScope scope, TypeArgument tYield,
+			TypeArgument tReturn, TypeArgument tNext) {
+
+		tYield = isVoid(tYield) ? scope.getUndefinedTypeRef() : TypeUtils.copyWithProxies(tYield);
+		tReturn = isVoid(tReturn) ? scope.getUndefinedTypeRef() : TypeUtils.copyWithProxies(tReturn);
+		tNext = (tNext == null) ? scope.getAnyTypeRef() : TypeUtils.copyWithProxies(tNext);
+		ParameterizedTypeRef generatorTypeRef = createTypeRef(scope.getGeneratorType(), tYield, tReturn, tNext);
+		return generatorTypeRef;
+	}
+
+	private static TypeRef inferYieldExprTypeFromYields(FunctionDefinition funDef, BuiltInTypeScope scope) {
+		boolean hasNonVoidReturn = funDef.getBody() != null && funDef.getBody().hasNonVoidYield();
+		if (hasNonVoidReturn) {
+			return scope.getAnyTypeRef();
+		} else {
+			return scope.getVoidTypeRef();
+		}
+	}
+
+	private static TypeRef inferReturnTypeFromReturns(FunctionDefinition funDef, BuiltInTypeScope scope) {
+		boolean hasNonVoidReturn = funDef.getBody() != null && funDef.getBody().hasNonVoidReturn();
+		if (hasNonVoidReturn) {
+			return scope.getAnyTypeRef();
+		} else {
+			return scope.getVoidTypeRef();
+		}
 	}
 
 	/**
