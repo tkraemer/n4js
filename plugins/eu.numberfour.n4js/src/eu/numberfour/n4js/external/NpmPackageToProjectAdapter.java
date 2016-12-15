@@ -331,10 +331,12 @@ public class NpmPackageToProjectAdapter {
 			 * then assumed to be in a folder called "lib" within the package root path.
 			 */
 			Path sourcePath = packageVersionedN4JSDSrcFolder.toPath();
+			Path targetPath = packageRoot.toPath();
+
 			Path mainModulePath = Paths.get(mainModule);
-			if (mainModulePath.getNameCount() > 0)
-				mainModulePath = mainModulePath.getParent();
-			Path targetPath = packageRoot.toPath().resolve(mainModulePath);
+			if (mainModulePath.getNameCount() > 1)
+				targetPath = targetPath.resolve(mainModulePath.getParent());
+
 			FileCopier.copy(sourcePath, targetPath);
 		} catch (IOException e) {
 			final String message = "Error while trying to update type definitions content for '" + packageName
