@@ -58,8 +58,8 @@ TypeRefAnnotationArgument:
 
 We use the map notation for retrieving annotation properties and values
 from a list of annotations, for example
-$$x.annotations[Required]$$, or shorter
-$$x@Required$$.
+$x.annotations[Required]$, or shorter
+$x@Required$.
 
 === Element-Specific Annotations
 
@@ -119,8 +119,8 @@ declaration, function and method level.
 
 This annotation will cause errors issued in the scope of the annotation
 (in the defined script, type, or method) to be transformed to warnings
-if their message text is similar to the $$errorMessage$$ text.
-If $$errorMessage$$ ends with `…` (three dots as a single
+if their message text is similar to the $errorMessage$ text.
+If $errorMessage$ ends with `…` (three dots as a single
 character, created by Eclipse to abbreviate messages), then the error’s
 message text must start with the specified text.
 
