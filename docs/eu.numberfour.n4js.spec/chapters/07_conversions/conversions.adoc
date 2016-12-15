@@ -194,7 +194,7 @@ The auto-conversion rules described in <<_auto-conversion-of-class-instances,Aut
 
 Enumeration values are objects and thus follow the behavior for
 ECMAScript `Object` and `Function`. They have a
-custom $$toString$$ method which returns the name of the
+custom $toString$ method which returns the name of the
 enumeration value.
 
 [.language-n4js]
@@ -224,14 +224,14 @@ We first define helper rules for the type cast constraints as follows:
 [req,id=IDE-89,version=1]
 --
 Given a type cast expression `e` in which
-$$\tee e.expr: S$$ and and target type `T`, the
+$\tee e.expr: S$ and and target type `T`, the
 following constraints must hold:
 
 1.  `T` must be a classifier, enum, primitive, function type
 expression, classifier type, type variable, union or intersection type:
-$$
+$
 \mu(T) \in & \{ \type{any}, \type{Class}, \type{Interface}, \type{Enum}, \type{Primitive}, \type{ObjectType}, \\
-& \type{FunctionTypeExpression}, \type{ClassifierType}, \type{TypeVariable}, \type{Union}, \type{Intersection} \}$$
+& \type{FunctionTypeExpression}, \type{ClassifierType}, \type{TypeVariable}, \type{Union}, \type{Intersection} \}$
 +
 2. `S` is a subtype of `T`, the cast is
 unnecessary and a warning will be generated.
@@ -239,31 +239,31 @@ unnecessary and a warning will be generated.
 primitive types, then `T` must be a subtype of
 `S`. This is also true if `T` is an interface
 and the type of `S` cannot have subtypes, or vice versa.
-$$(   & (isCPOE(T) \\
+$(   & (isCPOE(T) \\
 & \hspace{2em}\land (isCPOE(S) \\
 & \hspace{4em}\lor (\mu(S)=\type{Intersection} \land \exists S' \in S: isCPOE(S'))) \\
 & \lor (isInterface(T)  \land isFinalByType(S) ) \\
-& \lor (isFinalByType(T) \land isInterface(S) )  ) \to \tee T <: S $$
+& \lor (isFinalByType(T) \land isInterface(S) )  ) \to \tee T <: S $
 +
 // Doesn't work for daimond-relationships with S and T on left and right. --> limit to classes only.
 4.  `S` is a class, enum or primitive type and
 `T` is a type-variable, then for each given boundary
-$$T^{up}_i$$ of `T` of type class, enum or
+$T^{up}_i$ of `T` of type class, enum or
 primitive `S` must be a member of the type hierarchy:
 footnote:[`i` iterates over all boundaries]
-$$& (isBoundTypeVar(T) \land isCPOE(S) ) \\
-& \to  \forall_{T^{up}_i \in T.upperBounds} (isCPOE({T^{up}_i}) \to \tee ( {T^{up}_i} <: S \lor  {T^{up}_i} :> S ) )$$
+$& (isBoundTypeVar(T) \land isCPOE(S) ) \\
+& \to  \forall_{T^{up}_i \in T.upperBounds} (isCPOE({T^{up}_i}) \to \tee ( {T^{up}_i} <: S \lor  {T^{up}_i} :> S ) )$
 +
 5.  `S` is a union or intersection type, then the type
 cast is valid if it is valid for at least one element of
 `S`.
 6.  `S` and `T` are generics, and if
-$$S^0=T^0$$, a cast is possible if type arguments are sub- or
+$S^0=T^0$, a cast is possible if type arguments are sub- or
 supertypes of each other: footnote:[`i` iterates over all
 type args]
-$$
+$
 & \mu(S)=\type{Classifier} \land \mu(T)=\type{Classifier} \land S^0=T^0 \to \\
-& \hspace{2em} (\forall\ S.typeArg_i <: T.typeArg_i) \lor (\forall\ T.typeArg_i <: S.typeArg_i)$$
+& \hspace{2em} (\forall\ S.typeArg_i <: T.typeArg_i) \lor (\forall\ T.typeArg_i <: S.typeArg_i)$
 +
 7.  If `T` is a union type, then the type cast is valid if
 it is valid for at least one element of `T`.
@@ -379,13 +379,13 @@ This getter is of type `N4Class` which is a built-in type just like `N4Object`. 
 
 [horizontal]
 `fqn` ::
-The $$FQN$$ of the type.
+The $FQN$ of the type.
 
 `n4superType` ::
 The `N4Class` of the supertype, may be null if supertype is a not an `N4Class`.
 
 `allImplementedInterfaces` ::
-List of The $$FQN$$ of implemented interfaces (transitively
+List of The $FQN$ of implemented interfaces (transitively
 but without interfaces implemented by supertype)
 
 `get isClass` ::
@@ -573,11 +573,11 @@ a|
 Remarks:
 
 1.  ECMAScript doesn’t define explicit conversion from string content.
-Implicit handling states all strings with $$>$$0==true. `N4Primitives.parseBoolean( x )` yields
+Implicit handling states all strings with $>$0==true. `N4Primitives.parseBoolean( x )` yields
 true for `x.trim().toLowerCase().equals("true")`
 2.  The call to `Boolean(..)` for the arguments `0, -0, null, false, NaN, undefined` and `""` evaluate to `false`. All other values
 evaluate to `true`.
 3.  `Number` has several methods for converting a value to string cite:[ECMA11a(S15.7.4)]: `toExponential(), to Fixed(), toPrecision()`.
 4.  ECMAScript doesn’t define explicit conversion from boolean to
-number. Implicit handling states true $$\rightarrow$$ 1 and
-false $$\rightarrow$$ 0, which `N4Primitives.toNumber()` yields.
+number. Implicit handling states true $\rightarrow$ 1 and
+false $\rightarrow$ 0, which `N4Primitives.toNumber()` yields.

@@ -60,7 +60,7 @@ inference rules
 footnote:[A brief introduction can be found at http://www.cs.cornell.edu/~ross/publications/mixedsite/tutorial.html. In general, we refer the reader to cite:[Pierce02a]]
 , that is
 
-$$\frac{premises}{conclusion} \hspace{5mm} \textrm{rule name} \$$
+$\frac{premises}{conclusion} \hspace{5mm} \textrm{rule name} \$
 
 $premises$ is the rule’s premises (e.g., the expression to
 be inferred), $conclusion$ the result of the rule.
@@ -70,7 +70,7 @@ $rule name$ is an optional condition which may be omitted.
 Both parts of the rule may contain multiple expressions, which are
 concatenated via and. For example, the following
 
-$$\frac{P_1 \hspace{5mm}  P_2 \hspace{5mm} P_3}{C}$$
+$\frac{P_1 \hspace{5mm}  P_2 \hspace{5mm} P_3}{C}$
 can be read as
 
 [quote]
@@ -101,7 +101,7 @@ The following statement, for example, defines transitivity of subtypes
 
 // TODO replace math with original LaTeX
 
-$$\frac{\Gamma B \vdash <: A \hspace{7mm} \Gamma \vdash C <: B}{\Gamma \vdash C: < A}$$
+$\frac{\Gamma B \vdash <: A \hspace{7mm} \Gamma \vdash C <: B}{\Gamma \vdash C: < A}$
 
 
 is the context containing (bound) type variables etc.,
@@ -176,7 +176,7 @@ bindings are permitted due to visibility constraints.
 --
 We define a pseudo relation
 
-$$bind: VariableReference \times VariableDeclaration$$
+$bind: VariableReference \times VariableDeclaration$
 
 which binds a reference, i.e. an identifier, to a declaration (e.g.,variable
 declaration).
@@ -205,7 +205,7 @@ $bind$ for declared types as well:
 ---
 We define a pseudo relation
 
-$$bind: DeclaredType \times Class|Interface|Enum$$
+$bind: DeclaredType \times Class|Interface|Enum$
 
 which binds a type reference, i.e. a simple name, to the type declaration.
 ---
@@ -221,7 +221,7 @@ $merge$ as follows.
 --
 We define a pseudo function
 
-$$merge: Type \times \dots \times Type \to \powerset(Type)$$
+$merge: Type \times \dots \times Type \to \powerset(Type)$
 
 The idea of this function is to remove duplicates. For example; if a
 union type contains two type expressions $te_1$ and
