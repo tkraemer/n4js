@@ -83,7 +83,7 @@ Type access modifier as described in <<_accessibility-of-types-top-level-variabl
 
 `owned{Fields|Methods|Getters|Setters|Accessors}` ::
 Filters ownedMembers by metatype, short for +
-$$x \in ownedMembers, \mu(x)=\type{Field}$$ etc.
+$x \in ownedMembers, \mu(x)=\type{Field}$ etc.
 
 `members` ::
 Reflexive transitive closure of all members of a classifier and its
@@ -91,13 +91,13 @@ super classifiers, see below on how this is calculated.
 
 `fields|methods|getters|setters|accessors` ::
 Filters members by metatype, short for +
-$$x \in members, \mu(x)=\type{Field}$$ etc.
+$x \in members, \mu(x)=\type{Field}$ etc.
 
 `superClassifiers` ::
 Classes and interface may extend or implement classes or interfaces. Any
 class or interface extended or interface implemented is called __super
 classifier__. We distinguish the directly subtyped classifiers and from
-the transitive closure of supertypes $$superClassifiers^*$$
+the transitive closure of supertypes $superClassifiers^*$
 
 [.language-n4js]
 == Common Semantics of Classifiers
@@ -106,12 +106,12 @@ the transitive closure of supertypes $$superClassifiers^*$$
 [req,id=IDE-42,version=1]
 --
 For a given type `C`, and supertypes +
-$$superClassifiers = \{S_1,..., S_n\}$$ directly subtyped
+$superClassifiers = \{S_1,..., S_n\}$ directly subtyped
 `C`, +
 the following constraints must be true:
 
 1.  The supertypes must be accessible to the subtype:
-$$S_1, ..., S_n$$ must be accessible to `C`.
+$S_1, ..., S_n$ must be accessible to `C`.
 2.  All type parameters of the direct supertypes have to be bound by
 type arguments in the subtype and the type arguments have to be
 substitutable types of the type parameters.
@@ -125,12 +125,12 @@ substitutable types of the type parameters.
 3.  Wildcards may not be used as type argument when binding a
 supertype’s type parameters.
 4.  A classifier cannot be directly subtyped directly multiple times:
-$$\forall S_i, S_j (i,j \in \{1..n\}): S_i = S_j \to i=j$$
+$\forall S_i, S_j (i,j \in \{1..n\}): S_i = S_j \to i=j$
 
 In order to simplify the following constraints, we use the pseudo
-property $$members$$ to refer to all members of a classifier.
+property $members$ to refer to all members of a classifier.
 This includes all members directly declared by the classifier itself,
-i.e. the $$ownedMember$$, and all members inherited from its
+i.e. the $ownedMember$, and all members inherited from its
 super classifiers. The concrete mechanisms for inheriting a member are
 different and further constraint (cf. <<_redefinition-of-members,Redefinition of Members>>). A classifier only inherits its members from its direct supertypes, although the supertypes may contains
 members inherited from their supertypes.
@@ -225,18 +225,18 @@ Boolean flag indicating whether subtype relation uses nominal or
 structural typing, see <<_definition-site-structural-typing,Definition-Site Structural Typing>> for details.
 
 `superType/sup` ::
-The type referenced by $$superType$$ is called direct
+The type referenced by $superType$ is called direct
 superclass of a class, and vice versa the class is a direct subclass of
-$$superType$$. Instead of $$superType$$, we
-sometimes simply write $$sup$$. The derived set
-$$sup^+$$ is defined as the transitive closures of all direct
+$superType$. Instead of $superType$, we
+sometimes simply write $sup$. The derived set
+$sup^+$ is defined as the transitive closures of all direct
 and indirect superclasses of a class. If no supertype is explicitly
 stated, classes are derived from `N4Object`.
 
-`implementedInterfaces$/$interfaces$$` ::
+`implementedInterfaces$/$interfaces$` ::
 Collection of interfaces directly _implemented_ by the class; empty by
-default. Instead of $$implementedInterfaces$$, we simply write
-$$interfaces$$.
+default. Instead of $implementedInterfaces$, we simply write
+$interfaces$.
 
 `ownedCtor` ::
 Explicit constructor of a class (if any), see <<_constructor-and-classifier-type,Constructor>>.
@@ -249,10 +249,10 @@ Explicit or implicit constructor of a class, see <<_constructor-and-classifier-t
 
 `fields` ::
 Further derived properties for retrieving all methods (property
-$$methods$$), fields (property $$fields$$), static
-members (property $$staticOwnedMembers$$), etc. can easily be
-added by filtering properties $$members$$ or
-$$ownedMembers$$.
+$methods$), fields (property $fields$), static
+members (property $staticOwnedMembers$), etc. can easily be
+added by filtering properties $members$ or
+$ownedMembers$.
 
 ==== Type Inference [[class-type-inference]]
 
@@ -299,9 +299,9 @@ by the override and implementation constraints defined in .
 
 Note that since overloading is forbidden, the following constraint is
 true: +
-$$\forall m_1,m_2 \in members: m_1.name=m_2.name \iff m_1=m_2 \lor accessorPair(m_1, m_2)$$
-footnote:[ $$accessorPair(m_1,m_2)$$ is defined as follows:
-$$(\mu(m_1)=\type{getter}\land \mu(m_2)=\type{setter}) \lor (\mu(m_1)=\type{setter}\land \mu(m_2)=\type{getter})$$$
+$\forall m_1,m_2 \in members: m_1.name=m_2.name \iff m_1=m_2 \lor accessorPair(m_1, m_2)$
+footnote:[ $accessorPair(m_1,m_2)$ is defined as follows:
+$(\mu(m_1)=\type{getter}\land \mu(m_2)=\type{setter}) \lor (\mu(m_1)=\type{setter}\land \mu(m_2)=\type{getter})$$
 
 Remarks: Class and method definition is quite similar to the proposed
 ECMAScript version 6 draft cite:[ECMA15a(S13.5)], except that an N4 class and members may
@@ -409,7 +409,7 @@ final.
 === Abstract Classes
 
 A class with modifier `abstract` is called an _abstract class_ and has its
-$$abstract$$ property set to true. Other classes are called
+$abstract$ property set to true. Other classes are called
 _concrete_ classes.
 
 .Abstract Class
@@ -460,15 +460,15 @@ constructor as private. task:IDE-149[] This can be used for singletons.
 [req,id=IDE-47,version=1]
 --
 For a class `C` with a supertype
-$$S=C.sup$$, the following constraints must hold
+$S=C.sup$, the following constraints must hold
 
-* $$C.sup$$ must reference a class declaration `S`
+* $C.sup$ must reference a class declaration `S`
 * `S` must be be extendable in the project of
 `C`
-* $$C \not\in C.sup^+$$
+* $C \not\in C.sup^+$
 * All abstract members in `S` must be accessible from
 `C`: +
-$$\forall M \in S.members : M.abstract \Rightarrow $$
+$\forall M \in S.members : M.abstract \Rightarrow $
 `M` is accessible from `C` +
 (note that `M` need not be an owned member of
 `S` and that this constraint applies even if `C`
@@ -517,8 +517,8 @@ These are the additional properties of interfaces, which can be
 specified by the user:
 
 Collection of interfaces extended by this interface; empty by default.
-Instead of $$superInterfaces$$, we simply write
-$$interfaces$$.
+Instead of $superInterfaces$, we simply write
+$interfaces$.
 
 
 ==== Type Inference [[interfaces-type-inference]]
@@ -567,7 +567,7 @@ For any interface `I`, the following must hold:
 
 . Interfaces may not be instantiated.
 . Interfaces cannot be set to final (with annotation @Final):
-$$\neg I.final$$.
+$\neg I.final$.
 . Members of an interface must not be declared private. The default
 access modifier in interfaces is the the type’s visibility or , if the
 type’s visibility is .
@@ -606,7 +606,7 @@ modeled in N4JS 1:1.
 
 As specified in <<IDE-56,Defining and calling Constructors,Defining and Calling Constructors>>, interfaces
 cannot contain a constructor i.e.
-$$\forall m \in I.ownedMethods: m.name \neq 'constructor'$$.
+$\forall m \in I.ownedMethods: m.name \neq 'constructor'$.
 
 .Simple Interfaces
 [example]
@@ -642,31 +642,31 @@ Besides the general constraints described in <<_common-semantics-of-classifiers,
 [req,id=IDE-49,version=1]
 --
 For a given type
-`I`, and $$\{I_1,..., I_n\}$$ directly extended by
+`I`, and $\{I_1,..., I_n\}$ directly extended by
 `I`, the following constraints must be true:
 
 .  Only interfaces can extend interfaces:
-$$I, I_1, ..., I_n$$ must be interfaces.
+$I, I_1, ..., I_n$ must be interfaces.
 .  An interface may not directly extend the same interface more than
 once: +
-$$I_i=I_j \Rightarrow i=j$$ for any
-$$i,j \in \{1..n\}$$.
+$I_i=I_j \Rightarrow i=j$ for any
+$i,j \in \{1..n\}$.
 .  An interface may (indirectly) extend the same interface
-$$J$$ more than once only if
-..  $$J$$ is not parameterized, or
-..  in all cases $$J$$ is extended with the same type
+$J$ more than once only if
+..  $J$ is not parameterized, or
+..  in all cases $J$ is extended with the same type
 arguments for all invariant type parameters.
 +
-Note: for type parameters of $$J$$ that are declared covariant
+Note: for type parameters of $J$ that are declared covariant
 or contravariant on definition site, different type arguments may be
 used.
-.  All abstract members in $$I_i$$,
-$$i \in \{1, ..., n\}$$, must be accessible from
+.  All abstract members in $I_i$,
+$i \in \{1, ..., n\}$, must be accessible from
 `I`: +
-$$\forall i \in \{1, ..., n\} : M \in I_i.members \land M.abstract \Rightarrow $$
+$\forall i \in \{1, ..., n\} : M \in I_i.members \land M.abstract \Rightarrow $
 `M` is accessible from `I` +
 (note that `M` need not be an owned member of
-$$I_i$$).
+$I_i$).
 --
 
 .Implementing Interfaces
@@ -674,33 +674,33 @@ $$I_i$$).
 --
 
 For a given type
-`C`, and $$\{I_1,..., I_n\}$$ directly implemented
+`C`, and $\{I_1,..., I_n\}$ directly implemented
 by `C`, the following constraints must be true:
 
 .  Only classes can implement interfaces: `C` must be a
 Class.
-.  A class can only implement interfaces: $$I_1, ..., I_n$$
+.  A class can only implement interfaces: $I_1, ..., I_n$
 must be interfaces.
 .  A class may not directly implement the same interface more than
 once: +
-$$I_i=I_j \Rightarrow i=j$$ for any
-$$i,j \in \{1..n\}$$.
+$I_i=I_j \Rightarrow i=j$ for any
+$i,j \in \{1..n\}$.
 .  A class may (indirectly) implement the same interface
-$$J$$ more than once only if
-..  $$J$$ is not parameterized, or
-..  in all cases $$J$$ is implemented with the same type
+$J$ more than once only if
+..  $J$ is not parameterized, or
+..  in all cases $J$ is implemented with the same type
 arguments for all invariant type parameters.
 +
-Note: for type parameters of $$J$$ that are declared covariant
+Note: for type parameters of $J$ that are declared covariant
 or contravariant on definition site, different type arguments may be
 used.
-.  All abstract members in $$I_i$$,
-$$i \in \{1, ..., n\}$$, must be accessible from
+.  All abstract members in $I_i$,
+$i \in \{1, ..., n\}$, must be accessible from
 `C`: +
-$$\forall i \in \{1, ..., n\} : M \in I_i.members \land M.abstract \Rightarrow $$
+$\forall i \in \{1, ..., n\} : M \in I_i.members \land M.abstract \Rightarrow $
 `M` is accessible from `C` +
 (note that `M` need not be an owned member of
-$$I_i$$).
+$I_i$).
 
 --
 
@@ -718,7 +718,7 @@ Classifiers can be declared generic by defining a type parameter via `type-param
 A generic classifier is a
 classifier with at least one type parameter. That is, a given classifier
 `C` is generic if and only if
-$$|C.typePars|\geq 1$$.
+$|C.typePars|\geq 1$.
 
 If a classifier does not define any type parameters, it is not generic,
 even if its superclass or any implemented interface is generic.
