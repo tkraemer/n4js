@@ -11,7 +11,7 @@ Contributors:
 -->
 <?eclipse version="3.4"?>
 <plugin>
-
+	<!-- Xpect run menu item -->
     <extension
           point= "org.eclipse.debug.ui.launchShortcuts" >
        <shortcut
@@ -43,7 +43,7 @@ Contributors:
            </contextualLaunch>
        </shortcut>
    </extension>
-   
+   <!-- JIRA/GitHub bug menu items -->
    <extension
           point= "org.eclipse.debug.ui.launchShortcuts" >
        <shortcut
@@ -98,6 +98,7 @@ Contributors:
        </shortcut>
    </extension>
    
+   <!-- Register .n4jsx file extension to XPECT -->
    <extension
       point="org.xpect.testSuite">
          <testSuite
