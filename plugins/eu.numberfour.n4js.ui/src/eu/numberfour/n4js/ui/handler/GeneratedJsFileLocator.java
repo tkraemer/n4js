@@ -12,10 +12,7 @@ package eu.numberfour.n4js.ui.handler;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Optional.fromNullable;
-import static com.google.common.collect.Sets.newHashSet;
 import static eu.numberfour.n4js.N4JSGlobals.JS_FILE_EXTENSION;
-import static eu.numberfour.n4js.N4JSGlobals.N4JS_FILE_EXTENSION;
-import static java.util.Collections.unmodifiableCollection;
 import static org.eclipse.emf.common.util.URI.createPlatformResourceURI;
 
 import org.eclipse.core.resources.IFile;
@@ -28,6 +25,7 @@ import eu.numberfour.n4js.generator.common.CompilerUtils;
 import eu.numberfour.n4js.generator.common.GeneratorException;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
+import eu.numberfour.n4js.resource.AllowedFileExtensionsForGeneratedSourceProvider;
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
 /**
@@ -38,8 +36,8 @@ public class GeneratedJsFileLocator {
 	/**
 	 * An iterable of allowed file extensions when looking up the corresponding generated source.
 	 */
-	public static final Iterable<String> ALLOWED_FILE_EXTENSIONS = unmodifiableCollection(newHashSet(
-			N4JS_FILE_EXTENSION, JS_FILE_EXTENSION));
+	// public static final Iterable<String> ALLOWED_FILE_EXTENSIONS = unmodifiableCollection(newHashSet(
+	// N4JS_FILE_EXTENSION, JS_FILE_EXTENSION, "n4jsx", "jsx"));
 
 	@Inject
 	private IN4JSCore core;
@@ -49,6 +47,9 @@ public class GeneratedJsFileLocator {
 
 	@Inject
 	private FileExtensionBasedPropertTester tester;
+
+	@Inject
+	private AllowedFileExtensionsForGeneratedSourceProvider allowedFileExtensionProvider;
 
 	/**
 	 * Tries to locates the generated {@link IFile file} of an N4JS or pure JS file give with the argument and returns
@@ -64,7 +65,7 @@ public class GeneratedJsFileLocator {
 			return absent();
 		}
 
-		if (tester.test(file, null, null, ALLOWED_FILE_EXTENSIONS)) {
+		if (tester.test(file, null, null, allowedFileExtensionProvider.getAllowedFileExtensions())) {
 			final IFile generatedFile = tryLocateGeneratedFile(file,
 					N4JSLanguageConstants.TRANSPILER_SUBFOLDER_FOR_TESTS);
 			if (null != generatedFile && generatedFile.exists()) {

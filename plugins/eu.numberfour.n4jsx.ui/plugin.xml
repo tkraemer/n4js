@@ -66,7 +66,7 @@ Contributors:
         </handler>
         <!-- Open generated source command handler -->
         <handler
-              class="eu.numberfour.n4jsx.ui.N4JSXExecutableExtensionFactory:eu.numberfour.n4jsx.ui.handler.OpenGeneratedSourceInEditorHandler"
+              class="eu.numberfour.n4jsx.ui.N4JSXExecutableExtensionFactory:eu.numberfour.n4js.ui.handler.OpenGeneratedSourceInEditorHandler"
               commandId="eu.numberfour.n4jsx.ui.openGeneratedSourceInEditor">
         </handler>
     </extension>
@@ -167,7 +167,7 @@ Contributors:
                locationURI="popup:#TextEditorContext?after=additions">
             <command
                   commandId="eu.numberfour.n4jsx.ui.openGeneratedSourceInEditor"
-                  icon="icons/macrodef_obj.gif"
+                  icon="platform:/plugin/eu.numberfour.n4js.ui/icons/macrodef_obj.gif"
                   label="Open Generated Source In Editor"
                   style="push">
                <visibleWhen
@@ -185,7 +185,7 @@ Contributors:
                locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
             <command
                   commandId="eu.numberfour.n4jsx.ui.openGeneratedSourceInEditor"
-                  icon="icons/macrodef_obj.gif"
+                  icon="platform:/plugin/eu.numberfour.n4js.ui/icons/macrodef_obj.gif"
                   label="Open Generated Source In Editor"
                   style="push">
                <visibleWhen

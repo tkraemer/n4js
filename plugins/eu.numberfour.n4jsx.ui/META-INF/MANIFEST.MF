@@ -44,7 +44,8 @@ Require-Bundle: eu.numberfour.n4js;visibility:=reexport,
  org.eclipse.jgit
 Import-Package: com.ibm.icu.text,
  org.apache.log4j
-Export-Package: eu.numberfour.n4jsx.ui.quickfix,
- eu.numberfour.n4jsx.ui.contentassist
+Export-Package: eu.numberfour.n4jsx.ui.contentassist,
+ eu.numberfour.n4jsx.ui.handler,
+ eu.numberfour.n4jsx.ui.quickfix
 Bundle-Activator: eu.numberfour.n4jsx.ui.internal.N4JSXActivator
 Bundle-ActivationPolicy: lazy
