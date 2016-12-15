@@ -44,7 +44,7 @@ public enum ResourceType {
 	private final static String EXT_N4JS = N4JSGlobals.N4JS_FILE_EXTENSION;
 	private final static String EXT_N4JSD = N4JSGlobals.N4JSD_FILE_EXTENSION;
 	private final static String EXT_N4MF = N4MFConstants.N4MF_FILE_EXTENSION;
-	private final static String EXT_XT = "xt";
+	private final static String EXT_XT = N4JSGlobals.XT_FILE_EXTENSION;
 	private final static String END_JS_XT = "." + N4JSGlobals.JS_FILE_EXTENSION + "." + EXT_XT;
 	private final static String END_N4JS_XT = "." + N4JSGlobals.N4JS_FILE_EXTENSION + "." + EXT_XT;
 	private final static String END_N4JSD_XT = "." + N4JSGlobals.N4JSD_FILE_EXTENSION + "." + EXT_XT;

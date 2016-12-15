@@ -11,12 +11,12 @@ Contributors:
 -->
 <?eclipse version="3.4"?>
 <plugin>
-
-       <extension
+	<!-- Xpect run menu item -->
+    <extension
           point= "org.eclipse.debug.ui.launchShortcuts" >
        <shortcut
              class="eu.numberfour.n4js.xpect.ui.LaunchXpectShortcut"
-             icon="icons/xpect_run.png"
+             icon="platform:/plugin/eu.numberfour.n4js.xpect.ui/icons/xpect_run.png"
              id="eu.numberfour.n4js.xpect.ui.LaunchXpectShortcut"
              label="Xpect run"
              modes="run"> 
@@ -43,12 +43,12 @@ Contributors:
            </contextualLaunch>
        </shortcut>
    </extension>
-   
+   <!-- JIRA/GitHub bug menu items -->
    <extension
           point= "org.eclipse.debug.ui.launchShortcuts" >
        <shortcut
              class="eu.numberfour.n4js.xpect.ui.GenerateJiraBugReportShortcut"
-             icon="icons/bug_report.png"
+             icon="platform:/plugin/eu.numberfour.n4js.xpect.ui/icons/bug_report.png"
              id="eu.numberfour.n4js.xpect.ui.GenerateJiraBugReportShortcut"
              label="JIRA ticket generation for Xpect bug"
              modes="run"> 
@@ -73,7 +73,7 @@ Contributors:
        </shortcut>
        <shortcut
              class="eu.numberfour.n4js.xpect.ui.GenerateGitHubIssueReportShortcut"
-             icon="icons/bug_report.png"
+             icon="platform:/plugin/eu.numberfour.n4js.xpect.ui/icons/bug_report.png"
              id="eu.numberfour.n4js.xpect.ui.GenerateGitHubIssueReportShortcut"
              label="GitHub issue generation for Xpect bug"
              modes="run">
@@ -98,6 +98,7 @@ Contributors:
        </shortcut>
    </extension>
    
+   <!-- Register .n4jsx file extension to XPECT -->
    <extension
       point="org.xpect.testSuite">
          <testSuite
