@@ -1407,6 +1407,20 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EDataType iteratorOfExpressionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType iteratorOfYieldExpressionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EDataType iteratorOfStatementEDataType = null;
 
 	/**
@@ -2508,7 +2522,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getBlock__GetAllStatements() {
+	public EOperation getBlock__GetAllExpressions() {
 		return blockEClass.getEOperations().get(1);
 	}
 
@@ -2517,7 +2531,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getBlock__GetAllReturnStatements() {
+	public EOperation getBlock__GetAllYieldExpressions() {
 		return blockEClass.getEOperations().get(2);
 	}
 
@@ -2526,7 +2540,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getBlock__GetAllNonVoidReturnStatements() {
+	public EOperation getBlock__GetAllVoidYieldExpressions() {
 		return blockEClass.getEOperations().get(3);
 	}
 
@@ -2535,7 +2549,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getBlock__GetAllVoidReturnStatements() {
+	public EOperation getBlock__GetAllNonVoidYieldExpressions() {
 		return blockEClass.getEOperations().get(4);
 	}
 
@@ -2544,8 +2558,53 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getBlock__HasNonVoidReturn() {
+	public EOperation getBlock__HasNonVoidYield() {
 		return blockEClass.getEOperations().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getBlock__GetAllStatements() {
+		return blockEClass.getEOperations().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getBlock__GetAllReturnStatements() {
+		return blockEClass.getEOperations().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getBlock__GetAllNonVoidReturnStatements() {
+		return blockEClass.getEOperations().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getBlock__GetAllVoidReturnStatements() {
+		return blockEClass.getEOperations().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getBlock__HasNonVoidReturn() {
+		return blockEClass.getEOperations().get(10);
 	}
 
 	/**
@@ -5982,6 +6041,24 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getIteratorOfExpression() {
+		return iteratorOfExpressionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getIteratorOfYieldExpression() {
+		return iteratorOfYieldExpressionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EDataType getIteratorOfStatement() {
 		return iteratorOfStatementEDataType;
 	}
@@ -6172,6 +6249,11 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		blockEClass = createEClass(BLOCK);
 		createEReference(blockEClass, BLOCK__STATEMENTS);
 		createEOperation(blockEClass, BLOCK___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS);
+		createEOperation(blockEClass, BLOCK___GET_ALL_EXPRESSIONS);
+		createEOperation(blockEClass, BLOCK___GET_ALL_YIELD_EXPRESSIONS);
+		createEOperation(blockEClass, BLOCK___GET_ALL_VOID_YIELD_EXPRESSIONS);
+		createEOperation(blockEClass, BLOCK___GET_ALL_NON_VOID_YIELD_EXPRESSIONS);
+		createEOperation(blockEClass, BLOCK___HAS_NON_VOID_YIELD);
 		createEOperation(blockEClass, BLOCK___GET_ALL_STATEMENTS);
 		createEOperation(blockEClass, BLOCK___GET_ALL_RETURN_STATEMENTS);
 		createEOperation(blockEClass, BLOCK___GET_ALL_NON_VOID_RETURN_STATEMENTS);
@@ -6684,6 +6766,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		n4ModifierEEnum = createEEnum(N4_MODIFIER);
 
 		// Create data types
+		iteratorOfExpressionEDataType = createEDataType(ITERATOR_OF_EXPRESSION);
+		iteratorOfYieldExpressionEDataType = createEDataType(ITERATOR_OF_YIELD_EXPRESSION);
 		iteratorOfStatementEDataType = createEDataType(ITERATOR_OF_STATEMENT);
 		iteratorOfReturnStatementEDataType = createEDataType(ITERATOR_OF_RETURN_STATEMENT);
 	}
@@ -7127,6 +7211,16 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEReference(getBlock_Statements(), this.getStatement(), null, "statements", null, 0, -1, Block.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getBlock__AppliesOnlyToBlockScopedElements(), theEcorePackage.getEBoolean(), "appliesOnlyToBlockScopedElements", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getBlock__GetAllExpressions(), this.getIteratorOfExpression(), "getAllExpressions", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getBlock__GetAllYieldExpressions(), this.getIteratorOfYieldExpression(), "getAllYieldExpressions", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getBlock__GetAllVoidYieldExpressions(), this.getIteratorOfYieldExpression(), "getAllVoidYieldExpressions", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getBlock__GetAllNonVoidYieldExpressions(), this.getIteratorOfYieldExpression(), "getAllNonVoidYieldExpressions", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getBlock__HasNonVoidYield(), theEcorePackage.getEBoolean(), "hasNonVoidYield", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getBlock__GetAllStatements(), this.getIteratorOfStatement(), "getAllStatements", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -7819,6 +7913,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		addEEnumLiteral(n4ModifierEEnum, N4Modifier.CONST);
 
 		// Initialize data types
+		initEDataType(iteratorOfExpressionEDataType, Iterator.class, "IteratorOfExpression", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Iterator<eu.numberfour.n4js.n4JS.Expression>");
+		initEDataType(iteratorOfYieldExpressionEDataType, Iterator.class, "IteratorOfYieldExpression", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Iterator<eu.numberfour.n4js.n4JS.YieldExpression>");
 		initEDataType(iteratorOfStatementEDataType, Iterator.class, "IteratorOfStatement", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Iterator<eu.numberfour.n4js.n4JS.Statement>");
 		initEDataType(iteratorOfReturnStatementEDataType, Iterator.class, "IteratorOfReturnStatement", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Iterator<eu.numberfour.n4js.n4JS.ReturnStatement>");
 

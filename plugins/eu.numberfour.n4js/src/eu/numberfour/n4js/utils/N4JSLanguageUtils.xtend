@@ -114,6 +114,24 @@ class N4JSLanguageUtils {
 		return null;
 	}
 
+	/**
+	 * If the given function definition is a generator function, will wrap given return type into a Generator.
+	 * Otherwise, returns given return type unchanged. A return type of <code>void</code> is changed to
+	 * <code>undefined</code>.
+	 */
+	def static TypeRef makeGeneratorIfGeneratorFunction(FunctionDefinition functionDef, TypeRef returnTypeRef,
+			BuiltInTypeScope builtInTypeScope) {
+		
+		if (functionDef !== null && returnTypeRef !== null) {
+			if (functionDef.isGenerator()) {
+				// for generator functions with declared return type R: actual return type is Generator<R,R,any>
+				return TypeUtils.createGeneratorTypeRef(builtInTypeScope, returnTypeRef, returnTypeRef, null);
+			}
+			return returnTypeRef;
+		}
+		return null;
+	}
+
 
 	/**
 	 * Tells if given object is an <em>AST node</em>, i.e. contained below a {@link Script} element.

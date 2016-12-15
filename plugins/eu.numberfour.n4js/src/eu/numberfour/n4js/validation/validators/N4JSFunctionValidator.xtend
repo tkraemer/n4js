@@ -212,12 +212,27 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		val TypeRef retTypeRef = switch inferredType {
 			// note: order is important, because FunctionTypeRef IS a ParameterizedTypeRef as well
 			FunctionTypeExprOrRef: {
-				if(functionOrFieldAccessor instanceof FunctionDefinition && functionOrFieldAccessor.isAsync) {
-					(functionOrFieldAccessor as FunctionDefinition).returnTypeRef
+				var typeRef = inferredType?.returnTypeRef;
+				if(functionOrFieldAccessor instanceof FunctionDefinition) {
+					val tFun = functionOrFieldAccessor.definedType;
+					
+					if (functionOrFieldAccessor.isAsync) {
+						typeRef = functionOrFieldAccessor.returnTypeRef
+					}
+					
+					if (functionOrFieldAccessor.isGenerator) {
+						if (tFun instanceof TFunction) {
+							val actualReturnTypeRef = tFun.returnTypeRef;
+							val tReturn = actualReturnTypeRef.typeArgs.get(1);
+							val ruleEnv = newRuleEnvironment(functionOrFieldAccessor);
+							typeRef = ts.resolveType(ruleEnv, tReturn);
+							if (TypeUtils.isUndefined(typeRef)) {
+								typeRef = newRuleEnvironment(functionOrFieldAccessor).voidTypeRef;
+							}
+						}
+					}
 				}
-				else {
-					inferredType?.returnTypeRef
-				}
+				typeRef;
 			}
 			ParameterizedTypeRef: inferredType
 			default: null
@@ -358,6 +373,12 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		if (accessor instanceof ArrowFunction) {
 			if (accessor.isSingleExprImplicitReturn) {
 				return false
+			}
+		}
+		// Return statements are optional in generator functions
+ 		if (accessor instanceof FunctionDefinition) {
+			if (accessor.isGenerator) {
+				return false;
 			}
 		}
 		// at least one leaking control-flow path out of Method w/o returning anything:

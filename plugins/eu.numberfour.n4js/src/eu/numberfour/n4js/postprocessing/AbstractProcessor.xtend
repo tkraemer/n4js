@@ -44,6 +44,9 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
+import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 
 /**
  * Provides some common base functionality used across all processors (e.g. logging). See {@link ASTProcessor} for more
@@ -172,9 +175,22 @@ package abstract class AbstractProcessor {
 				val innerReturnTypeRef = tFunction.returnTypeRef;
 				if (innerReturnTypeRef !== null && !(innerReturnTypeRef instanceof DeferredTypeRef)) {
 					val scope = G.builtInTypeScope;
-				    if (!TypeUtils.isGenerator(innerReturnTypeRef, scope)) {
-						val tYield = innerReturnTypeRef;
-					    val outerReturnTypeRef = TypeUtils.createGeneratorTypeRef(scope, tYield, null, null);
+					if (!TypeUtils.isGenerator(innerReturnTypeRef, scope)) {
+						val definedReturn = funDef.returnTypeRef;
+						var TypeArgument tYield;
+						var TypeArgument tReturn = inferReturnTypeFromReturns(funDef, scope);
+						val TypeArgument tNext = scope.anyTypeRef;
+						
+						if (definedReturn === null) {
+							tYield = inferYieldExpressionTypeFromYields(funDef, scope);
+				    	} else {
+							tYield = innerReturnTypeRef;
+							if (TypeUtils.isVoid(definedReturn)) {
+								tReturn = scope.getUndefinedTypeRef();
+							}
+				    	}
+						
+					    val outerReturnTypeRef = TypeUtils.createGeneratorTypeRef(scope, tYield, tReturn, tNext);
 						EcoreUtilN4.doWithDeliver(false, [
 							tFunction.returnTypeRef = outerReturnTypeRef;
 						], tFunction);
@@ -183,7 +199,23 @@ package abstract class AbstractProcessor {
 			}
 		}
 	}
-
+	
+	def private ParameterizedTypeRef inferYieldExpressionTypeFromYields(FunctionDefinition definition, BuiltInTypeScope builtInTypeScope) {
+		val hasNonVoidReturn = definition.body!==null && definition.body.hasNonVoidYield;
+		if (hasNonVoidReturn) {
+			return builtInTypeScope.anyTypeRef
+		} else {
+			return builtInTypeScope.voidTypeRef
+		}
+	}
+	def private ParameterizedTypeRef inferReturnTypeFromReturns(FunctionDefinition definition, BuiltInTypeScope builtInTypeScope) {
+		val hasNonVoidReturn = definition.body!==null && definition.body.hasNonVoidReturn;
+		if (hasNonVoidReturn) {
+			return builtInTypeScope.anyTypeRef
+		} else {
+			return builtInTypeScope.voidTypeRef
+		}
+	}
 
 	def protected static String getObjectInfo(EObject obj) {
 		if (obj === null) {

@@ -1220,12 +1220,24 @@ public class TypeUtils {
 			TypeArgument tReturnOrg, TypeArgument tNextOrg) {
 
 		Objects.requireNonNull(tYieldOrg);
-		TypeArgument tYield = isVoid(tYieldOrg) ? scope.getUndefinedTypeRef()
-				: TypeUtils.copyWithProxies(tYieldOrg);
-		TypeArgument tReturn = tReturnOrg != null ? TypeUtils.copyWithProxies(tReturnOrg)
-				: scope.getUndefinedTypeRef();
-		TypeArgument tNext = tNextOrg != null ? TypeUtils.copyWithProxies(tNextOrg)
-				: scope.getAnyTypeRef();
+		Objects.requireNonNull(tReturnOrg);
+
+		// defaults
+		TypeArgument tYield = TypeUtils.copyWithProxies(tYieldOrg);
+		TypeArgument tReturn = TypeUtils.copyWithProxies(tReturnOrg);
+		TypeArgument tNext = scope.getAnyTypeRef();
+
+		// override when tYield is void
+		if (isVoid(tYieldOrg)) {
+			tYield = scope.getUndefinedTypeRef();
+		}
+		if (isVoid(tReturnOrg)) {
+			tReturn = scope.getUndefinedTypeRef();
+		}
+
+		// set to given types
+		if (tNextOrg != null)
+			tNext = TypeUtils.copyWithProxies(tNextOrg);
 
 		return createTypeRef(scope.getGeneratorType(), tYield, tReturn, tNext);
 	}

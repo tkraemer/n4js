@@ -408,6 +408,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   public final static String EXPECTEDTYPEINRETURNSTATEMENT = "eu.numberfour.n4js.xsemantics.ExpectedTypeInReturnStatement";
   
+  public final static String EXPECTEDTYPEINYIELDSTATEMENT = "eu.numberfour.n4js.xsemantics.ExpectedTypeInYieldStatement";
+  
   public final static String EXPECTEDTYPEINEXPRESSIONSTATEMENT = "eu.numberfour.n4js.xsemantics.ExpectedTypeInExpressionStatement";
   
   public final static String EXPECTEDTYPEINFORSTATEMENT = "eu.numberfour.n4js.xsemantics.ExpectedTypeInForStatement";
@@ -5799,6 +5801,32 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     TypeRef T = null; // output parameter
     TypeRef _expectedTypeOfReturnValueExpression = this.typeSystemHelper.getExpectedTypeOfReturnValueExpression(G, expression);
     T = _expectedTypeOfReturnValueExpression;
+    return new Result<TypeRef>(T);
+  }
+  
+  protected Result<TypeRef> expectedTypeInImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final YieldExpression yieldExpr, final Expression expression) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<TypeRef> _result_ = applyRuleExpectedTypeInYieldStatement(G, _subtrace_, yieldExpr, expression);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("expectedTypeInYieldStatement") + stringRepForEnv(G) + " |- " + stringRep(yieldExpr) + " |> " + stringRep(expression) + " : " + stringRep(_result_.getFirst());
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleExpectedTypeInYieldStatement) {
+    	expectedTypeInThrowException(ruleName("expectedTypeInYieldStatement") + stringRepForEnv(G) + " |- " + stringRep(yieldExpr) + " |> " + stringRep(expression) + " : " + "TypeRef",
+    		EXPECTEDTYPEINYIELDSTATEMENT,
+    		e_applyRuleExpectedTypeInYieldStatement, yieldExpr, expression, new ErrorInformation[] {new ErrorInformation(yieldExpr), new ErrorInformation(expression)});
+    	return null;
+    }
+  }
+  
+  protected Result<TypeRef> applyRuleExpectedTypeInYieldStatement(final RuleEnvironment G, final RuleApplicationTrace _trace_, final YieldExpression yieldExpr, final Expression expression) throws RuleFailedException {
+    TypeRef T = null; // output parameter
+    TypeRef _expectedTypeOfYieldValueExpression = this.typeSystemHelper.getExpectedTypeOfYieldValueExpression(G, yieldExpr, expression);
+    T = _expectedTypeOfYieldValueExpression;
     return new Result<TypeRef>(T);
   }
   

@@ -1874,7 +1874,7 @@ public providedByRuntime interface ~Iterable<out T> {
  * Note that in ECMAScript 6 this is not a built-in type, but a protocol. This protocol can be implemented
  * by any object respecting some conventions.
  */
-public providedByRuntime interface Generator<out TYield, out TReturn, out TNext> 
+public providedByRuntime interface Generator<out TYield, out TReturn, in TNext> 
 	extends Iterable<TYield>, Iterator<TYield> {
 
 	/**
@@ -1891,7 +1891,7 @@ public providedByRuntime interface Generator<out TYield, out TReturn, out TNext>
 	 *     any JavaScript value returned by the iterator. Can be omitted when done is true.
 	 * </ul>
 	 */
-	public abstract next(value?: TNext): IteratorEntry<TYield>
+	public abstract next(value: TNext?): IteratorEntry<TYield>
 	
 	/**
 	 * A zero arguments function that returns the <code>this</code> object, conforming to the iterator 
@@ -1931,7 +1931,7 @@ public providedByRuntime interface Generator<out TYield, out TReturn, out TNext>
 	 *     any JavaScript value returned by the iterator. Can be omitted when done is true.
 	 * </ul>
 	 */
-    public abstract return(value?: TNext): IteratorEntry<TReturn>;
+    public abstract return(value: TNext?): IteratorEntry<TReturn>;
 }
 
 /**

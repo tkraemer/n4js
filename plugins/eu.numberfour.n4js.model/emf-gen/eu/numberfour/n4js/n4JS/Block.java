@@ -60,6 +60,70 @@ public interface Block extends Statement, VariableEnvironmentElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
+	 * Returns all return expressions contained in this block, including those in nested blocks
+	 * but without delving into nested classes, or into nested expressions including functions.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" dataType="eu.numberfour.n4js.n4JS.IteratorOfExpression" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%com.google.common.base.Predicate%><<%org.eclipse.emf.ecore.EObject%>> _function = new <%com.google.common.base.Predicate%><<%org.eclipse.emf.ecore.EObject%>>()\n{\n\tpublic boolean apply(final <%org.eclipse.emf.ecore.EObject%> it)\n\t{\n\t\treturn (!(it instanceof <%eu.numberfour.n4js.n4JS.FunctionDefinition%>));\n\t}\n};\n<%org.eclipse.emf.common.util.TreeIterator%><<%org.eclipse.emf.ecore.EObject%>> _allContentsFiltered = <%eu.numberfour.n4js.utils.EcoreUtilN4%>.getAllContentsFiltered(this, _function);\nreturn <%com.google.common.collect.Iterators%>.<<%eu.numberfour.n4js.n4JS.Expression%>>filter(_allContentsFiltered, <%eu.numberfour.n4js.n4JS.Expression%>.class);'"
+	 * @generated
+	 */
+	Iterator<Expression> getAllExpressions();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Returns all return yield expressions contained in this block, including those in nested blocks
+	 * but without delving into nested classes, or into nested expressions including functions.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" dataType="eu.numberfour.n4js.n4JS.IteratorOfYieldExpression" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.util.Iterator%><<%eu.numberfour.n4js.n4JS.Expression%>> _allExpressions = this.getAllExpressions();\nreturn <%com.google.common.collect.Iterators%>.<<%eu.numberfour.n4js.n4JS.YieldExpression%>>filter(_allExpressions, <%eu.numberfour.n4js.n4JS.YieldExpression%>.class);'"
+	 * @generated
+	 */
+	Iterator<YieldExpression> getAllYieldExpressions();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Returns all return yield expressions contained in this block that dont't return any value, including those in nested blocks
+	 * but without delving into nested classes, or into nested expressions including functions.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" dataType="eu.numberfour.n4js.n4JS.IteratorOfYieldExpression" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.util.Iterator%><<%eu.numberfour.n4js.n4JS.YieldExpression%>> _allYieldExpressions = this.getAllYieldExpressions();\nfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.n4JS.YieldExpression%>, <%java.lang.Boolean%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.n4JS.YieldExpression%>, <%java.lang.Boolean%>>()\n{\n\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.n4JS.YieldExpression%> it)\n\t{\n\t\t<%eu.numberfour.n4js.n4JS.Expression%> _expression = it.getExpression();\n\t\treturn <%java.lang.Boolean%>.valueOf(<%com.google.common.base.Objects%>.equal(_expression, null));\n\t}\n};\nreturn <%org.eclipse.xtext.xbase.lib.IteratorExtensions%>.<<%eu.numberfour.n4js.n4JS.YieldExpression%>>filter(_allYieldExpressions, _function);'"
+	 * @generated
+	 */
+	Iterator<YieldExpression> getAllVoidYieldExpressions();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Returns all return yield expressions contained in this block that return some value, including those in nested blocks
+	 * but without delving into nested classes, or into nested expressions including functions.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" dataType="eu.numberfour.n4js.n4JS.IteratorOfYieldExpression" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.util.Iterator%><<%eu.numberfour.n4js.n4JS.YieldExpression%>> _allYieldExpressions = this.getAllYieldExpressions();\nfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.n4JS.YieldExpression%>, <%java.lang.Boolean%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.n4JS.YieldExpression%>, <%java.lang.Boolean%>>()\n{\n\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.n4JS.YieldExpression%> it)\n\t{\n\t\t<%eu.numberfour.n4js.n4JS.Expression%> _expression = it.getExpression();\n\t\treturn <%java.lang.Boolean%>.valueOf((!<%com.google.common.base.Objects%>.equal(_expression, null)));\n\t}\n};\nreturn <%org.eclipse.xtext.xbase.lib.IteratorExtensions%>.<<%eu.numberfour.n4js.n4JS.YieldExpression%>>filter(_allYieldExpressions, _function);'"
+	 * @generated
+	 */
+	Iterator<YieldExpression> getAllNonVoidYieldExpressions();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * True iff one or more yield expressions exist in this block that return some value.
+	 * <!-- end-model-doc -->
+	 * @model unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.util.Iterator%><<%eu.numberfour.n4js.n4JS.YieldExpression%>> _allNonVoidYieldExpressions = this.getAllNonVoidYieldExpressions();\nboolean _isEmpty = <%org.eclipse.xtext.xbase.lib.IteratorExtensions%>.isEmpty(_allNonVoidYieldExpressions);\nreturn (!_isEmpty);'"
+	 * @generated
+	 */
+	boolean hasNonVoidYield();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
 	 * Returns all statements that belong to this block. This includes statements of nested blocks
 	 * but excludes statements in nested classes, nested functions, etc.
 	 * <!-- end-model-doc -->

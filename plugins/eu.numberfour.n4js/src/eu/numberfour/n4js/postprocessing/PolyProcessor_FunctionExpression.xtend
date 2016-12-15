@@ -113,6 +113,8 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 			// (note: we even do this for void functions, producing the weird Promise<void,?>; but this is intended
 			// for the time being, see N4JS Specification, Section 6.4.1 "Asynchronous Functions")
 			returnTypeRef = N4JSLanguageUtils.makePromiseIfAsync(funExpr, returnTypeRef, G.builtInTypeScope);
+			// to obtain outer return type: wrap in Generator if it is a generator function
+			returnTypeRef = N4JSLanguageUtils.makeGeneratorIfGeneratorFunction(funExpr, returnTypeRef, G.builtInTypeScope);
 		}
 		result1.returnTypeRef = returnTypeRef;
 

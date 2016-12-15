@@ -2174,6 +2174,14 @@ from {
 	T = typeSystemHelper.getExpectedTypeOfReturnValueExpression(G, expression);
 }
 
+
+/* @see [N4JS] ??? Yield Expression */
+rule expectedTypeInYieldStatement
+	G |- YieldExpression yieldExpr |> Expression expression : TypeRef T
+from {
+	T = typeSystemHelper.getExpectedTypeOfYieldValueExpression(G, yieldExpr, expression);
+}
+
 /*
  * Same as rule 'expectedTypeInReturnStatement', but for the special case of an implicit return in a single-expression
  * arrow function.
