@@ -9,7 +9,7 @@ import eu.numberfour.n4jsx.N4JSXGlobals;
 /**
  * This provider enables .n4js and .js for generated source
  */
-public class N4JSXTranspilableFileExtensionsForGeneratedSourceProvider
+public class N4JSXTranspilableFileExtensionsProvider
 		implements TranspilableFileExtensionsProvider {
 
 	@Override

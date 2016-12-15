@@ -104,7 +104,7 @@ import eu.numberfour.n4jsx.internal.N4JSXRuntimeCore;
 import eu.numberfour.n4jsx.parser.N4JSXSemicolonInjectingParser;
 import eu.numberfour.n4jsx.parser.RegExLiteralAwareLexer;
 import eu.numberfour.n4jsx.parser.antlr.lexer.InternalN4JSXLexer;
-import eu.numberfour.n4jsx.resource.N4JSXTranspilableFileExtensionsForGeneratedSourceProvider;
+import eu.numberfour.n4jsx.resource.N4JSXTranspilableFileExtensionsProvider;
 import eu.numberfour.n4jsx.resource.N4JSXLinker;
 import eu.numberfour.n4jsx.scoping.N4JSXScopeProvider;
 import eu.numberfour.n4jsx.typesystem.N4JSXUnsupportedExpressionTypeHelper;
@@ -555,6 +555,6 @@ public class N4JSXRuntimeModule extends eu.numberfour.n4jsx.AbstractN4JSXRuntime
 	 * Bind allowed file extensions for open generated source
 	 */
 	public Class<? extends TranspilableFileExtensionsProvider> bindAllowedFileExtensionsForGeneratedSourceProvider() {
-		return N4JSXTranspilableFileExtensionsForGeneratedSourceProvider.class;
+		return N4JSXTranspilableFileExtensionsProvider.class;
 	}
 }
