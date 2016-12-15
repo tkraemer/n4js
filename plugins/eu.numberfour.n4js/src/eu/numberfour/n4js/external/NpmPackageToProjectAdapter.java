@@ -22,6 +22,7 @@ import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -127,6 +128,8 @@ public class NpmPackageToProjectAdapter {
 		for (File packageRoot : packageRoots) {
 			try {
 				PackageJson packageJson = getPackageJson(packageRoot);
+				String mainModule = computeMainModule(packageRoot);
+
 				final File manifest = new File(packageRoot, N4MF_MANIFEST);
 				// looks like n4js project skip adaptation
 				if (manifest.exists() && manifest.isFile()) {
@@ -144,7 +147,7 @@ public class NpmPackageToProjectAdapter {
 					manifest.createNewFile();
 
 					try {
-						generateManifestContent(packageRoot, packageJson, manifest);
+						generateManifestContent(packageRoot, packageJson, mainModule, manifest);
 						adaptedProjects.add(packageRoot);
 						if (!names.remove(packageRoot.getName())) {
 							throw new IOException("Unexpected error occurred while adapting '" + packageRoot.getName()
@@ -163,7 +166,7 @@ public class NpmPackageToProjectAdapter {
 				}
 
 				if (n4jsdsFolder != null) {
-					addTypeDefinitions(packageRoot, packageJson, manifest, n4jsdsFolder);
+					addTypeDefinitions(packageRoot, packageJson, mainModule, manifest, n4jsdsFolder);
 				}
 
 			} catch (final Exception e) {
@@ -238,6 +241,17 @@ public class NpmPackageToProjectAdapter {
 	}
 
 	/**
+	 * Convenience overload.
+	 *
+	 * @see #addTypeDefinitions(File, PackageJson, String, File, File)
+	 */
+	IStatus addTypeDefinitions(File packageRoot, PackageJson packageJson, File manifest,
+			File definitionsFolder) {
+		String mainModule = computeMainModule(packageRoot);
+		return addTypeDefinitions(packageRoot, packageJson, mainModule, manifest, definitionsFolder);
+	}
+
+	/**
 	 * Add type definitions (N4JSDs) to the npm package. Types are added only if matching version is found.
 	 *
 	 * This method suppresses any potential issues as adding type definitions to some npm package does not affect
@@ -248,6 +262,8 @@ public class NpmPackageToProjectAdapter {
 	 *            npm package folder.
 	 * @param packageJson
 	 *            {@link TargetPlatformFactory package.json} of that package.
+	 * @param mainModule
+	 *            the main module
 	 * @param manifest
 	 *            file that will be adjusted according to manifest fragments.
 	 * @param definitionsFolder
@@ -255,7 +271,7 @@ public class NpmPackageToProjectAdapter {
 	 *
 	 * @return a status representing the outcome of performed the operation.
 	 */
-	IStatus addTypeDefinitions(File packageRoot, PackageJson packageJson, File manifest,
+	IStatus addTypeDefinitions(File packageRoot, PackageJson packageJson, String mainModule, File manifest,
 			File definitionsFolder) {
 
 		String packageName = packageRoot.getName();
@@ -304,7 +320,22 @@ public class NpmPackageToProjectAdapter {
 		File packageVersionedN4JSDProjectRoot = new File(packageN4JSDsRoot, closestMatchingVersion.toString());
 		File packageVersionedN4JSDSrcFolder = new File(packageVersionedN4JSDProjectRoot, N4JSD_SRC_FOLDER);
 		try {
-			FileCopier.copy(packageVersionedN4JSDSrcFolder.toPath(), packageRoot.toPath());
+			/*
+			 * Changed the computation of the source and target path for the N4JSD files as follows for IDE-2429.
+			 *
+			 * The .n4jsd files are assumed to be in a folder called "src" within the N4JSD project root folder.
+			 *
+			 * Their target path is computed from the package root path and the main module path. The given main module
+			 * path contains the file name (without extension) of the main module of the NPM, potentially prepended by a
+			 * path that represents folders. An example would be "lib/index". The target path for the N4JSD files is
+			 * then assumed to be in a folder called "lib" within the package root path.
+			 */
+			Path sourcePath = packageVersionedN4JSDSrcFolder.toPath();
+			Path mainModulePath = Paths.get(mainModule);
+			if (mainModulePath.getNameCount() > 0)
+				mainModulePath = mainModulePath.getParent();
+			Path targetPath = packageRoot.toPath().resolve(mainModulePath);
+			FileCopier.copy(sourcePath, targetPath);
 		} catch (IOException e) {
 			final String message = "Error while trying to update type definitions content for '" + packageName
 					+ "' npm package.";
@@ -406,14 +437,17 @@ public class NpmPackageToProjectAdapter {
 	 *            root folder of the npm package in which manifest is written
 	 * @param packageJSON
 	 *            that will be used as manifest data source
+	 * @param mainModule
+	 *            the main module
 	 * @param manifest
 	 *            file to which contents should be written
+	 *
 	 */
-	private void generateManifestContent(File projectFolder, PackageJson packageJSON, File manifest)
+	private void generateManifestContent(File projectFolder, PackageJson packageJSON, String mainModule,
+			File manifest)
 			throws IOException {
 
 		String projectId = packageJSON.name;
-		String manifestMain = computeMainModule(projectFolder);
 
 		if (!projectFolder.getName().equals(projectId)) {
 			LOGGER.warn("project folder and project name are different : " + projectFolder.getName() + " <> + "
@@ -421,13 +455,11 @@ public class NpmPackageToProjectAdapter {
 		}
 
 		try (FileWriter fw = new FileWriter(manifest)) {
-			fw.write(manifestContentProvider.getContent(projectId, ".", ".", manifestMain));
+			fw.write(manifestContentProvider.getContent(projectId, ".", ".", mainModule));
 		}
 	}
 
-	/**
-	 */
-	private String computeMainModule(File projectFolder) {
+	String computeMainModule(File projectFolder) {
 
 		String mainModule = resolveMainModule(projectFolder);
 
