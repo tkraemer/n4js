@@ -63,10 +63,10 @@ implemented in N4JS but in plain ECMAScript or another language.
 --
 
 * Declarations with external flags are only allowed in files with the
-extension $$n4jsd$$ (so called N4JS definition files).
+extension $n4jsd$ (so called N4JS definition files).
 * Only external classes, external interfaces marked with `@N4JS`, external
 enums, external function declarations and structurally typed interfaces
-are allowed in a $$n4jsd$$ file.
+are allowed in a $n4jsd$ file.
 * Declarations with external flags are allowed to subclass built-in type
 `Error` type and all of its descendants such as `EvalError`, `RangeError`, `ReferenceError`, `SyntaxError`, `TypeError` and `URIError`, although any of the error types are annotated with `@N4JS`.
 
@@ -215,7 +215,7 @@ disable validation of implementations completely via `@@IgnoreImplementation`.
 [req,id=IDE-169,version=1]
 --
 task:IDE-1099[]
-For a given external declaration $$D$$ but not for
+For a given external declaration $D$ but not for
 API-definitions footnote:[<<_api-and-implementation-components,API and Implementation Components>>], the
 following constraints must hold:
 
@@ -231,7 +231,7 @@ is generated.
 ====
 
 If, in addition to standard `source`, the `source-external` fragment is
-provided in `Sources`, $$n4jsd$$ files in the folder tree
+provided in `Sources`, $n4jsd$ files in the folder tree
 below source folders will be related to modules of the same name in the
 external folders. This is shown in External Class Implementation Naming below.
 
@@ -322,7 +322,7 @@ N4JS supports global definitions via the annotation `Global`. This annotation
 can only be defined on modules (via `@@Global`) – this means that all declarations in the module are globally defined.
 footnote:[Global basically means that the module defines no namespace on its own. Thus the annotation is a script/module related annotation.]
 
-We introduce a new pseudo property $$global$$ on all declared
+We introduce a new pseudo property $global$ on all declared
 elements accordingly:
 
 Boolean flag set to true if annotation `@Global` is set in containing module. Flag indicates that the exported element is globally available and must not
@@ -330,7 +330,7 @@ be imported. task:IDE-1036[]
 
 Since definition of global elements is not supported by N4JS directly,
 this can be only used in external definitions. A declaration with
-$$global$$ can be used without explicit import statement. It
+$global$ can be used without explicit import statement. It
 is not possible to import these declarations.
 
 
@@ -339,8 +339,8 @@ is not possible to import these declarations.
 --
 Global Definitions
 
-For a declaration $$D$$ with $$D.global=\TRUE$$, not a polyfill
-($$D.polyfill=\FALSE)$$, the following constraints must hold:
+For a declaration $D$ with $D.global=\TRUE$, not a polyfill
+($D.polyfill=\FALSE)$, the following constraints must hold:
 
 1.  The name of the definition must not be equal to any primitive type
 (`string`, `number` etc.), `any`, or an built-in N4 type (`N4Object` etc.).
@@ -380,7 +380,7 @@ N4JS supports runtime definitions via the annotation `@ProvidedByRuntime`. This 
 * on modules (via `@@ProvidedByRuntime`)– this means that all declarations in the module are provided by the runtime
 * on export statements or declarations.
 
-We introduce a new pseudo property $$providedByRuntime$$
+We introduce a new pseudo property $providedByRuntime$
 accordingly:
 
 Boolean flag set to true if the annotation `@ProvidedByRuntime` is set. Flag indicates that
@@ -396,15 +396,15 @@ Provided By Runtime
 
 task:IDE-1036[]
 For a declaration
-$$D$$ with $$D.providedByRuntime=\TRUE$$, the
+$D$ with $D.providedByRuntime=\TRUE$, the
 following constraints must hold:
 
 1.  The declaration must either be an export declaration itself or an
 exportable declaration.
 2.  The declaration must be contained in a definition module.
 3.  The declaration must be (indirectly) contained in a component of
-type $$\lenum{runtimeEnvironment}$$ or
-$$\lenum{runtimeLibrary}$$.
+type $\lenum{runtimeEnvironment}$ or
+$\lenum{runtimeLibrary}$.
 4.  There must be no implementation file with the same name as the
 definition module if annotation is defined for a whole module. task:IDE-1084[]
 --

@@ -756,17 +756,17 @@ E.providedRTLibs^* & = E.providedRTLibs \\
 --
 An N4JS Component `C` can be executed in an runtime environment
 `E`, written as
-$$E \models C$$
+$E \models C$
 if the following constraints hold:
 
 . The environment must provide all runtime libraries transitively
 required by the component:
-$$\forall R \in C.requiredRTLibs^*: R \in E.providedRTLibs^ *$$
+$\forall R \in C.requiredRTLibs^*: R \in E.providedRTLibs^ *$
 +
 . There exist libraries which can be executed by the environment, so
 that all APIs are implemented:
 +
-$$\forall S \in C.requiredAPIs^*: \exists I: S \in I.implementedAPIs \land E \models I$$
+$\forall S \in C.requiredAPIs^*: \exists I: S \in I.implementedAPIs \land E \models I$
 --
 
 [.language-n4js]
@@ -939,20 +939,21 @@ user’s locale.
 
 The syntax of a resource file is defined as:
 
-[source,n4js]
+[source,n4js,subs="macros"]
 ----
 ResourceFile:   Comment* | $entry+=$ Entry*;
-Comment:        '#' .* EOL;
+Comment:        'pass:[#]' .* EOL;
 Entry:          $key$ = KeyIdentifier '=' $value$ = .* EOL;
 KeyIdentifier:  LETTER (DIGIT | LETTER | '.')*;
 ----
 
+// Added pass above for editor syntax highlighting.
 
 === Constraints
 
 Properties files have to be stored in source fragment of type source.
 The _base folder_ for storing the properties files of a project
-`p` is $$p.name\lstnfjs{/nls}$$. The
+`p` is $p.name\lstnfjs{/nls}$. The
 language-specific resource files are stored in subfolders of the base
 folder. The base language (normally english) has to be located in a
 subfolder of the base folder. The resource files for other languages
@@ -1036,7 +1037,7 @@ interface is changed or `C` is made abstract.
 
 When launching an N4JS component `C` under runtime
 environment <<AC,RE>>, the user may(!) provide an implementation
-ID $$I\!I\!D$$ to run. Then, for each API project
+ID $I\!I\!D$ to run. Then, for each API project
 `A` in the direct or indirect dependencies of
 `C` an implementation project is chosen as follows:
 
@@ -1046,22 +1047,22 @@ ID $$I\!I\!D$$ to run. Then, for each API project
 environment <<AC,RE>>, using the same logic as for running
 ordinary N4JS components (this step is not implemented yet!).
 .  If there are no implementation projects left, show an error.
-.  If $$I\!I\!D$$ is defined (i.e. user specified an
+.  If $I\!I\!D$ is defined (i.e. user specified an
 implementation ID to run), then:
 ..  If there is an implementation project left with implementation ID
-$$I\!I\!D$$, use that.
+$I\!I\!D$, use that.
 ..  Otherwise, show an error.
-.  If $$I\!I\!D$$ is undefined, then
+.  If $I\!I\!D$ is undefined, then
 ..  If there is exactly 1 implementation project left, use it.
 ..  Otherwise, in UI mode prompt the user for a choice, in headless mode
 show an error.
 
-Having found an implementation project $$I_n$$ for each API
-project $$A_n$$, launch as usual except that whenever
-$$A_n$$’s output folder would be used, use $$I_n$$’s
+Having found an implementation project $I_n$ for each API
+project $A_n$, launch as usual except that whenever
+$A_n$’s output folder would be used, use $I_n$’s
 output folder (esp. when constructing a `class path`) and when loading
-or importing a type from $$A_n$$ return the corresponding type
-with the same fully-qualified name from $$I_n$$.
+or importing a type from $A_n$ return the corresponding type
+with the same fully-qualified name from $I_n$.
 
 [.language-n4js]
 == API and Implementation With DI
