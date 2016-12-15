@@ -1,5 +1,6 @@
 
 = N4JS Specific Classifiers
+
 ////
 Copyright (c) 2016 NumberFour AG.
 All rights reserved. This program and the accompanying materials
@@ -155,7 +156,7 @@ in both superclasses) could be solved via union and intersection types,
 this would lead to problems when calling these super implementations.
 This is particularly an issue due to JavaScript not supporting multiple
 prototypes.
-footnote:[E.g., for given `class A{ foo(A):A{}} class B{ foo(B):B{}}`, a class C could be defined as `class C{ foo(union{A,B}):intersection{A,B}{}}`. In this case it would then be a syntactical problem (and even worse - a conceptual problem) of how to call the super methods defined in A and Bfrom C.]
+footnote:[E.g., for given [language-n4js]`class A{ foo(A):A{}} class B{ foo(B):B{}}`, a class C could be defined as [language-n4js]`class C{ foo(union{A,B}):intersection{A,B}{}}`. In this case it would then be a syntactical problem (and even worse - a conceptual problem) of how to call the super methods defined in A and Bfrom C.]
 Interfaces, however, allow for multi-inheritance. Since the
 former can also define functions with bodies, this is not a hard
 restriction.
@@ -746,7 +747,7 @@ bound) specified in the type parameter.
 This example demonstrates how to define a generic type and how to refer to it in a
 variable definition.
 
-[source]
+[source,n4js]
 ----
 export class Container<T> {
     private item: T;
@@ -854,6 +855,7 @@ variable definition.
 --
 
 [.language-n4js]
+[[sec:definition-site-variance]]
 == Definition-Site Variance
 
 In addition to use-site declaration of variance in the form of Java-like

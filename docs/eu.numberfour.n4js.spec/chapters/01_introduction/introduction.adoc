@@ -60,7 +60,7 @@ inference rules
 footnote:[A brief introduction can be found at http://www.cs.cornell.edu/~ross/publications/mixedsite/tutorial.html. In general, we refer the reader to cite:[Pierce02a]]
 , that is
 
-math:[\[ \frac{premises}{conclusion} \hspace{5mm} \textrm{rule name} \] ]
+$$\frac{premises}{conclusion} \hspace{5mm} \textrm{rule name} \$$
 
 $premises$ is the rule’s premises (e.g., the expression to
 be inferred), $conclusion$ the result of the rule.
@@ -70,10 +70,7 @@ $rule name$ is an optional condition which may be omitted.
 Both parts of the rule may contain multiple expressions, which are
 concatenated via and. For example, the following
 
-[math]
---
-\frac{P_1 \hspace{5mm}  P_2 \hspace{5mm} P_3}{C}
---
+$$\frac{P_1 \hspace{5mm}  P_2 \hspace{5mm} P_3}{C}$$
 can be read as
 
 [quote]
@@ -186,7 +183,7 @@ declaration).
 
 Binding of variable references to declaration is defined by ECMAScript
 already. Type references only occur in type expressions, how these are
-handled is explained in <<_type-expressions>>.
+handled is explained in <<_type_expressions>>.
 
 We usually omit this binding mechanism in most rules and use the
 reference similarly to the declaration or definition it is bound to. If
@@ -197,7 +194,7 @@ $bind(r,D), D.type$ to refer to the type expression (of the
 variable).
 --
 
-footnote:[One can interpret this similar to delegate methods, that is, instead of writing ``r.binding().getType()``, a method ``r.getType()\{return binding().getType();`` is defined.]
+footnote:[One can interpret this similar to delegate methods, that is, instead of writing [language-n4js]``r.binding().getType()``, a method [language-n4js]``r.getType()\{return binding().getType();`` is defined.]
 
 A `DeclaredType` references the type declaration by its simple name that has been
 imported from a module specifier. We define the method
@@ -313,8 +310,10 @@ $C$ is the class, we simply write
 --
 instead of
 
-$\forall m \in C.members: m.owner=C$
-
+[math]
+--
+\forall m \in C.members: m.owner=C
+--
 or even more complicated with index variables.
 
 Sequences are 1-based, e.g., a sequence $s$ with length

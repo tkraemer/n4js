@@ -82,7 +82,7 @@ The target element is to be fully qualified including the module specifier. The 
 the source folder relative path name with forward slashes. Type and
 element are added to that using dot as a separator. For example:
 
-[source]
+[source,n4js]
 ----
 /**
  * @testee some/package/Module.Type.member
@@ -285,7 +285,7 @@ State of type or member definition, e.g., stable or draft. This can be
 used to define a history. In this case, the tag has to be repeated. For
 example:
 
-[source]
+[source,n4js]
 ----
 /**
  * @apiState stable (WK)

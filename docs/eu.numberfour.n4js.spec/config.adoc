@@ -38,6 +38,7 @@
 // Numbered section titles with auto-generated anchors
 :sectnums:
 :sectanchors:
+:idseparator: -
 
 // Creates a clickable (and copyable) link beside section titles
 :sectlinks:

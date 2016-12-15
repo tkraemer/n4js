@@ -105,8 +105,8 @@ Remarks on differences between the syntax defined in <<IDE-241102>> and https://
 * JSXPropertyAttribute models the JSX non-spread JSXAttribute definition; again existing rules (IdentifierName, StringLiteral) are used to model JSX specific ones (JSXAttributeName, JSXDoubleStringCharacters, JSXSingleStringCharacters)
 
 task:IDE-2414[]
-SX Syntax With Free Text
-.J
+
+.JSX Syntax With Free Text
 [req,id=IDE-241401,version=1]
 --
 [source,jsx]

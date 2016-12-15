@@ -107,7 +107,7 @@ validation errors. This is to be used for known IDE bugs only.
 
 === Syntax [[idebug-syntax]]
 
-[source]
+[source,n4js]
 ----
 '@IDEBUG' '(' bugID = INT ',' errorMessage=STRING ')'
 ----
@@ -130,7 +130,7 @@ error.
 [IDEBUG][ex:IDEBUG] In the following code snippet, two errors are to be
 transformed to warnings.
 
-[source]
+[source,n4js]
 ----
 export class TestDataBridge with IModuleTest {
     @IDEBUG(166, "{function(number):void} is not a subtype of {function(T):void}.")
@@ -150,14 +150,14 @@ type system (as of writing this example) that type arguments are not
 correctly bound in case of function expressions used as callback
 methods. The annotation in line 2 transforms the error
 
-[source]
+[source,n4js]
 ----
 {function(number):void} is not a subtype of {function(T):void}.
 ----
 
 into a warning with the following text:
 
-[source]
+[source,n4js]
 ----
 IDEBUG-166: {function(number):void} is not a subtype of {function(T):void}.
 ----
@@ -167,7 +167,7 @@ refers to the corresponding bug report, that is .
 The annotation on line 3 was proposed as a workaround for `IDEBUG-91` which has
 been fixed. footnote:[Hopefully IDEBUG-166 task:IDEBUG-166[] is fixed at time of publication.]. No error message is produced and an error will be issued on line 3 instead:
 
-[source]
+[source,n4js]
 ----
 No matching error found, apparently bug IDEBUG-91 has been fixed or does not occur here.
 ----

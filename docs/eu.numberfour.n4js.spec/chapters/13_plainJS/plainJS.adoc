@@ -243,7 +243,7 @@ image::{find}fig/externalClassImplementation_naming.png[title="External Class Im
 
 Assume the following non-N4JS module:
 
-[source]
+[source,javascript]
 ----
 module.exports = {
     "Point": function Point(x, y) {
@@ -270,8 +270,7 @@ source folder
 the following N4JS external class declarations in *shapes.n4jsd* are
 sufficient:
 
-
-[source]
+[source,javascript]
 ----
 export external public class Point {
     x: number; y: number;
@@ -291,7 +290,7 @@ in the js files, respectively.
 [example]
 --
 
-[source]
+[source,javascript]
 ----
 export external public interface ~Scalable {
     scaleX(factor: number);
@@ -433,7 +432,7 @@ class to add the new ECMAScript 7 observer functionality.
 This snippet has to be defined in a runtime library or environment.
 
 
-[source,n4js]
+[source,javascript]
 ----
 @@ProvidedByRuntime
 @@Global

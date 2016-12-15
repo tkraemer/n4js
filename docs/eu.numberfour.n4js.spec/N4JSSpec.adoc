@@ -46,9 +46,9 @@ include::{find}chapters/02_grammar/grammar.adoc[]
 
 include::{find}chapters/03_names/names.adoc[]
 
-//include::{find}chapters/04_types/types.adoc[]
+include::{find}chapters/04_types/types.adoc[]
 
-//include::{find}chapters/05_classifiers/classifiers.adoc[]
+include::{find}chapters/05_classifiers/classifiers.adoc[]
 
 include::{find}chapters/06_functions/functions.adoc[]
 

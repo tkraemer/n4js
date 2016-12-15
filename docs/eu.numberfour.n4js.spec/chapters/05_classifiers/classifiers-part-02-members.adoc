@@ -18,14 +18,14 @@ function), a data field, or a getter or a setter. The latter two
 implicitly define an accessor field. Similar to object literals, there
 must be no data field with the same name as a getter or setter.
 
-$$ (overriding, implementation and consumption) is
-described in <<_redefinition-of-members,$$>>.
+(overriding, implementation and consumption) is
+described in <<_redefinition-of-members,Redefiniton of Members>>.
 
 [.language-n4js]
 == Syntax
 
 .Syntax N4JS member access modifier
-[source]
+[source,n4js]
 ----
 enum N4JSMemberAccessModifier: private | project | protected | public;
 
@@ -501,7 +501,7 @@ containing class.
 
 [Generic Method Definition]
 
-[source]
+[source,n4js]
 ----
 class C {
     <T> foo(p: T p): T { return p;}
@@ -568,7 +568,7 @@ operator. Since the return type of a constructor is implicitly defined
 by the class, it is to be omitted. By this definition, a constructor
 looks like the following:
 
-[source]
+[source,n4js]
 ----
 class C {
     public constructor(s: string) {
@@ -637,7 +637,7 @@ require an object providing all public fields of the class for
 initialization purposes. The fields have to be set manually as shown in
 the following code snippet.
 
-[source]
+[source,n4js]
 ----
 class A{
     public s: string;
@@ -665,7 +665,7 @@ structural reference with additional structural members, which can be
 used to initialize private fields which become not automatically part of
 the structural field type. For example:
 
-[source]
+[source,n4js]
 ----
 class A{
     public s: string;
@@ -709,11 +709,11 @@ $$\nexists M \in C.members: M.acc=\lenum{public} \land M.name = SM.name
 
 .Field name conflicts with structural member name
 [example]
---
+====
 
 The situation described in <<IDE-58,Names of additional members of structural this type in constructor>> is demonstrated in the following code fragment:
 
-[source]
+[source,n4js]
 ----
 class A {
     private myPrivateNumber: number;
@@ -726,7 +726,7 @@ class B extends A {
     public x: number; // will cause an error message
 }
 ----
---
+====
 
 
 @Spec-style Constructor [[spec-style-constructor]] ::
@@ -738,7 +738,7 @@ initializer field typing. For more details about this typing can be
 found in <<_structural-read-only-write-only-and-initializer-field-typing,Structural Read-only, Write-only and Initializer Field Typing>>.
 This can be used as shown in the following listing:
 
-[source]
+[source,n4js]
 ----
 class A {
     public constructor(@Spec spec: ~i~this) {}
@@ -764,11 +764,8 @@ parameter are copied as well. task:IDEBUG-134[]
 accordingly.
 7.  The type of an additional member which match owned non-public field
 must be subtype of the field’s type:
-$$
-
-\forall s \in ctor.fpar.structuralMembers, ctor.fpar.spec: \\
-\hspace{2em}\exists f \in ctor.owner.ownedFields \Rightarrow \tee s \subtype f
---
+$$\forall s \in ctor.fpar.structuralMembers, ctor.fpar.spec: \\
+\hspace{2em}\exists f \in ctor.owner.ownedFields \Rightarrow \tee s \subtype f$$
 
 8.  math:[$\nfjstilde i \nfjstilde\lstnfjs{this}$] constructor
 ignores superfluous properties provided by an object literal. These
@@ -789,7 +786,7 @@ corresponding readble fields. These properties will be initialzed.
 The base class `A` in the examples redefines the constructor already defined in `N4Object`. This is not
 generally necessary and is only used here to make the example legible.
 
-[source]
+[source,n4js]
 ----
 class A {
     public s: string;
@@ -805,13 +802,14 @@ class B extends A {
     }
 }
 ----
+
 ====
 
 .Spec Object and Subclasses
 [example]
 ====
 
-[source]
+[source,n4js]
 ----
 class A1 {
     public s: string;
@@ -878,7 +876,7 @@ via the math:[$\lstnfjs{with}$] to the parameter otherwise
 properties are _not_ used to set non-math:[$\lenum{public}$]
 fields.
 
-[source]
+[source,n4js]
 ----
 class C {
     public s: string;
@@ -972,7 +970,7 @@ This constraint corresponds to <<IDE-74,Implementation of Interface Members>>
 except for the `@Override` annotation, which is not required, here.
 ..  Given a classifier `C` without an owned constructor and
 an extended class or interface math:[$Sup$] that has a covariant
-constructor (owned or inherited, see <<covariant_constructor, definition: Covariant Constructor>>), we require the inherited constructor math:[$ctor$] of `C` within the context of
+constructor (owned or inherited, see <<covariant_constructor,definition: Covariant Constructor>>), we require the inherited constructor math:[$ctor$] of `C` within the context of
 `C` to be override compatible to itself in the context of
 math:[$Sup$]. Using notation math:[$m[T]$] to denote that a
 member `M` is to be treated as defined in container type
@@ -989,11 +987,12 @@ constructors. It shows a small class hierarchy using covariant
 constructors, `Cls` and `Cls2`, together with a helper function `createAnother` that creates and returns a new instance of the same type as its argument `value`.
 
 
-[[ex:covariant-constructors]]
+[[ex:covariant_constructors]]
 .Covariant Constructors
 [example]
 ====
-[source]
+
+[source,n4js]
 ----
 class A {}
 class B extends A {}
@@ -1021,7 +1020,7 @@ y = createAnother(x, new B());
 
 ====
 
-In the code of <<ex:covariant-constructors,Covariant Constructors example>>, we would get an error if we changed the type of parameter `p` in the constructor of `Cls2` to some other type that is not a super type of `B`,
+In the code of <<ex:covariant_constructors,Covariant Constructors example>>, we would get an error if we changed the type of parameter `p` in the constructor of `Cls2` to some other type that is not a super type of `B`,
 i.e. the type of the corresponding parameter of `Cls`’s constructor. If we
 removed the `@CovariantConstructor` annotation on `Cls`, we would get an error in the new expression inside function `createAnother`.
 
@@ -1031,7 +1030,7 @@ The next example illustrates how to use `@CovariantConstructor` with interfaces 
 [example]
 ====
 
-[source]
+[source,n4js]
 ----
 @CovariantConstructor
 interface I {
@@ -1075,7 +1074,7 @@ Data fields in N4JS are similar to these implicit fields in ECMAScript 6 except 
 === Syntax [[data-fields-syntax]]
 
 
-[source]
+[source,n4js]
 ----
 N4FieldDeclaration <Yield>:
     {N4FieldDeclaration}
@@ -1158,33 +1157,27 @@ math:[$a.required \to a.init=null$]
 2.  There must be no other member with the same name of a data field
 `f`. In particular, there must be no getter or setter
 defined with the same name:
-$$
-& \forall\ m \in f.owner.members : m \neq f \to m.name \neq f.name
-
---
+$$& \forall\ m \in f.owner.members : m \neq f \to m.name \neq f.name$$
 
 
 If a subclass should set a different default value, this has to be done
 in the constructor of the subclass.
 
 For the relation of data fields and field accessors in the context of
-extending classes or implementing interfaces see <<_redefinition-of-members,$$>>.
+extending classes or implementing interfaces see <<_redefinition-of-members,Redefinition of Members>>.
 --
 
 ==== Type Inference [[data-fields-type-inference]]
 
 The type of a field is the type of its declaration:
 
-$$
-& \infer{\tee f: \tee d}{} \\$$
+$$& \infer{\tee f: \tee d}{} \\$$
 
 
 The type of a field declaration is either the declared type or the
 inferred type of the initializer expression:
 
-$$
-
-& \infer{\tee d: T}{d.declaredType \neq \NULL & T = d.declaredType} \\
+$$& \infer{\tee d: T}{d.declaredType \neq \NULL & T = d.declaredType} \\
 & \infer{\tee d: T}{
     d.declaredType = \NULL & d.expression \neq \NULL \\
     E = \tee d.expression & E \not\in \{\type{null, undefined}\} & T = E} \\
@@ -1195,9 +1188,7 @@ If the type contains type variables they are substituted according to
 type parameters which are provided by the reference:
 
 
-$$
-
-\infer{\typeEnv \entails \type{TField}\ tfield: T}
+$$\infer{\typeEnv \entails \type{TField}\ tfield: T}
         {\typeEnv \entails tfield.typeRef: T}$$
 
 
@@ -1242,14 +1233,13 @@ See <<IDE-68,requirement Write-Acccess>> for details.
 .  A final data field must be either initialized by an initializer expression or in the constructor.
 If the field is initialized in the constructor, this may be done either explicitly or via a spec-styleconstructor.
 task:IDEBUG-575[]
-$$-
+$$
 & f.expr \neq \NULL \\
 & \lor (\exists assignExp: assignExpr.containingFunction = f.owner.constructor \\
 & \hspace{3em} \land assignExpr.left.target = \lstnfjs{"this"} \\
 & \hspace{3em} \land bind(assignExpr.left.property, f)) \\
 & \lor (f.public \land \exists fpar \in f.owner.constructor.fpars: \\
-& \hspace{3em} fpar.spec \land \exists sm \in structuralMembers: sm.name=f.name)
----
+& \hspace{3em} fpar.spec \land \exists sm \in structuralMembers: sm.name=f.name)$$
 --
 // todo{Constraints for final assignment are not completely implemented yet, also they have some problems here (e.g., not all control flows are required to assign a value). They will be implemented in the progress of adding more powerful program analysis in general}
 
@@ -1264,7 +1254,7 @@ to the accuser methods in object literals:
 ==== Syntax [[field-acessors-syntax]]
 task:IDE-8[]
 
-[source]
+[source,n4js]
 ----
 N4GetterDeclaration <Yield>:
     => ({N4GetterDeclaration}
@@ -1305,7 +1295,7 @@ The getter lazily initializes the field on demand. The setter performs
 some notification.
 
 .Getter Setter
-[source]
+[source,n4js]
 ----
 class A {}
 
@@ -1350,6 +1340,7 @@ There must be no field or method with the same name as a field accessor
 constraints must hold:
 
 
+
 .Field Accessors
 [req,id=IDE-64,version=1]
 --
@@ -1369,7 +1360,7 @@ The same applies to setters, accordingly.
 
 NOTE: A getter and setter with the same name need not have the same type, i.e. the getter’s return type need not be the same as a subtype of
 the type of the setter’s parameter (the types can be completely unrelated).
-footnote:[Thus, the type of one accessor is not used to infer the type of the other one. E.g., from `set x(string s)`, we cannot infer `get x()` to return `string` — instead, the getter is inferred to return `any`.]
+footnote:[Thus, the type of one accessor is not used to infer the type of the other one. E.g., from [language-n4js]`set x(string s)`, we cannot infer [language-n4js]`get x()` to return [language-n4js]`string` — instead, the getter is inferred to return [language-n4js]`any`.]
 
 --
 
@@ -1458,7 +1449,7 @@ write-access is only possible via the defining type name `C.m`: . So in the
 list above, only the first line can be used when assigning values to a
 field. Note that this only applies to fields and
 set-accessors.
-footnote:[The technical reason for this rule is the way properties are stored in JavaScript. Take for an example subclass-write access : `class C { static f="a";}` with `class D extends C { }`. Now the data field `f` on `C` can also be queried using `D` (`var q=D.f;`) but writing (`D.f="b";`) would introduce a newly created property `f` on class `D`, which differs from the one defined on `C`. It would do this without explicitly overriding the inherited property. Subsequent reads to `D.f` would route to this ’accidentally’ introduced property. Such a behavior would not be expected and therefore has been disallowed. Note that this write restriction applies to data-fields and to field setters.]
+footnote:[The technical reason for this rule is the way properties are stored in JavaScript. Take for an example subclass-write access : [language-n4js]`class C { static f="a";}` with [language-n4js]`class D extends C { }`. Now the data field `f` on `C` can also be queried using `D` ([language-n4js]`var q=D.f;`) but writing ([language-n4js]`D.f="b";`) would introduce a newly created property `f` on class `D`, which differs from the one defined on `C`. It would do this without explicitly overriding the inherited property. Subsequent reads to [language-n4js]`D.f` would route to this ’accidentally’ introduced property. Such a behavior would not be expected and therefore has been disallowed. Note that this write restriction applies to data-fields and to field setters.]
 
 It is even possible to call a static field accessor or method of a class
 using dynamic polymorphism, as demonstrated in the following example:
@@ -1620,16 +1611,16 @@ $$\mu(S)=\type{Method} & \Rightarrow \mu(M) = \type{Method} \\
 \mu(S)=\type{Setter} & \Rightarrow \mu(M) \in \type{Field, Setter} \\$$
 . The overridden member must not be declared final:
 $$\lnot S.final$$
-4.  Overridden member declared const can only be overridden (redefined)
+.  Overridden member declared const can only be overridden (redefined)
 by const members:
 $$S.const \Leftrightarrow M.const$$
-5.  It is not possible to override a non-abstract member with an
+.  It is not possible to override a non-abstract member with an
 abstract one:
 $$\lnot M.abstract \lor S.abstract$$
-6.  The types are compatible:
+.  The types are compatible:
 $$(\mu(M) \in \types{Method, Getter, Field} \land \mu(S)\neq\type{Setter}) &  \Rightarrow \tee M \subtype S \\
     (\mu(M) \in \type{Setter, Field}         \land \mu(S)\neq\type{Getter} \land \lnot S.const) &   \Rightarrow \tee S \subtype M \\$$
-7.  The access modifier is compatible:
+.  The access modifier is compatible:
 $$M.acc \geq S.acc$$
 
 --
@@ -1760,7 +1751,7 @@ two implemented interfaces.
 
 .Consumption of Interface Members
 [req,id=IDE-73,version=1]
----
+--
 Given a classifier `C` footnote:[`C` could either be a class or an interface.], and interfaces math:[$I_1,..., I_n$]
 implemented (or extended) by `C`, and sets math:[$M_C$]
 and math:[$M_I$] as defined in . A non-static member
@@ -1792,7 +1783,7 @@ $$
 $$
 \mu(M) \in \types{Method, Getter, Field} \land \mu(M') \neq \type{Setter}   & \Rightarrow \tee M \subtype M' \\
 \mu(M) \in \types{Setter, Field} \land \mu(M') \neq \type{Getter}           & \Rightarrow \tee M' \subtype M$$
----
+--
 
 [.language-n4js]
 ==== Member Implementation
@@ -1846,11 +1837,9 @@ order to solve type conflicts produced by methods of different
 interfaces with same name but different signatures.
 2.  Methods in an implementor cannot decrease the accessibility of
 methods from implemented interfaces, that is
-
-$$    & \forall M \in C.methods, M' \in I_i.methods (i=1\dots n): \\
-        & \hspace{2em} M.name=M'.name \Rightarrow M.acc \neq private \to M.acc \geq M'.acc
-    $$
-
++
+$$& \forall M \in C.methods, M' \in I_i.methods (i=1\dots n): \\
+& \hspace{2em} M.name=M'.name \Rightarrow M.acc \neq private \to M.acc \geq M'.acc$$
 3.  Methods in the implementor must be a supertype footnote:[As defined in <<_function-type,Function Type>> for function types.] of methods from implemented interfaces.
 That is to say the implemented methods are override-compatible.
 4.  There may be several methods math:[$M_1, ..., M_n$] defined in
@@ -1885,7 +1874,7 @@ We always use the `@Override` annotation.
 <<tab:methodConsumption,Table Method Consumption>> shows simple examples of above rules.
 Assuming that `class C` extends super `class S` and implements interface `I1` and `I2`:
 
-[source]
+[source,n4js]
 ----
 class C extends S implements I1, I2 {...}
 ----
@@ -1977,3 +1966,4 @@ the initializer of `s` in `C` is used.
 * `d.v = "I2"` : `v` is overridden in `I2`, so is the field initializer. This is why `d.v` must be assigned to `I2` and not `I0`.
 
 --
+

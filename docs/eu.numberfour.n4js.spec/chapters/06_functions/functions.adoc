@@ -27,7 +27,7 @@ A function type is modeled as (see cite:[ECMA11a(S13,p.98)] in ECMAScript.
 Function types can be defined by means of;
 
 * A function object (<<_function-object-type,Function Object Type>>).
-* A function type expression (<<_type-expressions,Type Expressions>>).
+* A function type expression (<<_type_expressions,Type Expressions>>).
 * A function declaration (<<_function-declaration,Function Definition>>).
 * A method declaration (<<Methods>>).
 
@@ -223,7 +223,7 @@ The type of can be explicitly set via the annotation.
 [example]
 --
 
-[source]
+[source,n4js]
 ----
 function f(): A {..}
 function p(): void {..}
@@ -251,7 +251,7 @@ If classes A, B, and C are defined as previously mentioned
 The following subtyping relations with function types are to be
 evaluated as follows:
 
-[source]
+[source,n4js]
 ----
 {function():void} <: {function():void}              -> true
 {function(A):A} <: {function(A):A}                  -> true
@@ -271,7 +271,7 @@ evaluated as follows:
 The following examples demonstrate the effect of optional and variadic
 parameters:
 
-[source]
+[source,n4js]
 ----
 {function(A)} <: {function(B)}                      -> true
 {function(A...)} <: {function(A)}                   -> true
@@ -299,7 +299,7 @@ parameters:
 
 The following examples demonstrate the effect of optional return types:
 
-[source]
+[source,n4js]
 ----
 {function():void} <: {function():void}              -> true
 {function():X}    <: {function():void}              -> true
@@ -314,7 +314,7 @@ The following examples demonstrate the effect of optional return types:
 
 The following examples show the effect of the annotation:
 
-[source]
+[source,n4js]
 ----
 {@This(A) function():void} <: {@This(X) function():void}    -> false
 {@This(B) function():void} <: {@This(A) function():void}    -> false
@@ -379,7 +379,7 @@ or contra-variant position, is not relevant:
 [example]
 --
 
-[source]
+[source,n4js]
 ----
 class A {}
 class B extends A {}
@@ -429,7 +429,7 @@ declarations, it is possible to call the properties of Function object
 directly. This is similar to autoboxing for strings.
 
 .Access of Function properties on functions
-[source]
+[source,n4js]
 ----
 // function declaration
 var param: number = function(a,b){}.length // 2
@@ -608,7 +608,7 @@ math:[$FunctionExpression$].
 .Function Declaration with Type Annotation
 [example]
 --
-[source]
+[source,n4js]
 ----
 // plain JS
 function f(p) { return p.length }
@@ -646,7 +646,7 @@ most details are explained in <<_ecmascript-5-function-definition,Function Defin
 
 ==== Syntax [[function-expression-syntax]]
 
-[source]
+[source,n4js]
 ----
 FunctionExpression:
          ({FunctionExpression}
@@ -684,7 +684,7 @@ In general, `{function():any}` is a subtype of `{function():void}` (cf. <<_funct
 expression is inferred, this relation is taken into account which may
 lead to unexpected results as shown in the following code snippet:
 
-[source]
+[source,n4js]
 ----
 function f(cb: {function():void}) { cb() }
 f(function() { return 1; });
@@ -809,7 +809,7 @@ The following syntax rules are extracted from the real syntax rules.
 They only display parts relevant to declaring a function or method as
 asynchronous.
 
-[source]
+[source,n4js]
 ----
 AsyncFunctionDeclaration <Yield>:
         (declaredModifiers+=N4Modifier)*

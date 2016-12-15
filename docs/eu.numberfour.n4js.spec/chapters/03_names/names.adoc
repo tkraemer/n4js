@@ -20,7 +20,7 @@ the visibility of a declaration by limiting its scope.
 
 _Extensibility_ refers to whether a given type can be subtyped, or in
 the case of members, whether they can be overridden. Access control is a
-prerequisite for extensibility which is further explained in <<_n4js-specific-classifiers,N4JS Specific Classifiers>>
+prerequisite for extensibility which is further explained in <<_n4js_specific_classifiers,N4JS Specific Classifiers>>
 
 [.language-n4js]
 == Access Control
@@ -153,9 +153,7 @@ $$\alpha_T: TypeReference \times TypeDeclaration \to Boolean$$
 
 computes whether a given type, (top-level) variable or function
 reference can access the declaration that it references.
-math:[$\alpha_T$] is defined with .
-
-//TODO missing ref here
+math:[$\alpha_T$] is defined with <<tab:typeAccessControl,Access Control>>.
 
 Formally, we define math:[$\alpha_T$] for a given reference
 math:[$r$] and a module top level variable, function or type
@@ -352,7 +350,7 @@ metatypes, no shadowing etc).
 Formally, we define math:[$\alpha_m$] for a given reference
 math:[$r$] and member declaration math:[$M$] as
 follows:
-footnote:[See <<_n4js-specific-classifiers,N4-Specific Classifiers>> for definitions of metatype properties. Note that math:[$r.receiver$] always refers to a type declaration in the context of an expression as the receiver type of math:[$r$]. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member
+footnote:[See <<_n4js_specific_classifiers,N4-Specific Classifiers>> for definitions of metatype properties. Note that math:[$r.receiver$] always refers to a type declaration in the context of an expression as the receiver type of math:[$r$]. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member
 declaration.]
 
 footnote:[Note, the Java-like access restriction for members of visibility [language-n4js]`protected` or [language-n4js]`protected@Internal` to code that is responsible for the implementation of that object. cite:[Gosling15a(S6.6.2,p.166)]]

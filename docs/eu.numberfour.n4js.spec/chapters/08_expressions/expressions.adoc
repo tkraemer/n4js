@@ -1131,13 +1131,13 @@ cf. cite:[ECMA11a(S11.2.2,p.68)]
 [discrete]
 ==== Syntax [[new-expression-syntax]]
 
-[source]
+[source,n4js]
 ----
 NewExpression: 'new' callee=MemberExpression<Yield> (-> TypeArguments)?
         (=> withArgs?='(' Arguments<Yield>? ')' )?
 ----
 
-[source]
+[source,n4js]
 ----
 import Address from "my/Address";
 
@@ -2228,7 +2228,7 @@ $$\infer{\tee cexpr: T}{n=|cexpr.exprs|, \tee cexpr.exprs_n:T} \tag{\S11.14}$$
 SuperLiteral: {SuperLiteral} 'super';
 ----
 
-Apart from the use of keyword `super` in wildcards of type expressions (cf. <<_type-expressions>>), there are two use cases for keyword `super`: super member access and super
+Apart from the use of keyword `super` in wildcards of type expressions (cf. <<_type_expressions>>), there are two use cases for keyword `super`: super member access and super
 constructor calls.
 
 .Super Keyword
