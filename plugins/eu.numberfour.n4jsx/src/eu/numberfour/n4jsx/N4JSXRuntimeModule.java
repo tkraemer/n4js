@@ -63,7 +63,7 @@ import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.preferences.FileBasedExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.resource.AccessibleSerializer;
-import eu.numberfour.n4js.resource.AllowedFileExtensionsForGeneratedSourceProvider;
+import eu.numberfour.n4js.resource.TranspilableFileExtensionsProvider;
 import eu.numberfour.n4js.resource.ErrorAwareLinkingService;
 import eu.numberfour.n4js.resource.N4JSCache;
 import eu.numberfour.n4js.resource.N4JSDerivedStateComputer;
@@ -104,7 +104,7 @@ import eu.numberfour.n4jsx.internal.N4JSXRuntimeCore;
 import eu.numberfour.n4jsx.parser.N4JSXSemicolonInjectingParser;
 import eu.numberfour.n4jsx.parser.RegExLiteralAwareLexer;
 import eu.numberfour.n4jsx.parser.antlr.lexer.InternalN4JSXLexer;
-import eu.numberfour.n4jsx.resource.N4JSXAllowedFileExtensionsForGeneratedSourceProvider;
+import eu.numberfour.n4jsx.resource.N4JSXTranspilableFileExtensionsForGeneratedSourceProvider;
 import eu.numberfour.n4jsx.resource.N4JSXLinker;
 import eu.numberfour.n4jsx.scoping.N4JSXScopeProvider;
 import eu.numberfour.n4jsx.typesystem.N4JSXUnsupportedExpressionTypeHelper;
@@ -554,7 +554,7 @@ public class N4JSXRuntimeModule extends eu.numberfour.n4jsx.AbstractN4JSXRuntime
 	/**
 	 * Bind allowed file extensions for open generated source
 	 */
-	public Class<? extends AllowedFileExtensionsForGeneratedSourceProvider> bindAllowedFileExtensionsForGeneratedSourceProvider() {
-		return N4JSXAllowedFileExtensionsForGeneratedSourceProvider.class;
+	public Class<? extends TranspilableFileExtensionsProvider> bindAllowedFileExtensionsForGeneratedSourceProvider() {
+		return N4JSXTranspilableFileExtensionsForGeneratedSourceProvider.class;
 	}
 }

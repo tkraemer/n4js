@@ -14,9 +14,9 @@ package eu.numberfour.n4js.resource;
  * This interface defines a method for retrieving file extensions that should be allowed for showing generated JS
  * source. This should be implemented for a language or sub-language
  */
-public interface AllowedFileExtensionsForGeneratedSourceProvider {
+public interface TranspilableFileExtensionsProvider {
 	/**
-	 * Return file extensions that are allowed for showing generated JS source
+	 * Return transpilable file extensions
 	 */
-	Iterable<String> getAllowedFileExtensions();
+	Iterable<String> getTranspilableFileExtensions();
 }

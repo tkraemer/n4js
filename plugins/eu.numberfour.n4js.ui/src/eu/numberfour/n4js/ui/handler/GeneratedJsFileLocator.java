@@ -25,20 +25,13 @@ import eu.numberfour.n4js.generator.common.CompilerUtils;
 import eu.numberfour.n4js.generator.common.GeneratorException;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
-import eu.numberfour.n4js.resource.AllowedFileExtensionsForGeneratedSourceProvider;
+import eu.numberfour.n4js.resource.TranspilableFileExtensionsProvider;
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
 /**
  * Service class for locating generated JS files for N4JS files.
  */
 public class GeneratedJsFileLocator {
-
-	/**
-	 * An iterable of allowed file extensions when looking up the corresponding generated source.
-	 */
-	// public static final Iterable<String> ALLOWED_FILE_EXTENSIONS = unmodifiableCollection(newHashSet(
-	// N4JS_FILE_EXTENSION, JS_FILE_EXTENSION, "n4jsx", "jsx"));
-
 	@Inject
 	private IN4JSCore core;
 
@@ -49,7 +42,7 @@ public class GeneratedJsFileLocator {
 	private FileExtensionBasedPropertTester tester;
 
 	@Inject
-	private AllowedFileExtensionsForGeneratedSourceProvider allowedFileExtensionProvider;
+	private TranspilableFileExtensionsProvider allowedFileExtensionProvider;
 
 	/**
 	 * Tries to locates the generated {@link IFile file} of an N4JS or pure JS file give with the argument and returns
@@ -65,7 +58,7 @@ public class GeneratedJsFileLocator {
 			return absent();
 		}
 
-		if (tester.test(file, null, null, allowedFileExtensionProvider.getAllowedFileExtensions())) {
+		if (tester.test(file, null, null, allowedFileExtensionProvider.getTranspilableFileExtensions())) {
 			final IFile generatedFile = tryLocateGeneratedFile(file,
 					N4JSLanguageConstants.TRANSPILER_SUBFOLDER_FOR_TESTS);
 			if (null != generatedFile && generatedFile.exists()) {

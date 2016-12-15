@@ -18,11 +18,11 @@ import static java.util.Collections.unmodifiableCollection;
 /**
  * This provider enables .n4js and .js for generated source
  */
-public class N4JSAllowedFileExtensionsForGeneratedSourceProvider
-		implements AllowedFileExtensionsForGeneratedSourceProvider {
+public class N4JSTranspilableFileExtensionsProvider
+		implements TranspilableFileExtensionsProvider {
 
 	@Override
-	public Iterable<String> getAllowedFileExtensions() {
+	public Iterable<String> getTranspilableFileExtensions() {
 		return unmodifiableCollection(newHashSet(
 				N4JS_FILE_EXTENSION, JS_FILE_EXTENSION));
 	}
