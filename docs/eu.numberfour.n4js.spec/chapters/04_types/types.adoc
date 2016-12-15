@@ -1132,8 +1132,10 @@ With prefix `0` you indicate that the number is octal based and with prefix `0x`
 
 The type `number` is subtype of `any`:
 
-$\infer{`number} <: `any}}{} \\$
-
+[math]
+---
+\infer{`number} <: `any}}{}
+---
 
 However, variables of type `number` can be auto-converted (coerced) to `Number`, as
 described in <<_integer-literals,Integer Literals>> .
@@ -1818,7 +1820,10 @@ Remarks:
 
 * Joining a union type with another type is not similar to joining the
 elements of the union type directly with another type. That is
-$A\ \mbox{join}\  \lstnfjs{union\{}B,C\lstnfjs{\}} \neq A\ \mbox{join}\  B \ \mbox{join}\  C\$
+[math]
+---
+A\ \mbox{join}\  \lstnfjs{union\{}B,C\lstnfjs{\}} \neq A\ \mbox{join}\  B \ \mbox{join}\  C\
+---
 * The computed join is simplified according to the constraints defined
 above.
 --
@@ -1856,8 +1861,11 @@ task:IDEBUG-260[]
 The upper and lower bound of a union type $U$ is a union type $U'$
 containing the upper and lower bound of the elements of $U$:
 
-$upper(\union{T_1, \dots, T_n}) := \union{upper(T_1), \dots, upper(T_1)} \\
-lower(\union{T_1, \dots, T_n}) := \union{lower(T_1), \dots, lower(T_1)} \\$
+[math]
+---
+upper(\union{T_1, \dots, T_n}) := \union{upper(T_1), \dots, upper(T_1)} \\
+lower(\union{T_1, \dots, T_n}) := \union{lower(T_1), \dots, lower(T_1)} \\
+---
 
 --
 

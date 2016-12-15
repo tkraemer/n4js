@@ -233,7 +233,10 @@ type:
 .  If the this keyword is used in some function annotated with an
 annotation , the type specified in the annotation is used. The inferred
 type is always nominal.
-$\infer{\tee \lstnfbnf{"this"}: \tsNom T}{f=\lstnfbnf{"this"}.containingFunctionOrAccessor \\ f.hasAnnotation(\lstnfbnf{"@This"}) & T = f.annotation\lstnfjs{["@This"]}}\\$
+[math]
+---
+\infer{\tee \lstnfbnf{"this"}: \tsNom T}{f=\lstnfbnf{"this"}.containingFunctionOrAccessor \\ f.hasAnnotation(\lstnfbnf{"@This"}) & T = f.annotation\lstnfjs{["@This"]}}\\
+---
 +
 .  If the this keyword is used in some _instance_ method of a
 classifier or in an _instance_ field initializer, is bound to the
@@ -245,14 +248,22 @@ this keyword is used in a function expression assigned to an property of
 an object literal, the type of the object literal is used. Note that
 usually this is the type in instance methods, and the type in static
 methods.task:IDE-785[]
-
-$\infer{\tee \lstnfbnf{"this"}: \tsNom T}{T=\lstnfbnf{"this"}.probableThisTarget & T\neq\NULL}\\$
+[math]
+---
+\infer{\tee \lstnfbnf{"this"}: \tsNom T}{T=\lstnfbnf{"this"}.probableThisTarget & T\neq\NULL}\\
+---
 . task:IDE-185[] In all other cases: Non-strict mode:
-$\infer{\tee \lstnfbnf{"this"}: \type{global}}{mode=\lenum{unrestricted}}\\$
+[math]
+---
+\infer{\tee \lstnfbnf{"this"}: \type{global}}{mode=\lenum{unrestricted}}\\
+---
 
 Strict mode and N4JS mode:
 
-$\infer{\tee \lstnfbnf{"this"}: \type{global} \type{undefined}}{mode\neq\lenum{unrestricted}}\\$
+[math]
+---
+\infer{\tee \lstnfbnf{"this"}: \type{global} \type{undefined}}{mode\neq\lenum{unrestricted}}\\
+---
 
 --
 
@@ -466,13 +477,16 @@ described in <<_property-accessors,Property Accessors>>.
 If an identifier $i$ is accessed, the bound declared element
 $D$ must be readable if it is not used on the left-hand side
 of an assignment expression.
-$& bind(i, D) \\
+[math]
+---
+& bind(i, D) \\
 
 & \hspace{2em}\land \not\exists\ \type{AssignmentExpression}\ ae \in i.container^*: \\
 //*
 & \hspace{3em} ae.left = i \\
 & \hspace{4em}\lor (\mu(ae.left)=\type{PropertyAccessExpression} \land ae.left.property=i): \\
-& \Rightarrow D.readable \\$
+& \Rightarrow D.readable \\
+---
 
 --
 
@@ -599,7 +613,10 @@ The interesting question is the binding of the type variable $T$.
 
 The type of an array padding _p_ is inferred as follows:
 
-$&\infer{\tee p: \type{undefined}}{} \\$
+[math]
+---
+&\infer{\tee p: \type{undefined}}{} \\
+---
 
 
 The element type of an array literal is simply inferred as the
@@ -1680,7 +1697,10 @@ task:IDE-244[] task:IDE-345[]
 
 The type returned by a bitwise shift expression is always `boolean`:
 
-$&\infer{\tee\ (\lstnfbnf{Expression ('<<'|'>>'|'>>>')\ Expression}): \type{number}}{}   \tag{\S 11.7.1/2} \\$
+[math]
+---
+&\infer{\tee\ (\lstnfbnf{Expression ('<<'|'>>'|'>>>')\ Expression}): \type{number}}{}   \tag{\S 11.7.1/2} \\
+---
 
 
 === Relational Expression
@@ -1718,14 +1738,17 @@ in N4JS mode, the following constraints must hold:
 
 * The operands must have the same type and the type must be either a
 number, string, or boolean:
-$&\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}
+[math]
+---
+&\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}
         { \tee rhs: T & T\in \{\type{number,string,boolean}\}} \\
 &\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}
         { \tee rhs: O & O \not\in \{\type{number,string,boolean}\} & T=\type{\union{number,string,boolean}}  } \\
 &\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ rhs: T}
         { \tee lhs: T & T\in \{\type{number,string,boolean}\}} \\
 &\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ rhs: T}
-        { \tee lhs: O & O \not\in \{\type{number,string,boolean}\} & T=\type{\union{number,string,boolean}}  } \\$
+        { \tee lhs: O & O \not\in \{\type{number,string,boolean}\} & T=\type{\union{number,string,boolean}}  } \\
+---
 
 
 --

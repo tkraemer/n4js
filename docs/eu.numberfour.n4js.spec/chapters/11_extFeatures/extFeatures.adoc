@@ -1252,10 +1252,13 @@ $P.super = F$
 . $P$’s name equals the name of the filled class and is
 contained in a module with same qualified name (specifier or global):
 +
-$& P.name = F.name \\
+[math]
+---
+& P.name = F.name \\
     & \land P.containedModule.global=F.containedModule.global \\
     & \land (P.containedModule.global \\
-        & \hspace{3em} \lor P.containedModule.specifier=F.containedModule.specifier) \\$
+        & \hspace{3em} \lor P.containedModule.specifier=F.containedModule.specifier) \\
+---
 . Both the polyfill and filled class must be top-level declarations
 (i.e., no class expression):
 $& P.topLevel = \TRUE \land F.topLevel = \TRUE$
@@ -1274,16 +1277,19 @@ $
 .  If $P$ declares a constructor, it must be override
 compatible with the constructor of the filled class:
 +
-$
+[math]
+---
 \exists P.ownedCtor: P.ownedCtor <: F.ctor
-$
+---
 . $P$ must define the same type variables as the filled
 class $F$ and the arguments must be in the same order as the
 parameters (with no further modifications):
-$
+[math]
+---
 & \forall i, 0 \leq i<|P.typePars|:\\
 &   \hspace{3em} P.typePars_i=F.typePars_i \\
-&   \hspace{3em} \land P.typePars_i.name=P.super.typeArgs_i.name \\$
+&   \hspace{3em} \land P.typePars_i.name=P.super.typeArgs_i.name \\
+---
 . All constraints related to member redefinition (cf. <<_redefinition-of-members,Redefinition of Members>>) have to hold.
 In the case of polyfills, this is true for constructors (cf.
 <<IDE-72,requirement: Overriding Members>>) and private members.

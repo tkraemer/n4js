@@ -1736,8 +1736,11 @@ For the following constraints, we define two helper sets
 $M_C$ and $M_I$ as follows: Given a
 `C`, and interface $I_1,..., I_n$, implemented
 by `C`, with
-$M_C & =  C.ownedMembers \cup \{ m \in C.superType.members | m.acc > \lenum{private}\}\\
-M_I & = \bigcup^{n}_{i=1}I_i.members \\$
+[math]
+---
+M_C & =  C.ownedMembers \cup \{ m \in C.superType.members | m.acc > \lenum{private}\}\\
+M_I & = \bigcup^{n}_{i=1}I_i.members \\
+---
 
 Note that these
 sets already contain only non-private data fields.
