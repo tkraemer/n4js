@@ -86,20 +86,20 @@ footnote:[http://javascript.crockford.com/code.html]
 
 1.  Type (and Type Variable) Identifiers
 +
-[source]
+[source,bash]
 ----
 TypeIdentifier: [_A-Z][_a-zA-Z0-9]*
 TypeVariableIdentifier: [_A-Z][_a-zA-Z0-9]*
 ----
 2.  Package Identifiers
 +
-[source]
+[source,bash]
 ----
 PackageIdentifier: [_a-z][._a-zA-Z0-9]*; // i.e. the folder names, must not end with .
 ----
 3.  Member Identifiers and Enum Literals
 +
-[source]
+[source,bash]
 ----
 InstanceFieldIdentifier: [_a-z][_a-zA-Z0-9]*
 StaticFieldIdentifier: [_A-Z][_A-Z0-9]*([_A-Z0-9]+)*
@@ -107,20 +107,20 @@ EnumLiteral: [_A-Z][_A-Z0-9]*([_A-Z0-9]+)*
 ----
 4.  Variable and Parameter Names
 +
-[source]
+[source,bash]
 ----
 VariableIdentifier: [_a-zA-Z0-9]*
 􏰀ParameterIdentifier: [_a-z][_a-zA-Z0-9]*
 ----
 5.  Methods
 +
-[source]
+[source,bash]
 ----
 MethodIdentifier: [_a-z][_a-zA-Z0-9]*;
 ----
 6.  Annotations
 +
-[source]
+[source,bash]
 ----
 AnnotationIdentifier: [_A-Z][_a-zA-Z0-9]*
 ----
@@ -130,7 +130,7 @@ created. Note that these fully qualified names cannot be used in N4JS
 directly. Though they may be shown in error messages etc. to identify
 elements.
 
-[source]
+[source,bash]
 ----
 TypeIdentifier:         [A-Z][a-zA-Z0-9]*;
 PackageIdentifier:      [a-z][a-zA-Z0-9]*;

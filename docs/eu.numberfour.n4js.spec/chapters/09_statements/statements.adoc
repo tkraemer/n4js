@@ -129,20 +129,20 @@ const MESSAGE = "Hello World";
 
 From a model and type inference point of view, variable and constant
 statements and declarations are similar except that the pseudo property
-math:[$const$] is set to false for variables and true for
+$$const$$ is set to false for variables and true for
 constants. Also see exported variable statement (<<Export Statement>>) and constant statement and declaration (<<Const>>).
 
 .Variable declaration
 [req,id=IDE-127,version=1]
 --
-For a given variable declaration math:[$d$], the following constraints must hold:
+For a given variable declaration $$d$$, the following constraints must hold:
 
 * The type of the initializer expression must conform to the declared
 type: +
-math:[$d.expression\neq \NULL \land d.declaredTypeRef\neq \NULL\\
-         \to \tee d.expression.type \subtype \tee d.declaredTypeRef$]
+$$d.expression\neq \NULL \land d.declaredTypeRef\neq \NULL\\
+         \to \tee d.expression.type \subtype \tee d.declaredTypeRef$$
 * The initializer expression should not contain a reference to
-math:[$d$] except where the reference is contained in a class
+$$d$$ except where the reference is contained in a class
 expression or function expression and the class is not immediately
 initialized or the function is not immediately invoked. In these cases,
 the code is executed later and the self-reference is not a problem. +
@@ -280,7 +280,7 @@ ContinueStatement <Yield>: {ContinueStatement} 'continue' (label=[LabelledStatem
 BreakStatement <Yield>: {BreakStatement} 'break' (label=[LabelledStatement|BindingIdentifier<Yield>])? Semi;
 ----
 
-Since math:[$varDecl(s)$] are `VariableStatement`s as described in <<_variable-statement,Var Statement>>, the declared variables can be type annotated.
+Since $$varDecl(s)$$ are `VariableStatement`s as described in <<_variable-statement,Var Statement>>, the declared variables can be type annotated.
 
 TIP: Using for-in is not recommended, instead ``pass:[_each]`` should be used.
 
@@ -293,13 +293,13 @@ ECMAScript operation `ToBoolean` cite:[ECMA11a(S9.2,p.43)] is used to convert an
 .For-In-Statement Constraints
 [req,id=IDE-129,version=1]
 --
-For a given math:[$f$] the following conditions must hold:
+For a given $$f$$ the following conditions must hold:
 
 * The type of the expression must be conform to object: +
-math:[$\tee f.expression <: \type{union\{Object,string,ArgumentType\}}$]
+$$\tee f.expression <: \type{union\{Object,string,ArgumentType\}}$$
 * Either a new loop variable must be declared or an rvalue must be
 provided as init expression: +
-math:[$f.varDecl \neq null \lor (f.initExpr \neq null \land isRValue(f.initExpr))$]
+$$f.varDecl \neq null \lor (f.initExpr \neq null \land isRValue(f.initExpr))$$
 * The type of the loop variable must be a string (or a super type of
 string, i.e. any):
 $$& (f.varDecl \neq null \land  \tee f.varDecl \subtype \type{string} ) \\
@@ -396,10 +396,10 @@ DefaultClause <Yield>: {DefaultClause} 'default' ':' (statements+=Statement<Yiel
 .Switch Constraints
 [req,id=IDE-132,version=1]
 --
-For a given switch statement math:[$s$], the following constraints must hold:
+For a given switch statement $$s$$, the following constraints must hold:
 
-* For all cases math:[$c \in s.cases$],
-math:[$s.expr$]===math:[$c.expr$] must be valid according to
+* For all cases $$c \in s.cases$$,
+$$s.expr$$===$$c.expr$$ must be valid according to
 the constraints defined in <<Equality Expression>>.
 --
 
@@ -501,7 +501,7 @@ fields (cf. <<_assignment-modifiers>>).
 [req,id=IDE-133,version=1]
 --
 All variable declarations of a const variable statement
-math:[$constStmt$] are not writeable:
+$$constStmt$$ are not writeable:
 $$\forall vdecl \in constStmt.varDecl: \lnot vdecl.writable$$
 --
 
@@ -520,19 +520,19 @@ See <<_iteration-statements,Iteration Statements>>
 .for ... of statement
 [req,id=IDE-134,version=1]
 --
-For a given math:[$f$] the following conditions must hold:
+For a given $$f$$ the following conditions must hold:
 
 1.  The value provided after `of` in a `for ... of` statement must be a subtype of `Iterable<?>`.
 2.  Either a new loop variable must be declared or an rvalue must be
 provided as init expression: +
-math:[$f.varDecl \neq null \lor (f.initExpr \neq null \land isRValue(f.initExpr))$]
-3.  If a new variable math:[$v$] is declared before `of` and it has a
-declared type math:[$T$], the value provided after must be a
-subtype of . If math:[$v$] does not have a declared type, the type
-of math:[$v$] is inferred to the type of the first type argument of
+$$f.varDecl \neq null \lor (f.initExpr \neq null \land isRValue(f.initExpr))$$
+3.  If a new variable $$v$$ is declared before `of` and it has a
+declared type $$T$$, the value provided after must be a
+subtype of . If $$v$$ does not have a declared type, the type
+of $$v$$ is inferred to the type of the first type argument of
 the actual type of the value provided after .
 4.  If a previously-declared variable is referenced before with a
-declared or inferred type of math:[$T$], the value provided after `of`
+declared or inferred type of $$T$$, the value provided after `of`
 must be a subtype of `Iterable<? extends T>`.
 
 NOTE: `Iterable` is structurally typed on definition-site so non-N4JS types can
@@ -621,8 +621,8 @@ The elements to be imported with their names.
 %Properties set via annotations:
 %\version{postponed}{Not implemented as part of version 0.1, will be implemented if needed}
 %\begin{properties}
-%\item [$exclude$] \annotationDef{@Exclude}; compiler instruction to exclude the particular dependency from the generated define() call, even if the dependency analyzer would add it.
-%\item [$force$] \annotationDef{@Force}; compiler instruction to include the particular dependency from the generated define() call, even if the dependency analyzer would have removed it.
+%\item [$exclude$$ \annotationDef{@Exclude}; compiler instruction to exclude the particular dependency from the generated define() call, even if the dependency analyzer would add it.
+%\item [$force$$ \annotationDef{@Force}; compiler instruction to include the particular dependency from the generated define() call, even if the dependency analyzer would have removed it.
 %\end{properties}
 %note above (\annotationDef{@Exclude} and \annotationDef{@Force}) should be aligned with ES6 modules semantics
 ////
@@ -719,7 +719,7 @@ module):
 [req,id=IDE-135,version=1]
 --
 The following constraints are defined on a
-(non-dynamic) import statement math:[$i$]:
+(non-dynamic) import statement $$i$$:
 
 * The imported module needs to be accessible from the current project.
 * The imported declarations need to be accessible from the current
@@ -857,14 +857,14 @@ done by adding `+` to the name of the named import.
 .Dynamic Import
 [req,id=IDE-136,version=1]
 --
-Let math:[$i$] be an import
-statement math:[$i$] with a dynamic namespace specifier. The
+Let $$i$$ be an import
+statement $$i$$ with a dynamic namespace specifier. The
 following constraints must hold:
 
-1.  math:[$i.module$] must not reference an `n4js` file.
-2.  If math:[$i.module$] references an `n4jsd` file, a warning is
+1.  $$i.module$$ must not reference an `n4js` file.
+2.  If $$i.module$$ references an `n4jsd` file, a warning is
 to be created.
-3.  If the file referenced by math:[$i.module$] is not found, an
+3.  If the file referenced by $$i.module$$ is not found, an
 error is created just as in the static case.
 
 These constraints define the error level when using dynamic import: we
@@ -896,14 +896,14 @@ http://www.ecma-international.org/ecma-262/6.0/index.html#sec-createimportbindin
 .Immutable Import
 [req,id=IDE-137,version=1]
 --
-Let math:[$i$] be a binding to an imported element. It is an error if
+Let $$i$$ be a binding to an imported element. It is an error if
 
-* math:[$i$] occurs on the left-hand side as the assignment-target
+* $$i$$ occurs on the left-hand side as the assignment-target
 of an assignment expression (this also includes any level in a
 destructuring pattern on the left-hand side),
-* math:[$i$] as a direct argument of a postfix operator (/),
-* math:[$i$] as a direct argument of a operator,
-* math:[$i$] as a direct argument of the `increment` or
+* $$i$$ as a direct argument of a postfix operator (/),
+* $$i$$ as a direct argument of a operator,
+* $$i$$ as a direct argument of the `increment` or
 `decrement` unary operator (/)
 
 --

@@ -53,7 +53,7 @@ Name of function or method, may be empty or automatically generated (for
 messages).
 
 `body` ::
-The body of the function, it contains statements math:[$stmts$].
+The body of the function, it contains statements $$stmts$$.
 The body is null if a function type is defined in a type expression, and
 it is the last argument in case of a function object constructor, or the
 content of the function definition body.
@@ -72,13 +72,14 @@ sub typing rules. If `this` is not used inside the function, then `any` is set
 instead of the inferred thisTypeRef to allow for more usages. The
 property is computed as follows: +
 
-$$
+[math]
+--
 tfpars = \lif & \ \mbox{this is used or explicitly declared}\ \\
 & \lthen thisTypeRef + fpars \\
-& \lelse any + fpars$$
+& \lelse any + fpars
+--
 
-
-Parameters (in math:[$pars$]) have the following properties:
+Parameters (in $$pars$$) have the following properties:
 
 [horizontal]
 `name` ::
@@ -100,7 +101,7 @@ property advice set.
 .Function Type
 [req,id=IDE-79,version=1]
 --
-Type Given a function type math:[$F$], the following
+Type Given a function type $$F$$, the following
 constraints must be true:
 
 
@@ -108,10 +109,10 @@ constraints must be true:
 1.  Optional parameters must be defined at the end of the (formal)
 parameter list. In particular, an optional parameter must not be
 followed by a non-optional parameter: +
-math:[$F.fpars_i.optional \to \not \exists\ k>i: \lnot F.fpars_k.optvar$]
+$$F.fpars_i.optional \to \not \exists\ k>i: \lnot F.fpars_k.optvar$$
 2.  Only the last parameter of a method may be defined as variadic
 parameter: +
-math:[$F.fpars_i.variadic \to i = |F.fpars|-1$]
+$$F.fpars_i.variadic \to i = |F.fpars|-1$$
 3.  If a function explicitly defines a return type, the last statement
 of the transitive closure of statements of the body must be a return
 statement:
@@ -138,28 +139,28 @@ $$& F.typeRef \neq Undefined \\
 [def]
 --
 For the given non-parameterized function types +
-math:[$F_{left}$] with
-math:[$F_{left}.tfpars=L_0, L_1, ... L_k$] and
-math:[$|F_{left}.typesPars|=0$] +
-math:[$F_{right}$] with
-math:[$F_{right}.tfpars=R_0, R_1, ... R_n$] and
-math:[$|F_{right}.typesPars|=0$], +
-we say math:[$F_{left}$] conforms to math:[$F_{right}$],
-written as math:[$F_{left} <: F_{right}$], if and only if:
+$$F_{left}$$ with
+$$F_{left}.tfpars=L_0, L_1, ... L_k$$ and
+$$|F_{left}.typesPars|=0$$ +
+$$F_{right}$$ with
+$$F_{right}.tfpars=R_0, R_1, ... R_n$$ and
+$$|F_{right}.typesPars|=0$$, +
+we say $$F_{left}$$ conforms to $$F_{right}$$,
+written as $$F_{left} <: F_{right}$$, if and only if:
 
-* math:[$F_{right}.returnType = \type{void}$] +
-math:[$\lor (F_{left}.returnType = \type{void} \land F_{right}.opt)$] +
-math:[$\lor (F_{left}.returnType <: F_{right}.returnType \land \neg (F_{left}.opt \land \neg F_{right}.opt))$]
-* if math:[$k\leq n$]:
-** math:[$\forall\ i, 1\leq i\leq k: (R_i.opt \to (L_i.opt \lor L_i.var)) \land (R_i.var \to L_i.var)$]
-** math:[$\forall\ i, 1\leq i\leq k: L_i :> R_i$]
-** math:[$L_k.var=true \to \forall\ i, k<i\leq n: L_K :> R_i$]
+* $$F_{right}.returnType = \type{void}$$ +
+$$\lor (F_{left}.returnType = \type{void} \land F_{right}.opt)$$ +
+$$\lor (F_{left}.returnType <: F_{right}.returnType \land \neg (F_{left}.opt \land \neg F_{right}.opt))$$
+* if $$k\leq n$$:
+** $$\forall\ i, 1\leq i\leq k: (R_i.opt \to (L_i.opt \lor L_i.var)) \land (R_i.var \to L_i.var)$$
+** $$\forall\ i, 1\leq i\leq k: L_i :> R_i$$
+** $$L_k.var=true \to \forall\ i, k<i\leq n: L_K :> R_i$$
 +
-else (math:[$k>n$]):
-** math:[$\forall\ i, 1\leq i\leq n: (R_i.opt \to (L_i.opt \lor L_i.var)) \land (R_i.var \to L_i.var)$]
-** math:[$\forall\ i, 1\leq i\leq n: L_i :> R_i$]
-** math:[$\forall\ n<i\leq k: L_i.opt \lor L_i.var$]
-** math:[$R_n.var=true \to \forall\ i, n<i\leq k: L_i :> R_n$]
+else ($$k>n$$):
+** $$\forall\ i, 1\leq i\leq n: (R_i.opt \to (L_i.opt \lor L_i.var)) \land (R_i.var \to L_i.var)$$
+** $$\forall\ i, 1\leq i\leq n: L_i :> R_i$$
+** $$\forall\ n<i\leq k: L_i.opt \lor L_i.var$$
+** $$R_n.var=true \to \forall\ i, n<i\leq k: L_i :> R_n$$
 
 <<cdVarianceFunctionChart>> shows a simple example with the function type conformance relations.
 
@@ -200,13 +201,13 @@ with
 --
 
 The following incomplete snippet demonstrates the usage of two function variables
-math:[$f1$] and math:[$f2$], in which
-math:[$\infType{f2} <: \infType{f1}$] must hold true according to
+$$f1$$ and $$f2$$, in which
+$$\infType{f2} <: \infType{f1}$$ must hold true according to
 the aforementioed constraints. A function `bar` declares a parameter
-math:[$f1$], which is actually a function itself. math:[$f2$]
+$$f1$$, which is actually a function itself. $$f2$$
 is a variable, to which a function expression is a assigned. Function `bar` is
-then called with math:[$f2$] as an argument. Thus, the type of
-math:[$f2$] must be a subtype of the math:[$f1$]’s type.
+then called with $$f2$$ as an argument. Thus, the type of
+$$f2$$ must be a subtype of the $$f1$$’s type.
 
 [source,n4js]
 ----
@@ -246,7 +247,7 @@ fA(p);      // --> error    void !<: A
 [example]
 --
 If classes A, B, and C are defined as previously mentioned
-(math:[$C <: B <: A$])
+($$C <: B <: A$$)
 
 The following subtyping relations with function types are to be
 evaluated as follows:
@@ -331,40 +332,40 @@ The following examples show the effect of the annotation:
 [def]
 --
 For the given function types +
-math:[$F_{left}$] with
-math:[$F_{left}.tfpars=L_0, L_1, ... L_k$] +
-math:[$F_{right}$] with
-math:[$F_{right}.tfpars=R_0, R_1, ... R_n$], +
-we say math:[$F_{left}$] conforms to math:[$F_{right}$],
-written as math:[$F_{left} <: F_{right}$], if and only if:
+$$F_{left}$$ with
+$$F_{left}.tfpars=L_0, L_1, ... L_k$$ +
+$$F_{right}$$ with
+$$F_{right}.tfpars=R_0, R_1, ... R_n$$, +
+we say $$F_{left}$$ conforms to $$F_{right}$$,
+written as $$F_{left} <: F_{right}$$, if and only if:
 
 function_type_conformance_non_parameterized
 
 
-* if math:[$|F_{left}.typePars|=|F_{right}.typePars|=0$]:
-** math:[$F_{left} <: F_{right}$]
+* if $$|F_{left}.typePars|=|F_{right}.typePars|=0$$:
+** $$F_{left} <: F_{right}$$
 (cf. <<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>>)
 * else if
-math:[$|F_{left}.typePars|>0 \land |F_{right}.typePars|=0$]:
-** math:[$\exists \typeSubs: ( \typeEnvAdd \typeSubs ) \entails F_{left} <: F_{right}$]
+$$|F_{left}.typePars|>0 \land |F_{right}.typePars|=0$$:
+** $$\exists \typeSubs: ( \typeEnvAdd \typeSubs ) \entails F_{left} <: F_{right}$$
 (cf. <<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>>)
 +
-(i.e. there exists a substitution math:[$\typeSubs$] of type
-variables in math:[$F_{left}$] so that after substitution it
-becomes a subtype of math:[$F_{right}$] as defined by
+(i.e. there exists a substitution $$\typeSubs$$ of type
+variables in $$F_{left}$$ so that after substitution it
+becomes a subtype of $$F_{right}$$ as defined by
 <<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>>)
-* else if math:[$|F_{left}.typePars|=|F_{right}.typePars|$]:
-** math:[$\typeEnvAdd \{ V^r_i \leftarrow V^l_i | 0 \leq i \leq n \} \entails F_{left} <: F_{right}$]
+* else if $$|F_{left}.typePars|=|F_{right}.typePars|$$:
+** $$\typeEnvAdd \{ V^r_i \leftarrow V^l_i | 0 \leq i \leq n \} \entails F_{left} <: F_{right}$$
 ( accordingly)
-** math:[$\forall 0 \leq i \leq n : \\
-        \intersection{V^l_i.\mathit{upperBounds}} :> \intersection{V^r_i.\mathit{upperBounds}}$]
+** $$\forall 0 \leq i \leq n : \\
+        \intersection{V^l_i.\mathit{upperBounds}} :> \intersection{V^r_i.\mathit{upperBounds}}$$
 +
-with math:[$F_{left}.typePars=V^l_0, V^l_1, ... V^l_n$] and
-math:[$F_{right}.typePars=V^r_0, V^r_1, ... V^r_n$] +
-(i.e. we replace each type variable in math:[$F_{right}$] by the
-corresponding type variable at the same index in math:[$F_{left}$]
-and check the constraints from<<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>> as if math:[$F_{left}$] and
-math:[$F_{right}$] were non-parameterized functions and, in
+with $$F_{left}.typePars=V^l_0, V^l_1, ... V^l_n$$ and
+$$F_{right}.typePars=V^r_0, V^r_1, ... V^r_n$$ +
+(i.e. we replace each type variable in $$F_{right}$$ by the
+corresponding type variable at the same index in $$F_{left}$$
+and check the constraints from<<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>> as if $$F_{left}$$ and
+$$F_{right}$$ were non-parameterized functions and, in
 addition, the upper bounds on the left side need to be supertypes of the
 upper bounds on the right side).
 --
@@ -404,16 +405,16 @@ method comnsumption and implementation accordingly, see
 <<IDE-74,requirement: Implementation of Interface Members>>). Note that this is very
 different from Java which is far more restrictive when checking
 overriding methods. As Java also supports method overloading: given two
-types math:[$A, B$] with math:[$B <: A$] and a super class
+types $$A, B$$ with $$B <: A$$ and a super class
 method `void m(B param)`, it is valid to override `m` as `void m(A param)` in N4JS but not in Java. In Java this would be handled as method overloading and therefore an `@Override` annotation on `m` would produce an error.
 
 
 .Upper and Lower Bound of a Function Type
 [req,id=IDE-80,version=1]
 --
-The upper bound of a function type math:[$F$] is a function type with the lower bound types of the parameters and the upper bound of the return type:
+The upper bound of a function type $$F$$ is a function type with the lower bound types of the parameters and the upper bound of the return type:
 $$upper(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( lower(P_1),\dots,lower(P_n) ): upper(R)$$
-The lower bound of a function type math:[$F$] is a function type
+The lower bound of a function type $$F$$ is a function type
 with the upper bound types of the parameters and the lower bound of the
 return type:
 $$lower(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( upper(P_1),\dots,upper(P_n) ): lower(R)$$
@@ -476,10 +477,10 @@ function named `arguments` or in the rare case that the function
 itself is called ’arguments’ cite:[ECMA11a(S10.5,pp59)]. The argument object has array-like behavior even though it is not of type `array`:
 
 * All actual passed-in parameters of the current execution context can
-be retrieved by math:[$0-based$] index access.
+be retrieved by $$0-based$$ index access.
 * The `length` property of the arguments object stores the actual number of
 passed-in arguments which may differ from the number of formally defined
-number of parameters math:[$fpars$] of the containing function.
+number of parameters $$fpars$$ of the containing function.
 * It is possible to store custom values in the arguments object, even
 outside the original index boundaries.
 * All obtained values from the arguments object are of type `any`.
@@ -599,11 +600,11 @@ Properties of the function declaration and expression are described in
 in <<_function-type,Function Type>>.
 
 For this specification, we introduce a supertype
-math:[$FunctionDefinition$] for both,
-math:[$FunctionDeclaration$] and
-math:[$FunctionExpression$]. This supertype contains all common
+$$FunctionDefinition$$ for both,
+$$FunctionDeclaration$$ and
+$$FunctionExpression$$. This supertype contains all common
 properties of these two subtypes, that is, all properties of
-math:[$FunctionExpression$].
+$$FunctionExpression$$.
 
 .Function Declaration with Type Annotation
 [example]
@@ -623,11 +624,11 @@ task:IDE-224[]
 A function defined in a class’s method (or method modifier) builder is a
 method, see <<Methods>> for details and additional constraints.
 The metatype of a function definition is function type (<<_function-type,Function Type>>), as a function declaration is only a different syntax for creating a object.
-Constraints for function type are described in <<_function-type,Function Type>>. Another consequence is that the inferred type of a function definition math:[$fdecl$] is simply its function type
-math:[$F$].
+Constraints for function type are described in <<_function-type,Function Type>>. Another consequence is that the inferred type of a function definition $$fdecl$$ is simply its function type
+$$F$$.
 $$\infer{\infType{F}}{\infType{fdecl}}$$
 
-Note that the type of a function definition is different from its return type math:[$f.decl$]!
+Note that the type of a function definition is different from its return type $$f.decl$$!
 
 .Function Declaration only on Top-Level
 [req,id=IDE-83,version=1]
@@ -936,23 +937,23 @@ non-noisy.
 --
 1. `async` may be used on declared functions and methods, and for function
 expressions. and arrow functions.
-2.  A function or method math:[$f$] with a declared return type
-math:[$R$] that is declared has an actual return type of `async`.
+2.  A function or method $$f$$ with a declared return type
+$$R$$ that is declared has an actual return type of `async`.
 +
 NOTE: for the time being this applies also to functions with a void
 return type, producing the actual return type `Promise<void,?>` (to be reconsidered).
-3.  Given a function or method math:[$f$] with a declared return
-type math:[$R$] that is declared , all return statements in
-math:[$f$] must have an expression of type math:[$R$] (and not
+3.  Given a function or method $$f$$ with a declared return
+type $$R$$ that is declared , all return statements in
+$$f$$ must have an expression of type $$R$$ (and not
 of type ).
 4.  `await` can be used in expressions directly enclosed in an async function,
 and behaves like a unary operator with the same precedence as in ES6.
-5.  Given an expression math:[$\mathit{expr}$] of type
-math:[$T$], the type of math:[$($]
-math:[$\mathit{expr} )$] is inferred to math:[$T$] if
-math:[$T$] is not a Promise or it is inferred to math:[$S$] if
-math:[$T$] is a Promise with a success value of type
-math:[$S$], i.e. math:[$T <:$] .
+5.  Given an expression $$\mathit{expr}$$ of type
+$$T$$, the type of $$($$
+$$\mathit{expr} )$$ is inferred to $$T$$ if
+$$T$$ is not a Promise or it is inferred to $$S$$ if
+$$T$$ is a Promise with a success value of type
+$$S$$, i.e. $$T <:$$ .
 
 --
 
@@ -1056,20 +1057,20 @@ annotation is optional after `await`.
 .Promisifiable
 [req,id=IDE-87,version=1]
 --
-A function or method math:[$f$] can be annotated with `@Promisifiable` if and only if the following constraints hold:
+A function or method $$f$$ can be annotated with `@Promisifiable` if and only if the following constraints hold:
 
-1.  Last parameter of math:[$f$] is a function (the
-math:[$callback$]).
-2.  The math:[$callback$] has a signature of
+1.  Last parameter of $$f$$ is a function (the
+$$callback$$).
+2.  The $$callback$$ has a signature of
 * `{function(E, T0, T1, ..., Tn): V}`, or
 * `{function(T0, T1, ..., Tn): V}`
 +
-in which math:[$E$] is type `Error` or a subtype thereof,
-math:[$T_0, ..., T_n$] are arbitrary types except or its subtypes.
-math:[$E$], if given, is then the type of the error value, and
-math:[$T_0, ..., T_n$] are the types of the success values of the
+in which $$E$$ is type `Error` or a subtype thereof,
+$$T_0, ..., T_n$$ are arbitrary types except or its subtypes.
+$$E$$, if given, is then the type of the error value, and
+$$T_0, ..., T_n$$ are the types of the success values of the
 asynchronous operation. +
-Since the return value of the synchronous function call is not available when using `@Promisify`, math:[$V$] is recommended to be `void`, but it can be any type.
+Since the return value of the synchronous function call is not available when using `@Promisify`, $$V$$ is recommended to be `void`, but it can be any type.
 3.  The callback parameter may be optional.
 footnote:[Even in this case, the function will actually be called with the callback method which is then created by the transpiler. However, the callback is not given in the N4JS code).]
 
@@ -1083,15 +1084,15 @@ parameters must be of other types.
 .@Promisify and await with promisifiable functions
 [req,id=IDE-88,version=1]
 --
-A promisifiable function math:[$f$] with one of the two valid
+A promisifiable function $$f$$ with one of the two valid
 signatures given in <<IDE-87,requirement: Promisifiable>> can be promisified with `Promisify` or
 used with `await`, if and only if the following constraints hold:
 
-1.  Function math:[$f$] must be annotated with `@Promisifiable`.
+1.  Function $$f$$ must be annotated with `@Promisifiable`.
 2.  Using `@Promisify f()` without `await` returns a promise of type `Promise<S,F>` where
-* math:[$S$] is `IterableN<T0,...,Tn>` if math:[$n\geq 2$], `T` if math:[$n=1$], and `void` if math:[$n=0$].
-* math:[$F$] is `E` if given, `void` otherwise.
-3.  Using `await @Promisify f()` returns a value of type `IterableN<T0,...,Tn>` if math:[$n\geq 2$], `T` if math:[$n=1$], and `void` if math:[$n=0$].
+* $$S$$ is `IterableN<T0,...,Tn>` if $$n\geq 2$$, `T` if $$n=1$$, and `void` if $$n=0$$.
+* $$F$$ is `E` if given, `void` otherwise.
+3.  Using `await @Promisify f()` returns a value of type `IterableN<T0,...,Tn>` if $$n\geq 2$$, `T` if $$n=1$$, and `void` if $$n=0$$.
 4.  In case of using an `await`, the annotation can be omitted. +
 I.e., `await @Promisify f()` is equivalent to `await f()`.
 5.  Only call expressions using f as target can be promisified, in other

@@ -128,11 +128,11 @@ $$\lenum{private} < \lenum{project} < \lenum{public@Internal} < \lenum{public}$$
 .Type Access Modifiers
 [req,id=IDE-3,version=1]
 --
-The following constraints for type access modifiers for a given type math:[$T$]
+The following constraints for type access modifiers for a given type $T$
 (which may be a classifier declaration, a function or a variable) must
 hold:
 
-* It is an error if math:[$T$] is not exported but defined as
+* It is an error if $T$ is not exported but defined as
 `project`, `public` or
 `public@Internal`.
 * It is an error if an annotation `@Internal` is
@@ -153,11 +153,11 @@ $$\alpha_T: TypeReference \times TypeDeclaration \to Boolean$$
 
 computes whether a given type, (top-level) variable or function
 reference can access the declaration that it references.
-math:[$\alpha_T$] is defined with <<tab:typeAccessControl,Access Control>>.
+$\alpha_T$ is defined with <<tab:typeAccessControl,Access Control>>.
 
-Formally, we define math:[$\alpha_T$] for a given reference
-math:[$r$] and a module top level variable, function or type
-declaration math:[$D$] as follows: footnote:[See for definitions of metatype properties.]
+Formally, we define $\alpha_T$ for a given reference
+$r$ and a module top level variable, function or type
+declaration $D$ as follows: footnote:[See for definitions of metatype properties.]
 
 $$&\infer{\alpha_T(r, D)}{D.acc=\lenum{public} }\\
 &\infer{\alpha_T(r, D)}{D.acc=\lenum{public@Internal} & r.vendor=D.vendor}\\
@@ -165,7 +165,7 @@ $$&\infer{\alpha_T(r, D)}{D.acc=\lenum{public} }\\
 &\infer{\alpha_T(r, D)}{D.acc=\lenum{private} & r.module=D.module}$$
 
 If the type of the arguments is clear from the context, we simply write
-math:[$\alpha(r,D)$] instead of math:[$\alpha_T(r,D)$].
+$\alpha(r,D)$ instead of $\alpha_T(r,D)$.
 
 Accessibility for types is only checked for types that manifest
 themselves in the concrete syntax of the N4JS file. Types that do not
@@ -320,7 +320,7 @@ as follows:
 & (\lenum{public@Internal},\lenum{public@Internal}), (\lenum{public}, \lenum{public} ) \}
 --
 
-We further define the relation math:[$\geq : TAM \times MAM$] as follows:
+We further define the relation $\geq : TAM \times MAM$ as follows:
 
 [math]
 --
@@ -334,23 +334,23 @@ Less, greater then etc. are defined accordingly.
 .Member Accessibility
 [def]
 --
-math:[$\alpha_m$]]
+$\alpha_m$
 The function
-math:[\[\alpha_m: MemberReference \times MemberDeclaration \to Boolean\]]
+\[\alpha_m: MemberReference \times MemberDeclaration \to Boolean\]]
 computes if a given reference can access the member declaration that it
 references.
 --
 
-Note that math:[$alpha_m$] and math:[$bind$] are different
+Note that $alpha_m$ and $bind$ are different
 functions. A reference can only bind to a declaration if it can access
 the declaration. However, bind requires more condition to work (correct
 metatypes, no shadowing etc).
 
 
-Formally, we define math:[$\alpha_m$] for a given reference
-math:[$r$] and member declaration math:[$M$] as
+Formally, we define $\alpha_m$ for a given reference
+$r$ and member declaration $M$ as
 follows:
-footnote:[See <<_n4js_specific_classifiers,N4-Specific Classifiers>> for definitions of metatype properties. Note that math:[$r.receiver$] always refers to a type declaration in the context of an expression as the receiver type of math:[$r$]. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member
+footnote:[See <<_n4js_specific_classifiers,N4-Specific Classifiers>> for definitions of metatype properties. Note that $r.receiver$] always refers to a type declaration in the context of an expression as the receiver type of $r$. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member
 declaration.]
 
 footnote:[Note, the Java-like access restriction for members of visibility [language-n4js]`protected` or [language-n4js]`protected@Internal` to code that is responsible for the implementation of that object. cite:[Gosling15a(S6.6.2,p.166)]]
@@ -370,7 +370,7 @@ footnote:[Note, the Java-like access restriction for members of visibility [lang
 
 
 If the type of the arguments is clear from the context, we simply write
-math:[$\alpha(r,M)$] instead of math:[$\alpha_m(r,M)$].
+$\alpha(r,M)$ instead of $\alpha_m(r,M)$.
 
 Although private members are accessible inside a module, it is not
 possible to redefine (override etc.) these members (see <<_redefinition-of-members,Redefinition of Members>>).

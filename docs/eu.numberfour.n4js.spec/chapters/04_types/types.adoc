@@ -32,21 +32,21 @@ Types are related to each other by the subtype relation.
 .Subtype Relation
 [def]
 --
-We use math:[subtype]
+We use $$subtype$$
 for the general subtype relation or type conformance. In nominal typing,
-math:[\[T\subtype S\]] means that $$S$$ is a (transitive)
+$$T\subtype S$$ means that $$S$$ is a (transitive)
 supertype of _T_. Generally in structural typing, this means
 that _T_ conforms to $$S$$. $$\subtype$$
 is defined transitive reflexive by default. We write $$<$$ to
 refer to the transitive non-reflexive relation, that is
-math:[\[T < S \iff T \subtype S \land T \neq S\]]
+$$T < S \iff T \subtype S \land T \neq S$$
 --
 
 Whether nominal or structural typing is used depends on the declaration
 of the type or the reference. This is explained further in <<_structural-typing,Structural Typing>>.
 
 For convenience reasons, we sometimes revert the operator, that is
-math:[\[T \subtype S \iff S :> T\]] We write
+$$T \subtype S \iff S :> T$$ We write
 $$T \notsubtype S$$ if _T_ is not type conforming
 to $$S$$. (cf. cite:[Gosling12a(S4.10)])
 
@@ -520,15 +520,15 @@ only if there is the identical type variable on both sides.
 2.  If we have a type variable on the left side and no type variable on
 the right side: the result is true if and only if the type variable on
 the left has one or more declared upper bounds.
-math:[\[intersection(left.declaredUpperBounds) <: right\]] +
+$$intersection(left.declaredUpperBounds) <: right$$ +
 This is the case for
-math:[\[`(T extends B)} <: `A}\]] in which T is an
+$$`(T extends B)} <: `A}$$ in which T is an
 unbound type variable and A, B two classes with $$B <: A$$.
 3.  In all other cases the result is false. +
 This includes cases such as +
 $$\[`B} <: `(T extends A)}\]$$
 which is always false, even if $$B <: A$$ or +
-math:[\[`(T extends A)} <: `(S extends B)}\]] which
+$$`(T extends A)} <: `(S extends B)}$$ which
 is always false, even if $$A = B$$.
 
 We thus obtain the following defintion:
@@ -539,10 +539,10 @@ We thus obtain the following defintion:
 For two types $$T, S$$ of which at least one is a type variable, we define
 
 * if both _T_ and $$S$$ are type variables:
-math:[\[\infer{T <: S}{T = S}\]]
+$$\infer{T <: S}{T = S}$$
 * if _T_ is a type variable and $$S$$ is not:
-math:[\[\infer{T <: S}{
-        {T.\mathit{declaredUpperBounds}.\mathit{size} > 0} {\ \land\ \forall t \in T.\mathit{declaredUpperBounds}: t <: S}}\]]
+$$\infer{T <: S}{
+        {T.\mathit{declaredUpperBounds}.\mathit{size} > 0} {\ \land\ \forall t \in T.\mathit{declaredUpperBounds}: t <: S}}$$
 
 --
 
@@ -2955,11 +2955,11 @@ For a string-based enum declaration $$E_S$$ with literals
 $$L_S$$ the following type rules are defined:
 
 .  Every string-based enumeration $$E_S$$ is a subtype of the
-base type `N4StringBasedEnum`: math:[\[\begin{gathered}\infer{ \tee \type{type\{E_S\}} \subtype \type{N4StringBasedEnum} }{}                \\
+base type `N4StringBasedEnum`: $$\begin{gathered}\infer{ \tee \type{type\{E_S\}} \subtype \type{N4StringBasedEnum} }{}                \\
          \intertext{which itself is not related to the standard enumeration type \lstnfjs{N4Enum}}
          \infer{ \type{N4StringBasedEnum} \notsubtype \type{N4Enum}}{}  \\
          \infer{ \type{N4Enum} \notsubtype \type{N4StringBasedEnum} }{}
-    \end{gathered}\]]
+    \end{gathered}$$
 .  `N4StringBasedEnum` is a subtype of `string`
 $$infer{ \type{N4StringBasedEnum} \subtype \type{string} }{}$$
 .  Each literal in $$L_S$$ of a string-based enumeration
