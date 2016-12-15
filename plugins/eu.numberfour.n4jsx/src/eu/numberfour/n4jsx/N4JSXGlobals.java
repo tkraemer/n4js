@@ -11,12 +11,9 @@
 package eu.numberfour.n4jsx;
 
 /**
- * Global hook for static information about the current setup.
- *
- * Start up code must initialize static attributes here.
- *
+ * Globals for N4JSX sub-language
  */
-public class N4JSXGlobals {
+public final class N4JSXGlobals {
 
 	/**
 	 * Files extension of JSX source files (<b>not</b> including the separator dot).
@@ -27,4 +24,8 @@ public class N4JSXGlobals {
 	 * Files extension of N4JSX source files (<b>not</b> including the separator dot).
 	 */
 	public static final String N4JSX_FILE_EXTENSION = "n4jsx";
+
+	private N4JSXGlobals() {
+		// private to prevent inheritance & instantiation.
+	}
 }
