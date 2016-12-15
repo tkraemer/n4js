@@ -60,7 +60,10 @@ inference rules
 footnote:[A brief introduction can be found at http://www.cs.cornell.edu/~ross/publications/mixedsite/tutorial.html. In general, we refer the reader to cite:[Pierce02a]]
 , that is
 
-$\frac{premises}{conclusion} \hspace{5mm} \textrm{rule name} \$
+[math]
+---
+\frac{premises}{conclusion} \hspace{5mm} \textrm{rule name}
+---
 
 $premises$ is the rule’s premises (e.g., the expression to
 be inferred), $conclusion$ the result of the rule.
@@ -70,7 +73,11 @@ $rule name$ is an optional condition which may be omitted.
 Both parts of the rule may contain multiple expressions, which are
 concatenated via and. For example, the following
 
-$\frac{P_1 \hspace{5mm}  P_2 \hspace{5mm} P_3}{C}$
+[math]
+---
+\frac{P_1 \hspace{5mm}  P_2 \hspace{5mm} P_3}{C}
+---
+
 can be read as
 
 [quote]
@@ -101,7 +108,10 @@ The following statement, for example, defines transitivity of subtypes
 
 // TODO replace math with original LaTeX
 
-$\frac{\Gamma B \vdash <: A \hspace{7mm} \Gamma \vdash C <: B}{\Gamma \vdash C: < A}$
+[math]
+--
+\frac{\Gamma B \vdash <: A \hspace{7mm} \Gamma \vdash C <: B}{\Gamma \vdash C: < A}
+--
 
 
 is the context containing (bound) type variables etc.,
@@ -134,7 +144,7 @@ A variable or other typed element may be associated with three types:
 2.  Inferred type: the type inferred by the type inferencer, e.g.,
 infers the type of s to `string`. I.e.
 $\Gamma \vdash s :{string}$ will be true, or
-$[\![s]\!] < :string $\]]. If an element is
+$[\![s]\!] < :string $. If an element is
 annotated with a type ,i.e. it has a declared type, the inferred type
 will always be the declared type.
 3.  Actual type: the actual type of a variable during runtime. This type
@@ -176,7 +186,10 @@ bindings are permitted due to visibility constraints.
 --
 We define a pseudo relation
 
-$bind: VariableReference \times VariableDeclaration$
+[math]
+--
+bind: VariableReference \times VariableDeclaration
+--
 
 which binds a reference, i.e. an identifier, to a declaration (e.g.,variable
 declaration).
@@ -205,7 +218,10 @@ $bind$ for declared types as well:
 ---
 We define a pseudo relation
 
-$bind: DeclaredType \times Class|Interface|Enum$
+[math]
+---
+bind: DeclaredType \times Class|Interface|Enum
+---
 
 which binds a type reference, i.e. a simple name, to the type declaration.
 ---
@@ -221,7 +237,10 @@ $merge$ as follows.
 --
 We define a pseudo function
 
-$merge: Type \times \dots \times Type \to \powerset(Type)$
+[math]
+---
+merge: Type \times \dots \times Type \to \powerset(Type)
+---
 
 The idea of this function is to remove duplicates. For example; if a
 union type contains two type expressions $te_1$ and
@@ -265,7 +284,10 @@ We use the following symbols and font conventions:
 
 //TODO: math processor test section:
 
-$\land$, $\lor$, $\lxor$,
+[math]
+---
+\land$, $\lor$, $\lxor$,
+---
 
 [horizontal]
 $\lnot$::
