@@ -106,7 +106,7 @@ public interface TypeDefinitionGitLocationProvider {
 		 * Type definition location for testing purposes.
 		 */
 		// TODO: Do NOT forget to change this before merging!
-		TEST_DEFINITION_LOCATION("n4jsd-sandbox", "git@github.com:kduske-n4/n4jsd-sandbox.git");
+		TEST_DEFINITION_LOCATION("n4jsd-sandbox", "https://github.com/kduske-n4/n4jsd-sandbox.git");
 
 		private final String repositoryName;
 		private final String remoteUrl;
