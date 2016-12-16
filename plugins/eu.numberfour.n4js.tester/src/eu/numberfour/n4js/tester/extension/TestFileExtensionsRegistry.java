@@ -19,11 +19,12 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.RegistryFactory;
 
-import eu.numberfour.n4js.N4JSGlobals;
+import com.google.inject.Singleton;
 
 /**
  * This class collect test file extensions from extensions to extension point.
  */
+@Singleton
 public class TestFileExtensionsRegistry {
 	private final static Logger log = Logger.getLogger(TesterRegistry.class);
 
@@ -32,6 +33,14 @@ public class TestFileExtensionsRegistry {
 	private static final String ATT_FILE_EXTENSION = "fileExtension";
 	private boolean isInitialized = false;
 	private final Collection<String> testFileExtensions = new ArrayList<>();
+
+	/**
+	 * Register a test file extension. This method should only be invoked by client code directly in headless mode. When
+	 * running in Eclipse, test file extensions will be registered via the 'testFileExtension' extension point.
+	 */
+	public void register(String testFileExtension) {
+		testFileExtensions.add(testFileExtension);
+	}
 
 	/**
 	 * Return test file extensions
@@ -65,12 +74,7 @@ public class TestFileExtensionsRegistry {
 							ex);
 				}
 			}
-		} else {
-			// Headless compiler does not use extension points. Set default file extension of tests to .n4js
-			// TODO: better way to handle this?
-			testFileExtensions.add(N4JSGlobals.N4JS_FILE_EXTENSION);
 		}
-
 	}
 
 }
