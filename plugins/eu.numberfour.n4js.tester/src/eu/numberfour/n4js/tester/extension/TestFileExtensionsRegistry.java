@@ -19,6 +19,8 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.RegistryFactory;
 
+import eu.numberfour.n4js.N4JSGlobals;
+
 /**
  * This class collect test file extensions from extensions to extension point.
  */
@@ -63,6 +65,10 @@ public class TestFileExtensionsRegistry {
 							ex);
 				}
 			}
+		} else {
+			// Headless compiler does not use extension points. Set default file extension of tests to .n4js
+			// TODO: better way to handle this?
+			testFileExtensions.add(N4JSGlobals.N4JS_FILE_EXTENSION);
 		}
 
 	}
