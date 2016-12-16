@@ -92,6 +92,7 @@ import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import java.math.BigDecimal
 import java.util.List
+import eu.numberfour.n4js.n4JS.NullLiteral
 
 /**
  * Builder methods for intermediate elements.
@@ -588,6 +589,10 @@ public class TranspilerBuilderBlocks
 		val result = N4JSFactory.eINSTANCE.createParenExpression;
 		result.expression = expr;
 		return result;
+	}
+
+	public static def NullLiteral _NULL() {
+		return N4JSFactory.eINSTANCE.createNullLiteral;
 	}
 
 	public static def BooleanLiteral _TRUE() {
