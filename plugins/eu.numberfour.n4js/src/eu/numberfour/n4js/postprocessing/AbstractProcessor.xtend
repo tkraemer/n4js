@@ -56,7 +56,7 @@ package abstract class AbstractProcessor {
 
 	val private static DEBUG_LOG = false;
 	val private static DEBUG_LOG_RESULT = false;
-	val private static DEBUG_RIGID = true; // if true, more consistency checks are performed and exceptions thrown if wrong
+	val private static DEBUG_RIGID = false; // if true, more consistency checks are performed and exceptions thrown if wrong
 
 	@Inject
 	private InternalTypeSystem ts_internal;

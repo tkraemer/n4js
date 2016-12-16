@@ -75,7 +75,14 @@ public enum JavaScriptVariant {
 		return getVariant(eobj) == this;
 	}
 
-	private static boolean isContainedInStrictFunctionOrScript(EObject eobj) {
+	/**
+	 * Return true if an EObject is contained within a strict function or script, e.g. a script starting with "use
+	 * strict"
+	 *
+	 * @param eobj
+	 *            the input EObject
+	 */
+	public static boolean isContainedInStrictFunctionOrScript(EObject eobj) {
 		if (eobj == null) {
 			return false;
 		}

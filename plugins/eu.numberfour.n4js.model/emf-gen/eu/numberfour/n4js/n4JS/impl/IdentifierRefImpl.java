@@ -14,6 +14,9 @@ import eu.numberfour.n4js.n4JS.IdentifierRef;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.StrictModeRelevant;
 
+import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
+import eu.numberfour.n4js.ts.typeRefs.Versionable;
+
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 
 import java.lang.reflect.InvocationTargetException;
@@ -210,6 +213,15 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getVersion() {
+		return 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -297,6 +309,11 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 				default: return -1;
 			}
 		}
+		if (baseClass == Versionable.class) {
+			switch (derivedFeatureID) {
+				default: return -1;
+			}
+		}
 		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
 	}
 
@@ -310,6 +327,11 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 		if (baseClass == StrictModeRelevant.class) {
 			switch (baseFeatureID) {
 				case N4JSPackage.STRICT_MODE_RELEVANT__STRICT_MODE: return N4JSPackage.IDENTIFIER_REF__STRICT_MODE;
+				default: return -1;
+			}
+		}
+		if (baseClass == Versionable.class) {
+			switch (baseFeatureID) {
 				default: return -1;
 			}
 		}
@@ -334,6 +356,12 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 				default: return -1;
 			}
 		}
+		if (baseClass == Versionable.class) {
+			switch (baseOperationID) {
+				case TypeRefsPackage.VERSIONABLE___GET_VERSION: return N4JSPackage.IDENTIFIER_REF___GET_VERSION;
+				default: return -1;
+			}
+		}
 		return super.eDerivedOperationID(baseOperationID, baseClass);
 	}
 
@@ -347,6 +375,8 @@ public class IdentifierRefImpl extends PrimaryExpressionImpl implements Identifi
 		switch (operationID) {
 			case N4JSPackage.IDENTIFIER_REF___IS_VALID_SIMPLE_ASSIGNMENT_TARGET:
 				return isValidSimpleAssignmentTarget();
+			case N4JSPackage.IDENTIFIER_REF___GET_VERSION:
+				return getVersion();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

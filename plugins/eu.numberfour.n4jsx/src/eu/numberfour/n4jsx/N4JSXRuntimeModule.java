@@ -63,6 +63,7 @@ import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.preferences.FileBasedExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.resource.AccessibleSerializer;
+import eu.numberfour.n4js.resource.TranspilableFileExtensionsProvider;
 import eu.numberfour.n4js.resource.ErrorAwareLinkingService;
 import eu.numberfour.n4js.resource.N4JSCache;
 import eu.numberfour.n4js.resource.N4JSDerivedStateComputer;
@@ -76,6 +77,7 @@ import eu.numberfour.n4js.resource.N4JSResourceDescriptionStrategy;
 import eu.numberfour.n4js.resource.N4JSUnloader;
 import eu.numberfour.n4js.resource.PostProcessingAwareResource.PostProcessor;
 import eu.numberfour.n4js.resource.UserdataMapper;
+import eu.numberfour.n4js.resource.XpectAwareFileExtensionCalculator;
 import eu.numberfour.n4js.scoping.N4JSGlobalScopeProvider;
 import eu.numberfour.n4js.scoping.builtin.ScopeRegistrar;
 import eu.numberfour.n4js.scoping.imports.N4JSImportedNamespaceAwareLocalScopeProvider;
@@ -88,7 +90,9 @@ import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSStringRepresenation;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.N4JSValidatorErrorGenerator;
+import eu.numberfour.n4js.typesystem.N4JSVersionResolver;
 import eu.numberfour.n4js.typesystem.UnsupportedExpressionTypeHelper;
+import eu.numberfour.n4js.typesystem.VersionResolver;
 import eu.numberfour.n4js.utils.di.scopes.ScopeManager;
 import eu.numberfour.n4js.utils.di.scopes.TransformationScoped;
 import eu.numberfour.n4js.validation.JavaScriptVariantHelper;
@@ -100,6 +104,7 @@ import eu.numberfour.n4jsx.internal.N4JSXRuntimeCore;
 import eu.numberfour.n4jsx.parser.N4JSXSemicolonInjectingParser;
 import eu.numberfour.n4jsx.parser.RegExLiteralAwareLexer;
 import eu.numberfour.n4jsx.parser.antlr.lexer.InternalN4JSXLexer;
+import eu.numberfour.n4jsx.resource.N4JSXTranspilableFileExtensionsProvider;
 import eu.numberfour.n4jsx.resource.N4JSXLinker;
 import eu.numberfour.n4jsx.scoping.N4JSXScopeProvider;
 import eu.numberfour.n4jsx.typesystem.N4JSXUnsupportedExpressionTypeHelper;
@@ -525,9 +530,31 @@ public class N4JSXRuntimeModule extends eu.numberfour.n4jsx.AbstractN4JSXRuntime
 	}
 
 	/**
+	 * Bind type version resolver (used in N4JS.xsemantics). This customization point is used in N4IDL to support
+	 * versions in the type system.
+	 */
+	public Class<? extends VersionResolver> bindVersionResolver() {
+		return N4JSVersionResolver.class;
+	}
+
+	/**
 	 * Bind a helper for typing expression types which are unknown in N4JS.
 	 */
 	public Class<? extends UnsupportedExpressionTypeHelper> bindUnsupportedExpressionTypeHelper() {
 		return N4JSXUnsupportedExpressionTypeHelper.class;
+	}
+
+	/**
+	 * Bind file extension calculator
+	 */
+	public Class<? extends XpectAwareFileExtensionCalculator> bindXpectAwareFileExtensionCalculator() {
+		return XpectAwareFileExtensionCalculator.class;
+	}
+
+	/**
+	 * Bind allowed file extensions for open generated source
+	 */
+	public Class<? extends TranspilableFileExtensionsProvider> bindAllowedFileExtensionsForGeneratedSourceProvider() {
+		return N4JSXTranspilableFileExtensionsProvider.class;
 	}
 }

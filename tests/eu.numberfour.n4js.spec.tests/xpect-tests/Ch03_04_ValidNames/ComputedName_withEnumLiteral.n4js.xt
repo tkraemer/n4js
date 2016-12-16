@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+@StringBased enum E {
+	LitA: 'hello',
+	LitB
+}
+
+let obj = {
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "E.LitA"
+	[E.LitA]: "not allowed",
+	// XPECT noerrors -->
+	[E.LitB]: "ok"
+};
+

@@ -100,10 +100,12 @@ ruleJSXSpreadAttribute :
 
 // Rule JSXPropertyAttribute
 ruleJSXPropertyAttribute :
-	ruleIdentifierName '=' (
-		ruleStringLiteral |
-		'{' ruleAssignmentExpression '}'
-	)
+	ruleIdentifierName (
+		'=' (
+			ruleStringLiteral |
+			'{' ruleAssignmentExpression '}'
+		)
+	)?
 ;
 
 // Rule ScriptElement

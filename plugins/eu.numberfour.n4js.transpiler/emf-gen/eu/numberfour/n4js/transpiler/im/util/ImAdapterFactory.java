@@ -48,7 +48,7 @@ import eu.numberfour.n4js.ts.typeRefs.StaticBaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
-
+import eu.numberfour.n4js.ts.typeRefs.Versionable;
 import eu.numberfour.n4js.ts.types.TypableElement;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -213,6 +213,10 @@ public class ImAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseStrictModeRelevant(StrictModeRelevant object) {
 				return createStrictModeRelevantAdapter();
+			}
+			@Override
+			public Adapter caseVersionable(Versionable object) {
+				return createVersionableAdapter();
 			}
 			@Override
 			public Adapter caseIdentifierRef(IdentifierRef object) {
@@ -709,6 +713,20 @@ public class ImAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStrictModeRelevantAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.typeRefs.Versionable <em>Versionable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see eu.numberfour.n4js.ts.typeRefs.Versionable
+	 * @generated
+	 */
+	public Adapter createVersionableAdapter() {
 		return null;
 	}
 

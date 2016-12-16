@@ -4974,13 +4974,22 @@ public interface N4JSPackage extends EPackage {
 	int IDENTIFIER_REF_FEATURE_COUNT = PRIMARY_EXPRESSION_FEATURE_COUNT + 3;
 
 	/**
+	 * The operation id for the '<em>Get Version</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IDENTIFIER_REF___GET_VERSION = PRIMARY_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Is Valid Simple Assignment Target</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF___IS_VALID_SIMPLE_ASSIGNMENT_TARGET = PRIMARY_EXPRESSION_OPERATION_COUNT + 0;
+	int IDENTIFIER_REF___IS_VALID_SIMPLE_ASSIGNMENT_TARGET = PRIMARY_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Identifier Ref</em>' class.
@@ -4989,7 +4998,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_REF_OPERATION_COUNT = PRIMARY_EXPRESSION_OPERATION_COUNT + 1;
+	int IDENTIFIER_REF_OPERATION_COUNT = PRIMARY_EXPRESSION_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.StrictModeRelevantImpl <em>Strict Mode Relevant</em>}' class.

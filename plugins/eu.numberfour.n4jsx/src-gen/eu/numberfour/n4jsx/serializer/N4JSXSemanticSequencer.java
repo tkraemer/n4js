@@ -13125,7 +13125,7 @@ public class N4JSXSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     JSXPropertyAttribute returns JSXPropertyAttribute
 	 *
 	 * Constraint:
-	 *     (property=[IdentifiableElement|IdentifierName] (jsxAttributeValue=StringLiteral | jsxAttributeValue=AssignmentExpression))
+	 *     (property=[IdentifiableElement|IdentifierName] (jsxAttributeValue=StringLiteral | jsxAttributeValue=AssignmentExpression)?)
 	 */
 	protected void sequence_JSXPropertyAttribute(ISerializationContext context, JSXPropertyAttribute semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

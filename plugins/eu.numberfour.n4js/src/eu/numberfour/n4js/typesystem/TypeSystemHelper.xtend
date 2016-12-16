@@ -75,6 +75,8 @@ class TypeSystemHelper {
 
 	@Inject private N4JSTypeSystem ts;
 
+	@Inject private VersionResolver versionResolver;
+
 	// *****************************************************************************************************
 	//   forwarding of utility methods implemented in strategy classes
 	// *****************************************************************************************************
@@ -391,11 +393,15 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	 * and hence it was moved here.
 	 */
 	def public Type getStaticType(RuleEnvironment G, TypeTypeRef ctorTypeRef) {
+		return getStaticTypeRef(G, ctorTypeRef)?.declaredType; // will return null if #getStaticTypeRef() is not of type ParameterizedTypeRef
+	}
+
+	def public TypeRef getStaticTypeRef(RuleEnvironment G, TypeTypeRef ctorTypeRef) {
 		var typeArg = ctorTypeRef.typeArg;
 		while(typeArg instanceof Wildcard || typeArg instanceof ExistentialTypeRef || typeArg instanceof BoundThisTypeRef) {
 			typeArg = ts.upperBound(G, typeArg).value;
 		}
-		return (typeArg as TypeRef)?.declaredType; // will return null if 'typeArg' is not of type ParameterizedTypeRef
+		return typeArg as TypeRef;
 	}
 
 	/**
@@ -403,12 +409,13 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	 * TypeArguments. Returns UnknownTypeRef if the static type could not be retrieved (e.g. unbound This-Type).
 	 */
 	def public TypeRef createTypeRefFromStaticType(RuleEnvironment G, TypeTypeRef ctr, TypeArgument ... typeArgs) {
-		 val type = getStaticType(G, ctr);
-		 return if( type !== null ) {
-		 	 TypeExtensions.ref(type,typeArgs)
-		 } else {
-		 	 TypeRefsFactory.eINSTANCE.createUnknownTypeRef
-		 };
+		 val typeRef = getStaticTypeRef(G, ctr);
+		 val type = typeRef.declaredType;
+		 if (type !== null ) {
+		 	 var resultTypeRef = TypeExtensions.ref(type,typeArgs);
+		 	 return versionResolver.resolveVersion(resultTypeRef, typeRef);
+		 }
+		 return TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
 	 }
 
 	/**

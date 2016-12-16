@@ -6900,6 +6900,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		parenExpressionEClass.getESuperTypes().add(this.getPrimaryExpression());
 		identifierRefEClass.getESuperTypes().add(this.getPrimaryExpression());
 		identifierRefEClass.getESuperTypes().add(this.getStrictModeRelevant());
+		identifierRefEClass.getESuperTypes().add(theTypeRefsPackage.getVersionable());
 		superLiteralEClass.getESuperTypes().add(this.getPrimaryExpression());
 		thisLiteralEClass.getESuperTypes().add(this.getPrimaryExpression());
 		thisLiteralEClass.getESuperTypes().add(this.getStrictModeRelevant());

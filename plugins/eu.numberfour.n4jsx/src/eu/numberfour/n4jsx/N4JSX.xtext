@@ -80,5 +80,5 @@ JSXSpreadAttribute:
 	'{' '...' expression=AssignmentExpression<false,false> '}';
 
 JSXPropertyAttribute:
-	property=[types::IdentifiableElement|IdentifierName] '=' (jsxAttributeValue=StringLiteral | ('{'
-	jsxAttributeValue=AssignmentExpression<false,false> '}'));
+	property=[types::IdentifiableElement|IdentifierName] ('=' (jsxAttributeValue=StringLiteral | ('{'
+	jsxAttributeValue=AssignmentExpression<false,false> '}')))?;

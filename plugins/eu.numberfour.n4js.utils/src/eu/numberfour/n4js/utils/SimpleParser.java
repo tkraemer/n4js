@@ -183,6 +183,24 @@ public class SimpleParser {
 			return false;
 		}
 
+		/**
+		 * Returns the integer value of this token by passing the token data to {@link Integer#parseInt(String)}.
+		 *
+		 * @return the integer value of this token
+		 */
+		public final int toInt() {
+			return Integer.parseInt(data);
+		}
+
+		/**
+		 * Returns the float value of this token by passing the token data to {@link Float#parseFloat(String)}.
+		 *
+		 * @return the float value of this token
+		 */
+		public final float toFloat() {
+			return Float.parseFloat(data);
+		}
+
 		@Override
 		public String toString() {
 			StringBuilder result = new StringBuilder();
@@ -446,6 +464,44 @@ public class SimpleParser {
 		}
 
 		/**
+		 * Reads a token that represents an integer number. For the expected format, see method
+		 * {@link #readIntegerString()}.
+		 *
+		 * @param tokenType
+		 *            the type of the token to create
+		 * @return the newly created token
+		 * @throws SimpleParserException
+		 *             if the current parsing position is not the start of an integer of the expected format
+		 */
+		protected Token<TokenType> readIntegerToken(TokenType tokenType) throws SimpleParserException {
+			final TokenPosition position = getTokenPosition();
+			final String attachment = readIntegerString();
+			return new Token<>(tokenType, position, attachment.length(), attachment);
+		}
+
+		/**
+		 * Reads an integer string with the format <code>[+-]?\d+</code>. The string of numbers is delimited by any
+		 * non-digit character or the end of file.
+		 *
+		 * @return the integer string
+		 *
+		 * @throws SimpleParserException
+		 *             if the current parsing position is not the start of an integer of the expected format
+		 */
+		protected String readIntegerString() throws SimpleParserException {
+			int startPos = getCurrentPosition();
+
+			expectChar("+-0123456789");
+			if (getCurrentChar() == '+' || getCurrentChar() == '-')
+				advance();
+
+			expectChar("0123456789");
+			readWhile("0123456789");
+
+			return data.substring(startPos, getCurrentPosition());
+		}
+
+		/**
 		 * Forwards the current parsing position while the current character is contained in the given string and while
 		 * the current parsing position is not the end of file.
 		 *
@@ -652,6 +708,38 @@ public class SimpleParser {
 		protected void throwIfEof() throws SimpleParserException {
 			if (eof())
 				throw new SimpleParserException(line, column, "Unexpected end of file");
+		}
+
+		/**
+		 * Throws an exception indicating that an unexpected character was encountered.
+		 *
+		 * @param c
+		 *            the unexpected character
+		 */
+		protected void unexpectedChar(char c) throws SimpleParserException {
+			throw new SimpleParserException(line, column, "Unexpected character '" + c + "'");
+		}
+
+		/**
+		 * Checks whether the current character is the given character and throws an exception otherwise.
+		 *
+		 * @param c
+		 *            the expected character
+		 */
+		protected void expectChar(char c) throws SimpleParserException {
+			if (getCurrentChar() != c)
+				unexpectedChar(c);
+		}
+
+		/**
+		 * Checks whether the current character is any of the given characters and throws an exception otherwise.
+		 *
+		 * @param s
+		 *            the expected characters
+		 */
+		protected void expectChar(String s) throws SimpleParserException {
+			if (s.indexOf(getCurrentChar()) == -1)
+				unexpectedChar(getCurrentChar());
 		}
 
 		@Override

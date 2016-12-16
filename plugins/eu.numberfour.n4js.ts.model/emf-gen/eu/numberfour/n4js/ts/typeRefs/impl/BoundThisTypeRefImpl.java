@@ -15,6 +15,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.typeRefs.TypeVariableMapping;
+import eu.numberfour.n4js.ts.typeRefs.Versionable;
 
 import eu.numberfour.n4js.ts.types.TN4Classifier;
 import eu.numberfour.n4js.ts.types.TStructMember;
@@ -404,6 +405,16 @@ public class BoundThisTypeRefImpl extends ThisTypeRefImpl implements BoundThisTy
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getVersion() {
+		ParameterizedTypeRef _actualThisTypeRef = this.getActualThisTypeRef();
+		return _actualThisTypeRef.getVersion();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean hasPostponedSubstitutionFor(final TypeVariable typeVar) {
 		EList<TypeVariableMapping> _postponedSubstitutions = this.getPostponedSubstitutions();
 		final Function1<TypeVariableMapping, Boolean> _function = new Function1<TypeVariableMapping, Boolean>() {
@@ -602,6 +613,12 @@ public class BoundThisTypeRefImpl extends ThisTypeRefImpl implements BoundThisTy
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
+		if (baseClass == Versionable.class) {
+			switch (baseOperationID) {
+				case TypeRefsPackage.VERSIONABLE___GET_VERSION: return TypeRefsPackage.BOUND_THIS_TYPE_REF___GET_VERSION;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
 		if (baseClass == TypeRef.class) {
 			switch (baseOperationID) {
 				case TypeRefsPackage.TYPE_REF___GET_DECLARED_UPPER_BOUND: return TypeRefsPackage.BOUND_THIS_TYPE_REF___GET_DECLARED_UPPER_BOUND;
@@ -610,6 +627,7 @@ public class BoundThisTypeRefImpl extends ThisTypeRefImpl implements BoundThisTy
 				case TypeRefsPackage.TYPE_REF___GET_STRUCTURAL_MEMBERS: return TypeRefsPackage.BOUND_THIS_TYPE_REF___GET_STRUCTURAL_MEMBERS;
 				case TypeRefsPackage.TYPE_REF___IS_USE_SITE_STRUCTURAL_TYPING: return TypeRefsPackage.BOUND_THIS_TYPE_REF___IS_USE_SITE_STRUCTURAL_TYPING;
 				case TypeRefsPackage.TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING: return TypeRefsPackage.BOUND_THIS_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+				case TypeRefsPackage.TYPE_REF___GET_VERSION: return TypeRefsPackage.BOUND_THIS_TYPE_REF___GET_VERSION;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -657,6 +675,8 @@ public class BoundThisTypeRefImpl extends ThisTypeRefImpl implements BoundThisTy
 				return isUseSiteStructuralTyping();
 			case TypeRefsPackage.BOUND_THIS_TYPE_REF___GET_STRUCTURAL_MEMBERS:
 				return getStructuralMembers();
+			case TypeRefsPackage.BOUND_THIS_TYPE_REF___GET_VERSION:
+				return getVersion();
 			case TypeRefsPackage.BOUND_THIS_TYPE_REF___HAS_POSTPONED_SUBSTITUTION_FOR__TYPEVARIABLE:
 				return hasPostponedSubstitutionFor((TypeVariable)arguments.get(0));
 		}
