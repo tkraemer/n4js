@@ -20,14 +20,15 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.RegistryFactory;
 
 /**
- *
+ * This class collect test file extensions from extensions to extension point.
  */
 public class TestFileExtensionsRegistry {
 	private final static Logger log = Logger.getLogger(TesterRegistry.class);
 
-	private static final String TEST_FILE_EXTENSIONS_POINT_ID = "eu.numberfour.n4js.tester.testfileExtensions";
-	private boolean isInitialized;
-
+	/* The extension point to test file extensions */
+	private static final String TEST_FILE_EXTENSIONS_POINT_ID = "eu.numberfour.n4js.tester.testFileExtensions";
+	private static final String ATT_FILE_EXTENSION = "fileExtension";
+	private boolean isInitialized = false;
 	private final Collection<String> testFileExtensions = new ArrayList<>();
 
 	/**
@@ -56,7 +57,7 @@ public class TestFileExtensionsRegistry {
 
 			for (IConfigurationElement elem : configElems) {
 				try {
-					testFileExtensions.add(elem.getAttribute("fileExtension"));
+					testFileExtensions.add(elem.getAttribute(ATT_FILE_EXTENSION));
 				} catch (Exception ex) {
 					log.error("Error while reading extensions for extension point " + TEST_FILE_EXTENSIONS_POINT_ID,
 							ex);
