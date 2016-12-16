@@ -1041,12 +1041,14 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	//	=> ((
 	//	// we cannot use fragments here since we have to combine the terminals into a syntactic predicate
 	//	// also, we have to use explicit alternatives instead of making async optional due to a generation bug
-	//	'(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
-	//	| => (declaredAsync?='async' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (','
+	//	-> '(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
+	//	| -> (declaredAsync?='async' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (','
 	//	fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
+	//	| -> (generator?='*' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')'
+	//	(':' returnTypeRef=TypeRef)?
 	//	| fpars+=BindingIdentifierAsFormalParameter<Yield>)
-	//	/ * no line terminator here, guaranteed implicitly * / '=>') (-> hasBracesAroundBody?='{' body=BlockMinusBraces<Yield>
-	//	'}' | body=ExpressionDisguisedAsBlock<In>)
+	//	/ * no line terminator here, guaranteed implicitly * / '=>') (-> hasBracesAroundBody?='{'
+	//	body=BlockMinusBraces<Yield=true> '}' | body=ExpressionDisguisedAsBlock<In,Yield=true>)
 	public N4JSGrammarAccess.ArrowExpressionElements getArrowExpressionAccess() {
 		return gaN4JS.getArrowExpressionAccess();
 	}
@@ -1085,8 +1087,8 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		return getBlockMinusBracesAccess().getRule();
 	}
 
-	//ExpressionDisguisedAsBlock <In Block:
-	//	{Block} statements+=AssignmentExpressionStatement<In>
+	//ExpressionDisguisedAsBlock <In, Yield Block:
+	//	{Block} statements+=AssignmentExpressionStatement<In,Yield>
 	public N4JSGrammarAccess.ExpressionDisguisedAsBlockElements getExpressionDisguisedAsBlockAccess() {
 		return gaN4JS.getExpressionDisguisedAsBlockAccess();
 	}
@@ -1095,8 +1097,8 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 		return getExpressionDisguisedAsBlockAccess().getRule();
 	}
 
-	//AssignmentExpressionStatement <In ExpressionStatement:
-	//	expression=AssignmentExpression<In,Yield=false>
+	//AssignmentExpressionStatement <In, Yield ExpressionStatement:
+	//	expression=AssignmentExpression<In,Yield>
 	public N4JSGrammarAccess.AssignmentExpressionStatementElements getAssignmentExpressionStatementAccess() {
 		return gaN4JS.getAssignmentExpressionStatementAccess();
 	}

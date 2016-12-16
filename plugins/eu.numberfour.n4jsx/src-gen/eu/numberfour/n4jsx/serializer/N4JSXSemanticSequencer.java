@@ -6163,7 +6163,13 @@ public class N4JSXSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     (
 	 *         (
 	 *             ((fpars+=FormalParameter fpars+=FormalParameter*)? returnTypeRef=TypeRef?) | 
-	 *             (declaredAsync?='async' (fpars+=FormalParameter fpars+=FormalParameter*)? returnTypeRef=TypeRef?) | 
+	 *             (
+	 *                 (declaredAsync?='async' | generator?='*') 
+	 *                 (
+	 *                     ((fpars+=FormalParameter fpars+=FormalParameter*)? returnTypeRef=TypeRef?) | 
+	 *                     ((fpars+=FormalParameter fpars+=FormalParameter*)? returnTypeRef=TypeRef?)
+	 *                 )
+	 *             ) | 
 	 *             fpars+=BindingIdentifierAsFormalParameter
 	 *         )? 
 	 *         ((hasBracesAroundBody?='{' body=BlockMinusBraces) | body=ExpressionDisguisedAsBlock)
@@ -6210,7 +6216,9 @@ public class N4JSXSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	
 	/**
 	 * Contexts:
+	 *     AssignmentExpressionStatement<In,Yield> returns ExpressionStatement
 	 *     AssignmentExpressionStatement<In> returns ExpressionStatement
+	 *     AssignmentExpressionStatement<Yield> returns ExpressionStatement
 	 *     AssignmentExpressionStatement returns ExpressionStatement
 	 *
 	 * Constraint:
@@ -9506,7 +9514,9 @@ public class N4JSXSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	
 	/**
 	 * Contexts:
+	 *     ExpressionDisguisedAsBlock<In,Yield> returns Block
 	 *     ExpressionDisguisedAsBlock<In> returns Block
+	 *     ExpressionDisguisedAsBlock<Yield> returns Block
 	 *     ExpressionDisguisedAsBlock returns Block
 	 *
 	 * Constraint:

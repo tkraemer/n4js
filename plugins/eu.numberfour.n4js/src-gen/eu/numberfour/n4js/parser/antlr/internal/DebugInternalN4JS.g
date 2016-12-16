@@ -399,7 +399,9 @@ ruleAsyncFunctionExpression :
 ruleArrowExpression :
 	( (
 	(
-		'(' (
+		( (
+		'('
+		) => '(' ) (
 			ruleFormalParameter (
 				',' ruleFormalParameter
 			)*
@@ -407,9 +409,20 @@ ruleArrowExpression :
 			':' ruleTypeRef
 		)? |
 		( (
-		'async' ruleNoLineTerminator '('
+		'async'
 		) => (
 			'async' ruleNoLineTerminator '('
+		) ) (
+			ruleFormalParameter (
+				',' ruleFormalParameter
+			)*
+		)? ')' (
+			':' ruleTypeRef
+		)? |
+		( (
+		'*'
+		) => (
+			'*' ruleNoLineTerminator '('
 		) ) (
 			ruleFormalParameter (
 				',' ruleFormalParameter
@@ -421,7 +434,9 @@ ruleArrowExpression :
 	) '=>'
 	) => (
 		(
-			'(' (
+			( (
+			'('
+			) => '(' ) (
 				ruleFormalParameter (
 					',' ruleFormalParameter
 				)*
@@ -429,9 +444,20 @@ ruleArrowExpression :
 				':' ruleTypeRef
 			)? |
 			( (
-			'async' ruleNoLineTerminator '('
+			'async'
 			) => (
 				'async' ruleNoLineTerminator '('
+			) ) (
+				ruleFormalParameter (
+					',' ruleFormalParameter
+				)*
+			)? ')' (
+				':' ruleTypeRef
+			)? |
+			( (
+			'*'
+			) => (
+				'*' ruleNoLineTerminator '('
 			) ) (
 				ruleFormalParameter (
 					',' ruleFormalParameter
@@ -444,8 +470,8 @@ ruleArrowExpression :
 	) ) (
 		( (
 		'{'
-		) => '{' ) ruleBlockMinusBraces '}' |
-		ruleExpressionDisguisedAsBlock
+		) => '{' ) norm1_BlockMinusBraces '}' |
+		norm2_ExpressionDisguisedAsBlock
 	)
 ;
 
@@ -453,7 +479,9 @@ ruleArrowExpression :
 norm1_ArrowExpression :
 	( (
 	(
-		'(' (
+		( (
+		'('
+		) => '(' ) (
 			ruleFormalParameter (
 				',' ruleFormalParameter
 			)*
@@ -461,9 +489,20 @@ norm1_ArrowExpression :
 			':' ruleTypeRef
 		)? |
 		( (
-		'async' ruleNoLineTerminator '('
+		'async'
 		) => (
 			'async' ruleNoLineTerminator '('
+		) ) (
+			ruleFormalParameter (
+				',' ruleFormalParameter
+			)*
+		)? ')' (
+			':' ruleTypeRef
+		)? |
+		( (
+		'*'
+		) => (
+			'*' ruleNoLineTerminator '('
 		) ) (
 			ruleFormalParameter (
 				',' ruleFormalParameter
@@ -475,7 +514,9 @@ norm1_ArrowExpression :
 	) '=>'
 	) => (
 		(
-			'(' (
+			( (
+			'('
+			) => '(' ) (
 				ruleFormalParameter (
 					',' ruleFormalParameter
 				)*
@@ -483,9 +524,20 @@ norm1_ArrowExpression :
 				':' ruleTypeRef
 			)? |
 			( (
-			'async' ruleNoLineTerminator '('
+			'async'
 			) => (
 				'async' ruleNoLineTerminator '('
+			) ) (
+				ruleFormalParameter (
+					',' ruleFormalParameter
+				)*
+			)? ')' (
+				':' ruleTypeRef
+			)? |
+			( (
+			'*'
+			) => (
+				'*' ruleNoLineTerminator '('
 			) ) (
 				ruleFormalParameter (
 					',' ruleFormalParameter
@@ -498,8 +550,8 @@ norm1_ArrowExpression :
 	) ) (
 		( (
 		'{'
-		) => '{' ) ruleBlockMinusBraces '}' |
-		norm1_ExpressionDisguisedAsBlock
+		) => '{' ) norm1_BlockMinusBraces '}' |
+		norm3_ExpressionDisguisedAsBlock
 	)
 ;
 
@@ -507,7 +559,9 @@ norm1_ArrowExpression :
 norm2_ArrowExpression :
 	( (
 	(
-		'(' (
+		( (
+		'('
+		) => '(' ) (
 			norm1_FormalParameter (
 				',' norm1_FormalParameter
 			)*
@@ -515,9 +569,20 @@ norm2_ArrowExpression :
 			':' ruleTypeRef
 		)? |
 		( (
-		'async' ruleNoLineTerminator '('
+		'async'
 		) => (
 			'async' ruleNoLineTerminator '('
+		) ) (
+			norm1_FormalParameter (
+				',' norm1_FormalParameter
+			)*
+		)? ')' (
+			':' ruleTypeRef
+		)? |
+		( (
+		'*'
+		) => (
+			'*' ruleNoLineTerminator '('
 		) ) (
 			norm1_FormalParameter (
 				',' norm1_FormalParameter
@@ -529,7 +594,9 @@ norm2_ArrowExpression :
 	) '=>'
 	) => (
 		(
-			'(' (
+			( (
+			'('
+			) => '(' ) (
 				norm1_FormalParameter (
 					',' norm1_FormalParameter
 				)*
@@ -537,9 +604,20 @@ norm2_ArrowExpression :
 				':' ruleTypeRef
 			)? |
 			( (
-			'async' ruleNoLineTerminator '('
+			'async'
 			) => (
 				'async' ruleNoLineTerminator '('
+			) ) (
+				norm1_FormalParameter (
+					',' norm1_FormalParameter
+				)*
+			)? ')' (
+				':' ruleTypeRef
+			)? |
+			( (
+			'*'
+			) => (
+				'*' ruleNoLineTerminator '('
 			) ) (
 				norm1_FormalParameter (
 					',' norm1_FormalParameter
@@ -553,7 +631,7 @@ norm2_ArrowExpression :
 		( (
 		'{'
 		) => '{' ) norm1_BlockMinusBraces '}' |
-		ruleExpressionDisguisedAsBlock
+		norm2_ExpressionDisguisedAsBlock
 	)
 ;
 
@@ -561,7 +639,9 @@ norm2_ArrowExpression :
 norm3_ArrowExpression :
 	( (
 	(
-		'(' (
+		( (
+		'('
+		) => '(' ) (
 			norm1_FormalParameter (
 				',' norm1_FormalParameter
 			)*
@@ -569,9 +649,20 @@ norm3_ArrowExpression :
 			':' ruleTypeRef
 		)? |
 		( (
-		'async' ruleNoLineTerminator '('
+		'async'
 		) => (
 			'async' ruleNoLineTerminator '('
+		) ) (
+			norm1_FormalParameter (
+				',' norm1_FormalParameter
+			)*
+		)? ')' (
+			':' ruleTypeRef
+		)? |
+		( (
+		'*'
+		) => (
+			'*' ruleNoLineTerminator '('
 		) ) (
 			norm1_FormalParameter (
 				',' norm1_FormalParameter
@@ -583,7 +674,9 @@ norm3_ArrowExpression :
 	) '=>'
 	) => (
 		(
-			'(' (
+			( (
+			'('
+			) => '(' ) (
 				norm1_FormalParameter (
 					',' norm1_FormalParameter
 				)*
@@ -591,9 +684,20 @@ norm3_ArrowExpression :
 				':' ruleTypeRef
 			)? |
 			( (
-			'async' ruleNoLineTerminator '('
+			'async'
 			) => (
 				'async' ruleNoLineTerminator '('
+			) ) (
+				norm1_FormalParameter (
+					',' norm1_FormalParameter
+				)*
+			)? ')' (
+				':' ruleTypeRef
+			)? |
+			( (
+			'*'
+			) => (
+				'*' ruleNoLineTerminator '('
 			) ) (
 				norm1_FormalParameter (
 					',' norm1_FormalParameter
@@ -607,7 +711,7 @@ norm3_ArrowExpression :
 		( (
 		'{'
 		) => '{' ) norm1_BlockMinusBraces '}' |
-		norm1_ExpressionDisguisedAsBlock
+		norm3_ExpressionDisguisedAsBlock
 	)
 ;
 
@@ -640,23 +744,18 @@ norm1_BindingIdentifierAsFormalParameter :
 ;
 
 // Rule BlockMinusBraces
-ruleBlockMinusBraces :
-	ruleStatement*
-;
-
-// Rule BlockMinusBraces
 norm1_BlockMinusBraces :
 	norm1_Statement*
 ;
 
 // Rule ExpressionDisguisedAsBlock
-ruleExpressionDisguisedAsBlock :
-	ruleAssignmentExpressionStatement
+norm2_ExpressionDisguisedAsBlock :
+	norm2_AssignmentExpressionStatement
 ;
 
 // Rule ExpressionDisguisedAsBlock
-norm1_ExpressionDisguisedAsBlock :
-	norm1_AssignmentExpressionStatement
+norm3_ExpressionDisguisedAsBlock :
+	norm3_AssignmentExpressionStatement
 ;
 
 // Rule AssignmentExpressionStatement
@@ -667,6 +766,16 @@ ruleAssignmentExpressionStatement :
 // Rule AssignmentExpressionStatement
 norm1_AssignmentExpressionStatement :
 	norm1_AssignmentExpression
+;
+
+// Rule AssignmentExpressionStatement
+norm2_AssignmentExpressionStatement :
+	norm2_AssignmentExpression
+;
+
+// Rule AssignmentExpressionStatement
+norm3_AssignmentExpressionStatement :
+	norm3_AssignmentExpression
 ;
 
 // Rule AnnotatedExpression
@@ -1241,6 +1350,7 @@ ruleForStatement :
 					'@' |
 					'(' |
 					'async' |
+					'*' |
 					'yield' |
 					'get' |
 					'set' |
@@ -1308,6 +1418,7 @@ ruleForStatement :
 					'@' |
 					'(' |
 					'async' |
+					'*' |
 					'yield' |
 					'get' |
 					'set' |
@@ -1408,6 +1519,7 @@ norm1_ForStatement :
 					'@' |
 					'(' |
 					'async' |
+					'*' |
 					'get' |
 					'set' |
 					'let' |
@@ -1475,6 +1587,7 @@ norm1_ForStatement :
 					'@' |
 					'(' |
 					'async' |
+					'*' |
 					'get' |
 					'set' |
 					'let' |
@@ -3917,7 +4030,9 @@ ruleAssignmentExpression :
 	) => rulePromisifyExpression ) |
 	( (
 	(
-		'(' (
+		( (
+		'('
+		) => '(' ) (
 			ruleFormalParameter (
 				',' ruleFormalParameter
 			)*
@@ -3925,9 +4040,20 @@ ruleAssignmentExpression :
 			':' ruleTypeRef
 		)? |
 		( (
-		'async' ruleNoLineTerminator '('
+		'async'
 		) => (
 			'async' ruleNoLineTerminator '('
+		) ) (
+			ruleFormalParameter (
+				',' ruleFormalParameter
+			)*
+		)? ')' (
+			':' ruleTypeRef
+		)? |
+		( (
+		'*'
+		) => (
+			'*' ruleNoLineTerminator '('
 		) ) (
 			ruleFormalParameter (
 				',' ruleFormalParameter
@@ -3955,7 +4081,9 @@ norm1_AssignmentExpression :
 	) => norm1_PromisifyExpression ) |
 	( (
 	(
-		'(' (
+		( (
+		'('
+		) => '(' ) (
 			ruleFormalParameter (
 				',' ruleFormalParameter
 			)*
@@ -3963,9 +4091,20 @@ norm1_AssignmentExpression :
 			':' ruleTypeRef
 		)? |
 		( (
-		'async' ruleNoLineTerminator '('
+		'async'
 		) => (
 			'async' ruleNoLineTerminator '('
+		) ) (
+			ruleFormalParameter (
+				',' ruleFormalParameter
+			)*
+		)? ')' (
+			':' ruleTypeRef
+		)? |
+		( (
+		'*'
+		) => (
+			'*' ruleNoLineTerminator '('
 		) ) (
 			ruleFormalParameter (
 				',' ruleFormalParameter
@@ -3993,7 +4132,9 @@ norm2_AssignmentExpression :
 	) => norm2_PromisifyExpression ) |
 	( (
 	(
-		'(' (
+		( (
+		'('
+		) => '(' ) (
 			norm1_FormalParameter (
 				',' norm1_FormalParameter
 			)*
@@ -4001,9 +4142,20 @@ norm2_AssignmentExpression :
 			':' ruleTypeRef
 		)? |
 		( (
-		'async' ruleNoLineTerminator '('
+		'async'
 		) => (
 			'async' ruleNoLineTerminator '('
+		) ) (
+			norm1_FormalParameter (
+				',' norm1_FormalParameter
+			)*
+		)? ')' (
+			':' ruleTypeRef
+		)? |
+		( (
+		'*'
+		) => (
+			'*' ruleNoLineTerminator '('
 		) ) (
 			norm1_FormalParameter (
 				',' norm1_FormalParameter
@@ -4032,7 +4184,9 @@ norm3_AssignmentExpression :
 	) => norm3_PromisifyExpression ) |
 	( (
 	(
-		'(' (
+		( (
+		'('
+		) => '(' ) (
 			norm1_FormalParameter (
 				',' norm1_FormalParameter
 			)*
@@ -4040,9 +4194,20 @@ norm3_AssignmentExpression :
 			':' ruleTypeRef
 		)? |
 		( (
-		'async' ruleNoLineTerminator '('
+		'async'
 		) => (
 			'async' ruleNoLineTerminator '('
+		) ) (
+			norm1_FormalParameter (
+				',' norm1_FormalParameter
+			)*
+		)? ')' (
+			':' ruleTypeRef
+		)? |
+		( (
+		'*'
+		) => (
+			'*' ruleNoLineTerminator '('
 		) ) (
 			norm1_FormalParameter (
 				',' norm1_FormalParameter
@@ -4070,6 +4235,7 @@ ruleYieldExpression :
 	'@' |
 	'(' |
 	'async' |
+	'*' |
 	'get' |
 	'set' |
 	'let' |
@@ -4139,6 +4305,7 @@ norm1_YieldExpression :
 	'@' |
 	'(' |
 	'async' |
+	'*' |
 	'get' |
 	'set' |
 	'let' |

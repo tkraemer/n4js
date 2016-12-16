@@ -3513,9 +3513,11 @@ ruleArrowExpression returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((((((
+((((((((
 LeftParenthesis
-((
+)=>
+LeftParenthesis
+)((
 (
 ruleFormalParameter
 )
@@ -3534,7 +3536,9 @@ Colon
 ruleTypeRef
 )
 ))?)
-    |(((((
+    |(((
+Async
+)=>((
 (
 
 Async
@@ -3543,10 +3547,31 @@ Async
 )
 )ruleNoLineTerminator[null]
 LeftParenthesis
-))=>((
+))((
+(
+ruleFormalParameter
+)
+)(
+Comma
+(
+(
+ruleFormalParameter
+)
+))*)?
+RightParenthesis
+(
+Colon
+(
+(
+ruleTypeRef
+)
+))?)
+    |(((
+Asterisk
+)=>((
 (
 
-Async
+Asterisk
 
 
 )
@@ -3577,12 +3602,14 @@ ruleBindingIdentifierAsFormalParameter
 )
 ))
 EqualsSignGreaterThanSign
-))=>(((
+))=>(((((
+LeftParenthesis
+)=>
 	otherlv_0=LeftParenthesis
     {
     	newLeafNode(otherlv_0, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_0_0());
     }
-((
+)((
 (
 		{ 
 	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsFormalParameterParserRuleCall_0_0_0_0_1_0_0()); 
@@ -3652,16 +3679,9 @@ EqualsSignGreaterThanSign
 
 )
 ))?)
-    |(((((
-(
-
+    |(((
 Async
-
-
-)
-)ruleNoLineTerminator[null]
-LeftParenthesis
-))=>((
+)=>((
 (
 		lv_declaredAsync_7_0=
 	Async
@@ -3764,37 +3784,142 @@ LeftParenthesis
 
 )
 ))?)
-    |(
+    |(((
+Asterisk
+)=>((
+(
+		lv_generator_16_0=
+	Asterisk
+    {
+        newLeafNode(lv_generator_16_0, grammarAccess.getArrowExpressionAccess().getGeneratorAsteriskKeyword_0_0_0_2_0_0_0_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getArrowExpressionRule());
+	        }
+       		setWithLastConsumed($current, "generator", true, "*");
+	    }
+
+)
+)
+    { 
+		if ($current==null) {
+			$current = createModelElement(grammarAccess.getArrowExpressionRule());
+		}
+        newCompositeNode(grammarAccess.getArrowExpressionAccess().getNoLineTerminatorParserRuleCall_0_0_0_2_0_0_1()); 
+    }
+    this_NoLineTerminator_17=ruleNoLineTerminator[$current]
+    {
+        $current = $this_NoLineTerminator_17.current;
+        afterParserOrEnumRuleCall();
+    }
+
+	otherlv_18=LeftParenthesis
+    {
+    	newLeafNode(otherlv_18, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_2_0_0_2());
+    }
+))((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0()); 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsFormalParameterParserRuleCall_0_0_0_2_1_0_0()); 
 	    }
-		lv_fpars_16_0=ruleBindingIdentifierAsFormalParameter		{
+		lv_fpars_19_0=ruleFormalParameter		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
 	        }
        		add(
        			$current, 
        			"fpars",
-        		lv_fpars_16_0, 
+        		lv_fpars_19_0, 
+        		"eu.numberfour.n4js.N4JS.FormalParameter");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+	otherlv_20=Comma
+    {
+    	newLeafNode(otherlv_20, grammarAccess.getArrowExpressionAccess().getCommaKeyword_0_0_0_2_1_1_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0()); 
+	    }
+		lv_fpars_21_0=ruleFormalParameter		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"fpars",
+        		lv_fpars_21_0, 
+        		"eu.numberfour.n4js.N4JS.FormalParameter");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*)?
+	otherlv_22=RightParenthesis
+    {
+    	newLeafNode(otherlv_22, grammarAccess.getArrowExpressionAccess().getRightParenthesisKeyword_0_0_0_2_2());
+    }
+(
+	otherlv_23=Colon
+    {
+    	newLeafNode(otherlv_23, grammarAccess.getArrowExpressionAccess().getColonKeyword_0_0_0_2_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0()); 
+	    }
+		lv_returnTypeRef_24_0=ruleTypeRef		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"returnTypeRef",
+        		lv_returnTypeRef_24_0, 
+        		"eu.numberfour.n4js.ts.TypeExpressions.TypeRef");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?)
+    |(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0()); 
+	    }
+		lv_fpars_25_0=ruleBindingIdentifierAsFormalParameter		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"fpars",
+        		lv_fpars_25_0, 
         		"eu.numberfour.n4js.N4JS.BindingIdentifierAsFormalParameter");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
 ))
-	otherlv_17=EqualsSignGreaterThanSign
+	otherlv_26=EqualsSignGreaterThanSign
     {
-    	newLeafNode(otherlv_17, grammarAccess.getArrowExpressionAccess().getEqualsSignGreaterThanSignKeyword_0_0_1());
+    	newLeafNode(otherlv_26, grammarAccess.getArrowExpressionAccess().getEqualsSignGreaterThanSignKeyword_0_0_1());
     }
 ))((((
 LeftCurlyBracket
 )=>
 (
-		lv_hasBracesAroundBody_18_0=
+		lv_hasBracesAroundBody_27_0=
 	LeftCurlyBracket
     {
-        newLeafNode(lv_hasBracesAroundBody_18_0, grammarAccess.getArrowExpressionAccess().getHasBracesAroundBodyLeftCurlyBracketKeyword_1_0_0_0());
+        newLeafNode(lv_hasBracesAroundBody_27_0, grammarAccess.getArrowExpressionAccess().getHasBracesAroundBodyLeftCurlyBracketKeyword_1_0_0_0());
     }
 
 	    {
@@ -3810,23 +3935,23 @@ LeftCurlyBracket
 		{ 
 	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getBodyBlockMinusBracesParserRuleCall_1_0_1_0()); 
 	    }
-		lv_body_19_0=ruleBlockMinusBraces		{
+		lv_body_28_0=norm1_BlockMinusBraces		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
 	        }
        		set(
        			$current, 
        			"body",
-        		lv_body_19_0, 
+        		lv_body_28_0, 
         		"eu.numberfour.n4js.N4JS.BlockMinusBraces");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
 )
-	otherlv_20=RightCurlyBracket
+	otherlv_29=RightCurlyBracket
     {
-    	newLeafNode(otherlv_20, grammarAccess.getArrowExpressionAccess().getRightCurlyBracketKeyword_1_0_2());
+    	newLeafNode(otherlv_29, grammarAccess.getArrowExpressionAccess().getRightCurlyBracketKeyword_1_0_2());
     }
 )
     |(
@@ -3834,14 +3959,14 @@ LeftCurlyBracket
 		{ 
 	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getBodyExpressionDisguisedAsBlockParserRuleCall_1_1_0()); 
 	    }
-		lv_body_21_0=ruleExpressionDisguisedAsBlock		{
+		lv_body_30_0=norm2_ExpressionDisguisedAsBlock		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
 	        }
        		set(
        			$current, 
        			"body",
-        		lv_body_21_0, 
+        		lv_body_30_0, 
         		"eu.numberfour.n4js.N4JS.ExpressionDisguisedAsBlock");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -3860,9 +3985,11 @@ norm1_ArrowExpression returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((((((
+((((((((
 LeftParenthesis
-((
+)=>
+LeftParenthesis
+)((
 (
 ruleFormalParameter
 )
@@ -3881,7 +4008,9 @@ Colon
 ruleTypeRef
 )
 ))?)
-    |(((((
+    |(((
+Async
+)=>((
 (
 
 Async
@@ -3890,10 +4019,31 @@ Async
 )
 )ruleNoLineTerminator[null]
 LeftParenthesis
-))=>((
+))((
+(
+ruleFormalParameter
+)
+)(
+Comma
+(
+(
+ruleFormalParameter
+)
+))*)?
+RightParenthesis
+(
+Colon
+(
+(
+ruleTypeRef
+)
+))?)
+    |(((
+Asterisk
+)=>((
 (
 
-Async
+Asterisk
 
 
 )
@@ -3924,12 +4074,14 @@ ruleBindingIdentifierAsFormalParameter
 )
 ))
 EqualsSignGreaterThanSign
-))=>(((
+))=>(((((
+LeftParenthesis
+)=>
 	otherlv_0=LeftParenthesis
     {
     	newLeafNode(otherlv_0, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_0_0());
     }
-((
+)((
 (
 		{ 
 	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsFormalParameterParserRuleCall_0_0_0_0_1_0_0()); 
@@ -3999,16 +4151,9 @@ EqualsSignGreaterThanSign
 
 )
 ))?)
-    |(((((
-(
-
+    |(((
 Async
-
-
-)
-)ruleNoLineTerminator[null]
-LeftParenthesis
-))=>((
+)=>((
 (
 		lv_declaredAsync_7_0=
 	Async
@@ -4111,37 +4256,142 @@ LeftParenthesis
 
 )
 ))?)
-    |(
+    |(((
+Asterisk
+)=>((
+(
+		lv_generator_16_0=
+	Asterisk
+    {
+        newLeafNode(lv_generator_16_0, grammarAccess.getArrowExpressionAccess().getGeneratorAsteriskKeyword_0_0_0_2_0_0_0_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getArrowExpressionRule());
+	        }
+       		setWithLastConsumed($current, "generator", true, "*");
+	    }
+
+)
+)
+    { 
+		if ($current==null) {
+			$current = createModelElement(grammarAccess.getArrowExpressionRule());
+		}
+        newCompositeNode(grammarAccess.getArrowExpressionAccess().getNoLineTerminatorParserRuleCall_0_0_0_2_0_0_1()); 
+    }
+    this_NoLineTerminator_17=ruleNoLineTerminator[$current]
+    {
+        $current = $this_NoLineTerminator_17.current;
+        afterParserOrEnumRuleCall();
+    }
+
+	otherlv_18=LeftParenthesis
+    {
+    	newLeafNode(otherlv_18, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_2_0_0_2());
+    }
+))((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0()); 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsFormalParameterParserRuleCall_0_0_0_2_1_0_0()); 
 	    }
-		lv_fpars_16_0=ruleBindingIdentifierAsFormalParameter		{
+		lv_fpars_19_0=ruleFormalParameter		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
 	        }
        		add(
        			$current, 
        			"fpars",
-        		lv_fpars_16_0, 
+        		lv_fpars_19_0, 
+        		"eu.numberfour.n4js.N4JS.FormalParameter");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+	otherlv_20=Comma
+    {
+    	newLeafNode(otherlv_20, grammarAccess.getArrowExpressionAccess().getCommaKeyword_0_0_0_2_1_1_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0()); 
+	    }
+		lv_fpars_21_0=ruleFormalParameter		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"fpars",
+        		lv_fpars_21_0, 
+        		"eu.numberfour.n4js.N4JS.FormalParameter");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*)?
+	otherlv_22=RightParenthesis
+    {
+    	newLeafNode(otherlv_22, grammarAccess.getArrowExpressionAccess().getRightParenthesisKeyword_0_0_0_2_2());
+    }
+(
+	otherlv_23=Colon
+    {
+    	newLeafNode(otherlv_23, grammarAccess.getArrowExpressionAccess().getColonKeyword_0_0_0_2_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0()); 
+	    }
+		lv_returnTypeRef_24_0=ruleTypeRef		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"returnTypeRef",
+        		lv_returnTypeRef_24_0, 
+        		"eu.numberfour.n4js.ts.TypeExpressions.TypeRef");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?)
+    |(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0()); 
+	    }
+		lv_fpars_25_0=ruleBindingIdentifierAsFormalParameter		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"fpars",
+        		lv_fpars_25_0, 
         		"eu.numberfour.n4js.N4JS.BindingIdentifierAsFormalParameter");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
 ))
-	otherlv_17=EqualsSignGreaterThanSign
+	otherlv_26=EqualsSignGreaterThanSign
     {
-    	newLeafNode(otherlv_17, grammarAccess.getArrowExpressionAccess().getEqualsSignGreaterThanSignKeyword_0_0_1());
+    	newLeafNode(otherlv_26, grammarAccess.getArrowExpressionAccess().getEqualsSignGreaterThanSignKeyword_0_0_1());
     }
 ))((((
 LeftCurlyBracket
 )=>
 (
-		lv_hasBracesAroundBody_18_0=
+		lv_hasBracesAroundBody_27_0=
 	LeftCurlyBracket
     {
-        newLeafNode(lv_hasBracesAroundBody_18_0, grammarAccess.getArrowExpressionAccess().getHasBracesAroundBodyLeftCurlyBracketKeyword_1_0_0_0());
+        newLeafNode(lv_hasBracesAroundBody_27_0, grammarAccess.getArrowExpressionAccess().getHasBracesAroundBodyLeftCurlyBracketKeyword_1_0_0_0());
     }
 
 	    {
@@ -4157,23 +4407,23 @@ LeftCurlyBracket
 		{ 
 	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getBodyBlockMinusBracesParserRuleCall_1_0_1_0()); 
 	    }
-		lv_body_19_0=ruleBlockMinusBraces		{
+		lv_body_28_0=norm1_BlockMinusBraces		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
 	        }
        		set(
        			$current, 
        			"body",
-        		lv_body_19_0, 
+        		lv_body_28_0, 
         		"eu.numberfour.n4js.N4JS.BlockMinusBraces");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
 )
-	otherlv_20=RightCurlyBracket
+	otherlv_29=RightCurlyBracket
     {
-    	newLeafNode(otherlv_20, grammarAccess.getArrowExpressionAccess().getRightCurlyBracketKeyword_1_0_2());
+    	newLeafNode(otherlv_29, grammarAccess.getArrowExpressionAccess().getRightCurlyBracketKeyword_1_0_2());
     }
 )
     |(
@@ -4181,14 +4431,14 @@ LeftCurlyBracket
 		{ 
 	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getBodyExpressionDisguisedAsBlockParserRuleCall_1_1_0()); 
 	    }
-		lv_body_21_0=norm1_ExpressionDisguisedAsBlock		{
+		lv_body_30_0=norm3_ExpressionDisguisedAsBlock		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
 	        }
        		set(
        			$current, 
        			"body",
-        		lv_body_21_0, 
+        		lv_body_30_0, 
         		"eu.numberfour.n4js.N4JS.ExpressionDisguisedAsBlock");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -4207,9 +4457,11 @@ norm2_ArrowExpression returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((((((
+((((((((
 LeftParenthesis
-((
+)=>
+LeftParenthesis
+)((
 (
 norm1_FormalParameter
 )
@@ -4228,7 +4480,9 @@ Colon
 ruleTypeRef
 )
 ))?)
-    |(((((
+    |(((
+Async
+)=>((
 (
 
 Async
@@ -4237,10 +4491,31 @@ Async
 )
 )ruleNoLineTerminator[null]
 LeftParenthesis
-))=>((
+))((
+(
+norm1_FormalParameter
+)
+)(
+Comma
+(
+(
+norm1_FormalParameter
+)
+))*)?
+RightParenthesis
+(
+Colon
+(
+(
+ruleTypeRef
+)
+))?)
+    |(((
+Asterisk
+)=>((
 (
 
-Async
+Asterisk
 
 
 )
@@ -4271,12 +4546,14 @@ norm1_BindingIdentifierAsFormalParameter
 )
 ))
 EqualsSignGreaterThanSign
-))=>(((
+))=>(((((
+LeftParenthesis
+)=>
 	otherlv_0=LeftParenthesis
     {
     	newLeafNode(otherlv_0, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_0_0());
     }
-((
+)((
 (
 		{ 
 	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsFormalParameterParserRuleCall_0_0_0_0_1_0_0()); 
@@ -4346,16 +4623,9 @@ EqualsSignGreaterThanSign
 
 )
 ))?)
-    |(((((
-(
-
+    |(((
 Async
-
-
-)
-)ruleNoLineTerminator[null]
-LeftParenthesis
-))=>((
+)=>((
 (
 		lv_declaredAsync_7_0=
 	Async
@@ -4458,37 +4728,142 @@ LeftParenthesis
 
 )
 ))?)
-    |(
+    |(((
+Asterisk
+)=>((
+(
+		lv_generator_16_0=
+	Asterisk
+    {
+        newLeafNode(lv_generator_16_0, grammarAccess.getArrowExpressionAccess().getGeneratorAsteriskKeyword_0_0_0_2_0_0_0_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getArrowExpressionRule());
+	        }
+       		setWithLastConsumed($current, "generator", true, "*");
+	    }
+
+)
+)
+    { 
+		if ($current==null) {
+			$current = createModelElement(grammarAccess.getArrowExpressionRule());
+		}
+        newCompositeNode(grammarAccess.getArrowExpressionAccess().getNoLineTerminatorParserRuleCall_0_0_0_2_0_0_1()); 
+    }
+    this_NoLineTerminator_17=ruleNoLineTerminator[$current]
+    {
+        $current = $this_NoLineTerminator_17.current;
+        afterParserOrEnumRuleCall();
+    }
+
+	otherlv_18=LeftParenthesis
+    {
+    	newLeafNode(otherlv_18, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_2_0_0_2());
+    }
+))((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0()); 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsFormalParameterParserRuleCall_0_0_0_2_1_0_0()); 
 	    }
-		lv_fpars_16_0=norm1_BindingIdentifierAsFormalParameter		{
+		lv_fpars_19_0=norm1_FormalParameter		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
 	        }
        		add(
        			$current, 
        			"fpars",
-        		lv_fpars_16_0, 
+        		lv_fpars_19_0, 
+        		"eu.numberfour.n4js.N4JS.FormalParameter");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+	otherlv_20=Comma
+    {
+    	newLeafNode(otherlv_20, grammarAccess.getArrowExpressionAccess().getCommaKeyword_0_0_0_2_1_1_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0()); 
+	    }
+		lv_fpars_21_0=norm1_FormalParameter		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"fpars",
+        		lv_fpars_21_0, 
+        		"eu.numberfour.n4js.N4JS.FormalParameter");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*)?
+	otherlv_22=RightParenthesis
+    {
+    	newLeafNode(otherlv_22, grammarAccess.getArrowExpressionAccess().getRightParenthesisKeyword_0_0_0_2_2());
+    }
+(
+	otherlv_23=Colon
+    {
+    	newLeafNode(otherlv_23, grammarAccess.getArrowExpressionAccess().getColonKeyword_0_0_0_2_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0()); 
+	    }
+		lv_returnTypeRef_24_0=ruleTypeRef		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"returnTypeRef",
+        		lv_returnTypeRef_24_0, 
+        		"eu.numberfour.n4js.ts.TypeExpressions.TypeRef");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?)
+    |(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0()); 
+	    }
+		lv_fpars_25_0=norm1_BindingIdentifierAsFormalParameter		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"fpars",
+        		lv_fpars_25_0, 
         		"eu.numberfour.n4js.N4JS.BindingIdentifierAsFormalParameter");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
 ))
-	otherlv_17=EqualsSignGreaterThanSign
+	otherlv_26=EqualsSignGreaterThanSign
     {
-    	newLeafNode(otherlv_17, grammarAccess.getArrowExpressionAccess().getEqualsSignGreaterThanSignKeyword_0_0_1());
+    	newLeafNode(otherlv_26, grammarAccess.getArrowExpressionAccess().getEqualsSignGreaterThanSignKeyword_0_0_1());
     }
 ))((((
 LeftCurlyBracket
 )=>
 (
-		lv_hasBracesAroundBody_18_0=
+		lv_hasBracesAroundBody_27_0=
 	LeftCurlyBracket
     {
-        newLeafNode(lv_hasBracesAroundBody_18_0, grammarAccess.getArrowExpressionAccess().getHasBracesAroundBodyLeftCurlyBracketKeyword_1_0_0_0());
+        newLeafNode(lv_hasBracesAroundBody_27_0, grammarAccess.getArrowExpressionAccess().getHasBracesAroundBodyLeftCurlyBracketKeyword_1_0_0_0());
     }
 
 	    {
@@ -4504,23 +4879,23 @@ LeftCurlyBracket
 		{ 
 	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getBodyBlockMinusBracesParserRuleCall_1_0_1_0()); 
 	    }
-		lv_body_19_0=norm1_BlockMinusBraces		{
+		lv_body_28_0=norm1_BlockMinusBraces		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
 	        }
        		set(
        			$current, 
        			"body",
-        		lv_body_19_0, 
+        		lv_body_28_0, 
         		"eu.numberfour.n4js.N4JS.BlockMinusBraces");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
 )
-	otherlv_20=RightCurlyBracket
+	otherlv_29=RightCurlyBracket
     {
-    	newLeafNode(otherlv_20, grammarAccess.getArrowExpressionAccess().getRightCurlyBracketKeyword_1_0_2());
+    	newLeafNode(otherlv_29, grammarAccess.getArrowExpressionAccess().getRightCurlyBracketKeyword_1_0_2());
     }
 )
     |(
@@ -4528,14 +4903,14 @@ LeftCurlyBracket
 		{ 
 	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getBodyExpressionDisguisedAsBlockParserRuleCall_1_1_0()); 
 	    }
-		lv_body_21_0=ruleExpressionDisguisedAsBlock		{
+		lv_body_30_0=norm2_ExpressionDisguisedAsBlock		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
 	        }
        		set(
        			$current, 
        			"body",
-        		lv_body_21_0, 
+        		lv_body_30_0, 
         		"eu.numberfour.n4js.N4JS.ExpressionDisguisedAsBlock");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -4554,9 +4929,11 @@ norm3_ArrowExpression returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((((((
+((((((((
 LeftParenthesis
-((
+)=>
+LeftParenthesis
+)((
 (
 norm1_FormalParameter
 )
@@ -4575,7 +4952,9 @@ Colon
 ruleTypeRef
 )
 ))?)
-    |(((((
+    |(((
+Async
+)=>((
 (
 
 Async
@@ -4584,10 +4963,31 @@ Async
 )
 )ruleNoLineTerminator[null]
 LeftParenthesis
-))=>((
+))((
+(
+norm1_FormalParameter
+)
+)(
+Comma
+(
+(
+norm1_FormalParameter
+)
+))*)?
+RightParenthesis
+(
+Colon
+(
+(
+ruleTypeRef
+)
+))?)
+    |(((
+Asterisk
+)=>((
 (
 
-Async
+Asterisk
 
 
 )
@@ -4618,12 +5018,14 @@ norm1_BindingIdentifierAsFormalParameter
 )
 ))
 EqualsSignGreaterThanSign
-))=>(((
+))=>(((((
+LeftParenthesis
+)=>
 	otherlv_0=LeftParenthesis
     {
     	newLeafNode(otherlv_0, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_0_0());
     }
-((
+)((
 (
 		{ 
 	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsFormalParameterParserRuleCall_0_0_0_0_1_0_0()); 
@@ -4693,16 +5095,9 @@ EqualsSignGreaterThanSign
 
 )
 ))?)
-    |(((((
-(
-
+    |(((
 Async
-
-
-)
-)ruleNoLineTerminator[null]
-LeftParenthesis
-))=>((
+)=>((
 (
 		lv_declaredAsync_7_0=
 	Async
@@ -4805,37 +5200,142 @@ LeftParenthesis
 
 )
 ))?)
-    |(
+    |(((
+Asterisk
+)=>((
+(
+		lv_generator_16_0=
+	Asterisk
+    {
+        newLeafNode(lv_generator_16_0, grammarAccess.getArrowExpressionAccess().getGeneratorAsteriskKeyword_0_0_0_2_0_0_0_0());
+    }
+
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getArrowExpressionRule());
+	        }
+       		setWithLastConsumed($current, "generator", true, "*");
+	    }
+
+)
+)
+    { 
+		if ($current==null) {
+			$current = createModelElement(grammarAccess.getArrowExpressionRule());
+		}
+        newCompositeNode(grammarAccess.getArrowExpressionAccess().getNoLineTerminatorParserRuleCall_0_0_0_2_0_0_1()); 
+    }
+    this_NoLineTerminator_17=ruleNoLineTerminator[$current]
+    {
+        $current = $this_NoLineTerminator_17.current;
+        afterParserOrEnumRuleCall();
+    }
+
+	otherlv_18=LeftParenthesis
+    {
+    	newLeafNode(otherlv_18, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_2_0_0_2());
+    }
+))((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0()); 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsFormalParameterParserRuleCall_0_0_0_2_1_0_0()); 
 	    }
-		lv_fpars_16_0=norm1_BindingIdentifierAsFormalParameter		{
+		lv_fpars_19_0=norm1_FormalParameter		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
 	        }
        		add(
        			$current, 
        			"fpars",
-        		lv_fpars_16_0, 
+        		lv_fpars_19_0, 
+        		"eu.numberfour.n4js.N4JS.FormalParameter");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+	otherlv_20=Comma
+    {
+    	newLeafNode(otherlv_20, grammarAccess.getArrowExpressionAccess().getCommaKeyword_0_0_0_2_1_1_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0()); 
+	    }
+		lv_fpars_21_0=norm1_FormalParameter		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"fpars",
+        		lv_fpars_21_0, 
+        		"eu.numberfour.n4js.N4JS.FormalParameter");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*)?
+	otherlv_22=RightParenthesis
+    {
+    	newLeafNode(otherlv_22, grammarAccess.getArrowExpressionAccess().getRightParenthesisKeyword_0_0_0_2_2());
+    }
+(
+	otherlv_23=Colon
+    {
+    	newLeafNode(otherlv_23, grammarAccess.getArrowExpressionAccess().getColonKeyword_0_0_0_2_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0()); 
+	    }
+		lv_returnTypeRef_24_0=ruleTypeRef		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"returnTypeRef",
+        		lv_returnTypeRef_24_0, 
+        		"eu.numberfour.n4js.ts.TypeExpressions.TypeRef");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?)
+    |(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getFparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0()); 
+	    }
+		lv_fpars_25_0=norm1_BindingIdentifierAsFormalParameter		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"fpars",
+        		lv_fpars_25_0, 
         		"eu.numberfour.n4js.N4JS.BindingIdentifierAsFormalParameter");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
 ))
-	otherlv_17=EqualsSignGreaterThanSign
+	otherlv_26=EqualsSignGreaterThanSign
     {
-    	newLeafNode(otherlv_17, grammarAccess.getArrowExpressionAccess().getEqualsSignGreaterThanSignKeyword_0_0_1());
+    	newLeafNode(otherlv_26, grammarAccess.getArrowExpressionAccess().getEqualsSignGreaterThanSignKeyword_0_0_1());
     }
 ))((((
 LeftCurlyBracket
 )=>
 (
-		lv_hasBracesAroundBody_18_0=
+		lv_hasBracesAroundBody_27_0=
 	LeftCurlyBracket
     {
-        newLeafNode(lv_hasBracesAroundBody_18_0, grammarAccess.getArrowExpressionAccess().getHasBracesAroundBodyLeftCurlyBracketKeyword_1_0_0_0());
+        newLeafNode(lv_hasBracesAroundBody_27_0, grammarAccess.getArrowExpressionAccess().getHasBracesAroundBodyLeftCurlyBracketKeyword_1_0_0_0());
     }
 
 	    {
@@ -4851,23 +5351,23 @@ LeftCurlyBracket
 		{ 
 	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getBodyBlockMinusBracesParserRuleCall_1_0_1_0()); 
 	    }
-		lv_body_19_0=norm1_BlockMinusBraces		{
+		lv_body_28_0=norm1_BlockMinusBraces		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
 	        }
        		set(
        			$current, 
        			"body",
-        		lv_body_19_0, 
+        		lv_body_28_0, 
         		"eu.numberfour.n4js.N4JS.BlockMinusBraces");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
 )
-	otherlv_20=RightCurlyBracket
+	otherlv_29=RightCurlyBracket
     {
-    	newLeafNode(otherlv_20, grammarAccess.getArrowExpressionAccess().getRightCurlyBracketKeyword_1_0_2());
+    	newLeafNode(otherlv_29, grammarAccess.getArrowExpressionAccess().getRightCurlyBracketKeyword_1_0_2());
     }
 )
     |(
@@ -4875,14 +5375,14 @@ LeftCurlyBracket
 		{ 
 	        newCompositeNode(grammarAccess.getArrowExpressionAccess().getBodyExpressionDisguisedAsBlockParserRuleCall_1_1_0()); 
 	    }
-		lv_body_21_0=norm1_ExpressionDisguisedAsBlock		{
+		lv_body_30_0=norm3_ExpressionDisguisedAsBlock		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getArrowExpressionRule());
 	        }
        		set(
        			$current, 
        			"body",
-        		lv_body_21_0, 
+        		lv_body_30_0, 
         		"eu.numberfour.n4js.N4JS.ExpressionDisguisedAsBlock");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -5093,49 +5593,6 @@ norm1_BindingIdentifierAsFormalParameter returns [EObject current=null]
 
 
 
-// Entry rule entryRuleBlockMinusBraces
-entryRuleBlockMinusBraces returns [EObject current=null]
-	:
-	{ newCompositeNode(grammarAccess.getBlockMinusBracesRule()); }
-	 iv_ruleBlockMinusBraces=ruleBlockMinusBraces 
-	 { $current=$iv_ruleBlockMinusBraces.current; } 
-	 EOF 
-;
-
-// Rule BlockMinusBraces
-ruleBlockMinusBraces returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-    {
-        $current = forceCreateModelElement(
-            grammarAccess.getBlockMinusBracesAccess().getBlockAction_0(),
-            $current);
-    }
-)(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getBlockMinusBracesAccess().getStatementsStatementParserRuleCall_1_0()); 
-	    }
-		lv_statements_1_0=ruleStatement		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getBlockMinusBracesRule());
-	        }
-       		add(
-       			$current, 
-       			"statements",
-        		lv_statements_1_0, 
-        		"eu.numberfour.n4js.N4JS.Statement");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)*)
-;
-
-
-
 
 
 
@@ -5175,17 +5632,13 @@ norm1_BlockMinusBraces returns [EObject current=null]
 
 
 
-// Entry rule entryRuleExpressionDisguisedAsBlock
-entryRuleExpressionDisguisedAsBlock returns [EObject current=null]
-	:
-	{ newCompositeNode(grammarAccess.getExpressionDisguisedAsBlockRule()); }
-	 iv_ruleExpressionDisguisedAsBlock=ruleExpressionDisguisedAsBlock 
-	 { $current=$iv_ruleExpressionDisguisedAsBlock.current; } 
-	 EOF 
-;
+
+
+
+
 
 // Rule ExpressionDisguisedAsBlock
-ruleExpressionDisguisedAsBlock returns [EObject current=null] 
+norm2_ExpressionDisguisedAsBlock returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -5200,7 +5653,7 @@ ruleExpressionDisguisedAsBlock returns [EObject current=null]
 		{ 
 	        newCompositeNode(grammarAccess.getExpressionDisguisedAsBlockAccess().getStatementsAssignmentExpressionStatementParserRuleCall_1_0()); 
 	    }
-		lv_statements_1_0=ruleAssignmentExpressionStatement		{
+		lv_statements_1_0=norm2_AssignmentExpressionStatement		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getExpressionDisguisedAsBlockRule());
 	        }
@@ -5222,7 +5675,7 @@ ruleExpressionDisguisedAsBlock returns [EObject current=null]
 
 
 // Rule ExpressionDisguisedAsBlock
-norm1_ExpressionDisguisedAsBlock returns [EObject current=null] 
+norm3_ExpressionDisguisedAsBlock returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -5237,7 +5690,7 @@ norm1_ExpressionDisguisedAsBlock returns [EObject current=null]
 		{ 
 	        newCompositeNode(grammarAccess.getExpressionDisguisedAsBlockAccess().getStatementsAssignmentExpressionStatementParserRuleCall_1_0()); 
 	    }
-		lv_statements_1_0=norm1_AssignmentExpressionStatement		{
+		lv_statements_1_0=norm3_AssignmentExpressionStatement		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getExpressionDisguisedAsBlockRule());
 	        }
@@ -5308,6 +5761,68 @@ norm1_AssignmentExpressionStatement returns [EObject current=null]
 	        newCompositeNode(grammarAccess.getAssignmentExpressionStatementAccess().getExpressionAssignmentExpressionParserRuleCall_0()); 
 	    }
 		lv_expression_0_0=norm1_AssignmentExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAssignmentExpressionStatementRule());
+	        }
+       		set(
+       			$current, 
+       			"expression",
+        		lv_expression_0_0, 
+        		"eu.numberfour.n4js.N4JS.AssignmentExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+;
+
+
+
+
+
+
+// Rule AssignmentExpressionStatement
+norm2_AssignmentExpressionStatement returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAssignmentExpressionStatementAccess().getExpressionAssignmentExpressionParserRuleCall_0()); 
+	    }
+		lv_expression_0_0=norm2_AssignmentExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAssignmentExpressionStatementRule());
+	        }
+       		set(
+       			$current, 
+       			"expression",
+        		lv_expression_0_0, 
+        		"eu.numberfour.n4js.N4JS.AssignmentExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+;
+
+
+
+
+
+
+// Rule AssignmentExpressionStatement
+norm3_AssignmentExpressionStatement returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAssignmentExpressionStatementAccess().getExpressionAssignmentExpressionParserRuleCall_0()); 
+	    }
+		lv_expression_0_0=norm3_AssignmentExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getAssignmentExpressionStatementRule());
 	        }
@@ -9614,6 +10129,9 @@ LeftParenthesis
 Async
 
     |
+Asterisk
+
+    |
 Yield
 
     |
@@ -9820,6 +10338,8 @@ CommercialAt
 LeftParenthesis
  | 
 Async
+ | 
+Asterisk
  | 
 Yield
  | 
@@ -10453,6 +10973,9 @@ LeftParenthesis
 Async
 
     |
+Asterisk
+
+    |
 Get
 
     |
@@ -10659,6 +11182,8 @@ CommercialAt
 LeftParenthesis
  | 
 Async
+ | 
+Asterisk
  | 
 Get
  | 
@@ -23896,9 +24421,11 @@ Promisify
         afterParserOrEnumRuleCall();
     }
 )
-    |(((((
+    |(((((((
 LeftParenthesis
-((
+)=>
+LeftParenthesis
+)((
 (
 ruleFormalParameter
 )
@@ -23917,7 +24444,9 @@ Colon
 ruleTypeRef
 )
 ))?)
-    |(((((
+    |(((
+Async
+)=>((
 (
 
 Async
@@ -23926,10 +24455,31 @@ Async
 )
 )ruleNoLineTerminator[null]
 LeftParenthesis
-))=>((
+))((
+(
+ruleFormalParameter
+)
+)(
+Comma
+(
+(
+ruleFormalParameter
+)
+))*)?
+RightParenthesis
+(
+Colon
+(
+(
+ruleTypeRef
+)
+))?)
+    |(((
+Asterisk
+)=>((
 (
 
-Async
+Asterisk
 
 
 )
@@ -24067,9 +24617,11 @@ Promisify
         afterParserOrEnumRuleCall();
     }
 )
-    |(((((
+    |(((((((
 LeftParenthesis
-((
+)=>
+LeftParenthesis
+)((
 (
 ruleFormalParameter
 )
@@ -24088,7 +24640,9 @@ Colon
 ruleTypeRef
 )
 ))?)
-    |(((((
+    |(((
+Async
+)=>((
 (
 
 Async
@@ -24097,10 +24651,31 @@ Async
 )
 )ruleNoLineTerminator[null]
 LeftParenthesis
-))=>((
+))((
+(
+ruleFormalParameter
+)
+)(
+Comma
+(
+(
+ruleFormalParameter
+)
+))*)?
+RightParenthesis
+(
+Colon
+(
+(
+ruleTypeRef
+)
+))?)
+    |(((
+Asterisk
+)=>((
 (
 
-Async
+Asterisk
 
 
 )
@@ -24238,9 +24813,11 @@ Promisify
         afterParserOrEnumRuleCall();
     }
 )
-    |(((((
+    |(((((((
 LeftParenthesis
-((
+)=>
+LeftParenthesis
+)((
 (
 norm1_FormalParameter
 )
@@ -24259,7 +24836,9 @@ Colon
 ruleTypeRef
 )
 ))?)
-    |(((((
+    |(((
+Async
+)=>((
 (
 
 Async
@@ -24268,10 +24847,31 @@ Async
 )
 )ruleNoLineTerminator[null]
 LeftParenthesis
-))=>((
+))((
+(
+norm1_FormalParameter
+)
+)(
+Comma
+(
+(
+norm1_FormalParameter
+)
+))*)?
+RightParenthesis
+(
+Colon
+(
+(
+ruleTypeRef
+)
+))?)
+    |(((
+Asterisk
+)=>((
 (
 
-Async
+Asterisk
 
 
 )
@@ -24419,9 +25019,11 @@ Promisify
         afterParserOrEnumRuleCall();
     }
 )
-    |(((((
+    |(((((((
 LeftParenthesis
-((
+)=>
+LeftParenthesis
+)((
 (
 norm1_FormalParameter
 )
@@ -24440,7 +25042,9 @@ Colon
 ruleTypeRef
 )
 ))?)
-    |(((((
+    |(((
+Async
+)=>((
 (
 
 Async
@@ -24449,10 +25053,31 @@ Async
 )
 )ruleNoLineTerminator[null]
 LeftParenthesis
-))=>((
+))((
+(
+norm1_FormalParameter
+)
+)(
+Comma
+(
+(
+norm1_FormalParameter
+)
+))*)?
+RightParenthesis
+(
+Colon
+(
+(
+ruleTypeRef
+)
+))?)
+    |(((
+Asterisk
+)=>((
 (
 
-Async
+Asterisk
 
 
 )
@@ -24623,6 +25248,8 @@ LeftParenthesis
  | 
 Async
  | 
+Asterisk
+ | 
 Get
  | 
 Set
@@ -24787,6 +25414,8 @@ CommercialAt
 LeftParenthesis
  | 
 Async
+ | 
+Asterisk
  | 
 Get
  | 
