@@ -12,7 +12,6 @@ package eu.numberfour.n4js.tester;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Optional.fromNullable;
-import static com.google.common.base.Strings.nullToEmpty;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Iterables.isEmpty;
 import static com.google.common.collect.Lists.newArrayList;
@@ -60,6 +59,7 @@ import eu.numberfour.n4js.tester.domain.ID;
 import eu.numberfour.n4js.tester.domain.TestCase;
 import eu.numberfour.n4js.tester.domain.TestSuite;
 import eu.numberfour.n4js.tester.domain.TestTree;
+import eu.numberfour.n4js.tester.extension.TestFileExtensionsRegistry;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TMethod;
@@ -72,6 +72,9 @@ import eu.numberfour.n4js.utils.ContainerTypesHelper;
  * Helper to collect all tests in a given N4JS project, sub-folder, or file.
  */
 public class TestDiscoveryHelper {
+
+	@Inject
+	private TestFileExtensionsRegistry testFileExtensionRegistry;
 
 	private static final EClass T_CLASS = TypesPackage.eINSTANCE.getTClass();
 
@@ -221,7 +224,7 @@ public class TestDiscoveryHelper {
 					.stream()
 					.filter(IN4JSSourceContainer::isTest)
 					.flatMap(TestDiscoveryHelper::stream) // note: IN4JSSourceContainer is an Iterable<URI>
-					.filter(uri -> isN4jsFile(uri)) // filter out everything but N4JS files.
+					.filter(uri -> isTestFile(uri)) // filter out everything but N4JS files.
 					.filter(uri -> isTestModule(resSet, index.getResourceDescription(uri)));
 		}
 
@@ -412,10 +415,8 @@ public class TestDiscoveryHelper {
 		}
 	}
 
-	private boolean isN4jsFile(final URI uri) {
-		return null != uri && (nullToEmpty(uri.lastSegment()).endsWith("." + N4JS_FILE_EXTENSION)
-				|| nullToEmpty(uri.lastSegment()).endsWith("." + "n4jsx")); // TODO: Refactor so that this bundle is
-																			// agnostic of N4JSX! IDE-2453
+	private boolean isTestFile(final URI uri) {
+		return testFileExtensionRegistry.getTestFileExtensions().contains(uri.fileExtension());
 	}
 
 	private boolean isTestModule(final ResourceSet resourceSet, final IResourceDescription module) {
