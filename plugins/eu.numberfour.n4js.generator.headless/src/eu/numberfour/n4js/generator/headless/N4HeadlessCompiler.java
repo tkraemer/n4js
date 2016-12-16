@@ -50,6 +50,7 @@ import org.eclipse.xtext.validation.Issue;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
+import com.google.common.base.Stopwatch;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.HashMultimap;
@@ -402,7 +403,6 @@ public class N4HeadlessCompiler {
 	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
 	 *
 	 */
-	@SuppressWarnings({ "unused" })
 	public void compileProjects(List<File> projectLocations, List<File> projectLocationsToCompile,
 			List<File> singleSourcesToCompile, IssueAcceptor issueAcceptor)
 			throws N4JSCompileException {
@@ -504,25 +504,42 @@ public class N4HeadlessCompiler {
 		// List for Tracking of loaded Projects.
 		LinkedList<MarkedProject> loadedProjects = new LinkedList<>();
 
+		// Helper to investigate memory usage
+		MemoryTracker mt = new MemoryTracker(createDebugOutput);
+
 		for (MarkedProject mp : sortedProjects) {
+			mt.startSeries("compile project " + mp.project.getProjectId());
+
 			// only load if is marked.
 			if (mp.hasMarkers()) {
 				rec.markProcessing(mp.project);
 				configureFSA(mp.project);
 				try {
 					// load
+					mt.addSeriesPoint("before load");
+					Stopwatch ls = Stopwatch.createStarted();
 					doLoad(mp, resourceSet, rec, issueAcceptor);
+					mt.addSeriesPoint("after load ( " + ls.stop().toString() + " )");
 					loadedProjects.add(mp);
+
+					mt.addSeriesPoint("before generate");
+					Stopwatch gs = Stopwatch.createStarted();
 					// compile only if it has itself as marker and non-external
 					if (mp.hasMarker(mp.project) && !mp.project.isExternal()) {
 						// compile only:
 						doCompile(mp, resourceSet, compileFilter, rec);
 					}
+					mt.addSeriesPoint("after generate ( " + gs.stop().toString() + " )");
+
 					// remove marker from loaded
 					ListIterator<MarkedProject> loadedIter = loadedProjects.listIterator();
 					while (loadedIter.hasNext()) {
 						MarkedProject loaded = loadedIter.next();
 						loaded.remove(mp.project);
+
+						/* IDE-2479 temporary switch unloading strategy */
+						boolean doAggressiveUnloading = false;
+
 						// §§ // §§§§ // §§§§ // §§§§ // §§§§ // §§§§ // §§§§ // §§§§ // §§
 						// TODO BELOW are two different ways of dealing with unloading
 						// they differ in the overall performance.
@@ -533,18 +550,24 @@ public class N4HeadlessCompiler {
 						// strategy 3) none of the below
 						/*-*/// unload guarded // TODO experimental, remove if: unload immediately works (below)
 						// Ohne unload 51-54 sec. nur im recorder
-						if (true) { // mit marker-unload 55.6-56.2 sec unload
+						if (doAggressiveUnloading) { // mit marker-unload 55.6-56.2 sec unload
 							// Strategy 1:
 							if (!loaded.hasMarkers()) {
 								// unload from ResourceSet
+								mt.addSeriesPoint("before unload " + loaded.project.getProjectId());
+								Stopwatch us = Stopwatch.createStarted();
 								doUnload(loaded, rec);
+								mt.addSeriesPoint("after unload ( " + us.stop().toString() + " )");
 								loadedIter.remove();
 							} /**/
 						} else {
 
 							// Strategy 2:
 							// unload immediately // direkter unload nach compile 76 - 80 sec im rekorder.
+							mt.addSeriesPoint("before unload2");
+							Stopwatch us2 = Stopwatch.createStarted();
 							doUnload(loaded, rec);
+							mt.addSeriesPoint("after unload2 ( " + us2.stop().toString() + " )");
 							loadedIter.remove();
 						}
 						// §§ // §§§§ // §§§§ // §§§§ // §§§§ // §§§§ // §§§§ // §§§§ // §§
@@ -563,10 +586,33 @@ public class N4HeadlessCompiler {
 					}
 				} finally {
 					resetFSA();
+
+					/* IDE-2479 temporary force releasing memory */
+					boolean forceGC = true;
+					if (forceGC) {
+						/*
+						 * Similarly to strategy above unloading strategy above this is matter of performance. Invoking
+						 * GC trades CPU over for currently used memory. Notice that using this TENDS to decrease
+						 * overall used memory, but can result in larger allocations during compilation of next project.
+						 * It would be useful to investigate further correlation between compiled projects and memory
+						 * consumption. Ultimately compiler should adjust unloading strategy and GC invocations
+						 * accordingly to input data, i.e. available memory, size of the projects and their dependency
+						 * graph.
+						 */
+						mt.addSeriesPoint("before GC");
+						Stopwatch cs2 = Stopwatch.createStarted();
+						Runtime.getRuntime().runFinalization();
+						Runtime.getRuntime().gc();
+						Thread.yield();
+						mt.addSeriesPoint("after GC ( " + cs2.stop().toString() + " )");
+					}
 				}
 				rec.markEndProcessing(mp.project);
 			}
 		}
+
+		if (createDebugOutput)
+			System.out.println(mt.dataTable());
 
 		rec.dumpToLogfile(logFile);
 
