@@ -18,7 +18,6 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newHashSet;
 import static eu.numberfour.n4js.AnnotationDefinition.TEST_METHOD;
-import static eu.numberfour.n4js.N4JSGlobals.N4JS_FILE_EXTENSION;
 import static eu.numberfour.n4js.resource.N4JSResourceDescriptionStrategy.ABSTRACT_KEY;
 import static eu.numberfour.n4js.resource.N4JSResourceDescriptionStrategy.EXPORTED_CLASS_KEY;
 import static eu.numberfour.n4js.resource.N4JSResourceDescriptionStrategy.TEST_CLASS_KEY;
@@ -306,7 +305,10 @@ public class TestDiscoveryHelper {
 		if (locations.length > 0) {
 			final URI uri = locations[0];
 			name = valueOf(uri.trimFragment()).replaceFirst("platform:/resource/", "");
-			name = name.replace("." + N4JS_FILE_EXTENSION, "");
+			// name = name.replace("." + N4JS_FILE_EXTENSION, "");
+			if (name.lastIndexOf('.') > 0) {
+				name = name.substring(0, name.lastIndexOf('.'));
+			}
 			// Assuming one single test case.
 			if (uri.hasFragment() && !suites.isEmpty() && !suites.get(0).getTestCases().isEmpty()) {
 				name = name + "#" + suites.get(0).getTestCases().get(0).getDisplayName();

@@ -77,4 +77,11 @@ public class TestFileExtensionsRegistry {
 		}
 	}
 
+	/**
+	 * Reset the list of test file extensions to empty
+	 */
+	public void reset() {
+		isInitialized = false;
+		testFileExtensions.clear();
+	}
 }
