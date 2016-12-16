@@ -21,5 +21,6 @@ Require-Bundle: eu.numberfour.n4js,
  eu.numberfour.n4js.tester.nodejs,
  eu.numberfour.n4js.tests.helper,
  eu.numberfour.n4js.external.libraries,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ eu.numberfour.n4jsx
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
