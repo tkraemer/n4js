@@ -506,7 +506,7 @@ public class N4HeadlessCompiler {
 
 		// Helper to investigate memory usage
 		// MemoryTracker mt = new MemoryTracker(createDebugOutput);
-		MemoryTracker mt = new MemoryTracker(true);// IDE-2479
+		MemoryTracker mt = new MemoryTracker(true, true);// IDE-2479
 		for (MarkedProject mp : sortedProjects) {
 			mt.startSeries("compile project " + mp.project.getProjectId());
 
@@ -606,9 +606,6 @@ public class N4HeadlessCompiler {
 						Thread.yield();
 						mt.addSeriesPoint("after GC ( " + cs2.stop().toString() + " )");
 					}
-					// IDE-2479
-					// if (verbose)
-					System.out.println(mt.dataTable());
 				}
 				rec.markEndProcessing(mp.project);
 			}

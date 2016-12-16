@@ -22,17 +22,19 @@ public class MemoryTracker {
 	private final List<List<Long>> usedMemory = new ArrayList<>();
 	private final List<List<String>> labels = new ArrayList<>();
 	private final boolean recordData;
+	private final boolean verbose;
 	private int counter = -1;
 	private int longestLabel = 0;
 
 	/** Default, tracker will record memory data. */
 	public MemoryTracker() {
-		this(true);
+		this(true, false);
 	}
 
 	/** Flag decides if tracker will record data. Convenience approach, easier then conditionals calls by clients. */
-	public MemoryTracker(boolean recordData) {
+	public MemoryTracker(boolean recordData, boolean verbose) {
 		this.recordData = recordData;
+		this.verbose = verbose;
 	}
 
 	/** Use provided label as new series of measurements. */
@@ -59,6 +61,26 @@ public class MemoryTracker {
 		labels.get(counter).add(label);
 		if (label.length() > longestLabel) {
 			longestLabel = label.length();
+		}
+
+		if (verbose) {
+			List<String> seriesLabels = labels.get(counter);
+			List<Long> seriesUsed = usedMemory.get(counter);
+			StringBuilder sb = new StringBuilder("\nrecording memory " + seriesLabels.get(0));
+
+			int current = seriesUsed.size() - 1;
+			int prevPoint = current > 1 ? current - 1 : 0;
+
+			sb.append(String.format("\n| %s | %s | %s |",
+					formatLabel(" mem diff"),
+					formatMemory("used delta"),
+					formatMemory("used total")));
+			sb.append(String.format("\n| %s | %s | %s |",
+					formatLabel(" " + label),
+					formatMemory(bytesToHuman(seriesUsed.get(current) - seriesUsed.get(prevPoint))),
+					formatMemory(bytesToHuman(seriesUsed.get(current)))));
+
+			System.out.println(sb);
 		}
 	}
 
