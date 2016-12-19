@@ -440,6 +440,8 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     declaredAsync?='async' (ambiguity) '(' ')' ':' returnTypeRef=TypeRef
+	 *     declaredAsync?='async' (ambiguity) '(' ')' '=>' body=ExpressionDisguisedAsBlock
+	 *     declaredAsync?='async' (ambiguity) '(' ')' '=>' hasBracesAroundBody?='{'
 	 *     declaredAsync?='async' (ambiguity) '(' fpars+=FormalParameter
 	 *     declaredAsync?='async' (ambiguity) 'function' '(' ')' ':' returnTypeRef=TypeRef
 	 *     declaredAsync?='async' (ambiguity) 'function' '(' ')' (rule end)
@@ -450,8 +452,6 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     declaredAsync?='async' (ambiguity) 'function' generator?='*'
 	 *     declaredAsync?='async' (ambiguity) 'function' name=BindingIdentifier
 	 *     declaredAsync?='async' (ambiguity) declaredName=LiteralOrComputedPropertyName
-	 *     generator?='*' (ambiguity) '(' ')' ':' returnTypeRef=TypeRef
-	 *     generator?='*' (ambiguity) '(' fpars+=FormalParameter
 	 */
 	protected void emit_NoLineTerminator_NO_LINE_TERMINATORTerminalRuleCall_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

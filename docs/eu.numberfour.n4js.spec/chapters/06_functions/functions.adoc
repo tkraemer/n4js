@@ -942,13 +942,62 @@ math:[$S$], i.e. math:[$T <:$] .
 
 --
 
-=== Asynchronous Arrow Functions
+==== Asynchronous Arrow Functions
 task:IDE-1494[]
 
 An `await` expression is allowed in the body of an async arrow function but not
 in the body of a non-async arrow function. The semantics here are
 intentional and are in line with similar constraint for function
 expressions.
+
+
+
+
+=== Generator Functions
+task:IDE-1347[]
+
+
+==== Syntax [[asynchronous-functions-syntax]]
+
+[source]
+----
+GeneratorFunctionDeclaration <Yield>:
+        (declaredModifiers+=N4Modifier)*
+        'function'
+        generator?='*' 
+        FunctionHeader<YieldIfGenerator,Generator=true> FunctionBody<Yield=true,Expression>
+        FunctionHeader<Yield,Generator=false>
+        FunctionBody<Yield=true,Expression=false> Semi
+;
+
+GeneratorFunctionExpression:
+        generator?='*' NoLineTerminator 'function'
+        FunctionHeader<Yield=false,Generator=false>
+        FunctionBody<Yield=true,Expression=true>
+;
+
+GeneratorArrowExpression <In, Yield>:
+        generator?='*' NoLineTerminator '('
+            (fpars+=FormalParameter<Yield>
+                (',' fpars+=FormalParameter<Yield>)*)?
+        ')' (':' returnTypeRef=TypeRef)? '=>'
+        (   '{' body=BlockMinusBraces<Yield> '}'
+            | body=ExpressionDisguisedAsBlock<In,Yield=true>
+        )
+;
+
+GeneratorMethodDeclaration:
+    annotations+=Annotation+ (declaredModifiers+=N4Modifier)* TypeVariables?
+    generator?='*' NoLineTerminator LiteralOrComputedPropertyName<Yield>
+    MethodParamsReturnAndBody
+----
+
+==== Semantics [[asynchronous-functions-semantics]]
+==== Generator Arrow Functions
+
+
+
+
 
 == N4JS Extended Function Definition
 

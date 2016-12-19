@@ -211,12 +211,6 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getArrowExpressionAccess().getGroup_0_0_0_1_1(), "rule__ArrowExpression__Group_0_0_0_1_1__0");
 					put(grammarAccess.getArrowExpressionAccess().getGroup_0_0_0_1_1_1(), "rule__ArrowExpression__Group_0_0_0_1_1_1__0");
 					put(grammarAccess.getArrowExpressionAccess().getGroup_0_0_0_1_3(), "rule__ArrowExpression__Group_0_0_0_1_3__0");
-					put(grammarAccess.getArrowExpressionAccess().getGroup_0_0_0_2(), "rule__ArrowExpression__Group_0_0_0_2__0");
-					put(grammarAccess.getArrowExpressionAccess().getGroup_0_0_0_2_0(), "rule__ArrowExpression__Group_0_0_0_2_0__0");
-					put(grammarAccess.getArrowExpressionAccess().getGroup_0_0_0_2_0_0(), "rule__ArrowExpression__Group_0_0_0_2_0_0__0");
-					put(grammarAccess.getArrowExpressionAccess().getGroup_0_0_0_2_1(), "rule__ArrowExpression__Group_0_0_0_2_1__0");
-					put(grammarAccess.getArrowExpressionAccess().getGroup_0_0_0_2_1_1(), "rule__ArrowExpression__Group_0_0_0_2_1_1__0");
-					put(grammarAccess.getArrowExpressionAccess().getGroup_0_0_0_2_3(), "rule__ArrowExpression__Group_0_0_0_2_3__0");
 					put(grammarAccess.getArrowExpressionAccess().getGroup_1_0(), "rule__ArrowExpression__Group_1_0__0");
 					put(grammarAccess.getStrictFormalParametersAccess().getGroup(), "rule__StrictFormalParameters__Group__0");
 					put(grammarAccess.getStrictFormalParametersAccess().getGroup_1(), "rule__StrictFormalParameters__Group_1__0");
@@ -678,11 +672,7 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_1_1_0(), "rule__ArrowExpression__FparsAssignment_0_0_0_1_1_0");
 					put(grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_1_1_1_1(), "rule__ArrowExpression__FparsAssignment_0_0_0_1_1_1_1");
 					put(grammarAccess.getArrowExpressionAccess().getReturnTypeRefAssignment_0_0_0_1_3_1(), "rule__ArrowExpression__ReturnTypeRefAssignment_0_0_0_1_3_1");
-					put(grammarAccess.getArrowExpressionAccess().getGeneratorAssignment_0_0_0_2_0_0_0(), "rule__ArrowExpression__GeneratorAssignment_0_0_0_2_0_0_0");
-					put(grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_2_1_0(), "rule__ArrowExpression__FparsAssignment_0_0_0_2_1_0");
-					put(grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_2_1_1_1(), "rule__ArrowExpression__FparsAssignment_0_0_0_2_1_1_1");
-					put(grammarAccess.getArrowExpressionAccess().getReturnTypeRefAssignment_0_0_0_2_3_1(), "rule__ArrowExpression__ReturnTypeRefAssignment_0_0_0_2_3_1");
-					put(grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_3(), "rule__ArrowExpression__FparsAssignment_0_0_0_3");
+					put(grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_2(), "rule__ArrowExpression__FparsAssignment_0_0_0_2");
 					put(grammarAccess.getArrowExpressionAccess().getHasBracesAroundBodyAssignment_1_0_0(), "rule__ArrowExpression__HasBracesAroundBodyAssignment_1_0_0");
 					put(grammarAccess.getArrowExpressionAccess().getBodyAssignment_1_0_1(), "rule__ArrowExpression__BodyAssignment_1_0_1");
 					put(grammarAccess.getArrowExpressionAccess().getBodyAssignment_1_1(), "rule__ArrowExpression__BodyAssignment_1_1");

@@ -1719,27 +1719,8 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonKeyword_0_0_0_1_3_0 = (Keyword)cGroup_0_0_0_1_3.eContents().get(0);
 		private final Assignment cReturnTypeRefAssignment_0_0_0_1_3_1 = (Assignment)cGroup_0_0_0_1_3.eContents().get(1);
 		private final RuleCall cReturnTypeRefTypeRefParserRuleCall_0_0_0_1_3_1_0 = (RuleCall)cReturnTypeRefAssignment_0_0_0_1_3_1.eContents().get(0);
-		private final Group cGroup_0_0_0_2 = (Group)cAlternatives_0_0_0.eContents().get(2);
-		private final Group cGroup_0_0_0_2_0 = (Group)cGroup_0_0_0_2.eContents().get(0);
-		private final Group cGroup_0_0_0_2_0_0 = (Group)cGroup_0_0_0_2_0.eContents().get(0);
-		private final Assignment cGeneratorAssignment_0_0_0_2_0_0_0 = (Assignment)cGroup_0_0_0_2_0_0.eContents().get(0);
-		private final Keyword cGeneratorAsteriskKeyword_0_0_0_2_0_0_0_0 = (Keyword)cGeneratorAssignment_0_0_0_2_0_0_0.eContents().get(0);
-		private final RuleCall cNoLineTerminatorParserRuleCall_0_0_0_2_0_0_1 = (RuleCall)cGroup_0_0_0_2_0_0.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_0_0_0_2_0_0_2 = (Keyword)cGroup_0_0_0_2_0_0.eContents().get(2);
-		private final Group cGroup_0_0_0_2_1 = (Group)cGroup_0_0_0_2.eContents().get(1);
-		private final Assignment cFparsAssignment_0_0_0_2_1_0 = (Assignment)cGroup_0_0_0_2_1.eContents().get(0);
-		private final RuleCall cFparsFormalParameterParserRuleCall_0_0_0_2_1_0_0 = (RuleCall)cFparsAssignment_0_0_0_2_1_0.eContents().get(0);
-		private final Group cGroup_0_0_0_2_1_1 = (Group)cGroup_0_0_0_2_1.eContents().get(1);
-		private final Keyword cCommaKeyword_0_0_0_2_1_1_0 = (Keyword)cGroup_0_0_0_2_1_1.eContents().get(0);
-		private final Assignment cFparsAssignment_0_0_0_2_1_1_1 = (Assignment)cGroup_0_0_0_2_1_1.eContents().get(1);
-		private final RuleCall cFparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0 = (RuleCall)cFparsAssignment_0_0_0_2_1_1_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_0_0_0_2_2 = (Keyword)cGroup_0_0_0_2.eContents().get(2);
-		private final Group cGroup_0_0_0_2_3 = (Group)cGroup_0_0_0_2.eContents().get(3);
-		private final Keyword cColonKeyword_0_0_0_2_3_0 = (Keyword)cGroup_0_0_0_2_3.eContents().get(0);
-		private final Assignment cReturnTypeRefAssignment_0_0_0_2_3_1 = (Assignment)cGroup_0_0_0_2_3.eContents().get(1);
-		private final RuleCall cReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0 = (RuleCall)cReturnTypeRefAssignment_0_0_0_2_3_1.eContents().get(0);
-		private final Assignment cFparsAssignment_0_0_0_3 = (Assignment)cAlternatives_0_0_0.eContents().get(3);
-		private final RuleCall cFparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0 = (RuleCall)cFparsAssignment_0_0_0_3.eContents().get(0);
+		private final Assignment cFparsAssignment_0_0_0_2 = (Assignment)cAlternatives_0_0_0.eContents().get(2);
+		private final RuleCall cFparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0 = (RuleCall)cFparsAssignment_0_0_0_2.eContents().get(0);
 		private final Keyword cEqualsSignGreaterThanSignKeyword_0_0_1 = (Keyword)cGroup_0_0.eContents().get(1);
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
 		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
@@ -1755,60 +1736,54 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//	=> ((
 		//	// we cannot use fragments here since we have to combine the terminals into a syntactic predicate
 		//	// also, we have to use explicit alternatives instead of making async optional due to a generation bug
-		//	-> '(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
-		//	| -> (declaredAsync?='async' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (','
+		//	'(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
+		//	| => (declaredAsync?='async' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (','
 		//	fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
-		//	| -> (generator?='*' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')'
-		//	(':' returnTypeRef=TypeRef)?
 		//	| fpars+=BindingIdentifierAsFormalParameter<Yield>)
-		//	/ * no line terminator here, guaranteed implicitly * / '=>') (-> hasBracesAroundBody?='{'
-		//	body=BlockMinusBraces<Yield=true> '}' | body=ExpressionDisguisedAsBlock<In,Yield=true>)
+		//	/ * no line terminator here, guaranteed implicitly * / '=>') (-> hasBracesAroundBody?='{' body=BlockMinusBraces<Yield>
+		//	'}' | body=ExpressionDisguisedAsBlock<In>)
 		@Override public ParserRule getRule() { return rule; }
 
 		//=> (( // we cannot use fragments here since we have to combine the terminals into a syntactic predicate
 		//// also, we have to use explicit alternatives instead of making async optional due to a generation bug
-		//-> '(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)? | ->
+		//'(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)? | =>
 		//(declaredAsync?='async' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')'
-		//(':' returnTypeRef=TypeRef)? | -> (generator?='*' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (','
-		//fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)? | fpars+=BindingIdentifierAsFormalParameter<Yield>)
-		/// * no line terminator here, guaranteed implicitly * / '=>') (-> hasBracesAroundBody?='{'
-		//body=BlockMinusBraces<Yield=true> '}' | body=ExpressionDisguisedAsBlock<In,Yield=true>)
+		//(':' returnTypeRef=TypeRef)? | fpars+=BindingIdentifierAsFormalParameter<Yield>)
+		/// * no line terminator here, guaranteed implicitly * / '=>') (-> hasBracesAroundBody?='{' body=BlockMinusBraces<Yield>
+		//'}' | body=ExpressionDisguisedAsBlock<In>)
 		public Group getGroup() { return cGroup; }
 
 		//=> (( // we cannot use fragments here since we have to combine the terminals into a syntactic predicate
 		//// also, we have to use explicit alternatives instead of making async optional due to a generation bug
-		//-> '(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)? | ->
+		//'(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)? | =>
 		//(declaredAsync?='async' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')'
-		//(':' returnTypeRef=TypeRef)? | -> (generator?='*' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (','
-		//fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)? | fpars+=BindingIdentifierAsFormalParameter<Yield>)
+		//(':' returnTypeRef=TypeRef)? | fpars+=BindingIdentifierAsFormalParameter<Yield>)
 		/// * no line terminator here, guaranteed implicitly * / '=>')
 		public Group getGroup_0() { return cGroup_0; }
 
 		//(( // we cannot use fragments here since we have to combine the terminals into a syntactic predicate
 		//// also, we have to use explicit alternatives instead of making async optional due to a generation bug
-		//-> '(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)? | ->
+		//'(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)? | =>
 		//(declaredAsync?='async' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')'
-		//(':' returnTypeRef=TypeRef)? | -> (generator?='*' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (','
-		//fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)? | fpars+=BindingIdentifierAsFormalParameter<Yield>)
+		//(':' returnTypeRef=TypeRef)? | fpars+=BindingIdentifierAsFormalParameter<Yield>)
 		/// * no line terminator here, guaranteed implicitly * / '=>')
 		public Group getGroup_0_0() { return cGroup_0_0; }
 
 		//( // we cannot use fragments here since we have to combine the terminals into a syntactic predicate
 		//// also, we have to use explicit alternatives instead of making async optional due to a generation bug
-		//-> '(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)? | ->
+		//'(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)? | =>
 		//(declaredAsync?='async' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')'
-		//(':' returnTypeRef=TypeRef)? | -> (generator?='*' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (','
-		//fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)? | fpars+=BindingIdentifierAsFormalParameter<Yield>)
+		//(':' returnTypeRef=TypeRef)? | fpars+=BindingIdentifierAsFormalParameter<Yield>)
 		public Alternatives getAlternatives_0_0_0() { return cAlternatives_0_0_0; }
 
 		//// we cannot use fragments here since we have to combine the terminals into a syntactic predicate
 		//// also, we have to use explicit alternatives instead of making async optional due to a generation bug
-		//-> '(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
+		//'(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
 		public Group getGroup_0_0_0_0() { return cGroup_0_0_0_0; }
 
 		//// we cannot use fragments here since we have to combine the terminals into a syntactic predicate
 		//// also, we have to use explicit alternatives instead of making async optional due to a generation bug
-		//-> '('
+		//'('
 		public Keyword getLeftParenthesisKeyword_0_0_0_0_0() { return cLeftParenthesisKeyword_0_0_0_0_0; }
 
 		//(fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)?
@@ -1847,11 +1822,11 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//TypeRef
 		public RuleCall getReturnTypeRefTypeRefParserRuleCall_0_0_0_0_3_1_0() { return cReturnTypeRefTypeRefParserRuleCall_0_0_0_0_3_1_0; }
 
-		//-> (declaredAsync?='async' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)?
+		//=> (declaredAsync?='async' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)?
 		//')' (':' returnTypeRef=TypeRef)?
 		public Group getGroup_0_0_0_1() { return cGroup_0_0_0_1; }
 
-		//-> (declaredAsync?='async' NoLineTerminator '(')
+		//=> (declaredAsync?='async' NoLineTerminator '(')
 		public Group getGroup_0_0_0_1_0() { return cGroup_0_0_0_1_0; }
 
 		//(declaredAsync?='async' NoLineTerminator '(')
@@ -1905,77 +1880,19 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//TypeRef
 		public RuleCall getReturnTypeRefTypeRefParserRuleCall_0_0_0_1_3_1_0() { return cReturnTypeRefTypeRefParserRuleCall_0_0_0_1_3_1_0; }
 
-		//-> (generator?='*' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':'
-		//returnTypeRef=TypeRef)?
-		public Group getGroup_0_0_0_2() { return cGroup_0_0_0_2; }
-
-		//-> (generator?='*' NoLineTerminator '(')
-		public Group getGroup_0_0_0_2_0() { return cGroup_0_0_0_2_0; }
-
-		//(generator?='*' NoLineTerminator '(')
-		public Group getGroup_0_0_0_2_0_0() { return cGroup_0_0_0_2_0_0; }
-
-		//generator?='*'
-		public Assignment getGeneratorAssignment_0_0_0_2_0_0_0() { return cGeneratorAssignment_0_0_0_2_0_0_0; }
-
-		//'*'
-		public Keyword getGeneratorAsteriskKeyword_0_0_0_2_0_0_0_0() { return cGeneratorAsteriskKeyword_0_0_0_2_0_0_0_0; }
-
-		//NoLineTerminator
-		public RuleCall getNoLineTerminatorParserRuleCall_0_0_0_2_0_0_1() { return cNoLineTerminatorParserRuleCall_0_0_0_2_0_0_1; }
-
-		//'('
-		public Keyword getLeftParenthesisKeyword_0_0_0_2_0_0_2() { return cLeftParenthesisKeyword_0_0_0_2_0_0_2; }
-
-		//(fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)?
-		public Group getGroup_0_0_0_2_1() { return cGroup_0_0_0_2_1; }
-
-		//fpars+=FormalParameter<Yield>
-		public Assignment getFparsAssignment_0_0_0_2_1_0() { return cFparsAssignment_0_0_0_2_1_0; }
-
-		//FormalParameter<Yield>
-		public RuleCall getFparsFormalParameterParserRuleCall_0_0_0_2_1_0_0() { return cFparsFormalParameterParserRuleCall_0_0_0_2_1_0_0; }
-
-		//(',' fpars+=FormalParameter<Yield>)*
-		public Group getGroup_0_0_0_2_1_1() { return cGroup_0_0_0_2_1_1; }
-
-		//','
-		public Keyword getCommaKeyword_0_0_0_2_1_1_0() { return cCommaKeyword_0_0_0_2_1_1_0; }
-
-		//fpars+=FormalParameter<Yield>
-		public Assignment getFparsAssignment_0_0_0_2_1_1_1() { return cFparsAssignment_0_0_0_2_1_1_1; }
-
-		//FormalParameter<Yield>
-		public RuleCall getFparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0() { return cFparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0; }
-
-		//')'
-		public Keyword getRightParenthesisKeyword_0_0_0_2_2() { return cRightParenthesisKeyword_0_0_0_2_2; }
-
-		//(':' returnTypeRef=TypeRef)?
-		public Group getGroup_0_0_0_2_3() { return cGroup_0_0_0_2_3; }
-
-		//':'
-		public Keyword getColonKeyword_0_0_0_2_3_0() { return cColonKeyword_0_0_0_2_3_0; }
-
-		//returnTypeRef=TypeRef
-		public Assignment getReturnTypeRefAssignment_0_0_0_2_3_1() { return cReturnTypeRefAssignment_0_0_0_2_3_1; }
-
-		//TypeRef
-		public RuleCall getReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0() { return cReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0; }
-
 		//fpars+=BindingIdentifierAsFormalParameter<Yield>
-		public Assignment getFparsAssignment_0_0_0_3() { return cFparsAssignment_0_0_0_3; }
+		public Assignment getFparsAssignment_0_0_0_2() { return cFparsAssignment_0_0_0_2; }
 
 		//BindingIdentifierAsFormalParameter<Yield>
-		public RuleCall getFparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0() { return cFparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0; }
+		public RuleCall getFparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0() { return cFparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0; }
 
 		/// * no line terminator here, guaranteed implicitly * / '=>'
 		public Keyword getEqualsSignGreaterThanSignKeyword_0_0_1() { return cEqualsSignGreaterThanSignKeyword_0_0_1; }
 
-		//(-> hasBracesAroundBody?='{' body=BlockMinusBraces<Yield=true> '}' | body=ExpressionDisguisedAsBlock<In,Yield=true>)
+		//(-> hasBracesAroundBody?='{' body=BlockMinusBraces<Yield> '}' | body=ExpressionDisguisedAsBlock<In>)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
-		//-> hasBracesAroundBody?='{' body=BlockMinusBraces<Yield=true> '}'
+		//-> hasBracesAroundBody?='{' body=BlockMinusBraces<Yield> '}'
 		public Group getGroup_1_0() { return cGroup_1_0; }
 
 		//-> hasBracesAroundBody?='{'
@@ -1984,19 +1901,19 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getHasBracesAroundBodyLeftCurlyBracketKeyword_1_0_0_0() { return cHasBracesAroundBodyLeftCurlyBracketKeyword_1_0_0_0; }
 
-		//body=BlockMinusBraces<Yield=true>
+		//body=BlockMinusBraces<Yield>
 		public Assignment getBodyAssignment_1_0_1() { return cBodyAssignment_1_0_1; }
 
-		//BlockMinusBraces<Yield=true>
+		//BlockMinusBraces<Yield>
 		public RuleCall getBodyBlockMinusBracesParserRuleCall_1_0_1_0() { return cBodyBlockMinusBracesParserRuleCall_1_0_1_0; }
 
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_1_0_2() { return cRightCurlyBracketKeyword_1_0_2; }
 
-		//body=ExpressionDisguisedAsBlock<In,Yield=true>
+		//body=ExpressionDisguisedAsBlock<In>
 		public Assignment getBodyAssignment_1_1() { return cBodyAssignment_1_1; }
 
-		//ExpressionDisguisedAsBlock<In,Yield=true>
+		//ExpressionDisguisedAsBlock<In>
 		public RuleCall getBodyExpressionDisguisedAsBlockParserRuleCall_1_1_0() { return cBodyExpressionDisguisedAsBlockParserRuleCall_1_1_0; }
 	}
 
@@ -2095,20 +2012,20 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cStatementsAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cStatementsAssignmentExpressionStatementParserRuleCall_1_0 = (RuleCall)cStatementsAssignment_1.eContents().get(0);
 		
-		//ExpressionDisguisedAsBlock <In, Yield Block:
-		//	{Block} statements+=AssignmentExpressionStatement<In,Yield>
+		//ExpressionDisguisedAsBlock <In Block:
+		//	{Block} statements+=AssignmentExpressionStatement<In>
 		@Override public ParserRule getRule() { return rule; }
 
-		//{Block} statements+=AssignmentExpressionStatement<In,Yield>
+		//{Block} statements+=AssignmentExpressionStatement<In>
 		public Group getGroup() { return cGroup; }
 
 		//{Block}
 		public Action getBlockAction_0() { return cBlockAction_0; }
 
-		//statements+=AssignmentExpressionStatement<In,Yield>
+		//statements+=AssignmentExpressionStatement<In>
 		public Assignment getStatementsAssignment_1() { return cStatementsAssignment_1; }
 
-		//AssignmentExpressionStatement<In,Yield>
+		//AssignmentExpressionStatement<In>
 		public RuleCall getStatementsAssignmentExpressionStatementParserRuleCall_1_0() { return cStatementsAssignmentExpressionStatementParserRuleCall_1_0; }
 	}
 
@@ -2117,14 +2034,14 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cExpressionAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cExpressionAssignmentExpressionParserRuleCall_0 = (RuleCall)cExpressionAssignment.eContents().get(0);
 		
-		//AssignmentExpressionStatement <In, Yield ExpressionStatement:
-		//	expression=AssignmentExpression<In,Yield>
+		//AssignmentExpressionStatement <In ExpressionStatement:
+		//	expression=AssignmentExpression<In,Yield=false>
 		@Override public ParserRule getRule() { return rule; }
 
-		//expression=AssignmentExpression<In,Yield>
+		//expression=AssignmentExpression<In,Yield=false>
 		public Assignment getExpressionAssignment() { return cExpressionAssignment; }
 
-		//AssignmentExpression<In,Yield>
+		//AssignmentExpression<In,Yield=false>
 		public RuleCall getExpressionAssignmentExpressionParserRuleCall_0() { return cExpressionAssignmentExpressionParserRuleCall_0; }
 	}
 
@@ -10867,14 +10784,12 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	//	=> ((
 	//	// we cannot use fragments here since we have to combine the terminals into a syntactic predicate
 	//	// also, we have to use explicit alternatives instead of making async optional due to a generation bug
-	//	-> '(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
-	//	| -> (declaredAsync?='async' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (','
+	//	'(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
+	//	| => (declaredAsync?='async' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (','
 	//	fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
-	//	| -> (generator?='*' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')'
-	//	(':' returnTypeRef=TypeRef)?
 	//	| fpars+=BindingIdentifierAsFormalParameter<Yield>)
-	//	/ * no line terminator here, guaranteed implicitly * / '=>') (-> hasBracesAroundBody?='{'
-	//	body=BlockMinusBraces<Yield=true> '}' | body=ExpressionDisguisedAsBlock<In,Yield=true>)
+	//	/ * no line terminator here, guaranteed implicitly * / '=>') (-> hasBracesAroundBody?='{' body=BlockMinusBraces<Yield>
+	//	'}' | body=ExpressionDisguisedAsBlock<In>)
 	public ArrowExpressionElements getArrowExpressionAccess() {
 		return pArrowExpression;
 	}
@@ -10913,8 +10828,8 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		return getBlockMinusBracesAccess().getRule();
 	}
 
-	//ExpressionDisguisedAsBlock <In, Yield Block:
-	//	{Block} statements+=AssignmentExpressionStatement<In,Yield>
+	//ExpressionDisguisedAsBlock <In Block:
+	//	{Block} statements+=AssignmentExpressionStatement<In>
 	public ExpressionDisguisedAsBlockElements getExpressionDisguisedAsBlockAccess() {
 		return pExpressionDisguisedAsBlock;
 	}
@@ -10923,8 +10838,8 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		return getExpressionDisguisedAsBlockAccess().getRule();
 	}
 
-	//AssignmentExpressionStatement <In, Yield ExpressionStatement:
-	//	expression=AssignmentExpression<In,Yield>
+	//AssignmentExpressionStatement <In ExpressionStatement:
+	//	expression=AssignmentExpression<In,Yield=false>
 	public AssignmentExpressionStatementElements getAssignmentExpressionStatementAccess() {
 		return pAssignmentExpressionStatement;
 	}

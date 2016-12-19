@@ -292,14 +292,13 @@ ArrowExpression <In, Yield> returns ArrowFunction:
 			(
 					// we cannot use fragments here since we have to combine the terminals into a syntactic predicate
 					// also, we have to use explicit alternatives instead of making async optional due to a generation bug
-					->'(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
-				|	->(declaredAsync?='async' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
-				|	->(generator?='*' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
+					'(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
+				|	=>(declaredAsync?='async' NoLineTerminator '(') (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')' (':' returnTypeRef=TypeRef)?
 				| 	fpars+=BindingIdentifierAsFormalParameter<Yield>
 			)
 			/* no line terminator here, guaranteed implicitly */ '=>'
 		)
-		(-> hasBracesAroundBody?='{' body=BlockMinusBraces<Yield=true> '}' | body=ExpressionDisguisedAsBlock<In, Yield=true>)
+		(-> hasBracesAroundBody?='{' body=BlockMinusBraces<Yield> '}' | body=ExpressionDisguisedAsBlock<In>)
 ;
 
 fragment StrictFormalParameters <Yield>*:
@@ -310,11 +309,11 @@ BindingIdentifierAsFormalParameter <Yield> returns FormalParameter:	name=Binding
 
 BlockMinusBraces <Yield> returns Block:	{Block} statements+=Statement<Yield>*;
 
-ExpressionDisguisedAsBlock <In, Yield> returns Block:
-	{Block} statements+=AssignmentExpressionStatement<In, Yield>
+ExpressionDisguisedAsBlock <In> returns Block:
+	{Block} statements+=AssignmentExpressionStatement<In>
 ;
 
-AssignmentExpressionStatement <In, Yield> returns ExpressionStatement:	expression=AssignmentExpression<In,Yield>;
+AssignmentExpressionStatement <In> returns ExpressionStatement:	expression=AssignmentExpression<In,Yield=false>;
 
 /**
  * Left factored, annotated expression.

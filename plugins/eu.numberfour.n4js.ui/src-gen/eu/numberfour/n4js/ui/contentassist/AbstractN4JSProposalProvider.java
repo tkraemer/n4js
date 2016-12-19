@@ -142,9 +142,6 @@ public class AbstractN4JSProposalProvider extends eu.numberfour.n4js.ts.ui.conte
 	public void completeArrowExpression_DeclaredAsync(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
 	}
-	public void completeArrowExpression_Generator(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		// subclasses may override
-	}
 	public void completeArrowExpression_HasBracesAroundBody(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
 	}

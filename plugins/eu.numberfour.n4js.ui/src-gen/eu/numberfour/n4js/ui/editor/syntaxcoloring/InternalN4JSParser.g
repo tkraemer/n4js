@@ -1263,9 +1263,8 @@ entryRuleArrowExpression
 ruleArrowExpression 
     @init {
     }:
-((((((((
-	LeftParenthesis 	)=>
-	LeftParenthesis 	)((
+((((((
+	LeftParenthesis 	((
 (
 	ruleFormalParameter
 )
@@ -1281,35 +1280,17 @@ ruleArrowExpression
 	ruleTypeRef
 )
 ))?)
-    |(((
-	Async 	)=>((
+    |(((((
 (
 
 	Async 	
 
 )
 )	ruleNoLineTerminator
-	LeftParenthesis 	))((
-(
-	ruleFormalParameter
-)
-)(
-	Comma 	(
-(
-	ruleFormalParameter
-)
-))*)?
-	RightParenthesis 	(
-	Colon 	(
-(
-	ruleTypeRef
-)
-))?)
-    |(((
-	Asterisk 	)=>((
+	LeftParenthesis 	))=>((
 (
 
-	Asterisk 	
+	Async 	
 
 )
 )	ruleNoLineTerminator
@@ -1334,9 +1315,8 @@ ruleArrowExpression
 	ruleBindingIdentifierAsFormalParameter
 )
 ))
-	EqualsSignGreaterThanSign 	))=>(((((
-	LeftParenthesis 	)=>
-	LeftParenthesisKeyword_0_0_0_0_0=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_0_0_0, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_0_0()); })((
+	EqualsSignGreaterThanSign 	))=>(((
+	LeftParenthesisKeyword_0_0_0_0_0=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_0_0_0, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_0_0()); }((
 (
 	FparsFormalParameterParserRuleCall_0_0_0_0_1_0_0=ruleFormalParameter { announce($FparsFormalParameterParserRuleCall_0_0_0_0_1_0_0.start, $FparsFormalParameterParserRuleCall_0_0_0_0_1_0_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_0_1_0()); }
 )
@@ -1352,8 +1332,14 @@ ruleArrowExpression
 	ReturnTypeRefTypeRefParserRuleCall_0_0_0_0_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_0_0_0_0_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_0_0_0_0_3_1_0.stop, grammarAccess.getArrowExpressionAccess().getReturnTypeRefAssignment_0_0_0_0_3_1()); }
 )
 ))?)
-    |(((
-	Async 	)=>((
+    |(((((
+(
+
+	Async 	
+
+)
+)	ruleNoLineTerminator
+	LeftParenthesis 	))=>((
 (
 
 	DeclaredAsyncAsyncKeyword_0_0_0_1_0_0_0_0=Async 	 { announce($DeclaredAsyncAsyncKeyword_0_0_0_1_0_0_0_0, grammarAccess.getArrowExpressionAccess().getDeclaredAsyncAsyncKeyword_0_0_0_1_0_0_0_0()); }
@@ -1377,34 +1363,9 @@ ruleArrowExpression
 	ReturnTypeRefTypeRefParserRuleCall_0_0_0_1_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_0_0_0_1_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_0_0_0_1_3_1_0.stop, grammarAccess.getArrowExpressionAccess().getReturnTypeRefAssignment_0_0_0_1_3_1()); }
 )
 ))?)
-    |(((
-	Asterisk 	)=>((
-(
-
-	GeneratorAsteriskKeyword_0_0_0_2_0_0_0_0=Asterisk 	 { announce($GeneratorAsteriskKeyword_0_0_0_2_0_0_0_0, grammarAccess.getArrowExpressionAccess().getGeneratorAsteriskKeyword_0_0_0_2_0_0_0_0()); }
-
-)
-)	NoLineTerminatorParserRuleCall_0_0_0_2_0_0_1=ruleNoLineTerminator		{ announce($NoLineTerminatorParserRuleCall_0_0_0_2_0_0_1.start, $NoLineTerminatorParserRuleCall_0_0_0_2_0_0_1.stop, grammarAccess.getArrowExpressionAccess().getNoLineTerminatorParserRuleCall_0_0_0_2_0_0_1()); }
-
-	LeftParenthesisKeyword_0_0_0_2_0_0_2=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_0_2_0_0_2, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_2_0_0_2()); }))((
-(
-	FparsFormalParameterParserRuleCall_0_0_0_2_1_0_0=ruleFormalParameter { announce($FparsFormalParameterParserRuleCall_0_0_0_2_1_0_0.start, $FparsFormalParameterParserRuleCall_0_0_0_2_1_0_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_2_1_0()); }
-)
-)(
-	CommaKeyword_0_0_0_2_1_1_0=Comma 	 { announce($CommaKeyword_0_0_0_2_1_1_0, grammarAccess.getArrowExpressionAccess().getCommaKeyword_0_0_0_2_1_1_0()); }(
-(
-	FparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0=ruleFormalParameter { announce($FparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0.start, $FparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_2_1_1_1()); }
-)
-))*)?
-	RightParenthesisKeyword_0_0_0_2_2=RightParenthesis 	 { announce($RightParenthesisKeyword_0_0_0_2_2, grammarAccess.getArrowExpressionAccess().getRightParenthesisKeyword_0_0_0_2_2()); }(
-	ColonKeyword_0_0_0_2_3_0=Colon 	 { announce($ColonKeyword_0_0_0_2_3_0, grammarAccess.getArrowExpressionAccess().getColonKeyword_0_0_0_2_3_0()); }(
-(
-	ReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0.stop, grammarAccess.getArrowExpressionAccess().getReturnTypeRefAssignment_0_0_0_2_3_1()); }
-)
-))?)
     |(
 (
-	FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0=ruleBindingIdentifierAsFormalParameter { announce($FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0.start, $FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_3()); }
+	FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0=ruleBindingIdentifierAsFormalParameter { announce($FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0.start, $FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_2()); }
 )
 ))
 	EqualsSignGreaterThanSignKeyword_0_0_1=EqualsSignGreaterThanSign 	 { announce($EqualsSignGreaterThanSignKeyword_0_0_1, grammarAccess.getArrowExpressionAccess().getEqualsSignGreaterThanSignKeyword_0_0_1()); }))((((
@@ -1416,13 +1377,13 @@ ruleArrowExpression
 )
 )(
 (
-	BodyBlockMinusBracesParserRuleCall_1_0_1_0=norm1_BlockMinusBraces { announce($BodyBlockMinusBracesParserRuleCall_1_0_1_0.start, $BodyBlockMinusBracesParserRuleCall_1_0_1_0.stop, grammarAccess.getArrowExpressionAccess().getBodyAssignment_1_0_1()); }
+	BodyBlockMinusBracesParserRuleCall_1_0_1_0=ruleBlockMinusBraces { announce($BodyBlockMinusBracesParserRuleCall_1_0_1_0.start, $BodyBlockMinusBracesParserRuleCall_1_0_1_0.stop, grammarAccess.getArrowExpressionAccess().getBodyAssignment_1_0_1()); }
 )
 )
 	RightCurlyBracketKeyword_1_0_2=RightCurlyBracket 	 { announce($RightCurlyBracketKeyword_1_0_2, grammarAccess.getArrowExpressionAccess().getRightCurlyBracketKeyword_1_0_2()); })
     |(
 (
-	BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0=norm2_ExpressionDisguisedAsBlock { announce($BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.start, $BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.stop, grammarAccess.getArrowExpressionAccess().getBodyAssignment_1_1()); }
+	BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0=ruleExpressionDisguisedAsBlock { announce($BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.start, $BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.stop, grammarAccess.getArrowExpressionAccess().getBodyAssignment_1_1()); }
 )
 )))
 ;
@@ -1436,9 +1397,8 @@ ruleArrowExpression
 norm1_ArrowExpression 
     @init {
     }:
-((((((((
-	LeftParenthesis 	)=>
-	LeftParenthesis 	)((
+((((((
+	LeftParenthesis 	((
 (
 	ruleFormalParameter
 )
@@ -1454,35 +1414,17 @@ norm1_ArrowExpression
 	ruleTypeRef
 )
 ))?)
-    |(((
-	Async 	)=>((
+    |(((((
 (
 
 	Async 	
 
 )
 )	ruleNoLineTerminator
-	LeftParenthesis 	))((
-(
-	ruleFormalParameter
-)
-)(
-	Comma 	(
-(
-	ruleFormalParameter
-)
-))*)?
-	RightParenthesis 	(
-	Colon 	(
-(
-	ruleTypeRef
-)
-))?)
-    |(((
-	Asterisk 	)=>((
+	LeftParenthesis 	))=>((
 (
 
-	Asterisk 	
+	Async 	
 
 )
 )	ruleNoLineTerminator
@@ -1507,9 +1449,8 @@ norm1_ArrowExpression
 	ruleBindingIdentifierAsFormalParameter
 )
 ))
-	EqualsSignGreaterThanSign 	))=>(((((
-	LeftParenthesis 	)=>
-	LeftParenthesisKeyword_0_0_0_0_0=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_0_0_0, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_0_0()); })((
+	EqualsSignGreaterThanSign 	))=>(((
+	LeftParenthesisKeyword_0_0_0_0_0=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_0_0_0, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_0_0()); }((
 (
 	FparsFormalParameterParserRuleCall_0_0_0_0_1_0_0=ruleFormalParameter { announce($FparsFormalParameterParserRuleCall_0_0_0_0_1_0_0.start, $FparsFormalParameterParserRuleCall_0_0_0_0_1_0_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_0_1_0()); }
 )
@@ -1525,8 +1466,14 @@ norm1_ArrowExpression
 	ReturnTypeRefTypeRefParserRuleCall_0_0_0_0_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_0_0_0_0_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_0_0_0_0_3_1_0.stop, grammarAccess.getArrowExpressionAccess().getReturnTypeRefAssignment_0_0_0_0_3_1()); }
 )
 ))?)
-    |(((
-	Async 	)=>((
+    |(((((
+(
+
+	Async 	
+
+)
+)	ruleNoLineTerminator
+	LeftParenthesis 	))=>((
 (
 
 	DeclaredAsyncAsyncKeyword_0_0_0_1_0_0_0_0=Async 	 { announce($DeclaredAsyncAsyncKeyword_0_0_0_1_0_0_0_0, grammarAccess.getArrowExpressionAccess().getDeclaredAsyncAsyncKeyword_0_0_0_1_0_0_0_0()); }
@@ -1550,34 +1497,9 @@ norm1_ArrowExpression
 	ReturnTypeRefTypeRefParserRuleCall_0_0_0_1_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_0_0_0_1_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_0_0_0_1_3_1_0.stop, grammarAccess.getArrowExpressionAccess().getReturnTypeRefAssignment_0_0_0_1_3_1()); }
 )
 ))?)
-    |(((
-	Asterisk 	)=>((
-(
-
-	GeneratorAsteriskKeyword_0_0_0_2_0_0_0_0=Asterisk 	 { announce($GeneratorAsteriskKeyword_0_0_0_2_0_0_0_0, grammarAccess.getArrowExpressionAccess().getGeneratorAsteriskKeyword_0_0_0_2_0_0_0_0()); }
-
-)
-)	NoLineTerminatorParserRuleCall_0_0_0_2_0_0_1=ruleNoLineTerminator		{ announce($NoLineTerminatorParserRuleCall_0_0_0_2_0_0_1.start, $NoLineTerminatorParserRuleCall_0_0_0_2_0_0_1.stop, grammarAccess.getArrowExpressionAccess().getNoLineTerminatorParserRuleCall_0_0_0_2_0_0_1()); }
-
-	LeftParenthesisKeyword_0_0_0_2_0_0_2=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_0_2_0_0_2, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_2_0_0_2()); }))((
-(
-	FparsFormalParameterParserRuleCall_0_0_0_2_1_0_0=ruleFormalParameter { announce($FparsFormalParameterParserRuleCall_0_0_0_2_1_0_0.start, $FparsFormalParameterParserRuleCall_0_0_0_2_1_0_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_2_1_0()); }
-)
-)(
-	CommaKeyword_0_0_0_2_1_1_0=Comma 	 { announce($CommaKeyword_0_0_0_2_1_1_0, grammarAccess.getArrowExpressionAccess().getCommaKeyword_0_0_0_2_1_1_0()); }(
-(
-	FparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0=ruleFormalParameter { announce($FparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0.start, $FparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_2_1_1_1()); }
-)
-))*)?
-	RightParenthesisKeyword_0_0_0_2_2=RightParenthesis 	 { announce($RightParenthesisKeyword_0_0_0_2_2, grammarAccess.getArrowExpressionAccess().getRightParenthesisKeyword_0_0_0_2_2()); }(
-	ColonKeyword_0_0_0_2_3_0=Colon 	 { announce($ColonKeyword_0_0_0_2_3_0, grammarAccess.getArrowExpressionAccess().getColonKeyword_0_0_0_2_3_0()); }(
-(
-	ReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0.stop, grammarAccess.getArrowExpressionAccess().getReturnTypeRefAssignment_0_0_0_2_3_1()); }
-)
-))?)
     |(
 (
-	FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0=ruleBindingIdentifierAsFormalParameter { announce($FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0.start, $FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_3()); }
+	FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0=ruleBindingIdentifierAsFormalParameter { announce($FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0.start, $FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_2()); }
 )
 ))
 	EqualsSignGreaterThanSignKeyword_0_0_1=EqualsSignGreaterThanSign 	 { announce($EqualsSignGreaterThanSignKeyword_0_0_1, grammarAccess.getArrowExpressionAccess().getEqualsSignGreaterThanSignKeyword_0_0_1()); }))((((
@@ -1589,13 +1511,13 @@ norm1_ArrowExpression
 )
 )(
 (
-	BodyBlockMinusBracesParserRuleCall_1_0_1_0=norm1_BlockMinusBraces { announce($BodyBlockMinusBracesParserRuleCall_1_0_1_0.start, $BodyBlockMinusBracesParserRuleCall_1_0_1_0.stop, grammarAccess.getArrowExpressionAccess().getBodyAssignment_1_0_1()); }
+	BodyBlockMinusBracesParserRuleCall_1_0_1_0=ruleBlockMinusBraces { announce($BodyBlockMinusBracesParserRuleCall_1_0_1_0.start, $BodyBlockMinusBracesParserRuleCall_1_0_1_0.stop, grammarAccess.getArrowExpressionAccess().getBodyAssignment_1_0_1()); }
 )
 )
 	RightCurlyBracketKeyword_1_0_2=RightCurlyBracket 	 { announce($RightCurlyBracketKeyword_1_0_2, grammarAccess.getArrowExpressionAccess().getRightCurlyBracketKeyword_1_0_2()); })
     |(
 (
-	BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0=norm3_ExpressionDisguisedAsBlock { announce($BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.start, $BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.stop, grammarAccess.getArrowExpressionAccess().getBodyAssignment_1_1()); }
+	BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0=norm1_ExpressionDisguisedAsBlock { announce($BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.start, $BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.stop, grammarAccess.getArrowExpressionAccess().getBodyAssignment_1_1()); }
 )
 )))
 ;
@@ -1609,9 +1531,8 @@ norm1_ArrowExpression
 norm2_ArrowExpression 
     @init {
     }:
-((((((((
-	LeftParenthesis 	)=>
-	LeftParenthesis 	)((
+((((((
+	LeftParenthesis 	((
 (
 	norm1_FormalParameter
 )
@@ -1627,35 +1548,17 @@ norm2_ArrowExpression
 	ruleTypeRef
 )
 ))?)
-    |(((
-	Async 	)=>((
+    |(((((
 (
 
 	Async 	
 
 )
 )	ruleNoLineTerminator
-	LeftParenthesis 	))((
-(
-	norm1_FormalParameter
-)
-)(
-	Comma 	(
-(
-	norm1_FormalParameter
-)
-))*)?
-	RightParenthesis 	(
-	Colon 	(
-(
-	ruleTypeRef
-)
-))?)
-    |(((
-	Asterisk 	)=>((
+	LeftParenthesis 	))=>((
 (
 
-	Asterisk 	
+	Async 	
 
 )
 )	ruleNoLineTerminator
@@ -1680,9 +1583,8 @@ norm2_ArrowExpression
 	norm1_BindingIdentifierAsFormalParameter
 )
 ))
-	EqualsSignGreaterThanSign 	))=>(((((
-	LeftParenthesis 	)=>
-	LeftParenthesisKeyword_0_0_0_0_0=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_0_0_0, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_0_0()); })((
+	EqualsSignGreaterThanSign 	))=>(((
+	LeftParenthesisKeyword_0_0_0_0_0=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_0_0_0, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_0_0()); }((
 (
 	FparsFormalParameterParserRuleCall_0_0_0_0_1_0_0=norm1_FormalParameter { announce($FparsFormalParameterParserRuleCall_0_0_0_0_1_0_0.start, $FparsFormalParameterParserRuleCall_0_0_0_0_1_0_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_0_1_0()); }
 )
@@ -1698,8 +1600,14 @@ norm2_ArrowExpression
 	ReturnTypeRefTypeRefParserRuleCall_0_0_0_0_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_0_0_0_0_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_0_0_0_0_3_1_0.stop, grammarAccess.getArrowExpressionAccess().getReturnTypeRefAssignment_0_0_0_0_3_1()); }
 )
 ))?)
-    |(((
-	Async 	)=>((
+    |(((((
+(
+
+	Async 	
+
+)
+)	ruleNoLineTerminator
+	LeftParenthesis 	))=>((
 (
 
 	DeclaredAsyncAsyncKeyword_0_0_0_1_0_0_0_0=Async 	 { announce($DeclaredAsyncAsyncKeyword_0_0_0_1_0_0_0_0, grammarAccess.getArrowExpressionAccess().getDeclaredAsyncAsyncKeyword_0_0_0_1_0_0_0_0()); }
@@ -1723,34 +1631,9 @@ norm2_ArrowExpression
 	ReturnTypeRefTypeRefParserRuleCall_0_0_0_1_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_0_0_0_1_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_0_0_0_1_3_1_0.stop, grammarAccess.getArrowExpressionAccess().getReturnTypeRefAssignment_0_0_0_1_3_1()); }
 )
 ))?)
-    |(((
-	Asterisk 	)=>((
-(
-
-	GeneratorAsteriskKeyword_0_0_0_2_0_0_0_0=Asterisk 	 { announce($GeneratorAsteriskKeyword_0_0_0_2_0_0_0_0, grammarAccess.getArrowExpressionAccess().getGeneratorAsteriskKeyword_0_0_0_2_0_0_0_0()); }
-
-)
-)	NoLineTerminatorParserRuleCall_0_0_0_2_0_0_1=ruleNoLineTerminator		{ announce($NoLineTerminatorParserRuleCall_0_0_0_2_0_0_1.start, $NoLineTerminatorParserRuleCall_0_0_0_2_0_0_1.stop, grammarAccess.getArrowExpressionAccess().getNoLineTerminatorParserRuleCall_0_0_0_2_0_0_1()); }
-
-	LeftParenthesisKeyword_0_0_0_2_0_0_2=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_0_2_0_0_2, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_2_0_0_2()); }))((
-(
-	FparsFormalParameterParserRuleCall_0_0_0_2_1_0_0=norm1_FormalParameter { announce($FparsFormalParameterParserRuleCall_0_0_0_2_1_0_0.start, $FparsFormalParameterParserRuleCall_0_0_0_2_1_0_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_2_1_0()); }
-)
-)(
-	CommaKeyword_0_0_0_2_1_1_0=Comma 	 { announce($CommaKeyword_0_0_0_2_1_1_0, grammarAccess.getArrowExpressionAccess().getCommaKeyword_0_0_0_2_1_1_0()); }(
-(
-	FparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0=norm1_FormalParameter { announce($FparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0.start, $FparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_2_1_1_1()); }
-)
-))*)?
-	RightParenthesisKeyword_0_0_0_2_2=RightParenthesis 	 { announce($RightParenthesisKeyword_0_0_0_2_2, grammarAccess.getArrowExpressionAccess().getRightParenthesisKeyword_0_0_0_2_2()); }(
-	ColonKeyword_0_0_0_2_3_0=Colon 	 { announce($ColonKeyword_0_0_0_2_3_0, grammarAccess.getArrowExpressionAccess().getColonKeyword_0_0_0_2_3_0()); }(
-(
-	ReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0.stop, grammarAccess.getArrowExpressionAccess().getReturnTypeRefAssignment_0_0_0_2_3_1()); }
-)
-))?)
     |(
 (
-	FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0=norm1_BindingIdentifierAsFormalParameter { announce($FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0.start, $FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_3()); }
+	FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0=norm1_BindingIdentifierAsFormalParameter { announce($FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0.start, $FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_2()); }
 )
 ))
 	EqualsSignGreaterThanSignKeyword_0_0_1=EqualsSignGreaterThanSign 	 { announce($EqualsSignGreaterThanSignKeyword_0_0_1, grammarAccess.getArrowExpressionAccess().getEqualsSignGreaterThanSignKeyword_0_0_1()); }))((((
@@ -1768,7 +1651,7 @@ norm2_ArrowExpression
 	RightCurlyBracketKeyword_1_0_2=RightCurlyBracket 	 { announce($RightCurlyBracketKeyword_1_0_2, grammarAccess.getArrowExpressionAccess().getRightCurlyBracketKeyword_1_0_2()); })
     |(
 (
-	BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0=norm2_ExpressionDisguisedAsBlock { announce($BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.start, $BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.stop, grammarAccess.getArrowExpressionAccess().getBodyAssignment_1_1()); }
+	BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0=ruleExpressionDisguisedAsBlock { announce($BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.start, $BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.stop, grammarAccess.getArrowExpressionAccess().getBodyAssignment_1_1()); }
 )
 )))
 ;
@@ -1782,9 +1665,8 @@ norm2_ArrowExpression
 norm3_ArrowExpression 
     @init {
     }:
-((((((((
-	LeftParenthesis 	)=>
-	LeftParenthesis 	)((
+((((((
+	LeftParenthesis 	((
 (
 	norm1_FormalParameter
 )
@@ -1800,35 +1682,17 @@ norm3_ArrowExpression
 	ruleTypeRef
 )
 ))?)
-    |(((
-	Async 	)=>((
+    |(((((
 (
 
 	Async 	
 
 )
 )	ruleNoLineTerminator
-	LeftParenthesis 	))((
-(
-	norm1_FormalParameter
-)
-)(
-	Comma 	(
-(
-	norm1_FormalParameter
-)
-))*)?
-	RightParenthesis 	(
-	Colon 	(
-(
-	ruleTypeRef
-)
-))?)
-    |(((
-	Asterisk 	)=>((
+	LeftParenthesis 	))=>((
 (
 
-	Asterisk 	
+	Async 	
 
 )
 )	ruleNoLineTerminator
@@ -1853,9 +1717,8 @@ norm3_ArrowExpression
 	norm1_BindingIdentifierAsFormalParameter
 )
 ))
-	EqualsSignGreaterThanSign 	))=>(((((
-	LeftParenthesis 	)=>
-	LeftParenthesisKeyword_0_0_0_0_0=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_0_0_0, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_0_0()); })((
+	EqualsSignGreaterThanSign 	))=>(((
+	LeftParenthesisKeyword_0_0_0_0_0=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_0_0_0, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_0_0()); }((
 (
 	FparsFormalParameterParserRuleCall_0_0_0_0_1_0_0=norm1_FormalParameter { announce($FparsFormalParameterParserRuleCall_0_0_0_0_1_0_0.start, $FparsFormalParameterParserRuleCall_0_0_0_0_1_0_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_0_1_0()); }
 )
@@ -1871,8 +1734,14 @@ norm3_ArrowExpression
 	ReturnTypeRefTypeRefParserRuleCall_0_0_0_0_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_0_0_0_0_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_0_0_0_0_3_1_0.stop, grammarAccess.getArrowExpressionAccess().getReturnTypeRefAssignment_0_0_0_0_3_1()); }
 )
 ))?)
-    |(((
-	Async 	)=>((
+    |(((((
+(
+
+	Async 	
+
+)
+)	ruleNoLineTerminator
+	LeftParenthesis 	))=>((
 (
 
 	DeclaredAsyncAsyncKeyword_0_0_0_1_0_0_0_0=Async 	 { announce($DeclaredAsyncAsyncKeyword_0_0_0_1_0_0_0_0, grammarAccess.getArrowExpressionAccess().getDeclaredAsyncAsyncKeyword_0_0_0_1_0_0_0_0()); }
@@ -1896,34 +1765,9 @@ norm3_ArrowExpression
 	ReturnTypeRefTypeRefParserRuleCall_0_0_0_1_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_0_0_0_1_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_0_0_0_1_3_1_0.stop, grammarAccess.getArrowExpressionAccess().getReturnTypeRefAssignment_0_0_0_1_3_1()); }
 )
 ))?)
-    |(((
-	Asterisk 	)=>((
-(
-
-	GeneratorAsteriskKeyword_0_0_0_2_0_0_0_0=Asterisk 	 { announce($GeneratorAsteriskKeyword_0_0_0_2_0_0_0_0, grammarAccess.getArrowExpressionAccess().getGeneratorAsteriskKeyword_0_0_0_2_0_0_0_0()); }
-
-)
-)	NoLineTerminatorParserRuleCall_0_0_0_2_0_0_1=ruleNoLineTerminator		{ announce($NoLineTerminatorParserRuleCall_0_0_0_2_0_0_1.start, $NoLineTerminatorParserRuleCall_0_0_0_2_0_0_1.stop, grammarAccess.getArrowExpressionAccess().getNoLineTerminatorParserRuleCall_0_0_0_2_0_0_1()); }
-
-	LeftParenthesisKeyword_0_0_0_2_0_0_2=LeftParenthesis 	 { announce($LeftParenthesisKeyword_0_0_0_2_0_0_2, grammarAccess.getArrowExpressionAccess().getLeftParenthesisKeyword_0_0_0_2_0_0_2()); }))((
-(
-	FparsFormalParameterParserRuleCall_0_0_0_2_1_0_0=norm1_FormalParameter { announce($FparsFormalParameterParserRuleCall_0_0_0_2_1_0_0.start, $FparsFormalParameterParserRuleCall_0_0_0_2_1_0_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_2_1_0()); }
-)
-)(
-	CommaKeyword_0_0_0_2_1_1_0=Comma 	 { announce($CommaKeyword_0_0_0_2_1_1_0, grammarAccess.getArrowExpressionAccess().getCommaKeyword_0_0_0_2_1_1_0()); }(
-(
-	FparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0=norm1_FormalParameter { announce($FparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0.start, $FparsFormalParameterParserRuleCall_0_0_0_2_1_1_1_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_2_1_1_1()); }
-)
-))*)?
-	RightParenthesisKeyword_0_0_0_2_2=RightParenthesis 	 { announce($RightParenthesisKeyword_0_0_0_2_2, grammarAccess.getArrowExpressionAccess().getRightParenthesisKeyword_0_0_0_2_2()); }(
-	ColonKeyword_0_0_0_2_3_0=Colon 	 { announce($ColonKeyword_0_0_0_2_3_0, grammarAccess.getArrowExpressionAccess().getColonKeyword_0_0_0_2_3_0()); }(
-(
-	ReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0=ruleTypeRef { announce($ReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0.start, $ReturnTypeRefTypeRefParserRuleCall_0_0_0_2_3_1_0.stop, grammarAccess.getArrowExpressionAccess().getReturnTypeRefAssignment_0_0_0_2_3_1()); }
-)
-))?)
     |(
 (
-	FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0=norm1_BindingIdentifierAsFormalParameter { announce($FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0.start, $FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_3_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_3()); }
+	FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0=norm1_BindingIdentifierAsFormalParameter { announce($FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0.start, $FparsBindingIdentifierAsFormalParameterParserRuleCall_0_0_0_2_0.stop, grammarAccess.getArrowExpressionAccess().getFparsAssignment_0_0_0_2()); }
 )
 ))
 	EqualsSignGreaterThanSignKeyword_0_0_1=EqualsSignGreaterThanSign 	 { announce($EqualsSignGreaterThanSignKeyword_0_0_1, grammarAccess.getArrowExpressionAccess().getEqualsSignGreaterThanSignKeyword_0_0_1()); }))((((
@@ -1941,7 +1785,7 @@ norm3_ArrowExpression
 	RightCurlyBracketKeyword_1_0_2=RightCurlyBracket 	 { announce($RightCurlyBracketKeyword_1_0_2, grammarAccess.getArrowExpressionAccess().getRightCurlyBracketKeyword_1_0_2()); })
     |(
 (
-	BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0=norm3_ExpressionDisguisedAsBlock { announce($BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.start, $BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.stop, grammarAccess.getArrowExpressionAccess().getBodyAssignment_1_1()); }
+	BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0=norm1_ExpressionDisguisedAsBlock { announce($BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.start, $BodyExpressionDisguisedAsBlockParserRuleCall_1_1_0.stop, grammarAccess.getArrowExpressionAccess().getBodyAssignment_1_1()); }
 )
 )))
 ;
@@ -2034,6 +1878,26 @@ norm1_BindingIdentifierAsFormalParameter
 
 
 
+// Entry rule entryRuleBlockMinusBraces
+entryRuleBlockMinusBraces
+	:
+	ruleBlockMinusBraces 
+	EOF 
+;
+
+// Rule BlockMinusBraces
+ruleBlockMinusBraces 
+    @init {
+    }:
+((
+(
+	StatementsStatementParserRuleCall_1_0=ruleStatement { announce($StatementsStatementParserRuleCall_1_0.start, $StatementsStatementParserRuleCall_1_0.stop, grammarAccess.getBlockMinusBracesAccess().getStatementsAssignment_1()); }
+)
+)*)
+;
+
+
+
 
 
 
@@ -2052,18 +1916,20 @@ norm1_BlockMinusBraces
 
 
 
-
-
-
-
+// Entry rule entryRuleExpressionDisguisedAsBlock
+entryRuleExpressionDisguisedAsBlock
+	:
+	ruleExpressionDisguisedAsBlock 
+	EOF 
+;
 
 // Rule ExpressionDisguisedAsBlock
-norm2_ExpressionDisguisedAsBlock 
+ruleExpressionDisguisedAsBlock 
     @init {
     }:
 ((
 (
-	StatementsAssignmentExpressionStatementParserRuleCall_1_0=norm2_AssignmentExpressionStatement { announce($StatementsAssignmentExpressionStatementParserRuleCall_1_0.start, $StatementsAssignmentExpressionStatementParserRuleCall_1_0.stop, grammarAccess.getExpressionDisguisedAsBlockAccess().getStatementsAssignment_1()); }
+	StatementsAssignmentExpressionStatementParserRuleCall_1_0=ruleAssignmentExpressionStatement { announce($StatementsAssignmentExpressionStatementParserRuleCall_1_0.start, $StatementsAssignmentExpressionStatementParserRuleCall_1_0.stop, grammarAccess.getExpressionDisguisedAsBlockAccess().getStatementsAssignment_1()); }
 )
 ))
 ;
@@ -2074,12 +1940,12 @@ norm2_ExpressionDisguisedAsBlock
 
 
 // Rule ExpressionDisguisedAsBlock
-norm3_ExpressionDisguisedAsBlock 
+norm1_ExpressionDisguisedAsBlock 
     @init {
     }:
 ((
 (
-	StatementsAssignmentExpressionStatementParserRuleCall_1_0=norm3_AssignmentExpressionStatement { announce($StatementsAssignmentExpressionStatementParserRuleCall_1_0.start, $StatementsAssignmentExpressionStatementParserRuleCall_1_0.stop, grammarAccess.getExpressionDisguisedAsBlockAccess().getStatementsAssignment_1()); }
+	StatementsAssignmentExpressionStatementParserRuleCall_1_0=norm1_AssignmentExpressionStatement { announce($StatementsAssignmentExpressionStatementParserRuleCall_1_0.start, $StatementsAssignmentExpressionStatementParserRuleCall_1_0.stop, grammarAccess.getExpressionDisguisedAsBlockAccess().getStatementsAssignment_1()); }
 )
 ))
 ;
@@ -2118,38 +1984,6 @@ norm1_AssignmentExpressionStatement
 (
 (
 	ExpressionAssignmentExpressionParserRuleCall_0=norm1_AssignmentExpression { announce($ExpressionAssignmentExpressionParserRuleCall_0.start, $ExpressionAssignmentExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionStatementAccess().getExpressionAssignment()); }
-)
-)
-;
-
-
-
-
-
-
-// Rule AssignmentExpressionStatement
-norm2_AssignmentExpressionStatement 
-    @init {
-    }:
-(
-(
-	ExpressionAssignmentExpressionParserRuleCall_0=norm2_AssignmentExpression { announce($ExpressionAssignmentExpressionParserRuleCall_0.start, $ExpressionAssignmentExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionStatementAccess().getExpressionAssignment()); }
-)
-)
-;
-
-
-
-
-
-
-// Rule AssignmentExpressionStatement
-norm3_AssignmentExpressionStatement 
-    @init {
-    }:
-(
-(
-	ExpressionAssignmentExpressionParserRuleCall_0=norm3_AssignmentExpression { announce($ExpressionAssignmentExpressionParserRuleCall_0.start, $ExpressionAssignmentExpressionParserRuleCall_0.stop, grammarAccess.getAssignmentExpressionStatementAccess().getExpressionAssignment()); }
 )
 )
 ;
@@ -3839,8 +3673,6 @@ ruleForStatement
     |
 	Async 	
     |
-	Asterisk 	
-    |
 	Yield 	
     |
 	Get 	
@@ -3964,7 +3796,6 @@ ruleForStatement
 	CommercialAt 	 | 
 	LeftParenthesis 	 | 
 	Async 	 | 
-	Asterisk 	 | 
 	Yield 	 | 
 	Get 	 | 
 	Set 	 | 
@@ -4187,8 +4018,6 @@ norm1_ForStatement
     |
 	Async 	
     |
-	Asterisk 	
-    |
 	Get 	
     |
 	Set 	
@@ -4312,7 +4141,6 @@ norm1_ForStatement
 	CommercialAt 	 | 
 	LeftParenthesis 	 | 
 	Async 	 | 
-	Asterisk 	 | 
 	Get 	 | 
 	Set 	 | 
 	Let 	 | 
@@ -9922,9 +9750,8 @@ ruleAssignmentExpression
 	CommercialAt 	
 	Promisify 	))=>	PromisifyExpressionParserRuleCall_1=rulePromisifyExpression		{ announce($PromisifyExpressionParserRuleCall_1.start, $PromisifyExpressionParserRuleCall_1.stop, grammarAccess.getAssignmentExpressionAccess().getPromisifyExpressionParserRuleCall_1()); }
 )
-    |(((((((
-	LeftParenthesis 	)=>
-	LeftParenthesis 	)((
+    |(((((
+	LeftParenthesis 	((
 (
 	ruleFormalParameter
 )
@@ -9940,35 +9767,17 @@ ruleAssignmentExpression
 	ruleTypeRef
 )
 ))?)
-    |(((
-	Async 	)=>((
+    |(((((
 (
 
 	Async 	
 
 )
 )	ruleNoLineTerminator
-	LeftParenthesis 	))((
-(
-	ruleFormalParameter
-)
-)(
-	Comma 	(
-(
-	ruleFormalParameter
-)
-))*)?
-	RightParenthesis 	(
-	Colon 	(
-(
-	ruleTypeRef
-)
-))?)
-    |(((
-	Asterisk 	)=>((
+	LeftParenthesis 	))=>((
 (
 
-	Asterisk 	
+	Async 	
 
 )
 )	ruleNoLineTerminator
@@ -10027,9 +9836,8 @@ norm1_AssignmentExpression
 	CommercialAt 	
 	Promisify 	))=>	PromisifyExpressionParserRuleCall_1=norm1_PromisifyExpression		{ announce($PromisifyExpressionParserRuleCall_1.start, $PromisifyExpressionParserRuleCall_1.stop, grammarAccess.getAssignmentExpressionAccess().getPromisifyExpressionParserRuleCall_1()); }
 )
-    |(((((((
-	LeftParenthesis 	)=>
-	LeftParenthesis 	)((
+    |(((((
+	LeftParenthesis 	((
 (
 	ruleFormalParameter
 )
@@ -10045,35 +9853,17 @@ norm1_AssignmentExpression
 	ruleTypeRef
 )
 ))?)
-    |(((
-	Async 	)=>((
+    |(((((
 (
 
 	Async 	
 
 )
 )	ruleNoLineTerminator
-	LeftParenthesis 	))((
-(
-	ruleFormalParameter
-)
-)(
-	Comma 	(
-(
-	ruleFormalParameter
-)
-))*)?
-	RightParenthesis 	(
-	Colon 	(
-(
-	ruleTypeRef
-)
-))?)
-    |(((
-	Asterisk 	)=>((
+	LeftParenthesis 	))=>((
 (
 
-	Asterisk 	
+	Async 	
 
 )
 )	ruleNoLineTerminator
@@ -10132,9 +9922,8 @@ norm2_AssignmentExpression
 	CommercialAt 	
 	Promisify 	))=>	PromisifyExpressionParserRuleCall_1=norm2_PromisifyExpression		{ announce($PromisifyExpressionParserRuleCall_1.start, $PromisifyExpressionParserRuleCall_1.stop, grammarAccess.getAssignmentExpressionAccess().getPromisifyExpressionParserRuleCall_1()); }
 )
-    |(((((((
-	LeftParenthesis 	)=>
-	LeftParenthesis 	)((
+    |(((((
+	LeftParenthesis 	((
 (
 	norm1_FormalParameter
 )
@@ -10150,35 +9939,17 @@ norm2_AssignmentExpression
 	ruleTypeRef
 )
 ))?)
-    |(((
-	Async 	)=>((
+    |(((((
 (
 
 	Async 	
 
 )
 )	ruleNoLineTerminator
-	LeftParenthesis 	))((
-(
-	norm1_FormalParameter
-)
-)(
-	Comma 	(
-(
-	norm1_FormalParameter
-)
-))*)?
-	RightParenthesis 	(
-	Colon 	(
-(
-	ruleTypeRef
-)
-))?)
-    |(((
-	Asterisk 	)=>((
+	LeftParenthesis 	))=>((
 (
 
-	Asterisk 	
+	Async 	
 
 )
 )	ruleNoLineTerminator
@@ -10239,9 +10010,8 @@ norm3_AssignmentExpression
 	CommercialAt 	
 	Promisify 	))=>	PromisifyExpressionParserRuleCall_1=norm3_PromisifyExpression		{ announce($PromisifyExpressionParserRuleCall_1.start, $PromisifyExpressionParserRuleCall_1.stop, grammarAccess.getAssignmentExpressionAccess().getPromisifyExpressionParserRuleCall_1()); }
 )
-    |(((((((
-	LeftParenthesis 	)=>
-	LeftParenthesis 	)((
+    |(((((
+	LeftParenthesis 	((
 (
 	norm1_FormalParameter
 )
@@ -10257,35 +10027,17 @@ norm3_AssignmentExpression
 	ruleTypeRef
 )
 ))?)
-    |(((
-	Async 	)=>((
+    |(((((
 (
 
 	Async 	
 
 )
 )	ruleNoLineTerminator
-	LeftParenthesis 	))((
-(
-	norm1_FormalParameter
-)
-)(
-	Comma 	(
-(
-	norm1_FormalParameter
-)
-))*)?
-	RightParenthesis 	(
-	Colon 	(
-(
-	ruleTypeRef
-)
-))?)
-    |(((
-	Asterisk 	)=>((
+	LeftParenthesis 	))=>((
 (
 
-	Asterisk 	
+	Async 	
 
 )
 )	ruleNoLineTerminator
@@ -10363,7 +10115,6 @@ ruleYieldExpression
 	CommercialAt 	 | 
 	LeftParenthesis 	 | 
 	Async 	 | 
-	Asterisk 	 | 
 	Get 	 | 
 	Set 	 | 
 	Let 	 | 
@@ -10443,7 +10194,6 @@ norm1_YieldExpression
 	CommercialAt 	 | 
 	LeftParenthesis 	 | 
 	Async 	 | 
-	Asterisk 	 | 
 	Get 	 | 
 	Set 	 | 
 	Let 	 | 
