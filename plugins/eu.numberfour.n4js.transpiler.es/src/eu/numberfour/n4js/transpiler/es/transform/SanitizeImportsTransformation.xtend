@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.transpiler.es.transform
 
 import com.google.common.base.Joiner
+import com.google.inject.Inject
 import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.n4JS.ImportDeclaration
 import eu.numberfour.n4js.n4JS.ImportSpecifier
@@ -21,7 +22,11 @@ import eu.numberfour.n4js.transpiler.Transformation
 import eu.numberfour.n4js.transpiler.im.IdentifierRef_IM
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal
 import eu.numberfour.n4js.transpiler.utils.TranspilerUtils
+import eu.numberfour.n4js.ts.types.TModule
+import eu.numberfour.n4js.ts.types.TypesFactory
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
+import eu.numberfour.n4jsx.n4JSX.JSXElement
+import eu.numberfour.n4jsx.transpiler.utils.JSXBackendHelper
 import org.eclipse.xtext.EcoreUtil2
 
 import static eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*
@@ -34,6 +39,9 @@ import static eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*
  * </ul>
  */
 class SanitizeImportsTransformation extends Transformation {
+	
+	@Inject
+	JSXBackendHelper jsx;
 
 	override analyze() {
 	}
@@ -52,10 +60,38 @@ class SanitizeImportsTransformation extends Transformation {
 	}
 
 	override transform() {
-
 		addMissingImplicitImports();
 		removeUnusedImports();
+		patchJSX();
+	}
+	
+	/**
+	 * Adds import for JSX backend, if necessary, i.e.
+	 * import was not present or import was unused (in consequence it is removed).
+	 */
+	private def patchJSX() {
+		if (null === state.resource.script.eAllContents.findFirst[it instanceof JSXElement])
+			return
 
+		val jsxUsedOriginalImports = state.info.browseOriginalImports_internal.filter [
+			it.value.qualifiedName.endsWith(jsx.getBackendModuleName())
+		].map[it.key.importSpecifiers].flatten.filter[isUsed]
+		if (!jsxUsedOriginalImports.nullOrEmpty)
+			return;
+
+		val jsxBackensName = steFor_React
+		val iMod = _Module(jsx.jsxBackendModuleQualifiedName(state.resource))
+		iMod.n4jsdModule = true
+		val iSpec = _NamespaceImportSpecifier(jsxBackensName.name, true)
+		val iDecl = _ImportDecl(iMod, iSpec);
+		insertBefore(state.im.scriptElements.get(0), iDecl);
+		state.info.setImportedModule_internal(iDecl, iMod);
+	}
+
+	private static def TModule _Module(String qn) {
+		val result = TypesFactory.eINSTANCE.createTModule
+		result.qualifiedName = qn
+		return result;
 	}
 
 	/**
@@ -156,6 +192,11 @@ class SanitizeImportsTransformation extends Transformation {
 			} else if(importSpec instanceof NamespaceImportSpecifier) {
 				findSymbolTableEntryForNamespaceImport(importSpec)
 			};
+			
+			if(ste === null && JSXBackendHelper.isJsxBackendImportSpecifier(importSpec)){
+				return true
+			}
+			
 			// note: here it is not enough to return !ste.referencingElements.empty, because for performance reasons
 			// transformations are not required to remove obsolete entries from that list
 			val hasReference = ste.referencingElements.exists[TranspilerUtils.isIntermediateModelElement(it)];

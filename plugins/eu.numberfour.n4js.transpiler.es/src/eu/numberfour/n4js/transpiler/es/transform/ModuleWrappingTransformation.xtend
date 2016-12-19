@@ -55,7 +55,9 @@ import static eu.numberfour.n4js.n4JS.BinaryLogicalOperator.*
 import static eu.numberfour.n4js.n4JS.EqualityOperator.*
 import static eu.numberfour.n4js.n4JS.UnaryOperator.*
 
+
 import static extension eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*
+import eu.numberfour.n4jsx.transpiler.utils.JSXBackendHelper
 
 /**
  * Module/Script wrapping transformation.
@@ -67,6 +69,8 @@ import static extension eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*
  */
 @ExcludesAfter(/* if present, must come before: */ DestructuringTransformation)
 class ModuleWrappingTransformation extends Transformation {
+	@Inject
+	JSXBackendHelper jsx;
 
 	@Inject
 	extension QualifiedNameComputer qnameComputer
@@ -205,38 +209,36 @@ class ModuleWrappingTransformation extends Transformation {
 
 	}
 
-
-
-
 	/** FunctionExpression for import used inside of the setters-array*/
 	private def FunctionExpression importFE(ImportEntry entry) {
 		_FunExpr(false) => [
-			fpars += _Fpar => [ name = entry.fparName]
+			fpars += _Fpar => [name = entry.fparName]
 			body = _Block => [
-				for( val iter=entry.variableSTE_actualName.iterator;iter.hasNext; ){
+				for (val iter = entry.variableSTE_actualName.iterator; iter.hasNext;) {
 					val ImportAssignment current = iter.next;
-					val refToFPar = _IdentRef( getSymbolTableEntryInternal( entry.fparName, true ) );
-					val Expression rhs = if( current.isNameSpace ) { refToFPar; }
-						else {
+					val refToFPar = _IdentRef(getSymbolTableEntryInternal(entry.fparName, true));
+					val Expression rhs = if (current.isNameSpace) {
+							refToFPar;
+						} else {
 							// NamedImportSpecifiers require property access.
-							_PropertyAccessExpr =>
-							[
-								property_IM = getSymbolTableEntryInternal( current.ste.exportedName, true ) // ref to what we import.
+							_PropertyAccessExpr => [
+								property_IM = getSymbolTableEntryInternal(current.ste.exportedName, true) // ref to what we import.
 								target = refToFPar;
 							];
 						};
-					statements += _ExprStmnt( _IdentRef( current.ste )._AssignmentExpr( rhs ) ) =>[
-						// tracing:
-						state.tracer.copyTrace(current.tobeReplacedIM, it)
-					];
+					if (current.ste === null && JSXBackendHelper.isJsxBackendImportSpecifier(current.tobeReplacedIM)) {
+						statements += _ExprStmnt(_IdentRef(steFor_React)._AssignmentExpr(rhs))
+					} else {
+						statements += _ExprStmnt(_IdentRef(current.ste)._AssignmentExpr(rhs)) => [
+							state.tracer.copyTrace(current.tobeReplacedIM, it)
+						];
+					}
 				}
 			]
 			// tracing
 			state.tracer.copyTrace(entry.tobeReplacedImportSpecifier, it)
 		]
 	}
-
-
 
 	/**
 	 * Goes over imports from content_im and collect imported things in a meta-data-structure
@@ -258,8 +260,20 @@ class ModuleWrappingTransformation extends Transformation {
 				val module = state.info.getImportedModule(elementIM);
 
 				// calculate names in output
-				val completeModuleSpecifier = module.completeModuleSpecifier
-				val fparName = "$_import_"+module.completeModuleSpecifierAsIdentifier
+				val completeModuleSpecifier = 
+					if (JSXBackendHelper.isJsxBackendModule(module)) {
+						jsx.jsxBackendModuleSpecifier(module, state.resource)
+					} else {
+						module.completeModuleSpecifier
+					}
+				
+				val fparName = if (JSXBackendHelper.isJsxBackendModule(module)) {
+						jsx.getJsxBackendCompleteModuleSpecifierAsIdentifier(module)
+					} else {
+						"$_import_"+module.completeModuleSpecifierAsIdentifier
+					}
+				
+				
 
 				val moduleSpecifierAdjustment = getModuleSpecifierAdjustment(module);
 				val actualModuleSpecifier = if(moduleSpecifierAdjustment!==null) {
