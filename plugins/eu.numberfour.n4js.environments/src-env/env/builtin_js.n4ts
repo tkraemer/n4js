@@ -1892,7 +1892,7 @@ public providedByRuntime interface Generator<out TYield, out TReturn, in TNext>
 	 * </ul>
 	 */
 	public abstract next(value: TNext?): IteratorEntry<TYield>
-	
+
 	/**
 	 * A zero arguments function that returns the <code>this</code> object, conforming to the iterator 
 	 * interface.
@@ -1900,7 +1900,7 @@ public providedByRuntime interface Generator<out TYield, out TReturn, in TNext>
 	 * Note that the iterator can only be iterated once.
 	 */
 	public abstract [Symbol.iterator](): Generator<TYield, TReturn, TNext>
-	
+
 	/**
 	 * A one argument function. The argument <code>exception</code> is thrown at the current yield 
 	 * expression in the generator function. The return is an <code>IteratorEntry</code> with two 
@@ -1915,8 +1915,8 @@ public providedByRuntime interface Generator<out TYield, out TReturn, in TNext>
 	 *     any JavaScript value returned by the iterator. Can be omitted when done is true.
 	 * </ul>
 	 */
-    public abstract throw(exception: any): IteratorEntry<TYield>;
- 
+	public abstract throw(exception: any): IteratorEntry<TYield>;
+
     /**
 	 * A one (optional) argument function. The (optional) argument <code>value</code> is passed to the 
 	 * current yield expression in the generator function. The return is an <code>IteratorEntry</code> with 
@@ -1931,7 +1931,7 @@ public providedByRuntime interface Generator<out TYield, out TReturn, in TNext>
 	 *     any JavaScript value returned by the iterator. Can be omitted when done is true.
 	 * </ul>
 	 */
-    public abstract return(value: TNext?): IteratorEntry<TReturn>;
+	public abstract return(value: TNext?): IteratorEntry<TReturn>;
 }
 
 /**
