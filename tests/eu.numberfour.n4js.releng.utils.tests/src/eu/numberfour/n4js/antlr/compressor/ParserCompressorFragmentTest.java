@@ -36,7 +36,7 @@ public class ParserCompressorFragmentTest {
 		String javaContent = "		int index3_0 = input.index();\n" + "        input.rewind();\n" + "        s = -1;\n"
 				+ "        if ( (LA3_0==CommercialAt) ) {s = 1;}\n" + "\n"
 				+ "        else if ( (LA3_0==Private) ) {s = 2;}";
-		Matcher matcher = ParserCompressorFragment.STATE_CHANGE_INITIALIZER_PATTERN.matcher(javaContent);
+		Matcher matcher = ParserCompressorFragment2.STATE_CHANGE_INITIALIZER_PATTERN.matcher(javaContent);
 		assertTrue(matcher.find());
 		assertFalse(matcher.find());
 	}
@@ -50,7 +50,7 @@ public class ParserCompressorFragmentTest {
 				+ "		    public static final int EOF=-1;\n" + "		    public static final int Import=23;\n"
 				+ "			something else}	";
 
-		Matcher matcher = ParserCompressorFragment.CONST_DEF_PATTERN.matcher(javaContent);
+		Matcher matcher = ParserCompressorFragment2.CONST_DEF_PATTERN.matcher(javaContent);
 		assertTrue(matcher.find());
 		assertTrue(matcher.find());
 		assertTrue(matcher.find());
@@ -66,7 +66,7 @@ public class ParserCompressorFragmentTest {
 				+ "		    public static final int RULE_REGEX_CHAR=134;\n"
 				+ "		    public static final int EOF=-1;\n" + "		    public static final int Import=23;\n"
 				+ "			something else}	";
-		ParserCompressorFragment pci = new ParserCompressorFragment();
+		ParserCompressorFragment2 pci = new ParserCompressorFragment2();
 		Map<String, Integer> constMap = pci.createConstMap(javaContent);
 		assertEquals(4, constMap.size());
 		String[] tokenNames = { "Delete", "RULE_REGEX_CHAR", "EOF", "Import" };
@@ -80,13 +80,13 @@ public class ParserCompressorFragmentTest {
 	@Test
 	public void testCompressor() throws IOException {
 		String javaContent = loadFile("SampleGrammarFile.txt");
-		ParserCompressorFragment pci = new ParserCompressorFragment();
+		ParserCompressorFragment2 pci = new ParserCompressorFragment2();
 		pci.process(javaContent, new File("test"));
 	}
 
 	@Test
 	public void testCompressorTooLongMethod() throws IOException {
-		ParserCompressorFragment pci = new ParserCompressorFragment();
+		ParserCompressorFragment2 pci = new ParserCompressorFragment2();
 		String tokenValues = loadFile("TokenValues.txt");
 		Map<String, Integer> constMap = pci.createConstMap(tokenValues);
 		String javaContent = loadFile("TooLongMethodSnippet1.txt");

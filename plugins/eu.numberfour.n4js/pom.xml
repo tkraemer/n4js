@@ -78,6 +78,11 @@ Contributors:
 					</dependency>
 					<dependency>
 						<groupId>eu.numberfour.n4js</groupId>
+						<artifactId>eu.numberfour.n4js.model</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>eu.numberfour.n4js</groupId>
 						<artifactId>eu.numberfour.n4js.utils</artifactId>
 						<version>${project.version}</version>
 					</dependency>

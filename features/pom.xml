@@ -24,24 +24,24 @@ Contributors:
 	</parent>
 
 	<modules>
-		<module>/eu.numberfour.n4js.dependencies.sdk</module>
-		<module>/eu.numberfour.n4js.dependencies.ui.sdk</module>
+		<module>eu.numberfour.n4js.dependencies.sdk</module>
+		<module>eu.numberfour.n4js.dependencies.ui.sdk</module>
 		
-		<module>/eu.numberfour.n4js.compiler.sdk</module>
-		<module>/eu.numberfour.n4js.sdk</module>
-		<module>/eu.numberfour.n4js.lang.sdk</module>
-		<module>/eu.numberfour.n4js.n4mf.sdk</module>
-		<module>/eu.numberfour.n4js.regex.sdk</module>
-		<module>/eu.numberfour.n4js.ts.sdk</module>
-		<module>/eu.numberfour.n4js.unicode.sdk</module>
-		<module>/eu.numberfour.n4js.runner.sdk</module>
-		<module>/eu.numberfour.n4js.xpect.sdk</module>
-		<module>/eu.numberfour.n4js.tester.sdk</module>
+		<module>eu.numberfour.n4js.compiler.sdk</module>
+		<module>eu.numberfour.n4js.sdk</module>
+		<module>eu.numberfour.n4js.lang.sdk</module>
+		<module>eu.numberfour.n4js.n4mf.sdk</module>
+		<module>eu.numberfour.n4js.regex.sdk</module>
+		<module>eu.numberfour.n4js.ts.sdk</module>
+		<module>eu.numberfour.n4js.unicode.sdk</module>
+		<module>eu.numberfour.n4js.runner.sdk</module>
+		<module>eu.numberfour.n4js.xpect.sdk</module>
+		<module>eu.numberfour.n4js.tester.sdk</module>
 		<!-- additional feature only required for testing external plugin-development, not part of the product -->
-		<module>/eu.numberfour.n4js.tests.helper.sdk</module>
+		<module>eu.numberfour.n4js.tests.helper.sdk</module>
 <!--
 		note: feature e.n.i.smith.sdk is *not* supposed to be in the product (only used in developer launch configuration)
-		<module>/eu.numberfour.n4js.smith.sdk</module>
+		<module>eu.numberfour.n4js.smith.sdk</module>
 -->
 
 		<module>/eu.numberfour.n4jsx.sdk</module>

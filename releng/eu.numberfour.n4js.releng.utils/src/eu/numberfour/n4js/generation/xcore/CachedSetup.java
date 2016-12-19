@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.antlr.generator;
+package eu.numberfour.n4js.generation.xcore;
 
 import org.eclipse.emf.mwe2.runtime.Mandatory;
 import org.eclipse.xtext.ISetup;

@@ -19,6 +19,8 @@ import org.eclipse.xtext.builder.preferences.BuilderPreferenceAccess;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.generator.IGenerator;
 import org.eclipse.xtext.generator.IOutputConfigurationProvider;
+import org.eclipse.xtext.ide.editor.contentassist.antlr.FollowElementComputer;
+import org.eclipse.xtext.ide.editor.contentassist.antlr.IContentAssistParser;
 import org.eclipse.xtext.resource.ILocationInFileProvider;
 import org.eclipse.xtext.resource.SynchronizedXtextResourceSet;
 import org.eclipse.xtext.resource.XtextResourceSet;
@@ -31,8 +33,6 @@ import org.eclipse.xtext.ui.editor.contentassist.FQNPrefixMatcher;
 import org.eclipse.xtext.ui.editor.contentassist.FQNPrefixMatcher.LastSegmentFinder;
 import org.eclipse.xtext.ui.editor.contentassist.IContentAssistantFactory;
 import org.eclipse.xtext.ui.editor.contentassist.PrefixMatcher;
-import org.eclipse.xtext.ui.editor.contentassist.antlr.IContentAssistParser;
-import org.eclipse.xtext.ui.editor.contentassist.antlr.ParserBasedContentAssistContextFactory;
 import org.eclipse.xtext.ui.editor.doubleClicking.DoubleClickStrategyProvider;
 import org.eclipse.xtext.ui.editor.formatting2.ContentFormatter;
 import org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider;
@@ -52,9 +52,6 @@ import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
-import eu.numberfour.n4jsx.ui.contentassist.ContentAssistContextFactory;
-import eu.numberfour.n4jsx.ui.contentassist.CustomN4JSXParser;
-import eu.numberfour.n4jsx.ui.editor.syntaxcoloring.ParserBasedDocumentTokenSource;
 import eu.numberfour.n4js.CancelIndicatorBaseExtractor;
 import eu.numberfour.n4js.N4JSRuntimeModule;
 import eu.numberfour.n4js.binaries.BinariesPreferenceStore;
@@ -79,6 +76,8 @@ import eu.numberfour.n4js.ui.building.N4JSBuilderParticipant;
 import eu.numberfour.n4js.ui.building.instructions.ComposedGeneratorRegistry;
 import eu.numberfour.n4js.ui.containers.N4JSAllContainersStateProvider;
 import eu.numberfour.n4js.ui.contentassist.ContentAssistantFactory;
+import eu.numberfour.n4js.ui.contentassist.N4JSFollowElementCalculator;
+import eu.numberfour.n4js.ui.contentassist.PatchedFollowElementComputer;
 import eu.numberfour.n4js.ui.contentassist.SimpleLastSegmentFinder;
 import eu.numberfour.n4js.ui.editor.AlwaysAddNatureCallback;
 import eu.numberfour.n4js.ui.editor.N4JSDirtyStateEditorSupport;
@@ -109,6 +108,9 @@ import eu.numberfour.n4js.ui.validation.ManifestAwareResourceValidator;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBroker;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBrokerImpl;
 import eu.numberfour.n4js.utils.process.OutputStreamProvider;
+import eu.numberfour.n4jsx.ui.contentassist.ContentAssistContextFactory;
+import eu.numberfour.n4jsx.ui.contentassist.CustomN4JSXParser;
+import eu.numberfour.n4jsx.ui.editor.syntaxcoloring.ParserBasedDocumentTokenSource;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -319,8 +321,23 @@ public class N4JSXUiModule extends eu.numberfour.n4jsx.ui.AbstractN4JSXUiModule 
 	/**
 	 * Bind the customized content assist parser infrastructure.
 	 */
-	public Class<? extends ParserBasedContentAssistContextFactory.StatefulFactory> bindStatefulParserBasedContentAssistContextFactory() {
+	public Class<? extends org.eclipse.xtext.ide.editor.contentassist.antlr.ContentAssistContextFactory> bindContentAssistContextFactory() {
 		return ContentAssistContextFactory.class;
+	}
+
+	/**
+	 * Bind the customized content assist follow element calculator that drops parser rules of "bogus" language parts.
+	 */
+	public Class<? extends org.eclipse.xtext.ide.editor.contentassist.antlr.FollowElementCalculator> bindFollowElementCalculator() {
+		return N4JSFollowElementCalculator.class;
+	}
+
+	/**
+	 * Remove this binding once the change of https://github.com/eclipse/xtext-core/pull/167 is available in the target
+	 * platform.
+	 */
+	public Class<? extends FollowElementComputer> bindFollowElementComputer() {
+		return PatchedFollowElementComputer.class;
 	}
 
 	@Override

@@ -20,7 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
-import org.eclipse.xtext.generator.DefaultGeneratorFragment;
+import org.eclipse.xtext.xtext.generator.AbstractXtextGeneratorFragment;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
@@ -31,9 +31,9 @@ import eu.numberfour.n4js.antlr.compressor.IfElseCascade.Replacement;
  * MWE fragment that injects the necessary code to compress the generated ANTLR V3 parser in order to avoid problems
  * with methods exceeding the 65535 bytes limit.
  */
-public class ParserCompressorFragment extends DefaultGeneratorFragment {
+public class ParserCompressorFragment2 extends AbstractXtextGeneratorFragment {
 
-	private final static Logger LOGGER = Logger.getLogger(ParserCompressorFragment.class);
+	private final static Logger LOGGER = Logger.getLogger(ParserCompressorFragment2.class);
 
 	/**
 	 * Pattern for detecting const integer definitions. Package visible for testing.
@@ -53,7 +53,7 @@ public class ParserCompressorFragment extends DefaultGeneratorFragment {
 	/**
 	 *
 	 */
-	public ParserCompressorFragment() {
+	public ParserCompressorFragment2() {
 		grammarFiles = new ArrayList<>();
 	}
 
@@ -65,7 +65,7 @@ public class ParserCompressorFragment extends DefaultGeneratorFragment {
 	}
 
 	@Override
-	public void generate(org.eclipse.xtext.Grammar grammar, org.eclipse.xpand2.XpandExecutionContext ctx) {
+	public void generate() {
 		for (String fileName : grammarFiles) {
 			File file = new File(fileName);
 			String javaSource = null;
