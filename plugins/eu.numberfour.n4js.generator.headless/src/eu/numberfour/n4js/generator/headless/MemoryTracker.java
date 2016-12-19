@@ -57,7 +57,7 @@ public class MemoryTracker {
 	}
 
 	private void recordMemoryData(String label) {
-		usedMemory.get(counter).add(RUNTIME.totalMemory() - RUNTIME.freeMemory());
+		usedMemory.get(counter).add(getUsedMemory());
 		labels.get(counter).add(label);
 		if (label.length() > longestLabel) {
 			longestLabel = label.length();
@@ -127,8 +127,23 @@ public class MemoryTracker {
 		return sb.toString();
 	}
 
+	/** Print to std out current memory usage (no data recording). */
+	public static void printCurrentMemoryUsage(String label) {
+		System.out.println(String.format("\n| %s | %s |",
+				formatLabelToWidth(" " + label, label.length() + 2),
+				formatMemory(bytesToHuman(getUsedMemory()))));
+	}
+
+	private static long getUsedMemory() {
+		return RUNTIME.totalMemory() - RUNTIME.freeMemory();
+	}
+
 	private String formatLabel(String label) {
-		return String.format("%1$-" + longestLabel + "s", label);
+		return formatLabelToWidth(label, longestLabel);
+	}
+
+	private static String formatLabelToWidth(String label, int width) {
+		return String.format("%1$-" + width + "s", label);
 	}
 
 	private static String formatMemory(String mem) {

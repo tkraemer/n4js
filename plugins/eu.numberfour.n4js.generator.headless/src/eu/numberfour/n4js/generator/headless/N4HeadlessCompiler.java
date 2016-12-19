@@ -518,7 +518,7 @@ public class N4HeadlessCompiler {
 					// load
 					mt.addSeriesPoint("before load");
 					Stopwatch ls = Stopwatch.createStarted();
-					doLoad(mp, resourceSet, rec, issueAcceptor);
+					doLoad(mp, resourceSet, rec, issueAcceptor, mt);
 					mt.addSeriesPoint("after load ( " + ls.stop().toString() + " )");
 					loadedProjects.add(mp);
 
@@ -736,7 +736,7 @@ public class N4HeadlessCompiler {
 	 *             in case of compile-problems.
 	 */
 	private void doLoad(MarkedProject markedProject, ResourceSet resSet, N4ProgressStateRecorder rec,
-			IssueAcceptor issueAcceptor)
+			IssueAcceptor issueAcceptor, MemoryTracker mt)
 			throws N4JSCompileErrorException {
 
 		rec.markStartLoading(markedProject);
@@ -749,6 +749,8 @@ public class N4HeadlessCompiler {
 		HashSet<Resource> externalResources = new HashSet<>();
 		HashSet<Resource> testResources = Sets.newHashSet();
 
+		mt.addSeriesPoint("before collect ");
+		Stopwatch cs = Stopwatch.createStarted();
 		// TODO try to reuse code from IN4JSCore.createResourceSet
 		ImmutableList<? extends IN4JSSourceContainer> srcCont = markedProject.project.getSourceContainers();
 		for (IN4JSSourceContainer container : srcCont) {
@@ -772,8 +774,14 @@ public class N4HeadlessCompiler {
 				});
 			}
 		}
+		mt.addSeriesPoint("after collect ( " + cs.stop().toString() + " )");
+		mt.addSeriesPoint("before index ");
+		Stopwatch xs = Stopwatch.createStarted();
 		installIndex(resSet, markedProject.project.getManifestLocation());
+		mt.addSeriesPoint("after index ( " + xs.stop().toString() + " )");
 		// Load each file into memory.
+		mt.addSeriesPoint("before load ");
+		Stopwatch ls = Stopwatch.createStarted();
 		for (Resource res : resources) {
 			try {
 				res.load(Collections.EMPTY_MAP);
@@ -787,7 +795,7 @@ public class N4HeadlessCompiler {
 				warn(message);
 			}
 		}
-
+		mt.addSeriesPoint("after load ( " + ls.stop().toString() + " )");
 		// store for compiling &| unloading
 		markedProject.resources = resources;
 		markedProject.externalResources = externalResources;
@@ -796,6 +804,8 @@ public class N4HeadlessCompiler {
 		// Validate and find broken resources:
 		ArrayList<Issue> allErrorsAndWarnings = newArrayList();
 
+		mt.addSeriesPoint("before validate ");
+		Stopwatch vs = Stopwatch.createStarted();
 		// validation TODO see IDE-1426 redesign validation calls with generators
 		for (Resource resource : resources) {
 			// TODO enable if fabelhaft code doesn't contain *.xt files any more.
@@ -830,7 +840,7 @@ public class N4HeadlessCompiler {
 				}
 			}
 		}
-
+		mt.addSeriesPoint("after validate ( " + vs.stop().toString() + " )");
 		dumpAllIssues(allErrorsAndWarnings);
 
 		// Projects should not compile if there are severe errors:
