@@ -36,7 +36,7 @@ import org.eclipse.emf.common.util.EList;
  * @model abstract="true"
  * @generated
  */
-public interface TypeRef extends TypeArgument {
+public interface TypeRef extends TypeArgument, Versionable {
 	/**
 	 * Returns the value of the '<em><b>Null Modifier</b></em>' attribute.
 	 * The literals are from the enumeration {@link eu.numberfour.n4js.ts.types.NullModifier}.
@@ -357,14 +357,12 @@ public interface TypeRef extends TypeArgument {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * The version of the type as specified by the reference, this is only available in languages derived from N4JS.
-	 * Note that this is the declared version of the reference, not of the declared type itself! By default, 0 is
-	 * returned which means that no specific version is requested.
+	 * Override Versioned#getVersion()
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return 0;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='int _xifexpression = (int) 0;\n<%eu.numberfour.n4js.ts.types.Type%> _declaredType = this.getDeclaredType();\nboolean _tripleNotEquals = (_declaredType != null);\nif (_tripleNotEquals)\n{\n\t<%eu.numberfour.n4js.ts.types.Type%> _declaredType_1 = this.getDeclaredType();\n\t_xifexpression = _declaredType_1.getVersion();\n}\nelse\n{\n\t_xifexpression = 0;\n}\nreturn _xifexpression;'"
 	 * @generated
 	 */
-	int getReferencedVersion();
+	int getVersion();
 
 } // TypeRef

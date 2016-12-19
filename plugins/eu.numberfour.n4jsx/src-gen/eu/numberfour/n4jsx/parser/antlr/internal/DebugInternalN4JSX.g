@@ -168,14 +168,16 @@ ruleJSXSpreadAttribute:
 // Rule JSXPropertyAttribute
 ruleJSXPropertyAttribute:
 	ruleIdentifierName
-	'='
 	(
-		ruleStringLiteral
-		    |
-		'{'
-		ruleAssignmentExpression
-		'}'
-	)
+		'='
+		(
+			ruleStringLiteral
+			    |
+			'{'
+			ruleAssignmentExpression
+			'}'
+		)
+	)?
 ;
 
 // Rule ScriptElement

@@ -892,42 +892,18 @@ ruleJSXPropertyAttribute returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_1=EqualsSign
-		{
-			newLeafNode(otherlv_1, grammarAccess.getJSXPropertyAttributeAccess().getEqualsSignKeyword_1());
-		}
 		(
+			otherlv_1=EqualsSign
+			{
+				newLeafNode(otherlv_1, grammarAccess.getJSXPropertyAttributeAccess().getEqualsSignKeyword_1_0());
+			}
 			(
-				(
-					{
-						newCompositeNode(grammarAccess.getJSXPropertyAttributeAccess().getJsxAttributeValueStringLiteralParserRuleCall_2_0_0());
-					}
-					lv_jsxAttributeValue_2_0=ruleStringLiteral
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getJSXPropertyAttributeRule());
-						}
-						set(
-							$current,
-							"jsxAttributeValue",
-							lv_jsxAttributeValue_2_0,
-							"eu.numberfour.n4js.N4JS.StringLiteral");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-			    |
-			(
-				otherlv_3=LeftCurlyBracket
-				{
-					newLeafNode(otherlv_3, grammarAccess.getJSXPropertyAttributeAccess().getLeftCurlyBracketKeyword_2_1_0());
-				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getJSXPropertyAttributeAccess().getJsxAttributeValueAssignmentExpressionParserRuleCall_2_1_1_0());
+							newCompositeNode(grammarAccess.getJSXPropertyAttributeAccess().getJsxAttributeValueStringLiteralParserRuleCall_1_1_0_0());
 						}
-						lv_jsxAttributeValue_4_0=ruleAssignmentExpression
+						lv_jsxAttributeValue_2_0=ruleStringLiteral
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getJSXPropertyAttributeRule());
@@ -935,18 +911,44 @@ ruleJSXPropertyAttribute returns [EObject current=null]
 							set(
 								$current,
 								"jsxAttributeValue",
-								lv_jsxAttributeValue_4_0,
-								"eu.numberfour.n4js.N4JS.AssignmentExpression");
+								lv_jsxAttributeValue_2_0,
+								"eu.numberfour.n4js.N4JS.StringLiteral");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
-				otherlv_5=RightCurlyBracket
-				{
-					newLeafNode(otherlv_5, grammarAccess.getJSXPropertyAttributeAccess().getRightCurlyBracketKeyword_2_1_2());
-				}
+				    |
+				(
+					otherlv_3=LeftCurlyBracket
+					{
+						newLeafNode(otherlv_3, grammarAccess.getJSXPropertyAttributeAccess().getLeftCurlyBracketKeyword_1_1_1_0());
+					}
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getJSXPropertyAttributeAccess().getJsxAttributeValueAssignmentExpressionParserRuleCall_1_1_1_1_0());
+							}
+							lv_jsxAttributeValue_4_0=ruleAssignmentExpression
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getJSXPropertyAttributeRule());
+								}
+								set(
+									$current,
+									"jsxAttributeValue",
+									lv_jsxAttributeValue_4_0,
+									"eu.numberfour.n4js.N4JS.AssignmentExpression");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+					otherlv_5=RightCurlyBracket
+					{
+						newLeafNode(otherlv_5, grammarAccess.getJSXPropertyAttributeAccess().getRightCurlyBracketKeyword_1_1_1_2());
+					}
+				)
 			)
-		)
+		)?
 	)
 ;
 

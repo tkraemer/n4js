@@ -71,10 +71,17 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case TypeRefsPackage.VERSIONABLE: {
+				Versionable versionable = (Versionable)theEObject;
+				T result = caseVersionable(versionable);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case TypeRefsPackage.TYPE_REF: {
 				TypeRef typeRef = (TypeRef)theEObject;
 				T result = caseTypeRef(typeRef);
 				if (result == null) result = caseTypeArgument(typeRef);
+				if (result == null) result = caseVersionable(typeRef);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -83,6 +90,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				T result = caseStaticBaseTypeRef(staticBaseTypeRef);
 				if (result == null) result = caseTypeRef(staticBaseTypeRef);
 				if (result == null) result = caseTypeArgument(staticBaseTypeRef);
+				if (result == null) result = caseVersionable(staticBaseTypeRef);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -92,6 +100,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseStaticBaseTypeRef(baseTypeRef);
 				if (result == null) result = caseTypeRef(baseTypeRef);
 				if (result == null) result = caseTypeArgument(baseTypeRef);
+				if (result == null) result = caseVersionable(baseTypeRef);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -101,6 +110,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseStaticBaseTypeRef(composedTypeRef);
 				if (result == null) result = caseTypeRef(composedTypeRef);
 				if (result == null) result = caseTypeArgument(composedTypeRef);
+				if (result == null) result = caseVersionable(composedTypeRef);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -111,6 +121,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseStaticBaseTypeRef(unionTypeExpression);
 				if (result == null) result = caseTypeRef(unionTypeExpression);
 				if (result == null) result = caseTypeArgument(unionTypeExpression);
+				if (result == null) result = caseVersionable(unionTypeExpression);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -121,6 +132,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseStaticBaseTypeRef(intersectionTypeExpression);
 				if (result == null) result = caseTypeRef(intersectionTypeExpression);
 				if (result == null) result = caseTypeArgument(intersectionTypeExpression);
+				if (result == null) result = caseVersionable(intersectionTypeExpression);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -131,6 +143,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseStaticBaseTypeRef(thisTypeRef);
 				if (result == null) result = caseTypeRef(thisTypeRef);
 				if (result == null) result = caseTypeArgument(thisTypeRef);
+				if (result == null) result = caseVersionable(thisTypeRef);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -142,6 +155,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseStaticBaseTypeRef(thisTypeRefNominal);
 				if (result == null) result = caseTypeRef(thisTypeRefNominal);
 				if (result == null) result = caseTypeArgument(thisTypeRefNominal);
+				if (result == null) result = caseVersionable(thisTypeRefNominal);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -154,6 +168,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseStaticBaseTypeRef(thisTypeRefStructural);
 				if (result == null) result = caseTypeRef(thisTypeRefStructural);
 				if (result == null) result = caseTypeArgument(thisTypeRefStructural);
+				if (result == null) result = caseVersionable(thisTypeRefStructural);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -166,6 +181,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseStaticBaseTypeRef(boundThisTypeRef);
 				if (result == null) result = caseTypeRef(boundThisTypeRef);
 				if (result == null) result = caseTypeArgument(boundThisTypeRef);
+				if (result == null) result = caseVersionable(boundThisTypeRef);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -176,17 +192,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseStaticBaseTypeRef(parameterizedTypeRef);
 				if (result == null) result = caseTypeRef(parameterizedTypeRef);
 				if (result == null) result = caseTypeArgument(parameterizedTypeRef);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case TypeRefsPackage.PARAMETERIZED_TYPE_REF_WITH_VERSION: {
-				ParameterizedTypeRefWithVersion parameterizedTypeRefWithVersion = (ParameterizedTypeRefWithVersion)theEObject;
-				T result = caseParameterizedTypeRefWithVersion(parameterizedTypeRefWithVersion);
-				if (result == null) result = caseParameterizedTypeRef(parameterizedTypeRefWithVersion);
-				if (result == null) result = caseBaseTypeRef(parameterizedTypeRefWithVersion);
-				if (result == null) result = caseStaticBaseTypeRef(parameterizedTypeRefWithVersion);
-				if (result == null) result = caseTypeRef(parameterizedTypeRefWithVersion);
-				if (result == null) result = caseTypeArgument(parameterizedTypeRefWithVersion);
+				if (result == null) result = caseVersionable(parameterizedTypeRef);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -205,6 +211,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseStaticBaseTypeRef(parameterizedTypeRefStructural);
 				if (result == null) result = caseTypeRef(parameterizedTypeRefStructural);
 				if (result == null) result = caseTypeArgument(parameterizedTypeRefStructural);
+				if (result == null) result = caseVersionable(parameterizedTypeRefStructural);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -213,6 +220,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				T result = caseExistentialTypeRef(existentialTypeRef);
 				if (result == null) result = caseTypeRef(existentialTypeRef);
 				if (result == null) result = caseTypeArgument(existentialTypeRef);
+				if (result == null) result = caseVersionable(existentialTypeRef);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -221,6 +229,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				T result = caseUnknownTypeRef(unknownTypeRef);
 				if (result == null) result = caseTypeRef(unknownTypeRef);
 				if (result == null) result = caseTypeArgument(unknownTypeRef);
+				if (result == null) result = caseVersionable(unknownTypeRef);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -231,6 +240,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseStaticBaseTypeRef(typeTypeRef);
 				if (result == null) result = caseTypeRef(typeTypeRef);
 				if (result == null) result = caseTypeArgument(typeTypeRef);
+				if (result == null) result = caseVersionable(typeTypeRef);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -253,6 +263,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseStaticBaseTypeRef(functionTypeExprOrRef);
 				if (result == null) result = caseTypeRef(functionTypeExprOrRef);
 				if (result == null) result = caseTypeArgument(functionTypeExprOrRef);
+				if (result == null) result = caseVersionable(functionTypeExprOrRef);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -265,6 +276,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseStaticBaseTypeRef(functionTypeRef);
 				if (result == null) result = caseTypeRef(functionTypeRef);
 				if (result == null) result = caseTypeArgument(functionTypeRef);
+				if (result == null) result = caseVersionable(functionTypeRef);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -275,6 +287,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseStaticBaseTypeRef(functionTypeExpression);
 				if (result == null) result = caseTypeRef(functionTypeExpression);
 				if (result == null) result = caseTypeArgument(functionTypeExpression);
+				if (result == null) result = caseVersionable(functionTypeExpression);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -283,6 +296,7 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 				T result = caseDeferredTypeRef(deferredTypeRef);
 				if (result == null) result = caseTypeRef(deferredTypeRef);
 				if (result == null) result = caseTypeArgument(deferredTypeRef);
+				if (result == null) result = caseVersionable(deferredTypeRef);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -294,6 +308,21 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 			}
 			default: return defaultCase(theEObject);
 		}
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Versionable</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Versionable</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseVersionable(Versionable object) {
+		return null;
 	}
 
 	/**
@@ -458,21 +487,6 @@ public class TypeRefsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseParameterizedTypeRef(ParameterizedTypeRef object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Parameterized Type Ref With Version</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Parameterized Type Ref With Version</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseParameterizedTypeRefWithVersion(ParameterizedTypeRefWithVersion object) {
 		return null;
 	}
 

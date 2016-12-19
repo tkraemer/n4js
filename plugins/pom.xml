@@ -78,7 +78,7 @@ Contributors:
 		<module>eu.numberfour.n4jsx</module>
 		<module>eu.numberfour.n4jsx.model</module>
 		<module>eu.numberfour.n4jsx.ui</module>
-		
+		<module>eu.numberfour.n4jsx.xpect.ui</module>
 	</modules>
 
 	<properties>

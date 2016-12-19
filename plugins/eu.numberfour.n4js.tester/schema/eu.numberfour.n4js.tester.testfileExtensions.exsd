@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="eu.numberfour.n4js.tester" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="eu.numberfour.n4js.tester" id="testfileExtensions" name="Test File Extensions"/>
+      </appinfo>
+      <documentation>
+         This extension point allows third-party plug-ins to specify file extensions that are considered as test files.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="testFileExtension"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="testFileExtension">
+      <complexType>
+         <attribute name="fileExtension" type="string">
+            <annotation>
+               <documentation>
+                  The file extension to be included in the test catalog
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+
+   <annotation>
+      <appinfo>
+         <meta.section type="examples"/>
+      </appinfo>
+      <documentation>
+         The following example shows how to specify .n4jsx as files:
+&lt;pre&gt;
+&lt;extension
+	point=&quot;eu.numberfour.n4js.tester.testFileExtensions&quot;&gt;
+    	&lt;testFileExtension
+        	fileExtension=&quot;n4jsx&quot;&gt;
+		&lt;/testFileExtension&gt;
+&lt;/extension&gt;
+&lt;/pre&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="apiinfo"/>
+      </appinfo>
+      <documentation>
+         Third-party plugins only need to specify file extensions without implementing any code.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="implementation"/>
+      </appinfo>
+      <documentation>
+         See plugin.xml of the project n4jsx.xspec.ui to see how this extension point is used.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="copyright"/>
+      </appinfo>
+      <documentation>
+         &lt;pre&gt;
+Copyright (c) 2016 NumberFour AG.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+   NumberFour AG - Initial API and implementation
+&lt;/pre&gt;
+      </documentation>
+   </annotation>
+
+</schema>

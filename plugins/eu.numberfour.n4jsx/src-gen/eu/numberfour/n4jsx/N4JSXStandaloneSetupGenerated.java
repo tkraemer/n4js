@@ -6,7 +6,6 @@ package eu.numberfour.n4jsx;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import eu.numberfour.n4js.N4JSStandaloneSetup;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.ISetup;
 import org.eclipse.xtext.resource.IResourceFactory;

@@ -151,3 +151,6 @@ snippets
 unicode
 referenceable
 lexer
+versionable
+versioned
+unversioned

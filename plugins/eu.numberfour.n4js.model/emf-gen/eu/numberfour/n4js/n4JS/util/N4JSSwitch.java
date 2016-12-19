@@ -9,6 +9,8 @@ package eu.numberfour.n4js.n4JS.util;
 
 import eu.numberfour.n4js.n4JS.*;
 
+import eu.numberfour.n4js.ts.typeRefs.Versionable;
+
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.TypableElement;
 
@@ -693,6 +695,7 @@ public class N4JSSwitch<T> extends Switch<T> {
 				T result = caseIdentifierRef(identifierRef);
 				if (result == null) result = casePrimaryExpression(identifierRef);
 				if (result == null) result = caseStrictModeRelevant(identifierRef);
+				if (result == null) result = caseVersionable(identifierRef);
 				if (result == null) result = caseExpression(identifierRef);
 				if (result == null) result = caseTypableElement(identifierRef);
 				if (result == null) result = defaultCase(theEObject);
@@ -4052,6 +4055,21 @@ public class N4JSSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseIdentifiableElement(IdentifiableElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Versionable</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Versionable</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseVersionable(Versionable object) {
 		return null;
 	}
 

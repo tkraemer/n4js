@@ -36,15 +36,18 @@ import com.google.common.base.Function;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
-import eu.numberfour.n4js.N4JSStandaloneSetup;
+import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.internal.FileBasedWorkspace;
 import eu.numberfour.n4js.tester.TestDiscoveryHelper;
 import eu.numberfour.n4js.tester.TesterModule;
 import eu.numberfour.n4js.tester.domain.TestSuite;
 import eu.numberfour.n4js.tester.domain.TestTree;
+import eu.numberfour.n4js.tester.extension.TestFileExtensionsRegistry;
 import eu.numberfour.n4js.tester.tests.InjectedModules;
 import eu.numberfour.n4js.tester.tests.JUnitGuiceClassRunner;
 import eu.numberfour.n4js.tester.tests.WithParentInjector;
+import eu.numberfour.n4jsx.N4JSXGlobals;
+import eu.numberfour.n4jsx.N4JSXStandaloneSetup;
 
 /**
  * Class for testing the behavior of the {@link TestDiscoveryHelper} in headless mode.
@@ -69,14 +72,26 @@ public class HeadlessTestDiscoveryTest {
 	private static final File TEST_CLASS_FILE_IDEBUG_572 = new File(TEST_SRC_FOLDER_IDEBUG_572,
 			"/path/to/the/source/" + TEST_CLASS_2 + ".n4js");
 
+	// Test project with mxied N4JS and N4JSX
+	private static final String TEST_N4JSX_PROJECT_NAME = "test.discovery.example.project.n4jsx";
+	private static final File TEST_N4JSX_PROJECT = new File(RESOURCES_FOLDER + separator + TEST_N4JSX_PROJECT_NAME);
+
+	private static final String TEST_N4JSX_CLASS_3 = "TestClass_3";
+	private static final String TEST_N4JSX_CLASS_4 = "TestClass_4";
+	private static final File TEST_N4JSX_CLASS_FILE = new File(TEST_SRC_FOLDER,
+			"/path/to/the/source/" + TEST_N4JSX_CLASS_3 + ".n4jsx");
+
 	/***/
 	@WithParentInjector
 	public static Injector getParentInjector() {
-		return new N4JSStandaloneSetup().createInjectorAndDoEMFRegistration();
+		return new N4JSXStandaloneSetup().createInjectorAndDoEMFRegistration();
 	}
 
 	@Inject
 	private TestDiscoveryHelper helper;
+
+	@Inject
+	private TestFileExtensionsRegistry testFileExtensionsRegistry;
 
 	@Inject
 	private FileBasedWorkspace fbWorkspace;
@@ -86,6 +101,11 @@ public class HeadlessTestDiscoveryTest {
 	public void prepareIN4JSCore() {
 		fbWorkspace.registerProject(URI.createFileURI(TEST_PROJECT.getAbsolutePath()));
 		fbWorkspace.registerProject(URI.createFileURI(TEST_PROJECT_IDEBUG_572.getAbsolutePath()));
+		fbWorkspace.registerProject(URI.createFileURI(TEST_N4JSX_PROJECT.getAbsolutePath()));
+		// Register test file extensions .n4js and .n4jsx
+		testFileExtensionsRegistry.reset();
+		testFileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION);
+		testFileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION);
 	}
 
 	/***/
@@ -216,6 +236,26 @@ public class HeadlessTestDiscoveryTest {
 		assertTestCaseCountForSuite(actual, TEST_SRC_STRUCTURE + "." + TEST_CLASS_1 + ".A", 2);
 		assertTestCaseCountForSuite(actual, TEST_SRC_STRUCTURE + "." + TEST_CLASS_1 + ".B", 1);
 		assertTestCaseCountForSuite(actual, TEST_SRC_STRUCTURE + "." + TEST_CLASS_1 + ".C", 1);
+	}
+
+	/** N4JSX test discovery tests */
+	@Test
+	public void testDiscoveryN4JSXExpectNonNullTestTree() {
+		assertNotNull(TEST_N4JSX_PROJECT + "", helper.collectTests(toURI(TEST_N4JSX_PROJECT)));
+	}
+
+	/***/
+	@Test
+	public void testDiscoveryN4JSXForSingleExistingProject() {
+		final TestTree actual = helper.collectTests(toURI(TEST_N4JSX_PROJECT));
+		assertTestSuiteCount(actual, 3);
+		assertTestSuiteNames(actual,
+				TEST_SRC_STRUCTURE + "." + TEST_N4JSX_CLASS_3 + ".D",
+				TEST_SRC_STRUCTURE + "." + TEST_N4JSX_CLASS_3 + ".E",
+				TEST_SRC_STRUCTURE + "." + TEST_N4JSX_CLASS_4 + ".F");
+		assertTestCaseCount(actual, 7);
+		assertTestCaseCountForSuite(actual, TEST_SRC_STRUCTURE + "." + TEST_N4JSX_CLASS_3 + ".D", 2);
+		assertTestCaseCountForSuite(actual, TEST_SRC_STRUCTURE + "." + TEST_N4JSX_CLASS_3 + ".E", 2);
 	}
 
 	private void assertTestSuiteCount(final TestTree actual, final int expected) {

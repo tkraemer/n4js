@@ -191,7 +191,7 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 	def private void checkNameConflicts(VariableEnvironmentElement scope, Set<String> outerNames) {
 		val List<String> localNames = scope.declaredNames.toList;
 
-		scope.checkGlobalNamesConflict(localNames)
+		scope.checkGlobalNamesConflict(scope.declaredNamesForGlobalScopeComparison.toList);
 
 		val Set<String> localNamesNoDuplicates = new HashSet(localNames);
 
@@ -213,9 +213,9 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 		val Set<String> globalNamesConflicts = new HashSet(globalNames)
 
 		if (globalNamesConflicts.retainAll(localNames)) {
-			scope.getNameDeclarations.filter[globalNamesConflicts.contains(it.declaredName)].forEach [
+			scope.getNameDeclarations.filter[globalNamesConflicts.contains(it.declaredNameForGlobalScopeComparision)].forEach [
 				val innerScopeObject = it;
-				val name = innerScopeObject.declaredName
+				val name = innerScopeObject.declaredNameForGlobalScopeComparision
 				if (name != 'eval') { // already validated by the AST Structure validator
 					val globalObjectMemeber = findGlobalMembers(scope.eResource).findFirst[m|name.equals(m.name)]
 					addIssue(
@@ -565,6 +565,13 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 	def private Iterable<String> getDeclaredNames(VariableEnvironmentElement scope) {
 		scope.nameDeclarations.map[declaredName]
 	}
+	
+	/**
+	 * Returns list of names declared in scope 'scope' without(!) considering nested scopes for comparison in global scope.
+	 */
+	def private Iterable<String> getDeclaredNamesForGlobalScopeComparison(VariableEnvironmentElement scope) {
+		scope.nameDeclarations.map[declaredNameForGlobalScopeComparision]
+	}
 
 	/**
 	 * Returns nested scopes of 'scope'. Only direct sub-scopes of 'scope' are returned, no sub-sub-scopes,
@@ -587,7 +594,7 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 	 * returns null in other cases.
 	 * Does not check value of the returned name, so it can be null or empty string.
 	 */
-	def private String getDeclaredName(EObject eo) {
+	def protected String getDeclaredName(EObject eo) {
 		if (eo instanceof FunctionDeclaration || eo instanceof FunctionExpression || eo instanceof N4TypeDefinition ||
 			eo instanceof Variable) {
 			return eo.findName
@@ -613,6 +620,10 @@ class N4JSDeclaredNameValidator extends AbstractN4JSDeclarativeValidator {
 		}
 
 		return null
+	}
+	
+	def protected String getDeclaredNameForGlobalScopeComparision(EObject eo) {
+		return eo.declaredName
 	}
 
 	/** helper dispatch because we lack one uniform interface for getName */
