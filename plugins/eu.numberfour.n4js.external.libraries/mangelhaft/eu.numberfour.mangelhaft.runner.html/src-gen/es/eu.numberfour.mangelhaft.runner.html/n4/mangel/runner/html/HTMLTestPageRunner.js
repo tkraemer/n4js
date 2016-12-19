@@ -50,11 +50,11 @@
 				}
 			],
 			execute: function() {
-				$makeClass(HTMLTestPageRunner, Object, [], {
+				$makeClass(HTMLTestPageRunner, N4Object, [], {
 					run: {
 						value: function run___n4() {
 							return $spawn(function*() {
-								let groupsStr = getParm("groups"), groupsFilter = getParm("filter"), groupsArray, testsStr = getParm("tests"), testsArray, reporterStr = getParm("reporter"), endpoint = getParm("endpoint"), tests, buffer = [], resultGroups;
+								let groupsStr = getParm("groups"), groupsFilter = getParm("filter"), groupsArray, testsStr = getParm("tests"), testsArray, tests, buffer = [], resultGroups;
 								;
 								try {
 									tests = ((yield ((yield window.fetch("/test-catalog.json", {
@@ -183,7 +183,7 @@
 						]
 					}
 				});
-				$makeClass(TestBinder, Object, [], {}, {}, function(instanceProto, staticProto) {
+				$makeClass(TestBinder, N4Object, [], {}, {}, function(instanceProto, staticProto) {
 					var metaClass = new N4Class({
 						name: 'TestBinder',
 						origin: 'eu.numberfour.mangelhaft.runner.html',
@@ -231,7 +231,7 @@
 						fieldsInjectedTypes: []
 					}
 				});
-				$makeClass(Root, Object, [], {
+				$makeClass(Root, N4Object, [], {
 					runner: {
 						value: undefined,
 						writable: true

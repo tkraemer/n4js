@@ -37,7 +37,7 @@
 				}
 			],
 			execute: function() {
-				$makeClass(CliColor, Object, [], {
+				$makeClass(CliColor, N4Object, [], {
 					red: {
 						value: function red___n4(str) {
 							return str;
@@ -96,7 +96,7 @@
 					});
 					return metaClass;
 				});
-				$makeClass(ConsoleReporter, Object, [
+				$makeClass(ConsoleReporter, N4Object, [
 					ITestReporter
 				], {
 					setLogger: {
@@ -121,7 +121,6 @@
 					register: {
 						value: function register___n4() {
 							return $spawn(function*() {
-								let sessionId = null;
 								let indent = 0;
 								this.spy.testingStarted.add((function(numAllGroups, sid, numAllTests) {
 									this.logger.call(this, ("" + "   ".repeat(indent) + "Begin tests"));

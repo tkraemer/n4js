@@ -61,7 +61,6 @@ export public class ConsoleReporter implements ITestReporter {
     }
 
     @Override public async register() {
-        let sessionId: string = null;
         let indent = 0;
         this.spy.testingStarted.add((numAllGroups: number, sid: string, numAllTests: number) => {
             this.logger.call(this, `${"   ".repeat(indent)}Begin tests`)

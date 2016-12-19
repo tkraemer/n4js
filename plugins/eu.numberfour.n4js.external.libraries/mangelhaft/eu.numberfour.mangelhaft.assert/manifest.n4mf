@@ -15,6 +15,9 @@ ProjectType: library
 ProjectVersion: 0.3.1
 Output: "src-gen"
 
+ProjectDependencies {
+    json-cycle
+}
 
 RequiredRuntimeLibraries {
     n4js-runtime-n4

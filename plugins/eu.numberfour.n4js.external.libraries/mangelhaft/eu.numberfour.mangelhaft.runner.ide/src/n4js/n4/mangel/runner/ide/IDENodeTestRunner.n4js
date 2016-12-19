@@ -42,7 +42,7 @@ class IDENodeTestRunner  {
             }
             this.reporter.endpoint = testCatalog.endpoint;
             this.controller.reporters = [this.reporter];
-            let groupResults = await this.controller.runGroups(testCatalog, 100);
+            await this.controller.runGroups(testCatalog, 100);
         } catch (err) {
             let errObj: Object+ = err as Object;
             console.error(err + "\nstack: " + errObj.stack.replace(/^Error:?\s*/, ""));

@@ -9,18 +9,18 @@
 		'@@cjs/n4mf-parser/index',
 		'@@cjs/n4js-cli/index'
 	], function($n4Export) {
-		var NodeTestCLI, child_process, lib_fs, os, lib_path, n4mf_parser, n4js_cli, MANIFEST_N4MF, requireResolve, count, createTempDir, detectProjectDir, coreLibs, rtLibs, NodeTestAPI;
+		var NodeTestCLI, child_process, lib_fs, os, lib_path, n4mf_parser, n4js_cli, MANIFEST_N4MF, requireResolve, createTempDir, detectProjectDir, coreLibs, rtLibs, mangelhaftNpmDeps, targetPlatformStub, NodeTestAPI;
 		requireResolve = function requireResolve(id) {
-			return (System._nodeRequire)["resolve"](id);
+			let sysObj = System;
+			return sysObj["_nodeRequire"]["resolve"](id);
 		};
 		$n4Export('requireResolve', requireResolve);
 		createTempDir = function createTempDir() {
 			return $spawn(function*() {
-				let tempDir = lib_path.join(os.tmpdir(), "n4js-mangelhaft-" + count++);
-				(yield $n4promisifyFunction(lib_fs.mkdir, [
-					tempDir
-				], false, false));
-				return tempDir;
+				let prefix = lib_path.join(os.tmpdir(), "n4js-mangelhaft-");
+				return $n4promisifyFunction(lib_fs.mkdtemp, [
+					prefix
+				], false, false);
 			}.apply(this, arguments));
 		};
 		$n4Export('createTempDir', createTempDir);
@@ -56,7 +56,6 @@
 			],
 			execute: function() {
 				MANIFEST_N4MF = "manifest.n4mf";
-				count = Date.now();
 				coreLibs = [
 					"n4js.lang",
 					"eu.numberfour.mangelhaft.assert"
@@ -69,7 +68,19 @@
 					"n4js-runtime-v8",
 					"n4js-runtime-node"
 				];
-				$makeClass(NodeTestAPI, Object, [], {}, {
+				mangelhaftNpmDeps = [
+					"json-cycle"
+				];
+				targetPlatformStub = {
+					location: [
+						{
+							config: {},
+							projects: {},
+							repoType: "npm"
+						}
+					]
+				};
+				$makeClass(NodeTestAPI, N4Object, [], {}, {
 					exec: {
 						value: function exec___n4(options) {
 							return $spawn(function*() {
@@ -77,7 +88,7 @@
 								var addManifest = function addManifest(dir) {
 									return $spawn(function*() {
 										let manifest = (yield n4mf_parser.readManifest(lib_path.join(dir, MANIFEST_N4MF)));
-										idToManifest.set(manifest["ArtifactId"], manifest);
+										idToManifest.set(manifest["ProjectId"], manifest);
 										prjToManifest.set(dir, manifest);
 									}.apply(this, arguments));
 								};
@@ -91,9 +102,7 @@
 										let prj = lib_path.join(dir, p), stat = (yield $n4promisifyFunction(lib_fs.stat, [
 											prj
 										], false, false));
-										if (stat.isDirectory() && ((yield $n4promisifyFunction(lib_fs.exists, [
-											lib_path.join(prj, MANIFEST_N4MF)
-										], false, true)))) {
+										if (stat.isDirectory() && lib_fs.existsSync(lib_path.join(prj, MANIFEST_N4MF))) {
 											(yield addManifest(prj));
 										}
 									}
@@ -107,12 +116,36 @@
 									console.log("projects:", Array.from(prjToManifest.keys()));
 								}
 								if (options.compile) {
+									let n4jscTempDir = (yield createTempDir());
 									if (options.testCatalog.startsWith("http://")) {
-										options.testCatalog = lib_path.join((yield createTempDir()), "catalog.json");
+										options.testCatalog = lib_path.join(n4jscTempDir, "catalog.json");
 									}
 									if (!options.targetPlatformInstallLocation) {
-										options.targetPlatformInstallLocation = (yield createTempDir());
+										options.targetPlatformInstallLocation = lib_path.join(n4jscTempDir, "targetPlatform-install");
 									}
+									let targetPlatform = targetPlatformStub;
+									if (options.targetPlatformFile) {
+										targetPlatform = JSON.parse((yield $n4promisifyFunction(lib_fs.readFile, [
+											options.targetPlatformFile,
+											{
+												encoding: "UTF-8"
+											}
+										], false, false)));
+									}
+									let npmDeps = targetPlatform.location[0].projects;
+									for(let dep of mangelhaftNpmDeps) {
+										if (!npmDeps[dep]) {
+											npmDeps[dep] = {};
+										}
+									}
+									options.targetPlatformFile = lib_path.join(n4jscTempDir, "targetplatform.n4tp");
+									(yield $n4promisifyFunction(lib_fs.writeFile, [
+										options.targetPlatformFile,
+										JSON.stringify(targetPlatform, null, 2),
+										{
+											encoding: "UTF-8"
+										}
+									], false, false));
 									let projects = Array.from(prjToManifest.keys()).concat(rtLibs.filter((function(id) {
 										return !idToManifest.has(id);
 									}).bind(this)).map(detectProjectDir));
@@ -159,7 +192,12 @@
 									console.log("args:", args);
 								}
 								(yield new Promise((function(resolve, reject) {
+									let execArgv = process.execArgv.slice();
+									if (options.inspect) {
+										execArgv.push(("--inspect=" + options.inspect + ""), "--debug-brk");
+									}
 									child_process.fork(requireResolve("n4js-node/n4js-cli"), args, {
+										execArgv: execArgv,
 										env: env
 									}).on("close", (function(code) {
 										if (code === 0) {

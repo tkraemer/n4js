@@ -13,9 +13,12 @@
 /**
  * Use this interface type to denote common ES2015 work-around cases
  * used to make Iterators compatible with for..of loops.
+ * 
+ * Dirty, but properly represents the ES2015 work-around.
  */
-export public interface ~IteratorExt<out T> extends Iterator<T> {
-    public [Symbol.iterator](): IteratorExt<T>; // must return this
+export public interface ~IteratorExt<out T> extends Iterator<T>, Iterable<T> {
+//    @Override
+//    public [Symbol.iterator](): IteratorExt<T>; // must return this
 }
 
 /* -*- mode: typescript;-*- */

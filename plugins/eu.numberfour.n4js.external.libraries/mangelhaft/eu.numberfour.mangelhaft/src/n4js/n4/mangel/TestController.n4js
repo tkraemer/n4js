@@ -34,14 +34,13 @@ export public class TestController {
     private reportersVal: Array<? extends ITestReporter> = [];
     public set reporters(reporters: Array<? extends ITestReporter>) {
         reporters.forEach(function(reporter) {
-            let dummy: Promise<any, ?> = reporter.register();
+            let dummy: Promise<any, ?> = reporter.register(); dummy;
         })
         this.reportersVal = reporters;
     }
 
     private async errorGroup(info: TestInfo, loadPath: string, testObject: InstrumentedTest?, originalError: any?) {
-        let emptyTest: TestMethodDescriptor
-          , error = originalError ? originalError: new Error("could not load test " + loadPath)
+        let error = originalError ? originalError: new Error("could not load test " + loadPath)
           , that = this
           , testResult: TestResult
           , testResults: Array<TestResult> = []
@@ -85,7 +84,6 @@ export public class TestController {
           , testClasses: Array<constructor{N4Object}>
           , testClass: constructor{N4Object}
           , instrumentedTestObjects: Array<IInstrumentedTest> = []
-          , instrumentedTestObject: InstrumentedTest
           , moduleName: string
         ;
 
@@ -144,20 +142,18 @@ export public class TestController {
             return null;
         }
         let arr = (await Promise.all(instrumentedTestObjects)).filter((item) => item !== null);
-        return (arr as any) as Array<InstrumentedTest>;
+        return arr as Array<InstrumentedTest>;
     }
     public async runGroups(testInfoObject: TestInfos, numTests: number?): ResultGroups {
         if (!testInfoObject) {
             throw new Error("TestController::runGroups called with a null testInfoObject");
         }
         let executor: TestExecutor = this.executor
-          , that = this
           , reses: Array<ResultGroups> = []
           , res: ResultGroups
           , testInfos: Array<TestInfo> = testInfoObject.testDescriptors
           , batchedTestInfos: Array<Array<TestInfo>> = []
           , ii: number = 0
-          , modules: Array<string>
           , testInfosBatch: Array<TestInfo>
           , instrumentedTestsBatch2d: Array<Array<InstrumentedTest>>
           , instrumentedTestsBatch: Array<InstrumentedTest>
@@ -186,9 +182,9 @@ export public class TestController {
         for (ii = 0, instrumentedTestsBatch = []; ii < batchedTestInfos.length; ++ii, instrumentedTestsBatch = []) {
             testInfosBatch = batchedTestInfos[ii]
             try {
-                fixme = await (await Promise.all(testInfosBatch
-                                            .map(this.instrument.bind(this))
-                                            .filter(function(test) {return test !== null})));
+                fixme = await Promise.resolve(await Promise.all(testInfosBatch.map(this.instrument.bind(this)).filter(function(test) {
+                    return test !== null;
+                })));
                 instrumentedTestsBatch2d = fixme as Array<Array<InstrumentedTest>>;
                 //flatten array
                 instrumentedTestsBatch =  (Array.prototype.concat.apply([], instrumentedTestsBatch2d) as Array<InstrumentedTest>)

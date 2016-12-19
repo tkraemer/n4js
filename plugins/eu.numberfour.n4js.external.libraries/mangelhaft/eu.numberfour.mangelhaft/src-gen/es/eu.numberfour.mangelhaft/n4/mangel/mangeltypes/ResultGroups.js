@@ -25,7 +25,7 @@
 				}
 			],
 			execute: function() {
-				$makeClass(ResultGroups, Object, [], {
+				$makeClass(ResultGroups, N4Object, [], {
 					aggregate: {
 						value: function aggregate___n4() {
 							let result;

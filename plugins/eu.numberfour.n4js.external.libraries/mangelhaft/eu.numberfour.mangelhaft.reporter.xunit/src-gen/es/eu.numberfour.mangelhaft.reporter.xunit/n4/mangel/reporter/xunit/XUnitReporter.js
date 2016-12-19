@@ -11,14 +11,9 @@
 		var ITestReporter, TestSpy, lib_path, lib_fs, os, xmlbuilder, mkdirp, isOK, XUnitReportSpec, XUnitReporter;
 		mkdirp = function mkdirp(path, mode) {
 			return $spawn(function*() {
-				if (!((yield $n4promisifyFunction(lib_fs.exists, [
-					path
-				], false, true)))) {
+				if (!lib_fs.existsSync(path)) {
 					(yield mkdirp(path.substring(0, path.lastIndexOf(lib_path.sep)), mode));
-					(yield $n4promisifyFunction(lib_fs.mkdir, [
-						path,
-						mode
-					], false, false));
+					(yield (lib_fs.mkdir(path, mode)));
 				}
 			}.apply(this, arguments));
 		};
@@ -70,7 +65,7 @@
 				}
 			],
 			execute: function() {
-				$makeClass(XUnitReportSpec, Object, [], {
+				$makeClass(XUnitReportSpec, N4Object, [], {
 					xunitReportFile: {
 						value: undefined,
 						writable: true
@@ -112,7 +107,7 @@
 					});
 					return metaClass;
 				});
-				$makeClass(XUnitReporter, Object, [
+				$makeClass(XUnitReporter, N4Object, [
 					ITestReporter
 				], {
 					testingStarted: {

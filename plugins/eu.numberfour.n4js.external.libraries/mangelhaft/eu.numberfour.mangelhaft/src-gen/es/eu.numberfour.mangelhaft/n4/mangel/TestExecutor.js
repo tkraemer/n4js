@@ -36,7 +36,7 @@
 				}
 			],
 			execute: function() {
-				$makeClass(TestExecutor, Object, [], {
+				$makeClass(TestExecutor, N4Object, [], {
 					handleFixme: {
 						value: function handleFixme___n4(testObject, testRes) {
 							if (testObject.fixme) {
@@ -69,10 +69,10 @@
 											return $spawn(function*() {
 												let res;
 												timeoutId = setTimeout(function() {
-													reject(new Error("Test object" + testMethodDescriptor.name + "timed out after" + testMethodDescriptor.timeout + " milliseconds"));
+													reject(new Error("Test object " + testMethodDescriptor.name + " timed out after " + testMethodDescriptor.timeout + " milliseconds"));
 												}, testMethodDescriptor.timeout);
 												try {
-													res = (yield testMethodDescriptor.value.call(instrumentedTest.testObject));
+													res = (yield Promise.resolve(testMethodDescriptor.value.call(instrumentedTest.testObject)));
 												} catch(error) {
 													reject(error);
 												} finally {
@@ -86,7 +86,7 @@
 									}.apply(this, arguments));
 								};
 								if (testMethodDescriptors) {
-									results = (((yield Promise.all(testMethodDescriptors.map(runTest)))));
+									results = ((yield Promise.all(testMethodDescriptors.map(runTest))));
 								}
 								return results;
 							}.apply(this, arguments));
@@ -100,7 +100,8 @@
 								node = node.parent;
 							}
 							do {
-								nodeTestMethods = (node)[testMethodName];
+								let nodeObj = node;
+								nodeTestMethods = nodeObj[testMethodName];
 								if (nodeTestMethods && nodeTestMethods.length) {
 									testMethods = testMethods.concat(nodeTestMethods);
 								}
@@ -284,7 +285,7 @@
 							let e = ex instanceof AssertionError ? ex : ex, reason = e.toString(), tr, status, trace;
 							;
 							if (reason.charAt(0) === "[") {
-								reason = e["name"] ? e["name"] + ": " + description : description;
+								reason = e.name ? ("" + e.name + " : " + description + "") : description;
 							}
 							if (ex instanceof AssertionError) {
 								status = 'FAILED';
@@ -295,19 +296,17 @@
 							} else {
 								status = 'ERROR';
 							}
-							if (!(e["actual"] == null && e["expected"] === undefined) && e["operator"] == null) {
-								reason += "( " + e["actual"] + " not " + e["operator"] + " " + e["expected"] + " )";
-							} else if (e["message"]) {
+							if (e.message) {
 								reason = String(e);
 							}
-							if (e["stack"]) {
-								if (typeof e["stack"] === "string") {
-									trace = (e["stack"]).split("\n");
-								} else if (Array.isArray(e["stack"])) {
-									trace = e["stack"];
+							if (e.stack) {
+								if (typeof e.stack === "string") {
+									trace = (e.stack).split("\n");
+								} else if (Array.isArray(e.stack)) {
+									trace = e.stack;
 								} else {
 									trace = [
-										(e["stack"]).toString()
+										(e.stack).toString()
 									];
 								}
 								trace = trace.map(function(line) {
@@ -319,8 +318,8 @@
 								message: reason,
 								trace: trace,
 								description: description,
-								expected: e.hasOwnProperty("expected") ? this.getStringFromAbiguous(e["expected"]) : undefined,
-								actual: e.hasOwnProperty("actual") ? this.getStringFromAbiguous(e["actual"]) : undefined
+								expected: e.hasOwnProperty("expected") ? this.getStringFromAbiguous(e.expected) : undefined,
+								actual: e.hasOwnProperty("actual") ? this.getStringFromAbiguous(e.actual) : undefined
 							});
 							return tr;
 						}

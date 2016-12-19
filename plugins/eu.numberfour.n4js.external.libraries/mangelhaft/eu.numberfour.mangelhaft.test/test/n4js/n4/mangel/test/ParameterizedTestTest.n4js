@@ -1,0 +1,30 @@
+import { Assert } from "n4/mangel/assert/Assert"
+import { Precondition } from "n4/mangel/precondition/Precondition"
+export public class ParameterizedTestTest {
+    @Parameters("{index}: location: {0}, drink: {1}")
+    public static foo() {
+        return [["party", "beer"],["work", "coffee"]]
+    }
+    
+    @Parameter
+    public location:string;
+    @Parameter(1)
+    public drink:string;
+
+    @Test
+    testParameterParty() {
+        if (this.location === "party") {
+            Assert.strictEqual(this.drink, "beer");
+        } else {
+            Precondition.fail("This parameterized test does not cover party");
+        }
+    }
+    @Test
+    testParameterWork() {
+        if (this.location === "work") {
+            Assert.strictEqual(this.drink, "coffee");
+        } else {
+            Precondition.fail("This parameterized test does not cover work");
+        }
+    }
+}

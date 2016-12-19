@@ -7,7 +7,7 @@
 		return {
 			setters: [],
 			execute: function() {
-				$makeClass(TestDIComponent, Object, [], {}, {}, function(instanceProto, staticProto) {
+				$makeClass(TestDIComponent, N4Object, [], {}, {}, function(instanceProto, staticProto) {
 					var metaClass = new N4Class({
 						name: 'TestDIComponent',
 						origin: 'eu.numberfour.mangelhaft',

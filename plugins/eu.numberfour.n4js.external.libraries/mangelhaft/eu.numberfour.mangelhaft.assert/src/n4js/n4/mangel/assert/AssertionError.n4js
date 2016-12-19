@@ -30,7 +30,7 @@ function truncate(s: string, n: number) {
     }
 }
 
-export public class AssertionError extends Error{
+export public class AssertionError extends Error {
     public actual: any?;
     public expected: any?;
     public operator: string?;
@@ -47,6 +47,13 @@ export public class AssertionError extends Error{
         let stackHolder: ~Object with {stack: string;} = {stack:""}
           , msg = spec.message ? spec.message: ""
         ;
+        try {
+            if (!(spec.actual == null && spec.expected == null && spec.operator == null)) {
+                msg += ` (${String(spec.actual)} not ${String(spec.operator)} ${String(spec.expected)} )`;
+            }
+        } catch (e) {
+            //ignore errors if actual, operator, or expected can't be stringified
+        }
         super(msg);
 
         this.name = "AssertionError";
@@ -60,7 +67,7 @@ export public class AssertionError extends Error{
         // work out the line that called in to assert.js.
                 try {
                     let err: Error+ = new Error();
-                    stackHolder.stack = err.stack.toString() as string;
+                    stackHolder.stack = err.stack.toString();
                 } catch (e) {}
             }
         }

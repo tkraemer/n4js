@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"ParameterizedTestTest.js",
+"lineCount":135,
+"mappings":"A;;;EAAA,yD;EACA,qE;;MADS,M,EACA,Y;EACT;;;I;;;;;KAFS,+G;;;KACA,uI;;;;IACW;;gDAYK;OACjB,IAAI,kBAAkB,OAAtB;QACI,mBAAmB,UAAnB,EAA+B,MAA/B,EADJ;;QAGI,kBAAkB,8CAAlB,EAHJ;QADiB;OAZL;;;+CAoBI;OAChB,IAAI,kBAAkB,MAAtB;QACI,mBAAmB,UAAnB,EAA+B,QAA/B,EADJ;;QAGI,kBAAkB,6CAAlB,EAHJ;QADgB;OApBJ;;;;;;;;;;;;iCAEI;OAChB,OAAO;QAAC;SAAC,OAAD;SAAU,MAAV;SAAD;QAAmB;SAAC,MAAD;SAAS,QAAT;SAAnB;QAAP,CADgB;OAFJ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+"sources":["/sources/eu.numberfour.mangelhaft.test/n4/mangel/test/ParameterizedTestTest.n4js"],
+"names":[]
+}
