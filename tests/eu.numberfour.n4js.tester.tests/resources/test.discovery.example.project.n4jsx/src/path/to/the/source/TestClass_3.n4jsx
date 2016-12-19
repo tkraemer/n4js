@@ -1,0 +1,21 @@
+export class D {
+	@Test
+	public foo(): void {
+	}
+
+	@Test
+	@Ignore
+	public bar(): void {
+	}
+}
+
+export class E {
+	@Test
+	public foo2(): void {
+	}
+
+	@Test
+	@Ignore
+	public bar2(): void {
+	}
+}

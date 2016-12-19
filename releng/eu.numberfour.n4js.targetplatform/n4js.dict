@@ -145,6 +145,12 @@ maven
 src
 namespace
 classpath
+committers
+subfolder
+snippets
+unicode
+referenceable
+lexer
 versionable
 versioned
 unversioned

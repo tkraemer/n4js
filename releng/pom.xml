@@ -24,8 +24,8 @@ Contributors:
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>/eu.numberfour.n4js.targetplatform</module>
-		<module>/eu.numberfour.n4js.releng.utils</module>
+		<module>eu.numberfour.n4js.targetplatform</module>
+		<module>eu.numberfour.n4js.releng.utils</module>
 	</modules>
 
 </project>

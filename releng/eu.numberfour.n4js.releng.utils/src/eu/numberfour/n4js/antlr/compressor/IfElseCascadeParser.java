@@ -20,7 +20,7 @@ import java.util.Map;
  * compilable. The parser is not robust, e.g., it does not perform checks on end of file. It assumes the parsed java
  * code to be an ANTLR parser.
  *
- * It works closely together with the {@link ParserCompressorFragment}. The cascades will look like that:
+ * It works closely together with the {@link ParserCompressorFragment2}. The cascades will look like that:
  *
  * <pre>
  * ...

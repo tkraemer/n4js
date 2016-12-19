@@ -1,0 +1,13 @@
+export class F {
+	@Test
+	public f1(): void {
+	}
+	
+	@Test
+	public f2(): void {
+	}
+	
+	@Test
+	public f3(): void {
+	}
+}
