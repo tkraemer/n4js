@@ -78,8 +78,6 @@ public class HeadlessTestDiscoveryTest {
 
 	private static final String TEST_N4JSX_CLASS_3 = "TestClass_3";
 	private static final String TEST_N4JSX_CLASS_4 = "TestClass_4";
-	private static final File TEST_N4JSX_CLASS_FILE = new File(TEST_SRC_FOLDER,
-			"/path/to/the/source/" + TEST_N4JSX_CLASS_3 + ".n4jsx");
 
 	/***/
 	@WithParentInjector
