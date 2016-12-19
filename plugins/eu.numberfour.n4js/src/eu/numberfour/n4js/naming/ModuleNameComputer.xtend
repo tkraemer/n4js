@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.naming.QualifiedName
 import eu.numberfour.n4js.utils.ResourceType
+import org.eclipse.xtext.resource.IResourceDescription
 
 /**
  * Utility class to calculate the qualified name of the resource depending on the project configuration.
@@ -40,8 +41,20 @@ class ModuleNameComputer {
 	 * like {@code ".n4js.xt"}. The calculation will handle this as a hole file extension, so {@code ".n4js"} will be pruned, too.
 	 */
 	def QualifiedName getQualifiedModuleName(Resource resource) {
-		val uri = resource.getURI()
+		resource.getURI().getQualifiedModuleNameFromUri
+	}
 
+	/**
+	 * Returns the qualified module name which is implicitly defined by the given resource description.
+	 * <p>
+	 * Please note there is also a special treatment for Xpect test files that may have a file extension
+	 * like {@code ".n4js.xt"}. The calculation will handle this as a hole file extension, so {@code ".n4js"} will be pruned, too.
+	 */
+	def QualifiedName getQualifiedModuleName(IResourceDescription resourceDesc) {
+		resourceDesc.getURI().getQualifiedModuleNameFromUri
+	}
+
+	def private getQualifiedModuleNameFromUri(URI uri){
 		val maybeSourceContainer = findN4JSSourceContainer(uri)
 		if (maybeSourceContainer.present) {
 			val sourceContainer = maybeSourceContainer.get

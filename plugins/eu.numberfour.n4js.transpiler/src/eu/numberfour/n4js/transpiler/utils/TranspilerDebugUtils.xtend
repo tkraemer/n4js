@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.transpiler.utils
 
+
 import eu.numberfour.n4js.transpiler.TranspilerState
 import eu.numberfour.n4js.transpiler.im.Script_IM
 import eu.numberfour.n4js.transpiler.im.SymbolTableEntry
@@ -27,6 +28,9 @@ import java.io.Writer
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
+import eu.numberfour.n4js.ts.types.TModule
+import eu.numberfour.n4js.n4JS.ImportDeclaration
+import static extension eu.numberfour.n4jsx.transpiler.utils.JSXBackendHelper.*
 
 /**
  * Some utilities for transpiler debugging, mainly dumping a {@link TranspilerState} to {@code stdout}, etc.
@@ -50,7 +54,7 @@ class TranspilerDebugUtils {
 		assertFalse(
 			"intermediate model should not have a cross-reference to an element outside the intermediate model"
 			+ " (except for SymbolTableEntry)",
-			state.im.eAllContents.filter[!(it instanceof SymbolTableEntry)].exists[hasCrossRefToOutsideOf(state)]);
+			state.im.eAllContents.filter[!(allowedCrossRefToOutside)].exists[hasCrossRefToOutsideOf(state)]);
 		// symbol table should exist
 		val st = state.im.symbolTable;
 		assertNotNull("intermediate model should have a symbol table", st);
@@ -77,6 +81,17 @@ class TranspilerDebugUtils {
 					}
 				}
 			}
+		}
+	}
+	
+	def private static allowedCrossRefToOutside(EObject it) {
+		//TODO IDE-2416 added for JSX workarounds, if possible remove, only SymbolTableEntry should be allowed
+		switch it {
+			SymbolTableEntry: true
+			TModule: jsxBackendModule
+			ImportDeclaration: jsxBackendImportDeclaration
+			ImportSpecifier: jsxBackendImportSpecifier
+			default: false
 		}
 	}
 
