@@ -106,5 +106,13 @@ Contributors:
                 fileExtension="n4jsx">
          </testSuite>
    </extension>
+   
+   <!-- Register .n4jsx file extension as test file extension -->
+   <extension
+      point="eu.numberfour.n4js.tester.testFileExtensions">
+         <testFileExtension
+         	fileExtension="n4jsx">
+         </testFileExtension>
+   </extension>
 
 </plugin>

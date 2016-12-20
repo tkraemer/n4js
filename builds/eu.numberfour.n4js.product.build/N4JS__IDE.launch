@@ -48,6 +48,8 @@
 <setEntry value="eu.numberfour.n4js.ts.sdk:default"/>
 <setEntry value="eu.numberfour.n4js.unicode.sdk:default"/>
 <setEntry value="eu.numberfour.n4js.xpect.sdk:default"/>
+<setEntry value="eu.numberfour.n4jsx.sdk:default"/>
+<setEntry value="eu.numberfour.n4jsx.xpect.sdk:default"/>
 <setEntry value="jsonedit-feature:default"/>
 <setEntry value="org.eclipse.e4.rcp:default"/>
 <setEntry value="org.eclipse.ecf.core.feature:default"/>

@@ -2,7 +2,7 @@ package eu.numberfour.n4js.n4mf.ui.contentassist.antlr.lexer;
 
 // Hack: Use our own Lexer superclass by means of import. 
 // Currently there is no other way to specify the superclass for the lexer.
-import org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer;
+import org.eclipse.xtext.ide.editor.contentassist.antlr.internal.Lexer;
 
 
 import org.antlr.runtime.*;
@@ -89,8 +89,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = ExtendedRuntimeEnvironment;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:19:28: ( 'ExtendedRuntimeEnvironment' )
-            // InternalN4MFLexer.g:19:30: 'ExtendedRuntimeEnvironment'
+            // InternalN4MFLexer.g:14:28: ( 'ExtendedRuntimeEnvironment' )
+            // InternalN4MFLexer.g:14:30: 'ExtendedRuntimeEnvironment'
             {
             match("ExtendedRuntimeEnvironment"); 
 
@@ -110,8 +110,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = ProvidedRuntimeLibraries;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:21:26: ( 'ProvidedRuntimeLibraries' )
-            // InternalN4MFLexer.g:21:28: 'ProvidedRuntimeLibraries'
+            // InternalN4MFLexer.g:16:26: ( 'ProvidedRuntimeLibraries' )
+            // InternalN4MFLexer.g:16:28: 'ProvidedRuntimeLibraries'
             {
             match("ProvidedRuntimeLibraries"); 
 
@@ -131,8 +131,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = RequiredRuntimeLibraries;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:23:26: ( 'RequiredRuntimeLibraries' )
-            // InternalN4MFLexer.g:23:28: 'RequiredRuntimeLibraries'
+            // InternalN4MFLexer.g:18:26: ( 'RequiredRuntimeLibraries' )
+            // InternalN4MFLexer.g:18:28: 'RequiredRuntimeLibraries'
             {
             match("RequiredRuntimeLibraries"); 
 
@@ -152,8 +152,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = ImplementedProjects;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:25:21: ( 'ImplementedProjects' )
-            // InternalN4MFLexer.g:25:23: 'ImplementedProjects'
+            // InternalN4MFLexer.g:20:21: ( 'ImplementedProjects' )
+            // InternalN4MFLexer.g:20:23: 'ImplementedProjects'
             {
             match("ImplementedProjects"); 
 
@@ -173,8 +173,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = ProjectDependencies;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:27:21: ( 'ProjectDependencies' )
-            // InternalN4MFLexer.g:27:23: 'ProjectDependencies'
+            // InternalN4MFLexer.g:22:21: ( 'ProjectDependencies' )
+            // InternalN4MFLexer.g:22:23: 'ProjectDependencies'
             {
             match("ProjectDependencies"); 
 
@@ -194,8 +194,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = RuntimeEnvironment;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:29:20: ( 'runtimeEnvironment' )
-            // InternalN4MFLexer.g:29:22: 'runtimeEnvironment'
+            // InternalN4MFLexer.g:24:20: ( 'runtimeEnvironment' )
+            // InternalN4MFLexer.g:24:22: 'runtimeEnvironment'
             {
             match("runtimeEnvironment"); 
 
@@ -215,8 +215,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = ImplementationId;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:31:18: ( 'ImplementationId' )
-            // InternalN4MFLexer.g:31:20: 'ImplementationId'
+            // InternalN4MFLexer.g:26:18: ( 'ImplementationId' )
+            // InternalN4MFLexer.g:26:20: 'ImplementationId'
             {
             match("ImplementationId"); 
 
@@ -236,8 +236,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = ProjectVersion;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:33:16: ( 'ProjectVersion' )
-            // InternalN4MFLexer.g:33:18: 'ProjectVersion'
+            // InternalN4MFLexer.g:28:16: ( 'ProjectVersion' )
+            // InternalN4MFLexer.g:28:18: 'ProjectVersion'
             {
             match("ProjectVersion"); 
 
@@ -257,8 +257,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = TestedProjects;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:35:16: ( 'TestedProjects' )
-            // InternalN4MFLexer.g:35:18: 'TestedProjects'
+            // InternalN4MFLexer.g:30:16: ( 'TestedProjects' )
+            // InternalN4MFLexer.g:30:18: 'TestedProjects'
             {
             match("TestedProjects"); 
 
@@ -278,8 +278,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = RuntimeLibrary;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:37:16: ( 'runtimeLibrary' )
-            // InternalN4MFLexer.g:37:18: 'runtimeLibrary'
+            // InternalN4MFLexer.g:32:16: ( 'runtimeLibrary' )
+            // InternalN4MFLexer.g:32:18: 'runtimeLibrary'
             {
             match("runtimeLibrary"); 
 
@@ -299,8 +299,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = ModuleFilters;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:39:15: ( 'ModuleFilters' )
-            // InternalN4MFLexer.g:39:17: 'ModuleFilters'
+            // InternalN4MFLexer.g:34:15: ( 'ModuleFilters' )
+            // InternalN4MFLexer.g:34:17: 'ModuleFilters'
             {
             match("ModuleFilters"); 
 
@@ -320,8 +320,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = ModuleLoader;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:41:14: ( 'ModuleLoader' )
-            // InternalN4MFLexer.g:41:16: 'ModuleLoader'
+            // InternalN4MFLexer.g:36:14: ( 'ModuleLoader' )
+            // InternalN4MFLexer.g:36:16: 'ModuleLoader'
             {
             match("ModuleLoader"); 
 
@@ -341,8 +341,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = NoModuleWrap;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:43:14: ( 'noModuleWrap' )
-            // InternalN4MFLexer.g:43:16: 'noModuleWrap'
+            // InternalN4MFLexer.g:38:14: ( 'noModuleWrap' )
+            // InternalN4MFLexer.g:38:16: 'noModuleWrap'
             {
             match("noModuleWrap"); 
 
@@ -362,8 +362,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = Node_builtin;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:45:14: ( 'node_builtin' )
-            // InternalN4MFLexer.g:45:16: 'node_builtin'
+            // InternalN4MFLexer.g:40:14: ( 'node_builtin' )
+            // InternalN4MFLexer.g:40:16: 'node_builtin'
             {
             match("node_builtin"); 
 
@@ -383,8 +383,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = InitModules;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:47:13: ( 'InitModules' )
-            // InternalN4MFLexer.g:47:15: 'InitModules'
+            // InternalN4MFLexer.g:42:13: ( 'InitModules' )
+            // InternalN4MFLexer.g:42:15: 'InitModules'
             {
             match("InitModules"); 
 
@@ -404,8 +404,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = ProjectType;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:49:13: ( 'ProjectType' )
-            // InternalN4MFLexer.g:49:15: 'ProjectType'
+            // InternalN4MFLexer.g:44:13: ( 'ProjectType' )
+            // InternalN4MFLexer.g:44:15: 'ProjectType'
             {
             match("ProjectType"); 
 
@@ -425,8 +425,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = Application;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:51:13: ( 'application' )
-            // InternalN4MFLexer.g:51:15: 'application'
+            // InternalN4MFLexer.g:46:13: ( 'application' )
+            // InternalN4MFLexer.g:46:15: 'application'
             {
             match("application"); 
 
@@ -446,8 +446,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = ExecModule;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:53:12: ( 'ExecModule' )
-            // InternalN4MFLexer.g:53:14: 'ExecModule'
+            // InternalN4MFLexer.g:48:12: ( 'ExecModule' )
+            // InternalN4MFLexer.g:48:14: 'ExecModule'
             {
             match("ExecModule"); 
 
@@ -467,8 +467,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = MainModule;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:55:12: ( 'MainModule' )
-            // InternalN4MFLexer.g:55:14: 'MainModule'
+            // InternalN4MFLexer.g:50:12: ( 'MainModule' )
+            // InternalN4MFLexer.g:50:14: 'MainModule'
             {
             match("MainModule"); 
 
@@ -488,8 +488,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = VendorName;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:57:12: ( 'VendorName' )
-            // InternalN4MFLexer.g:57:14: 'VendorName'
+            // InternalN4MFLexer.g:52:12: ( 'VendorName' )
+            // InternalN4MFLexer.g:52:14: 'VendorName'
             {
             match("VendorName"); 
 
@@ -509,8 +509,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = NoValidate;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:59:12: ( 'noValidate' )
-            // InternalN4MFLexer.g:59:14: 'noValidate'
+            // InternalN4MFLexer.g:54:12: ( 'noValidate' )
+            // InternalN4MFLexer.g:54:14: 'noValidate'
             {
             match("noValidate"); 
 
@@ -530,8 +530,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = Libraries;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:61:11: ( 'Libraries' )
-            // InternalN4MFLexer.g:61:13: 'Libraries'
+            // InternalN4MFLexer.g:56:11: ( 'Libraries' )
+            // InternalN4MFLexer.g:56:13: 'Libraries'
             {
             match("Libraries"); 
 
@@ -551,8 +551,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = ProjectId;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:63:11: ( 'ProjectId' )
-            // InternalN4MFLexer.g:63:13: 'ProjectId'
+            // InternalN4MFLexer.g:58:11: ( 'ProjectId' )
+            // InternalN4MFLexer.g:58:13: 'ProjectId'
             {
             match("ProjectId"); 
 
@@ -572,8 +572,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = Resources;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:65:11: ( 'Resources' )
-            // InternalN4MFLexer.g:65:13: 'Resources'
+            // InternalN4MFLexer.g:60:11: ( 'Resources' )
+            // InternalN4MFLexer.g:60:13: 'Resources'
             {
             match("Resources"); 
 
@@ -593,8 +593,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = Processor;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:67:11: ( 'processor' )
-            // InternalN4MFLexer.g:67:13: 'processor'
+            // InternalN4MFLexer.g:62:11: ( 'processor' )
+            // InternalN4MFLexer.g:62:13: 'processor'
             {
             match("processor"); 
 
@@ -614,8 +614,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = VendorId;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:69:10: ( 'VendorId' )
-            // InternalN4MFLexer.g:69:12: 'VendorId'
+            // InternalN4MFLexer.g:64:10: ( 'VendorId' )
+            // InternalN4MFLexer.g:64:12: 'VendorId'
             {
             match("VendorId"); 
 
@@ -635,8 +635,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = Commonjs;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:71:10: ( 'commonjs' )
-            // InternalN4MFLexer.g:71:12: 'commonjs'
+            // InternalN4MFLexer.g:66:10: ( 'commonjs' )
+            // InternalN4MFLexer.g:66:12: 'commonjs'
             {
             match("commonjs"); 
 
@@ -656,8 +656,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = External;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:73:10: ( 'external' )
-            // InternalN4MFLexer.g:73:12: 'external'
+            // InternalN4MFLexer.g:68:10: ( 'external' )
+            // InternalN4MFLexer.g:68:12: 'external'
             {
             match("external"); 
 
@@ -677,8 +677,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = Sources;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:75:9: ( 'Sources' )
-            // InternalN4MFLexer.g:75:11: 'Sources'
+            // InternalN4MFLexer.g:70:9: ( 'Sources' )
+            // InternalN4MFLexer.g:70:11: 'Sources'
             {
             match("Sources"); 
 
@@ -698,8 +698,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = Compile;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:77:9: ( 'compile' )
-            // InternalN4MFLexer.g:77:11: 'compile'
+            // InternalN4MFLexer.g:72:9: ( 'compile' )
+            // InternalN4MFLexer.g:72:11: 'compile'
             {
             match("compile"); 
 
@@ -719,8 +719,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = Content;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:79:9: ( 'content' )
-            // InternalN4MFLexer.g:79:11: 'content'
+            // InternalN4MFLexer.g:74:9: ( 'content' )
+            // InternalN4MFLexer.g:74:11: 'content'
             {
             match("content"); 
 
@@ -740,8 +740,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = Library;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:81:9: ( 'library' )
-            // InternalN4MFLexer.g:81:11: 'library'
+            // InternalN4MFLexer.g:76:9: ( 'library' )
+            // InternalN4MFLexer.g:76:11: 'library'
             {
             match("library"); 
 
@@ -761,8 +761,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = Output;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:83:8: ( 'Output' )
-            // InternalN4MFLexer.g:83:10: 'Output'
+            // InternalN4MFLexer.g:78:8: ( 'Output' )
+            // InternalN4MFLexer.g:78:10: 'Output'
             {
             match("Output"); 
 
@@ -782,8 +782,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = Source;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:85:8: ( 'source' )
-            // InternalN4MFLexer.g:85:10: 'source'
+            // InternalN4MFLexer.g:80:8: ( 'source' )
+            // InternalN4MFLexer.g:80:10: 'source'
             {
             match("source"); 
 
@@ -803,8 +803,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = KW_System;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:87:11: ( 'system' )
-            // InternalN4MFLexer.g:87:13: 'system'
+            // InternalN4MFLexer.g:82:11: ( 'system' )
+            // InternalN4MFLexer.g:82:13: 'system'
             {
             match("system"); 
 
@@ -824,8 +824,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = N4js;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:89:6: ( 'n4js' )
-            // InternalN4MFLexer.g:89:8: 'n4js'
+            // InternalN4MFLexer.g:84:6: ( 'n4js' )
+            // InternalN4MFLexer.g:84:8: 'n4js'
             {
             match("n4js"); 
 
@@ -845,8 +845,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = Test;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:91:6: ( 'test' )
-            // InternalN4MFLexer.g:91:8: 'test'
+            // InternalN4MFLexer.g:86:6: ( 'test' )
+            // InternalN4MFLexer.g:86:8: 'test'
             {
             match("test"); 
 
@@ -866,8 +866,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = User;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:93:6: ( 'user' )
-            // InternalN4MFLexer.g:93:8: 'user'
+            // InternalN4MFLexer.g:88:6: ( 'user' )
+            // InternalN4MFLexer.g:88:8: 'user'
             {
             match("user"); 
 
@@ -887,8 +887,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = API;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:95:5: ( 'API' )
-            // InternalN4MFLexer.g:95:7: 'API'
+            // InternalN4MFLexer.g:90:5: ( 'API' )
+            // InternalN4MFLexer.g:90:7: 'API'
             {
             match("API"); 
 
@@ -908,8 +908,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = In;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:97:4: ( 'in' )
-            // InternalN4MFLexer.g:97:6: 'in'
+            // InternalN4MFLexer.g:92:4: ( 'in' )
+            // InternalN4MFLexer.g:92:6: 'in'
             {
             match("in"); 
 
@@ -929,8 +929,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = LeftParenthesis;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:99:17: ( '(' )
-            // InternalN4MFLexer.g:99:19: '('
+            // InternalN4MFLexer.g:94:17: ( '(' )
+            // InternalN4MFLexer.g:94:19: '('
             {
             match('('); 
 
@@ -949,8 +949,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = RightParenthesis;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:101:18: ( ')' )
-            // InternalN4MFLexer.g:101:20: ')'
+            // InternalN4MFLexer.g:96:18: ( ')' )
+            // InternalN4MFLexer.g:96:20: ')'
             {
             match(')'); 
 
@@ -969,8 +969,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = Comma;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:103:7: ( ',' )
-            // InternalN4MFLexer.g:103:9: ','
+            // InternalN4MFLexer.g:98:7: ( ',' )
+            // InternalN4MFLexer.g:98:9: ','
             {
             match(','); 
 
@@ -989,8 +989,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = HyphenMinus;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:105:13: ( '-' )
-            // InternalN4MFLexer.g:105:15: '-'
+            // InternalN4MFLexer.g:100:13: ( '-' )
+            // InternalN4MFLexer.g:100:15: '-'
             {
             match('-'); 
 
@@ -1009,8 +1009,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = FullStop;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:107:10: ( '.' )
-            // InternalN4MFLexer.g:107:12: '.'
+            // InternalN4MFLexer.g:102:10: ( '.' )
+            // InternalN4MFLexer.g:102:12: '.'
             {
             match('.'); 
 
@@ -1029,8 +1029,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = Colon;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:109:7: ( ':' )
-            // InternalN4MFLexer.g:109:9: ':'
+            // InternalN4MFLexer.g:104:7: ( ':' )
+            // InternalN4MFLexer.g:104:9: ':'
             {
             match(':'); 
 
@@ -1049,8 +1049,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = LeftSquareBracket;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:111:19: ( '[' )
-            // InternalN4MFLexer.g:111:21: '['
+            // InternalN4MFLexer.g:106:19: ( '[' )
+            // InternalN4MFLexer.g:106:21: '['
             {
             match('['); 
 
@@ -1069,8 +1069,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = RightSquareBracket;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:113:20: ( ']' )
-            // InternalN4MFLexer.g:113:22: ']'
+            // InternalN4MFLexer.g:108:20: ( ']' )
+            // InternalN4MFLexer.g:108:22: ']'
             {
             match(']'); 
 
@@ -1089,8 +1089,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = LeftCurlyBracket;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:115:18: ( '{' )
-            // InternalN4MFLexer.g:115:20: '{'
+            // InternalN4MFLexer.g:110:18: ( '{' )
+            // InternalN4MFLexer.g:110:20: '{'
             {
             match('{'); 
 
@@ -1109,8 +1109,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = RightCurlyBracket;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:117:19: ( '}' )
-            // InternalN4MFLexer.g:117:21: '}'
+            // InternalN4MFLexer.g:112:19: ( '}' )
+            // InternalN4MFLexer.g:112:21: '}'
             {
             match('}'); 
 
@@ -1129,10 +1129,10 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:121:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '0' .. '9' )* )
-            // InternalN4MFLexer.g:121:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '0' .. '9' )*
+            // InternalN4MFLexer.g:116:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '0' .. '9' )* )
+            // InternalN4MFLexer.g:116:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '0' .. '9' )*
             {
-            // InternalN4MFLexer.g:121:11: ( '^' )?
+            // InternalN4MFLexer.g:116:11: ( '^' )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -1141,7 +1141,7 @@ public class InternalN4MFLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // InternalN4MFLexer.g:121:11: '^'
+                    // InternalN4MFLexer.g:116:11: '^'
                     {
                     match('^'); 
 
@@ -1159,7 +1159,7 @@ public class InternalN4MFLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalN4MFLexer.g:121:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '0' .. '9' )*
+            // InternalN4MFLexer.g:116:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '-' | '.' | '0' .. '9' )*
             loop2:
             do {
                 int alt2=2;
@@ -1208,10 +1208,10 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:123:10: ( ( '0' .. '9' )+ )
-            // InternalN4MFLexer.g:123:12: ( '0' .. '9' )+
+            // InternalN4MFLexer.g:118:10: ( ( '0' .. '9' )+ )
+            // InternalN4MFLexer.g:118:12: ( '0' .. '9' )+
             {
-            // InternalN4MFLexer.g:123:12: ( '0' .. '9' )+
+            // InternalN4MFLexer.g:118:12: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -1225,7 +1225,7 @@ public class InternalN4MFLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // InternalN4MFLexer.g:123:13: '0' .. '9'
+            	    // InternalN4MFLexer.g:118:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -1257,10 +1257,10 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:125:13: ( ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // InternalN4MFLexer.g:125:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalN4MFLexer.g:120:13: ( ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // InternalN4MFLexer.g:120:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // InternalN4MFLexer.g:125:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalN4MFLexer.g:120:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -1278,10 +1278,10 @@ public class InternalN4MFLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // InternalN4MFLexer.g:125:16: '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // InternalN4MFLexer.g:120:16: '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // InternalN4MFLexer.g:125:20: ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // InternalN4MFLexer.g:120:20: ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop4:
                     do {
                         int alt4=3;
@@ -1297,7 +1297,7 @@ public class InternalN4MFLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // InternalN4MFLexer.g:125:21: '\\\\' .
+                    	    // InternalN4MFLexer.g:120:21: '\\\\' .
                     	    {
                     	    match('\\'); 
                     	    matchAny(); 
@@ -1305,7 +1305,7 @@ public class InternalN4MFLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // InternalN4MFLexer.g:125:28: ~ ( ( '\\\\' | '\"' ) )
+                    	    // InternalN4MFLexer.g:120:28: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1330,10 +1330,10 @@ public class InternalN4MFLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalN4MFLexer.g:125:48: '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // InternalN4MFLexer.g:120:48: '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // InternalN4MFLexer.g:125:53: ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // InternalN4MFLexer.g:120:53: ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop5:
                     do {
                         int alt5=3;
@@ -1349,7 +1349,7 @@ public class InternalN4MFLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // InternalN4MFLexer.g:125:54: '\\\\' .
+                    	    // InternalN4MFLexer.g:120:54: '\\\\' .
                     	    {
                     	    match('\\'); 
                     	    matchAny(); 
@@ -1357,7 +1357,7 @@ public class InternalN4MFLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // InternalN4MFLexer.g:125:61: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // InternalN4MFLexer.g:120:61: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1400,12 +1400,12 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:127:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // InternalN4MFLexer.g:127:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // InternalN4MFLexer.g:122:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // InternalN4MFLexer.g:122:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // InternalN4MFLexer.g:127:24: ( options {greedy=false; } : . )*
+            // InternalN4MFLexer.g:122:24: ( options {greedy=false; } : . )*
             loop7:
             do {
                 int alt7=2;
@@ -1430,7 +1430,7 @@ public class InternalN4MFLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // InternalN4MFLexer.g:127:52: .
+            	    // InternalN4MFLexer.g:122:52: .
             	    {
             	    matchAny(); 
 
@@ -1460,12 +1460,12 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:129:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalN4MFLexer.g:129:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalN4MFLexer.g:124:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalN4MFLexer.g:124:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // InternalN4MFLexer.g:129:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalN4MFLexer.g:124:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop8:
             do {
                 int alt8=2;
@@ -1478,7 +1478,7 @@ public class InternalN4MFLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // InternalN4MFLexer.g:129:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalN4MFLexer.g:124:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1498,7 +1498,7 @@ public class InternalN4MFLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalN4MFLexer.g:129:40: ( ( '\\r' )? '\\n' )?
+            // InternalN4MFLexer.g:124:40: ( ( '\\r' )? '\\n' )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -1507,9 +1507,9 @@ public class InternalN4MFLexer extends Lexer {
             }
             switch (alt10) {
                 case 1 :
-                    // InternalN4MFLexer.g:129:41: ( '\\r' )? '\\n'
+                    // InternalN4MFLexer.g:124:41: ( '\\r' )? '\\n'
                     {
-                    // InternalN4MFLexer.g:129:41: ( '\\r' )?
+                    // InternalN4MFLexer.g:124:41: ( '\\r' )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -1518,7 +1518,7 @@ public class InternalN4MFLexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // InternalN4MFLexer.g:129:41: '\\r'
+                            // InternalN4MFLexer.g:124:41: '\\r'
                             {
                             match('\r'); 
 
@@ -1550,10 +1550,10 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:131:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalN4MFLexer.g:131:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalN4MFLexer.g:126:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalN4MFLexer.g:126:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalN4MFLexer.g:131:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalN4MFLexer.g:126:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt11=0;
             loop11:
             do {
@@ -1607,8 +1607,8 @@ public class InternalN4MFLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalN4MFLexer.g:133:16: ( . )
-            // InternalN4MFLexer.g:133:18: .
+            // InternalN4MFLexer.g:128:16: ( . )
+            // InternalN4MFLexer.g:128:18: .
             {
             matchAny(); 
 

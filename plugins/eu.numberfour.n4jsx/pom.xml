@@ -24,11 +24,11 @@ Contributors:
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<!-- <properties>
+	<properties>
 		<skip.mwe2>false</skip.mwe2>
-		<mwe2-file-location>/src/eu/numberfour/n4js/GenerateN4JS.mwe2</mwe2-file-location>
-		<mwe2descriptor>eu.numberfour.n4js.GenerateN4JS</mwe2descriptor>
-	</properties> -->
+		<mwe2-file-location>/src/eu/numberfour/n4jsx/GenerateN4JSX.mwe2</mwe2-file-location>
+		<mwe2descriptor>eu.numberfour.n4jsx.GenerateN4JSX</mwe2descriptor>
+	</properties>
 
 	<build>
 		<plugins>
@@ -49,8 +49,8 @@ Contributors:
 				<version>${fornax-oaw-m2-plugin.version}</version>
 			</plugin>
  -->
-
-			<!-- <plugin>
+		
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<executions>
@@ -77,12 +77,27 @@ Contributors:
 					</dependency>
 					<dependency>
 						<groupId>eu.numberfour.n4js</groupId>
+						<artifactId>eu.numberfour.n4js.model</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>eu.numberfour.n4js</groupId>
+						<artifactId>eu.numberfour.n4js</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>eu.numberfour.n4js</groupId>
+						<artifactId>eu.numberfour.n4jsx.model</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>eu.numberfour.n4js</groupId>
 						<artifactId>eu.numberfour.n4js.utils</artifactId>
 						<version>${project.version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>
- -->
+			
 			<plugin>
 				<groupId>org.eclipse.xtext</groupId>
 				<artifactId>xtext-maven-plugin</artifactId>
@@ -93,5 +108,5 @@ Contributors:
 			</plugin>
 		</plugins>
 	</build>
-
+	
 </project>

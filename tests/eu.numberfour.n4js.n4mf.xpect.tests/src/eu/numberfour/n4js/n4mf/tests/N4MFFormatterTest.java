@@ -10,10 +10,16 @@
  */
 package eu.numberfour.n4js.n4mf.tests;
 
-import org.eclipse.xtext.formatting.INodeModelFormatter;
-import org.eclipse.xtext.formatting.INodeModelFormatter.IFormattedRegion;
+import java.util.Collections;
+import java.util.List;
+
+import org.eclipse.xtext.formatting2.FormatterRequest;
+import org.eclipse.xtext.formatting2.IFormatter2;
+import org.eclipse.xtext.formatting2.regionaccess.ITextReplacement;
+import org.eclipse.xtext.formatting2.regionaccess.TextRegionAccessBuilder;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.util.TextRegion;
 import org.junit.runner.RunWith;
 import org.xpect.XpectImport;
 import org.xpect.expectation.IStringExpectation;
@@ -29,6 +35,7 @@ import org.xpect.xtext.lib.setup.XtextStandaloneSetup;
 import org.xpect.xtext.lib.setup.XtextValidatingSetup;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 import eu.numberfour.n4js.n4mf.tests.N4MFFormatterTest.NullValidatorSetup;
 
@@ -37,6 +44,7 @@ import eu.numberfour.n4js.n4mf.tests.N4MFFormatterTest.NullValidatorSetup;
 @RunWith(XpectRunner.class)
 @XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "model/formatter", fileExtensions = "n4mf")
 @XpectImport({ XtextStandaloneSetup.class, NullValidatorSetup.class })
+@SuppressWarnings("restriction")
 public class N4MFFormatterTest {
 
 	/**
@@ -57,7 +65,13 @@ public class N4MFFormatterTest {
 	}
 
 	@Inject
-	private INodeModelFormatter formatter;
+	private IFormatter2 formatter;
+
+	@Inject
+	private Provider<FormatterRequest> requestProvider;
+
+	@Inject
+	private Provider<TextRegionAccessBuilder> regionAccessBuilderProvider;
 
 	/**
 	 * @param expectation
@@ -74,13 +88,27 @@ public class N4MFFormatterTest {
 	public void formatted(@StringExpectation(whitespaceSensitive = true) IStringExpectation expectation,
 			@ThisResource XtextResource resource, int offset, int to) {
 		ICompositeNode rootNode = resource.getParseResult().getRootNode();
-		IFormattedRegion r = null;
+
+		FormatterRequest request = requestProvider.get().setTextRegionAccess(
+				regionAccessBuilderProvider.get().forNodeModel(resource).create());
+
+		int totalLength = rootNode.getTotalLength();
+		
 		if (offset >= 0 && to > offset) {
-			r = formatter.format(rootNode, offset, to - offset);
+			request.setRegions(Collections.singleton(new TextRegion(offset, to - offset)));
 		} else {
-			r = formatter.format(rootNode, rootNode.getOffset(), rootNode.getTotalLength());
+			request.setRegions(Collections.singleton(new TextRegion(offset, totalLength - offset)));
 		}
-		String formatted = r.getFormattedText();
+
+		List<ITextReplacement> replacements = formatter.format(request);
+		String formatted = request.getTextRegionAccess().getRewriter().renderToString(replacements);
+
+		if (offset >= 0 && to > offset) {
+			formatted = formatted.substring(offset, formatted.length() - (totalLength - to));
+		} else {
+			formatted = formatted.substring(offset);
+		}
+
 		if (isUnixEnding()) {
 			formatted = formatted.replaceAll("\r\n", "\n");
 		} else if (isWindowsEnding()) {

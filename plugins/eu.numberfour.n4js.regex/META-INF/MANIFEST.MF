@@ -6,7 +6,7 @@ Bundle-Version: 0.0.1.qualifier
 Bundle-SymbolicName: eu.numberfour.n4js.regex;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;visibility:=reexport,
- org.eclipse.xtext.generator;resolution:=optional,
+ org.eclipse.xtext.xtext.generator;resolution:=optional,
  org.apache.commons.logging;bundle-version="1.0.4";resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
@@ -15,6 +15,7 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.eclipse.xtext.util,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
+ org.eclipse.emf.mwe2.lib,
  org.antlr.runtime,
  eu.numberfour.n4js.releng.utils;resolution:=optional,
  org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional,
@@ -34,6 +35,5 @@ Export-Package: eu.numberfour.n4js.regex,
  eu.numberfour.n4js.regex.validation,
  eu.numberfour.n4js.regex.scoping,
  eu.numberfour.n4js.regex.generator,
- eu.numberfour.n4js.regex.formatting,
  eu.numberfour.n4js.regex.parser.antlr.lexer
 

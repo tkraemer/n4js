@@ -646,11 +646,6 @@ import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 
 	@Override
 	public Boolean casePropertyNameValuePair(PropertyNameValuePair original) {
-		if (N4JSLanguageUtils.SPREAD_IN_OJECT_LITERAL_WORK_AROUND.equals(original.getName())) {
-			write("... ");
-			process(original.getExpression());
-			return DONE;
-		}
 		processPropertyName(original);
 		write(": ");
 		process(original.getExpression());
@@ -1020,7 +1015,7 @@ import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 			write(']');
 		} else {
 			// standard case:
-			writeQuotedIfNonIdentifier(owner.getName());
+			writeQuotedIfNonIdentifier(propName);
 		}
 
 	}

@@ -236,11 +236,13 @@ Contributors:
 								<mainClass>org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher</mainClass>
 								<arguments>
 									<argument>file://${project.basedir}${mwe2-file-location}</argument>
+									
+									<!-- for workflows based on XtextGenerator (new) -->
 									<argument>
 										-p
 									</argument>
 									<argument>
-										runtimeProject=/${project.basedir}
+										rootPath=/${project.basedir}/../
 									</argument>
 								</arguments>
 								<!-- Following switch:
@@ -259,6 +261,11 @@ Contributors:
 						<dependency>
 							<groupId>org.eclipse.xtext</groupId>
 							<artifactId>org.eclipse.xtext.xtext</artifactId>
+							<version>${xtext-version}</version>
+						</dependency>
+						<dependency>
+							<groupId>org.eclipse.xtext</groupId>
+							<artifactId>org.eclipse.xtext.xtext.generator</artifactId>
 							<version>${xtext-version}</version>
 						</dependency>
 						<dependency>
@@ -307,7 +314,7 @@ Contributors:
 								<setup>org.eclipse.emf.codegen.ecore.xtext.GenModelSupport</setup>
 							</language>
 							<language>
-								<setup>eu.numberfour.n4js.antlr.generator.NewlineAwareXcoreStandaloneSetup</setup>
+								<setup>eu.numberfour.n4js.generation.xcore.NewlineAwareXcoreStandaloneSetup</setup>
 								<outputConfigurations>
 									<outputConfiguration>
 										<outputDirectory>emf-gen</outputDirectory>

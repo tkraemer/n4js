@@ -7,7 +7,7 @@ Bundle-SymbolicName: eu.numberfour.n4js.n4mf; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.eclipse.xtext.xbase;resolution:=optional;visibility:=reexport,
- org.eclipse.xtext.generator;resolution:=optional,
+ org.eclipse.xtext.xtext.generator;resolution:=optional,
  org.apache.commons.logging;bundle-version="1.0.4";resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
@@ -26,7 +26,7 @@ Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: eu.numberfour.n4js.n4mf,
- eu.numberfour.n4js.n4mf.formatting,
+ eu.numberfour.n4js.n4mf.formatting2,
  eu.numberfour.n4js.n4mf.parser.antlr,
  eu.numberfour.n4js.n4mf.parser.antlr.internal,
  eu.numberfour.n4js.n4mf.parser.antlr.lexer,

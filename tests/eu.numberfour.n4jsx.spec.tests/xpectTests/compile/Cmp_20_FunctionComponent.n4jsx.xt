@@ -1,0 +1,37 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "react.n4js" {}
+	}
+
+	END_SETUP
+ */
+
+/* XPECT output ---
+<==
+stdout:
+pure function element
+ Element {
+  name: 'PureFnComponent',
+  props: { myProp: 'This is my propsss' },
+  children: [] }
+stderr:
+==>
+--- */
+
+
+import * as React from "compile/react"
+
+class ~Props {
+	public myProp: string;
+}
+
+function PureFnComponent(props: Props): React.Element {
+	return (<div>{props.myProp}</div>);
+}
+
+export public function logElements(): void {
+	console.log('pure function element\n', <PureFnComponent myProp="This is my propsss"/>)
+};
+logElements()
