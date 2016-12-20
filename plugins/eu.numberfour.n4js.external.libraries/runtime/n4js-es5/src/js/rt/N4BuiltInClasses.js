@@ -246,248 +246,66 @@
         }
     }, {
         of: {
-            value: function
-            of(n4object) {
-                return n4object.constructor.n4type;
+            value: function of(n4object) {
+                return n4object ? n4object.n4type || n4object.constructor.n4type : undefined;
             }
         }
     });
 
     $makeN4BuiltInClass(N4Classifier, N4Type, {
         members: {
-            value: function
-            members(consumed, inherited, _static) {
-                var arr = [];
-                var self = this;
-                if (_static === true) {
-                    arr = arr.concat(this.ownedMembers.filter(function (m) {
-                        return m.isStatic;
-                    }));
-                } else {
-                    arr = arr.concat(this.ownedMembers);
-                }
-
-                if (consumed === true) {
+            value: function members(consumed, inherited, _static) {
+                var arr = this.ownedMembers.slice();
+                if (consumed) {
                     arr = arr.concat(this.consumedMembers);
                 }
-
-                if (inherited === true) {
-                    if (typeof this.n4superType === 'undefined') {
-                        return arr;
+                if (inherited) {
+                    if (this.n4superType) {
+                        var tmp = this.n4superType.members(consumed, inherited, _static);
+                        arr = arr.concat(tmp);
                     }
-                    var tmp = this.n4superType.members(consumed, inherited, _static);
-                    arr = arr.concat(tmp);
                 }
-
+                if (!_static) {
+                    arr = arr.filter(function (m) {
+                        return !m.isStatic;
+                    });
+                }
                 return arr;
             }
         },
         membersWithAnnotation: {
-            value: function
-            membersWithAnnotation(name, consumed, inherited, _static) {
-                var arr = [];
-                var self = this;
-                if (_static === true) {
-                    arr = arr.concat(this.ownedMembers.filter(function (m) {
-                        return m.isStatic;
-                    }));
-                } else {
-                    arr = arr.concat(this.ownedMembers);
-                }
-
-                if (consumed === true) {
-                    arr = arr.concat(this.consumedMembers);
-                }
-
-                if (inherited === true) {
-                    if (typeof this.n4superType === 'undefined') {
-                        return arr;
-                    }
-                    var tmp = this.n4superType.membersWithAnnotation(name, consumed, inherited, _static);
-                    arr = arr.concat(tmp);
-                }
-
-                return arr.filter(function (m) {
+            value: function membersWithAnnotation(name, consumed, inherited, _static) {
+                return this.members(consumed, inherited, _static).filter(function (m) {
                     return m.hasAnnotation(name);
                 });
             }
         },
         dataFields: {
-            value: function
-            dataFields(consumed, inherited, _static) {
-                var arr = [];
-                var self = this;
-                var tmp = [];
-                if (_static === true) {
-                    this.ownedMembers.forEach(function (m) {
-                        if (m instanceof N4DataField && m.isStatic) {
-                            tmp.push(m);
-                        }
-                    });
-                } else {
-                    this.ownedMembers.forEach(function (m) {
-                        if (m instanceof N4DataField) {
-                            tmp.push(m);
-                        }
-                    });
-                }
-                arr = arr.concat(tmp);
-                tmp = [];
-
-                if (consumed === true) {
-                    this.consumedMembers.forEach(function (m) {
-                        if (m instanceof N4DataField && m.isStatic) {
-                            tmp.push(m);
-                        }
-                    });
-                    arr = arr.concat(tmp);
-                    tmp = [];
-                }
-
-                if (inherited === true) {
-                    if (typeof this.n4superType === 'undefined') {
-                        return arr;
-                    }
-                    var tmp2 = this.n4superType.dataFields(consumed, inherited, _static);
-                    arr = arr.concat(tmp2);
-                }
-
-                return arr;
+            value: function dataFields(consumed, inherited, _static) {
+                return this.members(consumed, inherited, _static).filter(function (m) {
+                    return m instanceof N4DataField;
+                });
             }
         },
         dataFieldsWithAnnotation: {
-            value: function
-            dataFieldsWithAnnotation(name, consumed, inherited, _static) {
-                var arr = [];
-                var self = this;
-                var tmp = [];
-                if (_static === true) {
-                    this.ownedMembers.forEach(function (m) {
-                        if (m instanceof N4DataField && m.isStatic) {
-                            tmp.push(m);
-                        }
-                    });
-                } else {
-                    this.ownedMembers.forEach(function (m) {
-                        if (m instanceof N4DataField) {
-                            tmp.push(m);
-                        }
-                    });
-                }
-                arr = arr.concat(tmp);
-                tmp = [];
-
-                if (consumed === true) {
-                    this.consumedMembers.forEach(function (m) {
-                        if (m instanceof N4DataField) {
-                            tmp.push(m);
-                        }
-                    });
-                    arr = arr.concat(tmp);
-                    tmp = [];
-                }
-
-                if (inherited === true) {
-                    if (typeof this.n4superType === 'undefined') {
-                        return arr;
-                    }
-                    var tmp2 = this.n4superType.dataFieldsWithAnnotation(name, consumed, inherited, _static);
-                    arr = arr.concat(tmp2);
-                }
-
-                return arr.filter(function (df) {
-                    return df.hasAnnotation(name);
+            value: function dataFieldsWithAnnotation(name, consumed, inherited, _static) {
+                return this.membersWithAnnotation(name, consumed, inherited, _static).filter(function (m) {
+                    return m instanceof N4DataField;
                 });
             }
         },
         methods: {
-            value: function
-            methods(consumed, inherited, _static) {
-                var arr = [];
-                var self = this;
-                var tmp = [];
-                if (_static === true) {
-                    this.ownedMembers.forEach(function (m) {
-                        if (m instanceof N4Method && m.isStatic) {
-                            tmp.push(m);
-                        }
-                    });
-                } else {
-                    this.ownedMembers.forEach(function (m) {
-                        if (m instanceof N4Method) {
-                            tmp.push(m);
-                        }
-                    });
-                }
-                arr = arr.concat(tmp);
-                tmp = [];
-
-                if (consumed === true) {
-                    this.consumedMembers.forEach(function (m) {
-                        if (m instanceof N4Method) {
-                            tmp.push(m);
-                        }
-                    });
-                    arr = arr.concat(tmp);
-                    tmp = [];
-                }
-
-                if (inherited === true) {
-                    if (typeof this.n4superType === 'undefined') {
-                        return arr;
-                    }
-                    var tmp2 = this.n4superType.methods(consumed, inherited, _static);
-                    arr = arr.concat(tmp2);
-                }
-
-                return arr;
+            value: function methods(consumed, inherited, _static) {
+                return this.members(consumed, inherited, _static).filter(function (m) {
+                    return m instanceof N4Method;
+                });
             }
         },
         methodsWithAnnotation: {
             value: function
             methodsWithAnnotation(name, consumed, inherited, _static) {
-                var arr = [];
-                var self = this;
-                var tmp = [];
-                if (_static === true) {
-                    this.ownedMembers.forEach(function (m) {
-                        if (m instanceof N4Method && m.isStatic) {
-                            tmp.push(m);
-                        }
-                    });
-                } else {
-                    this.ownedMembers.forEach(function (m) {
-                        if (m instanceof N4Method) {
-                            tmp.push(m);
-                        }
-                    });
-                }
-                arr = arr.concat(tmp);
-                tmp = [];
-
-                /*get consumed*/
-                if (consumed === true) {
-                    this.consumedMembers.forEach(function (m) {
-                        if (m instanceof N4Method) {
-                            tmp.push(m);
-                        }
-                    });
-                    arr = arr.concat(tmp);
-                    tmp = [];
-                }
-
-                /*get inherited, */
-                if (inherited === true) {
-                    /*top level element (should be N4Object) has no supertype*/
-                    if (typeof this.n4superType === 'undefined') {
-                        return arr;
-                    }
-                    var tmp2 = this.n4superType.methods(consumed, inherited, _static);
-                    arr = arr.concat(tmp2);
-                }
-
-                return arr.filter(function (m) {
-                    return m.hasAnnotation(name);
+                return this.membersWithAnnotation(name, consumed, inherited, _static).filter(function (m) {
+                    return m instanceof N4Method;
                 });
             }
         }
@@ -581,7 +399,7 @@
         }
     }, {});
 
-    $makeN4BuiltInClass(N4StringBasedEnum, Object, {
+    $makeN4BuiltInClass(N4StringBasedEnum, String, {
         toString: {
             value: function toString() {
                 return this.value;
