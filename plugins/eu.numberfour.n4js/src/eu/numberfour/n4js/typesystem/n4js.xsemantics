@@ -569,7 +569,7 @@ from  {
 rule typeYieldExpression
 	G |- YieldExpression y : TypeRef T
 from {
-	T = typeSystemHelper.getExpectedTypeOfYieldExpression(G, y);
+	T = typeSystemHelper.getTypeOfYieldExpression(G, y);
 }
 
 
@@ -2183,7 +2183,7 @@ from {
 }
 
 
-/* @see [N4JS] ??? Yield Expression */
+/* @see [N4JS] 6.3.1. Generator Functions */
 rule expectedTypeInYieldStatement
 	G |- YieldExpression yieldExpr |> Expression expression : TypeRef T
 from {

@@ -151,7 +151,7 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 	}
 	
 	
-	def TypeRef getExpectedTypeOfYieldExpression(RuleEnvironment G, YieldExpression yieldExpr) {
+	def TypeRef getTypeOfYieldExpression(RuleEnvironment G, YieldExpression yieldExpr) {
 		val funDef = EcoreUtil2.getContainerOfType(yieldExpr?.eContainer, FunctionDefinition);
 		val G2 = G.wrap;
 		val myThisTypeRef = ts.thisTypeRef(G, yieldExpr).value;

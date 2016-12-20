@@ -2001,8 +2001,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleTypeYieldExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final YieldExpression y) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    TypeRef _expectedTypeOfYieldExpression = this.typeSystemHelper.getExpectedTypeOfYieldExpression(G, y);
-    T = _expectedTypeOfYieldExpression;
+    TypeRef _typeOfYieldExpression = this.typeSystemHelper.getTypeOfYieldExpression(G, y);
+    T = _typeOfYieldExpression;
     return new Result<TypeRef>(T);
   }
   
