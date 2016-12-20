@@ -19,11 +19,13 @@ Require-Bundle: eu.numberfour.n4js,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
- eu.numberfour.n4jsx.model
+ eu.numberfour.n4jsx.model,
+ eu.numberfour.n4jsx
 Export-Package: eu.numberfour.n4js.transpiler,
  eu.numberfour.n4js.transpiler.assistants,
  eu.numberfour.n4js.transpiler.im,
  eu.numberfour.n4js.transpiler.im.impl,
  eu.numberfour.n4js.transpiler.im.util,
  eu.numberfour.n4js.transpiler.operations,
- eu.numberfour.n4js.transpiler.utils
+ eu.numberfour.n4js.transpiler.utils,
+ eu.numberfour.n4jsx.transpiler.utils

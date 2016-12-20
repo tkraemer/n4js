@@ -21,9 +21,9 @@ import eu.numberfour.n4jsx.n4JSX.JSXElement
 import eu.numberfour.n4jsx.n4JSX.JSXExpression
 import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute
 import eu.numberfour.n4jsx.n4JSX.JSXSpreadAttribute
+import java.util.List
 
 import static eu.numberfour.n4js.transpiler.TranspilerBuilderBlocks.*
-import eu.numberfour.n4js.utils.N4JSLanguageUtils
 
 /**
  * 
@@ -54,11 +54,7 @@ class JSXTransformation extends Transformation {
 			(
 				#[
 					elem.tagNameFromElement,
-					if(elem.jsxAttributes.isEmpty) {
-						_NULL
-					} else {
-						_ObjLit(elem.jsxAttributes.map[convertJSXAttribute])
-					}
+					convertJSXAttributes(elem.jsxAttributes)
 				]
 				+ elem.jsxChildren.map[convertJSXChild]
 			)
@@ -74,16 +70,24 @@ class JSXTransformation extends Transformation {
 		}
 	}
 
-	def private PropertyNameValuePair convertJSXAttribute(JSXAttribute attr) {
-		switch(attr) {
-			JSXPropertyAttribute: {
-				_PropertyNameValuePair(
-					attr.nameFromPropertyAttribute,
-					attr.valueExpressionFromPropertyAttribute)
+	def private Expression convertJSXAttributes(List<JSXAttribute> attrs) {
+		if(attrs.isEmpty) {
+			_NULL
+		} else {
+			val propsSimple = _ObjLit(attrs.filter(JSXPropertyAttribute).map[convertJSXAttribute]);
+			val propsSpread = attrs.filter(JSXSpreadAttribute).map[expression].toList;
+			if(propsSpread.isEmpty) {
+				propsSimple
+			} else {
+				_CallExpr(_PropertyAccessExpr(steFor_Object,steFor_assign), #[ propsSimple ] + propsSpread)
 			}
-			JSXSpreadAttribute:
-				_PropertyNameValuePair(N4JSLanguageUtils.SPREAD_IN_OJECT_LITERAL_WORK_AROUND, attr.expression)
 		}
+	}
+
+	def private PropertyNameValuePair convertJSXAttribute(JSXPropertyAttribute attr) {
+		_PropertyNameValuePair(
+			attr.nameFromPropertyAttribute,
+			attr.valueExpressionFromPropertyAttribute)
 	}
 
 	def private Expression getTagNameFromElement(JSXElement elem) {
