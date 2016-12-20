@@ -16,7 +16,8 @@
 
     var options = n4.runtimeOptions,
         testMode = options["test-mode"],
-        windows = typeof process !== "undefined" && !!process.platform.match(/^win/),
+        isNodeJs = n4.runtimeInfo.platformId === "nodejs",
+        windows = isNodeJs && !!process.platform.match(/^win/),
         ideExecData = options.ideExecData,
         apisuffix_re = options["api-prj-suffix-re"];
 
@@ -87,8 +88,12 @@
         if (mod.__esModule) {
             return mod;
         } else {
-            var ret = {};
-            for (var prop of Object.getOwnPropertyNames(mod)) {
+            var ret = {},
+                prop, props = Object.getOwnPropertyNames(mod),
+                i = 0,
+                len = props.length;
+            for (; i < len; ++i) {
+                prop = props[i];
                 Object.defineProperty(ret, prop, Object.getOwnPropertyDescriptor(mod, prop));
             }
             Object.defineProperties(ret, {
@@ -137,7 +142,7 @@
 
     System.normalize = function(name, parentName, parentAddress) {
         return new Promise(function(resolveFn) {
-            if (System._nodeRequire) {
+            if (isNodeJs) {
                 var cjs = name.replace(n4.cjsModulesPrefix_re, "");
                 if (cjs.length !== name.length) { // i.e. node/npm; we actually install the module synchronously
                     var mod = cjsCreateModule(System._nodeRequire(cjs));
@@ -155,7 +160,7 @@
 
         md.format = "register"; // enforce for every module
 
-        if (this._nodeRequire) { // we use NODE_PATH for resolution
+        if (isNodeJs) { // we use NODE_PATH for resolution
             try {
                 path = this._nodeRequire.resolve(path);
                 if (windows) {
