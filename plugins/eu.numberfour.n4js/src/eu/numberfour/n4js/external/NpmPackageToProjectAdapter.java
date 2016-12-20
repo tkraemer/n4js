@@ -206,7 +206,7 @@ public class NpmPackageToProjectAdapter {
 		return PackageJson.readValue(packageJsonResource.toURI());
 	}
 
-	private static String NPM_DEFINITIONS_FOLDER_NAME = ".";
+	private static String NPM_DEFINITIONS_FOLDER_NAME = "npm";
 
 	private File getNpmsTypeDefinitionsFolder() {
 		return getNpmsTypeDefinitionsFolder(true);
