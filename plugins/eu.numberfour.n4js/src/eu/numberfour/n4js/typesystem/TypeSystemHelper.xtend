@@ -196,6 +196,11 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		return expectedTypeCompuer.getExpectedTypeOfYieldValueExpression(G, yieldExpr, returnValueExpr);
 	}
 
+	/** @see ExpectedTypeComputer#getExpectedTypeOfYieldValueExpression(RuleEnvironment,YieldExpression) */
+	def TypeRef getExpectedTypeOfYieldExpression(RuleEnvironment G, YieldExpression yieldExpr) {
+		return expectedTypeCompuer.getExpectedTypeOfYieldExpression(G, yieldExpr);
+	}
+
 
 
 	// *****************************************************************************************************

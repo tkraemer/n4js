@@ -569,7 +569,7 @@ from  {
 rule typeYieldExpression
 	G |- YieldExpression y : TypeRef T
 from {
-	T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef // yield is unsupported, at the moment
+	T = typeSystemHelper.getExpectedTypeOfYieldExpression(G, y);
 }
 
 
