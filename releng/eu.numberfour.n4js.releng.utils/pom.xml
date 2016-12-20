@@ -26,6 +26,11 @@ Contributors:
 
 	<build>
 		<plugins>
+			<!--
+			The following will deploy this artifact to a temporary maven repository (aka "local build repo"),
+			which will be used by the N4JS-N4 build to obtain dependencies of the MWE2 workflows. There are several
+			other cases like this; search for "Enable deploy:". THIS IS TEMPORARY AND SHOULD BE CLEANED-UP!
+			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
