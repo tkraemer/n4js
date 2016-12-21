@@ -677,6 +677,9 @@ import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 
 	@Override
 	public Boolean casePropertyMethodDeclaration(PropertyMethodDeclaration original) {
+		if (original.isGenerator()) {
+			write("* ");
+		}
 		processPropertyName(original);
 		write('(');
 		process(original.getFpars(), ", ");
