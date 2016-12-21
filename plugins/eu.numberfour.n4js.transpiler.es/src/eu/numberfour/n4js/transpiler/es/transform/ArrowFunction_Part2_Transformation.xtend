@@ -43,22 +43,19 @@ class ArrowFunction_Part2_Transformation extends Transformation {
 	/** replace arrow-function by function-expression  */
 	private def void transformArrowFunction(ArrowFunction arrowFunc ) {
 
-
 		// PART 2
-		val fe = _FunExpr(arrowFunc.async, arrowFunc.name, arrowFunc.fpars, arrowFunc.body  )
+		val fe = _FunExpr(arrowFunc.async, arrowFunc.name, arrowFunc.fpars, arrowFunc.body);
+		// note: arrow functions cannot be generators, so we do *not* need to do:
+		// fe.generator = arrowFunc.generator;
 
 		val thisBinder = _CallExpr(
 				_PropertyAccessExpr(
-					_Parenthesis( fe )	,
+					_Parenthesis( fe ),
 					getSymbolTableEntryForMember(state.G.functionType, "bind", false, false, true)
 				),
 				_ThisLiteral
-			) // end Call function*()
-			;
+			); // end Call function*()
 
 		replace(arrowFunc, thisBinder, fe);
-
 	}
-
-
 }
