@@ -101,7 +101,6 @@ public class N4jscJarUtils {
 		cmdline.addAll(Arrays.asList(
 				"java",
 				"-Xmx4096m", // TODO make this configurable
-				"-XX:-UseGCOverheadLimit", // TODO IDE-2479 remove 
 				"-jar", getAbsoluteRunnableN4jsc().getAbsolutePath(),
 				// "--debug", "-v", // generate more output
 				"-t", "allprojects"));
