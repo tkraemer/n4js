@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"DirectInjectionNoParentTest.js",
+"lineCount":219,
+"mappings":"A;;;EAUA,yC;EAEA,yD;EACA,+D;EACA,qE;;MAJQ,M,EACA,O,EACA,M,EACA,U,EACA,Y;EAGF;;;;I;EAUA,kD;EAGN;;;I;;;;;KApBQ,qF;KACA,uF;;;KACA,+G;;;KACA,kI;;;KACA,uI;;;;IAGF;;;;qCAEkB;OAChB,OAAO,iCAAP,CADgB;OAFlB;;;;;;;;;;;;;;;;;;;;;;;O;IAUA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;O;;;;;;;;;;;;;;;;;IAKc;;+CAOI;OAChB,IAAG,YAAA,QAAA,+BAA+B,KAA/B,IAAwC,YAAA,SAAA,gCAAiC,KAA5E;QACI,kBAAkB,2BAAlB,EACM,2DADN,EADJ;QADgB;OAPJ;;;4CAgBA;OACZ,aAAa,eAAb,EAA8B,iCAA9B,EAAiE,2BAAjE,EADY;OAhBA;;;sCAoBN;OACN,aAAa,gBAAb,EAA+B,qBAA/B,EAAsD,qBAAtD,EADM;OApBM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+"sources":["/sources/eu.numberfour.mangelhaft.test/n4/mangel/test/DirectInjectionNoParentTest.n4js"],
+"names":[]
+}

@@ -11,7 +11,7 @@
 		return {
 			setters: [],
 			execute: function() {
-				$makeClass(Nvp, Object, [], {
+				$makeClass(Nvp, N4Object, [], {
 					name: {
 						value: undefined,
 						writable: true

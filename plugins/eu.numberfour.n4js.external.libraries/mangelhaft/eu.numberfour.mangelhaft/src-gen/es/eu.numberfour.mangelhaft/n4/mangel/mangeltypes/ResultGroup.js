@@ -38,7 +38,7 @@
 		return {
 			setters: [],
 			execute: function() {
-				$makeClass(ResultGroup, Object, [], {
+				$makeClass(ResultGroup, N4Object, [], {
 					description: {
 						value: undefined,
 						writable: true

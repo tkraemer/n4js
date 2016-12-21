@@ -28,7 +28,7 @@
 		return {
 			setters: [],
 			execute: function() {
-				$makeClass(Signal, Object, [], {
+				$makeClass(Signal, N4Object, [], {
 					registerListener: {
 						value: function registerListener___n4(listener, isOnce, listenerContext, priority) {
 							priority = priority || 0;
@@ -142,7 +142,7 @@
 								for(let executeNext = true;executeNext && n > 0;--n) {
 									executeNext = false;
 									if (bindings[n - 1] && this.shouldPropagate) {
-										let res = (yield bindings[n - 1].execute(paramsArr));
+										let res = (yield Promise.resolve(bindings[n - 1].execute(paramsArr)));
 										executeNext = res !== false;
 									}
 								}
@@ -311,7 +311,7 @@
 					});
 					return metaClass;
 				});
-				$makeClass(SignalBinding, Object, [], {
+				$makeClass(SignalBinding, N4Object, [], {
 					execute: {
 						value: function execute___n4(paramsArr) {
 							let handlerReturn, params;

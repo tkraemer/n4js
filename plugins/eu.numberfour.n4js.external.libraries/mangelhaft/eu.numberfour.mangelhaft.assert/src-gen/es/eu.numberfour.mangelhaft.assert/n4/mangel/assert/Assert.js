@@ -3,43 +3,18 @@
 	System.register([
 		'eu.numberfour.mangelhaft.assert/n4/mangel/assert/AssertionError',
 		'eu.numberfour.mangelhaft.assert/n4/mangel/precondition/PreconditionNotMet',
-		'eu.numberfour.mangelhaft.assert/n4/mangel/assert/Decycle'
+		'@@cjs/json-cycle/cycle'
 	], function($n4Export) {
-		var AssertionError, PreconditionNotMet, decycle, getTypeOf, getTypeName, _isInstanceOf, DEFAULT_TIMEOUT, DEFAULT_POLLING_INTERVAL, replacer, truncate, isUndefinedOrNull, isArguments, pSlice, Object_keys, objEquiv, _deepEqual, expectedException, Assert, deepEqual;
-		getTypeOf = function getTypeOf(type) {
-			return ((type)["n4type"] || null);
-		};
-		getTypeName = function getTypeName(type) {
-			let t = getTypeOf(type);
-			return t ? t.fqn : "";
-		};
-		_isInstanceOf = function _isInstanceOf(target, type) {
-			if (typeof target !== "object") {
-				return false;
+		var AssertionError, PreconditionNotMet, decycle, getTypeName, DEFAULT_TIMEOUT, DEFAULT_POLLING_INTERVAL, isUndefinedOrNull, isArguments, dupObject, Object_keys, objEquiv, _deepEqual, expectedException, Assert;
+		getTypeName = function getTypeName(val) {
+			if (typeof val === "object") {
+				let ctor = (val).constructor;
+				let n4type = ctor.n4type;
+				if (n4type) {
+					return n4type.fqn;
+				}
 			}
-			if (typeof type === "object") {
-				return getTypeOf((target).constructor).allImplementedInterfaces.indexOf(getTypeName(type)) >= 0;
-			}
-			return $instanceof(target, type);
-		};
-		replacer = function replacer(key, value) {
-			if (value === undefined) {
-				return '' + value;
-			}
-			if (typeof value === 'number' && (isNaN(value) || !isFinite(value))) {
-				return (value).toString();
-			}
-			if (typeof value === 'function' || $instanceof(value, RegExp)) {
-				return (value).toString();
-			}
-			return value;
-		};
-		truncate = function truncate(s, n) {
-			if (typeof s == 'string') {
-				return s.length < n ? s : s.slice(0, n);
-			} else {
-				return s;
-			}
+			return String(val);
 		};
 		isUndefinedOrNull = function isUndefinedOrNull(value) {
 			return value === null || value === undefined;
@@ -59,8 +34,8 @@
 				if (!isArguments(b)) {
 					return false;
 				}
-				a = pSlice.call(a);
-				b = pSlice.call(b);
+				a = Array.prototype.slice.call(a);
+				b = Array.prototype.slice.call(b);
 				return _deepEqual(a, b, ignorePrototype);
 			}
 			try {
@@ -122,8 +97,8 @@
 				function($_import_eu_u002enumberfour_u002emangelhaft_u002eassert_n4_u002fmangel_u002fprecondition_u002fPreconditionNotMet) {
 					PreconditionNotMet = $_import_eu_u002enumberfour_u002emangelhaft_u002eassert_n4_u002fmangel_u002fprecondition_u002fPreconditionNotMet.PreconditionNotMet;
 				},
-				function($_import_eu_u002enumberfour_u002emangelhaft_u002eassert_n4_u002fmangel_u002fassert_u002fDecycle) {
-					decycle = $_import_eu_u002enumberfour_u002emangelhaft_u002eassert_n4_u002fmangel_u002fassert_u002fDecycle.decycle;
+				function($_import_json_u002dcycle_cycle) {
+					decycle = $_import_json_u002dcycle_cycle.decycle;
 				}
 			],
 			execute: function() {
@@ -131,20 +106,18 @@
 				$n4Export('DEFAULT_TIMEOUT', DEFAULT_TIMEOUT);
 				DEFAULT_POLLING_INTERVAL = 50;
 				$n4Export('DEFAULT_POLLING_INTERVAL', DEFAULT_POLLING_INTERVAL);
-				pSlice = [].slice;
-				Object_keys = typeof Object.keys === 'function' ? Object.keys : function(obj) {
+				dupObject = Object;
+				Object_keys = typeof Object.keys === 'function' ? dupObject["keys"] : function(obj) {
 					let keys = [];
 					for(let key in obj) {
 						keys.push(key);
 					}
 					return keys;
 				};
-				;
-				$makeClass(Assert, Object, [], {}, {
+				$makeClass(Assert, N4Object, [], {}, {
 					rethrowIfSpecialError: {
 						value: function rethrowIfSpecialError___n4(error, expected) {
 							let objError, ctor;
-							;
 							if (error !== null && typeof error === "object") {
 								objError = error;
 								ctor = objError.constructor;
@@ -156,67 +129,67 @@
 					},
 					fail_: {
 						value: function fail____n4(actual, expected, message, operator, stackStartFunction) {
-							let error = new AssertionError({
+							let obj = this, fail_ = obj["fail_"], error = new AssertionError({
 								message: message,
 								actual: actual,
 								expected: expected,
 								operator: operator,
-								stackStartFunction: stackStartFunction
+								stackStartFunction: fail_
 							});
 							throw error;
 						}
 					},
 					fail: {
 						value: function fail___n4(message, error) {
-							this.fail_(error, null, message, null, this.fail);
+							this.fail_(error, null, message, null);
 						}
 					},
 					ok: {
 						value: function ok___n4(value, message) {
 							if (!!!value) {
-								this.fail_(value, true, message, '==', this.ok);
+								this.fail_(value, true, message, '==');
 							}
 						}
 					},
 					equal: {
 						value: function equal___n4(actual, expected, message) {
 							if (actual != expected) {
-								this.fail_(actual, expected, message, '==', this.equal);
+								this.fail_(actual, expected, message, '==');
 							}
 						}
 					},
 					greaterThan: {
 						value: function greaterThan___n4(actual, expected, message) {
 							if (!(actual > expected)) {
-								this.fail_(actual, expected, message, '>', this.greaterThan);
+								this.fail_(actual, expected, message, '>');
 							}
 						}
 					},
 					lessThan: {
 						value: function lessThan___n4(actual, expected, message) {
 							if (!(actual < expected)) {
-								this.fail_(actual, expected, message, '<', this.lessThan);
+								this.fail_(actual, expected, message, '<');
 							}
 						}
 					},
 					greaterThanOrEqual: {
 						value: function greaterThanOrEqual___n4(actual, expected, message) {
 							if (!(actual >= expected)) {
-								this.fail_(actual, expected, message, '>', this.greaterThanOrEqual);
+								this.fail_(actual, expected, message, '>');
 							}
 						}
 					},
 					lessThanOrEqual: {
 						value: function lessThanOrEqual___n4(actual, expected, message) {
 							if (!(actual <= expected)) {
-								this.fail_(actual, expected, message, '<', this.lessThanOrEqual);
+								this.fail_(actual, expected, message, '<');
 							}
 						}
 					},
 					isNull: {
 						value: function isNull___n4(actual, message) {
 							if (actual !== null) {
-								this.fail_(actual, null, message, "=== null", this.isNull);
+								this.fail_(actual, null, message, "=== null");
 							}
 						}
 					},
@@ -224,14 +197,14 @@
 						value: function isUndefined___n4(actual, message) {
 							let undef;
 							if (actual !== undef) {
-								this.fail_(actual, null, message, "=== undefined", this.isUndefined);
+								this.fail_(actual, null, message, "=== undefined");
 							}
 						}
 					},
 					isNotNull: {
 						value: function isNotNull___n4(actual, message) {
 							if (actual === null) {
-								this.fail_(actual, null, message, "!== null", this.isNotNull);
+								this.fail_(actual, null, message, "!== null");
 							}
 						}
 					},
@@ -239,7 +212,7 @@
 						value: function isNotUndefined___n4(actual, message) {
 							let undef;
 							if (actual === undef) {
-								this.fail_(actual, null, message, "!== undefined", this.isNotUndefined);
+								this.fail_(actual, null, message, "!== undefined");
 							}
 						}
 					},
@@ -247,22 +220,21 @@
 						value: function isNullOrUndefined___n4(actual, message) {
 							let undef;
 							if (!(actual === null || actual === undef)) {
-								this.fail_(actual, null, message, "=== null || undefined", this.isNullOrUndefined);
+								this.fail_(actual, null, message, "=== null || undefined");
 							}
 						}
 					},
 					isNotNullOrUndefined: {
 						value: function isNotNullOrUndefined___n4(actual, message) {
-							let undef;
 							if ((actual === null || actual === undefined)) {
-								this.fail_(actual, null, message, "!== null || undefined", this.isNotNullOrUndefined);
+								this.fail_(actual, null, message, "!== null || undefined");
 							}
 						}
 					},
 					notEqual: {
 						value: function notEqual___n4(actual, expected, message) {
 							if (actual == expected) {
-								this.fail_(actual, expected, message, '!=', this.notEqual);
+								this.fail_(actual, expected, message, '!=');
 							}
 						}
 					},
@@ -279,58 +251,58 @@
 								} catch(err) {
 									message += "\n unable to calculate diff";
 								}
-								this.fail_(actual, expected, message, 'deepEqual', this.deepEqual);
+								this.fail_(actual, expected, message, 'deepEqual');
 							}
 						}
 					},
 					notDeepEqual: {
 						value: function notDeepEqual___n4(actual, expected, message, ignorePrototype) {
 							if (_deepEqual(actual, expected, ignorePrototype)) {
-								this.fail_(actual, expected, message, 'NotDeepEqual', this.deepEqual);
+								this.fail_(actual, expected, message, 'NotDeepEqual');
 							}
 						}
 					},
 					strictEqual: {
 						value: function strictEqual___n4(actual, expected, message) {
 							if (!(actual === expected)) {
-								this.fail_(actual, expected, message, '===', this.strictEqual);
+								this.fail_(actual, expected, message, '===');
 							}
 						}
 					},
 					notStrictEqual: {
 						value: function notStrictEqual___n4(actual, expected, message) {
 							if (!(actual !== expected)) {
-								this.fail_(actual, expected, message, '!==', this.notStrictEqual);
+								this.fail_(actual, expected, message, '!==');
 							}
 						}
 					},
 					isTrue: {
 						value: function isTrue___n4(actual, message) {
 							if (!(!!actual)) {
-								this.fail_(actual, true, message, "== true", this.isTrue);
+								this.fail_(actual, true, message, "== true");
 							}
 						}
 					},
 					isFalse: {
 						value: function isFalse___n4(actual, message) {
 							if (!!actual) {
-								this.fail_(actual, true, message, "!== true", this.isFalse);
+								this.fail_(actual, true, message, "!== true");
 							}
 						}
 					},
 					isInstanceOf: {
 						value: function isInstanceOf___n4(actual, expected, message) {
-							if (!_isInstanceOf(actual, expected)) {
-								let actualName = getTypeName((actual).constructor), expectedName = getTypeName(expected);
-								this.fail_(actualName, expectedName, message, "instanceof", this.isInstanceOf);
+							if (!($instanceof(actual, expected))) {
+								let actualName = getTypeName(actual), expectedName = (expected).n4type.fqn;
+								this.fail_(actualName, expectedName, message, "instanceof");
 							}
 						}
 					},
 					isNotInstanceOf: {
 						value: function isNotInstanceOf___n4(actual, expected, message) {
-							if (_isInstanceOf(actual, expected)) {
-								let actualName = getTypeName((actual).constructor), expectedName = getTypeName(expected);
-								this.fail_(actualName, expectedName, message, "not instanceof", this.isInstanceOf);
+							if ($instanceof(actual, expected)) {
+								let actualName = getTypeName(actual), expectedName = (expected).n4type.fqn;
+								this.fail_(actualName, expectedName, message, "not instanceof");
 							}
 						}
 					},
@@ -344,9 +316,9 @@
 								actual = e;
 							}
 							if (!threw) {
-								this.fail_(null, null, message, "Did not throw any exception", this.throws);
+								this.fail_(null, null, message, "Did not throw any exception");
 							}
-							return this.thrownCheck(true, actual, error, message, "throws", this.throws);
+							return this.thrownCheck(true, actual, error, message, "throws");
 						}
 					},
 					doesNotThrow: {
@@ -360,7 +332,7 @@
 								this.rethrowIfSpecialError(actual, error);
 							}
 							if (threw) {
-								this.fail_(actual, null, message, "does not throw", this.doesNotThrow);
+								this.fail_(actual, null, message, "does not throw");
 							}
 						}
 					},
@@ -368,17 +340,16 @@
 						value: function throwsAsync___n4(testFunction, expectedErrorType, message) {
 							return $spawn(function*() {
 								let actual, threw = false;
-								;
 								try {
-									(yield testFunction());
+									(yield Promise.resolve(testFunction()));
 								} catch(e) {
 									threw = true;
 									actual = e;
 								}
 								if (!threw) {
-									this.fail_(null, null, message, "Did not throw any exception", this.throwsAsync);
+									this.fail_(null, null, message, "Did not throw any exception");
 								}
-								return this.thrownCheck(true, actual, expectedErrorType, message, "throws", this.throwsAsync);
+								return this.thrownCheck(true, actual, expectedErrorType, message, "throws");
 							}.apply(this, arguments));
 						}
 					},
@@ -387,14 +358,14 @@
 							return $spawn(function*() {
 								let actual, threw = false;
 								try {
-									(yield testFunction());
+									(yield Promise.resolve(testFunction()));
 								} catch(e) {
 									threw = true;
 									actual = e;
 									this.rethrowIfSpecialError(actual, error);
 								}
 								if (threw) {
-									this.fail_(actual, null, message, "does not throw", this.doesNotThrowAsync);
+									this.fail_(actual, null, message, "does not throw");
 								}
 							}.apply(this, arguments));
 						}
@@ -426,7 +397,7 @@
 						}
 					},
 					thrownCheck: {
-						value: function thrownCheck___n4(shouldThrow, actual, expected, message, operator, stackStartFunction) {
+						value: function thrownCheck___n4(shouldThrow, actual, expected, message, operator) {
 							this.rethrowIfSpecialError(actual, expected);
 							let msg = ".";
 							if (expected) {
@@ -441,10 +412,10 @@
 								msg += ".";
 							}
 							if (!shouldThrow && expectedException(actual, expected)) {
-								this.fail_(actual, expected, 'Got unwanted exception' + message, operator, stackStartFunction);
+								this.fail_(actual, expected, 'Got unwanted exception' + message, operator);
 							}
 							if ((shouldThrow && expected != null && !expectedException(actual, expected)) || (!shouldThrow && actual != null)) {
-								this.fail_("" + actual, expected, "thrown error of wrong type " + message, operator, stackStartFunction);
+								this.fail_("" + actual, expected, "thrown error of wrong type " + message, operator);
 							}
 							return actual;
 						}
@@ -656,8 +627,6 @@
 					N4ApiNotImplementedError,
 					PreconditionNotMet
 				];
-				deepEqual = _deepEqual;
-				$n4Export('deepEqual', deepEqual);
 			}
 		};
 	});

@@ -83,25 +83,29 @@ export public interface DIComponentMeta extends InjectedClassMeta {
 /** exported just for testing*/
 @Internal
 export public function hasDIMeta(type: type{N4Object}): boolean {
-    return typeof (type as Object)[DI_PROP_NAME] === typeof{};
+    let typeObj: Object = type;
+    return typeof typeObj[DI_PROP_NAME] === typeof{};
 }
 
 /** exported just for testing*/
 @Internal
 export public function getInjectedClassMeta(type: type{N4Object}): InjectedClassMeta? {
-    return (type as Object)[DI_PROP_NAME] as InjectedClassMeta;
+    let typeObj: Object = type;
+    return typeObj[DI_PROP_NAME] as InjectedClassMeta;
 }
 
 /** exported just for testing*/
 @Internal
 export public function getBinderMeta(type: type{N4Object}): BinderMeta? {
-    return (type as Object)[DI_PROP_NAME] as BinderMeta;
+    let typeObj: Object = type;
+    return typeObj[DI_PROP_NAME] as BinderMeta;
 }
 
 /** exported just for testing*/
 @Internal
 export public function getDIComponentMeta(type: type{N4Object}): DIComponentMeta? {
-    return (type as Object)[DI_PROP_NAME] as DIComponentMeta;
+    let typeObj: Object = type;
+    return typeObj[DI_PROP_NAME] as DIComponentMeta;
 }
 
 // ==================================
@@ -180,7 +184,7 @@ export public class N4Injector{
     /** information about DICompoment */
     private dicInfo: string;
     /** parent injector used to delegate creation of some types, or getting singleton instances */
-    private parent: N4Injector;
+    @Final public parent: N4Injector;
 
     private constructor(dicInfo: string, bindings: Map<string, N4Object>, parent: N4Injector?){
         this.dicInfo = dicInfo;
@@ -210,7 +214,7 @@ export public class N4Injector{
         // - ? <: ~N4Provider<T>
         
         // TODO: ctor as any cast is a hack. In the long run, we should properly type this whole file
-        return this.internalCreate(ctor, this, cachedInstances) as T;
+        return this.internalCreate(ctor, this, cachedInstances);
     }
 
     /**
@@ -546,7 +550,8 @@ export public class N4Injector{
                     //effectively becomes singleton during injection phase.
                     //we want to make them singleton like only per injection chain
                     //to break cyclic dependency
-                    (instance as Object)[f.name] = delegate.createFromInjectedTypeMeta(f, delegate, new Map<string, N4Object>(cachedInstances));
+                    let instanceObj: Object = instance;
+                    instanceObj[f.name] = delegate.createFromInjectedTypeMeta(f, delegate, new Map<string, N4Object>(cachedInstances));
                 }
             });
             if(meta.superType){
@@ -561,7 +566,8 @@ export public class N4Injector{
      */
     private createProvided(binder: N4Object, info: ProvideMethodInfo, delegate: N4Injector, cachedInstances: Map<string, N4Object>): N4Object{
         let params: Array<N4Object> = info.args.map(e => this.createFromInjectedTypeMeta(e, delegate, cachedInstances));
-        return ((binder as Object)[info.name] as Function).apply(binder, params) as N4Object;
+        let binderObj: Object = binder;
+        return (binderObj[info.name] as Function).apply(binder, params) as N4Object;
     }
 
     /**

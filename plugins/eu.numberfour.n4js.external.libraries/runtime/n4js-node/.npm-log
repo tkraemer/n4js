@@ -1,9 +1,8 @@
-n4js-node@ /var/lib/build/workspace/CI_stdlib_n4js/n4js-libs/rtenvs/n4js-node
-├─┬ node-fetch@1.4.0 
-│ ├─┬ encoding@0.1.12 
-│ │ └── iconv-lite@0.4.13 
-│ └── is-stream@1.0.1 
-└─┬ systemjs@0.19.24 
-  ├── es6-module-loader@0.17.11 
-  └── when@3.7.7 
+n4js-node@ /var/lib/build/workspace/CI_stdlib_n4js/n4js-libs/packages/n4js-node
+├── encoding@0.1.12 
+├── iconv-lite@0.4.13 
+├── is-stream@1.1.0 
+├── node-fetch@1.6.3 
+├── systemjs@0.19.40 
+└── when@3.7.7 
 

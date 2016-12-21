@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"InjectionTest.js",
+"lineCount":397,
+"mappings":"A;;;EAUA,yC;EAEA,yD;EACA,+D;EACA,qE;EACA,gC;EACA,gE;;MANQ,M,EACA,O,EACA,M,EACA,U,EACA,Y,EACA,U,EACA,e;EAKF,sC;EAKA;;;I;EASA;;;I;EAQN;;;;I;;;;;KAjCQ,qF;KACA,uF;;;KACA,+G;;;KACA,kI;;;KACA,uI;;;KACA,+E;;;KACA,mI;;;;IAKF;;;;;;;;;;;;;;;;;;;;;;;;O;;;;;;;;;;;;;IAKA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;O;;;;;;;;;;;;;;;;;;;IASA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;O;;;;;;;;;;;;;;;;;IAQc;;+CAMI;OAChB,IAAI;QACA,cAAc,WAAd,EAA2B,mBAA3B,EADA;QAEF,OAAO,EAAP,EAAW;QACT,kBAAkB,2DAAlB,EADS;QAHG;OANJ;;;wCAeH;OACT,qBAAqB,cAAc,iBAAd,EAAiC,mBAAjC,SAA6D,iBAA7D,CAArB,CADS;OAfG;;;uCAmBJ;OACR,eAAe,cAAc,WAAd,EAA2B,mBAA3B,EAAgD,IAAI,UAAJ,EAAhD,SAAyE,WAAzE,CAAf,CADQ;OAnBI;;;4CAwBA;OACZ,aAAa,uBAAb,EAAsC,2BAAtC,EAAmE,2BAAnE,EADY;OAxBA;;;sCA4BN;OACN,aAAa,wBAAb,EAAuC,qBAAvC,EAA8D,qBAA9D,EADM;OA5BM;;;kDAgCM;OAClB,aAAa,6BAAb,EAA4C,2BAA5C,EAAyE,2BAAzE,EADkB;OAhCN;;;4CAoCA;OACZ,aAAa,8BAAb,EAA6C,2BAA7C,EAA0E,2BAA1E,EADY;OApCA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+"sources":["/sources/eu.numberfour.mangelhaft.test/n4/mangel/test/InjectionTest.n4js"],
+"names":[]
+}

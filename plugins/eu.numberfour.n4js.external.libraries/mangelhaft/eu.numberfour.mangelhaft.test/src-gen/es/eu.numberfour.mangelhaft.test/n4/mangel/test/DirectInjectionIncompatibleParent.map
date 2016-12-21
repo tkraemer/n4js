@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"DirectInjectionIncompatibleParent.js",
+"lineCount":181,
+"mappings":"A;;;EAUA,yC;EAEA,yD;EACA,+D;;MAHQ,M,EACA,O,EACA,M,EACA,U;EAGF,oC;EAEA;;;;I;EAUA,kD;EAEN,oF;;;;;KApBQ,qF;KACA,uF;;;KACA,+G;;;KACA,kI;;;;IAGF;;;;;;;;;;;;;;;;;O;;;;;;;IAEA;;;;qCAEkB;OAChB,OAAO,iCAAP,CADgB;OAFlB;;;;;;;;;;;;;;;;;;;;;;;O;IAUA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;O;;;;;;;;;;;;;;;;;IAKc;;yCASH;OACT,YAAY,yBAAZ,EADS;OATG;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+"sources":["/sources/eu.numberfour.mangelhaft.test/n4/mangel/test/DirectInjectionIncompatibleParent.n4js"],
+"names":[]
+}
