@@ -85,7 +85,7 @@ public class NpmPackageToProjectAdapter {
 
 	/** Default filter for manifest fragments */
 	private final static FileFilter ONLY_MANIFEST_FRAGMENTS = new FileFilter() {
-		private final static String MANIFEST_FRAGMENT = N4MFConstants.MANIFEST_FRAGMENT;
+		private final static String MANIFEST_FRAGMENT = "manifest.fragment";
 
 		@Override
 		public boolean accept(File pathname) {

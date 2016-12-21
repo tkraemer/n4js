@@ -32,7 +32,7 @@ abstract class N4MFConstants {
 	/**
 	 * The name (with extension) of the manifest fragment file.
 	 */
-	public val static MANIFEST_FRAGMENT = "manifest.fragment";
+	public val static MANIFEST_FRAGMENT = "fragment.n4mf";
 
 	private new() {	}
 }
