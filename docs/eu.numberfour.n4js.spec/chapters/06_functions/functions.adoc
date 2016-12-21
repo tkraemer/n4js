@@ -530,8 +530,6 @@ function z(){
 }
 ----
 
---
---
 
 == ECMAScript 5 Function Definition
 
@@ -691,11 +689,150 @@ into account!
 
 == ECMAScript 2015 Function Definition
 
+
 === Generator Functions
+task:IDE-1347[]
+
+Generators come together with the `yield` expression and can play three roles: 
+the role of an iterator (data producer), of an observer (data consumer), and a combined role which is called coroutines.
+When calling a generator function or method, the returned generator object of type `Generator<TYield,TReturn,TNext>` can be controlled by its methods 
+(cf. cite:[ECMA15a(S14.4)], also see cite:[Kuizinas14a]).
+
+==== Syntax [[asynchronous-functions-syntax]]
+Generator functions and methods differ from ordinary functions and methods only in the additional `*` symbol before the function or method name.
+The following syntax rules are extracted from the real syntax rules.
+They only display parts relevant to declaring a function or method as a generator.
 
 
-Cf. cite:[ECMA15a(S14.4)], also see cite:[Kuizinas14a]. Syntax supported, semantic and transpilation not
-supported yet.
+[source]
+----
+GeneratorFunctionDeclaration <Yield>:
+        (declaredModifiers+=N4Modifier)*
+        'function' generator?='*'
+        FunctionHeader<YieldIfGenerator,Generator=true>
+        FunctionBody<Yield=true,Expression=false>
+;
+
+GeneratorFunctionExpression:
+        'function' generator?='*'
+        FunctionHeader<YieldIfGenerator,Generator=true>
+        FunctionBody<Yield=true,Expression=true>
+;
+
+GeneratorMethodDeclaration:
+    annotations+=Annotation+ (declaredModifiers+=N4Modifier)* TypeVariables?
+    generator?='*' NoLineTerminator LiteralOrComputedPropertyName<Yield>
+    MethodParamsReturnAndBody<Generator=true>
+----
+
+
+
+
+==== Semantics [[asynchronous-functions-semantics]]
+The basic idea is to make code dealing with Generators easier to write and more readable without changing their functionality. 
+Take this example:
+
+[source,n4js]
+.Two simple generator functions.
+----
+// explicit form of the return type
+function * countTo(iMax:int) : Generator<int,string,undefined> {
+	for (int i=0; i<=iMax; i++)
+		yield i;
+	return "finished";
+}
+val genObj1 = countTo(3);
+val values1 = [...genObj1]; // is [0,1,2,3]
+val lastObj1 = genObj1.next(); // is {value="finished",done=true}
+
+// shorthand form of the return type
+function * countFrom(start:int) : int {
+	for (int i=start; i>=0; i--)
+		yield i;
+	return finished;
+}
+val genObj2 = countFrom(3);
+val values2 = [...genObj2]; // is [3,2,1,0]
+val lastObj2 = genObj2.next(); // is {value="finished",done=true}
+----
+
+In the example above, two generator functions are declared.
+The first declares its return type explicitly whereas the second uses a shorthand form.
+
+
+Generator functions and methods return objects of the type `Generator<TYield,TReturn,TNext>` which is a subtype of the `Iterable<TYield>` and `Iterator<TYield>` interfaces.
+Moreover, it provides the methods `throw(exception:any)` and `return(value:TNext?)` for advanced control of the generator object.
+The complete interface of the generator class is given below.
+
+
+.The generator class
+[source,n4js]
+----
+public providedByRuntime interface Generator<out TYield, out TReturn, in TNext>
+	extends Iterable<TYield>, Iterator<TYield> {
+	public abstract next(value: TNext?): IteratorEntry<TYield>
+	public abstract [Symbol.iterator](): Generator<TYield, TReturn, TNext>
+	public abstract throw(exception: any): IteratorEntry<TYield>;
+	public abstract return(value: TNext?): IteratorEntry<TReturn>;
+}
+----
+
+
+.Modifier `*`
+[req,id=IDE-14370,version=1]
+--
+. `*` may be used on declared functions and methods, and for function expressions.
+.  A function or method _f_ with a declared return type _R_ that is declared `*` has an actual return type of `Generator<TYield,TReturn,TNext>`.
+.  A generator function or method can have no declared return type, a shorthand form of a return type or an explicitly declared return type.
+..  The explicitly declared return type is of the form `Generator<TYield,TReturn,TNext>` with the type variables:
+...  _TYield_ as the expected type of the yield expression argument,
+...  _TReturn_ as the expected type of the return expression, and
+...  _TNext_ as both the return type of the yield expression.
+..  The shorthand form only declares the type of _TYield_ which implicitly translates to `Generator<TYield,TReturn,any>` as the return type.
+...  The type _TReturn_ is inferred to either `undefined` or `any` from the body.
+...  In case the declared type is `void`, actual return type evaluates to `Generator<undefined,undefined,any>`.
+..  If no return type is declared, both _TYield_ and _TReturn_ are inferred from the body to either `any` or `undefined`. _TNext_ is `any`.
+.  Given a generator function or method _f_ with an actual return type `Generator<TYield,TReturn,TNext>`:
+..  all yield statements in _f_ must have an expression of type _TYield_.
+..  all return statements in _f_ must have an expression of type _TReturn_.
+.  Return statements in generator functions or methods are always optional.
+--
+
+.Modifier `yield` and `yield*`
+[req,id=IDE-14371,version=1]
+--
+. `yield` and `yield*` may only be in body of generator functions or methods.
+. `yield expr` takes only expressions _expr_ of type _TYield_ in a generator function or methods with the actual type `Generator<TYield,TReturn,TNext>`.
+. The return type of the `yield` expression is _TNext_.
+. `yield* fg()` takes only generator functions or methods _fg_ with the actual return type `Generator<? extends TYield,? extends TReturn,? super TNext>`.
+. The return type of the `yield*` expression is _TNext_.
+--
+
+Similar to `async` functions, shorthand and explicit form `* function():int{};` and `* function():Generator<int,TResult,any>` are equal, 
+given that the inferred _TResult_ of the former functions equals to _TResult_ in the latter function).
+In other words, the return type of generator functions or methods is wrapped when it is not explicitly defined as `Generator` already.
+Thus, whenever a nested generator type is desired, it has to be defined explicitly.
+Consider the example below.
+
+[source,n4js]
+.Type variables with async methods.
+----
+class C<T> {
+	genFoo(): T{} // equals to genFoo(): Generator<T, undefined, any>;
+				// note that TResult depends on the body of genFoo()
+}
+function fn(C<int> c1, C<Generator<int,any,any>> c2) {
+	c1.genFoo();  // returns Generator<int, undefined, any>
+	c2.genFoo();  // returns Generator<Generator<int,any,any>, undefined, any>
+}
+----
+
+==== Generator Arrow Functions
+As of now, generator arrow functions are not supported by EcmaScript 6 and also, the support is not planned.
+However, introducing generator arrow function in EcmaScript is still under discussion.
+For more information, please refer to https://esdiscuss.org/topic/generator-arrow-functions[ESDiscuss.org] and https://esdiscuss.org/topic/why-do-generator-expressions-return-generators[StackOverflow.com].
+
+
 
 === Arrow Function Expression
 task:IDE-252[]
@@ -802,7 +939,7 @@ AsyncFunctionDeclaration <Yield>:
         (declaredModifiers+=N4Modifier)*
         declaredAsync?='async' NoLineTerminator 'function'
         FunctionHeader<Yield,Generator=false>
-        FunctionBody<Yield=false,Expression=false> Semi
+        FunctionBody<Yield=false,Expression=false>
 ;
 
 AsyncFunctionExpression:
@@ -887,22 +1024,20 @@ async function loadAddress(id: string) : string {
 ----
 
 The modifier `async` changes the return type of `loadAddress()` from `string` (the declared return type) to `Promise<string,?>` (the actual return type).
-For code inside the function, the return
-type is still `string`: the value in the return statement of the last line will
-be wrapped in a Promise. For client code outside the function and in
-case of recursive invocations, the return type is `Promise<string,?>`. To raise an error, simply throw an exception, its value will become the error value of the returned Promise.
+For code inside the function, the return type is still `string`: 
+the value in the return statement of the last line will be wrapped in a Promise. 
+For client code outside the function and in case of recursive invocations, the return type is `Promise<string,?>`. 
+To raise an error, simply throw an exception, its value will become the error value of the returned Promise.
 
-If the expression after an `await` evaluates to a `Promise`, execution of the enclosing asynchronous function will be suspended until either a success value is available (which will then make the entire await-expession evaluate to
-this success value and continue execution) or until the Promise is
-rejected (which will then cause an exception to be thrown at the
-location of the await-expression).
-If, on the other hand, the expression
-after an `await` evaluates to a non-promise, the value will be simply passed
-through. In addition, a warning is shown to indicate the unnecessary `await`
-epression.
+If the expression after an `await` evaluates to a `Promise`, execution of the enclosing asynchronous function will be suspended until either a success value is available
+(which will then make the entire await-expression evaluate to this success value and continue execution)
+or until the Promise is rejected (which will then cause an exception to be thrown at the location of the await-expression).
+If, on the other hand, the expression after an `await` evaluates to a non-promise, the value will be simply passed through.
+In addition, a warning is shown to indicate the unnecessary `await` expression.
 
 Note how method `loadAddress()` above can be implemented without any explicit references to the built-in type Promise.
-In the above example we handle the errors of the nested asynchronous calls to `getDataBase()` and `loadEntry()` for demonstration purposes only; if we are not interested in the errors we could simply remove the try/catch block and any errors would be forwarded to the caller of `loadAddress()`.
+In the above example we handle the errors of the nested asynchronous calls to `getDataBase()` and `loadEntry()` for demonstration purposes only;
+if we are not interested in the errors we could simply remove the try/catch block and any errors would be forwarded to the caller of `loadAddress()`.
 
 Invoking an async function commonly adopts one of two forms: task:IDEBUG-620[]
 
@@ -914,41 +1049,64 @@ These patterns are so common that a warning is available whenever both
 . `Promise` is omitted as expected type; and
 . `await` is also omitted.
 
-The warning aims at hinting about forgetting to wait for the result, while remaining
-non-noisy.
+The warning aims at hinting about forgetting to wait for the result, while remaining non-noisy.
 
 .Modifier `async` and `await`
 [req,id=IDE-86,version=1]
 --
-1. `async` may be used on declared functions and methods, and for function
-expressions. and arrow functions.
-2.  A function or method math:[$f$] with a declared return type
-math:[$R$] that is declared has an actual return type of `async`.
-+
-NOTE: for the time being this applies also to functions with a void
-return type, producing the actual return type `Promise<void,?>` (to be reconsidered).
-3.  Given a function or method math:[$f$] with a declared return
-type math:[$R$] that is declared , all return statements in
-math:[$f$] must have an expression of type math:[$R$] (and not
-of type ).
-4.  `await` can be used in expressions directly enclosed in an async function,
-and behaves like a unary operator with the same precedence as in ES6.
-5.  Given an expression math:[$\mathit{expr}$] of type
-math:[$T$], the type of math:[$($]
-math:[$\mathit{expr} )$] is inferred to math:[$T$] if
-math:[$T$] is not a Promise or it is inferred to math:[$S$] if
-math:[$T$] is a Promise with a success value of type
-math:[$S$], i.e. math:[$T <:$] .
+. `async` may be used on declared functions and methods, for function expressions, and for arrow functions.
+.  A function or method _f_ with a declared return type _R_ that is declared `async` has an actual return type of `Promise<R,?>`.
+..  The declared return type `void` is translated to the actual return type `Promise<undefined,?>`.
+.  A function or method that is declared `async` can have no declared return type, a shorthand form of a return type or an explicitly declared return type.
+..  The explicitly declared return type is of the form `Promise<R,E>` where _R_ is the type of all return statements in the body, and E is the type of exceptions that are thrown in the body.
+..  The shorthand form only declares the type of _R_ which implicitly translates to `Promise<R,?>` as the return type.
+..  In case no return type is declared, the type _R_ of `Promise<R,?>` is inferred from the body.
+. Return type inference is only performed when no return type is declared.
+..  The return type `R` of `Promise<R,?>` is inferred either as `void` or as `any`.
+.. 
+.  Given a function or method _f_ that is declared `async` with a declared return type _R_, or with a declared return type `Promise<R,?>`,
+all return statements in _f_ must have an expression of type _R_ (and not of type `Promise<R,?>`).
+.  `await` can be used in expressions directly enclosed in an async function, and behaves like a unary operator with the same precedence as `yield` in ES6.
+.  Given an expression _expr_ of type
+_T_, the type of (`await` _expr_) is inferred to _T_ if
+_T_ is not a Promise, or it is inferred to _S_ if
+_T_ is a Promise with a success value of type
+_S_, i.e. _T <: Promise<S,?>_ .
 
 --
 
-=== Asynchronous Arrow Functions
+In other words, the return _R_ type of `async` methods will always be wrapped to a `Promise<R,?>` unless _R_ is `Promise` already.
+As a consequence, nested `Promise`s as a return type of a async function or method have to be stated explicitly like `Promise<Promise<R,?>,?>`.
+
+When a type `T` variable is used to define the the return type of a async function or method, it also will be wrapped.
+Consider the example below.
+
+[source,n4js]
+.Type variables with async methods.
+----
+interface I<T> {
+	foo(): T;  // equals to foo(): Promise<T>;
+}
+function snafu(I<int> i1, I<Promise<int>> i2) {
+	i1.foo();  // returns Promise<int,?>
+	i2.foo();  // returns Promise<Promise<int,?>,?>
+}
+----
+
+
+==== Asynchronous Arrow Functions
 task:IDE-1494[]
 
 An `await` expression is allowed in the body of an async arrow function but not
 in the body of a non-async arrow function. The semantics here are
 intentional and are in line with similar constraint for function
 expressions.
+
+
+
+
+
+
 
 == N4JS Extended Function Definition
 

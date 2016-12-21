@@ -1868,6 +1868,73 @@ public providedByRuntime interface ~Iterable<out T> {
 
 
 /**
+ * An iterator over a collection, defining a standard way to produce a sequence of values (either finite
+ * or infinite).
+ * <p>
+ * Note that in ECMAScript 6 this is not a built-in type, but a protocol. This protocol can be implemented
+ * by any object respecting some conventions.
+ */
+public providedByRuntime interface Generator<out TYield, out TReturn, in TNext> 
+	extends Iterable<TYield>, Iterator<TYield> {
+
+	/**
+	 * A one (optional) argument function. The (optional) argument <code>value</code> is passed to the 
+	 * current yield expression in the generator function. The return is an <code>IteratorEntry</code> 
+	 * with two properties:
+	 * <ul>
+	 * <li>done (boolean)<br>
+	 *     Has the value true if the iterator is past the end of the iterated sequence. In this case value
+	 *     optionally specifies the return value of the iterator. The return values are explained here.
+	 *     Has the value false if the iterator was able to produce the next value in the sequence. This is
+	 *     equivalent of not specifying the done property altogether.
+	 * <li>value<br>
+	 *     any JavaScript value returned by the iterator. Can be omitted when done is true.
+	 * </ul>
+	 */
+	public abstract next(value: TNext?): IteratorEntry<TYield>
+
+	/**
+	 * A zero arguments function that returns the <code>this</code> object, conforming to the iterator 
+	 * interface.
+	 * <p>
+	 * Note that the iterator can only be iterated once.
+	 */
+	public abstract [Symbol.iterator](): Generator<TYield, TReturn, TNext>
+
+	/**
+	 * A one argument function. The argument <code>exception</code> is thrown at the current yield 
+	 * expression in the generator function. The return is an <code>IteratorEntry</code> with two 
+	 * properties:
+	 * <ul>
+	 * <li>done (boolean)<br>
+	 *     Has the value true if the iterator is past the end of the iterated sequence. In this case value
+	 *     optionally specifies the return value of the iterator. The return values are explained here.
+	 *     Has the value false if the iterator was able to produce the next value in the sequence. This is
+	 *     equivalent of not specifying the done property altogether.
+	 * <li>value<br>
+	 *     any JavaScript value returned by the iterator. Can be omitted when done is true.
+	 * </ul>
+	 */
+	public abstract throw(exception: any): IteratorEntry<TYield>;
+
+    /**
+	 * A one (optional) argument function. The (optional) argument <code>value</code> is passed to the 
+	 * current yield expression in the generator function. The return is an <code>IteratorEntry</code> with 
+	 * two properties:
+	 * <ul>
+	 * <li>done (boolean)<br>
+	 *     Has the value true if the iterator is past the end of the iterated sequence. In this case value
+	 *     optionally specifies the return value of the iterator. The return values are explained here.
+	 *     Has the value false if the iterator was able to produce the next value in the sequence. This is
+	 *     equivalent of not specifying the done property altogether.
+	 * <li>value<br>
+	 *     any JavaScript value returned by the iterator. Can be omitted when done is true.
+	 * </ul>
+	 */
+	public abstract return(value: TNext?): IteratorEntry<TReturn>;
+}
+
+/**
  * A promise represents a proxy for a value that is usually not yet known
  * when the promise is created.
  * <p>

@@ -36,6 +36,7 @@ import org.eclipse.xtext.EcoreUtil2;
 
 import com.google.common.collect.Iterables;
 
+import eu.numberfour.n4js.n4JS.FunctionDefinition;
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope;
 import eu.numberfour.n4js.ts.scoping.builtin.N4Scheme;
 import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef;
@@ -1193,6 +1194,16 @@ public class TypeUtils {
 	}
 
 	/**
+	 * Returns true iff the {@link TypeRef} is a generator.
+	 */
+	public static boolean isGenerator(TypeRef ref, BuiltInTypeScope scope) {
+		if (ref instanceof ParameterizedTypeRef) {
+			return ref.getDeclaredType() == scope.getGeneratorType();
+		}
+		return false;
+	}
+
+	/**
 	 * For the given success and failure value types, this method returns a Promise<R,?> type reference. The failure
 	 * type is optional (i.e. may be <code>null</code>). A success value type of <code>void</code> will be changed to
 	 * type <code>undefined</code>, because <code>void</code> is not a valid type argument.
@@ -1201,12 +1212,91 @@ public class TypeUtils {
 	 */
 	public static ParameterizedTypeRef createPromiseTypeRef(BuiltInTypeScope scope, TypeArgument successType,
 			TypeArgument failureTypeOrNull) {
+
 		Objects.requireNonNull(successType);
-		return createTypeRef(
-				scope.getPromiseType(),
-				isVoid(successType) ? scope.getUndefinedTypeRef() : TypeUtils.copyWithProxies(successType),
-				failureTypeOrNull != null ? TypeUtils.copyWithProxies(failureTypeOrNull)
-						: TypeRefsFactory.eINSTANCE.createWildcard());
+		TypeArgument successTypeArg = isVoid(successType) ? scope.getUndefinedTypeRef()
+				: TypeUtils.copyWithProxies(successType);
+		TypeArgument failureTypeArg = failureTypeOrNull != null ? TypeUtils.copyWithProxies(failureTypeOrNull)
+				: TypeRefsFactory.eINSTANCE.createWildcard();
+
+		return createTypeRef(scope.getPromiseType(), successTypeArg, failureTypeArg);
+	}
+
+	/**
+	 * For a given generator function, a return type is created of the form {@code Generator<TYield,TReturn,TNext>} in
+	 * case no type or a type other than Generator is declared. In case no type is declared, the types TYield and
+	 * TReturn are inferred from the yield expressions and return statements in the body. The type TNext is
+	 * <code>any</code>. In case a type other than <code>Generator</code> is declared, type type TYield becomes the
+	 * declared type. The type TReturn is still inferred from the return statements. In case the declared type is
+	 * <code>void</code>, both TYield and TReturn become the type <code>undefined</code>.
+	 *
+	 * <p>
+	 * WARNING: this method will resolve proxies in 'successType' (in order to check if it points to type 'void')
+	 */
+	public static ParameterizedTypeRef createGeneratorTypeRef(BuiltInTypeScope scope, FunctionDefinition funDef) {
+		Objects.requireNonNull(scope);
+		Objects.requireNonNull(funDef);
+
+		TypeRef definedReturn = funDef.getReturnTypeRef();
+		TypeArgument tYield;
+		TypeArgument tReturn = inferReturnTypeFromReturns(funDef, scope);
+
+		if (definedReturn == null) {
+			tYield = inferYieldExprTypeFromYields(funDef, scope);
+		} else {
+			tYield = ((TFunction) funDef.getDefinedType()).getReturnTypeRef();
+			if (TypeUtils.isVoid(definedReturn)) {
+				tReturn = scope.getUndefinedTypeRef();
+			}
+		}
+
+		ParameterizedTypeRef generatorTypeRef = createGeneratorTypeRef(scope, tYield, tReturn, null);
+		return generatorTypeRef;
+	}
+
+	/**
+	 * Creates a generator type of the form {@code Generator<TYield,TReturn,TNext>}. In case {@code tYield} or
+	 * {@code tReturn} is of type {@code void}, it will be transformed to {@code undefined}. In case {@code tNext} is
+	 * {@code null}, it will be of type {@code any}.
+	 */
+	public static ParameterizedTypeRef createGeneratorTypeRef(BuiltInTypeScope scope, TypeArgument tYield,
+			TypeArgument tReturn, TypeArgument tNext) {
+
+		tYield = isVoid(tYield) ? scope.getUndefinedTypeRef() : TypeUtils.copyWithProxies(tYield);
+		tReturn = isVoid(tReturn) ? scope.getUndefinedTypeRef() : TypeUtils.copyWithProxies(tReturn);
+		tNext = (tNext == null) ? scope.getAnyTypeRef() : TypeUtils.copyWithProxies(tNext);
+		ParameterizedTypeRef generatorTypeRef = createTypeRef(scope.getGeneratorType(), tYield, tReturn, tNext);
+		return generatorTypeRef;
+	}
+
+	/**
+	 * Infers the yield value type form all yield expressions in the body.
+	 * <p>
+	 * This is a poor man's type inference, meaning that the outcome is either {@code any} or {@code void}. (Similar to:
+	 * {@code AbstractFunctionDefinitionTypesBuilder}).
+	 */
+	private static TypeRef inferYieldExprTypeFromYields(FunctionDefinition funDef, BuiltInTypeScope scope) {
+		boolean hasNonVoidReturn = funDef.getBody() != null && funDef.getBody().hasNonVoidYield();
+		if (hasNonVoidReturn) {
+			return scope.getAnyTypeRef();
+		} else {
+			return scope.getVoidTypeRef();
+		}
+	}
+
+	/**
+	 * Infers the return value type form all yield expressions in the body.
+	 * <p>
+	 * This is a poor man's type inference, meaning that the outcome is either {@code any} or {@code void}. (Similar to:
+	 * {@code AbstractFunctionDefinitionTypesBuilder}).
+	 */
+	private static TypeRef inferReturnTypeFromReturns(FunctionDefinition funDef, BuiltInTypeScope scope) {
+		boolean hasNonVoidReturn = funDef.getBody() != null && funDef.getBody().hasNonVoidReturn();
+		if (hasNonVoidReturn) {
+			return scope.getAnyTypeRef();
+		} else {
+			return scope.getVoidTypeRef();
+		}
 	}
 
 	/**

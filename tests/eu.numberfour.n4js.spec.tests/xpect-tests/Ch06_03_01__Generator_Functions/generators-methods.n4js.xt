@@ -1,0 +1,44 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+class C {
+	// no return ok
+// XPECT noerrors
+	* g1() {
+	}
+	
+	// recursive yield type ok
+// XPECT noerrors
+	* g2() {
+		yield * this.g1();
+	}
+	
+	// yield has return
+// XPECT noerrors
+	* g3a() {
+		let x = yield; 
+		x;
+	}
+	
+	// err
+	// yield has return of type any, error case
+	* g3b() {
+// XPECT errors --> "any is not a subtype of string." at "yield"
+		let x : string = yield; 
+		x;
+	}
+	
+	// yield has return
+	* g3c() : Generator<?,?,int> {
+// XPECT noerrors
+		let x = yield; 
+		x;
+	}
+	
+	// yield has return of type TNext
+	* g4() : Generator<?,?,string>{
+// XPECT noerrors
+		let x : string = yield; 
+		x;
+	}
+}
