@@ -74,7 +74,7 @@ export public function createElement(type: union {string, {function(Object?): El
 		}
 		element.props = props
 		
-		children.map((p)=>createChildElements(p)).forEach(ch=>element.children.push(ch))
+		children.map((p)=>createChildElements(p)).forEach(cha=>(cha as Array<?>).forEach(ch=>element.children.push(ch)))
 		
 		return element;
 	}

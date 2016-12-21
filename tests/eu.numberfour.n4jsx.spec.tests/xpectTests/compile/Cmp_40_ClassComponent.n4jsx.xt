@@ -12,12 +12,21 @@
 <==
 stdout:
 lower component
- Element {
-  name: 'LowerComponent',
-  props: { whatTextShouldIShow: 'lcShadow' },
-  children: [] }
+ {
+  "name": "LowerComponent",
+  "props": {
+    "whatTextShouldIShow": "lcShadow"
+  },
+  "children": []
+}
 my component
- Element { name: 'MyComponent', props: { aProp: 'mcAPop' }, children: [] }
+ {
+  "name": "MyComponent",
+  "props": {
+    "aProp": "mcAPop"
+  },
+  "children": []
+}
 stderr:
 ==>
 --- */
@@ -57,8 +66,10 @@ class MyComponent extends
 
 
 export public function logElements(): void {
-	console.log('lower component\n', <LowerComponent whatTextShouldIShow='lcShadow'/>)
-	console.log('my component\n', <MyComponent aProp='mcAPop'/>)
+	let lc = <LowerComponent whatTextShouldIShow='lcShadow'/>
+	console.log('lower component\n', JSON.stringify(lc, null, '  '))
+	let mc = <MyComponent aProp='mcAPop'/>
+	console.log('my component\n', JSON.stringify(mc, null, '  '))
 };
 
 logElements()
