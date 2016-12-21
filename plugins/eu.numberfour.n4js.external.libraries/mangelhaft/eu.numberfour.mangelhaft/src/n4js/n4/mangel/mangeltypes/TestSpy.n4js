@@ -30,12 +30,13 @@ export public class TestSpy {
      * resets all signals, removing their handlers.
      */
     public reset(): this {
-        let field: string
-            ,sig: Signal<?>
+        let field: string,
+            sig: Signal<?>,
+            that: Object = this;
         ;
         for (field in this) {
             if (this.hasOwnProperty(field)) {
-                sig = (this as Object)[field] as Signal<?>;
+                sig = that[field] as Signal<?>;
                 sig.removeAll().forget();
             }
         }

@@ -42,8 +42,6 @@ class HTMLTestPageRunner {
         , groupsArray: Array<string>
         , testsStr = getParm("tests")
         , testsArray: Array<string>
-        , reporterStr = getParm("reporter")
-        , endpoint = getParm("endpoint")
         , tests: TestInfos
         , buffer: Array<Array<?>> = []
         , resultGroups: ResultGroups

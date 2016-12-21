@@ -29,11 +29,14 @@
             return memo;
         }, {});
 
-        options = Object.assign(envOptions, options);
+        options = Object.assign(envOptions, global.n4 && global.n4.runtimeOptions, options);
         if (options.debug) {
             console.log("## node.js exec.");
             console.log(process.title, "\n", process.versions, "\nargs:", process.argv);
-            console.log("NODE_PATH=\n", process.env.NODE_PATH.split(lib_path.delimiter).join("\n" + lib_path.delimiter));
+            console.log("NODE_PATH=");
+            if (process.env.NODE_PATH) {
+                console.log(process.env.NODE_PATH.split(lib_path.delimiter).join("\n" + lib_path.delimiter));
+            }
             console.log("## Runtime Options:", options);
 
             Error.stackTraceLimit = 10000;//Infinity;
@@ -47,12 +50,18 @@
             runtimeOptions: options,
             runtimeInfo: {
                 platformId: "nodejs",
+                platformVariant: process.version,
                 isTouch: false,
                 deviceId: "pc"
             }
         };
 
-        require("./node-netwerk-polyfills.js");
+        var fetch = global.fetch = require("node-fetch");
+        ["Request", "Response", "Headers"].forEach(function(p) {
+            global[p] = fetch[p];
+        });
+        require("./node-url-polyfill.js");
+
         require("systemjs");
         require("n4js-es5/rt");
 
@@ -60,4 +69,4 @@
     }
 
     exports.installN4JSRuntime = installN4JSRuntime;
-})();
+}());

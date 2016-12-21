@@ -14,7 +14,10 @@
     if (typeof $makeClass === "undefined") {
         require("./rt/node-bootstrap.js").installN4JSRuntime();
     }
-    var CJSLoader = require("./rt/node-cjs-loader-polyfill.js").Loader;
+    var CJSLoader = require("./rt/node-cjs-loader-polyfill.js").Loader,
+        staticSystem = new CJSLoader();
+
+    exports.staticSystem = staticSystem;
 
     exports.System = function(req, mod) {
         // detect whether the module is being loaded via require(),
