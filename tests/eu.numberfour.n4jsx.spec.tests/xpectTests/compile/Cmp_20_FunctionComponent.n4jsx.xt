@@ -12,10 +12,13 @@
 <==
 stdout:
 pure function element
- Element {
-  name: 'PureFnComponent',
-  props: { myProp: 'This is my propsss' },
-  children: [] }
+ {
+  "name": "PureFnComponent",
+  "props": {
+    "myProp": "This is my propsss"
+  },
+  "children": []
+}
 stderr:
 ==>
 --- */
@@ -32,6 +35,7 @@ function PureFnComponent(props: Props): React.Element {
 }
 
 export public function logElements(): void {
-	console.log('pure function element\n', <PureFnComponent myProp="This is my propsss"/>)
+	let fc = <PureFnComponent myProp="This is my propsss"/>
+	console.log('pure function element\n', JSON.stringify(fc, null, '  '))
 };
 logElements()
