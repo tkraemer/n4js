@@ -237,6 +237,9 @@ import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 			processTypeParams(original.getTypeVars());
 			write(' ');
 		}
+		if (original.isGenerator()) {
+			write("* ");
+		}
 		write(original.getName());
 		write('(');
 		process(original.getFpars(), ", ");
@@ -258,7 +261,7 @@ import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 			processTypeParams(original.getTypeVars());
 		}
 		if (original.isGenerator()) {
-			write('*');
+			write(" *");
 		}
 		if (original.getName() != null) {
 			write(' ');
