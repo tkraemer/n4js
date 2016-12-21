@@ -140,17 +140,19 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 			if (TypeUtils.isGenerator(actualReturnTypeRef, scope)) {
 				val yieldTypeArg = actualReturnTypeRef.typeArgs.get(0);
 				val yieldTypeRef = ts.upperBound(G, yieldTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+				val yieldTypeRefCopy = TypeUtils.copyWithProxies(yieldTypeRef);
 				if (yieldExpr.isMany()) {
 					val nextTypeArg = actualReturnTypeRef.typeArgs.get(2);
 					val nextTypeRef = ts.upperBound(G, nextTypeArg).value; // take upper bound to get rid of Wildcard, etc.
-					val superNext = TypeUtils.createWildcardSuper(nextTypeRef);
-					val extendsYield = TypeUtils.createWildcardExtends(yieldTypeRef);
+					val nextTypeRefCopy = TypeUtils.copyWithProxies(nextTypeRef);
+					val superNext = TypeUtils.createWildcardSuper(nextTypeRefCopy);
+					val extendsYield = TypeUtils.createWildcardExtends(yieldTypeRefCopy);
 					val tReturn = scope.getAnyTypeRef();
 					// the return type does not matter since it is not returned in a yield* statement
 					val recursiveGeneratorSuperType = TypeUtils.createGeneratorTypeRef(scope, extendsYield, tReturn, superNext);
 					return recursiveGeneratorSuperType;
 				} else {
-				    return yieldTypeRef;
+				    return yieldTypeRefCopy;
 				}
 			}
 		}
