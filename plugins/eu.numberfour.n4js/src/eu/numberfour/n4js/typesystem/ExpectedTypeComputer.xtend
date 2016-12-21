@@ -24,7 +24,6 @@ import org.eclipse.xtext.EcoreUtil2
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import eu.numberfour.n4js.n4JS.YieldExpression
-import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 
 /**
  * Contains helper methods used by the rules of the 'expectedTypeIn' judgment.
@@ -78,14 +77,15 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 	
 	private def TypeRef getExpectedTypeOfReturnValueExpressionForAsyncFunction(RuleEnvironment G, FunctionDefinition funDef) {
 		// we have an async function:
-		// in this case, N4JSFunctionDefinitionTypesBuilder sets funDef.definedType.returnTypeRef
-		// to Promise<R,?>, where R can be based on funDef.returnTypeRef
+		// in case it does not already have a return type of Promise, N4JSFunctionDefinitionTypesBuilder sets
+		// funDef.definedType.returnTypeRef to Promise<R,?>, where R can be based on funDef.returnTypeRef
 		val tFun = funDef.definedType;
 		if (tFun instanceof TFunction) {
 			val actualReturnTypeRef = tFun.returnTypeRef;
 			if (TypeUtils.isPromise(actualReturnTypeRef, G.getPredefinedTypes().builtInTypeScope)) {
 				val firstTypeArg = actualReturnTypeRef.typeArgs.head;
-				return ts.upperBound(G, firstTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+				if (firstTypeArg !== null)
+					return ts.upperBound(G, firstTypeArg).value; // take upper bound to get rid of Wildcard, etc.
 			}
 		}
 		
@@ -98,14 +98,17 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 	
 	private def TypeRef getExpectedTypeOfReturnValueExpressionForGeneratorFunction(RuleEnvironment G, FunctionDefinition funDef) {
 		// we have a generator function:
-		// in this case, N4JSFunctionDefinitionTypesBuilder sets funDef.definedType.returnTypeRef
-		// to Generator<TYield,TResult,TNext>, where TYield can be based on funDef.returnTypeRef
+		// in case it does not already have a return type of Generator, N4JSFunctionDefinitionTypesBuilder
+		// sets funDef.definedType.returnTypeRef to Generator<TYield,TResult,TNext>, where TYield can be based on funDef.returnTypeRef
 		val tFun = funDef.definedType;
 		if (tFun instanceof TFunction) {
 			val actualReturnTypeRef = tFun.returnTypeRef;
 			if (TypeUtils.isGenerator(actualReturnTypeRef, G.getPredefinedTypes().builtInTypeScope)) {
-				val secondTypeArg = actualReturnTypeRef.typeArgs.get(1);
-				return ts.upperBound(G, secondTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+				if (actualReturnTypeRef.typeArgs.length >= 2) {
+					val secondTypeArg = actualReturnTypeRef.typeArgs.get(1);
+					if (secondTypeArg !== null)
+						return ts.upperBound(G, secondTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+				}
 			}
 		}
 		
@@ -116,6 +119,11 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 		return null;
 	}
 	
+	/**
+	 * Returns the expected type of the yield value. It is retrieved from the type TYield of the actual function return type 
+	 * (with regard to {@code Generator<TYield,TReturn,TNext>}). In case the yield expression is recursive (features a star),
+	 * the expected type must conform to {@code Generator<? extends TYield,any,? super TNext>}.
+	 */
 	def TypeRef getExpectedTypeOfYieldValueExpression(RuleEnvironment G, YieldExpression yieldExpr, Expression expression) {
 		val funDef = EcoreUtil2.getContainerOfType(expression?.eContainer, FunctionDefinition);
 		val G2 = G.wrap;
@@ -148,29 +156,6 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 		}
 		
 		return null; // null means: no type expectation
-	}
-	
-	
-	def TypeRef getTypeOfYieldExpression(RuleEnvironment G, YieldExpression yieldExpr) {
-		val funDef = EcoreUtil2.getContainerOfType(yieldExpr?.eContainer, FunctionDefinition);
-		val G2 = G.wrap;
-		val myThisTypeRef = ts.thisTypeRef(G, yieldExpr).value;
-		G2.addThisType(myThisTypeRef); // takes the real-this type even if it is a type{this} reference.
-
-		if (funDef === null || !funDef.isGenerator) 
-			return null; // yields only occur in generator functions
-		
-		val tFun = funDef.definedType;
-		if (tFun instanceof TFunction) {
-			val actualReturnTypeRef = tFun.returnTypeRef;
-			val scope = G.getPredefinedTypes().builtInTypeScope;
-			if (TypeUtils.isGenerator(actualReturnTypeRef, scope)) {
-				val nextTypeArg = actualReturnTypeRef.typeArgs.get(2);
-				val nextTypeRef = ts.upperBound(G, nextTypeArg).value; // take upper bound to get rid of Wildcard, etc.
-				return nextTypeRef;
-			}
-		}
-		return TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
 	}
 	
 }

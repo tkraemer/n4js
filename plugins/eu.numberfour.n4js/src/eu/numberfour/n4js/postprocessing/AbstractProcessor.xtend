@@ -44,9 +44,6 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
-import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
-import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 
 /**
  * Provides some common base functionality used across all processors (e.g. logging). See {@link ASTProcessor} for more
@@ -167,6 +164,21 @@ package abstract class AbstractProcessor {
 
 
 	/**
+	 * Some special handling for generator functions (including methods): we have to wrap their inner return type
+	 * <code>R</code> into a {@code Generator<R,TReturn,TNext>} and use that as their actual, outer return type. This means
+	 * for generator functions, the types builder will create a <code>TFunction</code> with the inner return type and during
+	 * post-processing this method will change that return type to a <code>Generator</code> (only the return type of the
+	 * TFunction in the types model is changed; the declared return type in the AST remains unchanged).
+	 * <p>
+	 * In addition, a return type of <code>void</code> will be replaced by <code>undefined</code>, i.e. will produce an
+	 * outer return type of {@code Generator<undefined,undefined,TNext>}. This will be taken care of by method
+	 * {@link TypeUtils#createGeneratorTypeRef(BuiltInTypeScope,FunctionDefinition)}.
+	 * <p>
+	 * NOTES:
+	 * <ol>
+	 * <li>normally, this wrapping could easily be done in the types builder, but because we have to check if the inner
+	 * return type is <code>void</code> we need to resolve proxies, which is not allowed in the types builder.
+	 * </ol>
 	 */
 	def protected void handleGeneratorFunctionDefinition(RuleEnvironment G, FunctionDefinition funDef, ASTMetaInfoCache cache) {
 		if(funDef.isGenerator) {

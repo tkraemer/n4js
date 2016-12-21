@@ -226,11 +226,13 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 					if (functionOrFieldAccessor.isGenerator) {
 						if (tFun instanceof TFunction) {
 							val actualReturnTypeRef = tFun.returnTypeRef;
-							val tReturn = actualReturnTypeRef.typeArgs.get(1);
-							val ruleEnv = newRuleEnvironment(functionOrFieldAccessor);
-							typeRef = ts.resolveType(ruleEnv, tReturn);
-							if (TypeUtils.isUndefined(typeRef)) {
-								typeRef = newRuleEnvironment(functionOrFieldAccessor).voidTypeRef;
+							if (actualReturnTypeRef.typeArgs.length >= 2) {
+								val tReturn = actualReturnTypeRef.typeArgs.get(1);
+								val ruleEnv = newRuleEnvironment(functionOrFieldAccessor);
+								typeRef = ts.resolveType(ruleEnv, tReturn);
+								if (TypeUtils.isUndefined(typeRef)) {
+									typeRef = newRuleEnvironment(functionOrFieldAccessor).voidTypeRef;
+								}
 							}
 						}
 					}
