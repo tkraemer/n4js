@@ -53,6 +53,7 @@ import com.google.inject.Module;
 import com.google.inject.Provider;
 import com.google.inject.util.Modules;
 
+import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.N4JSRuntimeModule;
 import eu.numberfour.n4js.N4JSStandaloneSetup;
 import eu.numberfour.n4js.binaries.BinariesPreferenceStore;
@@ -87,6 +88,7 @@ import eu.numberfour.n4js.tester.TesterFacade;
 import eu.numberfour.n4js.tester.TesterFrontEnd;
 import eu.numberfour.n4js.tester.TesterModule;
 import eu.numberfour.n4js.tester.extension.ITesterDescriptor;
+import eu.numberfour.n4js.tester.extension.TestFileExtensionsRegistry;
 import eu.numberfour.n4js.tester.extension.TesterRegistry;
 import eu.numberfour.n4js.tester.nodejs.NodeTester.NodeTesterDescriptorProvider;
 import eu.numberfour.n4js.ts.TypeExpressionsStandaloneSetup;
@@ -94,6 +96,7 @@ import eu.numberfour.n4js.ts.TypesStandaloneSetup;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.utils.io.FileDeleter;
+import eu.numberfour.n4jsx.N4JSXGlobals;
 
 /**
  * N4JS Compiler.
@@ -310,6 +313,9 @@ public class N4jsc {
 	@Inject
 	private TypeDefinitionGitLocationProvider gitLocationProvider;
 
+	@Inject
+	private TestFileExtensionsRegistry testFileExtensionRegister;
+
 	/**
 	 * Entry point to start the compiler. Parses the Parameters.
 	 *
@@ -375,9 +381,11 @@ public class N4jsc {
 			// help.
 			initInjection(refProperties());
 
-			// Wire up available runners and testers.
+			// Wire up available runners and testers and test file extensions
 			runnerRegistry.register(nodeRunnerDescriptorProvider.get());
 			testerRegistry.register(nodeTesterDescriptorProvider.get());
+			testFileExtensionRegister.register(N4JSGlobals.N4JS_FILE_EXTENSION);
+			testFileExtensionRegister.register(N4JSXGlobals.N4JSX_FILE_EXTENSION);
 
 			if (listRunners) {
 				printAvailableRunners(System.out);

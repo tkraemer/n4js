@@ -9,5 +9,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: eu.numberfour.n4js.tester.tests.helper,
  com.google.guava,
  org.eclipse.xtend.lib,
- org.junit
+ org.junit,
+ eu.numberfour.n4jsx
 Import-Package: org.apache.log4j.varia;version="1.2.15"

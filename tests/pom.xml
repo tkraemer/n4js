@@ -27,39 +27,39 @@ Contributors:
 		<!-- ************************************** JUnit Tests -->
 
         <!-- Release Engineering Tools Tests -->
-		<module>/eu.numberfour.n4js.releng.utils.tests</module>		
+		<module>eu.numberfour.n4js.releng.utils.tests</module>		
 		
 		<!-- Type system tests -->
-		<module>/eu.numberfour.n4js.ts.model.tests</module>
-		<module>/eu.numberfour.n4js.ts.tests</module>
-		<module>/eu.numberfour.n4js.ts.xpect.tests</module>
+		<module>eu.numberfour.n4js.ts.model.tests</module>
+		<module>eu.numberfour.n4js.ts.tests</module>
+		<module>eu.numberfour.n4js.ts.xpect.tests</module>
 		
 		<!-- Tester tests -->
-		<module>/eu.numberfour.n4js.tester.tests</module>
+		<module>eu.numberfour.n4js.tester.tests</module>
 
 		<!-- Regex tests -->
-		<module>/eu.numberfour.n4js.regex.tests</module>
+		<module>eu.numberfour.n4js.regex.tests</module>
 		
 		<!-- N4 JS tests -->
-		<module>/eu.numberfour.n4js.lang.tests</module>
-		<module>/eu.numberfour.n4js.spec.tests</module>
-		<module>/eu.numberfour.n4js.tests.ecmatestsuite</module>
-		<module>/eu.numberfour.n4js.xpect.tests</module>
+		<module>eu.numberfour.n4js.lang.tests</module>
+		<module>eu.numberfour.n4js.spec.tests</module>
+		<module>eu.numberfour.n4js.tests.ecmatestsuite</module>
+		<module>eu.numberfour.n4js.xpect.tests</module>
 
 		<!-- Xsemantics tests -->
-		<module>/eu.numberfour.n4js.xsemantics.tests</module>
+		<module>eu.numberfour.n4js.xsemantics.tests</module>
 		
 		<!-- N4 JS transpiler tests -->
-		<module>/eu.numberfour.n4js.transpiler.es5.tests</module>
-		<module>/eu.numberfour.n4js.transpiler.es.tests</module>
-		<module>/eu.numberfour.n4js.generator.headless.tests</module>
+		<module>eu.numberfour.n4js.transpiler.es5.tests</module>
+		<module>eu.numberfour.n4js.transpiler.es.tests</module>
+		<module>eu.numberfour.n4js.generator.headless.tests</module>
 		<!-- N4 Manifest tests -->
-		<module>/eu.numberfour.n4js.n4mf.tests</module>
-		<module>/eu.numberfour.n4js.n4mf.xpect.tests</module>
+		<module>eu.numberfour.n4js.n4mf.tests</module>
+		<module>eu.numberfour.n4js.n4mf.xpect.tests</module>
 		
 
 		<!-- N4 access control tests -->
-		<module>/eu.numberfour.n4js.accesscontrol.tests</module>
+		<module>eu.numberfour.n4js.accesscontrol.tests</module>
 
 		<!-- ************************************** JUnit Plugin Tests -->
 		<!-- N4 JS tests -->
@@ -70,31 +70,31 @@ Contributors:
 			SWTBot tests can run with the common heap size settings and can check out the required git repositories that is why they 
 			should run earlier than plug-in UI tests.
 		 -->
-		<module>/eu.numberfour.n4js.ui.tests</module>
-		<module>/eu.numberfour.n4js.xpect.ui.tests</module>
-		<module>/eu.numberfour.n4js.n4ide.spec.tests</module> 
+		<module>eu.numberfour.n4js.ui.tests</module>
+		<module>eu.numberfour.n4js.xpect.ui.tests</module>
+		<module>eu.numberfour.n4js.n4ide.spec.tests</module> 
 		<!-- N4 Manifest tests -->
-		<module>/eu.numberfour.n4js.n4mf.xpect.ui.tests</module>
+		<module>eu.numberfour.n4js.n4mf.xpect.ui.tests</module>
 		<!-- Runner tests -->
 		<module>eu.numberfour.n4js.runner.ui.tests</module>
 
 		<!--  **************************************Other tests -->
 
 		<!-- Smoke tests -->
-		<module>/eu.numberfour.n4js.smoke.tests</module>
-		<module>/eu.numberfour.n4js.jsdoc.tests</module>
+		<module>eu.numberfour.n4js.smoke.tests</module>
+		<module>eu.numberfour.n4js.jsdoc.tests</module>
 		<!-- utils -->
-		<module>/eu.numberfour.n4js.utils.tests</module>
+		<module>eu.numberfour.n4js.utils.tests</module>
 		<!-- Expect Matrix test -->
-		<module>/eu.numberfour.n4js.expectmatrix.tests</module>
+		<module>eu.numberfour.n4js.expectmatrix.tests</module>
 		<!-- Bugreports -->
-		<module>/eu.numberfour.n4js.bugreports.tests</module>
+		<module>eu.numberfour.n4js.bugreports.tests</module>
 		<!-- Spec Examples test -->
-		<module>/eu.numberfour.n4js.spec.examples.xpect.tests</module>
+		<module>eu.numberfour.n4js.spec.examples.xpect.tests</module>
 
 		<!-- *************************************** Tests testing the test helpers -->
-		<module>/eu.numberfour.n4js.test.helpers.tests</module>
-		
+		<module>eu.numberfour.n4js.test.helpers.tests</module>
+
 		<!-- *************************************** Headless Tools Tests -->
 		<module>eu.numberfour.n4js.hlc.tests</module>
 

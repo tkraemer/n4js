@@ -30,8 +30,8 @@ Workflow {
     }
 
     component = de.itemis.xcore2java.XcoreReader {
-		register = eu.numberfour.n4js.antlr.generator.CachedSetup : xcoreSetup {
-			delegate = eu.numberfour.n4js.antlr.generator.NewlineAwareXcoreStandaloneSetup {}
+		register = eu.numberfour.n4js.generation.xcore.CachedSetup : xcoreSetup {
+			delegate = eu.numberfour.n4js.generation.xcore.NewlineAwareXcoreStandaloneSetup {}
 		}
 		path = "model"
 		slot = "model"

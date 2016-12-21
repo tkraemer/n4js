@@ -10,6 +10,12 @@
  */
 package eu.numberfour.n4jsx;
 
+import static com.google.common.collect.Sets.newLinkedHashSet;
+import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableCollection;
+
+import java.util.Collection;
+
 /**
  * Globals for N4JSX sub-language
  */
@@ -24,6 +30,13 @@ public final class N4JSXGlobals {
 	 * Files extension of N4JSX source files (<b>not</b> including the separator dot).
 	 */
 	public static final String N4JSX_FILE_EXTENSION = "n4jsx";
+
+	/**
+	 * Unmodifiable list containing {@link #N4JSX_FILE_EXTENSION} and {@link #JSX_FILE_EXTENSION}.
+	 */
+	public static final Collection<String> ALL_JSX_FILE_EXTENSIONS = unmodifiableCollection(newLinkedHashSet(asList(
+			N4JSX_FILE_EXTENSION,
+			JSX_FILE_EXTENSION)));
 
 	private N4JSXGlobals() {
 		// private to prevent inheritance & instantiation.

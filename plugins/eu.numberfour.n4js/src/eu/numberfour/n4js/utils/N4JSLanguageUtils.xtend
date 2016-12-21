@@ -103,13 +103,6 @@ class N4JSLanguageUtils {
 	public static final String SYMBOL_IDENTIFIER_PREFIX = ComputedPropertyNameValueConverter.SYMBOL_IDENTIFIER_PREFIX;
 
 	/**
-	 * Temporary hack to be able to support spread operator in the JSX transpiler support.
-	 * This is required, because the ES6 spread operator is not yet supported in the N4JS grammar.
-	 * TODO IDE-2471 remove this and add proper support for spread in object literals to grammar/parser
-	 */
-	public static final String SPREAD_IN_OJECT_LITERAL_WORK_AROUND = "MISSING_SPREAD_WORK_AROUND";
-
-	/**
 	 * If the given function definition is asynchronous, will wrap given return type into a Promise.
 	 * Otherwise, returns given return type unchanged. A return type of <code>void</code> is changed to
 	 * <code>undefined</code>.

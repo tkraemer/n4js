@@ -6,16 +6,15 @@ import java.util.concurrent.ExecutorService;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.Token;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.xtext.ide.editor.contentassist.antlr.FollowElement;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.INode;
-import org.eclipse.xtext.ui.editor.contentassist.antlr.FollowElement;
-import org.eclipse.xtext.ui.editor.contentassist.antlr.ParserBasedContentAssistContextFactory;
-import org.eclipse.xtext.ui.editor.contentassist.antlr.ParserBasedContentAssistContextFactory.StatefulFactory;
 import org.eclipse.xtext.util.Strings;
 
+import eu.numberfour.n4js.ui.contentassist.CustomN4JSParser;
+
 /**
- * Overrides the default {@link StatefulFactory} to use the API that is introduced by the {@link CustomN4JSParser}.
+ * Overrides the default {@link org.eclipse.xtext.ide.editor.contentassist.antlr.ContentAssistContextFactory} to use the API that is introduced by the {@link CustomN4JSParser}.
  *
  * All overridden methods basically override the inherited behavior to use the production parser's node model rather
  * than a bogus own lexer.
@@ -23,7 +22,7 @@ import org.eclipse.xtext.util.Strings;
  * @see CustomN4JSParser#getFollowElements(INode, int, int, boolean)
  */
 // copy of eu.numberfour.n4js.ui.contentassist.ContentAssistContextFactory
-public class ContentAssistContextFactory extends ParserBasedContentAssistContextFactory.StatefulFactory {
+public class ContentAssistContextFactory extends org.eclipse.xtext.ide.editor.contentassist.antlr.ContentAssistContextFactory {
 
 	@Override
 	public void setPool(ExecutorService pool) {
@@ -36,7 +35,7 @@ public class ContentAssistContextFactory extends ParserBasedContentAssistContext
 	}
 
 	@Override
-	protected void createContextsForLastCompleteNode(EObject previousModel, boolean strict) throws BadLocationException {
+	protected void createContextsForLastCompleteNode(EObject previousModel, boolean strict) {
 		String currentNodePrefix = getPrefix(currentNode);
 		if (!Strings.isEmpty(currentNodePrefix) && !currentNode.getText().equals(currentNodePrefix)) {
 			lexer.setCharStream(new ANTLRStringStream(currentNodePrefix));
@@ -56,7 +55,7 @@ public class ContentAssistContextFactory extends ParserBasedContentAssistContext
 	}
 
 	@Override
-	protected void handleLastCompleteNodeAsPartOfDatatypeNode() throws BadLocationException {
+	protected void handleLastCompleteNodeAsPartOfDatatypeNode() {
 		String prefix = getPrefix(datatypeNode);
 		Collection<FollowElement> followElements = getParser().getFollowElements(rootNode, 0, datatypeNode.getOffset(),
 				false);
@@ -65,7 +64,7 @@ public class ContentAssistContextFactory extends ParserBasedContentAssistContext
 	}
 
 	@Override
-	protected void handleLastCompleteNodeIsAtEndOfDatatypeNode() throws BadLocationException {
+	protected void handleLastCompleteNodeIsAtEndOfDatatypeNode() {
 		String prefix = getPrefix(lastCompleteNode);
 		INode previousNode = getLastCompleteNodeByOffset(rootNode, lastCompleteNode.getOffset());
 		EObject previousModel = previousNode.getSemanticElement();
