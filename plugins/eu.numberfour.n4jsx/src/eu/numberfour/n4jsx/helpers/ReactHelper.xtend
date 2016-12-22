@@ -50,8 +50,6 @@ class ReactHelper {
 	public final static String REACT_COMPONENT = "Component";
 	public final static String REACT_ELEMENT = "Element";
 	
-	
-
 	/**
 	 * Lookup React component/element type. For increased efficiency, the found results are cached
 	 *
@@ -63,20 +61,29 @@ class ReactHelper {
 			val IEObjectDescription eod = scope.allElements.findFirst [ e |
 				val classifier = e.EObjectOrProxy;
 				if (classifier instanceof TClassifier) {
-					return reactName == classifier.exportedName &&
-						reactModuleName == classifier.containingModule.qualifiedName.toQualifiedName.lastSegment;
+					// If the found react.Element, react.Component is a proxy, exportedName and containingModule will be null.
+					// That's why we need to resolve the proxy first
+					// TODO: is this too expensive?
+					val resolvedClassifier = 
+						if (classifier.eIsProxy) {
+							EcoreUtil2.resolve(classifier, context.eResource) as TClassifier;
+						} else classifier;
+					return reactName == resolvedClassifier.exportedName &&
+						reactModuleName == resolvedClassifier.containingModule.qualifiedName.toQualifiedName.lastSegment;	
 				}
 				return false;
 			]
-
 			if (eod === null)
 				return null;
-
-			val classifier = eod.EObjectOrProxy;
+			var classifier = eod.EObjectOrProxy;
 			if (classifier.eIsProxy) {
-				EcoreUtil2.resolve(classifier, context.eResource)
+				classifier = EcoreUtil2.resolve(classifier, context.eResource)
+			}			
+			if (classifier.eIsProxy) {
+				return null;
+			} else {
+				return (classifier as TClassifier);	
 			}
-			return classifier as TClassifier;
 		])
 	}
 	
