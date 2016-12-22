@@ -456,13 +456,13 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	
 	
 	/**
-	 * From the actual (outer) return type of a generator function (or method), which is
-	 * {@code Generator<TYield,TReturn,TNext>}, the type TNext is returned.
+	 * From any expression within a generator function or method, the type TNext is returned (referring to the
+	 * actual (outer) return type, which is {@code Generator<TYield,TReturn,TNext>}).
 	 */
-	def TypeRef getTNextOfGeneratorReturnType(RuleEnvironment G, YieldExpression yieldExpr) {
-		val funDef = EcoreUtil2.getContainerOfType(yieldExpr?.eContainer, FunctionDefinition);
+	def TypeRef getActualGeneratorReturnType(RuleEnvironment G, Expression expr) {
+		val funDef = EcoreUtil2.getContainerOfType(expr?.eContainer, FunctionDefinition);
 		val G2 = G.wrap;
-		val myThisTypeRef = ts.thisTypeRef(G, yieldExpr).value;
+		val myThisTypeRef = ts.thisTypeRef(G, expr).value;
 		G2.addThisType(myThisTypeRef); // takes the real-this type even if it is a type{this} reference.
 
 		if (funDef === null || !funDef.isGenerator) 
@@ -473,11 +473,21 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 			val actualReturnTypeRef = tFun.returnTypeRef;
 			val scope = G.getPredefinedTypes().builtInTypeScope;
 			if (TypeUtils.isGenerator(actualReturnTypeRef, scope)) {
-				val nextTypeArg = actualReturnTypeRef.typeArgs.get(2);
-				val nextTypeRef = ts.upperBound(G, nextTypeArg).value; // take upper bound to get rid of Wildcard, etc.
-				return nextTypeRef;
+				return actualReturnTypeRef;
 			}
 		}
 		return TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
+	}
+	
+	def TypeRef getGeneratorTReturn(RuleEnvironment G, TypeRef generatorTypeRef) {
+		val nextTypeArg = generatorTypeRef.typeArgs.get(1);
+		val nextTypeRef = ts.upperBound(G, nextTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+		return nextTypeRef;
+	}
+	
+	def TypeRef getGeneratorTNext(RuleEnvironment G, TypeRef generatorTypeRef) {
+		val nextTypeArg = generatorTypeRef.typeArgs.get(2);
+		val nextTypeRef = ts.upperBound(G, nextTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+		return nextTypeRef;
 	}
 }

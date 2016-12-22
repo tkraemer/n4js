@@ -569,7 +569,21 @@ from  {
 rule typeYieldExpression
 	G |- YieldExpression y : TypeRef T
 from {
-	T = typeSystemHelper.getTNextOfGeneratorReturnType(G, y);
+	if (y.isMany()) {
+		val yieldValue = y.getExpression();
+		if (yieldValue instanceof ParameterizedCallExpression) {
+			G |- yieldValue.target : var TypeRef targetTypeRef;
+			if (targetTypeRef instanceof FunctionTypeRef) {
+				val returnTypeRef = targetTypeRef.getReturnTypeRef();
+				T = typeSystemHelper.getGeneratorTReturn(G, returnTypeRef);
+			}
+		}
+	} else {
+		val actualGenTypeRef = typeSystemHelper.getActualGeneratorReturnType(G, y);
+		if (actualGenTypeRef !== null) {
+			T = typeSystemHelper.getGeneratorTNext(G, actualGenTypeRef);
+		}
+	}
 }
 
 
