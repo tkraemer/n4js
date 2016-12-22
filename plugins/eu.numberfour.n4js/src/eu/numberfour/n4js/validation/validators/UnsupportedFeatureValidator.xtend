@@ -215,13 +215,6 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 		return eobj?.declaredName?.expression;
 	}
 
-	def private EStructuralFeature getNameFeature(EObject eobj) {
-		switch(eobj) {
-			IdentifiableElement: TypesPackage.eINSTANCE.identifiableElement_Name
-			default: eobj.eClass.EAllAttributes.filter[name=='name'].head
-		}
-	}
-
 	/**
 	 * Turns off unsupported feature validation for class expressions, invokes given function, and turns validation
 	 * back on (for testing of class expressions).
