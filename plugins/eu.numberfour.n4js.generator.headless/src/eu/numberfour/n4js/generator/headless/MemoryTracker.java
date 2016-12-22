@@ -31,6 +31,11 @@ public class MemoryTracker {
 		this(true, false);
 	}
 
+	/** Tracker will record memory data according to flag. */
+	public MemoryTracker(boolean recordData) {
+		this(recordData, false);
+	}
+
 	/** Flag decides if tracker will record data. Convenience approach, easier then conditionals calls by clients. */
 	public MemoryTracker(boolean recordData, boolean verbose) {
 		this.recordData = recordData;
@@ -127,11 +132,18 @@ public class MemoryTracker {
 		return sb.toString();
 	}
 
-	/** Print to std out current memory usage (no data recording). */
+	/** Utility, print to std out current memory usage (no data recording). */
 	public static void printCurrentMemoryUsage(String label) {
 		System.out.println(String.format("\n| %s | %s |",
 				formatLabelToWidth(" " + label, label.length() + 2),
 				formatMemory(bytesToHuman(getUsedMemory()))));
+	}
+
+	/** Utility, run finalizations and GC. */
+	public static void runGC() {
+		Runtime.getRuntime().runFinalization();
+		Runtime.getRuntime().gc();
+		Thread.yield();
 	}
 
 	private static long getUsedMemory() {

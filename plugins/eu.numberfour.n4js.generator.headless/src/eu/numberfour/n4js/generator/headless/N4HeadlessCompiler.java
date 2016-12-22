@@ -506,7 +506,8 @@ public class N4HeadlessCompiler {
 
 		// Helper to investigate memory usage
 		// MemoryTracker mt = new MemoryTracker(createDebugOutput);
-		MemoryTracker mt = new MemoryTracker(true, true);// IDE-2479
+		boolean doCompileMemoryTracking = false;
+		MemoryTracker mt = new MemoryTracker(doCompileMemoryTracking, false);// IDE-2479
 		for (MarkedProject mp : sortedProjects) {
 			mt.startSeries("compile project " + mp.project.getProjectId());
 
@@ -601,9 +602,7 @@ public class N4HeadlessCompiler {
 						 */
 						mt.addSeriesPoint("before GC");
 						Stopwatch cs2 = Stopwatch.createStarted();
-						Runtime.getRuntime().runFinalization();
-						Runtime.getRuntime().gc();
-						Thread.yield();
+						MemoryTracker.runGC();
 						mt.addSeriesPoint("after GC ( " + cs2.stop().toString() + " )");
 					}
 				}
@@ -613,7 +612,9 @@ public class N4HeadlessCompiler {
 
 		// IDE-2479
 		// if (createDebugOutput)
-		System.out.println(mt.dataTable());
+		// System.out.println("\n\n" + mt.dataTable());
+		if (doCompileMemoryTracking)
+			System.out.println("\n\n" + mt.dataTable());
 
 		rec.dumpToLogfile(logFile);
 
@@ -777,7 +778,7 @@ public class N4HeadlessCompiler {
 		mt.addSeriesPoint("after collect ( " + cs.stop().toString() + " )");
 		mt.addSeriesPoint("before index ");
 		Stopwatch xs = Stopwatch.createStarted();
-		installIndex(resSet, markedProject.project.getManifestLocation());
+		installIndex(resSet, markedProject.project.getManifestLocation(), mt, markedProject.project.getProjectId());
 		mt.addSeriesPoint("after index ( " + xs.stop().toString() + " )");
 		// Load each file into memory.
 		mt.addSeriesPoint("before load ");
@@ -852,34 +853,51 @@ public class N4HeadlessCompiler {
 	/**
 	 * TODO try to reuse code from IN4JSCore.createResourceSet
 	 */
-	private void installIndex(ResourceSet resourceSet, Optional<URI> manifestUri) {
+	private void installIndex(ResourceSet resourceSet, Optional<URI> manifestUri, MemoryTracker mt, String label) {
 		// Fill index
 		ResourceDescriptionsData index = new OrderedResourceDescriptionsData(
 				Collections.<IResourceDescription> emptyList());
 		List<Resource> resources = Lists.newArrayList(resourceSet.getResources());
+		mt.addSeriesPoint("before indexing ");
+		Stopwatch is = Stopwatch.createStarted();
+
+		// toggle to track memory on indexing
+		// amount of output produced is proportional to number of resources
+		// (i.e. a lot)
+		boolean doIndexTracking = false;
+		MemoryTracker innerMT = new MemoryTracker(doIndexTracking, false);
+		innerMT.startSeries(label + " : index " + resources.size() + " files");
 		for (Resource resource : resources) {
-			index(resource, index);
+			index(resource, index, innerMT);
 		}
+		mt.addSeriesPoint("after indexing ( " + is.stop().toString() + " )");
 
 		// Create index for N4 manifest as well. Index artifact names among project types and library dependencies.
 		if (manifestUri.isPresent()) {
 			final Resource manifestResource = resourceSet.getResource(manifestUri.get(), true);
 			if (null != manifestResource) {
-				index(manifestResource, index);
+				index(manifestResource, index, innerMT);
 			}
 		}
+
+		if (doIndexTracking)
+			System.out.println("\n\n" + innerMT.dataTable() + "\n\n");
 
 		Adapter existing = EcoreUtil.getAdapter(resourceSet.eAdapters(), ResourceDescriptionsData.class);
 		if (existing != null) {
 			resourceSet.eAdapters().remove(existing);
 		}
+		mt.addSeriesPoint("before installing ");
+		Stopwatch iis = Stopwatch.createStarted();
 		ResourceDescriptionsData.ResourceSetAdapter.installResourceDescriptionsData(resourceSet, index);
+		mt.addSeriesPoint("after installing ( " + iis.stop().toString() + " )");
 	}
 
 	/**
 	 * Installing the ResourceDescription of a resource into the index. Raw JS-files will not be indexed.
+	 *
 	 */
-	private void index(Resource resource, ResourceDescriptionsData index) {
+	private void index(Resource resource, ResourceDescriptionsData index, MemoryTracker innerMT) {
 
 		final URI uri = resource.getURI();
 
@@ -893,8 +911,12 @@ public class N4HeadlessCompiler {
 		IResourceServiceProvider serviceProvider = IResourceServiceProvider.Registry.INSTANCE
 				.getResourceServiceProvider(uri);
 		if (serviceProvider != null) {
-			IResourceDescription resourceDescription = serviceProvider.getResourceDescriptionManager()
-					.getResourceDescription(resource);
+			innerMT.addSeriesPoint("before DescriptionManager ");
+			Stopwatch iis = Stopwatch.createStarted();
+			IResourceDescription.Manager resourceDescriptionManager = serviceProvider.getResourceDescriptionManager();
+			IResourceDescription resourceDescription = resourceDescriptionManager.getResourceDescription(resource);
+
+			innerMT.addSeriesPoint("after DescriptionManager ( " + iis.stop().toString() + " )");
 			if (resourceDescription != null) {
 				if (createDebugOutput) {
 					println("Adding resource description for resource '" + uri + "' to index.");
@@ -1014,14 +1036,23 @@ public class N4HeadlessCompiler {
 		if (createDebugOutput) {
 			println("# unloading " + markedProject.project);
 		}
+		boolean doUnloadingTracking = false;
+		MemoryTracker innerMT = new MemoryTracker(doUnloadingTracking, false);
+		innerMT.startSeries("unloading " + markedProject.project.getProjectId());
+
 		rec.markStartUnloading(markedProject);
 		// Clean resourceSet ?
 		for (Resource res : markedProject.resources) {
 			rec.markUnloadingOf(res);
+			innerMT.addSeriesPoint("before unloading " + res.getURI().lastSegment());
+			Stopwatch iis = Stopwatch.createStarted();
 			res.unload();
+			innerMT.addSeriesPoint("after unloading ( " + iis.stop().toString() + " )");
 		}
 		rec.markFinishedUnloading(markedProject);
 
+		if (doUnloadingTracking)
+			System.out.println("\n\n" + innerMT.dataTable());
 	}
 
 	/**

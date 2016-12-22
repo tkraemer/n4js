@@ -344,7 +344,7 @@ public class N4jsc {
 	 * @throws ExitCodeException
 	 *             in case of errors.
 	 */
-	void doMain(String[] args) throws ExitCodeException {
+	public void doMain(String[] args) throws ExitCodeException {
 		try {
 
 			CmdLineParser parser = new CmdLineParser(this);
@@ -1281,7 +1281,7 @@ public class N4jsc {
 	 * Class Wrapping the information to shutdown VM in error-case. Remember to do user-output before throwing an
 	 * instance of this class.
 	 */
-	protected static class ExitCodeException extends Exception {
+	public static class ExitCodeException extends Exception {
 
 		private int exitCode = 0;
 
