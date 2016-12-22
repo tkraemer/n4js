@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"RectanglesTest.js",
+"lineCount":399,
+"mappings":"A;;;EAUA,yD;;MAAQ,M;EACF,+BAKU,MALV,EAK0B,KAL1B;iBACe,CADf;gBAEc,CAFd;eAGa,CAHb;mBAIkB,KAJlB;GAME,cAAc,MAAd,CANF;GAOE,aAAa,KAAb,CAPF;GAQE,YAAY,SAAS,KAArB,CARF;I;EAeN;;;;;;;I;;;;;KAhBQ,+G;;;;IACF;;qCAUqB;;QACnB,gBAAoC,IAApC,CADmB;;OAVrB;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;O;IAec;;4CAgBC;OACb,mBAAmB,EAAnB,CADa;OAhBD;;;uCAqBJ;OACR,aAAa;QAAC,OAAD;QAAU,OAAV;QAAmB,OAAnB;QAAb,CADQ;OArBI;;;gDA0BK;OACjB,mBAAmB,IAAnB,CADiB;OA1BL;;;uCA+BJ;OACR,aAAa,IAAb,CADQ;OA/BI;;;4DAoCiB;OAC7B,yBAAyB,gBAAzB,EAA2C,uCAA3C,EAD6B;OAE7B,mBAAmB,IAAI,SAAJ,CAAc,WAAd,EAA2B,UAA3B,CAAnB,CAF6B;OAG7B,YAAY,cAAc,UAA1B,CAH6B;OApCjB;;;0DA2CqB;;QACjC,IAAI,CAAC,yBAAL;SACI,OAAM,0BAAN,EADJ;SADiC;QAIjC,mBAAmB,IAAnB,CAJiC;;OA3CrB;;;uCAmDL;OACP,cAAc,yBAAyB,CAAvC,EACc,+BADd,EADO;OAnDK;;;gDAyDI;OAChB,mBAAmB,qBAAnB,EAA0C,SAA1C,EACmB,yCADnB,EADgB;OAzDJ;;;qDAgEgB;;QAC5B,eAAe,yBAAf,EACI,yCADJ,EAD4B;QAG5B,OAAM,0BAAN,EAH4B;QAI5B,cAAc,yBAAd,EACI,kCADJ,EAJ4B;;OAhEhB;;;yCAwEF;OACV,iBAAiB,UAAjB,EAA6B;QAAC,OAAD;QAAU,OAAV;QAAmB,OAAnB;QAA7B,EACiB,8BADjB,EADU;OAxEE;;;;;;;;;;;;;;;;;;;;;;;;;;;;+CAEkB;OAC9B,OAAO;QAAC;SAAC,CAAD;SAAI,CAAJ;SAAD;QAAS;SAAC,CAAD;SAAI,CAAJ;SAAT;QAAiB;SAAC,IAAD;SAAO,CAAP;SAAjB;QAAP,CAD8B;OAFlB;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+"sources":["/sources/eu.numberfour.mangelhaft.test/n4/mangel/test/RectanglesTest.n4js"],
+"names":[]
+}

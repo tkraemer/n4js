@@ -15,19 +15,23 @@
 		DIComponentMeta = {};
 		$n4Export('DIComponentMeta', DIComponentMeta);
 		hasDIMeta = function hasDIMeta(type) {
-			return typeof (type)[DI_PROP_NAME] === typeof {};
+			let typeObj = type;
+			return typeof typeObj[DI_PROP_NAME] === typeof {};
 		};
 		$n4Export('hasDIMeta', hasDIMeta);
 		getInjectedClassMeta = function getInjectedClassMeta(type) {
-			return (type)[DI_PROP_NAME];
+			let typeObj = type;
+			return typeObj[DI_PROP_NAME];
 		};
 		$n4Export('getInjectedClassMeta', getInjectedClassMeta);
 		getBinderMeta = function getBinderMeta(type) {
-			return (type)[DI_PROP_NAME];
+			let typeObj = type;
+			return typeObj[DI_PROP_NAME];
 		};
 		$n4Export('getBinderMeta', getBinderMeta);
 		getDIComponentMeta = function getDIComponentMeta(type) {
-			return (type)[DI_PROP_NAME];
+			let typeObj = type;
+			return typeObj[DI_PROP_NAME];
 		};
 		$n4Export('getDIComponentMeta', getDIComponentMeta);
 		_$ = function _$(fn) {
@@ -368,7 +372,7 @@
 					});
 					return metaClass;
 				});
-				$makeClass(_$, Object, [], {
+				$makeClass(_$, N4Object, [], {
 					get: {
 						value: function get___n4() {
 							return this.fn();
@@ -469,7 +473,7 @@
 						fieldsInjectedTypes: []
 					}
 				});
-				$makeClass(N4Injector, Object, [], {
+				$makeClass(N4Injector, N4Object, [], {
 					create: {
 						value: function create___n4(ctor) {
 							let cachedInstances = new Map();
@@ -708,7 +712,8 @@
 								meta.fieldsInjectedTypes.forEach((function(f) {
 									if (!usedNames.has(f.name)) {
 										usedNames.add(f.name);
-										(instance)[f.name] = delegate.createFromInjectedTypeMeta(f, delegate, new Map(cachedInstances));
+										let instanceObj = instance;
+										instanceObj[f.name] = delegate.createFromInjectedTypeMeta(f, delegate, new Map(cachedInstances));
 									}
 								}).bind(this));
 								if (meta.superType) {
@@ -722,7 +727,8 @@
 							let params = info.args.map((function(e) {
 								return this.createFromInjectedTypeMeta(e, delegate, cachedInstances);
 							}).bind(this));
-							return ((binder)[info.name]).apply(binder, params);
+							let binderObj = binder;
+							return (binderObj[info.name]).apply(binder, params);
 						}
 					},
 					createAnonymousProvider: {

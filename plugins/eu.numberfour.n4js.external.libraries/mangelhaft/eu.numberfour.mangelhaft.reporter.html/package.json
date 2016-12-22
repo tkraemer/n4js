@@ -1,0 +1,15 @@
+{
+  "author": "NumberFour AG <npm@numberfour.eu>",
+  "private": true,
+  "license": "EPL-1.0",
+  "repository": "https://github.com/NumberFour/n4js",
+  "description": "A mangelhaft HTML reporter for reporting tests in the browser.",
+  "keywords": [
+    "n4js",
+    "testing",
+    "mangelhaft"
+  ],
+  "engines": {
+    "node": ">= 5.0.0"
+  }
+}

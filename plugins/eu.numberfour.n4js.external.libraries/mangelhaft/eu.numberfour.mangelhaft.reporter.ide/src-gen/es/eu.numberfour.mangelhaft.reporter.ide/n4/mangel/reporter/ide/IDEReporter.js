@@ -35,7 +35,7 @@
 				}
 			],
 			execute: function() {
-				$makeClass(IDEReporter, Object, [
+				$makeClass(IDEReporter, N4Object, [
 					ITestReporter
 				], {
 					send: {
@@ -49,11 +49,11 @@
 										}
 										return value;
 									}).bind(this), 2);
-									ret = (yield this.fetch.call(null, this.endpoint + uri, {
+									ret = (yield Promise.resolve(this.fetch.call(null, this.endpoint + uri, {
 										method: method,
 										headers: headers,
 										body: bodyStr
-									}));
+									})));
 								} catch(er) {
 									let err = er;
 									console.error(err);
@@ -102,7 +102,7 @@
 										if (!sessionId) {
 											throw new Error("Test start sent before session start");
 										}
-										let response = (yield that.send([
+										(yield that.send([
 											"/n4.ide/testing/sessions",
 											sessionId,
 											"tests",
@@ -129,7 +129,7 @@
 										if (!sessionId) {
 											throw new Error("Test end sent outside active session");
 										}
-										let response = (yield that.send([
+										(yield that.send([
 											"/n4.ide/testing/sessions",
 											sessionId,
 											"tests",

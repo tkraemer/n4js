@@ -19,7 +19,3 @@ Sources {
         "src/n4js"
     }
 }
-
-RequiredRuntimeLibraries {
-    n4js-runtime-es2015
-}

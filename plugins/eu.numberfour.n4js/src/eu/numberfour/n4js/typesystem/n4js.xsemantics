@@ -569,7 +569,7 @@ from  {
 rule typeYieldExpression
 	G |- YieldExpression y : TypeRef T
 from {
-	T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef // yield is unsupported, at the moment
+	T = typeSystemHelper.getTNextOfGeneratorReturnType(G, y);
 }
 
 
@@ -2180,6 +2180,14 @@ rule expectedTypeInReturnStatement
 	G |- ReturnStatement stmt |> Expression expression : TypeRef T
 from {
 	T = typeSystemHelper.getExpectedTypeOfReturnValueExpression(G, expression);
+}
+
+
+/* @see [N4JS] 6.3.1. Generator Functions */
+rule expectedTypeInYieldStatement
+	G |- YieldExpression yieldExpr |> Expression expression : TypeRef T
+from {
+	T = typeSystemHelper.getExpectedTypeOfYieldValueExpression(G, yieldExpr, expression);
 }
 
 /*

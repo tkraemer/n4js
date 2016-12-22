@@ -38,7 +38,7 @@
 				}
 			],
 			execute: function() {
-				$makeClass(IDENodeTestRunner, Object, [], {
+				$makeClass(IDENodeTestRunner, N4Object, [], {
 					run: {
 						value: function run___n4() {
 							return $spawn(function*() {
@@ -58,7 +58,7 @@
 									this.controller.reporters = [
 										this.reporter
 									];
-									let groupResults = (yield this.controller.runGroups(testCatalog, 100));
+									(yield this.controller.runGroups(testCatalog, 100));
 								} catch(err) {
 									let errObj = err;
 									console.error(err + "\nstack: " + errObj.stack.replace(/^Error:?\s*/, ""));
@@ -129,7 +129,7 @@
 						]
 					}
 				});
-				$makeClass(TestBinder, Object, [], {}, {}, function(instanceProto, staticProto) {
+				$makeClass(TestBinder, N4Object, [], {}, {}, function(instanceProto, staticProto) {
 					var metaClass = new N4Class({
 						name: 'TestBinder',
 						origin: 'eu.numberfour.mangelhaft.runner.ide',
@@ -177,7 +177,7 @@
 						fieldsInjectedTypes: []
 					}
 				});
-				$makeClass(Root, Object, [], {
+				$makeClass(Root, N4Object, [], {
 					runner: {
 						value: undefined,
 						writable: true

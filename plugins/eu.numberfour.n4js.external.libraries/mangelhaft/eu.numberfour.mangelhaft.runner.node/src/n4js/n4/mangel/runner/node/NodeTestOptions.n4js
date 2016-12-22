@@ -63,6 +63,11 @@ export default public class ~NodeTestOptions extends XUnitReportSpec {
      * Debug output.
      */
     public debug: boolean;
+
+    /**
+     * Attach V8 Inspector with --debug-brk.
+     */
+    public inspect: int;
 }
 
 /* -*- mode: typescript;-*- */

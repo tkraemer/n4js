@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"DIAncestorTest.js",
+"lineCount":157,
+"mappings":"A;;;EAUA,4D;EACA,gC;;MADQ,K,EACA,U;EACR,2BAEgB,aAFhB,K;;EAOA;;I;;EAMM;;I;EAKN,4C;;;;;KApBQ,qH;;;KACA,+E;;;;IACY;;;;;;;;;;;;;;;;;;;;;;;;O;;;;;;;;;;;;;;;IAOA;;;;;;;;;;;;O;;;;;;;IAMd;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;O;;;;;;;;;;;;IAKc;;uCAEJ;OACR,cAAc,WAAd,SAAkC,WAAlC,EADQ;OAFI;;;;;;;;;;;;;;;;;;;;;;",
+"sources":["/sources/eu.numberfour.mangelhaft.test/n4/mangel/test/DIAncestorTest.n4js"],
+"names":[]
+}

@@ -13,7 +13,7 @@
 		return {
 			setters: [],
 			execute: function() {
-				$makeClass(TestInfo, Object, [], {
+				$makeClass(TestInfo, N4Object, [], {
 					origin: {
 						value: undefined,
 						writable: true

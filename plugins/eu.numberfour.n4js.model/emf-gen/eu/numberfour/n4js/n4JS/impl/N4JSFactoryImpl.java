@@ -219,6 +219,10 @@ public class N4JSFactoryImpl extends EFactoryImpl implements N4JSFactory {
 				return createAssignmentOperatorFromString(eDataType, initialValue);
 			case N4JSPackage.N4_MODIFIER:
 				return createN4ModifierFromString(eDataType, initialValue);
+			case N4JSPackage.ITERATOR_OF_EXPRESSION:
+				return createIteratorOfExpressionFromString(eDataType, initialValue);
+			case N4JSPackage.ITERATOR_OF_YIELD_EXPRESSION:
+				return createIteratorOfYieldExpressionFromString(eDataType, initialValue);
 			case N4JSPackage.ITERATOR_OF_STATEMENT:
 				return createIteratorOfStatementFromString(eDataType, initialValue);
 			case N4JSPackage.ITERATOR_OF_RETURN_STATEMENT:
@@ -262,6 +266,10 @@ public class N4JSFactoryImpl extends EFactoryImpl implements N4JSFactory {
 				return convertAssignmentOperatorToString(eDataType, instanceValue);
 			case N4JSPackage.N4_MODIFIER:
 				return convertN4ModifierToString(eDataType, instanceValue);
+			case N4JSPackage.ITERATOR_OF_EXPRESSION:
+				return convertIteratorOfExpressionToString(eDataType, instanceValue);
+			case N4JSPackage.ITERATOR_OF_YIELD_EXPRESSION:
+				return convertIteratorOfYieldExpressionToString(eDataType, instanceValue);
 			case N4JSPackage.ITERATOR_OF_STATEMENT:
 				return convertIteratorOfStatementToString(eDataType, instanceValue);
 			case N4JSPackage.ITERATOR_OF_RETURN_STATEMENT:
@@ -1689,6 +1697,44 @@ public class N4JSFactoryImpl extends EFactoryImpl implements N4JSFactory {
 	 */
 	public String convertN4ModifierToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	public Iterator<Expression> createIteratorOfExpressionFromString(EDataType eDataType, String initialValue) {
+		return (Iterator<Expression>)super.createFromString(initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertIteratorOfExpressionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	public Iterator<YieldExpression> createIteratorOfYieldExpressionFromString(EDataType eDataType, String initialValue) {
+		return (Iterator<YieldExpression>)super.createFromString(initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertIteratorOfYieldExpressionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(instanceValue);
 	}
 
 	/**

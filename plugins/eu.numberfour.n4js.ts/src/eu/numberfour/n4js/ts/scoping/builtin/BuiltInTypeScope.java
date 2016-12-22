@@ -162,6 +162,11 @@ public final class BuiltInTypeScope extends EnumerableScope {
 	public static final QualifiedName QN_ITERABLE = QualifiedName.create("Iterable");
 
 	/**
+	 * The built-in name {@code Generator}
+	 */
+	public static final QualifiedName QN_GENERATOR = QualifiedName.create("Generator");
+
+	/**
 	 * The built-in name {@code Promise}
 	 */
 	public static final QualifiedName QN_PROMISE = QualifiedName.create("Promise");
@@ -366,6 +371,13 @@ public final class BuiltInTypeScope extends EnumerableScope {
 	 */
 	public final TInterface getIterableType() {
 		return getEObjectOrProxy(QN_ITERABLE);
+	}
+
+	/**
+	 * Returns the built-in type "Generator".
+	 */
+	public final TInterface getGeneratorType() {
+		return getEObjectOrProxy(QN_GENERATOR);
 	}
 
 	/**
