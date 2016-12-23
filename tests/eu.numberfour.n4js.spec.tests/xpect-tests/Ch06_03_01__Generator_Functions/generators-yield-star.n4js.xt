@@ -8,9 +8,8 @@ function * g3a() {
 }
 
 function * g3b() {
-// err
-// yield has return of type any, error case
-// XPECT errors --> "any is not a subtype of string." at "yield * g3b()"
+// yield has return of type undefined, warning case
+// XPECT warnings --> "The type of this expression is undefined, so it will never evaluate to a value other than undefined." at "yield * g3b()"
 	let x : string = yield * g3b(); 
 	x;
 }
@@ -22,9 +21,9 @@ function * g3c() : Generator<?,?,int> {
 	x;
 }
 
-// yield* has return of type TNext
-// XPECT noerrors
 function * g4() : Generator<?,?,string>{
+// yield* has return of type any, error case
+// XPECT errors --> "any is not a subtype of string." at "yield * g4()"
 	let x : string = yield * g4(); 
 	x;
 }
@@ -39,7 +38,7 @@ function g5() {
 --- */
 	yield *;
 }
- 
+
 // yield * may not have a return value
 // XPECT noerrors
 function * g6() {
@@ -56,4 +55,32 @@ function * g7() : int {
 // XPECT noerrors
 function * g8() : Generator<int, ?, ?> {
 	yield  * g7();
+}
+
+function *g9a(): Generator<string,string,any> {}
+function *g9b() {
+    // XPECT noerrors -->
+    let x: string = yield* g9a();
+    x;
+}
+
+function *it0() {
+    // XPECT FIXME noerrors --> "Array<string> is not a subtype of Generator<? extends any,any,? super any>."
+    yield* (["a", "b", "c"]);
+}
+
+function *it1() : string {
+    // XPECT FIXME noerrors --> "Array<string> is not a subtype of Generator<? extends any,any,? super any>."
+    yield* (["a", "b", "c"]);
+}
+
+function *it2() : Generator<string,int,boolean> {
+    // XPECT FIXME noerrors --> "Array<string> is not a subtype of Generator<? extends any,any,? super any>."
+    yield* (["a", "b", "c"]);
+}
+
+function *it3() {
+    // XPECT FIXME noerrors --> "Array<string> is not a subtype of Generator<? extends any,any,? super any>."
+    let x = yield* (["a", "b", "c"]);
+    x;
 }

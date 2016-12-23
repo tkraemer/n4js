@@ -479,15 +479,42 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		return TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
 	}
 	
-	def TypeRef getGeneratorTReturn(RuleEnvironment G, TypeRef generatorTypeRef) {
-		val nextTypeArg = generatorTypeRef.typeArgs.get(1);
-		val nextTypeRef = ts.upperBound(G, nextTypeArg).value; // take upper bound to get rid of Wildcard, etc.
-		return nextTypeRef;
+	/**
+	 * Given a {@link TypeRef} to a {@code Generator<TYield,TReturn,TNext>} class, this method returns TYield, if existent.
+	 */
+	def TypeRef getGeneratorTYield(RuleEnvironment G, TypeRef generatorTypeRef) {
+		var TypeRef yieldTypeRef = null;
+		if (generatorTypeRef.typeArgs.length === 3) {
+			val yieldTypeArg = generatorTypeRef.typeArgs.get(0);
+			if (yieldTypeArg !== null)
+				yieldTypeRef = ts.upperBound(G, yieldTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+		}
+		return yieldTypeRef;
 	}
 	
+	/**
+	 * Given a {@link TypeRef} to a {@code Generator<TYield,TReturn,TNext>} class, this method returns TReturn, if existent.
+	 */
+	def TypeRef getGeneratorTReturn(RuleEnvironment G, TypeRef generatorTypeRef) {
+		var TypeRef returnTypeRef = null;
+		if (generatorTypeRef.typeArgs.length === 3) {
+			val returnTypeArg = generatorTypeRef.typeArgs.get(1);
+			if (returnTypeArg !== null)
+				returnTypeRef = ts.upperBound(G, returnTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+		}
+		return returnTypeRef;
+	}
+	
+	/**
+	 * Given a {@link TypeRef} to a {@code Generator<TYield,TReturn,TNext>} class, this method returns TNext, if existent.
+	 */
 	def TypeRef getGeneratorTNext(RuleEnvironment G, TypeRef generatorTypeRef) {
-		val nextTypeArg = generatorTypeRef.typeArgs.get(2);
-		val nextTypeRef = ts.upperBound(G, nextTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+		var TypeRef nextTypeRef = null;
+		if (generatorTypeRef.typeArgs.length === 3) {
+			val nextTypeArg = generatorTypeRef.typeArgs.get(2);
+			if (nextTypeArg !== null)
+				nextTypeRef = ts.upperBound(G, nextTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+		}
 		return nextTypeRef;
 	}
 }

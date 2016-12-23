@@ -2001,6 +2001,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleTypeYieldExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final YieldExpression y) throws RuleFailedException {
     TypeRef T = null; // output parameter
+    TypeRef t = null;
     boolean _isMany = y.isMany();
     if (_isMany) {
       final Expression yieldValue = y.getExpression();
@@ -2015,16 +2016,22 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         if ((targetTypeRef instanceof FunctionTypeRef)) {
           final TypeRef returnTypeRef = ((FunctionTypeRef)targetTypeRef).getReturnTypeRef();
           TypeRef _generatorTReturn = this.typeSystemHelper.getGeneratorTReturn(G, returnTypeRef);
-          T = _generatorTReturn;
+          t = _generatorTReturn;
         }
       }
     } else {
       final TypeRef actualGenTypeRef = this.typeSystemHelper.getActualGeneratorReturnType(G, y);
       if ((actualGenTypeRef != null)) {
         TypeRef _generatorTNext = this.typeSystemHelper.getGeneratorTNext(G, actualGenTypeRef);
-        T = _generatorTNext;
+        t = _generatorTNext;
       }
     }
+    boolean _equals = Objects.equal(t, null);
+    if (_equals) {
+      ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
+      t = _anyTypeRef;
+    }
+    T = t;
     return new Result<TypeRef>(T);
   }
   
