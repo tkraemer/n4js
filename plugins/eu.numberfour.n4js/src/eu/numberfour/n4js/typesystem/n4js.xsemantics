@@ -572,11 +572,15 @@ from {
 	var TypeRef t;
 	if (y.isMany()) {
 		val yieldValue = y.getExpression();
-		if (yieldValue instanceof ParameterizedCallExpression) {
-			G |- yieldValue.target : var TypeRef targetTypeRef;
-			if (targetTypeRef instanceof FunctionTypeRef) {
-				val returnTypeRef = targetTypeRef.getReturnTypeRef();
-				t = typeSystemHelper.getGeneratorTReturn(G, returnTypeRef);
+		G |- yieldValue : var TypeRef yieldValueTypeRef;
+		val scope = G.getPredefinedTypes().builtInTypeScope;
+		if (TypeUtils.isGenerator(yieldValueTypeRef, scope)) {
+			t = typeSystemHelper.getGeneratorTReturn(G, yieldValueTypeRef);
+		} else {
+			val itTypeRef = G.iterableTypeRef(TypeUtils.createWildcard);
+			val isIterable = {G |- yieldValueTypeRef <: itTypeRef};
+			if (isIterable) {
+				t = typeSystemHelper.getIterableTypeArg(G, yieldValueTypeRef);
 			}
 		}
 	} else {
@@ -2207,7 +2211,8 @@ from {
 rule expectedTypeInYieldStatement
 	G |- YieldExpression yieldExpr |> Expression expression : TypeRef T
 from {
-	T = typeSystemHelper.getExpectedTypeOfYieldValueExpression(G, yieldExpr, expression);
+	G |- expression : var TypeRef exprTypeRef;
+	T = typeSystemHelper.getExpectedTypeOfYieldValueExpression(G, yieldExpr, exprTypeRef);
 }
 
 /*

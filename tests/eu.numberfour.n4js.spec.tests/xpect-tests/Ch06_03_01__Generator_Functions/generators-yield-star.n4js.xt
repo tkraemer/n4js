@@ -65,22 +65,45 @@ function *g9b() {
 }
 
 function *it0() {
-    // XPECT FIXME noerrors --> "Array<string> is not a subtype of Generator<? extends any,any,? super any>."
+    // XPECT noerrors --> "Array<string> is not a subtype of Generator<? extends any,any,? super any>."
     yield* (["a", "b", "c"]);
 }
 
 function *it1() : string {
-    // XPECT FIXME noerrors --> "Array<string> is not a subtype of Generator<? extends any,any,? super any>."
+    // XPECT noerrors --> "Array<string> is not a subtype of Generator<? extends any,any,? super any>."
     yield* (["a", "b", "c"]);
 }
 
 function *it2() : Generator<string,int,boolean> {
-    // XPECT FIXME noerrors --> "Array<string> is not a subtype of Generator<? extends any,any,? super any>."
+    // XPECT noerrors --> "Array<string> is not a subtype of Generator<? extends any,any,? super any>."
     yield* (["a", "b", "c"]);
 }
 
-function *it3() {
-    // XPECT FIXME noerrors --> "Array<string> is not a subtype of Generator<? extends any,any,? super any>."
+function *it3() : Generator<string,int,boolean> {
+    // XPECT errors --> "Array<int> is not a structural subtype of Iterable<string>: #iterator failed: {function():Iterator<int>} is not a subtype of {function():Iterator<string>}." at "([1,2,3])"
+    yield* ([1,2,3]);
+}
+
+function *it4() {
+	// XPECT noerrors --> "Array<string> is not a subtype of Generator<? extends any,any,? super any>."
+	// infer type from iterable object
+	// XPECT type of 'x' --> string
     let x = yield* (["a", "b", "c"]);
     x;
+}
+
+function getIt() : Iterable<string> { return null; }
+function *itTest() : Generator<string,int,boolean> {
+	// infer type from returned iterable object
+	// XPECT type of 'i' --> string
+    let i = yield* getIt();
+    i;
+}
+
+function getGO() : Generator<string,int,boolean> { return null; }
+function *goTest() : Generator<string,int,boolean> {
+	// infer type from returned generator object
+	// XPECT type of 'i' --> int
+    let i = yield* getGO();
+    i;
 }

@@ -81,6 +81,7 @@ import eu.numberfour.n4js.n4JS.VariableBinding;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
 import eu.numberfour.n4js.n4JS.YieldExpression;
 import eu.numberfour.n4js.scoping.members.MemberScopingHelper;
+import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope;
 import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
@@ -135,6 +136,7 @@ import eu.numberfour.n4js.ts.utils.TypeExtensions;
 import eu.numberfour.n4js.ts.utils.TypeHelper;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.typesbuilder.N4JSFunctionDefinitionTypesBuilder;
+import eu.numberfour.n4js.typesystem.PredefinedTypes;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
 import eu.numberfour.n4js.typesystem.StructuralTypingResult;
 import eu.numberfour.n4js.typesystem.TypeSystemErrorExtensions;
@@ -2005,18 +2007,27 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     boolean _isMany = y.isMany();
     if (_isMany) {
       final Expression yieldValue = y.getExpression();
-      if ((yieldValue instanceof ParameterizedCallExpression)) {
-        /* G |- yieldValue.target : var TypeRef targetTypeRef */
-        Expression _target = ((ParameterizedCallExpression)yieldValue).getTarget();
-        TypeRef targetTypeRef = null;
-        Result<TypeRef> result = typeInternal(G, _trace_, _target);
-        checkAssignableTo(result.getFirst(), TypeRef.class);
-        targetTypeRef = (TypeRef) result.getFirst();
-        
-        if ((targetTypeRef instanceof FunctionTypeRef)) {
-          final TypeRef returnTypeRef = ((FunctionTypeRef)targetTypeRef).getReturnTypeRef();
-          TypeRef _generatorTReturn = this.typeSystemHelper.getGeneratorTReturn(G, returnTypeRef);
-          t = _generatorTReturn;
+      /* G |- yieldValue : var TypeRef yieldValueTypeRef */
+      TypeRef yieldValueTypeRef = null;
+      Result<TypeRef> result = typeInternal(G, _trace_, yieldValue);
+      checkAssignableTo(result.getFirst(), TypeRef.class);
+      yieldValueTypeRef = (TypeRef) result.getFirst();
+      
+      PredefinedTypes _predefinedTypes = RuleEnvironmentExtensions.getPredefinedTypes(G);
+      final BuiltInTypeScope scope = _predefinedTypes.builtInTypeScope;
+      boolean _isGenerator = TypeUtils.isGenerator(yieldValueTypeRef, scope);
+      if (_isGenerator) {
+        TypeRef _generatorTReturn = this.typeSystemHelper.getGeneratorTReturn(G, yieldValueTypeRef);
+        t = _generatorTReturn;
+      } else {
+        Wildcard _createWildcard = TypeUtils.createWildcard();
+        final ParameterizedTypeRef itTypeRef = RuleEnvironmentExtensions.iterableTypeRef(G, _createWildcard);
+        /* G |- yieldValueTypeRef <: itTypeRef */
+        boolean _ruleinvocation = subtypeSucceeded(G, _trace_, yieldValueTypeRef, itTypeRef);
+        final boolean isIterable = _ruleinvocation;
+        if (isIterable) {
+          TypeRef _iterableTypeArg = this.typeSystemHelper.getIterableTypeArg(G, yieldValueTypeRef);
+          t = _iterableTypeArg;
         }
       }
     } else {
@@ -5869,7 +5880,13 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleExpectedTypeInYieldStatement(final RuleEnvironment G, final RuleApplicationTrace _trace_, final YieldExpression yieldExpr, final Expression expression) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    TypeRef _expectedTypeOfYieldValueExpression = this.typeSystemHelper.getExpectedTypeOfYieldValueExpression(G, yieldExpr, expression);
+    /* G |- expression : var TypeRef exprTypeRef */
+    TypeRef exprTypeRef = null;
+    Result<TypeRef> result = typeInternal(G, _trace_, expression);
+    checkAssignableTo(result.getFirst(), TypeRef.class);
+    exprTypeRef = (TypeRef) result.getFirst();
+    
+    TypeRef _expectedTypeOfYieldValueExpression = this.typeSystemHelper.getExpectedTypeOfYieldValueExpression(G, yieldExpr, exprTypeRef);
     T = _expectedTypeOfYieldValueExpression;
     return new Result<TypeRef>(T);
   }

@@ -193,8 +193,8 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	}
 
 	/** @see ExpectedTypeComputer#getExpectedTypeOfYieldValueExpression(RuleEnvironment,YieldExpression,Expression) */
-	def TypeRef getExpectedTypeOfYieldValueExpression(RuleEnvironment G, YieldExpression yieldExpr, Expression returnValueExpr) {
-		return expectedTypeCompuer.getExpectedTypeOfYieldValueExpression(G, yieldExpr, returnValueExpr);
+	def TypeRef getExpectedTypeOfYieldValueExpression(RuleEnvironment G, YieldExpression yieldExpr, TypeRef exprTypeRef) {
+		return expectedTypeCompuer.getExpectedTypeOfYieldValueExpression(G, yieldExpr, exprTypeRef);
 	}
 
 
@@ -516,5 +516,18 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 				nextTypeRef = ts.upperBound(G, nextTypeArg).value; // take upper bound to get rid of Wildcard, etc.
 		}
 		return nextTypeRef;
+	}
+	
+	/**
+	 * Given a {@link TypeRef} to an {@code Iterable<T>}, this method returns T, if existent.
+	 */
+	def TypeRef getIterableTypeArg(RuleEnvironment G, TypeRef iterableTypeRef) {
+		var TypeRef typeRef = null;
+		if (iterableTypeRef.typeArgs.length === 1) {
+			val nextTypeArg = iterableTypeRef.typeArgs.get(0);
+			if (nextTypeArg !== null)
+				typeRef = ts.upperBound(G, nextTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+		}
+		return typeRef;
 	}
 }
