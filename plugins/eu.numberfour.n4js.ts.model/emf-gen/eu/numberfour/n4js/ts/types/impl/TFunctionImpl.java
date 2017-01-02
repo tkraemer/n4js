@@ -57,6 +57,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getTypeVars <em>Type Vars</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getDeclaredThisType <em>Declared This Type</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#isDeclaredAsync <em>Declared Async</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#isDeclaredGenerator <em>Declared Generator</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#isConstructor <em>Constructor</em>}</li>
  * </ul>
  *
@@ -152,6 +153,26 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 	 * @ordered
 	 */
 	protected boolean declaredAsync = DECLARED_ASYNC_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isDeclaredGenerator() <em>Declared Generator</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredGenerator()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean DECLARED_GENERATOR_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isDeclaredGenerator() <em>Declared Generator</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDeclaredGenerator()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean declaredGenerator = DECLARED_GENERATOR_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isConstructor() <em>Constructor</em>}' attribute.
@@ -387,6 +408,27 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isDeclaredGenerator() {
+		return declaredGenerator;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDeclaredGenerator(boolean newDeclaredGenerator) {
+		boolean oldDeclaredGenerator = declaredGenerator;
+		declaredGenerator = newDeclaredGenerator;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFUNCTION__DECLARED_GENERATOR, oldDeclaredGenerator, declaredGenerator));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isConstructor() {
 		return constructor;
 	}
@@ -468,6 +510,10 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 			strb.append("async ");
 		}
 		strb.append("function ");
+		boolean _isDeclaredGenerator = this.isDeclaredGenerator();
+		if (_isDeclaredGenerator) {
+			strb.append("* ");
+		}
 		String _name = this.getName();
 		StringBuilder _append_2 = strb.append(_name);
 		StringBuilder _append_3 = _append_2.append("(");
@@ -544,6 +590,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 				return getDeclaredThisType();
 			case TypesPackage.TFUNCTION__DECLARED_ASYNC:
 				return isDeclaredAsync();
+			case TypesPackage.TFUNCTION__DECLARED_GENERATOR:
+				return isDeclaredGenerator();
 			case TypesPackage.TFUNCTION__CONSTRUCTOR:
 				return isConstructor();
 		}
@@ -582,6 +630,9 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 			case TypesPackage.TFUNCTION__DECLARED_ASYNC:
 				setDeclaredAsync((Boolean)newValue);
 				return;
+			case TypesPackage.TFUNCTION__DECLARED_GENERATOR:
+				setDeclaredGenerator((Boolean)newValue);
+				return;
 			case TypesPackage.TFUNCTION__CONSTRUCTOR:
 				setConstructor((Boolean)newValue);
 				return;
@@ -618,6 +669,9 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 			case TypesPackage.TFUNCTION__DECLARED_ASYNC:
 				setDeclaredAsync(DECLARED_ASYNC_EDEFAULT);
 				return;
+			case TypesPackage.TFUNCTION__DECLARED_GENERATOR:
+				setDeclaredGenerator(DECLARED_GENERATOR_EDEFAULT);
+				return;
 			case TypesPackage.TFUNCTION__CONSTRUCTOR:
 				setConstructor(CONSTRUCTOR_EDEFAULT);
 				return;
@@ -647,6 +701,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 				return declaredThisType != null;
 			case TypesPackage.TFUNCTION__DECLARED_ASYNC:
 				return declaredAsync != DECLARED_ASYNC_EDEFAULT;
+			case TypesPackage.TFUNCTION__DECLARED_GENERATOR:
+				return declaredGenerator != DECLARED_GENERATOR_EDEFAULT;
 			case TypesPackage.TFUNCTION__CONSTRUCTOR:
 				return constructor != CONSTRUCTOR_EDEFAULT;
 		}
@@ -740,6 +796,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 		result.append(external);
 		result.append(", declaredAsync: ");
 		result.append(declaredAsync);
+		result.append(", declaredGenerator: ");
+		result.append(declaredGenerator);
 		result.append(", constructor: ");
 		result.append(constructor);
 		result.append(')');
