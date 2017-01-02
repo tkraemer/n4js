@@ -778,14 +778,17 @@ public class N4jsc {
 
 		final Module module = Modules.combine(new N4JSRuntimeModule(), cliTesterModule,
 				new N4JSHeadlessGeneratorModule(properties));
+
 		RegularExpressionStandaloneSetup.doSetup();
 		TypesStandaloneSetup.doSetup();
 		N4MFStandaloneSetup.doSetup();
 		TypeExpressionsStandaloneSetup.doSetup();
-		N4JSXStandaloneSetup.doSetup();
+
 		final Injector injector = Guice.createInjector(module);
 		new N4JSStandaloneSetup().register(injector);
 		injector.injectMembers(this);
+
+		N4JSXStandaloneSetup.doSetupWithoutParentLanguages();
 	}
 
 	/**
