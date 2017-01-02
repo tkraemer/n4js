@@ -97,6 +97,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.utils.io.FileDeleter;
 import eu.numberfour.n4jsx.N4JSXGlobals;
+import eu.numberfour.n4jsx.N4JSXStandaloneSetup;
 
 /**
  * N4JS Compiler.
@@ -781,6 +782,7 @@ public class N4jsc {
 		TypesStandaloneSetup.doSetup();
 		N4MFStandaloneSetup.doSetup();
 		TypeExpressionsStandaloneSetup.doSetup();
+		N4JSXStandaloneSetup.doSetup();
 		final Injector injector = Guice.createInjector(module);
 		new N4JSStandaloneSetup().register(injector);
 		injector.injectMembers(this);
