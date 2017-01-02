@@ -3,15 +3,71 @@
 
 // generator method in object literal
 // XPECT noerrors
-let obj0 = {
-	* g0() {}
+let o1 = {
+	* g() {}
 };
-// XPECT type of 'obj0' --> Generator<undefined,undefined,any>
-obj0;
+// XPECT type of 'o1' --> ~Object with { g(): Generator<undefined,undefined,any> }
+o1;
 
-// XPECT type of 'ol' --> ~Object with { m(): Generator<string,any,any> }
-let ol = {
-    string * m() {}
+// XPECT type of 'o2' --> ~Object with { g(): Generator<string,undefined,any> }
+let o2 = {
+    string g() {}
 };
-// XPECT type of 'ol.m' --> {function(): Generator<string,any,any>}
-ol.m;
+// XPECT warnings at 'o2.g' --> "int is not a subtype of string." at "1"
+let o2g = o2.g;
+// XPECT  type of 'o2g' --> {method(): Generator<string,undefined,any>}
+o2g;
+
+// XPECT type of 'o3' --> ~Object with { g(): Generator<string,any,any> }
+let o3 = {
+    string * g() {	return 1;	}
+};
+o3;
+
+// XPECT type of 'o4' --> ~Object with { g(): Generator<string,undefined,any> }
+let o4 = {
+    string * g() {	yield "1";	}
+};
+o4;
+
+let o5 = {
+    string * g() {
+// XPECT errors at '1' --> "int is not a subtype of string." at "1"
+    	yield 1;
+    }
+};
+o5;
+
+// XPECT type of 'o6' --> ~Object with { g(): Generator<undefined,undefined,any> }
+let o6 = {
+    void * g() {	}
+};
+o6;
+
+// XPECT noerrors
+let o7 = {
+    void * g() {	yield; return; }
+};
+o7;
+
+// XPECT noerrors
+let o8 = {
+    void * g() {	 return undefined; }
+};
+o8;
+
+let o9 = {
+    void * g() {
+// XPECT errors at '1' -->"int is not a subtype of undefined." at "1"
+    	return 1;
+    }
+};
+o9;
+
+let o10 = {
+    void * g() {
+// XPECT errors at '1' -->"int is not a subtype of undefined." at "1"
+    	yield 1;
+    }
+};
+o10;
