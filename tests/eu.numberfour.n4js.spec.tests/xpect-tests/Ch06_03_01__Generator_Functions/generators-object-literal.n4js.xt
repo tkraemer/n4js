@@ -11,11 +11,11 @@ o1;
 
 // XPECT type of 'o2' --> ~Object with { g(): Generator<string,undefined,any> }
 let o2 = {
-    string g() {}
+    string * g() {}
 };
-// XPECT warnings at 'o2.g' --> "int is not a subtype of string." at "1"
+// XPECT warnings at 'o2.g' --> "A reference to method g is created detached from a (correct) this-instance." at "g"
 let o2g = o2.g;
-// XPECT  type of 'o2g' --> {method(): Generator<string,undefined,any>}
+// XPECT FIXME type of 'o2g' --> {method * g1(): Generator<undefined,undefined,any>}
 o2g;
 
 // XPECT type of 'o3' --> ~Object with { g(): Generator<string,any,any> }
