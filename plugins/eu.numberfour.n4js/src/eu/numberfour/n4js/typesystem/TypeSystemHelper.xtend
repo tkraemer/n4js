@@ -55,6 +55,8 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.n4JS.YieldExpression
+import org.eclipse.xtext.EcoreUtil2
 
 /**
  * Utility methods used in the XSemantics type system. Must be injected.
@@ -189,6 +191,12 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	def TypeRef getExpectedTypeOfReturnValueExpression(RuleEnvironment G, Expression returnValueExpr) {
 		return expectedTypeCompuer.getExpectedTypeOfReturnValueExpression(G, returnValueExpr);
 	}
+
+	/** @see ExpectedTypeComputer#getExpectedTypeOfYieldValueExpression(RuleEnvironment,YieldExpression,Expression) */
+	def TypeRef getExpectedTypeOfYieldValueExpression(RuleEnvironment G, YieldExpression yieldExpr, Expression returnValueExpr) {
+		return expectedTypeCompuer.getExpectedTypeOfYieldValueExpression(G, yieldExpr, returnValueExpr);
+	}
+
 
 
 
@@ -444,5 +452,32 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		}
 		
 		return unionTRs
+	}
+	
+	
+	/**
+	 * From the actual (outer) return type of a generator function (or method), which is
+	 * {@code Generator<TYield,TReturn,TNext>}, the type TNext is returned.
+	 */
+	def TypeRef getTNextOfGeneratorReturnType(RuleEnvironment G, YieldExpression yieldExpr) {
+		val funDef = EcoreUtil2.getContainerOfType(yieldExpr?.eContainer, FunctionDefinition);
+		val G2 = G.wrap;
+		val myThisTypeRef = ts.thisTypeRef(G, yieldExpr).value;
+		G2.addThisType(myThisTypeRef); // takes the real-this type even if it is a type{this} reference.
+
+		if (funDef === null || !funDef.isGenerator) 
+			return null; // yields only occur in generator functions
+		
+		val tFun = funDef.definedType;
+		if (tFun instanceof TFunction) {
+			val actualReturnTypeRef = tFun.returnTypeRef;
+			val scope = G.getPredefinedTypes().builtInTypeScope;
+			if (TypeUtils.isGenerator(actualReturnTypeRef, scope)) {
+				val nextTypeArg = actualReturnTypeRef.typeArgs.get(2);
+				val nextTypeRef = ts.upperBound(G, nextTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+				return nextTypeRef;
+			}
+		}
+		return TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
 	}
 }

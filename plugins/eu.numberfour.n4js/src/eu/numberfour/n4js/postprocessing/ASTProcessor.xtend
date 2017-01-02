@@ -299,6 +299,7 @@ public class ASTProcessor extends AbstractProcessor {
 
 		if(node instanceof FunctionDefinition) {
 			handleAsyncFunctionDefinition(G, node, cache);
+			handleGeneratorFunctionDefinition(G, node, cache);
 		}
 
 		typeDeferredProcessor.handleDeferredTypeRefs_preChildren(G, node, cache);

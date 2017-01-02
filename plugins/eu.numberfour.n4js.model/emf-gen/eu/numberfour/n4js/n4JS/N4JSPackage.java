@@ -2869,13 +2869,58 @@ public interface N4JSPackage extends EPackage {
 	int BLOCK___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = STATEMENT_OPERATION_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Get All Expressions</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLOCK___GET_ALL_EXPRESSIONS = STATEMENT_OPERATION_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Get All Yield Expressions</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLOCK___GET_ALL_YIELD_EXPRESSIONS = STATEMENT_OPERATION_COUNT + 3;
+
+	/**
+	 * The operation id for the '<em>Get All Void Yield Expressions</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLOCK___GET_ALL_VOID_YIELD_EXPRESSIONS = STATEMENT_OPERATION_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Get All Non Void Yield Expressions</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLOCK___GET_ALL_NON_VOID_YIELD_EXPRESSIONS = STATEMENT_OPERATION_COUNT + 5;
+
+	/**
+	 * The operation id for the '<em>Has Non Void Yield</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLOCK___HAS_NON_VOID_YIELD = STATEMENT_OPERATION_COUNT + 6;
+
+	/**
 	 * The operation id for the '<em>Get All Statements</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BLOCK___GET_ALL_STATEMENTS = STATEMENT_OPERATION_COUNT + 2;
+	int BLOCK___GET_ALL_STATEMENTS = STATEMENT_OPERATION_COUNT + 7;
 
 	/**
 	 * The operation id for the '<em>Get All Return Statements</em>' operation.
@@ -2884,7 +2929,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BLOCK___GET_ALL_RETURN_STATEMENTS = STATEMENT_OPERATION_COUNT + 3;
+	int BLOCK___GET_ALL_RETURN_STATEMENTS = STATEMENT_OPERATION_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Get All Non Void Return Statements</em>' operation.
@@ -2893,7 +2938,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BLOCK___GET_ALL_NON_VOID_RETURN_STATEMENTS = STATEMENT_OPERATION_COUNT + 4;
+	int BLOCK___GET_ALL_NON_VOID_RETURN_STATEMENTS = STATEMENT_OPERATION_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Get All Void Return Statements</em>' operation.
@@ -2902,7 +2947,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BLOCK___GET_ALL_VOID_RETURN_STATEMENTS = STATEMENT_OPERATION_COUNT + 5;
+	int BLOCK___GET_ALL_VOID_RETURN_STATEMENTS = STATEMENT_OPERATION_COUNT + 10;
 
 	/**
 	 * The operation id for the '<em>Has Non Void Return</em>' operation.
@@ -2911,7 +2956,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BLOCK___HAS_NON_VOID_RETURN = STATEMENT_OPERATION_COUNT + 6;
+	int BLOCK___HAS_NON_VOID_RETURN = STATEMENT_OPERATION_COUNT + 11;
 
 	/**
 	 * The number of operations of the '<em>Block</em>' class.
@@ -2920,7 +2965,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BLOCK_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 7;
+	int BLOCK_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 12;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.VariableDeclarationContainerImpl <em>Variable Declaration Container</em>}' class.
@@ -13551,6 +13596,26 @@ public interface N4JSPackage extends EPackage {
 	int N4_MODIFIER = 170;
 
 	/**
+	 * The meta object id for the '<em>Iterator Of Expression</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.util.Iterator
+	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getIteratorOfExpression()
+	 * @generated
+	 */
+	int ITERATOR_OF_EXPRESSION = 171;
+
+	/**
+	 * The meta object id for the '<em>Iterator Of Yield Expression</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.util.Iterator
+	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getIteratorOfYieldExpression()
+	 * @generated
+	 */
+	int ITERATOR_OF_YIELD_EXPRESSION = 172;
+
+	/**
 	 * The meta object id for the '<em>Iterator Of Statement</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13558,7 +13623,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getIteratorOfStatement()
 	 * @generated
 	 */
-	int ITERATOR_OF_STATEMENT = 171;
+	int ITERATOR_OF_STATEMENT = 173;
 
 	/**
 	 * The meta object id for the '<em>Iterator Of Return Statement</em>' data type.
@@ -13568,7 +13633,7 @@ public interface N4JSPackage extends EPackage {
 	 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getIteratorOfReturnStatement()
 	 * @generated
 	 */
-	int ITERATOR_OF_RETURN_STATEMENT = 172;
+	int ITERATOR_OF_RETURN_STATEMENT = 174;
 
 
 	/**
@@ -14755,6 +14820,56 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getBlock__AppliesOnlyToBlockScopedElements();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.Block#getAllExpressions() <em>Get All Expressions</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get All Expressions</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.Block#getAllExpressions()
+	 * @generated
+	 */
+	EOperation getBlock__GetAllExpressions();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.Block#getAllYieldExpressions() <em>Get All Yield Expressions</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get All Yield Expressions</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.Block#getAllYieldExpressions()
+	 * @generated
+	 */
+	EOperation getBlock__GetAllYieldExpressions();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.Block#getAllVoidYieldExpressions() <em>Get All Void Yield Expressions</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get All Void Yield Expressions</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.Block#getAllVoidYieldExpressions()
+	 * @generated
+	 */
+	EOperation getBlock__GetAllVoidYieldExpressions();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.Block#getAllNonVoidYieldExpressions() <em>Get All Non Void Yield Expressions</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get All Non Void Yield Expressions</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.Block#getAllNonVoidYieldExpressions()
+	 * @generated
+	 */
+	EOperation getBlock__GetAllNonVoidYieldExpressions();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.Block#hasNonVoidYield() <em>Has Non Void Yield</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Has Non Void Yield</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.Block#hasNonVoidYield()
+	 * @generated
+	 */
+	EOperation getBlock__HasNonVoidYield();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.Block#getAllStatements() <em>Get All Statements</em>}' operation.
@@ -18762,6 +18877,28 @@ public interface N4JSPackage extends EPackage {
 	EEnum getN4Modifier();
 
 	/**
+	 * Returns the meta object for data type '{@link java.util.Iterator <em>Iterator Of Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Iterator Of Expression</em>'.
+	 * @see java.util.Iterator
+	 * @model instanceClass="java.util.Iterator<eu.numberfour.n4js.n4JS.Expression>"
+	 * @generated
+	 */
+	EDataType getIteratorOfExpression();
+
+	/**
+	 * Returns the meta object for data type '{@link java.util.Iterator <em>Iterator Of Yield Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Iterator Of Yield Expression</em>'.
+	 * @see java.util.Iterator
+	 * @model instanceClass="java.util.Iterator<eu.numberfour.n4js.n4JS.YieldExpression>"
+	 * @generated
+	 */
+	EDataType getIteratorOfYieldExpression();
+
+	/**
 	 * Returns the meta object for data type '{@link java.util.Iterator <em>Iterator Of Statement</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -19789,6 +19926,46 @@ public interface N4JSPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation BLOCK___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = eINSTANCE.getBlock__AppliesOnlyToBlockScopedElements();
+
+		/**
+		 * The meta object literal for the '<em><b>Get All Expressions</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation BLOCK___GET_ALL_EXPRESSIONS = eINSTANCE.getBlock__GetAllExpressions();
+
+		/**
+		 * The meta object literal for the '<em><b>Get All Yield Expressions</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation BLOCK___GET_ALL_YIELD_EXPRESSIONS = eINSTANCE.getBlock__GetAllYieldExpressions();
+
+		/**
+		 * The meta object literal for the '<em><b>Get All Void Yield Expressions</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation BLOCK___GET_ALL_VOID_YIELD_EXPRESSIONS = eINSTANCE.getBlock__GetAllVoidYieldExpressions();
+
+		/**
+		 * The meta object literal for the '<em><b>Get All Non Void Yield Expressions</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation BLOCK___GET_ALL_NON_VOID_YIELD_EXPRESSIONS = eINSTANCE.getBlock__GetAllNonVoidYieldExpressions();
+
+		/**
+		 * The meta object literal for the '<em><b>Has Non Void Yield</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation BLOCK___HAS_NON_VOID_YIELD = eINSTANCE.getBlock__HasNonVoidYield();
 
 		/**
 		 * The meta object literal for the '<em><b>Get All Statements</b></em>' operation.
@@ -23147,6 +23324,26 @@ public interface N4JSPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum N4_MODIFIER = eINSTANCE.getN4Modifier();
+
+		/**
+		 * The meta object literal for the '<em>Iterator Of Expression</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.util.Iterator
+		 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getIteratorOfExpression()
+		 * @generated
+		 */
+		EDataType ITERATOR_OF_EXPRESSION = eINSTANCE.getIteratorOfExpression();
+
+		/**
+		 * The meta object literal for the '<em>Iterator Of Yield Expression</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.util.Iterator
+		 * @see eu.numberfour.n4js.n4JS.impl.N4JSPackageImpl#getIteratorOfYieldExpression()
+		 * @generated
+		 */
+		EDataType ITERATOR_OF_YIELD_EXPRESSION = eINSTANCE.getIteratorOfYieldExpression();
 
 		/**
 		 * The meta object literal for the '<em>Iterator Of Statement</em>' data type.
