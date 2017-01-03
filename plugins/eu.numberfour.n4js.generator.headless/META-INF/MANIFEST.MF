@@ -10,5 +10,6 @@ Require-Bundle: eu.numberfour.n4js.generator;bundle-version="0.0.1",
  org.eclipse.xtext.generator,
  eu.numberfour.n4js.utils,
  eu.numberfour.n4js,
- eu.numberfour.n4js.environments;bundle-version="0.0.1"
+ eu.numberfour.n4js.environments;bundle-version="0.0.1",
+ eu.numberfour.n4jsx
 Export-Package: eu.numberfour.n4js.generator.headless
