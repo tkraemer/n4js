@@ -108,12 +108,22 @@ public interface TypeDefinitionGitLocationProvider {
 		// TODO: Do NOT forget to change this before merging!
 		TEST_DEFINITION_LOCATION("n4jsd-sandbox", "https://github.com/kduske-n4/n4jsd-sandbox.git");
 
+		private static final String N4JSD_URL_SYSTEM_PROPERTY_PREFIX = "numberfour.n4jsd-repository.url";
+
 		private final String repositoryName;
 		private final String remoteUrl;
 
-		private TypeDefinitionGitLocation(final String repositoryName, final String remoteUrl) {
+		private TypeDefinitionGitLocation(final String repositoryName, final String defaultRemoteUrl) {
 			this.repositoryName = repositoryName;
-			this.remoteUrl = remoteUrl;
+			this.remoteUrl = getActualRemoteUrl(repositoryName, defaultRemoteUrl);
+		}
+
+		private String getActualRemoteUrl(final String systemPropertySuffix, final String defaultRemoteUrl) {
+			final String key = N4JSD_URL_SYSTEM_PROPERTY_PREFIX + "." + systemPropertySuffix;
+			final String value = System.getProperty(key);
+			if (value != null && !value.trim().isEmpty())
+				return value;
+			return defaultRemoteUrl;
 		}
 
 		/**
