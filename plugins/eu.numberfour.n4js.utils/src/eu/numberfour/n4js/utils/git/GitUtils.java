@@ -23,6 +23,7 @@ import static org.eclipse.jgit.api.Git.cloneRepository;
 import static org.eclipse.jgit.api.Git.open;
 import static org.eclipse.jgit.api.ListBranchCommand.ListMode.REMOTE;
 import static org.eclipse.jgit.api.ResetCommand.ResetType.HARD;
+import static org.eclipse.jgit.lib.Constants.DEFAULT_REMOTE_NAME;
 import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.eclipse.jgit.lib.Constants.MASTER;
 import static org.eclipse.jgit.lib.Constants.R_REMOTES;
@@ -30,8 +31,10 @@ import static org.eclipse.jgit.lib.Constants.R_REMOTES;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -47,7 +50,9 @@ import org.eclipse.jgit.errors.RepositoryNotFoundException;
 import org.eclipse.jgit.lib.ProgressMonitor;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.TextProgressMonitor;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.SshTransport;
+import org.eclipse.jgit.transport.URIish;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 import com.google.common.base.Joiner;
@@ -249,6 +254,25 @@ public abstract class GitUtils {
 	}
 
 	/**
+	 * Returns the name of the default remote.
+	 *
+	 * @return the name of the default remote
+	 */
+	public static String getDefaultRemote() {
+		return DEFAULT_REMOTE_NAME;
+	}
+
+	private static boolean hasRemote(Git git, final String uriStr) throws GitAPIException, URISyntaxException {
+		URIish uri = new URIish(uriStr);
+		List<RemoteConfig> remoteConfigs = git.remoteList().call();
+		return Iterables.any(remoteConfigs, (RemoteConfig config) -> {
+			return config.getName().equals(getDefaultRemote()) && Iterables.any(config.getURIs(), (configRemote) -> {
+				return configRemote.equals(uri);
+			});
+		});
+	}
+
+	/**
 	 * Clones a branch of a remote Git repository to the local file system.
 	 *
 	 * @param remoteUri
@@ -281,39 +305,49 @@ public abstract class GitUtils {
 
 		final File[] existingFiles = destinationFolder.listFiles();
 		if (!isEmpty(existingFiles)) {
-			LOGGER.info("Repository already exists. Aborting clone phase. Files in " + destinationFolder + " are: "
-					+ Joiner.on(',').join(existingFiles));
 			try (final Git git = open(localClonePath.toFile())) {
-				final String currentBranch = git.getRepository().getBranch();
-				if (!currentBranch.equals(branch)) {
-					LOGGER.info("Desired branch differs from the current one. Desired: '" + branch + "' current: '"
-							+ currentBranch + "'.");
-					git.pull().setProgressMonitor(createMonitor()).call();
-					// check if the remote desired branch exists or not.
-					final Ref remoteBranchRef = from(git.branchList().setListMode(REMOTE).call())
-							.firstMatch(ref -> ref.getName().equals(R_REMOTES + "origin/" + branch)).orNull();
-					// since repository might be cloned via --depth 1 (aka shallow clone) we cannot just switch to
-					// any remote branch those ones do not exist. and we cannot run 'pull --unshallow' either.
-					// we have to delete the repository content and run a full clone from scratch.
-					if (null == remoteBranchRef) {
-						LOGGER.info("Cleaning up current git clone and running clone phase from scratch.");
-						deleteRecursively(destinationFolder);
-						clone(remoteUri, localClonePath, currentBranch);
-					} else {
+				LOGGER.info(
+						"Repository already exists. Aborting clone phase. Files in " + destinationFolder + " are: "
+								+ Joiner.on(',').join(existingFiles));
+				if (!hasRemote(git, remoteUri)) {
+					LOGGER.info(
+							"Desired remote URI differs from the current one. Desired: '" + remoteUri + "'.");
+					LOGGER.info("Cleaning up current git clone and running clone phase from scratch.");
+					deleteRecursively(destinationFolder);
+					clone(remoteUri, localClonePath, branch);
+				} else {
+					final String currentBranch = git.getRepository().getBranch();
+					if (!currentBranch.equals(branch)) {
+						LOGGER.info("Desired branch differs from the current one. Desired: '" + branch + "' current: '"
+								+ currentBranch + "'.");
 						git.pull().setProgressMonitor(createMonitor()).call();
-						LOGGER.info("Pulled from upstream.");
+						// check if the remote desired branch exists or not.
+						final Ref remoteBranchRef = from(git.branchList().setListMode(REMOTE).call())
+								.firstMatch(ref -> ref.getName().equals(R_REMOTES + "origin/" + branch)).orNull();
+						// since repository might be cloned via --depth 1 (aka shallow clone) we cannot just switch to
+						// any remote branch those ones do not exist. and we cannot run 'pull --unshallow' either.
+						// we have to delete the repository content and run a full clone from scratch.
+						if (null == remoteBranchRef) {
+							LOGGER.info("Cleaning up current git clone and running clone phase from scratch.");
+							deleteRecursively(destinationFolder);
+							clone(remoteUri, localClonePath, currentBranch);
+						} else {
+							git.pull().setProgressMonitor(createMonitor()).call();
+							LOGGER.info("Pulled from upstream.");
+						}
 					}
 				}
+				return;
 			} catch (final Exception e) {
 				final String msg = "Error when performing git pull in " + localClonePath + " from " + remoteUri + ".";
 				LOGGER.error(msg, e);
 				throw new RuntimeException(
 						"Error when performing git pull in " + localClonePath + " from " + remoteUri + ".", e);
 			}
-			return;
 		}
 
 		LOGGER.info("Cloning repository from '" + remoteUri + "'...");
+
 		final CloneCommand cloneCommand = cloneRepository()
 				.setURI(remoteUri)
 				.setDirectory(destinationFolder)
@@ -321,7 +355,8 @@ public abstract class GitUtils {
 				.setProgressMonitor(createMonitor())
 				.setTransportConfigCallback(TRANSPORT_CALLBACK);
 
-		try (final Git git = cloneCommand.call()) {
+		try (
+				final Git git = cloneCommand.call()) {
 			LOGGER.info(
 					"Repository content has been successfully cloned to '" + git.getRepository().getDirectory() + "'.");
 		} catch (final GitAPIException e) {
