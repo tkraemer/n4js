@@ -297,7 +297,7 @@ public class ASTProcessor extends AbstractProcessor {
 	 */
 	def private void processNode_preChildren(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
 
-		if(node instanceof FunctionDefinition) {
+		if (node instanceof FunctionDefinition) {
 			handleAsyncFunctionDefinition(G, node, cache);
 			handleGeneratorFunctionDefinition(G, node, cache);
 		}

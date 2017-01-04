@@ -31,6 +31,7 @@ import eu.numberfour.n4js.n4JS.VariableEnvironmentElement;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
+import eu.numberfour.n4js.ts.types.TFunction;
 import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypeVariable;
@@ -587,6 +588,20 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public TFunction getDefinedFunction() {
+		final Type defType = this.getDefinedType();
+		TFunction _xifexpression = null;
+		if ((defType instanceof TFunction)) {
+			_xifexpression = ((TFunction)defType);
+		}
+		return _xifexpression;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public LocalArgumentsVariable getLocalArgumentsVariable() {
 		LocalArgumentsVariable __lok = this.get_lok();
 		boolean _tripleEquals = (__lok == null);
@@ -1007,6 +1022,7 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 		if (baseClass == FunctionDefinition.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.FUNCTION_DEFINITION___IS_ASYNC: return N4JSPackage.FUNCTION_DECLARATION___IS_ASYNC;
+				case N4JSPackage.FUNCTION_DEFINITION___GET_DEFINED_FUNCTION: return N4JSPackage.FUNCTION_DECLARATION___GET_DEFINED_FUNCTION;
 				default: return -1;
 			}
 		}
@@ -1053,6 +1069,8 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 				return isToplevel();
 			case N4JSPackage.FUNCTION_DECLARATION___IS_ASYNC:
 				return isAsync();
+			case N4JSPackage.FUNCTION_DECLARATION___GET_DEFINED_FUNCTION:
+				return getDefinedFunction();
 			case N4JSPackage.FUNCTION_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE:
 				return getLocalArgumentsVariable();
 			case N4JSPackage.FUNCTION_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR:

@@ -756,7 +756,9 @@ import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 		write("yield ");
 		if (original.isMany())
 			write("* ");
-		process(original.getExpression());
+
+		if (original.getExpression() != null)
+			process(original.getExpression());
 
 		write(')');
 		return DONE;
