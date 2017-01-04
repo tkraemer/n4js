@@ -345,7 +345,7 @@ public class N4jsc {
 	 * @throws ExitCodeException
 	 *             in case of errors.
 	 */
-	void doMain(String[] args) throws ExitCodeException {
+	void doMain(String... args) throws ExitCodeException {
 		try {
 
 			CmdLineParser parser = new CmdLineParser(this);
