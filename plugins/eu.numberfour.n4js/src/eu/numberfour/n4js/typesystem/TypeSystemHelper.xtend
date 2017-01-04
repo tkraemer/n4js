@@ -193,8 +193,8 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	}
 
 	/** @see ExpectedTypeComputer#getExpectedTypeOfYieldValueExpression(RuleEnvironment,YieldExpression,Expression) */
-	def TypeRef getExpectedTypeOfYieldValueExpression(RuleEnvironment G, YieldExpression yieldExpr, Expression returnValueExpr) {
-		return expectedTypeCompuer.getExpectedTypeOfYieldValueExpression(G, yieldExpr, returnValueExpr);
+	def TypeRef getExpectedTypeOfYieldValueExpression(RuleEnvironment G, YieldExpression yieldExpr, TypeRef exprTypeRef) {
+		return expectedTypeCompuer.getExpectedTypeOfYieldValueExpression(G, yieldExpr, exprTypeRef);
 	}
 
 
@@ -456,13 +456,13 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	
 	
 	/**
-	 * From the actual (outer) return type of a generator function (or method), which is
-	 * {@code Generator<TYield,TReturn,TNext>}, the type TNext is returned.
+	 * From any expression within a generator function or method, the type TNext is returned (referring to the
+	 * actual (outer) return type, which is {@code Generator<TYield,TReturn,TNext>}).
 	 */
-	def TypeRef getTNextOfGeneratorReturnType(RuleEnvironment G, YieldExpression yieldExpr) {
-		val funDef = EcoreUtil2.getContainerOfType(yieldExpr?.eContainer, FunctionDefinition);
+	def TypeRef getActualGeneratorReturnType(RuleEnvironment G, Expression expr) {
+		val funDef = EcoreUtil2.getContainerOfType(expr?.eContainer, FunctionDefinition);
 		val G2 = G.wrap;
-		val myThisTypeRef = ts.thisTypeRef(G, yieldExpr).value;
+		val myThisTypeRef = ts.thisTypeRef(G, expr).value;
 		G2.addThisType(myThisTypeRef); // takes the real-this type even if it is a type{this} reference.
 
 		if (funDef === null || !funDef.isGenerator) 
@@ -473,11 +473,61 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 			val actualReturnTypeRef = tFun.returnTypeRef;
 			val scope = G.getPredefinedTypes().builtInTypeScope;
 			if (TypeUtils.isGenerator(actualReturnTypeRef, scope)) {
-				val nextTypeArg = actualReturnTypeRef.typeArgs.get(2);
-				val nextTypeRef = ts.upperBound(G, nextTypeArg).value; // take upper bound to get rid of Wildcard, etc.
-				return nextTypeRef;
+				return actualReturnTypeRef;
 			}
 		}
 		return TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
+	}
+	
+	/**
+	 * Given a {@link TypeRef} to a {@code Generator<TYield,TReturn,TNext>} class, this method returns TYield, if existent.
+	 */
+	def TypeRef getGeneratorTYield(RuleEnvironment G, TypeRef generatorTypeRef) {
+		var TypeRef yieldTypeRef = null;
+		if (generatorTypeRef.typeArgs.length === 3) {
+			val yieldTypeArg = generatorTypeRef.typeArgs.get(0);
+			if (yieldTypeArg !== null)
+				yieldTypeRef = ts.upperBound(G, yieldTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+		}
+		return yieldTypeRef;
+	}
+	
+	/**
+	 * Given a {@link TypeRef} to a {@code Generator<TYield,TReturn,TNext>} class, this method returns TReturn, if existent.
+	 */
+	def TypeRef getGeneratorTReturn(RuleEnvironment G, TypeRef generatorTypeRef) {
+		var TypeRef returnTypeRef = null;
+		if (generatorTypeRef.typeArgs.length === 3) {
+			val returnTypeArg = generatorTypeRef.typeArgs.get(1);
+			if (returnTypeArg !== null)
+				returnTypeRef = ts.upperBound(G, returnTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+		}
+		return returnTypeRef;
+	}
+	
+	/**
+	 * Given a {@link TypeRef} to a {@code Generator<TYield,TReturn,TNext>} class, this method returns TNext, if existent.
+	 */
+	def TypeRef getGeneratorTNext(RuleEnvironment G, TypeRef generatorTypeRef) {
+		var TypeRef nextTypeRef = null;
+		if (generatorTypeRef.typeArgs.length === 3) {
+			val nextTypeArg = generatorTypeRef.typeArgs.get(2);
+			if (nextTypeArg !== null)
+				nextTypeRef = ts.upperBound(G, nextTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+		}
+		return nextTypeRef;
+	}
+	
+	/**
+	 * Given a {@link TypeRef} to an {@code Iterable<T>}, this method returns T, if existent.
+	 */
+	def TypeRef getIterableTypeArg(RuleEnvironment G, TypeRef iterableTypeRef) {
+		var TypeRef typeRef = null;
+		if (iterableTypeRef.typeArgs.length === 1) {
+			val nextTypeArg = iterableTypeRef.typeArgs.get(0);
+			if (nextTypeArg !== null)
+				typeRef = ts.upperBound(G, nextTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+		}
+		return typeRef;
 	}
 }

@@ -34,6 +34,8 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 
 	@Inject
 	private N4JSTypeSystem ts;
+	@Inject
+	private TypeSystemHelper tsh;
 
 	/**
 	 * Returns the expected type of an expression which be used to compute the return value of its containing function.
@@ -100,15 +102,11 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 		// we have a generator function:
 		// in case it does not already have a return type of Generator, N4JSFunctionDefinitionTypesBuilder
 		// sets funDef.definedType.returnTypeRef to Generator<TYield,TResult,TNext>, where TYield can be based on funDef.returnTypeRef
-		val tFun = funDef.definedType;
-		if (tFun instanceof TFunction) {
+		val tFun = funDef.definedFunction;
+		if (tFun !== null) {
 			val actualReturnTypeRef = tFun.returnTypeRef;
 			if (TypeUtils.isGenerator(actualReturnTypeRef, G.getPredefinedTypes().builtInTypeScope)) {
-				if (actualReturnTypeRef.typeArgs.length >= 2) {
-					val secondTypeArg = actualReturnTypeRef.typeArgs.get(1);
-					if (secondTypeArg !== null)
-						return ts.upperBound(G, secondTypeArg).value; // take upper bound to get rid of Wildcard, etc.
-				}
+				return tsh.getGeneratorTReturn(G, actualReturnTypeRef);
 			}
 		}
 		
@@ -124,7 +122,8 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 	 * (with regard to {@code Generator<TYield,TReturn,TNext>}). In case the yield expression is recursive (features a star),
 	 * the expected type must conform to {@code Generator<? extends TYield,any,? super TNext>}.
 	 */
-	def TypeRef getExpectedTypeOfYieldValueExpression(RuleEnvironment G, YieldExpression yieldExpr, Expression expression) {
+	def TypeRef getExpectedTypeOfYieldValueExpression(RuleEnvironment G, YieldExpression yieldExpr, TypeRef exprTypeRef) {
+		val expression = yieldExpr.expression;
 		val funDef = EcoreUtil2.getContainerOfType(expression?.eContainer, FunctionDefinition);
 		val G2 = G.wrap;
 		val myThisTypeRef = ts.thisTypeRef(G, expression).value;
@@ -133,24 +132,27 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 		if (funDef === null || !funDef.isGenerator) 
 			return null; // yields only occur in generator functions
 		
-		val tFun = funDef.definedType;
-		if (tFun instanceof TFunction) {
+		val tFun = funDef.definedFunction;
+		if (tFun !== null) {
 			val actualReturnTypeRef = tFun.returnTypeRef;
 			val scope = G.getPredefinedTypes().builtInTypeScope;
 			if (TypeUtils.isGenerator(actualReturnTypeRef, scope)) {
-				val yieldTypeArg = actualReturnTypeRef.typeArgs.get(0);
-				val yieldTypeRef = ts.upperBound(G, yieldTypeArg).value; // take upper bound to get rid of Wildcard, etc.
+				val yieldTypeRef = tsh.getGeneratorTYield(G, actualReturnTypeRef);
 				val yieldTypeRefCopy = TypeUtils.copyWithProxies(yieldTypeRef);
 				if (yieldExpr.isMany()) {
-					val nextTypeArg = actualReturnTypeRef.typeArgs.get(2);
-					val nextTypeRef = ts.upperBound(G, nextTypeArg).value; // take upper bound to get rid of Wildcard, etc.
-					val nextTypeRefCopy = TypeUtils.copyWithProxies(nextTypeRef);
-					val superNext = TypeUtils.createWildcardSuper(nextTypeRefCopy);
-					val extendsYield = TypeUtils.createWildcardExtends(yieldTypeRefCopy);
-					val tReturn = scope.getAnyTypeRef();
-					// the return type does not matter since it is not returned in a yield* statement
-					val recursiveGeneratorSuperType = TypeUtils.createGeneratorTypeRef(scope, extendsYield, tReturn, superNext);
-					return recursiveGeneratorSuperType;
+					val isGenerator = TypeUtils.isGenerator(exprTypeRef, scope);
+					if (isGenerator) {
+						val nextTypeRef = tsh.getGeneratorTNext(G, actualReturnTypeRef);
+						val nextTypeRefCopy = TypeUtils.copyWithProxies(nextTypeRef);
+						val superNext = TypeUtils.createWildcardSuper(nextTypeRefCopy);
+						val extendsYield = TypeUtils.createWildcardExtends(yieldTypeRefCopy);
+						val tReturn = scope.getAnyTypeRef(); // the return type does not matter since its use is optional
+						val recursiveGeneratorSuperType = TypeUtils.createGeneratorTypeRef(scope, extendsYield, tReturn, superNext);
+						return recursiveGeneratorSuperType;
+					} else {
+						val iterableTypeRef = G.iterableTypeRef(yieldTypeRefCopy)
+						return iterableTypeRef;
+					}
 				} else {
 				    return yieldTypeRefCopy;
 				}
