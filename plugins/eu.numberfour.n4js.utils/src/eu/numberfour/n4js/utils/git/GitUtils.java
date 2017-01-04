@@ -386,8 +386,10 @@ public abstract class GitUtils {
 	 */
 	private static boolean equals(URIish lhs, URIish rhs) {
 		// We only consider the scheme if both URIs have one
-		if (!StringUtils.isEmptyOrNull(lhs.getScheme()) && !StringUtils.isEmptyOrNull(rhs.getScheme()))
-			return Objects.equals(lhs.getScheme(), rhs.getScheme());
+		if (!StringUtils.isEmptyOrNull(lhs.getScheme()) && !StringUtils.isEmptyOrNull(rhs.getScheme())) {
+			if (!Objects.equals(lhs.getScheme(), rhs.getScheme()))
+				return false;
+		}
 		if (!equals(lhs.getUser(), rhs.getUser()))
 			return false;
 		if (!equals(lhs.getPass(), rhs.getPass()))
