@@ -2651,6 +2651,15 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_METHOD_DECLARATION___IS_ASYNC = N4JSPackage.N4_METHOD_DECLARATION___IS_ASYNC;
 
 	/**
+	 * The operation id for the '<em>Get Defined Function</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_METHOD_DECLARATION___GET_DEFINED_FUNCTION = N4JSPackage.N4_METHOD_DECLARATION___GET_DEFINED_FUNCTION;
+
+	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

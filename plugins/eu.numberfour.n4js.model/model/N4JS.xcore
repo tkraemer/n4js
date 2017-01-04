@@ -54,6 +54,7 @@ import java.util.Collections
 import java.util.Iterator
 import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.ecore.EObject
+import eu.numberfour.n4js.ts.types.TFunction
 
 type IteratorOfExpression wraps Iterator<Expression>
 type IteratorOfYieldExpression wraps Iterator<YieldExpression>
@@ -470,6 +471,11 @@ abstract class FunctionDefinition extends FunctionOrFieldAccessor, TypeDefiningE
 		return declaredAsync;
 	}
 
+	/* Convenience method returning the 'definedType' if it is a TFunction, otherwise <code>null</code>. */
+	op TFunction getDefinedFunction() {
+		val defType = definedType;
+		return if(defType instanceof TFunction) { defType };
+	}
 }
 
 /*
@@ -1122,10 +1128,13 @@ class PropertyNameValuePairSingleName extends PropertyNameValuePair {
 }
 
 class PropertyMethodDeclaration extends AnnotablePropertyAssignment, MethodDeclaration, TypeProvidingElement  {
-	refers TStructMethod definedMethod
+	// IMPORTANT: don't introduce a property 'definedMethod' here, because PropertyMethodDeclaration inherits from
+	// TypeDefiningElement (via FunctionDefinition) and that class already has a property 'definedType' for this
+	// purpose; if we were using a separate property, it would break code that handles instances of
+	// PropertyMethodDeclaration as instances of TypeDefiningElement or FunctionDefinition!
 
 	op TStructMethod getDefinedMember() {
-		definedMethod
+		definedType as TStructMethod
 	}
 }
 

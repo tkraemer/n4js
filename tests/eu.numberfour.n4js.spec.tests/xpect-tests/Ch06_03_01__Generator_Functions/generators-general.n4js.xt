@@ -12,14 +12,6 @@ class M {
 	* g0 () {}
 }
 
-// generator method in object literal
-// XPECT noerrors
-let obj = {
-	* g0() {}
-};
-obj;
-
-
 // no return ok
 // XPECT noerrors
 function * g1() {
