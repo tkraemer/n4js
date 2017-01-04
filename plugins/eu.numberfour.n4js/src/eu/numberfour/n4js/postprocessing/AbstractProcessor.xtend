@@ -182,7 +182,7 @@ package abstract class AbstractProcessor {
 	 */
 	def protected void handleGeneratorFunctionDefinition(RuleEnvironment G, FunctionDefinition funDef, ASTMetaInfoCache cache) {
 		if(funDef.isGenerator) {
-			val tFunction = TypeUtils.getDefinedTypeOrMethod(funDef);
+			val tFunction = funDef.definedFunction;
 			if(tFunction !== null) {
 				val innerReturnTypeRef = tFunction.returnTypeRef;
 				if (innerReturnTypeRef !== null && !(innerReturnTypeRef instanceof DeferredTypeRef)) {

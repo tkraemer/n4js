@@ -102,7 +102,7 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 		// we have a generator function:
 		// in case it does not already have a return type of Generator, N4JSFunctionDefinitionTypesBuilder
 		// sets funDef.definedType.returnTypeRef to Generator<TYield,TResult,TNext>, where TYield can be based on funDef.returnTypeRef
-		val tFun = TypeUtils.getDefinedTypeOrMethod(funDef);
+		val tFun = funDef.definedFunction;
 		if (tFun !== null) {
 			val actualReturnTypeRef = tFun.returnTypeRef;
 			if (TypeUtils.isGenerator(actualReturnTypeRef, G.getPredefinedTypes().builtInTypeScope)) {
@@ -132,7 +132,7 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 		if (funDef === null || !funDef.isGenerator) 
 			return null; // yields only occur in generator functions
 		
-		val tFun = TypeUtils.getDefinedTypeOrMethod(funDef);
+		val tFun = funDef.definedFunction;
 		if (tFun !== null) {
 			val actualReturnTypeRef = tFun.returnTypeRef;
 			val scope = G.getPredefinedTypes().builtInTypeScope;

@@ -2297,6 +2297,15 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getFunctionDefinition__GetDefinedFunction() {
+		return functionDefinitionEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getFieldAccessor() {
 		return fieldAccessorEClass;
 	}
@@ -3757,15 +3766,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 */
 	public EClass getPropertyMethodDeclaration() {
 		return propertyMethodDeclarationEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getPropertyMethodDeclaration_DefinedMethod() {
-		return (EReference)propertyMethodDeclarationEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -6217,6 +6217,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEAttribute(functionDefinitionEClass, FUNCTION_DEFINITION__GENERATOR);
 		createEAttribute(functionDefinitionEClass, FUNCTION_DEFINITION__DECLARED_ASYNC);
 		createEOperation(functionDefinitionEClass, FUNCTION_DEFINITION___IS_ASYNC);
+		createEOperation(functionDefinitionEClass, FUNCTION_DEFINITION___GET_DEFINED_FUNCTION);
 
 		fieldAccessorEClass = createEClass(FIELD_ACCESSOR);
 		createEOperation(fieldAccessorEClass, FIELD_ACCESSOR___GET_DECLARED_TYPE_REF);
@@ -6437,7 +6438,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEOperation(propertyNameValuePairSingleNameEClass, PROPERTY_NAME_VALUE_PAIR_SINGLE_NAME___GET_NAME);
 
 		propertyMethodDeclarationEClass = createEClass(PROPERTY_METHOD_DECLARATION);
-		createEReference(propertyMethodDeclarationEClass, PROPERTY_METHOD_DECLARATION__DEFINED_METHOD);
 		createEOperation(propertyMethodDeclarationEClass, PROPERTY_METHOD_DECLARATION___GET_DEFINED_MEMBER);
 
 		getterDeclarationEClass = createEClass(GETTER_DECLARATION);
@@ -7172,6 +7172,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 
 		initEOperation(getFunctionDefinition__IsAsync(), theEcorePackage.getEBoolean(), "isAsync", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
+		initEOperation(getFunctionDefinition__GetDefinedFunction(), theTypesPackage.getTFunction(), "getDefinedFunction", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
 		initEClass(fieldAccessorEClass, FieldAccessor.class, "FieldAccessor", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEOperation(getFieldAccessor__GetDeclaredTypeRef(), theTypeRefsPackage.getTypeRef(), "getDeclaredTypeRef", 0, 1, !IS_UNIQUE, IS_ORDERED);
@@ -7434,7 +7436,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEOperation(getPropertyNameValuePairSingleName__GetName(), theEcorePackage.getEString(), "getName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(propertyMethodDeclarationEClass, PropertyMethodDeclaration.class, "PropertyMethodDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getPropertyMethodDeclaration_DefinedMethod(), theTypesPackage.getTStructMethod(), null, "definedMethod", null, 0, 1, PropertyMethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getPropertyMethodDeclaration__GetDefinedMember(), theTypesPackage.getTStructMethod(), "getDefinedMember", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

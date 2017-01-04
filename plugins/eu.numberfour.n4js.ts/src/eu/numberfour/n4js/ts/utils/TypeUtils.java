@@ -37,7 +37,6 @@ import org.eclipse.xtext.EcoreUtil2;
 import com.google.common.collect.Iterables;
 
 import eu.numberfour.n4js.n4JS.FunctionDefinition;
-import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration;
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope;
 import eu.numberfour.n4js.ts.scoping.builtin.N4Scheme;
 import eu.numberfour.n4js.ts.typeRefs.BaseTypeRef;
@@ -1329,19 +1328,5 @@ public class TypeUtils {
 			return typeRef.getTypingStrategy();
 		}
 		return TypingStrategy.DEFAULT;
-	}
-
-	/**
-	 * Returns the defined method in case {@code funDef} is a {@link PropertyMethodDeclaration}. Returns the defined
-	 * type otherwise.
-	 *
-	 * @param funDef
-	 *            the function definition
-	 */
-	public static TFunction getDefinedTypeOrMethod(FunctionDefinition funDef) {
-		if (funDef instanceof PropertyMethodDeclaration) {
-			return ((PropertyMethodDeclaration) funDef).getDefinedMethod();
-		}
-		return (TFunction) funDef.getDefinedType();
 	}
 }
