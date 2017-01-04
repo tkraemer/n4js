@@ -34,7 +34,9 @@ import java.io.OutputStreamWriter;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -56,6 +58,7 @@ import org.eclipse.jgit.transport.URIish;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Iterables;
 
@@ -105,8 +108,9 @@ public abstract class GitUtils {
 		}
 
 		try (final Git git = open(localClonePath.toFile())) {
-			if (!branch.equals(git.getRepository().getBranch())) {
-				LOGGER.info("Current branch is: '" + git.getRepository().getBranch() + "'.");
+			final String currentBranch = git.getRepository().getBranch();
+			if (!currentBranch.equals(branch)) {
+				LOGGER.info("Current branch is: '" + currentBranch + "'.");
 				LOGGER.info("Switching to desired '" + branch + "' branch...");
 				git.pull().setProgressMonitor(createMonitor()).call();
 				final Iterable<Ref> localBranchRefs = git.branchList().call();
@@ -115,9 +119,9 @@ public abstract class GitUtils {
 				LOGGER.info("Creating local branch '" + branch + "'? --> " + (createLocalBranch ? "yes" : "no"));
 				git.checkout().setCreateBranch(createLocalBranch).setName(branch)
 						.setStartPoint(R_REMOTES + "origin/" + branch).call();
-				checkState(branch.equals(git.getRepository().getBranch()),
+				checkState(currentBranch.equals(branch),
 						"Error when checking out '" + branch + "' branch.");
-				LOGGER.info("Switched to '" + git.getRepository().getBranch() + "' branch.");
+				LOGGER.info("Switched to '" + currentBranch + "' branch.");
 				git.pull().setProgressMonitor(createMonitor()).call();
 			}
 			LOGGER.info("Hard resetting local repository HEAD of the '" + branch + "' in '" + remoteUri + "'...");
@@ -254,25 +258,6 @@ public abstract class GitUtils {
 	}
 
 	/**
-	 * Returns the name of the default remote.
-	 *
-	 * @return the name of the default remote
-	 */
-	public static String getDefaultRemote() {
-		return DEFAULT_REMOTE_NAME;
-	}
-
-	private static boolean hasRemote(Git git, final String uriStr) throws GitAPIException, URISyntaxException {
-		URIish uri = new URIish(uriStr);
-		List<RemoteConfig> remoteConfigs = git.remoteList().call();
-		return Iterables.any(remoteConfigs, (RemoteConfig config) -> {
-			return config.getName().equals(getDefaultRemote()) && Iterables.any(config.getURIs(), (configRemote) -> {
-				return configRemote.equals(uri);
-			});
-		});
-	}
-
-	/**
 	 * Clones a branch of a remote Git repository to the local file system.
 	 *
 	 * @param remoteUri
@@ -309,9 +294,11 @@ public abstract class GitUtils {
 				LOGGER.info(
 						"Repository already exists. Aborting clone phase. Files in " + destinationFolder + " are: "
 								+ Joiner.on(',').join(existingFiles));
-				if (!hasRemote(git, remoteUri)) {
+				final List<URIish> originUris = getOriginUris(git);
+				if (!hasRemote(originUris, remoteUri)) {
 					LOGGER.info(
-							"Desired remote URI differs from the current one. Desired: '" + remoteUri + "'.");
+							"Desired remote URI differs from the current one. Desired: '" + remoteUri
+									+ "' origin URIs: '" + Joiner.on(',').join(originUris) + "'.");
 					LOGGER.info("Cleaning up current git clone and running clone phase from scratch.");
 					deleteRecursively(destinationFolder);
 					clone(remoteUri, localClonePath, branch);
@@ -355,8 +342,7 @@ public abstract class GitUtils {
 				.setProgressMonitor(createMonitor())
 				.setTransportConfigCallback(TRANSPORT_CALLBACK);
 
-		try (
-				final Git git = cloneCommand.call()) {
+		try (final Git git = cloneCommand.call()) {
 			LOGGER.info(
 					"Repository content has been successfully cloned to '" + git.getRepository().getDirectory() + "'.");
 		} catch (final GitAPIException e) {
@@ -367,6 +353,83 @@ public abstract class GitUtils {
 			LOGGER.info("Inconsistent checkout directory was successfully cleaned up.");
 			throw new RuntimeException(message, e);
 		}
+	}
+
+	/**
+	 * Checks whether the given git repository's origin has the given URI.
+	 *
+	 * @param git
+	 *            the git repository
+	 * @param uriStr
+	 *            the URI to check
+	 * @return <code>true</code> if the given repository's origin has the given URI and <code>false</code> otherwise
+	 * @throws GitAPIException
+	 *             if an error occurs while accessing the given repository
+	 * @throws URISyntaxException
+	 *             if the given URI is malformed
+	 */
+	private static boolean hasRemote(Git git, final String uriStr) throws GitAPIException, URISyntaxException {
+		return hasRemote(getOriginUris(git), uriStr);
+	}
+
+	/**
+	 * Checks whether the given URIs contain the given URI.
+	 *
+	 * @param uris
+	 *            the URIs
+	 * @param uriStr
+	 *            the URI to check
+	 * @return <code>true</code> if the given repository's origin has the given URI and <code>false</code> otherwise
+	 * @throws URISyntaxException
+	 *             if the given URI is malformed
+	 */
+	private static boolean hasRemote(Iterable<URIish> uris, final String uriStr) throws URISyntaxException {
+		final URIish uri = new URIish(uriStr);
+		return from(uris).anyMatch((originUri) -> {
+			return Objects.equals(originUri, uri);
+		});
+	}
+
+	/**
+	 * Returns all URIs of the given repository's origin remote.
+	 *
+	 * @param git
+	 *            the git repository
+	 * @return the list of URIs or an empty list if the given repository has no origin or if that origin has no URIs
+	 * @throws GitAPIException
+	 *             if an error occurs while accessing the given repository
+	 */
+	private static List<URIish> getOriginUris(Git git) throws GitAPIException {
+		Optional<RemoteConfig> origin = getOriginRemote(git);
+		if (origin.isPresent())
+			return origin.get().getURIs();
+		return Collections.emptyList();
+	}
+
+	/**
+	 * Returns the origin of the given repository.
+	 *
+	 * @param git
+	 *            the git repository
+	 * @return the origin
+	 * @throws GitAPIException
+	 *             if an error occurs while accessing the given repository
+	 */
+	private static Optional<RemoteConfig> getOriginRemote(Git git) throws GitAPIException {
+		final String origin = getDefaultRemote();
+		List<RemoteConfig> remotes = git.remoteList().call();
+		return from(remotes).firstMatch((remote) -> {
+			return remote.getName().equals(origin);
+		});
+	}
+
+	/**
+	 * Returns the name of the default remote.
+	 *
+	 * @return the name of the default remote
+	 */
+	public static String getDefaultRemote() {
+		return DEFAULT_REMOTE_NAME;
 	}
 
 	private static TextProgressMonitor createMonitor() {
