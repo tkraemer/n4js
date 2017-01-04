@@ -877,8 +877,8 @@ public providedByRuntime interface Generator<out TYield, out TReturn, in TNext>
 . `yield` and `yield*` may only be in body of generator functions or methods.
 . `yield expr` takes only expressions _expr_ of type _TYield_ in a generator function or methods with the actual type `Generator<TYield,TReturn,TNext>`.
 . The return type of the `yield` expression is _TNext_.
-. `yield* fg()` takes only generator functions or methods _fg_ with the actual return type `Generator<? extends TYield,? extends TReturn,? super TNext>`.
-. The return type of the `yield*` expression is _TNext_.
+. `yield* fg()` takes only iterators of type `Iterator<TYield>`, and generator functions or methods _fg_ with the actual return type `Generator<? extends TYield,? extends TReturn,? super TNext>`.
+. The return type of the `yield*` expression is _any_, since a custom iterator could return an entry `{done=true,value}` and any value for the variable `value`.
 --
 
 Similar to `async` functions, shorthand and explicit form `* function():int{};` and `* function():Generator<int,TResult,any>` are equal, 
