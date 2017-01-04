@@ -55,6 +55,7 @@ import org.eclipse.jgit.lib.TextProgressMonitor;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.SshTransport;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 import com.google.common.base.Joiner;
@@ -356,23 +357,6 @@ public abstract class GitUtils {
 	}
 
 	/**
-	 * Checks whether the given git repository's origin has the given URI.
-	 *
-	 * @param git
-	 *            the git repository
-	 * @param uriStr
-	 *            the URI to check
-	 * @return <code>true</code> if the given repository's origin has the given URI and <code>false</code> otherwise
-	 * @throws GitAPIException
-	 *             if an error occurs while accessing the given repository
-	 * @throws URISyntaxException
-	 *             if the given URI is malformed
-	 */
-	private static boolean hasRemote(Git git, final String uriStr) throws GitAPIException, URISyntaxException {
-		return hasRemote(getOriginUris(git), uriStr);
-	}
-
-	/**
 	 * Checks whether the given URIs contain the given URI.
 	 *
 	 * @param uris
@@ -386,8 +370,51 @@ public abstract class GitUtils {
 	private static boolean hasRemote(Iterable<URIish> uris, final String uriStr) throws URISyntaxException {
 		final URIish uri = new URIish(uriStr);
 		return from(uris).anyMatch((originUri) -> {
-			return Objects.equals(originUri, uri);
+			return equals(originUri, uri);
 		});
+	}
+
+	/**
+	 * Compare the two given git remote URIs. This method is a reimplementation of {@link URIish#equals(Object)} with
+	 * one difference. The scheme of the URIs is only considered if both URIs have a non-null and non-empty scheme part.
+	 *
+	 * @param lhs
+	 *            the left hand side
+	 * @param rhs
+	 *            the right hand side
+	 * @return <code>true</code> if the two URIs are to be considered equal and <code>false</code> otherwise
+	 */
+	private static boolean equals(URIish lhs, URIish rhs) {
+		// We only consider the scheme if both URIs have one
+		if (!StringUtils.isEmptyOrNull(lhs.getScheme()) && !StringUtils.isEmptyOrNull(rhs.getScheme()))
+			return Objects.equals(lhs.getScheme(), rhs.getScheme());
+		if (!equals(lhs.getUser(), rhs.getUser()))
+			return false;
+		if (!equals(lhs.getPass(), rhs.getPass()))
+			return false;
+		if (!equals(lhs.getHost(), rhs.getHost()))
+			return false;
+		if (lhs.getPort() != rhs.getPort())
+			return false;
+		if (!equals(lhs.getPath(), rhs.getPath()))
+			return false;
+		return true;
+	}
+
+	/**
+	 * A helper method for comparing strings. If both of the given strings are empty or <code>null</code>, they are
+	 * considered equal.
+	 *
+	 * @param lhs
+	 *            the left hand side
+	 * @param rhs
+	 *            the right hand side
+	 * @return <code>true</code> if the two strings are to be considered equal and <code>false</code> otherwise
+	 */
+	private static boolean equals(String lhs, String rhs) {
+		if (StringUtils.isEmptyOrNull(lhs) && StringUtils.isEmptyOrNull(rhs))
+			return true;
+		return Objects.equals(lhs, rhs);
 	}
 
 	/**
