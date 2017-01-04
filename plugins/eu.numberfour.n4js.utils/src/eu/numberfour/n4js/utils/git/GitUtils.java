@@ -398,7 +398,7 @@ public abstract class GitUtils {
 			return false;
 		if (lhs.getPort() != rhs.getPort())
 			return false;
-		if (!equals(lhs.getPath(), rhs.getPath()))
+		if (!pathEquals(lhs.getPath(), rhs.getPath()))
 			return false;
 		return true;
 	}
@@ -417,6 +417,24 @@ public abstract class GitUtils {
 		if (StringUtils.isEmptyOrNull(lhs) && StringUtils.isEmptyOrNull(rhs))
 			return true;
 		return Objects.equals(lhs, rhs);
+	}
+
+	private static boolean pathEquals(String lhs, String rhs) {
+		if (StringUtils.isEmptyOrNull(lhs) && StringUtils.isEmptyOrNull(rhs))
+			return true;
+
+		// Skip leading slashes in both paths.
+		int lhsIndex = 0;
+		while (lhsIndex < lhs.length() && lhs.charAt(lhsIndex) == '/')
+			++lhsIndex;
+
+		int rhsIndex = 0;
+		while (rhsIndex < rhs.length() && rhs.charAt(rhsIndex) == '/')
+			++rhsIndex;
+
+		String lhsRel = lhs.substring(lhsIndex);
+		String rhsRel = rhs.substring(rhsIndex);
+		return lhsRel.equals(rhsRel);
 	}
 
 	/**
