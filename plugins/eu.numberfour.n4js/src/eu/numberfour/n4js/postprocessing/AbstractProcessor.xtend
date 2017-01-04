@@ -182,8 +182,8 @@ package abstract class AbstractProcessor {
 	 */
 	def protected void handleGeneratorFunctionDefinition(RuleEnvironment G, FunctionDefinition funDef, ASTMetaInfoCache cache) {
 		if(funDef.isGenerator) {
-			val tFunction = funDef.definedFunction;
-			if(tFunction !== null) {
+			val tFunction = funDef.definedType;
+			if(tFunction instanceof TFunction) {
 				val innerReturnTypeRef = tFunction.returnTypeRef;
 				if (innerReturnTypeRef !== null && !(innerReturnTypeRef instanceof DeferredTypeRef)) {
 					val scope = G.builtInTypeScope;
