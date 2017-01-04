@@ -131,7 +131,9 @@ public class TypeUtils {
 	 * {@link BoundThisTypeRef}s.
 	 */
 	public static TypeRef wrapTypeInTypeRef(Type type, TypeArgument... typeArgs) {
-		if (type instanceof TEnum) {
+		if (type == null) {
+			return null; // avoid creating a bogus ParameterizedTypeRef with a 'declaredType' property of 'null'
+		} else if (type instanceof TEnum) {
 			return createTypeTypeRef(type, false);
 		} else if (type instanceof TEnumLiteral) {
 			return createTypeTypeRef((TEnum) type.eContainer(), false);
@@ -178,6 +180,9 @@ public class TypeUtils {
 	 */
 	public static ParameterizedTypeRef createTypeRef(Type declaredType, TypingStrategy typingStrategy,
 			boolean autoCreateTypeArgs, TypeArgument... typeArgs) {
+		if (declaredType == null) {
+			return null; // avoid creating a bogus ParameterizedTypeRef with a 'declaredType' property of 'null'
+		}
 		final ParameterizedTypeRef ref;
 		if (declaredType instanceof TFunction) {
 			ref = TypeRefsFactory.eINSTANCE.createFunctionTypeRef();
