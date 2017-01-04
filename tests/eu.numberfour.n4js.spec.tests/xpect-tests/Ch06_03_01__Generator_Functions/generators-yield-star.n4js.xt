@@ -87,7 +87,7 @@ function *it3() : Generator<string,int,boolean> {
 function *it4() {
 	// XPECT noerrors --> "Array<string> is not a subtype of Generator<? extends any,any,? super any>."
 	// infer type from iterable object
-	// XPECT type of 'x' --> string
+	// XPECT type of 'x' --> any
     let x = yield* (["a", "b", "c"]);
     x;
 }
@@ -95,7 +95,7 @@ function *it4() {
 function getIt() : Iterable<string> { return null; }
 function *itTest() : Generator<string,int,boolean> {
 	// infer type from returned iterable object
-	// XPECT type of 'i' --> string
+	// XPECT type of 'i' --> any
     let i = yield* getIt();
     i;
 }

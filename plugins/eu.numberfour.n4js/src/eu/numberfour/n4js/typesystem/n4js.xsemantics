@@ -579,7 +579,7 @@ from {
 			val itTypeRef = G.iterableTypeRef(TypeUtils.createWildcard);
 			val isIterable = {G |- yieldValueTypeRef <: itTypeRef};
 			if (isIterable) {
-				t = typeSystemHelper.getIterableTypeArg(G, yieldValueTypeRef);
+				t = scope.anyTypeRef;
 			}
 		}
 	} else {

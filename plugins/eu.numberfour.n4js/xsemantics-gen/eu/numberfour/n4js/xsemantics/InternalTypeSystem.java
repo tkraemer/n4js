@@ -2031,8 +2031,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         boolean _ruleinvocation = subtypeSucceeded(G, _trace_, yieldValueTypeRef, itTypeRef);
         final boolean isIterable = _ruleinvocation;
         if (isIterable) {
-          TypeRef _iterableTypeArg = this.typeSystemHelper.getIterableTypeArg(G, yieldValueTypeRef);
-          t = _iterableTypeArg;
+          ParameterizedTypeRef _anyTypeRef = scope.getAnyTypeRef();
+          t = _anyTypeRef;
         }
       }
     } else {
@@ -2044,8 +2044,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     }
     boolean _equals = Objects.equal(t, null);
     if (_equals) {
-      ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
-      t = _anyTypeRef;
+      ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
+      t = _anyTypeRef_1;
     }
     T = t;
     return new Result<TypeRef>(T);

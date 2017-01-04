@@ -150,7 +150,7 @@ class ExpectedTypeComputer extends TypeSystemHelperStrategy {
 						val recursiveGeneratorSuperType = TypeUtils.createGeneratorTypeRef(scope, extendsYield, tReturn, superNext);
 						return recursiveGeneratorSuperType;
 					} else {
-						val iterableTypeRef = TypeUtils.createTypeRef(scope.iterableType, yieldTypeRefCopy);
+						val iterableTypeRef = G.iterableTypeRef(yieldTypeRefCopy)
 						return iterableTypeRef;
 					}
 				} else {
