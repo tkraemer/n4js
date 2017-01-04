@@ -13,6 +13,8 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
+mathinclude::{find}commands.tex[]
+
 [.n4jslogo]
 image::{find}images/n4jslogo.png[400,400,align="center"]
 
