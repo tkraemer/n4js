@@ -90,14 +90,6 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 
 
 	@Check
-	def void checkFparDefaultInitializer(FormalParameter fpar) {
-		if(fpar.initializer!==null) {
-			unsupported("default initializers for formal parameters", fpar.initializer);
-		}
-	}
-
-
-	@Check
 	def void checkTaggedTemplateLiteral(TaggedTemplateString tts) {
 		unsupported("tagged template literals", tts, N4JSPackage.eINSTANCE.taggedTemplateString_Target);
 	}

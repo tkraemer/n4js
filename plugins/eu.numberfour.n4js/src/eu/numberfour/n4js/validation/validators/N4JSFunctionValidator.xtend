@@ -533,10 +533,10 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 				
 				val off = firstNode.offset;
 				val len = hLeafs.offset - firstNode.offset;
-				addIssue(messageForFUN_NAME_MISSING,functionDeclaration,off,len,FUN_NAME_MISSING);				
+				addIssue(messageForFUN_NAME_MISSING,functionDeclaration,off,len,FUN_NAME_MISSING);
 			} else { 
 			  	// mark complete function.	
-				addIssue(messageForFUN_NAME_MISSING,functionDeclaration,FUN_NAME_MISSING);				
+				addIssue(messageForFUN_NAME_MISSING,functionDeclaration,FUN_NAME_MISSING);
 			}
 			
 		}
@@ -575,29 +575,11 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
-	/**
-	 * IDEBUG-211  Check for ..., ?, and missing name in formal parameters.
-	 *
-	 */
 	@Check
-	def checkParameters(FunctionDefinition fun){
-		holdsModifierOfParamsHaveType(fun.fpars)
-
-		// only optional or variadic after first optional parameter.
-		var sawUndefined = false
-		var FormalParameter firstUndef = null
-		for(p:fun.fpars) {
-			if( ! sawUndefined ) {
-				sawUndefined = ( p.declaredTypeRef?.undefModifier == UndefModifier.OPTIONAL )
-				if( sawUndefined ) firstUndef = p;
-			} else {
-				// first optional already encountered.
-				if( p.declaredTypeRef?.undefModifier != UndefModifier.OPTIONAL &&  (! p.isVariadic ) ){
-					addIssue(messageForFUN_PARAM_OPTIONAL_AT_END,firstUndef, FUN_PARAM_OPTIONAL_AT_END )
-					// only one Error:
-					return
-				}
-			}
+	def void checkOptionalModifier(FormalParameter fpar) {
+		if(fpar.declaredTypeRef?.undefModifier === UndefModifier.OPTIONAL) {
+			val String msg = getMessageForFUN_PARAM_OPTIONAL_WRONG_SYNTAX(fpar.name)
+			addIssue(msg, fpar, FUN_PARAM_OPTIONAL_WRONG_SYNTAX)
 		}
 	}
 
@@ -607,38 +589,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def checkParameters(FunctionTypeExpression fun) {
-		holdsModifierOfParamsHaveTType(fun.fpars)
-
-		// 1. Variadic only once
-		val variadicsCount = fun.fpars.filter[isVariadic].size
-		if ( variadicsCount > 1) {
-			val variadicParams = fun.fpars.filter[isVariadic]
-			addIssue( messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head , FUN_PARAM_VARIADIC_ONLY_LAST )
-
-		}
-		// 2. Variadic is last
-		if( variadicsCount == 1) {
-			val variadicParams = fun.fpars.filter[isVariadic]
-			if( ! fun.fpars.last.isVariadic ) {
-				addIssue( messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head , FUN_PARAM_VARIADIC_ONLY_LAST )
-			}
-		}
-		// 3. only optional or variadic after first optional parameter.
-		var sawUndefined = false
-		var TFormalParameter firstUndef = null
-		for(p:fun.fpars) {
-			if( ! sawUndefined ) {
-				sawUndefined = ( p.typeRef?.undefModifier == UndefModifier.OPTIONAL )
-				if( sawUndefined ) firstUndef = p;
-			} else {
-				// first optional already encountered.
-				if( p.typeRef?.undefModifier != UndefModifier.OPTIONAL &&  (! p.isVariadic ) ){
-					addIssue(messageForFUN_PARAM_OPTIONAL_AT_END,firstUndef, FUN_PARAM_OPTIONAL_AT_END )
-					// only one Error:
-					return
-				}
-			}
-		}
+		internalCheckFormalParameters(fun.fpars);
 	}
 
 	/**
@@ -648,36 +599,23 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	 * */
 	@Check
 	def checkWithStructuralTypeRef(TFunction fun) {
-		holdsModifierOfParamsHaveTType(fun.fpars)
+		internalCheckFormalParameters(fun.fpars);
+	}
+
+	def internalCheckFormalParameters(TFormalParameter[] fpars) {
+		holdsModifierOfParamsHaveTType(fpars)
 
 		// 1. Variadic only once
-		val variadicsCount = fun.fpars.filter[isVariadic].size
-		if ( variadicsCount > 1) {
-			val variadicParams = fun.fpars.filter[isVariadic]
+		val variadicsCount = fpars.filter[isVariadic].size
+		if (variadicsCount > 1) {
+			val variadicParams = fpars.filter[isVariadic]
 			addIssue( messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head , FUN_PARAM_VARIADIC_ONLY_LAST )
-
 		}
 		// 2. Variadic is last
-		if( variadicsCount == 1) {
-			val variadicParams = fun.fpars.filter[isVariadic]
-			if( ! fun.fpars.last.isVariadic ) {
+		if (variadicsCount == 1) {
+			val variadicParams = fpars.filter[isVariadic]
+			if (!fpars.last.isVariadic) {
 				addIssue( messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head , FUN_PARAM_VARIADIC_ONLY_LAST )
-			}
-		}
-		// 3. only optional or variadic after first optional parameter.
-		var sawUndefined = false
-		var TFormalParameter firstUndef = null
-		for(p:fun.fpars) {
-			if( ! sawUndefined ) {
-				sawUndefined = ( p.typeRef?.undefModifier == UndefModifier.OPTIONAL )
-				if( sawUndefined ) firstUndef = p;
-			} else {
-				// first optional already encountered.
-				if( p.typeRef?.undefModifier != UndefModifier.OPTIONAL &&  (! p.isVariadic ) ){
-					addIssue(messageForFUN_PARAM_OPTIONAL_AT_END,firstUndef, FUN_PARAM_OPTIONAL_AT_END )
-					// only one Error:
-					return
-				}
 			}
 		}
 	}
