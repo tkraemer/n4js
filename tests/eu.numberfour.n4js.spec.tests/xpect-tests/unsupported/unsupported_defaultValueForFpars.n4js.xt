@@ -2,24 +2,24 @@
 
 
 
-// XPECT errors --> "Unsupported feature: default initializers for formal parameters." at "42"
+// XPECT noerrors
 function foo(param = 42) {}
 
 
-// XPECT errors --> "Unsupported feature: default initializers for formal parameters." at "42"
+// XPECT noerrors
 (function(param = 42){});
 
 
-// XPECT errors --> "Unsupported feature: default initializers for formal parameters." at "42"
+// XPECT noerrors
 ((param = 42)=>{});
 
 
 class C {
 	
-	// XPECT errors --> "Unsupported feature: default initializers for formal parameters." at "42"
+// XPECT noerrors
 	set s(value = 42) {}
 	
-	// XPECT errors --> "Unsupported feature: default initializers for formal parameters." at "42"
+// XPECT noerrors
 	m(param = 42) {}
 }
 

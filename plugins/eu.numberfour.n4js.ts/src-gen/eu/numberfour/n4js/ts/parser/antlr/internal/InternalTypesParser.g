@@ -4708,6 +4708,17 @@ ruleTAnonymousFormalParameter returns [EObject current=null]
 				}
 			)
 		)
+		{
+			if ($current==null) {
+				$current = createModelElement(grammarAccess.getTAnonymousFormalParameterRule());
+			}
+			newCompositeNode(grammarAccess.getTAnonymousFormalParameterAccess().getFormalParameterDefaultInitializerParserRuleCall_3());
+		}
+		this_FormalParameterDefaultInitializer_4=ruleFormalParameterDefaultInitializer[$current]
+		{
+			$current = $this_FormalParameterDefaultInitializer_4.current;
+			afterParserOrEnumRuleCall();
+		}
 	)
 ;
 
@@ -4783,7 +4794,62 @@ ruleTFormalParameter returns [EObject current=null]
 				}
 			)
 		)
+		{
+			if ($current==null) {
+				$current = createModelElement(grammarAccess.getTFormalParameterRule());
+			}
+			newCompositeNode(grammarAccess.getTFormalParameterAccess().getFormalParameterDefaultInitializerParserRuleCall_4());
+		}
+		this_FormalParameterDefaultInitializer_4=ruleFormalParameterDefaultInitializer[$current]
+		{
+			$current = $this_FormalParameterDefaultInitializer_4.current;
+			afterParserOrEnumRuleCall();
+		}
 	)
+;
+
+
+// Rule FormalParameterDefaultInitializer
+ruleFormalParameterDefaultInitializer[EObject in_current]  returns [EObject current=in_current]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_hasInitializer_0_0=EqualsSign
+				{
+					newLeafNode(lv_hasInitializer_0_0, grammarAccess.getFormalParameterDefaultInitializerAccess().getHasInitializerEqualsSignKeyword_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getFormalParameterDefaultInitializerRule());
+					}
+					setWithLastConsumed($current, "hasInitializer", true, "=");
+				}
+			)
+		)
+		(
+			(
+				otherlv_1=Void
+				{
+					newLeafNode(otherlv_1, grammarAccess.getFormalParameterDefaultInitializerAccess().getVoidKeyword_1_0_0());
+				}
+				this_INT_2=RULE_INT
+				{
+					newLeafNode(this_INT_2, grammarAccess.getFormalParameterDefaultInitializerAccess().getINTTerminalRuleCall_1_0_1());
+				}
+			)
+			    |
+			this_IDENTIFIER_3=RULE_IDENTIFIER
+			{
+				newLeafNode(this_IDENTIFIER_3, grammarAccess.getFormalParameterDefaultInitializerAccess().getIDENTIFIERTerminalRuleCall_1_1());
+			}
+		)
+	)?
 ;
 
 // Entry rule entryRuleUnionTypeExpressionOLD

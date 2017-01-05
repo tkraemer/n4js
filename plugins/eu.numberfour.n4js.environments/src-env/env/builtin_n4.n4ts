@@ -127,7 +127,7 @@ public abstract class N4Classifier extends N4Type {
 	 * @param _static if set, static members are returned as well (false by default).
 	 * @return array of members, may be empty but never null 
 	 */
-	public members(consumed: boolean?, inherited: boolean?, _static: boolean?): Array<? extends N4Member> 
+	public members(consumed: boolean=void 0, inherited: boolean=void 0, _static: boolean=void 0): Array<? extends N4Member> 
 	
 	/**
 	 * Returns all members defined in this classifier (or inherited) with an annotation
@@ -139,7 +139,7 @@ public abstract class N4Classifier extends N4Type {
 	 * @param _static if set, static members are returned as well (false by default).
 	 * @return array of members, may be empty but never null
 	 */
-	public membersWithAnnotation(name: string, consumed: boolean?, inherited: boolean?, _static: boolean?): Array<? extends N4Member> 
+	public membersWithAnnotation(name: string, consumed: boolean=void 0, inherited: boolean=void 0, _static: boolean=void 0): Array<? extends N4Member> 
 	
 	/**
 	 * Returns all data fields defined by this class directly, consumed, and inherited. The boolean flags control which data fields are returned.
@@ -149,7 +149,7 @@ public abstract class N4Classifier extends N4Type {
 	 * @param _static if set, static data fields are returned as well (false by default).
 	 * @return array of data fields, may be empty but never null 
 	 */
-	public dataFields(consumed: boolean?, inherited: boolean?, _static: boolean?): Array<? extends N4DataField>
+	public dataFields(consumed: boolean=void 0, inherited: boolean=void 0, _static: boolean=void 0): Array<? extends N4DataField>
 	
 	/**
 	 * Returns all data fields defined in this classifier (or inherited) with an annotation
@@ -161,7 +161,7 @@ public abstract class N4Classifier extends N4Type {
 	 * @param _static if set, static data fields are returned as well (false by default).
 	 * @return array of data fields, may be empty but never null
 	 */
-	public dataFieldsWithAnnotation(name: string, consumed: boolean?, inherited: boolean?, _static: boolean?): Array<? extends N4DataField>
+	public dataFieldsWithAnnotation(name: string, consumed: boolean=void 0, inherited: boolean=void 0, _static: boolean=void 0): Array<? extends N4DataField>
 	
 	/**
 	 * Returns all methods defined by this class directly, consumed, and inherited. The boolean flags control which methods are returned.
@@ -171,7 +171,7 @@ public abstract class N4Classifier extends N4Type {
 	 * @param _static if set, static methods are returned as well (false by default).
 	 * @return array of methods, may be empty but never null 
 	 */
-	public methods(consumed: boolean?, inherited: boolean?, _static: boolean?): Array<? extends N4Method>
+	public methods(consumed: boolean=void 0, inherited: boolean=void 0, _static: boolean=void 0): Array<? extends N4Method>
 	
 	/**
 	 * Returns all methods defined in this classifier (or inherited) with an annotation
@@ -183,7 +183,7 @@ public abstract class N4Classifier extends N4Type {
 	 * @param _static if set, static methods are returned as well (false by default).
 	 * @return array of methods, may be empty but never null
 	 */
-	public methodsWithAnnotation(name: string, consumed: boolean?, inherited: boolean?, _static: boolean?): Array<? extends N4Method>
+	public methodsWithAnnotation(name: string, consumed: boolean=void 0, inherited: boolean=void 0, _static: boolean=void 0): Array<? extends N4Method>
 }
 
 /**

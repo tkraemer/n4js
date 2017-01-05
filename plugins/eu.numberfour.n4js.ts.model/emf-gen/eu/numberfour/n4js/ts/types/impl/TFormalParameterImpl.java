@@ -7,18 +7,20 @@
  */
 package eu.numberfour.n4js.ts.types.impl;
 
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement;
 import eu.numberfour.n4js.ts.types.TAnnotableElement;
 import eu.numberfour.n4js.ts.types.TAnnotation;
 import eu.numberfour.n4js.ts.types.TFormalParameter;
+import eu.numberfour.n4js.ts.types.TFunction;
 import eu.numberfour.n4js.ts.types.TypesPackage;
-import eu.numberfour.n4js.ts.types.UndefModifier;
 
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
+import java.util.ListIterator;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -45,6 +47,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#getAstElement <em>Ast Element</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#isVariadic <em>Variadic</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#isHasInitializer <em>Has Initializer</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#getTypeRef <em>Type Ref</em>}</li>
  * </ul>
  *
@@ -90,6 +93,26 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	 * @ordered
 	 */
 	protected boolean variadic = VARIADIC_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isHasInitializer() <em>Has Initializer</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isHasInitializer()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean HAS_INITIALIZER_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isHasInitializer() <em>Has Initializer</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isHasInitializer()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean hasInitializer = HAS_INITIALIZER_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getTypeRef() <em>Type Ref</em>}' containment reference.
@@ -196,6 +219,27 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isHasInitializer() {
+		return hasInitializer;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setHasInitializer(boolean newHasInitializer) {
+		boolean oldHasInitializer = hasInitializer;
+		hasInitializer = newHasInitializer;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER, oldHasInitializer, hasInitializer));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TypeRef getTypeRef() {
 		return typeRef;
 	}
@@ -240,7 +284,33 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	 * @generated
 	 */
 	public boolean isOptional() {
-		return ((this.getTypeRef() != null) && (this.getTypeRef().getUndefModifier() == UndefModifier.OPTIONAL));
+		EList<TFormalParameter> fpars = null;
+		EObject _eContainer = this.eContainer();
+		if ((_eContainer instanceof TFunction)) {
+			EObject _eContainer_1 = this.eContainer();
+			EList<TFormalParameter> _fpars = ((TFunction) _eContainer_1).getFpars();
+			fpars = _fpars;
+		}
+		EObject _eContainer_2 = this.eContainer();
+		if ((_eContainer_2 instanceof FunctionTypeExprOrRef)) {
+			EObject _eContainer_3 = this.eContainer();
+			EList<TFormalParameter> _fpars_1 = ((FunctionTypeExprOrRef) _eContainer_3).getFpars();
+			fpars = _fpars_1;
+		}
+		if ((fpars == null)) {
+			return false;
+		}
+		int idx = fpars.indexOf(this);
+		ListIterator<TFormalParameter> iter = fpars.listIterator(idx);
+		while (iter.hasNext()) {
+			{
+				final TFormalParameter fpar = iter.next();
+				if (((!fpar.isVariadic()) && (!fpar.isHasInitializer()))) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -307,6 +377,8 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 				return basicGetAstElement();
 			case TypesPackage.TFORMAL_PARAMETER__VARIADIC:
 				return isVariadic();
+			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER:
+				return isHasInitializer();
 			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
 				return getTypeRef();
 		}
@@ -332,6 +404,9 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 			case TypesPackage.TFORMAL_PARAMETER__VARIADIC:
 				setVariadic((Boolean)newValue);
 				return;
+			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER:
+				setHasInitializer((Boolean)newValue);
+				return;
 			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
 				setTypeRef((TypeRef)newValue);
 				return;
@@ -356,6 +431,9 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 			case TypesPackage.TFORMAL_PARAMETER__VARIADIC:
 				setVariadic(VARIADIC_EDEFAULT);
 				return;
+			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER:
+				setHasInitializer(HAS_INITIALIZER_EDEFAULT);
+				return;
 			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
 				setTypeRef((TypeRef)null);
 				return;
@@ -377,6 +455,8 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 				return astElement != null;
 			case TypesPackage.TFORMAL_PARAMETER__VARIADIC:
 				return variadic != VARIADIC_EDEFAULT;
+			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER:
+				return hasInitializer != HAS_INITIALIZER_EDEFAULT;
 			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
 				return typeRef != null;
 		}
@@ -457,6 +537,8 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (variadic: ");
 		result.append(variadic);
+		result.append(", hasInitializer: ");
+		result.append(hasInitializer);
 		result.append(')');
 		return result.toString();
 	}

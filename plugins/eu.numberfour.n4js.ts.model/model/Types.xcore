@@ -35,6 +35,8 @@ import java.util.List
 import org.eclipse.emf.ecore.EMap
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.emf.common.util.EList
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 
 type IterableOfTClassifier wraps Iterable<? extends TClassifier>
 type Variance wraps Variance
@@ -1259,10 +1261,29 @@ class TStructMethod extends TMethod, TStructMember {
 
 class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRelatedTElement {
 	boolean variadic
+	boolean hasInitializer
 	contains TypeRef typeRef
-	/* Convenience method, returns true if typeRef undef modifier is optional. If type ref is not set, false is returned. */
+	
+	/* Convenience method, returns true if this and all following fparams are variadic or have an initializer. */
 	op boolean isOptional() {
-		typeRef !== null && typeRef.undefModifier === UndefModifier.OPTIONAL
+		var EList<TFormalParameter> fpars = null;
+		if (eContainer instanceof TFunction)
+			fpars = (eContainer as TFunction).fpars;
+		if (eContainer instanceof FunctionTypeExprOrRef)
+			fpars = (eContainer as FunctionTypeExprOrRef).fpars;
+		if (fpars === null)
+			return false;
+		
+		var idx = fpars.indexOf(this);
+		var iter = fpars.listIterator(idx);
+		
+		while (iter.hasNext) {
+			val fpar = iter.next;
+			if (!fpar.isVariadic && !fpar.hasInitializer) {
+				return false;
+			}
+		}
+		return true;
 	}
 	/* Convenience method, returns true if typeRef undef modifier is optional or variadic. */
 	op boolean isVariadicOrOptional() {

@@ -1,6 +1,6 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
-/* IDEBUG-188: 
+/* IDEBUG-188:
    Set/Get:
 	   wrong number of args in getter/setter lead to parse-errors 
 	   and break the following code. No xPECT-test possible
@@ -8,12 +8,12 @@
    Function Deklarations:
    Function Expressions:
    Function Type Expressions:
-     all of them must adhere to the Constraints 62-2	   
+     all of them must adhere to the Constraints 62-2
  */
 class A {
 	
-	get s () : number { return 3; } 
-	// no varargs here! 
+	get s () : number { return 3; }
+	// no varargs here!
 	// XPECT errors --> "Variadic parameter is not allowed in setter declarations." at "... fe : number"
 	set s (... fe : number) {}
 		
@@ -23,11 +23,11 @@ class A {
 /// -- Method declarations --
 ///////////////////////		
 	// XPECT errors --> "Only the last formal parameter can be variadic." at "..."
-	f4 (...a : number, b : number, c : number?) {}
+	f4 (...a : number, b : number, c : number=undefined) {}
 	// XPECT errors --> "Only the last formal parameter can be variadic." at "..."
-	f5 (a : number, ...b : number, c : number?) {}
+	f5 (a : number, ...b : number, c : number=undefined) {}
 	// XPECT errors --> "Only the last formal parameter can be variadic." at "..."
-	f6 (a : number, ...b : number, c : number?) {}
+	f6 (a : number, ...b : number, c : number=undefined) {}
 	// XPECT errors --> "Only the last formal parameter can be variadic." at "..."
 	f7 (a : number, ...b : number, c : number) {}
 	// XPECT errors --> "Only the last formal parameter can be variadic." at "..."
@@ -40,11 +40,11 @@ class A {
 /// -- Function declarations --
 ///////////////////////
 // XPECT errors --> "Only the last formal parameter can be variadic." at "..."
-function f4 (...a : number, b : number, c : number?) {}
+function f4 (...a : number, b : number, c : number=undefined) {}
 // XPECT errors --> "Only the last formal parameter can be variadic." at "..."
-function f5 (a : number, ...b : number, c : number?) {}
+function f5 (a : number, ...b : number, c : number=undefined) {}
 // XPECT errors --> "Only the last formal parameter can be variadic." at "..."
-function f6 (a : number, ...b : number, c : number?) {}
+function f6 (a : number, ...b : number, c : number=undefined) {}
 // XPECT errors --> "Only the last formal parameter can be variadic." at "..."
 function f7 (a : number, ...b : number, c : number) {}
 // XPECT errors --> "Only the last formal parameter can be variadic." at "..."
@@ -53,9 +53,9 @@ function f8 (a : number, ...b : number, ...c : number) {}
 // XPECT noerrors --> "mmmm"
 function f9_OK (a : number, b : number, ...c : number) {}
 // XPECT noerrors --> "mmmm"
-function f10_OK (a : number, b : number?, ...c : number) {}
+function f10_OK (a : number, b : number=undefined, ...c : number) {}
 // XPECT noerrors --> "mmmm"
-function f11_OK (a : number?, b : number?, ...c : number) {}
+function f11_OK (a : number=undefined, b : number=undefined, ...c : number) {}
 
 
 //////////////////////////
@@ -63,18 +63,18 @@ function f11_OK (a : number?, b : number?, ...c : number) {}
 ///////////////////////
 // XPECT errors -->"Only the last formal parameter can be variadic." at "..."
 var result1 : number = function (... a : number, b : number, c : number) : number { return b+2 } (13,0,0)
-var resultOK1 : number = function fOK12 (a : number, b : number?, ... c : number) : number {return a;} (1,2,3);
+var resultOK1 : number = function fOK12 (a : number, b : number=undefined, ... c : number) : number {return a;} (1,2,3);
 
 
 //////////////////////////
 /// -- Function types --
 ///////////////////////
 // XPECT errors --> "Only the last formal parameter can be variadic." at "...a : number"
-var dynf4 : { function (...a : number, b : number, c : number?) : void };
+var dynf4 : { function (...a : number, b : number, c : number=undefined) : void };
 // XPECT errors --> "Only the last formal parameter can be variadic." at "...b : number"
-var dynf5 : { function (a : number, ...b : number, c : number?) : void };
+var dynf5 : { function (a : number, ...b : number, c : number=undefined) : void };
 // XPECT errors --> "Only the last formal parameter can be variadic." at "...b : number"
-var dynf6 : { function (a : number , ...b : number, c : number?) :void };
+var dynf6 : { function (a : number , ...b : number, c : number=undefined) :void };
 // XPECT errors --> "Only the last formal parameter can be variadic." at "...b : number"
 var dynf7 : { function (a : number, ...b : number, c : number) :void };
 // XPECT errors --> "Only the last formal parameter can be variadic." at "...b : number"
@@ -83,9 +83,9 @@ var dynf8 : { function (a : number, ...b : number, ...c : number) : void };
 // XPECT noerrors --> "mmmm"
 var dynf9 : { function (a : number, b : number, ...c : number) : void };
 // XPECT noerrors --> "mmmm"
-var dynf10 : { function (a : number, b : number?, ...c : number) : void };
+var dynf10 : { function (a : number, b : number=undefined, ...c : number) : void };
 // XPECT noerrors --> "mmmm"
-var dynf11 : { function (a : number?, b : number?, ...c : number) : void };
+var dynf11 : { function (a : number=undefined, b : number=undefined, ...c : number) : void };
 
 
 

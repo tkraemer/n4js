@@ -63,7 +63,7 @@ public providedByRuntime object Object @Global {
 	 * 
 	 * @see ES5, 15.2.3.5
 	 */
-	public static create(proto: Object, props: Object?): Object
+	public static create(proto: Object, props: Object=void 0): Object
 	/**
 	 * Adds/changes a property to/of the given object.
 	 * 
@@ -125,7 +125,7 @@ public providedByRuntime object Object @Global {
 	 * Standard built-in Object-constructor.
 	 * @see ES5, 15.2.4.1
 	 */
-	public constructor(value: any?): void
+	public constructor(value: any=void 0): void
 	/**
 	 * Returns either "[object undefined]", "[object null]" or "[object " + class + and "]"
 	 * 
@@ -207,7 +207,7 @@ public providedByRuntime final object Function extends Object @Global {
 	public static get prototype(): Function
 	
 	/**
-	 * The value of the prototype property is used to initialise the [[Prototype]] internal property of a newly created object before the Function object is invoked as a constructor for that newly created object. This property has the attribute { [[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: false }.
+	 * The value of the prototype property is used to initialize the [[Prototype]] internal property of a newly created object before the Function object is invoked as a constructor for that newly created object. This property has the attribute { [[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: false }.
 	 *	NOTE Function objects created using Function.prototype.bind do not have a prototype property.
 	 * 
 	 * @see ES5 15.3.5.2
@@ -227,7 +227,7 @@ public providedByRuntime final object Function extends Object @Global {
 	 * @see ES5, 15.3.4.1
 	 * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function#Syntax
 	 */
-	// in WebStorm: new Function(args: Arguments?)
+	// in WebStorm: new Function(args: Arguments=void 0)
 	// in TypeScript: new Function(...args : string[])
 	public constructor (...args: string): void // note: keep this signature (except return type) aligned with the callable constructor above
 	
@@ -267,7 +267,7 @@ public providedByRuntime final object Function extends Object @Global {
 	/**
 	 * The value of the length property is an integer that indicates the ―typical‖ number of arguments expected by
      * the function. However, the language permits the function to be invoked with some other number of arguments.
-     * The behaviour of a function when invoked on a number of arguments other than the number specified by its
+     * The behavior of a function when invoked on a number of arguments other than the number specified by its
      * length property depends on the function. 
 	 *
 	 * @see ES5, 15.3.5.1
@@ -322,13 +322,13 @@ public providedByRuntime  object Array<T> extends Object indexed T @Global {
 	public static isArray(obj: any): boolean
 	
 	/**
-	 * Initialises an array either with a certain length or with the given list of items.
+	 * Initializes an array either with a certain length or with the given list of items.
 	 *
 	 * @see ES5, 15.4.4.1 
 	 */
 	// in WebStorm: new Array(...*)
 	// in TypeScript: new Array(arrayLength) or new Array(...items : any[])
-	public constructor(first: union{number, T}?, ...items: T): void  // TODO: signature is type unsafe, allows to create arrays with elements of wrong type, new Array<string>(5, "x", "y"), but cannot write constructor(union {number, T... items}? items)
+	public constructor(first: union{number, T}=void 0, ...items: T): void  // TODO: signature is type unsafe, allows to create arrays with elements of wrong type, new Array<string>(5, "x", "y"), but cannot write constructor(items : union {number, T... items}=void 0)
 
 	// 15.4.4.2 Array.prototype.toString ( ) inherited
 	// 15.4.4.3 Array.prototype.toLocaleString ( ) inherited
@@ -347,7 +347,7 @@ public providedByRuntime  object Array<T> extends Object indexed T @Global {
 	 *
 	 * @see ES5, 15.4.4.5
 	 */
-	public join(separator: string?): string
+	public join(separator: string=void 0): string
 	/**
 	 * The last element of the array is removed from the array and returned.
 	 *
@@ -381,15 +381,15 @@ public providedByRuntime  object Array<T> extends Object indexed T @Global {
 	 *
      * @see ES5, 15.4.4.10
 	 */
-	public slice(start: number?, end: number?): Array<T>
+	public slice(start: number=void 0, end: number=void 0): Array<T>
 	/**
 	 * The elements of this array are sorted. The sort is not necessarily stable (that is, elements that compare equal
-     * do not necessarily remain in their original order). If  comparefn is not undefined, it should be a function that
+     * do not necessarily remain in their original order). If  compareFn is not undefined, it should be a function that
      * accepts two arguments x and y and returns a negative value if x &lt; y, zero if x = y, or a positive value if x &gt; y.
 	 *
      * @see ES5, 15.4.4.11
 	 */
-	public sort(compareFn: {function (x: T, y: T) : number}?): Array<T>
+	public sort(compareFn: {function (x: T, y: T) : number}=void 0): Array<T>
 	/**
 	 * When the splice method is called with two or more arguments start, deleteCount and (optionally) item1, item2,
      * etc., the deleteCount elements of the array starting at array index  start are replaced by the arguments item1,
@@ -397,7 +397,7 @@ public providedByRuntime  object Array<T> extends Object indexed T @Global {
 	 *
      * @see ES5, 15.4.4.12
 	 */
-	public splice(start: number?, deleteCount: number?, ...items: T): Array<T>
+	public splice(start: number=void 0, deleteCount: number=void 0, ...items: T): Array<T>
 	/**
 	 * The arguments are prepended to the start of the array, such that their order within the array is the same as the
      * order in which they appear in the argument list.
@@ -417,7 +417,7 @@ public providedByRuntime  object Array<T> extends Object indexed T @Global {
 	 *
      * @see ES5, 15.4.4.14
 	 */
-	public indexOf(searchElement: any, fromIndex: number?): number
+	public indexOf(searchElement: any, fromIndex: number=void 0): number
 	/**
 	 * lastIndexOf compares  searchElement to  the  elements  of  the  array  in  descending  order using  the  internal
      * Strict Equality Comparison Algorithm (11.9.6), and if found at one or more positions, returns the index of the
@@ -429,111 +429,111 @@ public providedByRuntime  object Array<T> extends Object indexed T @Global {
 	 *
      * @see ES5, 15.4.4.15
 	 */
-	public lastIndexOf(searchElement: any, fromIndex: number?): number
+	public lastIndexOf(searchElement: any, fromIndex: number=void 0): number
 	/**
-	 * callbackfn  should  be  a  function  that  accepts  three  arguments  and  returns  a  value  that  is  coercible  to  the
-	 * Boolean value true or false. every calls callbackfn once for each element present in the array, in ascending
-	 * order, until it finds one where callbackfn returns false. If such an element is found, every immediately returns
-	 * false. Otherwise, if callbackfn returned true for all elements, every will return true. callbackfn is called only for
+	 * callback  should  be  a  function  that  accepts  three  arguments  and  returns  a  value  that  is  coercible  to  the
+	 * Boolean value true or false. every calls callback once for each element present in the array, in ascending
+	 * order, until it finds one where callback returns false. If such an element is found, every immediately returns
+	 * false. Otherwise, if callback returned true for all elements, every will return true. callback is called only for
 	 * elements of the array which actually exist; it is not called for missing elements of the array.
-	 * <p>If a thisArg parameter is provided, it will be used as the this value for each invocation of callbackfn. If it is not
+	 * <p>If a thisArg parameter is provided, it will be used as the this value for each invocation of callback. If it is not
 	 * provided, undefined is used instead.
-	 * <p>callbackfn is called with three arguments: the value of the element, the index of the element, and the object
+	 * <p>callback is called with three arguments: the value of the element, the index of the element, and the object
 	 * being traversed.
 	 * <p>every does not directly mutate the object on which it is called but the object may be mutated by the calls to
-	 * callbackfn.
-	 * <p>The  range  of  elements  processed  by  every is  set  before  the  first  call  to  callbackfn.  Elements  which  are
-	 * appended to the array after the call to every begins will not be visited by callbackfn. If existing elements of the
-	 * array  are  changed,  their  value  as  passed  to  callbackfn  will  be  the  value  at  the  time  every visits  them;
+	 * callback.
+	 * <p>The  range  of  elements  processed  by  every is  set  before  the  first  call  to  callback.  Elements  which  are
+	 * appended to the array after the call to every begins will not be visited by callback. If existing elements of the
+	 * array  are  changed,  their  value  as  passed  to  callback  will  be  the  value  at  the  time  every visits  them;
 	 * elements that are deleted after the call to every begins and before being visited are not visited. every acts
 	 * like the "for all" quantifier in mathematics. In particular, for an empty array, it returns true.
 	 *
      * @see ES5, 15.4.4.16
 	 */
-	public <ThisT extends Object> every(callback: {function(value: T, index: number, traversedObject: Array<T>)}, thisObject: ThisT?): boolean
+	public <ThisT extends Object> every(callback: {function(value: T, index: number, traversedObject: Array<T>)}, thisObject: ThisT=void 0): boolean
 		/**
-	 * callbackfn  should  be  a  function  that  accepts  three  arguments  and  returns  a  value  that  is  coercible  to  the
-	 * Boolean value true or false. some calls callbackfn once for each element present in the array, in ascending
-	 * order, until it finds one where callbackfn returns true. If such an element is found, some immediately returns
-	 * true. Otherwise, some returns false. callbackfn is called only for elements of the array which actually exist; it is
+	 * callback  should  be  a  function  that  accepts  three  arguments  and  returns  a  value  that  is  coercible  to  the
+	 * Boolean value true or false. some calls callback once for each element present in the array, in ascending
+	 * order, until it finds one where callback returns true. If such an element is found, some immediately returns
+	 * true. Otherwise, some returns false. callback is called only for elements of the array which actually exist; it is
 	 * not called for missing elements of the array.
-	 * <p>If a thisArg parameter is provided, it will be used as the this value for each invocation of callbackfn. If it is not
+	 * <p>If a thisArg parameter is provided, it will be used as the this value for each invocation of callback. If it is not
 	 * provided, undefined is used instead.
-	 * <p>callbackfn is called with three arguments: the value of the element, the index of the element, and the object
+	 * <p>callback is called with three arguments: the value of the element, the index of the element, and the object
 	 * being traversed.
 	 * <p>some does not directly mutate the object on which it is called but the object may be mutated by the calls to
-	 * callbackfn.
-	 * <p>The range of elements processed by some is set before the first call to callbackfn. Elements that are appended
-	 * to the array after the call to some begins will not be visited by callbackfn. If existing elements of the array are
-	 * changed, their value as passed to callbackfn will be the value at the time that some visits them; elements that
+	 * callback.
+	 * <p>The range of elements processed by some is set before the first call to callback. Elements that are appended
+	 * to the array after the call to some begins will not be visited by callback. If existing elements of the array are
+	 * changed, their value as passed to callback will be the value at the time that some visits them; elements that
 	 * are deleted after the call to some begins and before being visited are not visited.  some acts like the "exists"
 	 * quantifier in mathematics. In particular, for an empty array, it returns false.
 	 *
      * @see ES5, 15.4.4.17
 	 */
-	public <ThisT extends Object> some(callback: {function(value: T, index: number, traversedObject: Array<T>) : boolean}, thisObject: ThisT?): boolean
+	public <ThisT extends Object> some(callback: {function(value: T, index: number, traversedObject: Array<T>) : boolean}, thisObject: ThisT=void 0): boolean
 	/**
-	 * callbackfn should be a function that accepts three arguments. forEach calls callbackfn once for each element
-	 * present in the array, in ascending order. callbackfn is called only for elements of the array which actually exist;
+	 * callback should be a function that accepts three arguments. forEach calls callback once for each element
+	 * present in the array, in ascending order. callback is called only for elements of the array which actually exist;
 	 * it is not called for missing elements of the array.
-	 * <p>If a thisArg parameter is provided, it will be used as the this value for each invocation of callbackfn. If it is not
+	 * <p>If a thisArg parameter is provided, it will be used as the this value for each invocation of callback. If it is not
 	 * provided, undefined is used instead.
-	 * <p>callbackfn is called with three arguments: the value of the element, the index of the  element, and the object
+	 * <p>callback is called with three arguments: the value of the element, the index of the  element, and the object
 	 * being traversed.
 	 * <p>forEach does not directly mutate the object on which it is called but the object may be mutated by the calls to
-	 * callbackfn.
-	 * <p>The  range  of  elements  processed  by  forEach is  set  before  the  first  call  to  callbackfn.  Elements  which  are
-	 * appended to the array after the call to forEach begins will not be visited by callbackfn. If existing elements of
+	 * callback.
+	 * <p>The  range  of  elements  processed  by  forEach is  set  before  the  first  call  to  callback.  Elements  which  are
+	 * appended to the array after the call to forEach begins will not be visited by callback. If existing elements of
 	 * the array are changed, their value as passed to callback will be the value at the time  forEach visits them;
 	 * elements that are deleted after the call to forEach begins and before being visited are not visited.
 	 *
      * @see ES5, 15.4.4.18
 	 */
-	public <ThisT extends Object> forEach(callback: {function(value: T, index: number, traversedObject: Array<T>) : void}, thisObject: ThisT?): void
+	public <ThisT extends Object> forEach(callback: {function(value: T, index: number, traversedObject: Array<T>) : void}, thisObject: ThisT=void 0): void
 	/**
-	 * callbackfn should be a function that accepts three arguments. map calls callbackfn once for each element in the
-	 * array, in ascending order, and constructs a new Array from the results. callbackfn is called only for elements of
+	 * callback should be a function that accepts three arguments. map calls callback once for each element in the
+	 * array, in ascending order, and constructs a new Array from the results. callback is called only for elements of
 	 * the array which actually exist; it is not called for missing elements of the array.
-	 * <p>If a thisArg parameter is provided, it will be used as the this value for each invocation of callbackfn. If it is not
+	 * <p>If a thisArg parameter is provided, it will be used as the this value for each invocation of callback. If it is not
 	 * provided, undefined is used instead.
-	 * <p>callbackfn is called with three arguments: the value of the element, the index of the element, and the object
+	 * <p>callback is called with three arguments: the value of the element, the index of the element, and the object
 	 * being traversed.
 	 * <p>map does not directly mutate the object on  which it is called but the object may  be mutated by the calls to
-	 * callbackfn.
-	 * <p>The  range  of  elements  processed  by  map is  set  before  the  first  call  to  callbackfn.  Elements  which  are
-	 * appended to the array after the call to map begins will not be visited by callbackfn. If existing elements of the
-	 * array are changed, their value as passed to callbackfn will be the value at the time map visits them; elements
+	 * callback.
+	 * <p>The  range  of  elements  processed  by  map is  set  before  the  first  call  to  callback.  Elements  which  are
+	 * appended to the array after the call to map begins will not be visited by callback. If existing elements of the
+	 * array are changed, their value as passed to callback will be the value at the time map visits them; elements
 	 * that are deleted after the call to map begins and before being visited are not visited.
 	 *
      * @see ES5, 15.4.4.19
 	 */
-	public <U, ThisT extends Object> map(callback: {function(value: T, index: number, traversedObject: Array<T>) : U}, thisObject: ThisT?): Array<U>
+	public <U, ThisT extends Object> map(callback: {function(value: T, index: number, traversedObject: Array<T>) : U}, thisObject: ThisT=void 0): Array<U>
 
 	/**
-	 * callbackfn  should  be  a  function  that  accepts  three  arguments  and  returns  a  value  that  is  coercible  to  the
-	 * Boolean value true or false. filter calls callbackfn once for each element in the array, in ascending order,
-	 * and  constructs  a  new  array  of  all  the values  for  which  callbackfn  returns  true.  callbackfn  is  called  only  for
+	 * callback  should  be  a  function  that  accepts  three  arguments  and  returns  a  value  that  is  coercible  to  the
+	 * Boolean value true or false. filter calls callback once for each element in the array, in ascending order,
+	 * and  constructs  a  new  array  of  all  the values  for  which  callback  returns  true.  callback  is  called  only  for
 	 * elements of the array which actually exist; it is not called for missing elements of the array.
-	 * If a thisArg parameter is provided, it will be used as the this value for each invocation of callbackfn. If it is not
+	 * If a thisArg parameter is provided, it will be used as the this value for each invocation of callback. If it is not
 	 * provided, undefined is used instead.
-	 * <p>callbackfn is called with three arguments: the value of the element, the index of the element, and the object
+	 * <p>callback is called with three arguments: the value of the element, the index of the element, and the object
 	 * being traversed.
 	 * <p>filter does not directly mutate the object on which it is called but the object may be mutated by the calls to
-	 * callbackfn.
-	 * <p>The  range  of  elements  processed  by  filter is  set  before  the  first  call  to  callbackfn.  Elements  which  are
-	 * appended to the array after the call to filter begins will not be visited by callbackfn. If existing elements of
-	 * the array  are changed their value as passed to  callbackfn will be the  value at the time  filter visits them;
+	 * callback.
+	 * <p>The  range  of  elements  processed  by  filter is  set  before  the  first  call  to  callback.  Elements  which  are
+	 * appended to the array after the call to filter begins will not be visited by callback. If existing elements of
+	 * the array  are changed their value as passed to  callback will be the  value at the time  filter visits them;
 	 * elements that are deleted after the call to filter begins and before being visited are not visited.
 	 *
      * @see ES5, 15.4.4.20
 	 */
-	public <ThisT extends Object> filter(callback: {function(value: T, index: number, traversedObject: Array<T>) : boolean}, thisObject: ThisT?): Array<T>
+	public <ThisT extends Object> filter(callback: {function(value: T, index: number, traversedObject: Array<T>) : boolean}, thisObject: ThisT=void 0): Array<T>
 	// since ECMAScript 5
 
 	/**
-	 * callbackfn should be a function that takes four arguments. reduce calls the callback, as a function, once for
+	 * callback should be a function that takes four arguments. reduce calls the callback, as a function, once for
 	 * each element present in the array, in ascending order.
-	 * <p>callbackfn is called with four arguments: the previousValue (or value from the previous call to callbackfn), the
+	 * <p>callback is called with four arguments: the previousValue (or value from the previous call to callback), the
 	 * currentValue (value of the current element), the currentIndex, and the object being traversed.  The first time
 	 * that callback is  called, the  previousValue and currentValue can  be one of two  values. If an  initialValue  was
 	 * provided in the call to reduce, then previousValue will be equal to initialValue and currentValue will be equal
@@ -541,19 +541,19 @@ public providedByRuntime  object Array<T> extends Object indexed T @Global {
 	 * in the array and currentValue will be equal to the second. It is a TypeError if the array contains no elements
 	 * and initialValue is not provided.
 	 * <p>reduce does not directly mutate the object on which it is called but the object may be mutated by the calls to
-	 * callbackfn.
-	 * <p>The  range  of  elements  processed  by  reduce is  set  before  the  first  call  to  callbackfn.  Elements  that  are
-	 * appended to the array after the call to reduce begins will not be visited by callbackfn. If existing elements of
-	 * the array are changed, their value as passed to  callbackfn will be the value at the time reduce visits them;
+	 * callback.
+	 * <p>The  range  of  elements  processed  by  reduce is  set  before  the  first  call  to  callback.  Elements  that  are
+	 * appended to the array after the call to reduce begins will not be visited by callback. If existing elements of
+	 * the array are changed, their value as passed to  callback will be the value at the time reduce visits them;
 	 * elements that are deleted after the call to reduce begins and before being visited are not visited.
 	 *
 	 * @see ES5, 15.4.4.21
 	 */
-	public <MemoT> reduce(callback: {function(previousValue: MemoT, currentValue: T, index: number, traversedObject: Array<T>) : MemoT}, initialValue: MemoT?): MemoT
+	public <MemoT> reduce(callback: {function(previousValue: MemoT, currentValue: T, index: number, traversedObject: Array<T>) : MemoT}, initialValue: MemoT=void 0): MemoT
 	/**
-	 * callbackfn  should  be  a  function  that  takes  four  arguments.  reduceRight calls  the  callback,  as  a  function,
+	 * callback  should  be  a  function  that  takes  four  arguments.  reduceRight calls  the  callback,  as  a  function,
 	 * once for each element present in the array, in descending order.
-	 * <p>callbackfn  is called  with four arguments: the  previousValue (or value from the previous call to  callbackfn), the
+	 * <p>callback  is called  with four arguments: the  previousValue (or value from the previous call to  callback), the
 	 * currentValue (value of the current element), the currentIndex, and the object being traversed. The first time the
 	 * function is called, the previousValue and currentValue can be one of two values. If an initialValue was provided
 	 * in the call to reduceRight, then previousValue will be equal to initialValue and currentValue will be equal to the
@@ -561,16 +561,16 @@ public providedByRuntime  object Array<T> extends Object indexed T @Global {
 	 * array  and  currentValue  will  be  equal  to  the  second-to-last  value. It  is  a  TypeError if  the  array  contains  no
 	 * elements and initialValue is not provided.
 	 * <p>reduceRight does not directly mutate the object on which it is called but the object may be mutated by the
-	 * calls to callbackfn.
-	 * <p>The range of elements processed by reduceRight is set before the first call to callbackfn. Elements that are
-	 * appended  to  the  array  after  the  call  to  reduceRight begins  will  not  be  visited  by  callbackfn.  If  existing
-	 * elements of the array are changed by callbackfn, their value as passed to callbackfn will be the value at the
+	 * calls to callback.
+	 * <p>The range of elements processed by reduceRight is set before the first call to callback. Elements that are
+	 * appended  to  the  array  after  the  call  to  reduceRight begins  will  not  be  visited  by  callback.  If  existing
+	 * elements of the array are changed by callback, their value as passed to callback will be the value at the
 	 * time reduceRight visits them; elements that are deleted after the call to reduceRight begins and before
 	 * being visited are not visited.
 	 *
 	 * @see ES5, 15.4.4.22
 	 */
-	public <MemoT> reduceRight(callback: {function(previousValue: MemoT, currentValue: T, index: number, traversedObject: Array<T>) : MemoT}, initialValue: MemoT?): MemoT
+	public <MemoT> reduceRight(callback: {function(previousValue: MemoT, currentValue: T, index: number, traversedObject: Array<T>) : MemoT}, initialValue: MemoT=void 0): MemoT
 	
 	/**
 	 * The length property of this Array object is a data property whose value is always numerically greater than
@@ -634,7 +634,7 @@ public providedByRuntime final object String extends Object indexed string @Glob
 	 *
 	 * @see ES5, 15.5.4.1 String.prototype.constructor
 	 */
-	public constructor(value: any?): void
+	public constructor(value: any=void 0): void
 	
 	// 15.5.4.2 String.prototype.toString ( ) inherited
 	
@@ -678,7 +678,7 @@ public providedByRuntime final object String extends Object indexed string @Glob
 	 *
 	 * @see ES5, 15.5.4.7
 	 */
-	public indexOf(searchString: string, position: number?): number
+	public indexOf(searchString: string, position: number=void 0): number
 	/**
 	 * If searchString appears as a substring of the result of converting this object to a String at one or more positions
 	 * that  are  smaller  than  or  equal  to  position,  then  the  index  of  the  greatest  such  position  is  returned;
@@ -687,7 +687,7 @@ public providedByRuntime final object String extends Object indexed string @Glob
 	 *
 	 * @see ES5, 15.5.4.8
 	 */
-	public lastIndexOf(searchString: string, position: number?): number
+	public lastIndexOf(searchString: string, position: number=void 0): number
 	/**
 	 * When the localeCompare method is called with one argument that, it returns a Number other than NaN that
 	 * represents the result of a locale-sensitive String comparison of the this value (converted to a String) with that
@@ -699,7 +699,7 @@ public providedByRuntime final object String extends Object indexed string @Glob
 	 * optional parameters see MDN, are declared as "reserved" in ECMAScript 6
 	 * @see ES5, 15.5.4.9
 	 */
-	public localeCompare(that: string, locales: string?, options: any+?): number
+	public localeCompare(that: string, locales: string=void 0, options: any+=void 0): number
 	/**
 	 * Searches the given string for a match against a regular expression and returns the matches as an Array object.
 	 *
@@ -731,7 +731,7 @@ public providedByRuntime final object String extends Object indexed string @Glob
 	 *
 	 * @see ES5, 15.5.4.13
 	 */
-	public slice(start: number, end: number?): string
+	public slice(start: number, end: number=void 0): string
 	/**
 	 * Returns  an  Array  object  into  which  substrings  of  the  result  of  converting  this  object  to  a  String  have  been
 	 * stored.  The  substrings  are  determined  by  searching  from  left  to  right  for  occurrences  of  separator;  these
@@ -756,7 +756,7 @@ public providedByRuntime final object String extends Object indexed string @Glob
 	 *
 	 * @see ES5, 15.5.4.14
 	 */
-	public split(separator: any, limit: number?): Array<string>
+	public split(separator: any, limit: number=void 0): Array<string>
 	/**
 	 * The substring method takes two arguments, start and end, and returns a substring of the result of converting
 	 * this object to a String, starting from character position start and running to, but not including, character position
@@ -768,7 +768,7 @@ public providedByRuntime final object String extends Object indexed string @Glob
 	 *
 	 * @see ES5, 15.5.4.15
 	 */
-	public substring(start: number, end: number?): string
+	public substring(start: number, end: number=void 0): string
 	/**
 	 * Produces a String where each of its characters are either the Unicode lowercase equivalent of the corresponding
      * character in the given String or the actual corresponding character of the given String if no Unicode lowercase equivalent exists.
@@ -861,7 +861,7 @@ public providedByRuntime final object Boolean extends Object @Global {
 	 *
 	 * @see ES5, 15.6.2
 	 */
-	public constructor(value: any?): void
+	public constructor(value: any=void 0): void
 
 	/**
 	 * @see ES5, 15.6.4.3
@@ -915,7 +915,7 @@ public providedByRuntime final object Number extends Object @Global {
 	 *
 	 * @see ES5, 15.7.4.1
 	 */
-	public constructor(value: any?): void
+	public constructor(value: any=void 0): void
 	/**
 	 * The optional radix should be an integer value in the inclusive range 2 to 36. If radix not present or is undefined
      * the Number 10 is used as the value of radix. If ToInteger(radix) is the Number 10 then this Number value is
@@ -923,12 +923,12 @@ public providedByRuntime final object Number extends Object @Global {
      * <p>If  ToInteger(radix)   is  not  an  integer  between  2  and  36  inclusive  throw  a  RangeError  exception.  If
      * ToInteger(radix) is an integer from 2 to 36, but not 10, the result is a String representation of this Number value
      * using the specified radix. Letters a-z are used for digits with values 10 through 35. The precise algorithm is
-     * implementation-dependent  if  the  radix  is  not  10,  however  the  algorithm  should  be  a  generalisation  of  that
+     * implementation-dependent  if  the  radix  is  not  10,  however  the  algorithm  should  be  a  generalization  of  that
      * specified in 9.8.1.
 	 *
 	 * @see ES5, 15.7.4.2
 	 */
-	public toString(radix: number?): string
+	public toString(radix: number=void 0): string
 
 	// 15.7.4.3 Number.prototype.toLocaleString() inherited
 
@@ -944,25 +944,25 @@ public providedByRuntime final object Number extends Object @Global {
 	 *
 	 * @see ES5, 15.7.4.5
 	 */
-	public toFixed(fractionalDigits: number?): string
+	public toFixed(fractionalDigits: number=void 0): string
 	/**
 	 * Return a String containing this Number value represented in decimal exponential notation with one digit before
      * the significand's decimal point and fractionDigits digits after the significand's decimal point. If fractionDigits is
-     * undefined,  include  as  many  significand  digits  as  necessary  to  uniquely  specify  the  Number  (just  like  in
+     * undefined,  include  as  many  significant  digits  as  necessary  to  uniquely  specify  the  Number  (just  like  in
      * ToString except that in this case the Number is always output in exponential notation).
 	 *
 	 * @see ES5, 15.7.4.6
 	 */
-	public toExponential(fractionalDigits: number?): string
+	public toExponential(fractionalDigits: number=void 0): string
 	
 	/**
 	 * Return a String containing this Number value represented either in decimal exponential notation with one digit
      * before the significand's decimal point and precision–1 digits after the significand's decimal point or in decimal
-     * fixed  notation  with  precision  significant  digits.  If  precision  is  undefined,  call  ToString  (9.8.1)  instead. 
+     * fixed  notation  with  precision  significand digits.  If  precision  is  undefined,  call  ToString  (9.8.1)  instead.
 	 *
 	 * @see ES5, 15.7.4.7
 	 */
-	public toPrecision(precision: number?): string
+	public toPrecision(precision: number=void 0): string
 
 }
 
@@ -981,7 +981,7 @@ public providedByRuntime final object Symbol extends Object @Global {
 	 * 
 	 * @param description A description of the symbol which can be used for debugging but not to access the symbol itself.
 	 */
-	(description: string?): symbol
+	(description: string=void 0): symbol
 
 	/**
 	 * TODO doc
@@ -1203,21 +1203,21 @@ public providedByRuntime final object Date extends Object @Global {
      * interpreted as a local time, a UTC time, or a time in some other time zone, depending on the contents of the
      * String. The function first attempts to parse the format of the String according to the rules called out in Date
      * Time String Format (15.9.1.15). If the String does not conform to that format the function may fall back to any
-     * implementation-specific  heuristics  or  implementation-specific  date  formats.  Unrecognisable  Strings  or  dates
+     * implementation-specific  heuristics  or  implementation-specific  date  formats.  Unrecognizable  Strings  or  dates
      * containing illegal element values in the format String shall cause Date.parse to return NaN.
 	 *
 	 * @see ES5, 15.9.3.2
 	 */
 	public static parse(dateString: string): number
 	/**
-	 * When the UTC function is called with fewer than two arguments, the behaviour is implementation-dependent.
+	 * When the UTC function is called with fewer than two arguments, the behavior is implementation-dependent.
      * When  the  UTC function  is  called  with  two  to  seven  arguments,  it  computes  the  date  from  year,  month  and
      * (optionally) date, hours, minutes, seconds and ms.
      *
 	 *
 	 * @see ES5, 15.9.3.3
 	 */
-	public static UTC(year: number, month: number, date: number?, hours: number?, minutes: number?, seconds: number?, milliseconds: number?): number
+	public static UTC(year: number, month: number, date: number=void 0, hours: number=void 0, minutes: number=void 0, seconds: number=void 0, milliseconds: number=void 0): number
 	
 	// 	since ECMAScript 5
 	/**
@@ -1234,13 +1234,13 @@ public providedByRuntime final object Date extends Object @Global {
 //    public constructor(): void
 //    public constructor(value: number): void
 //    public constructor(value: string): void
-//    public constructor(year: number, month: number?, day: number?, hours: number?, minutes: number?, seconds: number?, ms: number?): void
+//    public constructor(year: number, month: number=void 0, day: number=void 0, hours: number=void 0, minutes: number=void 0, seconds: number=void 0, ms: number=void 0): void
     /*
      * <p>TODO: is it correctly defined? - see single line comments above?: answer: no - only one optional parameter allowed and no record types
      *
      * @see ES5, 15.9.5.1
      */
-    public constructor(numberOrStringOrYear: union{string, number}?, month: number?, date: number?, hours: number?, minutes: number?, seconds: number?, ms: number?): void
+    public constructor(numberOrStringOrYear: union{string, number}=void 0, month: number=void 0, date: number=void 0, hours: number=void 0, minutes: number=void 0, seconds: number=void 0, ms: number=void 0): void
 	/**
 	 * This  function  returns  a  String  value.  The  contents  of  the  String  are  implementation-dependent,  but  are
      * intended to represent the Date in the current time zone in a convenient, human-readable form.
@@ -1395,27 +1395,27 @@ public providedByRuntime final object Date extends Object @Global {
 	/*
 	 * @see ES5, 15.9.5.30
 	 */
-	public setSeconds(sec: number, ms: number?): number
+	public setSeconds(sec: number, ms: number=void 0): number
 	/**
 	 * @see ES5, 15.9.5.31
 	 */
-	public setUTCSeconds(sec: number, ms: number?): number
+	public setUTCSeconds(sec: number, ms: number=void 0): number
 	/**
 	 * @see ES5, 15.9.5.32
 	 */
-	public setMinutes(min: number, sec: number?, ms: number?): number
+	public setMinutes(min: number, sec: number=void 0, ms: number=void 0): number
 	/**
 	 * @see ES5, 15.9.5.33
 	 */
-	public setUTCMinutes(min: number, sec: number?, ms: number?): number
+	public setUTCMinutes(min: number, sec: number=void 0, ms: number=void 0): number
 	/**
 	 * @see ES5, 15.9.5.34
 	 */
-	public setHours(hour: number, min: number?, sec: number?, ms: number?): number
+	public setHours(hour: number, min: number=void 0, sec: number=void 0, ms: number=void 0): number
 	/**
 	 * @see ES5, 15.9.5.35
 	 */
-	public setUTCHours(hour: number, min: number?, sec: number?, ms: number?): number
+	public setUTCHours(hour: number, min: number=void 0, sec: number=void 0, ms: number=void 0): number
 	/**
 	 * @see ES5, 15.9.5.36
 	 */
@@ -1427,19 +1427,19 @@ public providedByRuntime final object Date extends Object @Global {
 	/**
 	 * @see ES5, 15.9.5.38
 	 */
-	public setMonth(month: number, date: number?): number
+	public setMonth(month: number, date: number=void 0): number
 	/**
 	 * @see ES5, 15.9.5.39
 	 */
-	public setUTCMonth(month: number, date: number?): number
+	public setUTCMonth(month: number, date: number=void 0): number
 	/**
 	 * @see ES5, 15.9.5.40
 	 */
-	public setFullYear(year: number, month: number?, date: number?): number
+	public setFullYear(year: number, month: number=void 0, date: number=void 0): number
 	/**
 	 * @see ES5, 15.9.5.41
 	 */
-	public setUTCFullYear(year: number, month: number?, date: number?): number
+	public setUTCFullYear(year: number, month: number=void 0, date: number=void 0): number
 	/**
 	 * This  function  returns  a  String  value.  The  contents  of  the  String  are  implementation-dependent,  but  are
      * intended to represent the Date in a convenient, human-readable form in UTC.
@@ -1463,7 +1463,7 @@ public providedByRuntime final object Date extends Object @Global {
 	 *
 	 * @see ES5, 15.9.5.44
 	 */
-	public toJSON(key: any?): string
+	public toJSON(key: any=void 0): string
 	
 
 	// Additional properties of prototype
@@ -1534,7 +1534,7 @@ public providedByRuntime final object RegExp extends Object @Global {
 	 *
 	 * @see ES5, 15.10.6.1
 	 */
-	public constructor(pattern: string?, flags: string?): void
+	public constructor(pattern: string=void 0, flags: string=void 0): void
 	/**
 	 * Performs  a  regular  expression  match  of  string  against  the  regular  expression  and  returns  an  Array  object
      * containing the results of the match, or null if string did not match.
@@ -1543,15 +1543,15 @@ public providedByRuntime final object RegExp extends Object @Global {
 	 */
 	// in TypeScript return value is RegExpExecArray, in JetBrains WebStorm it is Array|{index : number input : string}
 // TODO use the following after fixing IDEBUG-273:
-//	public ~Array<string> with {index: number; input: string;} exec(str: string?)
-	public exec(str: string?): TEMP_ReturnTypeOfMatchExec
+//	public ~Array<string> with {index: number; input: string;} exec(str: string=void 0)
+	public exec(str: string=void 0): TEMP_ReturnTypeOfMatchExec
 
 	/**
 	 * Executes exec with given str and returns true, if matched, false otherwise.
 	 *
 	 * @see ES5, 15.10.6.3
 	 */
-	public test(str: string?): boolean
+	public test(str: string=void 0): boolean
 	/**
 	 * Return the String value formed by concatenating the Strings "/", the String value of the source property of
      * this RegExp object, and "/"; plus "g" if the global property is true, "i" if the ignoreCase property is true,
@@ -1596,7 +1596,7 @@ public providedByRuntime final object RegExp extends Object @Global {
 
 }
 
-// TODO: to be used as return parameter of RegExp.exec(str: string?) ???
+// TODO: to be used as return parameter of RegExp.exec(str: string=void 0) ???
 // project object RegExpExecArray extends Array<string> {
 // 	public input: string
 // }
@@ -1620,7 +1620,7 @@ public providedByRuntime object Error extends Object @Global {
 	/**
 	 * @see ES 5, 15.11.4.1
 	 */
-	public constructor(message: string?): void
+	public constructor(message: string=void 0): void
 
 	/**
 	 * The id of this error type, the initial value is "Error".
@@ -1761,7 +1761,7 @@ public providedByRuntime final object JSON extends Object @Global {
 	 * 
 	 * @see 15.12.2
      */
-	public static parse(jsonString: string, reviver: {function(key: any, value: any) : any}?): any
+	public static parse(jsonString: string, reviver: {function(key: any, value: any) : any}=void 0): any
 
 	// https://developer.mozilla.org/en-US/docs/Using_native_JSON#The_replacer_parameter
 	/**
@@ -1774,7 +1774,7 @@ public providedByRuntime final object JSON extends Object @Global {
 	 *
 	 * @see 15.12.3
      */
-	public static stringify(value: any, replacer: union{Array<?>, {function(key: string, value: any) : any} }?, space: union{number , string}?): string
+	public static stringify(value: any, replacer: union{Array<?>, {function(key: string, value: any) : any} }=void 0, space: union{number , string}=void 0): string
 
 	
 }
@@ -1891,7 +1891,7 @@ public providedByRuntime interface Generator<out TYield, out TReturn, in TNext>
 	 *     any JavaScript value returned by the iterator. Can be omitted when done is true.
 	 * </ul>
 	 */
-	public abstract next(value: TNext?): IteratorEntry<TYield>
+	public abstract next(value: TNext=void 0): IteratorEntry<TYield>
 
 	/**
 	 * A zero arguments function that returns the <code>this</code> object, conforming to the iterator 
@@ -1931,7 +1931,7 @@ public providedByRuntime interface Generator<out TYield, out TReturn, in TNext>
 	 *     any JavaScript value returned by the iterator. Can be omitted when done is true.
 	 * </ul>
 	 */
-	public abstract return(value: TNext?): IteratorEntry<TReturn>;
+	public abstract return(value: TNext=void 0): IteratorEntry<TReturn>;
 }
 
 /**
@@ -1952,16 +1952,16 @@ public providedByRuntime class Promise<out S, out F> extends Object @Global {
 
     public constructor(executor:
             {function(
-                resolveFn:{function(arg: S?):void},
-                rejectFn: {function(arg: F?):void} ): void
+                resolveFn:{function(arg: S=void 0):void},
+                rejectFn: {function(arg: F=void 0):void} ): void
             } ): void
 
     public <Snew, Fnew> then(
-        onFulfilled: {function(arg:S?): union{Snew, Promise<Snew, Fnew>}?},
-        onRejected: {function(arg:F?): union{Fnew, Promise<Snew, Fnew>}?}?
+        onFulfilled: {function(arg:S=void 0): union{Snew, Promise<Snew, Fnew>}?},
+        onRejected: {function(arg:F=void 0): union{Fnew, Promise<Snew, Fnew>}?}=void 0
     ): Promise<Snew, Fnew>
 
-    public <Snew, Fnew> catch(onRejected: {function(arg:F?): union{Fnew, Promise<Snew, Fnew>}?}): Promise<Snew, Fnew>
+    public <Snew, Fnew> catch(onRejected: {function(arg:F=void 0): union{Fnew, Promise<Snew, Fnew>}?}): Promise<Snew, Fnew>
 //    public <Snew> Promise<Snew, F> onFulfilled({function(S):Snew} onFulfilled)
 //    public <Fnew> Promise<S, Fnew> onRejected({function(F):Fnew} onRejected)
 

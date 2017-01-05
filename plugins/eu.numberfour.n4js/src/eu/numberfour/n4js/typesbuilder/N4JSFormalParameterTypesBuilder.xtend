@@ -38,6 +38,7 @@ package class N4JSFormalParameterTypesBuilder {
 		val formalParameterType = TypesFactory::eINSTANCE.createTFormalParameter();
 		formalParameterType.name = astFormalParameter.name;
 		formalParameterType.variadic = astFormalParameter.variadic;
+		formalParameterType.hasInitializer = (astFormalParameter.initializer !== null);
 		setFormalParameterType(formalParameterType, astFormalParameter, defaultTypeRef, builtInTypeScope, preLinkingPhase)
 
 		copyAnnotations(formalParameterType, astFormalParameter, preLinkingPhase)

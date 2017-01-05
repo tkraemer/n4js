@@ -32,7 +32,7 @@ class T2 {
 	m4(p1 : A, p2 : A) : void {}
 	
 	m5(p1 : A, p2 : A) : void {}
-	m6(p1 : A, p2 : A?) : void {}
+	m6(p1 : A, p2 : A=undefined) : void {}
 	m7(p1 : A, p2 : A) : void {}
 	m8(p1 : A, ... p2 : A) : void {}
 }
@@ -46,8 +46,8 @@ class T3 {
 	m3(p1 : A, p2 : A) : void {}
 	m4(p1 : A, p2 : A, p3 : A) : void {}
 	
-	m5(p1 : A, p2 : A?) : void {}
-	m6(p1 : A, p2 : A?) : void {}
+	m5(p1 : A, p2 : A=undefined) : void {}
+	m6(p1 : A, p2 : A=undefined) : void {}
 	m7(p1 : A, ... p2 : A) : void {}
 	m8(p1 : A, ... p2 : A) : void {}
 }
@@ -112,36 +112,39 @@ u.m8(a1);  // now ok, because 2nd fpar of m6 is optional in both T2 and T3
 
 
 //
-// check invalid use of optional and variadic in a union's contained types
+// check invalid use of variadic in a union's contained types
 // (to make sure that union type code does not have problems with that)
+//
+// IDE-145: default parameters are allowed everywhere. They become optional
+// when they are followed by default or variadic parameters.
 //
 
 class T1err {
 	// invalid use of optional/variadic fpar in next two lines
-	// XPECT errors --> "Optional parameters can only appear after the non-optional parameters." at "p1 : A?"
-	mErr1(p1 : A?, p2 : A) : void {}
+	// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "p1 : A?"
+	mErr1(p1 : A=undefined, p2 : A) : void {}
 	// XPECT errors --> "Only the last formal parameter can be variadic." at "..."
 	mErr2(... p1 : A, p2 : A) : void {}
 }
 
 class T2err {
-	// XPECT errors --> "Optional parameters can only appear after the non-optional parameters." at "p1 : A?"
-	mErr1(p1 : A?, p2 : A) : void {}
+	// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "p1 : A?"
+	mErr1(p1 : A=undefined, p2 : A) : void {}
 	// XPECT errors --> "Only the last formal parameter can be variadic." at "..."
 	mErr2(... p1 : A, p2 : A) : void {}
 }
 
 class T3err {
-	// XPECT errors --> "Optional parameters can only appear after the non-optional parameters." at "p1 : A?"
-	mErr1(p1 : A?, p2 : A) : void {}
+	// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "p1 : A?"
+	mErr1(p1 : A=undefined, p2 : A) : void {}
 	// XPECT errors --> "Only the last formal parameter can be variadic." at "..."
 	mErr2(... p1 : A, p2 : A) : void {}
 }
 
 var u_err : union{T1err,T2err,T3err};
 
-// XPECT errors --> "Member mErr1 not present in all types of union or incompatible." at "mErr1"
-u_err.mErr1(a1,a2,a3);
+// IDE-145 XPECT noerrors --> "Member mErr1 not present in all types of union or incompatible." at "mErr1"
+u_err.mErr1(a1,a2);
 // XPECT errors --> "Member mErr2 not present in all types of union or incompatible." at "mErr2"
 u_err.mErr2(a1,a2,a3);
 

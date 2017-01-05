@@ -19,6 +19,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFormalParameter#isVariadic <em>Variadic</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializer <em>Has Initializer</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFormalParameter#getTypeRef <em>Type Ref</em>}</li>
  * </ul>
  *
@@ -54,6 +55,32 @@ public interface TFormalParameter extends IdentifiableElement, TAnnotableElement
 	void setVariadic(boolean value);
 
 	/**
+	 * Returns the value of the '<em><b>Has Initializer</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Has Initializer</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Has Initializer</em>' attribute.
+	 * @see #setHasInitializer(boolean)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTFormalParameter_HasInitializer()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isHasInitializer();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializer <em>Has Initializer</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Has Initializer</em>' attribute.
+	 * @see #isHasInitializer()
+	 * @generated
+	 */
+	void setHasInitializer(boolean value);
+
+	/**
 	 * Returns the value of the '<em><b>Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -83,10 +110,10 @@ public interface TFormalParameter extends IdentifiableElement, TAnnotableElement
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 *  Convenience method, returns true if typeRef undef modifier is optional. If type ref is not set, false is returned.
+	 *  Convenience method, returns true if this and all following fparams are variadic or have an initializer.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getTypeRef() != null) && (this.getTypeRef().getUndefModifier() == <%eu.numberfour.n4js.ts.types.UndefModifier%>.OPTIONAL));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> fpars = null;\n<%org.eclipse.emf.ecore.EObject%> _eContainer = this.eContainer();\nif ((_eContainer instanceof <%eu.numberfour.n4js.ts.types.TFunction%>))\n{\n\t<%org.eclipse.emf.ecore.EObject%> _eContainer_1 = this.eContainer();\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> _fpars = ((<%eu.numberfour.n4js.ts.types.TFunction%>) _eContainer_1).getFpars();\n\tfpars = _fpars;\n}\n<%org.eclipse.emf.ecore.EObject%> _eContainer_2 = this.eContainer();\nif ((_eContainer_2 instanceof <%eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef%>))\n{\n\t<%org.eclipse.emf.ecore.EObject%> _eContainer_3 = this.eContainer();\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> _fpars_1 = ((<%eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef%>) _eContainer_3).getFpars();\n\tfpars = _fpars_1;\n}\nif ((fpars == null))\n{\n\treturn false;\n}\nint idx = fpars.indexOf(this);\n<%java.util.ListIterator%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> iter = fpars.listIterator(idx);\nwhile (iter.hasNext())\n{\n\t{\n\t\tfinal <%eu.numberfour.n4js.ts.types.TFormalParameter%> fpar = iter.next();\n\t\tif (((!fpar.isVariadic()) && (!fpar.isHasInitializer())))\n\t\t{\n\t\t\treturn false;\n\t\t}\n\t}\n}\nreturn true;'"
 	 * @generated
 	 */
 	boolean isOptional();
