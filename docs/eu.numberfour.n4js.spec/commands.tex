@@ -1,5 +1,5 @@
-\newcommand{\TRUE}{\texttt{TRUE}}
-\newcommand{\FALSE}{\texttt{FALSE}}
+\newcommand{\TRUE}{\texttt{true}}
+\newcommand{\FALSE}{\texttt{false}}
 \newcommand{\NULL}{\texttt{NULL}}
 \newcommand{\dots}{\texttt{...}}
 \newcommand{\subtype}{<}
@@ -8,23 +8,27 @@
 \newcommand{\lif}{\textbf{if}\dots}
 \newcommand{\lthen}{\textbf{then}\dots}
 \newcommand{\lelse}{\textbf{else}\dots}
-\newcommand{\entails}{\vdash}
+
 \newcommand{\lxor}{\oplus}
 \newcommand{\to}{\longrightarrow}
 \newcommand{\powerset}{\mathcal{P}}
-\newcommand{\typeOf}[1]{\tee #1:}
-\newcommand{\lenum}[1]{\texttt{#1}}
-\newcommand{\tee}{\Gamma}
+\newcommand{\typeOf}{\tee{:}}
+\newcommand{\lenum}{\texttt}
+
+\newcommand{\typeEnv}{\Gamma}
+\newcommand{\typeEnvAdd}{\Gamma \leftarrow}
+\newcommand{\entails}{\vdash}
+\newcommand{\tee}{\typeEnv \entails }
+
 \newcommand{\infType}[1]{ {[\![} {#1} {]\!]} }
 \newcommand{\llbracket}{[\![}
 \newcommand{\rrbracket}{{]\!]}}
 \newcommand{\iff}{\Leftrightarrow}
-\newcommand{\typeEnvAdd}{\Gamma \leftarrow}
 \newcommand{\seq}{\overline{x}}
 \newcommand{\nfjstilde}{~}
 \newcommand{\lstnfjs}[1]{\texttt{#1}}
 \newcommand{\lstnfbnf}[1]{\texttt{#1}}
-\newcommand{\union}{\color{red}{union}}
+\newcommand{\union}[1]{\textbf{union\{}{#1}\textbf{\}}}
 \newcommand{\join}{\vee}
 \newcommand{\meet}{\wedge}
 \newcommand{\tsStr}[1]{\texttt{#1}}
@@ -32,3 +36,11 @@
 \newcommand{\tsRoFld}[1]{\texttt{#1}}
 \newcommand{\tsWoFld}[1]{\texttt{#1}}
 \newcommand{\tsInitFld}[1]{\texttt{#1}}
+\newcommand{\infer}[3]{\frac{#3}{#2} \texttt{#1}}
+\newcommand{\spc}{\hspace{7mm}}
+\newcommand{\type}[1]{\texttt{#1}}
+\newcommand{\infTypeNF}[1]{ {[\![} {#1} {]\!]} }
+
+%placeholder symbols 
+\newcommand{\nexists}{|E}
+\newcommand{\notsubtype}{|<}

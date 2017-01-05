@@ -109,7 +109,7 @@ constraints must be true:
 1.  Optional parameters must be defined at the end of the (formal)
 parameter list. In particular, an optional parameter must not be
 followed by a non-optional parameter: +
-$F.fpars_i.optional \to \not \exists\ k>i: \lnot F.fpars_k.optvar$
+$F.fpars_i.optional \to \not \exists k>i: \lnot F.fpars_k.optvar$
 2.  Only the last parameter of a method may be defined as variadic
 parameter: +
 $F.fpars_i.variadic \to i = |F.fpars|-1$
@@ -630,7 +630,11 @@ method, see <<Methods>> for details and additional constraints.
 The metatype of a function definition is function type (<<_function-type,Function Type>>), as a function declaration is only a different syntax for creating a object.
 Constraints for function type are described in <<_function-type,Function Type>>. Another consequence is that the inferred type of a function definition $fdecl$ is simply its function type
 $F$.
-$\infer{\infType{F}}{\infType{fdecl}}$
+[math]
+[math]
+---
+\infer
+{\infType{F}}{\infType{fdecl}}$
 
 Note that the type of a function definition is different from its return type $f.decl$!
 

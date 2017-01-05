@@ -1,3 +1,4 @@
+
 = Grammars
 
 N4JS extends the ECMAScript 2015 language grammar and combines it with type expression.

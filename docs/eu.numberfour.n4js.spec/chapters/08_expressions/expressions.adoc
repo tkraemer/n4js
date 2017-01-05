@@ -499,8 +499,12 @@ An identifier reference $i$ is bound to an identifiable
 element $i.id$, which is expressed with the function
 $bind(i, i.id)$. The type of the reference is then inferred
 as follows:
-$\infer{\typeEnv \entails \type{IdentifierRef}\ idref: T}
-    {\typeEnv \entails idref.id: T}$
+[math]
+---
+\infer
+{\typeEnv \entails \type{IdentifierRef}\ idref: T}
+    {\typeEnv \entails idref.id: T}
+---
 
 
 === Literals
@@ -622,8 +626,10 @@ The type of an array padding _p_ is inferred as follows:
 The element type of an array literal is simply inferred as the
 (simplified) union of the type elements of the array. Thus, the type of
 an array literal $a$ is inferred as follows:
-
-$&\infer{\tee(a): Array<T>}{\tee a.\seq{elements}: \seq{T_e} &  T = \bigcup \seq{T_e}} $
+[math]
+---
+\infer{\tee(a): Array<T>}{\tee a.\seq{elements}: \seq{T_e} &  T = \bigcup \seq{T_e}}
+---
 
 
 In other languages not supporting union types, the element type is often
@@ -904,8 +910,11 @@ The type of the grouping operator simply is the type of its nested
 expression. The type if a parenthesized expression $pe$ is
 inferred as follows:
 
-$& \infer{\tee \lstnfbnf{'('} e \lstnfbnf{')'}: T}
-        {\tee e: T}                                             \tag{\S11.1.6}$
+[math]
+---
+\infer{\tee \lstnfbnf{'('} e \lstnfbnf{')'}: T}
+        {\tee e: T}                                             \tag{\S11.1.6}
+---
 
 .Parenthesized Expression Type Examples
 [example]
@@ -1125,18 +1134,27 @@ We define the following type inferencing rules for property accessors:
 
 * The type of an indexed-access expression _p_ is inferred
 as follows task:IDE-342]:
-$& \infer{\tee p: T}{\lnot p.target.dyn \lor p.index.type \subtype[number] & \tee p.target: \type{Array<T>}} \\
-& \infer{\tee p: \type{any}}{else}$
-
+[math]
+---
+\infer{\tee p: T}{\lnot p.target.dyn \lor p.index.type \subtype[number] & \tee p.target: \type{Array<T>}} \\
+\infer{\tee p: \type{any}}{else}
+---
 * The type of a property access expression is inferred as follows:
-$\infer{\type{PropertyAccessExpression}\ expr: T}
-{\typeEnvAdd \typeSubs(R) \entails expr.target : R & \typeEnv \entails expr.property : T}$
+[math]
+---
+\infer
+{\type{PropertyAccessExpression}\ expr: T}
+{\typeEnvAdd \typeSubs(R) \entails expr.target : R & \typeEnv \entails expr.property : T}
+---
 
 * The type of a parameterized access expression _p_ is
 inferred as follows:
 
-$& \infer{\tee p: T}{\exists m \in p.target: m.name=p.name & \tee m: T}
-& \infer{\tee p: \type{any}}{}$
+[math]
+---
+\infer{\tee p: T}{\exists m \in p.target: m.name=p.name & \tee m: T}
+\infer{\tee p: \type{any}}{}
+---
 
 
 === New Expression
@@ -1246,7 +1264,10 @@ foo(B);
 
 The type of a new expression $ne$ is inferred as follows:
 
-$& \infer{\tee ne: C}{\tee ne.callee: \type{constructor\{C\}}}$
+[math]
+---
+\infer{\tee ne: C}{\tee ne.callee: \type{constructor\{C\}}}
+---
 
 For classes, constructors are described in <<_constructor-and-classifier-type,Constructor>>.
 
@@ -1351,7 +1372,11 @@ A call expression $expr$ is bound to a method (<<Methods>>) or function
 declaration (which may be part of a function definition (<<_function-declaration,Function Definition>> or specified via a function type <<_function-type>>) $F$ (via evaluation of `MemberExpression`. The type of the call is inferred from the function declaration or type $F$ as follows:
 
 
-$\infer{\tee expr: T}{bind(expr.target, F) & F.returnType: T}$
+[math]
+---
+\infer
+{\tee expr: T}{bind(expr.target, F) & F.returnType: T}
+---
 
 
 task:IDE-205[]
@@ -1497,7 +1522,11 @@ the following constraints must hold:
 
 * If mode is N4JS, task:IDE-345[] the type $T$ of the expression must be a
 number
-$& \infer{\tee \type{UnaryExpression} \expectType \type{Expression}: \type{number}}{}$
+
+[math]
+---
+\infer{\tee \type{UnaryExpression} \expectType \type{Expression}: \type{number}}{}
+---
 
 * If
 $u.expression = PropertyAccess \; pa(p)  \land  pa.isDotAccess$
@@ -1515,7 +1544,10 @@ $u.expression.type: T$, the following constraints must hold: task:IDE-345[]
 
 * In N4JS mode, the type T of the expression must be a number:
 
-$& \infer{\tee \type{UnaryExpression} \expectType \type{Expression}: \type{number}}{}$
+[math]
+---
+\infer{\tee \type{UnaryExpression} \expectType \type{Expression}: \type{number}}{}
+---
 
 
 --
@@ -1575,7 +1607,10 @@ For a given multiplicative expression the following constraints must hold in N4J
 mode task:IDE-345[]:
 
 * The types of the operands must be subtypes of number:
-$\infer{\typeEnv \entails \type{MultiplicativeExpression} \expectType \type{Expression}: \type{number}}{}$
+[math]
+---
+\infer
+{\typeEnv \entails \type{MultiplicativeExpression} \expectType \type{Expression}: \type{number}}{}
 --
 
 [discrete]
@@ -1584,7 +1619,11 @@ task:IDE-244[] task:IDE-345[] [[type-inference-9]]
 
 The inferred type of a multiplicative expression always is number:
 
-$\infer{\typeEnv \entails \type{MultiplicativeExpression}: \type{number}}{}$
+[math]
+---
+\infer
+{\typeEnv \entails \type{MultiplicativeExpression}: \type{number}}{}
+---
 
 === Additive Expression
 
@@ -1613,10 +1652,12 @@ N4JS mode:
 * The types of the operands must be subtypes of number if the operator
 is not ’+’, otherwise, any type could be used:
 
-$\infer{\typeEnv \entails \type{AdditiveExpression}\ e \expectType \type{Expression}: \type{number}}
-{e.op \neq AdditiveOperator.ADD}$
-
---
+[math]
+---
+\infer
+{\typeEnv \entails \type{AdditiveExpression}\ e \expectType \type{Expression}: \type{number}}
+{e.op \neq AdditiveOperator.ADD}
+---
 
 
 ==== Type Inference [[type-inference-10]]
@@ -1632,18 +1673,23 @@ We first define two helper rules to simplify the addition operator
 condition:
 
 
-$
-&\infer[nb]{nb(T)}{T = \type{number} \lor T = \type{boolean}}
-&\infer[nb]{nb(expr)}{nb\tee expr}\\
-&\infer[un]{un(T)}{T = \type{undefined} \lor T = \type{null}}
-&\infer[un]{un(expr)}{un\tee expr.lhs \lor un\tee expr.rhs}$
+[math]
+---
+\infer[nb]{nb(T)}{T = \type{number} \lor T = \type{boolean}}
+\infer[nb]{nb(expr)}{nb\tee expr}\\
+\infer[un]{un(T)}{T = \type{undefined} \lor T = \type{null}}
+\infer[un]{un(expr)}{un\tee expr.lhs \lor un\tee expr.rhs}
+---
 
 
 The type of an additive expression $e$ is inferred as
 follows:
-$\infer{\tee e: \type{string}}{e.op='+' & \lnot(nb(e.lhs)\land nb(e.rhs)) & \lnot(un(e) \land (nb(e.lhs)\lor nb(e.rhs))}\\
+[math]
+---
+\infer
+{\tee e: \type{string}}{e.op='+' & \lnot(nb(e.lhs)\land nb(e.rhs)) & \lnot(un(e) \land (nb(e.lhs)\lor nb(e.rhs))}\\
 &\infer{\tee e: \type{number}}{}\\
-$
+---
 
 
 .Type of addition expression
@@ -1688,8 +1734,11 @@ ShiftOperator returns ShiftOperator:
 --
 For a given bitwise shift expression $e$ the following constraints must hold in N4JS mode: task:IDE-345[] task:IDE-771[]
 * The types of the operands must be both number.
-$\infer{\tee \type{BitwiseShiftExpression}\ \expectType\ \type{Expression}: \type{number}}{}$
---
+[math]
+---
+\infer
+{\tee \type{BitwiseShiftExpression}\ \expectType\ \type{Expression}: \type{number}}{}
+---
 
 [discrete]
 ==== Type Inference [[type-inference-11]]
@@ -1941,8 +1990,11 @@ in N4JS mode: task:IDE-345[]
 
 * The types of the operands must be both number.
 
-$\infer{\tee \type{BitwiseBitwiseExpression}\ \expectType\ \type{Expression}: \type{number}}{}$
---
+[math]
+---
+\infer
+{\tee \type{BitwiseBitwiseExpression}\ \expectType\ \type{Expression}: \type{number}}{}
+---
 
 [discrete]
 ==== Type Inference [[type-inference-14]]
@@ -1994,7 +2046,10 @@ the inferred type usually is not `boolean` ((cf. cite:[ECMA11a(S11.11.,p.83ff)] 
 The type inference does not take this short-circuit evaluation strategy into account, as it will
 affect the result in case one of the types is `null` either or `undefined`, which is not allowed in N4JS mode.
 
-$& \infer{\tee\ lhs\ \lstnfbnf{'&&'|'||'}\ rhs: \type{\union*}\tee lhs, \tee rhs \type{\}}}{}$
+[math]
+---
+\infer{\tee\ lhs\ \lstnfbnf{'&&'|'||'}\ rhs: \type{\union*}\tee lhs, \tee rhs \type{\}}}{}
+---
 
 === Conditional Expression
 
@@ -2042,8 +2097,12 @@ task:IDE-348[]
 
 The inferred type of a conditional expression is the union of the true
 and false expression (cf. cite:[ECMA11a(S11.12,p.84)]   ():
-$\infer{\tee cond\ \lstnfbnf{'?'} et\ \lstnfbnf{':'} ef : T}
-    {T = \union{ \tee et, \tee ef}}$
+[math]
+---
+\infer
+{\tee cond\ \lstnfbnf{'?'} et\ \lstnfbnf{':'} ef : T}
+    {T = \union{ \tee et, \tee ef}}
+---
 
 
 
@@ -2119,7 +2178,10 @@ the following constraints must hold:
 In the following inference rule and the constraint, ’@’ is to be
 replaced with the right part of one of the assignment operators listed
 above, that is,
-$@ \in \{\lstnfbnf{'*', '/', '\%', '+', '-', '<<', '>>', '>>>', '&', '^', '|'}\}$
+[math]
+---
+@ \in \{\lstnfbnf{'*', '/', '\%', '+', '-', '<<', '>>', '>>>', '&', '^', '|'}\}
+---
 
 --
 
@@ -2191,7 +2253,11 @@ Compound assignments are reduced to the former by splitting an operator
 expression with operator `@` and a simple assignment `=`. Since the type
 of the latter is the right-hand side, we can define:
 
-$\infer{\tee left\ \lstnfbnf{'@='} right: T}{\tee left\ \lstnfbnf{'@'} right: T} \tag{\S 11.13.1}$
+[math]
+---
+\infer
+{\tee left\ \lstnfbnf{'@='} right: T}{\tee left\ \lstnfbnf{'@'} right: T} \tag{\S 11.13.1}
+---
 
 
 === Comma Expression
@@ -2237,7 +2303,11 @@ Cf. cite:[ECMA11a(S11.14,p.85)]
 
 The type of a comma expression $cexpr$ is inferred to the
 last expression:
-$\infer{\tee cexpr: T}{n=|cexpr.exprs|, \tee cexpr.exprs_n:T} \tag{\S11.14}$
+[math]
+---
+\infer
+{\tee cexpr: T}{n=|cexpr.exprs|, \tee cexpr.exprs_n:T} \tag{\S11.14}
+---
 
 [.language-n4js]
 == ECMAScript 6 Expressions
@@ -2357,9 +2427,12 @@ $\mu(s.containingFunction=s.containingMethodOrFieldAccessor$
 4.  If the return type of the method access via super is this, the
 actually bound this type will be the type of the calling class (and not
 of the class defining the method).
-$\infer{\type{function():T} \subtype s.m}
-{s.containingClass=T & \mu(m)=\type{Method} & m.returnType=\type{this}}$
---
+[math]
+---
+\infer
+{\type{function():T} \subtype s.m}
+{s.containingClass=T & \mu(m)=\type{Method} & m.returnType=\type{this}}
+---
 
 .Super Literal Usage
 [req,id=IDE-125,version=1]
@@ -2478,7 +2551,11 @@ TypeRefForCast returns StaticBaseTypeRef:
 
 The inferred type of the type cast expression is the target type:
 
-$\infer{\tee expr\ \lstnfbnf{"as"}\ T: T}{}$
+[math]
+---
+\infer
+{\tee expr\ \lstnfbnf{"as"}\ T: T}{}
+---
 
 
 The type cast returns the expression without further modifications. Type

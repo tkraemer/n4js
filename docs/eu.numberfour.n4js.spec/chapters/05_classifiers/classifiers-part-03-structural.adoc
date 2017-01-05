@@ -124,7 +124,10 @@ $\infer{\tee X \subtype T}{X \subtype \type{N4Object} & T.defStructural & {T \in
 ..  A structurally defined type $T$ is implicitly derived
 from `Object` if no other type is specified. In particular, a structurally
 defined type must not be inherited from
-$\infer{\tee T \subtype \lstnfjs{Object}}{T.defStructural}$
+[math]
+---
+\infer{\tee T \subtype \lstnfjs{Object}}{T.defStructural}
+---
 +
 $T.defStructural \Rightarrow \tee T \notsubtype \lstnfjs{N4Object} \land \lstnfjs{N4Object} \not\in T.superTypes^*$
 --
@@ -559,7 +562,10 @@ that it can be used to check the type of an instance.
 
 If a type $X$ is a (nominal) subtype of T, it is, of course,
 also a subtype of $\tsStr T$:
-$\infer{\tee X \subtype \tee \tsStr T}{\tee X \subtype \tee T}$
+[math]
+---
+\infer{\tee X \subtype \tee \tsStr T}{\tee X \subtype \tee T}
+---
 This is only a shortcut for the type inference defined above.
 
 .Definition and Use-Site Precedence

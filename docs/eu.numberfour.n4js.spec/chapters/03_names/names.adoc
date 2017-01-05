@@ -1,4 +1,5 @@
 
+
 = Names
 :find:
 ////
@@ -122,8 +123,10 @@ h|Modifier h|Module h| Project h| Vendor h| World
 
 `TAM` is a totally ordered set:
 
-$$\lenum{private} < \lenum{project} < \lenum{public@Internal} < \lenum{public}$$
-
+[math]
+--
+\lenum{private} < \lenum{project} < \lenum{public@Internal} < \lenum{public}
+--
 
 .Type Access Modifiers
 [req,id=IDE-3,version=1]
@@ -301,7 +304,7 @@ is a totally ordered set footnote:[That is, for application developers not provi
 
 .Type and Member Accessibility Relation
 [def]
---
+---
 We define the relation
 
 [math]
@@ -328,7 +331,7 @@ We further define the relation $\geq : TAM \times MAM$ as follows:
 --
 
 Less, greater then etc. are defined accordingly.
---
+---
 
 
 .Member Accessibility

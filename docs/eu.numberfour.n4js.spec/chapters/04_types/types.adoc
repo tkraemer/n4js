@@ -1,4 +1,5 @@
 
+
 = Types
 :find:
 ////
@@ -522,16 +523,23 @@ only if there is the identical type variable on both sides.
 the right side: the result is true if and only if the type variable on
 the left has one or more declared upper bounds.
 $intersection(left.declaredUpperBounds) <: right$ +
-This is the case for $`(T extends B)} <: `A}$
-//`
+This is the case for
+[math]
+--
+(T extends B) <: A
+--
 in which T is an unbound type variable and A, B two classes with $B <: A$.
 3.  In all other cases the result is false. +
 This includes cases such as +
-$\[`B} <: `(T extends A)}\]$
-//`
+[math]
+--
+B <: (T extends A)
+--
 which is always false, even if $B <: A$ or +
-$`(T extends A)} <: `(S extends B)}$
-//`
+[math]
+--
+(T extends A) <: (S extends B)
+--
 which is always false, even if $A = B$.
 
 We thus obtain the following defintion:
@@ -542,13 +550,15 @@ We thus obtain the following defintion:
 For two types $T, S$ of which at least one is a type variable, we define
 
 * if both _T_ and $S$ are type variables:
-$\infer{T <: S}{T = S}$
+[math]
+---
+\infer{T <: S}{T = S}
+---
 * if _T_ is a type variable and $S$ is not:
 +
 [math]
 ---
-\infer{T <: S}{
-        {T.\mathit{declaredUpperBounds}.\mathit{size} > 0} {\ \land\ \forall t \in T.\mathit{declaredUpperBounds}: t <: S}}
+\infer{T <: S}{{T.\mathit{declaredUpperBounds}.\mathit{size} > 0} {\ \land\ \forall t \in T.\mathit{declaredUpperBounds}: t <: S}}
 ---
 
 --
@@ -654,9 +664,10 @@ is: +
 
 --
 
-We define type erasure similar to Java cite:[Gosling12a(S4.6)] as a "mapping from types (possibly including parameterized types and type variables) to types (that are never parameterized types or type variables)". We write $T°$ for the erasure of type _T_.\
-//footnote:[The notation $|T|$ used in cite:[Gosling12a]
-conflicts with the notation of cardinality of sets, which we use in case of union or intersection types for types as well. The notation used here is inspired by cite:[Crary02a], in which  a mapping is defined between a typed language $\lambda$ to an untyped language $\lambda°$.]
+// TODO fix superscript font for correct math symbol.
+
+We define type erasure similar to Java cite:[Gosling12a(S4.6)] as a "mapping from types (possibly including parameterized types and type variables) to types (that are never parameterized types or type variables)". We write $T$^o^ for the erasure of type _T_.\
+footnote:[The notation $|T|$ used in cite:[Gosling12a] conflicts with the notation of cardinality of sets, which we use in case of union or intersection types for types as well. The notation used here is inspired by cite:[Crary02a], in which a mapping is defined between a typed language $\lambda$ to an untyped language $\lambda$^o^.]
 
 .Parameterized Type
 [def]
@@ -670,7 +681,9 @@ type_ or _erasure_ of _T_.
 
 We define for types in general:
 
-* The erasure $G°$ of a parameterized type
+// TODO replace ^o^ with correct math symbol
+
+* The erasure $G$^o^ of a parameterized type
 $G<T_1, ..., T_n>$ is simply $G$.
 * The erasure of a type variable is the erasure of its upper bound.
 * The erasure of any other type is the type itself.
@@ -683,7 +696,7 @@ types) are available.
 
 That is, the type reference in `var G<string> gs;`
 actually defines a type `G<string>`, so that
-$\infTypeNF{gs} = \type{G<string>]$. It may reference a type
+$\infTypeNF{gs} = \type{G<string>}$. It may reference a type
 defined by a class declaration `class G<T>`.
 It is important that the type `G<string>` is different from `G<T>`.
 
@@ -738,9 +751,11 @@ functions or methods does not need to be parameterized.
 We define type conformance for non-primitive type references as follows:
 
 
-* For two non-parameterized types $T^0$ and
-$S^0$,
-$\infer{ T^0 <: S^0}{S^0 \in T^0.sup^* \cup T^0.interfaces^* }$
+* For two non-parameterized types $T^0$ and $S^0$,
+[math]
+---
+\infer{ T^0 <: S^0}{S^0 \in T^0.sup^* \cup T^0.interfaces^* }
+---
 * For two parameterized types
 $T<T_1,...,T_n>$ and
 $S<S_1,...,S_m>$
@@ -1001,9 +1016,10 @@ undef = 1; // will issue an error!
 ----
 
 The type `undefined` is a subtype of all types. That is,
-
-$\infer{\tee `undefined` <: T }{}$
-
+[math]
+--
+\infer{\tee `undefined` <: T }{}
+--
 is an axiom and true for all types _T_.
 
 ====
@@ -1028,7 +1044,10 @@ Original LaTeX math:
 \end{align*}
 ////
 
-$\infer{\tee `null}\ left <: `Type} right}{right \neq `undefined` &$
+[math]
+--
+\infer{\tee `null}\ left <: `Type} right}{right \neq `undefined` &
+--
 
 Please note that
 
@@ -1074,7 +1093,10 @@ var b = false; console.log(b == 0) | prints true
 
 The type is subtype of :
 
-$\infer{\type{boolean} <: \type{any}}{}$
+[math]
+--
+\infer{\type{boolean} <: \type{any}}{}
+--
 
 Variables of type `boolean` can be auto-converted (coerced) to `Boolean`, as described in <<_autoboxing-and-coercing,Autoboxing and Coercing>>.
 
@@ -1111,8 +1133,10 @@ are never interpreted as a special character.
 
 The `string` type is a subtype of `any`:
 
-
-$\infer{\type{string} <: \type{any}}{}$
+[math]
+--
+\infer{\type{string} <: \type{any}}{}
+--
 
 It is supertype of the N4JS primitive type `pathselector`, and `i18nKey`.
 <<_primitive-pathselector-and-i18nkey,Primitive Pathselector and I18nKey>>
@@ -1185,7 +1209,10 @@ assigned to a variable of type `any`, but a variable declared  `any` can only be
 
 `any` is supertype of all other types. That is,
 
-$\infer{\tee `Type` left \subtype `any}}{}\end{aligned}\` ]$
+[math]
+--
+\infer{\tee `Type` left \subtype `any}}{}\end{aligned}\`
+--
 
 is an axiom and true for all types.
 
@@ -1236,7 +1263,10 @@ $&f.returnType=\type{void} \to \\
 The following type hierarchy is defined: `void` is only a subtype of itself but
 not of any other type and no other type is a subtype of void.
 
-$\infer{\type{void} <: \type{void}}{}$
+[math]
+--
+\infer{\type{void} <: \type{void}}{}
+--
 
 Since `void` cannot be
 used as the type of variables, fields, formal parameters, etc., a
@@ -1484,7 +1514,10 @@ subtype of `Object`.
 
 ==== Semantics [[N4Object-semantics]]
 
-$\infer{`N4Object` <: `Object`}{}$
+[math]
+--
+\infer{`N4Object` <: `Object`}{}
+--
 
 === N4Class
 
@@ -1649,18 +1682,25 @@ $ \forall T \in U.typeRefs \to \lnot T.opt  $
 Let $U$ be an union type.
 
 * The union type is a common supertype of all its element types:
-
-$\infer{T <: U}{T \in U.typeRefs}$
+[math]
+---
+\infer{T <: U}{T \in U.typeRefs}
+---
 * More generally, a type is a subtype of a union type, if it is a
 subtype of at least one type contained in the union:
-
-$\infer{S <: U}{\exists T \in U.typeRefs: S <: T}$
+[math]
+---
+\infer{S <: U}{\exists T \in U.typeRefs: S <: T}
+---
 
 * A union type is a subtype of a type $S$, if all types of
 the union are subtypes of that type. footnote:[This rule is a
 generalization of the sub typing rules given in cite:[Igarashi07a(p.40)]}]
 
-$\infer{U <: S}{\forall T \in U.typeRefs: T <: S}$
+[math]
+---
+\infer{U <: S}{\forall T \in U.typeRefs: T <: S}
+---
 
 * Commutativity: The order of element does not matter:
 $\union{A,B} = \union{B,A}$
@@ -1681,15 +1721,21 @@ are always automatically applied to union types.
 * Simplification of union type with one element: If a union type
 contains only one element, it is reduced to the element:
 
-$\infer{T}{\union{T}}$
+[math]
+---
+\infer{T}{\union{T}}
+---
 
 * Simplification of union types of union types: A union type
 $U$ containing another union types $V$ is
 reduced to a single union type $W$, with
 $W.typeRefs = U.typeRefs \cup V.typeRefs$:
 
-$\infer{\union{S_1,\dots,S_{k-1},T_1,\dots,T_m,S_{k+1},\dots,S_n}}
-{\union{S_1,\dots,S_{k-1},\union{T_1,\dots,T_m},S_{k+1},\dots,S_n}}$
+[math]
+---
+\infer{\union{S_1,\dots,S_{k-1},T_1,\dots,T_m,S_{k+1},\dots,S_n}}
+{\union{S_1,\dots,S_{k-1},\union{T_1,\dots,T_m},S_{k+1},\dots,S_n}}
+---
 
 * Simplification of union type with undefined or null: Since undefined
 is the bottom type, and null is kind of a second button type, they are
@@ -1811,7 +1857,10 @@ This finding is the foundation of the definition of join of a (non-union) type w
 The join $J$ of a union type $U$ with a type
 _T_ is the union of both types:
 
-$& \infer {(U \join T) = J}{J=U \cup T}$
+[math]
+---
+& \infer {(U \join T) = J}{J=U \cup T}
+---
 
 
 
@@ -1959,7 +2008,10 @@ following conditions must hold:
 1.  The intersection must contain at least one type:
 $I.typeRefs \neq \emptyset$
 2.  Only one class must be contained in the intersection type: +
-$(\exists C \in I.typeRefs: \mu(C)=`Class}) \to \not\exists T \in I.typeRefs \setminus\{C\}: \mu(T)=`Class}$
+[math]
+---
+\exists C \in I.typeRefs: \mu(C)=`Class}) \to \not\exists T \in I.typeRefs \setminus\{C\}: \mu(T)=`Class}
+---
 //`
 +
 For the time being, only a warning is produced when more than one class
@@ -1982,13 +2034,17 @@ cite:[Laurent12a]Table 2, $\cap^1_l$ and $\cap^2_l$
 
 [math]
 ---
-\infer{I <: S}{\exists T \in I.typeRefs: T <: S}$
+\infer{I <: S}{\exists T \in I.typeRefs: T <: S}
 ---
 
 * A type is a subtype of an intersection type, if it is a subtype of all
 types contained in the intersection type: footnote:[This rule is a
 generalization of the subtyping rules given in cite:[Laurent12a]Table 2, $\cap^1_l$ and $\cap^2_l$
-$\infer{S <: I}{\forall T \in I.typeRefs: S <: T}$
+
+[math]
+---
+\infer{S <: I}{\forall T \in I.typeRefs: S <: T}
+---
 
 
 * Non-optional elements:
@@ -2004,8 +2060,11 @@ automatically applied to intersection types.
 
 * The structural typing strategy is propagated to the types of the
 intersection:
-$\infer{\intersection{\tsStr T_1, \ldots, \tsStr T_n}}
-          {\tsStr \intersection{T_1, \dots, T_n}}$
+[math]
+---
+\infer{\intersection{\tsStr T_1, \ldots, \tsStr T_n}}
+          {\tsStr \intersection{T_1, \dots, T_n}}
+---
 
 
 These subtyping rules are similar to Ceylon.
@@ -2901,16 +2960,28 @@ For a given enumeration declaration $E$ with literals $L$, the following
 type rules are defined:
 
 1. Every enumeration $E$ is a subtype of the base type :
-$\infer{\tee `type\{E\}} \subtype `type\{N4Enum\}}}{}$
+[math]
+---
+\infer{\tee `type\{E\}} \subtype `type\{N4Enum\}}}{}
+---
 2.  Every literal $L$ of an enumeration $E$ is
 of the type of the enumeration:
-$\infer{\tee L: E}{L \in E.literals}$
+[math]
+---
+\infer{\tee L: E}{L \in E.literals}
+---
 That means that every literal is a subtype of :
 // TODO missing types in this section
-$ \infer{\tee L \subtype `N4Enum` }{L \in E.literals} $
+[math]
+---
+\infer{\tee L \subtype `N4Enum` }{L \in E.literals}
+---
 .  Since the implementation of enumerations may vary per runtime, enum
 literals are not objects:
-$\infer{\tee L \notsubtype `Object`}{L \in E.literals}$
+[math]
+---
+\infer{\tee L \notsubtype `Object`}{L \in E.literals}
+---
 
 The base enumeration type is defined as follows footnote:[This is pseudo N4JS code as it is not possible to infer from `any` or define abstract static methods.]
 
@@ -3064,7 +3135,11 @@ $infer{ \type{N4StringBasedEnum} \subtype \type{string} }{}$
 .  Each literal in $L_S$ of a string-based enumeration
 $E_S$ is of the type of the string-based enumeration.
 
-$\infer{ \tee l \subtype E_S }{l \in E_S.L_S}$
+
+[math]
+---
+\infer{ \tee l \subtype E_S }{l \in E_S.L_S}
+---
 
 .  <<IDE-39,requirement: Unique Literal Names>> also applies for `N4StringBasedEnum`.
 .  [<<IDE-40,requirement: Enum Literals are Singletons>>]
