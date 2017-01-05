@@ -13,7 +13,6 @@ package eu.numberfour.n4jsx.typesystem
 import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
-import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.DefaultUnsupportedExpressionTypeHelper
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
@@ -22,7 +21,6 @@ import eu.numberfour.n4jsx.n4JSX.JSXElement
 import eu.numberfour.n4jsx.n4JSX.JSXPropertyAttribute
 import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.EReference
 
 /**
  * This class adds typing rules for JSX elements. Consider to define these typing rules in an Xsemantics for N4JSX 
@@ -41,8 +39,7 @@ class N4JSXUnsupportedExpressionTypeHelper extends DefaultUnsupportedExpressionT
 	 */
 	override public typeExpression(Expression expression, RuleEnvironment G) {
 		if (expression instanceof JSXElement) {
-			val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
-			val classifierReactElement = reactLookupHelper.lookUpReactClassifier(expression, reference, ReactHelper.REACT_ELEMENT, ReactHelper.REACT_MODULE);
+			val classifierReactElement = reactLookupHelper.lookUpReactElement(expression);
 			
 			if (classifierReactElement === null) {
 				throw new IllegalStateException(ReactHelper.REACT_MODULE + "." + ReactHelper.REACT_ELEMENT +  " not found");			
