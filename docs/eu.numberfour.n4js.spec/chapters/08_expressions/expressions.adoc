@@ -518,13 +518,14 @@ cf. cite:[ECMA11a(S11.1.3p.63,S7.8p.19ff)].
 The type of a literal can directly be derived from the grammar. The
 following axioms are defined for literals:
 
-
-$&\infer{\type{NullLiteral}: \type{null}}{}          \tag{\S7.8.1}\\
+[math]
+--
+&\infer{\type{NullLiteral}: \type{null}}{}          \tag{\S7.8.1}\\
 &\infer{\type{BooleanLiteral}: \type{boolean}}{}        \tag{\S7.8.2}\\
 &\infer{\type{NumericLiteral}: \type{int} or \type{number}}{}       \tag{\S7.8.3}\\
 &\infer{\type{StringLiteral}: \type{string}}{}      \tag{\S7.8.4}\\
-&\infer{\type{RegularExpressionLiteral}: \type{RegExpr}}{} \tag{\S7.8.5}$
-
+&\infer{\type{RegularExpressionLiteral}: \type{RegExpr}}{} \tag{\S7.8.5}
+--
 
 Note that there are no literals specific for `pathSelector` or `i18nkey`.
 
@@ -618,18 +619,19 @@ The interesting question is the binding of the type variable $T$.
 The type of an array padding _p_ is inferred as follows:
 
 [math]
----
+--
 &\infer{\tee p: \type{undefined}}{} \\
----
+--
 
 
 The element type of an array literal is simply inferred as the
 (simplified) union of the type elements of the array. Thus, the type of
 an array literal $a$ is inferred as follows:
+
 [math]
----
+--
 \infer{\tee(a): Array<T>}{\tee a.\seq{elements}: \seq{T_e} &  T = \bigcup \seq{T_e}}
----
+--
 
 
 In other languages not supporting union types, the element type is often
@@ -1574,12 +1576,14 @@ The following operators have fixed types independent of their operand
 types:
 task:IDE-244[] task:IDE-345[]
 
-$&\infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{}     \tag{\S 11.4.1}\\
+[math]
+--
+&\infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{}     \tag{\S 11.4.1}\\
 &\infer{\tee \lstnfbnf{'void'}\ expression: \type{undefined}}{}     \tag{\S 11.4.2}\\
 &\infer{\tee \lstnfbnf{'typeof'}\ expression: \type{string}}{}  \tag{\S 11.4.3}\\
 &\infer{\tee \lstnfbnf{('++'|'$--$'|'+'|'$-$'|'~')}\ expression: \type{number}}{}   \tag{\S 11.4.4-8}\\
-&\infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{}  \tag{\S 11.4.9}$
-
+&\infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{}  \tag{\S 11.4.9}
+--
 // ~
 
 === Multiplicative Expression
@@ -1674,22 +1678,22 @@ condition:
 
 
 [math]
----
+--
 \infer[nb]{nb(T)}{T = \type{number} \lor T = \type{boolean}}
 \infer[nb]{nb(expr)}{nb\tee expr}\\
 \infer[un]{un(T)}{T = \type{undefined} \lor T = \type{null}}
 \infer[un]{un(expr)}{un\tee expr.lhs \lor un\tee expr.rhs}
----
+--
 
 
 The type of an additive expression $e$ is inferred as
 follows:
+
 [math]
----
-\infer
-{\tee e: \type{string}}{e.op='+' & \lnot(nb(e.lhs)\land nb(e.rhs)) & \lnot(un(e) \land (nb(e.lhs)\lor nb(e.rhs))}\\
+--
+\infer{\tee e: \type{string}}{e.op='+' & \lnot(nb(e.lhs)\land nb(e.rhs)) & \lnot(un(e) \land (nb(e.lhs)\lor nb(e.rhs))}\\
 &\infer{\tee e: \type{number}}{}\\
----
+--
 
 
 .Type of addition expression
@@ -1734,6 +1738,7 @@ ShiftOperator returns ShiftOperator:
 --
 For a given bitwise shift expression $e$ the following constraints must hold in N4JS mode: task:IDE-345[] task:IDE-771[]
 * The types of the operands must be both number.
++
 [math]
 ---
 \infer
@@ -1747,9 +1752,9 @@ task:IDE-244[] task:IDE-345[]
 The type returned by a bitwise shift expression is always `boolean`:
 
 [math]
----
+--
 &\infer{\tee\ (\lstnfbnf{Expression ('<<'|'>>'|'>>>')\ Expression}): \type{number}}{}   \tag{\S 11.7.1/2} \\
----
+--
 
 
 === Relational Expression
@@ -1787,6 +1792,7 @@ in N4JS mode, the following constraints must hold:
 
 * The operands must have the same type and the type must be either a
 number, string, or boolean:
++
 [math]
 ---
 &\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}
@@ -1814,17 +1820,24 @@ footnote:[Only [language-n4js]`Function` implements the ECMAScript specification
 Thus instanceof expressions are rewritten by the compiler for other types.
 Note that a reference to a class returns the constructor type, which actually is a function itself.
 In other words,
-$&\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{Class\}}}{} \\$
++
+[math]
+---
+\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{Class\}}}{}
+---
++
 is contained in the the first type rule.] task:IDE-652[]
 // TODO check for missing reference
 , an object type reference
 footnote:[Includes interfaces, since an interface type reference is a subtype of object type reference: $\type{type\{Interface\}} <: \type{type\{Object\}}$]
-or an enum type reference. task:IDE-681[] task:IDEBUG-631[]    +
+or an enum type reference. task:IDE-681[] task:IDEBUG-631[]
 
-$&\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{Function}}{} \\
+[math]
+---
+&\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{Function}}{} \\
 &\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{Object\}}}{} \\
-&\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{N4Enum\}}}{}$
-
+&\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{N4Enum\}}}{}
+---
 
 The type of a definition site structural classifier $C$ is
 not of type `C`. Thus, the `instanceof` operator cannot be used for structural types.
@@ -1837,17 +1850,26 @@ interpreted (by the parser) as a binary operator.
 [req,id=IDE-115,version=1]
 --
 task:IDE-345[]
-For a given relational expression $e$ with
-$e.op = \lstnfjs{in}$, the following constraints must hold:
+For a given relational expression $e$ with $e.op = \lstnfjs{in}$, the following constraints must hold:
 
-1.  The right operand of the in operator must be an `Object`: +
-$&\infer{\tee lhs\ \lstnfbnf{'in'}\  rhs\  \expectType\ rhs: \type{Object}}{}$
-2.  In N4JS mode,the left operand is restricted to be of type `string` or `number`:
-$&\infer{\tee  lhs\ \lstnfbnf{'in'}\ rhs\  \expectType\ lhs: \type{\union{string,number}}}{}$
+1.  The right operand of the in operator must be an `Object`:
++
+[math]
+---
+&\infer{\tee lhs\ \lstnfbnf{'in'}\  rhs\  \expectType\ rhs: \type{Object}}{}
+---
+2.  In N4JS mode, the left operand is restricted to be of type `string` or `number`:
++
+[math]
+---
+&\infer{\tee  lhs\ \lstnfbnf{'in'}\ rhs\  \expectType\ lhs: \type{\union{string,number}}}{}
+---
+
 --
 
-A special feature of N4JS is support for interface type references in
-combination with the `instance of` operator. The compiler rewrites the code to make this work. task:IDE-561[]
+A special feature of N4JS is support for interface type references in combination with the `instance of` operator.
+The compiler rewrites the code to make this work. task:IDE-561[]
+
 .`instanceof` with Interface
 [example]
 --
@@ -1890,8 +1912,12 @@ task:IDE-244[] task:IDE-345[]
 
 The type of a relational expression always is `boolean`;
 
-$&\infer{\tee lhs\ \lstnfbnf{('<'|'<='|'>'|'>='|'instanceof'|'in')}\ rhs\ : \type{boolean}}{}    \tag{\S 11.8.1-6}$
+[math]
+--
+&\infer{\tee lhs\ \lstnfbnf{('<'|'<='|'>'|'>='|'instanceof'|'in')}\ rhs\ : \type{boolean}}{}    \tag{\S 11.8.1-6}
+--
 
+// TODO check \tag{\S 11.8.1-6} in math blocks
 
 === Equality Expression
 
@@ -1938,9 +1964,8 @@ function isFirst(ar: Array<? extends A>, b: B): boolean {
 ----
 
 the type of array elements is `? extends A`. +
-Neither $\lstnfjs{? extends A}\subtype \lstnfjs{B}$ nor
-$\lstnfjs{B} \subtype \lstnfjs{? extends A}$ is true. This
-is why the upper bounds are to be used.
+Neither $\lstnfjs{? extends A}\subtype \lstnfjs{B}$ nor $\lstnfjs{B} \subtype \lstnfjs{? extends A}$ is true.
+This is why the upper bounds are to be used.
 
 [discrete]
 ==== Type Inference [[type-inference-13]]
@@ -1949,7 +1974,10 @@ task:IDE-244[] task:IDE-345[]
 In N4JSmode, using the non-strict equality operators `'=='|'!='` is only allowed for internal developers. External developers have to use the strict equality
 operators `'==='|'!=='`. The inferred type of an equality expression always is `boolean`.
 
-$&\infer{\tee lhs\ \lstnfbnf{('=='|'!='|'==='|'!==')}\ rhs\ : \type{boolean}}{}  \tag{\S 11.9}$
+[math]
+--
+&\infer{\tee lhs\ \lstnfbnf{('=='|'!='|'==='|'!==')}\ rhs\ : \type{boolean}}{}  \tag{\S 11.9}
+--
 
 === Binary Bitwise Expression
 
@@ -1992,8 +2020,7 @@ in N4JS mode: task:IDE-345[]
 
 [math]
 ---
-\infer
-{\tee \type{BitwiseBitwiseExpression}\ \expectType\ \type{Expression}: \type{number}}{}
+\infer{\tee \type{BitwiseBitwiseExpression}\ \expectType\ \type{Expression}: \type{number}}{}
 ---
 
 [discrete]
@@ -2002,7 +2029,10 @@ task:IDE-244[] task:IDE-345[]
 
 The type returned by a binary bitwise expression is always :
 
-$&\infer{\tee\ (\lstnfbnf{Expression ('&'|'^'|'|')\ Expression}): \type{number}}{}   \tag{\S 11.10}$
+[math]
+--
+&\infer{\tee\ (\lstnfbnf{Expression ('&'|'^'|'|')\ Expression}): \type{number}}{}   \tag{\S 11.10}
+--
 
 === Binary Logical Expression
 
@@ -2047,9 +2077,9 @@ The type inference does not take this short-circuit evaluation strategy into acc
 affect the result in case one of the types is `null` either or `undefined`, which is not allowed in N4JS mode.
 
 [math]
----
+--
 \infer{\tee\ lhs\ \lstnfbnf{'&&'|'||'}\ rhs: \type{\union*}\tee lhs, \tee rhs \type{\}}}{}
----
+--
 
 === Conditional Expression
 
@@ -2097,13 +2127,13 @@ task:IDE-348[]
 
 The inferred type of a conditional expression is the union of the true
 and false expression (cf. cite:[ECMA11a(S11.12,p.84)]   ():
+
 [math]
----
+--
 \infer
 {\tee cond\ \lstnfbnf{'?'} et\ \lstnfbnf{':'} ef : T}
     {T = \union{ \tee et, \tee ef}}
----
-
+--
 
 
 .Type of Conditional Expressions
@@ -2135,6 +2165,7 @@ cond ? (cond ? a : b) : (cond ? c : d); // union{A,B,C,D}
 cond ? (cond ? a : b) : (cond ? b : d); // union{A,B,D}
 cond ? ga : gb;                         // union{G<A>,G<B>}
 ----
+
 --
 
 
@@ -2178,6 +2209,7 @@ the following constraints must hold:
 In the following inference rule and the constraint, ’@’ is to be
 replaced with the right part of one of the assignment operators listed
 above, that is,
++
 [math]
 ---
 @ \in \{\lstnfbnf{'*', '/', '\%', '+', '-', '<<', '>>', '>>>', '&', '^', '|'}\}
@@ -2245,8 +2277,10 @@ Similarly to cite:[ECMA11a(S11.1,p.84ff)], we define type inference for simple a
 
 The type of the assignment is simply the type of the right-hand side:
 
-
-$&\infer{\tee left\ \lstnfbnf{'='} right: T}{\tee right: T}  \tag{\S 11.13.1}$
+[math]
+--
+&\infer{\tee left\ \lstnfbnf{'='} right: T}{\tee right: T}  \tag{\S 11.13.1}
+--
 
 Compound assignments are reduced to the former by splitting an operator
 `@=`, in which `@` is a simple operator, into a simple operator
@@ -2254,11 +2288,9 @@ expression with operator `@` and a simple assignment `=`. Since the type
 of the latter is the right-hand side, we can define:
 
 [math]
----
-\infer
-{\tee left\ \lstnfbnf{'@='} right: T}{\tee left\ \lstnfbnf{'@'} right: T} \tag{\S 11.13.1}
----
-
+--
+\infer{\tee left\ \lstnfbnf{'@='} right: T}{\tee left\ \lstnfbnf{'@'} right: T} \tag{\S 11.13.1}
+--
 
 === Comma Expression
 
@@ -2279,8 +2311,7 @@ CommaExpression <In, Yield>:
 ==== Semantics [[comma-expression-semantics]]
 task:IDE-778[]
 
-All expressions will be evaluated even though only the value of the last
-expression will be the result.
+All expressions will be evaluated even though only the value of the last expression will be the result.
 
 .Comma Expression
 [example]
@@ -2293,6 +2324,7 @@ var b: boolean;
 b = (12, 34, true); // ok, b=true
 b =  12, 34, true ; // error, b=12 is invalid
 ----
+
 --
 
 [discrete]
@@ -2303,17 +2335,18 @@ Cf. cite:[ECMA11a(S11.14,p.85)]
 
 The type of a comma expression $cexpr$ is inferred to the
 last expression:
+
 [math]
----
-\infer
-{\tee cexpr: T}{n=|cexpr.exprs|, \tee cexpr.exprs_n:T} \tag{\S11.14}
----
+--
+\infer{\tee cexpr: T}{n=|cexpr.exprs|, \tee cexpr.exprs_n:T} \tag{\S11.14}
+--
 
 [.language-n4js]
 == ECMAScript 6 Expressions
 
 === The super Keyword
-//\todo{compare semantic with ES6, the current definition stems from times when ES6 was in draft mode.}
+
+// todo{compare semantic with ES6, the current definition stems from times when ES6 was in draft mode.}
 
 
 [source,n4js]
@@ -2352,8 +2385,7 @@ class B extends A {
 task:IDE-645[]
 
 
-`super` can be used to access the supertype’s constructor, methods, getters and
-setters.
+`super` can be used to access the supertype’s constructor, methods, getters and setters.
 The supertype is defined lexically, which is different from how `this` works.
 footnote:[See cite:[ECMA15a], Chapter 12.3.5 "The Super Keyword"; note the use of "HomeObject" instead of "thisValue"; also see this http://www.2ality.com/2011/11/super-references.html[blog]).
 Note that in cite:[ECMA15a] Chapter 12.3.5 `The Super Keyword`, `super` is defined as a keyword but the

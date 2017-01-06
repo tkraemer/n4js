@@ -90,8 +90,7 @@ means that all types with the same members as the specified type are
 subtypes of that type, except for subtypes of `N4Object`. In the latter case,
 programmers are enforced to nominal declare the type relation.
 
-If a type $T$ is declared as structural at its definition,
-$T.defStructural$ is true.
+If a type $T$ is declared as structural at its definition, $T.defStructural$ is true.
 
 
 .Definition Site Structural Typing
@@ -120,18 +119,23 @@ or
 ..  if it is a subtype of `N4Object` which explicitly extends or implements the
 structurally defined type.
 +
-$\infer{\tee X \subtype T}{X \subtype \type{N4Object} & T.defStructural & {T \in X.superTypes^* }}$
+[math]
+---
+\infer{\tee X \subtype T}{X \subtype \type{N4Object} & T.defStructural & {T \in X.superTypes^* }}
+---
 ..  A structurally defined type $T$ is implicitly derived
 from `Object` if no other type is specified. In particular, a structurally
 defined type must not be inherited from
+
 [math]
 ---
 \infer{\tee T \subtype \lstnfjs{Object}}{T.defStructural}
+
+T.defStructural \Rightarrow \tee T \notsubtype \lstnfjs{N4Object} \land \lstnfjs{N4Object} \not\in T.superTypes^*
 ---
-+
-$T.defStructural \Rightarrow \tee T \notsubtype \lstnfjs{N4Object} \land \lstnfjs{N4Object} \not\in T.superTypes^*$
+
 --
-// **
+// TODO check math block above
 
 .Declaration Site Structural Typing
 [example]

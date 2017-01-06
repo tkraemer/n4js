@@ -1396,7 +1396,8 @@ $& P.containedModule.staticPolyfillModule = \TRUE $
 +
 6. For a statically-filled class $F$ there is at most one
 static polyfill:
-$(P_1 \text{ is static polyfill of } F \land P_2 \text{ is static polyfill of } F) \rightarrow P_1=P_2$
++
+$(P_1 \texttt{ is static polyfill of } F \land P_2 \texttt{ is static polyfill of } F) \rightarrow P_1=P_2$
 --
 
 
@@ -1407,24 +1408,36 @@ $(P_1 \text{ is static polyfill of } F \land P_2 \text{ is static polyfill of } 
 For a static polyfilling module $M_P$ the following must hold:
 
 1.  All top-level elements are static polyfills:
-$& \infer{T.staticPolyfill = \TRUE}{\forall T \in M_P \land T.topLevel = \TRUE}$
 +
+[math]
+---
+& \infer{T.staticPolyfill = \TRUE}{\forall T \in M_P \land T.topLevel = \TRUE}
+---
 2.  It exists exactly one filled module $M_F$ annotated with
 $staticPolyfillAware$ in the same project.
 3.  It is an error if two static polyfill modules for the same filled
 module exist in the same project:
-$\infer{M_1 = M_2}{
++
+[math]
+---
+\infer
+{M_1 = M_2}{
 M_1.specifier = M_2.specifier
 \land M_1.project = M_2.project \\
-\land M_1.staticPolyfillModul = M_2.staticPolyfillModul = \TRUE }$
+\land M_1.staticPolyfillModul = M_2.staticPolyfillModul = \TRUE }
+---
+
 --
 
 
 .Static polyfill
 [example]
 ====
-<<ex:staticpolyfill-genmod,Static Polyfill GenMod example>> shows an example of generated code. <<ex:staticpolyfill-polyfillmod,Static Polyfill Mod example>> demonstrates the static polyfill.
-Note that the containing project has two source folders configured:
+
+<<ex:staticpolyfill-genmod,Static Polyfill GenMod example>> shows an example of generated code.
+<<ex:staticpolyfill-polyfillmod,Static Polyfill Mod example>> demonstrates the static polyfill.
+
+Note that the containing project has two source folders configured: +
 `Project/src/n4js` and `Project/src/n4js-gen`.
 
 [[ex:staticpolyfill-polyfillmod]]
@@ -1457,6 +1470,7 @@ export public class B extends B {
     m3(): void {...} // adds new method m3 to B
 }
 ----
+
 ====
 
 === Transpiling static polyfilled classes
