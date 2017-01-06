@@ -368,13 +368,13 @@ footnote:[Note, the Java-like access restriction for members of visibility [lang
 [math]
 ++++
 \begin{matrix}
-\infer{\alpha_m(r, M)}{M.acc = \lenum{public}}
-\infer{\alpha_m(r, M)}{r.vendor = M.vendor \spc M.acc = \lenum{public@Internal}}
+\infer{\alpha_m(r, M)}{M.acc = \lenum{public}} \\
+\infer{\alpha_m(r, M)}{r.vendor = M.vendor \spc M.acc = \lenum{public@Internal}} \\
 \infer{\alpha_m(r, M)}{r.owner \in r.receiver.super^* \spc M.acc = \lenum{protected}}
-\infer{\alpha_m(r, M)}{r.owner \in r.receiver.super^* \spc r.vendor = M.vendor \spc M.acc = \lenum{protected@Internal}}
-\infer{\alpha_m(r, M)}{r.project = M.project \spc M.acc = \lenum{project}}
-\infer{\alpha_m(r, M)}{r.module = r.module \spc M.acc =\lenum{private}}
-\end{natrix}
+\infer{\alpha_m(r, M)}{r.owner \in r.receiver.super^* \spc r.vendor = M.vendor \spc M.acc = \lenum{protected@Internal}} \\
+\infer{\alpha_m(r, M)}{r.project = M.project \spc M.acc = \lenum{project}} \\
+\infer{\alpha_m(r, M)}{r.module = r.module \spc M.acc =\lenum{private}} \\
+\end{matrix}
 ++++
 
 

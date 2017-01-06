@@ -61,9 +61,9 @@ A type $J$ is called a _join_ (or least common supertype, ) of a pair of types $
 [math]
 ++++
 \begin{matrix}
-S \subtype J\\
-T \subtype J\\
-\forall L: (S\subtype L) \land (T\subtype L) \to J\subtype L
+S \subtype J \\
+T \subtype J \\
+\forall L: (S \subtype L) \land (T \subtype L) \to J\subtype L
 \end{matrix}
 ++++
 
@@ -77,6 +77,7 @@ $S \meet T = M$, if +
 M \subtype  S\\
 M \subtype  T\\
 \forall L: (L\subtype S) \land (L\subtype T) \to L\subtype M
+\begin{end}
 ++++
 --
 
@@ -1043,17 +1044,9 @@ In contrast to `undefined`, it expresses the intentional absence of a value.
 The `null` type can be assigned to any other type. That is, the type `null` is a
 subtype of all other types except `undefined`:
 
-////
-Original LaTeX math:
-% XSemantics subtypeNullType and subtypeNullType_UndefinedType
-\begin{align*}
-\infer{\tee \type{null}\ left <: \type{Type} right}{right \neq \type{undefined}} &
-\end{align*}
-////
-
 [math]
 ++++
-\infer{\tee `null}\ left <: `Type} right}{right \neq `undefined`
+\infer{\tee \type{null}\ left <: \type{Type} right}{right \neq \type{undefined}}
 ++++
 
 Please note that
@@ -1262,7 +1255,7 @@ function or method as `void` in order to state that the function does not return
 [math]
 ++++
 \begin{matrix}
-f.returnType=\type{void} \to\\
+f.returnType=\type{void} \to \\
 \forall r, \mu(r)=\type{ReturnStatement}, r.containingFunction=f: r.expression=\NULL
 \end{matrix}
 ++++
@@ -1273,7 +1266,7 @@ f.returnType=\type{void} \to\\
 \begin{matrix}
 f.returnType=\type{void} \to \\
 \forall e, bind(e, f): \mu(e.container)=\type{ExpressionStatement}
-\end{marix}
+\end{matrix}
 ++++
 
 ---
@@ -1767,6 +1760,7 @@ removed from the union:
 \infer{\union{T_1,\dots,T_{k-1},`null},T_k,\dots,T_n}}{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}}
 \end{matrix}
 ++++
+
 //`
 
 NOTE: simplification rules for union types
@@ -1957,7 +1951,7 @@ No union type shall conatin an type:
 
 [math]
 ++++
-\not \exists any \in U.typeRefs
+\nexists any \in U.typeRefs
 ++++
 
 Similar to the documentary purpose of using specific classes along with
@@ -1979,7 +1973,7 @@ interface type that also is contained in the union type.
 [math]
 ++++
 \begin{matrix}
-\not \exists TT \in U.typeRefs : \exists T \in U.typeRefs : \\
+\nexists TT \in U.typeRefs : \exists T \in U.typeRefs : \\
 (TT <: T \wedge isClassOrInterface(T) \wedge isClassOrInterface(TT))
 \end{matrix}
 ++++
@@ -2200,7 +2194,7 @@ and since it always can be omitted.
 No intersection type shall conatin an type:
 
 $
-\not \exists any \in I.typeRefs
+\nexists any \in I.typeRefs
 $
 
 --
@@ -2220,7 +2214,7 @@ another class or interface type that also is contained in the
 intersection type.
 [math]
 ++++
-\not \exists T \in I.typeRefs :
+\nexists T \in I.typeRefs :
 \exists TT \in I.typeRefs : \\
 (TT <: T \wedge isClassOrInterface(T) \wedge isClassOrInterface(TT))
 ++++
