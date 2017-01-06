@@ -32,22 +32,20 @@ We express absence of automatic coercion here by means of subtype
 relations:
 
 [math]
---
+++++
 \infer{\tee \type{Boolean} \notsubtype{\type{boolean}}}{} | \infer{\tee \type{boolean} \notsubtype{\type{Boolean}}}{} \\
 \infer{\tee \type{Number} \notsubtype{\type{number}}}{} | \infer{\tee \type{number} \notsubtype{\type{Number}}}{}  \\
 \infer{\tee \type{String} \notsubtype{\type{string}}}{} | \infer{\tee \type{string} \notsubtype{\type{String}}}{}
-\\
---
+++++
 
 
 and for the N4JS specific types:
 
 [math]
---
+++++
 \infer{\tee \type{pathSelector<T>} \subtype{\type{string}}}{} \\
 \infer{\tee \type{i18nKey} \subtype{\type{string}}}{}
-\\
---
+++++
 
 
 If a conversion between primitive and object type is desired, we require
@@ -211,13 +209,13 @@ Type casts are expressed with the cast expression (`as`), see <<_cast-as-express
 We first define helper rules for the type cast constraints as follows:
 
 [math]
---
+++++
 |\infer{isCPOE(T)}{\mu(T) \in \{ \type{TEnum}, \type{Class}, \type{Primitive}, \type{ObjectType}\}}\\
 |\infer{isCPOE(T)}{\mu{T} \in\{\type{ClassifierType}, \type{TypeType} \} \land \mu(T.typeRef) \neq \type{TypeVariable} }\\
 |\infer{isInterface(T)}{\mu(T) \in \{ \type{Interface} \}}\\
 |\infer{isBoundTypeVar(T)}{\mu(T)=\type{TypeVariable}  \land T.upperBounds \neq  \emptyset }\\
 |\infer{isFinalByType(T)}{\mu(T) \in \{\ \type{TEnum}, \type{Primitive} \} \lor (\mu(T)=\type{Class} \land T.extensibility=\lenum{final} \})}
---
+++++
 
 
 

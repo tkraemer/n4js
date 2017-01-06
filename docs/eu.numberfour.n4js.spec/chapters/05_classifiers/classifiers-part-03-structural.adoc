@@ -105,7 +105,7 @@ $T$ either
 non-static members of that type
 +
 [math]
----
+++++
 \infer{\tee X \subtype T}{
     {X \notsubtype \type{N4Object} \hspace{3em} T.defStructural} \\
     {\forall m \in T.members, m.acc=\lenum{public}, \neg m.static, m\neq T.ctor:}\\
@@ -114,25 +114,25 @@ non-static members of that type
     {\hspace{2em} \land \tee m' \subtype m}\\
     {\hspace{2em} \land \mu(m)=\type{Field} \to \tee m \subtype m'}
 }
----
+++++
 or
 ..  if it is a subtype of `N4Object` which explicitly extends or implements the
 structurally defined type.
 +
 [math]
----
+++++
 \infer{\tee X \subtype T}{X \subtype \type{N4Object} & T.defStructural & {T \in X.superTypes^* }}
----
+++++
 ..  A structurally defined type $T$ is implicitly derived
 from `Object` if no other type is specified. In particular, a structurally
 defined type must not be inherited from
 
 [math]
----
+++++
 \infer{\tee T \subtype \lstnfjs{Object}}{T.defStructural}
 
 T.defStructural \Rightarrow \tee T \notsubtype \lstnfjs{N4Object} \land \lstnfjs{N4Object} \not\in T.superTypes^*
----
+++++
 
 --
 // TODO check math block above
@@ -467,15 +467,16 @@ the structural field type:
 $\tsFld T \subtype \tsWoFld T$
 5.  The structural (field) version of a type cannot be used on the right
 hand side of the `instanceof` operator:
++
 [math]
----
+++++
 & x\ \lstnfjs{instanceof}\ E \Rightarrow \tee E: T \\
 & \hspace{3em}\to \lnot (T.refStructural \\
 & \hspace{6em}\lor T.refStructuralField \\
 & \hspace{6em}\lor T.refStructuralReadOnlyField \\
 & \hspace{6em}\lor T.refStructuralWriteOnlyField \\
 & \hspace{6em}\lor T.refStructuralInitField)
----
+++++
 That is, the following code will always issue an error: ``pass:[x instanceof ~T]``.
 footnote:[Since this is already prevented by the parser (the tilde is interpreted as an unary operator), error messages are likely to look a little strange.]
 6.  A type $X$ is a subtype of a structural version of a
@@ -484,18 +485,19 @@ members of the type $T$:
 footnote:[Note that due to this relaxed definition (compared with definition-site structural types) it is possible to pass an `N4Object` instance to a function of method with a declared structural type parameter.]
 +
 [math]
----
+++++
 \infer{\tee X \subtype \tee \tsStr T}
     {{\forall m \in T.members, m.owner \not\in \types{N4Object}, m.acc=\lenum{public}, \neg m.static, m\neq T.ctor:}\\
     {\hspace{1em} \exists m' \in X.members:}\\
     {\hspace{2em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name}\\
     {\hspace{2em} \land \tee m' \subtype \tee m}}
----
+++++
 7.  A type $X$ is a subtype of a structural field version of
 a type $\tsFld T$, if it contains all public, non-static and
 non-optional fields of the type $T$:
++
 [math]
----
+++++
 \infer{\tee X \subtype \tsFld T}
     {{\forall m \in T.fields, m.owner \not\in \types{N4Object}, m.acc=\lenum{public}, \neg m.static}\\
     {{\hspace{1em} \nexists m' \in X.fields}: m.optional}\\
@@ -503,12 +505,13 @@ non-optional fields of the type $T$:
     {\hspace{3em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name}\\
     {\hspace{3em} \land \tee m': T_m \land \tee m: T_{m'} \land T_m=T_{m'}} \\
     {\hspace{3em} \land m'.assignability\geq m.assignability}}
----
+++++
 8.  A type $X$ is a subtype of a structural read-only field
 version of a type $\tsRoFld T$, if it contains all public,
 non-optional and non-static readable fields of the type $T$:
++
 [math]
----
+++++
 \infer{\tee X \subtype \tsRoFld T}
     {{\forall m \in T.fields \cup T.getters, m.owner \not\in \types{N4Object}, m.acc=\lenum{public}, \neg m.static}\\
     {{\hspace{1em} \nexists m' \in X.fields \cup X.getters}: m.optional}\\
@@ -516,12 +519,13 @@ non-optional and non-static readable fields of the type $T$:
     {\hspace{3em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name}\\
     {\hspace{3em} \land \tee m': T_m \land \tee m: T_{m'} \land T_m=T_{m'}} \\
     {\hspace{3em} \land m'.assignability\geq m.assignability}}
----
+++++
 9.  A type $X$ is a subtype of a structural write-only field
 version of a type $\tsWoFld T$, if it contains all public,
 non-optional and non-static writable fields of the type $T$:
++
 [math]
----
+++++
 \infer{\tee X \subtype \tsWoFld T}
     {{\forall m \in T.fields \cup T.setters, m.owner \not\in \types{N4Object}, m.acc=\lenum{public}, \neg m.static, \neg m.final}\\
     {{\hspace{1em} \nexists m' \in X.fields \cup X.setters}: m.optional}\\
@@ -529,14 +533,15 @@ non-optional and non-static writable fields of the type $T$:
     {\hspace{3em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name}\\
     {\hspace{3em} \land \tee m': T_m \land \tee m: T_{m'} \land T_m=T_{m'}} \\
     {\hspace{3em} \land m'.assignability\geq m.assignability}}
----
+++++
 10. A type $X$ is a subtype of a structural field version of
 a type $\tsFld this$, if it contains all public, non-static
 and non-optional fields, either defined via data fields or field get
 accessors, of the inferred type of `this`. _All fields which have an
 initializer are handled as if they were optional._
++
 [math]
----
+++++
 \infer{\tee X \subtype \tsFld this}
     {{\tee this:  T} \\
     {\forall m \in T.fields \cup T.setters, m.owner \not\in \types{N4Object}, m.acc=\lenum{public}, \neg m.static}\\
@@ -544,16 +549,17 @@ initializer are handled as if they were optional._
     {\hspace{1em} \lor\ \exists m' \in X.fields \cup X.getters:}\\
     {\hspace{3em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name}\\
     {\hspace{3em} \land \tee m' \subtype m} \land m'.assignability\geq m.assignability}
----
+++++
 11. A structural field type $\tsFld T$ is a subtype of a
 structural type $\tsStr X$, if $\tsStr X$ only
 contains fields (except methods inherited from `Object`) and if
 $\tsFld T \subtype \tsFld X$.
++
 [math]
----
+++++
 \infer{\tee \tsFld T \subtype \tsStr X}
     {X.methods \setminus \lstnfjs{Object}.methods = \emptyset \land \tee \tsFld T \subtype \tsFld X}
----
+++++
 12. Use-site structural typing cannot be used for declaring supertypes
 of classes or interfaces. That is to say that structural types cannot be
 used after `extends`, `implements` or `eith` in type declarations.
@@ -566,10 +572,11 @@ that it can be used to check the type of an instance.
 
 If a type $X$ is a (nominal) subtype of T, it is, of course,
 also a subtype of $\tsStr T$:
++
 [math]
----
+++++
 \infer{\tee X \subtype \tee \tsStr T}{\tee X \subtype \tee T}
----
+++++
 This is only a shortcut for the type inference defined above.
 
 .Definition and Use-Site Precedence
@@ -582,7 +589,7 @@ applied.
 
 .Use-Site Structural Typing
 [example]
---
+====
 
 The following example demonstrates the effect of the structural (field)
 modifier, used in this case for function parameters.
@@ -602,11 +609,11 @@ f({x:10});      // error, the object literal does not provide function foo()
 g({x:10});      // ok: object literal provides all fields of I
 ----
 
---
+====
 
 .Structural types variable and instanceof operator
 [example]
---
+====
 It is possible to use a variable typed with a structural version of a type on the left hand side of the `instanceof` operator, as demonstrated in this example:
 
 [source,n4js]
@@ -625,7 +632,7 @@ function f(p: ~~C) {
 }
 ----
 
---
+====
 
 The following table describes the member availability of `X` in various
 typing scenarios. Such as $\tsFld X$,

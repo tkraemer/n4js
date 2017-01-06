@@ -90,9 +90,9 @@ writable modifiers used for fields. We define a partial order on this
 enumeration as follows:
 
 [math]
---
+++++
 <(l,r) & ::= & \{ (\lenum{set}, \lenum{any}), (\lenum{get}, \lenum{any})  \}
---
+++++
 
 
 [horizontal]
@@ -123,9 +123,9 @@ task:IDE-550[] task:IDE-551[]
 other is non-static:
 +
 [math]
----
+++++
 \forall m_1,m_2 \in C.ownedMembers, m_1\neq m_2: m_1.name\neq m_2.name \lor m_1.static\neq m_2.static
----
+++++
 2.  The member name must be a valid identifier name, see <<_identifier-names-and-identifiers,Identifier Grammar>>.
 
 --
@@ -701,18 +701,20 @@ true:
 $S.ctor=C.ctor$ (the subclass does not define its own
 constructor), `S` must not contain a public member with same
 name as $SM$:
++
 [math]
----
+++++
 &S <: C, S.ctor = C.ctor \\
     &\hspace{3em}\to \nexists M \in S.members: \\
     &\hspace{5em}M.acc=\lenum{public} \land M.name = SM.name
----
+++++
 2.  `C` itself must not contain a public member with same
 name as $SM$:
++
 [math]
----
+++++
 \nexists M \in C.members: M.acc=\lenum{public} \land M.name = SM.name
----
+++++
 
 --
 
@@ -773,11 +775,12 @@ parameter are copied as well. task:IDEBUG-134[]
 accordingly.
 7.  The type of an additional member which match owned non-public field
 must be subtype of the field’s type:
++
 [math]
----
+++++
 \forall s \in ctor.fpar.structuralMembers, ctor.fpar.spec: \\
 \hspace{2em}\exists f \in ctor.owner.ownedFields \Rightarrow \tee s \subtype f
----
+++++
 8.  $\nfjstilde i \nfjstilde\lstnfjs{this}$ constructor
 ignores superfluous properties provided by an object literal. These
 ignored properties are _not_ used to set
@@ -1183,30 +1186,30 @@ extending classes or implementing interfaces see <<_redefinition-of-members,Rede
 The type of a field is the type of its declaration:
 
 [math]
---
+++++
 & \infer{\tee f: \tee d}{} \\
---
+++++
 
 The type of a field declaration is either the declared type or the
 inferred type of the initializer expression:
 
 [math]
---
+++++
 & \infer{\tee d: T}{d.declaredType \neq \NULL & T = d.declaredType} \\
 & \infer{\tee d: T}{
     d.declaredType = \NULL & d.expression \neq \NULL \\
     E = \tee d.expression & E \not\in \{\type{null, undefined}\} & T = E} \\
 & \infer{\tee d: \type{any}}{else}
---
+++++
 
 If the type contains type variables they are substituted according to
 type parameters which are provided by the reference:
 
 [math]
---
+++++
 \infer{\typeEnv \entails \type{TField}\ tfield: T}
         {\typeEnv \entails tfield.typeRef: T}
---
+++++
 
 === Assignment Modifiers
 task:IDE-946[]
@@ -1252,14 +1255,14 @@ If the field is initialized in the constructor, this may be done either explicit
 task:IDEBUG-575[]
 +
 [math]
----
+++++
 & f.expr \neq \NULL \\
 & \lor (\exists assignExp: assignExpr.containingFunction = f.owner.constructor \\
 & \hspace{3em} \land assignExpr.left.target = \lstnfjs{"this"} \\
 & \hspace{3em} \land bind(assignExpr.left.property, f)) \\
 & \lor (f.public \land \exists fpar \in f.owner.constructor.fpars: \\
 & \hspace{3em} fpar.spec \land \exists sm \in structuralMembers: sm.name=f.name)
----
+++++
 --
 // todo{Constraints for final assignment are not completely implemented yet, also they have some problems here (e.g., not all control flows are required to assign a value). They will be implemented in the progress of adding more powerful program analysis in general}
 
@@ -1626,12 +1629,12 @@ following constraints hold:
 $M.name=S.name \land M.static=S.static$
 .  The metatypes are compatible:
 [math]
----
+++++
 \mu(S)=\type{Method} & \Rightarrow \mu(M) = \type{Method} \\
 \mu(S)=\type{Field}  & \Rightarrow \mu(M) \in \type{Field, Getter, Setter} \\
 \mu(S)=\type{Getter} & \Rightarrow \mu(M) \in \type{Field, Getter} \\
 \mu(S)=\type{Setter} & \Rightarrow \mu(M) \in \type{Field, Setter} \\
----
+++++
 . The overridden member must not be declared final:
 $\lnot S.final$
 .  Overridden member declared const can only be overridden (redefined)
@@ -1642,10 +1645,10 @@ abstract one:
 $\lnot M.abstract \lor S.abstract$
 .  The types are compatible:
 [math]
----
+++++
 (\mu(M) \in \types{Method, Getter, Field} \land \mu(S)\neq\type{Setter}) &  \Rightarrow \tee M \subtype S \\
     (\mu(M) \in \type{Setter, Field}         \land \mu(S)\neq\type{Getter} \land \lnot S.const) &   \Rightarrow \tee S \subtype M \\
----
+++++
 .  The access modifier is compatible:
 $M.acc \geq S.acc$
 
@@ -1666,13 +1669,13 @@ implement another member, then it must not be declared as override. That
 is the following constraint must hold:
 
 [math]
----
+++++
 & \lnot M.override\\
 & \land \\
 & \nexists M' \in C.super.members \cup \bigcup^{n}_{i=1}I_i.members:\\
 &  M'.name=M.name \land M'.static=M.static \\
 & \land M'.acc>\lenum{private} \\
----
+++++
 
 --
 
@@ -1737,10 +1740,10 @@ $M_C$ and $M_I$ as follows: Given a
 `C`, and interface $I_1,..., I_n$, implemented
 by `C`, with
 [math]
----
+++++
 M_C & =  C.ownedMembers \cup \{ m \in C.superType.members | m.acc > \lenum{private}\}\\
 M_I & = \bigcup^{n}_{i=1}I_i.members \\
----
+++++
 
 Note that these
 sets already contain only non-private data fields.
@@ -1789,40 +1792,41 @@ and $M_I$ as defined in . A non-static member
 into the consumer (`C`), if for all other (possible) members
 $M'$ of `C`
 [math]
----
+++++
 \forall M' \in M_C\cup M_I \setminus \{M\} :  M.name=M'.name \land \neg M'.static
----
+++++
 
 the following constraints hold:
 
 .  The other member’s meta type matches the meta type of the merge
 candiate:
++
 [math]
----
+++++
 \mu(M)=\type{Method}    & \Rightarrow \mu(M') = \type{Method} \\
 \mu(M)\neq\type{Method} & \Rightarrow \mu(M') \in \types{Field, FieldAccessor} % Field, Accessor
----
+++++
 
 .  The other member is abstract and not owned by the consumer:
++
 [math]
----
+++++
 & \mu(M)=\mu(M') \lor \mu(M)=\type{Field} \\ % getter does no effect setter and vice versa
 & \hspace{2em}\Rightarrow M'.abstract \land M' \not\in C.ownedMembers
----
+++++
 .  The merge candidate’s access modifier is not less than the modifier
 of the other member:
 [math]
----
+++++
 & \mu(M)=\mu(M') \lor \mu(M)=\type{Field} \\ % getter does no effect setter and vice versa
 & \hspace{2em} \Rightarrow M.acc \geq M'.acc
 ---
 .  The merge candidate’s type compatible with the other member:
 [math]
----
+++++
 \mu(M) \in \types{Method, Getter, Field} \land \mu(M') \neq \type{Setter}   & \Rightarrow \tee M \subtype M' \\
 \mu(M) \in \types{Setter, Field} \land \mu(M') \neq \type{Getter}           & \Rightarrow \tee M' \subtype M
-[math]
----
+++++
 --
 
 [.language-n4js]
@@ -1843,19 +1847,21 @@ the consumer.
 .  An implementation-compatible member $M'$ must exist in
 `C`:
 ..  if `M` is not a field:
++
 [math]
----
+++++
     \mu(M) \neq\type{Field} & \Rightarrow \\
                         & \exists M' \in C.members: \\
                             & \hspace{3em} overrideCompatible(M',M) \\
                             & \hspace{3em} \land (M' \in C.ownedMembers \Rightarrow M'.override)
----
-
+++++
 ..  if `M` is a field, then either an
 implementation-compatible field $F'$ or accessor pair
 $G', S'$ must exist:
++
 [math]
----    \mu(M)=\type{Field} & \Rightarrow \\
+++++
+    \mu(M)=\type{Field} & \Rightarrow \\
                         & \exists F' \in C.fields: \\
                             & \hspace{3em} overrideCompatible(F',M) \\
                             & \hspace{3em} \land (F' \in C.ownedMembers \Rightarrow F'.override) \\
@@ -1865,8 +1871,7 @@ $G', S'$ must exist:
                             & \hspace{3em} \land overrideCompatible(S',M) \\
                             & \hspace{3em} \land (G' \in C.ownedMembers \Rightarrow G'.override) \\
                             & \hspace{3em} \land (S' \in C.ownedMembers \Rightarrow S'.override)
----
-
+++++
 --
 
 Methods defined in interfaces are automatically declared abstract if
@@ -1884,10 +1889,10 @@ interfaces with same name but different signatures.
 methods from implemented interfaces, that is
 +
 [math]
----
+++++
 & \forall M \in C.methods, M' \in I_i.methods (i=1\dots n): \\
 & \hspace{2em} M.name=M'.name \Rightarrow M.acc \neq private \to M.acc \geq M'.acc
----
+++++
 3.  Methods in the implementor must be a supertype footnote:[As defined in <<_function-type,Function Type>> for function types.] of methods from implemented interfaces.
 That is to say the implemented methods are override-compatible.
 4.  There may be several methods $M_1, ..., M_n$ defined in

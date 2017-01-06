@@ -56,27 +56,32 @@ Join and meet are defined as follows:
 .Join and Meet
 [def]
 --
-A type $J$ is called a _join_ (or least common supertype, ) of a pair of types $S$
-and _T_, written $S \join T = J$, if
+A type $J$ is called a _join_ (or least common supertype, ) of a pair of types $S$ and _T_, written $S \join T = J$, if
+
 [math]
----
-& S \subtype J\\
-& T \subtype J\\
-& \forall L: (S\subtype L) \land (T\subtype L) \to J\subtype L
----
+++++
+\begin{matrix}
+S \subtype J\\
+T \subtype J\\
+\forall L: (S\subtype L) \land (T\subtype L) \to J\subtype L
+\end{matrix}
+++++
 
 Similarly, we say that a type $M$ is a _meet_ (or greatest
 common subtype, ) of $S$ and _T_, written
 $S \meet T = M$, if +
 
-$& M \subtype  S\\
-& M \subtype  T\\
-& \forall L: (L\subtype S) \land (L\subtype T) \to L\subtype M$
+[math]
+++++
+\begin{matrix}
+M \subtype  S\\
+M \subtype  T\\
+\forall L: (L\subtype S) \land (L\subtype T) \to L\subtype M
+++++
 --
 
-Note that this declarative definition needs to be specified in detail
-for special cases, such as union and intersection types. Usually, the
-union type of two types is also the join.
+Note that this declarative definition needs to be specified in detail for special cases, such as union and intersection types.
+Usually, the union type of two types is also the join.
 
 <<fig-cd-predefined-type-hierarchy,The Predefined Types Heirarchy figure>> summarizes all predefined types,
 that is primitive and built-in ECMAScript and N4JS types.
@@ -525,21 +530,21 @@ the left has one or more declared upper bounds.
 $intersection(left.declaredUpperBounds) <: right$ +
 This is the case for
 [math]
---
+++++
 (T extends B) <: A
---
+++++
 in which T is an unbound type variable and A, B two classes with $B <: A$.
 3.  In all other cases the result is false. +
 This includes cases such as +
 [math]
---
+++++
 B <: (T extends A)
---
+++++
 which is always false, even if $B <: A$ or +
 [math]
---
+++++
 (T extends A) <: (S extends B)
---
+++++
 which is always false, even if $A = B$.
 
 We thus obtain the following defintion:
@@ -551,15 +556,15 @@ For two types $T, S$ of which at least one is a type variable, we define
 
 * if both _T_ and $S$ are type variables:
 [math]
----
+++++
 \infer{T <: S}{T = S}
----
+++++
 * if _T_ is a type variable and $S$ is not:
 +
 [math]
----
+++++
 \infer{T <: S}{{T.\mathit{declaredUpperBounds}.\mathit{size} > 0} {\ \land\ \forall t \in T.\mathit{declaredUpperBounds}: t <: S}}
----
+++++
 
 --
 
@@ -657,10 +662,10 @@ $G=R.declaredType$, the following constraints must hold:
 is: +
 
 [math]
----
+++++
 & |G.typePars|=|R.typeArgs|\\
 &\land \forall\ i, 0<i<|R.typeArgs|: \infType{R.typeArgs_i} <: \infType{R.typePars_i} \\
----
+++++
 
 --
 
@@ -752,22 +757,23 @@ We define type conformance for non-primitive type references as follows:
 
 
 * For two non-parameterized types $T^0$ and $S^0$,
++
 [math]
----
+++++
 \infer{ T^0 <: S^0}{S^0 \in T^0.sup^* \cup T^0.interfaces^* }
----
-* For two parameterized types
-$T<T_1,...,T_n>$ and
-$S<S_1,...,S_m>$
-
+++++
+* For two parameterized types $T<T_1,...,T_n>$ and $S<S_1,...,S_m>$
++
 [math]
----
+++++
+\begin{matrix}
 \infer{\hspace{10em}T <: S\hspace{10em}}{
 {T^0<:S^0} \\
 {(n=0 \lor m=0 \lor (n=m \to \forall i:}\\
 \hspace{2em} {T_i.upperBound <: S_i.upperBound} \\
 \hspace{1em} \land {T_i.lowerBound :> S_i.lowerBound}))}
----
+\end{matrix}
+++++
 
 --
 
@@ -1017,9 +1023,10 @@ undef = 1; // will issue an error!
 
 The type `undefined` is a subtype of all types. That is,
 [math]
---
+++++
 \infer{\tee `undefined` <: T }{}
---
+++++
+
 is an axiom and true for all types _T_.
 
 ====
@@ -1045,9 +1052,9 @@ Original LaTeX math:
 ////
 
 [math]
---
-\infer{\tee `null}\ left <: `Type} right}{right \neq `undefined` &
---
+++++
+\infer{\tee `null}\ left <: `Type} right}{right \neq `undefined`
+++++
 
 Please note that
 
@@ -1094,9 +1101,9 @@ var b = false; console.log(b == 0) | prints true
 The type is subtype of :
 
 [math]
---
-\infer{\type{boolean} <: \type{any}}{}
---
+++++
+\inferSup{\type{boolean} <: \type{any}}{}
+++++
 
 Variables of type `boolean` can be auto-converted (coerced) to `Boolean`, as described in <<_autoboxing-and-coercing,Autoboxing and Coercing>>.
 
@@ -1134,9 +1141,9 @@ are never interpreted as a special character.
 The `string` type is a subtype of `any`:
 
 [math]
---
-\infer{\type{string} <: \type{any}}{}
---
+++++
+\inferSup{\type{string} <: \type{any}}{}
+++++
 
 It is supertype of the N4JS primitive type `pathselector`, and `i18nKey`.
 <<_primitive-pathselector-and-i18nkey,Primitive Pathselector and I18nKey>>
@@ -1157,9 +1164,9 @@ With prefix `0` you indicate that the number is octal based and with prefix `0x`
 The type `number` is subtype of `any`:
 
 [math]
----
+++++
 \infer{`number} <: `any}}{}
----
+++++
 
 However, variables of type `number` can be auto-converted (coerced) to `Number`, as
 described in <<_integer-literals,Integer Literals>> .
@@ -1210,9 +1217,9 @@ assigned to a variable of type `any`, but a variable declared  `any` can only be
 `any` is supertype of all other types. That is,
 
 [math]
---
-\infer{\tee `Type` left \subtype `any}}{}\end{aligned}\`
---
+++++
+\inferSup{\tee `Type` left \subtype `any}`
+++++
 
 is an axiom and true for all types.
 
@@ -1251,22 +1258,33 @@ function or method as `void` in order to state that the function does not return
 ---
 * The type `void` may only be used to declare the return type of a function or method.
 * If a function $f$ is declared to return `void`, an error is created if a return statement contains an expression:
-
-$& f.returnType=\type{void} \to\\
-& \forall r, \mu(r)=\type{ReturnStatement}, r.containingFunction=f: r.expression=\NULL$
-
++
+[math]
+++++
+\begin{matrix}
+f.returnType=\type{void} \to\\
+\forall r, \mu(r)=\type{ReturnStatement}, r.containingFunction=f: r.expression=\NULL
+\end{matrix}
+++++
 * If a function $f$ is declared to return `void`, an error is issued if the function is called in any statement or expression but an expression statement directly:
-$&f.returnType=\type{void} \to \\
-& \forall e, bind(e, f): \mu(e.container)=\type{ExpressionStatement}$
++
+[math]
+++++
+\begin{matrix}
+f.returnType=\type{void} \to \\
+\forall e, bind(e, f): \mu(e.container)=\type{ExpressionStatement}
+\end{marix}
+++++
+
 ---
 
 The following type hierarchy is defined: `void` is only a subtype of itself but
 not of any other type and no other type is a subtype of void.
 
 [math]
---
-\infer{\type{void} <: \type{void}}{}
---
+++++
+\inferSup{\type{void} <: \type{void}}
+++++
 
 Since `void` cannot be
 used as the type of variables, fields, formal parameters, etc., a
@@ -1319,10 +1337,12 @@ for enabling additional validation. Thus, they are completely
 interchangeable with string types:
 
 [math]
----
+++++
+\begin{matrix}
 \infer{\type{i18nKey} <: \type{string}}{}             && \infer{\type{string} <: \type{i18nKey}}{}        \\
 \infer{\type{pathSelector<T>} <: \type{string}}{}   && \infer{\type{string} <: \type{pathSelector<T>}}{}
----
+\end{matrix}
+++++
 
 As special literals for these N4JS types do not exist, the type has to
 be explicitly specified in order to enable the additional validation.
@@ -1515,9 +1535,9 @@ subtype of `Object`.
 ==== Semantics [[N4Object-semantics]]
 
 [math]
---
+++++
 \infer{`N4Object` <: `Object`}{}
---
+++++
 
 === N4Class
 
@@ -1683,24 +1703,24 @@ Let $U$ be an union type.
 
 * The union type is a common supertype of all its element types:
 [math]
----
+++++
 \infer{T <: U}{T \in U.typeRefs}
----
+++++
 * More generally, a type is a subtype of a union type, if it is a
 subtype of at least one type contained in the union:
 [math]
----
+++++
 \infer{S <: U}{\exists T \in U.typeRefs: S <: T}
----
+++++
 
 * A union type is a subtype of a type $S$, if all types of
 the union are subtypes of that type. footnote:[This rule is a
 generalization of the sub typing rules given in cite:[Igarashi07a(p.40)]}]
 
 [math]
----
+++++
 \infer{U <: S}{\forall T \in U.typeRefs: T <: S}
----
+++++
 
 * Commutativity: The order of element does not matter:
 $\union{A,B} = \union{B,A}$
@@ -1722,9 +1742,9 @@ are always automatically applied to union types.
 contains only one element, it is reduced to the element:
 
 [math]
----
+++++
 \infer{T}{\union{T}}
----
+++++
 
 * Simplification of union types of union types: A union type
 $U$ containing another union types $V$ is
@@ -1732,22 +1752,21 @@ reduced to a single union type $W$, with
 $W.typeRefs = U.typeRefs \cup V.typeRefs$:
 
 [math]
----
-\infer{\union{S_1,\dots,S_{k-1},T_1,\dots,T_m,S_{k+1},\dots,S_n}}
-{\union{S_1,\dots,S_{k-1},\union{T_1,\dots,T_m},S_{k+1},\dots,S_n}}
----
+++++
+\infer{\union{S_1,\dots,S_{k-1},T_1,\dots,T_m,S_{k+1},\dots,S_n}}{\union{S_1,\dots,S_{k-1},\union{T_1,\dots,T_m},S_{k+1},\dots,S_n}}
+++++
 
 * Simplification of union type with undefined or null: Since undefined
 is the bottom type, and null is kind of a second button type, they are
 removed from the union:
 +
 [math]
----
-\infer{\union{T_1,\dots,T_{k-1},`undefined},T_k,\dots,T_n}}
-{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}} \\
-\infer{\union{T_1,\dots,T_{k-1},`null},T_k,\dots,T_n}}
-{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}} \\
----
+++++
+\begin{matrix}
+\infer{\union{T_1,\dots,T_{k-1},`undefined},T_k,\dots,T_n}}{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}} \\
+\infer{\union{T_1,\dots,T_{k-1},`null},T_k,\dots,T_n}}{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}}
+\end{matrix}
+++++
 //`
 
 NOTE: simplification rules for union types
@@ -1755,11 +1774,11 @@ with one element are applied first.
 
 * The structural typing strategy is propagated to the types of the
 union:
++
 [math]
----
-\infer{\union{\tsStr T_1, \ldots, \tsStr T_n}}
-{\tsStr \union{T_1, \dots, T_n}}
----
+++++
+\infer{\union{\tsStr T_1, \ldots, \tsStr T_n}}{\tsStr \union{T_1, \dots, T_n}}
+++++
 
 --
 
@@ -1858,9 +1877,9 @@ The join $J$ of a union type $U$ with a type
 _T_ is the union of both types:
 
 [math]
----
-& \infer {(U \join T) = J}{J=U \cup T}
----
+++++
+\infer {(U \join T) = J}{J=U \cup T}
+++++
 
 
 
@@ -1870,9 +1889,9 @@ Remarks:
 * Joining a union type with another type is not similar to joining the
 elements of the union type directly with another type. That is
 [math]
----
-A\ \mbox{join}\  \lstnfjs{union\{}B,C\lstnfjs{\}} \neq A\ \mbox{join}\  B \ \mbox{join}\  C\
----
+++++
+A\ \mathbf{join}\  \lstnfjs{union\{}B,C\lstnfjs{\}} \neq A\ \mathbf{join}\  B \ \mathbf{join}\  C\
+++++
 * The computed join is simplified according to the constraints defined
 above.
 --
@@ -1885,12 +1904,11 @@ The meet of union types is defined as the meet of the elements.
 That is
 
 [math]
----
-& \infer{\union{T_1,\dots,T_n} \meet S }
-{T_1 \meet S \meet \dots \meet T_n \meet S}\\
-& \infer{\union{T_1,\dots,T_n} \meet \union{S_1,\dots,S_m} }
+++++
+\infer{\union{T_1,\dots,T_n} \meet S }{T_1 \meet S \meet \dots \meet T_n \meet S}\\
+\infer{\union{T_1,\dots,T_n} \meet \union{S_1,\dots,S_m} }
 {T_1 \meet S_1,\dots,T_1 \meet S_m, \dots,  T_n \meet S_1,\dots,T_n \meet S_m}
----
+++++
 
 Remarks:
 
@@ -1911,10 +1929,12 @@ The upper and lower bound of a union type $U$ is a union type $U'$
 containing the upper and lower bound of the elements of $U$:
 
 [math]
----
+++++
+\begin{matrix}
 upper(\union{T_1, \dots, T_n}) := \union{upper(T_1), \dots, upper(T_1)} \\
 lower(\union{T_1, \dots, T_n}) := \union{lower(T_1), \dots, lower(T_1)} \\
----
+\end{matrix}
+++++
 
 --
 
@@ -1935,9 +1955,10 @@ since documentation can also be done in a comment.
 --
 No union type shall conatin an type:
 
-$
+[math]
+++++
 \not \exists any \in U.typeRefs
-$
+++++
 
 Similar to the documentary purpose of using specific classes along with
 the `any` type is the following case. When two types are used, one of them a
@@ -1956,11 +1977,12 @@ contain class or interface types which are a subtype of another class or
 interface type that also is contained in the union type.
 
 [math]
----
- \not \exists TT \in U.typeRefs :
-\exists T \in U.typeRefs : \\
+++++
+\begin{matrix}
+\not \exists TT \in U.typeRefs : \exists T \in U.typeRefs : \\
 (TT <: T \wedge isClassOrInterface(T) \wedge isClassOrInterface(TT))
----
+\end{matrix}
+++++
 
 --
 
@@ -2009,9 +2031,9 @@ following conditions must hold:
 $I.typeRefs \neq \emptyset$
 2.  Only one class must be contained in the intersection type: +
 [math]
----
+++++
 \exists C \in I.typeRefs: \mu(C)=`Class}) \to \not\exists T \in I.typeRefs \setminus\{C\}: \mu(T)=`Class}
----
+++++
 //`
 +
 For the time being, only a warning is produced when more than one class
@@ -2033,18 +2055,18 @@ cite:[Laurent12a]Table 2, $\cap^1_l$ and $\cap^2_l$
 
 
 [math]
----
+++++
 \infer{I <: S}{\exists T \in I.typeRefs: T <: S}
----
+++++
 
 * A type is a subtype of an intersection type, if it is a subtype of all
 types contained in the intersection type: footnote:[This rule is a
 generalization of the subtyping rules given in cite:[Laurent12a]Table 2, $\cap^1_l$ and $\cap^2_l$
 
 [math]
----
+++++
 \infer{S <: I}{\forall T \in I.typeRefs: S <: T}
----
+++++
 
 
 * Non-optional elements:
@@ -2060,11 +2082,11 @@ automatically applied to intersection types.
 
 * The structural typing strategy is propagated to the types of the
 intersection:
++
 [math]
----
-\infer{\intersection{\tsStr T_1, \ldots, \tsStr T_n}}
-          {\tsStr \intersection{T_1, \dots, T_n}}
----
+++++
+\infer{\intersection{\tsStr T_1, \ldots, \tsStr T_n}}{\tsStr \intersection{T_1, \dots, T_n}}
+++++
 
 
 These subtyping rules are similar to Ceylon.
@@ -2116,14 +2138,14 @@ intersection{A,Any} <: A                        -> true
 The join of intersection types is defined as the join of the elements. That is
 
 [math]
----
+++++
 & \infer{\intersection{T_1,\dots,T_n} \join S }
 { T_1 \join S \join \dots \join T_n \join S}\\
 & \infer{\intersection{T_1,\dots,T_n} \join \intersection{S_1,\dots,S_m} }
 {T_1 \join S_1,\dots,T_1 \join S_m,
 \dots,
 T_n \join S_1,\dots,T_n \join S_m}
----
+++++
 
 --
 
@@ -2133,14 +2155,12 @@ T_n \join S_1,\dots,T_n \join S_m}
 The meet of intersection types is defined over their elements. That is
 
 [math]
----
-&\infer{\intersection{T_1,\dots,T_n} \meet S}
-{\intersection{T_1 \meet S,\dots,T_n \meet S}}\\
-&\infer{\intersection{T_1,\dots,T_n} \meet \intersection{S_1,\dots,S_m}}
-{\intersection{T_1\meet S_1,\dots,T_1\meet S_m,
+++++
+\infer{\intersection{T_1,\dots,T_n} \meet S}{\intersection{T_1 \meet S,\dots,T_n \meet S}}\\
+\infer{\intersection{T_1,\dots,T_n} \meet \intersection{S_1,\dots,S_m}}{\intersection{T_1\meet S_1,\dots,T_1\meet S_m,
 \quad \dots,
 \quad T_n\meet S_1,\dots,T_n\meet S_m}}
----
+++++
 
 --
 //TODO  {review meet with intersection type, same as with join}
@@ -2156,10 +2176,10 @@ $I'$ containing the upper and lower bound of the elements of
 $I$:
 
 [math]
----
+++++
 upper(\intersection{T_1, \dots, T_n}) := \intersection{upper(T_1), \dots, upper(T_1)} \\
 lower(\intersection{T_1, \dots, T_n}) := \intersection{lower(T_1), \dots, lower(T_1)} \\
----
+++++
 --
 
 --
@@ -2199,11 +2219,11 @@ Intersection types shall not contain class or interface types which are a supert
 another class or interface type that also is contained in the
 intersection type.
 [math]
----
+++++
 \not \exists T \in I.typeRefs :
 \exists TT \in I.typeRefs : \\
 (TT <: T \wedge isClassOrInterface(T) \wedge isClassOrInterface(TT))
----
+++++
 
 --
 
@@ -2259,56 +2279,56 @@ constraints for its members must hold:
 $\forall\ a \in U.attributes:$
 
 [math]
---
+++++
 &\forall\ k\in\{1,2\}: \exists\ a_k\in T_k.attributes: a_k.acc > private\\
 &\land a.acc = min(a_1.acc, a_2.acc)\\
 &\land a.name=a_1.name=a_2.name\\
 &\land a.typeRef = a_1.typeRef = a_2.typeRef
---
+++++
 
 [math]
---
+++++
 \forall\ m \in U.methods:
---
+++++
 
 [math]
---
+++++
 &\exists\ m_1 \in T_1.methods, m_2 \in T_2.methods,\\
-&\hspace{2em} \mbox{with}\ p=m.fpars \land p'=m_1.fpars \land p''=m_2.fpars, \mbox{\acs{WLOG}}\ |p'|\leq |p''|:\\
+&\hspace{2em} \mathbf{with} p=m.fpars \land p'=m_1.fpars \land p''=m_2.fpars, \mathbf{WLOG} |p'|\leq |p''|:\\
 &\hspace{1.2em} \forall k\in\{1,2\}: m_k.acc > private\\
 &\land m.acc = min(m_1.acc, m_2.acc)\\
 &\land m.name=m_1.name=m_2.name\\
 &\land m.typeRef = m_1.typeRef|m_2.typeRef \\
-&\land \forall\ i<|p''|: p_i \ \mbox{exists with} \\
+&\land \forall\ i<|p''|: p_i \ \mathbf{exists with} \\
 &\hspace{2em} p_i.name =
         \begin{cases}
             {p''}_i.name                        & i \geq |p'| \lor {p'}_i.name={p''}_i.name \\
-            {p'}_i.name + \mbox{"\_"} + {p''}_i.name
-                                            & \mbox{else}
+            {p'}_i.name + \mathbf{"\_"} + {p''}_i.name
+                                            & \mathbf{else}
         \end{cases}\\
 &\hspace{2em} p_i.typeRef =
         \begin{cases}
             {p'}_i.typeRef\&{p''}_i.typeRef         & i < |p'|\\
             {p'}_{|p'|-1}.typeRef\&{p''}_i.typeRef  & i \geq |p'| \land {p'}_{|p'|-1}.var\\
-            {p''}_i.typeRef                     & \mbox{else}
+            {p''}_i.typeRef                     & \mathbf{else}
         \end{cases}\\
 &\hspace{2em} p_i.opt =
         \begin{cases}
             ({p'}_i.opt\land{p''}_i.opt)    & i < |p'|\\
-            {p''}_i.opt                         & \mbox{else}
+            {p''}_i.opt                         & \mathbf{else}
         \end{cases}\\
 &\hspace{2em} p_i.var =
         \begin{cases}
             {p'}_i.var\land{p''}_i.var  & i < |p'| \land i=|p''|-1\\
             {p''}_i.var                     & i \geq |p'| \land i=|p''|-1 \\
-            false                       & \mbox{else}
+            false                       & \mathbf{else}
         \end{cases}\\
-&\land (l=|p'|=|p''| \land \lnot({p'}_{l-1}.opt\land{p''}_{l-1}.opt) \land \exists v\in\{p'_{l-1}, p''_{l-1}\} {v}.var: p_l\ \mbox{exists with} \\
+&\land (l=|p'|=|p''| \land \lnot({p'}_{l-1}.opt\land{p''}_{l-1}.opt) \land \exists v\in\{p'_{l-1}, p''_{l-1}\} {v}.var: p_l\ \mathbf{exists with} \\
 &\hspace{2em} p_l.name = v.name \\
 &\hspace{2em} p_i.typeRef = v.typeRef \\
 &\hspace{2em} p_i.opt = true \\
 &\hspace{2em} p_i.var  = true
---
+++++
 
 ---
 
@@ -2356,66 +2376,66 @@ constraints for its members must hold:
 $\forall a \in I.attributes:$
 
 [math]
---
+++++
 &(\exists a_1\in T_1.attributes, a_1.acc>private) \lor (\exists a_2\in T_2.attributes, a_2.acc>private) \\
 &\land a.name =
         \begin{cases}
             a_1.name            & a_1\neq null \land (a_2=null \lor a_2.name=a_1.name) \\
-            a_2.name            & \mbox{else}
+            a_2.name            & \mathbf{else}
         \end{cases}\\
 &\land a.acc =
         \begin{cases}
             a_1.acc         & a_1\neq null \land (a_2=null \lor a_2.acc \leq a_1.acc) \\
-            a_2.acc         & \mbox{else}
+            a_2.acc         & \mathbf{else}
         \end{cases}\\
 &\land a.typeRef =
         \begin{cases}
             a_1.typeRef\&a_2.typeRef    & a_1\neq null \land a_2\neq null \\
             a_1.typeRef             & a_1\neq null \\
-            a_2.typeRef             & \mbox{else} (a_2\neq null)
+            a_2.typeRef             & \mathbf{else} (a_2\neq null)
         \end{cases}
---
+++++
 
 
 [math]
---
+++++
 \forall m \in I.methods:
---
+++++
 
 [math]
---
+++++
 & (\exists m_1 \in T_1.methods, m_1.acc>private) \lor (\exists m_2 \in T_1.methods, m_2.acc>private): \\
-&\hspace{2em} \mbox{with}\ p=m.fpars\\
-&\hspace{3em} \land \mbox{if}\ m_1\ \mbox{exists}\ p'=m_1.fpars\ \mbox{(else $p'=\emptyset$)},\\
-&\hspace{3em} \land \mbox{if}\ m_2\ \mbox{exists}\ p''=m_2.fpars\ \mbox{(else $p''=\emptyset$)}, \mbox{\acs{WLOG}} |p'|\leq |p''|:\\
+&\hspace{2em} \mathbf{with} p=m.fpars\\
+&\hspace{3em} \land \mathbf{if}\ m_1\ \mathbf{exists}\ p'=m_1.fpars\ \mathbf{(else $p'=\emptyset$)},\\
+&\hspace{3em} \land \mathbf{if}\ m_2\ \mathbf{exists}\ p''=m_2.fpars\ \mathbf{(else $p''=\emptyset$)}, \mathbf{\acs{WLOG}} |p'|\leq |p''|:\\
 &\hspace{1em} m.name =
         \begin{cases}
             m_1.name            & m_1\neq null \land (m_2=null \lor m_2.name=m_1.name)\\
-            m_2.name            & \mbox{else}
+            m_2.name            & \mathbf{else}
         \end{cases}\\
 &\land m.acc =
         \begin{cases}
             m_1.acc         & m_1\neq null \land (m_2=null \lor m_2.acc \leq m_1.acc)\\
-            m_2.acc         & \mbox{else}
+            m_2.acc         & \mathbf{else}
         \end{cases}\\
 &\land m.typeRef =
         \begin{cases}
             m_1.typeRef\&m_2.typeRef    & m_1\neq null \land m_2\neq null \\
             m_1.typeRef         & m_1\neq null \\
-            m_2.typeRef         & \mbox{else} (m_2\neq null)
+            m_2.typeRef         & \mathbf{else} (m_2\neq null)
         \end{cases}\\
-&\land \forall\ i<|p''|: p_i \ \mbox{exists with} \\
+&\land \forall\ i<|p''|: p_i \ \mathbf{exists with} \\
 &\hspace{2em} p_i.name =
         \begin{cases}
             {p''}_i.name                        & i \geq |p'| \lor {p''}_i.name={p'}_i.name \\
-            {p'}_i.name + \mbox{"\_"} + {p''}_i.name
-                                            & \mbox{else}
+            {p'}_i.name + \mathbf{"\_"} + {p''}_i.name
+                                            & \mathbf{else}
         \end{cases}\\
 &\hspace{2em} p_i.typeRef =
         \begin{cases}
             {p'}_i.typeRef|{p''}_i.typeRef      & i < |p'|\\
             {p'}_{|p'|-1}.typeRef|{p''}_i.typeRef   & i \geq |p'| \land {p'}_{|p'|-1}.var\\
-            {p''}_i.typeRef                     & \mbox{else}
+            {p''}_i.typeRef                     & \mathbf{else}
         \end{cases}\\
 &\hspace{2em} p_i.opt =
         (\exists k \leq min(|p'|-1, i): p'_k.opt) \lor (\exists k \leq i: p''_k.opt)\\
@@ -2423,14 +2443,14 @@ $\forall a \in I.attributes:$
             \begin{cases}
             p_i.opt \lor ({p'}_i.var\lor{p''}_i.var)    & i < |p'| \land i=|p''|-1\\
             {p''}_i.var                     & i \geq |p'| \land i=|p''|-1 \\
-            false                       & \mbox{else}
+            false                       & \mathbf{else}
         \end{cases} \\
-&\land (l=|p'|=|p''| \land l>0 \land \lnot({p}_{l-1}.opt) \land \exists v\in\{p'_{l-1}, p''_{l-1}\} {v}.var: p_l\ \mbox{exists with} \\
+&\land (l=|p'|=|p''| \land l>0 \land \lnot({p}_{l-1}.opt) \land \exists v\in\{p'_{l-1}, p''_{l-1}\} {v}.var: p_l\ \mathbf{exists with} \\
 &\hspace{2em} p_l.name = v.name \\
 &\hspace{2em} p_i.typeRef = v.typeRef \\
 &\hspace{2em} p_i.opt = true \\
 &\hspace{2em} p_i.var  = true
---
+++++
 
 ---
 
@@ -2486,25 +2506,27 @@ classifier type _type{T}_.
 . The keyword `this` in a static method of a type _T_ actually
 binds to the classifier type _type{T}_.
 . The constructor type ``constructor``_{T}_ is a subtype of the classifier type _type{T}_:
++
 [math]
---
+++++
 \forall T: `constructor\{_T_\}` <: `type\{_T_\}`
---
+++++
 . If a class _B_ is a subtype (subclass) of a class
 _A_, then the classifier type _type{B}_ also is a subtype of _type{A}_:
++
 [math]
---
+++++
 \infer{`type\{B\}` <: `type\{A\}`} {B <: A}
---
+++++
 .  If a class _B_ is a subtype (subclass) of a class
 _A_, and if the constructor function of _B_ is a
 subtype of the constructor function of _A_, then the
 classifier type ``constructor``_{B}_ also is a subtype of ``constructor``_{A}_:
 +
 [math]
---
+++++
 \infer{`constructor\{B\}` <: `constructor\{A\`}}{   {B <: A} & {B.ctor <: A.ctor} }
---
+++++
 +
 The subtype relation of the constructor function is
 defined in <<_function-type,Function Type>>.
@@ -2517,19 +2539,19 @@ constructor of the super class is marked as `final`, see <<_constructor-and-clas
 constructor of that class:
 
 [math]
---
+++++
 \infer{\tee C: \lstnfjs{constructorC}}
 {\mu(C) \in \{ \type{classifierDefinition} \} }
---
+++++
 . A class cannot be called as a function in ECMAScript. Thus, the constructor and type type are only subtype of :
 +
 [math]
---
+++++
 \forall T: \\
 \forall T: \\
 & \lstnfjs{constructor\{_T_\}} <: \type{Object} \\
 & \lstnfjs{type\{_T_\}} <: \type{Object} \\
---
+++++
 +
 .  If the type argument of the constructor is not a declared type
 (i.e., a wildcard or a type variable with bounds), the constructor
@@ -2539,10 +2561,10 @@ following rules apply: task:GH-221[]
 
 
 [math]
---
+++++
 \infer{\lstnfjs{constructor\{S\}} <: \lstnfjs{constructor\{_T_\}}}
 {S.upper <: T.upper &&  T.lower <: S.lower && \mu(T) \neq \type{DeclaredTypeWithAccessModifier}}
---
+++++
 
 Note that this is only true for the right hand side
 of the subtyping rule. A constructor type with a wildcard is never a
@@ -2960,28 +2982,32 @@ For a given enumeration declaration $E$ with literals $L$, the following
 type rules are defined:
 
 1. Every enumeration $E$ is a subtype of the base type :
++
 [math]
----
-\infer{\tee `type\{E\}} \subtype `type\{N4Enum\}}}{}
----
+++++
+\inferSup{\tee `type\{E\}} \subtype `type\{N4Enum\}}}{}
+++++
 2.  Every literal $L$ of an enumeration $E$ is
 of the type of the enumeration:
++
 [math]
----
+++++
 \infer{\tee L: E}{L \in E.literals}
----
+++++
 That means that every literal is a subtype of :
 // TODO missing types in this section
++
 [math]
----
+++++
 \infer{\tee L \subtype `N4Enum` }{L \in E.literals}
----
+++++
 .  Since the implementation of enumerations may vary per runtime, enum
 literals are not objects:
++
 [math]
----
+++++
 \infer{\tee L \notsubtype `Object`}{L \in E.literals}
----
+++++
 
 The base enumeration type is defined as follows footnote:[This is pseudo N4JS code as it is not possible to infer from `any` or define abstract static methods.]
 
@@ -3122,28 +3148,26 @@ $L_S$ the following type rules are defined:
 
 .  Every string-based enumeration $E_S$ is a subtype of the
 base type `N4StringBasedEnum`:
++
 [math]
----
-\begin{gathered}\infer{ \tee \type{type\{E_S\}} \subtype \type{N4StringBasedEnum} }{}                \\
+++++
+\begin{gathered}\inferSup{ \tee \type{type\{E_S\}} \subtype \type{N4StringBasedEnum} }{}                \\
          \intertext{which itself is not related to the standard enumeration type \lstnfjs{N4Enum}}
          \infer{ \type{N4StringBasedEnum} \notsubtype \type{N4Enum}}{}  \\
          \infer{ \type{N4Enum} \notsubtype \type{N4StringBasedEnum} }{}
     \end{gathered}
----
+++++
 .  `N4StringBasedEnum` is a subtype of `string`
 $infer{ \type{N4StringBasedEnum} \subtype \type{string} }{}$
 .  Each literal in $L_S$ of a string-based enumeration
 $E_S$ is of the type of the string-based enumeration.
-
-
++
 [math]
----
+++++
 \infer{ \tee l \subtype E_S }{l \in E_S.L_S}
----
-
+++++
 .  <<IDE-39,requirement: Unique Literal Names>> also applies for `N4StringBasedEnum`.
-.  [<<IDE-40,requirement: Enum Literals are Singletons>>]
-also applies for `N4StringBasedEnum`.
+.  [<<IDE-40,requirement: Enum Literals are Singletons>>] also applies for `N4StringBasedEnum`.
 .  References to string-based enums may only be used in the following
 places:
 ..  in type annotations

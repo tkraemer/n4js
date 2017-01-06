@@ -73,11 +73,11 @@ instead of the inferred thisTypeRef to allow for more usages. The
 property is computed as follows: +
 
 [math]
---
+++++
 tfpars = \lif & \ \mbox{this is used or explicitly declared}\ \\
 & \lthen thisTypeRef + fpars \\
 & \lelse any + fpars
---
+++++
 
 Parameters (in $pars$) have the following properties:
 
@@ -112,9 +112,9 @@ parameter list. In particular, an optional parameter must not be
 followed by a non-optional parameter:
 +
 [math]
----
+++++
 F.fpars_i.optional \to \nexists k>i: \lnot F.fpars_k.optvar
----
+++++
 2.  Only the last parameter of a method may be defined as variadic
 parameter: +
 $F.fpars_i.variadic \to i = |F.fpars|-1$
@@ -123,21 +123,21 @@ of the transitive closure of statements of the body must be a return
 statement:
 +
 [math]
----
+++++
 F.typeRef \neq Undefined \to \\
 & |f.body.stmts|>0 \\
 & \land f.body.stmts^*_{|f.body.stmts^*|-1} isa\ \lstnfbnf{ReturnStatement}
----
+++++
 4.  If a function explicitly defines a return type, all return
 statements must return a type conform to that type:
 +
 [math]
----
+++++
 & F.typeRef \neq Undefined \\
 & \iff \\
 & \forall r \in F.body.stmts, r\ isa\ \lstnfbnf{ReturnStatement}: \\
 & r.expr\neq null \land \infType{r.expr.typeRef} <: \infType{F.typeRef}
----
+++++
 
 --
 
@@ -188,23 +188,23 @@ Otherwise is assumed. This is also true if there is an error due to
 other constraint violations.
 
 [math]
----
+++++
 & \infer{\tee f \lstnfbnf{'('} arglist\ \lstnfbnf{')'}: \type{any}}
         {binds(f,F)&F.returnType=\NULL & \exists r \in returns(F): r.expression \neq \NULL} \\
 & \infer{\tee f \lstnfbnf{'('} arglist\ \lstnfbnf{')'}: \type{void}}
         {binds(f,F)&F.returnType=\NULL & \forall r \in returns(F): r.expression \neq \NULL}
----
+++++
 
 with
 
 [math]
----
+++++
 
 & \infer{returns(F): RETS}
         {\{r \in F.body.statements | \mu(r)=\type{ReturnStatement}\} \cup \bigcup_{s\in F.body.statements} returns(s)} \\
 & \infer{returns(s): RETS}
         {\{sub \in s.statements | \mu(sub)=\type{ReturnStatement}\} \cup \bigcup_{sub\in s.statements} returns(sub)}
----
+++++
 
 --
 
@@ -639,10 +639,9 @@ The metatype of a function definition is function type (<<_function-type,Functio
 Constraints for function type are described in <<_function-type,Function Type>>. Another consequence is that the inferred type of a function definition $fdecl$ is simply its function type
 $F$.
 [math]
-[math]
----
-\infer
-{\infType{F}}{\infType{fdecl}}$
+++++
+\infer{\infType{F}}{\infType{fdecl}}
+++++
 
 Note that the type of a function definition is different from its return type $f.decl$!
 

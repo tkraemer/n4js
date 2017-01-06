@@ -722,10 +722,9 @@ libraries provided by an environment.
 We defined the following transitive closures of dependencies:
 
 For a given N4JS Component `C` we define
-////
 
 [math]
---
+++++
  C.requiredAPIs^* & = C.requiredPIs \\
                     & \hspace{4em} \cup \\
                     & \bigcup_{L \in C.requiredLibs}C.requiredPIs^* \\
@@ -734,20 +733,18 @@ For a given N4JS Component `C` we define
 C.requiredLibs^*    & = C.requiredRTLibs \\
                     & \hspace{4em} \cup \\
                     & \bigcup_{L \in C.requiredLibs}L.requiredRTLibs^*
---
+++++
 
 For a given Runtime Environment `E` we define
 
 [math]
---
+++++
 
 E.providedRTLibs^* & = E.providedRTLibs \\
                     & \hspace{4em} \cup \\
                     & \bigcup_{ES \in E.extendedRTEnvs} ES.E.providedRTLibs^*
---
+++++
 
-
-////
 --
 
 

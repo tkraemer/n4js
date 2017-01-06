@@ -177,24 +177,22 @@ patterns, see <<_array-and-object-destructuring>> for details.
 The type of a variable is the type of its declaration:
 
 [math]
---
-
+++++
 & \infer{\tee v: \tee d}{} \\
---
+++++
 
 
 The type of a variable declaration is either the declared type or the
 inferred type of the initializer expression:
 
 [math]
---
-
+++++
 & \infer{\tee d: T}{d.declaredType \neq \NULL & T = d.declaredType} \\
 & \infer{\tee d: T}{
     d.declaredType = \NULL & d.expression \neq \NULL \\
     E = \tee d.expression & E \not\in \{\type{null, undefined}\} & T = E} \\
 & \infer{\tee d: \type{any}}{else}
---
+++++
 
 
 // \todo{known limitation: if the initializer expression is an ObjectLiteral or FunctionExpression, the variable type will be inferred to \lstnfjs{any}.task:IDE-865[]
@@ -328,9 +326,12 @@ ReturnStatement <Yield>:
 --
 1.  Expected type of expression in a return statement must be a sub type
 of the return type of the enclosing function:
-$\infer{\tee returnStmt \expectType expression: T}
-{\tee returnStmt.containingFunction: FT & T=FT.returnType}$
- Note that the expression may be evaluated to `void`.
++
+[math]
+++++
+\infer{\tee returnStmt \expectType expression: T}{\tee returnStmt.containingFunction: FT & T=FT.returnType}
+++++
+Note that the expression may be evaluated to `void`.
 2.  If enclosing function is declared to return `void`, then either
 * no return statement must be defined
 * return statement has no expression
@@ -439,10 +440,9 @@ lead to the wrong assumption that a type can be specified.
 The type of the catch variable is always assumed to be .
 
 [math]
---
-
+++++
 \infer{\tee catchBlock.catchVariable: \type{any}}{}
---
+++++
 
 
 === Debugger Statement

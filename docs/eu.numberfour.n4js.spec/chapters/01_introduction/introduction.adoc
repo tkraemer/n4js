@@ -66,15 +66,14 @@ simplification.
 .Rule
 [def]
 --
-We use the common notation for rules such as type
-inference rules
+We use the common notation for rules such as type inference rules
 footnote:[A brief introduction can be found at http://www.cs.cornell.edu/~ross/publications/mixedsite/tutorial.html. In general, we refer the reader to cite:[Pierce02a]]
 , that is
 
 [math]
----
+++++
 \frac{premises}{conclusion} \hspace{5mm} \textrm{rule name}
----
+++++
 
 $premises$ is the rule’s premises (e.g., the expression to
 be inferred), $conclusion$ the result of the rule.
@@ -85,9 +84,9 @@ Both parts of the rule may contain multiple expressions, which are
 concatenated via and. For example, the following
 
 [math]
----
+++++
 \frac{P_1 \hspace{5mm}  P_2 \hspace{5mm} P_3}{C}
----
+++++
 
 can be read as
 
@@ -100,10 +99,10 @@ The following judgments (with relation symbols) are used:
 
 // TODO replace math with original LaTeX
 [horizontal]
-subtype `<` ::
+subtype $<$ ::
 -
 +
-type ``:`` ::
+type $:$ ::
   in which the left hand side is a declaration or
   expression, and the right hand side a type. We also use
   $\infType{..}$ as a function returning the (inferred) type
@@ -120,9 +119,9 @@ The following statement, for example, defines transitivity of subtypes
 // TODO replace math with original LaTeX
 
 [math]
---
+++++
 \frac{\Gamma B \vdash <: A \hspace{7mm} \Gamma \vdash C <: B}{\Gamma \vdash C: < A}
---
+++++
 
 
 is the context containing (bound) type variables etc.,
@@ -198,27 +197,22 @@ bindings are permitted due to visibility constraints.
 We define a pseudo relation
 
 [math]
---
+++++
 bind: VariableReference \times VariableDeclaration
---
+++++
 
 which binds a reference, i.e. an identifier, to a declaration (e.g.,variable
 declaration).
 
-Binding of variable references to declaration is defined by ECMAScript
-already. Type references only occur in type expressions, how these are
-handled is explained in <<_type_expressions>>.
+Binding of variable references to declaration is defined by ECMAScript already.
+Type references only occur in type expressions, how these are handled is explained in <<_type_expressions>>.
 
-We usually omit this binding mechanism in most rules and use the
-reference similarly to the declaration or definition it is bound to. If
-a variable reference $r$, for example, is bound to a
-variable declaration $D$, i.e. $bind(r,D)$, we
-simply write $r.type$ instead of
-$bind(r,D), D.type$ to refer to the type expression (of the
-variable).
---
-
+We usually omit this binding mechanism in most rules and use the reference similarly to the declaration or definition it is bound to.
+If a variable reference $r$, for example, is bound to a variable declaration $D$, i.e. $bind(r,D)$, we
+simply write $r.type$ instead of $bind(r,D), D.type$ to refer to the type expression (of the variable).
 footnote:[One can interpret this similar to delegate methods, that is, instead of writing [language-n4js]``r.binding().getType()``, a method [language-n4js]``r.getType()\{return binding().getType();`` is defined.]
+
+--
 
 A `DeclaredType` references the type declaration by its simple name that has been
 imported from a module specifier. We define the method
@@ -226,16 +220,16 @@ $bind$ for declared types as well:
 
 .Binding Relation of Types
 [def]
----
+--
 We define a pseudo relation
 
 [math]
----
+++++
 bind: DeclaredType \times Class|Interface|Enum
----
+++++
 
 which binds a type reference, i.e. a simple name, to the type declaration.
----
+--
 
 === Merging Types
 
@@ -249,9 +243,9 @@ $merge$ as follows.
 We define a pseudo function
 
 [math]
----
+++++
 merge: Type \times \dots \times Type \to \powerset(Type)
----
+++++
 
 The idea of this function is to remove duplicates. For example; if a
 union type contains two type expressions $te_1$ and
@@ -314,36 +308,38 @@ Power set of $X$, i.e.
 $\powerset(X) = \{ U: U \subseteq X \}$.
 
 $\exists$, $\nexists$, $\forall$::
-Exists, not exists, for all; we write
-$\exists x,...,z: P(x,...,z)$ and say
+Exists, not exists, for all; we write $\exists x,...,z: P(x,...,z)$ and say
++
+[quote]
 "there exists $x,...,z$ such that predicate $P$ is true".
++
 Note that $\nexists x: P(x) \iff \forall x: \lnot P(x)$.
 
 $\mu(..)$::
 (mu) read "*metatype of*"; metatype of a variable or property, e.g.,
-
++
 [math]
---
+++++
 \lif \mu(x)=:{Class} \lthen  \lelse
---
+++++
 
 $\seq{x}$::
 Sequence of elements $x_1,\dots,x_n$. E.g., if we want to
 define a constraint that the owner of a members of a class
 $C$ is the class, we simply write
-
++
 [math]
---
+++++
 C.\seq{members}.owner = C
---
-
+++++
++
 instead of
-
++
 [math]
---
+++++
 \forall m \in C.members: m.owner=C
---
+++++
++
 or even more complicated with index variables.
-
-Sequences are 1-based, e.g., a sequence $s$ with length
-$|s|=n$, has elements $s_1, \dots, s_n$.
++
+Sequences are 1-based, e.g., a sequence $s$ with length $|s|=n$, has elements $s_1, \dots, s_n$.

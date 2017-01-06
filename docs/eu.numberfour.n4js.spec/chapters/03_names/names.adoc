@@ -124,9 +124,9 @@ h|Modifier h|Module h| Project h| Vendor h| World
 `TAM` is a totally ordered set:
 
 [math]
---
+++++
 \lenum{private} < \lenum{project} < \lenum{public@Internal} < \lenum{public}
---
+++++
 
 .Type Access Modifiers
 [req,id=IDE-3,version=1]
@@ -151,10 +151,7 @@ modifier is explicitly specified.
 .Type Accessibility T
 [def]
 --
-The function
-$$\alpha_T: TypeReference \times TypeDeclaration \to Boolean$$
-
-computes whether a given type, (top-level) variable or function
+The function $\alpha_T: TypeReference \times TypeDeclaration \to Boolean$ computes whether a given type, (top-level) variable or function
 reference can access the declaration that it references.
 $\alpha_T$ is defined with <<tab:typeAccessControl,Access Control>>.
 
@@ -162,13 +159,17 @@ Formally, we define $\alpha_T$ for a given reference
 $r$ and a module top level variable, function or type
 declaration $D$ as follows: footnote:[See for definitions of metatype properties.]
 
-$$&\infer{\alpha_T(r, D)}{D.acc=\lenum{public} }\\
-&\infer{\alpha_T(r, D)}{D.acc=\lenum{public@Internal} & r.vendor=D.vendor}\\
-&\infer{\alpha_T(r, D)}{D.acc=\lenum{project} & r.project=D.project}\\
-&\infer{\alpha_T(r, D)}{D.acc=\lenum{private} & r.module=D.module}$$
+[math]
+++++
+\begin{matrix}
+\infer{\alpha_T(r, D)}{D.acc=\lenum{public} }\\
+\infer{\alpha_T(r, D)}{D.acc=\lenum{public@Internal} \spc  r.vendor=D.vendor}\\
+\infer{\alpha_T(r, D)}{D.acc=\lenum{project} \spc  r.project=D.project}\\
+\infer{\alpha_T(r, D)}{D.acc=\lenum{private} \spc  r.module=D.module} \\
+\end{matrix}
+++++
 
-If the type of the arguments is clear from the context, we simply write
-$\alpha(r,D)$ instead of $\alpha_T(r,D)$.
+If the type of the arguments is clear from the context, we simply write $\alpha(r,D)$ instead of $\alpha_T(r,D)$.
 
 Accessibility for types is only checked for types that manifest
 themselves in the concrete syntax of the N4JS file. Types that do not
@@ -224,14 +225,14 @@ The modifiers and may be annotated with . Thus, we can define the
 following set of member access modifiers:
 
 [math]
---
-
-MAM &= \{ & \\
-&\lenum{private}, \lenum{protected@Internal}, \lenum{protected}, \\
-&\lenum{project}, \lenum{public@Internal}, \lenum{public}\\
+++++
+\begin{matrix}
+MAM &= \{ \spc  \\
+\lenum{private}, \lenum{protected@Internal}, \lenum{protected}, \\
+\lenum{project}, \lenum{public@Internal}, \lenum{public}\\
 \}
-
---
+\end{matrix}
+++++
 
 `protected@Internal` and `public@Internal` are synthesized tags and were
 introduced as shorthand notation for the `@Internal` annotation together with `protected` or `public` access modifiers.
@@ -272,18 +273,16 @@ export @Internal public class C {
 `MAM` does not define a totally ordered set. However, its subset
 
 [math]
---
+++++
 MAM \backslash \{\lenum{public@Internal}\}
---
+++++
 
 is a totally ordered set footnote:[That is, for application developers not providing a library or a public API available to other vendors, member access modifiers behave almost similar to modifiers known from Java.] :
 
 [math]
---
-
+++++
 \lenum{private} < \lenum{project} < \lenum{protected@Internal} < \lenum{protected} < \lenum{public}
-
---
+++++
 
 
 <<tab:Member-Access-Controls,Table Member Access Controls>> shows which members are accessible from where.
@@ -304,34 +303,40 @@ is a totally ordered set footnote:[That is, for application developers not provi
 
 .Type and Member Accessibility Relation
 [def]
----
+--
 We define the relation
 
 [math]
---
+++++
 & = \hspace{1em}: \hspace{1em} TAM \times MAM
---
+++++
 
 as follows:
 
 [math]
---
+++++
 & = \hspace{1em}: \hspace{1em} TAM \times MAM
-\end{align*} as follows:
-\begin{align*}
+++++
+
+as follows:
+
+[math]
+++++
+\begin{matrix}
 = \hspace{1em} ::= \{ &     (\lenum{private}, \lenum{private} ), (\lenum{project}, \lenum{project} ),\\
 & (\lenum{public@Internal},\lenum{public@Internal}), (\lenum{public}, \lenum{public} ) \}
---
+\end{matrix}
+++++
 
 We further define the relation $\geq : TAM \times MAM$ as follows:
 
 [math]
---
+++++
 \infer{tam \geq mam}{\exists mam'\in MAM: tam = mam' \land mam' \geq mam}
---
+++++
 
 Less, greater then etc. are defined accordingly.
----
+--
 
 
 .Member Accessibility
@@ -339,44 +344,43 @@ Less, greater then etc. are defined accordingly.
 --
 $\alpha_m$
 The function
-\[\alpha_m: MemberReference \times MemberDeclaration \to Boolean\]]
+
+[math]
+++++
+\alpha_m: MemberReference \times MemberDeclaration \to Boolean
+++++
+
 computes if a given reference can access the member declaration that it
 references.
+
 --
 
-Note that $alpha_m$ and $bind$ are different
-functions. A reference can only bind to a declaration if it can access
-the declaration. However, bind requires more condition to work (correct
-metatypes, no shadowing etc).
+Note that $alpha_m$ and $bind$ are different functions.
+A reference can only bind to a declaration if it can access the declaration.
+However, bind requires more condition to work (correct metatypes, no shadowing etc).
 
-
-Formally, we define $\alpha_m$ for a given reference
-$r$ and member declaration $M$ as
-follows:
-footnote:[See <<_n4js_specific_classifiers,N4-Specific Classifiers>> for definitions of metatype properties. Note that $r.receiver$] always refers to a type declaration in the context of an expression as the receiver type of $r$. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member
-declaration.]
+Formally, we define $\alpha_m$ for a given reference $r$ and member declaration $M$ as follows:
+footnote:[See <<_n4js_specific_classifiers,N4-Specific Classifiers>> for definitions of metatype properties. Note that $r.receiver$ always refers to a type declaration in the context of an expression as the receiver type of $r$. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member declaration.]
 
 footnote:[Note, the Java-like access restriction for members of visibility [language-n4js]`protected` or [language-n4js]`protected@Internal` to code that is responsible for the implementation of that object. cite:[Gosling15a(S6.6.2,p.166)]]
 
 
 [math]
---
+++++
+\begin{matrix}
+\infer{\alpha_m(r, M)}{M.acc = \lenum{public}}
+\infer{\alpha_m(r, M)}{r.vendor = M.vendor \spc M.acc = \lenum{public@Internal}}
+\infer{\alpha_m(r, M)}{r.owner \in r.receiver.super^* \spc M.acc = \lenum{protected}}
+\infer{\alpha_m(r, M)}{r.owner \in r.receiver.super^* \spc r.vendor = M.vendor \spc M.acc = \lenum{protected@Internal}}
+\infer{\alpha_m(r, M)}{r.project = M.project \spc M.acc = \lenum{project}}
+\infer{\alpha_m(r, M)}{r.module = r.module \spc M.acc =\lenum{private}}
+\end{natrix}
+++++
 
-&\infer{\alpha_m(r, M)}{M.acc = \lenum{public}}\\
-&\infer{\alpha_m(r, M)}{r.vendor = M.vendor & M.acc = \lenum{public@Internal}}\\
-&\infer{\alpha_m(r, M)}{r.owner \in r.receiver.super^* & M.acc = \lenum{protected}}\\
-&\infer{\alpha_m(r, M)}{r.owner \in r.receiver.super^* & r.vendor = M.vendor & M.acc = \lenum{protected@Internal}}\\
-&\infer{\alpha_m(r, M)}{r.project = M.project & M.acc = \lenum{project}}\\
-&\infer{\alpha_m(r, M)}{r.module = r.module & M.acc =\lenum{private}}\\
 
---
+If the type of the arguments is clear from the context, we simply write $\alpha(r,M)$ instead of $\alpha_m(r,M)$.
 
-
-If the type of the arguments is clear from the context, we simply write
-$\alpha(r,M)$ instead of $\alpha_m(r,M)$.
-
-Although private members are accessible inside a module, it is not
-possible to redefine (override etc.) these members (see <<_redefinition-of-members,Redefinition of Members>>).
+Although private members are accessible inside a module, it is not possible to redefine (override etc.) these members (see <<_redefinition-of-members,Redefinition of Members>>).
 
 .Default Member Access Modifiers
 [req,id=IDE-4,version=1]
@@ -537,10 +541,8 @@ cite:[ECMA11a(S7.6)]
 cite:[ECMA11a(S7.6.1.2)]
 cite:[ECMA11a(S11.6)] are applied.
 
-Identifier names in N4JS are defined similar to cite:[ECMA11a(S11.6)], making it possible to even use reserved words (keywords etc.). For some element types, errors
-or warnings are issued in order to prevent problems when using these
-names.
-
+Identifier names in N4JS are defined similar to cite:[ECMA11a(S11.6)], making it possible to even use reserved words (keywords etc.).
+For some element types, errors or warnings are issued in order to prevent problems when using these names.
 
 .Forbidden Identifier Names in N4JS
 [req,id=IDE-5,version=1]
@@ -555,8 +557,7 @@ In N4JS mode, errors are generated in the following cases:
 ..  an ECMAScript keyword
 ..  a boolean literal
 ..  the name of a base type
-.  The name of a function or function expression equals (but not the
-method)
+.  The name of a function or function expression equals (but not the method)
 ..  an ECMAScript keyword
 ..  a reserved future ECMAScript word
 
@@ -565,8 +566,8 @@ method)
 .Undesired Identifier Names in N4JS
 [req,id=IDE-6,version=1]
 --
-In N4JS mode, warnings are generated in the following cases:
 
+In N4JS mode, warnings are generated in the following cases:
 
 .  The name of a member (of a non external type)
 ..  equals the name of a base type footnote:[[.language-n4js]`string, boolean, number, any, null`] but the type of the variable is different from that type
@@ -579,21 +580,19 @@ fields)
 ..  equals the name of a base type but the type of the variable is
 different from that type
 ..  is not const but starts with an upper case letter
+
 --
 
 === Qualified Names
 
-In N4JS source code, types can only be referenced using their simple
-name. There is no such thing as a fully-qualified type name in N4JS or
-ECMAScript. Types are uniquely identified by their simple name, maybe
-together with an import and the module specifier given there. Clashes
-between simple names of imported type and locally declared types can be
-resolved by importing the type under an alias.
+In N4JS source code, types can only be referenced using their simple name.
+There is no such thing as a fully-qualified type name in N4JS or ECMAScript.
+Types are uniquely identified by their simple name, maybe together with an import and the module specifier given there.
+Clashes between simple names of imported type and locally declared types can be resolved by importing the type under an alias.
 
-In some cases, however, we need to define references to types or even
-members. For example, if we want to reference certain members in JSDoc
-comments or for unambiguous error messages. For this reason, we formally
-define qualified names even if they cannot occur in source code.
+In some cases, however, we need to define references to types or even members.
+For example, if we want to reference certain members in JSDoc comments or for unambiguous error messages.
+For this reason, we formally define qualified names even if they cannot occur in source code.
 
 <<tab:typenames,Type Names>> shows the different names of a given type `C`, defined in a module
 `M.n4js`, defined in a package `p` of a project `MyProject`.
@@ -610,9 +609,8 @@ define qualified names even if they cannot occur in source code.
 |Complete Type Specifier | MyProject/p/M.C
 |===
 
-Simple type names are used throughout N4JS code in order to refer to
-types. The different forms of module specifiers are only used in import
-declarations in the string following the keyword.
+Simple type names are used throughout N4JS code in order to refer to types.
+The different forms of module specifiers are only used in import declarations in the string following the keyword.
 
 === Name Duplicates
 
@@ -650,9 +648,8 @@ environment record__s created by `WithStatement` are not taken into account when
 resolving duplicates. This applies to both N4JS mode and JS strict mode.
 In unrestricted JS the `WithStatement` is allowed but duplicates are not validated.
 
-NOTE: In case of names introduced by ``ImportDeclaration``s only ``NamedImportSpecifiers``s are taken into account (their import name or its alias if available). ``WildcardImportSpecifiers``s are not taken into
-account. Potential optimizations by compiler or user annotation are also
-not currently taken into account during analysis.
+NOTE: In case of names introduced by ``ImportDeclaration``s only ``NamedImportSpecifiers``s are taken into account (their import name or its alias if available). ``WildcardImportSpecifiers``s are not taken into account.
+Potential optimizations by compiler or user annotation are also not currently taken into account during analysis.
 
 ==== Duplicates and Shadowing
 
@@ -669,16 +666,12 @@ a supertype is said to override the latter. Overriding is discussed in <<_redefi
 
 For the following constraints, we make the following assumptions:
 
-* Names of function expressions or declarations are handles similar to
-locally declared elements in the function. Function declarations are
-additionally declaring a name in their outer scope.
-* The implicit formal parameter `arguments` is treated similar to declared formal
-parameters.
-* Formal parameters are defined in the lexical environment of a
-function, that is, they are defined in the same lexical environment as
-local ``var``-variables or other declarations in that function.
-* The "global" environment contains objects globally defined by the
-execution environment.
+* Names of function expressions or declarations are handles similar to locally declared elements in the function.
+Function declarations are additionally declaring a name in their outer scope.
+* The implicit formal parameter `arguments` is treated similar to declared formal parameters.
+* Formal parameters are defined in the lexical environment of a function, that is, they are defined in the same lexical environment as local ``var``-variables or other declarations in that function.
+* The "global" environment contains objects globally defined by the execution environment.
+
 --
 
 .Forbidden Duplicates

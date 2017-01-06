@@ -1,6 +1,6 @@
 \newcommand{\TRUE}{\texttt{true}}
 \newcommand{\FALSE}{\texttt{false}}
-\newcommand{\NULL}{\texttt{NULL}}
+\newcommand{\NULL}{\texttt{null}}
 \newcommand{\dots}{\texttt{...}}
 \newcommand{\subtype}{<}
 \newcommand{\lhd}{\triangleleft}
@@ -36,11 +36,16 @@
 \newcommand{\tsRoFld}[1]{\texttt{#1}}
 \newcommand{\tsWoFld}[1]{\texttt{#1}}
 \newcommand{\tsInitFld}[1]{\texttt{#1}}
-\newcommand{\infer}[3]{\frac{#3}{#2} \texttt{#1}}
+\newcommand{\infer}[2]{\frac{#2}{#1}}
+\newcommand{\inferSup}[1]{\frac{ }{#1}}
+\newcommand{\inferRule}[3]{\frac{#3}{#2} \texttt{#1}}
 \newcommand{\spc}{\hspace{7mm}}
 \newcommand{\type}[1]{\texttt{#1}}
 \newcommand{\infTypeNF}[1]{ {[\![} {#1} {]\!]} }
-
 %placeholder symbols 
 \newcommand{\nexists}{|E}
-\newcommand{\notsubtype}{|<}
+\newcommand{\notsubtype}{\not \prec}
+
+
+% For alternatives to \texttt above, see http://www2.ph.ed.ac.uk/snuggletex/documentation/verbatim-mode.html
+

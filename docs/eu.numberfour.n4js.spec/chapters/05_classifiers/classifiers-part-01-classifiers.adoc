@@ -117,10 +117,10 @@ type arguments in the subtype and the type arguments have to be
 substitutable types of the type parameters.
 +
 [math]
----
+++++
 & \forall 0<i\leq k: \forall P \in S_i: \\
 & \hspace{3em}\exists A \in C_.typeArgs: bind(A, P) \land A.upperBound <: P.upperBound
----
+++++
 +
 3.  Wildcards may not be used as type argument when binding a
 supertype’s type parameters.
@@ -261,12 +261,12 @@ The type of a class declaration or class expression `C`
 that is if it can be instantiated. If it is abstract, the type of the
 definition simply is `{C}`:
 [math]
---
+++++
 &\infer{\tee C : \type{constructor\{C\}}}
       {\lnot C.abstract}\\
 &\infer{\tee C : \type{type\{C\}}}
       {C.abstract}
---
+++++
 
 
 .Structural and Nominal Supertypes
@@ -276,10 +276,10 @@ The type of supertypes and implemented interfaces is always the nominal type, ev
 if the supertype is declared structurally.
 
 [math]
---
+++++
 & \infer{\tee T.sup: \tsNom \tee S}{bind(T.sup, S)} \\
 & \infer{\tee I: \tsNom \tee S}{I \in T.interfaces & bind(I, S)}
---
+++++
 
 --
 
@@ -365,10 +365,10 @@ classifier `S` is (transitively) contained in the supertypes
 (superclasses or implemented interfaces) of the class:
 
 [math]
---
+++++
 \infer{\tee \type{TClass}\ left \subtype[TClass]\ right}{left=right}[shortcut] \\
 \infer{\tee \type{TClass}\ left \subtype[TClass]\ right}{\tee  left.superType.declaredType \subtype right}
---
+++++
 
 
 .Implicit Supertype of Classes
@@ -528,11 +528,9 @@ The type of an interface declaration `I` is of type `I`:
 
 
 [math]
---
-
-\infer{\tee I: \type{type\{I\}}}
-      {}
---
+++++
+\infer{\tee I: \type{type\{I\}}}{}
+++++
 
 
 
@@ -574,15 +572,14 @@ type’s visibility is .
 . Members of an interface, except methods, must not be declared :
 +
 [math]
----
+++++
 \forall m \in I.member: m.final \Rightarrow m \in I.methods
----
+++++
 +
 NOTE: not allowing field accessors to be declared
 final was a deliberate decision, because it would complicate the
 internal handling of member redefinition; might be reconsidered at a
 later time
-
 . The literal may not be used in the initializer expression of a field
 of an interface. +
 This restriction is required, because the order of implementation of
@@ -867,27 +864,26 @@ to its type arguments’ subtyping. For example, given a parameterized
 type and plain types and , we know
 
 * if `G` is *covariant* w.r.t. its parameter `T`, then
-
++
 [math]
---
+++++
 \lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G<B>} \subtype \lstnfjs{G<A>}
---
+++++
 
 * if `G` is *contravariant* w.r.t. its parameter `T`, then
-
++
 [math]
---
+++++
 \lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}
-
---
+++++
 
 * if `G` is *invariant* w.r.t. its parameter `T`, then
-
++
 [math]
---
+++++
 \lstnfjs{B} \subtype \lstnfjs{A} & \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}\\
-        \lstnfjs{B} \subtype \lstnfjs{A} & \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}
---
+\lstnfjs{B} \subtype \lstnfjs{A} & \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}
+++++
 
 
 Note that variance is declared per type parameter, so a single
