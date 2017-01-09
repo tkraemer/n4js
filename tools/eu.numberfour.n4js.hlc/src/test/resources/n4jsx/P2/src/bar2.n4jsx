@@ -1,0 +1,2 @@
+
+export public const baz2 = <div>{`hello from baz2`}</div>;

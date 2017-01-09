@@ -1,0 +1,70 @@
+/**
+ * Copyright (c) 2016 NumberFour AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   NumberFour AG - Initial API and implementation
+ */
+package eu.numberfour.n4js.hlc;
+
+import java.io.IOException;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import eu.numberfour.n4js.hlc.N4jsc.ExitCodeException;
+
+/**
+ * Basic tests for N4jsc, like checking command line options or simple compile.
+ */
+public class N4JSXTest extends AbstractN4jscTest {
+
+	private static final String TEST_DATA_SET__N4JSX = "n4jsx";
+	private static final String WS_ROOT = TARGET + "/" + WSP;
+
+	/** Prepare tests. */
+	@Before
+	public void setupWorkspace() throws IOException {
+		setupWorkspace(TEST_DATA_SET__N4JSX);
+	}
+
+	/** Compile a single n4jsx file without any n4js files in the workspace. */
+	@Test
+	public void testOnlyN4JSX() throws ExitCodeException {
+		System.out.println(logMethodname());
+
+		String p1Root = WS_ROOT + "/" + "P1";
+
+		new N4jsc().doMain("-pl", WS_ROOT, "-t", "projects", p1Root);
+		assertFilesCompiledToES(1, p1Root);
+	}
+
+	/** Compile several n4js and n4jsx files, with cross-references between the files. */
+	@Test
+	public void testCombinedWithN4JS() throws ExitCodeException {
+		System.out.println(logMethodname());
+
+		String p2Root = WS_ROOT + "/" + "P2";
+
+		new N4jsc().doMain("-pl", WS_ROOT, "-t", "projects", p2Root);
+		assertFilesCompiledToES(3, p2Root);
+	}
+
+	/** Same as {@link #testCombinedWithN4JS()}, but the files are compiled individually using 'singlefile' mode. */
+	@Test
+	public void testCombinedWithN4JS_singleFile() throws ExitCodeException {
+		System.out.println(logMethodname());
+
+		String p2Root = WS_ROOT + "/" + "P2";
+
+		new N4jsc().doMain("-pl", WS_ROOT, "-t", "singlefile", p2Root + "/src/foo.n4js");
+		assertFilesCompiledToES(1, p2Root);
+		new N4jsc().doMain("-pl", WS_ROOT, "-t", "singlefile", p2Root + "/src/bar.n4jsx");
+		assertFilesCompiledToES(2, p2Root);
+		new N4jsc().doMain("-pl", WS_ROOT, "-t", "singlefile", p2Root + "/src/bar2.n4jsx");
+		assertFilesCompiledToES(3, p2Root);
+	}
+}

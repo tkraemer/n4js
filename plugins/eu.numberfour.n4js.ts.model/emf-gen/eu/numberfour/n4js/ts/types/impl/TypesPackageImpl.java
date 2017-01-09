@@ -1090,8 +1090,17 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTFunction_Constructor() {
+	public EAttribute getTFunction_DeclaredGenerator() {
 		return (EAttribute)tFunctionEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTFunction_Constructor() {
+		return (EAttribute)tFunctionEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -2971,6 +2980,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEReference(tFunctionEClass, TFUNCTION__TYPE_VARS);
 		createEReference(tFunctionEClass, TFUNCTION__DECLARED_THIS_TYPE);
 		createEAttribute(tFunctionEClass, TFUNCTION__DECLARED_ASYNC);
+		createEAttribute(tFunctionEClass, TFUNCTION__DECLARED_GENERATOR);
 		createEAttribute(tFunctionEClass, TFUNCTION__CONSTRUCTOR);
 		createEOperation(tFunctionEClass, TFUNCTION___IS_CALLABLE_CONSTRUCTOR);
 		createEOperation(tFunctionEClass, TFUNCTION___GET_FPAR_FOR_ARG_IDX__INT);
@@ -3415,6 +3425,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEReference(getTFunction_TypeVars(), this.getTypeVariable(), null, "typeVars", null, 0, -1, TFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTFunction_DeclaredThisType(), theTypeRefsPackage.getTypeRef(), null, "declaredThisType", null, 0, 1, TFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTFunction_DeclaredAsync(), theEcorePackage.getEBoolean(), "declaredAsync", null, 0, 1, TFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTFunction_DeclaredGenerator(), theEcorePackage.getEBoolean(), "declaredGenerator", null, 0, 1, TFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTFunction_Constructor(), theEcorePackage.getEBoolean(), "constructor", null, 0, 1, TFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTFunction__IsCallableConstructor(), theEcorePackage.getEBoolean(), "isCallableConstructor", 0, 1, !IS_UNIQUE, IS_ORDERED);

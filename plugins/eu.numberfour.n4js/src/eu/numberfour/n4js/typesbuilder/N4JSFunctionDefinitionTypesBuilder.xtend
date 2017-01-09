@@ -59,7 +59,8 @@ public class N4JSFunctionDefinitionTypesBuilder extends AbstractFunctionDefiniti
 		functionType.addTypeVariables(functionDecl, preLinkingPhase)
 		functionType.setDeclaredThisTypeFromAnnotation(functionDecl, preLinkingPhase)
 		functionType.copyAnnotations(functionDecl, preLinkingPhase)
-		functionType.declaredAsync = functionDecl.async // TODO change to declaredAsync one the annotation is gone
+		functionType.declaredAsync = functionDecl.async // TODO change to declaredAsync once the annotation is gone
+		functionType.declaredGenerator = functionDecl.generator
 
 		// set container
 		target.topLevelTypes += functionType
@@ -151,6 +152,7 @@ public class N4JSFunctionDefinitionTypesBuilder extends AbstractFunctionDefiniti
 		}
 		functionType.name = functionDef.name; // maybe null in case of function expression
 		functionType.declaredAsync = functionDef.isAsync // TODO change to declaredAsync when annotation is removed
+		functionType.declaredGenerator = functionDef.generator // TODO change to declaredAsync when annotation is removed
 
 		// link
 		functionType.astElement = functionDef
