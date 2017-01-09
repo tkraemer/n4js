@@ -48,6 +48,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#getAstElement <em>Ast Element</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#isVariadic <em>Variadic</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#isHasInitializer <em>Has Initializer</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#isHasInitializerAssignment <em>Has Initializer Assignment</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#getTypeRef <em>Type Ref</em>}</li>
  * </ul>
  *
@@ -113,6 +114,26 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	 * @ordered
 	 */
 	protected boolean hasInitializer = HAS_INITIALIZER_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isHasInitializerAssignment() <em>Has Initializer Assignment</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isHasInitializerAssignment()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean HAS_INITIALIZER_ASSIGNMENT_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isHasInitializerAssignment() <em>Has Initializer Assignment</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isHasInitializerAssignment()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean hasInitializerAssignment = HAS_INITIALIZER_ASSIGNMENT_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getTypeRef() <em>Type Ref</em>}' containment reference.
@@ -240,6 +261,27 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isHasInitializerAssignment() {
+		return hasInitializerAssignment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setHasInitializerAssignment(boolean newHasInitializerAssignment) {
+		boolean oldHasInitializerAssignment = hasInitializerAssignment;
+		hasInitializerAssignment = newHasInitializerAssignment;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT, oldHasInitializerAssignment, hasInitializerAssignment));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TypeRef getTypeRef() {
 		return typeRef;
 	}
@@ -305,7 +347,7 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 		while (iter.hasNext()) {
 			{
 				final TFormalParameter fpar = iter.next();
-				if (((!fpar.isVariadic()) && (!fpar.isHasInitializer()))) {
+				if (((!fpar.isVariadic()) && (!fpar.isHasInitializerAssignment()))) {
 					return false;
 				}
 			}
@@ -345,7 +387,7 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 		}
 		boolean _isOptional = this.isOptional();
 		if (_isOptional) {
-			strb.append("=");
+			strb.append(" = undefined");
 		}
 		return strb.toString();
 	}
@@ -383,6 +425,8 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 				return isVariadic();
 			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER:
 				return isHasInitializer();
+			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT:
+				return isHasInitializerAssignment();
 			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
 				return getTypeRef();
 		}
@@ -411,6 +455,9 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER:
 				setHasInitializer((Boolean)newValue);
 				return;
+			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT:
+				setHasInitializerAssignment((Boolean)newValue);
+				return;
 			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
 				setTypeRef((TypeRef)newValue);
 				return;
@@ -438,6 +485,9 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER:
 				setHasInitializer(HAS_INITIALIZER_EDEFAULT);
 				return;
+			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT:
+				setHasInitializerAssignment(HAS_INITIALIZER_ASSIGNMENT_EDEFAULT);
+				return;
 			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
 				setTypeRef((TypeRef)null);
 				return;
@@ -461,6 +511,8 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 				return variadic != VARIADIC_EDEFAULT;
 			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER:
 				return hasInitializer != HAS_INITIALIZER_EDEFAULT;
+			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT:
+				return hasInitializerAssignment != HAS_INITIALIZER_ASSIGNMENT_EDEFAULT;
 			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
 				return typeRef != null;
 		}
@@ -543,6 +595,8 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 		result.append(variadic);
 		result.append(", hasInitializer: ");
 		result.append(hasInitializer);
+		result.append(", hasInitializerAssignment: ");
+		result.append(hasInitializerAssignment);
 		result.append(')');
 		return result.toString();
 	}

@@ -4,7 +4,7 @@ publicInternal class GlobalObject {
 	public final undefined: undefined;
 	
 	public eval(x: any): Object
-	public parseInt(s: any, radix: number=void 0): number
+	public parseInt(s: any, radix: number = undefined): number
 	public parseFloat(x: any): number
 	public isNaN(x: number): boolean
 	public isFinite(x: number): boolean

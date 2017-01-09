@@ -1262,6 +1262,7 @@ class TStructMethod extends TMethod, TStructMember {
 class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRelatedTElement {
 	boolean variadic
 	boolean hasInitializer
+	boolean hasInitializerAssignment
 	contains TypeRef typeRef
 	
 	/* Convenience method, returns true if this and all following fparams are variadic or have an initializer. */
@@ -1279,7 +1280,7 @@ class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRel
 		
 		while (iter.hasNext) {
 			val fpar = iter.next;
-			if (!fpar.isVariadic && !fpar.hasInitializer) {
+			if (!fpar.isVariadic && !fpar.hasInitializerAssignment) {
 				return false;
 			}
 		}
@@ -1298,7 +1299,7 @@ class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRel
 		if (variadic) strb.append("...");
 		strb.append(name);
 		if (typeRef!==null) strb.append(": ").append(typeRef.typeRefAsString);
-		if (optional) strb.append("=");
+		if (optional) strb.append(" = undefined");
 		return strb.toString();
 	}
 //	op String getFormalParameterAsHTML() {

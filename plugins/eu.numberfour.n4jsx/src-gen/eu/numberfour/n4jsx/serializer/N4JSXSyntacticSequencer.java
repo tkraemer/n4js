@@ -29,7 +29,6 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_AnnotationNoAtSign___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q;
 	protected AbstractElementAlias match_ArrayBindingPattern_CommaKeyword_3_2_0_q;
 	protected AbstractElementAlias match_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__;
-	protected AbstractElementAlias match_BindingElementFragment_EqualsSignKeyword_1_0_q;
 	protected AbstractElementAlias match_ClassExtendsClause_ExtendsKeyword_0_1_0_1_0_1_or_ImplementsKeyword_0_1_0_1_0_0;
 	protected AbstractElementAlias match_ClassImplementsList_CommaKeyword_1_0_0_or_ExtendsKeyword_1_0_2_or_ImplementsKeyword_1_0_1;
 	protected AbstractElementAlias match_DoStatement_SemiParserRuleCall_6_q;
@@ -60,7 +59,6 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_AnnotationNoAtSign___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAnnotationNoAtSignAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getAnnotationNoAtSignAccess().getRightParenthesisKeyword_1_2()));
 		match_ArrayBindingPattern_CommaKeyword_3_2_0_q = new TokenAlias(false, true, grammarAccess.getArrayBindingPatternAccess().getCommaKeyword_3_2_0());
 		match_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_1()), new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getFunctionKeyword_3()), new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftParenthesisKeyword_5())), new TokenAlias(false, false, grammarAccess.getArrowFunctionTypeExpressionAccess().getLeftParenthesisKeyword_1()));
-		match_BindingElementFragment_EqualsSignKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getBindingElementFragmentAccess().getEqualsSignKeyword_1_0());
 		match_ClassExtendsClause_ExtendsKeyword_0_1_0_1_0_1_or_ImplementsKeyword_0_1_0_1_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getClassExtendsClauseAccess().getExtendsKeyword_0_1_0_1_0_1()), new TokenAlias(false, false, grammarAccess.getClassExtendsClauseAccess().getImplementsKeyword_0_1_0_1_0_0()));
 		match_ClassImplementsList_CommaKeyword_1_0_0_or_ExtendsKeyword_1_0_2_or_ImplementsKeyword_1_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getClassImplementsListAccess().getCommaKeyword_1_0_0()), new TokenAlias(false, false, grammarAccess.getClassImplementsListAccess().getExtendsKeyword_1_0_2()), new TokenAlias(false, false, grammarAccess.getClassImplementsListAccess().getImplementsKeyword_1_0_1()));
 		match_DoStatement_SemiParserRuleCall_6_q = new TokenAlias(false, true, grammarAccess.getDoStatementAccess().getSemiParserRuleCall_6());
@@ -84,12 +82,24 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (ruleCall.getRule() == grammarAccess.getNO_LINE_TERMINATORRule())
+		if (ruleCall.getRule() == grammarAccess.getIDENTIFIERRule())
+			return getIDENTIFIERToken(semanticObject, ruleCall, node);
+		else if (ruleCall.getRule() == grammarAccess.getNO_LINE_TERMINATORRule())
 			return getNO_LINE_TERMINATORToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getSemiRule())
 			return getSemiToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getTemplateExpressionEndRule())
 			return getTemplateExpressionEndToken(semanticObject, ruleCall, node);
+		return "";
+	}
+	
+	/**
+	 * terminal IDENTIFIER:
+	 * 	IDENTIFIER_START IDENTIFIER_PART*;
+	 */
+	protected String getIDENTIFIERToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
 		return "";
 	}
 	
@@ -143,8 +153,6 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_ArrayBindingPattern_CommaKeyword_3_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__.equals(syntax))
 				emit_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_BindingElementFragment_EqualsSignKeyword_1_0_q.equals(syntax))
-				emit_BindingElementFragment_EqualsSignKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ClassExtendsClause_ExtendsKeyword_0_1_0_1_0_1_or_ImplementsKeyword_0_1_0_1_0_0.equals(syntax))
 				emit_ClassExtendsClause_ExtendsKeyword_0_1_0_1_0_1_or_ImplementsKeyword_0_1_0_1_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ClassImplementsList_CommaKeyword_1_0_0_or_ExtendsKeyword_1_0_2_or_ImplementsKeyword_1_0_1.equals(syntax))
@@ -270,19 +278,6 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) (ambiguity) fpars+=TAnonymousFormalParameter
 	 */
 	protected void emit_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     '='?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     bindingPattern=BindingPattern (ambiguity) (rule end)
-	 *     declaredTypeRef=TypeRef (ambiguity) (rule end)
-	 *     name=BindingIdentifier (ambiguity) (rule end)
-	 */
-	protected void emit_BindingElementFragment_EqualsSignKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

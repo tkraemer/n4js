@@ -575,7 +575,7 @@ public class N4JSXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTAnonymousFormalParameterListAccess().getGroup_1(), "rule__TAnonymousFormalParameterList__Group_1__0");
 					put(grammarAccess.getTAnonymousFormalParameterAccess().getGroup(), "rule__TAnonymousFormalParameter__Group__0");
 					put(grammarAccess.getTAnonymousFormalParameterAccess().getGroup_1(), "rule__TAnonymousFormalParameter__Group_1__0");
-					put(grammarAccess.getTFormalParameterAccess().getGroup(), "rule__TFormalParameter__Group__0");
+					put(grammarAccess.getTAnonymousFormalParameterAccess().getGroup_3(), "rule__TAnonymousFormalParameter__Group_3__0");
 					put(grammarAccess.getUnionTypeExpressionOLDAccess().getGroup(), "rule__UnionTypeExpressionOLD__Group__0");
 					put(grammarAccess.getUnionTypeExpressionOLDAccess().getGroup_4(), "rule__UnionTypeExpressionOLD__Group_4__0");
 					put(grammarAccess.getIntersectionTypeExpressionOLDAccess().getGroup(), "rule__IntersectionTypeExpressionOLD__Group__0");
@@ -717,6 +717,7 @@ public class N4JSXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getBindingElementFragmentAccess().getAnnotationsAssignment_0_1_0(), "rule__BindingElementFragment__AnnotationsAssignment_0_1_0");
 					put(grammarAccess.getBindingElementFragmentAccess().getVariadicAssignment_0_1_2(), "rule__BindingElementFragment__VariadicAssignment_0_1_2");
 					put(grammarAccess.getBindingElementFragmentAccess().getNameAssignment_0_1_3(), "rule__BindingElementFragment__NameAssignment_0_1_3");
+					put(grammarAccess.getBindingElementFragmentAccess().getHasInitializerAssignmentAssignment_1_0(), "rule__BindingElementFragment__HasInitializerAssignmentAssignment_1_0");
 					put(grammarAccess.getBindingElementFragmentAccess().getInitializerAssignment_1_1(), "rule__BindingElementFragment__InitializerAssignment_1_1");
 					put(grammarAccess.getColonSepTypeRefAccess().getDeclaredTypeRefAssignment_1(), "rule__ColonSepTypeRef__DeclaredTypeRefAssignment_1");
 					put(grammarAccess.getBogusTypeRefFragmentAccess().getBogusTypeRefAssignment(), "rule__BogusTypeRefFragment__BogusTypeRefAssignment");
@@ -1003,10 +1004,8 @@ public class N4JSXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTAnonymousFormalParameterAccess().getVariadicAssignment_0(), "rule__TAnonymousFormalParameter__VariadicAssignment_0");
 					put(grammarAccess.getTAnonymousFormalParameterAccess().getNameAssignment_1_0(), "rule__TAnonymousFormalParameter__NameAssignment_1_0");
 					put(grammarAccess.getTAnonymousFormalParameterAccess().getTypeRefAssignment_2(), "rule__TAnonymousFormalParameter__TypeRefAssignment_2");
-					put(grammarAccess.getTFormalParameterAccess().getVariadicAssignment_0(), "rule__TFormalParameter__VariadicAssignment_0");
-					put(grammarAccess.getTFormalParameterAccess().getNameAssignment_1(), "rule__TFormalParameter__NameAssignment_1");
-					put(grammarAccess.getTFormalParameterAccess().getTypeRefAssignment_3(), "rule__TFormalParameter__TypeRefAssignment_3");
-					put(grammarAccess.getFormalParameterDefaultInitializerAccess().getHasInitializerAssignment(), "rule__FormalParameterDefaultInitializer__HasInitializerAssignment");
+					put(grammarAccess.getTAnonymousFormalParameterAccess().getHasInitializerAssignmentAssignment_3_0(), "rule__TAnonymousFormalParameter__HasInitializerAssignmentAssignment_3_0");
+					put(grammarAccess.getTAnonymousFormalParameterAccess().getHasInitializerAssignment_3_1(), "rule__TAnonymousFormalParameter__HasInitializerAssignment_3_1");
 					put(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsAssignment_3(), "rule__UnionTypeExpressionOLD__TypeRefsAssignment_3");
 					put(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsAssignment_4_1(), "rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1");
 					put(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsAssignment_3(), "rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3");

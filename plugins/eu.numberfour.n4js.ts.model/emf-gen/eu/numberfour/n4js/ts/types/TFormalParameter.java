@@ -20,6 +20,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFormalParameter#isVariadic <em>Variadic</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializer <em>Has Initializer</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializerAssignment <em>Has Initializer Assignment</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFormalParameter#getTypeRef <em>Type Ref</em>}</li>
  * </ul>
  *
@@ -81,6 +82,32 @@ public interface TFormalParameter extends IdentifiableElement, TAnnotableElement
 	void setHasInitializer(boolean value);
 
 	/**
+	 * Returns the value of the '<em><b>Has Initializer Assignment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Has Initializer Assignment</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Has Initializer Assignment</em>' attribute.
+	 * @see #setHasInitializerAssignment(boolean)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTFormalParameter_HasInitializerAssignment()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isHasInitializerAssignment();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializerAssignment <em>Has Initializer Assignment</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Has Initializer Assignment</em>' attribute.
+	 * @see #isHasInitializerAssignment()
+	 * @generated
+	 */
+	void setHasInitializerAssignment(boolean value);
+
+	/**
 	 * Returns the value of the '<em><b>Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -113,7 +140,7 @@ public interface TFormalParameter extends IdentifiableElement, TAnnotableElement
 	 *  Convenience method, returns true if this and all following fparams are variadic or have an initializer.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> fpars = null;\n<%org.eclipse.emf.ecore.EObject%> _eContainer = this.eContainer();\nif ((_eContainer instanceof <%eu.numberfour.n4js.ts.types.TFunction%>))\n{\n\t<%org.eclipse.emf.ecore.EObject%> _eContainer_1 = this.eContainer();\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> _fpars = ((<%eu.numberfour.n4js.ts.types.TFunction%>) _eContainer_1).getFpars();\n\tfpars = _fpars;\n}\n<%org.eclipse.emf.ecore.EObject%> _eContainer_2 = this.eContainer();\nif ((_eContainer_2 instanceof <%eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef%>))\n{\n\t<%org.eclipse.emf.ecore.EObject%> _eContainer_3 = this.eContainer();\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> _fpars_1 = ((<%eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef%>) _eContainer_3).getFpars();\n\tfpars = _fpars_1;\n}\nif ((fpars == null))\n{\n\treturn false;\n}\nint idx = fpars.indexOf(this);\n<%java.util.ListIterator%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> iter = fpars.listIterator(idx);\nwhile (iter.hasNext())\n{\n\t{\n\t\tfinal <%eu.numberfour.n4js.ts.types.TFormalParameter%> fpar = iter.next();\n\t\tif (((!fpar.isVariadic()) && (!fpar.isHasInitializer())))\n\t\t{\n\t\t\treturn false;\n\t\t}\n\t}\n}\nreturn true;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> fpars = null;\n<%org.eclipse.emf.ecore.EObject%> _eContainer = this.eContainer();\nif ((_eContainer instanceof <%eu.numberfour.n4js.ts.types.TFunction%>))\n{\n\t<%org.eclipse.emf.ecore.EObject%> _eContainer_1 = this.eContainer();\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> _fpars = ((<%eu.numberfour.n4js.ts.types.TFunction%>) _eContainer_1).getFpars();\n\tfpars = _fpars;\n}\n<%org.eclipse.emf.ecore.EObject%> _eContainer_2 = this.eContainer();\nif ((_eContainer_2 instanceof <%eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef%>))\n{\n\t<%org.eclipse.emf.ecore.EObject%> _eContainer_3 = this.eContainer();\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> _fpars_1 = ((<%eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef%>) _eContainer_3).getFpars();\n\tfpars = _fpars_1;\n}\nif ((fpars == null))\n{\n\treturn false;\n}\nint idx = fpars.indexOf(this);\n<%java.util.ListIterator%><<%eu.numberfour.n4js.ts.types.TFormalParameter%>> iter = fpars.listIterator(idx);\nwhile (iter.hasNext())\n{\n\t{\n\t\tfinal <%eu.numberfour.n4js.ts.types.TFormalParameter%> fpar = iter.next();\n\t\tif (((!fpar.isVariadic()) && (!fpar.isHasInitializerAssignment())))\n\t\t{\n\t\t\treturn false;\n\t\t}\n\t}\n}\nreturn true;'"
 	 * @generated
 	 */
 	boolean isOptional();
@@ -139,7 +166,7 @@ public interface TFormalParameter extends IdentifiableElement, TAnnotableElement
 	 * preceding variadic modifier and colon separated type if declared.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%java.lang.StringBuilder%> strb = new <%java.lang.StringBuilder%>();\nboolean _isVariadic = this.isVariadic();\nif (_isVariadic)\n{\n\tstrb.append(\"...\");\n}\n<%java.lang.String%> _name = this.getName();\nstrb.append(_name);\n<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef = this.getTypeRef();\nboolean _tripleNotEquals = (_typeRef != null);\nif (_tripleNotEquals)\n{\n\t<%java.lang.StringBuilder%> _append = strb.append(\": \");\n\t<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef_1 = this.getTypeRef();\n\t<%java.lang.String%> _typeRefAsString = _typeRef_1.getTypeRefAsString();\n\t_append.append(_typeRefAsString);\n}\nboolean _isOptional = this.isOptional();\nif (_isOptional)\n{\n\tstrb.append(\"=\");\n}\nreturn strb.toString();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%java.lang.StringBuilder%> strb = new <%java.lang.StringBuilder%>();\nboolean _isVariadic = this.isVariadic();\nif (_isVariadic)\n{\n\tstrb.append(\"...\");\n}\n<%java.lang.String%> _name = this.getName();\nstrb.append(_name);\n<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef = this.getTypeRef();\nboolean _tripleNotEquals = (_typeRef != null);\nif (_tripleNotEquals)\n{\n\t<%java.lang.StringBuilder%> _append = strb.append(\": \");\n\t<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef_1 = this.getTypeRef();\n\t<%java.lang.String%> _typeRefAsString = _typeRef_1.getTypeRefAsString();\n\t_append.append(_typeRefAsString);\n}\nboolean _isOptional = this.isOptional();\nif (_isOptional)\n{\n\tstrb.append(\" = undefined\");\n}\nreturn strb.toString();'"
 	 * @generated
 	 */
 	String getFormalParameterAsString();

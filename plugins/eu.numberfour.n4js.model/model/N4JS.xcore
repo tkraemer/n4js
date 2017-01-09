@@ -595,6 +595,7 @@ class LocalArgumentsVariable extends Variable {
 class FormalParameter extends AnnotableElement, Variable {
 	contains Annotation[] annotations
 	boolean variadic
+	boolean hasInitializerAssignment
 	refers transient TFormalParameter definedTypeElement
 	contains Expression initializer
 	contains BindingPattern bindingPattern

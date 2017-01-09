@@ -40,9 +40,20 @@ public class TypeExpressionsSyntacticSequencer extends AbstractSyntacticSequence
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (ruleCall.getRule() == grammarAccess.getIDENTIFIERRule())
+			return getIDENTIFIERToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
+	/**
+	 * terminal IDENTIFIER:
+	 * 	IDENTIFIER_START IDENTIFIER_PART*;
+	 */
+	protected String getIDENTIFIERToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "";
+	}
 	
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {

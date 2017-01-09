@@ -2273,7 +2273,7 @@ ruleCallableCtor returns [EObject current=null]
 							$current,
 							"fpars",
 							lv_fpars_2_0,
-							"eu.numberfour.n4js.ts.TypeExpressions.TFormalParameter");
+							"eu.numberfour.n4js.ts.Types.TFormalParameter");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -2297,7 +2297,7 @@ ruleCallableCtor returns [EObject current=null]
 								$current,
 								"fpars",
 								lv_fpars_4_0,
-								"eu.numberfour.n4js.ts.TypeExpressions.TFormalParameter");
+								"eu.numberfour.n4js.ts.Types.TFormalParameter");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -2764,7 +2764,7 @@ ruleTMethod returns [EObject current=null]
 							$current,
 							"fpars",
 							lv_fpars_11_0,
-							"eu.numberfour.n4js.ts.TypeExpressions.TFormalParameter");
+							"eu.numberfour.n4js.ts.Types.TFormalParameter");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -2788,7 +2788,7 @@ ruleTMethod returns [EObject current=null]
 								$current,
 								"fpars",
 								lv_fpars_13_0,
-								"eu.numberfour.n4js.ts.TypeExpressions.TFormalParameter");
+								"eu.numberfour.n4js.ts.Types.TFormalParameter");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -2827,6 +2827,111 @@ ruleTMethod returns [EObject current=null]
 			{
 				newLeafNode(otherlv_17, grammarAccess.getTMethodAccess().getSemicolonKeyword_5());
 			}
+		)?
+	)
+;
+
+// Entry rule entryRuleTFormalParameter
+entryRuleTFormalParameter returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getTFormalParameterRule()); }
+	iv_ruleTFormalParameter=ruleTFormalParameter
+	{ $current=$iv_ruleTFormalParameter.current; }
+	EOF;
+
+// Rule TFormalParameter
+ruleTFormalParameter returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_variadic_0_0=FullStopFullStopFullStop
+				{
+					newLeafNode(lv_variadic_0_0, grammarAccess.getTFormalParameterAccess().getVariadicFullStopFullStopFullStopKeyword_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getTFormalParameterRule());
+					}
+					setWithLastConsumed($current, "variadic", true, "...");
+				}
+			)
+		)?
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getTFormalParameterAccess().getNameBindingIdentifierParserRuleCall_1_0());
+				}
+				lv_name_1_0=ruleBindingIdentifier
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getTFormalParameterRule());
+					}
+					set(
+						$current,
+						"name",
+						lv_name_1_0,
+						"eu.numberfour.n4js.ts.TypeExpressions.BindingIdentifier");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_2=Colon
+		{
+			newLeafNode(otherlv_2, grammarAccess.getTFormalParameterAccess().getColonKeyword_2());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getTFormalParameterAccess().getTypeRefTypeRefParserRuleCall_3_0());
+				}
+				lv_typeRef_3_0=ruleTypeRef
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getTFormalParameterRule());
+					}
+					set(
+						$current,
+						"typeRef",
+						lv_typeRef_3_0,
+						"eu.numberfour.n4js.ts.Types.TypeRef");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				(
+					lv_hasInitializerAssignment_4_0=EqualsSign
+					{
+						newLeafNode(lv_hasInitializerAssignment_4_0, grammarAccess.getTFormalParameterAccess().getHasInitializerAssignmentEqualsSignKeyword_4_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getTFormalParameterRule());
+						}
+						setWithLastConsumed($current, "hasInitializerAssignment", true, "=");
+					}
+				)
+			)
+			(
+				(
+					lv_hasInitializer_5_0=Undefined
+					{
+						newLeafNode(lv_hasInitializer_5_0, grammarAccess.getTFormalParameterAccess().getHasInitializerUndefinedKeyword_4_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getTFormalParameterRule());
+						}
+						setWithLastConsumed($current, "hasInitializer", true, "undefined");
+					}
+				)
+			)?
 		)?
 	)
 ;
@@ -3355,7 +3460,7 @@ ruleTSetter returns [EObject current=null]
 						$current,
 						"fpar",
 						lv_fpar_8_0,
-						"eu.numberfour.n4js.ts.TypeExpressions.TFormalParameter");
+						"eu.numberfour.n4js.ts.Types.TFormalParameter");
 					afterParserOrEnumRuleCall();
 				}
 			)
@@ -3512,7 +3617,7 @@ ruleTFunction returns [EObject current=null]
 							$current,
 							"fpars",
 							lv_fpars_10_0,
-							"eu.numberfour.n4js.ts.TypeExpressions.TFormalParameter");
+							"eu.numberfour.n4js.ts.Types.TFormalParameter");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -3536,7 +3641,7 @@ ruleTFunction returns [EObject current=null]
 								$current,
 								"fpars",
 								lv_fpars_12_0,
-								"eu.numberfour.n4js.ts.TypeExpressions.TFormalParameter");
+								"eu.numberfour.n4js.ts.Types.TFormalParameter");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -4708,129 +4813,41 @@ ruleTAnonymousFormalParameter returns [EObject current=null]
 				}
 			)
 		)
-		{
-			if ($current==null) {
-				$current = createModelElement(grammarAccess.getTAnonymousFormalParameterRule());
-			}
-			newCompositeNode(grammarAccess.getTAnonymousFormalParameterAccess().getFormalParameterDefaultInitializerParserRuleCall_3());
-		}
-		this_FormalParameterDefaultInitializer_4=ruleFormalParameterDefaultInitializer[$current]
-		{
-			$current = $this_FormalParameterDefaultInitializer_4.current;
-			afterParserOrEnumRuleCall();
-		}
-	)
-;
-
-// Entry rule entryRuleTFormalParameter
-entryRuleTFormalParameter returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getTFormalParameterRule()); }
-	iv_ruleTFormalParameter=ruleTFormalParameter
-	{ $current=$iv_ruleTFormalParameter.current; }
-	EOF;
-
-// Rule TFormalParameter
-ruleTFormalParameter returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
 		(
 			(
-				lv_variadic_0_0=FullStopFullStopFullStop
-				{
-					newLeafNode(lv_variadic_0_0, grammarAccess.getTFormalParameterAccess().getVariadicFullStopFullStopFullStopKeyword_0_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getTFormalParameterRule());
+				(
+					lv_hasInitializerAssignment_4_0=EqualsSign
+					{
+						newLeafNode(lv_hasInitializerAssignment_4_0, grammarAccess.getTAnonymousFormalParameterAccess().getHasInitializerAssignmentEqualsSignKeyword_3_0_0());
 					}
-					setWithLastConsumed($current, "variadic", true, "...");
-				}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getTAnonymousFormalParameterRule());
+						}
+						setWithLastConsumed($current, "hasInitializerAssignment", true, "=");
+					}
+				)
 			)
+			(
+				(
+					lv_hasInitializer_5_0=RULE_IDENTIFIER
+					{
+						newLeafNode(lv_hasInitializer_5_0, grammarAccess.getTAnonymousFormalParameterAccess().getHasInitializerIDENTIFIERTerminalRuleCall_3_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getTAnonymousFormalParameterRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"hasInitializer",
+							true,
+							"eu.numberfour.n4js.ts.TypeExpressions.IDENTIFIER");
+					}
+				)
+			)?
 		)?
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getTFormalParameterAccess().getNameBindingIdentifierParserRuleCall_1_0());
-				}
-				lv_name_1_0=ruleBindingIdentifier
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getTFormalParameterRule());
-					}
-					set(
-						$current,
-						"name",
-						lv_name_1_0,
-						"eu.numberfour.n4js.ts.TypeExpressions.BindingIdentifier");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		otherlv_2=Colon
-		{
-			newLeafNode(otherlv_2, grammarAccess.getTFormalParameterAccess().getColonKeyword_2());
-		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getTFormalParameterAccess().getTypeRefTypeRefParserRuleCall_3_0());
-				}
-				lv_typeRef_3_0=ruleTypeRef
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getTFormalParameterRule());
-					}
-					set(
-						$current,
-						"typeRef",
-						lv_typeRef_3_0,
-						"eu.numberfour.n4js.ts.Types.TypeRef");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		{
-			if ($current==null) {
-				$current = createModelElement(grammarAccess.getTFormalParameterRule());
-			}
-			newCompositeNode(grammarAccess.getTFormalParameterAccess().getFormalParameterDefaultInitializerParserRuleCall_4());
-		}
-		this_FormalParameterDefaultInitializer_4=ruleFormalParameterDefaultInitializer[$current]
-		{
-			$current = $this_FormalParameterDefaultInitializer_4.current;
-			afterParserOrEnumRuleCall();
-		}
 	)
-;
-
-
-// Rule FormalParameterDefaultInitializer
-ruleFormalParameterDefaultInitializer[EObject in_current]  returns [EObject current=in_current]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			lv_hasInitializer_0_0=EqualsSign
-			{
-				newLeafNode(lv_hasInitializer_0_0, grammarAccess.getFormalParameterDefaultInitializerAccess().getHasInitializerEqualsSignKeyword_0());
-			}
-			{
-				if ($current==null) {
-					$current = createModelElement(grammarAccess.getFormalParameterDefaultInitializerRule());
-				}
-				setWithLastConsumed($current, "hasInitializer", true, "=");
-			}
-		)
-	)?
 ;
 
 // Entry rule entryRuleUnionTypeExpressionOLD

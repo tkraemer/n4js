@@ -8224,13 +8224,22 @@ public interface TypesPackage extends EPackage {
 	int TFORMAL_PARAMETER__HAS_INITIALIZER = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Has Initializer Assignment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
 	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER__TYPE_REF = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 4;
+	int TFORMAL_PARAMETER__TYPE_REF = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>TFormal Parameter</em>' class.
@@ -8239,7 +8248,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER_FEATURE_COUNT = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 5;
+	int TFORMAL_PARAMETER_FEATURE_COUNT = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -8340,6 +8349,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TANONYMOUS_FORMAL_PARAMETER__HAS_INITIALIZER = TFORMAL_PARAMETER__HAS_INITIALIZER;
+
+	/**
+	 * The feature id for the '<em><b>Has Initializer Assignment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TANONYMOUS_FORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT = TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT;
 
 	/**
 	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
@@ -13130,6 +13148,17 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTFormalParameter_HasInitializer();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializerAssignment <em>Has Initializer Assignment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Has Initializer Assignment</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializerAssignment()
+	 * @see #getTFormalParameter()
+	 * @generated
+	 */
+	EAttribute getTFormalParameter_HasInitializerAssignment();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.types.TFormalParameter#getTypeRef <em>Type Ref</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15419,6 +15448,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TFORMAL_PARAMETER__HAS_INITIALIZER = eINSTANCE.getTFormalParameter_HasInitializer();
+
+		/**
+		 * The meta object literal for the '<em><b>Has Initializer Assignment</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT = eINSTANCE.getTFormalParameter_HasInitializerAssignment();
 
 		/**
 		 * The meta object literal for the '<em><b>Type Ref</b></em>' containment reference feature.

@@ -1148,7 +1148,8 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//fragment BindingElementFragment <Yield> *:
 	//	(=> bindingPattern=BindingPattern<Yield> | annotations+=Annotation* BogusTypeRefFragment? variadic?='...'?
-	//	name=BindingIdentifier<Yield> ColonSepTypeRef?) ('=' initializer=AssignmentExpression<In=true,Yield>?)?;
+	//	name=BindingIdentifier<Yield> ColonSepTypeRef?) (hasInitializerAssignment?='='
+	//	initializer=AssignmentExpression<In=true,Yield>?)?;
 	public N4JSGrammarAccess.BindingElementFragmentElements getBindingElementFragmentAccess() {
 		return gaN4JS.getBindingElementFragmentAccess();
 	}
@@ -3460,44 +3461,23 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	/// **
 	// * Used in type expressions, name is optional.
+	// *
+	// * Default initializers in FunctionTypeExpressions or TFunctions
+	// * are necessary to specify optional formal parameters. Hence, their
+	// * initializer expression is rather uninteresting and limited by validations
+	// * to either 'undefined' and 'void INT'. The shorthand form, that is omitting
+	// * the initializer, is supported.
+	// * 
+	// * Note: Keep the initializer part in sync with: Types.xtext:TFormalParameter
 	// * / TAnonymousFormalParameter:
-	//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef
-	//	FormalParameterDefaultInitializer;
+	//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef (hasInitializerAssignment?='='
+	//	hasInitializer?=IDENTIFIER?)?;
 	public TypeExpressionsGrammarAccess.TAnonymousFormalParameterElements getTAnonymousFormalParameterAccess() {
 		return gaTypeExpressions.getTAnonymousFormalParameterAccess();
 	}
 	
 	public ParserRule getTAnonymousFormalParameterRule() {
 		return getTAnonymousFormalParameterAccess().getRule();
-	}
-	
-	/// **
-	// * Used in Types language only.
-	// * / TFormalParameter:
-	//	variadic?='...'? name=BindingIdentifier<Yield=false>
-	//	':' typeRef=TypeRef
-	//	FormalParameterDefaultInitializer;
-	public TypeExpressionsGrammarAccess.TFormalParameterElements getTFormalParameterAccess() {
-		return gaTypeExpressions.getTFormalParameterAccess();
-	}
-	
-	public ParserRule getTFormalParameterRule() {
-		return getTFormalParameterAccess().getRule();
-	}
-	
-	/// **
-	// * Default initializers in FunctionTypeExpressions or TFunctions
-	// * are necessary to specify optional formal parameters. Hence, their
-	// * initializer expression is rather uninteresting and limited by validations
-	// * to either 'undefined' and 'void INT'.
-	// * / fragment FormalParameterDefaultInitializer *:
-	//	hasInitializer?='='?;
-	public TypeExpressionsGrammarAccess.FormalParameterDefaultInitializerElements getFormalParameterDefaultInitializerAccess() {
-		return gaTypeExpressions.getFormalParameterDefaultInitializerAccess();
-	}
-	
-	public ParserRule getFormalParameterDefaultInitializerRule() {
-		return getFormalParameterDefaultInitializerAccess().getRule();
 	}
 	
 	//UnionTypeExpressionOLD UnionTypeExpression:

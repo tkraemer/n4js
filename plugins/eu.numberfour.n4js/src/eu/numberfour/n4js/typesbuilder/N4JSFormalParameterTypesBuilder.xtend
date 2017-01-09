@@ -39,6 +39,7 @@ package class N4JSFormalParameterTypesBuilder {
 		formalParameterType.name = astFormalParameter.name;
 		formalParameterType.variadic = astFormalParameter.variadic;
 		formalParameterType.hasInitializer = (astFormalParameter.initializer !== null);
+		formalParameterType.hasInitializerAssignment = astFormalParameter.hasInitializerAssignment;
 		setFormalParameterType(formalParameterType, astFormalParameter, defaultTypeRef, builtInTypeScope, preLinkingPhase)
 
 		copyAnnotations(formalParameterType, astFormalParameter, preLinkingPhase)

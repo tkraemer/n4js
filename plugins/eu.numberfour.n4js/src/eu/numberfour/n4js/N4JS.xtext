@@ -346,7 +346,7 @@ fragment BindingElementFragment <Yield>*:
 	( => bindingPattern=BindingPattern<Yield>
 	| annotations+=Annotation* BogusTypeRefFragment? variadic?='...'? name=BindingIdentifier<Yield> ColonSepTypeRef?
 	)
-	('=' initializer=AssignmentExpression<In=true, Yield>?)?
+	(hasInitializerAssignment?='=' initializer=AssignmentExpression<In=true, Yield>?)?
 ;
 
 fragment ColonSepTypeRef*:

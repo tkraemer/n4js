@@ -8528,13 +8528,11 @@ ruleTAnonymousFormalParameter:
 		':'
 	)?
 	ruleTypeRef
-	ruleFormalParameterDefaultInitializer
-;
-
-// Rule FormalParameterDefaultInitializer
-ruleFormalParameterDefaultInitializer:
-	'='
-	?
+	(
+		'='
+		RULE_IDENTIFIER
+		?
+	)?
 ;
 
 // Rule UnionTypeExpressionOLD

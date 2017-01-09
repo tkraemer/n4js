@@ -16,7 +16,6 @@ import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.Wildcard;
 import eu.numberfour.n4js.ts.types.TAnonymousFormalParameter;
-import eu.numberfour.n4js.ts.types.TFormalParameter;
 import eu.numberfour.n4js.ts.types.TStructField;
 import eu.numberfour.n4js.ts.types.TStructGetter;
 import eu.numberfour.n4js.ts.types.TStructMethod;
@@ -276,10 +275,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 		else if (epackage == TypesPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case TypesPackage.TANONYMOUS_FORMAL_PARAMETER:
-				sequence_FormalParameterDefaultInitializer_TAnonymousFormalParameter(context, (TAnonymousFormalParameter) semanticObject); 
-				return; 
-			case TypesPackage.TFORMAL_PARAMETER:
-				sequence_FormalParameterDefaultInitializer_TFormalParameter(context, (TFormalParameter) semanticObject); 
+				sequence_TAnonymousFormalParameter(context, (TAnonymousFormalParameter) semanticObject); 
 				return; 
 			case TypesPackage.TSTRUCT_FIELD:
 				sequence_TStructField(context, (TStructField) semanticObject); 
@@ -385,30 +381,6 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     ((fpars+=TAnonymousFormalParameter fpars+=TAnonymousFormalParameter*)? returnTypeRef=PrimaryTypeExpression)
 	 */
 	protected void sequence_ArrowFunctionTypeExpression_TAnonymousFormalParameterList(ISerializationContext context, FunctionTypeExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     TAnonymousFormalParameter returns TAnonymousFormalParameter
-	 *
-	 * Constraint:
-	 *     (variadic?='...'? name=BindingIdentifier? typeRef=TypeRef hasInitializer?='='?)
-	 */
-	protected void sequence_FormalParameterDefaultInitializer_TAnonymousFormalParameter(ISerializationContext context, TAnonymousFormalParameter semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     TFormalParameter returns TFormalParameter
-	 *
-	 * Constraint:
-	 *     (variadic?='...'? name=BindingIdentifier typeRef=TypeRef hasInitializer?='='?)
-	 */
-	protected void sequence_FormalParameterDefaultInitializer_TFormalParameter(ISerializationContext context, TFormalParameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -652,6 +624,18 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     )
 	 */
 	protected void sequence_TAnonymousFormalParameterList_TStructMethod(ISerializationContext context, TStructMethod semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TAnonymousFormalParameter returns TAnonymousFormalParameter
+	 *
+	 * Constraint:
+	 *     (variadic?='...'? name=BindingIdentifier? typeRef=TypeRef (hasInitializerAssignment?='=' hasInitializer?=IDENTIFIER?)?)
+	 */
+	protected void sequence_TAnonymousFormalParameter(ISerializationContext context, TAnonymousFormalParameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
