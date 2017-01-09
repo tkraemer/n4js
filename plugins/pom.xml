@@ -48,6 +48,7 @@ Contributors:
 		<module>eu.numberfour.n4js.runner.ui</module>
 		<module>eu.numberfour.n4js.runner.nodejs</module>
 		<module>eu.numberfour.n4js.runner.nodejs.ui</module>
+		<module>eu.numberfour.n4js.runner.nodejsx.ui</module>
 		<module>eu.numberfour.n4js.runner.chrome</module>
 		<module>eu.numberfour.n4js.runner.chrome.ui</module>
 		<!-- n4mf -->
@@ -79,6 +80,8 @@ Contributors:
 		<module>eu.numberfour.n4jsx.model</module>
 		<module>eu.numberfour.n4jsx.ui</module>
 		<module>eu.numberfour.n4jsx.xpect.ui</module>
+		<module>eu.numberfour.n4jsx.runner.ui</module>
+		<module>eu.numberfour.n4jsx.runner.nodejs.ui</module>
 	</modules>
 
 	<properties>

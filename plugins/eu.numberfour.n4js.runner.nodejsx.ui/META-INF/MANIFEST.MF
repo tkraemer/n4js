@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: eu.numberfour.n4jsx.runner.nodejs.ui
+Bundle-SymbolicName: eu.numberfour.n4jsx.runner.nodejs.ui;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Bundle-Vendor: NumberFour AG
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui.workbench,
+ org.eclipse.debug.ui,
+ org.eclipse.jface,
+ eu.numberfour.n4jsx.runner.ui;bundle-version="0.0.1",
+ eu.numberfour.n4js.runner.nodejs,
+ eu.numberfour.n4js.runner.nodejs.ui;bundle-version="0.0.1"
+Import-Package: com.google.common.cache;version="15.0.0",
+ com.google.inject;version="1.3.0",
+ eu.numberfour.n4js.utils,
+ eu.numberfour.n4jsx.ui.internal

@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js.runner;
 
-import static eu.numberfour.n4js.N4JSGlobals.JS_FILE_EXTENSION;
-import static eu.numberfour.n4js.N4JSGlobals.N4JS_FILE_EXTENSION;
 import static eu.numberfour.n4js.utils.io.FileUtils.getTempFolder;
 
 import java.io.File;
@@ -34,6 +32,7 @@ import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.generator.common.CompilerUtils;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
+import eu.numberfour.n4js.resource.TranspilableFileExtensionsProvider;
 import eu.numberfour.n4js.runner.RunnerHelper.ApiUsage;
 import eu.numberfour.n4js.runner.extension.IRunnerDescriptor;
 import eu.numberfour.n4js.runner.extension.RunnerRegistry;
@@ -57,6 +56,9 @@ public class RunnerFrontEnd {
 
 	@Inject
 	private RunnerRegistry runnerRegistry;
+
+	@Inject
+	private TranspilableFileExtensionsProvider transpilableFileExtensionsProvider;
 
 	/**
 	 * Returns true iff the runner with the given id can run the given moduleToRun. Takes same arguments as
@@ -223,8 +225,7 @@ public class RunnerFrontEnd {
 		 * Testers need to pass test discovery result. Runners need to pass module/class/method selection.
 		 */
 		final URI userSelection = config.getUserSelection();
-		if (userSelection != null && (userSelection.toString().endsWith("." + N4JS_FILE_EXTENSION)
-				|| userSelection.toString().endsWith("." + JS_FILE_EXTENSION))) {
+		if (userSelection != null && (hasValidFileExtension(userSelection.toString()))) {
 			final String userSelection_targetFileName = compilerUtils.getTargetFileName(userSelection, null);
 			config.setExecutionData(RunConfiguration.EXEC_DATA_KEY__USER_SELECTION, userSelection_targetFileName);
 		} else {
@@ -240,6 +241,15 @@ public class RunnerFrontEnd {
 		// 7) delegate further computation to the specific runner implementation
 		IRunner runner = runnerRegistry.getRunner(config);
 		runner.prepareConfiguration(config);
+	}
+
+	private boolean hasValidFileExtension(String fileName) {
+		for (String fileExtension : transpilableFileExtensionsProvider.getTranspilableFileExtensions()) {
+			if (fileName.endsWith("." + fileExtension)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

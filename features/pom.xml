@@ -46,6 +46,7 @@ Contributors:
 
 		<module>/eu.numberfour.n4jsx.sdk</module>
 		<module>/eu.numberfour.n4jsx.xpect.sdk</module>
+		<module>eu.numberfour.n4jsx.runner.sdk</module>
 	</modules>
 
 	<build>

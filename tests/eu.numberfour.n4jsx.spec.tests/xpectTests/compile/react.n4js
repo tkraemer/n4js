@@ -2,6 +2,10 @@ export public class Element {
 	name: string = "dummy";
 	props : ~ComponentProps;
 	children: Array<any> = [];
+
+	constructor() {
+
+	}
 }
 
 
@@ -48,16 +52,16 @@ export public abstract class PureComponent <PropsT extends ComponentProps, State
  * The type argument can be either an html tag name string (eg. 'div', 'span', etc),
  * or a ReactClass.
  */
-// mor TODO IDE-2323 
+// mor TODO IDE-2323
 //    public static <PropsT extends ComponentProps> createElement(
 //        type: union{string, {function(PropsT?): Element}, constructor{Component<PropsT, ?>}},
 //        props: PropsT?, ...children: union{string, Element, Array<Element>}): Element;
 export public function createElement(type: union {string, {function(Object?): Element}, constructor{Component} },
 	props: Object?,
 	...children: union { string, Element, Array<Element> }): Element{
-		
+
 		let element = new Element
-		
+
 		if(typeof type ==  'string'){
 			element.name = type as string;
 		}else if(N4Type.of(type) == Component){
@@ -67,21 +71,21 @@ export public function createElement(type: union {string, {function(Object?): El
   			 fnName = fnName.substring('function '.length);
   			 fnName = fnName.substring(0, fnName.indexOf('('));
 			element.name = fnName.trim()
-		}else{ 
+		}else{
 			const msg = "cannot obtain name of the component type";
 			console.error(msg);
 			throw msg;
 		}
 		element.props = props
-		
+
 		children.map((p)=>createChildElements(p)).forEach(cha=>(cha as Array<?>).forEach(ch=>element.children.push(ch)))
-		
+
 		return element;
 	}
-	
+
 export public function createChildElements(type: union { string, Element, Array<Element> }): Array<any>{
 		let elements :Array<any> = []
-		
+
 		if(typeof type ==  'string'){
 			let element = new Element
 			element.name = type as string;
@@ -95,6 +99,6 @@ export public function createChildElements(type: union { string, Element, Array<
 		}
 		return elements;
 	}
-	
+
 
 /* -*- mode: typescript;-*- */
