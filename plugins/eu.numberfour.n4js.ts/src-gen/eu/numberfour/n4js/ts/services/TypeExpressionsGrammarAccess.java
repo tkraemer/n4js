@@ -801,47 +801,23 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class FormalParameterDefaultInitializerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.FormalParameterDefaultInitializer");
-		private final Group cGroup = (Group)rule.eContents().get(0);
-		private final Assignment cHasInitializerAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Keyword cHasInitializerEqualsSignKeyword_0_0 = (Keyword)cHasInitializerAssignment_0.eContents().get(0);
-		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
-		private final Keyword cVoidKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
-		private final RuleCall cINTTerminalRuleCall_1_0_1 = (RuleCall)cGroup_1_0.eContents().get(1);
-		private final RuleCall cIDENTIFIERTerminalRuleCall_1_1 = (RuleCall)cAlternatives_1.eContents().get(1);
+		private final Assignment cHasInitializerAssignment = (Assignment)rule.eContents().get(0);
+		private final Keyword cHasInitializerEqualsSignKeyword_0 = (Keyword)cHasInitializerAssignment.eContents().get(0);
 		
 		/// **
 		// * Default initializers in FunctionTypeExpressions or TFunctions
 		// * are necessary to specify optional formal parameters. Hence, their
-		// * initializer expression is rather uninteresting and limited to either
-		// * 'undefined' and 'void INT'.
+		// * initializer expression is rather uninteresting and limited by validations
+		// * to either 'undefined' and 'void INT'.
 		// * / fragment FormalParameterDefaultInitializer *:
-		//	(hasInitializer?='=' ('void' INT | IDENTIFIER))?;
+		//	hasInitializer?='='?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(hasInitializer?='=' ('void' INT | IDENTIFIER))?
-		public Group getGroup() { return cGroup; }
-		
-		//hasInitializer?='='
-		public Assignment getHasInitializerAssignment_0() { return cHasInitializerAssignment_0; }
+		//hasInitializer?='='?
+		public Assignment getHasInitializerAssignment() { return cHasInitializerAssignment; }
 		
 		//'='
-		public Keyword getHasInitializerEqualsSignKeyword_0_0() { return cHasInitializerEqualsSignKeyword_0_0; }
-		
-		//('void' INT | IDENTIFIER)
-		public Alternatives getAlternatives_1() { return cAlternatives_1; }
-		
-		//'void' INT
-		public Group getGroup_1_0() { return cGroup_1_0; }
-		
-		//'void'
-		public Keyword getVoidKeyword_1_0_0() { return cVoidKeyword_1_0_0; }
-		
-		//INT
-		public RuleCall getINTTerminalRuleCall_1_0_1() { return cINTTerminalRuleCall_1_0_1; }
-		
-		//IDENTIFIER
-		public RuleCall getIDENTIFIERTerminalRuleCall_1_1() { return cIDENTIFIERTerminalRuleCall_1_1; }
+		public Keyword getHasInitializerEqualsSignKeyword_0() { return cHasInitializerEqualsSignKeyword_0; }
 	}
 	public class UnionTypeExpressionOLDElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.UnionTypeExpressionOLD");
@@ -2565,10 +2541,10 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	/// **
 	// * Default initializers in FunctionTypeExpressions or TFunctions
 	// * are necessary to specify optional formal parameters. Hence, their
-	// * initializer expression is rather uninteresting and limited to either
-	// * 'undefined' and 'void INT'.
+	// * initializer expression is rather uninteresting and limited by validations
+	// * to either 'undefined' and 'void INT'.
 	// * / fragment FormalParameterDefaultInitializer *:
-	//	(hasInitializer?='=' ('void' INT | IDENTIFIER))?;
+	//	hasInitializer?='='?;
 	public FormalParameterDefaultInitializerElements getFormalParameterDefaultInitializerAccess() {
 		return pFormalParameterDefaultInitializer;
 	}

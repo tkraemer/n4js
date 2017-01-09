@@ -29,11 +29,11 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_AnnotationNoAtSign___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q;
 	protected AbstractElementAlias match_ArrayBindingPattern_CommaKeyword_3_2_0_q;
 	protected AbstractElementAlias match_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__;
+	protected AbstractElementAlias match_BindingElementFragment_EqualsSignKeyword_1_0_q;
 	protected AbstractElementAlias match_ClassExtendsClause_ExtendsKeyword_0_1_0_1_0_1_or_ImplementsKeyword_0_1_0_1_0_0;
 	protected AbstractElementAlias match_ClassImplementsList_CommaKeyword_1_0_0_or_ExtendsKeyword_1_0_2_or_ImplementsKeyword_1_0_1;
 	protected AbstractElementAlias match_DoStatement_SemiParserRuleCall_6_q;
 	protected AbstractElementAlias match_ExportClause_CommaKeyword_1_2_q;
-	protected AbstractElementAlias match_FormalParameterDefaultInitializer_IDENTIFIERTerminalRuleCall_1_1_or___VoidKeyword_1_0_0_INTTerminalRuleCall_1_0_1__;
 	protected AbstractElementAlias match_FunctionDeclaration_SemiParserRuleCall_1_q;
 	protected AbstractElementAlias match_FunctionTypeExpressionOLD_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__;
 	protected AbstractElementAlias match_ImportSpecifiersExceptDefault_CommaKeyword_1_1_2_q;
@@ -60,11 +60,11 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_AnnotationNoAtSign___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAnnotationNoAtSignAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getAnnotationNoAtSignAccess().getRightParenthesisKeyword_1_2()));
 		match_ArrayBindingPattern_CommaKeyword_3_2_0_q = new TokenAlias(false, true, grammarAccess.getArrayBindingPatternAccess().getCommaKeyword_3_2_0());
 		match_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_1()), new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getFunctionKeyword_3()), new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftParenthesisKeyword_5())), new TokenAlias(false, false, grammarAccess.getArrowFunctionTypeExpressionAccess().getLeftParenthesisKeyword_1()));
+		match_BindingElementFragment_EqualsSignKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getBindingElementFragmentAccess().getEqualsSignKeyword_1_0());
 		match_ClassExtendsClause_ExtendsKeyword_0_1_0_1_0_1_or_ImplementsKeyword_0_1_0_1_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getClassExtendsClauseAccess().getExtendsKeyword_0_1_0_1_0_1()), new TokenAlias(false, false, grammarAccess.getClassExtendsClauseAccess().getImplementsKeyword_0_1_0_1_0_0()));
 		match_ClassImplementsList_CommaKeyword_1_0_0_or_ExtendsKeyword_1_0_2_or_ImplementsKeyword_1_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getClassImplementsListAccess().getCommaKeyword_1_0_0()), new TokenAlias(false, false, grammarAccess.getClassImplementsListAccess().getExtendsKeyword_1_0_2()), new TokenAlias(false, false, grammarAccess.getClassImplementsListAccess().getImplementsKeyword_1_0_1()));
 		match_DoStatement_SemiParserRuleCall_6_q = new TokenAlias(false, true, grammarAccess.getDoStatementAccess().getSemiParserRuleCall_6());
 		match_ExportClause_CommaKeyword_1_2_q = new TokenAlias(false, true, grammarAccess.getExportClauseAccess().getCommaKeyword_1_2());
-		match_FormalParameterDefaultInitializer_IDENTIFIERTerminalRuleCall_1_1_or___VoidKeyword_1_0_0_INTTerminalRuleCall_1_0_1__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getFormalParameterDefaultInitializerAccess().getVoidKeyword_1_0_0()), new TokenAlias(false, false, grammarAccess.getFormalParameterDefaultInitializerAccess().getINTTerminalRuleCall_1_0_1())), new TokenAlias(false, false, grammarAccess.getFormalParameterDefaultInitializerAccess().getIDENTIFIERTerminalRuleCall_1_1()));
 		match_FunctionDeclaration_SemiParserRuleCall_1_q = new TokenAlias(false, true, grammarAccess.getFunctionDeclarationAccess().getSemiParserRuleCall_1());
 		match_FunctionTypeExpressionOLD_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_1()), new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getFunctionKeyword_3()), new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftParenthesisKeyword_5())), new TokenAlias(false, false, grammarAccess.getPrimaryTypeExpressionAccess().getLeftParenthesisKeyword_0_0_0_1()));
 		match_ImportSpecifiersExceptDefault_CommaKeyword_1_1_2_q = new TokenAlias(false, true, grammarAccess.getImportSpecifiersExceptDefaultAccess().getCommaKeyword_1_1_2());
@@ -84,37 +84,13 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (ruleCall.getRule() == grammarAccess.getIDENTIFIERRule())
-			return getIDENTIFIERToken(semanticObject, ruleCall, node);
-		else if (ruleCall.getRule() == grammarAccess.getINTRule())
-			return getINTToken(semanticObject, ruleCall, node);
-		else if (ruleCall.getRule() == grammarAccess.getNO_LINE_TERMINATORRule())
+		if (ruleCall.getRule() == grammarAccess.getNO_LINE_TERMINATORRule())
 			return getNO_LINE_TERMINATORToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getSemiRule())
 			return getSemiToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getTemplateExpressionEndRule())
 			return getTemplateExpressionEndToken(semanticObject, ruleCall, node);
 		return "";
-	}
-	
-	/**
-	 * terminal IDENTIFIER:
-	 * 	IDENTIFIER_START IDENTIFIER_PART*;
-	 */
-	protected String getIDENTIFIERToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "";
-	}
-	
-	/**
-	 * terminal INT returns ecore::EBigDecimal:
-	 * 	DECIMAL_INTEGER_LITERAL_FRAGMENT;
-	 */
-	protected String getINTToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "0";
 	}
 	
 	/**
@@ -167,6 +143,8 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_ArrayBindingPattern_CommaKeyword_3_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__.equals(syntax))
 				emit_ArrowFunctionTypeExpression_FunctionTypeExpressionOLD_LeftParenthesisKeyword_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_BindingElementFragment_EqualsSignKeyword_1_0_q.equals(syntax))
+				emit_BindingElementFragment_EqualsSignKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ClassExtendsClause_ExtendsKeyword_0_1_0_1_0_1_or_ImplementsKeyword_0_1_0_1_0_0.equals(syntax))
 				emit_ClassExtendsClause_ExtendsKeyword_0_1_0_1_0_1_or_ImplementsKeyword_0_1_0_1_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ClassImplementsList_CommaKeyword_1_0_0_or_ExtendsKeyword_1_0_2_or_ImplementsKeyword_1_0_1.equals(syntax))
@@ -175,8 +153,6 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_DoStatement_SemiParserRuleCall_6_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ExportClause_CommaKeyword_1_2_q.equals(syntax))
 				emit_ExportClause_CommaKeyword_1_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_FormalParameterDefaultInitializer_IDENTIFIERTerminalRuleCall_1_1_or___VoidKeyword_1_0_0_INTTerminalRuleCall_1_0_1__.equals(syntax))
-				emit_FormalParameterDefaultInitializer_IDENTIFIERTerminalRuleCall_1_1_or___VoidKeyword_1_0_0_INTTerminalRuleCall_1_0_1__(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_FunctionDeclaration_SemiParserRuleCall_1_q.equals(syntax))
 				emit_FunctionDeclaration_SemiParserRuleCall_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_FunctionTypeExpressionOLD_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__.equals(syntax))
@@ -299,6 +275,19 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Ambiguous syntax:
+	 *     '='?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     bindingPattern=BindingPattern (ambiguity) (rule end)
+	 *     declaredTypeRef=TypeRef (ambiguity) (rule end)
+	 *     name=BindingIdentifier (ambiguity) (rule end)
+	 */
+	protected void emit_BindingElementFragment_EqualsSignKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
 	 *     'implements' | 'extends'
 	 *
 	 * This ambiguous syntax occurs at:
@@ -339,17 +328,6 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     namedExports+=ExportSpecifier (ambiguity) '}' Semi (rule end)
 	 */
 	protected void emit_ExportClause_CommaKeyword_1_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     ('void' INT) | IDENTIFIER
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     hasInitializer?='=' (ambiguity) (rule end)
-	 */
-	protected void emit_FormalParameterDefaultInitializer_IDENTIFIERTerminalRuleCall_1_1_or___VoidKeyword_1_0_0_INTTerminalRuleCall_1_0_1__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

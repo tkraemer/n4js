@@ -885,15 +885,8 @@ ruleTFormalParameter:
 
 // Rule FormalParameterDefaultInitializer
 ruleFormalParameterDefaultInitializer:
-	(
-		'='
-		(
-			'void'
-			RULE_INT
-			    |
-			RULE_IDENTIFIER
-		)
-	)?
+	'='
+	?
 ;
 
 // Rule UnionTypeExpressionOLD

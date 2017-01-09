@@ -3017,10 +3017,10 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	/// **
 	// * Default initializers in FunctionTypeExpressions or TFunctions
 	// * are necessary to specify optional formal parameters. Hence, their
-	// * initializer expression is rather uninteresting and limited to either
-	// * 'undefined' and 'void INT'.
+	// * initializer expression is rather uninteresting and limited by validations
+	// * to either 'undefined' and 'void INT'.
 	// * / fragment FormalParameterDefaultInitializer *:
-	//	(hasInitializer?='=' ('void' INT | IDENTIFIER))?;
+	//	hasInitializer?='='?;
 	public TypeExpressionsGrammarAccess.FormalParameterDefaultInitializerElements getFormalParameterDefaultInitializerAccess() {
 		return gaTypeExpressions.getFormalParameterDefaultInitializerAccess();
 	}

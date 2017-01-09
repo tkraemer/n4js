@@ -1200,6 +1200,7 @@ ruleBindingElementFragment:
 	(
 		'='
 		norm1_AssignmentExpression
+		?
 	)?
 ;
 
@@ -1223,6 +1224,7 @@ norm1_BindingElementFragment:
 	(
 		'='
 		norm3_AssignmentExpression
+		?
 	)?
 ;
 
@@ -8531,15 +8533,8 @@ ruleTAnonymousFormalParameter:
 
 // Rule FormalParameterDefaultInitializer
 ruleFormalParameterDefaultInitializer:
-	(
-		'='
-		(
-			'void'
-			RULE_INT
-			    |
-			RULE_IDENTIFIER
-		)
-	)?
+	'='
+	?
 ;
 
 // Rule UnionTypeExpressionOLD

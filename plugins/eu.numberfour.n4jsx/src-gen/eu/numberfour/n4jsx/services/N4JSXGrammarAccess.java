@@ -1148,7 +1148,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//fragment BindingElementFragment <Yield> *:
 	//	(=> bindingPattern=BindingPattern<Yield> | annotations+=Annotation* BogusTypeRefFragment? variadic?='...'?
-	//	name=BindingIdentifier<Yield> ColonSepTypeRef?) ('=' initializer=AssignmentExpression<In=true,Yield>)?;
+	//	name=BindingIdentifier<Yield> ColonSepTypeRef?) ('=' initializer=AssignmentExpression<In=true,Yield>?)?;
 	public N4JSGrammarAccess.BindingElementFragmentElements getBindingElementFragmentAccess() {
 		return gaN4JS.getBindingElementFragmentAccess();
 	}
@@ -3488,10 +3488,10 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	/// **
 	// * Default initializers in FunctionTypeExpressions or TFunctions
 	// * are necessary to specify optional formal parameters. Hence, their
-	// * initializer expression is rather uninteresting and limited to either
-	// * 'undefined' and 'void INT'.
+	// * initializer expression is rather uninteresting and limited by validations
+	// * to either 'undefined' and 'void INT'.
 	// * / fragment FormalParameterDefaultInitializer *:
-	//	(hasInitializer?='=' ('void' INT | IDENTIFIER))?;
+	//	hasInitializer?='='?;
 	public TypeExpressionsGrammarAccess.FormalParameterDefaultInitializerElements getFormalParameterDefaultInitializerAccess() {
 		return gaTypeExpressions.getFormalParameterDefaultInitializerAccess();
 	}

@@ -2196,11 +2196,11 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//fragment BindingElementFragment <Yield> *:
 		//	(=> bindingPattern=BindingPattern<Yield> | annotations+=Annotation* BogusTypeRefFragment? variadic?='...'?
-		//	name=BindingIdentifier<Yield> ColonSepTypeRef?) ('=' initializer=AssignmentExpression<In=true,Yield>)?;
+		//	name=BindingIdentifier<Yield> ColonSepTypeRef?) ('=' initializer=AssignmentExpression<In=true,Yield>?)?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//(=> bindingPattern=BindingPattern<Yield> | annotations+=Annotation* BogusTypeRefFragment? variadic?='...'?
-		//name=BindingIdentifier<Yield> ColonSepTypeRef?) ('=' initializer=AssignmentExpression<In=true,Yield>)?
+		//name=BindingIdentifier<Yield> ColonSepTypeRef?) ('=' initializer=AssignmentExpression<In=true,Yield>?)?
 		public Group getGroup() { return cGroup; }
 		
 		//(=> bindingPattern=BindingPattern<Yield> | annotations+=Annotation* BogusTypeRefFragment? variadic?='...'?
@@ -2240,13 +2240,13 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 		//ColonSepTypeRef?
 		public RuleCall getColonSepTypeRefParserRuleCall_0_1_4() { return cColonSepTypeRefParserRuleCall_0_1_4; }
 		
-		//('=' initializer=AssignmentExpression<In=true,Yield>)?
+		//('=' initializer=AssignmentExpression<In=true,Yield>?)?
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//'='
 		public Keyword getEqualsSignKeyword_1_0() { return cEqualsSignKeyword_1_0; }
 		
-		//initializer=AssignmentExpression<In=true,Yield>
+		//initializer=AssignmentExpression<In=true,Yield>?
 		public Assignment getInitializerAssignment_1_1() { return cInitializerAssignment_1_1; }
 		
 		//AssignmentExpression<In=true,Yield>
@@ -10698,7 +10698,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//fragment BindingElementFragment <Yield> *:
 	//	(=> bindingPattern=BindingPattern<Yield> | annotations+=Annotation* BogusTypeRefFragment? variadic?='...'?
-	//	name=BindingIdentifier<Yield> ColonSepTypeRef?) ('=' initializer=AssignmentExpression<In=true,Yield>)?;
+	//	name=BindingIdentifier<Yield> ColonSepTypeRef?) ('=' initializer=AssignmentExpression<In=true,Yield>?)?;
 	public BindingElementFragmentElements getBindingElementFragmentAccess() {
 		return pBindingElementFragment;
 	}
@@ -13058,10 +13058,10 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	/// **
 	// * Default initializers in FunctionTypeExpressions or TFunctions
 	// * are necessary to specify optional formal parameters. Hence, their
-	// * initializer expression is rather uninteresting and limited to either
-	// * 'undefined' and 'void INT'.
+	// * initializer expression is rather uninteresting and limited by validations
+	// * to either 'undefined' and 'void INT'.
 	// * / fragment FormalParameterDefaultInitializer *:
-	//	(hasInitializer?='=' ('void' INT | IDENTIFIER))?;
+	//	hasInitializer?='='?;
 	public TypeExpressionsGrammarAccess.FormalParameterDefaultInitializerElements getFormalParameterDefaultInitializerAccess() {
 		return gaTypeExpressions.getFormalParameterDefaultInitializerAccess();
 	}

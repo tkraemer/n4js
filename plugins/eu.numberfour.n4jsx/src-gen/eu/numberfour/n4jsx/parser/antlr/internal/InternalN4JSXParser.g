@@ -6978,7 +6978,7 @@ ruleBindingElementFragment[EObject in_current]  returns [EObject current=in_curr
 						afterParserOrEnumRuleCall();
 					}
 				)
-			)
+			)?
 		)?
 	)
 ;
@@ -7122,7 +7122,7 @@ norm1_BindingElementFragment[EObject in_current]  returns [EObject current=in_cu
 						afterParserOrEnumRuleCall();
 					}
 				)
-			)
+			)?
 		)?
 	)
 ;
@@ -35415,34 +35415,15 @@ ruleFormalParameterDefaultInitializer[EObject in_current]  returns [EObject curr
 }:
 	(
 		(
-			(
-				lv_hasInitializer_0_0=EqualsSign
-				{
-					newLeafNode(lv_hasInitializer_0_0, grammarAccess.getFormalParameterDefaultInitializerAccess().getHasInitializerEqualsSignKeyword_0_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getFormalParameterDefaultInitializerRule());
-					}
-					setWithLastConsumed($current, "hasInitializer", true, "=");
-				}
-			)
-		)
-		(
-			(
-				otherlv_1=Void
-				{
-					newLeafNode(otherlv_1, grammarAccess.getFormalParameterDefaultInitializerAccess().getVoidKeyword_1_0_0());
-				}
-				this_INT_2=RULE_INT
-				{
-					newLeafNode(this_INT_2, grammarAccess.getFormalParameterDefaultInitializerAccess().getINTTerminalRuleCall_1_0_1());
-				}
-			)
-			    |
-			this_IDENTIFIER_3=RULE_IDENTIFIER
+			lv_hasInitializer_0_0=EqualsSign
 			{
-				newLeafNode(this_IDENTIFIER_3, grammarAccess.getFormalParameterDefaultInitializerAccess().getIDENTIFIERTerminalRuleCall_1_1());
+				newLeafNode(lv_hasInitializer_0_0, grammarAccess.getFormalParameterDefaultInitializerAccess().getHasInitializerEqualsSignKeyword_0());
+			}
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getFormalParameterDefaultInitializerRule());
+				}
+				setWithLastConsumed($current, "hasInitializer", true, "=");
 			}
 		)
 	)?

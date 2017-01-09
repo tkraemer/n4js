@@ -1298,6 +1298,7 @@ class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRel
 		if (variadic) strb.append("...");
 		strb.append(name);
 		if (typeRef!==null) strb.append(": ").append(typeRef.typeRefAsString);
+		if (optional) strb.append("=");
 		return strb.toString();
 	}
 //	op String getFormalParameterAsHTML() {

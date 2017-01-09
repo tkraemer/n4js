@@ -343,6 +343,10 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 			String _typeRefAsString = _typeRef_1.getTypeRefAsString();
 			_append.append(_typeRefAsString);
 		}
+		boolean _isOptional = this.isOptional();
+		if (_isOptional) {
+			strb.append("=");
+		}
 		return strb.toString();
 	}
 

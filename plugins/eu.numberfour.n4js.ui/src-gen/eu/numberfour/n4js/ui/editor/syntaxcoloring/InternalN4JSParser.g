@@ -3171,7 +3171,7 @@ ruleBindingElementFragment
 					announce($InitializerAssignmentExpressionParserRuleCall_1_1_0.start, $InitializerAssignmentExpressionParserRuleCall_1_1_0.stop, grammarAccess.getBindingElementFragmentAccess().getInitializerAssignment_1_1());
 				}
 			)
-		)
+		)?
 	)?
 )
 ;
@@ -3237,7 +3237,7 @@ norm1_BindingElementFragment
 					announce($InitializerAssignmentExpressionParserRuleCall_1_1_0.start, $InitializerAssignmentExpressionParserRuleCall_1_1_0.stop, grammarAccess.getBindingElementFragmentAccess().getInitializerAssignment_1_1());
 				}
 			)
-		)
+		)?
 	)?
 )
 ;
@@ -20003,25 +20003,10 @@ ruleFormalParameterDefaultInitializer
 }:
 (
 	(
-		(
-			HasInitializerEqualsSignKeyword_0_0=EqualsSign
-			 {
-				announce($HasInitializerEqualsSignKeyword_0_0, grammarAccess.getFormalParameterDefaultInitializerAccess().getHasInitializerEqualsSignKeyword_0_0());
-			}
-		)
-	)
-	(
-		(
-			VoidKeyword_1_0_0=Void
-			 {
-				announce($VoidKeyword_1_0_0, grammarAccess.getFormalParameterDefaultInitializerAccess().getVoidKeyword_1_0_0());
-			}
-			INTTerminalRuleCall_1_0_1=RULE_INT
-			{ announce($INTTerminalRuleCall_1_0_1, grammarAccess.getFormalParameterDefaultInitializerAccess().getINTTerminalRuleCall_1_0_1()); }
-		)
-		    |
-		IDENTIFIERTerminalRuleCall_1_1=RULE_IDENTIFIER
-		{ announce($IDENTIFIERTerminalRuleCall_1_1, grammarAccess.getFormalParameterDefaultInitializerAccess().getIDENTIFIERTerminalRuleCall_1_1()); }
+		HasInitializerEqualsSignKeyword_0=EqualsSign
+		 {
+			announce($HasInitializerEqualsSignKeyword_0, grammarAccess.getFormalParameterDefaultInitializerAccess().getHasInitializerEqualsSignKeyword_0());
+		}
 	)
 )?
 ;

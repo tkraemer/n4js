@@ -145,7 +145,7 @@ TFormalParameter:
  * to either 'undefined' and 'void INT'.
  */
 fragment FormalParameterDefaultInitializer*:
-	(hasInitializer?='=' (('void' INT) | IDENTIFIER))?
+	hasInitializer?='='?
 ;
 
 
