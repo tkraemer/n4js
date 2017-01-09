@@ -46,6 +46,7 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
+import eu.numberfour.n4js.n4JS.YieldExpression
 
 /**
  * Main processor used during {@link N4JSPostProcessor post-processing} of N4JS resources. It controls the overall
@@ -258,6 +259,7 @@ public class ASTProcessor extends AbstractProcessor {
 				|| node instanceof N4GetterDeclaration || node instanceof N4SetterDeclaration
 				|| (node instanceof PropertyNameValuePair && (node as PropertyNameValuePair).expression instanceof FunctionExpression)
 				|| node instanceof PropertyGetterDeclaration || node instanceof PropertySetterDeclaration
+				|| (node instanceof Expression && node.eContainer instanceof YieldExpression)
 			)) {
 				return true;
 			}
