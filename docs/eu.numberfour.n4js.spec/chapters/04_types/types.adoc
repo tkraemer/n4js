@@ -556,6 +556,7 @@ We thus obtain the following defintion:
 For two types $T, S$ of which at least one is a type variable, we define
 
 * if both _T_ and $S$ are type variables:
++
 [math]
 ++++
 \infer{T <: S}{T = S}
