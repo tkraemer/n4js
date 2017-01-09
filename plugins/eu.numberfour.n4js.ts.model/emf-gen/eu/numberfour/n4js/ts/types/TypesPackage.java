@@ -1712,13 +1712,22 @@ public interface TypesPackage extends EPackage {
 	int TFUNCTION__DECLARED_ASYNC = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 6;
 
 	/**
+	 * The feature id for the '<em><b>Declared Generator</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFUNCTION__DECLARED_GENERATOR = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 7;
+
+	/**
 	 * The feature id for the '<em><b>Constructor</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TFUNCTION__CONSTRUCTOR = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 7;
+	int TFUNCTION__CONSTRUCTOR = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 8;
 
 	/**
 	 * The number of structural features of the '<em>TFunction</em>' class.
@@ -1727,7 +1736,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFUNCTION_FEATURE_COUNT = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 8;
+	int TFUNCTION_FEATURE_COUNT = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -7196,6 +7205,15 @@ public interface TypesPackage extends EPackage {
 	int TMETHOD__DECLARED_ASYNC = TFUNCTION__DECLARED_ASYNC;
 
 	/**
+	 * The feature id for the '<em><b>Declared Generator</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMETHOD__DECLARED_GENERATOR = TFUNCTION__DECLARED_GENERATOR;
+
+	/**
 	 * The feature id for the '<em><b>Constructor</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7717,6 +7735,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_METHOD__DECLARED_ASYNC = TMETHOD__DECLARED_ASYNC;
+
+	/**
+	 * The feature id for the '<em><b>Declared Generator</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_METHOD__DECLARED_GENERATOR = TMETHOD__DECLARED_GENERATOR;
 
 	/**
 	 * The feature id for the '<em><b>Constructor</b></em>' attribute.
@@ -11654,6 +11681,17 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTFunction_DeclaredAsync();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TFunction#isDeclaredGenerator <em>Declared Generator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Declared Generator</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TFunction#isDeclaredGenerator()
+	 * @see #getTFunction()
+	 * @generated
+	 */
+	EAttribute getTFunction_DeclaredGenerator();
+
+	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TFunction#isConstructor <em>Constructor</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14190,6 +14228,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TFUNCTION__DECLARED_ASYNC = eINSTANCE.getTFunction_DeclaredAsync();
+
+		/**
+		 * The meta object literal for the '<em><b>Declared Generator</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TFUNCTION__DECLARED_GENERATOR = eINSTANCE.getTFunction_DeclaredGenerator();
 
 		/**
 		 * The meta object literal for the '<em><b>Constructor</b></em>' attribute feature.

@@ -26,6 +26,8 @@ import org.eclipse.xtext.builder.preferences.BuilderPreferenceAccess;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.generator.IGenerator;
 import org.eclipse.xtext.generator.IOutputConfigurationProvider;
+import org.eclipse.xtext.ide.editor.contentassist.antlr.FollowElementComputer;
+import org.eclipse.xtext.ide.editor.contentassist.antlr.IContentAssistParser;
 import org.eclipse.xtext.resource.ILocationInFileProvider;
 import org.eclipse.xtext.resource.SynchronizedXtextResourceSet;
 import org.eclipse.xtext.resource.XtextResourceSet;
@@ -38,8 +40,6 @@ import org.eclipse.xtext.ui.editor.contentassist.FQNPrefixMatcher;
 import org.eclipse.xtext.ui.editor.contentassist.FQNPrefixMatcher.LastSegmentFinder;
 import org.eclipse.xtext.ui.editor.contentassist.IContentAssistantFactory;
 import org.eclipse.xtext.ui.editor.contentassist.PrefixMatcher;
-import org.eclipse.xtext.ui.editor.contentassist.antlr.IContentAssistParser;
-import org.eclipse.xtext.ui.editor.contentassist.antlr.ParserBasedContentAssistContextFactory;
 import org.eclipse.xtext.ui.editor.doubleClicking.DoubleClickStrategyProvider;
 import org.eclipse.xtext.ui.editor.formatting2.ContentFormatter;
 import org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider;
@@ -85,6 +85,8 @@ import eu.numberfour.n4js.ui.containers.N4JSAllContainersStateProvider;
 import eu.numberfour.n4js.ui.contentassist.ContentAssistContextFactory;
 import eu.numberfour.n4js.ui.contentassist.ContentAssistantFactory;
 import eu.numberfour.n4js.ui.contentassist.CustomN4JSParser;
+import eu.numberfour.n4js.ui.contentassist.N4JSFollowElementCalculator;
+import eu.numberfour.n4js.ui.contentassist.PatchedFollowElementComputer;
 import eu.numberfour.n4js.ui.contentassist.SimpleLastSegmentFinder;
 import eu.numberfour.n4js.ui.editor.AlwaysAddNatureCallback;
 import eu.numberfour.n4js.ui.editor.N4JSDirtyStateEditorSupport;
@@ -138,6 +140,9 @@ public class N4JSUiModule extends eu.numberfour.n4js.ui.AbstractN4JSUiModule {
 		N4jsUiLoggingInitializer.init();
 	}
 
+	/**
+	 * Bind the {@link IXtextBuilderParticipant} being aware of generating the Javascript files in the output directory.
+	 */
 	@Override
 	public Class<? extends IXtextBuilderParticipant> bindIXtextBuilderParticipant() {
 		return N4JSBuilderParticipant.class;
@@ -329,8 +334,23 @@ public class N4JSUiModule extends eu.numberfour.n4js.ui.AbstractN4JSUiModule {
 	/**
 	 * Bind the customized content assist parser infrastructure.
 	 */
-	public Class<? extends ParserBasedContentAssistContextFactory.StatefulFactory> bindStatefulParserBasedContentAssistContextFactory() {
+	public Class<? extends org.eclipse.xtext.ide.editor.contentassist.antlr.ContentAssistContextFactory> bindContentAssistContextFactory() {
 		return ContentAssistContextFactory.class;
+	}
+
+	/**
+	 * Bind the customized content assist follow element calculator that drops parser rules of "bogus" language parts.
+	 */
+	public Class<? extends org.eclipse.xtext.ide.editor.contentassist.antlr.FollowElementCalculator> bindFollowElementCalculator() {
+		return N4JSFollowElementCalculator.class;
+	}
+
+	/**
+	 * Remove this binding once the change of https://github.com/eclipse/xtext-core/pull/167 is available in the target
+	 * platform.
+	 */
+	public Class<? extends FollowElementComputer> bindFollowElementComputer() {
+		return PatchedFollowElementComputer.class;
 	}
 
 	@Override

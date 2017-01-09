@@ -17,7 +17,6 @@ import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.ExportableElement
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FormalParameter
-import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.ImportDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassDefinition
 import eu.numberfour.n4js.n4JS.N4ClassExpression
@@ -28,11 +27,8 @@ import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.PropertyNameOwner
 import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.n4JS.TaggedTemplateString
-import eu.numberfour.n4js.n4JS.YieldExpression
-import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TEnumLiteral
-import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.validation.ASTStructureValidator
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
@@ -98,18 +94,6 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 		if(fpar.initializer!==null) {
 			unsupported("default initializers for formal parameters", fpar.initializer);
 		}
-	}
-
-
-	@Check
-	def void checkGeneratorFunction(FunctionDefinition f) {
-		if(f.isGenerator) {
-			unsupported("generator functions", f, f.nameFeature);
-		}
-	}
-	@Check
-	def void checkYield(YieldExpression yieldExpr) {
-		unsupported("yield", yieldExpr);
 	}
 
 
@@ -227,13 +211,6 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 
 	def private Expression getComputedNameFrom(PropertyNameOwner eobj) {
 		return eobj?.declaredName?.expression;
-	}
-
-	def private EStructuralFeature getNameFeature(EObject eobj) {
-		switch(eobj) {
-			IdentifiableElement: TypesPackage.eINSTANCE.identifiableElement_Name
-			default: eobj.eClass.EAllAttributes.filter[name=='name'].head
-		}
 	}
 
 	/**

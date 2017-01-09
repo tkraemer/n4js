@@ -100,13 +100,11 @@ const nomnomOptions: Object = {
         help: "Test catalog (JSON) to be used. Option --compile will write the file, switches to temp file in case of URL."
     },
     targetPlatformFile: {
-        abbr: "tp",
         metavar: "PATH",
         transform: resolvePath,
         help: "NPM dependency definitions."
     },
     targetPlatformInstallLocation: {
-        abbr: "tl",
         metavar: "PATH",
         transform: resolvePath,
         help: "NPM dependencies install location."
@@ -131,6 +129,11 @@ const nomnomOptions: Object = {
         flag: true,
         abbr: "d",
         help: "Debug output."
+    },
+    inspect: {
+        type: "number",
+        metavar: "PORT",
+        help: "Attach V8 Inspector with --debug-brk."
     }
 };
 

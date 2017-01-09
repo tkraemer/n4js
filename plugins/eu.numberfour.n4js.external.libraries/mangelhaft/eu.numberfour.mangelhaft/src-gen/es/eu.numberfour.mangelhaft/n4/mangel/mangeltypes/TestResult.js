@@ -16,7 +16,7 @@
 		return {
 			setters: [],
 			execute: function() {
-				$makeClass(TestResult, Object, [], {
+				$makeClass(TestResult, N4Object, [], {
 					testStatus: {
 						value: undefined,
 						writable: true

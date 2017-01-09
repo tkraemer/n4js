@@ -22,14 +22,14 @@
 				}
 			],
 			execute: function() {
-				$makeClass(TestSpy, Object, [], {
+				$makeClass(TestSpy, N4Object, [], {
 					reset: {
 						value: function reset___n4() {
-							let field, sig;
+							let field, sig, that = this;
 							;
 							for(field in this) {
 								if (this.hasOwnProperty(field)) {
-									sig = (this)[field];
+									sig = that[field];
 									sig.removeAll().forget();
 								}
 							}

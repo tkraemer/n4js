@@ -5,7 +5,7 @@ Bundle-Vendor: NumberFour AG
 Bundle-SymbolicName: eu.numberfour.n4js.common.unicode
 Bundle-Version: 0.0.1.qualifier
 Require-Bundle: org.eclipse.xtext;visibility:=reexport,
- org.eclipse.xtext.generator;resolution:=optional,
+ org.eclipse.xtext.xtext.generator;resolution:=optional,
  org.apache.commons.logging;bundle-version="1.0.4";resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
@@ -13,9 +13,10 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.eclipse.xtext.util,
  eu.numberfour.n4js.releng.utils;resolution:=optional,
  org.eclipse.equinox.common;bundle-version="3.7.0";resolution:=optional,
- org.objectweb.asm;bundle-version="5.0.1";resolution:=optional
+ org.objectweb.asm;bundle-version="5.0.1";resolution:=optional,
+ com.ibm.icu
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: eu.numberfour.n4js.common.unicode,
- eu.numberfour.n4js.common.unicode.services,
- eu.numberfour.n4js.common.unicode.parseTreeConstruction
+ eu.numberfour.n4js.common.unicode.serializer,
+ eu.numberfour.n4js.common.unicode.services

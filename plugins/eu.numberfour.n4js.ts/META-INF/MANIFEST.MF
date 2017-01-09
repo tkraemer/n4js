@@ -7,7 +7,7 @@ Bundle-ClassPath: .
 Bundle-SymbolicName: eu.numberfour.n4js.ts;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;visibility:=reexport,
- org.eclipse.xtext.generator;resolution:=optional,
+ org.eclipse.xtext.xtext.generator;resolution:=optional,
  org.apache.commons.logging;bundle-version="1.0.4";resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
@@ -38,7 +38,6 @@ Export-Package: eu.numberfour.n4js.ts,
  eu.numberfour.n4js.ts.formatting2,
  eu.numberfour.n4js.ts.generator,
  eu.numberfour.n4js.ts.naming,
- eu.numberfour.n4js.ts.parseTreeConstruction,
  eu.numberfour.n4js.ts.parser.antlr,
  eu.numberfour.n4js.ts.parser.antlr.internal,
  eu.numberfour.n4js.ts.parser.antlr.lexer,

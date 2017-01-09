@@ -58,7 +58,7 @@
 					});
 					return metaClass;
 				});
-				$makeClass(FIXME1, Object, [
+				$makeClass(FIXME1, N4Object, [
 					IFIXME
 				], {
 					logStr: {
@@ -125,7 +125,7 @@
 					});
 					return metaClass;
 				});
-				$makeClass(FIXME2, Object, [
+				$makeClass(FIXME2, N4Object, [
 					IFIXME2
 				], {
 					logStr: {

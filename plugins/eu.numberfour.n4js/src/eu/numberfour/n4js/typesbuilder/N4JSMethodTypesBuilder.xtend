@@ -54,6 +54,7 @@ package class N4JSMethodTypesBuilder extends AbstractFunctionDefinitionTypesBuil
 		methodType.declaredOverride = AnnotationDefinition.OVERRIDE.hasAnnotation(methodDecl);
 		methodType.constructor = methodDecl.constructor
 		methodType.declaredAsync = methodDecl.async // TODO change to declaredAsync one the annotation is gone
+		methodType.declaredGenerator = methodDecl.generator
 
 		val providesDefaultImpl = AnnotationDefinition.PROVIDES_DEFAULT_IMPLEMENTATION.hasAnnotation(methodDecl);
 		methodType.hasNoBody = methodDecl.body===null && !providesDefaultImpl;

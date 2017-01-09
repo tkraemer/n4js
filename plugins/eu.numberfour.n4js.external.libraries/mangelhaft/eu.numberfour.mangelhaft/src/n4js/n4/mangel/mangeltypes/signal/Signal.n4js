@@ -207,7 +207,7 @@ function validateListener(listener: Function, fnName: string) {
             executeNext = false; //default state
 
             if (bindings[n - 1] && this.shouldPropagate) {
-                let res = await bindings[n - 1].execute(paramsArr);
+                let res = await Promise.resolve(bindings[n - 1].execute(paramsArr));
                 executeNext = res !== false;
             }
        }

@@ -1,0 +1,93 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "react.n4js" {}
+	}
+
+	END_SETUP
+ */
+
+
+/* XPECT output ---
+<==
+stdout:
+simple short
+ {
+  "name": "div",
+  "props": null,
+  "children": []
+}
+simple full
+ {
+  "name": "div",
+  "props": null,
+  "children": []
+}
+nested
+ {
+  "name": "div",
+  "props": {
+    "prop1": true,
+    "prop2": "hello",
+    "prop3": 42
+  },
+  "children": [
+    42,
+    {
+      "name": "a",
+      "props": null,
+      "children": [
+        42
+      ]
+    },
+    42,
+    {
+      "name": "p",
+      "props": null,
+      "children": []
+    }
+  ]
+}
+spread
+ {
+  "name": "div",
+  "props": {
+    "prop0": "0",
+    "prop3": true,
+    "prop6": true,
+    "prop1": "hi",
+    "prop2": 42,
+    "prop4": "hi",
+    "prop5": 42
+  },
+  "children": []
+}
+stderr:
+==>
+--- */
+
+
+
+export public function logElements(): void {
+	let ss = <div/>
+	console.log('simple short\n', JSON.stringify(ss, null, '  '))
+	let sh = <div></div>
+	console.log('simple full\n', JSON.stringify(sh, null, '  '))
+	let x = 42;
+	let nested =
+		<div prop1 prop2='hello' prop3={x}>
+			{x}<a>
+				{x}
+			  </a>{x}
+			  <p/>
+		</div>
+	console.log('nested\n', JSON.stringify(nested, null, '  '))
+	let propsA = { prop1: 'hi', prop2: 42 };
+	let propsB = { prop4: 'hi', prop5: 42 };
+	let sx =  <div prop0='0' {...propsA} prop3 {...propsB} prop6 />
+	console.log('spread\n', JSON.stringify(sx, null, '  '))
+};
+
+
+logElements()

@@ -1,8 +1,8 @@
 {
 "version":3,
 "file":"NodeTestOptions.js",
-"lineCount":132,
-"mappings":"A;;;EAUA,gF;;MAAS,e;EAKT;;;;;;;;;;;;I;;;;;KALS,kK;;;;IAKoB;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+"lineCount":142,
+"mappings":"A;;;EAUA,gF;;MAAS,e;EAKT;;;;;;;;;;;;;I;;;;;KALS,kK;;;;IAKoB;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
 "sources":["/sources/eu.numberfour.mangelhaft.runner.node/n4/mangel/runner/node/NodeTestOptions.n4js"],
 "names":[]
 }

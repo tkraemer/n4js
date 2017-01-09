@@ -15,6 +15,7 @@ import eu.numberfour.n4js.n4JS.TypeDefiningElement;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
+import eu.numberfour.n4js.ts.types.TFunction;
 import eu.numberfour.n4js.ts.types.Type;
 
 import java.lang.reflect.InvocationTargetException;
@@ -290,6 +291,20 @@ public abstract class FunctionDefinitionImpl extends FunctionOrFieldAccessorImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public TFunction getDefinedFunction() {
+		final Type defType = this.getDefinedType();
+		TFunction _xifexpression = null;
+		if ((defType instanceof TFunction)) {
+			_xifexpression = ((TFunction)defType);
+		}
+		return _xifexpression;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -465,6 +480,8 @@ public abstract class FunctionDefinitionImpl extends FunctionOrFieldAccessorImpl
 		switch (operationID) {
 			case N4JSPackage.FUNCTION_DEFINITION___IS_ASYNC:
 				return isAsync();
+			case N4JSPackage.FUNCTION_DEFINITION___GET_DEFINED_FUNCTION:
+				return getDefinedFunction();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

@@ -27,6 +27,11 @@
 				stack: ""
 			}, msg = spec.message ? spec.message : "";
 			;
+			try {
+				if (!(spec.actual == null && spec.expected == null && spec.operator == null)) {
+					msg += (" (" + String(spec.actual) + " not " + String(spec.operator) + " " + String(spec.expected) + " )");
+				}
+			} catch(e) {}
 			var err = new Error(msg);
 			this.message = err.message;
 			this.name = this.constructor.n4type.name;

@@ -52,6 +52,7 @@ import eu.numberfour.n4js.transpiler.utils.TranspilerUtils;
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.TClassifier;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
+import eu.numberfour.n4jsx.transpiler.utils.JSXBackendHelper;
 
 /**
  * Abstract base class for {@link Transformation}s and {@link TransformationAssistant}s, containing convenience delegate
@@ -70,6 +71,8 @@ public abstract class TranspilerComponent {
 	private TranspilerState state;
 	@Inject
 	private PreparationStep preparationStep;
+	@Inject
+	private JSXBackendHelper jsx;
 
 	/**
 	 * Default constructor.
@@ -640,10 +643,10 @@ public abstract class TranspilerComponent {
 		return getSymbolTableEntryInternal("exports", true);
 	}
 
-	/** "object" - retrieve the internal symbol table entry for the symbol "object" */
-	public SymbolTableEntryInternal steFor_object() {
+	/** "Object" - retrieve the internal symbol table entry for the symbol "Object" */
+	public SymbolTableEntryInternal steFor_Object() {
 
-		return getSymbolTableEntryInternal("object", true);
+		return getSymbolTableEntryInternal("Object", true);
 	}
 
 	/** "undefined" - retrieve the internal symbol table entry for the symbol "undefined" */
@@ -658,18 +661,24 @@ public abstract class TranspilerComponent {
 		return getSymbolTableEntryInternal("require", true);
 	}
 
+	/** "assign" - retrieve the internal symbol table entry for the symbol "assign" */
+	public SymbolTableEntryInternal steFor_assign() {
+
+		return getSymbolTableEntryInternal("assign", true);
+	}
+
 	// ################################################################################################################
 	// JSX RELATED THINGS (TODO IDE-2416 remove this from n4js transpiler)
 
 	/** "React" - retrieve the internal symbol table entry for the symbol "React" */
 	public SymbolTableEntryInternal steFor_React() {
 
-		return getSymbolTableEntryInternal("React", true);
+		return getSymbolTableEntryInternal(jsx.getBackendFacadeName(), true);
 	}
 
 	/** "createElement" - retrieve the internal symbol table entry for the symbol "createElement" */
 	public SymbolTableEntryInternal steFor_createElement() {
 
-		return getSymbolTableEntryInternal("createElement", true);
+		return getSymbolTableEntryInternal(jsx.getBackendElementFactoryMethodName(), true);
 	}
 }

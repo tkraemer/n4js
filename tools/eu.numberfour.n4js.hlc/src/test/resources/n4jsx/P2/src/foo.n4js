@@ -1,0 +1,4 @@
+import { baz } from "bar";
+
+console.log('hello from foo.n4js');
+console.log(baz);

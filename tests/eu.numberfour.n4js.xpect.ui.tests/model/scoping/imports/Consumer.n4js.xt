@@ -30,7 +30,7 @@ import { Class1 } from "scoping/imports/MultipleClasses"
 /* XPECT scopeWithResource at 'class1 : |Class1' ---
 Array - builtin_js.n4ts, Boolean - builtin_js.n4ts,
 Class1 - MultipleClasses.n4js, Class2 - T, Date - builtin_js.n4ts, Error - builtin_js.n4ts,
-EvalError - builtin_js.n4ts, Function - builtin_js.n4ts,
+EvalError - builtin_js.n4ts, Function - builtin_js.n4ts, Generator - builtin_js.n4ts,
 Iterable - builtin_js.n4ts,
 Iterable2 - builtin_n4.n4ts, Iterable3 - builtin_n4.n4ts, Iterable4 - builtin_n4.n4ts, Iterable5 - builtin_n4.n4ts,
 Iterable6 - builtin_n4.n4ts, Iterable7 - builtin_n4.n4ts, Iterable8 - builtin_n4.n4ts, Iterable9 - builtin_n4.n4ts,

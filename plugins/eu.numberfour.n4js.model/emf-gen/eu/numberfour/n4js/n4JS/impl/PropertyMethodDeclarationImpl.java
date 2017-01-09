@@ -34,6 +34,7 @@ import eu.numberfour.n4js.n4JS.TypedElement;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
+import eu.numberfour.n4js.ts.types.TFunction;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TStructMethod;
 import eu.numberfour.n4js.ts.types.Type;
@@ -85,7 +86,6 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure0;
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyMethodDeclarationImpl#getTypeVars <em>Type Vars</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyMethodDeclarationImpl#getDeclaredTypeRef <em>Declared Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyMethodDeclarationImpl#getBogusTypeRef <em>Bogus Type Ref</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.PropertyMethodDeclarationImpl#getDefinedMethod <em>Defined Method</em>}</li>
  * </ul>
  *
  * @generated
@@ -210,16 +210,6 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 	 * @ordered
 	 */
 	protected TypeRef bogusTypeRef;
-
-	/**
-	 * The cached value of the '{@link #getDefinedMethod() <em>Defined Method</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDefinedMethod()
-	 * @generated
-	 * @ordered
-	 */
-	protected TStructMethod definedMethod;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -564,46 +554,9 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TStructMethod getDefinedMethod() {
-		if (definedMethod != null && definedMethod.eIsProxy()) {
-			InternalEObject oldDefinedMethod = (InternalEObject)definedMethod;
-			definedMethod = (TStructMethod)eResolveProxy(oldDefinedMethod);
-			if (definedMethod != oldDefinedMethod) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, N4JSPackage.PROPERTY_METHOD_DECLARATION__DEFINED_METHOD, oldDefinedMethod, definedMethod));
-			}
-		}
-		return definedMethod;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TStructMethod basicGetDefinedMethod() {
-		return definedMethod;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setDefinedMethod(TStructMethod newDefinedMethod) {
-		TStructMethod oldDefinedMethod = definedMethod;
-		definedMethod = newDefinedMethod;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.PROPERTY_METHOD_DECLARATION__DEFINED_METHOD, oldDefinedMethod, definedMethod));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public TStructMethod getDefinedMember() {
-		return this.getDefinedMethod();
+		Type _definedType = this.getDefinedType();
+		return ((TStructMethod) _definedType);
 	}
 
 	/**
@@ -676,6 +629,20 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 	 */
 	public boolean isAsync() {
 		return this.isDeclaredAsync();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TFunction getDefinedFunction() {
+		final Type defType = this.getDefinedType();
+		TFunction _xifexpression = null;
+		if ((defType instanceof TFunction)) {
+			_xifexpression = ((TFunction)defType);
+		}
+		return _xifexpression;
 	}
 
 	/**
@@ -776,9 +743,6 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 				return getDeclaredTypeRef();
 			case N4JSPackage.PROPERTY_METHOD_DECLARATION__BOGUS_TYPE_REF:
 				return getBogusTypeRef();
-			case N4JSPackage.PROPERTY_METHOD_DECLARATION__DEFINED_METHOD:
-				if (resolve) return getDefinedMethod();
-				return basicGetDefinedMethod();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -824,9 +788,6 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 			case N4JSPackage.PROPERTY_METHOD_DECLARATION__BOGUS_TYPE_REF:
 				setBogusTypeRef((TypeRef)newValue);
 				return;
-			case N4JSPackage.PROPERTY_METHOD_DECLARATION__DEFINED_METHOD:
-				setDefinedMethod((TStructMethod)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -869,9 +830,6 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 			case N4JSPackage.PROPERTY_METHOD_DECLARATION__BOGUS_TYPE_REF:
 				setBogusTypeRef((TypeRef)null);
 				return;
-			case N4JSPackage.PROPERTY_METHOD_DECLARATION__DEFINED_METHOD:
-				setDefinedMethod((TStructMethod)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -904,8 +862,6 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 				return declaredTypeRef != null;
 			case N4JSPackage.PROPERTY_METHOD_DECLARATION__BOGUS_TYPE_REF:
 				return bogusTypeRef != null;
-			case N4JSPackage.PROPERTY_METHOD_DECLARATION__DEFINED_METHOD:
-				return definedMethod != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1065,6 +1021,7 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 		if (baseClass == FunctionDefinition.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.FUNCTION_DEFINITION___IS_ASYNC: return N4JSPackage.PROPERTY_METHOD_DECLARATION___IS_ASYNC;
+				case N4JSPackage.FUNCTION_DEFINITION___GET_DEFINED_FUNCTION: return N4JSPackage.PROPERTY_METHOD_DECLARATION___GET_DEFINED_FUNCTION;
 				default: return -1;
 			}
 		}
@@ -1113,6 +1070,8 @@ public class PropertyMethodDeclarationImpl extends AnnotablePropertyAssignmentIm
 				return isStatic();
 			case N4JSPackage.PROPERTY_METHOD_DECLARATION___IS_ASYNC:
 				return isAsync();
+			case N4JSPackage.PROPERTY_METHOD_DECLARATION___GET_DEFINED_FUNCTION:
+				return getDefinedFunction();
 			case N4JSPackage.PROPERTY_METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE:
 				return getLocalArgumentsVariable();
 			case N4JSPackage.PROPERTY_METHOD_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR:

@@ -143,7 +143,11 @@ public class N4JSRuntimeCore extends AbstractN4JSCore implements IN4JSRuntimeCor
 		}
 	}
 
-	private boolean isN4File(final URI uri) {
+	/**
+	 * Return true if the URI is a recognized N4 file. Sub-languages should override this method to provide additional
+	 * file extensions!
+	 */
+	protected boolean isN4File(final URI uri) {
 		final String ext = uri != null ? uri.fileExtension() : null;
 		return N4JSGlobals.ALL_N4_FILE_EXTENSIONS.contains(ext);
 	}

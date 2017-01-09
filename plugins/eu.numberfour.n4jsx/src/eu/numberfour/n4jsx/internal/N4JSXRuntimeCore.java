@@ -18,6 +18,7 @@ import com.google.inject.Singleton;
 import eu.numberfour.n4js.internal.FileBasedWorkspace;
 import eu.numberfour.n4js.internal.N4JSModel;
 import eu.numberfour.n4js.internal.N4JSRuntimeCore;
+import eu.numberfour.n4jsx.N4JSXGlobals;
 import eu.numberfour.n4jsx.validation.N4JSXResourceType;
 
 /**
@@ -50,5 +51,15 @@ public class N4JSXRuntimeCore extends N4JSRuntimeCore {
 			return false;
 		}
 		return super.isJsFile(uri);
+	}
+
+	/**
+	 * Return true if the URI is a recognized N4 file. Provide .n4jsx and .jsx recognized file extensions file
+	 * extensions!
+	 */
+	@Override
+	protected boolean isN4File(final URI uri) {
+		final String ext = uri != null ? uri.fileExtension() : null;
+		return N4JSXGlobals.ALL_JSX_FILE_EXTENSIONS.contains(ext) || super.isN4File(uri);
 	}
 }

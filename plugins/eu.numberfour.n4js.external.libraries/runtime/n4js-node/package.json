@@ -19,15 +19,20 @@
   "bin": {
     "n4js": "./n4js-cli.js"
   },
+  "main": "./index.js",
+  "browser": "./browser.js",
+  "react-native": "./react-native.js",
   "dependencies": {
-    "node-fetch": "^1.4.0",
-    "systemjs": "^0.19.24"
+    "node-fetch": "^1.6.3",
+    "systemjs": "^0.19.39"
   },
   "files": [
     "manifest.n4mf",
     "n4js-cli.js",
     "run.js",
     "index.js",
+    "browser.js",
+    "react-native.js",
     "rt"
   ]
 }

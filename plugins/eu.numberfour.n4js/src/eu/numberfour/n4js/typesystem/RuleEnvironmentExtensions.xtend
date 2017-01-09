@@ -639,6 +639,16 @@ class RuleEnvironmentExtensions {
 		createTypeRef(G.promiseType, typeArgs);
 	}
 
+	/* Returns built-in type {@code Generator<Y,R,N>} */
+	public def static generatorType(RuleEnvironment G) {
+		G.getPredefinedTypes().builtInTypeScope.generatorType
+	}
+
+	/* Returns newly created reference to built-in type {@code Generator<Y,R,N>} */
+	public def static generatorTypeRef(RuleEnvironment G, TypeArgument... typeArgs) {
+		createTypeRef(G.generatorType, typeArgs);
+	}
+
 	/**
 	 * Returns true if the given type is one of the {@link BuiltInTypeScope#isNumeric(Type) numeric} primitive
 	 * built-in types.

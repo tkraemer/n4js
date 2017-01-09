@@ -19,6 +19,7 @@ import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.ReturnStatement;
 import eu.numberfour.n4js.n4JS.Statement;
 import eu.numberfour.n4js.n4JS.VariableEnvironmentElement;
+import eu.numberfour.n4js.n4JS.YieldExpression;
 
 import eu.numberfour.n4js.utils.EcoreUtilN4;
 
@@ -105,6 +106,74 @@ public class BlockImpl extends StatementImpl implements Block {
 	 */
 	public boolean appliesOnlyToBlockScopedElements() {
 		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Iterator<Expression> getAllExpressions() {
+		final Predicate<EObject> _function = new Predicate<EObject>() {
+			public boolean apply(final EObject it) {
+				return (!(it instanceof FunctionDefinition));
+			}
+		};
+		TreeIterator<EObject> _allContentsFiltered = EcoreUtilN4.getAllContentsFiltered(this, _function);
+		return Iterators.<Expression>filter(_allContentsFiltered, Expression.class);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Iterator<YieldExpression> getAllYieldExpressions() {
+		Iterator<Expression> _allExpressions = this.getAllExpressions();
+		return Iterators.<YieldExpression>filter(_allExpressions, YieldExpression.class);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Iterator<YieldExpression> getAllVoidYieldExpressions() {
+		Iterator<YieldExpression> _allYieldExpressions = this.getAllYieldExpressions();
+		final Function1<YieldExpression, Boolean> _function = new Function1<YieldExpression, Boolean>() {
+			public Boolean apply(final YieldExpression it) {
+				Expression _expression = it.getExpression();
+				return Boolean.valueOf(Objects.equal(_expression, null));
+			}
+		};
+		return IteratorExtensions.<YieldExpression>filter(_allYieldExpressions, _function);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Iterator<YieldExpression> getAllNonVoidYieldExpressions() {
+		Iterator<YieldExpression> _allYieldExpressions = this.getAllYieldExpressions();
+		final Function1<YieldExpression, Boolean> _function = new Function1<YieldExpression, Boolean>() {
+			public Boolean apply(final YieldExpression it) {
+				Expression _expression = it.getExpression();
+				return Boolean.valueOf((!Objects.equal(_expression, null)));
+			}
+		};
+		return IteratorExtensions.<YieldExpression>filter(_allYieldExpressions, _function);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean hasNonVoidYield() {
+		Iterator<YieldExpression> _allNonVoidYieldExpressions = this.getAllNonVoidYieldExpressions();
+		boolean _isEmpty = IteratorExtensions.isEmpty(_allNonVoidYieldExpressions);
+		return (!_isEmpty);
 	}
 
 	/**
@@ -275,6 +344,16 @@ public class BlockImpl extends StatementImpl implements Block {
 		switch (operationID) {
 			case N4JSPackage.BLOCK___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS:
 				return appliesOnlyToBlockScopedElements();
+			case N4JSPackage.BLOCK___GET_ALL_EXPRESSIONS:
+				return getAllExpressions();
+			case N4JSPackage.BLOCK___GET_ALL_YIELD_EXPRESSIONS:
+				return getAllYieldExpressions();
+			case N4JSPackage.BLOCK___GET_ALL_VOID_YIELD_EXPRESSIONS:
+				return getAllVoidYieldExpressions();
+			case N4JSPackage.BLOCK___GET_ALL_NON_VOID_YIELD_EXPRESSIONS:
+				return getAllNonVoidYieldExpressions();
+			case N4JSPackage.BLOCK___HAS_NON_VOID_YIELD:
+				return hasNonVoidYield();
 			case N4JSPackage.BLOCK___GET_ALL_STATEMENTS:
 				return getAllStatements();
 			case N4JSPackage.BLOCK___GET_ALL_RETURN_STATEMENTS:

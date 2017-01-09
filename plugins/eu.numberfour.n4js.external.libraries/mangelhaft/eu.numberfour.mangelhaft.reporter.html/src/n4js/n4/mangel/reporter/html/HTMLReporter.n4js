@@ -17,7 +17,6 @@ import {TestSpy} from "n4/mangel/mangeltypes/TestSpy"
 import {TestStatus} from "n4/mangel/mangeltypes/TestStatus"
 import {ResultGroup} from "n4/mangel/mangeltypes/ResultGroup"
 
-let q = document.querySelectorAll.bind(document);
 
 function getLocation(): string {
     return location.href;
@@ -26,7 +25,6 @@ function getLocation(): string {
 function updateURLParameter(url: string, param: string, paramVal: string): string{
     let urlObj = new URL(url)
       , queryParts: Array<string>
-      , rowsTxt: string
     ;
     queryParts = urlObj.search.split("&").filter((part:string) => part.split('=')[0] != param);
     queryParts.push(String(`${param}=${encodeURIComponent(paramVal)}`));
@@ -82,7 +80,6 @@ export public class HTMLReporter implements ITestReporter {
         this.testsElm.classList.add("mangelhaft");
         this.spinner = document.createElement("pre");
         this.spinner.classList.add("mangelhaft-spinner");
-        let ii:number = 0;
         this.spinnerHandle = setInterval(() => {
            this.spinner.innerText += this.spinnerChar;
        }, 500);
@@ -455,10 +452,7 @@ export public class HTMLReporter implements ITestReporter {
         });
         this.spy.testingFinished.add((resultGroups: ResultGroups) => {
             if (this.reRunning) {return null;}
-                let done = document.createElement("span")
-                  , timers = document.createElement("div")
-                  , groupElm: Element
-                ;
+                let done = document.createElement("span");
                 this.testingTime = new Date().getTime() - this.testingTime;
                 this.timers.innerHTML = `Fetching catalog: ${this.catalogTime/1000}s Testing: ${this.testingTime/1000}s`;
                 

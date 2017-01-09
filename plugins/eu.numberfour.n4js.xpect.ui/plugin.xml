@@ -10,15 +10,17 @@ Contributors:
   NumberFour AG - Initial API and implementation
 -->
 <?eclipse version="3.4"?>
+<!-- Note: If you change this file, make sure to check the corresponding files for sub-languages -->
 <plugin>
 
-<extension point="org.eclipse.ui.views">
+	<extension point="org.eclipse.ui.views">
         <view id="eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectView"
                 name="Xpect View"
              icon="icons/test_view.png"
              category="eu.numberfour.n4js.category"
                 class="eu.numberfour.n4js.xpect.ui.results.N4IDEXpectView"/>
-</extension>
+	</extension>
+    
     <extension point="org.eclipse.debug.core.launchConfigurationTypes"> 
         <launchConfigurationType 
             delegate= "eu.numberfour.n4js.xpect.ui.XpectConfigurationDelegate" 
@@ -27,17 +29,16 @@ Contributors:
             name="Run XPECT">
        </launchConfigurationType> 
     </extension>
-
-   <extension
+	<extension
         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
         <launchConfigurationTabGroup   
             class= "eu.numberfour.n4js.xpect.ui.LaunchConfigurationTabGroup"
             id= "eu.numberfour.n4js.xpect.ui.LaunchConfigurationTabGroup.XPECT"
             type= "eu.numberfour.n4js.xpect.ui.LaunchConfigurationType.XPECT" >
         </launchConfigurationTabGroup>
-   </extension>
+	</extension>
 
-       <extension
+	<extension
           point= "org.eclipse.debug.ui.launchShortcuts" >
        <shortcut
              class="eu.numberfour.n4js.xpect.ui.LaunchXpectShortcut"
@@ -61,25 +62,15 @@ Contributors:
                                 property= "org.eclipse.debug.ui.matchesPattern"
                                 value= "*.n4js.xt" >
                           </test>
-<!--                          <test
-                                property= "org.eclipse.debug.ui.matchesPattern"
-                                value= "*.js" >
-                          </test>
-                          <test
-                                property= "org.eclipse.debug.ui.matchesPattern"
-                                value= "*.n4js" >
-                          </test>
--->
                        </or>
                     </iterate>
                  </with>
               </enablement>
            </contextualLaunch>
        </shortcut>
-   </extension>
-   
-
-       <extension
+	</extension>
+	
+	<extension
           point= "org.eclipse.debug.ui.launchShortcuts" >
        <shortcut
              class="eu.numberfour.n4js.xpect.ui.GenerateJiraBugReportShortcut"
@@ -100,15 +91,6 @@ Contributors:
                                 property= "org.eclipse.debug.ui.matchesPattern"
                                 value= "*.n4js.xt" >
                           </test>
-<!--                          <test
-                                property= "org.eclipse.debug.ui.matchesPattern"
-                                value= "*.js" >
-                          </test>
-                          <test
-                                property= "org.eclipse.debug.ui.matchesPattern"
-                                value= "*.n4js" >
-                          </test>
--->
                        </or>
                     </iterate>
                  </with>
@@ -140,106 +122,102 @@ Contributors:
              </enablement>
           </contextualLaunch>
        </shortcut>
-   </extension>
-   
-   
-       <extension
-             point="org.xpect.testSuite">
-          <testSuite
-                class="eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestClass"
-                fileExtension="n4js">
-          </testSuite>
-       </extension>
+	</extension>
+   <!-- Register .n4js file extension to XPECT -->
+	<extension
+          point="org.xpect.testSuite">
+      <testSuite
+            class="eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestClass"
+            fileExtension="n4js">
+      </testSuite>
+	</extension>
+	<!-- JIRA/GitHub bug command -->
+	<extension point="org.eclipse.ui.commands">
+	     <command
+	        description="Generate JIRA Bug Report"
+	        id="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.jira"
+	        name="Generate JIRA Bug Report">
+	      </command>
+	     <command
+	           description="Generate GitHub Issue Report"
+	           id="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.github"
+	           name="Generate GitHub Issue Report">
+	     </command>
+	     <command
+	           description="Compare Test Results"
+	           id="eu.numberfour.n4js.xpect.ui.runner.comparecommand"
+	           name="Compare Test Results">
+	     </command>
+	</extension>
+	
+	<extension point="org.eclipse.ui.handlers">
+	  <handler
+	        class="eu.numberfour.n4js.xpect.ui.results.XpectCompareCommandHandler"
+	        commandId="eu.numberfour.n4js.xpect.ui.runner.comparecommand">
+	  </handler>
+	  <handler
+	        class="eu.numberfour.n4js.xpect.ui.results.GenerateGitHubIssueXpectReportCommandHandler"
+	        commandId="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.github">
+	  </handler>
+	  <handler
+	        class="eu.numberfour.n4js.xpect.ui.results.GenerateJIRABugXpectReportCommandHandler"
+	        commandId="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.jira">
+	  </handler>
+	</extension>
 
+	<extension point="org.eclipse.ui.menus">
+	  <menuContribution locationURI="popup:eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectView">
+	     <command
+	        commandId="eu.numberfour.n4js.xpect.ui.runner.comparecommand"
+	           style="push">
+	            <visibleWhen>
+	               <with variable="activeMenuSelection">
+	                  <test property="eu.numberfour.n4js.xpect.ui.runner.isTest" value="true"/>
+	               </with>
+	            </visibleWhen>
+	     </command>
+	     <command
+	        commandId="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.jira"
+	           style="push">
+	            <visibleWhen>
+	               <with variable="activeMenuSelection">
+	                  <test property="eu.numberfour.n4js.xpect.ui.runner.isSuite" value="true"/>
+	               </with>
+	            </visibleWhen>
+	     </command>
+	     <command
+	           commandId="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.github"
+	           style="push">
+	        <visibleWhen>
+	           <with
+	                 variable="activeMenuSelection">
+	              <test
+	                    property="eu.numberfour.n4js.xpect.ui.runner.isSuite"
+	                    value="true">
+	              </test>
+	           </with>
+	        </visibleWhen>
+	     </command>
+	  </menuContribution>
+	</extension>
 
-   <extension point="org.eclipse.ui.commands">
-     <command
-        description="Generate JIRA Bug Report"
-        id="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.jira"
-        name="Generate JIRA Bug Report">
-      </command>
-     <command
-           description="Generate GitHub Issue Report"
-           id="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.github"
-           name="Generate GitHub Issue Report">
-     </command>
-     <command
-           description="Compare Test Results"
-           id="eu.numberfour.n4js.xpect.ui.runner.comparecommand"
-           name="Compare Test Results">
-     </command>
-   </extension>
-
-<extension point="org.eclipse.ui.handlers">
-  <handler
-        class="eu.numberfour.n4js.xpect.ui.results.XpectCompareCommandHandler"
-        commandId="eu.numberfour.n4js.xpect.ui.runner.comparecommand">
-  </handler>
-  <handler
-        class="eu.numberfour.n4js.xpect.ui.results.GenerateGitHubIssueXpectReportCommandHandler"
-        commandId="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.github">
-  </handler>
-  <handler
-        class="eu.numberfour.n4js.xpect.ui.results.GenerateJIRABugXpectReportCommandHandler"
-        commandId="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.jira">
-  </handler>
-</extension>
-
-
-<extension point="org.eclipse.ui.menus">
-  <menuContribution locationURI="popup:eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectView">
-     <command
-        commandId="eu.numberfour.n4js.xpect.ui.runner.comparecommand"
-           style="push">
-            <visibleWhen>
-               <with variable="activeMenuSelection">
-                  <test property="eu.numberfour.n4js.xpect.ui.runner.isTest" value="true"/>
-               </with>
-            </visibleWhen>
-     </command>
-     <command
-        commandId="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.jira"
-           style="push">
-            <visibleWhen>
-               <with variable="activeMenuSelection">
-                  <test property="eu.numberfour.n4js.xpect.ui.runner.isSuite" value="true"/>
-               </with>
-            </visibleWhen>
-     </command>
-     <command
-           commandId="eu.numberfour.n4js.xpect.ui.runner.generatebugcommand.github"
-           style="push">
-        <visibleWhen>
-           <with
-                 variable="activeMenuSelection">
-              <test
-                    property="eu.numberfour.n4js.xpect.ui.runner.isSuite"
-                    value="true">
-              </test>
-           </with>
-        </visibleWhen>
-     </command>
-  </menuContribution>
-</extension>
-
-
-  <extension
+  	<extension
          point="org.eclipse.ui.contexts">
-      <context
+      	<context
             id="eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectView.context"
             name="XpectView Context"
             parentId="org.eclipse.ui.contexts.window">
-      </context>
-   </extension>
+      	</context>
+   	</extension>
    
     <extension point="org.eclipse.core.expressions.propertyTesters">
-    <propertyTester
-          class="eu.numberfour.n4js.xpect.ui.runner.DescriptionTester"
-          id="eu.numberfour.n4js.xpect.ui.runner.descriptionTester"
-          namespace="eu.numberfour.n4js.xpect.ui.runner"
-          properties="isTest, isSuite"
-          type="org.eclipse.jface.viewers.IStructuredSelection">
-    </propertyTester>
+	    <propertyTester
+	          class="eu.numberfour.n4js.xpect.ui.runner.DescriptionTester"
+	          id="eu.numberfour.n4js.xpect.ui.runner.descriptionTester"
+	          namespace="eu.numberfour.n4js.xpect.ui.runner"
+	          properties="isTest, isSuite"
+	          type="org.eclipse.jface.viewers.IStructuredSelection">
+	    </propertyTester>
    </extension>
 
 </plugin>

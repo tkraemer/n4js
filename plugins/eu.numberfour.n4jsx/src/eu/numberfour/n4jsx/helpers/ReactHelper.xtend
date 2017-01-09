@@ -11,6 +11,7 @@
 package eu.numberfour.n4jsx.helpers
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.N4JSGlobals
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
@@ -24,7 +25,6 @@ import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4jsx.n4JSX.JSXElement
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.resource.IEObjectDescription
@@ -44,39 +44,70 @@ class ReactHelper {
 	@Inject	IScopeProvider scopeProvider
 	@Inject	private IResourceScopeCache resourceScopeCacheHelper;
 	@Inject private extension IQualifiedNameConverter qualifierNameConverter;
-
-	public final static String REACT_TYPE = "REACT_TYPE__";
-	public final static String REACT_MODULE = "react";	
+		
+	public final static String REACT_MODULE = "react";
+	public final static String REACT_KEY = "KEY__" + REACT_MODULE;	
 	public final static String REACT_COMPONENT = "Component";
 	public final static String REACT_ELEMENT = "Element";
 	
-	
-
 	/**
-	 * Lookup React component/element type. For increased efficiency, the found results are cached
-	 *
+	 * Look up React.Element in the index.
+	 * 
+	 * @param context the EObject serving the context to look for React.Element.
 	 */
-	def public TClassifier lookUpReactClassifier(EObject context, EReference reference, String reactName, String reactModuleName) {
-		val String key = REACT_TYPE + reactModuleName + "." + reactName;
+	def public TClassifier lookUpReactElement(EObject context) {
+		return lookUpReactClassifier(context, REACT_ELEMENT);
+	}
+	
+	/**
+	 * Look up React.Component in the index.
+	 * 
+	 * @param context the EObject serving the context to look for React.Component.
+	 */
+	def public TClassifier lookUpReactComponent(EObject context) {
+		return lookUpReactClassifier(context, REACT_COMPONENT);
+	}
+	
+	/**
+	 * Lookup React component/element type. For increased efficiency, the found results are cached.
+	 * 
+	 * @param context the EObject serving the context to look for React classifiers.
+	 * @param reactClassifierName the name of React classifier.  
+	 */
+	def private TClassifier lookUpReactClassifier(EObject context, String reactClassifierName) {
+		val String key = REACT_KEY + "." + reactClassifierName;
 		return resourceScopeCacheHelper.get(key, context.eResource, [
-			val IScope scope = scopeProvider.getScope(context, reference)
+			val IScope scope = scopeProvider.getScope(context, TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE)
 			val IEObjectDescription eod = scope.allElements.findFirst [ e |
 				val classifier = e.EObjectOrProxy;
 				if (classifier instanceof TClassifier) {
-					return reactName == classifier.exportedName &&
-						reactModuleName == classifier.containingModule.qualifiedName.toQualifiedName.lastSegment;
+					// If the found react.Element, react.Component is a proxy, exportedName and containingModule will be null.
+					// That's why we need to resolve the proxy first
+					if ((e.EObjectURI.trimFragment.lastSegment != REACT_MODULE + "." + N4JSGlobals.N4JSD_FILE_EXTENSION) && 
+						(e.EObjectURI.trimFragment.lastSegment != REACT_MODULE + "." + N4JSGlobals.N4JS_FILE_EXTENSION)) {
+						// Only consider react.n4jd or react.n4js (the latter is for tests in n4jsx.spec.tests/compile)
+						return false;
+					}										
+					val resolvedClassifier = 
+						if (classifier.eIsProxy) {
+							EcoreUtil2.resolve(classifier, context.eResource) as TClassifier;
+						} else classifier;
+					return reactClassifierName == resolvedClassifier.exportedName &&
+						REACT_MODULE == resolvedClassifier.containingModule.qualifiedName.toQualifiedName.lastSegment;
 				}
 				return false;
 			]
-
 			if (eod === null)
 				return null;
-
-			val classifier = eod.EObjectOrProxy;
+			var classifier = eod.EObjectOrProxy;
 			if (classifier.eIsProxy) {
-				EcoreUtil2.resolve(classifier, context.eResource)
+				classifier = EcoreUtil2.resolve(classifier, context.eResource)
 			}
-			return classifier as TClassifier;
+			if (classifier.eIsProxy) {
+				return null;
+			} else {
+				return (classifier as TClassifier);
+			}
 		])
 	}
 	
@@ -114,10 +145,8 @@ class ReactHelper {
 		if (exprTypeRef instanceof TypeTypeRef && (exprTypeRef as TypeTypeRef).constructorRef) {
 			// The JSX elements refers to a class
 			val tclass = tsh.getStaticType(G, exprTypeRef as TypeTypeRef);
-			val EReference referenceParameterizedTypeRef = TypeRefsPackage.Literals.
-				PARAMETERIZED_TYPE_REF__DECLARED_TYPE;
 			val tComponentClassifier = lookUpReactClassifier(jsxElem,
-				referenceParameterizedTypeRef, ReactHelper.REACT_COMPONENT, REACT_MODULE);
+				ReactHelper.REACT_COMPONENT);
 			if (tComponentClassifier === null || tComponentClassifier.typeVars.isEmpty) {
 				return null;
 			}	

@@ -1,0 +1,77 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "react.n4js" {}
+	}
+
+	END_SETUP
+ */
+
+/* XPECT output ---
+<==
+stdout:
+lower component
+ {
+  "name": "LowerComponent",
+  "props": {
+    "whatTextShouldIShow": "lcShadow"
+  },
+  "children": []
+}
+my component
+ {
+  "name": "MyComponent",
+  "props": {
+    "aProp": "mcAPop"
+  },
+  "children": []
+}
+stderr:
+==>
+--- */
+
+import * as React from "compile/react"
+
+
+class LowerComponent extends React.Component<~Object with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
+	public constructor(props: ~Object with {whatTextShouldIShow : string}) {
+	    super(props);
+	    this.state = {
+	      squares: new Array<string>(9)
+	    };
+	    if (this.state.squares.length == 1) {
+
+	    }
+  	}
+
+	@Override
+	public render() : React.Element{
+		return (<div>{this.props.whatTextShouldIShow}</div>);
+	}
+}
+
+
+class MyComponent extends
+	React.Component<~Object with {aProp: string}, String> {
+
+	@Override
+	public render() : React.Element{
+		const constText = "some text";
+		//xPECT noerrors
+		return (<LowerComponent whatTextShouldIShow="Hallo">{constText}</LowerComponent>
+		);
+	}
+}
+
+
+export public function logElements(): void {
+	let lc = <LowerComponent whatTextShouldIShow='lcShadow'/>
+	console.log('lower component\n', JSON.stringify(lc, null, '  '))
+	let mc = <MyComponent aProp='mcAPop'/>
+	console.log('my component\n', JSON.stringify(mc, null, '  '))
+};
+
+logElements()
+
+

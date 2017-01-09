@@ -11,7 +11,7 @@
 		return {
 			setters: [],
 			execute: function() {
-				$makeClass(TestInfos, Object, [], {
+				$makeClass(TestInfos, N4Object, [], {
 					sessionId: {
 						value: undefined,
 						writable: true

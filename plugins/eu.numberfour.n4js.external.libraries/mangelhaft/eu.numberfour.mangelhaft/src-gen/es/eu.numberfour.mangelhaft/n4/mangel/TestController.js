@@ -50,11 +50,11 @@
 				}
 			],
 			execute: function() {
-				$makeClass(TestController, Object, [], {
+				$makeClass(TestController, N4Object, [], {
 					errorGroup: {
 						value: function errorGroup___n4(info, loadPath, testObject, originalError) {
 							return $spawn(function*() {
-								let emptyTest, error = originalError ? originalError : new Error("could not load test " + loadPath), that = this, testResult, testResults = [], unknownTest = new TestMethodDescriptor({
+								let error = originalError ? originalError : new Error("could not load test " + loadPath), that = this, testResult, testResults = [], unknownTest = new TestMethodDescriptor({
 									name: "",
 									type: TestFunctionType.TEST,
 									value: function() {}
@@ -102,7 +102,7 @@
 					instrument: {
 						value: function instrument___n4(info) {
 							return $spawn(function*() {
-								let parts, ctorName, groupModule, testClasses, testClass, instrumentedTestObjects = [], instrumentedTestObject, moduleName;
+								let parts, ctorName, groupModule, testClasses, testClass, instrumentedTestObjects = [], moduleName;
 								;
 								parts = info.fqn.split("\.");
 								ctorName = parts.pop();
@@ -157,7 +157,7 @@
 								let arr = ((yield Promise.all(instrumentedTestObjects))).filter((function(item) {
 									return item !== null;
 								}).bind(this));
-								return (arr);
+								return arr;
 							}.apply(this, arguments));
 						}
 					},
@@ -167,7 +167,7 @@
 								if (!testInfoObject) {
 									throw new Error("TestController::runGroups called with a null testInfoObject");
 								}
-								let executor = this.executor, that = this, reses = [], res, testInfos = testInfoObject.testDescriptors, batchedTestInfos = [], ii = 0, modules, testInfosBatch, instrumentedTestsBatch2d, instrumentedTestsBatch, fixme;
+								let executor = this.executor, reses = [], res, testInfos = testInfoObject.testDescriptors, batchedTestInfos = [], ii = 0, testInfosBatch, instrumentedTestsBatch2d, instrumentedTestsBatch, fixme;
 								;
 								if (numTests === undefined) {
 									numTests = testInfoObject.testDescriptors.reduce(function(acc, info) {
@@ -193,7 +193,7 @@
 								for(ii = 0, instrumentedTestsBatch = [];ii < batchedTestInfos.length;++ii, instrumentedTestsBatch = []) {
 									testInfosBatch = batchedTestInfos[ii];
 									try {
-										fixme = (yield ((yield Promise.all(testInfosBatch.map(this.instrument.bind(this)).filter(function(test) {
+										fixme = (yield Promise.resolve((yield Promise.all(testInfosBatch.map(this.instrument.bind(this)).filter(function(test) {
 											return test !== null;
 										})))));
 										instrumentedTestsBatch2d = fixme;
@@ -218,6 +218,7 @@
 						set: function setReporters___n4(reporters) {
 							reporters.forEach(function(reporter) {
 								let dummy = reporter.register();
+								dummy;
 							});
 							this.reportersVal = reporters;
 						}

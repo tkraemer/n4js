@@ -46,14 +46,16 @@ class FunctionDeclarationTransformation extends Transformation {
 		val name = funDecl.name;
 
 		val varDecl = _VariableDeclaration(name,
-			  _FunExpr( funDecl.async,
-			  			name,
-						funDecl.fpars,	// reusing existing fpars!
-						funDecl.body	// reusing existing body!
-				) =>[	if( funDecl.annotationList !== null
-							&& funDecl.annotationList.annotations.size > 0 )
-					 	 annotationList = _ExprAnnoList( funDecl.annotationList.annotations ); // reusing annotations from original annotation-list.
-					]
+			_FunExpr(funDecl.async,
+				name,
+				funDecl.fpars,	// reusing existing fpars!
+				funDecl.body	// reusing existing body!
+			) => [
+				generator = funDecl.generator;
+				if(funDecl.annotationList !== null && funDecl.annotationList.annotations.size > 0) {
+					annotationList = _ExprAnnoList( funDecl.annotationList.annotations ); // reusing annotations from original annotation-list.
+				}
+			]
 		);
 
 		replace(funDecl, varDecl);

@@ -62,7 +62,7 @@
 				}
 			],
 			execute: function() {
-				$makeClass(InstrumentedTest, Object, [
+				$makeClass(InstrumentedTest, N4Object, [
 					IInstrumentedTest
 				], {
 					filterTests: {
@@ -105,8 +105,7 @@
 					},
 					load: {
 						value: function load___n4(testClass, info) {
-							let that = this, props = getAllPropertyNames(testClass).keys(), parentClass = Object.getPrototypeOf(testClass);
-							;
+							let parentClass = Object.getPrototypeOf(testClass);
 							this.classIgnoreAnnotation = testClass.n4type.allAnnotations("Ignore")[0];
 							this.beforeAlls = this.getTestMethodDescriptors(testClass.n4type.methodsWithAnnotation("BeforeAll", true, false, false), TestFunctionType.BEFORE_ALL);
 							this.afterAlls = this.getTestMethodDescriptors(testClass.n4type.methodsWithAnnotation("AfterAll", true, false, false), TestFunctionType.AFTER_ALL);
@@ -123,7 +122,8 @@
 									return info.testMethods.indexOf(test.name) !== -1;
 								});
 							}
-							if (parentClass !== Object) {
+							let parentClassFn = parentClass;
+							if (parentClassFn !== Object) {
 								this.parent = new InstrumentedTest().load(parentClass);
 								this.parent.child = this;
 							}

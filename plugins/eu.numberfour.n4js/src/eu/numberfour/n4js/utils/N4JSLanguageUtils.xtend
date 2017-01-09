@@ -103,23 +103,31 @@ class N4JSLanguageUtils {
 	public static final String SYMBOL_IDENTIFIER_PREFIX = ComputedPropertyNameValueConverter.SYMBOL_IDENTIFIER_PREFIX;
 
 	/**
-	 * Temporary hack to be able to support spread operator in the JSX transpiler support.
-	 * This is required, because the ES6 spread operator is not yet supported in the N4JS grammar.
-	 * TODO IDE-2471 remove this and add proper support for spread in object literals to grammar/parser
-	 */
-	public static final String SPREAD_IN_OJECT_LITERAL_WORK_AROUND = "MISSING_SPREAD_WORK_AROUND";
-
-	/**
 	 * If the given function definition is asynchronous, will wrap given return type into a Promise.
 	 * Otherwise, returns given return type unchanged. A return type of <code>void</code> is changed to
 	 * <code>undefined</code>.
 	 */
-	def static TypeRef makePromiseIfAsync(FunctionDefinition functionDef, TypeRef returnTypeRef,
-			BuiltInTypeScope builtInTypeScope) {
-		if (functionDef !== null && returnTypeRef !== null) {
-			if (functionDef.isAsync()) {
+	def static TypeRef makePromiseIfAsync(FunctionDefinition funDef, TypeRef returnTypeRef,	BuiltInTypeScope builtInTypeScope) {
+		if (funDef !== null && returnTypeRef !== null) {
+			if (funDef.isAsync()) {
 				// for async functions with declared return type R: actual return type is Promise<R,?>
 				return TypeUtils.createPromiseTypeRef(builtInTypeScope, returnTypeRef, null);
+			}
+			return returnTypeRef;
+		}
+		return null;
+	}
+
+	/**
+	 * If the given function definition is a generator function, will wrap given return type into a Generator.
+	 * Otherwise, returns given return type unchanged. A return type of <code>void</code> is changed to
+	 * <code>undefined</code>.
+	 */
+	def static TypeRef makeGeneratorIfGeneratorFunction(FunctionDefinition funDef, TypeRef returnTypeRef, BuiltInTypeScope builtInTypeScope) {
+		if (funDef !== null && returnTypeRef !== null) {
+			if (funDef.isGenerator()) {
+				// for generator functions with declared return type R: actual return type is Generator<R,R,any>
+				return TypeUtils.createGeneratorTypeRef(builtInTypeScope, funDef);
 			}
 			return returnTypeRef;
 		}

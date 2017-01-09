@@ -27,7 +27,7 @@
 				}
 			],
 			execute: function() {
-				$makeClass(NodeTestCLI, Object, [], {}, {
+				$makeClass(NodeTestCLI, N4Object, [], {}, {
 					toCommandLine: {
 						value: function toCommandLine___n4(options) {
 							let optionsObj = options, res = [];
@@ -137,13 +137,11 @@
 						help: "Test catalog (JSON) to be used. Option --compile will write the file, switches to temp file in case of URL."
 					},
 					targetPlatformFile: {
-						abbr: "tp",
 						metavar: "PATH",
 						transform: resolvePath,
 						help: "NPM dependency definitions."
 					},
 					targetPlatformInstallLocation: {
-						abbr: "tl",
 						metavar: "PATH",
 						transform: resolvePath,
 						help: "NPM dependencies install location."
@@ -168,6 +166,11 @@
 						flag: true,
 						abbr: "d",
 						help: "Debug output."
+					},
+					inspect: {
+						type: "number",
+						metavar: "PORT",
+						help: "Attach V8 Inspector with --debug-brk."
 					}
 				};
 				nomnomHelp = "Runs N4JS mangelhaft testing.\n\nBy default n4js-mangelhaft will retrieve the test catalog from a running IDE and just runs the tests.\nOn CI systems, you may want to compile and run the tests in one go:\n\n$ n4js-mangelhaft --compile --xunitReportFile ./jenkins/reports.xml --scan ./projects\n";
