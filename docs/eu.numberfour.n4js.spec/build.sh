@@ -17,7 +17,7 @@ cp -r styles images scripts ./$GEN_FOLDER/
 echo INFO: AsciiSpec Generating HTML
 
 ####################### Build HTML for gh-pages #######################
-asciispec -a data-uri=true -D $GEN_FOLDER/ N4JSSpec.adoc 
+asciispec -a data-uri=true -a stylesheet=foundation.css -D $GEN_FOLDER/ N4JSSpec.adoc 
 
 echo INFO: AsciiSpec HTML conversion Done
 

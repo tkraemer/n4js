@@ -2133,12 +2133,9 @@ The join of intersection types is defined as the join of the elements. That is
 
 [math]
 ++++
-& \infer{\intersection{T_1,\dots,T_n} \join S }
-{ T_1 \join S \join \dots \join T_n \join S}\\
-& \infer{\intersection{T_1,\dots,T_n} \join \intersection{S_1,\dots,S_m} }
-{T_1 \join S_1,\dots,T_1 \join S_m,
-\dots,
-T_n \join S_1,\dots,T_n \join S_m}
+\infer{\intersection{T_1,\dots,T_n} \join S }{ T_1 \join S \join \dots \join T_n \join S}\\
+\infer{\intersection{T_1,\dots,T_n} \join \intersection{S_1,\dots,S_m} }{T_1 \join S_1,\dots,T_1 \join S_m,
+\dots,T_n \join S_1,\dots,T_n \join S_m}
 ++++
 
 --

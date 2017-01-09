@@ -26,7 +26,7 @@
 
 // Stylesheet settings //
 :stylesdir: styles
-:stylesheet: n4-adoc.css
+:stylesheet: foundation.css
 
 // Syntax Highlighting //
 :!source-highlighter:

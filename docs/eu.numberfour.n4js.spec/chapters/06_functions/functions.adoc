@@ -116,8 +116,12 @@ followed by a non-optional parameter:
 F.fpars_i.optional \to \nexists k>i: \lnot F.fpars_k.optvar
 ++++
 2.  Only the last parameter of a method may be defined as variadic
-parameter: +
-$F.fpars_i.variadic \to i = |F.fpars|-1$
+parameter:
++
+[math]
+++++
+F.fpars_i.variadic \to i = |F.fpars|-1
+++++
 3.  If a function explicitly defines a return type, the last statement
 of the transitive closure of statements of the body must be a return
 statement:
