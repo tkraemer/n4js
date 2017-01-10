@@ -20,7 +20,6 @@ import eu.numberfour.n4js.ts.types.TypesPackage;
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
-import java.util.ListIterator;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -342,17 +341,15 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 		if ((fpars == null)) {
 			return false;
 		}
-		int idx = fpars.indexOf(this);
-		ListIterator<TFormalParameter> iter = fpars.listIterator(idx);
-		while (iter.hasNext()) {
+		for (int i = fpars.indexOf(this); (i >= 0); i--) {
 			{
-				final TFormalParameter fpar = iter.next();
-				if (((!fpar.isVariadic()) && (!fpar.isHasInitializerAssignment()))) {
-					return false;
+				final TFormalParameter fpar = fpars.get(i);
+				if ((fpar.isVariadic() || fpar.isHasInitializerAssignment())) {
+					return true;
 				}
 			}
 		}
-		return true;
+		return false;
 	}
 
 	/**

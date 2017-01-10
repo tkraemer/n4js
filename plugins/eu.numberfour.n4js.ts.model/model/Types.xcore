@@ -1275,16 +1275,13 @@ class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRel
 		if (fpars === null)
 			return false;
 		
-		var idx = fpars.indexOf(this);
-		var iter = fpars.listIterator(idx);
-		
-		while (iter.hasNext) {
-			val fpar = iter.next;
-			if (!fpar.isVariadic && !fpar.hasInitializerAssignment) {
-				return false;
+		for (var i=fpars.indexOf(this); i>=0; i--) {
+			val fpar = fpars.get(i);
+			if (fpar.isVariadic || fpar.hasInitializerAssignment) {
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	/* Convenience method, returns true if typeRef undef modifier is optional or variadic. */
 	op boolean isVariadicOrOptional() {
