@@ -14,7 +14,7 @@ Contributors:
    <extension
          point="org.eclipse.debug.core.launchConfigurationTypes">
       <launchConfigurationType
-            delegate="eu.numberfour.n4jsx.runner.nodejs.ui.RunnerNodejsUiExecutableExtensionFactory:eu.numberfour.n4js.runner.nodejs.ui.NodejsLaunchConfigurationDelegate"
+            delegate="eu.numberfour.n4jsx.runner.nodejs.ui.RunnerNodejsUiExecutableExtensionFactory:eu.numberfour.n4jsx.runner.nodejs.ui.NodejsLaunchConfigurationDelegate"
             delegateDescription="Runs given selection with Node.js runner"
             delegateName="Node.js Runner Launch Configuration Delegate"
             id="eu.numberfour.n4jsx.runner.nodejs.ui.launchConfigurationType"

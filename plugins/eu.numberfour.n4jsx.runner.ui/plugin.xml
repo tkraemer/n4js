@@ -21,12 +21,4 @@ Contributors:
             type="java.lang.Object">
       </propertyTester>
    </extension>
-   <extension
-         point="org.eclipse.ui.startup">
-      <startup
-            class="eu.numberfour.n4jsx.runner.ui.ActivationTrigger">
-      </startup>
-   </extension>
-
- 
 </plugin>

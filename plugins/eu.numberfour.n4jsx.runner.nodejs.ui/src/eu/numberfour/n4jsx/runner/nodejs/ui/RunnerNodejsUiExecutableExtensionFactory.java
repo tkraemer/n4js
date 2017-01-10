@@ -18,7 +18,8 @@ import eu.numberfour.n4js.utils.N4ExecutableExtensionFactory;
 import eu.numberfour.n4jsx.runner.ui.RunnerUiModule;
 
 /**
- * Executable extension factory for the runner Node.js UI module.
+ * Executable extension factory for the runner Node.js UI module. This class provides the right dependency injection
+ * modules for N4JSX
  */
 public class RunnerNodejsUiExecutableExtensionFactory extends N4ExecutableExtensionFactory {
 

@@ -13,10 +13,11 @@ package eu.numberfour.n4jsx.runner.nodejs.ui;
 import org.eclipse.debug.ui.ILaunchShortcut;
 
 import eu.numberfour.n4js.runner.nodejs.NodeRunner;
-import eu.numberfour.n4jsx.runner.ui.AbstractRunnerLaunchShortcut;
+import eu.numberfour.n4js.runner.ui.AbstractRunnerLaunchShortcut;
 
 /**
- * Node runner {@link ILaunchShortcut}, used to create node runner launches from selections in the UI
+ * Node runner {@link ILaunchShortcut}, used to create node runner launches from selections in the UI. Note: This class
+ * must be triggered within n4jsx.runner.nodejs.ui in order for that dependency injection for n4jsx to correctly.
  */
 public class NodeRunnerLaunchShortcut extends AbstractRunnerLaunchShortcut {
 
