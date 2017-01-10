@@ -32,7 +32,8 @@
 :!source-highlighter:
 
 // General / Document layout etc. //
-:toc: right
+:toc: left
+:toclevel: 3
 :doctype: book
 
 // Numbered section titles with auto-generated anchors

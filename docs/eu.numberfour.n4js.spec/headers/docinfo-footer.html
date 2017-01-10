@@ -6,13 +6,17 @@
 <script>
 // Toggle the table of contents
 $( "button#tocbutton" ).click(function() {
-  if ($("#tocbutton").css('right') == '25px') {
-    $( "#tocbutton" ).animate({right: '215px'},"slow");
-    $( "#toc.toc2" ).animate({right: '0'},"slow");
+  if ($("#tocbutton").css('left') == '25px') {
+    $( "#tocbutton" ).animate({left: '215px'},"slow");
+    $( "#toc.toc2" ).animate({left: '0'},"slow");
+    $( "#menubar" ).animate({left: '215px'},"slow");
+    $( "#header, #content, #footnotes, #footer" ).animate({left: '230px'},"slow");
 }
   else {
-    $( "#tocbutton" ).animate({right: '25px'},"slow");
-    $( "#toc.toc2" ).animate({right: '-13rem'},"slow");
+    $( "#menubar" ).animate({left: '10px'},"slow");
+    $( "#tocbutton" ).animate({left: '25px'},"slow");
+    $( "#toc.toc2" ).animate({left: '-13rem'},"slow");
+    $( "#header, #content, #footnotes, #footer" ).animate({left: '0px'},"slow");
 }
 });
 </script>
