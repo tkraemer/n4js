@@ -387,7 +387,7 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 		}
 		boolean _isOptional = this.isOptional();
 		if (_isOptional) {
-			strb.append(" = undefined");
+			strb.append("=\u2026");
 		}
 		return strb.toString();
 	}
