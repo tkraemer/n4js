@@ -119,14 +119,18 @@ task:IDE-550[] task:IDE-551[]
 .Member Names
 [req,id=IDE-52,version=1]
 --
-1.  No two members may have the same name, except one is static and the
+. The name of a member is given as an identifier, a string literal, a numeric literal, or as a computed property name with
+.. a string literal, e.g. `['myProp']`,
+.. a built-in symbol, for example as in `[Symbol.iterator]`, or
+.. a literal of a `@StringBased` enum.
+.  No two members may have the same name, except one is static and the
 other is non-static:
 +
 [math]
 ++++
 \forall m_1,m_2 \in C.ownedMembers, m_1\neq m_2: m_1.name\neq m_2.name \lor m_1.static\neq m_2.static
 ++++
-2.  The member name must be a valid identifier name, see <<_identifier-names-and-identifiers,Identifier Grammar>>.
+.  The member name must be a valid identifier name, see <<_identifier-names-and-identifiers,Identifier Grammar>>.
 
 --
 
