@@ -297,11 +297,14 @@ Class expressions are not fully supported at the moment. task:IDE-171[]
 The reflexive transitive closure of members of a class is indirectly defined
 by the override and implementation constraints defined in .
 
-Note that since overloading is forbidden, the following constraint is
-true: +
-$\forall m_1,m_2 \in members: m_1.name=m_2.name \iff m_1=m_2 \lor accessorPair(m_1, m_2)$
-footnote:[ $accessorPair(m_1,m_2)$ is defined as follows:
-$(\mu(m_1)=\type{getter}\land \mu(m_2)=\type{setter}) \lor (\mu(m_1)=\type{setter}\land \mu(m_2)=\type{getter})$$
+Note that since overloading is forbidden, the following constraint is true:footnote:[ $accessorPair(m_1,m_2)$ is defined as follows: $(\mu(m_1)=\type{getter}\land \mu(m_2)=\type{setter}) \lor (\mu(m_1)=\type{setter}\land \mu(m_2)=\type{getter})$
+
+
+[math]
+++++
+\forall m_1,m_2 \in members: m_1.name=m_2.name \iff m_1=m_2 \lor accessorPair(m_1, m_2)
+++++
+
 
 Remarks: Class and method definition is quite similar to the proposed
 ECMAScript version 6 draft cite:[ECMA15a(S13.5)], except that an N4 class and members may
@@ -322,7 +325,7 @@ public).
 
 .Simple Class
 [example]
---
+====
 This first example shows a very simple class with a field, a constructor and a method.
 
 [source,n4js]
@@ -338,7 +341,7 @@ class C {
 }
 ----
 
---
+====
 
 .Extend and implement
 [example]
@@ -367,6 +370,9 @@ classifier `S` is (transitively) contained in the supertypes
 [math]
 ++++
 \infer{\tee \type{TClass}\ left \subtype[TClass]\ right}{left=right}[shortcut] \\
+++++
+[math]
+++++
 \infer{\tee \type{TClass}\ left \subtype[TClass]\ right}{\tee  left.superType.declaredType \subtype right}
 ++++
 
@@ -529,7 +535,7 @@ The type of an interface declaration `I` is of type `I`:
 
 [math]
 ++++
-\infer{\tee I: \type{type\{I\}}}{}
+\infer{\tee I: \type{type{I}}}{}
 ++++
 
 

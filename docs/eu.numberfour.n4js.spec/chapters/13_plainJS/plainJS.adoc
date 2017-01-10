@@ -348,14 +348,13 @@ For a declaration $D$ with $D.global=\TRUE$, not a polyfill
 Type then the project must be a runtime environment:
 
 [math]
---
-
+++++
 &D.name \in \{ \\
 &\hspace{3em} 'Object', 'Function', 'Array', 'String', 'Boolean'\\
 &\hspace{3em} 'Number', 'Math', 'Date', 'RegExp', 'Error', 'JSON' \\
 &\}\\
 &\Rightarrow D.containingProject.type=\lenum{runtimeEnvironment}
---
+++++
 
 
 --

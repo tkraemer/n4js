@@ -1602,12 +1602,13 @@ task:IDE-244[] task:IDE-345[]
 
 [math]
 ++++
-&\infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{}     \tag{\S 11.4.1}\\
-&\infer{\tee \lstnfbnf{'void'}\ expression: \type{undefined}}{}     \tag{\S 11.4.2}\\
-&\infer{\tee \lstnfbnf{'typeof'}\ expression: \type{string}}{}  \tag{\S 11.4.3}\\
-&\infer{\tee \lstnfbnf{('++'|'$--$'|'+'|'$-$'|'~')}\ expression: \type{number}}{}   \tag{\S 11.4.4-8}\\
-&\infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{}  \tag{\S 11.4.9}
+\spc \infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{}
+\spc  \infer{\tee \lstnfbnf{'void'}\ expression: \type{undefined}}{}
+\spc  \infer{\tee \lstnfbnf{'typeof'}\ expression: \type{string}}{}
+\spc  \infer{\tee \lstnfbnf{('++'|'$--$'|'+'|'$-$'|'~')}\ expression: \type{number}}{}
+\spc  \infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{}
 ++++
+
 // ~
 
 === Multiplicative Expression
@@ -1635,6 +1636,7 @@ For a given multiplicative expression the following constraints must hold in N4J
 mode task:IDE-345[]:
 
 * The types of the operands must be subtypes of number:
++
 [math]
 ++++
 \infer
@@ -1649,8 +1651,7 @@ The inferred type of a multiplicative expression always is number:
 
 [math]
 ++++
-\infer
-{\typeEnv \entails \type{MultiplicativeExpression}: \type{number}}{}
+\infer{\typeEnv \entails \type{MultiplicativeExpression}: \type{number}}{}
 ++++
 
 === Additive Expression
@@ -1715,8 +1716,8 @@ follows:
 
 [math]
 ++++
-\infer{\tee e: \type{string}}{e.op='+' & \lnot(nb(e.lhs)\land nb(e.rhs)) & \lnot(un(e) \land (nb(e.lhs)\lor nb(e.rhs))}\\
-&\infer{\tee e: \type{number}}{}\\
+\infer{\tee e: \type{string}}{e.op='+' \spc   \lnot(nb(e.lhs)\land nb(e.rhs)) \spc   \lnot(un(e) \land (nb(e.lhs)\lor nb(e.rhs))}\\
+\spc  \infer{\tee e: \type{number}}{}\\
 ++++
 
 
@@ -1768,6 +1769,8 @@ For a given bitwise shift expression $e$ the following constraints must hold in 
 \infer
 {\tee \type{BitwiseShiftExpression}\ \expectType\ \type{Expression}: \type{number}}{}
 ++++
+
+--
 
 [discrete]
 ==== Type Inference [[type-inference-11]]

@@ -461,8 +461,7 @@ structural type:
 $\tsStr T \subtype \tsFld T$
 3.  The structural read-only field version of a type is a supertype of
 the structural field type:
-$
-\tsFld T \subtype \tsRoFld T$
+$\tsFld T \subtype \tsRoFld T$
 4.  The structural write-only field version of a type is a supertype of
 the structural field type:
 $\tsFld T \subtype \tsWoFld T$
@@ -471,27 +470,29 @@ hand side of the `instanceof` operator:
 +
 [math]
 ++++
-& x\ \lstnfjs{instanceof}\ E \Rightarrow \tee E: T \\
-& \hspace{3em}\to \lnot (T.refStructural \\
-& \hspace{6em}\lor T.refStructuralField \\
-& \hspace{6em}\lor T.refStructuralReadOnlyField \\
-& \hspace{6em}\lor T.refStructuralWriteOnlyField \\
-& \hspace{6em}\lor T.refStructuralInitField)
+\begin{matrix}
+\spc x\ \lstnfjs{instanceof}\ E \Rightarrow \tee E: T \\
+\spc \hspace{3em}\to \lnot (T.refStructural \\
+\spc \hspace{6em}\lor T.refStructuralField \\
+\spc \hspace{6em}\lor T.refStructuralReadOnlyField \\
+\spc \hspace{6em}\lor T.refStructuralWriteOnlyField \\
+\spc \hspace{6em}\lor T.refStructuralInitField)
+\end{matrix}
 ++++
 That is, the following code will always issue an error: ``pass:[x instanceof ~T]``.
 footnote:[Since this is already prevented by the parser (the tilde is interpreted as an unary operator), error messages are likely to look a little strange.]
-6.  A type $X$ is a subtype of a structural version of a
-type $\tsStr T$, if it contains all public, non-static
-members of the type $T$:
+6.  A type $X$ is a subtype of a structural version of a type $\tsStr T$, if it contains all public, non-static members of the type $T$:
 footnote:[Note that due to this relaxed definition (compared with definition-site structural types) it is possible to pass an `N4Object` instance to a function of method with a declared structural type parameter.]
 +
 [math]
 ++++
+\begin{matrix}
 \infer{\tee X \subtype \tee \tsStr T}
     {{\forall m \in T.members, m.owner \not\in \types{N4Object}, m.acc=\lenum{public}, \neg m.static, m\neq T.ctor:}\\
     {\hspace{1em} \exists m' \in X.members:}\\
     {\hspace{2em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name}\\
     {\hspace{2em} \land \tee m' \subtype \tee m}}
+\end{matrix}
 ++++
 7.  A type $X$ is a subtype of a structural field version of
 a type $\tsFld T$, if it contains all public, non-static and

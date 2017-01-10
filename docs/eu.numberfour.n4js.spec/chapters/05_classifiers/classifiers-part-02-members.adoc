@@ -557,9 +557,10 @@ implicitly and every class has an (implicit) constructor.
 For a given a class `C`, the constructor is available via
 two properties:
 
-the explicitly defined constructor (if any).
+[horizontal]
+$ownedCtor$:: the explicitly defined constructor (if any).
 
-the explicit or implicit constructor.
+$ctor$:: the explicit or implicit constructor.
 
 If `C` is provided with an explicit constructor, we have
 $C.ctor = C.ownedCtor$ and
@@ -779,6 +780,9 @@ must be subtype of the field’s type:
 [math]
 ++++
 \forall s \in ctor.fpar.structuralMembers, ctor.fpar.spec: \\
+++++
+[math]
+++++
 \hspace{2em}\exists f \in ctor.owner.ownedFields \Rightarrow \tee s \subtype f
 ++++
 8.  $\nfjstilde i \nfjstilde\lstnfjs{this}$ constructor
@@ -1195,11 +1199,13 @@ inferred type of the initializer expression:
 
 [math]
 ++++
+\begin{matrix}
 \spc \infer{\tee d: T}{d.declaredType \neq \NULL \spc T = d.declaredType} \\
 \spc \infer{\tee d: T}{
     d.declaredType = \NULL \spc d.expression \neq \NULL \\
     E = \tee d.expression \spc E \not\in \{\type{null, undefined}\} \spc T = E} \\
 \spc \infer{\tee d: \type{any}}{else}
+\end{matrix}
 ++++
 
 If the type contains type variables they are substituted according to
@@ -1256,12 +1262,14 @@ task:IDEBUG-575[]
 +
 [math]
 ++++
+\begin{matrix}
 \spc f.expr \neq \NULL \\
 \spc \lor (\exists assignExp: assignExpr.containingFunction = f.owner.constructor \\
 \spc \hspace{3em} \land assignExpr.left.target = \lstnfjs{"this"} \\
 \spc \hspace{3em} \land bind(assignExpr.left.property, f)) \\
 \spc \lor (f.public \land \exists fpar \in f.owner.constructor.fpars: \\
 \spc \hspace{3em} fpar.spec \land \exists sm \in structuralMembers: sm.name=f.name)
+\end{matrix}
 ++++
 --
 // todo{Constraints for final assignment are not completely implemented yet, also they have some problems here (e.g., not all control flows are required to assign a value). They will be implemented in the progress of adding more powerful program analysis in general}
@@ -1391,6 +1399,7 @@ Getters and setters – like functions – define a variable execution
 environment and therefore provide access to the actual passed-in
 parameters through the implicit `arguments` variable inside of their bodies (c.f. <<_arguments-object>>).
 
+[.language-n4js]
 == Static Members
 task:IDE-151[] task:IDE-505[]
 
@@ -1631,10 +1640,12 @@ $M.name=S.name \land M.static=S.static$
 +
 [math]
 ++++
+\begin{matrix}
 \mu(S)=\type{Method} \spc \Rightarrow \mu(M) = \type{Method} \\
 \mu(S)=\type{Field}  \spc \Rightarrow \mu(M) \in \type{Field, Getter, Setter} \\
 \mu(S)=\type{Getter} \spc \Rightarrow \mu(M) \in \type{Field, Getter} \\
 \mu(S)=\type{Setter} \spc \Rightarrow \mu(M) \in \type{Field, Setter} \\
+\end{matrix}
 ++++
 . The overridden member must not be declared final:
 $\lnot S.final$
@@ -1648,10 +1659,13 @@ $\lnot M.abstract \lor S.abstract$
 +
 [math]
 ++++
+\begin{matrix}
 (\mu(M) \in \types{Method, Getter, Field} \land \mu(S)\neq\type{Setter}) \spc  \Rightarrow \tee M \subtype S \\
     (\mu(M) \in \type{Setter, Field}         \land \mu(S)\neq\type{Getter} \land \lnot S.const) \spc   \Rightarrow \tee S \subtype M \\
+\end{matrix}
 ++++
 .  The access modifier is compatible:
++
 $M.acc \geq S.acc$
 
 --
@@ -1672,11 +1686,13 @@ is the following constraint must hold:
 
 [math]
 ++++
+\begin{matrix}
 \spc \lnot M.override\\
 \spc \land \\
 \spc \nexists M' \in C.super.members \cup \bigcup^{n}_{i=1}I_i.members:\\
 \spc  M'.name=M.name \land M'.static=M.static \\
 \spc \land M'.acc>\lenum{private} \\
+\end{matrix}
 ++++
 
 --
@@ -1704,7 +1720,7 @@ constraints must hold:
 
 1.  `S` must be accessible from `C`
 2.  `M` must be override compatible with `S`:
-
++
 $overrideCompatible(M, S)$
 3.  If `S` is a field and `M` is an accessor,
 then an additional accessor $M'$ must exists so that
@@ -1790,13 +1806,10 @@ two implemented interfaces.
 .Consumption of Interface Members
 [req,id=IDE-73,version=1]
 --
-Given a classifier `C` footnote:[`C` could either be a class or an interface.], and interfaces $I_1,..., I_n$
-implemented (or extended) by `C`, and sets $M_C$
-and $M_I$ as defined in . A non-static member
-`M` defined in any interface $I_i$ is merged
-into the consumer (`C`), if for all other (possible) members
-$M'$ of `C`
-+
+Given a classifier `C` footnote:[`C` could either be a class or an interface.], and interfaces $I_1,..., I_n$ implemented (or extended) by `C`, and sets $M_C$ and $M_I$ as defined in .
+// TODO add ref to def:Interface_and_Class_Member_Sets above
+A non-static member `M` defined in any interface $I_i$ is merged into the consumer (`C`), if for all other (possible) members $M'$ of `C`
+
 [math]
 ++++
 \forall M' \in M_C\cup M_I \setminus \{M\} :  M.name=M'.name \land \neg M'.static
@@ -1809,10 +1822,11 @@ candiate:
 +
 [math]
 ++++
+\begin{matrix}
 \mu(M)=\type{Method}    \spc \Rightarrow \mu(M') = \type{Method} \\
 \mu(M)\neq\type{Method} \spc \Rightarrow \mu(M') \in \types{Field, FieldAccessor} % Field, Accessor
+\end{matrix}
 ++++
-
 .  The other member is abstract and not owned by the consumer:
 +
 [math]
@@ -1828,7 +1842,7 @@ of the other member:
 \spc \mu(M)=\mu(M') \lor \mu(M)=\type{Field} \\ % getter does no effect setter and vice versa
 \spc \hspace{2em} \Rightarrow M.acc \geq M'.acc
 ++++
----
++
 .  The merge candidate’s type compatible with the other member:
 +
 [math]
@@ -1854,23 +1868,24 @@ member(s) must be declared as override if they are directly defined in
 the consumer.
 
 .  `M` must be accessible from `C`.
-.  An implementation-compatible member $M'$ must exist in
-`C`:
+.  An implementation-compatible member $M'$ must exist in `C`:
 ..  if `M` is not a field:
 +
 [math]
 ++++
+\begin{matrix}
     \mu(M) \neq\type{Field} \spc \Rightarrow \\
                         \spc \exists M' \in C.members: \\
                             \spc \hspace{3em} overrideCompatible(M',M) \\
                             \spc \hspace{3em} \land (M' \in C.ownedMembers \Rightarrow M'.override)
+\end{matrix}
 ++++
 ..  if `M` is a field, then either an
-implementation-compatible field $F'$ or accessor pair
-$G', S'$ must exist:
+implementation-compatible field $F'$ or accessor pair $G', S'$ must exist:
 +
 [math]
 ++++
+\begin{matrix}
     \mu(M)=\type{Field} \spc \Rightarrow \\
                         \spc \exists F' \in C.fields: \\
                             \spc \hspace{3em} overrideCompatible(F',M) \\
@@ -1881,6 +1896,7 @@ $G', S'$ must exist:
                             \spc \hspace{3em} \land overrideCompatible(S',M) \\
                             \spc \hspace{3em} \land (G' \in C.ownedMembers \Rightarrow G'.override) \\
                             \spc \hspace{3em} \land (S' \in C.ownedMembers \Rightarrow S'.override)
+\end{matrix}
 ++++
 
 --
@@ -1901,8 +1917,10 @@ methods from implemented interfaces, that is
 +
 [math]
 ++++
+\begin{matrix}
 \spc \forall M \in C.methods, M' \in I_i.methods (i=1\dots n): \\
 \spc \hspace{2em} M.name=M'.name \Rightarrow M.acc \neq private \to M.acc \geq M'.acc
+\end{matrix}
 ++++
 3.  Methods in the implementor must be a supertype footnote:[As defined in <<_function-type,Function Type>> for function types.] of methods from implemented interfaces.
 That is to say the implemented methods are override-compatible.
