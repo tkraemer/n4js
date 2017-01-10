@@ -1,6 +1,7 @@
 
 
 = Types
+
 :find:
 ////
 Copyright (c) 2016 NumberFour AG.
@@ -1680,7 +1681,7 @@ set. Due to interfaces, a variable may conform to multiple types.
 .Union Type
 [req,id=IDE-18,version=1]
 --
-For a given union type $U=\union{T_1,\dots,T_n}$, the following conditions must hold:
+For a given union type $ U= union\{ T_1, \dots ,T_n \}$, the following conditions must hold:
 
 1.  Non-empty: At least one element has to be specified:
 $U.typeRefs \neq \emptyset$ ($n\geq 1)$

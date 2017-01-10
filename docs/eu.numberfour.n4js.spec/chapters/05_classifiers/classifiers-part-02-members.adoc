@@ -91,7 +91,7 @@ enumeration as follows:
 
 [math]
 ++++
-<(l,r) & ::= & \{ (\lenum{set}, \lenum{any}), (\lenum{get}, \lenum{any})  \}
+<(l,r) \spc ::= \spc \{ (\lenum{set}, \lenum{any}), (\lenum{get}, \lenum{any})  \}
 ++++
 
 
@@ -1171,7 +1171,7 @@ $a.required \to a.init=null$
 2.  There must be no other member with the same name of a data field
 `f`. In particular, there must be no getter or setter
 defined with the same name:
-$& \forall\ m \in f.owner.members : m \neq f \to m.name \neq f.name$
+$\spc \forall\ m \in f.owner.members : m \neq f \to m.name \neq f.name$
 
 
 If a subclass should set a different default value, this has to be done
@@ -1187,7 +1187,7 @@ The type of a field is the type of its declaration:
 
 [math]
 ++++
-& \infer{\tee f: \tee d}{} \\
+\infer{\tee f: \tee d}{}
 ++++
 
 The type of a field declaration is either the declared type or the
@@ -1195,11 +1195,11 @@ inferred type of the initializer expression:
 
 [math]
 ++++
-& \infer{\tee d: T}{d.declaredType \neq \NULL & T = d.declaredType} \\
-& \infer{\tee d: T}{
-    d.declaredType = \NULL & d.expression \neq \NULL \\
-    E = \tee d.expression & E \not\in \{\type{null, undefined}\} & T = E} \\
-& \infer{\tee d: \type{any}}{else}
+\spc \infer{\tee d: T}{d.declaredType \neq \NULL \spc T = d.declaredType} \\
+\spc \infer{\tee d: T}{
+    d.declaredType = \NULL \spc d.expression \neq \NULL \\
+    E = \tee d.expression \spc E \not\in \{\type{null, undefined}\} \spc T = E} \\
+\spc \infer{\tee d: \type{any}}{else}
 ++++
 
 If the type contains type variables they are substituted according to
@@ -1256,12 +1256,12 @@ task:IDEBUG-575[]
 +
 [math]
 ++++
-& f.expr \neq \NULL \\
-& \lor (\exists assignExp: assignExpr.containingFunction = f.owner.constructor \\
-& \hspace{3em} \land assignExpr.left.target = \lstnfjs{"this"} \\
-& \hspace{3em} \land bind(assignExpr.left.property, f)) \\
-& \lor (f.public \land \exists fpar \in f.owner.constructor.fpars: \\
-& \hspace{3em} fpar.spec \land \exists sm \in structuralMembers: sm.name=f.name)
+\spc f.expr \neq \NULL \\
+\spc \lor (\exists assignExp: assignExpr.containingFunction = f.owner.constructor \\
+\spc \hspace{3em} \land assignExpr.left.target = \lstnfjs{"this"} \\
+\spc \hspace{3em} \land bind(assignExpr.left.property, f)) \\
+\spc \lor (f.public \land \exists fpar \in f.owner.constructor.fpars: \\
+\spc \hspace{3em} fpar.spec \land \exists sm \in structuralMembers: sm.name=f.name)
 ++++
 --
 // todo{Constraints for final assignment are not completely implemented yet, also they have some problems here (e.g., not all control flows are required to assign a value). They will be implemented in the progress of adding more powerful program analysis in general}
@@ -1628,12 +1628,13 @@ following constraints hold:
 .  The name and static modifiers are equal:
 $M.name=S.name \land M.static=S.static$
 .  The metatypes are compatible:
++
 [math]
 ++++
-\mu(S)=\type{Method} & \Rightarrow \mu(M) = \type{Method} \\
-\mu(S)=\type{Field}  & \Rightarrow \mu(M) \in \type{Field, Getter, Setter} \\
-\mu(S)=\type{Getter} & \Rightarrow \mu(M) \in \type{Field, Getter} \\
-\mu(S)=\type{Setter} & \Rightarrow \mu(M) \in \type{Field, Setter} \\
+\mu(S)=\type{Method} \spc \Rightarrow \mu(M) = \type{Method} \\
+\mu(S)=\type{Field}  \spc \Rightarrow \mu(M) \in \type{Field, Getter, Setter} \\
+\mu(S)=\type{Getter} \spc \Rightarrow \mu(M) \in \type{Field, Getter} \\
+\mu(S)=\type{Setter} \spc \Rightarrow \mu(M) \in \type{Field, Setter} \\
 ++++
 . The overridden member must not be declared final:
 $\lnot S.final$
@@ -1644,10 +1645,11 @@ $S.const \Leftrightarrow M.const$
 abstract one:
 $\lnot M.abstract \lor S.abstract$
 .  The types are compatible:
++
 [math]
 ++++
-(\mu(M) \in \types{Method, Getter, Field} \land \mu(S)\neq\type{Setter}) &  \Rightarrow \tee M \subtype S \\
-    (\mu(M) \in \type{Setter, Field}         \land \mu(S)\neq\type{Getter} \land \lnot S.const) &   \Rightarrow \tee S \subtype M \\
+(\mu(M) \in \types{Method, Getter, Field} \land \mu(S)\neq\type{Setter}) \spc  \Rightarrow \tee M \subtype S \\
+    (\mu(M) \in \type{Setter, Field}         \land \mu(S)\neq\type{Getter} \land \lnot S.const) \spc   \Rightarrow \tee S \subtype M \\
 ++++
 .  The access modifier is compatible:
 $M.acc \geq S.acc$
@@ -1670,11 +1672,11 @@ is the following constraint must hold:
 
 [math]
 ++++
-& \lnot M.override\\
-& \land \\
-& \nexists M' \in C.super.members \cup \bigcup^{n}_{i=1}I_i.members:\\
-&  M'.name=M.name \land M'.static=M.static \\
-& \land M'.acc>\lenum{private} \\
+\spc \lnot M.override\\
+\spc \land \\
+\spc \nexists M' \in C.super.members \cup \bigcup^{n}_{i=1}I_i.members:\\
+\spc  M'.name=M.name \land M'.static=M.static \\
+\spc \land M'.acc>\lenum{private} \\
 ++++
 
 --
@@ -1707,10 +1709,13 @@ $overrideCompatible(M, S)$
 3.  If `S` is a field and `M` is an accessor,
 then an additional accessor $M'$ must exists so that
 $M, M'$ are an accessor pair for `S`:
-
-$&\mu(S)=\type{Field} \land \mu(M)={Accessor} \\
-    & \Rightarrow \exists M'\in C.member: \\
-    & \hspace{4em} overrideCompatible(M',S) \land \{\mu(M),\mu(M')\}=\types{Getter,Setter}$
++
+[math]
+++++
+\spc \mu(S)=\type{Field} \land \mu(M)={Accessor} \\
+\spc \Rightarrow \exists M'\in C.member: \\
+\spc \hspace{4em} overrideCompatible(M',S) \land \{\mu(M),\mu(M')\}=\types{Getter,Setter}
+++++
 4.  `M` must be declared as override:
 `M.override`
 --
@@ -1739,10 +1744,11 @@ For the following constraints, we define two helper sets
 $M_C$ and $M_I$ as follows: Given a
 `C`, and interface $I_1,..., I_n$, implemented
 by `C`, with
+
 [math]
 ++++
-M_C & =  C.ownedMembers \cup \{ m \in C.superType.members | m.acc > \lenum{private}\}\\
-M_I & = \bigcup^{n}_{i=1}I_i.members \\
+M_C \spc =  C.ownedMembers \cup \{ m \in C.superType.members | m.acc > \lenum{private}\}\\
+M_I \spc = \bigcup^{n}_{i=1}I_i.members \\
 ++++
 
 Note that these
@@ -1754,7 +1760,7 @@ sets already contain only non-private data fields.
 
 .Member Consumption and Implementation
 [def]
----
+--
 A member `M` defined in an interface `I` is _consumed_ by
 an implementor `C`, if it becomes a member of the class,
 that is, $M \in C.members$.
@@ -1762,9 +1768,8 @@ that is, $M \in C.members$.
 A member `M` is consumed if there is no member defined in
 the implementor with the same name and if there is no non-private
 non-abstract member with that name inherited by the implementor from its
-superclass.footnote:[There had been the idea of preventing static
-members of being consumed. However, this would break the type subtype
-relation.
+superclass.footnote:[There had been the idea of preventing static members of being consumed. However, this would break the type subtype
+relation.]
 
 If the implementor defines the member itself, then the member is
 implemented rather than consumed.
@@ -1780,7 +1785,7 @@ generally assume semantic differences which the consumer has to be aware
 of. Data fields defined in interfaces, in particular, are assumed to be
 concrete. It is not, therefore, possible to consume a field defined in
 two implemented interfaces.
----
+--
 
 .Consumption of Interface Members
 [req,id=IDE-73,version=1]
@@ -1791,6 +1796,7 @@ and $M_I$ as defined in . A non-static member
 `M` defined in any interface $I_i$ is merged
 into the consumer (`C`), if for all other (possible) members
 $M'$ of `C`
++
 [math]
 ++++
 \forall M' \in M_C\cup M_I \setminus \{M\} :  M.name=M'.name \land \neg M'.static
@@ -1803,30 +1809,34 @@ candiate:
 +
 [math]
 ++++
-\mu(M)=\type{Method}    & \Rightarrow \mu(M') = \type{Method} \\
-\mu(M)\neq\type{Method} & \Rightarrow \mu(M') \in \types{Field, FieldAccessor} % Field, Accessor
+\mu(M)=\type{Method}    \spc \Rightarrow \mu(M') = \type{Method} \\
+\mu(M)\neq\type{Method} \spc \Rightarrow \mu(M') \in \types{Field, FieldAccessor} % Field, Accessor
 ++++
 
 .  The other member is abstract and not owned by the consumer:
 +
 [math]
 ++++
-& \mu(M)=\mu(M') \lor \mu(M)=\type{Field} \\ % getter does no effect setter and vice versa
-& \hspace{2em}\Rightarrow M'.abstract \land M' \not\in C.ownedMembers
+\spc \mu(M)=\mu(M') \lor \mu(M)=\type{Field} \\ % getter does no effect setter and vice versa
+\spc \hspace{2em}\Rightarrow M'.abstract \land M' \not\in C.ownedMembers
 ++++
 .  The merge candidate’s access modifier is not less than the modifier
 of the other member:
++
 [math]
 ++++
-& \mu(M)=\mu(M') \lor \mu(M)=\type{Field} \\ % getter does no effect setter and vice versa
-& \hspace{2em} \Rightarrow M.acc \geq M'.acc
+\spc \mu(M)=\mu(M') \lor \mu(M)=\type{Field} \\ % getter does no effect setter and vice versa
+\spc \hspace{2em} \Rightarrow M.acc \geq M'.acc
+++++
 ---
 .  The merge candidate’s type compatible with the other member:
++
 [math]
 ++++
-\mu(M) \in \types{Method, Getter, Field} \land \mu(M') \neq \type{Setter}   & \Rightarrow \tee M \subtype M' \\
-\mu(M) \in \types{Setter, Field} \land \mu(M') \neq \type{Getter}           & \Rightarrow \tee M' \subtype M
+\mu(M) \in \types{Method, Getter, Field} \land \mu(M') \neq \type{Setter}   \spc \Rightarrow \tee M \subtype M' \\
+\mu(M) \in \types{Setter, Field} \land \mu(M') \neq \type{Getter}           \spc \Rightarrow \tee M' \subtype M
 ++++
+
 --
 
 [.language-n4js]
@@ -1850,10 +1860,10 @@ the consumer.
 +
 [math]
 ++++
-    \mu(M) \neq\type{Field} & \Rightarrow \\
-                        & \exists M' \in C.members: \\
-                            & \hspace{3em} overrideCompatible(M',M) \\
-                            & \hspace{3em} \land (M' \in C.ownedMembers \Rightarrow M'.override)
+    \mu(M) \neq\type{Field} \spc \Rightarrow \\
+                        \spc \exists M' \in C.members: \\
+                            \spc \hspace{3em} overrideCompatible(M',M) \\
+                            \spc \hspace{3em} \land (M' \in C.ownedMembers \Rightarrow M'.override)
 ++++
 ..  if `M` is a field, then either an
 implementation-compatible field $F'$ or accessor pair
@@ -1861,17 +1871,18 @@ $G', S'$ must exist:
 +
 [math]
 ++++
-    \mu(M)=\type{Field} & \Rightarrow \\
-                        & \exists F' \in C.fields: \\
-                            & \hspace{3em} overrideCompatible(F',M) \\
-                            & \hspace{3em} \land (F' \in C.ownedMembers \Rightarrow F'.override) \\
-                        & \lor \\
-                        & \exists G' \in C.getters, S' \in C.setters: \\
-                            & \hspace{3em} overrideCompatible(G',M) \\
-                            & \hspace{3em} \land overrideCompatible(S',M) \\
-                            & \hspace{3em} \land (G' \in C.ownedMembers \Rightarrow G'.override) \\
-                            & \hspace{3em} \land (S' \in C.ownedMembers \Rightarrow S'.override)
+    \mu(M)=\type{Field} \spc \Rightarrow \\
+                        \spc \exists F' \in C.fields: \\
+                            \spc \hspace{3em} overrideCompatible(F',M) \\
+                            \spc \hspace{3em} \land (F' \in C.ownedMembers \Rightarrow F'.override) \\
+                        \spc \lor \\
+                        \spc \exists G' \in C.getters, S' \in C.setters: \\
+                            \spc \hspace{3em} overrideCompatible(G',M) \\
+                            \spc \hspace{3em} \land overrideCompatible(S',M) \\
+                            \spc \hspace{3em} \land (G' \in C.ownedMembers \Rightarrow G'.override) \\
+                            \spc \hspace{3em} \land (S' \in C.ownedMembers \Rightarrow S'.override)
 ++++
+
 --
 
 Methods defined in interfaces are automatically declared abstract if
@@ -1890,8 +1901,8 @@ methods from implemented interfaces, that is
 +
 [math]
 ++++
-& \forall M \in C.methods, M' \in I_i.methods (i=1\dots n): \\
-& \hspace{2em} M.name=M'.name \Rightarrow M.acc \neq private \to M.acc \geq M'.acc
+\spc \forall M \in C.methods, M' \in I_i.methods (i=1\dots n): \\
+\spc \hspace{2em} M.name=M'.name \Rightarrow M.acc \neq private \to M.acc \geq M'.acc
 ++++
 3.  Methods in the implementor must be a supertype footnote:[As defined in <<_function-type,Function Type>> for function types.] of methods from implemented interfaces.
 That is to say the implemented methods are override-compatible.

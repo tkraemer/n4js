@@ -228,9 +228,12 @@ following constraints must hold:
 
 1.  `T` must be a classifier, enum, primitive, function type
 expression, classifier type, type variable, union or intersection type:
-$
-\mu(T) \in & \{ \type{any}, \type{Class}, \type{Interface}, \type{Enum}, \type{Primitive}, \type{ObjectType}, \\
-& \type{FunctionTypeExpression}, \type{ClassifierType}, \type{TypeVariable}, \type{Union}, \type{Intersection} \}$
++
+[math]
+++++
+\mu(T) \in \spc \{ \type{any}, \type{Class}, \type{Interface}, \type{Enum}, \type{Primitive}, \type{ObjectType}, \\
+\spc \type{FunctionTypeExpression}, \type{ClassifierType}, \type{TypeVariable}, \type{Union}, \type{Intersection} \}
+++++
 +
 2. `S` is a subtype of `T`, the cast is
 unnecessary and a warning will be generated.
@@ -238,11 +241,15 @@ unnecessary and a warning will be generated.
 primitive types, then `T` must be a subtype of
 `S`. This is also true if `T` is an interface
 and the type of `S` cannot have subtypes, or vice versa.
++
+[math]
+++++
 $(   & (isCPOE(T) \\
 & \hspace{2em}\land (isCPOE(S) \\
 & \hspace{4em}\lor (\mu(S)=\type{Intersection} \land \exists S' \in S: isCPOE(S'))) \\
 & \lor (isInterface(T)  \land isFinalByType(S) ) \\
 & \lor (isFinalByType(T) \land isInterface(S) )  ) \to \tee T <: S $
+++++
 +
 // Doesn't work for daimond-relationships with S and T on left and right. --> limit to classes only.
 4.  `S` is a class, enum or primitive type and
@@ -260,9 +267,12 @@ cast is valid if it is valid for at least one element of
 $S^0=T^0$, a cast is possible if type arguments are sub- or
 supertypes of each other: footnote:[`i` iterates over all
 type args]
-$
++
+[math]
+++++
 & \mu(S)=\type{Classifier} \land \mu(T)=\type{Classifier} \land S^0=T^0 \to \\
 & \hspace{2em} (\forall\ S.typeArg_i <: T.typeArg_i) \lor (\forall\ T.typeArg_i <: S.typeArg_i)$
+++++
 +
 7.  If `T` is a union type, then the type cast is valid if
 it is valid for at least one element of `T`.

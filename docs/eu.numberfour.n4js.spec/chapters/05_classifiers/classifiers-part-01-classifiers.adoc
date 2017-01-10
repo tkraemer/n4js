@@ -867,14 +867,14 @@ type and plain types and , we know
 +
 [math]
 ++++
-\lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G<B>} \subtype \lstnfjs{G<A>}
+\lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G&lt;B&gt;} \subtype \lstnfjs{G&lt;A&gt;}
 ++++
 
 * if `G` is *contravariant* w.r.t. its parameter `T`, then
 +
 [math]
 ++++
-\lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}
+\lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G&lt;A&lt;} \subtype \lstnfjs{G&lt;B&gt;}
 ++++
 
 * if `G` is *invariant* w.r.t. its parameter `T`, then

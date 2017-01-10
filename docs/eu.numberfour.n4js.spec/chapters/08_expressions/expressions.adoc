@@ -233,6 +233,7 @@ type:
 .  If the this keyword is used in some function annotated with an
 annotation , the type specified in the annotation is used.
 The inferred type is always nominal.
++
 [math]
 ++++
 \infer{\tee \lstnfbnf{"this"}: \tsNom T}{f=\lstnfbnf{"this"}.containingFunctionOrAccessor \\ f.hasAnnotation(\lstnfbnf{"@This"}) & T = f.annotation\lstnfjs{["@This"]}}\\
@@ -248,11 +249,13 @@ this keyword is used in a function expression assigned to an property of
 an object literal, the type of the object literal is used. Note that
 usually this is the type in instance methods, and the type in static
 methods.task:IDE-785[]
++
 [math]
 ++++
 \infer{\tee \lstnfbnf{"this"}: \tsNom T}{T=\lstnfbnf{"this"}.probableThisTarget & T\neq\NULL}\\
 ++++
 . task:IDE-185[] In all other cases: Non-strict mode:
++
 [math]
 ++++
 \infer{\tee \lstnfbnf{"this"}: \type{global}}{mode=\lenum{unrestricted}}\\
@@ -476,6 +479,7 @@ described in <<_property-accessors,Property Accessors>>.
 If an identifier $i$ is accessed, the bound declared element
 $D$ must be readable if it is not used on the left-hand side
 of an assignment expression.
++
 [math]
 ++++
 & bind(i, D) \\
@@ -498,6 +502,7 @@ An identifier reference $i$ is bound to an identifiable
 element $i.id$, which is expressed with the function
 $bind(i, i.id)$. The type of the reference is then inferred
 as follows:
++
 [math]
 ++++
 \infer
@@ -1019,14 +1024,22 @@ introduced (cf. ). The constraints are basically similar.
 --
 
 1.  If dot notation is used in N4JS mode, the referenced property must
-exist unless receiver is a dynamic type: task:IDE-422[] +
-$& pae.isDotAccess \land \lnot R.dyn \to \\
-& \exists m \in pae.target.type.properties: m.name=pae.name$
+exist unless receiver is a dynamic type: task:IDE-422[]
++
+[math]
+++++
+& pae.isDotAccess \land \lnot R.dyn \to \\
+& \exists m \in pae.target.type.properties: m.name=pae.name
+++++
 +
 2.  If dot notation is used and the referenced property exists, then the
-property must be accessible: +
-$& pae.isDotAccess \land \lnot R.dyn \to\\
-& (\exists m \in pae.target.type.properties : m.name=pae.name) \to  \alpha(pae, m)$
+property must be accessible:
++
+[math]
+++++
+& pae.isDotAccess \land \lnot R.dyn \to\\
+& (\exists m \in pae.target.type.properties : m.name=pae.name) \to  \alpha(pae, m)
+++++
 +
 3.  If dot notation is used and the referenced property exists and this
 property is a member with a declared `@This` type (only possible for methods or
@@ -1055,10 +1068,13 @@ or subtypes, for (not including subtypes of and not for and ), and for
 dynamic types. It is not allowed to access members of enums in
 particular. That is to say, for an indexed-access expression
 $iae$, the following constraint must hold:
-$
++
+[math]
+++++
 &\tee ia.target \subtype T, T \in \types{Array, ArgumentType, string, String, Iterable} \\
 &\lor\\
-&\tee ia.target = \type{Object}$
+&\tee ia.target = \type{Object}
+++++
 +
 3.  In N4JS mode, if the receiver is an array and is not dynamic, in
 case of index access the index expression must be a number: +
@@ -1198,7 +1214,13 @@ Let $ne$ be a new expression, with
 $\tee ne.callee: C$. The following constraints must hold:
 
 .  The callee must be a constructor type:
-math:[\[C <: \type{constructor\{?\}}\]] or a constructable type.
++
+[math]
+++++
+C <: \type{constructor\{?\}}
+++++
++
+or a constructable type.
 .  Let $O$ be the type argument of $C$, that is
 $C = constructor\{O\}$. In that case,
 ..  $O$ must not be an interface or enum:
@@ -1917,6 +1939,7 @@ The type of a relational expression always is `boolean`;
 [math]
 ++++
 &\infer{\tee lhs\ \lstnfbnf{('<'|'<='|'>'|'>='|'instanceof'|'in')}\ rhs\ : \type{boolean}}{}    \tag{\S 11.8.1-6}
+++++
 
 
 // TODO check \tag{\S 11.8.1-6} in math blocks
@@ -1951,6 +1974,7 @@ $lhs \lstnfbnf{('==='|'!==')} rhs$, neither
 $\tee lhs.upper <: rhs.upper$ nor
 $\tee rhs.upper <: lhs.upper$ and no interface or composed
 type is involved as the result is constant in these cases.
+
 task:IDE-773[] task:IDEBUG-260[]
 
 Note that a warning is only created if the upper bounds do not match the
@@ -1971,6 +1995,7 @@ This is why the upper bounds are to be used.
 
 [discrete]
 ==== Type Inference [[type-inference-13]]
+
 task:IDE-244[] task:IDE-345[]
 
 In N4JSmode, using the non-strict equality operators `'=='|'!='` is only allowed for internal developers. External developers have to use the strict equality
@@ -1978,7 +2003,7 @@ operators `'==='|'!=='`. The inferred type of an equality expression always is `
 
 [math]
 ++++
-&\infer{\tee lhs\ \lstnfbnf{('=='|'!='|'==='|'!==')}\ rhs\ : \type{boolean}}{}  \tag{\S 11.9}
+&\infer{\tee lhs\ \lstnfbnf{('=='|'!='|'==='|'!==')}\ rhs\ : \type{boolean}}{}
 ++++
 
 === Binary Bitwise Expression
@@ -2461,6 +2486,7 @@ $\mu(s.containingFunction=s.containingMethodOrFieldAccessor$
 4.  If the return type of the method access via super is this, the
 actually bound this type will be the type of the calling class (and not
 of the class defining the method).
++
 [math]
 ++++
 \infer

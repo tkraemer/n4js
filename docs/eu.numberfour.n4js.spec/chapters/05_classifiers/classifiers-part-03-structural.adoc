@@ -96,6 +96,7 @@ If a type $T$ is declared as structural at its definition, $T.defStructural$ is 
 .Definition Site Structural Typing
 [req,id=IDE-75,version=1]
 --
+
 .  The structurally defined type cannot be used on the right hand side
 of the `instanceof` operator:
 $x\ \lstnfjs{instanceof}\ T \Rightarrow \lnot T.defStructural$
@@ -126,7 +127,7 @@ structurally defined type.
 ..  A structurally defined type $T$ is implicitly derived
 from `Object` if no other type is specified. In particular, a structurally
 defined type must not be inherited from
-
++
 [math]
 ++++
 \infer{\tee T \subtype \lstnfjs{Object}}{T.defStructural}
@@ -144,7 +145,7 @@ The following snippet demonstrates the effect of definition-site structural type
 nominal declared types: [[ex:declaration-site-structural-typing]]
 
 .Declaration Site Structural Typing
-[source,n4js,caption="Declaration Site Structural Typing"]
+[source,n4js]
 ----
 interface ~Tilde { x; y; }
 interface Nominal { x; y; }
