@@ -762,38 +762,25 @@ class A {
 --
 
 1.  Annotation `@Spec` may only appear on a formal parameter of a constructor.
-2.  Only a single formal parameter of a constructor may be annotated
-with  `@Spec`.
-3.  If a formal parameter is annotated with `@Spec`, the parameter’s type must
-be $\nfjstilde\lstnfjs{this}$ or
-$\nfjstilde i \nfjstilde\lstnfjs{this}$ (i.e. use-site
+2.  Only a single formal parameter of a constructor may be annotated with `@Spec`.
+3.  If a formal parameter is annotated with `@Spec`, the parameter’s type must be $\nfjstilde\lstnfjs{this}$ or $\nfjstilde i \nfjstilde\lstnfjs{this}$ (i.e. use-site
 structurally typed $\lstnfjs{this}$).
-4.  Fields provided by the parameter, but not defined in the structural
-field type, are _not_ used to set fields.
-5.  Non-`public` fields explicitly added to the spec
-parameter are copied as well. task:IDEBUG-134[]
-6.  Even if the `@Spec` annotation is used, the super constructor must be called
-accordingly.
-7.  The type of an additional member which match owned non-public field
-must be subtype of the field’s type:
+4.  Fields provided by the parameter, but not defined in the structural field type, are _not_ used to set fields.
+5.  Non-`public` fields explicitly added to the specparameter are copied as well. task:IDEBUG-134[]
+6.  Even if the `@Spec` annotation is used, the super constructor must be calledaccordingly.
+7.  The type of an additional member which match owned non-public fieldmust be subtype of the field’s type:
 +
 [math]
 ++++
+\begin{matrix}
 \forall s \in ctor.fpar.structuralMembers, ctor.fpar.spec: \\
-++++
-[math]
-++++
 \hspace{2em}\exists f \in ctor.owner.ownedFields \Rightarrow \tee s \subtype f
+\end{matrix}
 ++++
-8.  $\nfjstilde i \nfjstilde\lstnfjs{this}$ constructor
-ignores superfluous properties provided by an object literal. These
-ignored properties are _not_ used to set
-non-$\lenum{public}$ fields.
-9.  Since use-site structural initializer field types can be defined via
-public, non-static, non-optional writable fields,
-$\nfjstilde i \nfjstilde\lstnfjs{this}$ constructor accepts
-those properties provided by an object literal which has the
-corresponding readble fields. These properties will be initialzed.
+8.  $\nfjstilde i \nfjstilde\lstnfjs{this}$ constructor ignores superfluous properties provided by an object literal.
+These ignored properties are _not_ used to set non-$\lenum{public}$ fields.
+9.  Since use-site structural initializer field types can be defined via public, non-static, non-optional writable fields, $\nfjstilde i \nfjstilde\lstnfjs{this}$ constructor accepts those properties provided by an object literal which has the corresponding readble fields.
+These properties will be initialzed.
 
 --
 

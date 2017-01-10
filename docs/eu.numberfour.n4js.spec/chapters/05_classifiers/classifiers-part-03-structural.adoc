@@ -488,7 +488,7 @@ footnote:[Note that due to this relaxed definition (compared with definition-sit
 ++++
 \begin{matrix}
 \infer{\tee X \subtype \tee \tsStr T}
-    {{\forall m \in T.members, m.owner \not\in \types{N4Object}, m.acc=\lenum{public}, \neg m.static, m\neq T.ctor:}\\
+    {{\forall m \in T.members, m.owner \notin \types{N4Object}, m.acc=\lenum{public}, \neg m.static, m \neq T.ctor:}\\
     {\hspace{1em} \exists m' \in X.members:}\\
     {\hspace{2em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name}\\
     {\hspace{2em} \land \tee m' \subtype \tee m}}

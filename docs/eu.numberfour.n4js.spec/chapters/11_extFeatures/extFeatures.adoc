@@ -402,13 +402,19 @@ the $key$. task:IDEBUG-484[]
 
 A provider method $M$ (in the binder) defines a binding
 
+[math]
+++++
 $bind(M.returnType, X)$
- (in which $X$ is an
-existential type with
-$\exists X \subtype target.returnType$).
+++++
 
-For simplification, we define +
-$key*=
+(in which $X$ is an existential type with $\exists X \subtype target.returnType$).
+
+For simplification, we define:
+
+[math]
+++++
+\begin{matrix}
+key*=
    \begin{cases}
      target.returnType,     &\text{if $target$ is provider method} \\
      key,                   &\text{otherwise ($key$ is a type reference)}
@@ -418,7 +424,9 @@ $target*=
    \begin{cases}
      X \subtype target.returnType,  &\text{if $target$ is provider method} \\
      target,                        &\text{otherwise ($target$ is a type reference)}
-   \end{cases}$
+   \end{cases}
+\end{matrix}
+++++
 
 --
 
@@ -1248,7 +1256,6 @@ $P.polyfill=\TRUE$, all the following constraints must hold:
 is called the filled class:
 +
 $P.super = F$
-
 . $P$’s name equals the name of the filled class and is
 contained in a module with same qualified name (specifier or global):
 +
@@ -1268,12 +1275,14 @@ $P.implementedInterfaces=\emptyset$
 . $P$ must have the same access modifier (access,
 abstract, final) as the filled class:
 +
-$
+[math]
+++++
+\begin{matrix}
 & P.accessModifier=F.accessModifier \\
 & P.abstract = F.abstract \\
 & P.final = F.final
-$
-+
+\end{matrix}
+++++
 .  If $P$ declares a constructor, it must be override
 compatible with the constructor of the filled class:
 +
@@ -1284,6 +1293,7 @@ compatible with the constructor of the filled class:
 . $P$ must define the same type variables as the filled
 class $F$ and the arguments must be in the same order as the
 parameters (with no further modifications):
++
 [math]
 ++++
 & \forall i, 0 \leq i<|P.typePars|:\\

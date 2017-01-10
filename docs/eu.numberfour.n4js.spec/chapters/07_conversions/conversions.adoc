@@ -33,18 +33,23 @@ relations:
 
 [math]
 ++++
+\begin{matrix}
 \infer{\tee \type{Boolean} \notsubtype{\type{boolean}}}{} | \infer{\tee \type{boolean} \notsubtype{\type{Boolean}}}{} \\
 \infer{\tee \type{Number} \notsubtype{\type{number}}}{} | \infer{\tee \type{number} \notsubtype{\type{Number}}}{}  \\
 \infer{\tee \type{String} \notsubtype{\type{string}}}{} | \infer{\tee \type{string} \notsubtype{\type{String}}}{}
+\end{matrix}
 ++++
+
 
 
 and for the N4JS specific types:
 
 [math]
 ++++
+\begin{matrix}
 \infer{\tee \type{pathSelector<T>} \subtype{\type{string}}}{} \\
 \infer{\tee \type{i18nKey} \subtype{\type{string}}}{}
+\end{matrix}
 ++++
 
 
@@ -210,11 +215,13 @@ We first define helper rules for the type cast constraints as follows:
 
 [math]
 ++++
+\begin{matrix}
 |\infer{isCPOE(T)}{\mu(T) \in \{ \type{TEnum}, \type{Class}, \type{Primitive}, \type{ObjectType}\}}\\
 |\infer{isCPOE(T)}{\mu{T} \in\{\type{ClassifierType}, \type{TypeType} \} \land \mu(T.typeRef) \neq \type{TypeVariable} }\\
 |\infer{isInterface(T)}{\mu(T) \in \{ \type{Interface} \}}\\
 |\infer{isBoundTypeVar(T)}{\mu(T)=\type{TypeVariable}  \land T.upperBounds \neq  \emptyset }\\
 |\infer{isFinalByType(T)}{\mu(T) \in \{\ \type{TEnum}, \type{Primitive} \} \lor (\mu(T)=\type{Class} \land T.extensibility=\lenum{final} \})}
+\end{matrix}
 ++++
 
 
@@ -226,58 +233,52 @@ Given a type cast expression `e` in which
 $\tee e.expr: S$ and and target type `T`, the
 following constraints must hold:
 
-1.  `T` must be a classifier, enum, primitive, function type
-expression, classifier type, type variable, union or intersection type:
+1.  `T` must be a classifier, enum, primitive, function type expression, classifier type, type variable, union or intersection type:
 +
 [math]
 ++++
+\begin{matrix}
 \mu(T) \in \spc \{ \type{any}, \type{Class}, \type{Interface}, \type{Enum}, \type{Primitive}, \type{ObjectType}, \\
 \spc \type{FunctionTypeExpression}, \type{ClassifierType}, \type{TypeVariable}, \type{Union}, \type{Intersection} \}
+\end{matrix}
 ++++
-+
-2. `S` is a subtype of `T`, the cast is
-unnecessary and a warning will be generated.
-3.  `S` and `T` are classes, enums or
-primitive types, then `T` must be a subtype of
-`S`. This is also true if `T` is an interface
-and the type of `S` cannot have subtypes, or vice versa.
+2. `S` is a subtype of `T`, the cast is unnecessary and a warning will be generated.
+3.  `S` and `T` are classes, enums or primitive types, then `T` must be a subtype of `S`.
+This is also true if `T` is an interface and the type of `S` cannot have subtypes, or vice versa.
 +
 [math]
 ++++
-$(   & (isCPOE(T) \\
+\begin{matrix}
+(   & (isCPOE(T) \\
 & \hspace{2em}\land (isCPOE(S) \\
 & \hspace{4em}\lor (\mu(S)=\type{Intersection} \land \exists S' \in S: isCPOE(S'))) \\
 & \lor (isInterface(T)  \land isFinalByType(S) ) \\
-& \lor (isFinalByType(T) \land isInterface(S) )  ) \to \tee T <: S $
+& \lor (isFinalByType(T) \land isInterface(S) )  ) \to \tee T <: S
+\end{matrix}
 ++++
-+
 // Doesn't work for daimond-relationships with S and T on left and right. --> limit to classes only.
-4.  `S` is a class, enum or primitive type and
-`T` is a type-variable, then for each given boundary
-$T^{up}_i$ of `T` of type class, enum or
-primitive `S` must be a member of the type hierarchy:
+4.  `S` is a class, enum or primitive type and `T` is a type-variable, then for each given boundary $T^{up}_i$ of `T` of type class, enum or primitive `S` must be a member of the type hierarchy:
 footnote:[`i` iterates over all boundaries]
-$& (isBoundTypeVar(T) \land isCPOE(S) ) \\
-& \to  \forall_{T^{up}_i \in T.upperBounds} (isCPOE({T^{up}_i}) \to \tee ( {T^{up}_i} <: S \lor  {T^{up}_i} :> S ) )$
-+
-5.  `S` is a union or intersection type, then the type
-cast is valid if it is valid for at least one element of
-`S`.
-6.  `S` and `T` are generics, and if
-$S^0=T^0$, a cast is possible if type arguments are sub- or
-supertypes of each other: footnote:[`i` iterates over all
-type args]
 +
 [math]
 ++++
+\begin{matrix}
+& (isBoundTypeVar(T) \land isCPOE(S) ) \\
+& \to  \forall_{T^{up}_i \in T.upperBounds} (isCPOE({T^{up}_i}) \to \tee ( {T^{up}_i} <: S \lor  {T^{up}_i} :> S ) )
+\end{matrix}
+++++
+5.  `S` is a union or intersection type, then the type cast is valid if it is valid for at least one element of `S`.
+6.  `S` and `T` are generics, and if $S^0=T^0$, a cast is possible if type arguments are sub- or supertypes of each other: footnote:[`i` iterates over all type args]
++
+[math]
+++++
+\begin{matrix}
 & \mu(S)=\type{Classifier} \land \mu(T)=\type{Classifier} \land S^0=T^0 \to \\
 & \hspace{2em} (\forall\ S.typeArg_i <: T.typeArg_i) \lor (\forall\ T.typeArg_i <: S.typeArg_i)$
+\end{matrix}
 ++++
-+
-7.  If `T` is a union type, then the type cast is valid if
-it is valid for at least one element of `T`.
-8.  If `T` is an intersection type, then the type cast is
-valid if it is valid for all elements of `T`.
+7.  If `T` is a union type, then the type cast is valid if it is valid for at least one element of `T`.
+8.  If `T` is an intersection type, then the type cast is valid if it is valid for all elements of `T`.
 
 NOTE: `any` is a supertype of all other types, thus it is always possible
 to cast a variable of type `any` to other (non-composed) types.
@@ -547,6 +548,7 @@ a|
 ----
 n = Number("42");//42
 ----
+
 | string  | boolean | N4Primitives.parseBoolean(...)
 a|
 [source,n4js]
@@ -554,24 +556,28 @@ a|
  b=N4Primitives.parseBoolean("false");
 ----
 | number  | boolean | Boolean(...)
+
 a|
 [source,n4js]
 ----
 b=Boolean(17.5); //true
 ----
 | number  | string  | Number.toString()
+
 a|
 [source,n4js]
 ----
 s=42.toString(); //"42"
 ----
 | boolean | number  | N4Primitives.toNumber(...)
+
 a|
 [source,n4js]
 ----
 n=N4Primitives.toNumber(true);
 ----
 | boolean | string  | Boolean.toString()
+
 a|
 [source,n4js]
 ----
@@ -582,11 +588,9 @@ a|
 Remarks:
 
 1.  ECMAScript doesn’t define explicit conversion from string content.
-Implicit handling states all strings with $>$0==true. `N4Primitives.parseBoolean( x )` yields
-true for `x.trim().toLowerCase().equals("true")`
-2.  The call to `Boolean(..)` for the arguments `0, -0, null, false, NaN, undefined` and `""` evaluate to `false`. All other values
-evaluate to `true`.
+Implicit handling states all strings with $>$0==true. `N4Primitives.parseBoolean( x )` yields true for `x.trim().toLowerCase().equals("true")`
+2.  The call to `Boolean(..)` for the arguments `0, -0, null, false, NaN, undefined` and `""` evaluate to `false`.
+All other values evaluate to `true`.
 3.  `Number` has several methods for converting a value to string cite:[ECMA11a(S15.7.4)]: `toExponential(), to Fixed(), toPrecision()`.
-4.  ECMAScript doesn’t define explicit conversion from boolean to
-number. Implicit handling states true $\rightarrow$ 1 and
-false $\rightarrow$ 0, which `N4Primitives.toNumber()` yields.
+4.  ECMAScript doesn’t define explicit conversion from boolean to number.
+Implicit handling states true $\rightarrow$ 1 and false $\rightarrow$ 0, which `N4Primitives.toNumber()` yields.

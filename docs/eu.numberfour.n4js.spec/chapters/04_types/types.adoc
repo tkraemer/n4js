@@ -78,7 +78,7 @@ $S \meet T = M$, if +
 M \subtype  S\\
 M \subtype  T\\
 \forall L: (L\subtype S) \land (L\subtype T) \to L\subtype M
-\begin{end}
+\end{matrix}
 ++++
 --
 

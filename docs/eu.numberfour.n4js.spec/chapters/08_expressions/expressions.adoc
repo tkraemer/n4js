@@ -818,35 +818,50 @@ following constraints must hold (cf. cite:[ECMA11a(p.66)]:
 
 * Object literal may not have two PropertyNameValuePairs with the same
 name in strict mode (cf. 4.a):
-$mode=\lenum{strict} \to & \forall pa \in ol.propertyAssignments, pa.isData:\\
++
+[math]
+++++
+\begin{matrix}
+mode=\lenum{strict} \to & \forall pa \in ol.propertyAssignments, pa.isData:\\
 & \nexists pa' \in ol.propertyAssignments:\\
-& pa'.isAccessor \land pa'.name = pa.name$
+& pa'.isAccessor \land pa'.name = pa.name
+\end{matrix}
+++++
 
-* Object literal may not have PropertyNameValuePair and
-PropertyGetterDeclaration/PropertySetterDeclaration with the same name
-(cf. 4.b/c): +
-$\forall & pa \in ol.propertyAssignments, pa$\nexists & pgsd \in ol.propertyAssig$& \mu(pgsd)\neq\type{PropertyNameValuePair} \land pgsd.name = pa.name$
+* Object literal may not have PropertyNameValuePair and ``PropertyGetterDeclaration``/``PropertySetterDeclaration`` with the same name (cf. 4.b/c):
 +
-* Object literal may not have multiple PropertyGetterDeclaration or
-PropertySetterDeclaration with the same name (cf. 4.d):
-$\forall & pg \in ol.propertyAssignments, pg.isAccessor:\\
+[math]
+++++
+\forall & pa \in ol.propertyAssignments, pa$\nexists & pgsd \in ol.propertyAssig$& \mu(pgsd)\neq\type{PropertyNameValuePair} \land pgsd.name = pa.name
+++++
+
+* Object literal may not have multiple `PropertyGetterDeclaration` or `PropertySetterDeclaration` with the same name (cf. 4.d):
++
+[math]
+++++
+\begin{matrix}
+\forall & pg \in ol.propertyAssignments, pg.isAccessor:\\
 \nexists & pg' \in ol.propertyAssignments\{pg\}: \\
-& \mu(pg')=\mu(pg) \land pg'.name = pg.name$
-+
-* It is a SyntaxError if the Identifier `eval` or the Identifier
-`arguments` occurs as the Identifier in a PropertySetParameterList of
-a PropertyAssignment that is contained in strict code or if its
-FunctionBody is strict code.
-cite:[ECMA11a(p.66)]
-* If two or more property assignments have the same name (and the
-previous conditions hold), then the types of these assignments must
-`conform`. That is to say that the inferred (but not declared) type of
-all assignments must be type of probably declared types and if the types
+& \mu(pg')=\mu(pg) \land pg'.name = pg.name
+\end{matrix}
+++++
+
+* It is a SyntaxError if the Identifier `eval` or the Identifier `arguments` occurs as the Identifier in a PropertySetParameterList of a PropertyAssignment that is contained in strict code or if its
+FunctionBody is strict code. cite:[ECMA11a(p.66)]
+
+* If two or more property assignments have the same name (and the previous conditions hold), then the types of these assignments must
+`conform`. That is to say that the inferred (but not declared) type of all assignments must be type of probably declared types and if the types
 are explicitly declared, they must be equal.
 //todo[JvP, LB]{How to express that?}
+
 * In N4JS mode, the name of a property must be a valid N4JSIdentifier:
-$mode=\lenum{n4js} \to & \forall pa \in ol.propertyAssignments:\\
-& \mu(pa.name)=\type{N4JSIdentifier}$
++
+[math]
+++++
+\begin{matrix}mode=\lenum{n4js} \to & \forall pa \in ol.propertyAssignments:\\
+& \mu(pa.name)=\type{N4JSIdentifier}
+++++
+
 --
 
 
@@ -1071,16 +1086,20 @@ $iae$, the following constraint must hold:
 +
 [math]
 ++++
+\begin{matrix}
 &\tee ia.target \subtype T, T \in \types{Array, ArgumentType, string, String, Iterable} \\
 &\lor\\
 &\tee ia.target = \type{Object}
+\end{matrix}
 ++++
 +
-3.  In N4JS mode, if the receiver is an array and is not dynamic, in
-case of index access the index expression must be a number: +
-$& mode=\lenum{n4js} \land pae.target.type=\type{Array} \land pae.isIndexAccess \\
-& \Rightarrow \tee pae.index \subtype[number]$
+3.  In N4JS mode, if the receiver is an array and is not dynamic, in case of index access the index expression must be a number:
 +
+[math]
+++++
+& mode=\lenum{n4js} \land pae.target.type=\type{Array} \land pae.isIndexAccess \\
+& \Rightarrow \tee pae.index \subtype[number]
+++++
 4.  In N4JS mode, if the receiver is a subtype of types or and is not
 dynamic, in case of index access the index expression must be a
 number:  task:IDE-837[] +
@@ -1091,14 +1110,18 @@ $& mode=\lenum{n4js} \\
 +
 5.  In N4JS mode, if the receiver is an iterable and is not dynamic, in
 case of index access the index expression must be a property access
-expression to the built-in symbol : +
-$
+expression to the built-in symbol :
++
+[math]
+++++
 & mode=\lenum{n4js} \land pae.target.type=\type{Iterable} \land pae.isIndexAccess \\
 & \Rightarrow \\
 & \hspace{3em} \mu(pae.index)=\type{IndexedAccessExpression} \\
 & \hspace{3em} \land pae.index.isDotAccess \\
 & \hspace{3em} \land pae.index.target = \type{Symbol} \\
-& \hspace{3em} \land pae.index.property = "iterator" \\ $
+& \hspace{3em} \land pae.index.property = "iterator" \\
+++++
+
 --
 
 Although index access is very limited, it is still possible to use
@@ -1150,7 +1173,7 @@ Cf. cite:[ECMA11a(S11.2.1,p.67ff)]
 We define the following type inferencing rules for property accessors:
 
 * The type of an indexed-access expression _p_ is inferred
-as follows task:IDE-342]:
+as follows task:IDE-342[]]:
 +
 [math]
 ++++
@@ -2052,6 +2075,8 @@ in N4JS mode: task:IDE-345[]
 ++++
 \infer{\tee \type{BitwiseBitwiseExpression}\ \expectType\ \type{Expression}: \type{number}}{}
 ++++
+
+--
 
 [discrete]
 ==== Type Inference [[type-inference-14]]
