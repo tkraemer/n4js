@@ -121,23 +121,23 @@ u.m8(a1);  // now ok, because 2nd fpar of m6 is optional in both T2 and T3
 
 class T1err {
 	// invalid use of optional/variadic fpar in next two lines
-	// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "p1 : A?"
+	// IDE-145 XPECT warnings --> "This parameter is changed to the default parameter 'p2=undefined' since it follows a default parameter." at "p2 : A"
 	mErr1(p1 : A=undefined, p2 : A) : void {}
-	// XPECT errors --> "Only the last formal parameter can be variadic." at "..."
+	// XPECT errors --> "Only the last formal parameter can be variadic." at "... p1 : A"
 	mErr2(... p1 : A, p2 : A) : void {}
 }
 
 class T2err {
-	// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "p1 : A?"
+	// IDE-145 XPECT warnings --> "This parameter is changed to the default parameter 'p2=undefined' since it follows a default parameter." at "p2 : A"
 	mErr1(p1 : A=undefined, p2 : A) : void {}
-	// XPECT errors --> "Only the last formal parameter can be variadic." at "..."
+	// XPECT errors --> "Only the last formal parameter can be variadic." at "... p1 : A"
 	mErr2(... p1 : A, p2 : A) : void {}
 }
 
 class T3err {
-	// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "p1 : A?"
+	// IDE-145 XPECT warnings --> "This parameter is changed to the default parameter 'p2=undefined' since it follows a default parameter." at "p2 : A"
 	mErr1(p1 : A=undefined, p2 : A) : void {}
-	// XPECT errors --> "Only the last formal parameter can be variadic." at "..."
+	// XPECT errors --> "Only the last formal parameter can be variadic." at "... p1 : A"
 	mErr2(... p1 : A, p2 : A) : void {}
 }
 

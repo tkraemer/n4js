@@ -1,7 +1,7 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 class Foo {
     bar(f : {function(this): void}) : void { f(this); }
-    barOpt(f : {function(this=void 0): void}) : void { f(this); f(); }
+    barOpt(f : {function(this=undefined): void}) : void { f(this); f(); }
 }
 class Futzi extends Foo { }
 

@@ -851,29 +851,6 @@ class ASTStructureValidator {
 		val container = model.eContainer
 		var allowYieldInInit = false
 		if (container instanceof FunctionDefinition) {
-			if (model.isVariadic) {
-				if (container.fpars.last !== model) {
-					val nodes = NodeModelUtils.findNodesForFeature(model, N4JSPackage.Literals.FORMAL_PARAMETER__VARIADIC)
-					val target = nodes.head ?: NodeModelUtils.findActualNodeFor(model)
-					if(target !== null) {
-						producer.node = target
-						producer.addDiagnostic(
-							new DiagnosticMessage(IssueCodes.messageForFUN_PARAM_VARIADIC_ONLY_LAST,
-								IssueCodes.getDefaultSeverity(IssueCodes.FUN_PARAM_VARIADIC_ONLY_LAST),
-								IssueCodes.FUN_PARAM_VARIADIC_ONLY_LAST))
-					}
-				} else if (model.initializer !== null) {
-					val nodes = NodeModelUtils.findNodesForFeature(model, N4JSPackage.Literals.FORMAL_PARAMETER__INITIALIZER)
-					val target = nodes.head ?: NodeModelUtils.findActualNodeFor(model)
-					if(target !== null) {
-						producer.node = target
-						producer.addDiagnostic(
-							new DiagnosticMessage(IssueCodes.messageForFUN_PARAM_VARIADIC_WITH_INITIALIZER,
-								IssueCodes.getDefaultSeverity(IssueCodes.FUN_PARAM_VARIADIC_WITH_INITIALIZER),
-								IssueCodes.FUN_PARAM_VARIADIC_WITH_INITIALIZER))
-					}
-				}
-			}
 			allowYieldInInit = !container.isGenerator
 		}
 		_validateASTStructure(

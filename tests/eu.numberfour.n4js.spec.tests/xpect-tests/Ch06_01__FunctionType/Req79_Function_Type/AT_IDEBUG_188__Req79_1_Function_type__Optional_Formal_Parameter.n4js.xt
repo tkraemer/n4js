@@ -9,11 +9,14 @@ class A {
 //////////////////////////
 /// -- Method declarations --
 ///////////////////////
-// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "a : number?"
+/*  IDE-145 XPECT warnings ---
+"This parameter is changed to the default parameter 'b=undefined' since it follows a default parameter." at "b : number"
+"This parameter is changed to the default parameter 'c=undefined' since it follows a default parameter." at "c : number"
+---*/
 	f (a : number=undefined, b : number, c : number) : void {}
-// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "b : number?"
+// IDE-145 XPECT warnings --> "This parameter is changed to the default parameter 'c=undefined' since it follows a default parameter." at "c : number"
 	f2 (a : number, b : number=undefined, c : number) : void {}
-// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "a : number?"
+// IDE-145 XPECT warnings --> "This parameter is changed to the default parameter 'b=undefined' since it follows a default parameter." at "b : number"
 	f3 (a : number=undefined, b : number, c : number=undefined) : void {}
 	
 }
@@ -22,11 +25,14 @@ class A {
 //////////////////////////
 /// -- Function declarations --
 ///////////////////////
-// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "a : number?"
+/* IDE-145 XPECT warnings ---
+"This parameter is changed to the default parameter 'b=undefined' since it follows a default parameter." at "b : number"
+"This parameter is changed to the default parameter 'c=undefined' since it follows a default parameter." at "c : number"
+---*/
 function f (a : number=undefined, b : number, c : number) {}
-// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "b : number?"
+// IDE-145 XPECT warnings --> "This parameter is changed to the default parameter 'c=undefined' since it follows a default parameter." at "c : number"
 function f2 (a : number, b : number=undefined, c : number) {}
-// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "a : number?"
+// IDE-145 XPECT warnings --> "This parameter is changed to the default parameter 'b=undefined' since it follows a default parameter." at "b : number"
 function f3 (a : number=undefined, b : number, c : number=undefined) {}
 
 // XPECT noerrors --> "mmmm"
@@ -38,18 +44,24 @@ function fOK2 (a : number, b : number=undefined, ... c : number) {}
 //////////////////////////
 /// -- Function expressions --
 ///////////////////////
-// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "a : number?"
+/* IDE-145 XPECT warnings ---
+"This parameter is changed to the default parameter 'b=undefined' since it follows a default parameter." at "b : number"
+"This parameter is changed to the default parameter 'c=undefined' since it follows a default parameter." at "c : number"
+---*/
 var result1 : number = function (a : number=undefined, b : number, c : number) : number { return a+2 } (13,0,0)
 var resultOK1 : number = function fOK12 (a : number, b : number=undefined, c : number=undefined) : number {return a;} (1,2,3);
 
 //////////////////////////
 /// -- Function types --
 ///////////////////////
-// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "a : number?"
+/* IDE-145 XPECT warnings ---
+"This parameter is changed to the default parameter 'number=undefined' since it follows a default parameter." at "b : number"
+"This parameter is changed to the default parameter 'number=undefined' since it follows a default parameter." at "c : number"
+---*/
 var dynF1 : { function (a : number=undefined, b : number, c : number) : void };
-// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "b : number?"
+// IDE-145 XPECT warnings --> "This parameter is changed to the default parameter 'number=undefined' since it follows a default parameter." at "c : number"
 var dynF2 : { function (a : number, b : number=undefined, c : number) : void };
-// IDE-145 XPECT noerrors --> "Optional parameters can only appear after the non-optional parameters." at "a : number?"
+// IDE-145 XPECT warnings --> "This parameter is changed to the default parameter 'number=undefined' since it follows a default parameter." at "b : number"
 var dynF3 : { function (a : number=undefined, b : number, c : number=undefined) : void };
 
 // XPECT noerrors --> "mmmm"

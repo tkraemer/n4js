@@ -583,39 +583,73 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
+	@Check
+	def void checkOptionalModifierT(TFormalParameter fpar) {
+		if(fpar.typeRef?.undefModifier === UndefModifier.OPTIONAL) {
+			val String msg = getMessageForFUN_PARAM_OPTIONAL_WRONG_SYNTAX(fpar.typeRef?.declaredType?.name)
+			addIssue(msg, fpar, FUN_PARAM_OPTIONAL_WRONG_SYNTAX)
+		}
+	}
+
+	@Check
+	def checkFormalParametersIn(FunctionTypeExpression fun) {
+		<TFormalParameter>internalCheckFormalParameter(fun.fpars, [variadic], [hasInitializerAssignment], [typeRef], [typeRef?.declaredType?.name]);
+	}
+
+	@Check
+	def checkFormalParametersIn(TFunction fun) {
+		<TFormalParameter>internalCheckFormalParameter(fun.fpars, [variadic], [hasInitializerAssignment], [typeRef], [typeRef?.declaredType?.name]);
+	}
+
+	@Check
+	def checkFormalParametersIn(FunctionDefinition fun) {
+		<FormalParameter>internalCheckFormalParameter(fun.fpars, [variadic], [hasInitializerAssignment], [it.definedTypeElement.typeRef], [name]);
+	}
+
 	/**
-	 * IDEBUG-211  Check for ..., ?, and missing name in formal parameters.
-	 *
+	 * IDEBUG-211, IDE-145  Check for ..., ?, and missing name in formal parameters.
 	 */
-	@Check
-	def checkParameters(FunctionTypeExpression fun) {
-		internalCheckFormalParameters(fun.fpars);
-	}
-
-	/**
-	 * IDEBUG-211  Check for ..., ?, and missing name in formal parameters.
-	 *
-	 * TFunctions is supertype of are referenced
-	 * */
-	@Check
-	def checkWithStructuralTypeRef(TFunction fun) {
-		internalCheckFormalParameters(fun.fpars);
-	}
-
-	def internalCheckFormalParameters(TFormalParameter[] fpars) {
-		holdsModifierOfParamsHaveTType(fpars)
+	private def <T extends EObject> internalCheckFormalParameter(
+		T[] fpars,
+		(T)=>boolean variadic,
+		(T)=>boolean hasInitAssgn,
+		(T)=>TypeRef typeRef,
+		(T)=>String name
+	) {
 
 		// 1. Variadic only once
-		val variadicsCount = fpars.filter[isVariadic].size
+		val variadicsCount = fpars.filter[variadic.apply(it)].size
 		if (variadicsCount > 1) {
-			val variadicParams = fpars.filter[isVariadic]
+			val variadicParams = fpars.filter[variadic.apply(it)]
 			addIssue( messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head , FUN_PARAM_VARIADIC_ONLY_LAST )
 		}
 		// 2. Variadic is last
 		if (variadicsCount == 1) {
-			val variadicParams = fpars.filter[isVariadic]
-			if (!fpars.last.isVariadic) {
+			val variadicParams = fpars.filter[variadic.apply(it)]
+			if (!variadic.apply(fpars.last)) {
 				addIssue( messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head , FUN_PARAM_VARIADIC_ONLY_LAST )
+			}
+		}
+		// 3. both variadic and initializerAssignment
+		for (fp:fpars) {
+			if (hasInitAssgn.apply(fp)) {
+				typeRef.apply(fp).addIssueIfNoDeclaredOrUsableType
+				if (variadic.apply(fp)) {
+					addIssue(messageForFUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS,fp,FUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS)
+				}
+			}
+		}
+		// 4. Implicit default formal parameters
+		var boolean initAssgnVisited = false;
+		val iter = fpars.iterator;
+		while (iter.hasNext() && !initAssgnVisited) {
+			initAssgnVisited = hasInitAssgn.apply(iter.next());
+		}
+		while (initAssgnVisited && iter.hasNext()) {
+			val T fpar = iter.next();
+			if (!hasInitAssgn.apply(fpar) && !variadic.apply(fpar)) {
+				val String msg = getMessageForFUN_PARAM_IMPLICIT_DEFAULT_PARAM(name.apply(fpar));
+				addIssue(msg, fpar, FUN_PARAM_IMPLICIT_DEFAULT_PARAM)
 			}
 		}
 	}
@@ -623,8 +657,8 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	/* IDEBUG-211 checking Undefined, Variadic and missing Typenames. */
 	@Check
 	def void checkStructuralTField(TStructField tfield) {
-		if(  tfield.typeRef?.undefModifier == UndefModifier.OPTIONAL) {
-			if ( tfield.typeRef.isMissing ) {
+		if(tfield.typeRef?.undefModifier == UndefModifier.OPTIONAL) {
+			if(tfield.typeRef.isMissing ) {
 				addIssue( messageForFUN_PARAM_MISSING_TYPE_NAME_FOR_OPTIONAL, tfield.typeRef, FUN_PARAM_MISSING_TYPE_NAME_FOR_OPTIONAL )
 			}
 		}
@@ -634,7 +668,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	/** IDEBUG-211 invalid combination of undefined, variadic & omitting type */
 	def holdsModifierOfParamsHaveType(EList<FormalParameter> list) {
 		for(fp:list) {
-			if(  fp.declaredTypeRef?.undefModifier == UndefModifier.OPTIONAL) {
+			if(fp.definedTypeElement.hasInitializerAssignment) {
 				fp.declaredTypeRef.addIssueIfNoDeclaredOrUsableType
 				if(fp.variadic) {
 					addIssue(messageForFUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS,fp,FUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS)
@@ -647,13 +681,12 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	/** IDEBUG-211 invalid combination of undefined, variadic & omitting type */
 	def holdsModifierOfParamsHaveTType(List<TFormalParameter> list) {
 		for(fp:list) {
-			if(  fp.typeRef?.undefModifier == UndefModifier.OPTIONAL) {
+			if(fp.hasInitializerAssignment) {
 				fp.typeRef.addIssueIfNoDeclaredOrUsableType
 				if(fp.variadic) {
 					addIssue(messageForFUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS,fp,FUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS)
 				}
 			}
-
 		}
 	}
 
