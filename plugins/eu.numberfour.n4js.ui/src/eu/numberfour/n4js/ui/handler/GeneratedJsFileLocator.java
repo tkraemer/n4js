@@ -25,7 +25,7 @@ import eu.numberfour.n4js.generator.common.CompilerUtils;
 import eu.numberfour.n4js.generator.common.GeneratorException;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
-import eu.numberfour.n4js.runner.extension.RunnableExtensionsRegistry;
+import eu.numberfour.n4js.runner.extension.RunnableFileExtensionsRegistry;
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
 /**
@@ -42,7 +42,7 @@ public class GeneratedJsFileLocator {
 	private FileExtensionBasedPropertTester tester;
 
 	@Inject
-	private RunnableExtensionsRegistry runnableExtensionRegistry;
+	private RunnableFileExtensionsRegistry runnableExtensionRegistry;
 	// private TranspilableFileExtensionsProvider allowedFileExtensionProvider;
 
 	/**

@@ -34,7 +34,7 @@ import eu.numberfour.n4js.generator.common.CompilerUtils;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.runner.RunnerHelper.ApiUsage;
 import eu.numberfour.n4js.runner.extension.IRunnerDescriptor;
-import eu.numberfour.n4js.runner.extension.RunnableExtensionsRegistry;
+import eu.numberfour.n4js.runner.extension.RunnableFileExtensionsRegistry;
 import eu.numberfour.n4js.runner.extension.RunnerRegistry;
 import eu.numberfour.n4js.runner.extension.RuntimeEnvironment;
 
@@ -58,7 +58,7 @@ public class RunnerFrontEnd {
 	private RunnerRegistry runnerRegistry;
 
 	@Inject
-	private RunnableExtensionsRegistry runnableExtensionsRegistry;
+	private RunnableFileExtensionsRegistry runnableExtensionsRegistry;
 	// private TranspilableFileExtensionsProvider transpilableFileExtensionsProvider;
 
 	/**

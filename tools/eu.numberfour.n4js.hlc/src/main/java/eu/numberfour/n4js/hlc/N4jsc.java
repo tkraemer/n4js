@@ -79,6 +79,7 @@ import eu.numberfour.n4js.regex.RegularExpressionStandaloneSetup;
 import eu.numberfour.n4js.runner.RunnerFrontEnd;
 import eu.numberfour.n4js.runner.SystemLoaderInfo;
 import eu.numberfour.n4js.runner.extension.IRunnerDescriptor;
+import eu.numberfour.n4js.runner.extension.RunnableFileExtensionsRegistry;
 import eu.numberfour.n4js.runner.extension.RunnerRegistry;
 import eu.numberfour.n4js.runner.nodejs.NodeRunner.NodeRunnerDescriptorProvider;
 import eu.numberfour.n4js.tester.CliTestTreeTransformer;
@@ -317,6 +318,9 @@ public class N4jsc {
 	@Inject
 	private TestFileExtensionsRegistry testFileExtensionRegister;
 
+	@Inject
+	private RunnableFileExtensionsRegistry runnableFileExtensionsRegistry;
+
 	/**
 	 * Entry point to start the compiler. Parses the Parameters.
 	 *
@@ -382,11 +386,17 @@ public class N4jsc {
 			// help.
 			initInjection(refProperties());
 
-			// Wire up available runners and testers and test file extensions
+			// Wire up available runners and testers, test file extensions and runnable file extensions
 			runnerRegistry.register(nodeRunnerDescriptorProvider.get());
 			testerRegistry.register(nodeTesterDescriptorProvider.get());
+
 			testFileExtensionRegister.register(N4JSGlobals.N4JS_FILE_EXTENSION);
 			testFileExtensionRegister.register(N4JSXGlobals.N4JSX_FILE_EXTENSION);
+
+			runnableFileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION);
+			runnableFileExtensionsRegistry.register(N4JSGlobals.JS_FILE_EXTENSION);
+			runnableFileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION);
+			runnableFileExtensionsRegistry.register(N4JSXGlobals.JSX_FILE_EXTENSION);
 
 			if (listRunners) {
 				printAvailableRunners(System.out);

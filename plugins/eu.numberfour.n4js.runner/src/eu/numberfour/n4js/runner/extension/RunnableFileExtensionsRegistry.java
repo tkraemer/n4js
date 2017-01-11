@@ -26,8 +26,8 @@ import com.google.inject.Singleton;
  * This class collect test file extensions from extensions to extension point.
  */
 @Singleton
-public class RunnableExtensionsRegistry {
-	private final static Logger log = Logger.getLogger(RunnableExtensionsRegistry.class);
+public class RunnableFileExtensionsRegistry {
+	private final static Logger log = Logger.getLogger(RunnableFileExtensionsRegistry.class);
 
 	/* The extension point to runnable file extensions */
 	private static final String RUNNABLE_FILE_EXTENSIONS_POINT_ID = "eu.numberfour.n4js.runner.runnableFileExtensions";
