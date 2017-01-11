@@ -731,7 +731,8 @@ When calling a generator function or method, the returned generator object of ty
 (cf. cite:[ECMA15a(S14.4)], also see cite:[Kuizinas14a]).
 
 ==== Syntax [[asynchronous-functions-syntax]]
-Generator functions and methods differ from ordinary functions and methods only in the additional `*` symbol before the function or method name.
+
+Generator functions and methods differ from ordinary functions and methods only in the additional `pass:[*]` symbol before the function or method name.
 The following syntax rules are extracted from the real syntax rules.
 They only display parts relevant to declaring a function or method as a generator.
 
@@ -810,11 +811,11 @@ public providedByRuntime interface Generator<out TYield, out TReturn, in TNext>
 ----
 
 
-.Modifier `*`
+.Modifier `pass:[*]`
 [req,id=IDE-14370,version=1]
 --
-. `*` may be used on declared functions and methods, and for function expressions.
-.  A function or method _f_ with a declared return type _R_ that is declared `*` has an actual return type of `Generator<TYield,TReturn,TNext>`.
+. `pass:[*]` may be used on declared functions and methods, and for function expressions.
+.  A function or method _f_ with a declared return type _R_ that is declared `pass:[*]` has an actual return type of `Generator<TYield,TReturn,TNext>`.
 .  A generator function or method can have no declared return type, a shorthand form of a return type or an explicitly declared return type.
 ..  The explicitly declared return type is of the form `Generator<TYield,TReturn,TNext>` with the type variables:
 ...  _TYield_ as the expected type of the yield expression argument,

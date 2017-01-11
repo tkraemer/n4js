@@ -125,11 +125,12 @@ The following statement, for example, defines transitivity of subtypes
 ++++
 
 
-is the context containing (bound) type variables etc.,
-$\entails$ can be read as `entails`. Thus, the rule can be
-read as follows: if the type B is a subtype of type A in context (i.e.
-with constraints on type variables specified in ), and if type C is a
-subtype of B, then C is also a subtype of A in context .
+is the context containing (bound) type variables etc., $\entails$ can be read as `entails`.
+Thus, the rule can be read as follows:
+
+[quote]
+if the type B is a subtype of type A in context $\Gamma$ (i.e. with constraints on type variables specified in $\Gamma$), and if type C is a subtype of B, then C is also a subtype of A in context $\Gamma$.
+
 
 In rules, we sometimes omit the environment if it is not needed. New
 information is sometimes added to the environment, in particular,
@@ -151,16 +152,14 @@ omitted.
 
 A variable or other typed element may be associated with three types:
 
+// TODO missing type here
+
 1.  Declared type: the type explicitly specified in the code, e.g., .
-2.  Inferred type: the type inferred by the type inferencer, e.g.,
-infers the type of s to `string`. I.e.
-$\Gamma \vdash s :{string}$ will be true, or
-$[\![s]\!] < :string $. If an element is
-annotated with a type ,i.e. it has a declared type, the inferred type
-will always be the declared type.
-3.  Actual type: the actual type of a variable during runtime. This type
-information is not available at compile time and ignored in this
-specification.
+2.  Inferred type: the type inferred by the type inferencer, e.g., infers the type of s to `string`. I.e.
+$\Gamma \vdash s :{string}$ will be true, or $[\![s]\!] < :string $.
+If an element is annotated with a type ,i.e. it has a declared type, the inferred type will always be the declared type.
+3.  Actual type: the actual type of a variable during runtime.
+This type information is not available at compile time and ignored in this specification.
 
 These types are not type declarations but type references, in fact, as
 they may be parameterized. For the sake of simplicity, we often omit the
@@ -168,22 +167,20 @@ they may be parameterized. For the sake of simplicity, we often omit the
 following properties and pseudo properties for typed elements such as
 variables:
 
-The explicitly declared type, this is usually a real property of the
-construct. Not all elements allow the specification of a declared type,
-such as expressions.
+The explicitly declared type, this is usually a real property of the construct.
+Not all elements allow the specification of a declared type, such as expressions.
 
+// TODO missing type here
 or $\infType{..}$: This pseudo property is the inferred type
 computed by the type inferencer.
 
-A pseudo property for elements with a $declaredType$
-property. It is similar to the inferred type, i.e.
-$e.type = \infType{e}$
+A pseudo property for elements with a $declaredType$ property.
+It is similar to the inferred type, i.e. $e.type = \infType{e}$
 
 [.language-n4js]
 == Auxiliary Functions
 
-This section describes some auxiliary functions required for definition
-of type inference rules later on.
+This section describes some auxiliary functions required for definition of type inference rules later on.
 
 === Binding
 
@@ -202,16 +199,14 @@ We define a pseudo relation
 bind: VariableReference \times VariableDeclaration
 ++++
 
-which binds a reference, i.e. an identifier, to a declaration (e.g.,variable
-declaration).
+which binds a reference, i.e. an identifier, to a declaration (e.g.,variable declaration).
 
 Binding of variable references to declaration is defined by ECMAScript already.
 Type references only occur in type expressions, how these are handled is explained in <<_type_expressions>>.
 
 We usually omit this binding mechanism in most rules and use the reference similarly to the declaration or definition it is bound to.
 If a variable reference $r$, for example, is bound to a variable declaration $D$, i.e. $bind(r,D)$, we
-simply write $r.type$ instead of $bind(r,D), D.type$ to refer to the type expression (of the variable).
-footnote:[One can interpret this similar to delegate methods, that is, instead of writing [language-n4js]``r.binding().getType()``, a method [language-n4js]``r.getType()\{return binding().getType();`` is defined.]
+simply write $r.type$ instead of $bind(r,D), D.type$ to refer to the type expression (of the variable).footnote:[One can interpret this similar to delegate methods, that is, instead of writing [language-n4js]``r.binding().getType()``, a method [language-n4js]``r.getType()\{return binding().getType();`` is defined.]
 
 --
 
@@ -234,9 +229,8 @@ which binds a type reference, i.e. a simple name, to the type declaration.
 
 === Merging Types
 
-In some cases we have to merge types, e.g., types of a union type or
-item types of an array. For that purpose, we define a method
-$merge$ as follows.
+In some cases we have to merge types, e.g., types of a union type or item types of an array.
+For that purpose, we define a method $merge$ as follows.
 
 .Merge Function
 [def]
@@ -248,43 +242,33 @@ We define a pseudo function
 merge: Type \times \dots \times Type \to \powerset(Type)
 ++++
 
-The idea of this function is to remove duplicates. For example; if a
-union type contains two type expressions $te_1$ and
-$te_k$, and if $\tau(te_1)=\tau(te_2)$, then
-$merge(\tau(te_1), \tau(te_2))$ contains only one element.
+The idea of this function is to remove duplicates.
+For example; if a union type contains two type expressions $te_1$ and $te_k$, and if $\tau(te_1)=\tau(te_2)$, then $merge(\tau(te_1), \tau(te_2))$ contains only one element.
 The order of the elements is lost, however.
 --
 
 ==== Logic Formulars
 
-In general, we use a pragmatic mixture of pseudo code, predicate logic,
-and OCL. Within constraints (also within the inference rules), the
-properties defined in the grammar are used.
+In general, we use a pragmatic mixture of pseudo code, predicate logic, and OCL.
+Within constraints (also within the inference rules), the properties defined in the grammar are used.
 
-In some rules, it is necessary to type the rule variables. Instead of
-explicitly checking the metatype (via
-$\mu(X)=:{MetaType}$), we precede the variable with the
-type, that is: $:{MetaType} X$.
+In some rules, it is necessary to type the rule variables.
+Instead of explicitly checking the metatype (via $\mu(X)=:{MetaType}$), we precede the variable with the type, that is: $:{MetaType} X$.
 
-Instead of `type casting` elements, often properties are simply
-accessed. If an element does not define that element, it is either
-assumed to be false or null by default.
+Instead of `type casting` elements, often properties are simply accessed.
+If an element does not define that element, it is either assumed to be false or null by default.
 
-If a property $p$ is optional and not set, we write
-$p=null$ to test its absence. Note that $p=null$
-is different from $p=Null$, as the latter refers to the null
-type. Non-terminals may implicitly be subclasses. In that case, the
-concrete non-terminal, or type, of a property may be subject for a test
-in a constraint.
+If a property $p$ is optional and not set, we write $p=null$ to test its absence.
+Note that $p=null$ is different from $p=Null$, as the latter refers to the null type.
+Non-terminals may implicitly be subclasses.
+In that case, the concrete non-terminal, or type, of a property may be subject for a test in a constraint.
 
 === Symbols and Font Convention
 
-Variables and their properties are printed in italic when used in
-formulas (such as rules). A dot-notation is used for member access, e.g.
-$v.name$. Also defined functions are printed in italic,
-e.g., $acc(r,D)$. Properties which define sets are usually
-ordered and we assume 0-indexed access to elements, the index
-subscripted, e.g., $v.methods_i$.
+Variables and their properties are printed in italic when used in formulas (such as rules).
+A dot-notation is used for member access, e.g. $v.name$.
+Also defined functions are printed in italic, e.g., $acc(r,D)$.
+Properties which define sets are usually ordered and we assume 0-indexed access to elements, the index subscripted, e.g., $v.methods_i$.
 
 We use the following symbols and font conventions:
 

@@ -33,11 +33,11 @@ relations:
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \infer{\tee \type{Boolean} \notsubtype{\type{boolean}}}{} | \infer{\tee \type{boolean} \notsubtype{\type{Boolean}}}{} \\
 \infer{\tee \type{Number} \notsubtype{\type{number}}}{} | \infer{\tee \type{number} \notsubtype{\type{Number}}}{}  \\
 \infer{\tee \type{String} \notsubtype{\type{string}}}{} | \infer{\tee \type{string} \notsubtype{\type{String}}}{}
-\end{matrix}
+\endalign
 ++++
 
 
@@ -46,10 +46,10 @@ and for the N4JS specific types:
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \infer{\tee \type{pathSelector<T>} \subtype{\type{string}}}{} \\
 \infer{\tee \type{i18nKey} \subtype{\type{string}}}{}
-\end{matrix}
+\endalign
 ++++
 
 
@@ -215,13 +215,13 @@ We first define helper rules for the type cast constraints as follows:
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 |\infer{isCPOE(T)}{\mu(T) \in \{ \type{TEnum}, \type{Class}, \type{Primitive}, \type{ObjectType}\}}\\
 |\infer{isCPOE(T)}{\mu{T} \in\{\type{ClassifierType}, \type{TypeType} \} \land \mu(T.typeRef) \neq \type{TypeVariable} }\\
 |\infer{isInterface(T)}{\mu(T) \in \{ \type{Interface} \}}\\
 |\infer{isBoundTypeVar(T)}{\mu(T)=\type{TypeVariable}  \land T.upperBounds \neq  \emptyset }\\
 |\infer{isFinalByType(T)}{\mu(T) \in \{\ \type{TEnum}, \type{Primitive} \} \lor (\mu(T)=\type{Class} \land T.extensibility=\lenum{final} \})}
-\end{matrix}
+\endalign
 ++++
 
 
@@ -237,10 +237,10 @@ following constraints must hold:
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \mu(T) \in \spc \{ \type{any}, \type{Class}, \type{Interface}, \type{Enum}, \type{Primitive}, \type{ObjectType}, \\
 \spc \type{FunctionTypeExpression}, \type{ClassifierType}, \type{TypeVariable}, \type{Union}, \type{Intersection} \}
-\end{matrix}
+\endalign
 ++++
 2. `S` is a subtype of `T`, the cast is unnecessary and a warning will be generated.
 3.  `S` and `T` are classes, enums or primitive types, then `T` must be a subtype of `S`.
@@ -248,13 +248,13 @@ This is also true if `T` is an interface and the type of `S` cannot have subtype
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 (   & (isCPOE(T) \\
 & \hspace{2em}\land (isCPOE(S) \\
 & \hspace{4em}\lor (\mu(S)=\type{Intersection} \land \exists S' \in S: isCPOE(S'))) \\
 & \lor (isInterface(T)  \land isFinalByType(S) ) \\
 & \lor (isFinalByType(T) \land isInterface(S) )  ) \to \tee T <: S
-\end{matrix}
+\endalign
 ++++
 // Doesn't work for daimond-relationships with S and T on left and right. --> limit to classes only.
 4.  `S` is a class, enum or primitive type and `T` is a type-variable, then for each given boundary $T^{up}_i$ of `T` of type class, enum or primitive `S` must be a member of the type hierarchy:
@@ -262,20 +262,20 @@ footnote:[`i` iterates over all boundaries]
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 & (isBoundTypeVar(T) \land isCPOE(S) ) \\
 & \to  \forall_{T^{up}_i \in T.upperBounds} (isCPOE({T^{up}_i}) \to \tee ( {T^{up}_i} <: S \lor  {T^{up}_i} :> S ) )
-\end{matrix}
+\endalign
 ++++
 5.  `S` is a union or intersection type, then the type cast is valid if it is valid for at least one element of `S`.
 6.  `S` and `T` are generics, and if $S^0=T^0$, a cast is possible if type arguments are sub- or supertypes of each other: footnote:[`i` iterates over all type args]
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 & \mu(S)=\type{Classifier} \land \mu(T)=\type{Classifier} \land S^0=T^0 \to \\
-& \hspace{2em} (\forall\ S.typeArg_i <: T.typeArg_i) \lor (\forall\ T.typeArg_i <: S.typeArg_i)$
-\end{matrix}
+& \hspace{2em} (\forall\ S.typeArg_i <: T.typeArg_i) \lor (\forall\ T.typeArg_i <: S.typeArg_i)
+\endalign
 ++++
 7.  If `T` is a union type, then the type cast is valid if it is valid for at least one element of `T`.
 8.  If `T` is an intersection type, then the type cast is valid if it is valid for all elements of `T`.

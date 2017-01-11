@@ -162,12 +162,12 @@ declaration $D$ as follows: footnote:[See for definitions of metatype properties
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \infer{\alpha_T(r, D)}{D.acc=\lenum{public} }\\
 \infer{\alpha_T(r, D)}{D.acc=\lenum{public@Internal} \spc  r.vendor=D.vendor}\\
 \infer{\alpha_T(r, D)}{D.acc=\lenum{project} \spc  r.project=D.project}\\
 \infer{\alpha_T(r, D)}{D.acc=\lenum{private} \spc  r.module=D.module} \\
-\end{matrix}
+\endalign
 ++++
 
 If the type of the arguments is clear from the context, we simply write $\alpha(r,D)$ instead of $\alpha_T(r,D)$.
@@ -227,12 +227,12 @@ following set of member access modifiers:
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 MAM = \{ \spc  \\
 \lenum{private}, \lenum{protected@Internal}, \lenum{protected}, \\
 \lenum{project}, \lenum{public@Internal}, \lenum{public}\\
 \}
-\end{matrix}
+\endalign
 ++++
 
 `protected@Internal` and `public@Internal` are synthesized tags and were
@@ -316,10 +316,10 @@ as follows:
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 = \hspace{1em} ::= \{ &     (\lenum{private}, \lenum{private} ), (\lenum{project}, \lenum{project} ),\\
 & (\lenum{public@Internal},\lenum{public@Internal}), (\lenum{public}, \lenum{public} ) \}
-\end{matrix}
+\endalign
 ++++
 
 We further define the relation $\geq : TAM \times MAM$ as follows:
@@ -360,14 +360,14 @@ footnote:[Note, the Java-like access restriction for members of visibility [lang
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \infer{\alpha_m(r, M)}{M.acc = \lenum{public}} \\
 \infer{\alpha_m(r, M)}{r.vendor = M.vendor \spc M.acc = \lenum{public@Internal}} \\
 \infer{\alpha_m(r, M)}{r.owner \in r.receiver.super^* \spc M.acc = \lenum{protected}}
 \infer{\alpha_m(r, M)}{r.owner \in r.receiver.super^* \spc r.vendor = M.vendor \spc M.acc = \lenum{protected@Internal}} \\
 \infer{\alpha_m(r, M)}{r.project = M.project \spc M.acc = \lenum{project}} \\
 \infer{\alpha_m(r, M)}{r.module = r.module \spc M.acc =\lenum{private}} \\
-\end{matrix}
+\endalign
 ++++
 
 

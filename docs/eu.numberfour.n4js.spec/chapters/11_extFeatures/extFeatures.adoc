@@ -404,7 +404,7 @@ A provider method $M$ (in the binder) defines a binding
 
 [math]
 ++++
-$bind(M.returnType, X)$
+bind(M.returnType, X)
 ++++
 
 (in which $X$ is an existential type with $\exists X \subtype target.returnType$).
@@ -413,19 +413,25 @@ For simplification, we define:
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 key*=
    \begin{cases}
-     target.returnType,     &\text{if $target$ is provider method} \\
-     key,                   &\text{otherwise ($key$ is a type reference)}
-   \end{cases}$
-and
-$target*=
-   \begin{cases}
-     X \subtype target.returnType,  &\text{if $target$ is provider method} \\
-     target,                        &\text{otherwise ($target$ is a type reference)}
+     target.returnType,     &\textbf{if target is provider method} \\
+     key,                   &\textbf{otherwise (key is a type reference)}
    \end{cases}
-\end{matrix}
+\endalign
+++++
+and
+
+[math]
+++++
+\beginalign
+target*=
+   \begin{cases}
+     X \subtype target.returnType,  &\textbf{if target is provider method} \\
+     target,                        &\textbf{otherwise (target is a type reference)}
+   \end{cases}
+\endalign
 ++++
 
 --
@@ -1277,11 +1283,11 @@ abstract, final) as the filled class:
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 & P.accessModifier=F.accessModifier \\
 & P.abstract = F.abstract \\
 & P.final = F.final
-\end{matrix}
+\endalign
 ++++
 .  If $P$ declares a constructor, it must be override
 compatible with the constructor of the filled class:

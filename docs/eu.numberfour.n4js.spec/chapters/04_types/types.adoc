@@ -61,11 +61,11 @@ A type $J$ is called a _join_ (or least common supertype, ) of a pair of types $
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 S \subtype J \\
 T \subtype J \\
 \forall L: (S \subtype L) \land (T \subtype L) \to J\subtype L
-\end{matrix}
+\endalign
 ++++
 
 Similarly, we say that a type $M$ is a _meet_ (or greatest
@@ -74,11 +74,11 @@ $S \meet T = M$, if +
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 M \subtype  S\\
 M \subtype  T\\
 \forall L: (L\subtype S) \land (L\subtype T) \to L\subtype M
-\end{matrix}
+\endalign
 ++++
 --
 
@@ -1157,7 +1157,7 @@ The type `number` is subtype of `any`:
 
 [math]
 ++++
-\infer{`number} <: `any}}{}
+\inferSup{`number} <: `any}}{}
 ++++
 
 However, variables of type `number` can be auto-converted (coerced) to `Number`, as
@@ -1253,19 +1253,19 @@ function or method as `void` in order to state that the function does not return
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 f.returnType=\type{void} \to \\
 \forall r, \mu(r)=\type{ReturnStatement}, r.containingFunction=f: r.expression=\NULL
-\end{matrix}
+\endalign
 ++++
 * If a function $f$ is declared to return `void`, an error is issued if the function is called in any statement or expression but an expression statement directly:
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 f.returnType=\type{void} \to \\
 \forall e, bind(e, f): \mu(e.container)=\type{ExpressionStatement}
-\end{matrix}
+\endalign
 ++++
 
 ---
@@ -1330,10 +1330,10 @@ interchangeable with string types:
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \infer{\type{i18nKey} <: \type{string}}{}             && \infer{\type{string} <: \type{i18nKey}}{}        \\
 \infer{\type{pathSelector<T>} <: \type{string}}{}   && \infer{\type{string} <: \type{pathSelector<T>}}{}
-\end{matrix}
+\endalign
 ++++
 //TODO - check math here, is something missing?
 
@@ -1664,6 +1664,7 @@ footnote:[For type theory about union types, cite:[Pierce02a(15.7)] and cite:[Ig
 
 For convenience, we repeat the definition of union type expression:
 
+[.language,n4js]
 [source,n4js,subs="macros"]
 ----
 pass:[UnionTypeExpression: 'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';]
@@ -1695,34 +1696,41 @@ $ \forall T \in U.typeRefs \to \lnot T.opt  $
 Let $U$ be an union type.
 
 * The union type is a common supertype of all its element types:
++
 [math]
 ++++
 \infer{T <: U}{T \in U.typeRefs}
 ++++
 * More generally, a type is a subtype of a union type, if it is a
 subtype of at least one type contained in the union:
++
 [math]
 ++++
 \infer{S <: U}{\exists T \in U.typeRefs: S <: T}
 ++++
 
-* A union type is a subtype of a type $S$, if all types of
-the union are subtypes of that type. footnote:[This rule is a
-generalization of the sub typing rules given in cite:[Igarashi07a(p.40)]}]
-
+* A union type is a subtype of a type $S$, if all types of the union are subtypes of that type. footnote:[This rule is a generalization of the sub typing rules given in cite:[Igarashi07a(p.40)]]
++
 [math]
 ++++
 \infer{U <: S}{\forall T \in U.typeRefs: T <: S}
 ++++
 
 * Commutativity: The order of element does not matter:
-$\union{A,B} = \union{B,A}$
++
+[math]
+++++
+\union{A,B} = \union{B,A}
+++++
 * Associativity:
 $\union{A,\union{B,C}} = \union{\union{A,B},C}$
 * Uniqueness of elements: A union type may not contain duplicates
 (similar to sets):
-
-$& \forall 1\leq i < k \leq n, \union{T_1,\dots,T_n}: T_i \neq T_k$
++
+[math]
+++++
+& \forall 1\leq i < k \leq n, \union{T_1,\dots,T_n}: T_i \neq T_k
+++++
 --
 
 .Implicit simplification of union types
@@ -1733,7 +1741,7 @@ are always automatically applied to union types.
 
 * Simplification of union type with one element: If a union type
 contains only one element, it is reduced to the element:
-
++
 [math]
 ++++
 \infer{T}{\union{T}}
@@ -1742,8 +1750,9 @@ contains only one element, it is reduced to the element:
 * Simplification of union types of union types: A union type
 $U$ containing another union types $V$ is
 reduced to a single union type $W$, with
++
 $W.typeRefs = U.typeRefs \cup V.typeRefs$:
-
++
 [math]
 ++++
 \infer{\union{S_1,\dots,S_{k-1},T_1,\dots,T_m,S_{k+1},\dots,S_n}}{\union{S_1,\dots,S_{k-1},\union{T_1,\dots,T_m},S_{k+1},\dots,S_n}}
@@ -1755,11 +1764,12 @@ removed from the union:
 +
 [math]
 ++++
-\begin{matrix}
-\infer{\union{T_1,\dots,T_{k-1},`undefined},T_k,\dots,T_n}}{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}} \\
-\infer{\union{T_1,\dots,T_{k-1},`null},T_k,\dots,T_n}}{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}}
-\end{matrix}
+\beginalign
+\infer{\union{T_1,\dots,T_{k-1},undefined},T_k,\dots,T_n}{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}} \\
+\infer{\union{T_1,\dots,T_{k-1},null},T_k,\dots,T_n}{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}}
+\endalign
 ++++
+// TODO - fix expression above
 
 //`
 
@@ -1869,36 +1879,31 @@ This finding is the foundation of the definition of join of a (non-union) type w
 .Join with Union Type
 [req,id=IDE-22,version=1]
 --
-The join $J$ of a union type $U$ with a type
-_T_ is the union of both types:
+The join $J$ of a union type $U$ with a type _T_ is the union of both types:
 
 [math]
 ++++
 \infer {(U \join T) = J}{J=U \cup T}
 ++++
 
-
-
-
 Remarks:
 
-* Joining a union type with another type is not similar to joining the
-elements of the union type directly with another type. That is
+* Joining a union type with another type is not similar to joining the elements of the union type directly with another type.
+That is
++
 [math]
 ++++
-A\ \mathbf{join}\  \lstnfjs{union\{}B,C\lstnfjs{\}} \neq A\ \mathbf{join}\  B \ \mathbf{join}\  C\
+A \mathbf{join}  \lstnfjs{union\{}B,C\lstnfjs{\}} \neq A \mathbf{join}\  B \mathbf{join}\  C
 ++++
-* The computed join is simplified according to the constraints defined
-above.
+* The computed join is simplified according to the constraints defined above.
 --
 
 .Meet with Union Type
 [req,id=IDE-23,version=1]
 --
-
 The meet of union types is defined as the meet of the elements.
 That is
-
++
 [math]
 ++++
 \infer{\union{T_1,\dots,T_n} \meet S }{T_1 \meet S \meet \dots \meet T_n \meet S}\\
@@ -1929,10 +1934,10 @@ containing the upper and lower bound of the elements of $U$:
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 upper(\union{T_1, \dots, T_n}) := \union{upper(T_1), \dots, upper(T_1)} \\
 lower(\union{T_1, \dots, T_n}) := \union{lower(T_1), \dots, lower(T_1)} \\
-\end{matrix}
+\endalign
 ++++
 
 --
@@ -1977,10 +1982,10 @@ interface type that also is contained in the union type.
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \nexists TT \in U.typeRefs : \exists T \in U.typeRefs : \\
 (TT <: T \wedge isClassOrInterface(T) \wedge isClassOrInterface(TT))
-\end{matrix}
+\endalign
 ++++
 
 --
@@ -2032,7 +2037,7 @@ $I.typeRefs \neq \emptyset$
 +
 [math]
 ++++
-\exists C \in I.typeRefs: \mu(C)=`Class}) \to \not\exists T \in I.typeRefs \setminus\{C\}: \mu(T)=`Class}
+\exists C \in I.typeRefs: \mu(C)=`Class}) \to \nexists T \in I.typeRefs \setminus\{C\}: \mu(T)=`Class}
 ++++
 //`
 +
@@ -2291,12 +2296,12 @@ $\forall\ a \in U.attributes:$
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 &\forall\ k\in\{1,2\}: \exists\ a_k\in T_k.attributes: a_k.acc > private\\
 &\land a.acc = min(a_1.acc, a_2.acc)\\
 &\land a.name=a_1.name=a_2.name\\
 &\land a.typeRef = a_1.typeRef = a_2.typeRef
-\end{matrix}
+\endalign
 ++++
 
 [math]
@@ -2306,7 +2311,7 @@ $\forall\ a \in U.attributes:$
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 &\exists\ m_1 \in T_1.methods, m_2 \in T_2.methods,\\
 &\hspace{2em} \mathbf{with} p=m.fpars \land p'=m_1.fpars \land p''=m_2.fpars, \mathbf{WLOG} |p'|\leq |p''|:\\
 &\hspace{1.2em} \forall k\in\{1,2\}: m_k.acc > private\\
@@ -2342,7 +2347,7 @@ $\forall\ a \in U.attributes:$
 &\hspace{2em} p_i.typeRef = v.typeRef \\
 &\hspace{2em} p_i.opt = true \\
 &\hspace{2em} p_i.var  = true
-\end{matrix}
+\endalign
 ++++
 
 ---
@@ -2393,7 +2398,7 @@ $\forall a \in I.attributes:$
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 &(\exists a_1\in T_1.attributes, a_1.acc>private) \lor (\exists a_2\in T_2.attributes, a_2.acc>private) \\
 &\land a.name =
         \begin{cases}
@@ -2411,7 +2416,7 @@ $\forall a \in I.attributes:$
             a_1.typeRef             & a_1\neq null \\
             a_2.typeRef             & \mathbf{else} (a_2\neq null)
         \end{cases}
-\end{matrix}
+\endalign
 ++++
 
 
@@ -2420,11 +2425,11 @@ $\forall m \in I.methods$:
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 (\exists m_1 \in T_1.methods, m_1.acc>private) \lor (\exists m_2 \in T_1.methods, m_2.acc>private): \\
 &\hspace{2em} \mathbf{with} p=m.fpars\\
-&\hspace{3em} \land \mathbf{if}\ m_1\ \mathbf{exists}\ p'=m_1.fpars\ \mathbf{(else $p'=\emptyset$)},\\
-&\hspace{3em} \land \mathbf{if}\ m_2\ \mathbf{exists}\ p''=m_2.fpars\ \mathbf{(else $p''=\emptyset$)}, \mathbf{\acs{WLOG}} |p'|\leq |p''|:\\
+&\hspace{3em} \land \mathbf{if}\ m_1\ \mathbf{exists}\ p'=m_1.fpars\ \mathbf{(else p'=\emptyset)},\\
+&\hspace{3em} \land \mathbf{if}\ m_2\ \mathbf{exists}\ p''=m_2.fpars\ \mathbf{(else p''=\emptyset)}, \mathbf{\mathbf{WLOG}} |p'|\leq |p''|:\\
 &\hspace{1em} m.name =
         \begin{cases}
             m_1.name            & m_1\neq null \land (m_2=null \lor m_2.name=m_1.name)\\
@@ -2467,7 +2472,7 @@ $\forall m \in I.methods$:
 &\hspace{2em} p_i.typeRef = v.typeRef \\
 &\hspace{2em} p_i.opt = true \\
 &\hspace{2em} p_i.var  = true
-\end{matrix}
+\endalign
 ++++
 
 // TODO fix math here
@@ -3164,19 +3169,25 @@ the enum’s literals.
 [req,id=IDE-41,version=1]
 --
 
-For a string-based enum declaration $E_S$ with literals
-$L_S$ the following type rules are defined:
+For a string-based enum declaration $E_S$ with literals $L_S$ the following type rules are defined:
 
-.  Every string-based enumeration $E_S$ is a subtype of the
-base type `N4StringBasedEnum`:
+// TODO - original math below = \inferSup{ \tee \type{type\{E_S\}} \subtype \type{N4StringBasedEnum} }{}
+
+.  Every string-based enumeration $E_S$ is a subtype of the base type `N4StringBasedEnum`:
 +
 [math]
 ++++
-\begin{gathered}\inferSup{ \tee \type{type\{E_S\}} \subtype \type{N4StringBasedEnum} }{}                \\
-         \intertext{which itself is not related to the standard enumeration type \lstnfjs{N4Enum}}
-         \infer{ \type{N4StringBasedEnum} \notsubtype \type{N4Enum}}{}  \\
-         \infer{ \type{N4Enum} \notsubtype \type{N4StringBasedEnum} }{}
-    \end{gathered}
+\inferSup{ \tee \type{type}\{E_S\} \subtype \type{N4StringBasedEnum} }{}
+++++
++
+which itself is not related to the standard enumeration type `N4Enum`
++
+[math]
+++++
+\beginalign
+\infer{ \type{N4StringBasedEnum} \notsubtype \type{N4Enum}}{}  \\
+\infer{ \type{N4Enum} \notsubtype \type{N4StringBasedEnum} }{}
+\endalign
 ++++
 .  `N4StringBasedEnum` is a subtype of `string`
 +

@@ -482,13 +482,15 @@ of an assignment expression.
 +
 [math]
 ++++
+\beginalign
 & bind(i, D) \\
 
-& \hspace{2em}\land \not\exists\ \type{AssignmentExpression}\ ae \in i.container^*: \\
+& \hspace{2em}\land \nexists\ \type{AssignmentExpression}\ ae \in i.container^*: \\
 //*
 & \hspace{3em} ae.left = i \\
 & \hspace{4em}\lor (\mu(ae.left)=\type{PropertyAccessExpression} \land ae.left.property=i): \\
 & \Rightarrow D.readable \\
+\endalign
 ++++
 
 --
@@ -524,12 +526,22 @@ following axioms are defined for literals:
 
 [math]
 ++++
+&\infer{\type{NullLiteral}: \type{null}}{}
+&\infer{\type{BooleanLiteral}: \type{boolean}}{}
+&\infer{\type{NumericLiteral}: \type{int} or \type{number}}{}
+&\infer{\type{StringLiteral}: \type{string}}{}
+&\infer{\type{RegularExpressionLiteral}: \type{RegExpr}}{}
+++++
+
+////
+TODO - check status of tags:
+
 &\infer{\type{NullLiteral}: \type{null}}{}          \tag{\S7.8.1}\\
 &\infer{\type{BooleanLiteral}: \type{boolean}}{}        \tag{\S7.8.2}\\
 &\infer{\type{NumericLiteral}: \type{int} or \type{number}}{}       \tag{\S7.8.3}\\
 &\infer{\type{StringLiteral}: \type{string}}{}      \tag{\S7.8.4}\\
 &\infer{\type{RegularExpressionLiteral}: \type{RegExpr}}{} \tag{\S7.8.5}
-++++
+////
 
 Note that there are no literals specific for `pathSelector` or `i18nkey`.
 
@@ -821,29 +833,33 @@ name in strict mode (cf. 4.a):
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 mode=\lenum{strict} \to & \forall pa \in ol.propertyAssignments, pa.isData:\\
 & \nexists pa' \in ol.propertyAssignments:\\
 & pa'.isAccessor \land pa'.name = pa.name
-\end{matrix}
+\endalign
 ++++
 
 * Object literal may not have PropertyNameValuePair and ``PropertyGetterDeclaration``/``PropertySetterDeclaration`` with the same name (cf. 4.b/c):
 +
 [math]
 ++++
-\forall & pa \in ol.propertyAssignments, pa$\nexists & pgsd \in ol.propertyAssig$& \mu(pgsd)\neq\type{PropertyNameValuePair} \land pgsd.name = pa.name
+\beginalign
+\forall & pa \in ol.propertyAssignments, pa.isData : \\
+\nexists & pgsd \in ol.propertyAssignments : \\
+\mu(pgsd) \neq\type{PropertyNameValuePair} \land pgsd.name = pa.name
+\endalign
 ++++
 
 * Object literal may not have multiple `PropertyGetterDeclaration` or `PropertySetterDeclaration` with the same name (cf. 4.d):
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \forall & pg \in ol.propertyAssignments, pg.isAccessor:\\
 \nexists & pg' \in ol.propertyAssignments\{pg\}: \\
 & \mu(pg')=\mu(pg) \land pg'.name = pg.name
-\end{matrix}
+\endalign
 ++++
 
 * It is a SyntaxError if the Identifier `eval` or the Identifier `arguments` occurs as the Identifier in a PropertySetParameterList of a PropertyAssignment that is contained in strict code or if its
@@ -858,9 +874,13 @@ are explicitly declared, they must be equal.
 +
 [math]
 ++++
-\begin{matrix}mode=\lenum{n4js} \to & \forall pa \in ol.propertyAssignments:\\
+\beginalign
+mode=\lenum{n4js} \to & \forall pa \in ol.propertyAssignments:\\
 & \mu(pa.name)=\type{N4JSIdentifier}
+\endalign
 ++++
+
+// TODO check math here
 
 --
 
@@ -927,15 +947,15 @@ ParenExpression <Yield>: '(' expression=Expression<In=true,Yield> ')';
 ==== Type Inference [[Grouping-Operator-type-inference]]
 task:IDE-244[] task:IDE-345[]
 
-The type of the grouping operator simply is the type of its nested
-expression. The type if a parenthesized expression $pe$ is
-inferred as follows:
+The type of the grouping operator simply is the type of its nested expression.
+The type if a parenthesized expression $pe$ is inferred as follows:
 
 [math]
 ++++
-\infer{\tee \lstnfbnf{'('} e \lstnfbnf{')'}: T}
-        {\tee e: T}                                             \tag{\S11.1.6}
+\infer{\tee \lstnfbnf{'('} e \lstnfbnf{')'}: T}{\tee e: T}
 ++++
+
+// TODO check  \tag{\S11.1.6}
 
 .Parenthesized Expression Type Examples
 [example]
@@ -1086,11 +1106,11 @@ $iae$, the following constraint must hold:
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 &\tee ia.target \subtype T, T \in \types{Array, ArgumentType, string, String, Iterable} \\
 &\lor\\
 &\tee ia.target = \type{Object}
-\end{matrix}
+\endalign
 ++++
 +
 3.  In N4JS mode, if the receiver is an array and is not dynamic, in case of index access the index expression must be a number:
@@ -1614,6 +1634,8 @@ $u.op=\lstnfjs{!}$.
 %\end{itemize}
 ////
 
+// TODO check block here
+
 --
 
 [discrete]
@@ -1625,11 +1647,13 @@ task:IDE-244[] task:IDE-345[]
 
 [math]
 ++++
+\beginalign
 \spc \infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{}
-\spc  \infer{\tee \lstnfbnf{'void'}\ expression: \type{undefined}}{}
-\spc  \infer{\tee \lstnfbnf{'typeof'}\ expression: \type{string}}{}
-\spc  \infer{\tee \lstnfbnf{('++'|'$--$'|'+'|'$-$'|'~')}\ expression: \type{number}}{}
-\spc  \infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{}
+\spc \infer{\tee \lstnfbnf{'void'}\ expression: \type{undefined}}{}
+\spc \infer{\tee \lstnfbnf{'typeof'}\ expression: \type{string}}{}
+\spc \infer{\tee \lstnfbnf{('++'|'$--$'|'+'|'$-$'|'~')}\ expression: \type{number}}{}
+\spc \infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{}
+\endalign
 ++++
 
 // ~
@@ -1662,9 +1686,10 @@ mode task:IDE-345[]:
 +
 [math]
 ++++
-\infer
-{\typeEnv \entails \type{MultiplicativeExpression} \expectType \type{Expression}: \type{number}}{}
+\inferSup{\typeEnv \entails \type{MultiplicativeExpression} \expectType \type{Expression}: \type{number}}{}
 ++++
+
+--
 
 [discrete]
 ==== Type Inference
@@ -1706,11 +1731,9 @@ is not ’+’, otherwise, any type could be used:
 
 [math]
 ++++
-\infer
-{\typeEnv \entails \type{AdditiveExpression}\ e \expectType \type{Expression}: \type{number}}
-{e.op \neq AdditiveOperator.ADD}
+\infer{\typeEnv \entails \type{AdditiveExpression}\ e \expectType \type{Expression}: \type{number}}{e.op \neq AdditiveOperator.ADD}
 ++++
-
+--
 
 ==== Type Inference [[type-inference-10]]
 task:IDE-244[] task:IDE-345[]
@@ -1727,10 +1750,12 @@ condition:
 
 [math]
 ++++
-\infer[nb]{nb(T)}{T = \type{number} \lor T = \type{boolean}}
-\infer[nb]{nb(expr)}{nb\tee expr}\\
-\infer[un]{un(T)}{T = \type{undefined} \lor T = \type{null}}
-\infer[un]{un(expr)}{un\tee expr.lhs \lor un\tee expr.rhs}
+\beginalign
+\inferRule{nb}{nb(T)}{T = \type{number} \lor T = \type{boolean}}
+\inferRule{nb}{nb(expr)}{nb\tee expr} \\
+\inferRule{un}{un(T)}{T = \type{undefined} \lor T = \type{null}}
+\inferRule{un}{un(expr)}{un\tee expr.lhs \lor un\tee expr.rhs}
+\endalign
 ++++
 
 
@@ -1739,8 +1764,10 @@ follows:
 
 [math]
 ++++
+\beginalign
 \infer{\tee e: \type{string}}{e.op='+' \spc   \lnot(nb(e.lhs)\land nb(e.rhs)) \spc   \lnot(un(e) \land (nb(e.lhs)\lor nb(e.rhs))}\\
 \spc  \infer{\tee e: \type{number}}{}\\
+\endalign
 ++++
 
 
@@ -1803,9 +1830,10 @@ The type returned by a bitwise shift expression is always `boolean`:
 
 [math]
 ++++
-&\infer{\tee\ (\lstnfbnf{Expression ('<<'|'>>'|'>>>')\ Expression}): \type{number}}{}   \tag{\S 11.7.1/2} \\
+&\infer{\tee\ (\lstnfbnf{Expression ('<<'|'>>'|'>>>')\ Expression}): \type{number}}{}  \\
 ++++
 
+// TODO - check  \tag{\S 11.7.1/2}
 
 === Relational Expression
 
@@ -1964,11 +1992,12 @@ The type of a relational expression always is `boolean`;
 
 [math]
 ++++
-&\infer{\tee lhs\ \lstnfbnf{('<'|'<='|'>'|'>='|'instanceof'|'in')}\ rhs\ : \type{boolean}}{}    \tag{\S 11.8.1-6}
+&\infer{\tee lhs\ \lstnfbnf{('<'|'<='|'>'|'>='|'instanceof'|'in')}\ rhs\ : \type{boolean}}{}
 ++++
 
 
-// TODO check \tag{\S 11.8.1-6} in math blocks
+// TODO check \tag{\S 11.8.1-6}
+
 
 === Equality Expression
 
@@ -2082,12 +2111,14 @@ in N4JS mode: task:IDE-345[]
 ==== Type Inference [[type-inference-14]]
 task:IDE-244[] task:IDE-345[]
 
-The type returned by a binary bitwise expression is always :
+The type returned by a binary bitwise expression is always $number$:
 
 [math]
 ++++
-&\infer{\tee\ (\lstnfbnf{Expression ('&'|'^'|'|')\ Expression}): \type{number}}{}   \tag{\S 11.10}
+\inferSup{\tee (\lstnfbnf{Expression ('&'|'\^'|'|') Expression}) : \type{number}}{}
 ++++
+
+// TODO - check  \tag{\S 11.10}
 
 === Binary Logical Expression
 
@@ -2133,7 +2164,7 @@ affect the result in case one of the types is `null` either or `undefined`, whic
 
 [math]
 ++++
-\infer{\tee\ lhs\ \lstnfbnf{'&&'|'||'}\ rhs: \type{\union*}\tee lhs, \tee rhs \type{\}}}{}
+\infer{\tee lhs \lstnfbnf{'&&'|'||'} rhs : union \{ \tee lhs, \tee rhs \}}{}
 ++++
 
 === Conditional Expression
@@ -2267,7 +2298,7 @@ above, that is,
 +
 [math]
 ++++
-@ \in \{\lstnfbnf{'*', '/', '\%', '+', '-', '<<', '>>', '>>>', '&', '^', '|'}\}
+@ \in \{\lstnfbnf{'*', '/', '\%', '+', '-', '<<', '>>', '>>>', '&', '\^', '|'}\}
 ++++
 
 --
@@ -2334,8 +2365,10 @@ The type of the assignment is simply the type of the right-hand side:
 
 [math]
 ++++
-&\infer{\tee left\ \lstnfbnf{'='} right: T}{\tee right: T}  \tag{\S 11.13.1}
+&\infer{\tee left\ \lstnfbnf{'='} right: T}{\tee right: T}
 ++++
+
+// TODO check \tag{\S 11.13.1}
 
 Compound assignments are reduced to the former by splitting an operator
 `@=`, in which `@` is a simple operator, into a simple operator
@@ -2344,8 +2377,10 @@ of the latter is the right-hand side, we can define:
 
 [math]
 ++++
-\infer{\tee left\ \lstnfbnf{'@='} right: T}{\tee left\ \lstnfbnf{'@'} right: T} \tag{\S 11.13.1}
+\infer{\tee left\ \lstnfbnf{'@='} right: T}{\tee left\ \lstnfbnf{'@'} right: T}
 ++++
+
+// TODO check \tag{\S 11.13.1}
 
 === Comma Expression
 
@@ -2393,8 +2428,10 @@ last expression:
 
 [math]
 ++++
-\infer{\tee cexpr: T}{n=|cexpr.exprs|, \tee cexpr.exprs_n:T} \tag{\S11.14}
+\infer{\tee cexpr: T}{n=|cexpr.exprs|, \tee cexpr.exprs_n:T}
 ++++
+
+// TODO: check  \tag{\S11.14}
 
 [.language-n4js]
 == ECMAScript 6 Expressions
@@ -2521,6 +2558,8 @@ of the class defining the method).
 {\type{function():T} \subtype s.m}
 {s.containingClass=T & \mu(m)=\type{Method} & m.returnType=\type{this}}
 ++++
+
+--
 
 .Super Literal Usage
 [req,id=IDE-125,version=1]
