@@ -13,7 +13,8 @@ Contributors:
 
 For all statements, we define the following pseudo properties:
 
-
+[.language-n4js]
+--
 [horizontal]
 `containingFunction` ::
 The function or method in which the statement is (indirectly) contained,
@@ -22,6 +23,7 @@ this may be null.
 `containingClass` ::
 The class in which the statement is (indirectly) contained, this may be
 null.
+--
 
 The expressions and statements are ordered, at first describing the
 constructs available in the 5th edition of ECMA-262 referred to as  cite:[ECMA11a] in the following.
@@ -138,9 +140,15 @@ constants. Also see exported variable statement (<<Export Statement>>) and const
 For a given variable declaration $d$, the following constraints must hold:
 
 * The type of the initializer expression must conform to the declared
-type: +
-$d.expression\neq \NULL \land d.declaredTypeRef\neq \NULL\\
-         \to \tee d.expression.type \subtype \tee d.declaredTypeRef$
+type:
++
+[math]
+++++
+\beginalign
+d.expression\neq \NULL \land d.declaredTypeRef\neq \NULL\\
+         \to \tee d.expression.type \subtype \tee d.declaredTypeRef
+\endalign
+++++
 * The initializer expression should not contain a reference to
 $d$ except where the reference is contained in a class
 expression or function expression and the class is not immediately
@@ -294,14 +302,20 @@ ECMAScript operation `ToBoolean` cite:[ECMA11a(S9.2,p.43)] is used to convert an
 For a given $f$ the following conditions must hold:
 
 * The type of the expression must be conform to object: +
-$\tee f.expression <: \type{union\{Object,string,ArgumentType\}}$
+$\tee f.expression <: \type{union{Object,string,ArgumentType}}$
 * Either a new loop variable must be declared or an rvalue must be
 provided as init expression: +
 $f.varDecl \neq null \lor (f.initExpr \neq null \land isRValue(f.initExpr))$
 * The type of the loop variable must be a string (or a super type of
 string, i.e. any):
-$& (f.varDecl \neq null \land  \tee f.varDecl \subtype \type{string} ) \\
-\lor & (f.initExp \neq null \land  \tee \type{string} \subtype f.initExpr)$
++
+[math]
+++++
+\beginalign
+& (f.varDecl \neq null \land  \tee f.varDecl \subtype \type{string} ) \\
+\lor & (f.initExp \neq null \land  \tee \type{string} \subtype f.initExpr)
+\endalign
+++++
 --
 
 [.language-n4js]
@@ -505,6 +519,7 @@ $constStmt$ are not writeable:
 $\forall vdecl \in constStmt.varDecl: \lnot vdecl.writable$
 --
 
+[[_for-of-statement]]
 === `for ... of` statement
 
 ES6 introduced a new form of `for` statement: `for ... of` to iterate over the elements of an  `Iterable`, cf. <<_iterablen>>.

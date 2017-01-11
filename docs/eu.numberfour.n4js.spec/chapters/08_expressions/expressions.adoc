@@ -1121,12 +1121,17 @@ $iae$, the following constraint must hold:
 ++++
 4.  In N4JS mode, if the receiver is a subtype of types or and is not
 dynamic, in case of index access the index expression must be a
-number:  task:IDE-837[] +
-$& mode=\lenum{n4js} \\
+number:  task:IDE-837[]
++
+[math]
+++++
+\beginalign
+& mode=\lenum{n4js} \\
 & \hspace{3em} \land (\tee pae.target\subtype {string} \lor \tee pae.target \subtype {String}) \\
 & \hspace{3em} \land pae.isIndexAccess \\
-& \Rightarrow \tee pae.index \subtype{number}$
-+
+& \Rightarrow \tee pae.index \subtype{number}
+\endalign
+++++
 5.  In N4JS mode, if the receiver is an iterable and is not dynamic, in
 case of index access the index expression must be a property access
 expression to the built-in symbol :
@@ -1255,26 +1260,24 @@ var c = new C<string>("hello");
 Let $ne$ be a new expression, with
 $\tee ne.callee: C$. The following constraints must hold:
 
-.  The callee must be a constructor type:
-+
-[math]
-++++
-C <: \type{constructor\{?\}}
-++++
-+
-or a constructable type.
+.  The callee must be a constructor type: $C <: \type{constructor{?}}$  or a constructable type.
 .  Let $O$ be the type argument of $C$, that is
 $C = constructor\{O\}$. In that case,
 ..  $O$ must not be an interface or enum:
-$\mu(C) \not\in \{ \type{Interface}, \type{Enum} \}$
+$\mu(C) \not\in { \type{Interface}, \type{Enum} }$
 ..  $O$ must not contain any wildcards.
 ..  $O$ must not be a type variable.
-.  If $C$ is not a constructor type, it must be a
-constructable type, that is one of the following:
-math:[\[\{ \type{Object}, \type{Function}, \type{String}, \type{Boolean},
-                   \type{Number}, \type{Array}, \type{Date}, \type{RegExp}, \type{Error} \}\]]
+.  If $C$ is not a constructor type, it must be a constructable type, that is one of the following:
++
+[math]
+++++
+\beginalign
+\type{Object}, \type{Function}, \type{String}, \type{Boolean}, \\
+\type{Number}, \type{Array}, \type{Date}, \type{RegExp}, \type{Error}
+\endalign
+++++
 In particular, it must not refer to a primitive type or a defined
-functions (i.e., subtypes of ) cannot be used in new-expressions in
+functions (i.e., subtypes of `Function`) cannot be used in new-expressions in
 N4JS.
 
 // TODO fix missing ref here
@@ -1282,7 +1285,7 @@ N4JS.
 
 Remarks:
 
-to 1) The type of an abstract class `A` is $\type{type\{A\}}$.
+to 1) The type of an abstract class `A` is $type\{A\}$.
 Or in other words: Only instantiable classes have an inferred type of
 $constructor\{..\}$.
 
@@ -1333,7 +1336,7 @@ The type of a new expression $ne$ is inferred as follows:
 
 [math]
 ++++
-\infer{\tee ne: C}{\tee ne.callee: \type{constructor\{C\}}}
+\infer{\tee ne: C}{\tee ne.callee: \type{constructor{C}}}
 ++++
 
 For classes, constructors are described in <<_constructor-and-classifier-type,Constructor>>.
@@ -2188,9 +2191,15 @@ task:IDE-776[]
 [req,id=IDE-118,version=1]
 --
 For a given conditional expression $e$ with
-$e.expression.type: C,
+
+[math]
+++++
+\beginalign
+e.expression.type: C,
 e.trueExpression.type: T,
-e.false\-Expression.type: F$
+e.false\-Expression.type: F
+\endalign
+++++
 
 the following constraints must hold:
 
@@ -2288,7 +2297,7 @@ the following constraints must hold:
 //\todo[jvp infer type of left and even right-hand side of assignments]{Cf. pathSelectors: even the return type of a generic method may be inferred, that is, the assignment operator inference rules are a bit more complicated. Cf. generics.}
 
 1.  $\infType{assignment.lhs} \subtype \infType{assignment.rhs}$
-
++
 In the following inference rule and the constraint, ’@’ is to be
 replaced with the right part of one of the assignment operators listed
 above, that is,
@@ -2297,7 +2306,7 @@ above, that is,
 ++++
 @ \in \{\lstnfbnf{'*', '/', '\%', '+', '-', '<<', '>>', '>>>', '&', '\^', '|'}\}
 ++++
-
+// TODO fix block
 --
 
 .Compound Assignment
@@ -2326,18 +2335,20 @@ left-hand side is not to be changed by the compound assignment.
 .Write Acccess
 [req,id=IDE-121,version=1]
 --
-For a given assignment expression
-$assignExpr$, the left-hand side must be writeable or a
-final data field and the assignment must be in the constructor. Let
-$v$ be the bound variable (or field) with
-$bind(assignExpr.left, v)$
-$
+For a given assignment expression $assignExpr$, the left-hand side must be writeable or a final data field and the assignment must be in the constructor.
+Let $v$ be the bound variable (or field) with $bind(assignExpr.left, v)$
+
+[math]
+++++
+\beginalign
 v.writeable \lor
     v.final \land
     & \hspace{2em} v.expr = \NULL \\
     & \hspace{2em} \land assignExpr.containingFunction = v.owner.constructor \\
     & \hspace{2em} \land \mu(assignExpr.left)=\type{PropertyAccess} \\
-    & \hspace{4em} \land assignExpr.left.target = \lstnfjs{"this"}$
+    & \hspace{4em} \land assignExpr.left.target = \lstnfjs{"this"}
+\endalign
+++++
 
 
 The value of writeable is true for setters and usually for variables and
@@ -2443,7 +2454,7 @@ last expression:
 SuperLiteral: {SuperLiteral} 'super';
 ----
 
-Apart from the use of keyword `super` in wildcards of type expressions (cf. <<_type_expressions>>), there are two use cases for keyword `super`: super member access and super
+Apart from the use of keyword `super` in wildcards of type expressions (cf. <<_type-expressions >>), there are two use cases for keyword `super`: super member access and super
 constructor calls.
 
 .Super Keyword

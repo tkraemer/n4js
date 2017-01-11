@@ -167,14 +167,13 @@ they may be parameterized. For the sake of simplicity, we often omit the
 following properties and pseudo properties for typed elements such as
 variables:
 
-The explicitly declared type, this is usually a real property of the construct.
+[horizontal]
+declaredType$Ref$ :: The explicitly declared type, this is usually a real property of the construct.
 Not all elements allow the specification of a declared type, such as expressions.
 
-// TODO missing type here
-or $\infType{..}$: This pseudo property is the inferred type
-computed by the type inferencer.
+inferredType$Ref$ or $\infType{..}$:: This pseudo property is the inferred type computed by the type inferencer.
 
-A pseudo property for elements with a $declaredType$ property.
+type$Ref$ :: A pseudo property for elements with a $declaredType$ property.
 It is similar to the inferred type, i.e. $e.type = \infType{e}$
 
 [.language-n4js]
@@ -202,7 +201,7 @@ bind: VariableReference \times VariableDeclaration
 which binds a reference, i.e. an identifier, to a declaration (e.g.,variable declaration).
 
 Binding of variable references to declaration is defined by ECMAScript already.
-Type references only occur in type expressions, how these are handled is explained in <<_type_expressions>>.
+Type references only occur in type expressions, how these are handled is explained in <<_type-expressions,Type Expressions>>.
 
 We usually omit this binding mechanism in most rules and use the reference similarly to the declaration or definition it is bound to.
 If a variable reference $r$, for example, is bound to a variable declaration $D$, i.e. $bind(r,D)$, we

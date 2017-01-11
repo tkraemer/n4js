@@ -1396,8 +1396,13 @@ hold in addition to <<IDE-152,requirement: Polyfill Class>>:
 1.  $P$’s name equals the name of the filled class and is
 contained in a module with the same qualified name:
 +
-$& P.name = F.name \\
-    & \land P.containedModule.specifier=F.containedModule.specifier \\ $
+[math]
+++++
+\beginalign
+& P.name = F.name \\
+    & \land P.containedModule.specifier=F.containedModule.specifier \\
+\endalign
+++++
 2.  Both the static polyfill and the filled class are part of the same
 project:
 $& P.project = F.project$

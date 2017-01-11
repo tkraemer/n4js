@@ -230,10 +230,10 @@ $sup^+$ is defined as the transitive closures of all direct
 and indirect superclasses of a class. If no supertype is explicitly
 stated, classes are derived from `N4Object`.
 
-`implementedInterfaces$/$interfaces$` ::
+`implementedInterfaces`/`interfaces` ::
 Collection of interfaces directly _implemented_ by the class; empty by
-default. Instead of $implementedInterfaces$, we simply write
-$interfaces$.
+default. Instead of `implementedInterfaces`, we simply write
+`interfaces`.
 
 `ownedCtor` ::
 Explicit constructor of a class (if any), see <<_constructor-and-classifier-type,Constructor>>.
@@ -519,9 +519,10 @@ fragment InterfaceImplementsList*:
 These are the additional properties of interfaces, which can be
 specified by the user:
 
+[horizontal]
+`superInterfaces`::
 Collection of interfaces extended by this interface; empty by default.
-Instead of $superInterfaces$, we simply write
-$interfaces$.
+Instead of `superInterfaces`, we simply write `interfaces`.
 
 
 ==== Type Inference [[interfaces-type-inference]]

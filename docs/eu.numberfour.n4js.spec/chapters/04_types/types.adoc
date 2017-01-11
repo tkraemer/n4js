@@ -355,7 +355,6 @@ At the moment, N4JS does not support type guards or, more general, effect system
 [.language-n4js]
 == Generic and Parameterized Types
 
-
 Some notes on terminology:
 
 [horizontal]
@@ -418,12 +417,11 @@ with an upper bound.
 
 Properties of `TypeVariable`:
 
-Type variable, as type variable contains only an identifier, we use type
-parameter instead of type variable (and vice versa) if the correct
+[horizontal]
+$name$ :: Type variable, as type variable contains only an identifier, we use type parameter instead of type variable (and vice versa) if the correct
 element is clear from the context.
 
-Upper bounds of concrete type bound to the type variable, i.e. a super
-class.
+$declaredUpperBounds$ :: Upper bounds of concrete type bound to the type variable, i.e. a super class.
 
 [discrete]
 ==== Semantics [[type-variables-semantics]]
@@ -1549,9 +1547,9 @@ NOTE: This is not documented in detail yet, because we want to gain experience w
 == Type Modifiers
 
 Type expressions can be further described with type
-modifiers. The type modifiers add additional constraints to the type
-expression which are then used to perform a stricter validation of the
-source code. Type modifiers can not be used in type arguments.
+modifiers.
+The type modifiers add additional constraints to the type expression which are then used to perform a stricter validation of the source code.
+Type modifiers can not be used in type arguments.
 
 The general type modifiers $nullable$, $nonnull$
 and $dynamic$ can be used for variables, attributes, method
@@ -1567,9 +1565,9 @@ property and call any method on it. The default behavior for a type is
 to be static, that is no new properties can be added and no unknown
 properties can be accessed.
 
-$<:$ and $<:$ is always true. Using dynamically
-added members of a dynamic type is never type safe. Using the operator
-on a subtype of is not allowed.
+`T` $<:$ `T+` and `T+` $<:$ `T` is always true.
+Using dynamically added members of a dynamic type is never type safe.
+Using the `delete` operator on a subtype of `N4Object` is not allowed.
 
 .Non-Dynamic Primitive Types
 [req,id=IDE-15,version=1]
@@ -1891,7 +1889,7 @@ That is
 +
 [math]
 ++++
-A \mathbf{join}  \lstnfjs{union\{}B,C\lstnfjs{\}} \neq A \mathbf{join}\  B \mathbf{join}\  C
+A \spc  \mathbf{join} \spc  \union{B,C} \neq A \spc  \mathbf{join} \spc   B \spc \mathbf{join} \spc  C
 ++++
 * The computed join is simplified according to the constraints defined above.
 --

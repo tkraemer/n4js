@@ -101,8 +101,7 @@ Autoboxing is not directly supported in N4JS. Instead, primitive types
 virtually have the same members as their corresponding object types. It
 is then possible to use the Autoboxing feature when calling a member.
 In general, Autoboxing is only supported for accessing built-in
-read-only (immutable) properties. For example, `"some string value".split(" ");` is supported but `"some string value".foo=1;` will be rejected as String does not allow properties to be added (cf. vs. , see <<_dynamic,Dynamic Type Modifiers>>).
-// TODO missing references
+read-only (immutable) properties. For example, `"some string value".split(" ");` is supported but `"some string value".foo=1;` will be rejected as String does not allow properties to be added (cf. `String` vs. `String+`, see <<_dynamic,Dynamic Type Modifiers>>).
 
 Autoboxing often leads to problems, in particular in combination with
 dynamic types – this is why it is not directly supported in N4JS. For
@@ -140,8 +139,7 @@ All classes defined in N4JS modules implicitly subclass `N4Object`, which is a
 plain JavaScript Object type. The same auto-conversion rules defined for
 JavaScript `Object` therefore apply to `N4Object` instances as well.
 
-The basic conversion uses the abstract JavaScript function `ToPrimitive` cite:[ECMA11a(S9.1)], which relays on the specification method `Object`
-cite:[ECMA11a(S8.12.8)].
+The basic conversion uses the abstract JavaScript function `ToPrimitive` cite:[ECMA11a(S9.1)], which relays on the specification method `Object` cite:[ECMA11a(S8.12.8)].
 `DefaultValue` calls `valueOf` or `toString` methods if they are defined by the class (in the `methods`-builder).
 
 Note that according to the cite:[ECMA11a], in most cases, objects are first converted into primitives. That is, in most cases, no extra hint is passed to
@@ -216,11 +214,11 @@ We first define helper rules for the type cast constraints as follows:
 [math]
 ++++
 \beginalign
-|\infer{isCPOE(T)}{\mu(T) \in \{ \type{TEnum}, \type{Class}, \type{Primitive}, \type{ObjectType}\}}\\
-|\infer{isCPOE(T)}{\mu{T} \in\{\type{ClassifierType}, \type{TypeType} \} \land \mu(T.typeRef) \neq \type{TypeVariable} }\\
-|\infer{isInterface(T)}{\mu(T) \in \{ \type{Interface} \}}\\
-|\infer{isBoundTypeVar(T)}{\mu(T)=\type{TypeVariable}  \land T.upperBounds \neq  \emptyset }\\
-|\infer{isFinalByType(T)}{\mu(T) \in \{\ \type{TEnum}, \type{Primitive} \} \lor (\mu(T)=\type{Class} \land T.extensibility=\lenum{final} \})}
+\infer{isCPOE(T)}{\mu(T) \in \{ \type{TEnum}, \type{Class}, \type{Primitive}, \type{ObjectType}\}}\\
+\infer{isCPOE(T)}{\mu{T} \in\{\type{ClassifierType}, \type{TypeType} \} \land \mu(T.typeRef) \neq \type{TypeVariable} }\\
+\infer{isInterface(T)}{\mu(T) \in \{ \type{Interface} \}}\\
+\infer{isBoundTypeVar(T)}{\mu(T)=\type{TypeVariable}  \land T.upperBounds \neq  \emptyset }\\
+\infer{isFinalByType(T)}{\mu(T) \in \{\ \type{TEnum}, \type{Primitive} \} \lor (\mu(T)=\type{Class} \land T.extensibility=\lenum{final} \})}
 \endalign
 ++++
 

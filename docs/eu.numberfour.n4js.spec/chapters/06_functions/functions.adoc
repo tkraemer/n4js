@@ -27,7 +27,7 @@ A function type is modeled as (see cite:[ECMA11a(S13,p.98)] in ECMAScript.
 Function types can be defined by means of;
 
 * A function object (<<_function-object-type,Function Object Type>>).
-* A function type expression (<<_type_expressions,Type Expressions>>).
+* A function type expression (<<_type-expressions ,Type Expressions>>).
 * A function declaration (<<_function-declaration,Function Definition>>).
 * A method declaration (<<Methods>>).
 
@@ -373,8 +373,15 @@ becomes a subtype of $F_{right}$ as defined by
 * else if $|F_{left}.typePars|=|F_{right}.typePars|$:
 ** $\typeEnvAdd \{ V^r_i \leftarrow V^l_i | 0 \leq i \leq n \} \entails F_{left} <: F_{right}$
 ( accordingly)
-** $\forall 0 \leq i \leq n : \\
-        \intersection{V^l_i.\mathit{upperBounds}} :> \intersection{V^r_i.\mathit{upperBounds}}$
+** -
++
+[math]
+++++
+\beginalign
+\forall 0 \leq i \leq n : \\
+        \intersection{V^l_i.\mathit{upperBounds}} :> \intersection{V^r_i.\mathit{upperBounds}}
+\endalign
+++++
 +
 with $F_{left}.typePars=V^l_0, V^l_1, ... V^l_n$ and
 $F_{right}.typePars=V^r_0, V^r_1, ... V^r_n$ +

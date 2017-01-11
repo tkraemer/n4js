@@ -806,37 +806,33 @@ its project’s source folder’s relative path without any extension, see
 
 This are the properties of script, which can be specified by the user:
 
-Arbitrary annotations, see <<_annotations,Annotations>> and below for details.
+[horizontal]
+`annotations` :: Arbitrary annotations, see <<_annotations,Annotations>> and below for details.
 
-The content of the script.
+`scriptElements`:: The content of the script.
 
 And we additionally define the following pseudo properties:
 
-File system path (path delimiter is always `’/’`) relative to the source
-fragment of the file without the extension. E.g.: given a source folder
-`src`, `path` of a module located at:
-
+`path` :: File system path (path delimiter is always `’/’`) relative to the source fragment of the file without the extension. E.g.: given a source folder `src`, `path` of a module located at:
++
 * `src/n4/lang/List.js` is `n4/lang/List`
 * `src/n4/lang/Objects.prototypes` is `n4/lang/Objects`
 
-Pseudo property consists of the project name and project version of the
-module followed by the path, the concrete syntax is: +
-`<project.name>-<project.version>/<module.path>`, +
-where project version includes all version parts except the qualifier. +
+`expandedPath` :: Pseudo property consists of the project name and project version of the module followed by the path, the concrete syntax is:
++
+`<project.name>-<project.version>/<module.path>` +
+where project version includes all version parts except the qualifier.
++
 E.g. given a module with path `n4/lang/List` in a project `lib` with
-version `1.0.0`, the `expandedPath` is
-`lib-1.0.0/n4/lang/List`.
+version `1.0.0`, the `expandedPath` is `lib-1.0.0/n4/lang/List`.
 
-Pseudo property contains all load time dependencies of this module.
+`loadtimeDeps` :: Pseudo property contains all load time dependencies of this module.
 
-Pseudo property contains all runtime dependencies of this module.
+`runtimeDeps` :: Pseudo property contains all runtime dependencies of this module.
 
-Pseudo property contains all dependencies of this module. This is the
-union of `loadtimeDeps` and `runtimeDeps` which
-maintains the ordering of both lists, with the
-`loadtimeDeps` at the front.
+`allDeps` :: Pseudo property contains all dependencies of this module. This is the union of `loadtimeDeps` and `runtimeDeps` which maintains the ordering of both lists, with the `loadtimeDeps` at the front.
 
-Pseudo properties to be set via annotations are explained in .
+Pseudo properties to be set via annotations are explained in <<_annotations,Annotations>>.
 
 [.language-n4js]
 == NumberFour Archives (NFAR)
@@ -853,21 +849,21 @@ to:
 A nfar archive has the following structure:
 
 [horizontal]
-/resources/::
+`/resources/`::
   contains all resources such as images and css files
-/src/::
+`/src/`::
   contains all JavaScript and N4ML source files, but doesn’t contain
   test source files.
-/output/::
+`/output/`::
   contains the compiled JavaScript.
-/model/::
+`/model/`::
   contains the compiled type model.
-manifest.pmi::
+`manifest.pmi`::
   the manifest file
-bundle.json::
+`bundle.json`::
   This is used to track the format/version of the contained data, so
   that we are able to see if two bundles are compatible with each other
-package.json::
+`package.json`::
   This contains the _N4 deployment descriptor_ required by the N4
   deployment webservice. This file is only added to the nfar file when
   deploying it to a N4 environment! That means that it’s not available
@@ -875,7 +871,7 @@ package.json::
 
 === N4 Deployment Descriptor
 
-//todo[N4 Deployment Descriptor]{Why is it needed? Where is it generated? Does it has to be changed?
+// todo[N4 Deployment Descriptor]{Why is it needed? Where is it generated? Does it has to be changed?
 
 The N4 deployment descriptor of a project `p` is a NFON
 formatted file with the following structure:

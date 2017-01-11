@@ -297,7 +297,7 @@ b.button:before { content: "["; padding: 0 3px 0 2px; }
 
 b.button:after { content: "]"; padding: 0 2px 0 3px; }
 
-#header, #content, #footnotes, #footer { max-width:1300px; margin-right: 80px; margin-top: 0; margin-bottom: 0; *zoom: 1; position: relative; padding-left: 0.9375em; padding-right: 0.9375em; }
+#header, #content, #footnotes, #footer { max-width:1300px; margin-right: 80px; margin-top: 0; margin-bottom: 0; *zoom: 1; position: relative; padding-left: 0.9375em; padding-right: 0.9375em; left: 40px;}
 
 @media only screen and (max-width: 1360px) {
 	#toc {width: 200px }
@@ -331,7 +331,7 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
 #toc ul.sectlevel0 > li > a { font-style: italic; }
 #toc ul.sectlevel0 ul.sectlevel1 { margin: 0.5em 0; }
 #toc ul { font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; list-style-type: none; }
-#toc li { line-height: 1.3334; margin-top: 0.3334em; }
+#toc li { line-height: 1.3334; margin-top: 0.3334em; padding-left: 5px;}
 #toc a { text-decoration: none; }
 #toc a:active { text-decoration: underline; }
 
@@ -921,8 +921,7 @@ div.slicknav_menu li:last-of-type
 #menubar ul {list-style: none; }
 #menubar a {text-decoration: none;}
 #menubar li {margin-left: 0;}
-#menubar {    height: 90px;position: relative;color: white;font-size: 1.9rem;border-bottom: #595959;border-bottom: 2px solid #dddddd;}
-
+#menubar { height: 90px;max-width: 1280px;position: relative;margin-left: 50px;color: white;font-size: 1.9rem;border-bottom: #595959;border-bottom: 2px solid #dddddd;}
 #menubar img {
     padding-left: 45px;
     margin-top: 15px;

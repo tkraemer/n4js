@@ -39,7 +39,7 @@ Members share the following properties:
 `annotations` ::
 Arbitrary annotations, see <<Annotations>> for details.
 
-`accessModifier$` ::
+`accessModifier` ::
 N4JS member access modifier: `private`, `project`, `potected`, or `public`; the latter two can be combined with `@Internal`; default is `project` for classes and private interfaces. For a non-private interface defaults to the interface’s visibility. task:IDE-84[]
 
 `name` ::
@@ -193,8 +193,7 @@ IdentifierName: IDENTIFIER | ReservedWord | N4Keyword;
 NumericLiteralAsString: DOUBLE | INT | OCTAL_INT | HEX_INT | SCIENTIFIC_INT;
 StringLiteralAsName: STRING;
 
-// see ~\autoref{sec:_asynchronous-functions}~
-fragment AsyncNoTrailingLineBreak *: (declaredAsync?='async' NoLineTerminator)?;
+fragment AsyncNoTrailingLineBreak *: (declaredAsync?='async' NoLineTerminator)?; // <1>
 
 fragment StrictFormalParameters <Yield>*:
     '(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')'
@@ -218,7 +217,7 @@ fragment ColonSepTypeRef*:
     ':' declaredTypeRef=TypeRef
 ;
 ----
-
+<1> See the <<_asynchronous-functions,Asynchronour Functions>> section.
 
 [.language-n4js]
 === Properties
