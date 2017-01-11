@@ -1,7 +1,7 @@
 
 = JSX
 ////
-Copyright (c) 2016 NumberFour AG.
+Copyright (c) 2017 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -24,11 +24,11 @@ There are two ways of defining a React component:
 
 * functional component: A function is a React component, iff
 ** its return type is React.Element
-** the function has at least one parameter. This first parameter is considered as the ``props`` property. The type of the first parameter only has public fields (or methods defined by Object). The fields may be defined as optional.
+** the function has at least one parameter. This first parameter is considered as the `props` property. The type of the first parameter only has public fields (or methods defined by Object). The fields may be defined as optional.
 * class component: A class is a React component, iff
 ** it extends React.Component.
 ** the type parameters must be structural types.
-*** The first parameter defines the ``props`` type, it must only define public fields (or methods defined by Object)
+*** The first parameter defines the `props` type, it must only define public fields (or methods defined by Object)
 *** The second parameter defines the ``state`` type, it must only define public fields (or methods defined by Object)
 
 In both cases, the name must be capitalized (i.e., start with an upper case letter).
@@ -185,6 +185,6 @@ If the lower-case tag does not bind to a function or class declaration, the foll
 --
 The use of spread operators within an JSX element for specifying multiple attributes should be allowed. In this case, all constraints regarding type conformity checking and non-optional properties mentioned in <<IDE-241117>> apply to the attributes specified in the spread operator. In particular,
 
-* The type of each attribute specified in spread operator must be conform to the type of the corresponding property of ``props``.
-* If a non-optional property of ``props`` is specified neither as attribute nor in a spread operator, a warning is issued.
+* The type of each attribute specified in spread operator must be conform to the type of the corresponding property of `props`.
+* If a non-optional property of `props` is specified neither as attribute nor in a spread operator, a warning is issued.
 --

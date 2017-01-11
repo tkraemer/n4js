@@ -2,7 +2,7 @@
 = Expressions
 :find:
 ////
-Copyright (c) 2016 NumberFour AG.
+Copyright (c) 2017 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -476,10 +476,8 @@ described in <<_property-accessors,Property Accessors>>.
 .Read Access to Identifier
 [req,id=IDE-93,version=1]
 --
-If an identifier $i$ is accessed, the bound declared element
-$D$ must be readable if it is not used on the left-hand side
-of an assignment expression.
-+
+If an identifier $i$ is accessed, the bound declared element $D$ must be readable if it is not used on the left-hand side of an assignment expression.
+
 [math]
 ++++
 \beginalign
@@ -536,11 +534,12 @@ following axioms are defined for literals:
 ////
 TODO - check status of tags:
 
-&\infer{\type{NullLiteral}: \type{null}}{}          \tag{\S7.8.1}\\
-&\infer{\type{BooleanLiteral}: \type{boolean}}{}        \tag{\S7.8.2}\\
-&\infer{\type{NumericLiteral}: \type{int} or \type{number}}{}       \tag{\S7.8.3}\\
-&\infer{\type{StringLiteral}: \type{string}}{}      \tag{\S7.8.4}\\
-&\infer{\type{RegularExpressionLiteral}: \type{RegExpr}}{} \tag{\S7.8.5}
+\tag{\S7.8.1}\\
+\tag{\S7.8.2}\\
+\tag{\S7.8.3}\\
+\tag{\S7.8.4}\\
+\tag{\S7.8.5}
+
 ////
 
 Note that there are no literals specific for `pathSelector` or `i18nkey`.
@@ -1648,15 +1647,13 @@ task:IDE-244[] task:IDE-345[]
 [math]
 ++++
 \beginalign
-\spc \infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{}
-\spc \infer{\tee \lstnfbnf{'void'}\ expression: \type{undefined}}{}
-\spc \infer{\tee \lstnfbnf{'typeof'}\ expression: \type{string}}{}
-\spc \infer{\tee \lstnfbnf{('++'|'$--$'|'+'|'$-$'|'~')}\ expression: \type{number}}{}
-\spc \infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{}
+\spc \infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{} \\
+\spc \infer{\tee \lstnfbnf{'void'}\ expression: \type{undefined}}{}\\
+\spc \infer{\tee \lstnfbnf{'typeof'}\ expression: \type{string}}{}\\
+\spc \infer{\tee \lstnfbnf{('++'|'$--$'|'+'|'$-$'|'~')}\ expression: \type{number}}{}\\
+\spc \infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{}\\
 \endalign
 ++++
-
-// ~
 
 === Multiplicative Expression
 
@@ -2496,32 +2493,45 @@ $\tee \lstnfjs{super}: T \land T.typingStrategy = \lenum{nominal}$
 .Access Super Constructor with Super Literal
 [req,id=IDE-123,version=1]
 --
-If the super literal $s$ is used to access the super constructor of a
-class, all of the following constraints must hold:
+If the super literal $s$ is used to access the super constructor of a class, all of the following constraints must hold:
 
 1.  The super constructor access must be a call expression:
-$\mu(cexpr)=\type{CallExpression} \land c.target = cexpr$
 +
-2.  The super constructor call must be the expression of an expression
-statement $exprStmt$:
-$exprStmt = cexpr.container \land \mu(cexpr.container) = \type{ExpressionStatement}$
+[math]
+++++
+\mu(cexpr)=\type{CallExpression} \land c.target = cexpr
+++++
+2.  The super constructor call must be the expression of an expression statement $exprStmt$:
 +
-3.  The containing statement $stmtExpr$ must be directly
-contained in a constructor body:
-$&\mu(exprStmt.containingFunction)=\type{Constructor}) \\
-&\land exprStmt.container = exprStmt.containingFunction.body$
+[math]
+++++
+exprStmt = cexpr.container \land \mu(cexpr.container) = \type{ExpressionStatement}
+++++
+3.  The containing statement $stmtExpr$ must be directly contained in a constructor body:
 +
-4.  task:IDEBUG-147[] There must be no access to and not return statement before the
-containing statement $exprStmt$. +
-Let $si$ be the index of $exprStmt$ in the
-constructor body: +
-$exprStmt.container.stmts_{si}=exprStmt$. +
-Then, the following constraint must
-holdfootnote:[$e \in^* c$ is the transitive version of
-$e \in c$, that is, it $e$ directly or
-indirectly contained in $c$.]
-$&\forall i<si: \nexists element \in^* exprStmt.container.stmts_{i}:\\
-&\hspace{3em} \mu(i) \in \types{ThisLiteral, ReturnStatement}$
+[math]
+++++
+\beginalign
+&\mu(exprStmt.containingFunction)=\type{Constructor}) \\
+&\land exprStmt.container = exprStmt.containingFunction.body
+\endalign
+++++
+4.  There must be no access to and not return statement before the containing statement $exprStmt$. task:IDEBUG-147[]
++
+Let $si$ be the index of $exprStmt$ in the constructor body:
++
+[math]
+++++
+exprStmt.container.stmts_{si}=exprStmt
+++++
++
+Then, the following constraint must hold: footnote:[$e \in^* c$ is the transitive version of $e \in c$, that is, it $e$ directly or indirectly contained in $c$.]
++
+[math]
+++++
+&\forall i<si: \nexists element \in^* exprStmt.container.stmts_{i}:\\
+&\hspace{3em} \mu(i) \in \types{ThisLiteral, ReturnStatement}
+++++
 
 Further constraints with regard to super constructor calls are described
 in <<_constructor-and-classifier-type,Constructor>>.
@@ -2538,16 +2548,24 @@ $c=s.container.container$
 
 1.  The super literal must be the receiver of a method call (cf. remarks
 below):
-$& \mu(c)=\type{CallExpression}\\
++
+[math]
+++++
+\beginalign
+& \mu(c)=\type{CallExpression}\\
 \land & c.target = \type{PropertyAccessExpression} \\
-\land & c.target.target=s$
+\land & c.target.target=s
+\endalign
+++++
 2.  The super literal is used in a method or field accessor of a class:
 task:IDEBUG-386[]
 $\mu(s..containingClass) = \type{Class}$
-
 3.  The super literal must not be used in a nested function expression:
-$\mu(s.containingFunction=s.containingMethodOrFieldAccessor$
-
++
+[math]
+++++
+\mu(s.containingFunction=s.containingMethodOrFieldAccessor
+++++
 4.  If the return type of the method access via super is this, the
 actually bound this type will be the type of the calling class (and not
 of the class defining the method).

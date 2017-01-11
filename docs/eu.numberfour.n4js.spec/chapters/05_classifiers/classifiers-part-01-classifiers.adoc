@@ -2,7 +2,7 @@
 = N4JS Specific Classifiers
 
 ////
-Copyright (c) 2016 NumberFour AG.
+Copyright (c) 2017 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -97,7 +97,9 @@ $x \in members, \mu(x)=\type{Field}$ etc.
 Classes and interface may extend or implement classes or interfaces. Any
 class or interface extended or interface implemented is called __super
 classifier__. We distinguish the directly subtyped classifiers and from
-the transitive closure of supertypes $superClassifiers^*$
+the transitive closure of supertypes $ superClassifiers^* $
+
+//*
 
 [.language-n4js]
 == Common Semantics of Classifiers
@@ -105,10 +107,8 @@ the transitive closure of supertypes $superClassifiers^*$
 .Subtyping of Classifiers
 [req,id=IDE-42,version=1]
 --
-For a given type `C`, and supertypes +
-$superClassifiers = \{S_1,..., S_n\}$ directly subtyped
-`C`, +
-the following constraints must be true:
+For a given type `C`, and supertypes $superClassifiers = \{S_1,..., S_n\}$ directly subtyped
+`C`, the following constraints must be true:
 
 1.  The supertypes must be accessible to the subtype:
 $S_1, ..., S_n$ must be accessible to `C`.
@@ -116,12 +116,9 @@ $S_1, ..., S_n$ must be accessible to `C`.
 type arguments in the subtype and the type arguments have to be
 substitutable types of the type parameters.
 +
-[math]
-++++
-& \forall 0<i\leq k: \forall P \in S_i: \\
-& \hspace{3em}\exists A \in C_.typeArgs: bind(A, P) \land A.upperBound <: P.upperBound
-++++
-+
+
+$\forall 0<i\leq k: \forall P \in S_i:$ +
+$\exists A \in C_.typeArgs: bind(A, P) \land A.upperBound <: P.upperBound$
 3.  Wildcards may not be used as type argument when binding a
 supertype’s type parameters.
 4.  A classifier cannot be directly subtyped directly multiple times:
@@ -132,7 +129,7 @@ property $members$ to refer to all members of a classifier.
 This includes all members directly declared by the classifier itself,
 i.e. the $ownedMember$, and all members inherited from its
 super classifiers. The concrete mechanisms for inheriting a member are
-different and further constraint (cf. <<_redefinition-of-members,Redefinition of Members>>). A classifier only inherits its members from its direct supertypes, although the supertypes may contains
+different and further constraint (cf. <<_redefinition-of-members,Redefinition of Members>> ). A classifier only inherits its members from its direct supertypes, although the supertypes may contains
 members inherited from their supertypes.
 --
 

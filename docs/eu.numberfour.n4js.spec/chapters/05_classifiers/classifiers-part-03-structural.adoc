@@ -3,7 +3,7 @@
 = Structural Typing
 task:IDE-673[] task:IDE-680[] task:IDE-688[] task:IDE-691[]
 ////
-Copyright (c) 2016 NumberFour AG.
+Copyright (c) 2017 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -470,14 +470,14 @@ hand side of the `instanceof` operator:
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \spc x\ \lstnfjs{instanceof}\ E \Rightarrow \tee E: T \\
 \spc \hspace{3em}\to \lnot (T.refStructural \\
 \spc \hspace{6em}\lor T.refStructuralField \\
 \spc \hspace{6em}\lor T.refStructuralReadOnlyField \\
 \spc \hspace{6em}\lor T.refStructuralWriteOnlyField \\
 \spc \hspace{6em}\lor T.refStructuralInitField)
-\end{matrix}
+\endalign
 ++++
 That is, the following code will always issue an error: ``pass:[x instanceof ~T]``.
 footnote:[Since this is already prevented by the parser (the tilde is interpreted as an unary operator), error messages are likely to look a little strange.]
@@ -486,13 +486,13 @@ footnote:[Note that due to this relaxed definition (compared with definition-sit
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \infer{\tee X \subtype \tee \tsStr T}
     {{\forall m \in T.members, m.owner \notin \types{N4Object}, m.acc=\lenum{public}, \neg m.static, m \neq T.ctor:}\\
     {\hspace{1em} \exists m' \in X.members:}\\
     {\hspace{2em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name}\\
     {\hspace{2em} \land \tee m' \subtype \tee m}}
-\end{matrix}
+\endalign
 ++++
 7.  A type $X$ is a subtype of a structural field version of
 a type $\tsFld T$, if it contains all public, non-static and
@@ -723,8 +723,7 @@ class A5 {
 [.small]
 [cols="19"]
 |===
-|  h| A1 h| pass:[~A1] h| pass:[~~A1] h| pass:[~r~A1] h| pass:[~r~A2] h| pass:[~r~A3] h| pass:[~r~A4] h| pass:[~r~A5]
-h| pass:[~w~A1] h| pass:[~w~A2] h| pass:[~w~A3] h| pass:[~w~A4] h| pass:[~w~A5] h| pass:[~i~A1] h| pass:[~i~A2] h| pass:[~i~A3] h| pass:[~r~A4] h| pass:[~r~A5]
+|  h| A1 h| pass:[~A1] h| pass:[~~A1] h| pass:[~r~A1] h| pass:[~r~A2] h| pass:[~r~A3] h| pass:[~r~A4] h| pass:[~r~A5] h| pass:[~w~A1] h| pass:[~w~A2] h| pass:[~w~A3] h| pass:[~w~A4] h| pass:[~w~A5] h| pass:[~i~A1] h| pass:[~i~A2]  h| pass:[~i~A3] h| pass:[~r~A4] h| pass:[~r~A5]
 
 h| A1          |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓
 h| pass:[~A1]  |  |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓

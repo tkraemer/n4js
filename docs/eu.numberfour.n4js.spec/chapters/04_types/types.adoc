@@ -4,7 +4,7 @@
 
 :find:
 ////
-Copyright (c) 2016 NumberFour AG.
+Copyright (c) 2017 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -662,19 +662,16 @@ type reference $R$ with +
 $G=R.declaredType$, the following constraints must hold:
 
 * The actual type arguments must conform to the type parameters, that
-is: +
-
-[math]
-++++
-& |G.typePars|=|R.typeArgs|\\
-&\land \forall\ i, 0<i<|R.typeArgs|: \infType{R.typeArgs_i} <: \infType{R.typePars_i} \\
-++++
+is:
++
+$ |G.typePars|=|R.typeArgs|$ +
+$\land \forall\ i, 0<i<|R.typeArgs|: \infType{R.typeArgs_i} <: \infType{R.typePars_i} $
 
 --
 
 // TODO fix superscript font for correct math symbol.
 
-We define type erasure similar to Java cite:[Gosling12a(S4.6)] as a "mapping from types (possibly including parameterized types and type variables) to types (that are never parameterized types or type variables)". We write $T$^o^ for the erasure of type _T_.\
+We define type erasure similar to Java cite:[Gosling12a(S4.6)] as 'mapping from types (possibly including parameterized types and type variables) to types (that are never parameterized types or type variables)'. We write $T$^o^ for the erasure of type _T_.
 footnote:[The notation $|T|$ used in cite:[Gosling12a] conflicts with the notation of cardinality of sets, which we use in case of union or intersection types for types as well. The notation used here is inspired by cite:[Crary02a], in which a mapping is defined between a typed language $\lambda$ to an untyped language $\lambda$^o^.]
 
 .Parameterized Type
@@ -733,6 +730,7 @@ class B extends A{}
 class G<T extends A> { t: T; }
 var g: G;
 ----
+
 ====
 
 In this case, variable `g` refers to the _raw type_ `G`. This is forbidden in

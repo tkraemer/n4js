@@ -3,7 +3,7 @@
 task:IDE-12[] task:IDE-381[]
 
 ////
-Copyright (c) 2016 NumberFour AG.
+Copyright (c) 2017 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -772,10 +772,10 @@ structurally typed $\lstnfjs{this}$).
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \forall s \in ctor.fpar.structuralMembers, ctor.fpar.spec: \\
 \hspace{2em}\exists f \in ctor.owner.ownedFields \Rightarrow \tee s \subtype f
-\end{matrix}
+\endalign
 ++++
 8.  $\nfjstilde i \nfjstilde\lstnfjs{this}$ constructor ignores superfluous properties provided by an object literal.
 These ignored properties are _not_ used to set non-$\lenum{public}$ fields.
@@ -1186,13 +1186,13 @@ inferred type of the initializer expression:
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \spc \infer{\tee d: T}{d.declaredType \neq \NULL \spc T = d.declaredType} \\
 \spc \infer{\tee d: T}{
     d.declaredType = \NULL \spc d.expression \neq \NULL \\
     E = \tee d.expression \spc E \not\in \{\type{null, undefined}\} \spc T = E} \\
 \spc \infer{\tee d: \type{any}}{else}
-\end{matrix}
+\endalign
 ++++
 
 If the type contains type variables they are substituted according to
@@ -1249,14 +1249,14 @@ task:IDEBUG-575[]
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \spc f.expr \neq \NULL \\
 \spc \lor (\exists assignExp: assignExpr.containingFunction = f.owner.constructor \\
 \spc \hspace{3em} \land assignExpr.left.target = \lstnfjs{"this"} \\
 \spc \hspace{3em} \land bind(assignExpr.left.property, f)) \\
 \spc \lor (f.public \land \exists fpar \in f.owner.constructor.fpars: \\
 \spc \hspace{3em} fpar.spec \land \exists sm \in structuralMembers: sm.name=f.name)
-\end{matrix}
+\endalign
 ++++
 --
 // todo{Constraints for final assignment are not completely implemented yet, also they have some problems here (e.g., not all control flows are required to assign a value). They will be implemented in the progress of adding more powerful program analysis in general}
@@ -1627,12 +1627,12 @@ $M.name=S.name \land M.static=S.static$
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \mu(S)=\type{Method} \spc \Rightarrow \mu(M) = \type{Method} \\
 \mu(S)=\type{Field}  \spc \Rightarrow \mu(M) \in \type{Field, Getter, Setter} \\
 \mu(S)=\type{Getter} \spc \Rightarrow \mu(M) \in \type{Field, Getter} \\
 \mu(S)=\type{Setter} \spc \Rightarrow \mu(M) \in \type{Field, Setter} \\
-\end{matrix}
+\endalign
 ++++
 . The overridden member must not be declared final:
 $\lnot S.final$
@@ -1646,10 +1646,10 @@ $\lnot M.abstract \lor S.abstract$
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 (\mu(M) \in \types{Method, Getter, Field} \land \mu(S)\neq\type{Setter}) \spc  \Rightarrow \tee M \subtype S \\
     (\mu(M) \in \type{Setter, Field}         \land \mu(S)\neq\type{Getter} \land \lnot S.const) \spc   \Rightarrow \tee S \subtype M \\
-\end{matrix}
+\endalign
 ++++
 .  The access modifier is compatible:
 +
@@ -1673,13 +1673,13 @@ is the following constraint must hold:
 
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \spc \lnot M.override\\
 \spc \land \\
 \spc \nexists M' \in C.super.members \cup \bigcup^{n}_{i=1}I_i.members:\\
 \spc  M'.name=M.name \land M'.static=M.static \\
 \spc \land M'.acc>\lenum{private} \\
-\end{matrix}
+\endalign
 ++++
 
 --
@@ -1809,10 +1809,10 @@ candiate:
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \mu(M)=\type{Method}    \spc \Rightarrow \mu(M') = \type{Method} \\
 \mu(M)\neq\type{Method} \spc \Rightarrow \mu(M') \in \types{Field, FieldAccessor} % Field, Accessor
-\end{matrix}
+\endalign
 ++++
 .  The other member is abstract and not owned by the consumer:
 +
@@ -1860,19 +1860,19 @@ the consumer.
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
     \mu(M) \neq\type{Field} \spc \Rightarrow \\
                         \spc \exists M' \in C.members: \\
                             \spc \hspace{3em} overrideCompatible(M',M) \\
                             \spc \hspace{3em} \land (M' \in C.ownedMembers \Rightarrow M'.override)
-\end{matrix}
+\endalign
 ++++
 ..  if `M` is a field, then either an
 implementation-compatible field $F'$ or accessor pair $G', S'$ must exist:
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
     \mu(M)=\type{Field} \spc \Rightarrow \\
                         \spc \exists F' \in C.fields: \\
                             \spc \hspace{3em} overrideCompatible(F',M) \\
@@ -1883,7 +1883,7 @@ implementation-compatible field $F'$ or accessor pair $G', S'$ must exist:
                             \spc \hspace{3em} \land overrideCompatible(S',M) \\
                             \spc \hspace{3em} \land (G' \in C.ownedMembers \Rightarrow G'.override) \\
                             \spc \hspace{3em} \land (S' \in C.ownedMembers \Rightarrow S'.override)
-\end{matrix}
+\endalign
 ++++
 
 --
@@ -1904,10 +1904,10 @@ methods from implemented interfaces, that is
 +
 [math]
 ++++
-\begin{matrix}
+\beginalign
 \spc \forall M \in C.methods, M' \in I_i.methods (i=1\dots n): \\
 \spc \hspace{2em} M.name=M'.name \Rightarrow M.acc \neq private \to M.acc \geq M'.acc
-\end{matrix}
+\endalign
 ++++
 3.  Methods in the implementor must be a supertype footnote:[As defined in <<_function-type,Function Type>> for function types.] of methods from implemented interfaces.
 That is to say the implemented methods are override-compatible.
@@ -1969,8 +1969,8 @@ h| class `C` | | _M~C~_ | *M~C~* | | |_M~C~_
 h| $\in C.members$ |_M~I1~_ | _M~C~_ | _M~C~_ | _M~S~_ | _M~S~_  |_M~C~_
 |===
 
-
-Consuming Field Initializers :: [[consuming-field-initializers]]
+[[consuming-field-initializers]]
+Consuming Field Initializers ::
 Aside from the fields themselves, an implementor _always_ consumes the
 field initialization if the field is consumed – this is how the
 consumption is noticed at runtime.
