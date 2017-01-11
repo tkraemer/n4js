@@ -20286,24 +20286,32 @@ ruleTAnonymousFormalParameter
 			}
 		)
 	)
+	DefaultFormalParameterParserRuleCall_3=ruleDefaultFormalParameter{ announce($DefaultFormalParameterParserRuleCall_3.start, $DefaultFormalParameterParserRuleCall_3.stop, grammarAccess.getTAnonymousFormalParameterAccess().getDefaultFormalParameterParserRuleCall_3()); }
+)
+;
+
+
+// Rule DefaultFormalParameter
+ruleDefaultFormalParameter
+@init {
+}:
+(
 	(
 		(
-			(
-				HasInitializerAssignmentEqualsSignKeyword_3_0_0=EqualsSign
-				 {
-					announce($HasInitializerAssignmentEqualsSignKeyword_3_0_0, grammarAccess.getTAnonymousFormalParameterAccess().getHasInitializerAssignmentEqualsSignKeyword_3_0_0());
-				}
-			)
+			HasInitializerAssignmentEqualsSignKeyword_0_0=EqualsSign
+			 {
+				announce($HasInitializerAssignmentEqualsSignKeyword_0_0, grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignmentEqualsSignKeyword_0_0());
+			}
 		)
+	)
+	(
 		(
-			(
-				HasInitializerIDENTIFIERTerminalRuleCall_3_1_0=RULE_IDENTIFIER{
-					announce($HasInitializerIDENTIFIERTerminalRuleCall_3_1_0, grammarAccess.getTAnonymousFormalParameterAccess().getHasInitializerAssignment_3_1());
-				}
-			)
-		)?
+			HasInitializerTypeReferenceNameParserRuleCall_1_0=ruleTypeReferenceName{
+				announce($HasInitializerTypeReferenceNameParserRuleCall_1_0.start, $HasInitializerTypeReferenceNameParserRuleCall_1_0.stop, grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignment_1());
+			}
+		)
 	)?
-)
+)?
 ;
 
 // Entry rule entryRuleUnionTypeExpressionOLD

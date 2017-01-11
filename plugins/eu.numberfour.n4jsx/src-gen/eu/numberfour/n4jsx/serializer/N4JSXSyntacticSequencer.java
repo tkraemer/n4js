@@ -82,24 +82,14 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (ruleCall.getRule() == grammarAccess.getIDENTIFIERRule())
-			return getIDENTIFIERToken(semanticObject, ruleCall, node);
-		else if (ruleCall.getRule() == grammarAccess.getNO_LINE_TERMINATORRule())
+		if (ruleCall.getRule() == grammarAccess.getNO_LINE_TERMINATORRule())
 			return getNO_LINE_TERMINATORToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getSemiRule())
 			return getSemiToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getTemplateExpressionEndRule())
 			return getTemplateExpressionEndToken(semanticObject, ruleCall, node);
-		return "";
-	}
-	
-	/**
-	 * terminal IDENTIFIER:
-	 * 	IDENTIFIER_START IDENTIFIER_PART*;
-	 */
-	protected String getIDENTIFIERToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
+		else if (ruleCall.getRule() == grammarAccess.getTypeReferenceNameRule())
+			return getTypeReferenceNameToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
@@ -131,6 +121,17 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 		if (node != null)
 			return getTokenText(node);
 		return "}";
+	}
+	
+	/**
+	 * TypeReferenceName:
+	 * 	'void' | 'This' | 'await' | 'Promisify' | 'target' | QualifiedTypeReferenceName
+	 * ;
+	 */
+	protected String getTypeReferenceNameToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "void";
 	}
 	
 	@Override

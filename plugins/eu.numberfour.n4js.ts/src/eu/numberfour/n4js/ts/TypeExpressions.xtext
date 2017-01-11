@@ -123,21 +123,31 @@ fragment TAnonymousFormalParameterList*:
 
 /**
  * Used in type expressions, name is optional.
- *
+ */
+TAnonymousFormalParameter:
+	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef
+	DefaultFormalParameter
+;
+
+/**
+ * Used in Types language only.
+ */
+TFormalParameter:
+	variadic?='...'? name=BindingIdentifier<Yield=false>
+	':' typeRef=TypeRef
+	DefaultFormalParameter
+;
+
+/**
  * Default initializers in FunctionTypeExpressions or TFunctions
  * are necessary to specify optional formal parameters. Hence, their
  * initializer expression is rather uninteresting and limited by validations
  * to either 'undefined' and 'void INT'. The shorthand form, that is omitting
  * the initializer, is supported.
- * 
- * Note: Keep the initializer part in sync with: Types.xtext:TFormalParameter
  */
-TAnonymousFormalParameter:
-	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef
-	(hasInitializerAssignment?='=' hasInitializer?=IDENTIFIER?)?
+fragment DefaultFormalParameter*:
+	(hasInitializerAssignment?='=' hasInitializer?=TypeReferenceName?)?
 ;
-
-
 
 UnionTypeExpressionOLD returns UnionTypeExpression:
 	{UnionTypeExpression}

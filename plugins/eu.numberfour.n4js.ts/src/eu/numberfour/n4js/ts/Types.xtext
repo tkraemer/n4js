@@ -236,21 +236,6 @@ TMethod: =>
 	';'?
 ;
 
-/**
- * Default initializers in TFunctions (or FunctionTypeExpressions)
- * are necessary to specify optional formal parameters. Hence, their
- * initializer expression is rather uninteresting and limited by validations
- * to either 'undefined' and 'void INT'. The shorthand form, that is omitting
- * the initializer, is supported.
- * 
- * Note: Keep the initializer part in sync with: TypeExpressions.xtext:TAnonymousFormalParameter
- */
-TFormalParameter:
-	variadic?='...'? name=BindingIdentifier<Yield=false>
-	':' typeRef=TypeRef
-	(hasInitializerAssignment?='=' hasInitializer?='undefined'?)?
-;
-
 TField:
 	declaredMemberAccessModifier=MemberAccessModifier
  	(declaredStatic?='static' | const?='const' | declaredFinal?='final')?

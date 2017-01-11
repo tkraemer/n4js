@@ -125,6 +125,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.Wildcard;
 import eu.numberfour.n4js.ts.types.TAnonymousFormalParameter;
+import eu.numberfour.n4js.ts.types.TFormalParameter;
 import eu.numberfour.n4js.ts.types.TStructField;
 import eu.numberfour.n4js.ts.types.TStructGetter;
 import eu.numberfour.n4js.ts.types.TStructMethod;
@@ -1533,7 +1534,10 @@ public class N4JSXSemanticSequencer extends N4JSSemanticSequencer {
 		else if (epackage == TypesPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case TypesPackage.TANONYMOUS_FORMAL_PARAMETER:
-				sequence_TAnonymousFormalParameter(context, (TAnonymousFormalParameter) semanticObject); 
+				sequence_DefaultFormalParameter_TAnonymousFormalParameter(context, (TAnonymousFormalParameter) semanticObject); 
+				return; 
+			case TypesPackage.TFORMAL_PARAMETER:
+				sequence_DefaultFormalParameter_TFormalParameter(context, (TFormalParameter) semanticObject); 
 				return; 
 			case TypesPackage.TSTRUCT_FIELD:
 				sequence_TStructField(context, (TStructField) semanticObject); 

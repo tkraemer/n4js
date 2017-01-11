@@ -539,20 +539,6 @@ ruleTMethod:
 	';'?
 ;
 
-// Rule TFormalParameter
-ruleTFormalParameter:
-	'...'
-	?
-	ruleBindingIdentifier
-	':'
-	ruleTypeRef
-	(
-		'='
-		'undefined'
-		?
-	)?
-;
-
 // Rule TField
 ruleTField:
 	ruleMemberAccessModifier
@@ -884,9 +870,24 @@ ruleTAnonymousFormalParameter:
 		':'
 	)?
 	ruleTypeRef
+	ruleDefaultFormalParameter
+;
+
+// Rule TFormalParameter
+ruleTFormalParameter:
+	'...'
+	?
+	ruleBindingIdentifier
+	':'
+	ruleTypeRef
+	ruleDefaultFormalParameter
+;
+
+// Rule DefaultFormalParameter
+ruleDefaultFormalParameter:
 	(
 		'='
-		RULE_IDENTIFIER
+		ruleTypeReferenceName
 		?
 	)?
 ;

@@ -8623,9 +8623,14 @@ ruleTAnonymousFormalParameter:
 		':'
 	)?
 	ruleTypeRef
+	ruleDefaultFormalParameter
+;
+
+// Rule DefaultFormalParameter
+ruleDefaultFormalParameter:
 	(
 		'='
-		RULE_IDENTIFIER
+		ruleTypeReferenceName
 		?
 	)?
 ;

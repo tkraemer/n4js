@@ -34873,41 +34873,64 @@ ruleTAnonymousFormalParameter returns [EObject current=null]
 				}
 			)
 		)
+		{
+			if ($current==null) {
+				$current = createModelElement(grammarAccess.getTAnonymousFormalParameterRule());
+			}
+			newCompositeNode(grammarAccess.getTAnonymousFormalParameterAccess().getDefaultFormalParameterParserRuleCall_3());
+		}
+		this_DefaultFormalParameter_4=ruleDefaultFormalParameter[$current]
+		{
+			$current = $this_DefaultFormalParameter_4.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+
+// Rule DefaultFormalParameter
+ruleDefaultFormalParameter[EObject in_current]  returns [EObject current=in_current]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
 		(
 			(
-				(
-					lv_hasInitializerAssignment_4_0=EqualsSign
-					{
-						newLeafNode(lv_hasInitializerAssignment_4_0, grammarAccess.getTAnonymousFormalParameterAccess().getHasInitializerAssignmentEqualsSignKeyword_3_0_0());
+				lv_hasInitializerAssignment_0_0=EqualsSign
+				{
+					newLeafNode(lv_hasInitializerAssignment_0_0, grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignmentEqualsSignKeyword_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getDefaultFormalParameterRule());
 					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTAnonymousFormalParameterRule());
-						}
-						setWithLastConsumed($current, "hasInitializerAssignment", true, "=");
-					}
-				)
+					setWithLastConsumed($current, "hasInitializerAssignment", true, "=");
+				}
 			)
+		)
+		(
 			(
-				(
-					lv_hasInitializer_5_0=RULE_IDENTIFIER
-					{
-						newLeafNode(lv_hasInitializer_5_0, grammarAccess.getTAnonymousFormalParameterAccess().getHasInitializerIDENTIFIERTerminalRuleCall_3_1_0());
+				{
+					newCompositeNode(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerTypeReferenceNameParserRuleCall_1_0());
+				}
+				lv_hasInitializer_1_0=ruleTypeReferenceName
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getDefaultFormalParameterRule());
 					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTAnonymousFormalParameterRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"hasInitializer",
-							true,
-							"eu.numberfour.n4js.ts.TypeExpressions.IDENTIFIER");
-					}
-				)
-			)?
+					set(
+						$current,
+						"hasInitializer",
+						true,
+						"eu.numberfour.n4js.N4JS.TypeReferenceName");
+					afterParserOrEnumRuleCall();
+				}
+			)
 		)?
-	)
+	)?
 ;
 
 // Entry rule entryRuleUnionTypeExpressionOLD

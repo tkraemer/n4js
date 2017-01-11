@@ -46,19 +46,18 @@ public class TypesSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (ruleCall.getRule() == grammarAccess.getIDENTIFIERRule())
-			return getIDENTIFIERToken(semanticObject, ruleCall, node);
+		if (ruleCall.getRule() == grammarAccess.getTypeReferenceNameRule())
+			return getTypeReferenceNameToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
 	/**
-	 * terminal IDENTIFIER:
-	 * 	IDENTIFIER_START IDENTIFIER_PART*;
+	 * TypeReferenceName: 'void' | 'any' | 'undefined' | 'null' | 'indexed' | IDENTIFIER ('/' IDENTIFIER)*;
 	 */
-	protected String getIDENTIFIERToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	protected String getTypeReferenceNameToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "";
+		return "void";
 	}
 	
 	@Override

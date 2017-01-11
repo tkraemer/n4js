@@ -127,8 +127,6 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTMethodAccess().getGroup_0_0_2_2(), "rule__TMethod__Group_0_0_2_2__0");
 					put(grammarAccess.getTMethodAccess().getGroup_1(), "rule__TMethod__Group_1__0");
 					put(grammarAccess.getTMethodAccess().getGroup_1_1(), "rule__TMethod__Group_1_1__0");
-					put(grammarAccess.getTFormalParameterAccess().getGroup(), "rule__TFormalParameter__Group__0");
-					put(grammarAccess.getTFormalParameterAccess().getGroup_4(), "rule__TFormalParameter__Group_4__0");
 					put(grammarAccess.getTFieldAccess().getGroup(), "rule__TField__Group__0");
 					put(grammarAccess.getTGetterAccess().getGroup(), "rule__TGetter__Group__0");
 					put(grammarAccess.getTGetterAccess().getGroup_0(), "rule__TGetter__Group_0__0");
@@ -169,7 +167,8 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTAnonymousFormalParameterListAccess().getGroup_1(), "rule__TAnonymousFormalParameterList__Group_1__0");
 					put(grammarAccess.getTAnonymousFormalParameterAccess().getGroup(), "rule__TAnonymousFormalParameter__Group__0");
 					put(grammarAccess.getTAnonymousFormalParameterAccess().getGroup_1(), "rule__TAnonymousFormalParameter__Group_1__0");
-					put(grammarAccess.getTAnonymousFormalParameterAccess().getGroup_3(), "rule__TAnonymousFormalParameter__Group_3__0");
+					put(grammarAccess.getTFormalParameterAccess().getGroup(), "rule__TFormalParameter__Group__0");
+					put(grammarAccess.getDefaultFormalParameterAccess().getGroup(), "rule__DefaultFormalParameter__Group__0");
 					put(grammarAccess.getUnionTypeExpressionOLDAccess().getGroup(), "rule__UnionTypeExpressionOLD__Group__0");
 					put(grammarAccess.getUnionTypeExpressionOLDAccess().getGroup_4(), "rule__UnionTypeExpressionOLD__Group_4__0");
 					put(grammarAccess.getIntersectionTypeExpressionOLDAccess().getGroup(), "rule__IntersectionTypeExpressionOLD__Group__0");
@@ -282,11 +281,6 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTMethodAccess().getFparsAssignment_1_0(), "rule__TMethod__FparsAssignment_1_0");
 					put(grammarAccess.getTMethodAccess().getFparsAssignment_1_1_1(), "rule__TMethod__FparsAssignment_1_1_1");
 					put(grammarAccess.getTMethodAccess().getReturnTypeRefAssignment_4(), "rule__TMethod__ReturnTypeRefAssignment_4");
-					put(grammarAccess.getTFormalParameterAccess().getVariadicAssignment_0(), "rule__TFormalParameter__VariadicAssignment_0");
-					put(grammarAccess.getTFormalParameterAccess().getNameAssignment_1(), "rule__TFormalParameter__NameAssignment_1");
-					put(grammarAccess.getTFormalParameterAccess().getTypeRefAssignment_3(), "rule__TFormalParameter__TypeRefAssignment_3");
-					put(grammarAccess.getTFormalParameterAccess().getHasInitializerAssignmentAssignment_4_0(), "rule__TFormalParameter__HasInitializerAssignmentAssignment_4_0");
-					put(grammarAccess.getTFormalParameterAccess().getHasInitializerAssignment_4_1(), "rule__TFormalParameter__HasInitializerAssignment_4_1");
 					put(grammarAccess.getTFieldAccess().getDeclaredMemberAccessModifierAssignment_0(), "rule__TField__DeclaredMemberAccessModifierAssignment_0");
 					put(grammarAccess.getTFieldAccess().getDeclaredStaticAssignment_1_0(), "rule__TField__DeclaredStaticAssignment_1_0");
 					put(grammarAccess.getTFieldAccess().getConstAssignment_1_1(), "rule__TField__ConstAssignment_1_1");
@@ -337,8 +331,11 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTAnonymousFormalParameterAccess().getVariadicAssignment_0(), "rule__TAnonymousFormalParameter__VariadicAssignment_0");
 					put(grammarAccess.getTAnonymousFormalParameterAccess().getNameAssignment_1_0(), "rule__TAnonymousFormalParameter__NameAssignment_1_0");
 					put(grammarAccess.getTAnonymousFormalParameterAccess().getTypeRefAssignment_2(), "rule__TAnonymousFormalParameter__TypeRefAssignment_2");
-					put(grammarAccess.getTAnonymousFormalParameterAccess().getHasInitializerAssignmentAssignment_3_0(), "rule__TAnonymousFormalParameter__HasInitializerAssignmentAssignment_3_0");
-					put(grammarAccess.getTAnonymousFormalParameterAccess().getHasInitializerAssignment_3_1(), "rule__TAnonymousFormalParameter__HasInitializerAssignment_3_1");
+					put(grammarAccess.getTFormalParameterAccess().getVariadicAssignment_0(), "rule__TFormalParameter__VariadicAssignment_0");
+					put(grammarAccess.getTFormalParameterAccess().getNameAssignment_1(), "rule__TFormalParameter__NameAssignment_1");
+					put(grammarAccess.getTFormalParameterAccess().getTypeRefAssignment_3(), "rule__TFormalParameter__TypeRefAssignment_3");
+					put(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignmentAssignment_0(), "rule__DefaultFormalParameter__HasInitializerAssignmentAssignment_0");
+					put(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignment_1(), "rule__DefaultFormalParameter__HasInitializerAssignment_1");
 					put(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsAssignment_3(), "rule__UnionTypeExpressionOLD__TypeRefsAssignment_3");
 					put(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsAssignment_4_1(), "rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1");
 					put(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsAssignment_3(), "rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3");

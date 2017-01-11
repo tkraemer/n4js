@@ -13037,23 +13037,45 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	
 	/// **
 	// * Used in type expressions, name is optional.
-	// *
-	// * Default initializers in FunctionTypeExpressions or TFunctions
-	// * are necessary to specify optional formal parameters. Hence, their
-	// * initializer expression is rather uninteresting and limited by validations
-	// * to either 'undefined' and 'void INT'. The shorthand form, that is omitting
-	// * the initializer, is supported.
-	// * 
-	// * Note: Keep the initializer part in sync with: Types.xtext:TFormalParameter
 	// * / TAnonymousFormalParameter:
-	//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef (hasInitializerAssignment?='='
-	//	hasInitializer?=IDENTIFIER?)?;
+	//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef
+	//	DefaultFormalParameter;
 	public TypeExpressionsGrammarAccess.TAnonymousFormalParameterElements getTAnonymousFormalParameterAccess() {
 		return gaTypeExpressions.getTAnonymousFormalParameterAccess();
 	}
 	
 	public ParserRule getTAnonymousFormalParameterRule() {
 		return getTAnonymousFormalParameterAccess().getRule();
+	}
+	
+	/// **
+	// * Called from Types grammar only
+	// * / TFormalParameter:
+	//	variadic?='...'? name=BindingIdentifier<Yield=false>
+	//	':' typeRef=TypeRef
+	//	DefaultFormalParameter;
+	public TypeExpressionsGrammarAccess.TFormalParameterElements getTFormalParameterAccess() {
+		return gaTypeExpressions.getTFormalParameterAccess();
+	}
+	
+	public ParserRule getTFormalParameterRule() {
+		return getTFormalParameterAccess().getRule();
+	}
+	
+	/// **
+	// * Default initializers in FunctionTypeExpressions or TFunctions
+	// * are necessary to specify optional formal parameters. Hence, their
+	// * initializer expression is rather uninteresting and limited by validations
+	// * to either 'undefined' and 'void INT'. The shorthand form, that is omitting
+	// * the initializer, is supported.
+	// * / fragment DefaultFormalParameter *:
+	//	(hasInitializerAssignment?='=' hasInitializer?=super::TypeReferenceName?)?;
+	public TypeExpressionsGrammarAccess.DefaultFormalParameterElements getDefaultFormalParameterAccess() {
+		return gaTypeExpressions.getDefaultFormalParameterAccess();
+	}
+	
+	public ParserRule getDefaultFormalParameterRule() {
+		return getDefaultFormalParameterAccess().getRule();
 	}
 	
 	//UnionTypeExpressionOLD UnionTypeExpression:

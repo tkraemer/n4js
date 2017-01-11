@@ -713,29 +713,16 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
 		private final Assignment cTypeRefAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cTypeRefTypeRefParserRuleCall_2_0 = (RuleCall)cTypeRefAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Assignment cHasInitializerAssignmentAssignment_3_0 = (Assignment)cGroup_3.eContents().get(0);
-		private final Keyword cHasInitializerAssignmentEqualsSignKeyword_3_0_0 = (Keyword)cHasInitializerAssignmentAssignment_3_0.eContents().get(0);
-		private final Assignment cHasInitializerAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cHasInitializerIDENTIFIERTerminalRuleCall_3_1_0 = (RuleCall)cHasInitializerAssignment_3_1.eContents().get(0);
+		private final RuleCall cDefaultFormalParameterParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
 		
 		/// **
 		// * Used in type expressions, name is optional.
-		// *
-		// * Default initializers in FunctionTypeExpressions or TFunctions
-		// * are necessary to specify optional formal parameters. Hence, their
-		// * initializer expression is rather uninteresting and limited by validations
-		// * to either 'undefined' and 'void INT'. The shorthand form, that is omitting
-		// * the initializer, is supported.
-		// * 
-		// * Note: Keep the initializer part in sync with: Types.xtext:TFormalParameter
 		// * / TAnonymousFormalParameter:
-		//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef (hasInitializerAssignment?='='
-		//	hasInitializer?=IDENTIFIER?)?;
+		//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef
+		//	DefaultFormalParameter;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef (hasInitializerAssignment?='='
-		//hasInitializer?=IDENTIFIER?)?
+		//variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef DefaultFormalParameter
 		public Group getGroup() { return cGroup; }
 		
 		//variadic?='...'?
@@ -762,20 +749,88 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//TypeRef
 		public RuleCall getTypeRefTypeRefParserRuleCall_2_0() { return cTypeRefTypeRefParserRuleCall_2_0; }
 		
-		//(hasInitializerAssignment?='=' hasInitializer?=IDENTIFIER?)?
-		public Group getGroup_3() { return cGroup_3; }
+		//DefaultFormalParameter
+		public RuleCall getDefaultFormalParameterParserRuleCall_3() { return cDefaultFormalParameterParserRuleCall_3; }
+	}
+	public class TFormalParameterElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.TFormalParameter");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cVariadicAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cVariadicFullStopFullStopFullStopKeyword_0_0 = (Keyword)cVariadicAssignment_0.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameBindingIdentifierParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cTypeRefAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTypeRefTypeRefParserRuleCall_3_0 = (RuleCall)cTypeRefAssignment_3.eContents().get(0);
+		private final RuleCall cDefaultFormalParameterParserRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
+		
+		/// **
+		// * Called from Types grammar only
+		// * / TFormalParameter:
+		//	variadic?='...'? name=BindingIdentifier<Yield=false>
+		//	':' typeRef=TypeRef
+		//	DefaultFormalParameter;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//variadic?='...'? name=BindingIdentifier<Yield=false> ':' typeRef=TypeRef DefaultFormalParameter
+		public Group getGroup() { return cGroup; }
+		
+		//variadic?='...'?
+		public Assignment getVariadicAssignment_0() { return cVariadicAssignment_0; }
+		
+		//'...'
+		public Keyword getVariadicFullStopFullStopFullStopKeyword_0_0() { return cVariadicFullStopFullStopFullStopKeyword_0_0; }
+		
+		//name=BindingIdentifier<Yield=false>
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//BindingIdentifier<Yield=false>
+		public RuleCall getNameBindingIdentifierParserRuleCall_1_0() { return cNameBindingIdentifierParserRuleCall_1_0; }
+		
+		//':'
+		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
+		
+		//typeRef=TypeRef
+		public Assignment getTypeRefAssignment_3() { return cTypeRefAssignment_3; }
+		
+		//TypeRef
+		public RuleCall getTypeRefTypeRefParserRuleCall_3_0() { return cTypeRefTypeRefParserRuleCall_3_0; }
+		
+		//DefaultFormalParameter
+		public RuleCall getDefaultFormalParameterParserRuleCall_4() { return cDefaultFormalParameterParserRuleCall_4; }
+	}
+	public class DefaultFormalParameterElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.DefaultFormalParameter");
+		private final Group cGroup = (Group)rule.eContents().get(0);
+		private final Assignment cHasInitializerAssignmentAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cHasInitializerAssignmentEqualsSignKeyword_0_0 = (Keyword)cHasInitializerAssignmentAssignment_0.eContents().get(0);
+		private final Assignment cHasInitializerAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cHasInitializerTypeReferenceNameParserRuleCall_1_0 = (RuleCall)cHasInitializerAssignment_1.eContents().get(0);
+		
+		/// **
+		// * Default initializers in FunctionTypeExpressions or TFunctions
+		// * are necessary to specify optional formal parameters. Hence, their
+		// * initializer expression is rather uninteresting and limited by validations
+		// * to either 'undefined' and 'void INT'. The shorthand form, that is omitting
+		// * the initializer, is supported.
+		// * / fragment DefaultFormalParameter *:
+		//	(hasInitializerAssignment?='=' hasInitializer?=TypeReferenceName?)?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//(hasInitializerAssignment?='=' hasInitializer?=TypeReferenceName?)?
+		public Group getGroup() { return cGroup; }
 		
 		//hasInitializerAssignment?='='
-		public Assignment getHasInitializerAssignmentAssignment_3_0() { return cHasInitializerAssignmentAssignment_3_0; }
+		public Assignment getHasInitializerAssignmentAssignment_0() { return cHasInitializerAssignmentAssignment_0; }
 		
 		//'='
-		public Keyword getHasInitializerAssignmentEqualsSignKeyword_3_0_0() { return cHasInitializerAssignmentEqualsSignKeyword_3_0_0; }
+		public Keyword getHasInitializerAssignmentEqualsSignKeyword_0_0() { return cHasInitializerAssignmentEqualsSignKeyword_0_0; }
 		
-		//hasInitializer?=IDENTIFIER?
-		public Assignment getHasInitializerAssignment_3_1() { return cHasInitializerAssignment_3_1; }
+		//hasInitializer?=TypeReferenceName?
+		public Assignment getHasInitializerAssignment_1() { return cHasInitializerAssignment_1; }
 		
-		//IDENTIFIER
-		public RuleCall getHasInitializerIDENTIFIERTerminalRuleCall_3_1_0() { return cHasInitializerIDENTIFIERTerminalRuleCall_3_1_0; }
+		//TypeReferenceName
+		public RuleCall getHasInitializerTypeReferenceNameParserRuleCall_1_0() { return cHasInitializerTypeReferenceNameParserRuleCall_1_0; }
 	}
 	public class UnionTypeExpressionOLDElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.UnionTypeExpressionOLD");
@@ -2134,6 +2189,8 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final ArrowFunctionTypeExpressionElements pArrowFunctionTypeExpression;
 	private final TAnonymousFormalParameterListElements pTAnonymousFormalParameterList;
 	private final TAnonymousFormalParameterElements pTAnonymousFormalParameter;
+	private final TFormalParameterElements pTFormalParameter;
+	private final DefaultFormalParameterElements pDefaultFormalParameter;
 	private final UnionTypeExpressionOLDElements pUnionTypeExpressionOLD;
 	private final IntersectionTypeExpressionOLDElements pIntersectionTypeExpressionOLD;
 	private final ParameterizedTypeRefElements pParameterizedTypeRef;
@@ -2198,6 +2255,8 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pArrowFunctionTypeExpression = new ArrowFunctionTypeExpressionElements();
 		this.pTAnonymousFormalParameterList = new TAnonymousFormalParameterListElements();
 		this.pTAnonymousFormalParameter = new TAnonymousFormalParameterElements();
+		this.pTFormalParameter = new TFormalParameterElements();
+		this.pDefaultFormalParameter = new DefaultFormalParameterElements();
 		this.pUnionTypeExpressionOLD = new UnionTypeExpressionOLDElements();
 		this.pIntersectionTypeExpressionOLD = new IntersectionTypeExpressionOLDElements();
 		this.pParameterizedTypeRef = new ParameterizedTypeRefElements();
@@ -2467,23 +2526,45 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	/// **
 	// * Used in type expressions, name is optional.
-	// *
-	// * Default initializers in FunctionTypeExpressions or TFunctions
-	// * are necessary to specify optional formal parameters. Hence, their
-	// * initializer expression is rather uninteresting and limited by validations
-	// * to either 'undefined' and 'void INT'. The shorthand form, that is omitting
-	// * the initializer, is supported.
-	// * 
-	// * Note: Keep the initializer part in sync with: Types.xtext:TFormalParameter
 	// * / TAnonymousFormalParameter:
-	//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef (hasInitializerAssignment?='='
-	//	hasInitializer?=IDENTIFIER?)?;
+	//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef
+	//	DefaultFormalParameter;
 	public TAnonymousFormalParameterElements getTAnonymousFormalParameterAccess() {
 		return pTAnonymousFormalParameter;
 	}
 	
 	public ParserRule getTAnonymousFormalParameterRule() {
 		return getTAnonymousFormalParameterAccess().getRule();
+	}
+	
+	/// **
+	// * Called from Types grammar only
+	// * / TFormalParameter:
+	//	variadic?='...'? name=BindingIdentifier<Yield=false>
+	//	':' typeRef=TypeRef
+	//	DefaultFormalParameter;
+	public TFormalParameterElements getTFormalParameterAccess() {
+		return pTFormalParameter;
+	}
+	
+	public ParserRule getTFormalParameterRule() {
+		return getTFormalParameterAccess().getRule();
+	}
+	
+	/// **
+	// * Default initializers in FunctionTypeExpressions or TFunctions
+	// * are necessary to specify optional formal parameters. Hence, their
+	// * initializer expression is rather uninteresting and limited by validations
+	// * to either 'undefined' and 'void INT'. The shorthand form, that is omitting
+	// * the initializer, is supported.
+	// * / fragment DefaultFormalParameter *:
+	//	(hasInitializerAssignment?='=' hasInitializer?=TypeReferenceName?)?;
+	public DefaultFormalParameterElements getDefaultFormalParameterAccess() {
+		return pDefaultFormalParameter;
+	}
+	
+	public ParserRule getDefaultFormalParameterRule() {
+		return getDefaultFormalParameterAccess().getRule();
 	}
 	
 	//UnionTypeExpressionOLD UnionTypeExpression:

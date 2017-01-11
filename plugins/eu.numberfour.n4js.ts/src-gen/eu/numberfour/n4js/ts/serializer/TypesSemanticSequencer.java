@@ -355,7 +355,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 				sequence_TAnnotationTypeRefArgument(context, (TAnnotationTypeRefArgument) semanticObject); 
 				return; 
 			case TypesPackage.TANONYMOUS_FORMAL_PARAMETER:
-				sequence_TAnonymousFormalParameter(context, (TAnonymousFormalParameter) semanticObject); 
+				sequence_DefaultFormalParameter_TAnonymousFormalParameter(context, (TAnonymousFormalParameter) semanticObject); 
 				return; 
 			case TypesPackage.TCLASS:
 				sequence_TClass(context, (TClass) semanticObject); 
@@ -370,7 +370,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 				sequence_TField(context, (TField) semanticObject); 
 				return; 
 			case TypesPackage.TFORMAL_PARAMETER:
-				sequence_TFormalParameter(context, (TFormalParameter) semanticObject); 
+				sequence_DefaultFormalParameter_TFormalParameter(context, (TFormalParameter) semanticObject); 
 				return; 
 			case TypesPackage.TFUNCTION:
 				sequence_TFunction(context, (TFunction) semanticObject); 
@@ -823,18 +823,6 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     )
 	 */
 	protected void sequence_TField(ISerializationContext context, TField semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     TFormalParameter returns TFormalParameter
-	 *
-	 * Constraint:
-	 *     (variadic?='...'? name=BindingIdentifier typeRef=TypeRef (hasInitializerAssignment?='=' hasInitializer?='undefined'?)?)
-	 */
-	protected void sequence_TFormalParameter(ISerializationContext context, TFormalParameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
