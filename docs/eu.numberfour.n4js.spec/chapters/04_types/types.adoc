@@ -3000,6 +3000,7 @@ This leads to the following typing rules:
 For a given enumeration declaration $E$ with literals $L$, the following
 type rules are defined:
 
+// TODO check constraints in this section
 1. Every enumeration $E$ is a subtype of the base type :
 +
 [math]
@@ -3014,13 +3015,12 @@ of the type of the enumeration:
 \infer{\tee L: E}{L \in E.literals}
 ++++
 That means that every literal is a subtype of :
-// TODO missing types in this section
 +
 [math]
 ++++
 \infer{\tee L \subtype `N4Enum` }{L \in E.literals}
 ++++
-.  Since the implementation of enumerations may vary per runtime, enum
+3.  Since the implementation of enumerations may vary per runtime, enum
 literals are not objects:
 +
 [math]
@@ -3105,8 +3105,10 @@ Literal names have to be unique.
 --
 Enum literals are singletons:
 
-$\forall e_1,e_2, \mu(e_1)=\mu(e_2)=`N4EnumLiteral` \land \tee e_1 = \tee e_2: e_1`==}e_2 \iff e_1`===}e_2$
-
+[math]
+++++
+\forall e_1,e_2, \mu(e_1)=\mu(e_2)=`N4EnumLiteral` \land \tee e_1 = \tee e_2: e_1`==}e_2 \iff e_1`===}e_2
+++++
 
 .Enumeration List
 [example]
@@ -3177,7 +3179,11 @@ base type `N4StringBasedEnum`:
     \end{gathered}
 ++++
 .  `N4StringBasedEnum` is a subtype of `string`
-$infer{ \type{N4StringBasedEnum} \subtype \type{string} }{}$
++
+[math]
+++++
+infer{ \type{N4StringBasedEnum} \subtype \type{string} }{}
+++++
 .  Each literal in $L_S$ of a string-based enumeration
 $E_S$ is of the type of the string-based enumeration.
 +
@@ -3186,12 +3192,10 @@ $E_S$ is of the type of the string-based enumeration.
 \infer{ \tee l \subtype E_S }{l \in E_S.L_S}
 ++++
 .  <<IDE-39,requirement: Unique Literal Names>> also applies for `N4StringBasedEnum`.
-.  [<<IDE-40,requirement: Enum Literals are Singletons>>] also applies for `N4StringBasedEnum`.
-.  References to string-based enums may only be used in the following
-places:
+.  <<IDE-40,requirement: Enum Literals are Singletons>> also applies for `N4StringBasedEnum`.
+.  References to string-based enums may only be used in the following places:
 ..  in type annotations
-..  in property access expressions to refer to one of the enum’s
-literals
+..  in property access expressions to refer to one of the enum’s literals
 ..  in property access expressions to read from the static getter `literals`
 +
 In particular, it is invalid to use the type of a string-based enum as a
@@ -3255,8 +3259,7 @@ export external public class XMLHttpRequestResponse extends XMLHttpRequestEventT
 }
 ----
 
-Client code importing the runtime-library as defined above can now use
-the Enumeration in a type-safe way:
+Client code importing the runtime-library as defined above can now use the Enumeration in a type-safe way:
 
 .String-Based Enumeration Usage
 [source,n4js]
