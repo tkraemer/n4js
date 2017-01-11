@@ -765,7 +765,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDefaultFormalParameterParserRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
 		
 		/// **
-		// * Called from Types grammar only
+		// * Used in Types language only.
 		// * / TFormalParameter:
 		//	variadic?='...'? name=BindingIdentifier<Yield=false>
 		//	':' typeRef=TypeRef
@@ -2538,7 +2538,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	/// **
-	// * Called from Types grammar only
+	// * Used in Types language only.
 	// * / TFormalParameter:
 	//	variadic?='...'? name=BindingIdentifier<Yield=false>
 	//	':' typeRef=TypeRef

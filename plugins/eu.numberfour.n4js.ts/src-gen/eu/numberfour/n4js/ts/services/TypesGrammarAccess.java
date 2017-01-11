@@ -3001,7 +3001,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	/// **
-	// * Called from Types grammar only
+	// * Used in Types language only.
 	// * / TFormalParameter:
 	//	variadic?='...'? name=BindingIdentifier<Yield=false>
 	//	':' typeRef=super::TypeRef

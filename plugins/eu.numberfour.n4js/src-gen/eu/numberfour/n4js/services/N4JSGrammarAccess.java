@@ -13049,7 +13049,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	/// **
-	// * Called from Types grammar only
+	// * Used in Types language only.
 	// * / TFormalParameter:
 	//	variadic?='...'? name=BindingIdentifier<Yield=false>
 	//	':' typeRef=TypeRef
