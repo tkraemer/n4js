@@ -10,6 +10,8 @@
  */
 package eu.numberfour.n4js.validation.validators
 
+import com.google.inject.Inject
+import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.N4ClassExpression
@@ -17,7 +19,7 @@ import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParenExpression
 import eu.numberfour.n4js.n4JS.VariableDeclaration
-import eu.numberfour.n4js.ts.types.TVariable
+import eu.numberfour.n4js.postprocessing.ASTMetaInfoCacheHelper
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
 import java.util.List
@@ -25,9 +27,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
-import eu.numberfour.n4js.postprocessing.ASTMetaInfoCacheHelper
-import com.google.inject.Inject
-import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 
 /**
  * Validations for variable declarations and variables.
@@ -93,11 +92,19 @@ class N4JSVariableValidator extends AbstractN4JSDeclarativeValidator {
 			return result;  // add nothing
 
 		// standard cases:
-		if(astNode instanceof IdentifierRef)
-			if(astNode.id===varDecl || (astNode.id instanceof TVariable && (astNode.id as TVariable).astElement===varDecl))
+		val targetForReferencesToVarDecl = if(varDecl instanceof ExportedVariableDeclaration) {
+			varDecl.definedVariable // references to ExportedVariableDeclarations point to the TVariable in the TModule
+		} else {
+			varDecl // references to local variables point directly to the VariableDeclaration
+		};
+		if(astNode instanceof IdentifierRef) {
+			if(astNode.id===targetForReferencesToVarDecl) {
 				result.add(astNode);
-		for(child : astNode.eContents)
+			}
+		}
+		for(child : astNode.eContents) {
 			child.collectIdentifierRefsTo(varDecl,result);
+		}
 		return result;
 	}
 	def public static boolean containsIdentifierRefsTo(EObject astNode, VariableDeclaration varDecl) {
