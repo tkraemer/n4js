@@ -497,11 +497,4 @@ Contributors:
     </fileTypes>
   </extension>
 
-   <!-- Register .n4jsx and  .jsx as runnable file extensions. TODO: better in n4jsx.runner?-->
-   <extension
-   		point="eu.numberfour.n4js.runner.runnableFileExtensions">
-   		<runnableFileExtensions
-   			extensions="n4jsx,jsx">
-   		</runnableFileExtensions>
-   </extension>
 </plugin>

@@ -23,7 +23,7 @@ import com.google.common.base.Splitter;
 import com.google.inject.Singleton;
 
 /**
- * This class collect test file extensions from extensions to extension point.
+ * This class collect runnable file extensions from extensions to extension point.
  */
 @Singleton
 public class RunnableFileExtensionsRegistry {
@@ -37,7 +37,7 @@ public class RunnableFileExtensionsRegistry {
 
 	/**
 	 * Register a runnable file extension. This method should only be invoked by client code directly in headless mode.
-	 * When running in Eclipse, test file extensions will be registered via the 'runnableFileExtensions' extension
+	 * When running in Eclipse, runnable file extensions will be registered via the 'runnableFileExtensions' extension
 	 * point.
 	 */
 	public void register(String runnableFileExtension) {
@@ -45,7 +45,7 @@ public class RunnableFileExtensionsRegistry {
 	}
 
 	/**
-	 * Return test file extensions
+	 * Return runnable file extensions
 	 */
 	public Collection<String> getRunnableFileExtensions() {
 		if (!isInitialized) {
@@ -81,7 +81,7 @@ public class RunnableFileExtensionsRegistry {
 	}
 
 	/**
-	 * Reset the list of test file extensions to empty
+	 * Reset the list of runnable file extensions to empty
 	 */
 	public void reset() {
 		isInitialized = false;
