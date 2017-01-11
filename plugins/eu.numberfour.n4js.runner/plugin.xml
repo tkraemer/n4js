@@ -12,5 +12,13 @@ Contributors:
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="eu.numberfour.n4js.runner.runners" name="N4JS Runners" schema="schema/eu.numberfour.n4js.runner.runners.exsd"/>
- 
+   <extension-point id="eu.numberfour.n4js.runner.runnableFileExtensions" name="Runnable File Extensions" schema="schema/eu.numberfour.n4js.runner.runnableFileExtensions.exsd"/>
+   
+   <!-- Register .n4js and  .js as runnable file extensions -->
+   <extension
+   		point="eu.numberfour.n4js.runner.runnableFileExtensions">
+   		<runnableFileExtensions 
+   			extensions="n4js,js">
+   		</runnableFileExtensions>
+   </extension>
 </plugin>
