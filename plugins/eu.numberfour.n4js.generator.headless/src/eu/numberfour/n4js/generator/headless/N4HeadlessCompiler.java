@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js.generator.headless;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,13 +26,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
 import org.eclipse.xtext.generator.OutputConfiguration;
@@ -46,17 +43,16 @@ import org.eclipse.xtext.resource.containers.DelegatingIAllContainerAdapter;
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsData;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.validation.CheckMode;
+import org.eclipse.xtext.validation.IResourceValidator;
 import org.eclipse.xtext.validation.Issue;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
-import com.google.common.base.Stopwatch;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
@@ -74,7 +70,9 @@ import eu.numberfour.n4js.internal.N4JSProject;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
+import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.resource.OrderedResourceDescriptionsData;
+import eu.numberfour.n4js.typesbuilder.N4JSTypesBuilder;
 import eu.numberfour.n4js.utils.ResourceType;
 
 /**
@@ -114,6 +112,9 @@ public class N4HeadlessCompiler {
 
 	@Inject
 	private IN4JSCore n4jsCore;
+
+	@Inject
+	private N4JSTypesBuilder n4jsTypesBuilder;
 
 	@Inject
 	private N4FilebasedWorkspaceResourceSetContainerState rsbAcs;
@@ -504,74 +505,38 @@ public class N4HeadlessCompiler {
 		// List for Tracking of loaded Projects.
 		LinkedList<MarkedProject> loadedProjects = new LinkedList<>();
 
-		// Helper to investigate memory usage
-		// MemoryTracker mt = new MemoryTracker(createDebugOutput);
-		boolean doCompileMemoryTracking = false;
-		MemoryTracker mt = new MemoryTracker(doCompileMemoryTracking, false);// IDE-2479
-		for (MarkedProject mp : sortedProjects) {
-			mt.startSeries("compile project " + mp.project.getProjectId());
-
+		for (MarkedProject markedProject : sortedProjects) {
 			// only load if is marked.
-			if (mp.hasMarkers()) {
-				rec.markProcessing(mp.project);
-				configureFSA(mp.project);
+			if (markedProject.hasMarkers()) {
+				rec.markProcessing(markedProject.project);
+				configureFSA(markedProject.project);
 				try {
 					// load
-					mt.addSeriesPoint("before load");
-					Stopwatch ls = Stopwatch.createStarted();
-					doLoad(mp, resourceSet, rec, issueAcceptor, mt);
-					mt.addSeriesPoint("after load ( " + ls.stop().toString() + " )");
-					loadedProjects.add(mp);
+					doLoad(markedProject, resourceSet, rec, issueAcceptor);
+					loadedProjects.add(markedProject);
 
-					mt.addSeriesPoint("before generate");
-					Stopwatch gs = Stopwatch.createStarted();
 					// compile only if it has itself as marker and non-external
-					if (mp.hasMarker(mp.project) && !mp.project.isExternal()) {
+					if (markedProject.hasMarker(markedProject.project) && !markedProject.project.isExternal()) {
 						// compile only:
-						doCompile(mp, resourceSet, compileFilter, rec);
+						doCompile(markedProject, resourceSet, compileFilter, rec);
 					}
-					mt.addSeriesPoint("after generate ( " + gs.stop().toString() + " )");
 
-					// remove marker from loaded
+					// once compiled, we can unload the AST
+					doUnloadASTs(markedProject);
+
+					// remove marker from loaded projects and unload if no longer in use
 					ListIterator<MarkedProject> loadedIter = loadedProjects.listIterator();
 					while (loadedIter.hasNext()) {
 						MarkedProject loaded = loadedIter.next();
-						loaded.remove(mp.project);
+						loaded.remove(markedProject.project);
 
-						/* IDE-2479 temporary switch unloading strategy */
-						boolean doAggressiveUnloading = false;
+						if (!loaded.hasMarkers()) {
+							if (createDebugOutput)
+								println("# unloading " + loaded.project);
 
-						// §§ // §§§§ // §§§§ // §§§§ // §§§§ // §§§§ // §§§§ // §§§§ // §§
-						// TODO BELOW are two different ways of dealing with unloading
-						// they differ in the overall performance.
-						// theoretically the Resources of a project could be unloaded after compilation
-						// in practise letting them in memory is faster (presuming there is sufficient memory)
-						// strategy 1) unload if no other project needs to access the contents of this project
-						// strategy 2) unload after compilation
-						// strategy 3) none of the below
-						/*-*/// unload guarded // TODO experimental, remove if: unload immediately works (below)
-						// Ohne unload 51-54 sec. nur im recorder
-						if (doAggressiveUnloading) { // mit marker-unload 55.6-56.2 sec unload
-							// Strategy 1:
-							if (!loaded.hasMarkers()) {
-								// unload from ResourceSet
-								mt.addSeriesPoint("before unload " + loaded.project.getProjectId());
-								Stopwatch us = Stopwatch.createStarted();
-								doUnload(loaded, rec);
-								mt.addSeriesPoint("after unload ( " + us.stop().toString() + " )");
-								loadedIter.remove();
-							} /**/
-						} else {
-
-							// Strategy 2:
-							// unload immediately // direkter unload nach compile 76 - 80 sec im rekorder.
-							mt.addSeriesPoint("before unload2");
-							Stopwatch us2 = Stopwatch.createStarted();
-							doUnload(loaded, rec);
-							mt.addSeriesPoint("after unload2 ( " + us2.stop().toString() + " )");
+							loaded.unload(resourceSet, rec);
 							loadedIter.remove();
 						}
-						// §§ // §§§§ // §§§§ // §§§§ // §§§§ // §§§§ // §§§§ // §§§§ // §§
 					}
 				} catch (N4JSCompileErrorException e) {
 					rec.compileException(e);
@@ -587,36 +552,47 @@ public class N4HeadlessCompiler {
 					}
 				} finally {
 					resetFSA();
-
-					/* IDE-2479 temporary force releasing memory */
-					boolean forceGC = true;
-					if (forceGC) {
-						/*
-						 * Similarly to strategy above unloading strategy above this is matter of performance. Invoking
-						 * GC trades CPU over for currently used memory. Notice that using this TENDS to decrease
-						 * overall used memory, but can result in larger allocations during compilation of next project.
-						 * It would be useful to investigate further correlation between compiled projects and memory
-						 * consumption. Ultimately compiler should adjust unloading strategy and GC invocations
-						 * accordingly to input data, i.e. available memory, size of the projects and their dependency
-						 * graph.
-						 */
-						mt.addSeriesPoint("before GC");
-						Stopwatch cs2 = Stopwatch.createStarted();
-						MemoryTracker.runGC();
-						mt.addSeriesPoint("after GC ( " + cs2.stop().toString() + " )");
-					}
 				}
-				rec.markEndProcessing(mp.project);
+				rec.markEndProcessing(markedProject.project);
 			}
 		}
 
-		// IDE-2479
-		// if (createDebugOutput)
-		// System.out.println("\n\n" + mt.dataTable());
-		if (doCompileMemoryTracking)
-			System.out.println("\n\n" + mt.dataTable());
+		int loadedResCount = 0;
+		for (Resource res : resourceSet.getResources()) {
+			System.out.print("    " + res.getURI());
+
+			if (res instanceof N4JSResource) {
+				N4JSResource saRes = (N4JSResource) res;
+				if (saRes.getScript() != null && !saRes.getScript().eIsProxy()) {
+					System.out.println(" (loaded");
+					loadedResCount++;
+					continue;
+				}
+			}
+			System.out.println();
+		}
+
+		System.out.println("Number of resources: " + resourceSet.getResources().size());
+		System.out.println("Number of loaded resources: " + loadedResCount);
+
+		// TODO: unloadAST builtin-type resources once they have been parsed
+		resourceSet.getResources().clear();
+
+		System.out.println("Still have " + loadedProjects.size() + " projects loaded.");
 
 		rec.dumpToLogfile(logFile);
+
+		try {
+			System.out.println("Done compiling, cleaning up...");
+			Thread.sleep(TimeUnit.SECONDS.toMillis(1));
+			System.gc();
+			Thread.sleep(TimeUnit.SECONDS.toMillis(5));
+			System.out.println("Cleanup finished");
+
+			Thread.sleep(TimeUnit.HOURS.toMillis(10));
+		} catch (InterruptedException e) {
+			System.out.println(e);
+		}
 
 		if (collectedErrors != null) {
 			throw collectedErrors;
@@ -737,7 +713,7 @@ public class N4HeadlessCompiler {
 	 *             in case of compile-problems.
 	 */
 	private void doLoad(MarkedProject markedProject, ResourceSet resSet, N4ProgressStateRecorder rec,
-			IssueAcceptor issueAcceptor, MemoryTracker mt)
+			IssueAcceptor issueAcceptor)
 			throws N4JSCompileErrorException {
 
 		rec.markStartLoading(markedProject);
@@ -745,29 +721,37 @@ public class N4HeadlessCompiler {
 			println("# loading " + markedProject.project);
 		}
 
-		// load all files into a resource set
-		LinkedList<Resource> resources = new LinkedList<>();
-		HashSet<Resource> externalResources = new HashSet<>();
-		HashSet<Resource> testResources = Sets.newHashSet();
+		collectResources(markedProject, resSet, rec);
+		loadResources(markedProject, rec);
+		installIndex(resSet, markedProject);
 
-		mt.addSeriesPoint("before collect ");
-		Stopwatch cs = Stopwatch.createStarted();
+		List<Issue> allErrorsAndWarnings = validateProject(markedProject, issueAcceptor, rec);
+		dumpAllIssues(allErrorsAndWarnings);
+
+		// Projects should not compile if there are severe errors:
+		if (!keepOnCompiling) {
+			failOnErrors(allErrorsAndWarnings, markedProject.project.getProjectId());
+		}
+	}
+
+	private void collectResources(MarkedProject markedProject, ResourceSet resourceSet, N4ProgressStateRecorder rec) {
+		markedProject.clearResources();
+
 		// TODO try to reuse code from IN4JSCore.createResourceSet
-		ImmutableList<? extends IN4JSSourceContainer> srcCont = markedProject.project.getSourceContainers();
-		for (IN4JSSourceContainer container : srcCont) {
+		for (IN4JSSourceContainer container : markedProject.project.getSourceContainers()) {
 			// Conditionally filter test-resources if not desired
 			if (shouldReadResources(container)) {
 				container.forEach(uri -> {
-					Resource resource = resSet.createResource(uri);
+					Resource resource = resourceSet.createResource(uri);
 					if (resource != null) {
 						if (createDebugOutput) {
 							println("Collecting resources from source container: " + resource.getURI());
 						}
-						resources.add(resource);
+						markedProject.resources.add(resource);
 						if (container.isExternal())
-							externalResources.add(resource); // register externals.
+							markedProject.externalResources.add(resource); // register externals.
 						if (container.isTest())
-							testResources.add(resource); // register tests.
+							markedProject.testResources.add(resource); // register tests.
 					} else {
 						rec.markFailedCreateResource(uri);
 						warn("Skipped file: could not create resource for URI=" + uri);
@@ -775,15 +759,11 @@ public class N4HeadlessCompiler {
 				});
 			}
 		}
-		mt.addSeriesPoint("after collect ( " + cs.stop().toString() + " )");
-		mt.addSeriesPoint("before index ");
-		Stopwatch xs = Stopwatch.createStarted();
-		installIndex(resSet, markedProject.project.getManifestLocation(), mt, markedProject.project.getProjectId());
-		mt.addSeriesPoint("after index ( " + xs.stop().toString() + " )");
-		// Load each file into memory.
-		mt.addSeriesPoint("before load ");
-		Stopwatch ls = Stopwatch.createStarted();
-		for (Resource res : resources) {
+	}
+
+	private void loadResources(MarkedProject markedProject, N4ProgressStateRecorder rec)
+			throws N4JSCompileErrorException {
+		for (Resource res : markedProject.resources) {
 			try {
 				res.load(Collections.EMPTY_MAP);
 			} catch (IOException e) {
@@ -796,19 +776,14 @@ public class N4HeadlessCompiler {
 				warn(message);
 			}
 		}
-		mt.addSeriesPoint("after load ( " + ls.stop().toString() + " )");
-		// store for compiling &| unloading
-		markedProject.resources = resources;
-		markedProject.externalResources = externalResources;
-		markedProject.testResources = testResources;
+	}
 
-		// Validate and find broken resources:
-		ArrayList<Issue> allErrorsAndWarnings = newArrayList();
+	private List<Issue> validateProject(MarkedProject markedProject, IssueAcceptor issueAcceptor,
+			N4ProgressStateRecorder rec) {
+		List<Issue> allErrorsAndWarnings = new LinkedList<>();
 
-		mt.addSeriesPoint("before validate ");
-		Stopwatch vs = Stopwatch.createStarted();
 		// validation TODO see IDE-1426 redesign validation calls with generators
-		for (Resource resource : resources) {
+		for (Resource resource : markedProject.resources) {
 			// TODO enable if fabelhaft code doesn't contain *.xt files any more.
 			/*-
 			if (isXpectFile(resource.getURI())) {
@@ -827,11 +802,12 @@ public class N4HeadlessCompiler {
 			} */
 			if (resource instanceof XtextResource && // is Xtext resource
 					(!n4jsCore.isNoValidate(resource.getURI())) && // is validating
-					(!externalResources.contains(resource)) // not in external folder
+					(!markedProject.externalResources.contains(resource)) // not in external folder
 			) {
 				XtextResource xtextResource = (XtextResource) resource;
-				List<Issue> issues = xtextResource.getResourceServiceProvider().getResourceValidator()
-						.validate(xtextResource, CheckMode.ALL, CancelIndicator.NullImpl);
+				IResourceValidator validator = xtextResource.getResourceServiceProvider().getResourceValidator();
+				List<Issue> issues = validator.validate(xtextResource, CheckMode.ALL, CancelIndicator.NullImpl);
+
 				if (!issues.isEmpty()) {
 					rec.markResourceIssues(resource, issues);
 					for (Issue issue : issues) {
@@ -841,86 +817,55 @@ public class N4HeadlessCompiler {
 				}
 			}
 		}
-		mt.addSeriesPoint("after validate ( " + vs.stop().toString() + " )");
-		dumpAllIssues(allErrorsAndWarnings);
 
-		// Projects should not compile if there are severe errors:
-		if (!keepOnCompiling) {
-			failOnErrors(allErrorsAndWarnings, markedProject.project.getProjectId());
-		}
+		return allErrorsAndWarnings;
 	}
 
 	/**
 	 * TODO try to reuse code from IN4JSCore.createResourceSet
 	 */
-	private void installIndex(ResourceSet resourceSet, Optional<URI> manifestUri, MemoryTracker mt, String label) {
-		// Fill index
-		ResourceDescriptionsData index = new OrderedResourceDescriptionsData(
-				Collections.<IResourceDescription> emptyList());
-		List<Resource> resources = Lists.newArrayList(resourceSet.getResources());
-		mt.addSeriesPoint("before indexing ");
-		Stopwatch is = Stopwatch.createStarted();
-
-		// toggle to track memory on indexing
-		// amount of output produced is proportional to number of resources
-		// (i.e. a lot)
-		boolean doIndexTracking = false;
-		MemoryTracker innerMT = new MemoryTracker(doIndexTracking, false);
-		innerMT.startSeries(label + " : index " + resources.size() + " files");
-		for (Resource resource : resources) {
-			index(resource, index, innerMT);
+	private void installIndex(ResourceSet resourceSet, MarkedProject markedProject) {
+		ResourceDescriptionsData index = ResourceDescriptionsData.ResourceSetAdapter
+				.findResourceDescriptionsData(resourceSet);
+		if (index == null) {
+			index = new OrderedResourceDescriptionsData(Collections.emptyList());
+			ResourceDescriptionsData.ResourceSetAdapter.installResourceDescriptionsData(resourceSet, index);
 		}
-		mt.addSeriesPoint("after indexing ( " + is.stop().toString() + " )");
+
+		for (Resource resource : markedProject.resources)
+			index(resource, index);
 
 		// Create index for N4 manifest as well. Index artifact names among project types and library dependencies.
+		Optional<URI> manifestUri = markedProject.project.getManifestLocation();
 		if (manifestUri.isPresent()) {
 			final Resource manifestResource = resourceSet.getResource(manifestUri.get(), true);
-			if (null != manifestResource) {
-				index(manifestResource, index, innerMT);
-			}
+			if (null != manifestResource)
+				index(manifestResource, index);
 		}
-
-		if (doIndexTracking)
-			System.out.println("\n\n" + innerMT.dataTable() + "\n\n");
-
-		Adapter existing = EcoreUtil.getAdapter(resourceSet.eAdapters(), ResourceDescriptionsData.class);
-		if (existing != null) {
-			resourceSet.eAdapters().remove(existing);
-		}
-		mt.addSeriesPoint("before installing ");
-		Stopwatch iis = Stopwatch.createStarted();
-		ResourceDescriptionsData.ResourceSetAdapter.installResourceDescriptionsData(resourceSet, index);
-		mt.addSeriesPoint("after installing ( " + iis.stop().toString() + " )");
 	}
 
 	/**
 	 * Installing the ResourceDescription of a resource into the index. Raw JS-files will not be indexed.
-	 *
 	 */
-	private void index(Resource resource, ResourceDescriptionsData index, MemoryTracker innerMT) {
-
+	private void index(Resource resource, ResourceDescriptionsData index) {
 		final URI uri = resource.getURI();
 
 		if (isJsFile(uri)) {
 			IN4JSSourceContainer sourceContainer = n4jsCore.findN4JSSourceContainer(uri).orNull();
-			if (null == sourceContainer) {
+			if (null == sourceContainer)
 				return; // We do not want to index resources that are not in source containers.
-			}
 		}
 
 		IResourceServiceProvider serviceProvider = IResourceServiceProvider.Registry.INSTANCE
 				.getResourceServiceProvider(uri);
 		if (serviceProvider != null) {
-			innerMT.addSeriesPoint("before DescriptionManager ");
-			Stopwatch iis = Stopwatch.createStarted();
 			IResourceDescription.Manager resourceDescriptionManager = serviceProvider.getResourceDescriptionManager();
 			IResourceDescription resourceDescription = resourceDescriptionManager.getResourceDescription(resource);
 
-			innerMT.addSeriesPoint("after DescriptionManager ( " + iis.stop().toString() + " )");
 			if (resourceDescription != null) {
-				if (createDebugOutput) {
+				if (createDebugOutput)
 					println("Adding resource description for resource '" + uri + "' to index.");
-				}
+
 				index.addDescription(uri, resourceDescription);
 			}
 		}
@@ -948,6 +893,37 @@ public class N4HeadlessCompiler {
 
 		return (processTestCode || !container.isTest()) // no testcode if processtestcode is false
 		;
+	}
+
+	/**
+	 * In case of errors: throw exception
+	 *
+	 * @param allErrorsAndWarnings
+	 *            list of issues and warnings
+	 * @param projectId
+	 *            projectId of the bad project.
+	 * @throws N4JSCompileErrorException
+	 *             in case of any issues of type Severity.ERROR
+	 */
+	private void failOnErrors(List<Issue> allErrorsAndWarnings, String projectId)
+			throws N4JSCompileErrorException {
+
+		ArrayList<Issue> errors = new ArrayList<>();
+		Iterables.addAll(errors, Iterables.filter(allErrorsAndWarnings, e -> e.getSeverity() == Severity.ERROR));
+
+		if (errors.size() != 0) {
+			// dump other issues beforehand.
+			allErrorsAndWarnings
+					.stream()
+					.filter(e -> e.getSeverity() != Severity.ERROR)
+					.forEach(i -> println(issueLine(i)));
+			String msg = "ERROR: cannot compile project " + projectId + " due to " + errors.size() + " errors.";
+			for (Issue err : errors) {
+				msg = msg + "\n  " + err;
+			}
+			throw new N4JSCompileErrorException(msg, projectId);
+		}
+
 	}
 
 	/**
@@ -1022,75 +998,23 @@ public class N4HeadlessCompiler {
 
 	}
 
-	/**
-	 * Unload all referenced resources.
-	 *
-	 * @param markedProject
-	 *            carries pointer to resourcelist.
-	 * @param rec
-	 *            state reporting
-	 */
-	@SuppressWarnings("unused")
-	private void doUnload(MarkedProject markedProject, N4ProgressStateRecorder rec)
-			throws N4JSCompileErrorException {
-		if (createDebugOutput) {
-			println("# unloading " + markedProject.project);
-		}
-		boolean doUnloadingTracking = false;
-		MemoryTracker innerMT = new MemoryTracker(doUnloadingTracking, false);
-		innerMT.startSeries("unloading " + markedProject.project.getProjectId());
-
-		rec.markStartUnloading(markedProject);
-		// Clean resourceSet ?
-		for (Resource res : markedProject.resources) {
-			rec.markUnloadingOf(res);
-			innerMT.addSeriesPoint("before unloading " + res.getURI().lastSegment());
-			Stopwatch iis = Stopwatch.createStarted();
-			res.unload();
-			innerMT.addSeriesPoint("after unloading ( " + iis.stop().toString() + " )");
-		}
-		rec.markFinishedUnloading(markedProject);
-
-		if (doUnloadingTracking)
-			System.out.println("\n\n" + innerMT.dataTable());
-	}
-
-	/**
-	 * In case of errors: throw exception
-	 *
-	 * @param allErrorsAndWarnings
-	 *            list of issues and warnings
-	 * @param projectId
-	 *            projectId of the bad project.
-	 * @throws N4JSCompileErrorException
-	 *             in case of any issues of type Severity.ERROR
-	 */
-	private void failOnErrors(ArrayList<Issue> allErrorsAndWarnings, String projectId)
-			throws N4JSCompileErrorException {
-
-		ArrayList<Issue> errors = new ArrayList<>();
-		Iterables.addAll(errors, Iterables.filter(allErrorsAndWarnings, e -> e.getSeverity() == Severity.ERROR));
-
-		if (errors.size() != 0) {
-			// dump other issues beforehand.
-			allErrorsAndWarnings
-					.stream()
-					.filter(e -> e.getSeverity() != Severity.ERROR)
-					.forEach(i -> println(issueLine(i)));
-			String msg = "ERROR: cannot compile project " + projectId + " due to " + errors.size() + " errors.";
-			for (Issue err : errors) {
-				msg = msg + "\n  " + err;
+	private void doUnloadASTs(MarkedProject markedProject) {
+		// Unload all ASTs
+		for (Resource resource : markedProject.resources) {
+			if (resource instanceof N4JSResource) {
+				N4JSResource n4jsResource = (N4JSResource) resource;
+				n4jsResource.performPostProcessing(); // Make sure the resource is fully postprocessed before unloading
+														// the AST.
+				n4jsResource.unloadAST(); // Unload because now we don't need the AST anymore.
 			}
-			throw new N4JSCompileErrorException(msg, projectId);
 		}
-
 	}
 
 	/**
 	 * @param allErrorsAndWarnings
 	 *            list of issues and warnings
 	 */
-	private void dumpAllIssues(ArrayList<Issue> allErrorsAndWarnings) {
+	private void dumpAllIssues(List<Issue> allErrorsAndWarnings) {
 		for (Issue issue : allErrorsAndWarnings) {
 			println(issueLine(issue));
 		}
@@ -1363,11 +1287,11 @@ public class N4HeadlessCompiler {
 		 */
 		final LinkedHashSet<IN4JSProject> markers = new LinkedHashSet<>();
 		/** pointer to a List of loaded resource (all types) */
-		List<Resource> resources = Collections.emptyList();
+		List<Resource> resources = new LinkedList<>();
 		/** Set of external-resources. This must be a subset of resources. */
-		Set<Resource> externalResources = Collections.emptySet();
+		Set<Resource> externalResources = new HashSet<>();
 		/** Set of test-resources. This must be a subset of resources. */
-		Set<Resource> testResources = Collections.emptySet();
+		Set<Resource> testResources = new HashSet<>();
 
 		/**
 		 * Create a wrapper around a project;
@@ -1419,6 +1343,58 @@ public class N4HeadlessCompiler {
 		 */
 		public boolean remove(IN4JSProject marker) {
 			return markers.remove(marker);
+		}
+
+		/**
+		 * Unload all resources associated with this marked project and remove them from the given resource set.
+		 *
+		 * @param resourceSet
+		 *            the resource set containing the resources of this project
+		 * @param recorder
+		 *            the progress state recorder
+		 */
+		public void unload(ResourceSet resourceSet, N4ProgressStateRecorder recorder) {
+			recorder.markStartUnloading(this);
+
+			ResourceDescriptionsData index = ResourceDescriptionsData.ResourceSetAdapter
+					.findResourceDescriptionsData(resourceSet);
+
+			unloadResources(resourceSet, index, recorder);
+			unloadManifestResource(resourceSet, index, recorder);
+			clearResources();
+
+			recorder.markFinishedUnloading(this);
+		}
+
+		private void unloadResources(ResourceSet resourceSet, ResourceDescriptionsData index,
+				N4ProgressStateRecorder recorder) {
+			for (Resource res : resources)
+				unloadResource(res, resourceSet, index, recorder);
+		}
+
+		private void unloadManifestResource(ResourceSet resourceSet, ResourceDescriptionsData index,
+				N4ProgressStateRecorder recorder) {
+			Optional<URI> manifestLocation = project.getManifestLocation();
+			if (manifestLocation.isPresent()) {
+				Resource resource = resourceSet.getResource(manifestLocation.get(), false);
+				if (resource != null)
+					unloadResource(resource, resourceSet, index, recorder);
+			}
+		}
+
+		private void unloadResource(Resource resource, ResourceSet resourceSet, ResourceDescriptionsData index,
+				N4ProgressStateRecorder recorder) {
+			recorder.markUnloadingOf(resource);
+			if (index != null)
+				index.removeDescription(resource.getURI());
+			resource.unload();
+			resourceSet.getResources().remove(resource);
+		}
+
+		public void clearResources() {
+			resources.clear();
+			externalResources.clear();
+			testResources.clear();
 		}
 	}
 

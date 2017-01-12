@@ -72,9 +72,7 @@ import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.preferences.FileBasedExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.resource.AccessibleSerializer;
-import eu.numberfour.n4js.resource.TranspilableFileExtensionsProvider;
 import eu.numberfour.n4js.resource.ErrorAwareLinkingService;
-import eu.numberfour.n4js.resource.N4JSTranspilableFileExtensionsProvider;
 import eu.numberfour.n4js.resource.N4JSCache;
 import eu.numberfour.n4js.resource.N4JSDerivedStateComputer;
 import eu.numberfour.n4js.resource.N4JSDescriptionUtils;
@@ -84,8 +82,10 @@ import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.resource.N4JSResourceDescription;
 import eu.numberfour.n4js.resource.N4JSResourceDescriptionManager;
 import eu.numberfour.n4js.resource.N4JSResourceDescriptionStrategy;
+import eu.numberfour.n4js.resource.N4JSTranspilableFileExtensionsProvider;
 import eu.numberfour.n4js.resource.N4JSUnloader;
 import eu.numberfour.n4js.resource.PostProcessingAwareResource.PostProcessor;
+import eu.numberfour.n4js.resource.TranspilableFileExtensionsProvider;
 import eu.numberfour.n4js.resource.UserdataMapper;
 import eu.numberfour.n4js.resource.XpectAwareFileExtensionCalculator;
 import eu.numberfour.n4js.scoping.N4JSGlobalScopeProvider;
@@ -529,6 +529,7 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 	/**
 	 * Bind JavaScriptVariantHelper
 	 */
+	@SingletonBinding
 	public Class<? extends JavaScriptVariantHelper> bindJavaScriptVariantHelper() {
 		return N4JSJavaScriptVariantHelper.class;
 	}

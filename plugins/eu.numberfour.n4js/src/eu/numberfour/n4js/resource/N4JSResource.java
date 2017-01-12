@@ -529,6 +529,24 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	protected void doUnload() {
 		aboutToBeUnloaded = false;
 		super.doUnload();
+		clearLazyProxyInformation();
+		lazyProxyClearCount++;
+	}
+
+	public void unloadAST() {
+		aboutToBeUnloaded = false;
+
+		discardAST();
+		getErrors().clear();
+		getWarnings().clear();
+		setParseResult(null);
+		setIsLoadedFromStorage(false);
+
+		// TODO: Should this be false or what.
+		// fullyPostProcessed = false;
+
+		clearLazyProxyInformation();
+		lazyProxyClearCount++;
 	}
 
 	/**
@@ -557,6 +575,16 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	public void forceSetLoaded() {
 		isLoaded = true;
 		aboutToBeUnloaded = true;
+	}
+
+	protected List<EObject> discardAST() {
+		ModuleAwareContentsList theContents = (ModuleAwareContentsList) contents;
+		if (contents != null && !theContents.isEmpty()) {
+			List<EObject> toBeUnloaded = theContents.subList(0, 1);
+			unloadElements(toBeUnloaded);
+			return toBeUnloaded;
+		}
+		return Collections.emptyList();
 	}
 
 	/**
@@ -899,7 +927,29 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	 * preLinkingPhase}==true if the module isn't fully initialized yet. It is safe to call this method at any time.
 	 */
 	public TModule getModule() {
-		return getContents().size() >= 2 ? (TModule) getContents().get(1) : null;
+		return hasModule() ? (TModule) getContents().get(1) : null;
+	}
+
+	/**
+	 * Indicates whether a module has been built already. Returns <code>true</code> regardless of whether the module has
+	 * {@link TModule#isPreLinkingPhase()} set or not.
+	 *
+	 * @return <code>true</code> if a module has already been built and <code>false</code> otherwise
+	 */
+	public boolean hasModule() {
+		return getContents().size() >= 2;
+	}
+
+	/**
+	 * Indicates whether a module has been built and is fully initialized, i.e., whether
+	 * {@link TModule#isPreLinkingPhase()} is set.
+	 *
+	 * @return <code>true</code> if a module has already been built and is fully initialized and <code>false</code>
+	 *         otherwise
+	 */
+	public boolean hasFullyInitializedModule() {
+		TModule module = getModule();
+		return module != null && !module.isPreLinkingPhase();
 	}
 
 	/**
@@ -931,5 +981,14 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	 */
 	public void clearResolving() {
 		resolving.clear();
+	}
+
+	private int lazyProxyClearCount = 0;
+
+	@Override
+	public int addLazyProxyInformation(EObject obj, EReference ref, INode node) {
+		if (lazyProxyClearCount > 0)
+			System.out.println("########### " + getURI() + " reloaded: " + lazyProxyClearCount);
+		return super.addLazyProxyInformation(obj, ref, node);
 	}
 }

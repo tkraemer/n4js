@@ -63,7 +63,6 @@ import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.preferences.FileBasedExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.resource.AccessibleSerializer;
-import eu.numberfour.n4js.resource.TranspilableFileExtensionsProvider;
 import eu.numberfour.n4js.resource.ErrorAwareLinkingService;
 import eu.numberfour.n4js.resource.N4JSCache;
 import eu.numberfour.n4js.resource.N4JSDerivedStateComputer;
@@ -76,6 +75,7 @@ import eu.numberfour.n4js.resource.N4JSResourceDescriptionManager;
 import eu.numberfour.n4js.resource.N4JSResourceDescriptionStrategy;
 import eu.numberfour.n4js.resource.N4JSUnloader;
 import eu.numberfour.n4js.resource.PostProcessingAwareResource.PostProcessor;
+import eu.numberfour.n4js.resource.TranspilableFileExtensionsProvider;
 import eu.numberfour.n4js.resource.UserdataMapper;
 import eu.numberfour.n4js.resource.XpectAwareFileExtensionCalculator;
 import eu.numberfour.n4js.scoping.N4JSGlobalScopeProvider;
@@ -104,8 +104,8 @@ import eu.numberfour.n4jsx.internal.N4JSXRuntimeCore;
 import eu.numberfour.n4jsx.parser.N4JSXSemicolonInjectingParser;
 import eu.numberfour.n4jsx.parser.RegExLiteralAwareLexer;
 import eu.numberfour.n4jsx.parser.antlr.lexer.InternalN4JSXLexer;
-import eu.numberfour.n4jsx.resource.N4JSXTranspilableFileExtensionsProvider;
 import eu.numberfour.n4jsx.resource.N4JSXLinker;
+import eu.numberfour.n4jsx.resource.N4JSXTranspilableFileExtensionsProvider;
 import eu.numberfour.n4jsx.scoping.N4JSXScopeProvider;
 import eu.numberfour.n4jsx.typesystem.N4JSXUnsupportedExpressionTypeHelper;
 import eu.numberfour.n4jsx.validation.N4JSXIssueSeveritiesProvider;
@@ -524,6 +524,7 @@ public class N4JSXRuntimeModule extends eu.numberfour.n4jsx.AbstractN4JSXRuntime
 	/**
 	 * Binds JS variant for N4JSX language
 	 */
+	@SingletonBinding
 	public Class<? extends JavaScriptVariantHelper> bindJavaScriptVariantHelper() {
 		return N4JSXJavaScriptVariantHelper.class;
 	}
