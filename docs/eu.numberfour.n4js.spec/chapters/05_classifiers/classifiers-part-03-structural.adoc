@@ -585,7 +585,7 @@ This is only a shortcut for the type inference defined above.
 [req,id=IDE-77,version=1]
 --
 If a type is structurally typed on both definition and use-site, the rules for
-use-site structural typing (<<IDE-76,Use-Site Structural Typing>>) are
+use-site structural typing (<<Req-IDE-76,Use-Site Structural Typing>>) are
 applied.
 
 
@@ -939,7 +939,7 @@ It is only possible to add additional members to a type if use-site structural
 typing is used. The following constraints must hold:
 
 1.  For all additional members defined in a structural type reference,
-the constraints for member overriding (<<IDE-72,requirement Overriding Members>>) apply
+the constraints for member overriding (<<Req-IDE-72,requirement Overriding Members>>) apply
 as well.
 2.  All additional members have the access modifier set to
 $\lenum{public}$.

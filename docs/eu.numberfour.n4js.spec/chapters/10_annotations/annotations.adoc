@@ -76,7 +76,7 @@ corresponding sections:
 |@Undefined             |Variable                                      |<<_undefined-type>>
 |@StringBased           |Enum                                          |<<_string-based-enums>>
 |@Final                 |Class, Member                                 |<<_final-methods>>
-|@Spec                  |FPar                                          |<<IDE-59,Spec-Style Constructor>>
+|@Spec                  |FPar                                          |<<Req-IDE-59,Spec-Style Constructor>>
 |@Override              |Method                                        |<<_redefinition-of-members>>
 |@Promisifiable         |Function                                      |<<_promisifiable-functions>>
 |@Promisify             |CallExpression                                |<<_promisifiable-functions>>

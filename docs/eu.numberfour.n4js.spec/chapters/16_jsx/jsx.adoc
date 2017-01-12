@@ -97,7 +97,7 @@ This syntax is similar to the syntax defined by https://facebook.github.io/jsx/[
 
 --
 
-Remarks on differences between the syntax defined in <<IDE-241102>> and https://facebook.github.io/jsx/[JSX]:
+Remarks on differences between the syntax defined in <<Req-IDE-241102>> and https://facebook.github.io/jsx/[JSX]:
 
 * JSXSelfClosingElement, JSXOpeningElement and JSXClosingElement are merged into one single rule JSXElement
 * JSXAttributes is defined as fragment, that is, the attributes become fields of the JSXElement
@@ -183,7 +183,7 @@ If the lower-case tag does not bind to a function or class declaration, the foll
 .JSXSpreadAttribute behavior
 [req,id=IDE-241119,version=1]
 --
-The use of spread operators within an JSX element for specifying multiple attributes should be allowed. In this case, all constraints regarding type conformity checking and non-optional properties mentioned in <<IDE-241117>> apply to the attributes specified in the spread operator. In particular,
+The use of spread operators within an JSX element for specifying multiple attributes should be allowed. In this case, all constraints regarding type conformity checking and non-optional properties mentioned in <<Req-IDE-241117>> apply to the attributes specified in the spread operator. In particular,
 
 * The type of each attribute specified in spread operator must be conform to the type of the corresponding property of `props`.
 * If a non-optional property of `props` is specified neither as attribute nor in a spread operator, a warning is issued.

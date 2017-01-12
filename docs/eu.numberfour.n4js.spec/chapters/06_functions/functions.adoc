@@ -422,10 +422,10 @@ Method `m` in `Y` may return an `A`, thus breaking the contract of m in `X`, but
 
 The subtype relation for function types is also applied for method
 overriding to ensure that an overriding method’s signature conforms to
-that of the overridden method, see <<IDE-72,requirement: Overriding Members>> (applies to
+that of the overridden method, see <<Req-IDE-72,requirement: Overriding Members>> (applies to
 method comnsumption and implementation accordingly, see
-<<IDE-73,requirement: Consumption of Interface Members>> and
-<<IDE-74,requirement: Implementation of Interface Members>>). Note that this is very
+<<Req-IDE-73,requirement: Consumption of Interface Members>> and
+<<Req-IDE-74,requirement: Implementation of Interface Members>>). Note that this is very
 different from Java which is far more restrictive when checking
 overriding methods. As Java also supports method overloading: given two
 types $A, B$ with $B <: A$ and a super class
@@ -1276,7 +1276,7 @@ footnote:[Even in this case, the function will actually be called with the callb
 
 --
 
-According to <<IDE-87,requirement: Promisifiable>>, a promisifiable function or method may
+According to <<Req-IDE-87,requirement: Promisifiable>>, a promisifiable function or method may
 or may not have a non-void return type, and that only the first
 parameter of the callback is allowed to be of type `Error`, all other
 parameters must be of other types.
@@ -1285,7 +1285,7 @@ parameters must be of other types.
 [req,id=IDE-88,version=1]
 --
 A promisifiable function $f$ with one of the two valid
-signatures given in <<IDE-87,requirement: Promisifiable>> can be promisified with `Promisify` or
+signatures given in <<Req-IDE-87,requirement: Promisifiable>> can be promisified with `Promisify` or
 used with `await`, if and only if the following constraints hold:
 
 1.  Function $f$ must be annotated with `@Promisifiable`.

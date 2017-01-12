@@ -283,7 +283,7 @@ function type conformance which is required for overriding and
 implementing methods.
 
 In addition, method declarations and definitions have to comply with the
-constraints for naming members of classifiers (cf. <<IDE-52,Member Names>>)
+constraints for naming members of classifiers (cf. <<Req-IDE-52,Member Names>>)
 and with the constraints detailed in the following sections on final
 methods (<<_final-methods,Final Methods>>), abstract methods (<<_abstract-methods,Abstract Methods>>
 and method overriding and implementation (<<_overriding-of-members,Overriding of Members>>, <<_implementation-of-members,Implementation of Members>>).
@@ -436,7 +436,7 @@ By default, methods can be overridden. To prevent a method from being
 overridden, it must be annotated with `@Final`.
 
 Of course, a method cannot be declared both abstract and final
-(cf. <<IDE-46,Abstract Member>>). Private methods are implicitly declared
+(cf. <<Req-IDE-46,Abstract Member>>). Private methods are implicitly declared
 final. Because static methods can be overridden in subclasses (which is
 different to Java), they also can be marked as final.
 
@@ -476,7 +476,7 @@ A method can be declared without defining it, i.e. without providing a
 method body, and is then called an __abstract method__. Such methods
 must be declared with modifier `abstract` and have their property
 $abstract$ set to true. Constraints for abstract methods are
-covered in <<IDE-46,Abstract Member>> (see <<_abstract-classes,Abstract Classes>>).
+covered in <<Req-IDE-46,Abstract Member>> (see <<_abstract-classes,Abstract Classes>>).
 
 In interfaces, methods are always abstract by default and they do not
 have to be marked as abstract. If a method in an interface provides a
@@ -527,11 +527,11 @@ method__. This will be mixed into an implementor of the interface if,
 and only if, neither the implementing class nor any of its direct or
 indirect superclasses already provides an implementation for this
 method; for details see <<_member-consumption,Member Consumption>>. Since the implementor is not known, some constraints exist for the body. I.e., no access to super is possible,
-cf. <<IDE-124,Access Super Member with Super Literal>>.
+cf. <<Req-IDE-124,Access Super Member with Super Literal>>.
 
 In order to declare an interface to provide a default implementation in
 a definition file, annotation `@ProvidesDefaultImplementation` can be used, cf.
-<<IDE-167,External Class/Interface Members>>.
+<<Req-IDE-167,External Class/Interface Members>>.
 
 When a method in an interface is provided with a default implementation,
 it may even be declared `@Final`, see <<_final-methods,Final Methods>>.
@@ -724,7 +724,7 @@ name as $SM$:
 [example]
 ====
 
-The situation described in <<IDE-58,Names of additional members of structural this type in constructor>> is demonstrated in the following code fragment:
+The situation described in <<Req-IDE-58,Names of additional members of structural this type in constructor>> is demonstrated in the following code fragment:
 
 [source,n4js]
 ----
@@ -923,7 +923,7 @@ The `@CovariantConstructor` annotation may be applied to the constructor, the co
 classifier, or both. It can also be used for interfaces; in fact,
 constructors are allowed in interfaces only if they themselves or the
 interface is annotated with `@CovariantConstructor` (see
-<<IDE-60,Requirement: Covariant Constructors>>).
+<<Req-IDE-60,Requirement: Covariant Constructors>>).
 
 .Covariant Constructor
 [def]
@@ -962,7 +962,7 @@ $S.constructor$:
 +
 $overrideCompatible(ctor, S.constructor)$
 +
-This constraint corresponds to <<IDE-72,requirement: Overriding Members>> except for the `Override` annotation which is not required here.
+This constraint corresponds to <<Req-IDE-72,requirement: Overriding Members>> except for the `Override` annotation which is not required here.
 .  Given a classifier `C` implementing interface
 `I` and `I` has a covariant constructor (owned
 or inherited, see <<covariant_constructor,Covariant Constructor>>), we require
@@ -972,7 +972,7 @@ defined in C with
 +
 $overrideCompatible(ctor, I.constructor)$
 +
-This constraint corresponds to <<IDE-74,Implementation of Interface Members>>
+This constraint corresponds to <<Req-IDE-74,Implementation of Interface Members>>
 except for the `@Override` annotation, which is not required, here.
 ..  Given a classifier `C` without an owned constructor and
 an extended class or interface $Sup$ that has a covariant
@@ -1057,7 +1057,7 @@ class D extends C {
 
 Interface `I` declares a covariant constructor expecting a single parameter of type `number`.
 Even though class `C` implements `I`, it does not need to define an owned constructor with such a parameter.
-According to <<IDE-60,requirement Covariant Constructor>>, it is enough for `C` to have a constructor,
+According to <<Req-IDE-60,requirement Covariant Constructor>>, it is enough for `C` to have a constructor,
 either owned or inherited, that is override compatible with the one declared by `I`. Class `C` inherits the default constructor from `N4Object`, which does not have any arguments and is thus override compatible to `I`’s constructor.
 
 In addition, subclasses are now required to have constructors which are
@@ -1228,7 +1228,7 @@ $\nexists sub \in f.expr^*: sub="this"$
 // ** syntax highlighting in editor
 .  A constant data field must not be annotated with `@Final`:
 $f.const \Rightarrow \lnot f.final$
-. Constant data fields are not writeable (cf. <<IDE-68,requirement Write-Acccess>>):
+. Constant data fields are not writeable (cf. <<Req-IDE-68,requirement Write-Acccess>>):
 $f.const \Rightarrow \lnot f.writeable$
 --
 
@@ -1243,7 +1243,7 @@ $f.final \Rightarrow \lnot f.const \land \lnot f.declaredStatic$
 .  A final data field is not writeable:
 $f.final \Rightarrow \lnot f.writeable$
 A final field may, however, be set in the constructor.
-See <<IDE-68,requirement Write-Acccess>> for details.
+See <<Req-IDE-68,requirement Write-Acccess>> for details.
 .  A final data field must be either initialized by an initializer expression or in the constructor.
 If the field is initialized in the constructor, this may be done either explicitly or via a spec-styleconstructor.
 task:IDEBUG-575[]
@@ -1355,7 +1355,7 @@ False for getters and true for setters.
 ==== Semantics [[field-accessors-semantics]]
 
 There must be no field or method with the same name as a field accessor
-(follows from <<IDE-52,requirement Member Names>>). In addition, the following
+(follows from <<Req-IDE-52,requirement Member Names>>). In addition, the following
 constraints must hold:
 
 
@@ -1375,7 +1375,7 @@ define a setter $s'$ with
 $s'.name=g.name \land s'.static=g.static$
 footnote:[This is required, because in Javascript a getter shadows a corresponding setter defined further up in the prototype chain; likewise a setter shadows a corresponding getter.].
 The same applies to setters, accordingly.
-* <<IDE-72,requirement Overriding Members>>, <<IDE-73,requirement Consumption of Interface Members>>, and <<IDE-74,Implementation of Interface Members>> apply to field accessors accordingly (getter / setter overriding).
+* <<Req-IDE-72,requirement Overriding Members>>, <<Req-IDE-73,requirement Consumption of Interface Members>>, and <<Req-IDE-74,Implementation of Interface Members>> apply to field accessors accordingly (getter / setter overriding).
 
 NOTE: A getter and setter with the same name need not have the same type, i.e. the getter’s return type need not be the same as a subtype of
 the type of the setter’s parameter (the types can be completely unrelated).
@@ -1543,7 +1543,7 @@ method can, however, be declared generic. Generic static methods are
 defined similarly to generic instance methods. Since they cannot refer
 to type variables of a generic class, the constraint to avoid type
 variables with equal names (see
-<<IDE-55,requirement Type Variable Names for Generic Methods>>) does not need to hold for
+<<Req-IDE-55,requirement Type Variable Names for Generic Methods>>) does not need to hold for
 generic static methods.
 
 === Static Members of Interfaces
@@ -1557,13 +1557,13 @@ static. A few restrictions apply:
 
 1.  Static members of interfaces may only be accessed directly via the
 containing interface’s type name task:IDEBUG-386[] (this means, of the four ways of
-accessing static members of classes defined in <<IDE-66,requirement Accessing Static Members>> above, only the first one applies to static members of interfaces).
+accessing static members of classes defined in <<Req-IDE-66,requirement Accessing Static Members>> above, only the first one applies to static members of interfaces).
 2.  The `this` literal may not be used in static methods or field accessors of
 interfaces and it may not be used in the initializer expression of
-static fields of interfaces. See <<IDE-173,requirement Valid location for this literal>>.
+static fields of interfaces. See <<Req-IDE-173,requirement Valid location for this literal>>.
 3.  The `super` literal may not be used in static methods or field accessors of
 interfaces (in fact, it may not be used in interfaces at all,
-cf. <<IDE-123,requirement Access Super Constructor with Super Literal>>).
+cf. <<Req-IDE-123,requirement Access Super Constructor with Super Literal>>).
 
 --
 
@@ -1573,7 +1573,7 @@ instance methods and as an argument type only in constructors
 static interface methods in the constraints above.
 
 In general, static members may not be abstract,
-cf. <<IDE-46,requirement Abstract Member>>, which applies here as well. Static methods
+cf. <<Req-IDE-46,requirement Abstract Member>>, which applies here as well. Static methods
 and field accessors of interfaces, therefore, always have to provide a
 body.
 

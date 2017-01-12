@@ -934,7 +934,7 @@ members, it seems convenient to use additional structural members, like
 on interface I2 in the
 example <<ex:use-declared-interfaces-for-lower-bounds,Use declared interfaces for lower bounds>> below. However,
 type variables must not be constrained using structural types (see
-constraint <<IDE-76,Use-Site Structural Typing>>). Hence, the recommended
+constraint <<Req-IDE-76,Use-Site Structural Typing>>). Hence, the recommended
 solution is to use an explicitly declared interface that uses definition
 site structural typing for these constraints as an upper bound (see
 interface in the example).
@@ -1397,7 +1397,7 @@ parameters, it would not normally be possible to invoke an instance of `Function
 For the time being, however, an instance of `Function` can be invoked, any number
 of arguments may be provided and the invocation may be parameterized
 with any number of type arguments (which will be ignored), i.e. 
-<<IDE-101,Function Call Constraints>> and <<IDE-102,Parameterized Function Call Constraints>> do not apply.
+<<Req-IDE-101,Function Call Constraints>> and <<Req-IDE-102,Parameterized Function Call Constraints>> do not apply.
 
 === Array Object Type
 
@@ -2742,7 +2742,7 @@ type of a method parameter
 * an existential type argument inside a return type expression for
 methods (e.g.`ArrayList<? extends this> method(){...}`)
 
-The precise rule where it may appear is given below in <<IDE-37,requirement: This Type>>.
+The precise rule where it may appear is given below in <<Req-IDE-37,requirement: This Type>>.
 
 The `this` type is similar to a type variable, and it is bound to the declared
 or inferred type of the receiver. If it is used as return type, all
@@ -3198,8 +3198,8 @@ $E_S$ is of the type of the string-based enumeration.
 ++++
 \infer{ \tee l \subtype E_S }{l \in E_S.L_S}
 ++++
-.  <<IDE-39,requirement: Unique Literal Names>> also applies for `N4StringBasedEnum`.
-.  <<IDE-40,requirement: Enum Literals are Singletons>> also applies for `N4StringBasedEnum`.
+.  <<Req-IDE-39,requirement: Unique Literal Names>> also applies for `N4StringBasedEnum`.
+.  <<Req-IDE-40,requirement: Enum Literals are Singletons>> also applies for `N4StringBasedEnum`.
 .  References to string-based enums may only be used in the following places:
 ..  in type annotations
 ..  in property access expressions to refer to one of the enum’s literals

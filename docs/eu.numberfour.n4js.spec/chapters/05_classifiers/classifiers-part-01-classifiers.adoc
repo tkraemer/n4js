@@ -605,7 +605,7 @@ modeled in N4JS 1:1.
 
 // todo[IDE-1236]{check current implementation: fields and methods}
 
-As specified in <<IDE-56,Defining and calling Constructors,Defining and Calling Constructors>>, interfaces
+As specified in <<Req-IDE-56,Defining and calling Constructors,Defining and Calling Constructors>>, interfaces
 cannot contain a constructor i.e.
 $\forall m \in I.ownedMethods: m.name \neq 'constructor'$.
 

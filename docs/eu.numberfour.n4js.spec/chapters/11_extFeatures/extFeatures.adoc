@@ -241,7 +241,7 @@ method can be used to create a root object causing a new injection phase
 to take place.
 .  If $C.ctor$ is marked as injection point, all its
 arguments are set by the injector. This is also true for an inherited
-constructor marked as an injection point. See <<IDE-143,requirement: Constructor Injection>> task:IDE-1264[]. For all arguments the injection phase constraints have to hold as well.
+constructor marked as an injection point. See <<Req-IDE-143,requirement: Constructor Injection>> task:IDE-1264[]. For all arguments the injection phase constraints have to hold as well.
 \item All fields of $C$, including \emph{inherited} once, marked as injection points are set by the injector. For all fields the injection phase constraints have to hold as well.
 task:IDE-1264[] task:IDEBUG-441[]
 .  All fields of $C$, including _inherited_ once, marked as
@@ -1308,7 +1308,7 @@ parameters (with no further modifications):
 ++++
 . All constraints related to member redefinition (cf. <<_redefinition-of-members,Redefinition of Members>>) have to hold.
 In the case of polyfills, this is true for constructors (cf.
-<<IDE-72,requirement: Overriding Members>>) and private members.
+<<Req-IDE-72,requirement: Overriding Members>>) and private members.
 --
 
 === Runtime Polyfill Definitions
@@ -1391,7 +1391,7 @@ must hold in addition to constraints :
 --
 For a static polyfill class $P$ annotated with `@StaticPolyfill`, that is
 $P.staticpolyfill=\TRUE$, all the following constraints must
-hold in addition to <<IDE-152,requirement: Polyfill Class>>:
+hold in addition to <<Req-IDE-152,requirement: Polyfill Class>>:
 
 1.  $P$’s name equals the name of the filled class and is
 contained in a module with the same qualified name:
