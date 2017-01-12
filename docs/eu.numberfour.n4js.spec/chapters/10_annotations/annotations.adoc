@@ -101,9 +101,9 @@ corresponding sections:
 
 ==== IDEBUG
 
-`IDEBUG` is an annotation similar to Java’s `@SuppressWarnings`. It changes the severity of an issue
-from an error to a warning so that code can be compiled regardless of
-validation errors. This is to be used for known IDE bugs only.
+`@IDEBUG` is an annotation similar to Java’s `@SuppressWarnings`.
+It changes the severity of an issue from an error to a warning so that code can be compiled regardless of validation errors.
+This is to be used for known IDE bugs only.
 
 === Syntax [[idebug-syntax]]
 
@@ -112,22 +112,19 @@ validation errors. This is to be used for known IDE bugs only.
 '@IDEBUG' '(' bugID = INT ',' errorMessage=STRING ')'
 ----
 
-The annotation is defined transitively and repeatable on script, type
-declaration, function and method level.
+The annotation is defined transitively and repeatable on script, type declaration, function and method level.
 
 ==== Semantics
 
-This annotation will cause errors issued in the scope of the annotation
-(in the defined script, type, or method) to be transformed to warnings
-if their message text is similar to the $errorMessage$ text.
-If $errorMessage$ ends with `…` (three dots as a single
-character, created by Eclipse to abbreviate messages), then the error’s
-message text must start with the specified text.
+This annotation will cause errors issued in the scope of the annotation (in the defined script, type, or method) to be transformed to warnings if their message text is similar to the $errorMessage$ text.
+If $errorMessage$ ends with `…` (three dots as a single character, created by Eclipse to abbreviate messages), then the error’s message text must start with the specified text.
 
-If no matching error is found, the annotation itself will issue an
-error.
+If no matching error is found, the annotation itself will issue an error.
 
-[IDEBUG][ex:IDEBUG] In the following code snippet, two errors are to be
+[[ex:IDEBUG]]
+.IDEBUG Example
+====
+In the following code snippet, two errors are to be
 transformed to warnings.
 
 [source,n4js]
@@ -162,7 +159,7 @@ into a warning with the following text:
 IDEBUG-166: {function(number):void} is not a subtype of {function(T):void}.
 ----
 
-refers to the corresponding bug report, that is .
+`IDEBUG-166` refers to the corresponding bug report, that is https://github.com/NumberFour/n4js/issues/166.
 
 The annotation on line 3 was proposed as a workaround for `IDEBUG-91` which has
 been fixed. footnote:[Hopefully IDEBUG-166 task:IDEBUG-166[] is fixed at time of publication.]. No error message is produced and an error will be issued on line 3 instead:
@@ -172,11 +169,13 @@ been fixed. footnote:[Hopefully IDEBUG-166 task:IDEBUG-166[] is fixed at time of
 No matching error found, apparently bug IDEBUG-91 has been fixed or does not occur here.
 ----
 
+====
+
 ==== Suppress Warnings
-//\version{0.5}{This is not part of version 0.3}
+
+TIP: version>0.5 - This is not part of version 0.3
 
 [.language-n4js]
 == Declaration of Annotations
 
-//TODO: fix
-//version{>0.5}{not implemented in version 0.3} task:IDE-139[]
+TIP: version>0.5 - not implemented in version 0.3 task:IDE-139[]
