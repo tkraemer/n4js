@@ -14,15 +14,12 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
-_Visibility_ defines the scope in which a declaration is visible, that
-is in which context references can be bound to the declaration. _Access
-control_ defines the extent to which types and members are accessible
-beyond their immediate context. Access control may, therefore, restrict
-the visibility of a declaration by limiting its scope.
+_Visibility_ defines the scope in which a declaration is visible, that is in which context references can be bound to the declaration.
+_Access control_ defines the extent to which types and members are accessible beyond their immediate context.
+Access control may, therefore, restrict the visibility of a declaration by limiting its scope.
 
-_Extensibility_ refers to whether a given type can be subtyped, or in
-the case of members, whether they can be overridden. Access control is a
-prerequisite for extensibility which is further explained in <<_n4js_specific_classifiers,N4JS Specific Classifiers>>
+_Extensibility_ refers to whether a given type can be subtyped, or in the case of members, whether they can be overridden.
+Access control is a prerequisite for extensibility which is further explained in <<_n4js_specific_classifiers,N4JS Specific Classifiers>>
 
 [.language-n4js]
 == Access Control
@@ -48,9 +45,8 @@ as follows:
 4.  *Vendor*: access from different project of the same vendor.
 5.  *World*: access from anything else.
 
-Accessibility is defined by modifiers on types and members, e.g , via
-the statement, and by the annotation. Extensibility is defined by the
-annotation respectively.
+Accessibility is defined by modifiers on types and members, e.g `public, protected, project, private`, via the `export` statement, and by the `@Internal` annotation.
+Extensibility is defined by the `@Final` annotation respectively.
 
 [.language-n4js]
 == Accessibility of Types, Top-Level Variables and Function Declarations
@@ -59,8 +55,7 @@ task:IDE-84[] task:IDE-556[] task:IDE-707[]
 We define types (classes, interfaces, enums) whereby each type has members (fields and methods, depending on the kind of type).
 When we define a type, we need to define whether it is visible only for the specifying module, project or whether that type should be accessible from outside of that project.
 
-The same is true for variable declarations and function declarations
-defined as top-level elements of a module.
+The same is true for variable declarations and function declarations defined as top-level elements of a module.
 
 The following type access modifiers are supported by N4JS:
 
@@ -70,18 +65,16 @@ enum TypeAccessModifier:      project
                             | public;
 ----
 
-If a type is not exported, its visibility is private. If a type has
-declared visibility `public`, it may additionally be marked as internal via the
-annotation `@Internal`. Thus, we have the following set of type access modifiers:
+If a type is not exported, its visibility is private.
+If a type has declared visibility `public`, it may additionally be marked as internal via the annotation `@Internal`.
+Thus, we have the following set of type access modifiers:
 
 TAM = `private` `project` `public@Internal` `public`
 
-That is, in N4JS, only the type access modifiers and are available. The
-redundant modifier serves only documentation purpose and can be
-synthesized if the modifier is preset.
+That is, in N4JS, only the type access modifiers and are available.
+The redundant `project` modifier serves only documentation purpose and can be synthesized if the `export` modifier is preset.
 
-All other modifiers used here are synthesized as shown in the next
-example:
+All other modifiers used here are synthesized as shown in the next example:
 
 .Synthesized Type Access Modifiers in N4JS
 [source,n4js]
@@ -136,17 +129,12 @@ The following constraints for type access modifiers for a given type $T$
 (which may be a classifier declaration, a function or a variable) must
 hold:
 
-* It is an error if $T$ is not exported but defined as
-`project`, `public` or
-`public@Internal`.
-* It is an error if an annotation `@Internal` is
-present on a module private or `project` visible
-type.
-* The type modifier for all built-in ECMAScript types is
-`public`.
-* The _default modifier_ for user declared exported declarations is
-`project`. That is, this modifier is assumed if no
-modifier is explicitly specified.
+* It is an error if $T$ is not exported but defined as `project`, `public` or `public@Internal`.
+* It is an error if an annotation `@Internal` is present on a module private or `project` visible type.
+* The type modifier for all built-in ECMAScript types is `public`.
+* The _default modifier_ for user declared exported declarations is `project`.
+That is, this modifier is assumed if no modifier is explicitly specified.
+
 --
 
 .Type Accessibility T
@@ -222,8 +210,8 @@ enum MemberAccessModifier:    private
                             | public;
 ----
 
-The modifiers and may be annotated with . Thus, we can define the
-following set of member access modifiers:
+The modifiers `protected` and `public` may be annotated with `@Internal`.
+Thus, we can define the following set of member access modifiers:
 
 [math]
 ++++
@@ -235,13 +223,10 @@ MAM = \{ \spc  \\
 \endalign
 ++++
 
-`protected@Internal` and `public@Internal` are synthesized tags and were
-introduced as shorthand notation for the `@Internal` annotation together with `protected` or `public` access modifiers.
-The modifier is the default one and it can be omitted.
-As with the type access modifiers, not all member access modifiers are
-available in N4JS. Instead, they are synthesized from different
-construct as shown in the next example.
-
+`protected@Internal` and `public@Internal` are synthesized tags and were introduced as shorthand notation for the `@Internal` annotation together with `protected` or `public` access modifiers.
+The `project` modifier is the default one and it can be omitted.
+As with the type access modifiers, not all member access modifiers are available in N4JS.
+Instead, they are synthesized from different construct as shown in the next example.
 
 .Synthesized Member Access Modifiers in N4JS
 [example]
@@ -357,6 +342,11 @@ footnote:[See <<_n4js_specific_classifiers,N4-Specific Classifiers>> for definit
 
 TIP: Note the Java-like access restriction for members of visibility [language-n4js]`protected` or [language-n4js]`protected@Internal` to code that is responsible for the implementation of that object. cite:[Gosling15a(S6.6.2,p.166)]
 
+////
+Citation inside footnote
+footnote:[Note, the Java-like access restriction for members of visibility [language-n4js]`protected` or [language-n4js]`protected@Internal` to code that is responsible for the implementation of that object. cite:[Gosling15a(S6.6.2,p.166)]]
+////
+
 [math]
 ++++
 \beginalign
@@ -432,8 +422,7 @@ export public abstract class C {
 }
 ----
 
-As demonstrated in the following snippet, class can be used but not
-subclassed in other modules:
+As demonstrated in the following snippet, class `C` can be used but not subclassed in other modules:
 
 [source,n4js]
 ----
@@ -482,10 +471,10 @@ t.m(t);
 ====
 
 
-The property access to the member `m` is valid because it fulfills the
-constraints for accessibility. The receiver of the property access is `t` of
-type `ApiType`. That type is exported and accessible. Therefore, the inherited
-member `m` is also considered valid since it is also defined `public`.
+The property access to the member `m` is valid because it fulfills the constraints for accessibility.
+The receiver of the property access is `t` of type `ApiType`.
+That type is exported and accessible.
+Therefore, the inherited member `m` is also considered valid since it is also defined `public`.
 
 This rule allows for defining a common functionality in module or
 project visible types that becomes accessible via exported, visible
@@ -589,6 +578,9 @@ For this reason, we formally define qualified names even if they cannot occur in
 <<tab:typenames,Type Names>> shows the different names of a given type `C`, defined in a module
 `M.n4js`, defined in a package `p` of a project `MyProject`.
 
+Simple type names are used throughout N4JS code in order to refer to types.
+The different forms of module specifiers are only used in import declarations in the string following the `from` keyword.
+
 [[tab:typenames]]
 .Different forms of module and type specifiers.
 [cols="<,^m"]
@@ -601,17 +593,13 @@ For this reason, we formally define qualified names even if they cannot occur in
 |Complete Type Specifier | MyProject/p/M.C
 |===
 
-Simple type names are used throughout N4JS code in order to refer to types.
-The different forms of module specifiers are only used in import declarations in the string following the keyword.
-
 === Name Duplicates
 
-There might be cases where two (or more) scopes created by different
-entities with the same (simple) name overlap. Those situations can be
-referred to as shadowing, hiding, or obscuring. While they are not the
-same, many of those cases are not allowed in N4JS. For simplicity we
-refer to them all as shadowing or duplication (see below). Rule of thumb
-is that N4JS allows everything that is allowed in JavaScript StrictMode.
+There might be cases where two (or more) scopes created by different entities with the same (simple) name overlap.
+Those situations can be referred to as shadowing, hiding, or obscuring.
+While they are not the same, many of those cases are not allowed in N4JS.
+For simplicity we refer to them all as shadowing or duplication (see below).
+Rule of thumb is that N4JS allows everything that is allowed in JavaScript StrictMode.
 
 ==== Lexical Environment
 
@@ -640,7 +628,8 @@ environment record__s created by `WithStatement` are not taken into account when
 resolving duplicates. This applies to both N4JS mode and JS strict mode.
 In unrestricted JS the `WithStatement` is allowed but duplicates are not validated.
 
-NOTE: In case of names introduced by ``ImportDeclaration``s only ``NamedImportSpecifiers``s are taken into account (their import name or its alias if available). ``WildcardImportSpecifiers``s are not taken into account.
+NOTE: In case of names introduced by ``ImportDeclaration``s only ``NamedImportSpecifiers``s are taken into account (their import name or its alias if available).
+``WildcardImportSpecifiers``s are not taken into account.
 Potential optimizations by compiler or user annotation are also not currently taken into account during analysis.
 
 ==== Duplicates and Shadowing
@@ -649,12 +638,11 @@ Potential optimizations by compiler or user annotation are also not currently ta
 [def]
 --
 
-Two elements with the same name declared in the same lexical environment
-(cf. cite:[ECMA11a(S10.2.2.1)] are called __duplicates__.
+Two elements with the same name declared in the same lexical environment (cf. cite:[ECMA11a(S10.2.2.1)] are called __duplicates__.
 An element defined in an environment _shadows_ all elements with the same name in outer environments.
 
-In class hierarchies, a member with the same name as a member defined in
-a supertype is said to override the latter. Overriding is discussed in <<_redefinition-of-members,Redefinition of Members>>.
+In class hierarchies, a member with the same name as a member defined in a supertype is said to override the latter.
+Overriding is discussed in <<_redefinition-of-members,Redefinition of Members>>.
 
 For the following constraints, we make the following assumptions:
 
@@ -676,12 +664,12 @@ that is, there must be no duplicates.
 .Forbidden Shadowing
 [req,id=IDE-8,version=1]
 --
-In general, shadowing is allowed in N4JS. But it is not allowed in the following cases:
+In general, shadowing is allowed in N4JS.
+But it is not allowed in the following cases:
 
 1.  No element defined in the standard global scope must be shadowed.
 2.  There must be no function shadowing another function.
-3.  Elements defined in catch blocks must not shadow elements defined
-all parent non-catch-block environments.
+3.  Elements defined in catch blocks must not shadow elements defined all parent non-catch-block environments.
 --
 
 .Forbidden Names
