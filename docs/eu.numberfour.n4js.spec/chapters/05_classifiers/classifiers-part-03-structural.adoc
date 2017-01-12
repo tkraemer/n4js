@@ -13,37 +13,25 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
-In general, N4JS uses nominal typing. This is to say that a duck is a
-duck only if it is declared to be a duck. In particular when working
-with external APIs, it is more convenient to use structural or duck
-typing. That is, a thing that can swim and quacks like a duck, is a
-duck.
+In general, N4JS uses nominal typing.
+This is to say that a duck is a duck only if it is declared to be a duck.
+In particular when working with external APIs, it is more convenient to use structural or duck typing.
+That is, a thing that can swim and quacks like a duck, is a duck.
 
 [.language-n4js]
-Interfaces or classes can be used for this purpose with a _typing
-strategy modifier_ . Given a type $T$, the simple ``pass:[~]`` (tilde)
-can be added to its declaration (on definition-site) or in a reference (on
-use-site) to indicate that the type system should use structural typing
-rather than nominal typing.
+Interfaces or classes can be used for this purpose with a _typing strategy modifier_.
+Given a type $T$, the simple ``pass:[~]`` (tilde) can be added to its declaration (on definition-site) or in a reference (on use-site) to indicate that the type system should use structural typing rather than nominal typing.
 footnote:[This kind of typing is used by TypeScript only. By defining a structural typed classifier or reference, it basically behaves as it would behave – without that modifier – in TypeScript.]
-This means that some other type must provide the same
-members as type $T$ to be deemed a structural subtype.
-However, the operator cannot be used anymore with the type or reference
-as this operator relies on the declaration information (or at least the
-closest thing available at runtime). In this case, $T$ is,
-therefore, always a structural subtype of $~T$.
-//~
+This means that some other type must provide the same members as type $T$ to be deemed a structural subtype.
+However, the operator cannot be used anymore with the type or reference as this operator relies on the declaration information (or at least the closest thing available at runtime).
+In this case, $T$ is, therefore, always a structural subtype of $pass:[~T]$.
+
 
 [.language-n4js]
-Sometimes it is convenient to refer only to the fields of a classifier,
-for example when the initial field values are to be provided in a
-variable passed to the constructor. In that case, the type can be
-modified with ``pass:[~~]`` (two tildes). This is only possible on use-site, i.e.
-on type references. Furthermore, only on the use-site, it is possible to
-consider only either readable or writable or fields by using the
-read-only ``pass:[r~]`` or write-only ``pass:[w~]`` structural field typing. For
-initialization blocks, it is even possible to use structural initializer
-field typing via the ``pass:[i~]`` operator.
+Sometimes it is convenient to refer only to the fields of a classifier, for example when the initial field values are to be provided in a variable passed to the constructor.
+In that case, the type can be modified with ``pass:[~~]`` (two tildes). This is only possible on use-site, i.e. on type references.
+Furthermore, only on the use-site, it is possible to consider only either readable or writable or fields by using the read-only ``pass:[r~]`` or write-only ``pass:[w~]`` structural field typing.
+For initialization blocks, it is even possible to use structural initializer field typing via the ``pass:[i~]`` operator.
 
 == Syntax
 
@@ -82,13 +70,10 @@ ThisTypeRefStructural returns ThisTypeRefStructural:
 [.language-n4js]
 == Definition Site Structural Typing
 
-An interface or class can be defined to be used with structural typing
-by adding the structural modifier to its definition (or, in case of
-external classes, to the declaration). This changes the default type
-system strategy from nominal to structural typing for that type. That
-means that all types with the same members as the specified type are
-subtypes of that type, except for subtypes of `N4Object`. In the latter case,
-programmers are enforced to nominal declare the type relation.
+An interface or class can be defined to be used with structural typing by adding the structural modifier to its definition (or, in case of external classes, to the declaration).
+This changes the default type system strategy from nominal to structural typing for that type.
+That means that all types with the same members as the specified type are subtypes of that type, except for subtypes of `N4Object`.
+In the latter case, programmers are enforced to nominal declare the type relation.
 
 If a type $T$ is declared as structural at its definition, $T.defStructural$ is true.
 
@@ -97,13 +82,11 @@ If a type $T$ is declared as structural at its definition, $T.defStructural$ is 
 [req,id=IDE-75,version=1]
 --
 
-.  The structurally defined type cannot be used on the right hand side
-of the `instanceof` operator:
+.  The structurally defined type cannot be used on the right hand side of the `instanceof` operator:
 $x\ \lstnfjs{instanceof}\ T \Rightarrow \lnot T.defStructural$
-.  A type $X$ is a subtype of a structurally defined type
-$T$ either
-..  if it is not a subtype of `N4Object` footnote:[We enforce programmers of N4JS to use nominal typing, therefore, it is not possible to bypass that principle by declaring a type as structural for normally defined classes (except those explicitly derived from `N4Object`).] but it contains all public,
-non-static members of that type
+.  A type $X$ is a subtype of a structurally defined type $T$ either
+..  if it is not a subtype of `N4Object` footnote:[We enforce programmers of N4JS to use nominal typing, therefore, it is not possible to bypass that principle by declaring a type as structural for normally defined classes (except those explicitly derived from `N4Object`).]
+but it contains all public, non-static members of that type
 +
 [math]
 ++++
@@ -140,7 +123,7 @@ T.defStructural \Rightarrow \tee T \notsubtype \lstnfjs{N4Object} \land \lstnfjs
 
 .Declaration Site Structural Typing
 [example]
---
+====
 The following snippet demonstrates the effect of definition-site structural types by comparing them to
 nominal declared types: [[ex:declaration-site-structural-typing]]
 
@@ -175,24 +158,18 @@ It may be unexpected, but `E` is not a subtype of `C`, i.e.
 $E \notsubtype C$! E.g., `instanceof` won’t work with `E`, while it works
 with `C`!
 
---
+====
 
 == Use-Site Structural Typing
 
-Use-site structural typing offers several typing strategy modifiers to
-define the accessability of public properties of classes and interfaces.
+Use-site structural typing offers several typing strategy modifiers to define the accessability of public properties of classes and interfaces.
 They can be used e.g. on variable declarations like this: ``pass:[var c : ~C]``.
-The table <<tab:available-fields-of-structural-types>> shows which properties
-of structural types can be accessed in the different type strategies.
-For example, when using the write-only structural strategy (i.e.
-$\tsWoFld X$), only the writeable fields, can be accessed
-for writing. In the table, the term field to both, public datafields and
-accessors of type $X$. Non-public properties are never
-accessable in use-site structural types. In any field-structural type,
-methods of the referenced nominal type $X$ are not
-available. The initializer structural typing provides readable fields
-for every writeable field of the references type.
-
+The table <<tab:available-fields-of-structural-types>> shows which properties of structural types can be accessed in the different type strategies.
+For example, when using the write-only structural strategy (i.e. $\tsWoFld X$), only the writeable fields, can be accessed for writing.
+In the table, the term field to both, public datafields and accessors of type $X$.
+Non-public properties are never accessable in use-site structural types.
+In any field-structural type, methods of the referenced nominal type $X$ are not available.
+The initializer structural typing provides readable fields for every writeable field of the references type.
 
 [[tab:available-fields-of-structural-types]]
 .Available Fields of Structural Types
@@ -211,14 +188,11 @@ for every writeable field of the references type.
 |public readable field | | | |$\emptyset$ |writable fields
 |===
 
-Multiple structural typing strategies can be nested when there are
-multiple use sites, like in the
-example <<ex:nested-structural-typing-strategies,Nested Structural Typing Strategies>> below at the locations
-ST1 and ST2. In the example, the datafield `a.field` has the nested structural
+Multiple structural typing strategies can be nested when there are multiple use sites, like in the example <<ex:nested-structural-typing-strategies,Nested Structural Typing Strategies>> below at the locations ST1 and ST2.
+In the example, the datafield `a.field` has the nested structural
 //TODO: check formatting below
-type `{\tsInitFld A}` and thus the datafield `a.field.df` is
-readable. Nested structural types are evaluated on the fly when doing
-subtype checks.
+type `{\tsInitFld A}` and thus the datafield `a.field.df` is readable.
+Nested structural types are evaluated on the fly when doing subtype checks.
 
 // todo{Not implemented yet. See GH-12, subtask 2}
 task:GH-12[]
@@ -242,17 +216,15 @@ var a : ~i~A; // ST2
 --
 
 
-The following example demonstrates the effect of the structural type
-modifiers:
-
+The following example demonstrates the effect of the structural type modifiers:
 
 .Effect of structural type modifiers on use-site
 [example]
 --
-Let’s assume the type defined on the left. The following _pseudo_ code snippets explicitly list the type with its members virtually created by a structural modifier. Note that
-this is pseudo code, as there are no real or virtual types created.
+Let’s assume the type defined on the left.
+The following _pseudo_ code snippets explicitly list the type with its members virtually created by a structural modifier.
+Note that this is pseudo code, as there are no real or virtual types created.
 Instead, only the subtype relation is defined accordingly:
-
 
 Effect of structural type modifiers on use-site
 
@@ -319,8 +291,6 @@ interface ~~I {
 
 |===
 
-
-
 [cols="1a,1a,1a"]
 |===
 
@@ -384,10 +354,7 @@ interface ~i~I {
 |===
 
 
-Note that even if a type is defined without the structural modifier, it
-is not possible to use `instanceof` for variables declared as structural, as shown in
-the next example:
-
+Note that even if a type is defined without the structural modifier, it is not possible to use `instanceof` for variables declared as structural, as shown in the next example:
 
 [cols="1a,1a,1a"]
 |===
@@ -430,43 +397,31 @@ foo(c: ~~C, i: ~~I) {
 ^h| Type ^h| Structural Type ^h| Structural Field Type
 |===
 
-* If a type is referenced with the structural type modifier ``pass:[~]`` , the
-property $T.refStructural$ is true. If a type is referenced
-with the structural field type modifier ``pass:[~~]``, the property
-$T.refStructuralField$ is true.
-* If a type is referenced with
-the structural read-only field type modifier ``pass:[~r~]``, the property
-$T.refStructuralReadOnlyField$ is true.
+* If a type is referenced with the structural type modifier ``pass:[~]`` , the property $T.refStructural$ is true.
+* If a type is referenced with the structural field type modifier ``pass:[~~]``, the property $T.refStructuralField$ is true.
+* If a type is referenced with the structural read-only field type modifier ``pass:[~r~]``, the property $T.refStructuralReadOnlyField$ is true.
 * If a type is referenced with the structural write-only field type modifier ``pass:[~w~]``, then the property $T.refStructuralWriteOnlyField$ is true.
-If a type is referenced with the structural initializer field type
-modifier ``pass:[~i~]``, then the property
-$T.refStructuralInitField$ is true.
+* If a type is referenced with the structural initializer field type modifier ``pass:[~i~]``, then the property $T.refStructuralInitField$ is true.
 
-We call $T$ the (nominal) type T, $\tsStr T$ the
-structural version of $T$, $\tsFld T$ the
-structural field version of $T$, $\tsRoFld T$
-the structural read-only field, $\tsWoFld T$ the structural
-write-only field and $\tsInitFld T$ the structural
-initializer field version of $T$.
+We call the following:
+
+* $T$ the (nominal) type T,
+* $\tsStr T$ the structural version of $T$,
+* $\tsFld T$ the structural field version of $T$,
+* $\tsRoFld T$ the structural read-only field,
+* $\tsWoFld T$ the structural write-only field and
+* $\tsInitFld T$ the structural initializer field version of $T$.
 
 --
 
 .Use-Site Structural Typing
 [req,id=IDE-76,version=1]
 --
-1.  The structural version of a type is a supertype of the nominal type:
-$T \subtype \tsStr T$
-2.  The structural field version of a type is a supertype of the
-structural type:
-$\tsStr T \subtype \tsFld T$
-3.  The structural read-only field version of a type is a supertype of
-the structural field type:
-$\tsFld T \subtype \tsRoFld T$
-4.  The structural write-only field version of a type is a supertype of
-the structural field type:
-$\tsFld T \subtype \tsWoFld T$
-5.  The structural (field) version of a type cannot be used on the right
-hand side of the `instanceof` operator:
+1.  The structural version of a type is a supertype of the nominal type: $T \subtype \tsStr T$
+2.  The structural field version of a type is a supertype of the structural type: $\tsStr T \subtype \tsFld T$
+3.  The structural read-only field version of a type is a supertype of the structural field type: $\tsFld T \subtype \tsRoFld T$
+4.  The structural write-only field version of a type is a supertype of the structural field type: $\tsFld T \subtype \tsWoFld T$
+5.  The structural (field) version of a type cannot be used on the right hand side of the `instanceof` operator:
 +
 [math]
 ++++
@@ -494,9 +449,7 @@ footnote:[Note that due to this relaxed definition (compared with definition-sit
     {\hspace{2em} \land \tee m' \subtype \tee m}}
 \endalign
 ++++
-7.  A type $X$ is a subtype of a structural field version of
-a type $\tsFld T$, if it contains all public, non-static and
-non-optional fields of the type $T$:
+7.  A type $X$ is a subtype of a structural field version of a type $\tsFld T$, if it contains all public, non-static and non-optional fields of the type $T$:
 +
 [math]
 ++++
@@ -508,9 +461,7 @@ non-optional fields of the type $T$:
     {\hspace{3em} \land \tee m': T_m \land \tee m: T_{m'} \land T_m=T_{m'}} \\
     {\hspace{3em} \land m'.assignability\geq m.assignability}}
 ++++
-8.  A type $X$ is a subtype of a structural read-only field
-version of a type $\tsRoFld T$, if it contains all public,
-non-optional and non-static readable fields of the type $T$:
+8.  A type $X$ is a subtype of a structural read-only field version of a type $\tsRoFld T$, if it contains all public, non-optional and non-static readable fields of the type $T$:
 +
 [math]
 ++++
@@ -522,9 +473,7 @@ non-optional and non-static readable fields of the type $T$:
     {\hspace{3em} \land \tee m': T_m \land \tee m: T_{m'} \land T_m=T_{m'}} \\
     {\hspace{3em} \land m'.assignability\geq m.assignability}}
 ++++
-9.  A type $X$ is a subtype of a structural write-only field
-version of a type $\tsWoFld T$, if it contains all public,
-non-optional and non-static writable fields of the type $T$:
+9.  A type $X$ is a subtype of a structural write-only field version of a type $\tsWoFld T$, if it contains all public, non-optional and non-static writable fields of the type $T$:
 +
 [math]
 ++++
@@ -536,11 +485,8 @@ non-optional and non-static writable fields of the type $T$:
     {\hspace{3em} \land \tee m': T_m \land \tee m: T_{m'} \land T_m=T_{m'}} \\
     {\hspace{3em} \land m'.assignability\geq m.assignability}}
 ++++
-10. A type $X$ is a subtype of a structural field version of
-a type $\tsFld this$, if it contains all public, non-static
-and non-optional fields, either defined via data fields or field get
-accessors, of the inferred type of `this`. _All fields which have an
-initializer are handled as if they were optional._
+10. A type $X$ is a subtype of a structural field version of a type $\tsFld this$, if it contains all public, non-static and non-optional fields, either defined via data fields or field get accessors, of the inferred type of `this`.
+_All fields which have an initializer are handled as if they were optional._
 +
 [math]
 ++++
@@ -552,25 +498,21 @@ initializer are handled as if they were optional._
     {\hspace{3em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name}\\
     {\hspace{3em} \land \tee m' \subtype m} \land m'.assignability\geq m.assignability}
 ++++
-11. A structural field type $\tsFld T$ is a subtype of a
-structural type $\tsStr X$, if $\tsStr X$ only
-contains fields (except methods inherited from `Object`) and if
-$\tsFld T \subtype \tsFld X$.
+11. A structural field type $\tsFld T$ is a subtype of a structural type $\tsStr X$, if $\tsStr X$ only contains fields (except methods inherited from `Object`) and if $\tsFld T \subtype \tsFld X$.
 +
 [math]
 ++++
 \infer{\tee \tsFld T \subtype \tsStr X}
     {X.methods \setminus \lstnfjs{Object}.methods = \emptyset \land \tee \tsFld T \subtype \tsFld X}
 ++++
-12. Use-site structural typing cannot be used for declaring supertypes
-of classes or interfaces. That is to say that structural types cannot be
-used after `extends`, `implements` or `eith` in type declarations.
+12. Use-site structural typing cannot be used for declaring supertypes of classes or interfaces. That is to say that structural types cannot be used after `extends`, `implements` or `with` in type declarations.
 footnote:[This is already constrained by the grammar.]
+
 --
 
-Note that all members of `N4Object` are excluded. This implies that extended
-reflective features (cf. <<_reflection-meta-information,Reflection Meta Information>> ) are not available in the context of structural typing. The `instanceof` operator is still working as described in <<_relational-expression,Relational Expression>>, in
-that it can be used to check the type of an instance.
+Note that all members of `N4Object` are excluded.
+This implies that extended reflective features (cf. <<_reflection-meta-information,Reflection Meta Information>> ) are not available in the context of structural typing.
+The `instanceof` operator is still working as described in <<_relational-expression,Relational Expression>>, in that it can be used to check the type of an instance.
 
 If a type $X$ is a (nominal) subtype of T, it is, of course,
 also a subtype of $\tsStr T$:
@@ -593,8 +535,7 @@ applied.
 [example]
 ====
 
-The following example demonstrates the effect of the structural (field)
-modifier, used in this case for function parameters.
+The following example demonstrates the effect of the structural (field) modifier, used in this case for function parameters.
 
 [source,n4js]
 ----
@@ -637,11 +578,12 @@ function f(p: ~~C) {
 ====
 
 The following table describes the member availability of `X` in various
-typing scenarios. Such as $\tsFld X$,
-$\tsRoFld X$, $\tsWoFld X$ and
-$\tsInitFld X$.
+typing scenarios. Such as `pass:[~~X]`, `pass:[~r~X]`, `pass:[~w~X]`,  `pass:[~i~X]`.
+
+// TODO check values in below table (m0 / ps)
 
 [.language-n4js]
+.Member Availability in various Typing Scenarios
 [cols="<2m,^,^,^,^"]
 |===
 h|Member of type __X__ | ``pass:[~~X]`` |``pass:[~r~X]`` |``pass:[~w~X]`` |``pass:[~i~X]``
@@ -672,26 +614,17 @@ h|Member of type __X__ | ``pass:[~~X]`` |``pass:[~r~X]`` |``pass:[~w~X]`` |``pas
 == Structural Read-only, Write-only and Initializer Field Typing
 task:IDE-1777[]
 
-Structural read-only, write-only and initializer field typings are
-extensions of structural field typing. Everything that is defined for
-the field structural typing must comply with these extension field
-typings. For the read-only type, readable fields (mutable and ones) and
-setters are considered, for the write-only type; only the setters and
-mutable fields are considered. Due to the hybrid nature of the
-initializer type it can act two different ways. To be more precise, a
-type $X$ (structural initializer field type) is a supertype
-of $Y$ (structural initializer field type) if for each
-public, non-static, non-optional writable field (mutable data field of
-setter) of $X$, there is a corresponding, public, non-static
-readable field of $Y$. All public member fields with
-annotation are considered to be mandatory in the initializer field
-typing constructors. The already-initialized fields can be either
-omitted from, or can be re-initialized via, an initializer field typing
-style constructor.
+Structural read-only, write-only and initializer field typings are extensions of structural field typing.
+Everything that is defined for the field structural typing must comply with these extension field typings.
+For the read-only type, readable fields (mutable and `@Final` ones) and setters are considered, for the write-only type; only the setters and mutable fields are considered.
+Due to the hybrid nature of the initializer type it can act two different ways.
+To be more precise, a type $X$ (structural initializer field type) is a supertype of $Y$ (structural initializer field type) if for each public, non-static, non-optional writable field (mutable data field of setter) of $X$, there is a corresponding, public, non-static readable field of $Y$.
+All public member fields with `@Final` annotation are considered to be mandatory in the initializer field typing  `@Spec` constructors.
+The already-initialized `@Final` fields can be either omitted from, or can be re-initialized via, an initializer field typing `@Spec` style constructor.
 
 .Subtype relationship between structural field typing
 [example]
---
+====
 
 [source,n4js]
 ----
@@ -723,7 +656,8 @@ class A5 {
 [.small]
 [cols="19"]
 |===
-|  h| A1 h| pass:[~A1] h| pass:[~~A1] h| pass:[~r~A1] h| pass:[~r~A2] h| pass:[~r~A3] h| pass:[~r~A4] h| pass:[~r~A5] h| pass:[~w~A1] h| pass:[~w~A2] h| pass:[~w~A3] h| pass:[~w~A4] h| pass:[~w~A5] h| pass:[~i~A1] h| pass:[~i~A2]  h| pass:[~i~A3] h| pass:[~r~A4] h| pass:[~r~A5]
+|  h| A1 h| pass:[~A1] h| pass:[~~A1] h| pass:[~r~A1] h| pass:[~r~A2] h| pass:[~r~A3] h| pass:[~r~A4] h| pass:[~r~A5] h| pass:[~w~A1]
+h| pass:[~w~A2] h| pass:[~w~A3] h| pass:[~w~A4] h| pass:[~w~A5] h| pass:[~i~A1] h| pass:[~i~A2]  h| pass:[~i~A3] h| pass:[~r~A4] h| pass:[~r~A5]
 
 h| A1          |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓
 h| pass:[~A1]  |  |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓
@@ -745,18 +679,15 @@ h| pass:[~r~A4]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |�
 h| pass:[~r~A5]|  |  |  |  |  |  |  |✓ |  |  |✓ |✓ |  |  |  |✓ |✓ |
 |===
 
---
-
-// TODO: fonts must be smaller here to prevent overlapping in PDF
+====
 
 [.language-n4js]
 == Public Setter Annotated With `ProvidesInitializer`
 
-Public setters with `ProvidesInitializer` annotation can declare optional fields implemented by means of field accessors instead of data fields. Data fields with an
-initializer are treated as optional in the initializer field type.
+Public setters with `ProvidesInitializer` annotation can declare optional fields implemented by means of field accessors instead of data fields.
+Data fields with an initializer are treated as optional in the initializer field type.
 
-It is important to note that it is valid to use the `ProvidesInitializer` annotation for
-setters in `n4js` files and not only definition files.
+It is important to note that it is valid to use the `ProvidesInitializer` annotation for setters in `n4js` files and not only definition files.
 
 .Setters with `@ProvidesInitializer` treated as optional
 [example]
@@ -782,9 +713,9 @@ console.log(new C({y: 42}).y); //24
 
 == Structural Types With Optional Fields
 
-
 Public optional fields become a member of the structural (field) type as
-well. But they will be optional in the structural type, that is to say
+well.
+But they will be optional in the structural type, that is to say
 it is not necessary to define the field.
 
 If a type defines an optional field then this type is always compatible
@@ -935,19 +866,17 @@ TAnonymousFormalParameter:
 [req,id=IDE-78,version=1]
 --
 
-It is only possible to add additional members to a type if use-site structural
-typing is used. The following constraints must hold:
+It is only possible to add additional members to a type if use-site structural typing is used.
 
-1.  For all additional members defined in a structural type reference,
-the constraints for member overriding (<<Req-IDE-72,requirement Overriding Members>>) apply
-as well.
-2.  All additional members have the access modifier set to
-$\lenum{public}$.
-3.  Type variables must not be augmented with additional structural
-members.
+The following constraints must hold:
 
-Additional fields may be declared optional in the same way as fields in
-classes. The rules given in <<_structural-types-with-optional-fields,Structural Types With Optional Fields>> apply accordingly. Consider the following example:
+1.  For all additional members defined in a structural type reference, the constraints for member overriding (<<Req-IDE-72,requirement Overriding Members>>) apply as well.
+2.  All additional members have the access modifier set to `public`.
+3.  Type variables must not be augmented with additional structural members.
+
+Additional fields may be declared optional in the same way as fields in classes.
+The rules given in <<_structural-types-with-optional-fields,Structural Types With Optional Fields>> apply accordingly.
+Consider the following example:
 
 --
 
@@ -971,15 +900,12 @@ c2 = { f1:42 };  // ok!!
 
 --
 
-Augmenting a type variable T with additional structural members can
-cause collisions with another member of a type argument for T. Hence,
-type variables must not be augmented with additional structural members
-like in the following example.
+Augmenting a type variable T with additional structural members can cause collisions with another member of a type argument for T.
+Hence, type variables must not be augmented with additional structural members like in the following example.
 
 .Forbidden additional structural members on type variables
 [example]
---
-
+====
 
 [source,n4js]
 ----
@@ -988,17 +914,15 @@ interface I<T> {
 }
 ----
 
---
+====
 
 
-Using an additional structural member on a type variable T could be seen
-as a constraint to T. However, constraints like this should be rather
-stated using an explicit interface like in the example below.
+Using an additional structural member on a type variable T could be seen as a constraint to T.
+However, constraints like this should be rather stated using an explicit interface like in the example below.
 
 .Use explicitly defined Interfaces
 [example]
---
-
+====
 
 [source,n4js]
 ----
@@ -1008,4 +932,5 @@ interface ~J {
 interface II<T extends J> {
 }
 ----
---
+
+====

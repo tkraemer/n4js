@@ -258,9 +258,9 @@ $ownedMembers$.
 ==== Type Inference [[class-type-inference]]
 
 The type of a class declaration or class expression `C`
-(i.e., a class definition in general) is of type `{C}` if it is not abstract,
+(i.e., a class definition in general) is of type `constructor{C}` if it is not abstract,
 that is if it can be instantiated. If it is abstract, the type of the
-definition simply is `{C}`:
+definition simply is `type{C}`:
 [math]
 ++++
 &\infer{\tee C : \type{constructor\{C\}}}
@@ -431,7 +431,7 @@ A concrete class has to, therefore, implement all abstract members of its superc
 implemented interfaces. Note that a class may implement fields with
 field accessors and vice versa. task:IDE-553[]
 2.  An abstract class may not be instantiated. task:IDE-148[]
-3.  An abstract class cannot be set to final (with annotation @Final).
+3.  An abstract class cannot be set to final (with annotation `@Final`).
 --
 
 .Abstract Member
@@ -470,11 +470,10 @@ For a class `C` with a supertype
 $S=C.sup$, the following constraints must hold
 
 * $C.sup$ must reference a class declaration `S`
-* `S` must be be extendable in the project of
-`C`
+* `S` must be be extendable in the project of `C`
 * $C \not\in C.sup^+$
-* All abstract members in `S` must be accessible from
-`C`: +
+* All abstract members in `S` must be accessible from `C`:
++
 $\forall M \in S.members : M.abstract \Rightarrow $
 `M` is accessible from `C` +
 (note that `M` need not be an owned member of
@@ -532,7 +531,7 @@ Instead of `superInterfaces`, we simply write `interfaces`.
 ==== Type Inference [[interfaces-type-inference]]
 
 
-The type of an interface declaration `I` is of type `I`:
+The type of an interface declaration `I` is of type `type{I}`:
 
 
 [math]
@@ -575,9 +574,9 @@ For any interface `I`, the following must hold:
 . Interfaces cannot be set to final (with annotation @Final):
 $\neg I.final$.
 . Members of an interface must not be declared private. The default
-access modifier in interfaces is the the type’s visibility or , if the
-type’s visibility is .
-. Members of an interface, except methods, must not be declared :
+access modifier in interfaces is the the type’s visibility or `project`, if the
+type’s visibility is `private`.
+. Members of an interface, except methods, must not be declared `@Final`:
 +
 [math]
 ++++
@@ -733,7 +732,7 @@ just like a normal type inside the class definition.
 
 If using a generic classifier as type of a variable, it may be
 parameterized. This is usually done via a type expression (cf.
-<<_parameterized-types,Parameterized Types>>) or via `type-arg` in case of supertypes. If a generic
+<<_parameterized-types,Parameterized Types>>) or via `typearg` in case of supertypes. If a generic
 classifier defines multiple type variables, these variables are bound in
 the order of their definition. In any case, all type variables have to
 be bound. That means in particular that raw types are not allowed. (cf <<_parameterized-types,Parameterized Types>> for details).
@@ -741,7 +740,7 @@ be bound. That means in particular that raw types are not allowed. (cf <<_parame
 If a generic classifier is used as super classifier, the type arguments
 can be type variables. Note that the type variable of the super
 classifier is not lifted, that is to say that all type variables are to
-be explicitly bound in the type references used in the `extend`, `with`, or `implements` section using `type-arg`. If a type variable is used in to bound a type variable of a type parameter, it has to fulfil possible type constraints (upper/lower
+be explicitly bound in the type references used in the `extend`, `with`, or `implements` section using `typearg`. If a type variable is used in `typearg` to bound a type variable of a type parameter, it has to fulfil possible type constraints (upper/lower
 bound) specified in the type parameter.
 --
 
@@ -863,13 +862,10 @@ variable definition.
 [[sec:definition-site-variance]]
 == Definition-Site Variance
 
-In addition to use-site declaration of variance in the form of Java-like
-wildcards, N4JS provides support for definition-site declaration of
-variance as known from languages such as C# and Scala.
+In addition to use-site declaration of variance in the form of Java-like wildcards, N4JS provides support for definition-site declaration of variance as known from languages such as C# and Scala.
 
-The _variance_ of a parameterized type states how its subtyping relates
-to its type arguments’ subtyping. For example, given a parameterized
-type and plain types and , we know
+The _variance_ of a parameterized type states how its subtyping relates to its type arguments’ subtyping.
+For example, given a parameterized type `G<T>` and plain types `A` and `B`, we know
 
 * if `G` is *covariant* w.r.t. its parameter `T`, then
 +
@@ -976,10 +972,10 @@ function getNameOfFirstPerson(list: List<? extends Person>): string {
 }
 ----
 
-Function `getNameOfFirstPerson` below takes a list and returns the name of the first person in
-the list. Since it never adds new elements to the given list, it could
-accept ``List``s of any subtype of `Person`, for example a `List<Employee>`. To allow this, its formal
-parameter has a type of `List<? extends Person>` instead of `List<Person>`. Such use-site variance is useful whenever an invariant type, like `List` above, is being used in a way such that it can be treated as if it were co- or contravariant.
+Function `getNameOfFirstPerson` below takes a list and returns the name of the first person in the list.
+Since it never adds new elements to the given list, it could accept ``List``s of any subtype of `Person`, for example a `List<Employee>`.
+To allow this, its formal parameter has a type of `List<? extends Person>` instead of `List<Person>`.
+Such use-site variance is useful whenever an invariant type, like `List` above, is being used in a way such that it can be treated as if it were co- or contravariant.
 
 Sometimes, however, we are dealing with types that are inherently
 covariant or contravariant, for example an `ImmutableList` from which we can only read elements would be covariant. In such a case, use-site declaration of

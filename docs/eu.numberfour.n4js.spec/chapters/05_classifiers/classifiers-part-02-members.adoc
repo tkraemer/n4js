@@ -56,11 +56,13 @@ The following pseudo properties are defined via annotations:
 [horizontal]
 `deprecated` ::
 Boolean property set to true if annotation `@Deprecated` is set.
-//version{0.4}{not implemented in version 0.3}
+
+TIP: version 0.4  - not implemented in version 0.3
 
 task:IDE-138[]
 
 And we additionally define the following pseudo properties:
+
 [horizontal]
 `acc` ::
 Member access modifier as described in <<_accessibility-of-members,Accessibility of Members>>, it is the aggregated value of
@@ -91,7 +93,7 @@ Enumeration, may be one of the following values: +
 NOTE: $assignability$ is related but not equal to
 writable modifiers used for fields. We define a partial order on this
 enumeration as follows:
-
++
 [math]
 ++++
 <(l,r) \spc ::= \spc \{ (\lenum{set}, \lenum{any}), (\lenum{get}, \lenum{any})  \}
@@ -114,8 +116,7 @@ $configurable$, this is always set to false for members.
 
 === Semantics
 
-The members of a given classifier `C` must be named such
-that the following constraints are met:
+The members of a given classifier `C` must be named such that the following constraints are met:
 
 task:IDE-550[] task:IDE-551[]
 
@@ -304,9 +305,7 @@ StrictFormalParameters also occurs in the LexicallyDeclaredNames of
 FunctionBody.
 --
 
-Methods – like functions – define a variable execution environment and
-therefore provide access to the actual passed-in parameters through the
-implicit variable inside of their bodies (c.f. <<_arguments-object,Arguments Objects>>).
+Methods – like functions – define a variable execution environment and therefore provide access to the actual passed-in parameters through the implicit `arguments` variable inside of their bodies (c.f. <<_arguments-object,Arguments Objects>>).
 
 Methods are similar to function definitions but they must not be
 assigned to or from variables. The following code issues an error
@@ -324,17 +323,10 @@ var v: {function():void} = new C().m;
 .Method Assignment
 [req,id=IDE-54,version=1]
 --
-. In contrast to ECMAScript 2015, methods are defined as readonly,
-that is, it is not possible to dynamically re-assign a property defined
-as method with a new value. This is because assigning or re-assigning a
-method breaks encapsulation. Methods are the <<Acronyms,API>> of a class, their
-implementation is internal to the class.
-.  When assigning a method to a variable, a warning is issued since
-this would lead to an detached this reference inside the method when it
-is called without explicitly providing the receiver. No warning is
-issued only if it is guaranteed that no problems will occur:
-..  The method’s body can be determined at compile time (i.e., it has
-been declared `@Final`) and it lacks usages of `this` or `super`. This is true for instance and static methods.
+. In contrast to ECMAScript 2015, methods are defined as readonly, that is, it is not possible to dynamically re-assign a property defined as method with a new value.
+This is because assigning or re-assigning a method breaks encapsulation. Methods are the <<Acronyms,API>> of a class, their implementation is internal to the class.
+.  When assigning a method to a variable, a warning is issued since this would lead to an detached this reference inside the method when it is called without explicitly providing the receiver. No warning is issued only if it is guaranteed that no problems will occur:
+..  The method’s body can be determined at compile time (i.e., it has been declared `@Final`) and it lacks usages of `this` or `super`. This is true for instance and static methods.
 ..  The method is the constructor. task:GH-224[]
 
 --
@@ -598,27 +590,20 @@ variable inside of their bodies (c.f. <<_arguments-object>>).
 For a constructor $ctor$ of a class `C`, the following conditions
 must hold:
 
-.  $ctor$ must neither be abstract nor static nor final and
-it must not be annotated with `@Override`.
-.  If a class does not explicitly define a constructor then the
-constructor’s signature of the superclass constructor is assumed.
-.  If a class defines a constructor with formal parameters then this
-constructor has to be called explicitly in constructors defined in
-subclasses.
-.  If a super constructor is called explicitly, this call must be the
-only expression of an expression statement which has to be the first
-statement of the body.
+.  $ctor$ must neither be abstract nor static nor final and it must not be annotated with `@Override`.
+.  If a class does not explicitly define a constructor then the constructor’s signature of the superclass constructor is assumed.
+.  If a class defines a constructor with formal parameters then this constructor has to be called explicitly in constructors defined in subclasses.
+.  If a super constructor is called explicitly, this call must be the only expression of an expression statement which has to be the first statement of the body.
 .  Constructors may appear in interfaces, but some restrictions apply:
 ..  constructors in interfaces must not have a body.
-..  constructors in interfaces or their containing interface or one of
-its direct or indirect super interfaces must be annotated with `@CovariantConstructor`.
+..  constructors in interfaces or their containing interface or one of its direct or indirect super interfaces must be annotated with `@CovariantConstructor`.
 .  A constructor must not have an explicit return type declaration.
 .  The implicit return type of a constructor is `this?`.
 
 --
 
-Properties of object literals may be called `constructor`. However they are not
-recognized as constructors in these cases.
+Properties of object literals may be called `constructor`.
+However they are not recognized as constructors in these cases.
 
 .Initialization of Final Fields in the Constructor
 [req,id=IDE-57,version=1]
@@ -643,7 +628,7 @@ The use of a structural this reference as a formal parameter type is
 possible only in constructors. This parameter can be annotated with `@Spec`
 which causes the compiler to generate initialization code.
 
-Simply using `$~~$this` as a type in the constructor causes the constructor to
+Simply using `this` as a type in the constructor causes the constructor to
 require an object providing all public fields of the class for
 initialization purposes. The fields have to be set manually as shown in
 the following code snippet.
@@ -660,16 +645,11 @@ class A{
 
 Remarks:
 
-* The type of the formal parameter `this` refers to the
-structural field type, see <<_structural-typing,Structural Typing>> for details on structural typing.
+* The type of the formal parameter `pass:[~~this]` refers to the structural field type, see <<_structural-typing,Structural Typing>> for details on structural typing.
 It contains all public fields of the type.
-* Subclasses may override the constructor and introduce additional
-parameters. They have to call the super constructor explicitly, however,
-providing a parameter with at least all required attributes of the
-superclass. Usually the type `this` is replaced with the actual subclass, but
-in the case of a `super()` call the `this` type of structural formal parameters is
-replaced with the `this` type of the superclass, hence only required fields of
-the superclass must be present. task:IDEBUG-262[]
+* Subclasses may override the constructor and introduce additional parameters.
+They have to call the super constructor explicitly, however, providing a parameter with at least all required attributes of the superclass.
+Usually the type `this` is replaced with the actual subclass, but in the case of a `super()` call the `this` type of structural formal parameters is replaced with the `this` type of the superclass, hence only required fields of the superclass must be present. task:IDEBUG-262[]
 
 As with other structural references, it is possible to add the
 structural reference with additional structural members, which can be
@@ -689,7 +669,7 @@ class A{
 ----
 
 Defining additional members may become a problem if a subclass defines
-public fields with the same name, as the `$~~$this` type will contain these fields
+public fields with the same name, as the `pass:[~~this]` type will contain these fields
 in the subclass. This is marked as an error in the subclass.
 
 task:IDEBUG-81[]
@@ -748,10 +728,9 @@ class B extends A {
 @Spec-style Constructor [[spec-style-constructor]] ::
 
 The tedious process of copying the members of the parameter to the
-fields of the class can be automated via the annotation if the argument
-has $\nfjstilde i \nfjstilde\lstnfjs{this}$ structural
-initializer field typing. For more details about this typing can be
-found in <<_structural-read-only-write-only-and-initializer-field-typing,Structural Read-only, Write-only and Initializer Field Typing>>.
+fields of the class can be automated via the `@Spec` annotation if the argument
+has `pass:[~i~this]` structural initializer field typing.
+For more details about this typing can be found in <<_structural-read-only-write-only-and-initializer-field-typing,Structural Read-only, Write-only and Initializer Field Typing>>.
 This can be used as shown in the following listing:
 
 [source,n4js]
@@ -767,8 +746,7 @@ class A {
 
 1.  Annotation `@Spec` may only appear on a formal parameter of a constructor.
 2.  Only a single formal parameter of a constructor may be annotated with `@Spec`.
-3.  If a formal parameter is annotated with `@Spec`, the parameter’s type must be $\nfjstilde\lstnfjs{this}$ or $\nfjstilde i \nfjstilde\lstnfjs{this}$ (i.e. use-site
-structurally typed $\lstnfjs{this}$).
+3.  If a formal parameter is annotated with `@Spec`, the parameter’s type must be `pass:[~this]` or `pass:[~i~this]` (i.e. use-site structurally typed `this`).
 4.  Fields provided by the parameter, but not defined in the structural field type, are _not_ used to set fields.
 5.  Non-`public` fields explicitly added to the specparameter are copied as well. task:IDEBUG-134[]
 6.  Even if the `@Spec` annotation is used, the super constructor must be calledaccordingly.
@@ -781,9 +759,9 @@ structurally typed $\lstnfjs{this}$).
 \hspace{2em}\exists f \in ctor.owner.ownedFields \Rightarrow \tee s \subtype f
 \endalign
 ++++
-8.  $\nfjstilde i \nfjstilde\lstnfjs{this}$ constructor ignores superfluous properties provided by an object literal.
+8.  `pass:[~i~this]` constructor ignores superfluous properties provided by an object literal.
 These ignored properties are _not_ used to set non-$\lenum{public}$ fields.
-9.  Since use-site structural initializer field types can be defined via public, non-static, non-optional writable fields, $\nfjstilde i \nfjstilde\lstnfjs{this}$ constructor accepts those properties provided by an object literal which has the corresponding readble fields.
+9.  Since use-site structural initializer field types can be defined via public, non-static, non-optional writable fields, `pass:[~i~this]` constructor accepts those properties provided by an object literal which has the corresponding readble fields.
 These properties will be initialzed.
 
 --
@@ -1118,11 +1096,10 @@ Also see <<_assignment-modifiers,Assignment Modifiers>>.
 
 task:IDE-946[]
 
-Note that $const$ is _not_ the (reversed) value of the property descriptor $writable$ as the latter is checked at runtime while const may or may not be checked at runtime.
+NOTE: $const$ is _not_ the (reversed) value of the property descriptor $writable$ as the latter is checked at runtime while const may or may not be checked at runtime.
 
 
-The following pseudo properties are defined via annotations for setting
-the values of the property descriptor:
+The following pseudo properties are defined via annotations for setting the values of the property descriptor:
 
 [horizontal]
 `enumerable` ::
@@ -1130,17 +1107,21 @@ Boolean flag reflecting the property descriptor
 $enumerable$, set via annotation `@Enumerable(true|false)`.
 The default value is $\TRUE$.
 
+TIP: version 4.0
+
 `declaredWriteable` ::
 Boolean flag reflecting the property descriptor $writeable$,
 set via annotation `@Writeable(true|false)`. The default value is $\TRUE$.
+
+TIP: This cannot be done w/o `null`/`undefined` analysis
 
 `final` ::
 Boolean flag making the field read-only, and it must be set in the
 constructor. Also see <<_assignment-modifiers,Assignment Modifiers>>.
 
-// TODO: use the following formatting to allow for better readability?
-// #### Derived values for fields:
-Derived values for fields
+[[data-fields-derived-values]]
+[discrete]
+==== Derived values for fields
 
 [horizontal]
 `readable` ::
@@ -1211,8 +1192,7 @@ type parameters which are provided by the reference:
 === Assignment Modifiers
 task:IDE-946[]
 
-Assignment of data fields can be modified by the assignment modifiers
-(similar to constant variable declarations, see <<Const>>) and `@Final`.
+Assignment of data fields can be modified by the assignment modifiers `const` (similar to constant variable declarations, see <<Const>>) and `@Final`.
 
 .Const Data Fields
 [req,id=IDE-62,version=1]
@@ -1438,9 +1418,7 @@ via:
 2.  The class declaration instance of a subtype, i.e. the classifier or constructor type, i.e. `D.m`, if `D` is a subclass of `C`.
 3.  `v.m`, if `v` is a variable of type `C` (i.e. classifier type as defined in <<_constructor-and-classifier-type>>) or a subtype thereof.
 4. `this.m` inside the body of any static method declared in `C` or any sub-class of `C`.
-5.  Via a type variable `T` which upper bound is a subclass
-of `C`, +
-e.g., `function <T extends C> f(){T.m}` task:GH-222[]
+5.  Via a type variable `T` which upper bound is a subclassof `C` e.g., `function <T extends C> f(){T.m}` task:GH-222[]
 
 --
 
