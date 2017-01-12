@@ -1,7 +1,5 @@
 
-
 = Types
-
 :find:
 ////
 Copyright (c) 2017 NumberFour AG.
@@ -17,12 +15,10 @@ Contributors:
 [.language-n4js]
 == Overview
 
-N4JS is essentially ECMAScript with the inclusion of
-types. In the following sections we will describe how types are defined
-and used in N4JS.
+N4JS is essentially ECMAScript with the inclusion of types.
+In the following sections we will describe how types are defined and used in N4JS.
 
-Besides standard JavaScript types, the following metatypes are
-introduced:
+Besides standard JavaScript types, the following metatypes are introduced:
 
 * Classifiers, that is class or interface (see <<_classifiers,Classifiers>>)
 * Enum
@@ -34,23 +30,20 @@ Types are related to each other by the subtype relation.
 .Subtype Relation
 [def]
 --
-We use $subtype$
-for the general subtype relation or type conformance. In nominal typing,
-$T\subtype S$ means that $S$ is a (transitive)
-supertype of _T_. Generally in structural typing, this means
-that _T_ conforms to $S$. $\subtype$
-is defined transitive reflexive by default. We write $<$ to
-refer to the transitive non-reflexive relation, that is
-$T < S \iff T \subtype S \land T \neq S$
+We use $subtype$ for the general subtype relation or type conformance.
+
+In nominal typing, $T\subtype S$ means that $S$ is a (transitive) supertype of _T_.
+Generally in structural typing, this means that _T_ conforms to $S$.
+$\subtype$ is defined transitive reflexive by default.
+
+We write $<$ to refer to the transitive non-reflexive relation, that is $T < S \iff T \subtype S \land T \neq S$
 --
 
-Whether nominal or structural typing is used depends on the declaration
-of the type or the reference. This is explained further in <<_structural-typing,Structural Typing>>.
+Whether nominal or structural typing is used depends on the declaration of the type or the reference.
+This is explained further in <<_structural-typing,Structural Typing>>.
 
-For convenience reasons, we sometimes revert the operator, that is
-$T \subtype S \iff S :> T$ We write
-$T \notsubtype S$ if _T_ is not type conforming
-to $S$. (cf. cite:[Gosling12a(S4.10)])
+For convenience reasons, we sometimes revert the operator, that is $T \subtype S \iff S :> T$.
+We write $T \notsubtype S$ if _T_ is not type conforming to $S$. (cf. cite:[Gosling12a(S4.10)])
 
 Join and meet are defined as follows:
 
@@ -93,12 +86,9 @@ This type hierarchy shows `any` and `undefined` as the top and bottom type (cf. 
 .Top and Bottom Type
 [def]
 --
-We call $Top$
-the top type, if for all types _T_ the relation
-$T \subtype  Top$ is true. We call $Bot$ the
-bottom type, if for all types _T_ the relation
-$Bot<:T$ is true. In N4JS, $Top=`any}$, the
-bottom type $Bot=`undefined}$.
+We call $Top$ the top type, if for all types _T_ the relation  $T \subtype  Top$ is true.
+We call $Bot$ the bottom type, if for all types _T_ the relation $Bot<:T$ is true.
+In N4JS, $Top=`any}$, the bottom type $Bot=`undefined}$.
 --
 
 `null` is almost similar to $Bot$, except that it is not a subtype
@@ -161,7 +151,8 @@ to specify the type of variables.
 === Syntax
 
 The listing <<EBNFTypeExpression,EBNF Type Expression>> summarizes the type expression grammar.
-Depending on the context, not all constructs are allowed. For example, the variadic modifier is only allowed for function parameters.
+Depending on the context, not all constructs are allowed.
+For example, the variadic modifier is only allowed for function parameters.
 
 References to user-declared types are expressed via `ParameterizedTypeRef`.
 This is also true for non-generic types, as the type arguments are optional.
@@ -169,17 +160,16 @@ See <<_parameterized-types,Parameterized Types>> for details on that reference.
 
 For qualified names and type reference names, see <<_qualified-names,Qualified Names>>
 
-The type expressions are usually added to parameter, field, or variable
-declarations as a suffix, separated with colon (``:``). The same is true
-for function, method, getter or setter return types. Exceptions in the
-cases of object literals or destructuring are explained later on.
+The type expressions are usually added to parameter, field, or variable declarations as a suffix, separated with colon (``:``).
+The same is true for function, method, getter or setter return types.
+Exceptions in the cases of object literals or destructuring are explained later on.
 
 .Type Annotation Syntax
 [example]
 --
 
 The following two listings show the very same code and type annotations are provided on
-the left hand side. For simplicity, is always used as type expression.
+the left hand side. For simplicity, `string` is always used as type expression.
 footnote:[In the N4JS IDE, type annotations are highlighted differently than ordinary code.]
 
 [source,n4js]
@@ -238,42 +228,40 @@ into the constructor by the N4JS transpiler.
 Besides the properties indirectly defined by the grammar, the following
 pseudo properties are used for type expressions:
 
-[hprizontal]
-Properties of ``TypeExpression``::
+Properties of ``TypeExpression``:
 
 [horizontal]
-`var` ::
+$var$ ::
 If true, variable of that type is variadic. This is only allowed for
 parameters. Default value: `false`.
 
-`opt` ::
+$opt$ ::
 If true, variable of that type is optional. This is only allowed for
 parameters and return types. This actually means that the type
 _T_ actually is a union type of `Undef|_T_`. Default value:
 `false`.
 
-`optvar` ::
+$optvar$ ::
 $optvar=var \lor opt$, reflect the facts that a variadic
 parameter is also optional (as its cardinality is $[0..n]).$
 
-`entity` ::
+$entity$ ::
 Pseudo property referencing the variable declaration (or expression)
 which `owns` the type expression.
 
 === Semantics
 
-The ECMAScript types _undefined_ and _null_ are also supported. These
-types cannot be referenced directly, however. Note that `void` and _undefined_
-are almost similar. Actually, the inferred type of a types element with
-declared type of `void` will be __undefined__. The difference between void and
-undefined is that an element of type void can never have another type,
-while an element of type undefined may be assigned a value later on and
-thus become a different type. `void` is only used for function and method return types.
+The ECMAScript types _undefined_ and _null_ are also supported.
+These types cannot be referenced directly, however.
+Note that `void` and _undefined_ are almost similar.
+Actually, the inferred type of a types element with declared type of `void` will be __undefined__.
+The difference between void and undefined is that an element of type void can never have another type, while an element of type undefined may be assigned a value later on and
+thus become a different type.
+`void` is only used for function and method return types.
 
-Note that not any type reference is allowed in any context. Variables or
-formal parameters must not be declared `void` or union types must not be
-declared dynamic, for example. These constraints are explained in the
-following section.
+Note that not any type reference is allowed in any context.
+Variables or formal parameters must not be declared `void` or union types must not be declared dynamic, for example.
+These constraints are explained in the following section.
 
 The types mentioned above are described in detail in the next sections.
 They are hierarchically defined and the following list displays all
@@ -478,7 +466,7 @@ treated like existential types. The following example illustrates this:
 
 .Type variables vs. existential types
 [example]
---
+====
 
 [source,n4js]
 ----
@@ -496,26 +484,22 @@ class X<T extends A, S extends B> {
         var t: T;
         var s: S;
 
-        t = s;  // ERROR: "S is not a subtype of T." at "s"
+        t = s;  // ERROR: "S is not a subtype of T." at "s" // <1>
 
         // existential types:
         var ga: G<? extends A>;
         var gb: G<? extends B>;
 
-        ga = gb;  // ok!
+        ga = gb;  // <2> ok!
     }
 }
 ----
-
---
-
-Even though the upper bound of `S` is a subtype of `T`’s upper bound (since
-$B <: A$), we cannot infer that `S` is a subtype of `T` (line 15),
+<1> Even though the upper bound of `S` is a subtype of `T`’s upper bound (since $B <: A$), we cannot infer that `S` is a subtype of `T`,
 because there are valid concrete bindings for which this would not be
 true: for example, if `T` were bound to `C` and `S` to `B`.
+<2> This differs from existential types (see `ga` and `gb` and line 21): `G<? extends B>` $<:$ `G<? extends A>` ).
 
-This differs from existential types (see `ga` and `gb` and line 21): `G<? extends B>` $<:$ `G<? extends A>` ).
-
+====
 
 We thus have to define subtype rules for type variables, taking the
 declared upper bound into account. If we have a subtype relation in
@@ -659,18 +643,20 @@ parameters is still valid.
 [req,id=IDE-11,version=1]
 --
 For a given parameterized
-type reference $R$ with +
-$G=R.declaredType$, the following constraints must hold:
+type reference $R$ with $G=R.declaredType$, the following constraints must hold:
 
-* The actual type arguments must conform to the type parameters, that
-is:
+* The actual type arguments must conform to the type parameters, that is:
 +
-$ |G.typePars|=|R.typeArgs|$ +
-$\land \forall\ i, 0<i<|R.typeArgs|: \infType{R.typeArgs_i} <: \infType{R.typePars_i} $
+[math]
+++++
+\beginalign
+|G.typePars|=|R.typeArgs|
+\land \forall\ i, 0 < i < |R.typeArgs|: \infType{R.typeArgs_i} <: \infType{R.typePars_i}
+\endalign
+++++
 
 --
 
-// TODO fix superscript font for correct math symbol.
 
 We define type erasure similar to Java cite:[Gosling12a(S4.6)] as 'mapping from types (possibly including parameterized types and type variables) to types (that are never parameterized types or type variables)'. We write $T$^o^ for the erasure of type _T_.
 footnote:[The notation $|T|$ used in cite:[Gosling12a] conflicts with the notation of cardinality of sets, which we use in case of union or intersection types for types as well. The notation used here is inspired by cite:[Crary02a], in which a mapping is defined between a typed language $\lambda$ to an untyped language $\lambda$^o^.]
@@ -678,19 +664,14 @@ footnote:[The notation $|T|$ used in cite:[Gosling12a] conflicts with the notati
 .Parameterized Type
 [def]
 --
-A parameterized type reference $R$ defines a parameterized type
-_T_, in which all type parameters of
-$R.declaredTpe$ are substituted with the actual values of
-the type arguments. We call the type $T^0$, in which all
-type parameters of $R.declaredType$ are ignored, the _raw
-type_ or _erasure_ of _T_.
+A parameterized type reference $R$ defines a parameterized type _T_, in which all type parameters of $R.declaredTpe$ are substituted with the actual values of the type arguments.
+We call the type $T^0$, in which all type parameters of $R.declaredType$ are ignored, the _raw type_ or _erasure_ of _T_.
 
 We define for types in general:
 
 // TODO replace ^o^ with correct math symbol
 
-* The erasure $G$^o^ of a parameterized type
-$G<T_1, ..., T_n>$ is simply $G$.
+* The erasure $G$^o^ of a parameterized type $G<T_1, ..., T_n>$ is simply $G$.
 * The erasure of a type variable is the erasure of its upper bound.
 * The erasure of any other type is the type itself.
 --
@@ -700,10 +681,8 @@ purposes. It is not to be confused with the `real` type erasure which
 takes place at runtime, in which almost no types (except primitive
 types) are available.
 
-That is, the type reference in `var G<string> gs;`
-actually defines a type `G<string>`, so that
-$\infTypeNF{gs} = \type{G<string>}$. It may reference a type
-defined by a class declaration `class G<T>`.
+That is, the type reference in `var G<string> gs;` actually defines a type `G<string>`, so that $\infTypeNF{gs} = \type{G<string>}$.
+It may reference a type defined by a class declaration `class G<T>`.
 It is important that the type `G<string>` is different from `G<T>`.
 
 If a parameterized type reference $R$ has no type arguments,
@@ -734,10 +713,9 @@ var g: G;
 
 ====
 
-In this case, variable `g` refers to the _raw type_ `G`. This is forbidden in
-N4JS, because two interpretations are possible:
+In this case, variable `g` refers to the _raw type_ `G`. This is forbidden in N4JS, because two interpretations are possible:
 
-1. `g` is of type `G<? extends A>`
+1. `g` is of type `G<?  extends>`
 2. `g` is of type `G<A>`
 
 In the first case, an existential type would be created, and `g.t = new A();` must fail.
@@ -762,7 +740,7 @@ We define type conformance for non-primitive type references as follows:
 +
 [math]
 ++++
-\infer{ T^0 <: S^0}{S^0 \in T^0.sup^* \cup T^0.interfaces^* }
+\infer{ T^0 < : S^0}{S^0 \in T^0.sup^* \cup T^0.interfaces^* }
 ++++
 * For two parameterized types $T<T_1,...,T_n>$ and $S<S_1,...,S_m>$
 +
@@ -1089,7 +1067,7 @@ var b = false; console.log(b == 0) | prints true
 [discrete]
 ==== Semantics [[primitive-boolean-type-semantics]]
 
-The type is subtype of :
+The type `boolean` is subtype of `any`:
 
 [math]
 ++++
@@ -1116,7 +1094,7 @@ console.log(a.length) // 8
 console.log(typeof a) // string
 ----
 
-You can handle a primitive `String` like an object type `String` but with these
+You can handle a primitive `string` like an object type `String` but with these
 exceptions:
 
 *  `typeof "MyString"` is `'string'` but `typeof new String("MyString")` is `'object'`
@@ -1136,7 +1114,7 @@ The `string` type is a subtype of `any`:
 \inferSup{\type{string} <: \type{any}}{}
 ++++
 
-It is supertype of the N4JS primitive type `pathselector`, and `i18nKey`.
+It is supertype of the N4JS primitive type `pathselector`, `typeName` and `i18nKey`.
 <<_primitive-pathselector-and-i18nkey,Primitive Pathselector and I18nKey>>
 
 However, variables of type `string` can be auto-converted (coerced) to `string`, as described in <<_autoboxing-and-coercing,Autoboxing and coercing>>.
@@ -1164,11 +1142,10 @@ described in <<_integer-literals,Integer Literals>> .
 
 === Primitive Type int
 
-Actually ECMAScript defines an internal type `int32`. A number of this type is
-returned by the binary or operation using zero as operand, e.g.
-ECMAScript’s internal type int32 can be represented in N4JS by a
-built-in primitive type called `int`. For details on how numeric literals map to types `number` and `int`, refer to
-<<_integer-literals,Integer Literals>>.
+Actually ECMAScript defines an internal type `int32`.
+A number of this type is returned by the binary or operation using zero as operand, e.g. ECMAScript’s internal type int32 can be represented in N4JS by a
+built-in primitive type called `int`.
+For details on how numeric literals map to types `number` and `int`, refer to <<_integer-literals,Integer Literals>>.
 
 IMPORTANT: for the time being, built-in type `int` is synonymous to type `number`. This means one can be assigned to the other and a value declared to be of type `int` may actually be a 64-bit floating point number.
 footnote:[The rationale for having this limited implementation of type is that API designers already want to start providing hints where later only 32-bit integers will be used. For the time being, **this is checked neither statically nor at runtime**!]
@@ -1200,7 +1177,7 @@ type of functions and methods
 
 Any type is the default type of all variables for without a type
 declaration. It has no properties. A value of any other type can be
-assigned to a variable of type `any`, but a variable declared  `any` can only be assigned to another variable declared with the type `any`.
+assigned to a variable of type `any`, but a variable declared `any` can only be assigned to another variable declared with the type `any`.
 
 
 ==== Semantics [[any-type-semantics]]
@@ -1246,8 +1223,9 @@ function or method as `void` in order to state that the function does not return
 
 .Void Type
 [req,id=IDE-13,version=1]
----
+--
 * The type `void` may only be used to declare the return type of a function or method.
+
 * If a function $f$ is declared to return `void`, an error is created if a return statement contains an expression:
 +
 [math]
@@ -1257,6 +1235,7 @@ f.returnType=\type{void} \to \\
 \forall r, \mu(r)=\type{ReturnStatement}, r.containingFunction=f: r.expression=\NULL
 \endalign
 ++++
+
 * If a function $f$ is declared to return `void`, an error is issued if the function is called in any statement or expression but an expression statement directly:
 +
 [math]
@@ -1267,7 +1246,7 @@ f.returnType=\type{void} \to \\
 \endalign
 ++++
 
----
+--
 
 The following type hierarchy is defined: `void` is only a subtype of itself but
 not of any other type and no other type is a subtype of void.
@@ -1302,7 +1281,9 @@ types are, in fact, translated to strings and do not add any new
 functionality. They are solely defined for enabling additional
 validation.
 
-* `pathSelector<T>}` is a generic type for specifying path selector expressions. PathSelectors are used to specify a path to a property in a (JSON-like) model tree.
+// TODO Check this section for deprecated content
+
+* `pathSelector<T>` is a generic type for specifying path selector expressions. PathSelectors are used to specify a path to a property in a (JSON-like) model tree.
 * The type variable `T` defines the context type (or type of the
 root of the tree) in which the selector is to be validated. A path
 selector is defined as a string literal that has to conform to the path
@@ -1323,9 +1304,9 @@ project depending on it.
 
 ==== Semantics [[pathselector-semantics]]
 
-The N4JS primitive types `i18nKey` and `pathSelector<T>` are basically only marker types of strings
-for enabling additional validation. Thus, they are completely
-interchangeable with string types:
+The N4JS primitive types `pathSelector<T>`, `i18nKey` and `pathSelector<T>` are basically only marker types of strings
+for enabling additional validation.
+Thus, they are completely interchangeable with string types:
 
 [math]
 ++++
@@ -1460,7 +1441,7 @@ can be retrieved with `Symbol.iterator`.
 
 The rationale for this selective support for symbols in N4JS is to allow
 for the use (and custom definition) of iterators and iterables and their
-application in the loop with as little support for symbols as possible.
+application in the `for...of` loop with as little support for symbols as possible.
 
 === Promise
 
@@ -1520,8 +1501,8 @@ N4JS additionally provides some built-in classes which are always available with
 === N4Object
 task:IDE-547[]
 
-Although `N4Object` is a built-in type, it is not the default supertype. It is a
-subtype of `Object`.
+Although `N4Object` is a built-in type, it is not the default supertype.
+It is a subtype of `Object`.
 
 
 ==== Semantics [[N4Object-semantics]]
@@ -1549,15 +1530,12 @@ NOTE: This is not documented in detail yet, because we want to gain experience w
 [.language-n4js]
 == Type Modifiers
 
-Type expressions can be further described with type
-modifiers.
+Type expressions can be further described with type modifiers.
 The type modifiers add additional constraints to the type expression which are then used to perform a stricter validation of the source code.
 Type modifiers can not be used in type arguments.
 
-The general type modifiers $nullable$, $nonnull$
-and $dynamic$ can be used for variables, attributes, method
-parameters and method types. Optional and variadic modifiers can only be
-applied for formal parameters.
+The general type modifiers $nullable$, $nonnull$ and $dynamic$ can be used for variables, attributes, method parameters and method types.
+Optional and variadic modifiers can only be applied for formal parameters.
 
 === Dynamic
 task:IDE-144[]
@@ -1610,20 +1588,16 @@ variadic parameter.
 --
 For a parameter $p$, the
 following condition must hold: $p.var \to p.opt$.
+--
 
 A parameter can, however, be declared either optional or variadic. That
 is to say that one can either write $Type=$ (optional) or
 $...Type$, but not $...Type=$
 
---
+Declaring a variadic method parameter of type _T_ causes the type of the method parameter to become `Array<T>`.
+That is, declaring `function(string ..tags)` causes `tags` to be an `Array<string>` and not just a scalar `string` value.
 
-
-Declaring a variadic method parameter of type _T_ causes the
-type of the method parameter to become `Array<T>`. That is, declaring `function(string ..tags)` causes `tags` to be
-an `Array<string>` and not just a scalar `string` value.
-
-To make this work at runtime, the compiler will generate code that
-constructs the `method parameter` from the `arguments` parameter explicitly passed to the function.
+To make this work at runtime, the compiler will generate code that constructs the `method parameter` from the `arguments` parameter explicitly passed to the function.
 
 .Variadic at Runtime
 [req,id=IDE-17,version=1]
@@ -1708,7 +1682,8 @@ subtype of at least one type contained in the union:
 \infer{S <: U}{\exists T \in U.typeRefs: S <: T}
 ++++
 
-* A union type is a subtype of a type $S$, if all types of the union are subtypes of that type. footnote:[This rule is a generalization of the sub typing rules given in cite:[Igarashi07a(p.40)]]
+* A union type is a subtype of a type $S$, if all types of the union are subtypes of that type.
+This rule is a generalization of the sub typing rules given in cite:[Igarashi07a(p.40)]
 +
 [math]
 ++++
@@ -1746,10 +1721,8 @@ contains only one element, it is reduced to the element:
 \infer{T}{\union{T}}
 ++++
 
-* Simplification of union types of union types: A union type
-$U$ containing another union types $V$ is
-reduced to a single union type $W$, with
-+
+* Simplification of union types of union types:
+* A union type $U$ containing another union types $V$ is reduced to a single union type $W$, with
 $W.typeRefs = U.typeRefs \cup V.typeRefs$:
 +
 [math]
@@ -1992,19 +1965,16 @@ interface type that also is contained in the union type.
 === Intersection Type
 task:IDE-142[] task:IDE-385[] task:IDE-383[]
 
-Intersection type reflects the dynamic nature of JavaScript, similar to
-union type. As in Java, intersection type is used to define the type
-boundaries of type variables in type parameter definitions. They are
-inferred by the type inferencer for type checking (as a result of join
-or meet).
+Intersection type reflects the dynamic nature of JavaScript, similar to union type.
+As in Java, intersection type is used to define the type boundaries of type variables in type parameter definitions.
+They are inferred by the type inferencer for type checking (as a result of join or meet).
 In contrast to Java, however, intersection type can be declared explicitly by means of intersection type expression.
-footnote:[For type theory about intersection types, see cite:[Pierce02a(15.7)] and cite:[Laurent12a], other languages supporting explicit notion of intersection type include Ceylon cite:[King13a(3.2.4/5)]].
+
+TIP: For type theory about intersection types, see cite:[Pierce02a(15.7)] and cite:[Laurent12a], other languages supporting explicit notion of intersection type include Ceylon cite:[King13a(3.2.4/5)].
 
 ==== Syntax [[intersection-type-syntax]]
 
-For convenience, we repeat the definition of intersection type
-expression and of type variables in which intersection types can be
-defined as in Java:
+For convenience, we repeat the definition of intersection type expression and of type variables in which intersection types can be defined as in Java:
 
 [source,n4js]
 ----
@@ -2012,7 +1982,6 @@ InterSectionTypeExpression: 'intersection' '{' typeRefs+=TypeRefWithoutModifiers
 
 TypeVariable:   name=IDENTIFIER ('extends' declaredUpperBounds+=ParameterizedTypeRefNominal ('&' declaredUpperBounds+=ParameterizedTypeRefNominal)*)?
 ----
-
 
 ==== Semantics [[intersection-type-semantics]]
 
@@ -2353,43 +2322,30 @@ $\forall\ a \in U.attributes:$
 
 Remarks on union type’s members:
 
-* Fields of the same type are merged to a composed field with the same
-type. Fields of different types are merged to a getter and setter.
-* The return type of a composed getter is the _union_ type of the return
-types of the merged getters.
-* The type of a composed setter is the _intersection_ type of the types
-of the merged setters.
+* Fields of the same type are merged to a composed field with the same type.
+Fields of different types are merged to a getter and setter.
+* The return type of a composed getter is the _union_ type of the return types of the merged getters.
+* The type of a composed setter is the _intersection_ type of the types of the merged setters.
 * Fields can be combined with getters and/or setters:
 ** fields combined with getters allow read-access.
 ** non-const fields combined with setters allow write-access.
-** non-const fields combined with getters _and_ setters, i.e. each type
-has either a non-const field or both a getter and a setter of the given
-name, allow both read- and write-access.
+** non-const fields combined with getters _and_ setters, i.e. each type has either a non-const field or both a getter and a setter of the given name, allow both read- and write-access.
 +
-Again, types need not be identical; for read-access the _union_ of the
-fields’ types and the getters’ return types is formed, for write-access
-the _intersection_ of the fields’ types and the setters’ types is
-formed. In the third case above, types are combined independently for
-read- and write-access if the getters and setters have different types.
-* The name of a method’s parameter is only used for error or warning
-messages and cannot be referenced otherwise.
-* The return type of a composed method is the _union_ type of the return
-types of the merged methods.
-* A composed method parameter’s type is the _intersection_ type of the
-merged parameters types.
-
+Again, types need not be identical; for read-access the _union_ of the fields’ types and the getters’ return types is formed, for write-access the _intersection_ of the fields’ types and the setters’ types is formed.
+In the third case above, types are combined independently for read- and write-access if the getters and setters have different types.
+* The name of a method’s parameter is only used for error or warning messages and cannot be referenced otherwise.
+* The return type of a composed method is the _union_ type of the return types of the merged methods.
+* A composed method parameter’s type is the _intersection_ type of the merged parameters types.
 
 ==== Properties of Intersection Type
 
-As an (unfortunately oversimplified) rule of thumb, the properties of an
-intersection type $I=T_1\&T_2$ are the union of properties
-$I.properties = T_1.properties \cup T_2.properties$. It is
-not quite that simple, however, as the question of "equality” with
-regards to properties has to be answered.
+As an (unfortunately oversimplified) rule of thumb, the properties of an intersection type $I=T_1\&T_2$ are the union of properties
+$I.properties = T_1.properties \cup T_2.properties$.
+It is not quite that simple, however, as the question of "equality” with regards to properties has to be answered.
 
 .Members of an Intersection Type
 [req,id=IDE-36,version=1]
----
+--
 For a given intersection type $I=T_1\&T_2$, the following
 constraints for its members must hold:
 
@@ -2475,7 +2431,7 @@ $\forall m \in I.methods$:
 \endalign
 ++++
 
----
+--
 
 
 
@@ -2491,20 +2447,14 @@ types.
 [.language-n4js]
 == Constructor and Classifier Type
 
-A class definition as described in <<Classes>> declares types. Often, it is
-necessary to access these types directly, for example to access static
-members or for dynamic construction of instances. These two use cases
-are actually slightly different and N4JS provides two different types,
-one for each use case: constructor and classifier type.footnote:[The
-classifier type is, in fact, the `type type` or `metatype` of a
-type. We use the term classifier type in the specification to avoid the
-bogus `type type` terminology.] The constructor is basically the
-classifier type with the additional possibility to call it via `new` in order
-to create new instances of the declared type.
+A class definition as described in <<Classes>> declares types.
+Often, it is necessary to access these types directly, for example to access staticmembers or for dynamic construction of instances.
+These two use cases are actually slightly different and N4JS provides two different types, one for each use case: constructor and classifier type.
+footnote:[The classifier type is, in fact, the `type type` or `metatype` of atype. We use the term classifier type in the specification to avoid the bogus `type type` terminology.]
+The constructor is basically the classifier type with the additional possibility to call it via `new` in order to create new instances of the declared type.
 
-Both `meta` types are different from Java’s type `Class<T>`, as the latter has a defined set of members, while the N4JS metatypes will have members
-according to a class definition. The concept of constructors as
-metatypes is similar to ECMAScript 2015 cite:[ECMA15a(14.5)]..
+Both `meta` types are different from Java’s type `Class<T>`, as the latter has a defined set of members, while the N4JS metatypes will have members according to a class definition.
+The concept of constructors as metatypes is similar to ECMAScript 2015 cite:[ECMA15a(14.5)]..
 
 === Syntax
 
@@ -2516,34 +2466,25 @@ ClassifierTypeRef returns ClassifierTypeRef: 'type' '{' typeArg = [TypeRef] '}';
 ----
 
 === Semantics
-
-
 task:IDE-786[]
-////
-
 
 // TODO math in this section causing out of bounds exceptions
 
-. Static members of a type _T_ are actually members of the
-classifier type _type{T}_.
-. The keyword `this` in a static method of a type _T_ actually
-binds to the classifier type _type{T}_.
+. Static members of a type _T_ are actually members of the classifier type _type{T}_.
+. The keyword `this` in a static method of a type _T_ actually binds to the classifier type _type{T}_.
 . The constructor type ``constructor``_{T}_ is a subtype of the classifier type _type{T}_:
 +
 [math]
 ++++
 \forall T: `constructor\{_T_\}` <: `type\{_T_\}`
 ++++
-. If a class _B_ is a subtype (subclass) of a class
-_A_, then the classifier type _type{B}_ also is a subtype of _type{A}_:
+. If a class _B_ is a subtype (subclass) of a class _A_, then the classifier type _type{B}_ also is a subtype of _type{A}_:
 +
 [math]
 ++++
 \infer{`type\{B\}` <: `type\{A\}`} {B <: A}
 ++++
-.  If a class _B_ is a subtype (subclass) of a class
-_A_, and if the constructor function of _B_ is a
-subtype of the constructor function of _A_, then the
+.  If a class _B_ is a subtype (subclass) of a class _A_, and if the constructor function of _B_ is a subtype of the constructor function of _A_, then the
 classifier type ``constructor``_{B}_ also is a subtype of ``constructor``_{A}_:
 +
 [math]
@@ -2551,22 +2492,19 @@ classifier type ``constructor``_{B}_ also is a subtype of ``constructor``_{A}_:
 \infer{`constructor\{B\}` <: `constructor\{A\`}}{   {B <: A} & {B.ctor <: A.ctor} }
 ++++
 +
-The subtype relation of the constructor function is
-defined in <<_function-type,Function Type>>.
-In the case of the default `N4Object` constructor, the type of the
-object literal argument depends on required attributes.
+The subtype relation of the constructor function is defined in <<_function-type,Function Type>>.
+In the case of the default `N4Object` constructor, the type of the object literal argument depends on required attributes.
 +
-This subtype relation for the constructor type is enforced if the
-constructor of the super class is marked as `final`, see <<_constructor-and-classifier-type,Constructor>> for details.
-.  The type of a classifier declaration or classifier expression is the
-constructor of that class:
-
+This subtype relation for the constructor type is enforced if the constructor of the super class is marked as `final`, see <<_constructor-and-classifier-type,Constructor>> for details.
+.  The type of a classifier declaration or classifier expression is the constructor of that class:
++
 [math]
 ++++
 \infer{\tee C: \lstnfjs{constructorC}}
 {\mu(C) \in \{ \type{classifierDefinition} \} }
 ++++
-. A class cannot be called as a function in ECMAScript. Thus, the constructor and type type are only subtype of :
+. A class cannot be called as a function in ECMAScript.
+Thus, the constructor and type type are only subtype of :
 +
 [math]
 ++++
@@ -2575,23 +2513,18 @@ constructor of that class:
 & \lstnfjs{constructor\{_T_\}} <: \type{Object} \\
 & \lstnfjs{type\{_T_\}} <: \type{Object} \\
 ++++
+.  If the type argument of the constructor is not a declared type (i.e., a wildcard or a type variable with bounds), the constructor cannot be used in a new expression.
+Thus, the constructor function signature becomes irrelevant for subtype checking.
+In that case, the following rules apply: task:GH-221[]
 +
-.  If the type argument of the constructor is not a declared type
-(i.e., a wildcard or a type variable with bounds), the constructor
-cannot be used in a new expression. Thus, the constructor function
-signature becomes irrelevant for subtype checking. In that case, the
-following rules apply: task:GH-221[]
-
-
 [math]
 ++++
 \infer{\lstnfjs{constructor\{S\}} <: \lstnfjs{constructor\{_T_\}}}
 {S.upper <: T.upper &&  T.lower <: S.lower && \mu(T) \neq \type{DeclaredTypeWithAccessModifier}}
 ++++
 
-Note that this is only true for the right hand side
-of the subtyping rule. A constructor type with a wildcard is never a
-subtype of a constructor type without a wildcard.
+Note that this is only true for the right hand side of the subtyping rule.
+A constructor type with a wildcard is never a subtype of a constructor type without a wildcard.
 
 The figure <<cdConstructorClassifierType>> shows the subtype relations defined by the preceding rules.
 
@@ -2599,7 +2532,6 @@ The figure <<cdConstructorClassifierType>> shows the subtype relations defined b
 image::{find}fig/cdConstructorClassifierType.png[title="Classifier and Constructor Type Subtype Relations"]
 
 Consequences:
-////
 
 * Overriding of static methods is possible and by using the constructor
 or classifier type, polymorphism for static methods is possible as well.
@@ -2624,6 +2556,7 @@ A.bar(); // will return "A"
 B.bar(); // will return "B", as foo() is called polymorphical
 ----
 ====
+
 * It is even possible to refer to the constructor of an abstract class.
 The abstract class itself cannot provide this constructor (it only
 provides a type..), that is to say only concrete subclasses can provide
@@ -2667,39 +2600,22 @@ above depending on whether they are used with wildcards or not:
 
 1.  having a value of type `constructor{C}`, we know we have
 * a constructor function of `{C}` or a subclass of `{C}`,
-* that can be used for instantiation (i.e. the represented class is not
-abstract),
-* that has a signature compatible to the owned or inherited constructor
-of `{C}`.
+* that can be used for instantiation (i.e. the represented class is not abstract),
+* that has a signature compatible to the owned or inherited constructor of `{C}`.
 +
-This means we have the constructor function of class `{C}` (but only if is
-non-abstract) or the constructor function of any non-abstract subclass
-of `{C}` with an override compatible signature to that of `{C}`'s constructor
-function.
+This means we have the constructor function of class `{C}` (but only if is non-abstract) or the constructor function of any non-abstract subclass of `{C}` with an override compatible signature to that of `{C}`'s constructor function.
 2.  having a value of type `constructor{? extends C}`, we know we have
 * a constructor function of `{C}` or a subclass of `{C}`,
-* that can be used for instantiation (i.e. the represented class is not
-abstract).
+* that can be used for instantiation (i.e. the represented class is not abstract).
 +
-So, same situation as before except that we know nothing about the
-constructor function’s signature. However, if `{C}` has a covariant
-constructor, cf. <<_covariant_constructors,Covariant Constructors>>, we can still conclude that we have an override compatible constructor function to that of `{C}`, because classes with
-covariant constructors enforce all their subclasses to have override
-compatible constructors.
-3.  have a value of type `type{? extends C}` or `type{C}` (the two types are equivalent), we know we
-have:
-* an object representing a type (often constructor functions are used
-for this, e.g. in the case of classes, but could also be a plain object,
-e.g. in the case of interfaces),
+So, same situation as before except that we know nothing about the constructor function’s signature.
+However, if `{C}` has a covariant constructor, cf. <<_covariant_constructors,Covariant Constructors>>, we can still conclude that we have an override compatible constructor function to that of `{C}`, because classes with covariant constructors enforce all their subclasses to have override compatible constructors.
+3.  have a value of type `type{? extends C}` or `type{C}` (the two types are equivalent), we know we have:
+* an object representing a type (often constructor functions are used for this, e.g. in the case of classes, but could also be a plain object, e.g. in the case of interfaces),
 * that represents type `{C}` or a subtype thereof,
-* that cannot be used for instantiation (e.g. could be the constructor
-function of an abstract class, the object representing an interface,
-etc.).
+* that cannot be used for instantiation (e.g. could be the constructor function of an abstract class, the object representing an interface, etc.).
 
-Slightly simplified, we can say that in the first above case we can
-always use the value for creating an instance with `new`, in the second case
-only if the referenced type has a covariant constructor, cf. <<_covariant_constructors,Covariant Constructors>>, and never
-in the third case.
+Slightly simplified, we can say that in the first above case we can always use the value for creating an instance with `new`, in the second case only if the referenced type has a covariant constructor, cf. <<_covariant_constructors,Covariant Constructors>>, and never in the third case.
 
 === Constructors and Prototypes in ECMAScript 2015
 
@@ -2731,9 +2647,9 @@ built-in class `N4Object`, if it provides an `extends` clause stating `Object` a
 == This Type
 task:IDE-377[] task:IDE-785[] task:IDEBUG-228[]
 
-The keyword may represent either a literal (cf. <<ex:this-keyword-and-type-in-instance-and-static-context,example: This keyword and type in instance and static context>>) or may refer to the type. In this section, we describe the latter case.
+The `this` keyword may represent either a `this` literal (cf. <<ex:this-keyword-and-type-in-instance-and-static-context,example: This keyword and type in instance and static context>>) or may refer to the `this` type. In this section, we describe the latter case.
 
-Typical use cases of the type include:
+Typical use cases of the `this` type include:
 
 * declaring the return type of instance methods
 * declaring the return type of static methods
@@ -2741,9 +2657,8 @@ Typical use cases of the type include:
 structural typing
 * the parameter type of a function type expression, which appears as
 type of a method parameter
-* the parameter type in a return type expression (`this`,`constructor{this}`)
-* an existential type argument inside a return type expression for
-methods (e.g.`ArrayList<? extends this> method(){...}`)
+* the parameter type in a return type expression ($type$`{this}`,`constructor{this}`)
+* an existential type argument inside a return type expression for methods (e.g.`ArrayList<? extends this> method(){...}`)
 
 The precise rule where it may appear is given below in <<Req-IDE-37,requirement: This Type>>.
 
@@ -2824,20 +2739,17 @@ is described in <<_structural-typing,Structural Typing>>.
 --
 task:IDE-538[]
 
-* used in the context of a class is actually inferred to an existential
-type inside the class itself.
-* the type may only be used
-** as the type of a formal parameter of a constructor, if and only if
-combined with use-site structural typing.
-** at covariant positions within member declarations, except for static
-members of interfaces.
+* `this` used in the context of a class is actually inferred to an existential type `? extends A` inside the class itself.
+* the `this` type may only be used
+** as the type of a formal parameter of a constructor, if and only if combined with use-site structural typing.
+** at covariant positions within member declarations, except for static members of interfaces.
 --
 
 Remarks
 
 * Due to the function subtype relation and constraints on overriding
 methods (in which the overriding method has to be a subtype of the
-overridden method), it is not possible to use the type in formal
+overridden method), it is not possible to use the `this` type in formal
 parameters but only as return type. The following listing demonstrates
 that problem:
 +
@@ -2852,28 +2764,28 @@ class B extends A {
 }
 ----
 +
-As the `this` type is replaced similar to a type variable, the virtually
-defined method `bar` in is not override compatible with `bar` in `{A}`.
+As the $this$ type is replaced similar to a type variable, the virtually
+defined method `bar` in is not override compatible with `bar` in `A`.
 +
 In case of constructors, this problem does not occur because a subclass
 constructor does not need to be override compatible with the constructor
-of the super class. Using `this` as the type of a constructor’s parameter,
+of the super class. Using $this$ as the type of a constructor’s parameter,
 however, would mean that you can only create an instance of the class if
 you already have an instance (considering that due to the lack of method
 overloading a class can have only a single constructor), making creation
-of the first instance impossible. Therefore, `this` is also disallowed as the
+of the first instance impossible. Therefore, $this$ is also disallowed as the
 type of a constructor’s parameter.
-* The difference between the type `this` and the keyword `this` is when and how the
-actual type is set: The actual type of the `this` type is computed at compile
+* The difference between the type $this$ and the keyword `this` is when and how the
+actual type is set: The actual type of the $this$ type is computed at compile
 (or validation) time and is always the containing type (of the member in
 which the type expression is used) or a subtype of that type – this is
 not a heuristic, this is so by definition. In contrast, the actual type
 of the keyword `this` is only available at runtime, while the type used at
 compilation time is only a heuristically computed type, in other words,
 a good guess.
-* The value of the `this` type is, in fact, not influenced by any `@This` annotations.
-Instead of using `this` in these cases, the type expressions in the `@This` annotations can be used.
-* The `this` type is always bound to the instance-type regardless of the
+* The value of the $this$ type is, in fact, not influenced by any `@This` annotations.
+Instead of using $this$ in these cases, the type expressions in the `@This` annotations can be used.
+* The $this$ type is always bound to the instance-type regardless of the
 context it occurs in (non-static or static). To refer to the
 this-classifier (static type) the construct `type{this}` is used. task:IDE-785[]
 
@@ -2894,7 +2806,7 @@ class A {
 
 --
 
-The use of `this` type is limited to situations where it cannot be referred in
+The use of $this$ type is limited to situations where it cannot be referred in
 mixed co- and contra-variant ways. In the following example the problem
 is sketched up. footnote:[The phenomenon is described in IDEBUG-263 task:IDEBUG-263[]]
 
@@ -2929,9 +2841,8 @@ a2.store.value( a ) // RUNTIME ERROR, the types are all correct, but remember b.
 task:IDE-327[] task:IDE-980[]
 
 
-Enums are an ordered set of literals. Although enums are not true
-classes, they come with built-in methods for accessing value, name and
-type name of the enum.
+Enums are an ordered set of literals.
+Although enums are not true classes, they come with built-in methods for accessing value, name and type name of the enum.
 
 In N4JS, two flavours of enumerations are distinguished: ordinary enums
 (N4JS) and string based enums. Ordinary enums (or in short, enums) are
@@ -2992,7 +2903,7 @@ N4EnumLiteral:
 ==== Semantics [[enums-semantics]]
 
 The enum declaration $E$ is of type `type{E}` and every enumeration is
-implicitly derived from `{N4Enum}`. There are similarities to other languages such
+implicitly derived from `N4Enum`. There are similarities to other languages such
 as Java, for example, where the literals of an enum are treated as final
 static fields with the type of the enumeration and the concrete
 enumeration provides specific static methods including the literals.
@@ -3005,7 +2916,7 @@ For a given enumeration declaration $E$ with literals $L$, the following
 type rules are defined:
 
 // TODO check constraints in this section
-1. Every enumeration $E$ is a subtype of the base type :
+1. Every enumeration $E$ is a subtype of the base type `N4Enum`:
 +
 [math]
 ++++
@@ -3018,7 +2929,7 @@ of the type of the enumeration:
 ++++
 \infer{\tee L: E}{L \in E.literals}
 ++++
-That means that every literal is a subtype of :
+That means that every literal is a subtype of `N4Enum`:
 +
 [math]
 ++++
@@ -3032,7 +2943,7 @@ literals are not objects:
 \infer{\tee L \notsubtype `Object`}{L \in E.literals}
 ++++
 
-The base enumeration type is defined as follows footnote:[This is pseudo N4JS code as it is not possible to infer from `any` or define abstract static methods.]
+The base enumeration type `N4Enum` is defined as follows footnote:[This is pseudo N4JS code as it is not possible to infer from `any` or define abstract static methods.]
 
 [source,n4js]
 ----
@@ -3092,8 +3003,7 @@ In particular, $E \notsubtype Object$ for all enums. Still,
 enums could be used similarly to objects:
 
 * enum types could be used on the right hand side of the `instanceof` operator.
-* enum variables could be used with the `typeof` operator, returning the simple
-name of the enumaration.
+* enum variables could be used with the `typeof` operator, returning the simple name of the enumaration.
 * enum variables used with the `+` operator will always be converted to `string`.
 * enum variables must not be used in a context in which a boolean or number type is expected.
 
@@ -3152,6 +3062,8 @@ user with some validations regarding the validity of a statement at
 compile time, a special kind of subtypes of `string` are introduced: the
 string-based enum using the `@StringBased` annotation. (See also other string-based
 types like `pathSelector<T>` and `i18nKey` in <<_primitive-pathselector-and-i18nkey,Primitive Pathselector and I18nKey>>.)
+
+// TODO check for typename<T>
 
 String-based enums do not have any kind of runtime representation;
 instead, the transpiler will replace each reference to a literal of a
