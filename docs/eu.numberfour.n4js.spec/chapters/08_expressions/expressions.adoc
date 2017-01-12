@@ -171,7 +171,8 @@ var ol2 = {
 .This in N4JS mode
 [example]
 --
-As in strict mode, `this` is bound to the receiver and if there is no receiver, it is bound to `undefined`. So the example above is also true for N4JS mode. Classes behave slightly differently:
+As in strict mode, `this` is bound to the receiver and if there is no receiver, it is bound to `undefined`. So the example above is also true for N4JS mode.
+Classes behave slightly differently:
 
 [source,n4js]
 ----
@@ -194,8 +195,7 @@ class A {
 
 --
 
-NOTE: In N4JS classes, `this` is always bound to the instance when used in
-field initialization.
+NOTE: In N4JS classes, `this` is always bound to the instance when used in field initialization.
 
 
 [discrete]
@@ -208,19 +208,17 @@ The type is inferred from the `this` type is bound to. The inference,
 therefore, has to consider the original semantics as described in cite:[ECMA11a(10.4.,10.4.3,p.58)].
 In ECMAScript the type of this is unfortunately determined by the function call and not by the function definition:
 
-* By default, `this` is bound to the global object cite:[ECMA11a(10.4.1.1)]   . Unfortunately it is often
-unknown what the global object will be at run time (e.g., node.js
-differs from browsers).
+* By default, `this` is bound to the global object cite:[ECMA11a(10.4.1.1)].
+Unfortunately it is often unknown what the global object will be at run time (e.g., node.js differs from browsers).
 * If a function is called without a receiver, `this` is bound to
 ** the global object or
 ** to `undefined` in strict mode.
-* If a function is called with a receiver,`this` is bound to the receiver
-object.
+* If a function is called with a receiver,`this` is bound to the receiver object.
 
-Actually, `this` is bound to the newly created object if a function is called
-with the `new` operator. If a function is known to be invoked with an explicit
-$thisArg$ (`apply()` etc.), the `@This` annotation can be used to explicitly set the this type. This annotation has precedence over otherwise
-inferred bindings. task:IDE-1010[]
+Actually, `this` is bound to the newly created object if a function is called with the `new` operator.
+If a function is known to be invoked with an explicit $thisArg$ (`apply()` etc.), the `@This` annotation can be used to explicitly set the this type.
+This annotation has precedence over otherwise inferred bindings. task:IDE-1010[]
+
 --
 
 .Type Inference Heuristic for This-Keyword
@@ -231,7 +229,7 @@ keyword. A heuristic is defined, however, to compute the probable this
 type:
 
 .  If the this keyword is used in some function annotated with an
-annotation , the type specified in the annotation is used.
+annotation `@This`, the type specified in the annotation is used.
 The inferred type is always nominal.
 +
 [math]
@@ -239,16 +237,11 @@ The inferred type is always nominal.
 \infer{\tee \lstnfbnf{"this"}: \tsNom T}{f=\lstnfbnf{"this"}.containingFunctionOrAccessor \\ f.hasAnnotation(\lstnfbnf{"@This"}) & T = f.annotation\lstnfjs{["@This"]}}\\
 ++++
 +
-.  If the this keyword is used in some _instance_ method of a
-classifier or in an _instance_ field initializer, is bound to the
-itself. If the this keyword is used in some _static_ method of a
-classifier or in a _static_ field initializer, the prototype type (or
-constructor) of the classifier is used, that is . In both cases, the
-target is determined by using the expressions’s pseudo property . If the
-this keyword is used in a function expression assigned to an property of
-an object literal, the type of the object literal is used. Note that
-usually this is the type in instance methods, and the type in static
-methods.task:IDE-785[]
+. If the this keyword is used in some _instance_ method of a  classifier or in an _instance_ field initializer,`this` is bound to the `T` itself.
+If the this keyword is used in some _static_ method of a classifier `T` or in a _static_ field initializer, the prototype type (or constructor) of the classifier is used, that is `type[T]`.
+In both cases, the target is determined by using the expressions’s pseudo property `probableThisTarget`.
+If the this keyword is used in a function expression assigned to an property of an object literal, the type of the object literal is used.
+Note that usually this is the `this` type in instance methods, and the `this` type in static methods. task:IDE-785[]
 +
 [math]
 ++++
@@ -276,6 +269,15 @@ That is to say that the actual this type is always a nominal type.
 This is indicated by the nominal modifier f
 (cf. <<Req-IDE-90,requirement: Type Inference Heuristic for This Keyword>> .1. and 2.).
 
+////
+
+TODO check if this constraint is still relevant
+
+Constraints 86 (No @This Annotation on Accessors):
+Since property- and field-acces- sors (also known as getter & setter) are not referable, their this type cannot be changed and is always bound to the current instance.
+Therefore, it is not allowed to use a @This (..) annotation on any getter or setter.
+////
+
 .Valid Target and Argument for @This Annotation
 [req,id=IDE-91,version=1]
 --
@@ -296,9 +298,9 @@ task:IDE-802[]
 It is not allowed to use more then one annotation on an element.
 --
 
-Effect of Nominal This Type
+.Effect of Nominal This Type
 [example]
---
+====
 Given the following declaration
 
 [source,n4js]
@@ -306,9 +308,9 @@ Given the following declaration
 @This(~Object with {a: string;}) f() {}
 ----
 
-Since the this type is always nominal, `pass:[~ Object]` becomes `Object`. In case of method call,
-however, the returned value becomes structural again. In case of error
-messages the type of the return type is then
+Since the this type is always nominal, `pass:[~ Object]` becomes `Object`.
+In case of method call, however, the returned value becomes structural again.
+In case of error messages the type of the return type is then
 
 [source,n4js]
 ----
@@ -330,7 +332,7 @@ instead of
 this[~Object]
 ----
 
---
+====
 
 .This and Function Declaration
 [example]
@@ -554,14 +556,9 @@ following rules apply:
 [req,id=IDE-94,version=1]
 --
 
-* Numeric literals with a fraction or using scientific notation, e.g. `2.0`
-and `2e0`, respectively, are always inferred to `number`, even if they represent
-integers in the range of int32.
-* Numeric literals that represent integers in the range of JavaScript’s
-int32, i.e. from $-2^{31}$ to $2^{31}-1$, are
-inferred to `int`.
-* Hexadecimal and octal literals are always interpreted as positive
-numbers, so all values above `0x7fffffff` and `017777777777` lie outside the range of int32 and will thus be inferred to `number`; this is an important difference to Java.
+* Numeric literals with a fraction or using scientific notation, e.g. `2.0` and `2e0`, respectively, are always inferred to `number`, even if they represent integers in the range of int32.
+* Numeric literals that represent integers in the range of JavaScript’s int32, i.e. from $-2^{31}$ to $2^{31}-1$, are inferred to `int`.
+* Hexadecimal and octal literals are always interpreted as positive numbers, so all values above `0x7fffffff` and `017777777777` lie outside the range of int32 and will thus be inferred to `number`; this is an important difference to Java.
 See below for further elaboration.
 
 There are differences to numeric literals in Java:
@@ -668,8 +665,8 @@ var names3          = new Array<string>(3); // length is 3
 var names4: Array<string>;
 ----
 
-Empty array literals are inferred to `any`, by default. We are not using `Array<?>` here
-because then a typical JavaScript pattern would no longer be supported:
+Empty array literals are inferred to `any`, by default.
+We are not using `Array<?>` here because then a typical JavaScript pattern would no longer be supported:
 
 [source,n4js]
 ----
@@ -677,19 +674,14 @@ var a = [];
 a.push('hello'); // would fail if a and thus [] were inferred to Array<?>
 ----
 
-There is an important exception, however: if a type expectation exists
-for the empty array literal and the expected type is `Array<T>`, then this will be
-used as the type of the array literal.
+There is an important exception, however: if a type expectation exists for the empty array literal and the expected type is `Array<T>`, then this will be used as the type of the array literal.
 
 .Empty array literal
 [req,id=IDE-95,version=1]
 --
-An empty array literal will be inferred as
-follows:
+An empty array literal will be inferred as follows:
 
-* If there is a type expectation for the empty array literal and the
-expected type is `T`, for any type `T`, then the type of the empty array
-literal will be inferred to `Array<T>`.
+* If there is a type expectation for the empty array literal and the expected type is `T`, for any type `T`, then the type of the empty array literal will be inferred to `Array<T>`.
 * Otherwise, the type of the empty array literal will be inferred to `Array<any`.
 
 --
@@ -904,19 +896,17 @@ p.b();
 p.o.nested;
 ----
 
-* Other properties within an object literal property can be accessed
-using this. In the expression of property name value pairs, however,
-`this` is not be bound to the containing object literal, but usually
-to undefined or global.
+* Other properties within an object literal property can be accessed using this.
+In the expression of property name value pairs, however, `this` is not be bound to the containing object literal, but usually to undefined or global.
 * The properties of an object literal are accessible from outside.
-* Nested properties of an object literal are also accessible from
-outside.
+* Nested properties of an object literal are also accessible from outside.
 
 [discrete]
 ==== Type Inference [[type-inference-3]]
 task:IDE-244[] task:IDE-343[] task:IDE-691[]
 
-An object literal implicitly extends `Object`, therefore, object literal types use structural typing. For details see <<_structural-typing>>.
+An object literal implicitly extends `pass:[~Object]`, therefore, object literal types use structural typing.
+For details see <<_structural-typing>>.
 From a type systems point of view, the two variables `ol` and `st` below have the same type.
 
 [source,n4js]
@@ -1098,10 +1088,9 @@ name starting with commercial-at).
 2.  Additionally, an indexed-access expression is allowed when targeting
 one of the types
 +
-or subtypes, for (not including subtypes of and not for and ), and for
-dynamic types. It is not allowed to access members of enums in
-particular. That is to say, for an indexed-access expression
-$iae$, the following constraint must hold:
+or subtypes, for `Object` (not including subtypes of `Object` and not for `pass:[~Object]` and `pass:[~~Object]` ), and for dynamic types.
+It is not allowed to access members of enums in particular.
+That is to say, for an indexed-access expression $iae$, the following constraint must hold:
 +
 [math]
 ++++
@@ -1134,7 +1123,7 @@ number:  task:IDE-837[]
 ++++
 5.  In N4JS mode, if the receiver is an iterable and is not dynamic, in
 case of index access the index expression must be a property access
-expression to the built-in symbol :
+expression to the built-in symbol `Symbol.iterator`:
 +
 [math]
 ++++
@@ -1261,10 +1250,8 @@ Let $ne$ be a new expression, with
 $\tee ne.callee: C$. The following constraints must hold:
 
 .  The callee must be a constructor type: $C <: \type{constructor{?}}$  or a constructable type.
-.  Let $O$ be the type argument of $C$, that is
-$C = constructor\{O\}$. In that case,
-..  $O$ must not be an interface or enum:
-$\mu(C) \not\in { \type{Interface}, \type{Enum} }$
+.  Let $O$ be the type argument of $C$, that is $C = constructor\{O\}$. In that case,
+..  $O$ must not be an interface or enum: $\mu(C) \not\in { \type{Interface}, \type{Enum} }$
 ..  $O$ must not contain any wildcards.
 ..  $O$ must not be a type variable.
 .  If $C$ is not a constructor type, it must be a constructable type, that is one of the following:
@@ -2053,8 +2040,8 @@ This is why the upper bounds are to be used.
 
 task:IDE-244[] task:IDE-345[]
 
-In N4JSmode, using the non-strict equality operators `'=='|'!='` is only allowed for internal developers. External developers have to use the strict equality
-operators `'==='|'!=='`. The inferred type of an equality expression always is `boolean`.
+In N4JSmode, using the non-strict equality operators `'=='|'!='` is only allowed for internal developers. External developers have to use the strict equality operators `'==='|'!=='`.
+The inferred type of an equality expression always is `boolean`.
 
 [math]
 ++++
@@ -2487,9 +2474,9 @@ task:IDE-645[]
 
 `super` can be used to access the supertype’s constructor, methods, getters and setters.
 The supertype is defined lexically, which is different from how `this` works.
-footnote:[See cite:[ECMA15a], Chapter 12.3.5 "The Super Keyword"; note the use of "HomeObject" instead of "thisValue"; also see this http://www.2ality.com/2011/11/super-references.html[blog]).
-Note that in cite:[ECMA15a] Chapter 12.3.5 `The Super Keyword`, `super` is defined as a keyword but the
-syntax and semantics are defined in conjunction of member access.]
+
+TIP: See cite:[ECMA15a], Chapter 12.3.5 "The Super Keyword"; note the use of "HomeObject" instead of "thisValue"; also see this http://www.2ality.com/2011/11/super-references.html[blog]).
+Note that in cite:[ECMA15a] Chapter 12.3.5 `The Super Keyword`, `super` is defined as a keyword but the syntax and semantics are defined in conjunction of member access.
 
 .Type Of Super is Always Nominal
 [req,id=IDE-122,version=1]
@@ -2540,12 +2527,11 @@ Then, the following constraint must hold: footnote:[$e \in^* c$ is the transitiv
 +
 [math]
 ++++
-&\forall i<si: \nexists element \in^* exprStmt.container.stmts_{i}:\\
+&\forall i < si: \nexists element \in^* exprStmt.container.stmts_{i}:\\
 &\hspace{3em} \mu(i) \in \types{ThisLiteral, ReturnStatement}
 ++++
 
-Further constraints with regard to super constructor calls are described
-in <<_constructor-and-classifier-type,Constructor>>.
+Further constraints with regard to super constructor calls are described in <<_constructor-and-classifier-type,Constructor>>.
 task:IDE-1753[]
 
 --
