@@ -30,11 +30,12 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
+import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry.FileExtensionType;
 import eu.numberfour.n4js.generator.common.CompilerUtils;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.runner.RunnerHelper.ApiUsage;
 import eu.numberfour.n4js.runner.extension.IRunnerDescriptor;
-import eu.numberfour.n4js.runner.extension.RunnableFileExtensionsRegistry;
 import eu.numberfour.n4js.runner.extension.RunnerRegistry;
 import eu.numberfour.n4js.runner.extension.RuntimeEnvironment;
 
@@ -58,7 +59,7 @@ public class RunnerFrontEnd {
 	private RunnerRegistry runnerRegistry;
 
 	@Inject
-	private RunnableFileExtensionsRegistry runnableExtensionsRegistry;
+	private FileExtensionsRegistry fileExtensionsRegistry;
 	// private TranspilableFileExtensionsProvider transpilableFileExtensionsProvider;
 
 	/**
@@ -245,7 +246,8 @@ public class RunnerFrontEnd {
 	}
 
 	private boolean hasValidFileExtension(String fileName) {
-		for (String fileExtension : runnableExtensionsRegistry.getRunnableFileExtensions()) {
+		for (String fileExtension : fileExtensionsRegistry
+				.getFileExtensions(FileExtensionType.RUNNABLE_FILE_EXTENSION)) {
 			if (fileName.endsWith("." + fileExtension)) {
 				return true;
 			}

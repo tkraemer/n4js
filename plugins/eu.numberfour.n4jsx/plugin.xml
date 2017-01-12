@@ -9,14 +9,13 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
   NumberFour AG - Initial API and implementation
 -->
-<?eclipse version="3.0"?>
-
+<?eclipse version="3.4"?>
 <plugin>
-   <!-- Register n4jsx and jsx as runnable file extensions. -->
-   <extension
-   		point="eu.numberfour.n4js.runner.runnableFileExtensions">
-   		<runnableFileExtensions
-   			extensions="n4jsx,jsx">
-   		</runnableFileExtensions>
+   <!-- Register file extensions for n4jsx language -->
+    <extension
+      point="eu.numberfour.n4js.utils.fileExtensions">
+	     <transpilableFileExtensions extensions="n4jsx, jsx"/>
+	     <runnableFileExtensions extensions="n4jsx, jsx"/>
+	     <testFileExtensions extensions="n4jsx"/>
    </extension>
 </plugin>

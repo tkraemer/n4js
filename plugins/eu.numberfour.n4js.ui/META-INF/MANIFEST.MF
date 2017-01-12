@@ -44,8 +44,7 @@ Require-Bundle: eu.numberfour.n4js;visibility:=reexport,
  org.eclipse.jgit,
  com.fasterxml.jackson.core.jackson-annotations,
  com.fasterxml.jackson.core.jackson-core,
- com.fasterxml.jackson.core.jackson-databind,
- eu.numberfour.n4js.runner
+ com.fasterxml.jackson.core.jackson-databind
 Import-Package: com.ibm.icu.text,
  org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

@@ -15,10 +15,15 @@ Contributors:
  Copyright (c) 2014 NumberFour AG (http://www.numberfour.eu).
  All rights reserved.
 -->
-
+<!-- 
+The eclipse version must be specified in order for id to be able to contain dots '.'
+See: http://help.eclipse.org/kepler/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/misc/plugin_manifest.html
+-->
+<?eclipse version="3.4"?>
 <plugin>
    <extension-point id="injectorSupplier" name="Injector Supplier" schema="schema/injectorSupplier.exsd"/>
    <extension-point id="quickfixProviderSupplier" name="quickfixProviderSupplier" schema="schema/quickfixProviderSupplier.exsd"/>
+   <extension-point id="eu.numberfour.n4js.utils.fileExtensions" name="File Extensions" schema="schema/eu.numberfour.n4js.utils.fileExtensions.exsd"/>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated Validation -->
@@ -27,5 +32,11 @@ Contributors:
             class="eu.numberfour.n4js.utils.validation.ValidationPackage"
             genModel="model/Validation.xcore"/>
    </extension>
-
+   
+   <extension
+      point="eu.numberfour.n4js.utils.fileExtensions">
+	     <transpilableFileExtensions extensions="n4js, js"/>
+	     <runnableFileExtensions extensions="n4js, js"/>
+	     <testFileExtensions extensions="n4js"/>
+   </extension>
 </plugin>

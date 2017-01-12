@@ -1,24 +1,26 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="eu.numberfour.n4js.runner" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="eu.numberfour.n4js.utils" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appinfo>
-         <meta.schema plugin="eu.numberfour.n4js.runner" id="eu.numberfour.n4js.runner.runnableFileExtensions" name="Runnable File Extensions"/>
-      </appinfo>
+      <appInfo>
+         <meta.schema plugin="eu.numberfour.n4js.utils" id="eu.numberfour.n4js.utils.fileExtensions" name="Runnable File Extensions"/>
+      </appInfo>
       <documentation>
-         This extension point should be used by sub-language plugins to register runnable file extensions. This allows for trigger runners these registered file extensions.
+         This extension point should be used by sub-language plugins to register transpilable, test and runnable file extensions. These file extensions are used by for openning generated source, runner and tester.
       </documentation>
    </annotation>
 
    <element name="extension">
       <annotation>
-         <appinfo>
+         <appInfo>
             <meta.element />
-         </appinfo>
+         </appInfo>
       </annotation>
       <complexType>
          <sequence>
+            <element ref="transpilableFileExtensions"/>
             <element ref="runnableFileExtensions"/>
+            <element ref="testFileExtensions"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -39,9 +41,9 @@
                <documentation>
                   
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute translatable="true"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
       </complexType>
@@ -59,28 +61,52 @@
       </complexType>
    </element>
 
+   <element name="transpilableFileExtensions">
+      <complexType>
+         <attribute name="extensions" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="testFileExtensions">
+      <complexType>
+         <attribute name="extensions" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="since"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          0.0.1
       </documentation>
    </annotation>
 
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="examples"/>
-      </appinfo>
+      </appInfo>
       <documentation>
-         The following is an example demonstrating how to declare .n4js and .js files as runnable:
+         The following is an example demonstrating how to declare transpilable, runnable and test file extensions for n4js language:
 &lt;p&gt; 
 &lt;pre&gt;
    &lt;extension
-     point=&quot;eu.numberfour.n4js.runner.runnableFileExtensions&quot;&gt;
-     &lt;runnableFileExtensions 
-      extensions=&quot;.n4js, .js&quot;&gt;
-     &lt;/runnableFileExtensions&gt;
+     point=&quot;eu.numberfour.n4js.utils.fileExtensions&quot;&gt;
+     &lt;transpilableFileExtensions extensions=&quot;.n4js, .js&quot;/&gt;
+     &lt;runnableFileExtensions extensions=&quot;.n4js, .js&quot;/&gt;
+     &lt;testFileExtensions extensions=&quot;.n4js&quot;/&gt;
    &lt;/extension&gt;
 &lt;/pre&gt; 
 &lt;/p&gt;
@@ -88,27 +114,27 @@
    </annotation>
 
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="apiinfo"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          See example for usage.
       </documentation>
    </annotation>
 
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="implementation"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          [Enter information about supplied implementation of this extension point.]
       </documentation>
    </annotation>
 
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="copyright"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          &lt;pre&gt;
 Copyright (c) 2017 NumberFour AG.
