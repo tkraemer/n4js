@@ -51,8 +51,8 @@ import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
  */
 package abstract class AbstractProcessor {
 
-	val private static DEBUG_LOG = false;
-	val private static DEBUG_LOG_RESULT = false;
+	val private static DEBUG_LOG = true;
+	val private static DEBUG_LOG_RESULT = true;
 	val private static DEBUG_RIGID = false; // if true, more consistency checks are performed and exceptions thrown if wrong
 
 	@Inject
@@ -69,7 +69,7 @@ package abstract class AbstractProcessor {
 		}
 		// special case:
 		// "this" in the default initializer expression of fpars is not supported yet
-		if (elem.isThisKeywordInFparDefaultExpression || elem.isFparRefInFparDefaultExpression) {
+//		if (elem.isThisKeywordInFparDefaultExpression || elem.isFparRefInFparDefaultExpression) {
 			// TODO IDE-1345 remove this work-around when fpar default initializers are properly supported
 			// To see why the following work-around is required, remove it and check the following code:
 			//
@@ -84,8 +84,8 @@ package abstract class AbstractProcessor {
 			//         prop: function(x = 42, y = x) {}
 			//     };
 			//
-			return new Result(G.undefinedTypeRef);
-		}
+//			return new Result(G.undefinedTypeRef);
+//		}
 		// special case:
 		// TStructMembers are special in that they may be types (in case of TStructMethod) and appear as AST nodes
 		// -> if we are dealing with an AST node, make sure to use the definedMember in the TModule

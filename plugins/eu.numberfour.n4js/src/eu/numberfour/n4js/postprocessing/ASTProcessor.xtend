@@ -47,6 +47,8 @@ import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 import eu.numberfour.n4js.n4JS.YieldExpression
+import eu.numberfour.n4js.n4JS.PropertyAssignment
+import eu.numberfour.n4js.n4JS.FormalParameter
 
 /**
  * Main processor used during {@link N4JSPostProcessor post-processing} of N4JS resources. It controls the overall
@@ -119,10 +121,10 @@ public class ASTProcessor extends AbstractProcessor {
 			val script = resource.script;
 			processSubtree(G, script, cache, 0);
 			// step 2: processing of postponed subtrees (only Blocks, so far)
-			var Block block;
-			while ((block = cache.postponedSubTrees.poll) !== null) {
+			var EObject eObj;
+			while ((eObj = cache.postponedSubTrees.poll) !== null) {
 				// note: we need to allow adding more postponed subtrees inside this loop!
-				processSubtree(G, block, cache, 0);
+				processSubtree(G, eObj, cache, 0);
 			}
 		} finally {
 			if (cache.canceled) {
@@ -182,14 +184,10 @@ public class ASTProcessor extends AbstractProcessor {
 
 			// process the children
 			val children = childrenToBeProcessed(G, node);
-			for(child : children) {
-				if(child instanceof Block && (
-						child.eContainer instanceof FunctionExpression
-						|| child.eContainer instanceof PropertyGetterDeclaration
-						|| child.eContainer instanceof PropertySetterDeclaration
-						|| child.eContainer instanceof PropertyMethodDeclaration)) {
+			for (child : children) {
+				if (postponeNode(child)) {
 					// postpone
-					cache.postponedSubTrees.add(child as Block);
+					cache.postponedSubTrees.add(child);
 				} else {
 					// process now
 					processSubtree(G, child, cache, indentLevel + 1);
@@ -214,6 +212,16 @@ public class ASTProcessor extends AbstractProcessor {
 		} finally {
 			cache.astNodesCurrentlyBeingTyped.remove(node);
 		}
+	}
+	
+	private def boolean postponeNode(EObject node) {
+		return 
+		(node instanceof Expression && node.eContainer instanceof FormalParameter)
+		|| node instanceof Block && (
+				node.eContainer instanceof FunctionExpression
+				|| node.eContainer instanceof PropertyGetterDeclaration
+				|| node.eContainer instanceof PropertySetterDeclaration
+				|| node.eContainer instanceof PropertyMethodDeclaration);
 	}
 
 	/**

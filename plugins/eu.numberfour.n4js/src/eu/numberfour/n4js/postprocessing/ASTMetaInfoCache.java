@@ -23,7 +23,6 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.util.CancelIndicator;
 
-import eu.numberfour.n4js.n4JS.Block;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
 import eu.numberfour.n4js.resource.N4JSResource;
@@ -170,7 +169,7 @@ public final class ASTMetaInfoCache {
 
 	final Set<EObject> forwardProcessedSubTrees = new LinkedHashSet<>();
 	final Set<EObject> astNodesCurrentlyBeingTyped = new LinkedHashSet<>();
-	final Queue<Block> postponedSubTrees = new LinkedList<>(); // using LinkedList as FIFO queue, here
+	final Queue<EObject> postponedSubTrees = new LinkedList<>(); // using LinkedList as FIFO queue, here
 
 	/* package */ boolean isProcessingInProgress() {
 		return isProcessingInProgress;
