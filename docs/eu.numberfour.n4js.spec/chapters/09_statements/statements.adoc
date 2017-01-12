@@ -338,8 +338,7 @@ ReturnStatement <Yield>:
 .Return statement
 [req,id=IDE-130,version=1]
 --
-1.  Expected type of expression in a return statement must be a sub type
-of the return type of the enclosing function:
+1.  Expected type of expression in a return statement must be a sub type of the return type of the enclosing function:
 +
 [math]
 ++++
@@ -350,8 +349,7 @@ Note that the expression may be evaluated to `void`.
 * no return statement must be defined
 * return statement has no expression
 * type of expression of return statement is `void`
-3.  If enclosing function is declared to to return a type different from
-`void`, then
+3.  If enclosing function is declared to to return a type different from `void`, then
 * all return statements must have a return expression
 * all control flows must either end with a return or throw statement
 4.  Returns statements must be enclosed in a function. A return
@@ -561,15 +559,13 @@ in different versions of the same implementation (for instance in
 different versions of V8). Older implementations require an `Iterator` or accept
 both `Iterator` an or `Iterable`.
 
-Requiring an `Iterable` and not accepting a plain `Iterator` seems to be the final decision (as of Dec. 2014). For reference, see abstract operations
-`GetIterator` in cite:[ECMA15a(S7.4.2)] and "CheckIterable"
-cite:[ECMA15a(S7.4.1)] and their application in "ForIn/OfExpressionEvaluation" cite:[ECMA15a(S13.6.4.8)] and `CheckIterable` and their application in
-`ForIn/OfExpressionEvaluation` . See also a related blog
-post
-footnote:[available at: http://www.2ality.com/2013/06/iterators-generators.html] that is kept up
-to date with changes to ECMAScript 6: _"ECMAScript 6 has a new loop,
-for-of. That loop works with iterables. Before we can use it with
-createArrayIterator(), we need to turn the result into an iterable"_.
+Requiring an `Iterable` and not accepting a plain `Iterator` seems to be the final decision (as of Dec. 2014).
+For reference, see abstract operations `GetIterator` in cite:[ECMA15a(S7.4.2)] and "CheckIterable" cite:[ECMA15a(S7.4.1)] and their application in "ForIn/OfExpressionEvaluation" cite:[ECMA15a(S13.6.4.8)] and `CheckIterable` and their application in`ForIn/OfExpressionEvaluation` .
+See also a related blog post footnote:[available at: http://www.2ality.com/2013/06/iterators-generators.html] that is kept up
+to date with changes to ECMAScript 6:
+
+[quote]
+ECMAScript 6 has a new loop, for-of. That loop works with iterables. Before we can use it with createArrayIterator(), we need to turn the result into an iterable.
 
 An array or object destructuring pattern may be used left of the `of`.
 This is used to destructure the elements of the `Iterable` on the right-hand side (not the `Iterable` itself). For detais, see <<_array-and-object-destructuring>>.
@@ -622,8 +618,7 @@ NamespaceImportSpecifier: {NamespaceImportSpecifier} '*' 'as' alias=BindingIdent
 ModuleSpecifier: STRING;
 ----
 
-These are the properties of import declaration which can be specified by
-the user:
+These are the properties of import declaration which can be specified by the user:
 
 [horizontal]
 `annotations` ::
@@ -670,11 +665,9 @@ module. Identifiable elements are
 ** functions
 * variables and constants. task:IDE-190[]
 
-The module to import from is identified by the string literal following
-keyword `from`. This string must be a valid
+The module to import from is identified by the string literal following keyword `from`. This string must be a valid
 
-* complete module specifier footnote:[For more details on module
-specifiers, see <<_qualified-names>>.]:
+* complete module specifier footnote:[For more details on module specifiers, see <<_qualified-names>>.]:
 +
 [source,n4js]
 ----
@@ -697,8 +690,7 @@ its manifest (using the `MainModule` manifest property, <<_properties-8>>):
 
 ----
 
-For choosing the element to import, there are the exact same options as
-in ECMAScript6:
+For choosing the element to import, there are the exact same options as in ECMAScript6:
 
 * named imports select one or more elements by name, optionally
 introducing a local alias:
@@ -915,15 +907,13 @@ http://www.ecma-international.org/ecma-262/6.0/index.html#sec-createimportbindin
 .Immutable Import
 [req,id=IDE-137,version=1]
 --
-Let $i$ be a binding to an imported element. It is an error if
+Let $i$ be a binding to an imported element.
+It is an error if
 
-* $i$ occurs on the left-hand side as the assignment-target
-of an assignment expression (this also includes any level in a
-destructuring pattern on the left-hand side),
-* $i$ as a direct argument of a postfix operator (/),
-* $i$ as a direct argument of a operator,
-* $i$ as a direct argument of the `increment` or
-`decrement` unary operator (/)
+* $i$ occurs on the left-hand side as the assignment-target of an assignment expression (this also includes any level in a destructuring pattern on the left-hand side),
+* $i$ as a direct argument of a postfix operator (`i++`/`i--`),
+* $i$ as a direct argument of a `delete` operator,
+* $i$ as a direct argument of the `increment` or `decrement` unary operator (`i++`/`i--`)
 
 --
 
@@ -979,9 +969,9 @@ ExportableElement:
 This are the properties of export declaration, which can be specified by
 the user:
 
+[horizontal]
 `exportedElement` ::
-The element to be exported, can be a declaration or a variable/const
-statement.
+The element to be exported, can be a declaration or a variable/const statement.
 
 .Export
 [example]
@@ -1000,7 +990,6 @@ export const c="Hello";
 
 [discrete]
 ==== Semantics [[export-statement-semantics]]
-
 
 With regard to type inference, export statements are not handled at all.
 Only the exported element is inferred and the `export` keyword is ignored.
