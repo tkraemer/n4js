@@ -67,6 +67,8 @@ import eu.numberfour.n4js.external.TypeDefinitionGitLocationProvider;
 import eu.numberfour.n4js.external.libraries.PackageJson;
 import eu.numberfour.n4js.external.libraries.TargetPlatformFactory;
 import eu.numberfour.n4js.external.libraries.TargetPlatformModel;
+import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
+import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry.FileExtensionType;
 import eu.numberfour.n4js.generator.headless.HeadlessHelper;
 import eu.numberfour.n4js.generator.headless.N4HeadlessCompiler;
 import eu.numberfour.n4js.generator.headless.N4JSCompileException;
@@ -88,7 +90,6 @@ import eu.numberfour.n4js.tester.TesterFacade;
 import eu.numberfour.n4js.tester.TesterFrontEnd;
 import eu.numberfour.n4js.tester.TesterModule;
 import eu.numberfour.n4js.tester.extension.ITesterDescriptor;
-import eu.numberfour.n4js.tester.extension.TestFileExtensionsRegistry;
 import eu.numberfour.n4js.tester.extension.TesterRegistry;
 import eu.numberfour.n4js.tester.nodejs.NodeTester.NodeTesterDescriptorProvider;
 import eu.numberfour.n4js.ts.TypeExpressionsStandaloneSetup;
@@ -315,7 +316,7 @@ public class N4jsc {
 	private TypeDefinitionGitLocationProvider gitLocationProvider;
 
 	@Inject
-	private TestFileExtensionsRegistry testFileExtensionRegister;
+	private FileExtensionsRegistry fileExtensionsRegistry;
 
 	/**
 	 * Entry point to start the compiler. Parses the Parameters.
@@ -382,11 +383,27 @@ public class N4jsc {
 			// help.
 			initInjection(refProperties());
 
-			// Wire up available runners and testers and test file extensions
+			// Wire up available runners and testers, test file extensions and runnable file extensions
 			runnerRegistry.register(nodeRunnerDescriptorProvider.get());
 			testerRegistry.register(nodeTesterDescriptorProvider.get());
-			testFileExtensionRegister.register(N4JSGlobals.N4JS_FILE_EXTENSION);
-			testFileExtensionRegister.register(N4JSXGlobals.N4JSX_FILE_EXTENSION);
+			// Register test file extensions
+			fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION, FileExtensionType.TEST_FILE_EXTENSION);
+			fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION, FileExtensionType.TEST_FILE_EXTENSION);
+			// Register runnable file extensions
+			fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
+			fileExtensionsRegistry.register(N4JSGlobals.JS_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
+			fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION,
+					FileExtensionType.RUNNABLE_FILE_EXTENSION);
+			fileExtensionsRegistry.register(N4JSXGlobals.JSX_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
+			// Register transpilable file extensions
+			fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION,
+					FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+			fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION,
+					FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+			fileExtensionsRegistry.register(N4JSGlobals.JS_FILE_EXTENSION,
+					FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+			fileExtensionsRegistry.register(N4JSXGlobals.JSX_FILE_EXTENSION,
+					FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
 
 			if (listRunners) {
 				printAvailableRunners(System.out);
