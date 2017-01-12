@@ -23,7 +23,7 @@ TIP: Further reading on <<Acronyms,DI>> Basics: cite:[Fowler04b,Prasanna09a], Ve
 
 === Syntax
 
-[source,n4js]
+[source,ebnf]
 ----
 BindingPattern <Yield>:
     ObjectBindingPattern<Yield>
@@ -275,7 +275,7 @@ in other component bindings.
 
 [math]
 ++++
-\exists DIC1,DIC2 : DIC1.\seq{binding}.\seq{key} \to DIC2.\seq{binding}.\seq{key} \iff DIC2<:DIC1$
+\exists DIC1,DIC2 : DIC1.\seq{binding}.\seq{key} \to DIC2.\seq{binding}.\seq{key} \iff DIC2<:DIC1
 ++++
 
 NOTE: Although subtype notation $<:$ is used here it does *not* imply actual subtype relations. It was used in this instance for of lack of formal notations for DI concepts and because this is similar to the Liskov Substitution principle.

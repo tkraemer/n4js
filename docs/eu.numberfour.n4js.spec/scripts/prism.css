@@ -12,9 +12,8 @@ pre[class*="language-"] {
 	text-shadow: 0 1px white;
 	font-family:  'Ubuntu Mono', monospace;
 	text-align: left;
-	white-space: pre;
 	word-spacing: normal;
-	word-break: break-all;
+	word-break: normal;
 	word-wrap: normal;
 	line-height: 1.5;
 
@@ -63,7 +62,7 @@ pre[class*="language-"] {
 :not(pre) > code[class*="language-"] {
 	padding: .1em;
 	border-radius: .3em;
-	white-space: pre;
+	white-space: normal;
 }
 
 .token.comment,
@@ -328,4 +327,6 @@ script[type='text/plain'].language-markup {
 .command-line-prompt > span[data-prompt]:before {
 	content: attr(data-prompt);
 }
+
+.punctuation + b { display: none; }
 

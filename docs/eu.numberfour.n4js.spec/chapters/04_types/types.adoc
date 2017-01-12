@@ -490,7 +490,7 @@ class X<T extends A, S extends B> {
         var ga: G<? extends A>;
         var gb: G<? extends B>;
 
-        ga = gb;  // <2> ok!
+        ga = gb;  // <2>
     }
 }
 ----
@@ -2474,10 +2474,7 @@ task:IDE-786[]
 . The keyword `this` in a static method of a type _T_ actually binds to the classifier type _type{T}_.
 . The constructor type ``constructor``_{T}_ is a subtype of the classifier type _type{T}_:
 +
-[math]
-++++
-\forall T: `constructor\{_T_\}` <: `type\{_T_\}`
-++++
+$\forall T:$ `constructor{T}` $<:$ `type{T}`
 . If a class _B_ is a subtype (subclass) of a class _A_, then the classifier type _type{B}_ also is a subtype of _type{A}_:
 +
 [math]
@@ -2487,10 +2484,7 @@ task:IDE-786[]
 .  If a class _B_ is a subtype (subclass) of a class _A_, and if the constructor function of _B_ is a subtype of the constructor function of _A_, then the
 classifier type ``constructor``_{B}_ also is a subtype of ``constructor``_{A}_:
 +
-[math]
-++++
-\infer{`constructor\{B\}` <: `constructor\{A\`}}{   {B <: A} & {B.ctor <: A.ctor} }
-++++
+$\infer{`constructor{B}` <: `constructor{A}`}{{B <: A} & {B.ctor <: A.ctor} }$
 +
 The subtype relation of the constructor function is defined in <<_function-type,Function Type>>.
 In the case of the default `N4Object` constructor, the type of the object literal argument depends on required attributes.
@@ -2500,18 +2494,19 @@ This subtype relation for the constructor type is enforced if the constructor of
 +
 [math]
 ++++
-\infer{\tee C: \lstnfjs{constructorC}}
-{\mu(C) \in \{ \type{classifierDefinition} \} }
+\infer{\tee C: \lstnfjs{constructorC}}{\mu(C) \in { \type{classifierDefinition} } }
 ++++
 . A class cannot be called as a function in ECMAScript.
 Thus, the constructor and type type are only subtype of :
 +
 [math]
 ++++
+\beginalign
 \forall T: \\
 \forall T: \\
-& \lstnfjs{constructor\{_T_\}} <: \type{Object} \\
-& \lstnfjs{type\{_T_\}} <: \type{Object} \\
+\lstnfjs{constructor{T}} <: \type{Object} \\
+\lstnfjs{type{T}} <: \type{Object} \\
+\endalign
 ++++
 .  If the type argument of the constructor is not a declared type (i.e., a wildcard or a type variable with bounds), the constructor cannot be used in a new expression.
 Thus, the constructor function signature becomes irrelevant for subtype checking.
@@ -2519,8 +2514,7 @@ In that case, the following rules apply: task:GH-221[]
 +
 [math]
 ++++
-\infer{\lstnfjs{constructor\{S\}} <: \lstnfjs{constructor\{_T_\}}}
-{S.upper <: T.upper &&  T.lower <: S.lower && \mu(T) \neq \type{DeclaredTypeWithAccessModifier}}
+\infer{\lstnfjs{constructor{S}} <: \lstnfjs{constructor{T}}}{S.upper <: T.upper &&  T.lower <: S.lower && \mu(T) \neq \type{DeclaredTypeWithAccessModifier}}
 ++++
 
 Note that this is only true for the right hand side of the subtyping rule.
