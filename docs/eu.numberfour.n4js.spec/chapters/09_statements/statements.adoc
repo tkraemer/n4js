@@ -777,7 +777,7 @@ at the same time.
 
 .Imports
 [example]
---
+====
 
 Imports cannot be duplicated:
 
@@ -813,6 +813,8 @@ import F from 'F';
 import * as NF from 'F';//error, F/F is already imported as F
 ----
 
+<<<
+
 Names used in imports must not not conflict with each other or local
 declarations:
 
@@ -847,6 +849,8 @@ import A as B from 'B';//local name B referencess to B/A
 import * as C from 'C';//local name C.A referencess to C/A
 ----
 
+<<<
+
 If a declaration has been imported with an alias or namespace, it is not
 accessible via its original name:
 
@@ -861,7 +865,7 @@ var a2_bad: A2;//error, A2/A2 is not directly accessible with original name
 var a2_correct: C;// A2/A2 is accessible via alias C
 ----
 
---
+====
 
 ==== Dynamic Imports
 

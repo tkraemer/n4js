@@ -15,13 +15,11 @@ Contributors:
 [.language-n4js]
 == Array and Object Destructuring
 
-N4JS supports array and object destructuring as provided in ES6. This is
-used to conveniently assign selected elements of an array or object to a
-number of newly-declared or pre-existing variables or to further
-destructure them by using nested destructuring
-patterns.
+N4JS supports array and object destructuring as provided in ES6.
+This is used to conveniently assign selected elements of an array or object to a number of newly-declared or pre-existing variables or to further
+destructure them by using nested destructuring patterns.
 
-footnote:[Further reading on <<Acronyms,DI>>: : Basics cite:[Fowler04b,Prasanna09a], Verification cite:[Zhu13a,Hudli13a], Frameworks cite:[Lesiecki08a,Betts13a,Knol13a,Dagger] ]
+TIP: Further reading on <<Acronyms,DI>> Basics: cite:[Fowler04b,Prasanna09a], Verification cite:[Zhu13a,Hudli13a], Frameworks cite:[Lesiecki08a,Betts13a,Knol13a,Dagger]
 
 === Syntax
 
@@ -62,7 +60,7 @@ fragment LiteralBindingPropertyName <Yield>*:
 
 === Semantics
 
-The following example declares four variables `a`, `b`, `x`, and `prop2`. Variables `a` and `x` will have the value ``hello``, whereas `b` and `prop2` will have value 42.
+The following example declares four variables `a`, `b`, `x`, and `prop2`. Variables `a` and `x` will have the value `hello`, whereas `b` and `prop2` will have value 42.
 
 [source,n4js]
 ----
@@ -71,12 +69,11 @@ var [a,b] = ["hello", 42];
 var {prop1:x, prop2} = {prop1:"hello", prop2:42};
 ----
 
-In the case of `prop2`, we do not provide a property name and variable name
-separately; this is useful in cases where the property name also makes
-for a suitable variable name (called ``single name binding``).
+In the case of `prop2`, we do not provide a property name and variable name separately; this is useful in cases where the property name also makes
+for a suitable variable name (called `single name binding`).
 
-One of the most useful use cases of destructuring is in a `for..of` loop. Take
-this example:
+One of the most useful use cases of destructuring is in a `for..of` loop.
+Take this example:
 
 [source,n4js]
 ----
@@ -97,25 +94,19 @@ for(var {key,value} of arr2) {
 //   goodbye / 43
 ----
 
-Array and object destructuring pattern can appear in many different
-places:
+Array and object destructuring pattern can appear in many different places:
 
-* In a variable declaration (not just in variable statements but also in
-other places where variable declarations are allowed, e.g. plain for
-loops; called _destructuring binding_; see <<_variable-statement,Var Statement>>).
-* On the left-hand side of an assignment expression (the assignment
-expression is then called _destructuring assignment_; see <<_assignment-expression>>).
-* In a `for..in` or `for..of` loop on the left side of the `in`/`of` (see <<_for-of-statement>>). +
-NOTE: It can also be used in plain statements, but then we actually have
-one of the above two use cases.
-* With lists of formal parameters or function arguments (NOT SUPPORTED
-YET) task:IDE-1609[].
+* In a variable declaration (not just in variable statements but also in other places where variable declarations are allowed, e.g. plain for loops; called _destructuring binding_; see <<_variable-statement,Var Statement>>).
+* On the left-hand side of an assignment expression (the assignment expression is then called _destructuring assignment_; see <<_assignment-expression>>).
+* In a `for..in` or `for..of` loop on the left side of the `in`/`of` (see <<_for-of-statement>>).
++
+NOTE: It can also be used in plain statements, but then we actually have one of the above two use cases.
+* With lists of formal parameters or function arguments (NOT SUPPORTED YET) task:IDE-1609[].
 
 For further details on array and object destructuring please refer to
 the ECMAScript 6 specification.
 
-Type annotations can only be added when a new variable name is
-introduced since the short version would be ambiguous with the long one.
+Type annotations can only be added when a new variable name is introduced since the short version would be ambiguous with the long one.
 For example:
 
 [source,n4js]
@@ -123,9 +114,8 @@ For example:
 var {x: someTypeOrNewVar} = ol
 ----
 
-could either mean that a new variable is declared and is assigned to it,
-or that a new variable is declared with type . The longer form would
-look like this:
+could either mean that a new variable `someTypeOrNewVar` is declared and `ol.x` is assigned to it, or that a new variable `x` is declared with type `someTypeOrNewVar`.
+The longer form would look like this:
 
 [source,n4js]
 ----
@@ -161,26 +151,16 @@ _key: pass the dependency instead of letting the client create or find it_
 Core terms
 
 * *Service* - A set of APIs describing the functionality of the service.
-* **Service Implementation**s - One or more implementations of given
-service API.
-* *Client* - Consumer of a given functionality, uses the given **Service
-Implementation**.
-* *Injector* - Object providing *Service Implementation* of a specific
-**Service**, according to configuration.
-* *Binding* - Part of configuration describing which interface
-implementing a subtype will be injected, when a given interface is
-requested.
-* *Provider* - Factory used to create instances of a given *Service
-Implementation* or its sub-components, can be a method.
-* *Injection Point* - Part of the user’s code that will have the given
-dependency injected. This is usually fields, method parameters,
-constructor parameters etc.
-* *di configuration* - This describes which elements of the user’s code
-are used in mechanisms and how they are wired. It is derived from user
-code elements being marked with appropriate annotations, bindings and
-providers.
-* *di wiring* - The code responsible for creating user objects. These
-are injectors, type factories/providers, fields initiators etc.
+* **Service Implementation**s - One or more implementations of given service API.
+* *Client* - Consumer of a given functionality, uses the given **Service Implementation**.
+* *Injector* - Object providing *Service Implementation* of a specific *Service*, according to configuration.
+* *Binding* - Part of configuration describing which interface implementing a subtype will be injected, when a given interface is requested.
+* *Provider* - Factory used to create instances of a given *Service Implementation* or its sub-components, can be a method.
+* *Injection Point* - Part of the user’s code that will have the given dependency injected. This is usually fields, method parameters, constructor parameters etc.
+* *DI configuration* - This describes which elements of the user’s code are used in mechanisms and how they are wired.
+It is derived from user code elements being marked with appropriate annotations, bindings and providers.
+* *di wiring* - The code responsible for creating user objects.
+These are injectors, type factories/providers, fields initiators etc.
 
 === DI Components and Injectors
 
@@ -192,16 +172,13 @@ N4JS’ <<Acronyms,DI>> systems is based on the notion of <<Acronyms,DIC>>.
 A <<Acronyms,DIC>> is a N4Class annotated with `@GenerateInjector`.
 --
 
-This annotation causes an _injector_ to be created for (and associated
-to) the <<Acronyms,DI>>. <<Acronyms,DIC>> can be composed; meaning that when requested to inject an
-instance of a type, a <<Acronyms,DIC>>’s injector can delegate this request to the
-injector of the containing <<Acronyms,DIC>>.
+This annotation causes an _injector_ to be created for (and associated to) the <<Acronyms,DI>>. <<Acronyms,DIC>> can be composed; meaning that when requested to inject an
+instance of a type, a <<Acronyms,DIC>>’s injector can delegate this request to the injector of the containing <<Acronyms,DIC>>.
 An injector always prioritizes its own configuration before delegating to the container’s injector.
 For validation purposes, a child <<Acronyms,DI>> can be annotated with `@WithParent` to ensure that it is always used with a proper parent.
 
-_Injector_ is the main object of <<Acronyms,DI>> mechanisms responsible for creating
-object graphs of the application. At runtime, injectors are instances of
-`N4Injector`.
+_Injector_ is the main object of <<Acronyms,DI>> mechanisms responsible for creating object graphs of the application.
+At runtime, injectors are instances of `N4Injector`.
 
 .DI Component and Injector
 [req,id=IDE-138,version=1]
@@ -209,8 +186,7 @@ object graphs of the application. At runtime, injectors are instances of
 
 The following constraints must hold for a class $C$ marked as <<Acronyms,DIC>>:
 
-1.  A subclass $S$ of $C$ is a <<Acronyms,DIC>> as well and it
-must be marked with `GenerateInjector` task:IDE-1563[].
+1.  A subclass $S$ of $C$ is a <<Acronyms,DIC>> as well and it must be marked with `GenerateInjector` task:IDE-1563[].
 2.  If a parent <<DIComponent Relations,DIC>> $P$ is specified via `WithParent`, then $P$ must be a <<Acronyms,DIC>> as well.
 3.  The injector associated to a <<Acronyms,DIC>> is of type `N4Injector`. It can be retrieved via `N4Injector.of(DIC)` in which `DIC` is the `DIC`.
 4.  Injectors associated to <<Acronyms,DIC>> a are DI-singletons (cf. <<Singleton Scope>>).
@@ -222,43 +198,34 @@ Two calls to `N4Injector.of(DIC)` are different (as different <<Acronyms,DIC>> a
 --
 task:IDE-1497[]
 We call the (transitive)
-creation and setting of values by an injector $I$ caused by
-the creation of an root object $R$ the __injection phase__.
-If an instance $C$ is newly created by the injector
-$I$ (regardless of the injection point being used), the
-injection is transitively applied on $C$. The following
-constraints have to hold:
+creation and setting of values by an injector $I$ caused by the creation of an root object $R$ the __injection phase__.
+If an instance $C$ is newly created by the injector $I$ (regardless of the injection point being used), the injection is transitively applied on $C$.
+The following constraints have to hold:
 
 .  Root objects are created by one of the following mechanisms:
-..  Any class or interface can be created as root objects via an
-injector associated to a <<Acronyms,DIC>>: `var x: X = N4Injector.of(DIC).create(X);`
-in which `DIC` is a `ac{DIC}`. Of course, an appropriate binding must
-exist. footnote:[Usually, only the itself is created like that, e.g., [language-n4js]`ar dic = N4Injector.of(DIC).create(DIC);}`]
+..  Any class or interface can be created as root objects via an injector associated to a <<Acronyms,DIC>>: `var x: X = N4Injector.of(DIC).create(X);`
+in which `DIC` is a <<Acronyms,DIC>>.
+Of course, an appropriate binding must exist. footnote:[Usually, only the itself is created like that, e.g., [language-n4js]`ar dic = N4Injector.of(DIC).create(DIC);}`]
 ..  If a type has the injector being injected, e.g. via field injection
 `@Inject injector: N4Injector;`, then this injector can be used anytime in the control flow to create a new root object similar as above (using `create` method).
-..  If a provider has been injected (i.e., an instance of `N4Provider}`), then its
-method can be used to create a root object causing a new injection phase
-to take place.
-.  If $C.ctor$ is marked as injection point, all its
-arguments are set by the injector. This is also true for an inherited
-constructor marked as an injection point. See <<Req-IDE-143,requirement: Constructor Injection>> task:IDE-1264[]. For all arguments the injection phase constraints have to hold as well.
-\item All fields of $C$, including \emph{inherited} once, marked as injection points are set by the injector. For all fields the injection phase constraints have to hold as well.
+..  If a provider has been injected (i.e., an instance of `N4Provider}`), then its method can be used to create a root object causing a new injection phase to take place.
+.  If $C.ctor$ is marked as injection point, all its arguments are set by the injector.
+This is also true for an inherited constructor marked as an injection point.
+See <<Req-IDE-143,requirement: Constructor Injection>> task:IDE-1264[].
+For all arguments the injection phase constraints have to hold as well.
+. All fields of $C$, including _inherited_ once, marked as injection points are set by the injector.
+For all fields the injection phase constraints have to hold as well.
 task:IDE-1264[] task:IDEBUG-441[]
-.  All fields of $C$, including _inherited_ once, marked as
-injection points are set by the injector. For all fields the injection
-phase constraints have to hold as well.
 
-The injector may use a provider method (of a binder) to create nested
-instances.
+The injector may use a provider method (of a binder) to create nested instances.
 
 The injector is configured with _Binders_ and it tracks _Bindings_
-between types (). An N4JS developer normally would not interact with
-this object directly except when defining an entry-point to his
-application. __Injector__s are configured with __Binder__s which contain
-explicit __Binding__s defined by an N4JS developer. A set of these
-combined with _implicit bindings_ creates the _di configuration_ used by
-a given injector. To configure given __Injector__s with given
-__Binder__(s) use `@UseBinder` annotation.
+between types (<<sec:N4JS_DI_Binders_and_Bindings,N4JS DI Binders and Bindings>>).
+An N4JS developer normally would not interact with this object directly except when defining an entry-point to his application.
+__Injector__s are configured with _Binder_s which contain explicit __Binding__s defined by an N4JS developer.
+A set of these combined with _implicit bindings_ creates the _di configuration_ used by
+a given injector.
+To configure given __Injector__s with given _Binder_(s) use `@UseBinder` annotation.
 
 --
 
@@ -269,10 +236,9 @@ Child DIComponents use the parent bindings but can also be configured
 with their own bindings or _change_ targets used by a parent. The final
 circumstance is local to the child and is referred to as __rebinding__.
 For more information about bindings see <<_binders-and-bindings,N4JS Binder and Bindings>>.
-A Child-Parent relation is expressed by the annotation attached to a given DIComponent. When this
-relation is defined between DIComponents, the user needs to take care to
-preserve the proper relation between injectors. In other words, the user
-must provide an instance of the parent injector (the injector of the
+A Child-Parent relation is expressed by the `@WithParentInjector` annotation attached to a given DIComponent.
+When this relation is defined between DIComponents, the user needs to take care to preserve the proper relation between injectors.
+In other words, the user must provide an instance of the parent injector (the injector of the
 DIComponent passes as a parameter to `@WithParentInjector`) when creating the child injector
 (injector of the DIComponent annotated with `@WithParentInjector`).
 
@@ -305,9 +271,12 @@ parents.
 --
 A given DIComponent
 is compatible with another DIComponent if it has bindings for all keys
-in other component bindings. +
- +
-$\exists DIC1,DIC2 : DIC1.\seq{binding}.\seq{key} \to DIC2.\seq{binding}.\seq{key} \iff DIC2<:DIC1$
+in other component bindings.
+
+[math]
+++++
+\exists DIC1,DIC2 : DIC1.\seq{binding}.\seq{key} \to DIC2.\seq{binding}.\seq{key} \iff DIC2<:DIC1$
+++++
 
 NOTE: Although subtype notation $<:$ is used here it does *not* imply actual subtype relations. It was used in this instance for of lack of formal notations for DI concepts and because this is similar to the Liskov Substitution principle.
 
@@ -361,14 +330,15 @@ N4Injector.of(Y, injectorD2);//throws DIConfigurationError, incompatible parent 
 ----
 ====
 
+[[sec:N4JS_DI_Binders_and_Bindings]]
 === Binders and Bindings
 
 _Binder_ allows an N4JS developer to (explicitly) define a set of
 __Binding__s that will be used by an _Injector_ configured with a given
-__Binder__. There are two ways for _Binder_ to define __Binding__s: `@Bind` (<<N4JS DI @Bind>>)
+_Binder_. There are two ways for _Binder_ to define __Binding__s: `@Bind` (<<N4JS DI @Bind>>)
 annotations and a method annotated with `@Provides`.
 
-_Binder_ is declared by annotating a class with the annotation.
+_Binder_ is declared by annotating a class with the `@Binder` annotation.
 
 A _Binding_ is part of a configuration that defines which instance of
 what type should be injected into an _injection point_ (<<_injection-points,N4JS DI Injection Points>>) with an expected type.
@@ -377,7 +347,7 @@ _Provider Method_ is essentially a _factory method_ that is used to
 create an instance of a type. N4JS allows a developer to declare those
 methods (see <<_n4js-di-provides,N4JS DI @Provides>>) which gives them a hook in instance creation process.
 Those methods will be used when creating instances by the _Injector_
-configured with the corresponding __Binder__. A provider method is a
+configured with the corresponding _Binder_. A provider method is a
 special kind of binding ($key$) in which the return type of
 the method is the $key$. The $target$ type is
 unknown at compile time (although it may be inferred by examining the
@@ -386,10 +356,9 @@ return statements of the provide method).
 .Binding
 [def]
 --
-A _binding_ is a pair
-$bind(key, target)$. It defines that for a dependency with a
-given key which usually is the expected type at the injection point. An
-instance of type $target$ is injected.
+A _binding_ is a pair $bind(key, target)$.
+It defines that for a dependency with a given key which usually is the expected type at the injection point.
+An instance of type $target$ is injected.
 
 A _binding_ is called _explicit_ if it is declared in the code, i.e. via `@Bind`
 annotation or `@Provides` annotation).
@@ -421,6 +390,7 @@ key*=
    \end{cases}
 \endalign
 ++++
+
 and
 
 [math]
@@ -439,23 +409,16 @@ target*=
 .Bindings
 [req,id=IDE-140,version=1]
 --
-For a given binding $b=(key, target)$, the following constraints must
-hold:
-footnote:[Note that other frameworks may define other constraints, e.g., arbitrary keys.]
+For a given binding $b=(key, target)$, the following constraints must hold: footnote:[Note that other frameworks may define other constraints, e.g., arbitrary keys.]
 
 1.  $key$ must be either a class or an interface.
 2.  $target$ must either be a class or a provider method.
-3.  If $b$ is implicit, then $key$ must be a
-class. If $key$ references a type $T$, then
-$target=T$ – even if $key$ is a use-site
-structural type.
-4.  $key$ and $target*$ can be nominal,
-structural or field-structural types, either definition-site or
-use-site. task:IDE-1496[] task:IDEBUG-418[] task:IDEBUG-498[] The injector and binder needs to take the different structural
-reference into account at runtime!
+3.  If $b$ is implicit, then $key$ must be a class.
+If $key$ references a type $T$, then $target=T$ – even if $key$ is a use-site structural type.
+4.  $key$ and $target*$ can be nominal, structural or field-structural types, either definition-site or use-site.
+task:IDE-1496[] task:IDEBUG-418[] task:IDEBUG-498[] The injector and binder needs to take the different structural reference into account at runtime!
 5.  $target* \subtype key$ must hold
-6.  If during injection phase no binding for a given key is found, an is
-thrown. task:IDEBUG-461[]
+6.  If during injection phase no binding for a given key is found, an `DIUnsatisfiedBindingError` is thrown. task:IDEBUG-461[]
 
 --
 
@@ -467,13 +430,11 @@ $b_2=(key_2, key_1)$, an effective binding
 $b=(key_2, target_1)$ is derived (replacing
 $b_1$).
 
-N4JS \ac{DI} mechanisms don’t allow for injection of primitives or built-in
+N4JS <<acronyms,DI>> mechanisms don’t allow for injection of primitives or built-in
 types. Only user-defined N4Types can be used. In cases where a user
 needs to inject a primitive or a built-in type, the developer must wrap
-it into its own class. footnote:[Also cf. blog posting about
-http://www.markhneedham.com/blog/2009/03/10/oo-micro-types/[micro
-types], http://darrenhobbs.com/2007/04/11/tiny-types/[tiny types]]. This
-is to say that none of the following metatypes can be bound: primitive
+it into its own class. footnote:[Also cf. blog posting about http://www.markhneedham.com/blog/2009/03/10/oo-micro-types/[micro types], http://darrenhobbs.com/2007/04/11/tiny-types/[tiny types]].
+This is to say that none of the following metatypes can be bound: primitive
 types, enumerations, functions, object types, union- or intersection
 types. It is possible to (implicitly) bind to built-in classes.
 
@@ -485,8 +446,7 @@ _Injector_ selecting a binding use for a type. If operates in the
 following order:
 
 1.  Try to use explicit binding, if this is not available:
-2.  Try to delegate to parent injectors (order of lookup is not
-guaranteed, first found is selected). If this is not available then:
+2.  Try to delegate to parent injectors (order of lookup is not guaranteed, first found is selected). If this is not available then:
 3.  Try to use use implicit binding, which is simply to attempt to
 create the instance.
 
@@ -496,9 +456,7 @@ If no binding for a requested type is available an error will be thrown.
 
 === Injection Points
 
-By _injection point_ we mean a place in the source code which, at
-runtime, will be expected to hold a reference to a particular type
-instance.
+By _injection point_ we mean a place in the source code which, atruntime, will be expected to hold a reference to a particular type instance.
 
 ==== Field Injection
 
@@ -523,7 +481,7 @@ will be injected as well.
 [example]
 --
 <<ex:field-injection,The listing below>> demonstrates simple field injection using default bindings. Note that all inherited fields
-(i.e. `A.xInA`) are injected and also fields in injected fields (i.e. )
+(i.e. `A.xInA`) are injected and also fields in injected fields (i.e. `x.y`)
 
 [[ex:field-injection]]
 .Simple Field Injection
@@ -572,7 +530,7 @@ Currently, optional constructor parameters are always initialized and
 created by the framework, therefore, they are ensured to be available at
 the constructor invocation time. Unlike optional parameters, variadic
 parameters cannot be injected into a type’s constructor. In case of
-annotating a constructor with that has variadic parameters, a validation
+annotating a constructor with `@Inject` that has variadic parameters, a validation
 error will be reported. When a class’s constructor is annotated with `@Inject`
 annotation, it is highly recommended to annotate all explicitly-defined
 constructors at the subclass level. If this is not done, the injection
@@ -673,7 +631,7 @@ built-in ``N4Provider``s.
 destruction is handled by JavaScript. The creation depends on the scope
 of the type. Aside from the scopes, note that it is also possible to
 implement custom scopes and life cycle management via `N4JSProvider` and
-Binder@Provides methods.
+`Binder@Provides` methods.
 
 ==== Injection Cylces
 task:IDE-1608[]
@@ -775,8 +733,8 @@ function doInjectionWithCylceAwareness(object, createdInstancesPerType) {
 
 The actual instance is created in line 10 via `createInstance`.
 This function then takes scopes into account.
-The map is passed to that function in order to enable cycle detection for constructor injection. The following scopes
-are supported by the N4JS \ac{DI}, other scopes, cf. https://jersey.java.net/documentation/latest/ioc.html[Jersey custom scopes] and https://github.com/google/guice/wiki/CustomScopes[Guice custom scopes], may be added in the future.
+The `createdInstancesPerType` map is passed to that function in order to enable cycle detection for constructor injection.
+The following scopes are supported by the N4JS <<acronyms,DI>>, other scopes, cf. https://jersey.java.net/documentation/latest/ioc.html[Jersey custom scopes] and https://github.com/google/guice/wiki/CustomScopes[Guice custom scopes], may be added in the future.
 
 This algorithm is not working for constructor injection because it is
 possible to already access all fields of the arguments passed to the
@@ -953,8 +911,7 @@ task:IDE-1671[]
 Terminology for this section:
 
 * a value is *injectable* if it
-** either conforms to a user-defined class or interface (a
-non-parameterized one, that is),
+** either conforms to a user-defined class or interface (a non-parameterized one, that is),
 ** or conforms to Provider-of-T where T is injectable itself.
 * a classifier declaring injected members is said to *require injection*
 
@@ -975,7 +932,7 @@ we can recap that at runtime:
 ** Some of those binders may have constructor(s) taking parameters.
 ** The set of binders described above should match the providedBinders.
 
-Validations in effect for callsites:
+Validations in effect for `pass:[N4Injector.create(type{T} ctor)]` callsites:
 
 * `T` should be injectable (in particular, it may be an `N4Provider`).
 
@@ -1077,8 +1034,8 @@ repeatable::
 arguments::
   NONE
 
-`@UseBinder` defines a list of bind configurations.
-That can be either annotations on itself or its factory methods annotated with `@Bind`.
+`@Binder` defines a list of bind configurations.
+That can be either `@Bind` annotations on `@Binder` itself or its factory methods annotated with `@Bind`.
 
 
 .DI binder
@@ -1165,8 +1122,8 @@ repeatable::
 arguments::
   NO
 
-`@Inject` defines the injection point into which an instance object will be injected. The specific instance depends on the injector configuration (bindings)
-used. Class fields, methods and constructors can be annotated. See <<_injection-points>> for more information.
+`@Inject` defines the injection point into which an instance object will be injected. The specific instance depends on the injector configuration (bindings) used.
+Class fields, methods and constructors can be annotated. See <<_injection-points,Injection Points>> for more information.
 
 
 .DI Inject

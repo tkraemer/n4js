@@ -737,7 +737,7 @@ the role of an iterator (data producer), of an observer (data consumer), and a c
 When calling a generator function or method, the returned generator object of type `Generator<TYield,TReturn,TNext>` can be controlled by its methods
 (cf. cite:[ECMA15a(S14.4)], also see cite:[Kuizinas14a]).
 
-==== Syntax [[asynchronous-functions-syntax]]
+==== Syntax [[generator-functions-syntax]]
 
 Generator functions and methods differ from ordinary functions and methods only in the additional `pass:[*]` symbol before the function or method name.
 The following syntax rules are extracted from the real syntax rules.
@@ -768,7 +768,8 @@ GeneratorMethodDeclaration:
 
 
 
-==== Semantics [[asynchronous-functions-semantics]]
+==== Semantics [[generator-functions-semantics]]
+
 The basic idea is to make code dealing with Generators easier to write and more readable without changing their functionality.
 Take this example:
 

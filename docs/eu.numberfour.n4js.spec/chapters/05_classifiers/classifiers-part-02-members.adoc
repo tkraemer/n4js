@@ -40,7 +40,9 @@ Members share the following properties:
 Arbitrary annotations, see <<Annotations>> for details.
 
 `accessModifier` ::
-N4JS member access modifier: `private`, `project`, `potected`, or `public`; the latter two can be combined with `@Internal`; default is `project` for classes and private interfaces. For a non-private interface defaults to the interface’s visibility. task:IDE-84[]
+N4JS member access modifier: `private`, `project`, `potected`, or `public`; the latter two can be combined with `@Internal`; default is `project` for classes and private interfaces. For a non-private interface defaults to the interface’s visibility.
+
+task:IDE-84[]
 
 `name` ::
 The simple name of the member, that is an identifier name (cf. <<_valid-names,Valid Names>>).
@@ -55,6 +57,7 @@ The following pseudo properties are defined via annotations:
 `deprecated` ::
 Boolean property set to true if annotation `@Deprecated` is set.
 //version{0.4}{not implemented in version 0.3}
+
 task:IDE-138[]
 
 And we additionally define the following pseudo properties:

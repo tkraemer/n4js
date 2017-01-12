@@ -64,15 +64,19 @@ See <<_structural-typing,Structural Typing>> for details.
 [horizontal]
 `export` ::
 Boolean property set to true if the `export` modifier is set. If value is true,
-the classifier may be accessible outside the project. task:IDE-84[]
+the classifier may be accessible outside the project.
+
+task:IDE-84[]
 
 `final` ::
 Boolean property which is set to final if annotation `@Final` is set. Also see
 <<_final-modifier,Final Extensibility>>
 
 `deprecated` ::
-Boolean property set to true if annotation `@Deprecated` is set. task:IDE-138[]
+Boolean property set to true if annotation `@Deprecated` is set.
 // Version 0.4, not implemented in Version 0.3
+
+task:IDE-138[]
 
 *We additionally define the following pseudo properties:*
 

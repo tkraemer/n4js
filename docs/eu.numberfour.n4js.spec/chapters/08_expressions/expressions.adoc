@@ -1907,7 +1907,7 @@ In other words,
 is contained in the the first type rule.] task:IDE-652[]
 // TODO check for missing reference
 , an object type reference
-footnote:[Includes interfaces, since an interface type reference is a subtype of object type reference: $\type{type\{Interface\}} <: \type{type{Object}}$]
+footnote:[Includes interfaces, since an interface type reference is a subtype of object type reference: $\type{type{Interface}} <: \type{type{Object}}$]
 or an enum type reference. task:IDE-681[] task:IDEBUG-631[]
 
 [math]

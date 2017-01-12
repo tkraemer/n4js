@@ -529,18 +529,21 @@ the right side: the result is true if and only if the type variable on
 the left has one or more declared upper bounds.
 $intersection(left.declaredUpperBounds) <: right$ +
 This is the case for
++
 [math]
 ++++
 (T \spc extends \spc B) <: A
 ++++
 in which T is an unbound type variable and A, B two classes with $B <: A$.
 3.  In all other cases the result is false. +
-This includes cases such as +
+This includes cases such as
++
 [math]
 ++++
 B <: (T \spc extends \spc A)
 ++++
-which is always false, even if $B <: A$ or +
+which is always false, even if $B <: A$ or
++
 [math]
 ++++
 (T \spc extends \spc A) <: (S \spc extends \spc B)
@@ -2416,6 +2419,7 @@ $\forall a \in I.attributes:$
 ++++
 
 
+<<<
 
 $\forall m \in I.methods$:
 
@@ -2471,7 +2475,6 @@ $\forall m \in I.methods$:
 \endalign
 ++++
 
-// TODO fix math here
 ---
 
 
