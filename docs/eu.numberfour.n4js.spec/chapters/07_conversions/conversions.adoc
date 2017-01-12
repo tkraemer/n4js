@@ -123,11 +123,9 @@ task:IDE-830[]
 Function expressions and declarations always define an object of type `Function`, thus coercing or Autoboxing is not required in case of functions:
 
 It is always possible to use a function expression where a `Function` is required, and to use an object of type `Function` where a function expression is expected.
-This is only possible if the function signatures are subtype-compatible,
-see <<_function-type,Function Type>> for details.
+This is only possible if the function signatures are subtype-compatible, see <<_function-type,Function Type>> for details.
 
-Still, it is always possible to call members of `Function`, e.g.,
-`function(){}.length()`.
+Still, it is always possible to call members of `Function`, e.g., `function(){}.length()`.
 
 [.language-n4js]
 == Auto-Conversion of Objects
@@ -135,16 +133,14 @@ Still, it is always possible to call members of `Function`, e.g.,
 === Auto-Conversion of Class Instances
 task:IDE-833[]
 
-All classes defined in N4JS modules implicitly subclass `N4Object`, which is a
-plain JavaScript Object type. The same auto-conversion rules defined for
-JavaScript `Object` therefore apply to `N4Object` instances as well.
+All classes defined in N4JS modules implicitly subclass `N4Object`, which is a plain JavaScript Object type.
+The same auto-conversion rules defined for JavaScript `Object` therefore apply to `N4Object` instances as well.
 
 The basic conversion uses the abstract JavaScript function `ToPrimitive` cite:[ECMA11a(S9.1)], which relays on the specification method `Object` cite:[ECMA11a(S8.12.8)].
 `DefaultValue` calls `valueOf` or `toString` methods if they are defined by the class (in the `methods`-builder).
 
 Note that according to the cite:[ECMA11a], in most cases, objects are first converted into primitives. That is, in most cases, no extra hint is passed to
-`DefaultValue`. Thus `valueOf` usually takes precedence over toString as
-demonstrated in the following example:
+`DefaultValue`. Thus `valueOf` usually takes precedence over toString as demonstrated in the following example:
 
 .Auto-Conversion
 [example]
@@ -194,10 +190,8 @@ The auto-conversion rules described in <<_auto-conversion-of-class-instances,Aut
 
 === Auto-Conversion of Enum Literals
 
-Enumeration values are objects and thus follow the behavior for
-ECMAScript `Object` and `Function`. They have a
-custom $toString$ method which returns the name of the
-enumeration value.
+Enumeration values are objects and thus follow the behavior for ECMAScript `Object` and `Function`.
+They have a custom $toString$ method which returns the name of the enumeration value.
 
 [.language-n4js]
 == Type Cast and Type Check
@@ -511,8 +505,9 @@ console.log(N4EnumType.of(e).fqn);
 task:IDE-980[]
 
 
-The meta-information of an interface `X` is available via
-getter `n4class` defined in the `type{X}`. This field is of type `N4Class` as well. Since an interface cannot have a super classs, the property `n4superTypes` will always be empty.
+The meta-information of an interface `X` is available via getter `n4class` defined in the `type{X}`.
+This field is of type `N4Class` as well.
+Since an interface cannot have a super classs, the property `n4superTypes` will always be empty.
 Calling `isInterface` respectively on the returned `N4Class` instance will return true.
 
 === Reflection for Enumerations
@@ -522,8 +517,7 @@ Calling `isInterface` respectively on the returned `N4Class` instance will retur
 var n: number; var b: boolean; var s: string;
 ----
 
-The meta-information for enumerations is available by means of the getter `n4class`, either statically by using the enumeration type or (in terms of an
-instance getter) via a literal.
+The meta-information for enumerations is available by means of the getter `n4class`, either statically by using the enumeration type or (in terms of an instance getter) via a literal.
 Calling `isEnum` on the returned `N4Class` instance will return true.
 
 [.language-n4js]
