@@ -725,6 +725,7 @@ For a given N4JS Component `C` we define
 
 [math]
 ++++
+\beginalign
  C.requiredAPIs^* & = C.requiredPIs \\
                     & \hspace{4em} \cup \\
                     & \bigcup_{L \in C.requiredLibs}C.requiredPIs^* \\
@@ -733,16 +734,18 @@ For a given N4JS Component `C` we define
 C.requiredLibs^*    & = C.requiredRTLibs \\
                     & \hspace{4em} \cup \\
                     & \bigcup_{L \in C.requiredLibs}L.requiredRTLibs^*
+\endalign
 ++++
 
 For a given Runtime Environment `E` we define
 
 [math]
 ++++
-
+\beginalign
 E.providedRTLibs^* & = E.providedRTLibs \\
                     & \hspace{4em} \cup \\
                     & \bigcup_{ES \in E.extendedRTEnvs} ES.E.providedRTLibs^*
+\endalign
 ++++
 
 --
@@ -758,12 +761,19 @@ if the following constraints hold:
 
 . The environment must provide all runtime libraries transitively
 required by the component:
-$\forall R \in C.requiredRTLibs^*: R \in E.providedRTLibs^ *$
++
+[math]
+++++
+\forall R \in C.requiredRTLibs^*: R \in E.providedRTLibs^ *
+++++
 +
 . There exist libraries which can be executed by the environment, so
 that all APIs are implemented:
 +
-$\forall S \in C.requiredAPIs^*: \exists I: S \in I.implementedAPIs \land E \models I$
+[math]
+++++
+\forall S \in C.requiredAPIs^*: \exists I: S \in I.implementedAPIs \land E \models I
+++++
 --
 
 [.language-n4js]
@@ -793,8 +803,8 @@ ScriptElement:
 ;
 ----
 
-Grammar and semantics of import statement is described in ; of of export
-statement is described in .
+Grammar and semantics of import statement is described in <<_import-statement,Import Statement>>; of export
+statement described in <<_export-statement,Export Statement>>.
 
 task:IDE-179[]
 An import statement imports a variable declaration, function
@@ -921,11 +931,9 @@ formatted file with the following structure:
 
 //\todo{review}
 
-Properties files have the file extension `properties` and describe how
-to localize text in a project. They basically define keys
-<<_primitive-pathselector-and-i18nkey,Primitive Pathselector I18nKey>> with their
-values. The key is used during runtime to retrieve text localized to the
-user’s locale.
+Properties files have the file extension `properties` and describe how to localize text in a project.
+They basically define keys <<_primitive-pathselector-and-i18nkey,Primitive Pathselector I18nKey>> with their values.
+The key is used during runtime to retrieve text localized to the user’s locale.
 
 [[n4-deployment-descriptor-syntax]]
 === Syntax
@@ -945,88 +953,50 @@ KeyIdentifier:  LETTER (DIGIT | LETTER | '.')*;
 === Constraints
 
 Properties files have to be stored in source fragment of type source.
-The _base folder_ for storing the properties files of a project
-`p` is $p.name\lstnfjs{/nls}$. The
-language-specific resource files are stored in subfolders of the base
-folder. The base language (normally english) has to be located in a
-subfolder of the base folder. The resource files for other languages
-have to be located in a subfolder with the name given by syntax
-**<ISO Language Code>_<ISO Country Code>**, where ISO Language Code is
-given by the ISO-639 standard and ISO Country Code is given by the
-ISO-3166 standard.
+The _base folder_ for storing the properties files of a project `p` is $p.name\lstnfjs{/nls}$.
+The language-specific resource files are stored in subfolders of the base folder.
+The base language (normally english) has to be located in a subfolder of the base folder.
+The resource files for other languages have to be located in a subfolder with the name given by syntax `<ISO Language Code>pass:[_]<ISO Country Code>`, where ISO Language Code is given by the ISO-639 standard and ISO Country Code is given by the ISO-3166 standard.
 
-All resource files stored in a language folder are compiled to a
-JavaScript file which exports all resource keys as an object literal.
+All resource files stored in a language folder are compiled to a JavaScript file which exports all resource keys as an object literal.
 
-The resource files of a project are automatically loaded. To access a
-resource key `key` stored in a resource file `my.properties`, you have
-to use the file name as a prefix (e.g. you have to use the key `my.key`).
+The resource files of a project are automatically loaded.
+To access a resource key `key` stored in a resource file `my.properties`, you have to use the file name as a prefix (e.g. you have to use the key `my.key`).
 
 [.language-n4js]
 == API and Implementation Components
 
-Instead of providing an implementation, N4JS components may only define
-an API by way of one or more n4jsd files which is then implemented by
-separate implementation projects. For one such API project, several
-implementation projects may be provided. Client code using the API will
-always be bound to the API project only, i.e. only the API project will
-appear in the client project’s manifest under project dependencies. When
-launching the client code, the launcher will choose an appropriate
-implementation for each API project in the client code’s direct or
-indirect dependencies and transparently replace the API project by the
-implementation project. In other words, instead of the API project’s
-output folder, the implementation project’s output folder will be put on
-the class path. Static compile time validations ensure that the
-implementation projects comply to their corresponding API project.
+Instead of providing an implementation, N4JS components may only define an API by way of one or more n4jsd files which is then implemented by separate implementation projects.
+For one such API project, several implementation projects may be provided.
+Client code using the API will always be bound to the API project only, i.e. only the API project will appear in the client project’s manifest under project dependencies.
+When launching the client code, the launcher will choose an appropriate implementation for each API project in the client code’s direct or indirect dependencies and transparently replace the API project by the implementation project.
+In other words, instead of the API project’s output folder, the implementation project’s output folder will be put on the class path.
+Static compile time validations ensure that the implementation projects comply to their corresponding API project.
 
-Note how this concept can be seen as an alternative way of providing the
-implementation for an n4jsd file: usually n4jsd files are used to define
-types that are implemented in plain JavaScript code or provided by the
-runtime; this concept allows for providing the implementation of an
-n4jsd file in form of ordinary N4JS code.
+Note how this concept can be seen as an alternative way of providing the implementation for an n4jsd file: usually n4jsd files are used to define types that are implemented in plain JavaScript code or provided by the runtime; this concept allows for providing the implementation of an n4jsd file in form of ordinary N4JS code.
 
-At this time, the concept of API and implementation components is in a
-prototype phase and the tool support is limited. The goal is to gain
-experience from using the early prototype support and then refine the
-concept over time.
+At this time, the concept of API and implementation components is in a prototype phase and the tool support is limited.
+The goal is to gain experience from using the early prototype support and then refine the concept over time.
 
 Here is a summary of the most important details of this concept (they
 are all subject to discussion and change):
 
-* Support for this concept, esp. validations, should not be built into
-the core language but rather implemented as a separate
-validation/analysis tool. Validation is currently provided in the form
-of a separate view: the API / Implementation compare view.
-* A project that defines one or more other projects in its manifest
-under `ImplementedProjects` is called _implementation project_. A project that has another
-project pointing to itself via `ImplementedProjects` is called _API project_.
+* Support for this concept, esp. validations, should not be built into the core language but rather implemented as a separate validation/analysis tool.
+* Validation is currently provided in the form of a separate view: the API / Implementation compare view.
+* A project that defines one or more other projects in its manifest under `ImplementedProjects` is called _implementation project_.
+A project that has another project pointing to itself via `ImplementedProjects` is called _API project_.
 Note that, at the moment, there is no explicit definition making a project an API project.
-* An implementation project must define an implementation ID in its
-manifest using the `ImplementationID` property.
-* For each public or public@Internal classifier or enum in an API
-project, there must be a corresponding type with the same
-fully-qualified name of the same or higher visibility in the
-implementation project. For each member of such a type in the API, there
-must exist a corresponding, owned _or_ inherited type-compatible member
-in the implementation type.
-* Beyond type compatibility, formal parameters should have the same name
-on API and implementation side; however, different names are legal but
-should be highlighted by API / Implementation tool support as a (legal)
-change.
-* Comments regarding the state of the API or implementation may be added
-to the JSDoc in the source code using the special tag @apiNote. API /
-Implementation tool support should extract and present this information
-to the user in an appropriate form.
-* If an API class `C` implements an interface
-`I`, it has to explicitly (re-) declare all members of
-`I` similar to the implementation. This is necessary for
-abstract classes anyway in order to distinguish the implemented methods
-from the non-implemented ones. For concrete classes, we want all members
-in `C` in order to be complete and avoid problems when the
-interface is changed or `C` is made abstract.
+* An implementation project must define an implementation ID in its manifest using the `ImplementationID` property.
+* For each public or public@Internal classifier or enum in an API project, there must be a corresponding type with the same fully-qualified name of the same or higher visibility in the  implementation project.
+For each member of such a type in the API, there must exist a corresponding, owned _or_ inherited type-compatible member in the implementation type.
+* Beyond type compatibility, formal parameters should have the same name on API and implementation side; however, different names are legal but should be highlighted by API / Implementation tool support as a (legal) change.
+* Comments regarding the state of the API or implementation may be added to the JSDoc in the source code using the special tag @apiNote.
+API / Implementation tool support should extract and present this information to the user in an appropriate form.
+* If an API class `C` implements an interface `I`, it has to explicitly (re-) declare all members of `I` similar to the implementation.
+This is necessary for abstract classes anyway in order to distinguish the implemented methods from the non-implemented ones.
+For concrete classes, we want all members in `C` in order to be complete and avoid problems when the interface is changed or `C` is made abstract.
 
 === Execution of API and Implementation Components
-
 
 When launching an N4JS component `C` under runtime
 environment <<AC,RE>>, the user may(!) provide an implementation
@@ -1034,54 +1004,38 @@ ID $I\!I\!D$ to run. Then, for each API project
 `A` in the direct or indirect dependencies of
 `C` an implementation project is chosen as follows:
 
-. Collect all implementation projects for `A`
-(i.e. projects that specify `A` in their manifest under `ImplementedProjects`).
-. Remove implementation projects that cannot be run under runtime
-environment <<AC,RE>>, using the same logic as for running
-ordinary N4JS components (this step is not implemented yet!).
+. Collect all implementation projects for `A` (i.e. projects that specify `A` in their manifest under `ImplementedProjects`).
+. Remove implementation projects that cannot be run under runtime environment <<AC,RE>>, using the same logic as for running ordinary N4JS components (this step is not implemented yet!).
 .  If there are no implementation projects left, show an error.
-.  If $I\!I\!D$ is defined (i.e. user specified an
-implementation ID to run), then:
-..  If there is an implementation project left with implementation ID
-$I\!I\!D$, use that.
+.  If $I\!I\!D$ is defined (i.e. user specified an implementation ID to run), then:
+..  If there is an implementation project left with implementation ID $I\!I\!D$, use that.
 ..  Otherwise, show an error.
 .  If $I\!I\!D$ is undefined, then
 ..  If there is exactly 1 implementation project left, use it.
-..  Otherwise, in UI mode prompt the user for a choice, in headless mode
-show an error.
+..  Otherwise, in UI mode prompt the user for a choice, in headless mode  how an error.
 
-Having found an implementation project $I_n$ for each API
-project $A_n$, launch as usual except that whenever
-$A_n$’s output folder would be used, use $I_n$’s
-output folder (esp. when constructing a `class path`) and when loading
-or importing a type from $A_n$ return the corresponding type
-with the same fully-qualified name from $I_n$.
+Having found an implementation project $I_n$ for each API project $A_n$, launch as usual except that whenever $A_n$’s output folder would be used, use $I_n$’s
+output folder (esp. when constructing a `class path`) and when loading or importing a type from $A_n$ return the corresponding type with the same fully-qualified name from $I_n$.
 
 [.language-n4js]
 == API and Implementation With DI
 
-API projects may use N4JS DI (<<_dependency-injection,Dependency Injection>>) language features which require
-Implementation projects to provide DI-compatible behaviour in order to
-allow a Client (implemented against an API project) to be executed with
-a given Implementation project. This is essential for normal execution
-and for test execution. Figure <<diag_APITestsDI_Overview>> shows some of those considerations from test client point of view.
+API projects may use N4JS DI (<<_dependency-injection,Dependency Injection>>) language features which require Implementation projects to provide DI-compatible behaviour in order to allow a Client (implemented against an API project) to be executed with a given Implementation project.
+This is essential for normal execution and for test execution.
+Figure <<diag_APITestsDI_Overview>> shows some of those considerations from test client point of view.
 
 [[diag_APITestsDI_Overview]]
 image::{find}fig/diag_ApiTestsDI_Overview.png[title="Overview of API tests with DI"]
 
-Static DI mechanisms in N4JS allow an API project to enforce
-Implementation projects to provide all necessary information. This
-allows clients to work seamlessly with various implementations without
-specific knowledge about them or without relying on extra tools for
-proper project wiring. Figure <<diag_ApiTestsDI_StaticDI>> shows how API project defines project wiring and enforces certain level of testability.
+Static DI mechanisms in N4JS allow an API project to enforce Implementation projects to provide all necessary information.
+This allows clients to work seamlessly with various implementations without specific knowledge about them or without relying on extra tools for proper project wiring.
+Figure <<diag_ApiTestsDI_StaticDI>> shows how API project defines project wiring and enforces certain level of testability.
 
 [[diag_ApiTestsDI_StaticDI]]
 image::{find}fig/diag_ApiTestsDI_StaticDI.png[title="API tests with static DI"]
 
-During Client execution, weather it is test execution or not, N4JS
-mechanisms will replace the API project with a proper Implementation
-project. During runtime DI mechanisms will take care of providing proper
-instances of implantation types.
+During Client execution, weather it is test execution or not, N4JS mechanisms will replace the API project with a proper Implementation project.
+During runtime DI mechanisms will take care of providing proper instances of implantation types.
 Figure <<diag_ApiTestsDI_Views>> shows Types View perspective of the client, and Instances View perspective of the client.
 
 [[diag_ApiTestsDI_Views]]
