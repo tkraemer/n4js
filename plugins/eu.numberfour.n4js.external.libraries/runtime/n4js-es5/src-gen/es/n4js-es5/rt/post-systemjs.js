@@ -26,9 +26,9 @@
     }
 
     n4.handleMainModule = function(system) {
-	    var mod = options["main"] || options["exec"],
+        var mod = options["main"] || options["exec"],
             mainSym;
-	
+
         // Check for module to startup: main=<module-path>[:export]
         if (!mod) {
             return Promise.reject(new Error("No main nor exec option given!"));

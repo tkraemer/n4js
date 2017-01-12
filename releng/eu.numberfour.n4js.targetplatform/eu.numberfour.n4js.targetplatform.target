@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated target-platform N4JS:N4JS_Neon" sequenceNumber="108">
+<target name="Generated target-platform N4JS:N4JS_Neon" sequenceNumber="107">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="org.eclipse.equinox.executable.feature.group" version="3.6.300.v20160525-1303"/>
@@ -58,7 +58,7 @@
       <repository location="http://cdn.rawgit.com/sandipchitale/pathtools/1.0.64/PathToolsUpdateSite"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-      <unit id="jsonedit-feature.feature.group" version="1.0.1"/>
+      <unit id="jsonedit-feature.feature.group" version="1.0.0.final"/>
       <repository location="http://boothen.github.io/Json-Eclipse-Plugin"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
