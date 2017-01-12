@@ -37,6 +37,7 @@ often defined by omitting the value, we always define the literal
 explicitly if it can be defined by the user.
 
 The following lists informally defines the grammar:
+
 [horizontal]
 Terminal::
   Terminals (or terminal strings) are enclosed in single quotes, e.g., `terminal`.
@@ -102,14 +103,12 @@ The following judgments (with relation symbols) are used:
 [horizontal]
 subtype $<$ ::
 -
-+
+
 type $:$ ::
-  in which the left hand side is a declaration or
-  expression, and the right hand side a type. We also use
-  $\infType{..}$ as a function returning the (inferred) type
-  of an expression.
+in which the left hand side is a declaration or expression, and the right hand side a type.
+We also use $\infType{..}$ as a function returning the (inferred) type of an expression.
 expectedTypeIn $ \lhd :$ ::
-   a relation with three arguments:
+a relation with three arguments:
   $container \lhd expression: type$ means, that
   $expression$ is expected to be a subtype of
   $type$ inside $container$
@@ -125,28 +124,21 @@ The following statement, for example, defines transitivity of subtypes
 ++++
 
 
-is the context containing (bound) type variables etc., $\entails$ can be read as `entails`.
+$\entails$ is the context containing (bound) type variables etc., $\entails$ can be read as `entails`.
 Thus, the rule can be read as follows:
 
 [quote]
 if the type B is a subtype of type A in context $\Gamma$ (i.e. with constraints on type variables specified in $\Gamma$), and if type C is a subtype of B, then C is also a subtype of A in context $\Gamma$.
 
 
-In rules, we sometimes omit the environment if it is not needed. New
-information is sometimes added to the environment, in particular,
-substitutions (that is binding type variables to a type). The set of
-substitutions is written with $\typeSubs$ (theta). If new
-substitutions are explicitly added to that set, we write
-$\typeSubs(V \leftarrow T)$ ($V$ is substituted
-with type $T$). Often, these bindings are computed from a
-parameterized type reference which declares type arguments which are
-bound to the type variables of the generic declaration. In this case we
-simply write $\typeSubs(p)$, in which $p$ is the
-parameterized type declaration. As these new substitutions must become
-part of a (newly) created environment, we then usually write
-$\typeEnvAdd \typeSubs(p)$. These substitutions are usually
-omitted.
-
+In rules, we sometimes omit the environment if it is not needed.
+New information is sometimes added to the environment, in particular, substitutions (that is binding type variables to a type).
+The set of substitutions is written with $\typeSubs$ (theta).
+If new substitutions are explicitly added to that set, we write $\typeSubs(V \leftarrow T)$ ($V$ is substituted with type $T$).
+Often, these bindings are computed from a parameterized type reference which declares type arguments which are bound to the type variables of the generic declaration.
+In this case we simply write $\typeSubs(p)$, in which $p$ is the parameterized type declaration.
+As these new substitutions must become part of a (newly) created environment, we then usually write $\typeEnvAdd \typeSubs(p)$.
+These substitutions are usually omitted.
 
 ==== Types of an Element
 
@@ -154,18 +146,16 @@ A variable or other typed element may be associated with three types:
 
 // TODO missing type here
 
-1.  Declared type: the type explicitly specified in the code, e.g., .
-2.  Inferred type: the type inferred by the type inferencer, e.g., infers the type of s to `string`. I.e.
+1.  Declared type: the type explicitly specified in the code, e.g., `var s: string`.
+2.  Inferred type: the type inferred by the type inferencer, e.g., `var s = "Hello"` infers the type of s to `string`. I.e.
 $\Gamma \vdash s :{string}$ will be true, or $[\![s]\!] < :string $.
 If an element is annotated with a type ,i.e. it has a declared type, the inferred type will always be the declared type.
 3.  Actual type: the actual type of a variable during runtime.
 This type information is not available at compile time and ignored in this specification.
 
-These types are not type declarations but type references, in fact, as
-they may be parameterized. For the sake of simplicity, we often omit the
-`Ref` suffix to shorten formulas. Consequently, we define the
-following properties and pseudo properties for typed elements such as
-variables:
+These types are not type declarations but type references, in fact, as they may be parameterized.
+For the sake of simplicity, we often omit the `Ref` suffix to shorten formulas.
+Consequently, we define the following properties and pseudo properties for typed elements such as variables:
 
 [horizontal]
 declaredType$Ref$ :: The explicitly declared type, this is usually a real property of the construct.
@@ -209,9 +199,8 @@ simply write $r.type$ instead of $bind(r,D), D.type$ to refer to the type expres
 
 --
 
-A `DeclaredType` references the type declaration by its simple name that has been
-imported from a module specifier. We define the method
-$bind$ for declared types as well:
+A `DeclaredType` references the type declaration by its simple name that has been imported from a module specifier.
+We define the method $bind$ for declared types as well:
 
 .Binding Relation of Types
 [def]
@@ -325,5 +314,5 @@ instead of
 ++++
 +
 or even more complicated with index variables.
-+
+
 Sequences are 1-based, e.g., a sequence $s$ with length $|s|=n$, has elements $s_1, \dots, s_n$.
