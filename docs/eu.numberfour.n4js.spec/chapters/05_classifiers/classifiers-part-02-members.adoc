@@ -124,7 +124,9 @@ other is non-static:
 +
 [math]
 ++++
+\beginalign
 \forall m_1,m_2 \in C.ownedMembers, m_1\neq m_2: m_1.name\neq m_2.name \lor m_1.static\neq m_2.static
+\endalign
 ++++
 2.  The member name must be a valid identifier name, see <<_identifier-names-and-identifiers,Identifier Grammar>>.
 

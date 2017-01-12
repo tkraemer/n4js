@@ -1901,13 +1901,13 @@ In other words,
 +
 [math]
 ++++
-\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{Class\}}}{}
+\inferSup{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type{Class}}}{}
 ++++
 +
 is contained in the the first type rule.] task:IDE-652[]
 // TODO check for missing reference
 , an object type reference
-footnote:[Includes interfaces, since an interface type reference is a subtype of object type reference: $\type{type\{Interface\}} <: \type{type\{Object\}}$]
+footnote:[Includes interfaces, since an interface type reference is a subtype of object type reference: $\type{type\{Interface\}} <: \type{type{Object}}$]
 or an enum type reference. task:IDE-681[] task:IDEBUG-631[]
 
 [math]
@@ -2197,7 +2197,7 @@ For a given conditional expression $e$ with
 \beginalign
 e.expression.type: C,
 e.trueExpression.type: T,
-e.false\-Expression.type: F
+e.false-Expression.type: F
 \endalign
 ++++
 
