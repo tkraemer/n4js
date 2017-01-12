@@ -593,17 +593,31 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Check
 	def checkFormalParametersIn(FunctionTypeExpression fun) {
+		// Optionals have a usable type
+		internalCheckOptionalsHaveType(fun.fpars);
+		// all other checks
 		<TFormalParameter>internalCheckFormalParameter(fun.fpars, [variadic], [hasInitializerAssignment], [typeRef], [typeRef?.declaredType?.name]);
 	}
 
 	@Check
 	def checkFormalParametersIn(TFunction fun) {
+		// Optionals have a usable type
+		internalCheckOptionalsHaveType(fun.fpars);
+		// all other checks
 		<TFormalParameter>internalCheckFormalParameter(fun.fpars, [variadic], [hasInitializerAssignment], [typeRef], [typeRef?.declaredType?.name]);
+	}
+	
+	private def void internalCheckOptionalsHaveType(TFormalParameter[] fpars) {
+		for (fp : fpars) {
+			if (fp.optional) {
+				fp.typeRef.addIssueIfNoDeclaredOrUsableType
+			}
+		}
 	}
 
 	@Check
 	def checkFormalParametersIn(FunctionDefinition fun) {
-		<FormalParameter>internalCheckFormalParameter(fun.fpars, [variadic], [hasInitializerAssignment], [it.definedTypeElement.typeRef], [name]);
+		<FormalParameter>internalCheckFormalParameter(fun.fpars, [variadic], [hasInitializerAssignment], [declaredTypeRef], [name]);
 	}
 
 	/**
@@ -621,21 +635,20 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		val variadicsCount = fpars.filter[variadic.apply(it)].size
 		if (variadicsCount > 1) {
 			val variadicParams = fpars.filter[variadic.apply(it)]
-			addIssue( messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head , FUN_PARAM_VARIADIC_ONLY_LAST )
+			addIssue( messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head, FUN_PARAM_VARIADIC_ONLY_LAST )
 		}
 		// 2. Variadic is last
 		if (variadicsCount == 1) {
 			val variadicParams = fpars.filter[variadic.apply(it)]
 			if (!variadic.apply(fpars.last)) {
-				addIssue( messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head , FUN_PARAM_VARIADIC_ONLY_LAST )
+				addIssue( messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head, FUN_PARAM_VARIADIC_ONLY_LAST )
 			}
 		}
 		// 3. both variadic and initializerAssignment
 		for (fp:fpars) {
 			if (hasInitAssgn.apply(fp)) {
-				typeRef.apply(fp).addIssueIfNoDeclaredOrUsableType
 				if (variadic.apply(fp)) {
-					addIssue(messageForFUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS,fp,FUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS)
+					addIssue(messageForFUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS, fp, FUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS)
 				}
 			}
 		}
@@ -693,7 +706,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	/* Part of the holdsModifierOfParamsHaveXX test. Ensures a usable type information is donated by either a
 	 * declaredType, a union/intersection, a ThisTypeRefStructural or a FunctionTypeExpression.*/
 	private def addIssueIfNoDeclaredOrUsableType(TypeRef typeRef) {
-		if( typeRef.isMissing ) {
+		if (typeRef===null || typeRef.isMissing) {
 			addIssue( messageForFUN_PARAM_MISSING_TYPE_NAME_FOR_OPTIONAL, typeRef, FUN_PARAM_MISSING_TYPE_NAME_FOR_OPTIONAL )
 		}
 	}

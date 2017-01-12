@@ -1,0 +1,62 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+let tmp1 = 1;
+let tmp2 = 2;
+var x:int = 3;
+
+class C {
+
+	// XPECT noerrors --> 
+	m0(int=undefined) {}
+	
+	// XPECT noerrors --> 
+	m1(i:int=undefined) {}
+	
+	
+	// XPECT noerrors --> 
+	m2(int=x) {}
+	
+	
+	// XPECT noerrors --> 
+	m3(i:int=x) {}
+	
+	
+	// XPECT noerrors --> 
+	m4(int=) {}
+	
+	
+	// XPECT noerrors --> 
+	m5(i:int=) {}
+	
+	
+	// XPECT noerrors --> 
+	m6(i=1, j=i) {}
+	
+	
+	// XPECT errors --> 
+	m7(i=j, j=1) {}
+	
+	
+	// XPECT errors --> 
+	m8(i=tmp1) { let tmp1 = 1; tmp1; }
+	
+	// XPECT noerrors --> 
+	m9(i=tmp2) { let tmp3 = 3; tmp3; }
+	
+	
+    field = "hello";
+    // XPECT FIXME noerrors --> "Couldn't resolve reference to IdentifiableElement 'field'." at "field"
+    m13(a = this.field) {}
+
+
+	// XPECT errors --> "Invalid combination of modifiers: =… and ...." at "...c="
+	m14(...c=){}
+	
+	
+	// XPECT errors --> "Only the last formal parameter can be variadic." at "...c"
+	m16(...c, ...d){}
+	
+	
+	m17(a=,...b){}
+	
+}

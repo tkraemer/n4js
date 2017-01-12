@@ -693,16 +693,18 @@ into account!
 == ECMAScript 2015 Function Definition
 
 
-== Formal Parameters
+=== Formal Parameters
 Parameter handling has been significantly upgraded in ECMAScript 6.
 It now supports parameter default values, rest parameters (variadics) and destructuring.
 Formal parameters can be modified to be either default or variadic.
 In case a formal parameter has no modifier, it is called normal.
 Modified parameters also become optional.
 
+Modifiers of formal parameters such as default or rest are neither evaluated nor rewritten in the transpiler.
 
 
-=== Optional Parameters [[Type_Modifiers_Optional]]
+
+==== Optional Parameters [[Type_Modifiers_Optional]]
 task:IDE-145[]
 An optional formal parameter can be omitted when calling a function/method.
 An omitted parameter has the value `undefined`.
@@ -713,7 +715,7 @@ Instead, being optional is true when a parameter is declared as default or varia
 Note that any formal parameter that follows a default parameter is itself also a default thus an optional parameter.
 
 
-=== Default Parameters [[Type_Modifiers_Default]]
+==== Default Parameters [[Type_Modifiers_Default]]
 A default parameter value is specified for a parameter via an equals sign (`=`).
 If a caller doesn’t provide a value for the parameter, the default value is used.
 
@@ -737,7 +739,7 @@ When a method is overwritten, its default parameters are not part of the overwri
 Consequently, initializers of default parameters in abstract methods are obsolete.
 
 
-=== Variadic [[Type_Modifiers_Variadic]]
+==== Variadic [[Type_Modifiers_Variadic]]
 task:IDE-145[] task:IDE-146[]
 
 Variadic parameters are also called _rest parameters_.
