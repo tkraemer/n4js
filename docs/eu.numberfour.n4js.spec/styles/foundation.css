@@ -524,11 +524,12 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-si
 .listingblock pre.highlightjs > code { padding: 0.8em 0.8em 0.65em 0.8em; -webkit-border-radius: 0; border-radius: 0; }
 
 .listingblock > .content { position: relative; }
-
+/*
+If reverting to builtin syntax highlighter, uncomment this section for source code blocks
 .listingblock code[data-lang]:before { display: none; content: attr(data-lang); position: absolute; font-size: 0.75em; top: 0.425rem; right: 0.5rem; line-height: 1; text-transform: uppercase; color: #999; }
 
 .listingblock:hover code[data-lang]:before { display: block; }
-
+*/
 .listingblock.terminal pre .command:before { content: attr(data-prompt); padding-right: 0.5em; color: #999; }
 
 .listingblock.terminal pre .command:not([data-prompt]):before { content: "$"; }
