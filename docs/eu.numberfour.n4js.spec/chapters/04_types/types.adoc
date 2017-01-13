@@ -659,7 +659,8 @@ type reference $R$ with $G=R.declaredType$, the following constraints must hold:
 
 
 We define type erasure similar to Java cite:[Gosling12a(S4.6)] as 'mapping from types (possibly including parameterized types and type variables) to types (that are never parameterized types or type variables)'. We write $T$^o^ for the erasure of type _T_.
-footnote:[The notation $|T|$ used in cite:[Gosling12a] conflicts with the notation of cardinality of sets, which we use in case of union or intersection types for types as well. The notation used here is inspired by cite:[Crary02a], in which a mapping is defined between a typed language $\lambda$ to an untyped language $\lambda$^o^.]
+
+TIP: The notation $|T|$ used in cite:[Gosling12a] conflicts with the notation of cardinality of sets, which we use in case of union or intersection types for types as well. The notation used here is inspired by cite:[Crary02a], in which a mapping is defined between a typed language $\lambda$ to an untyped language $\lambda$^o^.
 
 .Parameterized Type
 [def]
@@ -1125,7 +1126,7 @@ In ECMAScript numbers are usually 64-bit floating point numbers. For
 details see cite:[ECMA11a(8.5)].
 With prefix `0` you indicate that the number is octal based and with prefix `0x` it is marked as hexadecimal based.
 
-`NaN` can be produced by e.g.  '`0 / 0`’ or ’`1 - x`’. `typeof NaN` will return `number`.
+`NaN` can be produced by e.g.  `pass:[0 / 0]` or ’`1 - x`’. `typeof NaN` will return `number`.
 
 [discrete]
 ==== Semantics [[primitive-number-type-semantics]]
@@ -1167,17 +1168,17 @@ For more details, see <<_symbol,Primitive Symbol Type Object Type>>.
 Additionally to the primitive ECMAScript types, the following
 N4JS-specific primitive types are supported:
 
-* any: enables ECMAScript-like untyped variable declarations
-* void: almost similar to undefined, except it can be used as a return
-type of functions and methods
-* unknown: inferred in case of a type inference error
-* pathSelector<T>, i18nKey: subtypes of string
+[horizontal]
+`any`:: enables ECMAScript-like untyped variable declarations
+`void`:: almost similar to undefined, except it can be used as a return type of functions and methods
+`unknown`:: inferred in case of a type inference error
+`pathSelector<T>`, `i18nKey`:: subtypes of string
 
 === Any Type
 
-Any type is the default type of all variables for without a type
-declaration. It has no properties. A value of any other type can be
-assigned to a variable of type `any`, but a variable declared `any` can only be assigned to another variable declared with the type `any`.
+Any type is the default type of all variables for without a type declaration.
+It has no properties.
+A value of any other type can be assigned to a variable of type `any`, but a variable declared `any` can only be assigned to another variable declared with the type `any`.
 
 
 ==== Semantics [[any-type-semantics]]
@@ -1186,7 +1187,7 @@ assigned to a variable of type `any`, but a variable declared `any` can only be 
 
 [math]
 ++++
-\inferSup{\tee `Type` left \subtype `any}`
+\inferSup{\tee `Type` left \subtype `any`}
 ++++
 
 is an axiom and true for all types.
@@ -1631,7 +1632,7 @@ types and prefers single typed joins or meets. __The most common use
 case for union types is for emulating method overloading__, as we
 describe later on.
 
-footnote:[For type theory about union types, cite:[Pierce02a(15.7)] and cite:[Igarashi07a], other languages that explicitly support the notion of union type include Ceylon cite:[King13a(3.2.4/5)]]
+TIP: For type theory about union types, cite:[Pierce02a(15.7)] and cite:[Igarashi07a], other languages that explicitly support the notion of union type include Ceylon cite:[King13a(3.2.4/5)]
 
 ==== Syntax [[union-type-syntax]]
 
@@ -1701,10 +1702,8 @@ $\union{A,\union{B,C}} = \union{\union{A,B},C}$
 * Uniqueness of elements: A union type may not contain duplicates
 (similar to sets):
 +
-[math]
-++++
-& \forall 1\leq i < k \leq n, \union{T_1,\dots,T_n}: T_i \neq T_k
-++++
+\forall 1\leq i < k \leq n, \union{T_1,\dots,T_n}: T_i \neq T_k
+
 --
 
 .Implicit simplification of union types
@@ -1721,8 +1720,7 @@ contains only one element, it is reduced to the element:
 \infer{T}{\union{T}}
 ++++
 
-* Simplification of union types of union types:
-* A union type $U$ containing another union types $V$ is reduced to a single union type $W$, with
+* Simplification of union types of union types: A union type $U$ containing another union types $V$ is reduced to a single union type $W$, with
 $W.typeRefs = U.typeRefs \cup V.typeRefs$:
 +
 [math]
@@ -1764,15 +1762,11 @@ union:
 Remarks:
 
 * The simplification rules may be applied recursively.
-* For given types $B <: A$, and the union type
-$U=\union{A,B}$, $U \neq B$. The types are
-equivalent, however: $A <:= U$ and
-$U <:= A$.
+* For given types $B <: A$, and the union type $U=\union{A,B}$, $U \neq B$.
+The types are equivalent, however: $A <:= U$ and $U <:= A$.
 
-footnote:[This is different from Ceylon ( cite:[King13a(3.2.3)]), in
-which the union is defined to be `the same type as` _A_.
-Although the meaning of `same` is not clear, it is possibly used as a
-synonym for `equivalent`.]
+TIP: This is different from Ceylon ( cite:[King13a(3.2.3)]), in which the union is defined to be `the same type as` _A_.
+Although the meaning of `same` is not clear, it is possibly used as a synonym for `equivalent`.
 
 .Subtyping with union type
 [example]
@@ -1803,10 +1797,8 @@ union{X,Y,Z} <: union{X,Y}                      -> false
 --
 
 
-The simplification constraints are used by the type inferrer. It may be
-useful, however, to define union types with superfluous elements, as the
-next example demonstrates
-
+The simplification constraints are used by the type inferrer.
+It may be useful, however, to define union types with superfluous elements, as the next example demonstrates
 
 .Superfluous elements in union type
 [example]
@@ -1823,17 +1815,13 @@ function foo(p: union{A,B}) {..}
 
 ====
 
-Although `B` is superfluous, it may indicate that the function handles
-parameters of type differently than one of type `A` or `C`.
+Although `B` is superfluous, it may indicate that the function handles parameters of type differently than one of type `A` or `C`.
 
-Although a union type is a `<<Acronyms,LCST>>` of its contained (non-superfluous) types, the
-type inferrer usually does not create new union types when computing the
-join of types. If the join of types including at least one union type is
-calculated, the union type is preserved if possible. The same is true
-for meet.
+Although a union type is a `<<Acronyms,LCST>>` of its contained (non-superfluous) types, the type inferrer usually does not create new union types when computing the join of types.
+If the join of types including at least one union type is calculated, the union type is preserved if possible.
+The same is true for meet.
 
-For the definition of join and meet for union types, we define how a
-type is added to a union type:
+For the definition of join and meet for union types, we define how a type is added to a union type:
 
 .Union of union type
 [req,id=IDE-21,version=1]
@@ -2026,11 +2014,9 @@ is contained in the intersection type task:IDE-2302[].
 Let $I$ be an intersection type.
 
 * An intersection type is a subtype of another type, if at least one of
-its contained types is a subtype of that type: footnote:[This rule is a
-generalization of the subtyping rules given in
+its contained types is a subtype of that type:
 
-cite:[Laurent12a]Table 2, $\cap^1_l$ and $\cap^2_l$
-
+TIP: This rule is a generalization of the subtyping rules given in cite:[Laurent12a] Table 2, $\cap^1_l$ and $\cap^2_l$
 
 [math]
 ++++
@@ -2038,8 +2024,9 @@ cite:[Laurent12a]Table 2, $\cap^1_l$ and $\cap^2_l$
 ++++
 
 * A type is a subtype of an intersection type, if it is a subtype of all
-types contained in the intersection type: footnote:[This rule is a
-generalization of the subtyping rules given in cite:[Laurent12a]Table 2, $\cap^1_l$ and $\cap^2_l$
+types contained in the intersection type:
+
+TIP: This rule is a generalization of the subtyping rules given in cite:[Laurent12a]Table 2, $\cap_r$
 
 [math]
 ++++
@@ -2068,10 +2055,10 @@ intersection:
 
 
 These subtyping rules are similar to Ceylon.
-footnote:[In Ceylon, for a given union type $U=T_1|T_2$ and intersection type $I=T_1\&T_2$ (with ’|’ is union and ’&’ is intersection),
-$T_1<:U$ and $T_2<:U$ is true, and
-$T_1<:I$ and $T_2<:I$ is true. We should define
-that as well (if it is not already defined). Cf cite:[King13a(3.2.4/5)]]
+
+TIP: In Ceylon, for a given union type $U=T_1|T_2$ and intersection type $I=T_1\&T_2$ (with ’|’ is union and ’&’ is intersection),
+$T_1<:U$ and $T_2<:U$ is true, and $T_1<:I$ and $T_2<:I$ is true.
+We should define that as well (if it is not already defined). Cf cite:[King13a(3.2.4/5)]
 
 During validation, intersection types containing union or other
 intersection types may be inferred. In this case, the composed types are
@@ -2800,9 +2787,8 @@ class A {
 
 --
 
-The use of $this$ type is limited to situations where it cannot be referred in
-mixed co- and contra-variant ways. In the following example the problem
-is sketched up. footnote:[The phenomenon is described in IDEBUG-263 task:IDEBUG-263[]]
+The use of $this$ type is limited to situations where it cannot be referred in mixed co- and contra-variant ways.
+In the following example the problem is sketched up. footnote:[The phenomenon is described in IDEBUG-263 task:IDEBUG-263[]]
 
 .Problems with this type and type arguments
 [example]
@@ -2838,12 +2824,9 @@ task:IDE-327[] task:IDE-980[]
 Enums are an ordered set of literals.
 Although enums are not true classes, they come with built-in methods for accessing value, name and type name of the enum.
 
-In N4JS, two flavours of enumerations are distinguished: ordinary enums
-(N4JS) and string based enums. Ordinary enums (or in short, enums) are
-used while programming in N4JS. String based enums are introduced to
-access enumerations derived from standards, mainly developed by the W3C,
-in order to access the closed set of string literals defined in webIDL
-syntax.
+In N4JS, two flavours of enumerations are distinguished: ordinary enums (N4JS) and string based enums.
+Ordinary enums (or in short, enums) are used while programming in N4JS.
+String based enums are introduced to access enumerations derived from standards, mainly developed by the W3C, in order to access the closed set of string literals defined in webIDL syntax.
 
 === Enums (N4JS)
 

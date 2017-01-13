@@ -138,7 +138,9 @@ other is non-static:
 
 Thus, over__loading__ of methods is not supported footnote:[In order to emulate method overloading, union types are to be used.] and no field may have the same name as a method.
 However, over__riding__ of methods, getters, and setters are possible, see <<_redefinition-of-members,Redefinition of Members>>.
-Static members may also have the same name as non-static members footnote:[ cite[ECMA15a(p214)], `ClassBody : ClassElementList` indicates that it is possible to have the same name for instance and static members.].
+Static members may also have the same name as non-static members.
+
+TIP: cite[ECMA15a(p214)], `ClassBody : ClassElementList` indicates that it is possible to have the same name for instance and static members.
 
 The dollar character `\$` is not allowed for user-defined member identifiers as the dollar sign is used for rewriting private members.
 
@@ -223,7 +225,7 @@ fragment ColonSepTypeRef*:
     ':' declaredTypeRef=TypeRef
 ;
 ----
-<1> See the <<_asynchronous-functions,Asynchronour Functions>> section.
+<1> See the <<_asynchronous-functions,Asynchronous Functions>> section.
 
 [.language-n4js]
 === Properties
