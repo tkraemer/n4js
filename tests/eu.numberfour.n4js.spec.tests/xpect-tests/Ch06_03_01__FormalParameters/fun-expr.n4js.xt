@@ -68,17 +68,6 @@ fex11;
 var fex12 = function(i=1, j, k=3) {}
 fex12;
 
-
-class C {
-    field = "hello";
-    m() {
-		// XPECT FIXME noerrors --> "Couldn't resolve reference to IdentifiableElement 'field'." at "field"
-		var fex13 = function(j=this.field) {}
-		fex13;
-	}
-}
-
-
 // XPECT errors --> "Invalid combination of modifiers: =… and ...." at "...i="
 var fex14 = function(...i=) {};
 fex14;

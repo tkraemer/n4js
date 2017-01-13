@@ -47,7 +47,6 @@ import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 import eu.numberfour.n4js.n4JS.YieldExpression
-import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.FormalParameter
 
 /**
@@ -216,12 +215,12 @@ public class ASTProcessor extends AbstractProcessor {
 	
 	private def boolean postponeNode(EObject node) {
 		return 
-		(node instanceof Expression && node.eContainer instanceof FormalParameter)
-		|| node instanceof Block && (
-				node.eContainer instanceof FunctionExpression
+			(node instanceof Expression && node.eContainer instanceof FormalParameter)
+		||	(node instanceof Block 
+			 && (  node.eContainer instanceof FunctionExpression
 				|| node.eContainer instanceof PropertyGetterDeclaration
 				|| node.eContainer instanceof PropertySetterDeclaration
-				|| node.eContainer instanceof PropertyMethodDeclaration);
+				|| node.eContainer instanceof PropertyMethodDeclaration));
 	}
 
 	/**
