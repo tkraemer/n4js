@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="eu.numberfour.n4js.utils" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="eu.numberfour.n4js.utils" id="eu.numberfour.n4js.utils.fileExtensions" name="Runnable File Extensions"/>
+      </appInfo>
+      <documentation>
+         This extension point should be used by sub-language plugins to register transpilable, test and runnable file extensions. These file extensions are used by for openning generated source, runner and tester.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="transpilableFileExtensions"/>
+            <element ref="runnableFileExtensions"/>
+            <element ref="testFileExtensions"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="runnableFileExtensions">
+      <complexType>
+         <attribute name="extensions" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="transpilableFileExtensions">
+      <complexType>
+         <attribute name="extensions" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="testFileExtensions">
+      <complexType>
+         <attribute name="extensions" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         0.0.1
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         The following is an example demonstrating how to declare transpilable, runnable and test file extensions for n4js language:
+&lt;p&gt; 
+&lt;pre&gt;
+   &lt;extension
+     point=&quot;eu.numberfour.n4js.utils.fileExtensions&quot;&gt;
+     &lt;transpilableFileExtensions extensions=&quot;.n4js, .js&quot;/&gt;
+     &lt;runnableFileExtensions extensions=&quot;.n4js, .js&quot;/&gt;
+     &lt;testFileExtensions extensions=&quot;.n4js&quot;/&gt;
+   &lt;/extension&gt;
+&lt;/pre&gt; 
+&lt;/p&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiinfo"/>
+      </appInfo>
+      <documentation>
+         See example for usage.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         &lt;pre&gt;
+Copyright (c) 2017 NumberFour AG.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+   NumberFour AG - Initial API and implementation
+&lt;/pre&gt;
+      </documentation>
+   </annotation>
+
+</schema>

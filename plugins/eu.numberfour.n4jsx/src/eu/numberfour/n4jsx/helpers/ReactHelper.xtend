@@ -83,9 +83,7 @@ class ReactHelper {
 				if (classifier instanceof TClassifier) {
 					// If the found react.Element, react.Component is a proxy, exportedName and containingModule will be null.
 					// That's why we need to resolve the proxy first
-					if ((e.EObjectURI.trimFragment.lastSegment != REACT_MODULE + "." + N4JSGlobals.N4JSD_FILE_EXTENSION) && 
-						(e.EObjectURI.trimFragment.lastSegment != REACT_MODULE + "." + N4JSGlobals.N4JS_FILE_EXTENSION)) {
-						// Only consider react.n4jd or react.n4js (the latter is for tests in n4jsx.spec.tests/compile)
+					if ((e.EObjectURI.trimFragment.lastSegment != REACT_MODULE + "." + N4JSGlobals.N4JSD_FILE_EXTENSION)) {
 						return false;
 					}										
 					val resolvedClassifier = 

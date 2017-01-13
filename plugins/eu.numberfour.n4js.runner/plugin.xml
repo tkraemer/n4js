@@ -12,5 +12,4 @@ Contributors:
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="eu.numberfour.n4js.runner.runners" name="N4JS Runners" schema="schema/eu.numberfour.n4js.runner.runners.exsd"/>
- 
 </plugin>
