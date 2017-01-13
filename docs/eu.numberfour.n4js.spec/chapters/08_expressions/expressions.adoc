@@ -526,15 +526,17 @@ following axioms are defined for literals:
 
 [math]
 ++++
-&\infer{\type{NullLiteral}: \type{null}}{}
-&\infer{\type{BooleanLiteral}: \type{boolean}}{}
-&\infer{\type{NumericLiteral}: \type{int} or \type{number}}{}
-&\infer{\type{StringLiteral}: \type{string}}{}
-&\infer{\type{RegularExpressionLiteral}: \type{RegExpr}}{}
+\beginalign
+\infer{\type{NullLiteral}: \type{null}}{} \\
+\infer{\type{BooleanLiteral}: \type{boolean}}{}  \\
+\infer{\type{NumericLiteral}: \type{int} or \type{number}}{} \\
+\infer{\type{StringLiteral}: \type{string}}{} \\
+\infer{\type{RegularExpressionLiteral}: \type{RegExpr}}{} \\
+\endalign
 ++++
 
 ////
-TODO - check status of tags:
+TODO - convert tags to section links
 
 \tag{\S7.8.1}\\
 \tag{\S7.8.2}\\

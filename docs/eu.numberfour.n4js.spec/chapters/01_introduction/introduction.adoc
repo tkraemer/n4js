@@ -99,7 +99,6 @@ if $P_1$, $P_2$, and $P_3$ are all true, then $C$ is true as well.
 
 The following judgments (with relation symbols) are used:
 
-// TODO replace math with original LaTeX
 [horizontal]
 subtype $<$ ::
 -
@@ -116,13 +115,10 @@ a relation with three arguments:
 The following statement, for example, defines transitivity of subtypes
 (in a simplified manner):
 
-// TODO replace math with original LaTeX
-
 [math]
 ++++
 \frac{\Gamma B \vdash <: A \hspace{7mm} \Gamma \vdash C <: B}{\Gamma \vdash C: < A}
 ++++
-
 
 $\entails$ is the context containing (bound) type variables etc., $\entails$ can be read as `entails`.
 Thus, the rule can be read as follows:
@@ -143,8 +139,6 @@ These substitutions are usually omitted.
 ==== Types of an Element
 
 A variable or other typed element may be associated with three types:
-
-// TODO missing type here
 
 1.  Declared type: the type explicitly specified in the code, e.g., `var s: string`.
 2.  Inferred type: the type inferred by the type inferencer, e.g., `var s = "Hello"` infers the type of s to `string`. I.e.
