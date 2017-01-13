@@ -521,7 +521,7 @@ This applies to all variable execution environments like field accessors (getter
 // regular function
 function a1(s1: string, n2: number) {
     var l: number = arguments.length;
-    var s: string = arguments[0] as string;
+    var s: string = arguments[0] as string; // <1>
 }
 
 class A {
@@ -550,7 +550,7 @@ function z(){
     var arguments: number = 4;
 }
 ----
-
+<1> thing
 
 [.language-n4js]
 == ECMAScript 5 Function Definition
@@ -1000,6 +1000,7 @@ keyword, as shown in the next example.
 .Async as keyword and identifier
 [example]
 --
+
 [source,n4js]
 ----
 async // <1>
@@ -1096,33 +1097,6 @@ _T_, the type of (`await` _expr_) is inferred to _T_ if
 _T_ is not a Promise, or it is inferred to _S_ if
 _T_ is a Promise with a success value of type
 _S_, i.e. _T <: Promise<S,?>_ .
-
-
-////
-
-TODO Check if this section is deprecated
-
-1. `async` may be used on declared functions and methods, and for function
-expressions. and arrow functions.
-2.  A function or method $f$ with a declared return type
-$R$ that is declared has an actual return type of `async`.
-+
-NOTE: for the time being this applies also to functions with a void
-return type, producing the actual return type `Promise<void,?>` (to be reconsidered).
-3.  Given a function or method $f$ with a declared return
-type $R$ that is declared , all return statements in
-$f$ must have an expression of type $R$ (and not
-of type ).
-4.  `await` can be used in expressions directly enclosed in an async function,
-and behaves like a unary operator with the same precedence as in ES6.
-5.  Given an expression $\mathit{expr}$ of type
-$T$, the type of $($
-$\mathit{expr} )$ is inferred to $T$ if
-$T$ is not a Promise or it is inferred to $S$ if
-$T$ is a Promise with a success value of type
-$S$, i.e. $T <:$ .
-
-////
 
 --
 
