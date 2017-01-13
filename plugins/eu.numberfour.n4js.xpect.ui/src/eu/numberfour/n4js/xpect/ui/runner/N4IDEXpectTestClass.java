@@ -15,8 +15,13 @@ import org.xpect.XpectImport;
 import org.xpect.runner.IXpectURIProvider;
 import org.xpect.runner.XpectRunner;
 import org.xpect.runner.XpectSuiteClasses;
+import org.xpect.xtext.lib.tests.ResourceDescriptionTest;
 import org.xpect.xtext.lib.tests.ValidationTest;
 
+import eu.numberfour.n4js.xpect.OutputXpectMethod;
+import eu.numberfour.n4js.xpect.TypeXpectMethod;
+import eu.numberfour.n4js.xpect.linking.LinkingXpectMethod;
+import eu.numberfour.n4js.xpect.scoping.ScopeXpectMethod;
 import eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestFilesCollector.N4IDEXpectTestURIProvider;
 import eu.numberfour.n4js.xpect.ui.xpectmethods.NoerrorsXpectMethod;
 
@@ -27,7 +32,12 @@ import eu.numberfour.n4js.xpect.ui.xpectmethods.NoerrorsXpectMethod;
  */
 @XpectSuiteClasses({
 		ValidationTest.class,
-		NoerrorsXpectMethod.class
+		NoerrorsXpectMethod.class,
+		OutputXpectMethod.class,
+		TypeXpectMethod.class,
+		ScopeXpectMethod.class,
+		ResourceDescriptionTest.class,
+		LinkingXpectMethod.class
 })
 @RunWith(XpectRunner.class)
 @XpectImport({ N4IDEXpectFileSetup.class })

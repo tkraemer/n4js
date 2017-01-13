@@ -11,8 +11,10 @@ Require-Bundle: org.eclipse.debug.ui,
  eu.numberfour.n4js.utils,
  org.eclipse.ui.console,
  org.eclipse.compare,
- org.eclipse.core.expressions
+ org.eclipse.core.expressions,
+ eu.numberfour.n4js.xpect
 Bundle-ActivationPolicy: lazy
 Export-Package: eu.numberfour.n4js.xpect.ui,
- eu.numberfour.n4js.xpect.ui.results
+ eu.numberfour.n4js.xpect.ui.results,
+ eu.numberfour.n4js.xpect.ui.runner
 Bundle-Activator: eu.numberfour.n4js.xpect.ui.N4IDEXpectUIPlugin

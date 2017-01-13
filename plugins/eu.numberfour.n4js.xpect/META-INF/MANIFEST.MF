@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: N4JS Tests Helper
-Bundle-SymbolicName: eu.numberfour.n4js.tests.helper
+Bundle-Name: N4JS Xpect test methods
+Bundle-SymbolicName: eu.numberfour.n4js.xpect;singleton:=true
 Bundle-Version: 0.0.1.qualifier
 Bundle-Vendor: NumberFour
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -32,11 +32,9 @@ Import-Package: org.apache.log4j,
  org.junit.runners;version="4.5.0",
  org.junit.runners.model;version="4.5.0",
  org.slf4j
-Export-Package: eu.numberfour.n4js,
- eu.numberfour.n4js.analysis,
- eu.numberfour.n4js.csv,
- eu.numberfour.n4js.tests.codegen,
- eu.numberfour.n4js.tests.issues,
- eu.numberfour.n4js.tests.parser,
- eu.numberfour.n4js.tests.projectModel,
- eu.numberfour.n4js.xpect.config
+Export-Package: eu.numberfour.n4js.xpect,
+ eu.numberfour.n4js.xpect.linking,
+ eu.numberfour.n4js.xpect.references,
+ eu.numberfour.n4js.xpect.scoping,
+ eu.numberfour.n4js.xpect.validation,
+ eu.numberfour.n4js.xpect.validation.suppression

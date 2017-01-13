@@ -39,8 +39,6 @@ import com.google.inject.Provider;
 
 import eu.numberfour.n4js.formatting2.N4JSFormatterPreferenceKeys;
 import eu.numberfour.n4js.xpect.FormatterXpectMethod.TextRegionAccessFactory;
-import eu.numberfour.n4js.xpect.config.Preference;
-import eu.numberfour.n4js.xpect.config.Preferences;
 
 /**
  * @author Moritz Eysholdt

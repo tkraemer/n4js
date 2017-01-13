@@ -33,6 +33,7 @@ import org.eclipse.xtext.validation.IResourceValidator
 import org.eclipse.xtext.validation.Issue
 
 import static org.eclipse.xtext.diagnostics.Severity.*
+import eu.numberfour.n4js.resource.XpectAwareFileExtensionCalculator
 
 /**
  */
@@ -65,6 +66,9 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 
 	@Inject
 	extension N4JSPreferenceAccess
+	
+	@Inject 
+	extension XpectAwareFileExtensionCalculator
 
 	override getCompilerDescriptor() {
 		if (compilerDescriptor === null) {
@@ -129,9 +133,10 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 	override shouldBeCompiled(Resource input, CancelIndicator monitor) {
 		val autobuildEnabled = isActive(input)
 		val isXPECTMode = N4JSGlobals.XT_FILE_EXTENSION == input.URI.fileExtension.toLowerCase;
+		val fileExtension = input.URI.xpectAwareFileExtension;
 		
 		return (autobuildEnabled
-			&& (input.hasValidFileExtension || "n4jsx".equals(input.URI.fileExtension)) // TODO IDE-2416
+			&& (input.hasValidFileExtension || "n4jsx".equals(fileExtension) || "jsx".equals(fileExtension)) // TODO IDE-2416
 			&& projectUtils.isSource(input.URI)
 			&& (projectUtils.isNoValidate(input.URI) 
 				|| projectUtils.isExternal(input.URI) 
@@ -203,7 +208,8 @@ abstract class AbstractSubGenerator implements ISubGenerator {
 		 * assuming hasValidFileExtension was called, so care only about double extension
 		 */
 		var souceURI =
-			if (ResourceType.xtHidesOtherExtension(n4jsSourceFile.URI)) {
+			//TODO: need a uniform way to handle multiple languages here
+			if (ResourceType.xtHidesOtherExtension(n4jsSourceFile.URI) || (N4JSGlobals.XT_FILE_EXTENSION  == n4jsSourceFile.URI.fileExtension.toLowerCase)) {
 				n4jsSourceFile.URI.trimFileExtension
 			} else {
 				n4jsSourceFile.URI

@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.config;
+package eu.numberfour.n4js.xpect;
 
 import java.util.HashMap;
 import java.util.Set;
