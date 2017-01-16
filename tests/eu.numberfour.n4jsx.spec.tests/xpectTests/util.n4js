@@ -1,3 +1,0 @@
-export public function f(): string {
-	return "I am a util function";
-}

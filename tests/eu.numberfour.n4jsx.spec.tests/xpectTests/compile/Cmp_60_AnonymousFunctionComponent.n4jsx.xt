@@ -27,7 +27,6 @@ stderr:
 import * as React from "reactFiles/react"
 import { replacer } from "reactFiles/replacer";
 
-
 class MyProps implements React.ComponentProps  {
 	public a: int;
 	public x: int;
