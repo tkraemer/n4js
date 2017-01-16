@@ -713,6 +713,10 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 					// apparently we have an astProxy at index 0 but no module
 					// was deserialized from the index
 					// try to obtain the module from a freshly loaded ast
+					
+					// TODO: IDE-2479: Remove this!
+					boolean b = true; // trigger a warning as a reminder, too
+					System.out.println("########## Triggering reload of proxyfied AST for " + getURI());
 					contents.get(0);
 				}
 			}
