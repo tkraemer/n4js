@@ -8215,13 +8215,13 @@ public interface TypesPackage extends EPackage {
 	int TFORMAL_PARAMETER__VARIADIC = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Has Initializer</b></em>' attribute.
+	 * The feature id for the '<em><b>Initializer</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER__HAS_INITIALIZER = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 3;
+	int TFORMAL_PARAMETER__INITIALIZER = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Has Initializer Assignment</b></em>' attribute.
@@ -8260,13 +8260,22 @@ public interface TypesPackage extends EPackage {
 	int TFORMAL_PARAMETER___GET_CONTAINING_MODULE = IDENTIFIABLE_ELEMENT___GET_CONTAINING_MODULE;
 
 	/**
+	 * The operation id for the '<em>Has Initializer</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFORMAL_PARAMETER___HAS_INITIALIZER = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER___IS_OPTIONAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 0;
+	int TFORMAL_PARAMETER___IS_OPTIONAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Is Variadic Or Optional</em>' operation.
@@ -8275,7 +8284,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER___IS_VARIADIC_OR_OPTIONAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 1;
+	int TFORMAL_PARAMETER___IS_VARIADIC_OR_OPTIONAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Formal Parameter As String</em>' operation.
@@ -8284,7 +8293,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER___GET_FORMAL_PARAMETER_AS_STRING = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 2;
+	int TFORMAL_PARAMETER___GET_FORMAL_PARAMETER_AS_STRING = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>TFormal Parameter</em>' class.
@@ -8293,7 +8302,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER_OPERATION_COUNT = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 3;
+	int TFORMAL_PARAMETER_OPERATION_COUNT = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TAnonymousFormalParameterImpl <em>TAnonymous Formal Parameter</em>}' class.
@@ -8342,13 +8351,13 @@ public interface TypesPackage extends EPackage {
 	int TANONYMOUS_FORMAL_PARAMETER__VARIADIC = TFORMAL_PARAMETER__VARIADIC;
 
 	/**
-	 * The feature id for the '<em><b>Has Initializer</b></em>' attribute.
+	 * The feature id for the '<em><b>Initializer</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TANONYMOUS_FORMAL_PARAMETER__HAS_INITIALIZER = TFORMAL_PARAMETER__HAS_INITIALIZER;
+	int TANONYMOUS_FORMAL_PARAMETER__INITIALIZER = TFORMAL_PARAMETER__INITIALIZER;
 
 	/**
 	 * The feature id for the '<em><b>Has Initializer Assignment</b></em>' attribute.
@@ -8385,6 +8394,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TANONYMOUS_FORMAL_PARAMETER___GET_CONTAINING_MODULE = TFORMAL_PARAMETER___GET_CONTAINING_MODULE;
+
+	/**
+	 * The operation id for the '<em>Has Initializer</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TANONYMOUS_FORMAL_PARAMETER___HAS_INITIALIZER = TFORMAL_PARAMETER___HAS_INITIALIZER;
 
 	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
@@ -13137,15 +13155,15 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTFormalParameter_Variadic();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializer <em>Has Initializer</em>}'.
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TFormalParameter#getInitializer <em>Initializer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Has Initializer</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializer()
+	 * @return the meta object for the attribute '<em>Initializer</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TFormalParameter#getInitializer()
 	 * @see #getTFormalParameter()
 	 * @generated
 	 */
-	EAttribute getTFormalParameter_HasInitializer();
+	EAttribute getTFormalParameter_Initializer();
 
 	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializerAssignment <em>Has Initializer Assignment</em>}'.
@@ -13168,6 +13186,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTFormalParameter_TypeRef();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TFormalParameter#hasInitializer() <em>Has Initializer</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Has Initializer</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TFormalParameter#hasInitializer()
+	 * @generated
+	 */
+	EOperation getTFormalParameter__HasInitializer();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TFormalParameter#isOptional() <em>Is Optional</em>}' operation.
@@ -15442,12 +15470,12 @@ public interface TypesPackage extends EPackage {
 		EAttribute TFORMAL_PARAMETER__VARIADIC = eINSTANCE.getTFormalParameter_Variadic();
 
 		/**
-		 * The meta object literal for the '<em><b>Has Initializer</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Initializer</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TFORMAL_PARAMETER__HAS_INITIALIZER = eINSTANCE.getTFormalParameter_HasInitializer();
+		EAttribute TFORMAL_PARAMETER__INITIALIZER = eINSTANCE.getTFormalParameter_Initializer();
 
 		/**
 		 * The meta object literal for the '<em><b>Has Initializer Assignment</b></em>' attribute feature.
@@ -15464,6 +15492,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TFORMAL_PARAMETER__TYPE_REF = eINSTANCE.getTFormalParameter_TypeRef();
+
+		/**
+		 * The meta object literal for the '<em><b>Has Initializer</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TFORMAL_PARAMETER___HAS_INITIALIZER = eINSTANCE.getTFormalParameter__HasInitializer();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Optional</b></em>' operation.

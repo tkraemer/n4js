@@ -88,8 +88,6 @@ public class N4JSSyntacticSequencer extends AbstractSyntacticSequencer {
 			return getSemiToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getTemplateExpressionEndRule())
 			return getTemplateExpressionEndToken(semanticObject, ruleCall, node);
-		else if (ruleCall.getRule() == grammarAccess.getTypeReferenceNameRule())
-			return getTypeReferenceNameToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
@@ -121,17 +119,6 @@ public class N4JSSyntacticSequencer extends AbstractSyntacticSequencer {
 		if (node != null)
 			return getTokenText(node);
 		return "}";
-	}
-	
-	/**
-	 * TypeReferenceName:
-	 * 	'void' | 'This' | 'await' | 'Promisify' | 'target' | QualifiedTypeReferenceName
-	 * ;
-	 */
-	protected String getTypeReferenceNameToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "void";
 	}
 	
 	@Override

@@ -66,6 +66,10 @@ import static org.eclipse.xtext.util.Strings.toFirstUpper
 import static extension com.google.common.base.Strings.*
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.EcoreUtilN4.*
+import org.eclipse.xtext.EcoreUtil2
+import eu.numberfour.n4js.n4JS.IdentifierRef
+import eu.numberfour.n4js.scoping.members.MemberScopingHelper
+import eu.numberfour.n4js.scoping.N4JSScopeProvider
 
 /**
  */
@@ -83,10 +87,15 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject
 	private N4JSLanguageHelper languageHelper;
 	
-	@Inject 
+	@Inject
 	private JavaScriptVariantHelper jsVariantHelper;
 	
-
+	@Inject
+	private MemberScopingHelper memberScopingHelper;
+	
+	@Inject
+	private N4JSScopeProvider n4jsScopeProvider;
+	
 	/**
 	 * NEEEDED
 	 *
@@ -609,14 +618,27 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	
 	private def void internalCheckOptionalsHaveType(TFormalParameter[] fpars) {
 		for (fp : fpars) {
+			// 1. check missing type declaration
 			if (fp.optional) {
 				fp.typeRef.addIssueIfNoDeclaredOrUsableType
+			}
+			// 2. only 'undefined' as identifier allowed
+			if (fp.hasInitializer && !"undefined".equals(fp.initializer)) {
+				addIssue( messageForFUN_TPARAM_INITIALIZER_ONLY_UNDEFINED_ALLOWED, fp, FUN_TPARAM_INITIALIZER_ONLY_UNDEFINED_ALLOWED )
 			}
 		}
 	}
 
 	@Check
 	def checkFormalParametersIn(FunctionDefinition fun) {
+		// 1. check if default parameter initializers could bind to identifiers within the body
+		// TODO: finish unfinished business here
+		//val scope = n4jsScopeProvider.getScopeForContentAssist(fun.body.allStatements.head, N4JSPackage.eINSTANCE.identifierRef_Id);
+		//val list = scope.allElements;
+		//scope.getSingleElement(N4JSPackage.eINSTANCE.q);
+		
+		
+		// 2. all other checks
 		<FormalParameter>internalCheckFormalParameter(fun.fpars, [variadic], [hasInitializerAssignment], [declaredTypeRef], [name]);
 	}
 
@@ -635,18 +657,27 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		val variadicsCount = fpars.filter[variadic.apply(it)].size
 		if (variadicsCount > 1) {
 			val variadicParams = fpars.filter[variadic.apply(it)]
-			addIssue( messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head, FUN_PARAM_VARIADIC_ONLY_LAST )
+			addIssue(messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head, FUN_PARAM_VARIADIC_ONLY_LAST)
 		}
 		// 2. Variadic is last
 		if (variadicsCount == 1) {
 			val variadicParams = fpars.filter[variadic.apply(it)]
 			if (!variadic.apply(fpars.last)) {
-				addIssue( messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head, FUN_PARAM_VARIADIC_ONLY_LAST )
+				addIssue(messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head, FUN_PARAM_VARIADIC_ONLY_LAST)
 			}
 		}
-		// 3. both variadic and initializerAssignment
 		for (fp:fpars) {
 			if (hasInitAssgn.apply(fp)) {
+				// 3.a reference to succeeding parameter
+				val fpPos = fpars.indexOf(fp);
+				val List<IdentifierRef> irs = EcoreUtil2.getAllContentsOfType(fp, IdentifierRef);
+				for (ir : irs) {
+					if (fpars.indexOf(ir.id) >= fpPos) {
+						val String msg = getMessageForFUN_PARAM_INITIALIZER_ILLEGAL_FORWARD_REFERENCE();
+						addIssue(msg, ir, FUN_PARAM_INITIALIZER_ILLEGAL_FORWARD_REFERENCE)
+					}
+				}
+				// 3.b both variadic and initializerAssignment
 				if (variadic.apply(fp)) {
 					addIssue(messageForFUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS, fp, FUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS)
 				}

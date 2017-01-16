@@ -12946,22 +12946,22 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDefaultFormalParameter"
-    // InternalTypesParser.g:4813:1: ruleDefaultFormalParameter[EObject in_current] returns [EObject current=in_current] : ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_hasInitializer_1_0= ruleTypeReferenceName ) )? )? ;
+    // InternalTypesParser.g:4813:1: ruleDefaultFormalParameter[EObject in_current] returns [EObject current=in_current] : ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_initializer_1_0= ruleTypeReferenceName ) )? )? ;
     public final EObject ruleDefaultFormalParameter(EObject in_current) throws RecognitionException {
         EObject current = in_current;
 
         Token lv_hasInitializerAssignment_0_0=null;
-        AntlrDatatypeRuleToken lv_hasInitializer_1_0 = null;
+        AntlrDatatypeRuleToken lv_initializer_1_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalTypesParser.g:4819:2: ( ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_hasInitializer_1_0= ruleTypeReferenceName ) )? )? )
-            // InternalTypesParser.g:4820:2: ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_hasInitializer_1_0= ruleTypeReferenceName ) )? )?
+            // InternalTypesParser.g:4819:2: ( ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_initializer_1_0= ruleTypeReferenceName ) )? )? )
+            // InternalTypesParser.g:4820:2: ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_initializer_1_0= ruleTypeReferenceName ) )? )?
             {
-            // InternalTypesParser.g:4820:2: ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_hasInitializer_1_0= ruleTypeReferenceName ) )? )?
+            // InternalTypesParser.g:4820:2: ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_initializer_1_0= ruleTypeReferenceName ) )? )?
             int alt102=2;
             int LA102_0 = input.LA(1);
 
@@ -12970,7 +12970,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             }
             switch (alt102) {
                 case 1 :
-                    // InternalTypesParser.g:4821:3: ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_hasInitializer_1_0= ruleTypeReferenceName ) )?
+                    // InternalTypesParser.g:4821:3: ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_initializer_1_0= ruleTypeReferenceName ) )?
                     {
                     // InternalTypesParser.g:4821:3: ( (lv_hasInitializerAssignment_0_0= EqualsSign ) )
                     // InternalTypesParser.g:4822:4: (lv_hasInitializerAssignment_0_0= EqualsSign )
@@ -12998,7 +12998,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalTypesParser.g:4835:3: ( (lv_hasInitializer_1_0= ruleTypeReferenceName ) )?
+                    // InternalTypesParser.g:4835:3: ( (lv_initializer_1_0= ruleTypeReferenceName ) )?
                     int alt101=2;
                     int LA101_0 = input.LA(1);
 
@@ -13007,18 +13007,18 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt101) {
                         case 1 :
-                            // InternalTypesParser.g:4836:4: (lv_hasInitializer_1_0= ruleTypeReferenceName )
+                            // InternalTypesParser.g:4836:4: (lv_initializer_1_0= ruleTypeReferenceName )
                             {
-                            // InternalTypesParser.g:4836:4: (lv_hasInitializer_1_0= ruleTypeReferenceName )
-                            // InternalTypesParser.g:4837:5: lv_hasInitializer_1_0= ruleTypeReferenceName
+                            // InternalTypesParser.g:4836:4: (lv_initializer_1_0= ruleTypeReferenceName )
+                            // InternalTypesParser.g:4837:5: lv_initializer_1_0= ruleTypeReferenceName
                             {
                             if ( state.backtracking==0 ) {
 
-                              					newCompositeNode(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerTypeReferenceNameParserRuleCall_1_0());
+                              					newCompositeNode(grammarAccess.getDefaultFormalParameterAccess().getInitializerTypeReferenceNameParserRuleCall_1_0());
                               				
                             }
                             pushFollow(FOLLOW_2);
-                            lv_hasInitializer_1_0=ruleTypeReferenceName();
+                            lv_initializer_1_0=ruleTypeReferenceName();
 
                             state._fsp--;
                             if (state.failed) return current;
@@ -13029,8 +13029,8 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                               					}
                               					set(
                               						current,
-                              						"hasInitializer",
-                              						true,
+                              						"initializer",
+                              						lv_initializer_1_0,
                               						"eu.numberfour.n4js.ts.Types.TypeReferenceName");
                               					afterParserOrEnumRuleCall();
                               				

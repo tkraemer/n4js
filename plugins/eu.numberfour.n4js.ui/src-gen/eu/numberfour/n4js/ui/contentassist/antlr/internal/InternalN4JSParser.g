@@ -70573,9 +70573,9 @@ rule__DefaultFormalParameter__Group__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignment_1()); }
-	(rule__DefaultFormalParameter__HasInitializerAssignment_1)?
-	{ after(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignment_1()); }
+	{ before(grammarAccess.getDefaultFormalParameterAccess().getInitializerAssignment_1()); }
+	(rule__DefaultFormalParameter__InitializerAssignment_1)?
+	{ after(grammarAccess.getDefaultFormalParameterAccess().getInitializerAssignment_1()); }
 )
 ;
 finally {
@@ -84524,15 +84524,15 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__DefaultFormalParameter__HasInitializerAssignment_1
+rule__DefaultFormalParameter__InitializerAssignment_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerTypeReferenceNameParserRuleCall_1_0()); }
+		{ before(grammarAccess.getDefaultFormalParameterAccess().getInitializerTypeReferenceNameParserRuleCall_1_0()); }
 		ruleTypeReferenceName
-		{ after(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerTypeReferenceNameParserRuleCall_1_0()); }
+		{ after(grammarAccess.getDefaultFormalParameterAccess().getInitializerTypeReferenceNameParserRuleCall_1_0()); }
 	)
 ;
 finally {

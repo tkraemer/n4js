@@ -70720,7 +70720,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
         EObject current = in_current;
 
         Token lv_hasInitializerAssignment_0_0=null;
-        AntlrDatatypeRuleToken lv_hasInitializer_1_0 = null;
+        AntlrDatatypeRuleToken lv_initializer_1_0 = null;
 
 
 
@@ -70770,11 +70770,11 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
                             {
                             if ( state.backtracking==0 ) {
 
-                              					newCompositeNode(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerTypeReferenceNameParserRuleCall_1_0());
+                              					newCompositeNode(grammarAccess.getDefaultFormalParameterAccess().getInitializerTypeReferenceNameParserRuleCall_1_0());
                               				
                             }
                             pushFollow(FOLLOW_2);
-                            lv_hasInitializer_1_0=ruleTypeReferenceName();
+                            lv_initializer_1_0=ruleTypeReferenceName();
 
                             state._fsp--;
                             if (state.failed) return current;
@@ -70785,8 +70785,8 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
                               					}
                               					set(
                               						current,
-                              						"hasInitializer",
-                              						true,
+                              						"initializer",
+                              						lv_initializer_1_0,
                               						"eu.numberfour.n4js.N4JS.TypeReferenceName");
                               					afterParserOrEnumRuleCall();
                               				

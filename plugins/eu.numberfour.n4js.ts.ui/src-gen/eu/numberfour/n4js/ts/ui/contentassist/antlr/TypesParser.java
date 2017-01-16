@@ -335,7 +335,7 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTFormalParameterAccess().getNameAssignment_1(), "rule__TFormalParameter__NameAssignment_1");
 					put(grammarAccess.getTFormalParameterAccess().getTypeRefAssignment_3(), "rule__TFormalParameter__TypeRefAssignment_3");
 					put(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignmentAssignment_0(), "rule__DefaultFormalParameter__HasInitializerAssignmentAssignment_0");
-					put(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignment_1(), "rule__DefaultFormalParameter__HasInitializerAssignment_1");
+					put(grammarAccess.getDefaultFormalParameterAccess().getInitializerAssignment_1(), "rule__DefaultFormalParameter__InitializerAssignment_1");
 					put(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsAssignment_3(), "rule__UnionTypeExpressionOLD__TypeRefsAssignment_3");
 					put(grammarAccess.getUnionTypeExpressionOLDAccess().getTypeRefsAssignment_4_1(), "rule__UnionTypeExpressionOLD__TypeRefsAssignment_4_1");
 					put(grammarAccess.getIntersectionTypeExpressionOLDAccess().getTypeRefsAssignment_3(), "rule__IntersectionTypeExpressionOLD__TypeRefsAssignment_3");

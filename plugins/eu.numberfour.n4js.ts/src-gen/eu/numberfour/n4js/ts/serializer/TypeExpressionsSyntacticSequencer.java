@@ -40,20 +40,9 @@ public class TypeExpressionsSyntacticSequencer extends AbstractSyntacticSequence
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (ruleCall.getRule() == grammarAccess.getTypeReferenceNameRule())
-			return getTypeReferenceNameToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
-	/**
-	 * TypeReferenceName:
-	 * 	IDENTIFIER ('.' IDENTIFIER)*;
-	 */
-	protected String getTypeReferenceNameToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "";
-	}
 	
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {

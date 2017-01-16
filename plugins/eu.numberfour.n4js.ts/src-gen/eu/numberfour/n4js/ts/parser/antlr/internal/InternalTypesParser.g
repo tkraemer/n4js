@@ -4835,17 +4835,17 @@ ruleDefaultFormalParameter[EObject in_current]  returns [EObject current=in_curr
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerTypeReferenceNameParserRuleCall_1_0());
+					newCompositeNode(grammarAccess.getDefaultFormalParameterAccess().getInitializerTypeReferenceNameParserRuleCall_1_0());
 				}
-				lv_hasInitializer_1_0=ruleTypeReferenceName
+				lv_initializer_1_0=ruleTypeReferenceName
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getDefaultFormalParameterRule());
 					}
 					set(
 						$current,
-						"hasInitializer",
-						true,
+						"initializer",
+						lv_initializer_1_0,
 						"eu.numberfour.n4js.ts.Types.TypeReferenceName");
 					afterParserOrEnumRuleCall();
 				}

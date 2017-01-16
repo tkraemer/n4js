@@ -394,7 +394,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TAnonymousFormalParameter returns TAnonymousFormalParameter
 	 *
 	 * Constraint:
-	 *     (variadic?='...'? name=BindingIdentifier? typeRef=TypeRef (hasInitializerAssignment?='=' hasInitializer?=TypeReferenceName?)?)
+	 *     (variadic?='...'? name=BindingIdentifier? typeRef=TypeRef (hasInitializerAssignment?='=' initializer=TypeReferenceName?)?)
 	 */
 	protected void sequence_DefaultFormalParameter_TAnonymousFormalParameter(ISerializationContext context, TAnonymousFormalParameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -406,7 +406,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TFormalParameter returns TFormalParameter
 	 *
 	 * Constraint:
-	 *     (variadic?='...'? name=BindingIdentifier typeRef=TypeRef (hasInitializerAssignment?='=' hasInitializer?=TypeReferenceName?)?)
+	 *     (variadic?='...'? name=BindingIdentifier typeRef=TypeRef (hasInitializerAssignment?='=' initializer=TypeReferenceName?)?)
 	 */
 	protected void sequence_DefaultFormalParameter_TFormalParameter(ISerializationContext context, TFormalParameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

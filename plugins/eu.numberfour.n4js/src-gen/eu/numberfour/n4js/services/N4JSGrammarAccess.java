@@ -13069,7 +13069,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	// * to either 'undefined' and 'void INT'. The shorthand form, that is omitting
 	// * the initializer, is supported.
 	// * / fragment DefaultFormalParameter *:
-	//	(hasInitializerAssignment?='=' hasInitializer?=super::TypeReferenceName?)?;
+	//	(hasInitializerAssignment?='=' initializer=super::TypeReferenceName?)?;
 	public TypeExpressionsGrammarAccess.DefaultFormalParameterElements getDefaultFormalParameterAccess() {
 		return gaTypeExpressions.getDefaultFormalParameterAccess();
 	}

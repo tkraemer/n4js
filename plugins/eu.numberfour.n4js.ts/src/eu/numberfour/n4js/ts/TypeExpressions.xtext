@@ -146,7 +146,7 @@ TFormalParameter:
  * the initializer, is supported.
  */
 fragment DefaultFormalParameter*:
-	(hasInitializerAssignment?='=' hasInitializer?=TypeReferenceName?)?
+	(hasInitializerAssignment?='=' initializer=TypeReferenceName?)?
 ;
 
 UnionTypeExpressionOLD returns UnionTypeExpression:

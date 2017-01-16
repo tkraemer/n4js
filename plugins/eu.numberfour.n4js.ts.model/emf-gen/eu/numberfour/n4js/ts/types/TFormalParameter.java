@@ -19,7 +19,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFormalParameter#isVariadic <em>Variadic</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializer <em>Has Initializer</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TFormalParameter#getInitializer <em>Initializer</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializerAssignment <em>Has Initializer Assignment</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFormalParameter#getTypeRef <em>Type Ref</em>}</li>
  * </ul>
@@ -56,30 +56,30 @@ public interface TFormalParameter extends IdentifiableElement, TAnnotableElement
 	void setVariadic(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Has Initializer</b></em>' attribute.
+	 * Returns the value of the '<em><b>Initializer</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Has Initializer</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Initializer</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Has Initializer</em>' attribute.
-	 * @see #setHasInitializer(boolean)
-	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTFormalParameter_HasInitializer()
+	 * @return the value of the '<em>Initializer</em>' attribute.
+	 * @see #setInitializer(String)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTFormalParameter_Initializer()
 	 * @model unique="false"
 	 * @generated
 	 */
-	boolean isHasInitializer();
+	String getInitializer();
 
 	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializer <em>Has Initializer</em>}' attribute.
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TFormalParameter#getInitializer <em>Initializer</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Has Initializer</em>' attribute.
-	 * @see #isHasInitializer()
+	 * @param value the new value of the '<em>Initializer</em>' attribute.
+	 * @see #getInitializer()
 	 * @generated
 	 */
-	void setHasInitializer(boolean value);
+	void setInitializer(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Has Initializer Assignment</b></em>' attribute.
@@ -132,6 +132,18 @@ public interface TFormalParameter extends IdentifiableElement, TAnnotableElement
 	 * @generated
 	 */
 	void setTypeRef(TypeRef value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  Convenience method, returns true if this fparam has an initializer.
+	 * <!-- end-model-doc -->
+	 * @model unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _initializer = this.getInitializer();\nreturn (_initializer != null);'"
+	 * @generated
+	 */
+	boolean hasInitializer();
 
 	/**
 	 * <!-- begin-user-doc -->

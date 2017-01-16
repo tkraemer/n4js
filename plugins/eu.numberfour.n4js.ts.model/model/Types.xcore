@@ -1261,9 +1261,14 @@ class TStructMethod extends TMethod, TStructMember {
 
 class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRelatedTElement {
 	boolean variadic
-	boolean hasInitializer
+	String initializer
 	boolean hasInitializerAssignment
 	contains TypeRef typeRef
+
+	/* Convenience method, returns true if this fparam has an initializer. */
+	op boolean hasInitializer() {
+		return initializer !== null;
+	}
 	
 	/* Convenience method, returns true if this and all following fparams are variadic or have an initializer. */
 	op boolean isOptional() {

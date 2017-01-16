@@ -50500,7 +50500,7 @@ public class InternalN4JSParser extends AbstractInternalHighlightingAntlrParser 
         retval.start = input.LT(1);
 
         Token HasInitializerAssignmentEqualsSignKeyword_0_0=null;
-        InternalN4JSParser.ruleTypeReferenceName_return HasInitializerTypeReferenceNameParserRuleCall_1_0 = null;
+        InternalN4JSParser.ruleTypeReferenceName_return InitializerTypeReferenceNameParserRuleCall_1_0 = null;
 
 
 
@@ -50540,13 +50540,13 @@ public class InternalN4JSParser extends AbstractInternalHighlightingAntlrParser 
                             {
                             {
                             pushFollow(FOLLOW_2);
-                            HasInitializerTypeReferenceNameParserRuleCall_1_0=ruleTypeReferenceName();
+                            InitializerTypeReferenceNameParserRuleCall_1_0=ruleTypeReferenceName();
 
                             state._fsp--;
                             if (state.failed) return retval;
                             if ( state.backtracking==0 ) {
 
-                              				announce((HasInitializerTypeReferenceNameParserRuleCall_1_0!=null?((Token)HasInitializerTypeReferenceNameParserRuleCall_1_0.start):null), (HasInitializerTypeReferenceNameParserRuleCall_1_0!=null?((Token)HasInitializerTypeReferenceNameParserRuleCall_1_0.stop):null), grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignment_1());
+                              				announce((InitializerTypeReferenceNameParserRuleCall_1_0!=null?((Token)InitializerTypeReferenceNameParserRuleCall_1_0.start):null), (InitializerTypeReferenceNameParserRuleCall_1_0!=null?((Token)InitializerTypeReferenceNameParserRuleCall_1_0.stop):null), grammarAccess.getDefaultFormalParameterAccess().getInitializerAssignment_1());
                               			
                             }
 
