@@ -233,6 +233,11 @@ public class XpectN4JSES5TranspilerHelper {
 			SystemLoaderInfo systemLoader)
 			throws IOException {
 
+		// Apply some modification to the resource here.
+		if (resourceTweaker != null) {
+			resourceTweaker.tweak(resource);
+		}
+
 		RunConfiguration runConfig;
 		if (Platform.isRunning()) {
 			// If we are in Plugin UI test or IDE, execute the test the same as for "Run in Node.js" and this way avoid
@@ -247,11 +252,6 @@ public class XpectN4JSES5TranspilerHelper {
 
 			// compile all file resources
 			StringBuilder errorResult = new StringBuilder();
-
-			// Apply some modification to the resource here.
-			if (resourceTweaker != null) {
-				resourceTweaker.tweak(resource);
-			}
 
 			// replace n4jsd resource with provided js resource
 			for (final Resource dep : from(dependencies).filter(r -> !r.getURI().equals(resource.getURI()))) {
