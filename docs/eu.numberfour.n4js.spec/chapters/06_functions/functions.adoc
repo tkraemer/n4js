@@ -521,7 +521,7 @@ This applies to all variable execution environments like field accessors (getter
 // regular function
 function a1(s1: string, n2: number) {
     var l: number = arguments.length;
-    var s: string = arguments[0] as string; // <1>
+    var s: string = arguments[0] as string;
 }
 
 class A {
@@ -550,7 +550,7 @@ function z(){
     var arguments: number = 4;
 }
 ----
-<1> thing
+
 
 [.language-n4js]
 == ECMAScript 5 Function Definition
