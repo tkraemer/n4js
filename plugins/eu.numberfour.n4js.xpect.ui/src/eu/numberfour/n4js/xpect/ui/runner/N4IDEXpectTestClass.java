@@ -18,12 +18,12 @@ import org.xpect.runner.XpectSuiteClasses;
 import org.xpect.xtext.lib.tests.ResourceDescriptionTest;
 import org.xpect.xtext.lib.tests.ValidationTest;
 
+import eu.numberfour.n4js.xpect.NoerrorsXpectMethod;
 import eu.numberfour.n4js.xpect.OutputXpectMethod;
 import eu.numberfour.n4js.xpect.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.linking.LinkingXpectMethod;
 import eu.numberfour.n4js.xpect.scoping.ScopeXpectMethod;
 import eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestFilesCollector.N4IDEXpectTestURIProvider;
-import eu.numberfour.n4js.xpect.ui.xpectmethods.NoerrorsXpectMethod;
 
 /**
  * Main and only entry point for executing xpect in the product. Uses custom setup {@link N4IDEXpectFileSetup}.

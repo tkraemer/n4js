@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.ui.xpectmethods;
+package eu.numberfour.n4js.xpect;
 
 /**
  * *** WARNING *** WARNING *** WARNING ***
