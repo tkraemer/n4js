@@ -184,7 +184,7 @@ public class ASTProcessor extends AbstractProcessor {
 			// process the children
 			val children = childrenToBeProcessed(G, node);
 			for (child : children) {
-				if (postponeNode(child)) {
+				if (isPostponedNode(child)) {
 					// postpone
 					cache.postponedSubTrees.add(child);
 				} else {
@@ -213,7 +213,7 @@ public class ASTProcessor extends AbstractProcessor {
 		}
 	}
 	
-	private def boolean postponeNode(EObject node) {
+	private def boolean isPostponedNode(EObject node) {
 		return 
 			(node instanceof Expression && node.eContainer instanceof FormalParameter)
 		||	(node instanceof Block 

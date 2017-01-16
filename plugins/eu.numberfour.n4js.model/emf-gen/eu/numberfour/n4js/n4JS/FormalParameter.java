@@ -22,8 +22,8 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.n4JS.FormalParameter#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.FormalParameter#isVariadic <em>Variadic</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.FormalParameter#isHasInitializerAssignment <em>Has Initializer Assignment</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.FormalParameter#getDefinedTypeElement <em>Defined Type Element</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.FormalParameter#isHasInitializerAssignment <em>Has Initializer Assignment</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.FormalParameter#getInitializer <em>Initializer</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.FormalParameter#getBindingPattern <em>Binding Pattern</em>}</li>
  * </ul>
@@ -76,32 +76,6 @@ public interface FormalParameter extends AnnotableElement, Variable {
 	void setVariadic(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Has Initializer Assignment</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Has Initializer Assignment</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Has Initializer Assignment</em>' attribute.
-	 * @see #setHasInitializerAssignment(boolean)
-	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getFormalParameter_HasInitializerAssignment()
-	 * @model unique="false"
-	 * @generated
-	 */
-	boolean isHasInitializerAssignment();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.n4JS.FormalParameter#isHasInitializerAssignment <em>Has Initializer Assignment</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Has Initializer Assignment</em>' attribute.
-	 * @see #isHasInitializerAssignment()
-	 * @generated
-	 */
-	void setHasInitializerAssignment(boolean value);
-
-	/**
 	 * Returns the value of the '<em><b>Defined Type Element</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -128,13 +102,41 @@ public interface FormalParameter extends AnnotableElement, Variable {
 	void setDefinedTypeElement(TFormalParameter value);
 
 	/**
+	 * Returns the value of the '<em><b>Has Initializer Assignment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  A formal parameter with a default value in a function 'foo' can look like this:
+	 * foo(defParam = undefined){}, with 'undefined' as the initializing expression, which can be omitted.
+	 * When the initializer is omitted, it evaluates to 'undefined'. To know whether a parameter is a
+	 * default parameter, we need to know about the existence of the initializer assignment sign '='.
+	 * Hence, the following boolean property exists.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Has Initializer Assignment</em>' attribute.
+	 * @see #setHasInitializerAssignment(boolean)
+	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getFormalParameter_HasInitializerAssignment()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isHasInitializerAssignment();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.n4JS.FormalParameter#isHasInitializerAssignment <em>Has Initializer Assignment</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Has Initializer Assignment</em>' attribute.
+	 * @see #isHasInitializerAssignment()
+	 * @generated
+	 */
+	void setHasInitializerAssignment(boolean value);
+
+	/**
 	 * Returns the value of the '<em><b>Initializer</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Initializer</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  The initializer can be null despite being a default parameter.
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Initializer</em>' containment reference.
 	 * @see #setInitializer(Expression)
 	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getFormalParameter_Initializer()

@@ -20306,8 +20306,8 @@ ruleDefaultFormalParameter
 	)
 	(
 		(
-			InitializerTypeReferenceNameParserRuleCall_1_0=ruleTypeReferenceName{
-				announce($InitializerTypeReferenceNameParserRuleCall_1_0.start, $InitializerTypeReferenceNameParserRuleCall_1_0.stop, grammarAccess.getDefaultFormalParameterAccess().getInitializerAssignment_1());
+			AstInitializerTypeRefParserRuleCall_1_0=ruleTypeRef{
+				announce($AstInitializerTypeRefParserRuleCall_1_0.start, $AstInitializerTypeRefParserRuleCall_1_0.stop, grammarAccess.getDefaultFormalParameterAccess().getAstInitializerAssignment_1());
 			}
 		)
 	)?

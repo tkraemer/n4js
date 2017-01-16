@@ -13066,10 +13066,9 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	// * Default initializers in FunctionTypeExpressions or TFunctions
 	// * are necessary to specify optional formal parameters. Hence, their
 	// * initializer expression is rather uninteresting and limited by validations
-	// * to either 'undefined' and 'void INT'. The shorthand form, that is omitting
-	// * the initializer, is supported.
+	// * to 'undefined'. The shorthand form, that is omitting the initializer, is supported.
 	// * / fragment DefaultFormalParameter *:
-	//	(hasInitializerAssignment?='=' initializer=super::TypeReferenceName?)?;
+	//	(hasInitializerAssignment?='=' astInitializer=TypeRef?)?;
 	public TypeExpressionsGrammarAccess.DefaultFormalParameterElements getDefaultFormalParameterAccess() {
 		return gaTypeExpressions.getDefaultFormalParameterAccess();
 	}

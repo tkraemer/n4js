@@ -1261,24 +1261,29 @@ class TStructMethod extends TMethod, TStructMember {
 
 class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRelatedTElement {
 	boolean variadic
-	String initializer
+	/*
+	 * If and only if the TFormalParameter is used as an AST node, this property holds the initializer
+	 * type reference. This occurs in a situation like this:
+	 * <pre>
+	 * val fn : function(p : int = undefined) => void;
+	 * </pre>
+	 */
+	contains TypeRef astInitializer
 	boolean hasInitializerAssignment
 	contains TypeRef typeRef
 
 	/* Convenience method, returns true if this fparam has an initializer. */
-	op boolean hasInitializer() {
-		return initializer !== null;
+	op boolean hasASTInitializer() {
+		return astInitializer !== null;
 	}
 	
-	/* Convenience method, returns true if this and all following fparams are variadic or have an initializer. */
+	/* Convenience method, returns true if this or one of the preceding parameters have an initializer. */
 	op boolean isOptional() {
-		var EList<TFormalParameter> fpars = null;
-		if (eContainer instanceof TFunction)
-			fpars = (eContainer as TFunction).fpars;
-		if (eContainer instanceof FunctionTypeExprOrRef)
-			fpars = (eContainer as FunctionTypeExprOrRef).fpars;
-		if (fpars === null)
-			return false;
+		val EList<TFormalParameter> fpars = switch(eContainer) {
+            TFunction: (eContainer as TFunction).fpars
+            FunctionTypeExprOrRef: (eContainer as FunctionTypeExprOrRef).fpars
+            default: return false
+        };
 		
 		for (var i=fpars.indexOf(this); i>=0; i--) {
 			val fpar = fpars.get(i);

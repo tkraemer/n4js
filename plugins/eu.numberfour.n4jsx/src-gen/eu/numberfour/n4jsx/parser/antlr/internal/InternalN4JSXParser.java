@@ -70720,7 +70720,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
         EObject current = in_current;
 
         Token lv_hasInitializerAssignment_0_0=null;
-        AntlrDatatypeRuleToken lv_initializer_1_0 = null;
+        EObject lv_astInitializer_1_0 = null;
 
 
 
@@ -70761,7 +70761,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
                     int alt585=2;
                     int LA585_0 = input.LA(1);
 
-                    if ( (LA585_0==Promisify||LA585_0==Target||LA585_0==Await||LA585_0==This||LA585_0==Void||LA585_0==RULE_IDENTIFIER) ) {
+                    if ( ((LA585_0>=Intersection && LA585_0<=Constructor)||LA585_0==Promisify||LA585_0==Target||LA585_0==Await||LA585_0==Union||LA585_0==This||LA585_0==This_1||(LA585_0>=Type && LA585_0<=Void)||LA585_0==LeftParenthesis||LA585_0==QuestionMark||LA585_0==LeftSquareBracket||LA585_0==LeftCurlyBracket||LA585_0==Tilde||LA585_0==RULE_IDENTIFIER) ) {
                         alt585=1;
                     }
                     switch (alt585) {
@@ -70770,11 +70770,11 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
                             {
                             if ( state.backtracking==0 ) {
 
-                              					newCompositeNode(grammarAccess.getDefaultFormalParameterAccess().getInitializerTypeReferenceNameParserRuleCall_1_0());
+                              					newCompositeNode(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerTypeRefParserRuleCall_1_0());
                               				
                             }
                             pushFollow(FOLLOW_2);
-                            lv_initializer_1_0=ruleTypeReferenceName();
+                            lv_astInitializer_1_0=ruleTypeRef();
 
                             state._fsp--;
                             if (state.failed) return current;
@@ -70785,9 +70785,9 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
                               					}
                               					set(
                               						current,
-                              						"initializer",
-                              						lv_initializer_1_0,
-                              						"eu.numberfour.n4js.N4JS.TypeReferenceName");
+                              						"astInitializer",
+                              						lv_astInitializer_1_0,
+                              						"eu.numberfour.n4js.ts.TypeExpressions.TypeRef");
                               					afterParserOrEnumRuleCall();
                               				
                             }
@@ -113161,7 +113161,7 @@ public class InternalN4JSXParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_172 = new BitSet(new long[]{0x0000000000000000L,0x0001001000000000L});
     public static final BitSet FOLLOW_173 = new BitSet(new long[]{0x6C4D4680D5184F70L,0x40024A0010440000L});
     public static final BitSet FOLLOW_174 = new BitSet(new long[]{0x6C0D4680D5184F70L,0x40024A0010440000L});
-    public static final BitSet FOLLOW_175 = new BitSet(new long[]{0x0008040090000102L,0x4000000000000000L});
+    public static final BitSet FOLLOW_175 = new BitSet(new long[]{0x000D048090000132L,0x40024A0010000000L});
     public static final BitSet FOLLOW_176 = new BitSet(new long[]{0x000D048090000130L,0x4002400000000000L});
     public static final BitSet FOLLOW_177 = new BitSet(new long[]{0x0000000000000002L,0x0000004000000000L});
     public static final BitSet FOLLOW_178 = new BitSet(new long[]{0x200D048090000130L,0x40024A0010200000L});

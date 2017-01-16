@@ -76,7 +76,7 @@ class DerivationComputer extends TypeSystemHelperStrategy {
 				val newPar = TypesFactory.eINSTANCE.createTFormalParameter
 				newPar.name = fpar.name
 				newPar.variadic = fpar.variadic
-				newPar.initializer = fpar.initializer
+				// astInitializer is not copied since it's part of the AST
 				newPar.hasInitializerAssignment = fpar.hasInitializerAssignment
 
 				if(fpar.typeRef !== null) {
@@ -140,7 +140,7 @@ class DerivationComputer extends TypeSystemHelperStrategy {
 				val newPar = TypesFactory.eINSTANCE.createTFormalParameter
 				newPar.name = fpar.name
 				newPar.variadic = fpar.variadic
-				newPar.initializer = fpar.initializer
+				// astInitializer is not copied since it's part of the AST
 				newPar.hasInitializerAssignment = fpar.hasInitializerAssignment
 
 				if(fpar.typeRef !== null) {

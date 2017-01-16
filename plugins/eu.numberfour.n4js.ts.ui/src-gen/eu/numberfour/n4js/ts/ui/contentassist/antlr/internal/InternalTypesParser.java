@@ -39598,7 +39598,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:11742:1: ( rule__DefaultFormalParameter__Group__0__Impl rule__DefaultFormalParameter__Group__1 )
             // InternalTypesParser.g:11743:2: rule__DefaultFormalParameter__Group__0__Impl rule__DefaultFormalParameter__Group__1
             {
-            pushFollow(FOLLOW_15);
+            pushFollow(FOLLOW_9);
             rule__DefaultFormalParameter__Group__0__Impl();
 
             state._fsp--;
@@ -39711,34 +39711,34 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DefaultFormalParameter__Group__1__Impl"
-    // InternalTypesParser.g:11776:1: rule__DefaultFormalParameter__Group__1__Impl : ( ( rule__DefaultFormalParameter__InitializerAssignment_1 )? ) ;
+    // InternalTypesParser.g:11776:1: rule__DefaultFormalParameter__Group__1__Impl : ( ( rule__DefaultFormalParameter__AstInitializerAssignment_1 )? ) ;
     public final void rule__DefaultFormalParameter__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalTypesParser.g:11780:1: ( ( ( rule__DefaultFormalParameter__InitializerAssignment_1 )? ) )
-            // InternalTypesParser.g:11781:1: ( ( rule__DefaultFormalParameter__InitializerAssignment_1 )? )
+            // InternalTypesParser.g:11780:1: ( ( ( rule__DefaultFormalParameter__AstInitializerAssignment_1 )? ) )
+            // InternalTypesParser.g:11781:1: ( ( rule__DefaultFormalParameter__AstInitializerAssignment_1 )? )
             {
-            // InternalTypesParser.g:11781:1: ( ( rule__DefaultFormalParameter__InitializerAssignment_1 )? )
-            // InternalTypesParser.g:11782:2: ( rule__DefaultFormalParameter__InitializerAssignment_1 )?
+            // InternalTypesParser.g:11781:1: ( ( rule__DefaultFormalParameter__AstInitializerAssignment_1 )? )
+            // InternalTypesParser.g:11782:2: ( rule__DefaultFormalParameter__AstInitializerAssignment_1 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getDefaultFormalParameterAccess().getInitializerAssignment_1()); 
+               before(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerAssignment_1()); 
             }
-            // InternalTypesParser.g:11783:2: ( rule__DefaultFormalParameter__InitializerAssignment_1 )?
+            // InternalTypesParser.g:11783:2: ( rule__DefaultFormalParameter__AstInitializerAssignment_1 )?
             int alt121=2;
             int LA121_0 = input.LA(1);
 
-            if ( (LA121_0==Undefined||LA121_0==Indexed||LA121_0==Null||LA121_0==Void||LA121_0==Any||LA121_0==RULE_IDENTIFIER) ) {
+            if ( ((LA121_0>=Intersection && LA121_0<=Constructor)||LA121_0==Undefined||LA121_0==Indexed||LA121_0==Union||(LA121_0>=Null && LA121_0<=This_1)||(LA121_0>=Type && LA121_0<=Void)||LA121_0==Any||LA121_0==LeftCurlyBracket||LA121_0==Tilde||LA121_0==RULE_IDENTIFIER) ) {
                 alt121=1;
             }
             switch (alt121) {
                 case 1 :
-                    // InternalTypesParser.g:11783:3: rule__DefaultFormalParameter__InitializerAssignment_1
+                    // InternalTypesParser.g:11783:3: rule__DefaultFormalParameter__AstInitializerAssignment_1
                     {
                     pushFollow(FOLLOW_2);
-                    rule__DefaultFormalParameter__InitializerAssignment_1();
+                    rule__DefaultFormalParameter__AstInitializerAssignment_1();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -39749,7 +39749,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getDefaultFormalParameterAccess().getInitializerAssignment_1()); 
+               after(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerAssignment_1()); 
             }
 
             }
@@ -55009,29 +55009,29 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__DefaultFormalParameter__HasInitializerAssignmentAssignment_0"
 
 
-    // $ANTLR start "rule__DefaultFormalParameter__InitializerAssignment_1"
-    // InternalTypesParser.g:16754:1: rule__DefaultFormalParameter__InitializerAssignment_1 : ( ruleTypeReferenceName ) ;
-    public final void rule__DefaultFormalParameter__InitializerAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__DefaultFormalParameter__AstInitializerAssignment_1"
+    // InternalTypesParser.g:16754:1: rule__DefaultFormalParameter__AstInitializerAssignment_1 : ( ruleTypeRef ) ;
+    public final void rule__DefaultFormalParameter__AstInitializerAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalTypesParser.g:16758:1: ( ( ruleTypeReferenceName ) )
-            // InternalTypesParser.g:16759:2: ( ruleTypeReferenceName )
+            // InternalTypesParser.g:16758:1: ( ( ruleTypeRef ) )
+            // InternalTypesParser.g:16759:2: ( ruleTypeRef )
             {
-            // InternalTypesParser.g:16759:2: ( ruleTypeReferenceName )
-            // InternalTypesParser.g:16760:3: ruleTypeReferenceName
+            // InternalTypesParser.g:16759:2: ( ruleTypeRef )
+            // InternalTypesParser.g:16760:3: ruleTypeRef
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getDefaultFormalParameterAccess().getInitializerTypeReferenceNameParserRuleCall_1_0()); 
+               before(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerTypeRefParserRuleCall_1_0()); 
             }
             pushFollow(FOLLOW_2);
-            ruleTypeReferenceName();
+            ruleTypeRef();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getDefaultFormalParameterAccess().getInitializerTypeReferenceNameParserRuleCall_1_0()); 
+               after(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerTypeRefParserRuleCall_1_0()); 
             }
 
             }
@@ -55051,7 +55051,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__DefaultFormalParameter__InitializerAssignment_1"
+    // $ANTLR end "rule__DefaultFormalParameter__AstInitializerAssignment_1"
 
 
     // $ANTLR start "rule__UnionTypeExpressionOLD__TypeRefsAssignment_3"

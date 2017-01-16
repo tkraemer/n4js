@@ -804,20 +804,19 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(0);
 		private final Assignment cHasInitializerAssignmentAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final Keyword cHasInitializerAssignmentEqualsSignKeyword_0_0 = (Keyword)cHasInitializerAssignmentAssignment_0.eContents().get(0);
-		private final Assignment cInitializerAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cInitializerTypeReferenceNameParserRuleCall_1_0 = (RuleCall)cInitializerAssignment_1.eContents().get(0);
+		private final Assignment cAstInitializerAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cAstInitializerTypeRefParserRuleCall_1_0 = (RuleCall)cAstInitializerAssignment_1.eContents().get(0);
 		
 		/// **
 		// * Default initializers in FunctionTypeExpressions or TFunctions
 		// * are necessary to specify optional formal parameters. Hence, their
 		// * initializer expression is rather uninteresting and limited by validations
-		// * to either 'undefined' and 'void INT'. The shorthand form, that is omitting
-		// * the initializer, is supported.
+		// * to 'undefined'. The shorthand form, that is omitting the initializer, is supported.
 		// * / fragment DefaultFormalParameter *:
-		//	(hasInitializerAssignment?='=' initializer=TypeReferenceName?)?;
+		//	(hasInitializerAssignment?='=' astInitializer=TypeRef?)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(hasInitializerAssignment?='=' initializer=TypeReferenceName?)?
+		//(hasInitializerAssignment?='=' astInitializer=TypeRef?)?
 		public Group getGroup() { return cGroup; }
 		
 		//hasInitializerAssignment?='='
@@ -826,11 +825,11 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//'='
 		public Keyword getHasInitializerAssignmentEqualsSignKeyword_0_0() { return cHasInitializerAssignmentEqualsSignKeyword_0_0; }
 		
-		//initializer=TypeReferenceName?
-		public Assignment getInitializerAssignment_1() { return cInitializerAssignment_1; }
+		//astInitializer=TypeRef?
+		public Assignment getAstInitializerAssignment_1() { return cAstInitializerAssignment_1; }
 		
-		//TypeReferenceName
-		public RuleCall getInitializerTypeReferenceNameParserRuleCall_1_0() { return cInitializerTypeReferenceNameParserRuleCall_1_0; }
+		//TypeRef
+		public RuleCall getAstInitializerTypeRefParserRuleCall_1_0() { return cAstInitializerTypeRefParserRuleCall_1_0; }
 	}
 	public class UnionTypeExpressionOLDElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.UnionTypeExpressionOLD");
@@ -2555,10 +2554,9 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	// * Default initializers in FunctionTypeExpressions or TFunctions
 	// * are necessary to specify optional formal parameters. Hence, their
 	// * initializer expression is rather uninteresting and limited by validations
-	// * to either 'undefined' and 'void INT'. The shorthand form, that is omitting
-	// * the initializer, is supported.
+	// * to 'undefined'. The shorthand form, that is omitting the initializer, is supported.
 	// * / fragment DefaultFormalParameter *:
-	//	(hasInitializerAssignment?='=' initializer=TypeReferenceName?)?;
+	//	(hasInitializerAssignment?='=' astInitializer=TypeRef?)?;
 	public DefaultFormalParameterElements getDefaultFormalParameterAccess() {
 		return pDefaultFormalParameter;
 	}

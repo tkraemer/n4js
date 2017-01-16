@@ -82,6 +82,7 @@ import eu.numberfour.n4js.ts.types.TStructuralType;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesFactory;
+import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.ts.types.TypingStrategy;
 import eu.numberfour.n4js.ts.types.UndefModifier;
 import eu.numberfour.n4js.ts.types.UndefinedType;
@@ -1091,6 +1092,8 @@ public class TypeUtils {
 	private static final class TypeCopier extends Copier {
 		private static final EReference eRef_StructuralTypeRef_astStructuralMembers = TypeRefsPackage.eINSTANCE
 				.getStructuralTypeRef_AstStructuralMembers();
+		private static final EReference eRef_TFormalParameter_astInitializer = TypesPackage.eINSTANCE
+				.getTFormalParameter_AstInitializer();
 		private static final EReference eRef_Wildcard_declaredUpperBound = TypeRefsPackage.eINSTANCE
 				.getWildcard_DeclaredUpperBound();
 
@@ -1114,6 +1117,8 @@ public class TypeUtils {
 				return; // abort, do not copy ignored references
 			} else if (eReference == eRef_StructuralTypeRef_astStructuralMembers) {
 				return; // abort, do not copy 'astStructuralMembers' of StructuralTypeRefs
+			} else if (eReference == eRef_TFormalParameter_astInitializer) {
+				return; // abort, do not copy 'astInitializer' of TFormalParameters
 			} else if (eReference == eRef_Wildcard_declaredUpperBound) {
 				final Wildcard wOrig = (Wildcard) eObject;
 				final Wildcard wCopy = (Wildcard) copyEObject;

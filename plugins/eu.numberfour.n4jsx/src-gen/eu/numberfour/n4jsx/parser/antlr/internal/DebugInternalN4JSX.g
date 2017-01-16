@@ -8630,7 +8630,7 @@ ruleTAnonymousFormalParameter:
 ruleDefaultFormalParameter:
 	(
 		'='
-		ruleTypeReferenceName
+		ruleTypeRef
 		?
 	)?
 ;
