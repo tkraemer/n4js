@@ -9,11 +9,11 @@ fex0;
 var fex1 : {function(i:int=undefined)};
 fex1;
 
-// XPECT errors --> 
+// XPECT errors --> "Only 'undefined' allowed for initializers of default parameters in function types." at "int=x"
 var fex2 : {function(int=x)};
 fex2;
 
-// XPECT errors --> 
+// XPECT errors --> "Only 'undefined' allowed for initializers of default parameters in function types." at "i:int=x"
 var fex3 : {function(i:int=x)};
 fex3;
 

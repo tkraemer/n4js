@@ -33,11 +33,11 @@ class C {
 	m6(i=1, j=i) {}
 	
 	
-	// XPECT errors --> 
+	// XPECT errors --> "Illegal forward reference to formal parameter of same function." at "j"
 	m7(i=j, j=1) {}
 	
 	
-	// XPECT errors --> 
+	// XPECT errors --> "Initializer of parameter 'i' cannot reference the identifier 'tmp1' declared in the body." at "tmp1"
 	m8(i=tmp1) { let tmp1 = 1; tmp1; }
 	
 	// XPECT noerrors --> 
@@ -45,7 +45,7 @@ class C {
 	
 	
     field = "hello";
-    // XPECT FIXME noerrors --> "Couldn't resolve reference to IdentifiableElement 'field'." at "field"
+    // XPECT noerrors --> "Couldn't resolve reference to IdentifiableElement 'field'." at "field"
     m13(a = this.field) {}
 
 

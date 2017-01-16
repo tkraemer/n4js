@@ -44,7 +44,7 @@ var fex78 = (i:int=, s, n=undefined)=>{};
 fex78;
 
 let tmp1 = 1;
-// XPECT errors --> 
+// XPECT errors --> "Initializer of parameter 'i' cannot reference the identifier 'tmp1' declared in the body." at "tmp1"
 var fex8 = (i=tmp1)=>{ let tmp1 = 1; tmp1; }
 fex8;
 
@@ -72,7 +72,7 @@ fex12;
 class C {
     field = "hello";
     m() {
-		// XPECT FIXME noerrors --> "Couldn't resolve reference to IdentifiableElement 'field'." at "field"
+		// XPECT noerrors --> "Couldn't resolve reference to IdentifiableElement 'field'." at "field"
 		var fex13 = (j=this.field)=>{}
 		fex13;
 	}
@@ -94,7 +94,7 @@ fex17;
 var fex18 = (i=1, j=i)=>{}
 fex18;
 
-// XPECT errors --> 
+// XPECT errors --> "Illegal forward reference to formal parameter of same function." at "j"
 var fex19 = (i=j, j=1)=>{}
 fex19;
 

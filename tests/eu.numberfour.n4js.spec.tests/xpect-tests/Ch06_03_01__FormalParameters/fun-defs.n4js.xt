@@ -29,12 +29,12 @@ function f5(i:int=) {}
 function f6(i=1, j=i) {}
 
 
-// XPECT errors --> 
+// XPECT errors --> "Illegal forward reference to formal parameter of same function." at "j"
 function f7(i=j, j=1) {}
 
 
 let tmp1 = 1;
-// XPECT errors --> 
+// XPECT errors --> "Initializer of parameter 'i' cannot reference the identifier 'tmp1' declared in the body." at "tmp1"
 function f8(i=tmp1) { let tmp1 = 1; tmp1; }
 
 let tmp2 = 2;

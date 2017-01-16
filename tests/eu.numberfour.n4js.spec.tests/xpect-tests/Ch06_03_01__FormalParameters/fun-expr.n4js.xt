@@ -44,7 +44,7 @@ var fex78 = function(i:int=, s, n=undefined) {};
 fex78;
 
 let tmp1 = 1;
-// XPECT errors --> 
+// XPECT errors --> "Initializer of parameter 'i' cannot reference the identifier 'tmp1' declared in the body." at "tmp1"
 var fex8 = function(i=tmp1) { let tmp1 = 1; tmp1; }
 fex8;
 
@@ -84,7 +84,7 @@ fex17;
 var fex18 = function(i=1, j=i) {}
 fex18;
 
-// XPECT errors --> 
+// XPECT errors --> "Illegal forward reference to formal parameter of same function." at "j"
 var fex19 = function(i=j, j=1) {}
 fex19;
 

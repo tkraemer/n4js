@@ -68,8 +68,7 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 import static extension eu.numberfour.n4js.utils.EcoreUtilN4.*
 import org.eclipse.xtext.EcoreUtil2
 import eu.numberfour.n4js.n4JS.IdentifierRef
-import eu.numberfour.n4js.scoping.members.MemberScopingHelper
-import eu.numberfour.n4js.scoping.N4JSScopeProvider
+import eu.numberfour.n4js.n4JS.VariableDeclaration
 
 /**
  */
@@ -90,11 +89,6 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject
 	private JavaScriptVariantHelper jsVariantHelper;
 	
-	@Inject
-	private MemberScopingHelper memberScopingHelper;
-	
-	@Inject
-	private N4JSScopeProvider n4jsScopeProvider;
 	
 	/**
 	 * NEEEDED
@@ -624,7 +618,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 			}
 			// 2. only 'undefined' as identifier allowed
 			if (fp.hasInitializer && !"undefined".equals(fp.initializer)) {
-				addIssue( messageForFUN_TPARAM_INITIALIZER_ONLY_UNDEFINED_ALLOWED, fp, FUN_TPARAM_INITIALIZER_ONLY_UNDEFINED_ALLOWED )
+				addIssue( messageForFUN_PARAM_INITIALIZER_ONLY_UNDEFINED_ALLOWED, fp, FUN_PARAM_INITIALIZER_ONLY_UNDEFINED_ALLOWED )
 			}
 		}
 	}
@@ -632,14 +626,26 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def checkFormalParametersIn(FunctionDefinition fun) {
 		// 1. check if default parameter initializers could bind to identifiers within the body
-		// TODO: finish unfinished business here
-		//val scope = n4jsScopeProvider.getScopeForContentAssist(fun.body.allStatements.head, N4JSPackage.eINSTANCE.identifierRef_Id);
-		//val list = scope.allElements;
-		//scope.getSingleElement(N4JSPackage.eINSTANCE.q);
-		
-		
+		checkInitializerBindings(fun);
 		// 2. all other checks
 		<FormalParameter>internalCheckFormalParameter(fun.fpars, [variadic], [hasInitializerAssignment], [declaredTypeRef], [name]);
+	}
+	
+	private def checkInitializerBindings(FunctionDefinition fun) {
+		if (fun.body === null)
+			return;
+		
+		val idRefs = fun.fpars.map[EcoreUtil2.eAllOfType(it, IdentifierRef)].flatten.iterator;
+		val varDeclNamesInBody = EcoreUtil2.eAllOfType(fun.body, VariableDeclaration).map[it.name];
+		
+		while (idRefs.hasNext) {
+			val idRef = idRefs.next();
+			if (varDeclNamesInBody.contains(idRef.id.name)) {
+				val fpar = EcoreUtil2.getContainerOfType(idRef, FormalParameter);
+				val String msg = getMessageForFUN_PARAM_INITIALIZER_ILLEGAL_REFERENCE_TO_BODY_VARIABLE(fpar.name, idRef.id.name);
+				addIssue(msg, idRef, FUN_PARAM_INITIALIZER_ILLEGAL_REFERENCE_TO_BODY_VARIABLE)
+			}
+		}
 	}
 
 	/**
