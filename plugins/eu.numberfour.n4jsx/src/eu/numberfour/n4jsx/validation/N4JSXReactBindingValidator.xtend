@@ -17,7 +17,6 @@ import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
-import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef
 import eu.numberfour.n4js.ts.types.TField
@@ -35,7 +34,6 @@ import eu.numberfour.n4jsx.n4JSX.N4JSXPackage
 import it.xsemantics.runtime.Result
 import java.util.Arrays
 import java.util.List
-import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
@@ -183,9 +181,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	 * See Req. IDE-241116 
 	 */
 	def private void checkFunctionTypeExprOrRef(JSXElement jsxElem, FunctionTypeExprOrRef exprTypeRef) {
-		val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE;
-		val elementClassTypeRef = reactHelper.lookUpReactClassifier(jsxElem, reference, ReactHelper.REACT_ELEMENT,
-			ReactHelper.REACT_MODULE);
+		val elementClassTypeRef = reactHelper.lookUpReactElement(jsxElem);
 		if (elementClassTypeRef === null)
 			return;
 
@@ -208,9 +204,7 @@ class N4JSXReactBindingValidator extends AbstractN4JSDeclarativeValidator {
 	 * See Req. IDE-241116 
 	 */
 	def private void checkTypeTypeRefConstructor(JSXElement jsxElem, TypeTypeRef exprTypeRef) {
-		val EReference reference = TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE
-		val componentClassTypeRef = reactHelper.lookUpReactClassifier(jsxElem, reference, ReactHelper.REACT_COMPONENT,
-			ReactHelper.REACT_MODULE)
+		val componentClassTypeRef = reactHelper.lookUpReactComponent(jsxElem);
 		if (componentClassTypeRef === null)
 			return;
 

@@ -11,5 +11,11 @@ Contributors:
 -->
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="eu.numberfour.n4js.tester.testers" name="N4JS Testers" schema="schema/eu.numberfour.n4js.tester.testers.exsd"/>
+   <!-- Register file extensions for n4jsx language -->
+    <extension
+      point="eu.numberfour.n4js.utils.fileExtensions">
+	     <transpilableFileExtensions extensions="n4jsx, jsx"/>
+	     <runnableFileExtensions extensions="n4jsx, jsx"/>
+	     <testFileExtensions extensions="n4jsx"/>
+   </extension>
 </plugin>

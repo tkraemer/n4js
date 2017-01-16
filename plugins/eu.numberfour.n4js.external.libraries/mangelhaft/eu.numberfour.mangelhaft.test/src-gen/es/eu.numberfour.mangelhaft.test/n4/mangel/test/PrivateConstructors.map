@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"PrivateConstructors.js",
-"lineCount":79,
-"mappings":"A;;;EAUA,yD;;MAAQ,M;EAEF,wC;EAUN,wD;;;;;KAZQ,+G;;;;IAEF;;+CAK0B,EAL1B;;;;;;;;;;;;;;;;;;;;;;;;;;;O;IAUc;;gEAEqB;OACjC,oBAAoB,WAAW;QAC3B,IAAI,WAAJ,GAD2B;QAA/B,EAEG,IAFH,EAES,gDAFT,EADiC;OAFrB;;;;;;;;;;;;;;;;;;;;;;;;;;;",
-"sources":["/sources/eu.numberfour.mangelhaft.test/n4/mangel/test/PrivateConstructors.n4js"],
-"names":[]
-}

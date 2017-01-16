@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"CTORInjectionTest.js",
-"lineCount":115,
-"mappings":"A;;;EAUA,yD;EACA,4D;EACA,gC;;MAFQ,M,EACA,M,EACA,U;EAGF;;I;EAKN;;I;;;;;KAVQ,+G;;;KACA,uH;;;KACA,+E;;;;IAGF;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;O;;;;;;;;;;;;IAKc;;0CAGD;OACX,oBAAoB,WAAW;QAC3B,cAAc,WAAd,EAD2B;QAA/B,EAEG,IAFH,EAES,6DAFT,EADW;OAHC;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
-"sources":["/sources/eu.numberfour.mangelhaft.test/n4/mangel/test/CTORInjectionTest.n4js"],
-"names":[]
-}

@@ -21,11 +21,12 @@ import org.eclipse.emf.common.util.URI;
 import com.google.common.base.Optional;
 import com.google.inject.Inject;
 
+import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
+import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry.FileExtensionType;
 import eu.numberfour.n4js.generator.common.CompilerUtils;
 import eu.numberfour.n4js.generator.common.GeneratorException;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
-import eu.numberfour.n4js.resource.TranspilableFileExtensionsProvider;
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 
 /**
@@ -42,7 +43,8 @@ public class GeneratedJsFileLocator {
 	private FileExtensionBasedPropertTester tester;
 
 	@Inject
-	private TranspilableFileExtensionsProvider allowedFileExtensionProvider;
+	private FileExtensionsRegistry fileExtensionRegistry;
+	// private TranspilableFileExtensionsProvider allowedFileExtensionProvider;
 
 	/**
 	 * Tries to locates the generated {@link IFile file} of an N4JS or pure JS file give with the argument and returns
@@ -58,7 +60,8 @@ public class GeneratedJsFileLocator {
 			return absent();
 		}
 
-		if (tester.test(file, null, null, allowedFileExtensionProvider.getTranspilableFileExtensions())) {
+		if (tester.test(file, null, null,
+				fileExtensionRegistry.getFileExtensions(FileExtensionType.TRANSPILABLE_FILE_EXTENSION))) {
 			final IFile generatedFile = tryLocateGeneratedFile(file,
 					N4JSLanguageConstants.TRANSPILER_SUBFOLDER_FOR_TESTS);
 			if (null != generatedFile && generatedFile.exists()) {
