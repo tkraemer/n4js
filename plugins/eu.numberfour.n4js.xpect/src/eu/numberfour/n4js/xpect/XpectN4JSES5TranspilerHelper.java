@@ -265,8 +265,18 @@ public class XpectN4JSES5TranspilerHelper {
 				createTempJsFileWithScript(script, replaceQuotes); // IDE-2094 use a specific temp-folder here!
 
 				String fileToRun = jsModulePathToRun(script);
-				RunConfiguration runConfig = runnerFrontEnd.createXpectOutputTestConfiguration(NodeRunner.ID, fileToRun,
-						systemLoader);
+				RunConfiguration runConfig;
+				if (Platform.isRunning()) {
+					// If we are in Plugin UI test or IDE, execute the test the same as for "Run in Node.js"
+					runConfig = runnerFrontEnd.createConfiguration(NodeRunner.ID, null,
+							systemLoader.getId(),
+							resource.getURI().trimFileExtension());
+				} else {
+					// Not in UI case, hence manually set up the resources
+					runConfig = runnerFrontEnd.createXpectOutputTestConfiguration(NodeRunner.ID,
+							fileToRun,
+							systemLoader);
+				}
 
 				Process process = runnerFrontEnd.run(runConfig, executor());
 				EngineOutput eo = captureOutput(process);

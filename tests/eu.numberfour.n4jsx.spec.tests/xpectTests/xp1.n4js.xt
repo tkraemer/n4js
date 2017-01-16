@@ -1,0 +1,28 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	Workspace {
+		Project "TestProject" {
+			Folder "src" {
+				ThisFile {}
+				File "util.n4js" {}
+
+			}
+			Folder "src-gen" {}
+			File "manifest.n4mf" { from = "TestProject_manifest.n4mf"}
+		}
+	}
+
+	END_SETUP
+*/
+
+
+import { f } from "util";
+
+/* XPECT output ---
+<==
+stdout:
+I am a util function
+stderr:
+==>
+--- */
+console.log(f());

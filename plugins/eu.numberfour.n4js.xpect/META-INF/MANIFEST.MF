@@ -36,5 +36,4 @@ Export-Package: eu.numberfour.n4js.xpect,
  eu.numberfour.n4js.xpect.linking,
  eu.numberfour.n4js.xpect.references,
  eu.numberfour.n4js.xpect.scoping,
- eu.numberfour.n4js.xpect.validation,
- eu.numberfour.n4js.xpect.validation.suppression
+ eu.numberfour.n4js.xpect.validation
