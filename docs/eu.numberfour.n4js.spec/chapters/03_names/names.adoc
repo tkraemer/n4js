@@ -340,12 +340,7 @@ However, bind requires more condition to work (correct metatypes, no shadowing e
 Formally, we define $\alpha_m$ for a given reference $r$ and member declaration $M$ as follows:
 footnote:[See <<_n4js_specific_classifiers,N4-Specific Classifiers>> for definitions of metatype properties. Note that $r.receiver$ always refers to a type declaration in the context of an expression as the receiver type of $r$. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member declaration.]
 
-TIP: Note the Java-like access restriction for members of visibility [language-n4js]`protected` or [language-n4js]`protected@Internal` to code that is responsible for the implementation of that object. cite:[Gosling15a(S6.6.2,p.166)]
-
-////
-Citation inside footnote
-footnote:[Note, the Java-like access restriction for members of visibility [language-n4js]`protected` or [language-n4js]`protected@Internal` to code that is responsible for the implementation of that object. cite:[Gosling15a(S6.6.2,p.166)]]
-////
+footnote:[Note the Java-like access restriction for members of visibility [language-n4js]`protected` or [language-n4js]`protected@Internal` to code that is responsible for the implementation of that object. cite:[Gosling15a(S6.6.2,p.166)]]
 
 [math]
 ++++

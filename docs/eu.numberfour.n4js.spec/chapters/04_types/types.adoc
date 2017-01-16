@@ -658,9 +658,7 @@ type reference $R$ with $G=R.declaredType$, the following constraints must hold:
 --
 
 
-We define type erasure similar to Java cite:[Gosling12a(S4.6)] as 'mapping from types (possibly including parameterized types and type variables) to types (that are never parameterized types or type variables)'. We write $T$^o^ for the erasure of type _T_.
-
-TIP: The notation $|T|$ used in cite:[Gosling12a] conflicts with the notation of cardinality of sets, which we use in case of union or intersection types for types as well. The notation used here is inspired by cite:[Crary02a], in which a mapping is defined between a typed language $\lambda$ to an untyped language $\lambda$^o^.
+We define type erasure similar to Java cite:[Gosling12a(S4.6)] as 'mapping from types (possibly including parameterized types and type variables) to types (that are never parameterized types or type variables)'. We write $T$^o^ for the erasure of type _T_.footnote:[The notation $|T|$ used in cite:[Gosling12a] conflicts with the notation of cardinality of sets, which we use in case of union or intersection types for types as well. The notation used here is inspired by cite:[Crary02a], in which a mapping is defined between a typed language $\lambda$ to an untyped language $\lambda$^o^.]
 
 .Parameterized Type
 [def]
@@ -830,10 +828,7 @@ The key feature of the Java generic wildcard handling is called capture conversi
 However, there are some slight differences to Java 6 and 7, only with Java 8 similar results can be expected.
 All these papers include formal proofs of certain aspects, however even these paper lack proof of other aspect
 
-The idea is quite simple: All unbound wildcards are replaced with freshly created new types footnote:[in the Java 8 spec and compiler, they are called type variables, which are types as well], fulfilling the
-constraints defined by the wildcard’s upper and lower bound. These newly
-created types are then handled similar to real types during type
-inference and type conformance validation.
+The idea is quite simple: All unbound wildcards are replaced with freshly created new types footnote:[in the Java 8 spec and compiler, they are called type variables, which are types as well], fulfilling the constraints defined by the wildcard’s upper and lower bound. These newly created types are then handled similar to real types during type inference and type conformance validation.
 
 .Existential Type
 [example]
@@ -843,9 +838,8 @@ declared as
 
 `var x: G<? extends A>;`,
 
-that is the parameterized type, is an existential type
-$E_1$, which is a subtype of A. If you have another variable
-declared as
+that is the parameterized type, is an existential type $E_1$, which is a subtype of A.
+If you have another variable declared as
 
 `var y: G<? extends A>;`
 
@@ -859,10 +853,8 @@ This is no surprise, as `x.get()` actually returns a type $E_1$, which
 is not a subtype of $E_2$.
 ====
 
-The upper and lower bound declarations are, of course, still available
-during type inference for these existential types. This enables the type
-inferencer to calculate the join and meet of parameterized types as
-well.
+The upper and lower bound declarations are, of course, still available during type inference for these existential types.
+This enables the type inferencer to calculate the join and meet of parameterized types as well.
 
 .Join of Parameterized Types
 [req,id=IDE-12,version=1]
@@ -1632,7 +1624,7 @@ types and prefers single typed joins or meets. __The most common use
 case for union types is for emulating method overloading__, as we
 describe later on.
 
-TIP: For type theory about union types, cite:[Pierce02a(15.7)] and cite:[Igarashi07a], other languages that explicitly support the notion of union type include Ceylon cite:[King13a(3.2.4/5)]
+footnote:[For type theory about union types, cite:[Pierce02a(15.7)] and cite:[Igarashi07a], other languages that explicitly support the notion of union type include Ceylon cite:[King13a(3.2.4/5)]]
 
 ==== Syntax [[union-type-syntax]]
 
@@ -1765,8 +1757,7 @@ Remarks:
 * For given types $B <: A$, and the union type $U=\union{A,B}$, $U \neq B$.
 The types are equivalent, however: $A <:= U$ and $U <:= A$.
 
-TIP: This is different from Ceylon ( cite:[King13a(3.2.3)]), in which the union is defined to be `the same type as` _A_.
-Although the meaning of `same` is not clear, it is possibly used as a synonym for `equivalent`.
+footnote:[This is different from Ceylon ( cite:[King13a(3.2.3)]), in which the union is defined to be `the same type as` _A_. Although the meaning of `same` is not clear, it is possibly used as a synonym for `equivalent`.]
 
 .Subtyping with union type
 [example]
@@ -1958,7 +1949,7 @@ As in Java, intersection type is used to define the type boundaries of type vari
 They are inferred by the type inferencer for type checking (as a result of join or meet).
 In contrast to Java, however, intersection type can be declared explicitly by means of intersection type expression.
 
-TIP: For type theory about intersection types, see cite:[Pierce02a(15.7)] and cite:[Laurent12a], other languages supporting explicit notion of intersection type include Ceylon cite:[King13a(3.2.4/5)].
+footnote:[For type theory about intersection types, see cite:[Pierce02a(15.7)] and cite:[Laurent12a], other languages supporting explicit notion of intersection type include Ceylon cite:[King13a(3.2.4/5)].]
 
 ==== Syntax [[intersection-type-syntax]]
 
@@ -2016,7 +2007,7 @@ Let $I$ be an intersection type.
 * An intersection type is a subtype of another type, if at least one of
 its contained types is a subtype of that type:
 
-TIP: This rule is a generalization of the subtyping rules given in cite:[Laurent12a] Table 2, $\cap^1_l$ and $\cap^2_l$
+footnote:[This rule is a generalization of the subtyping rules given in cite:[Laurent12a] Table 2, $\cap^1_l$ and $\cap^2_l$]
 
 [math]
 ++++
@@ -2026,7 +2017,7 @@ TIP: This rule is a generalization of the subtyping rules given in cite:[Laurent
 * A type is a subtype of an intersection type, if it is a subtype of all
 types contained in the intersection type:
 
-TIP: This rule is a generalization of the subtyping rules given in cite:[Laurent12a]Table 2, $\cap_r$
+footnote:[This rule is a generalization of the subtyping rules given in cite:[Laurent12a]Table 2, $\cap_r$]
 
 [math]
 ++++
@@ -2056,9 +2047,9 @@ intersection:
 
 These subtyping rules are similar to Ceylon.
 
-TIP: In Ceylon, for a given union type $U=T_1|T_2$ and intersection type $I=T_1\&T_2$ (with ’|’ is union and ’&’ is intersection),
+footnote:[In Ceylon, for a given union type $U=T_1|T_2$ and intersection type $I=T_1\&T_2$ (with ’|’ is union and ’&’ is intersection),
 $T_1<:U$ and $T_2<:U$ is true, and $T_1<:I$ and $T_2<:I$ is true.
-We should define that as well (if it is not already defined). Cf cite:[King13a(3.2.4/5)]
+We should define that as well (if it is not already defined). Cf cite:[King13a(3.2.4/5)]]
 
 During validation, intersection types containing union or other
 intersection types may be inferred. In this case, the composed types are

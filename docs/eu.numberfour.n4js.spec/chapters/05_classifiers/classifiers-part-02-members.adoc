@@ -57,7 +57,7 @@ The following pseudo properties are defined via annotations:
 `deprecated` ::
 Boolean property set to true if annotation `@Deprecated` is set.
 
-TIP: version 0.4  - not implemented in version 0.3
+footnote:[ version 0.4  - not implemented in version 0.3]
 
 task:IDE-138[]
 
@@ -140,7 +140,7 @@ Thus, over__loading__ of methods is not supported footnote:[In order to emulate 
 However, over__riding__ of methods, getters, and setters are possible, see <<_redefinition-of-members,Redefinition of Members>>.
 Static members may also have the same name as non-static members.
 
-TIP: cite[ECMA15a(p214)], `ClassBody : ClassElementList` indicates that it is possible to have the same name for instance and static members.
+footnote:[cite[ECMA15a(p214)], `ClassBody : ClassElementList` indicates that it is possible to have the same name for instance and static members.]
 
 The dollar character `\$` is not allowed for user-defined member identifiers as the dollar sign is used for rewriting private members.
 
@@ -1109,13 +1109,13 @@ Boolean flag reflecting the property descriptor
 $enumerable$, set via annotation `@Enumerable(true|false)`.
 The default value is $\TRUE$.
 
-TIP: version 4.0
+footnote:[ version 4.0]
 
 `declaredWriteable` ::
 Boolean flag reflecting the property descriptor $writeable$,
 set via annotation `@Writeable(true|false)`. The default value is $\TRUE$.
 
-TIP: This cannot be done w/o `null`/`undefined` analysis
+footnote:[ This cannot be done w/o `null`/`undefined` analysis]
 
 `final` ::
 Boolean flag making the field read-only, and it must be set in the
@@ -1755,8 +1755,7 @@ that is, $M \in C.members$.
 A member `M` is consumed if there is no member defined in
 the implementor with the same name and if there is no non-private
 non-abstract member with that name inherited by the implementor from its
-superclass.footnote:[There had been the idea of preventing static members of being consumed. However, this would break the type subtype
-relation.]
+superclass. footnote:[There had been the idea of preventing static members of being consumed. However, this would break the type subtype relation.]
 
 If the implementor defines the member itself, then the member is
 implemented rather than consumed.

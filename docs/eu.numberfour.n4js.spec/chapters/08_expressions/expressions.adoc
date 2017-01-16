@@ -423,7 +423,7 @@ declared this type, which would cause an error in the first case.
 
 The use of the `@This` annotation is not allowed on methods. task:IDE-2313[]
 
-TIP: Using constructor functions is not recommended and an error or warning will be created. This is only useful for adapting third-party library code. Even in the latter case, it would probably make more sense to declare a (library) *class* Rectangle rather then defining the constructor function.}
+TIP: Using constructor functions is not recommended and an error or warning will be created. This is only useful for adapting third-party library code. Even in the latter case, it would probably make more sense to declare a (library) *class* Rectangle rather then defining the constructor function.
 
 === Identifier
 
@@ -1883,9 +1883,7 @@ task:IDE-345[] $e.op = \lstnfjs{instanceof}$, the following constraints
 must hold:
 
 * The right operand of the instanceof operator must be a `Function`
-footnote:[Only [language-n4js]`Function` implements the ECMAScript specification property [language-n4js]`hasInstance`.
-Thus instanceof expressions are rewritten by the compiler for other types.
-Note that a reference to a class returns the constructor type, which actually is a function itself.
+footnote:[Only [language-n4js]`Function` implements the ECMAScript specification property [language-n4js]`hasInstance`. Thus instanceof expressions are rewritten by the compiler for other types. Note that a reference to a class returns the constructor type, which actually is a function itself.]
 In other words,
 +
 [math]
@@ -2476,8 +2474,8 @@ task:IDE-645[]
 
 `super` can be used to access the supertype’s constructor, methods, getters and setters.
 The supertype is defined lexically, which is different from how `this` works.
+footnote:[See cite:[ECMA15a], Chapter 12.3.5 "The Super Keyword"; note the use of "HomeObject" instead of "thisValue"; also see this http://www.2ality.com/2011/11/super-references.html[blog]).]
 
-TIP: See cite:[ECMA15a], Chapter 12.3.5 "The Super Keyword"; note the use of "HomeObject" instead of "thisValue"; also see this http://www.2ality.com/2011/11/super-references.html[blog]).
 Note that in cite:[ECMA15a] Chapter 12.3.5 `The Super Keyword`, `super` is defined as a keyword but the syntax and semantics are defined in conjunction of member access.
 
 .Type Of Super is Always Nominal
