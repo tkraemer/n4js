@@ -48,6 +48,8 @@ import com.google.common.base.Optional;
 import com.google.common.collect.HashMultimap;
 import com.google.inject.Inject;
 
+import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
+import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry.FileExtensionType;
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration;
 import eu.numberfour.n4js.naming.QualifiedNameComputer;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
@@ -58,7 +60,6 @@ import eu.numberfour.n4js.tester.domain.ID;
 import eu.numberfour.n4js.tester.domain.TestCase;
 import eu.numberfour.n4js.tester.domain.TestSuite;
 import eu.numberfour.n4js.tester.domain.TestTree;
-import eu.numberfour.n4js.tester.extension.TestFileExtensionsRegistry;
 import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TMethod;
@@ -73,7 +74,7 @@ import eu.numberfour.n4js.utils.ContainerTypesHelper;
 public class TestDiscoveryHelper {
 
 	@Inject
-	private TestFileExtensionsRegistry testFileExtensionRegistry;
+	private FileExtensionsRegistry fileExtensionRegistry;
 
 	private static final EClass T_CLASS = TypesPackage.eINSTANCE.getTClass();
 
@@ -418,7 +419,8 @@ public class TestDiscoveryHelper {
 	}
 
 	private boolean isTestFile(final URI uri) {
-		return testFileExtensionRegistry.getTestFileExtensions().contains(uri.fileExtension());
+		return fileExtensionRegistry.getFileExtensions(FileExtensionType.TEST_FILE_EXTENSION)
+				.contains(uri.fileExtension());
 	}
 
 	private boolean isTestModule(final ResourceSet resourceSet, final IResourceDescription module) {

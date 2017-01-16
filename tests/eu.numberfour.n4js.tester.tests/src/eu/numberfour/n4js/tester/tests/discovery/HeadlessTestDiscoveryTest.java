@@ -37,12 +37,13 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import eu.numberfour.n4js.N4JSGlobals;
+import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
+import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry.FileExtensionType;
 import eu.numberfour.n4js.internal.FileBasedWorkspace;
 import eu.numberfour.n4js.tester.TestDiscoveryHelper;
 import eu.numberfour.n4js.tester.TesterModule;
 import eu.numberfour.n4js.tester.domain.TestSuite;
 import eu.numberfour.n4js.tester.domain.TestTree;
-import eu.numberfour.n4js.tester.extension.TestFileExtensionsRegistry;
 import eu.numberfour.n4js.tester.tests.InjectedModules;
 import eu.numberfour.n4js.tester.tests.JUnitGuiceClassRunner;
 import eu.numberfour.n4js.tester.tests.WithParentInjector;
@@ -89,7 +90,7 @@ public class HeadlessTestDiscoveryTest {
 	private TestDiscoveryHelper helper;
 
 	@Inject
-	private TestFileExtensionsRegistry testFileExtensionsRegistry;
+	private FileExtensionsRegistry fileExtensionsRegistry;
 
 	@Inject
 	private FileBasedWorkspace fbWorkspace;
@@ -100,10 +101,24 @@ public class HeadlessTestDiscoveryTest {
 		fbWorkspace.registerProject(URI.createFileURI(TEST_PROJECT.getAbsolutePath()));
 		fbWorkspace.registerProject(URI.createFileURI(TEST_PROJECT_IDEBUG_572.getAbsolutePath()));
 		fbWorkspace.registerProject(URI.createFileURI(TEST_N4JSX_PROJECT.getAbsolutePath()));
-		// Register test file extensions .n4js and .n4jsx
-		testFileExtensionsRegistry.reset();
-		testFileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION);
-		testFileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION);
+		// Register test file extensions
+		fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION, FileExtensionType.TEST_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION, FileExtensionType.TEST_FILE_EXTENSION);
+		// Register runnable file extensions
+		fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSGlobals.JS_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION,
+				FileExtensionType.RUNNABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSXGlobals.JSX_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
+		// Register transpilable file extensions
+		fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION,
+				FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION,
+				FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSGlobals.JS_FILE_EXTENSION,
+				FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSXGlobals.JSX_FILE_EXTENSION,
+				FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
 	}
 
 	/***/

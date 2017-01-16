@@ -1,0 +1,3 @@
+import { baz2 } from "bar2";
+
+export public const baz = <div align="center">{baz2}</div>;
