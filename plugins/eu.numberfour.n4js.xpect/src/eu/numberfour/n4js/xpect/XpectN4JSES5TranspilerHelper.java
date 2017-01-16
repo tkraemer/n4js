@@ -233,69 +233,71 @@ public class XpectN4JSES5TranspilerHelper {
 			SystemLoaderInfo systemLoader)
 			throws IOException {
 
-		final Iterable<Resource> dependencies = from(getDependentResources(init, fileSetupContext));
-		boolean replaceQuotes = false;
+		RunConfiguration runConfig;
+		if (Platform.isRunning()) {
+			// If we are in Plugin UI test or IDE, execute the test the same as for "Run in Node.js" and this way avoid
+			// the effort of calculating dependencies etc.
+			runConfig = runnerFrontEnd.createConfiguration(NodeRunner.ID, null,
+					systemLoader.getId(),
+					resource.getURI().trimFileExtension());
+		} else {
+			// In the non-GUI case, we need to calculate dependencies etc. manually
+			final Iterable<Resource> dependencies = from(getDependentResources(init, fileSetupContext));
+			boolean replaceQuotes = false;
 
-		// compile all file resources
-		StringBuilder errorResult = new StringBuilder();
+			// compile all file resources
+			StringBuilder errorResult = new StringBuilder();
 
-		// Apply some modification to the resource here.
-		if (resourceTweaker != null) {
-			resourceTweaker.tweak(resource);
-		}
-
-		// replace n4jsd resource with provided js resource
-		for (final Resource dep : from(dependencies).filter(r -> !r.getURI().equals(resource.getURI()))) {
-			if ("n4jsd".equalsIgnoreCase(dep.getURI().fileExtension())) {
-				compileImplementationOfN4JSDFile(errorResult, dep, replaceQuotes);
-			} else if (isCompilable(dep, errorResult)) {
-				final Script script = (Script) dep.getContents().get(0);
-				createTempJsFileWithScript(script, replaceQuotes); // IDE-2094 use a specific temp-folder here!
+			// Apply some modification to the resource here.
+			if (resourceTweaker != null) {
+				resourceTweaker.tweak(resource);
 			}
+
+			// replace n4jsd resource with provided js resource
+			for (final Resource dep : from(dependencies).filter(r -> !r.getURI().equals(resource.getURI()))) {
+				if ("n4jsd".equalsIgnoreCase(dep.getURI().fileExtension())) {
+					compileImplementationOfN4JSDFile(errorResult, dep, replaceQuotes);
+				} else if (isCompilable(dep, errorResult)) {
+					final Script script = (Script) dep.getContents().get(0);
+					createTempJsFileWithScript(script, replaceQuotes); // IDE-2094 use a specific temp-folder here!
+				}
+			}
+
+			if (errorResult.length() != 0) {
+				return errorResult.toString();
+			}
+
+			// No error so far
+			// determine module to run
+			Script script = (Script) resource.getContents().get(0);
+			createTempJsFileWithScript(script, replaceQuotes); // IDE-2094 use a specific temp-folder here!
+			String fileToRun = jsModulePathToRun(script);
+
+			// Not in UI case, hence manually set up the resources
+			runConfig = runnerFrontEnd.createXpectOutputTestConfiguration(NodeRunner.ID,
+					fileToRun,
+					systemLoader);
 		}
 
-		// determine module to run
-		Script script = (Script) resource.getContents().get(0);
-
-		String executionResult = null;
+		String executionResult;
 		List<String> combinedOutput = new ArrayList<>();
 		try {
-			if (errorResult.length() == 0) {
+			Process process = runnerFrontEnd.run(runConfig, executor());
+			EngineOutput eo = captureOutput(process);
 
-				createTempJsFileWithScript(script, replaceQuotes); // IDE-2094 use a specific temp-folder here!
-
-				String fileToRun = jsModulePathToRun(script);
-				RunConfiguration runConfig;
-				if (Platform.isRunning()) {
-					// If we are in Plugin UI test or IDE, execute the test the same as for "Run in Node.js"
-					runConfig = runnerFrontEnd.createConfiguration(NodeRunner.ID, null,
-							systemLoader.getId(),
-							resource.getURI().trimFileExtension());
-				} else {
-					// Not in UI case, hence manually set up the resources
-					runConfig = runnerFrontEnd.createXpectOutputTestConfiguration(NodeRunner.ID,
-							fileToRun,
-							systemLoader);
-				}
-
-				Process process = runnerFrontEnd.run(runConfig, executor());
-				EngineOutput eo = captureOutput(process);
-
-				if (decorateStdStreams) {
-					combinedOutput.add("<==");
-					combinedOutput.add("stdout:");
-				}
-				combinedOutput.addAll(eo.getStdOut());
-				if (decorateStdStreams) {
-					combinedOutput.add("stderr:");
-				}
-				combinedOutput.addAll(eo.getErrOut());
-				if (decorateStdStreams) {
-					combinedOutput.add("==>");
-				}
-			} else {
-				combinedOutput.add(errorResult.toString());
+			if (decorateStdStreams) {
+				combinedOutput.add("<==");
+				combinedOutput.add("stdout:");
 			}
+			combinedOutput.addAll(eo.getStdOut());
+			if (decorateStdStreams) {
+				combinedOutput.add("stderr:");
+			}
+			combinedOutput.addAll(eo.getErrOut());
+			if (decorateStdStreams) {
+				combinedOutput.add("==>");
+			}
+
 			executionResult = Joiner.on(nl).join(combinedOutput);
 		} catch (Exception e) {
 			executionResult = e.getMessage();
