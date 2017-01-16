@@ -88,3 +88,10 @@ fex18;
 var fex19 = function(i=j, j=1) {}
 fex19;
 
+// XPECT noerrors --> 
+var fex20 = function(i:int=1){};
+fex20;
+
+// XPECT errors --> "string is not a subtype of int." at ""1""
+var fex21 = function(i:int="1"){};
+fex21;

@@ -57,6 +57,14 @@ class C {
 	m16(...c, ...d){}
 	
 	
+	// XPECT noerrors --> 
 	m17(a=,...b){}
 	
+	
+	// XPECT noerrors --> 
+	m20(i:int=1){};
+	
+	
+	// XPECT errors --> "string is not a subtype of int." at ""1""
+	m21(i:int="1"){};
 }
