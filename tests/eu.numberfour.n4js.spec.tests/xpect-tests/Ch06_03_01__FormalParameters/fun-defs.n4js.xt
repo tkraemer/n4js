@@ -62,7 +62,7 @@ class C {
 	}
 }
 
-// XPECT errors --> "Invalid combination of modifiers: =… and ...." at "...c="
+// XPECT errors --> "Variadic parameters must not have a default initializer." at "...c="
 function f14(...c=){}
 
 

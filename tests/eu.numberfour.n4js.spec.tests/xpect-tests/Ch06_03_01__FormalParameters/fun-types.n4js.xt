@@ -47,7 +47,7 @@ var fex8 : {function(i:int=, string, number=undefined)};
 fex8;
 
 
-// XPECT errors --> "Invalid combination of modifiers: =… and ...." at "...int="
+// XPECT errors --> "Variadic parameters must not have a default initializer." at "...int="
 var fex14 : {function(...int=)};
 fex14;
 

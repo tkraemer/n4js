@@ -18,12 +18,12 @@ stderr:
 console.log({ 
 			string foo:'foo',
 			number bar : 3,
-			fn: function <S extends Object, T, P> someInitExpr(s : S, t : T,p : P, a, n : number?, ... vas : string) : number {
+			fn: function <S extends Object, T, P> someInitExpr(s : S, t : T,p : P, a, n : number=undefined, ... vas : string) : number {
 				return (s+t+p+a+n+vas).length
 			},
-			{function (any , any ,any ,any , number? , ...string ):number} fn2: function sd(s : any, t : any,p : any,a : any, n : number?, ... vas : string) {
+			{function (any , any ,any ,any , number=undefined , ...string ):number} fn2: function sd(s : any, t : any,p : any,a : any, n : number=undefined, ... vas : string) {
 				return (s+t+p+a+n+vas).length
 			},
-			get fng(): {function (s: any, t: any,p: any,a: any, n: number?, ...vas: string):any} { return null;},
-			set fns(pfns : {function (s: any, t: any, p: any, a: any, n: number?, ...vas: string ):any}){/*this.fn = null;*/}
+			get fng(): {function (s: any, t: any,p: any,a: any, n: number=undefined, ...vas: string):any} { return null;},
+			set fns(pfns : {function (s: any, t: any, p: any, a: any, n: number=undefined, ...vas: string ):any}){/*this.fn = null;*/}
 		});

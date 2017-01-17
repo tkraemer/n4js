@@ -557,24 +557,25 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def checkParameters(SetterDeclaration fun){
 		val isVariadic = if( fun?.fpar !== null ) { fun.fpar.isVariadic } else { false }
-		if( isVariadic ) {
-			val String msg = messageForFUN_SETTER_CANT_BE_VARIADIC
-			addIssue(msg, fun.fpar, FUN_SETTER_CANT_BE_VARIADIC)
-		}
+		val hasInitializerAssignment = if( fun?.fpar !== null ) { fun.fpar.hasInitializerAssignment } else { false }
+		internalCheckSetterParameters(fun.fpar, isVariadic, hasInitializerAssignment);
 	}
 
 	@Check
 	def checkParameters(TStructSetter fun){
 		val isVariadic = if( fun?.fpar !== null ) { fun.fpar.isVariadic } else { false }
-		if( isVariadic ) {
+		val hasInitializerAssignment = if( fun?.fpar !== null ) { fun.fpar.hasInitializerAssignment } else { false }
+		internalCheckSetterParameters(fun.fpar, isVariadic, hasInitializerAssignment);
+	}
+	
+	private def <T extends EObject> internalCheckSetterParameters(T fpar, boolean isVariadic, boolean hasInitializerAssignment){
+		if (isVariadic) {
 			val String msg = messageForFUN_SETTER_CANT_BE_VARIADIC
-			addIssue(msg, fun.fpar, FUN_SETTER_CANT_BE_VARIADIC)
+			addIssue(msg, fpar, FUN_SETTER_CANT_BE_VARIADIC)
 		}
-		// setter not optional:
-		if( fun?.fpar !== null ) {
-			if( fun.fpar.typeRef?.undefModifier == UndefModifier.OPTIONAL ) {
-				addIssue(messageForEXP_OPTIONAL_INVALID_PLACE, fun.fpar.typeRef, EXP_OPTIONAL_INVALID_PLACE )
-			}
+		if (hasInitializerAssignment) {
+			val String msg = messageForFUN_SETTER_CANT_BE_DEFAULT
+			addIssue(msg, fpar, FUN_SETTER_CANT_BE_DEFAULT)
 		}
 	}
 
@@ -685,7 +686,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 				}
 				// 3.b both variadic and initializerAssignment
 				if (variadic.apply(fp)) {
-					addIssue(messageForFUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS, fp, FUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS)
+					addIssue(messageForFUN_PARAM_VARIADIC_WITH_INITIALIZER, fp, FUN_PARAM_VARIADIC_WITH_INITIALIZER)
 				}
 			}
 		}
@@ -721,7 +722,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 			if(fp.definedTypeElement.hasInitializerAssignment) {
 				fp.declaredTypeRef.addIssueIfNoDeclaredOrUsableType
 				if(fp.variadic) {
-					addIssue(messageForFUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS,fp,FUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS)
+					addIssue(messageForFUN_PARAM_VARIADIC_WITH_INITIALIZER, fp, FUN_PARAM_VARIADIC_WITH_INITIALIZER)
 				}
 			}
 
@@ -734,7 +735,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 			if(fp.hasInitializerAssignment) {
 				fp.typeRef.addIssueIfNoDeclaredOrUsableType
 				if(fp.variadic) {
-					addIssue(messageForFUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS,fp,FUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS)
+					addIssue(messageForFUN_PARAM_VARIADIC_WITH_INITIALIZER, fp, FUN_PARAM_VARIADIC_WITH_INITIALIZER)
 				}
 			}
 		}
