@@ -14,7 +14,7 @@ export external public interface IEventEmitter {
     public on(event: string, listener: Function): this;
     public once(event: string, listener: Function): this;
     public removeListener(event: string, listener: Function): this;
-    public removeAllListeners(event: string?): this;
+    public removeAllListeners(event: string =): this;
     public setMaxListeners(n: number): void;
     public listeners(event: string): Array<Function>;
     public emit(event: string, ...args: any): boolean;
@@ -26,7 +26,7 @@ export external public class EventEmitter implements IEventEmitter {
     @Override public on(event: string, listener: Function): this;
     @Override public once(event: string, listener: Function): this;
     @Override public removeListener(event: string, listener: Function): this;
-    @Override public removeAllListeners(event: string?): this;
+    @Override public removeAllListeners(event: string =): this;
     @Override public setMaxListeners(n: number): void;
     @Override public listeners(event: string): Array<Function>;
     @Override public emit(event: string, ...args: any): boolean;
