@@ -68,7 +68,7 @@ fex11;
 var fex12 = function(i=1, j, k=3) {}
 fex12;
 
-// XPECT errors --> "Invalid combination of modifiers: =… and ...." at "...i="
+// XPECT errors --> "Variadic parameters must not have a default initializer." at "...i="
 var fex14 = function(...i=) {};
 fex14;
 

@@ -49,7 +49,7 @@ class C {
     m13(a = this.field) {}
 
 
-	// XPECT errors --> "Invalid combination of modifiers: =… and ...." at "...c="
+	// XPECT errors --> "Variadic parameters must not have a default initializer." at "...c="
 	m14(...c=){}
 	
 	
