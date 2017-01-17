@@ -2386,8 +2386,17 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTFormalParameter__GetFormalParameterAsString() {
+	public EOperation getTFormalParameter__GetFormalParameterAsTypesString() {
 		return tFormalParameterEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTFormalParameter__GetFormalParameterAsString() {
+		return tFormalParameterEClass.getEOperations().get(4);
 	}
 
 	/**
@@ -3176,6 +3185,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEOperation(tFormalParameterEClass, TFORMAL_PARAMETER___HAS_AST_INITIALIZER);
 		createEOperation(tFormalParameterEClass, TFORMAL_PARAMETER___IS_OPTIONAL);
 		createEOperation(tFormalParameterEClass, TFORMAL_PARAMETER___IS_VARIADIC_OR_OPTIONAL);
+		createEOperation(tFormalParameterEClass, TFORMAL_PARAMETER___GET_FORMAL_PARAMETER_AS_TYPES_STRING);
 		createEOperation(tFormalParameterEClass, TFORMAL_PARAMETER___GET_FORMAL_PARAMETER_AS_STRING);
 
 		tAnonymousFormalParameterEClass = createEClass(TANONYMOUS_FORMAL_PARAMETER);
@@ -3726,6 +3736,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEOperation(getTFormalParameter__IsOptional(), theEcorePackage.getEBoolean(), "isOptional", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTFormalParameter__IsVariadicOrOptional(), theEcorePackage.getEBoolean(), "isVariadicOrOptional", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTFormalParameter__GetFormalParameterAsTypesString(), theEcorePackage.getEString(), "getFormalParameterAsTypesString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTFormalParameter__GetFormalParameterAsString(), theEcorePackage.getEString(), "getFormalParameterAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

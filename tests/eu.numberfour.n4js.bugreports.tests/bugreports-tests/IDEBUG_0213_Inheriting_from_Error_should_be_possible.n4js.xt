@@ -5,7 +5,7 @@ export public class MyError extends Error {
 	
 	// constructor required as a work-around because super ctor call not working in case of Error (at least for the time being)
 	// see https://jira.numberfour.eu/browse/IDEBUG-213?focusedCommentId=34430&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-34430
-	constructor(msg : string?) {
+	constructor(msg : string=undefined) {
 		super(); // not working, but required to make N4JS validation happy
 		this.name = 'my failure name';
 		this.message = msg;

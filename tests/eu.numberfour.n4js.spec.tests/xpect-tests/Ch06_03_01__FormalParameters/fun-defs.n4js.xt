@@ -75,10 +75,10 @@ function f17(a=,...b){}
 
 
 // XPECT noerrors --> 
-function fex20(i:int=1)=>{};
+function fex20(i:int=1){};
 fex20;
 
-// XPECT errors --> 
-function fex21(i:int="1")=>{};
+// XPECT errors --> "string is not a subtype of int." at ""1""
+function fex21(i:int="1"){};
 fex21;
 

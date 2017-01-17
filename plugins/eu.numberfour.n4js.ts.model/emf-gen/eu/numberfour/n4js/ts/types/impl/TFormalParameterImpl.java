@@ -391,6 +391,34 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getFormalParameterAsTypesString() {
+		final StringBuilder strb = new StringBuilder();
+		boolean _isVariadic = this.isVariadic();
+		if (_isVariadic) {
+			strb.append("...");
+		}
+		TypeRef _typeRef = this.getTypeRef();
+		boolean _tripleNotEquals = (_typeRef != null);
+		if (_tripleNotEquals) {
+			TypeRef _typeRef_1 = this.getTypeRef();
+			String _typeRefAsString = _typeRef_1.getTypeRefAsString();
+			strb.append(_typeRefAsString);
+		}
+		else {
+			strb.append("null");
+		}
+		boolean _isHasInitializerAssignment = this.isHasInitializerAssignment();
+		if (_isHasInitializerAssignment) {
+			strb.append("=\u2026");
+		}
+		return strb.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getFormalParameterAsString() {
 		final StringBuilder strb = new StringBuilder();
 		boolean _isVariadic = this.isVariadic();
@@ -407,8 +435,8 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 			String _typeRefAsString = _typeRef_1.getTypeRefAsString();
 			_append.append(_typeRefAsString);
 		}
-		boolean _isOptional = this.isOptional();
-		if (_isOptional) {
+		boolean _isHasInitializerAssignment = this.isHasInitializerAssignment();
+		if (_isHasInitializerAssignment) {
 			strb.append("=\u2026");
 		}
 		return strb.toString();
@@ -601,6 +629,8 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 				return isOptional();
 			case TypesPackage.TFORMAL_PARAMETER___IS_VARIADIC_OR_OPTIONAL:
 				return isVariadicOrOptional();
+			case TypesPackage.TFORMAL_PARAMETER___GET_FORMAL_PARAMETER_AS_TYPES_STRING:
+				return getFormalParameterAsTypesString();
 			case TypesPackage.TFORMAL_PARAMETER___GET_FORMAL_PARAMETER_AS_STRING:
 				return getFormalParameterAsString();
 		}

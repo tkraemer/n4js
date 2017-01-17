@@ -1299,6 +1299,22 @@ class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRel
 	}
 	/**
 	 * Returns string representation of formal parameter according to syntax definition, including
+	 * preceding variadic modifier and type. The parameter name is omitted. Use when displaying the
+	 * parameter as part of an type or a type expression.
+	 */
+	op String getFormalParameterAsTypesString() {
+		val StringBuilder strb = new StringBuilder();
+		if (variadic) strb.append("...");
+		if (typeRef !== null) {
+			strb.append(typeRef.typeRefAsString);
+		} else {
+			strb.append("null");
+		}
+		if (hasInitializerAssignment) strb.append("=…");
+		return strb.toString();
+	}
+	/**
+	 * Returns string representation of formal parameter according to syntax definition, including
 	 * preceding variadic modifier and colon separated type if declared.
 	 */
 	op String getFormalParameterAsString() {
@@ -1306,7 +1322,7 @@ class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRel
 		if (variadic) strb.append("...");
 		strb.append(name);
 		if (typeRef!==null) strb.append(": ").append(typeRef.typeRefAsString);
-		if (optional) strb.append("=…");
+		if (hasInitializerAssignment) strb.append("=…");
 		return strb.toString();
 	}
 //	op String getFormalParameterAsHTML() {
