@@ -686,7 +686,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 				}
 				// 3.b both variadic and initializerAssignment
 				if (variadic.apply(fp)) {
-					addIssue(messageForFUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS, fp, FUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS)
+					addIssue(messageForFUN_PARAM_VARIADIC_WITH_INITIALIZER, fp, FUN_PARAM_VARIADIC_WITH_INITIALIZER)
 				}
 			}
 		}
@@ -722,7 +722,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 			if(fp.definedTypeElement.hasInitializerAssignment) {
 				fp.declaredTypeRef.addIssueIfNoDeclaredOrUsableType
 				if(fp.variadic) {
-					addIssue(messageForFUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS,fp,FUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS)
+					addIssue(messageForFUN_PARAM_VARIADIC_WITH_INITIALIZER, fp, FUN_PARAM_VARIADIC_WITH_INITIALIZER)
 				}
 			}
 
@@ -735,7 +735,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 			if(fp.hasInitializerAssignment) {
 				fp.typeRef.addIssueIfNoDeclaredOrUsableType
 				if(fp.variadic) {
-					addIssue(messageForFUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS,fp,FUN_PARAM_INVALID_COMBINATION_OF_TYPE_MODIFIERS)
+					addIssue(messageForFUN_PARAM_VARIADIC_WITH_INITIALIZER, fp, FUN_PARAM_VARIADIC_WITH_INITIALIZER)
 				}
 			}
 		}
