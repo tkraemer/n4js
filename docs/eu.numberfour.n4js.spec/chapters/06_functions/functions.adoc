@@ -178,7 +178,7 @@ else ($k>n$):
 [[cdVarianceFunctionChart]]
 image::{find}fig/cdVarianceFunctionChart.png[title="Function Variance Chart"]
 
-``{function()} $<:$ {function(A)} $<:$ {function(A, A)}`` might be surprising for Java programmers. However, in JavaScript it is
+`{function()}` $<:$ `{function(A)}` $<:$ `{function(A, A)}` might be surprising for Java programmers. However, in JavaScript it is
 possible to call a function with any number of arguments independently
 from how many formal parameters the function defines. task:IDE-433[]
 

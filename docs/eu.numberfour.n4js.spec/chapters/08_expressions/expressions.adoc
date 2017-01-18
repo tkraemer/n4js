@@ -1103,7 +1103,7 @@ That is to say, for an indexed-access expression $iae$, the following constraint
 \endalign
 ++++
 +
-3.  In N4JS mode, if the receiver is an array and is not dynamic, in case of index access the index expression must be a number:
+3. In N4JS mode, if the receiver is an array and is not dynamic, in case of index access the index expression must be a number:
 +
 [math]
 ++++
@@ -1585,7 +1585,6 @@ number
 [math]
 ++++
 \infer{\tee \type{UnaryExpression} \expectType \type{Expression}: \type{number}}{}
----
 ++++
 
 * If
