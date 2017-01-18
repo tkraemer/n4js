@@ -994,7 +994,7 @@ undef = 1; // will issue an error!
 The type `undefined` is a subtype of all types. That is,
 [math]
 ++++
-\infer{\tee `undefined` <: T }{}
+\infer{\tee \type{undefined} <: T }{}
 ++++
 
 is an axiom and true for all types _T_.
@@ -1127,7 +1127,7 @@ The type `number` is subtype of `any`:
 
 [math]
 ++++
-\inferSup{`number} <: `any}}{}
+\inferSup{\type{number} <: \type{any}}{}
 ++++
 
 However, variables of type `number` can be auto-converted (coerced) to `Number`, as
@@ -1179,7 +1179,7 @@ A value of any other type can be assigned to a variable of type `any`, but a var
 
 [math]
 ++++
-\inferSup{\tee `Type` left \subtype `any`}
+\inferSup{\tee \texttt{Type} left \subtype{any}}
 ++++
 
 is an axiom and true for all types.
@@ -1304,8 +1304,9 @@ Thus, they are completely interchangeable with string types:
 [math]
 ++++
 \beginalign
+\infer{\type{typeName&lt;T&gt;} <: \type{string}}{}             && \infer{\type{string} <: \type{typeName&lt;T&gt;}}{}        \\
 \infer{\type{i18nKey} <: \type{string}}{}             && \infer{\type{string} <: \type{i18nKey}}{}        \\
-\infer{\type{pathSelector<T>} <: \type{string}}{}   && \infer{\type{string} <: \type{pathSelector<T>}}{}
+\infer{\type{pathSelector&lt;T&gt;} <: \type{string}}{}   && \infer{\type{string} <: \type{pathSelector&gt;T&gt;}}{}
 \endalign
 ++++
 //TODO - check math here, is something missing?
@@ -1502,7 +1503,7 @@ It is a subtype of `Object`.
 
 [math]
 ++++
-\infer{`N4Object` <: `Object`}{}
+\infer{\type{N4Object} <: \type{Object}}{}
 ++++
 
 === N4Class
@@ -1694,7 +1695,7 @@ $\union{A,\union{B,C}} = \union{\union{A,B},C}$
 * Uniqueness of elements: A union type may not contain duplicates
 (similar to sets):
 +
-\forall 1\leq i < k \leq n, \union{T_1,\dots,T_n}: T_i \neq T_k
+$\forall 1\leq i < k \leq n, \union{T_1,\dots,T_n}: T_i \neq T_k$
 
 --
 
@@ -1984,7 +1985,7 @@ $I.typeRefs \neq \emptyset$
 +
 [math]
 ++++
-\exists C \in I.typeRefs: \mu(C)=`Class}) \to \nexists T \in I.typeRefs \setminus\{C\}: \mu(T)=`Class}
+(\exists C \in I.typeRefs: \mu(C)=\type{Class}) \to \nexists T \in I.typeRefs \setminus\{C\}: \mu(T)=\type{Class}
 ++++
 //`
 +
@@ -2005,9 +2006,7 @@ is contained in the intersection type task:IDE-2302[].
 Let $I$ be an intersection type.
 
 * An intersection type is a subtype of another type, if at least one of
-its contained types is a subtype of that type:
-
-footnote:[This rule is a generalization of the subtyping rules given in cite:[Laurent12a] Table 2, $\cap^1_l$ and $\cap^2_l$]
+its contained types is a subtype of that type: footnote:[This rule is a generalization of the subtyping rules given in cite:[Laurent12a] Table 2, $\cap^1_l$ and $\cap^2_l$]
 
 [math]
 ++++
@@ -2015,9 +2014,7 @@ footnote:[This rule is a generalization of the subtyping rules given in cite:[La
 ++++
 
 * A type is a subtype of an intersection type, if it is a subtype of all
-types contained in the intersection type:
-
-footnote:[This rule is a generalization of the subtyping rules given in cite:[Laurent12a]Table 2, $\cap_r$]
+types contained in the intersection type: footnote:[This rule is a generalization of the subtyping rules given in cite:[Laurent12a]Table 2, $\cap_r$]
 
 [math]
 ++++
@@ -2357,10 +2354,11 @@ $\forall a \in I.attributes:$
 
 $\forall m \in I.methods$:
 
+$(\exists m_1 \in T_1.methods, m_1.acc>private) \lor (\exists m_2 \in T_1.methods, m_2.acc>private):$
+
 [math]
 ++++
 \beginalign
-(\exists m_1 \in T_1.methods, m_1.acc>private) \lor (\exists m_2 \in T_1.methods, m_2.acc>private): \\
 &\hspace{2em} \mathbf{with} p=m.fpars\\
 &\hspace{3em} \land \mathbf{if}\ m_1\ \mathbf{exists}\ p'=m_1.fpars\ \mathbf{(else p'=\emptyset)},\\
 &\hspace{3em} \land \mathbf{if}\ m_2\ \mathbf{exists}\ p''=m_2.fpars\ \mathbf{(else p''=\emptyset)}, \mathbf{\mathbf{WLOG}} |p'|\leq |p''|:\\
@@ -2448,21 +2446,27 @@ task:IDE-786[]
 
 // TODO math in this section causing out of bounds exceptions
 
-. Static members of a type _T_ are actually members of the classifier type _type{T}_.
-. The keyword `this` in a static method of a type _T_ actually binds to the classifier type _type{T}_.
-. The constructor type ``constructor``_{T}_ is a subtype of the classifier type _type{T}_:
-+
-$\forall T:$ `constructor{T}` $<:$ `type{T}`
-. If a class _B_ is a subtype (subclass) of a class _A_, then the classifier type _type{B}_ also is a subtype of _type{A}_:
+. Static members of a type _T_ are actually members of the classifier type `type{T}`.
+. The keyword `this` in a static method of a type _T_ actually binds to the classifier type `type{T}`.
+. The constructor type ``constructor``_{T}_ is a subtype of the classifier type `type{T}`:
 +
 [math]
 ++++
-\infer{`type\{B\}` <: `type\{A\}`} {B <: A}
+\forall T: constructor{T}  <: type{T}
+++++
+. If a class _B_ is a subtype (subclass) of a class _A_, then the classifier type `type{B}` also is a subtype of `type{A}`:
++
+[math]
+++++
+\infer{type{B} <: type{A}}{B <: A}
 ++++
 .  If a class _B_ is a subtype (subclass) of a class _A_, and if the constructor function of _B_ is a subtype of the constructor function of _A_, then the
-classifier type ``constructor``_{B}_ also is a subtype of ``constructor``_{A}_:
+classifier type `constructor{B}` also is a subtype of `constructor_{A}_` :
 +
-$\infer{`constructor{B}` <: `constructor{A}`}{{B <: A} & {B.ctor <: A.ctor} }$
+[math]
+++++
+\infer{constructor{B}  <: constructor{A}}{B <: A & B.ctor <: A.ctor}
+++++
 +
 The subtype relation of the constructor function is defined in <<_function-type,Function Type>>.
 In the case of the default `N4Object` constructor, the type of the object literal argument depends on required attributes.
@@ -2472,7 +2476,7 @@ This subtype relation for the constructor type is enforced if the constructor of
 +
 [math]
 ++++
-\infer{\tee C: \lstnfjs{constructorC}}{\mu(C) \in { \type{classifierDefinition} } }
+\infer{\tee C: \lstnfjs{constructor[C]}}{\mu(C) \in { {classifierDefinition} } }
 ++++
 . A class cannot be called as a function in ECMAScript.
 Thus, the constructor and type type are only subtype of :
@@ -2888,7 +2892,7 @@ type rules are defined:
 +
 [math]
 ++++
-\inferSup{\tee `type\{E\}} \subtype `type\{N4Enum\}}}{}
+\inferSup{\tee type{E} \subtype type{N4Enum}}{}
 ++++
 2.  Every literal $L$ of an enumeration $E$ is
 of the type of the enumeration:
@@ -2901,14 +2905,14 @@ That means that every literal is a subtype of `N4Enum`:
 +
 [math]
 ++++
-\infer{\tee L \subtype `N4Enum` }{L \in E.literals}
+\infer{\tee L \subtype \type{N4Enum} }{L \in E.literals}
 ++++
 3.  Since the implementation of enumerations may vary per runtime, enum
 literals are not objects:
 +
 [math]
 ++++
-\infer{\tee L \notsubtype `Object`}{L \in E.literals}
+\infer{\tee L \notsubtype \type{Object}}{L \in E.literals}
 ++++
 
 The base enumeration type `N4Enum` is defined as follows footnote:[This is pseudo N4JS code as it is not possible to infer from `any` or define abstract static methods.]
