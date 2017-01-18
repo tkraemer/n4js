@@ -805,7 +805,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cHasInitializerAssignmentAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final Keyword cHasInitializerAssignmentEqualsSignKeyword_0_0 = (Keyword)cHasInitializerAssignmentAssignment_0.eContents().get(0);
 		private final Assignment cAstInitializerAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cAstInitializerTypeRefParserRuleCall_1_0 = (RuleCall)cAstInitializerAssignment_1.eContents().get(0);
+		private final RuleCall cAstInitializerTypeReferenceNameParserRuleCall_1_0 = (RuleCall)cAstInitializerAssignment_1.eContents().get(0);
 		
 		/// **
 		// * Default initializers in FunctionTypeExpressions or TFunctions
@@ -813,10 +813,10 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		// * initializer expression is rather uninteresting and limited by validations
 		// * to 'undefined'. The shorthand form, that is omitting the initializer, is supported.
 		// * / fragment DefaultFormalParameter *:
-		//	(hasInitializerAssignment?='=' astInitializer=TypeRef?)?;
+		//	(hasInitializerAssignment?='=' astInitializer=TypeReferenceName?)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(hasInitializerAssignment?='=' astInitializer=TypeRef?)?
+		//(hasInitializerAssignment?='=' astInitializer=TypeReferenceName?)?
 		public Group getGroup() { return cGroup; }
 		
 		//hasInitializerAssignment?='='
@@ -825,11 +825,11 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//'='
 		public Keyword getHasInitializerAssignmentEqualsSignKeyword_0_0() { return cHasInitializerAssignmentEqualsSignKeyword_0_0; }
 		
-		//astInitializer=TypeRef?
+		//astInitializer=TypeReferenceName?
 		public Assignment getAstInitializerAssignment_1() { return cAstInitializerAssignment_1; }
 		
-		//TypeRef
-		public RuleCall getAstInitializerTypeRefParserRuleCall_1_0() { return cAstInitializerTypeRefParserRuleCall_1_0; }
+		//TypeReferenceName
+		public RuleCall getAstInitializerTypeReferenceNameParserRuleCall_1_0() { return cAstInitializerTypeReferenceNameParserRuleCall_1_0; }
 	}
 	public class UnionTypeExpressionOLDElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.UnionTypeExpressionOLD");
@@ -2556,7 +2556,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	// * initializer expression is rather uninteresting and limited by validations
 	// * to 'undefined'. The shorthand form, that is omitting the initializer, is supported.
 	// * / fragment DefaultFormalParameter *:
-	//	(hasInitializerAssignment?='=' astInitializer=TypeRef?)?;
+	//	(hasInitializerAssignment?='=' astInitializer=TypeReferenceName?)?;
 	public DefaultFormalParameterElements getDefaultFormalParameterAccess() {
 		return pDefaultFormalParameter;
 	}

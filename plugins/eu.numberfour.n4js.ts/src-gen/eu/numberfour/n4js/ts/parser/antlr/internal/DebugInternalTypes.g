@@ -887,7 +887,7 @@ ruleTFormalParameter:
 ruleDefaultFormalParameter:
 	(
 		'='
-		ruleTypeRef
+		ruleTypeReferenceName
 		?
 	)?
 ;

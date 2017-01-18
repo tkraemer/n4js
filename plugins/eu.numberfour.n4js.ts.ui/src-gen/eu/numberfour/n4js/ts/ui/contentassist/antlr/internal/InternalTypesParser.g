@@ -16757,9 +16757,9 @@ rule__DefaultFormalParameter__AstInitializerAssignment_1
 	}
 :
 	(
-		{ before(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerTypeRefParserRuleCall_1_0()); }
-		ruleTypeRef
-		{ after(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerTypeRefParserRuleCall_1_0()); }
+		{ before(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerTypeReferenceNameParserRuleCall_1_0()); }
+		ruleTypeReferenceName
+		{ after(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerTypeReferenceNameParserRuleCall_1_0()); }
 	)
 ;
 finally {

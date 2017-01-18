@@ -56,7 +56,7 @@ public interface TFormalParameter extends IdentifiableElement, TAnnotableElement
 	void setVariadic(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Ast Initializer</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Ast Initializer</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -66,23 +66,23 @@ public interface TFormalParameter extends IdentifiableElement, TAnnotableElement
 	 * val fn : function(p : int = undefined) => void;
 	 * </pre>
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Ast Initializer</em>' containment reference.
-	 * @see #setAstInitializer(TypeRef)
+	 * @return the value of the '<em>Ast Initializer</em>' attribute.
+	 * @see #setAstInitializer(String)
 	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTFormalParameter_AstInitializer()
-	 * @model containment="true"
+	 * @model unique="false"
 	 * @generated
 	 */
-	TypeRef getAstInitializer();
+	String getAstInitializer();
 
 	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TFormalParameter#getAstInitializer <em>Ast Initializer</em>}' containment reference.
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TFormalParameter#getAstInitializer <em>Ast Initializer</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Ast Initializer</em>' containment reference.
+	 * @param value the new value of the '<em>Ast Initializer</em>' attribute.
 	 * @see #getAstInitializer()
 	 * @generated
 	 */
-	void setAstInitializer(TypeRef value);
+	void setAstInitializer(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Has Initializer Assignment</b></em>' attribute.
@@ -143,7 +143,7 @@ public interface TFormalParameter extends IdentifiableElement, TAnnotableElement
 	 *  Convenience method, returns true if this fparam has an initializer.
 	 * <!-- end-model-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _astInitializer = this.getAstInitializer();\nreturn (_astInitializer != null);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _astInitializer = this.getAstInitializer();\nreturn (_astInitializer != null);'"
 	 * @generated
 	 */
 	boolean hasASTInitializer();

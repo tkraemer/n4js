@@ -4835,9 +4835,9 @@ ruleDefaultFormalParameter[EObject in_current]  returns [EObject current=in_curr
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerTypeRefParserRuleCall_1_0());
+					newCompositeNode(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerTypeReferenceNameParserRuleCall_1_0());
 				}
-				lv_astInitializer_1_0=ruleTypeRef
+				lv_astInitializer_1_0=ruleTypeReferenceName
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getDefaultFormalParameterRule());
@@ -4846,7 +4846,7 @@ ruleDefaultFormalParameter[EObject in_current]  returns [EObject current=in_curr
 						$current,
 						"astInitializer",
 						lv_astInitializer_1_0,
-						"eu.numberfour.n4js.ts.Types.TypeRef");
+						"eu.numberfour.n4js.ts.Types.TypeReferenceName");
 					afterParserOrEnumRuleCall();
 				}
 			)

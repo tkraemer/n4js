@@ -1268,7 +1268,7 @@ class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRel
 	 * val fn : function(p : int = undefined) => void;
 	 * </pre>
 	 */
-	contains TypeRef astInitializer
+	String astInitializer
 	boolean hasInitializerAssignment
 	contains TypeRef typeRef
 

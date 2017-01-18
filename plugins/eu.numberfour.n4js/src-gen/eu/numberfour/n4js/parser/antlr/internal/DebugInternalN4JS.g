@@ -8535,7 +8535,7 @@ ruleTAnonymousFormalParameter:
 ruleDefaultFormalParameter:
 	(
 		'='
-		ruleTypeRef
+		ruleTypeReferenceName
 		?
 	)?
 ;

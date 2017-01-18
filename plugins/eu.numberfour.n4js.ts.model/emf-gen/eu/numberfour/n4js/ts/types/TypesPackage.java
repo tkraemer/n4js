@@ -8215,7 +8215,7 @@ public interface TypesPackage extends EPackage {
 	int TFORMAL_PARAMETER__VARIADIC = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Ast Initializer</b></em>' containment reference.
+	 * The feature id for the '<em><b>Ast Initializer</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -8360,7 +8360,7 @@ public interface TypesPackage extends EPackage {
 	int TANONYMOUS_FORMAL_PARAMETER__VARIADIC = TFORMAL_PARAMETER__VARIADIC;
 
 	/**
-	 * The feature id for the '<em><b>Ast Initializer</b></em>' containment reference.
+	 * The feature id for the '<em><b>Ast Initializer</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -13173,15 +13173,15 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTFormalParameter_Variadic();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.types.TFormalParameter#getAstInitializer <em>Ast Initializer</em>}'.
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TFormalParameter#getAstInitializer <em>Ast Initializer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Ast Initializer</em>'.
+	 * @return the meta object for the attribute '<em>Ast Initializer</em>'.
 	 * @see eu.numberfour.n4js.ts.types.TFormalParameter#getAstInitializer()
 	 * @see #getTFormalParameter()
 	 * @generated
 	 */
-	EReference getTFormalParameter_AstInitializer();
+	EAttribute getTFormalParameter_AstInitializer();
 
 	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializerAssignment <em>Has Initializer Assignment</em>}'.
@@ -15498,12 +15498,12 @@ public interface TypesPackage extends EPackage {
 		EAttribute TFORMAL_PARAMETER__VARIADIC = eINSTANCE.getTFormalParameter_Variadic();
 
 		/**
-		 * The meta object literal for the '<em><b>Ast Initializer</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Ast Initializer</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TFORMAL_PARAMETER__AST_INITIALIZER = eINSTANCE.getTFormalParameter_AstInitializer();
+		EAttribute TFORMAL_PARAMETER__AST_INITIALIZER = eINSTANCE.getTFormalParameter_AstInitializer();
 
 		/**
 		 * The meta object literal for the '<em><b>Has Initializer Assignment</b></em>' attribute feature.

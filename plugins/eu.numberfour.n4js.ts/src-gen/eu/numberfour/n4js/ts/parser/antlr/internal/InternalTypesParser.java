@@ -12946,22 +12946,22 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDefaultFormalParameter"
-    // InternalTypesParser.g:4813:1: ruleDefaultFormalParameter[EObject in_current] returns [EObject current=in_current] : ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_astInitializer_1_0= ruleTypeRef ) )? )? ;
+    // InternalTypesParser.g:4813:1: ruleDefaultFormalParameter[EObject in_current] returns [EObject current=in_current] : ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_astInitializer_1_0= ruleTypeReferenceName ) )? )? ;
     public final EObject ruleDefaultFormalParameter(EObject in_current) throws RecognitionException {
         EObject current = in_current;
 
         Token lv_hasInitializerAssignment_0_0=null;
-        EObject lv_astInitializer_1_0 = null;
+        AntlrDatatypeRuleToken lv_astInitializer_1_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalTypesParser.g:4819:2: ( ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_astInitializer_1_0= ruleTypeRef ) )? )? )
-            // InternalTypesParser.g:4820:2: ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_astInitializer_1_0= ruleTypeRef ) )? )?
+            // InternalTypesParser.g:4819:2: ( ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_astInitializer_1_0= ruleTypeReferenceName ) )? )? )
+            // InternalTypesParser.g:4820:2: ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_astInitializer_1_0= ruleTypeReferenceName ) )? )?
             {
-            // InternalTypesParser.g:4820:2: ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_astInitializer_1_0= ruleTypeRef ) )? )?
+            // InternalTypesParser.g:4820:2: ( ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_astInitializer_1_0= ruleTypeReferenceName ) )? )?
             int alt102=2;
             int LA102_0 = input.LA(1);
 
@@ -12970,7 +12970,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             }
             switch (alt102) {
                 case 1 :
-                    // InternalTypesParser.g:4821:3: ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_astInitializer_1_0= ruleTypeRef ) )?
+                    // InternalTypesParser.g:4821:3: ( (lv_hasInitializerAssignment_0_0= EqualsSign ) ) ( (lv_astInitializer_1_0= ruleTypeReferenceName ) )?
                     {
                     // InternalTypesParser.g:4821:3: ( (lv_hasInitializerAssignment_0_0= EqualsSign ) )
                     // InternalTypesParser.g:4822:4: (lv_hasInitializerAssignment_0_0= EqualsSign )
@@ -12998,27 +12998,27 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalTypesParser.g:4835:3: ( (lv_astInitializer_1_0= ruleTypeRef ) )?
+                    // InternalTypesParser.g:4835:3: ( (lv_astInitializer_1_0= ruleTypeReferenceName ) )?
                     int alt101=2;
                     int LA101_0 = input.LA(1);
 
-                    if ( ((LA101_0>=Intersection && LA101_0<=Constructor)||LA101_0==Undefined||LA101_0==Indexed||LA101_0==Union||(LA101_0>=Null && LA101_0<=This_1)||(LA101_0>=Type && LA101_0<=Void)||LA101_0==Any||LA101_0==LeftCurlyBracket||LA101_0==Tilde||LA101_0==RULE_IDENTIFIER) ) {
+                    if ( (LA101_0==Undefined||LA101_0==Indexed||LA101_0==Null||LA101_0==Void||LA101_0==Any||LA101_0==RULE_IDENTIFIER) ) {
                         alt101=1;
                     }
                     switch (alt101) {
                         case 1 :
-                            // InternalTypesParser.g:4836:4: (lv_astInitializer_1_0= ruleTypeRef )
+                            // InternalTypesParser.g:4836:4: (lv_astInitializer_1_0= ruleTypeReferenceName )
                             {
-                            // InternalTypesParser.g:4836:4: (lv_astInitializer_1_0= ruleTypeRef )
-                            // InternalTypesParser.g:4837:5: lv_astInitializer_1_0= ruleTypeRef
+                            // InternalTypesParser.g:4836:4: (lv_astInitializer_1_0= ruleTypeReferenceName )
+                            // InternalTypesParser.g:4837:5: lv_astInitializer_1_0= ruleTypeReferenceName
                             {
                             if ( state.backtracking==0 ) {
 
-                              					newCompositeNode(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerTypeRefParserRuleCall_1_0());
+                              					newCompositeNode(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerTypeReferenceNameParserRuleCall_1_0());
                               				
                             }
                             pushFollow(FOLLOW_2);
-                            lv_astInitializer_1_0=ruleTypeRef();
+                            lv_astInitializer_1_0=ruleTypeReferenceName();
 
                             state._fsp--;
                             if (state.failed) return current;
@@ -13031,7 +13031,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                               						current,
                               						"astInitializer",
                               						lv_astInitializer_1_0,
-                              						"eu.numberfour.n4js.ts.Types.TypeRef");
+                              						"eu.numberfour.n4js.ts.Types.TypeReferenceName");
                               					afterParserOrEnumRuleCall();
                               				
                             }
@@ -26102,7 +26102,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_82 = new BitSet(new long[]{0xB8D00D58D04FDF10L,0x000041480002236DL});
     public static final BitSet FOLLOW_83 = new BitSet(new long[]{0xB8D00D58D04FDF10L,0x0000414800022369L});
     public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000000000000000L,0x0000000020000000L});
-    public static final BitSet FOLLOW_85 = new BitSet(new long[]{0xB010000010040602L,0x0000414800000009L});
+    public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x1000000010040002L,0x0000400000000009L});
     public static final BitSet FOLLOW_86 = new BitSet(new long[]{0x0000000000000002L,0x0000000010000000L});
     public static final BitSet FOLLOW_87 = new BitSet(new long[]{0xB010000010040600L,0x0000414880010109L});
     public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x0000000000000002L,0x0000000010000002L});

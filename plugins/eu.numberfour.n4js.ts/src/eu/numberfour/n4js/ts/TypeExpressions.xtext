@@ -145,7 +145,7 @@ TFormalParameter:
  * to 'undefined'. The shorthand form, that is omitting the initializer, is supported.
  */
 fragment DefaultFormalParameter*:
-	(hasInitializerAssignment?='=' astInitializer=TypeRef?)?
+	(hasInitializerAssignment?='=' astInitializer=TypeReferenceName?)?
 ;
 
 UnionTypeExpressionOLD returns UnionTypeExpression:

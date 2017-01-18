@@ -95,14 +95,24 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	protected boolean variadic = VARIADIC_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getAstInitializer() <em>Ast Initializer</em>}' containment reference.
+	 * The default value of the '{@link #getAstInitializer() <em>Ast Initializer</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getAstInitializer()
 	 * @generated
 	 * @ordered
 	 */
-	protected TypeRef astInitializer;
+	protected static final String AST_INITIALIZER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getAstInitializer() <em>Ast Initializer</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAstInitializer()
+	 * @generated
+	 * @ordered
+	 */
+	protected String astInitializer = AST_INITIALIZER_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isHasInitializerAssignment() <em>Has Initializer Assignment</em>}' attribute.
@@ -229,7 +239,7 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TypeRef getAstInitializer() {
+	public String getAstInitializer() {
 		return astInitializer;
 	}
 
@@ -238,33 +248,11 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetAstInitializer(TypeRef newAstInitializer, NotificationChain msgs) {
-		TypeRef oldAstInitializer = astInitializer;
+	public void setAstInitializer(String newAstInitializer) {
+		String oldAstInitializer = astInitializer;
 		astInitializer = newAstInitializer;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypesPackage.TFORMAL_PARAMETER__AST_INITIALIZER, oldAstInitializer, newAstInitializer);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setAstInitializer(TypeRef newAstInitializer) {
-		if (newAstInitializer != astInitializer) {
-			NotificationChain msgs = null;
-			if (astInitializer != null)
-				msgs = ((InternalEObject)astInitializer).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TypesPackage.TFORMAL_PARAMETER__AST_INITIALIZER, null, msgs);
-			if (newAstInitializer != null)
-				msgs = ((InternalEObject)newAstInitializer).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TypesPackage.TFORMAL_PARAMETER__AST_INITIALIZER, null, msgs);
-			msgs = basicSetAstInitializer(newAstInitializer, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFORMAL_PARAMETER__AST_INITIALIZER, newAstInitializer, newAstInitializer));
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFORMAL_PARAMETER__AST_INITIALIZER, oldAstInitializer, astInitializer));
 	}
 
 	/**
@@ -337,7 +325,7 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	 * @generated
 	 */
 	public boolean hasASTInitializer() {
-		TypeRef _astInitializer = this.getAstInitializer();
+		String _astInitializer = this.getAstInitializer();
 		return (_astInitializer != null);
 	}
 
@@ -452,8 +440,6 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 		switch (featureID) {
 			case TypesPackage.TFORMAL_PARAMETER__ANNOTATIONS:
 				return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
-			case TypesPackage.TFORMAL_PARAMETER__AST_INITIALIZER:
-				return basicSetAstInitializer(null, msgs);
 			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
 				return basicSetTypeRef(null, msgs);
 		}
@@ -505,7 +491,7 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 				setVariadic((Boolean)newValue);
 				return;
 			case TypesPackage.TFORMAL_PARAMETER__AST_INITIALIZER:
-				setAstInitializer((TypeRef)newValue);
+				setAstInitializer((String)newValue);
 				return;
 			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT:
 				setHasInitializerAssignment((Boolean)newValue);
@@ -535,7 +521,7 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 				setVariadic(VARIADIC_EDEFAULT);
 				return;
 			case TypesPackage.TFORMAL_PARAMETER__AST_INITIALIZER:
-				setAstInitializer((TypeRef)null);
+				setAstInitializer(AST_INITIALIZER_EDEFAULT);
 				return;
 			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT:
 				setHasInitializerAssignment(HAS_INITIALIZER_ASSIGNMENT_EDEFAULT);
@@ -562,7 +548,7 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 			case TypesPackage.TFORMAL_PARAMETER__VARIADIC:
 				return variadic != VARIADIC_EDEFAULT;
 			case TypesPackage.TFORMAL_PARAMETER__AST_INITIALIZER:
-				return astInitializer != null;
+				return AST_INITIALIZER_EDEFAULT == null ? astInitializer != null : !AST_INITIALIZER_EDEFAULT.equals(astInitializer);
 			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT:
 				return hasInitializerAssignment != HAS_INITIALIZER_ASSIGNMENT_EDEFAULT;
 			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
@@ -649,6 +635,8 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (variadic: ");
 		result.append(variadic);
+		result.append(", astInitializer: ");
+		result.append(astInitializer);
 		result.append(", hasInitializerAssignment: ");
 		result.append(hasInitializerAssignment);
 		result.append(')');

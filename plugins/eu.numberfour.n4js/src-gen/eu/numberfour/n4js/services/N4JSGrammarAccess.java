@@ -13068,7 +13068,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	// * initializer expression is rather uninteresting and limited by validations
 	// * to 'undefined'. The shorthand form, that is omitting the initializer, is supported.
 	// * / fragment DefaultFormalParameter *:
-	//	(hasInitializerAssignment?='=' astInitializer=TypeRef?)?;
+	//	(hasInitializerAssignment?='=' astInitializer=super::TypeReferenceName?)?;
 	public TypeExpressionsGrammarAccess.DefaultFormalParameterElements getDefaultFormalParameterAccess() {
 		return gaTypeExpressions.getDefaultFormalParameterAccess();
 	}

@@ -618,7 +618,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 				fp.typeRef.addIssueIfNoDeclaredOrUsableType
 			}
 			// 2. only 'undefined' as identifier allowed
-			if (fp.hasASTInitializer && !TypeUtils.isUndefined(fp.astInitializer)) {
+			if (fp.hasASTInitializer && !"undefined".equals(fp.astInitializer)) {
 				addIssue( messageForFUN_PARAM_INITIALIZER_ONLY_UNDEFINED_ALLOWED, fp, FUN_PARAM_INITIALIZER_ONLY_UNDEFINED_ALLOWED )
 			}
 		}
