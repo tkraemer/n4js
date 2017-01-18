@@ -14,7 +14,7 @@ import static eu.numberfour.n4js.utils.UtilN4.concatUnique;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -64,6 +64,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
 
+import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.generator.CompositeGenerator;
 import eu.numberfour.n4js.generator.common.CompilerDescriptor;
 import eu.numberfour.n4js.generator.common.GeneratorException;
@@ -75,9 +76,9 @@ import eu.numberfour.n4js.internal.N4JSProject;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.projectModel.IN4JSSourceContainer;
-import eu.numberfour.n4js.resource.N4JSCache;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.resource.OrderedResourceDescriptionsData;
+import eu.numberfour.n4js.utils.Lazy;
 import eu.numberfour.n4js.utils.ResourceType;
 
 /**
@@ -163,38 +164,6 @@ public class N4HeadlessCompiler {
 	private Injector injector;
 
 	/**
-	 * Compiles a single n4js/js file
-	 *
-	 * @param modelFile
-	 *            source to compile
-	 * @param properties
-	 *            optional Project-Settings loaded into Properties.
-	 * @throws N4JSCompileException
-	 *             in compile errors
-	 */
-	public static void doMain(File modelFile, Properties properties) throws N4JSCompileException {
-		doMain(modelFile, properties, new DismissingIssueAcceptor());
-	}
-
-	/**
-	 * Compiles a single n4js/js file
-	 *
-	 * @param modelFile
-	 *            source to compile
-	 * @param properties
-	 *            optional Project-Settings loaded into Properties.
-	 * @param issueAcceptor
-	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
-	 * @throws N4JSCompileException
-	 *             in compile errors
-	 */
-	public static void doMain(File modelFile, Properties properties, IssueAcceptor issueAcceptor)
-			throws N4JSCompileException {
-		N4HeadlessCompiler hlc = injectAndSetup(properties);
-		hlc.compileSingleFile(modelFile, issueAcceptor);
-	}
-
-	/**
 	 * Construct a {@link N4HeadlessCompiler} instance based on preferences stored in the given properties.
 	 *
 	 * @param properties
@@ -215,13 +184,25 @@ public class N4HeadlessCompiler {
 	private N4HeadlessCompiler(CompositeGenerator compositeGenerator, JavaIoFileSystemAccess fsa) {
 		this.compositeGenerator = compositeGenerator;
 		this.fsa = fsa;
-
-		outputs = new HashMap<>();
-		for (CompilerDescriptor desc : compositeGenerator.getCompilerDescriptors()) {
-			outputs.put(desc.getIdentifier(), desc.getOutputConfiguration());
-		}
-		fsa.setOutputConfigurations(outputs);
+		this.outputs = buildInitialOutputConfiguration();
+		fsa.setOutputConfigurations(this.outputs);
 	}
+
+	private Map<String, OutputConfiguration> buildInitialOutputConfiguration() {
+		Map<String, OutputConfiguration> result = new HashMap<>();
+		for (CompilerDescriptor desc : compositeGenerator.getCompilerDescriptors()) {
+			result.put(desc.getIdentifier(), desc.getOutputConfiguration());
+		}
+		return result;
+	}
+
+	/*
+	 * ===============================================================================================================
+	 *
+	 * ENTRY POINTS TO LAUNCH COMPILATION
+	 *
+	 * ===============================================================================================================
+	 */
 
 	/**
 	 * Compile one single source file.
@@ -341,7 +322,34 @@ public class N4HeadlessCompiler {
 	}
 
 	/**
-	 * Compile a list of projects. Main algorithm.
+	 * Compile a list of projects. Dependencies will be searched in the current directory.
+	 *
+	 * @param projectPaths
+	 *            the projects to compile. the base folder of each project must be provided.
+	 * @throws N4JSCompileException
+	 *             if one or multiple errors occur during compilation
+	 */
+	public void compileProjects(List<File> projectPaths) throws N4JSCompileException {
+		compileProjects(Arrays.asList(new File(".")), projectPaths, Collections.emptyList(),
+				new DismissingIssueAcceptor());
+	}
+
+	/**
+	 * Compile a list of projects. Dependencies will be searched in the current directory.
+	 *
+	 * @param projectPaths
+	 *            the projects to compile. the base folder of each project must be provided.
+	 * @param issueAcceptor
+	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
+	 * @throws N4JSCompileException
+	 *             if one or multiple errors occur during compilation
+	 */
+	public void compileProjects(List<File> projectPaths, IssueAcceptor issueAcceptor) throws N4JSCompileException {
+		compileProjects(Arrays.asList(new File(".")), projectPaths, Collections.emptyList(), issueAcceptor);
+	}
+
+	/**
+	 * Compile a list of projects.
 	 *
 	 * @param searchPaths
 	 *            where to search for dependent projects.
@@ -356,7 +364,7 @@ public class N4HeadlessCompiler {
 	}
 
 	/**
-	 * Compile a list of projects. Main algorithm.
+	 * Compile a list of projects.
 	 *
 	 * @param searchPaths
 	 *            where to search for dependent projects.
@@ -373,7 +381,7 @@ public class N4HeadlessCompiler {
 	}
 
 	/**
-	 * Compile a list of projects. Main algorithm.
+	 * Compile a list of projects. Delegates to {@link #compileProjects(List, List, List, IssueAcceptor)}.
 	 *
 	 * @param searchPaths
 	 *            where to search for dependent projects.
@@ -389,6 +397,9 @@ public class N4HeadlessCompiler {
 		compileProjects(searchPaths, projectPaths, singleSourceFiles, new DismissingIssueAcceptor());
 	}
 
+	/**
+	 * Encapsulates the result of {@link N4HeadlessCompiler#collectAndRegisterProjects(List, List, List)}.
+	 */
 	private static class BuildSet {
 		public final List<N4JSProject> requestedProjects;
 		public final List<N4JSProject> discoveredProjects;
@@ -396,7 +407,6 @@ public class N4HeadlessCompiler {
 
 		public BuildSet(List<N4JSProject> requestedProjects, List<N4JSProject> discoveredProjects,
 				Predicate<URI> projectFilter) {
-			super();
 			this.requestedProjects = requestedProjects;
 			this.discoveredProjects = discoveredProjects;
 			this.projectFilter = projectFilter;
@@ -405,7 +415,8 @@ public class N4HeadlessCompiler {
 	}
 
 	/**
-	 * Compile a list of projects. Main algorithm.
+	 * Compile a list of projects. This method controls the actual build process. All other <code>compile*</code>
+	 * methods are just convenience overloads that delegate to this method.
 	 *
 	 * @param searchPaths
 	 *            where to search for dependent projects.
@@ -843,73 +854,50 @@ public class N4HeadlessCompiler {
 			IssueAcceptor issueAcceptor)
 			throws N4JSCompileException {
 
+		Lazy<N4JSCompoundCompileException> collectedErrors = Lazy
+				.create(() -> new N4JSCompoundCompileException("Errors during compiling."));
+		N4ProgressStateRecorder recorder = new N4ProgressStateRecorder();
+
 		ResourceSet resourceSet = createResourceSet();
-
-		N4JSCompoundCompileException collectedErrors = null;
-
-		N4ProgressStateRecorder rec = new N4ProgressStateRecorder();
-
-		// List for Tracking of loaded Projects.
 		List<MarkedProject> loadedProjects = new LinkedList<>();
 
 		for (MarkedProject markedProject : projects) {
 			// Only load a project if it was requested to be compile or if other requested projects depend on it.
 			if (markedProject.hasMarkers()) {
-				rec.markProcessing(markedProject.project);
+				recorder.markProcessing(markedProject.project);
 				configureFSA(markedProject.project);
 
 				try {
-					// load
-					loadProject(markedProject, resourceSet, rec, issueAcceptor);
+					// Add to loaded projects immediately so that the project gets unloaded even if loading fails.
 					loadedProjects.add(markedProject);
 
-					// compile only if it has itself as marker and non-external
-					if (markedProject.hasMarker(markedProject.project) && !markedProject.project.isExternal())
-						compileProject(markedProject, resourceSet, filter, rec);
+					loadProject(markedProject, resourceSet, recorder, issueAcceptor);
+					validateProject(markedProject, recorder, issueAcceptor);
 
-					// once compiled, we can unload the AST
-					unloadASTs(markedProject.resources);
-
-					// remove marker from loaded projects and unload if no longer in use
-					ListIterator<MarkedProject> loadedIter = loadedProjects.listIterator();
-					while (loadedIter.hasNext()) {
-						MarkedProject loaded = loadedIter.next();
-						loaded.remove(markedProject.project);
-
-						if (!loaded.hasMarkers()) {
-							// TODO IDE-2479: Restore this
-							// if (createDebugOutput)
-							println("# unloading " + loaded.project);
-
-							loaded.unload(resourceSet, rec);
-							loadedIter.remove();
-						}
+					// generate only if it has itself as marker and non-external
+					if (markedProject.hasMarker(markedProject.project) && !markedProject.project.isExternal()) {
+						generateProject(markedProject, resourceSet, filter, recorder);
 					}
 				} catch (N4JSCompileErrorException e) {
-					rec.compileException(e);
-					if (keepOnCompiling) {
-						if (collectedErrors == null)
-							collectedErrors = new N4JSCompoundCompileException("Errors during compiling.", e);
-						else {
-							collectedErrors.add(e);
-						}
+					recorder.compileException(e);
+					if (isKeepOnCompiling()) {
+						collectedErrors.get().add(e);
 					} else {
-						// fail fast
 						throw e;
 					}
 				} finally {
+					markedProject.unloadASTAndClearCaches();
+					unmarkAndUnloadProjects(loadedProjects, markedProject, resourceSet, recorder);
 					resetFSA();
 				}
-				rec.markEndProcessing(markedProject.project);
+				recorder.markEndProcessing(markedProject.project);
 			}
-
-			System.out.println("Still loaded: " + loadedProjects);
 		}
 
-		rec.dumpToLogfile(logFile);
+		recorder.dumpToLogfile(logFile);
 
-		if (collectedErrors != null) {
-			throw collectedErrors;
+		if (collectedErrors.isInitialized()) {
+			throw collectedErrors.get();
 		}
 	}
 
@@ -932,145 +920,255 @@ public class N4HeadlessCompiler {
 		return resourceSet;
 	}
 
-	/**
-	 * Setting the compile output-configurations to contain path-locations relative to the user.dir: Wrapper function
-	 * written against Xtext 2.7.1.
+	/*
+	 * ===============================================================================================================
 	 *
-	 * In Eclipse-compile mode there are "projects" and the FSA is configured relative to these projects. In this
-	 * filebasedWorkspace here there is no "project"-concept for the generator. So the paths of the FSA need to be
-	 * reconfigured to contain the navigation to the IN4JSProject-root.
+	 * PROJECT LOADING AND INDEXING
 	 *
-	 * @param in4jsProject
-	 *            project to be compiled
+	 * ===============================================================================================================
 	 */
-	private void configureFSA(IN4JSProject in4jsProject) {
-		File userdir = new File(".");
-		File prjdir = new File(in4jsProject.getLocation().toFileString());
-		// compute relative path, if project is not in a sub directory of user directory an absolute
-		// path is computed.
-		java.net.URI relativize = userdir.toURI().relativize(prjdir.toURI());
-		final String relativePrjReference = relativize.getPath();
-		if (relativePrjReference.length() == 0) {
-			// same directory, NTD
-			return;
-		}
-		// set different output configuration.
-		fsa.setOutputConfigurations(transformedOutputConfiguration(relativePrjReference));
-	}
 
 	/**
-	 * Wraps the output-configurations {@link #outputs} with a delegator transparently injecting the relative path to
-	 * the project-root.
-	 *
-	 * @param pathToProjectRoot
-	 *            relative path to the project-root
-	 * @return wrapped configurations.
-	 */
-	private Map<String, OutputConfiguration> transformedOutputConfiguration(String pathToProjectRoot) {
-		Map<String, OutputConfiguration> ret = new HashMap<>();
-
-		for (Entry<String, OutputConfiguration> pair : outputs.entrySet()) {
-			final OutputConfiguration input = pair.getValue();
-			OutputConfiguration transOC = new WrappedOutputConfiguration(input, pathToProjectRoot);
-			ret.put(pair.getKey(), transOC);
-		}
-		return ret;
-	}
-
-	/**
-	 * Reset output configuration to initial settings stored in {@link #outputs}.
-	 *
-	 * @see #configureFSA(IN4JSProject) how to set to specific project.
-	 */
-	private void resetFSA() {
-		fsa.setOutputConfigurations(outputs);
-	}
-
-	/**
-	 * Compiles all files in project.
+	 * Loads all resources in the given project and indexes them.
 	 *
 	 * FileSystemAccess has to be correctly configured, see {@link #configureFSA(IN4JSProject)} and {@link #resetFSA()}
 	 *
 	 * @param markedProject
-	 *            project to compile.
+	 *            project to load
 	 * @param resSet
-	 *            outer resource set
-	 * @param rec
+	 *            the resource set to load resources into
+	 * @param recorder
 	 *            failure-recording
 	 * @param issueAcceptor
 	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
 	 * @throws N4JSCompileErrorException
-	 *             in case of compile-problems.
+	 *             if an error occurs during loading or indexing
 	 */
-	private void loadProject(MarkedProject markedProject, ResourceSet resSet, N4ProgressStateRecorder rec,
+	private void loadProject(MarkedProject markedProject, ResourceSet resSet, N4ProgressStateRecorder recorder,
 			IssueAcceptor issueAcceptor)
 			throws N4JSCompileErrorException {
 
-		rec.markStartLoading(markedProject);
+		recorder.markStartLoading(markedProject);
 
-		// TODO: IDE-2479 Restore this
-		// if (createDebugOutput)
-		println("# loading " + markedProject.project);
-
-		collectResources(markedProject, resSet, rec);
-		loadResources(markedProject, rec);
-		installIndex(resSet, markedProject);
-
-		List<Issue> allErrorsAndWarnings = validateProject(markedProject, issueAcceptor, rec);
-		dumpAllIssues(allErrorsAndWarnings);
-
-		// Projects should not compile if there are severe errors:
-		if (!keepOnCompiling) {
-			failOnErrors(allErrorsAndWarnings, markedProject.project.getProjectId());
+		if (isCreateDebugOutput()) {
+			printDebug("Loading project " + markedProject.project.getProjectId());
 		}
+
+		collectResources(markedProject, resSet, recorder);
+		loadResources(markedProject, recorder);
+		indexResources(markedProject, resSet);
 	}
 
-	private void collectResources(MarkedProject markedProject, ResourceSet resourceSet, N4ProgressStateRecorder rec) {
+	/**
+	 * Collects all resources belonging to the given project and adds them to the given resource set.
+	 *
+	 * @param markedProject
+	 *            the project being loaded
+	 * @param resourceSet
+	 *            the resource set to load the resources into
+	 * @param recorder
+	 *            the progress recorder
+	 */
+	private void collectResources(MarkedProject markedProject, ResourceSet resourceSet,
+			N4ProgressStateRecorder recorder) {
+
 		markedProject.clearResources();
 
 		// TODO try to reuse code from IN4JSCore.createResourceSet
 		for (IN4JSSourceContainer container : markedProject.project.getSourceContainers()) {
-			// Conditionally filter test-resources if not desired
-			if (shouldReadResources(container)) {
-				container.forEach(uri -> {
+			// Conditionally filter test resources if not desired
+			if (shouldLoadSourceContainer(container)) {
+				if (isCreateDebugOutput()) {
+					printDebug("Collecting resources from source container " + container.getLocation());
+				}
+
+				Iterables.filter(container, uri -> shouldLoadResource(uri)).forEach(uri -> {
 					Resource resource = resourceSet.createResource(uri);
 					if (resource != null) {
-						if (createDebugOutput) {
-							println("Collecting resources from source container: " + resource.getURI());
+						if (isCreateDebugOutput()) {
+							printDebug("  Creating resource " + resource.getURI());
 						}
+
 						markedProject.resources.add(resource);
-						if (container.isExternal())
-							markedProject.externalResources.add(resource); // register externals.
-						if (container.isTest())
-							markedProject.testResources.add(resource); // register tests.
+
+						if (container.isExternal()) {
+							markedProject.externalResources.add(resource);
+						}
+
+						if (container.isTest()) {
+							markedProject.testResources.add(resource);
+						}
 					} else {
-						rec.markFailedCreateResource(uri);
-						warn("Skipped file: could not create resource for URI=" + uri);
+						recorder.markFailedCreateResource(uri);
+						warn("  Could not create resource for " + uri);
 					}
 				});
 			}
 		}
 	}
 
-	private void loadResources(MarkedProject markedProject, N4ProgressStateRecorder rec)
+	/**
+	 * Indicates whether the resources in the given source container should be loaded or not.
+	 *
+	 * @param sourceContainer
+	 *            the source container to decide on
+	 * @return <code>true</code> if the resources in the given source container should be loaded and <code>false</code>
+	 *         otherwise
+	 */
+	private boolean shouldLoadSourceContainer(final IN4JSSourceContainer sourceContainer) {
+		return (isProcessTestCode() || !sourceContainer.isTest());
+	}
+
+	/**
+	 * Indicates whether the resources with the given URI should be loaded or not.
+	 *
+	 * @param uri
+	 *            the URI of the resource to be loaded
+	 * @return <code>true</code> if the resource with the given URI should be loaded and <code>false</code> otherwise
+	 */
+	private boolean shouldLoadResource(final URI uri) {
+		if (uri == null)
+			return false;
+		final String ext = uri.fileExtension();
+		if (ext == null)
+			return false;
+
+		// FIXME: This will not work with N4JSX.
+		return N4JSGlobals.ALL_N4_FILE_EXTENSIONS.contains(ext.toLowerCase());
+	}
+
+	/**
+	 * Load all resources of the given marked project.
+	 *
+	 * @param markedProject
+	 *            the project to load
+	 * @param recorder
+	 *            the progress recorder
+	 * @throws N4JSCompileErrorException
+	 *             if an error occurs while loading the resources
+	 */
+	private void loadResources(MarkedProject markedProject, N4ProgressStateRecorder recorder)
 			throws N4JSCompileErrorException {
-		for (Resource res : markedProject.resources) {
+		if (isCreateDebugOutput()) {
+			printDebug("Loading resources for project " + markedProject.project.getProjectId());
+		}
+
+		for (Resource resource : markedProject.resources) {
 			try {
-				res.load(Collections.EMPTY_MAP);
+				if (isCreateDebugOutput()) {
+					printDebug("  Loading resource " + resource.getURI());
+				}
+
+				resource.load(Collections.EMPTY_MAP);
 			} catch (IOException e) {
-				rec.markLoadResourceFailed(res);
-				String message = "Cannot load resource=" + res.getURI();
-				if (!keepOnCompiling) {
-					throw new N4JSCompileErrorException(message,
-							markedProject.project.getProjectId(), e);
+				recorder.markLoadResourceFailed(resource);
+				String message = "Cannot load resource=" + resource.getURI();
+				if (!isKeepOnCompiling()) {
+					throw new N4JSCompileErrorException(message, markedProject.project.getProjectId(), e);
 				}
 				warn(message);
 			}
 		}
 	}
 
-	private List<Issue> validateProject(MarkedProject markedProject, IssueAcceptor issueAcceptor,
-			N4ProgressStateRecorder rec) {
+	/**
+	 * Indexes the resources in the given project including the manifest file resource and adds them to the index stored
+	 * in the given resource set. Assumes that the resources have been loaded, but not fully processed.
+	 *
+	 * @param markedProject
+	 *            the project to index
+	 * @param resourceSet
+	 *            the resource set that contains the index
+	 */
+	private void indexResources(MarkedProject markedProject, ResourceSet resourceSet) {
+		// TODO try to reuse code from IN4JSCore.createResourceSet
+
+		ResourceDescriptionsData index = ResourceDescriptionsData.ResourceSetAdapter
+				.findResourceDescriptionsData(resourceSet);
+
+		if (isCreateDebugOutput()) {
+			printDebug("Indexing project " + markedProject.project.getProjectId());
+		}
+
+		for (Resource resource : markedProject.resources) {
+			indexResource(resource, index);
+		}
+
+		// Index manifest file, too. Index artifact names among project types and library dependencies.
+		Optional<URI> manifestUri = markedProject.project.getManifestLocation();
+		if (manifestUri.isPresent()) {
+			final Resource manifestResource = resourceSet.getResource(manifestUri.get(), true);
+			if (manifestResource != null) {
+				indexResource(manifestResource, index);
+			}
+		}
+	}
+
+	/**
+	 * Install the given resource's description into the given index. Raw JavaScript files will not be indexed. Note
+	 * that when this method is called for the given resource, it is not yet fully processed and therefore the
+	 * serialized type model is not added to the index.
+	 * <p>
+	 * This is due to the fact that we keep a common resource set for all projects that contains the resources of all
+	 * projects with unprocessed dependencies, unlike in the IDE case where we have one resource set per open document
+	 * and load the type models from the index.
+	 * </p>
+	 * <p>
+	 * Since the type models are available in the resource set as long as they may still be referenced, they need not be
+	 * serialized and stored into the index.
+	 * </p>
+	 *
+	 * @param resource
+	 *            the resource to be indexed
+	 * @param index
+	 *            the index to add the given resource to
+	 */
+	private void indexResource(Resource resource, ResourceDescriptionsData index) {
+		if (!shouldIndexResource(resource))
+			return;
+
+		final URI uri = resource.getURI();
+		IResourceServiceProvider serviceProvider = IResourceServiceProvider.Registry.INSTANCE
+				.getResourceServiceProvider(uri);
+		if (serviceProvider != null) {
+			IResourceDescription.Manager resourceDescriptionManager = serviceProvider.getResourceDescriptionManager();
+			IResourceDescription resourceDescription = resourceDescriptionManager.getResourceDescription(resource);
+
+			if (resourceDescription != null) {
+				if (isCreateDebugOutput()) {
+					printDebug("  Indexing resource " + uri);
+				}
+
+				index.addDescription(uri, resourceDescription);
+			}
+		}
+	}
+
+	/**
+	 * Indicates whether or not the given resource should be indexed.
+	 *
+	 * @param resource
+	 *            the resource to be indexed
+	 * @return <code>true</code> if the given resource should be indexed and <code>false</code> otherwise
+	 */
+	private boolean shouldIndexResource(Resource resource) {
+		final URI uri = resource.getURI();
+		final ResourceType resourceType = ResourceType.getResourceType(uri);
+
+		// We only want to index raw JS files if they are contained in an N4JS source container.
+		return resourceType != ResourceType.JS || n4jsCore.findN4JSSourceContainer(uri).isPresent();
+	}
+
+	/*
+	 * ===============================================================================================================
+	 *
+	 * PROJECT VALIDATION
+	 *
+	 * ===============================================================================================================
+	 */
+
+	private void validateProject(MarkedProject markedProject, N4ProgressStateRecorder recorder,
+			IssueAcceptor issueAcceptor) throws N4JSCompileErrorException {
 		List<Issue> allErrorsAndWarnings = new LinkedList<>();
 
 		// validation TODO see IDE-1426 redesign validation calls with generators
@@ -1091,6 +1189,7 @@ public class N4HeadlessCompiler {
 				allErrorsAndWarnings.add(i);
 				rec.markResourceIssues(resource, Arrays.asList(i));
 			} */
+
 			if (resource instanceof XtextResource && // is Xtext resource
 					(!n4jsCore.isNoValidate(resource.getURI())) && // is validating
 					(!markedProject.externalResources.contains(resource)) // not in external folder
@@ -1100,7 +1199,7 @@ public class N4HeadlessCompiler {
 				List<Issue> issues = validator.validate(xtextResource, CheckMode.ALL, CancelIndicator.NullImpl);
 
 				if (!issues.isEmpty()) {
-					rec.markResourceIssues(resource, issues);
+					recorder.markResourceIssues(resource, issues);
 					for (Issue issue : issues) {
 						allErrorsAndWarnings.add(issue);
 						issueAcceptor.accept(issue);
@@ -1109,102 +1208,35 @@ public class N4HeadlessCompiler {
 			}
 		}
 
-		return allErrorsAndWarnings;
-	}
+		printIssues(allErrorsAndWarnings);
 
-	/**
-	 * TODO try to reuse code from IN4JSCore.createResourceSet
-	 */
-	private void installIndex(ResourceSet resourceSet, MarkedProject markedProject) {
-		ResourceDescriptionsData index = ResourceDescriptionsData.ResourceSetAdapter
-				.findResourceDescriptionsData(resourceSet);
-
-		for (Resource resource : markedProject.resources)
-			index(resource, index);
-
-		// Create index for N4 manifest as well. Index artifact names among project types and library dependencies.
-		Optional<URI> manifestUri = markedProject.project.getManifestLocation();
-		if (manifestUri.isPresent()) {
-			final Resource manifestResource = resourceSet.getResource(manifestUri.get(), true);
-			if (null != manifestResource)
-				index(manifestResource, index);
+		// Projects should not compile if there are severe errors:
+		if (!isKeepOnCompiling()) {
+			failOnErrors(allErrorsAndWarnings, markedProject.project.getProjectId());
 		}
 	}
 
 	/**
-	 * Installing the ResourceDescription of a resource into the index. Raw JS-files will not be indexed.
-	 */
-	private void index(Resource resource, ResourceDescriptionsData index) {
-		final URI uri = resource.getURI();
-
-		if (isJsFile(uri)) {
-			IN4JSSourceContainer sourceContainer = n4jsCore.findN4JSSourceContainer(uri).orNull();
-			if (null == sourceContainer)
-				return; // We do not want to index resources that are not in source containers.
-		}
-
-		IResourceServiceProvider serviceProvider = IResourceServiceProvider.Registry.INSTANCE
-				.getResourceServiceProvider(uri);
-		if (serviceProvider != null) {
-			IResourceDescription.Manager resourceDescriptionManager = serviceProvider.getResourceDescriptionManager();
-			IResourceDescription resourceDescription = resourceDescriptionManager.getResourceDescription(resource);
-
-			if (resourceDescription != null) {
-				if (createDebugOutput)
-					println("Adding resource description for resource '" + uri + "' to index.");
-
-				index.addDescription(uri, resourceDescription);
-			}
-		}
-	}
-
-	/**
-	 * Check for raw JS-files
+	 * In case of errors: print all non-error issues and throw exception.
 	 *
-	 * @param uri
-	 *            to test
-	 * @boolean if ends in .js or .js.xt
-	 */
-	private boolean isJsFile(URI uri) {
-		ResourceType resourceType = ResourceType.getResourceType(uri);
-		return (resourceType.equals(ResourceType.JS));
-	}
-
-	/**
-	 * Helper logic if resources should be loaded.
-	 *
-	 * @param container
-	 *            Source-container to decide on.
-	 */
-	boolean shouldReadResources(IN4JSSourceContainer container) {
-
-		return (processTestCode || !container.isTest()) // no testcode if processtestcode is false
-		;
-	}
-
-	/**
-	 * In case of errors: throw exception
-	 *
-	 * @param allErrorsAndWarnings
+	 * @param issues
 	 *            list of issues and warnings
 	 * @param projectId
 	 *            projectId of the bad project.
 	 * @throws N4JSCompileErrorException
-	 *             in case of any issues of type Severity.ERROR
+	 *             if the given issues contain errors
 	 */
-	private void failOnErrors(List<Issue> allErrorsAndWarnings, String projectId)
+	private void failOnErrors(List<Issue> issues, String projectId)
 			throws N4JSCompileErrorException {
 
-		ArrayList<Issue> errors = new ArrayList<>();
-		Iterables.addAll(errors, Iterables.filter(allErrorsAndWarnings, e -> e.getSeverity() == Severity.ERROR));
+		List<Issue> errors = new LinkedList<>();
+		Iterables.addAll(errors, Iterables.filter(issues, i -> i.getSeverity() == Severity.ERROR));
 
 		if (errors.size() != 0) {
-			// dump other issues beforehand.
-			allErrorsAndWarnings
-					.stream()
-					.filter(e -> e.getSeverity() != Severity.ERROR)
-					.forEach(i -> println(issueLine(i)));
-			String msg = "ERROR: cannot compile project " + projectId + " due to " + errors.size() + " errors.";
+			// Print other issues first.
+			Iterables.filter(issues, i -> i.getSeverity() != Severity.ERROR).forEach(i -> issue(i));
+
+			String msg = "Cannot compile project " + projectId + " due to " + errors.size() + " errors.";
 			for (Issue err : errors) {
 				msg = msg + "\n  " + err;
 			}
@@ -1213,8 +1245,16 @@ public class N4HeadlessCompiler {
 
 	}
 
+	/*
+	 * ===============================================================================================================
+	 *
+	 * GENERATING CODE
+	 *
+	 * ===============================================================================================================
+	 */
+
 	/**
-	 * Compiles all files in project.
+	 * Generates code for all resources in the given project.
 	 *
 	 * FileSystemAccess has to be correctly configured, see {@link #configureFSA(IN4JSProject)} and {@link #resetFSA()}
 	 *
@@ -1229,33 +1269,33 @@ public class N4HeadlessCompiler {
 	 * @throws N4JSCompileException
 	 *             in case of compile-problems. Possibly wrapping other N4SJCompileExceptions.
 	 */
-	private void compileProject(MarkedProject markedProject, ResourceSet resSet, Predicate<URI> compileFilter,
+	private void generateProject(MarkedProject markedProject, ResourceSet resSet, Predicate<URI> compileFilter,
 			N4ProgressStateRecorder rec)
 			throws N4JSCompileException {
 		rec.markStartCompiling(markedProject);
 
-		if (createDebugOutput) {
-			println("# compiling " + markedProject.project);
+		if (isVerbose() || isCreateDebugOutput()) {
+			info("Generating " + markedProject.project.getProjectId());
 		}
 
 		N4JSCompoundCompileException collectedErrors = null;
 
 		// then compile each file.
-		for (Resource input : markedProject.resources) {
-			if (compileFilter.test(input.getURI())) {
-				boolean isTest = markedProject.isTest(input);
-				boolean compile = (isTest && processTestCode) || (!isTest && compileSourceCode);
+		for (Resource resource : markedProject.resources) {
+			if (compileFilter.test(resource.getURI())) {
+				boolean isTest = markedProject.isTest(resource);
+				boolean compile = (isTest && isProcessTestCode()) || (!isTest && isCompileSourceCode());
 				if (compile) {
 					try {
-						rec.markStartCompile(input);
-						if (verbose)
-							info("compiling " + markedProject.project.getProjectId() + ": " + input.getURI());
-						compositeGenerator.doGenerate(input, fsa);
-						rec.markEndCompile(input);
+						rec.markStartCompile(resource);
+						if (isVerbose() || isCreateDebugOutput())
+							info("  Generating resource " + resource.getURI());
+						compositeGenerator.doGenerate(resource, fsa);
+						rec.markEndCompile(resource);
 					} catch (GeneratorException e) {
 						rec.markBrokenCompile(e);
 
-						if (keepOnCompiling) {
+						if (isKeepOnCompiling()) {
 							if (collectedErrors == null) {
 								collectedErrors = new N4JSCompoundCompileException("Errors during compiling project "
 										+ markedProject.project.getProjectId() + ".");
@@ -1272,7 +1312,7 @@ public class N4HeadlessCompiler {
 						}
 					}
 				} else {
-					rec.markSkippedCompile(input);
+					rec.markSkippedCompile(resource);
 				}
 			}
 		}
@@ -1284,149 +1324,120 @@ public class N4HeadlessCompiler {
 
 	}
 
-	@Inject
-	public N4JSCache resourceScopeCache;
+	/*
+	 * ===============================================================================================================
+	 *
+	 * PROJECT UNLOADING & CLEANUP
+	 *
+	 * ===============================================================================================================
+	 */
 
-	private void unloadASTs(Collection<Resource> resources) {
-		// Unload all ASTs
-		for (Resource resource : resources) {
-			if (resource instanceof N4JSResource) {
-				N4JSResource n4jsResource = (N4JSResource) resource;
+	/**
+	 * Remove the given marked project from every loaded project that it depends on and unload those projects which have
+	 * no marks anymore, since those are no longer required to process other projects.
+	 *
+	 * @param loadedProjects
+	 *            the currently loaded projects
+	 * @param markedProject
+	 *            the project that was just processed
+	 * @param resourceSet
+	 *            the resource set
+	 * @param recorder
+	 *            the progress recorder
+	 */
+	private void unmarkAndUnloadProjects(List<MarkedProject> loadedProjects, MarkedProject markedProject,
+			ResourceSet resourceSet, N4ProgressStateRecorder recorder) {
+		ListIterator<MarkedProject> loadedIter = loadedProjects.listIterator();
+		while (loadedIter.hasNext()) {
+			MarkedProject loaded = loadedIter.next();
+			loaded.remove(markedProject.project);
 
-				// Make sure the resource is fully postprocessed before unloading the AST. Otherwise, resolving cross
-				// references to the elements inside the resources from dependent projects will fail.
-				n4jsResource.performPostProcessing();
-				n4jsResource.unloadAST();
-				resourceScopeCache.clear(resource);
-			}
-
-			for (Adapter adapter : resource.eAdapters()) {
-				if (adapter instanceof OnChangeEvictingCache.CacheAdapter) {
-					OnChangeEvictingCache.CacheAdapter cacheAdapter = (OnChangeEvictingCache.CacheAdapter) adapter;
-					cacheAdapter.clearValues();
+			if (!loaded.hasMarkers()) {
+				if (createDebugOutput) {
+					printDebug("Unloading project " + loaded.project);
 				}
+
+				loaded.unload(resourceSet, recorder);
+				loadedIter.remove();
 			}
 		}
-	}
-
-	/**
-	 * @param allErrorsAndWarnings
-	 *            list of issues and warnings
-	 */
-	private void dumpAllIssues(List<Issue> allErrorsAndWarnings) {
-		// TODO IDE-2479: Restore this
-
-		// for (Issue issue : allErrorsAndWarnings) {
-		// println(issueLine(issue));
-		// }
-	}
-
-	private String issueLine(Issue issue) {
-		return "@issue = " + issue;
-	}
-
-	/**
-	 * user-feedback
-	 *
-	 * @param message
-	 *            warning
-	 */
-	private void warn(String message) {
-		println("WARN:  " + message);
-	}
-
-	/**
-	 * user-feedback if {@link #verbose}.
-	 *
-	 * @param message
-	 *            info
-	 */
-	private void info(String message) {
-		if (verbose) {
-			println(message);
-		}
-	}
-
-	/**
-	 * user-feedback
-	 *
-	 * @param message
-	 *            error
-	 */
-	private void error(String message) {
-		println("ERROR: " + message);
-	}
-
-	private void println(String message) {
-		if (!suppressOutput)
-			System.out.println(message);
-	}
-
-	/**
-	 * Only if {@link #createDebugOutput} is true, creates output to standard.out about the current build order. Does
-	 * nothing otherwise.
-	 *
-	 * @param sortedProjects
-	 *            list of topological sorted projects.
-	 *
-	 */
-	private void printBuildOrder(List<MarkedProject> sortedProjects) {
-		// TODO: IDE-2479: Restore this
-		// if (!createDebugOutput)
-		// return;
-
-		int i = 1;
-		for (MarkedProject mp : sortedProjects) {
-			boolean build = mp.hasMarkers();
-			println(" " + (build ? i : "-") + ". Project " + mp.project + " used by ["
-					+ Joiner.on(", ").join(mp.markers)
-					+ "] ");
-			if (build) {
-				i++;
-			}
-		}
-	}
-
-	/**
-	 * Compile a list of projects.
-	 *
-	 * @param projects
-	 *            the projects to compile. usually the base folder of the project is provided.
-	 * @throws N4JSCompileException
-	 *             in case of compile problems
-	 */
-	public void compileProjects(List<File> projects) throws N4JSCompileException {
-
-		// use user.dir of caller as projects-root.
-		compileProjects(Arrays.asList(new File(".")), projects, Collections.emptyList(), new DismissingIssueAcceptor());
-	}
-
-	/**
-	 * Compile a list of projects.
-	 *
-	 * @param projects
-	 *            the projects to compile. usually the base folder of the project is provided.
-	 * @param issueAcceptor
-	 *            the issue acceptor that can be used to collect or evaluate the issues occurring during compilation
-	 * @throws N4JSCompileException
-	 *             in case of compile problems
-	 */
-	public void compileProjects(List<File> projects, IssueAcceptor issueAcceptor) throws N4JSCompileException {
-
-		// use user.dir of caller as projects-root.
-		compileProjects(Arrays.asList(new File(".")), projects, Collections.emptyList(), issueAcceptor);
 	}
 
 	/*
 	 * ===============================================================================================================
 	 *
-	 * PRINT DEBUG INFORMATION
+	 * OUTPUT CONFIGURATION
 	 *
 	 * ===============================================================================================================
 	 */
 
 	/**
-	 * Prints out some debug information about the user-provided compilation arguments.
+	 * Setting the compile output-configurations to contain path-locations relative to the user.dir: Wrapper function
+	 * written against Xtext 2.7.1.
+	 *
+	 * In Eclipse-compile mode there are "projects" and the FSA is configured relative to these projects. In this
+	 * filebasedWorkspace here there is no "project"-concept for the generator. So the paths of the FSA need to be
+	 * reconfigured to contain the navigation to the IN4JSProject-root.
+	 *
+	 * @param project
+	 *            project to be compiled
+	 */
+	private void configureFSA(IN4JSProject project) {
+		File currentDirectory = new File(".");
+		File projectLocation = new File(project.getLocation().toFileString());
+
+		// If project is not in a sub directory of the current directory an absolute path is computed.
+		final java.net.URI projectURI = currentDirectory.toURI().relativize(projectLocation.toURI());
+		final String projectPath = projectURI.getPath();
+		if (projectPath.length() == 0) {
+			// same directory, skip
+			return;
+		}
+
+		// set different output configuration.
+		fsa.setOutputConfigurations(transformedOutputConfiguration(projectPath));
+	}
+
+	/**
+	 * Wraps the output-configurations {@link #outputs} with a delegate that transparently injects the relative path to
+	 * the project-root.
+	 *
+	 * @param projectPath
+	 *            relative path to the project-root
+	 * @return wrapped configurations.
+	 */
+	private Map<String, OutputConfiguration> transformedOutputConfiguration(String projectPath) {
+		Map<String, OutputConfiguration> result = new HashMap<>();
+
+		for (Entry<String, OutputConfiguration> pair : outputs.entrySet()) {
+			final OutputConfiguration input = pair.getValue();
+			OutputConfiguration transOC = new WrappedOutputConfiguration(input, projectPath);
+			result.put(pair.getKey(), transOC);
+		}
+
+		return result;
+	}
+
+	/**
+	 * Reset output configuration to initial settings stored in {@link #outputs}.
+	 *
+	 * @see #configureFSA(IN4JSProject) how to set to specific project.
+	 */
+	private void resetFSA() {
+		fsa.setOutputConfigurations(outputs);
+	}
+
+	/*
+	 * ===============================================================================================================
+	 *
+	 * PRINTING INFORMATION
+	 *
+	 * ===============================================================================================================
+	 */
+
+	/**
+	 * Prints out some debug information about the user-provided compilation arguments (only if
+	 * {@link #isCreateDebugOutput()} is <code>true</code>.
 	 *
 	 * @param searchPaths
 	 *            where to search for dependent projects.
@@ -1436,52 +1447,286 @@ public class N4HeadlessCompiler {
 	 *            if non-empty limit compilation to the sources files listed here
 	 */
 	private void printCompileArguments(List<File> searchPaths, List<File> projectPaths, List<File> singleSourceFiles) {
-		if (createDebugOutput) {
-			println("### compileProjects(List,List,List) ");
-			println("  # projectRoots = " + Joiner.on(", ").join(searchPaths));
-			println("  # projects     = " + Joiner.on(", ").join(projectPaths));
-			println("  # sources      = " + Joiner.on(", ").join(singleSourceFiles));
+		if (isCreateDebugOutput()) {
+			printDebug("Starting compilation with the following arguments");
+			printDebug("  Search paths: " + Joiner.on(", ").join(searchPaths));
+			printDebug("  Projects    : " + Joiner.on(", ").join(projectPaths));
+			printDebug("  Source files: " + Joiner.on(", ").join(singleSourceFiles));
 		}
 	}
 
 	/**
+	 * Prints the build order (only if {@link #isCreateDebugOutput()} is <code>true</code>).
 	 *
-	 * @return if compile should proceed as far as possible
+	 * @param buildOrder
+	 *            the build order
+	 */
+	private void printBuildOrder(List<MarkedProject> buildOrder) {
+		if (isCreateDebugOutput()) {
+			printDebug("Building " + buildOrder.size() + " projects in the following order");
+
+			long generated = buildOrder.stream().filter(mp -> mp.hasMarkers()).count();
+			int decimals = Long.toString(generated).length();
+
+			StringBuilder pattern = new StringBuilder();
+			StringBuilder placeHolderB = new StringBuilder();
+			for (long i = 0; i < decimals; i++) {
+				pattern.append("#");
+				placeHolderB.append("-");
+			}
+
+			DecimalFormat indexFormat = new DecimalFormat(pattern.toString());
+			String indexPlaceHolder = placeHolderB.toString();
+
+			int index = 1;
+			for (MarkedProject mp : buildOrder) {
+				boolean generate = mp.hasMarkers();
+
+				StringBuilder msg = new StringBuilder();
+				if (generate) {
+					msg.append(indexFormat.format(index)).append(".");
+					index++;
+				} else {
+					msg.append(indexPlaceHolder).append(" ");
+				}
+
+				msg.append(" Project ").append(mp.project);
+				msg.append(" used by [").append(Joiner.on(", ").join(mp.markers)).append("]");
+
+				printDebug(msg.toString());
+			}
+		}
+	}
+
+	/**
+	 * Prints all issues in the given collection.
+	 *
+	 * @param issues
+	 *            the issues to print
+	 */
+	private void printIssues(Collection<Issue> issues) {
+		issues.stream().forEach(i -> issue(i));
+	}
+
+	/**
+	 * Prints the given debug message. Does not consider {@link #isCreateDebugOutput()}. This responsibility falls to
+	 * the caller.
+	 *
+	 * @param message
+	 *            the message to print
+	 */
+	private void printDebug(String message) {
+		println("DEBUG: " + message);
+	}
+
+	/**
+	 * Prints the given info message.
+	 *
+	 * @param message
+	 *            the message to print
+	 */
+	private void info(String message) {
+		println(" INFO: " + message);
+	}
+
+	/**
+	 * Prints the given issue.
+	 *
+	 * @param issue
+	 *            the issue to print
+	 */
+	private void issue(Issue issue) {
+		println("@issue: " + issue);
+	}
+
+	/**
+	 * Prints the given warning.
+	 *
+	 * @param message
+	 *            the warning to print
+	 */
+	private void warn(String message) {
+		println(" WARN:  " + message);
+	}
+
+	/**
+	 * Prints the given error message.
+	 *
+	 * @param message
+	 *            the message to print
+	 */
+	private void error(String message) {
+		println("ERROR: " + message);
+	}
+
+	/**
+	 * Prints the given message unless {@link #suppressOutput} is <code>true</code>.
+	 *
+	 * @param message
+	 *            the message to print
+	 */
+	private void println(String message) {
+		if (!isOutputSuppressed()) {
+			System.out.println(message);
+		}
+	}
+
+	/**
+	 * Indicates whether or not compilation should proceed in case of errors.
 	 */
 	public boolean isKeepOnCompiling() {
 		return keepOnCompiling;
 	}
 
 	/**
-	 * @param keepOnCompiling
-	 *            true - keep compiling even if there are errors.
+	 * Specifies whether or not compilation should proceed in case of errors.
 	 */
 	public void setKeepOnCompiling(boolean keepOnCompiling) {
 		this.keepOnCompiling = keepOnCompiling;
 	}
 
 	/**
-	 * Marker-carrying wrapper around projects. As markers dependent projects still to be build are registered. This
-	 * class is used in the build-process to compute the state of which projects to be loaded / can be unloaded.
+	 * Indicates whether or not test code should be processed.
+	 */
+	public boolean isProcessTestCode() {
+		return processTestCode;
+	}
+
+	/**
+	 * Specifies whether or not test code should be processed.
+	 */
+	public void setProcessTestCode(boolean processTestCode) {
+		this.processTestCode = processTestCode;
+	}
+
+	/**
+	 * Indicates whether or not source code should be generated by the transpiler.
+	 */
+	public boolean isCompileSourceCode() {
+		return compileSourceCode;
+	}
+
+	/**
+	 * Specifies whether or not source code should be generated by the transpiler.
+	 */
+	public void setCompileSourceCode(boolean compileSourceCode) {
+		this.compileSourceCode = compileSourceCode;
+	}
+
+	/**
+	 * Indicates whether or not debug information should be printed.
+	 */
+	public boolean isCreateDebugOutput() {
+		return createDebugOutput;
+	}
+
+	/**
+	 * Specifies whether or not debug information should be printed.
+	 */
+	public void setCreateDebugOutput(boolean createDebugOutput) {
+		this.createDebugOutput = createDebugOutput;
+	}
+
+	/**
+	 * Indicates whether or not to suppress all output to standard out.
+	 */
+	public boolean isOutputSuppressed() {
+		return suppressOutput;
+	}
+
+	/**
+	 * Specifies whether or not to suppress all output to standard out.
+	 */
+	public void setOutputSuppressed(boolean suppressOutput) {
+		this.suppressOutput = suppressOutput;
+	}
+
+	/**
+	 * Indicates whether verbose logging is enabled.
+	 */
+	public boolean isVerbose() {
+		return verbose;
+	}
+
+	/**
+	 * Specifies whether verbose logging is enabled.
+	 */
+	public void setVerbose(boolean verbose) {
+		this.verbose = verbose;
+	}
+
+	/**
+	 * Returns the log file name to use for progress logging.
 	 *
-	 * Capable of referencing resources for load-state tracking.
+	 * @return Returns the log file name or <code>null</code> if no log file name has been set
+	 */
+	public String getLogFile() {
+		return logFile;
+	}
+
+	/**
+	 * Sets the log file name to use for progress logging.
 	 *
-	 * Capable of storing a set of test-resources to quickly query the code-nature of resource (test / source)
+	 * @param logFile
+	 *            the log file name
+	 */
+	public void setLogFile(String logFile) {
+		this.logFile = logFile;
+	}
+
+	/**
+	 * Reference to the creating Injector.
+	 */
+	public Injector getInjector() {
+		return injector;
+	}
+
+	/*
+	 * ===============================================================================================================
+	 *
+	 * MARKED PROJECT UTILITY CLASS
+	 *
+	 * ===============================================================================================================
+	 */
+	/**
+	 * A wrapper around N4JS projects that has the ability to track dependent projects in the form of markers. A project
+	 * is added as a marker of this project if it has an active dependency on it. A dependency is active as long as the
+	 * dependent project is not yet built.
+	 * <p>
+	 * Additionally, projects that have been explicitly requested to be compiled by the user are added as markers to
+	 * themselves, as opposed to projects that have been discovered solely due to dependencies of explicitly requested
+	 * projects.
+	 * </p>
+	 * <p>
+	 * Furthermore, this class tracks the loaded resources of the wrapped projects in order to be able to unload them as
+	 * soon as possible.
+	 * </p>
 	 */
 	static class MarkedProject {
-		/** the wrapped project */
-		final IN4JSProject project;
 		/**
-		 * list of active markers: Other projects that depend on this one, are part of the current build & have not yet
-		 * been build.
+		 * The wrapped project.
 		 */
-		final LinkedHashSet<IN4JSProject> markers = new LinkedHashSet<>();
-		/** pointer to a List of loaded resource (all types) */
-		List<Resource> resources = new LinkedList<>();
-		/** Set of external-resources. This must be a subset of resources. */
-		Set<Resource> externalResources = new HashSet<>();
-		/** Set of test-resources. This must be a subset of resources. */
-		Set<Resource> testResources = new HashSet<>();
+		final IN4JSProject project;
+
+		/**
+		 * Contains the active markers, i.e., dependent projects that have not yet been built themselves.
+		 */
+		final Set<IN4JSProject> markers = new LinkedHashSet<>();
+
+		/**
+		 * All loaded resources of this project.
+		 */
+		final Set<Resource> resources = new LinkedHashSet<>();
+
+		/**
+		 * All loaded external resources of this project. This is a subset of {@link #resources}.
+		 */
+		final Set<Resource> externalResources = new HashSet<>();
+
+		/**
+		 * All loaded test resources of this project. This is a subset of {@link #resources}.
+		 */
+		final Set<Resource> testResources = new HashSet<>();
 
 		/**
 		 * Create a wrapper around a project;
@@ -1491,45 +1736,64 @@ public class N4HeadlessCompiler {
 		}
 
 		/**
-		 * Tell if it is an external source.
+		 * Indicates whether the given resource is external in the context of this project.
 		 *
-		 * @param input
-		 *            element of {@link #resources} to query for external / not external source
-		 * @return if {@code input} is contained in {@link #externalResources}
+		 * @param resource
+		 *            the resource to check
+		 * @return <code>true</code> if the given resource is external and <code>false</code> otherwise
 		 */
-		public boolean isExternal(Resource input) {
-			return externalResources.contains(input);
+		public boolean isExternal(Resource resource) {
+			return externalResources.contains(resource);
 		}
 
 		/**
-		 * Tell if it is a test.
+		 * Indicates whether the given resource is a test in the context of this project.
 		 *
-		 * @param input
-		 *            element of {@link #resources} to query for test / not test
-		 * @return if {@code input} is contained in {@link #testResources}
+		 * @param resource
+		 *            the resource to check
+		 * @return <code>true</code> if the given resource is a test and <code>false</code> otherwise
 		 */
-		public boolean isTest(Resource input) {
-			return testResources.contains(input);
+		public boolean isTest(Resource resource) {
+			return testResources.contains(resource);
 		}
 
+		/**
+		 * Adds the given project as a marker, indicating that it depends on this project.
+		 *
+		 * @param marker
+		 *            the project to mark this project with
+		 */
 		public void markWith(IN4JSProject marker) {
 			markers.add(marker);
 		}
 
+		/**
+		 * Indicates whether or not the given project is a marker of this project.
+		 *
+		 * @param marker
+		 *            the project to check
+		 * @return <code>true</code> if the given project is a marker of this project and <code>false</code> otherwise
+		 */
 		public boolean hasMarker(IN4JSProject marker) {
 			return markers.contains(marker);
 		}
 
+		/**
+		 * Indicates whether or not this project still has markers.
+		 *
+		 * @return <code>true</code> if this project still has markers and <code>false</code> otherwise
+		 */
 		public boolean hasMarkers() {
 			return !markers.isEmpty();
 		}
 
 		/**
-		 * Remove a marker (e.g. when project was build)
+		 * Remove the given project as a marker of this project, indicating that it is no longer has an active
+		 * dependency on this project.
 		 *
 		 * @param marker
-		 *            dependent project to be removed from makerlist.
-		 * @return true if marker was in markerlsit
+		 *            dependent project to be removed
+		 * @return <code>true</code> if the given project was a marker of this project and <code>false</code> otherwise
 		 */
 		public boolean remove(IN4JSProject marker) {
 			return markers.remove(marker);
@@ -1581,125 +1845,38 @@ public class N4HeadlessCompiler {
 			resourceSet.getResources().remove(resource);
 		}
 
-		public void clearResources() {
+		private void clearResources() {
 			resources.clear();
 			externalResources.clear();
 			testResources.clear();
+		}
+
+		/**
+		 * Unload the ASTs and clear the resource scope caches of all resources that belong to this marked project.
+		 */
+		public void unloadASTAndClearCaches() {
+			Iterables.filter(resources, resource -> resource.isLoaded()).forEach(resource -> {
+				if (resource instanceof N4JSResource) {
+					N4JSResource n4jsResource = (N4JSResource) resource;
+
+					// Make sure the resource is fully postprocessed before unloading the AST. Otherwise, resolving
+					// cross references to the elements inside the resources from dependent projects will fail.
+					n4jsResource.performPostProcessing();
+					n4jsResource.unloadAST();
+				}
+
+				for (Adapter adapter : resource.eAdapters()) {
+					if (adapter instanceof OnChangeEvictingCache.CacheAdapter) {
+						OnChangeEvictingCache.CacheAdapter cacheAdapter = (OnChangeEvictingCache.CacheAdapter) adapter;
+						cacheAdapter.clearValues();
+					}
+				}
+			});
 		}
 
 		@Override
 		public String toString() {
 			return project.toString();
 		}
-	}
-
-	/**
-	 *
-	 * @return if test-content should be considered
-	 */
-	public boolean isProcessTestCode() {
-		return processTestCode;
-	}
-
-	/**
-	 * @param processTestCode
-	 *            true (default) test-content should be considered
-	 */
-	public void setProcessTestCode(boolean processTestCode) {
-		this.processTestCode = processTestCode;
-	}
-
-	/**
-	 *
-	 * @return if sources should be transpiled
-	 */
-	public boolean isCompileSourceCode() {
-		return compileSourceCode;
-	}
-
-	/**
-	 *
-	 * @param compileSourceCode
-	 *            (default true) if Sources should be transpiled.
-	 */
-	public void setCompileSourceCode(boolean compileSourceCode) {
-		this.compileSourceCode = compileSourceCode;
-	}
-
-	/**
-	 *
-	 * @return if debug messages should be printed
-	 */
-	public boolean isCreateDebugOutput() {
-		return createDebugOutput;
-	}
-
-	/**
-	 *
-	 * @param createDebugOutput
-	 *            (default false) if debug messages should be printed
-	 */
-	public void setCreateDebugOutput(boolean createDebugOutput) {
-		this.createDebugOutput = createDebugOutput;
-	}
-
-	/**
-	 * Indicates whether all output to standard out is suppressed.
-	 *
-	 * @return <code>true</code> if output to standard out is suppressed and <code>false</code> otherwise
-	 */
-	public boolean isOutputSuppressed() {
-		return suppressOutput;
-	}
-
-	/**
-	 * Set whether or not to suppress all output to standard out.
-	 *
-	 * @param suppressOutput
-	 *            whether or not to suppress the output
-	 */
-	public void setOutputSuppressed(boolean suppressOutput) {
-		this.suppressOutput = suppressOutput;
-	}
-
-	/**
-	 * @param logFile
-	 *            filname to write progress log to
-	 */
-	public void setLogFile(String logFile) {
-		this.logFile = logFile;
-	}
-
-	/**
-	 * Access to log file name
-	 *
-	 * @return null if not set, else file to write to.
-	 */
-	public String getLogFile() {
-		return logFile;
-	}
-
-	/**
-	 *
-	 * @return true if verbose enabled
-	 */
-	public boolean isVerbose() {
-		return verbose;
-	}
-
-	/**
-	 *
-	 * @param verbose
-	 *            true to enable
-	 */
-	public void setVerbose(boolean verbose) {
-		this.verbose = verbose;
-	}
-
-	/**
-	 * Reference to the creating Injector.
-	 */
-	public Injector getInjector() {
-		return injector;
 	}
 }
