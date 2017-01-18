@@ -2993,7 +2993,7 @@ Enum literals are singletons:
 
 [math]
 ++++
-\forall e_1,e_2, \mu(e_1)=\mu(e_2)=`N4EnumLiteral` \land \tee e_1 = \tee e_2: e_1`==}e_2 \iff e_1`===}e_2
+\forall e_1,e_2, \mu(e_1)=\mu(e_2)=\type{N4EnumLiteral} \land \tee e_1 = \tee e_2: e_1==e_2 \iff e_1===e_2
 ++++
 
 .Enumeration List

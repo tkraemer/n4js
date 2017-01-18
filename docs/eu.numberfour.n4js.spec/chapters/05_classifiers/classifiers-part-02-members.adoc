@@ -55,9 +55,7 @@ The following pseudo properties are defined via annotations:
 
 [horizontal]
 `deprecated` ::
-Boolean property set to true if annotation `@Deprecated` is set.
-
-footnote:[ version 0.4  - not implemented in version 0.3]
+Boolean property set to true if annotation `@Deprecated` is set. footnote:[ version 0.4  - not implemented in version 0.3]
 
 task:IDE-138[]
 
@@ -92,8 +90,7 @@ Enumeration, may be one of the following values: +
 
 NOTE: $assignability$ is related but not equal to
 writable modifiers used for fields. We define a partial order on this
-enumeration as follows:
-+
+enumeration as follows: +
 [math]
 ++++
 <(l,r) \spc ::= \spc \{ (\lenum{set}, \lenum{any}), (\lenum{get}, \lenum{any})  \}

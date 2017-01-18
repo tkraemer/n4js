@@ -33,6 +33,7 @@ In that case, the type can be modified with ``pass:[~~]`` (two tildes). This is 
 Furthermore, only on the use-site, it is possible to consider only either readable or writable or fields by using the read-only ``pass:[r~]`` or write-only ``pass:[w~]`` structural field typing.
 For initialization blocks, it is even possible to use structural initializer field typing via the ``pass:[i~]`` operator.
 
+[.language-n4js]
 == Syntax
 
 Structural typing is specified using the typing strategy modifier. There
@@ -90,6 +91,7 @@ but it contains all public, non-static members of that type
 +
 [math]
 ++++
+\beginalign
 \infer{\tee X \subtype T}{
     {X \notsubtype \type{N4Object} \hspace{3em} T.defStructural} \\
     {\forall m \in T.members, m.acc=\lenum{public}, \neg m.static, m\neq T.ctor:}\\
@@ -98,6 +100,7 @@ but it contains all public, non-static members of that type
     {\hspace{2em} \land \tee m' \subtype m}\\
     {\hspace{2em} \land \mu(m)=\type{Field} \to \tee m \subtype m'}
 }
+\endalign
 ++++
 or
 ..  if it is a subtype of `N4Object` which explicitly extends or implements the
@@ -160,6 +163,7 @@ with `C`!
 
 ====
 
+[.language-n4js]
 == Use-Site Structural Typing
 
 Use-site structural typing offers several typing strategy modifiers to define the accessability of public properties of classes and interfaces.
@@ -417,10 +421,10 @@ We call the following:
 .Use-Site Structural Typing
 [req,id=IDE-76,version=1]
 --
-1.  The structural version of a type is a supertype of the nominal type: $T \subtype \tsStr T$
-2.  The structural field version of a type is a supertype of the structural type: $\tsStr T \subtype \tsFld T$
-3.  The structural read-only field version of a type is a supertype of the structural field type: $\tsFld T \subtype \tsRoFld T$
-4.  The structural write-only field version of a type is a supertype of the structural field type: $\tsFld T \subtype \tsWoFld T$
+1.  The structural version of a type is a supertype of the nominal type: $T \subtype : \tsStr T$
+2.  The structural field version of a type is a supertype of the structural type: $\tsStr T \subtype : \tsFld T$
+3.  The structural read-only field version of a type is a supertype of the structural field type: $\tsFld T \subtype : \tsRoFld T$
+4.  The structural write-only field version of a type is a supertype of the structural field type: $\tsFld T \subtype : \tsWoFld T$
 5.  The structural (field) version of a type cannot be used on the right hand side of the `instanceof` operator:
 +
 [math]
@@ -516,7 +520,7 @@ The `instanceof` operator is still working as described in <<_relational-express
 
 If a type $X$ is a (nominal) subtype of T, it is, of course,
 also a subtype of $\tsStr T$:
-+
+
 [math]
 ++++
 \infer{\tee X \subtype \tee \tsStr T}{\tee X \subtype \tee T}
@@ -611,6 +615,7 @@ h|Member of type __X__ | ``pass:[~~X]`` |``pass:[~r~X]`` |``pass:[~w~X]`` |``pas
 
 --
 
+[.language-n4js]
 == Structural Read-only, Write-only and Initializer Field Typing
 task:IDE-1777[]
 
@@ -711,6 +716,7 @@ console.log(new C({y: 42}).y); //24
 
 --
 
+[.language-n4js]
 == Structural Types With Optional Fields
 
 Public optional fields become a member of the structural (field) type as
