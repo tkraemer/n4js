@@ -17,9 +17,7 @@ Contributors:
 
 N4JS supports array and object destructuring as provided in ES6.
 This is used to conveniently assign selected elements of an array or object to a number of newly-declared or pre-existing variables or to further
-destructure them by using nested destructuring patterns.
-
-TIP: Further reading on <<Acronyms,DI>> Basics: cite:[Fowler04b,Prasanna09a], Verification cite:[Zhu13a,Hudli13a], Frameworks cite:[Lesiecki08a,Betts13a,Knol13a,Dagger]
+destructure them by using nested destructuring patterns. footnote:[Further reading on <<Acronyms,DI>> Basics: cite:[Fowler04b,Prasanna09a], Verification cite:[Zhu13a,Hudli13a], Frameworks cite:[Lesiecki08a,Betts13a,Knol13a,Dagger]]
 
 === Syntax
 
