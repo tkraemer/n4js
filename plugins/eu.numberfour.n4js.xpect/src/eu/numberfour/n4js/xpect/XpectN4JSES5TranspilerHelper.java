@@ -254,7 +254,7 @@ public class XpectN4JSES5TranspilerHelper {
 		// if Xpect configured workspace is null, this has been triggered directly in the IDE
 		if (Platform.isRunning()
 				&& (((ReadOutWorkspaceConfiguration) readOutConfiguration).getXpectConfiguredWorkspace() == null)) {
-			// If we are in Plugin UI test or IDE, execute the test the same as for "Run in Node.js" and this way avoid
+			// If we are in the IDE, execute the test the same as for "Run in Node.js" and this way avoid
 			// the effort of calculating dependencies etc.
 			runConfig = runnerFrontEnd.createConfiguration(NodeRunner.ID, null,
 					systemLoader.getId(),
