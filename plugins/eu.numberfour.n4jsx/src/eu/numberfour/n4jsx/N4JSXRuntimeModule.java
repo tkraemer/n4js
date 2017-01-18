@@ -522,6 +522,7 @@ public class N4JSXRuntimeModule extends eu.numberfour.n4jsx.AbstractN4JSXRuntime
 	/**
 	 * Binds JS variant for N4JSX language
 	 */
+	@SingletonBinding
 	public Class<? extends JavaScriptVariantHelper> bindJavaScriptVariantHelper() {
 		return N4JSXJavaScriptVariantHelper.class;
 	}
