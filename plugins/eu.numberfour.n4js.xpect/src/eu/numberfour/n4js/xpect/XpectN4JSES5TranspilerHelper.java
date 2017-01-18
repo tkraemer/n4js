@@ -46,6 +46,7 @@ import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.validation.CheckMode;
 import org.eclipse.xtext.validation.IResourceValidator;
 import org.eclipse.xtext.validation.Issue;
+import org.junit.Assert;
 import org.xpect.xtext.lib.setup.FileSetupContext;
 import org.xpect.xtext.lib.setup.emf.ResourceFactory;
 import org.xpect.xtext.lib.setup.workspace.Workspace;
@@ -90,6 +91,8 @@ public class XpectN4JSES5TranspilerHelper {
 
 	@Inject
 	private RunnerRegistry runnerRegistry;
+
+	private ReadOutConfiguration readOutConfiguration;
 
 	/**
 	 * Java value object to passed to ISetupInitializer to let extract the configuration via reflection. Xpect look for
@@ -182,6 +185,13 @@ public class XpectN4JSES5TranspilerHelper {
 		}
 
 		/**
+		 * @return the workspace configured by Xpect, null if not configured by Xpect
+		 */
+		public Workspace getXpectConfiguredWorkspace() {
+			return configuredWorkspace;
+		}
+
+		/**
 		 * @return the resources retrieved from the Xpect resource set configuration
 		 */
 		@Override
@@ -238,8 +248,12 @@ public class XpectN4JSES5TranspilerHelper {
 			resourceTweaker.tweak(resource);
 		}
 
+		loadXpectConfiguration(init, fileSetupContext);
+
 		RunConfiguration runConfig;
-		if (Platform.isRunning()) {
+		// if Xpect configured workspace is null, this has been triggered directly in the IDE
+		if (Platform.isRunning()
+				&& (((ReadOutWorkspaceConfiguration) readOutConfiguration).getXpectConfiguredWorkspace() == null)) {
 			// If we are in Plugin UI test or IDE, execute the test the same as for "Run in Node.js" and this way avoid
 			// the effort of calculating dependencies etc.
 			runConfig = runnerFrontEnd.createConfiguration(NodeRunner.ID, null,
@@ -247,7 +261,7 @@ public class XpectN4JSES5TranspilerHelper {
 					resource.getURI().trimFileExtension());
 		} else {
 			// In the non-GUI case, we need to calculate dependencies etc. manually
-			final Iterable<Resource> dependencies = from(getDependentResources(init, fileSetupContext));
+			final Iterable<Resource> dependencies = from(getDependentResources());
 			boolean replaceQuotes = false;
 
 			// compile all file resources
@@ -307,6 +321,19 @@ public class XpectN4JSES5TranspilerHelper {
 
 		}
 		return executionResult;
+	}
+
+	/**
+	 * Load Xpect configuration
+	 */
+	private void loadXpectConfiguration(
+			org.xpect.setup.ISetupInitializer<Object> init, FileSetupContext fileSetupContext) {
+		if (Platform.isRunning()) {
+			readOutConfiguration = new ReadOutWorkspaceConfiguration(fileSetupContext, core, fileExtensionProvider);
+		} else {
+			readOutConfiguration = new ReadOutResourceSetConfiguration(fileSetupContext, core);
+		}
+		init.initialize(readOutConfiguration);
 	}
 
 	/**
@@ -427,17 +454,13 @@ public class XpectN4JSES5TranspilerHelper {
 		return ((XtextResource) resource).getResourceServiceProvider().get(EcmaScriptSubGenerator.class);
 	}
 
-	private List<Resource> getDependentResources(
-			org.xpect.setup.ISetupInitializer<Object> init, FileSetupContext fileSetupContext) {
+	/**
+	 * Get dependent resources. Before calling this method make sure xpect configuration has been loaded.
+	 */
+	private List<Resource> getDependentResources() {
+		Assert.assertNotNull("Xpect configuration has not been loaded!", readOutConfiguration);
 
 		List<Resource> resourcesFromXpectConfiguredResourceSet = new ArrayList<>();
-		final ReadOutConfiguration readOutConfiguration;
-		if (Platform.isRunning()) {
-			readOutConfiguration = new ReadOutWorkspaceConfiguration(fileSetupContext, core, fileExtensionProvider);
-		} else {
-			readOutConfiguration = new ReadOutResourceSetConfiguration(fileSetupContext, core);
-		}
-		init.initialize(readOutConfiguration);
 		resourcesFromXpectConfiguredResourceSet = readOutConfiguration.getResources();
 		return Collections.unmodifiableList(new ArrayList<>(resourcesFromXpectConfiguredResourceSet));
 	}

@@ -429,7 +429,8 @@ public class QuickFixXpectMethod {
 		for (Issue issue : allIssues) {
 			if (issue.getLineNumber() == offsetNode.getStartLine()
 					&& issue.getLineNumber() <= offsetNode.getEndLine()) {
-				Display.getDefault().syncExec(() -> resolutions.addAll(quickfixProvider.getResolutions(issue)));
+				List<IssueResolution> is = quickfixProvider.getResolutions(issue);
+				Display.getDefault().syncExec(() -> resolutions.addAll(is));
 			}
 		}
 		return resolutions;
