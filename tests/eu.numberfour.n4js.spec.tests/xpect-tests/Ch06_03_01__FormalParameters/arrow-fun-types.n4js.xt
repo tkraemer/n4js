@@ -11,14 +11,12 @@ var fex1 : (i:int=undefined)=>void;
 fex1;
 
 /* XPECT errors ---
-"Couldn't resolve reference to Type 'x'." at "x"
 "Only 'undefined' allowed for initializers of default parameters in function types." at "int=x"
 ---*/
 var fex2 : (int=x)=>void;
 fex2;
 
 /* XPECT errors ---
-"Couldn't resolve reference to Type 'x'." at "x"
 "Only 'undefined' allowed for initializers of default parameters in function types." at "i:int=x"
 ---*/
 var fex3 : (i:int=x)=>void;

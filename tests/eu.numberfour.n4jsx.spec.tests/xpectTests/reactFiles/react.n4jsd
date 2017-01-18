@@ -50,7 +50,7 @@ export external public abstract class Component<PropsT extends ComponentProps, S
      *
      * @param callback - Called after update is complete.
      */
-    @Final protected forceUpdate(callback: Function?): void;
+    @Final protected forceUpdate(callback: Function =): void;
 
     /**
      * Sets a subset of the state. Always use this to mutate
@@ -77,7 +77,7 @@ export external public abstract class Component<PropsT extends ComponentProps, S
      * @final
      * @protected
      */
-    public setState(partialState: union{Object /* subset of StateT */, {function(state: Object /* subset of StateT */, props: PropsT, context: Object): void}}, callback: Function?): void;
+    public setState(partialState: union{Object /* subset of StateT */, {function(state: Object /* subset of StateT */, props: PropsT, context: Object): void}}, callback: Function =): void;
 
     /**
      * Returns true if the component is rendered into the DOM, false otherwise.
@@ -181,8 +181,8 @@ export external public abstract class PureComponent<PropsT extends ComponentProp
 //        type: union{string, {function(PropsT?): Element}, constructor{Component<PropsT, ?>}},
 //        props: PropsT?, ...children: union{string, Element, Array<Element>}): Element;
 export external public function createElement(
-    type: union{string, {function(Object?): Element}, constructor{Component}},
-    props: Object?,
+    type: union{string, {function(Object =): Element}, constructor{Component}},
+    props: Object =,
     ...children: union{string, Element, Array<Element>}): Element;
 
 /**
@@ -194,7 +194,7 @@ export external public function createElement(
  */    
 export external public function cloneElement(
     Element: Element,
-    props: Object?,
+    props: Object =,
     ...children: union{string, Element, Array<Element>}): Element;
 
 /**
