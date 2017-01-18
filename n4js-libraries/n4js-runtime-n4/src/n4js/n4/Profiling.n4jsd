@@ -65,7 +65,7 @@
      * @param title
      * @param justOrder (i.e. no time taking)
      */
-    public timeStamp(title: string, justOrder: boolean?): void;
+    public timeStamp(title: string, justOrder: boolean =): void;
 
     /**
      * Set a timestamp for an aggregated entry.
