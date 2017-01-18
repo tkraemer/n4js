@@ -16,7 +16,7 @@ package eu.numberfour.n4js.resource;
  */
 public interface TranspilableFileExtensionsProvider {
 	/**
-	 * Return transpilable file extensions
+	 * Return transpilable file extensions.
 	 */
 	Iterable<String> getTranspilableFileExtensions();
 }
