@@ -1169,6 +1169,9 @@ public class N4HeadlessCompiler {
 
 	private void validateProject(MarkedProject markedProject, N4ProgressStateRecorder recorder,
 			IssueAcceptor issueAcceptor) throws N4JSCompileErrorException {
+
+		// TODO IDE-2479: Replace this with a wrapping issue acceptor that collects all errors and warnings instead to
+		// save one parameter.
 		List<Issue> allErrorsAndWarnings = new LinkedList<>();
 
 		// validation TODO see IDE-1426 redesign validation calls with generators
