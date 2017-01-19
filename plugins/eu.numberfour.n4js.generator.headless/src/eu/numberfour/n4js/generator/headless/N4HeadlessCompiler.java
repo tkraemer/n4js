@@ -1228,7 +1228,7 @@ public class N4HeadlessCompiler {
 	private void failOnErrors(List<Issue> errors, String projectId)
 			throws N4JSCompileErrorException {
 
-		if (errors.size() != 0) {
+		if (!errors.isEmpty()) {
 			StringBuilder message = new StringBuilder();
 			message.append("Cannot compile project " + projectId + " due to " + errors.size() + " errors.");
 			errors.forEach(error -> message.append("\n").append(error));
@@ -1266,11 +1266,14 @@ public class N4HeadlessCompiler {
 			throws N4JSCompileException {
 		rec.markStartCompiling(markedProject);
 
+		final String projectId = markedProject.project.getProjectId();
 		if (isVerbose() || isCreateDebugOutput()) {
-			info("Generating " + markedProject.project.getProjectId());
+			info("Generating " + projectId);
 		}
 
-		N4JSCompoundCompileException collectedErrors = null;
+		Lazy<N4JSCompoundCompileException> collectedErrors = Lazy.create(() -> {
+			return new N4JSCompoundCompileException("Errors during generation of project " + projectId);
+		});
 
 		// then compile each file.
 		for (Resource resource : markedProject.resources) {
@@ -1280,27 +1283,22 @@ public class N4HeadlessCompiler {
 				if (compile) {
 					try {
 						rec.markStartCompile(resource);
-						if (isVerbose() || isCreateDebugOutput())
+						if (isVerbose() || isCreateDebugOutput()) {
 							info("  Generating resource " + resource.getURI());
+						}
 						compositeGenerator.doGenerate(resource, fsa);
 						rec.markEndCompile(resource);
 					} catch (GeneratorException e) {
 						rec.markBrokenCompile(e);
 
 						if (isKeepOnCompiling()) {
-							if (collectedErrors == null) {
-								collectedErrors = new N4JSCompoundCompileException("Errors during compiling project "
-										+ markedProject.project.getProjectId() + ".");
-							}
-							collectedErrors.add(new N4JSCompileErrorException(e.getMessage(), markedProject.project
-									.getProjectId(), e));
+							collectedErrors.get().add(new N4JSCompileErrorException(e.getMessage(), projectId, e));
 							if (verbose) {
 								error(e.getMessage());
 							}
 						} else {
 							// fail fast
 							throw e;
-
 						}
 					}
 				} else {
@@ -1311,9 +1309,9 @@ public class N4HeadlessCompiler {
 
 		rec.markEndCompiling(markedProject);
 
-		if (collectedErrors != null)
-			throw collectedErrors;
-
+		if (collectedErrors.isInitialized()) {
+			throw collectedErrors.get();
+		}
 	}
 
 	/*
