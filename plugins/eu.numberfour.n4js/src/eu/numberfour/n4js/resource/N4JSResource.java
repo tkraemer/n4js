@@ -530,9 +530,11 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 		aboutToBeUnloaded = false;
 		super.doUnload();
 		clearLazyProxyInformation();
-		lazyProxyClearCount++;
 	}
 
+	/**
+	 * Unloads the AST, but leaves the type model intact. Also resets the errors and warnings and the parse result.
+	 */
 	public void unloadAST() {
 		aboutToBeUnloaded = false;
 
@@ -540,13 +542,12 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 		getErrors().clear();
 		getWarnings().clear();
 		setParseResult(null);
-		setIsLoadedFromStorage(false);
+		// setIsLoadedFromStorage(false);
 
 		// TODO: Should this be false or what.
 		// fullyPostProcessed = false;
 
 		clearLazyProxyInformation();
-		lazyProxyClearCount++;
 	}
 
 	/**
@@ -577,14 +578,15 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 		aboutToBeUnloaded = true;
 	}
 
-	protected List<EObject> discardAST() {
+	/**
+	 * Discard the AST and proxify all referenced nodes. Does nothing if the AST is already unloaded.
+	 */
+	protected void discardAST() {
 		ModuleAwareContentsList theContents = (ModuleAwareContentsList) contents;
 		if (contents != null && !theContents.isEmpty()) {
 			List<EObject> toBeUnloaded = theContents.subList(0, 1);
 			unloadElements(toBeUnloaded);
-			return toBeUnloaded;
 		}
-		return Collections.emptyList();
 	}
 
 	/**
@@ -713,10 +715,8 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 					// apparently we have an astProxy at index 0 but no module
 					// was deserialized from the index
 					// try to obtain the module from a freshly loaded ast
-					
-					// TODO: IDE-2479: Remove this!
-					boolean b = true; // trigger a warning as a reminder, too
-					System.out.println("########## Triggering reload of proxyfied AST for " + getURI());
+
+					// Note: this would be a good place to track when a proxified AST is being reloaded.
 					contents.get(0);
 				}
 			}
@@ -987,12 +987,8 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 		resolving.clear();
 	}
 
-	private int lazyProxyClearCount = 0;
-
 	@Override
 	public int addLazyProxyInformation(EObject obj, EReference ref, INode node) {
-		if (lazyProxyClearCount > 0)
-			System.out.println("########### " + getURI() + " reloaded: " + lazyProxyClearCount);
 		return super.addLazyProxyInformation(obj, ref, node);
 	}
 }
