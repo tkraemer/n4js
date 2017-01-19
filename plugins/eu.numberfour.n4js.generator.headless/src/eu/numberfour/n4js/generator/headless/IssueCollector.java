@@ -10,44 +10,22 @@
  */
 package eu.numberfour.n4js.generator.headless;
 
-import java.util.Collection;
 import java.util.LinkedList;
-import java.util.Objects;
+import java.util.List;
 
 import org.eclipse.xtext.validation.Issue;
 
 /**
  * Collects issues during a compilation. The collected issues can be accessed using the {@link #getCollectedIssues()}
- * method. An issue collector can optionally be configured with an instance of {@link IssueFilter} to filter the issues
- * before collecting them. By default, the issue collector will collect all issues.
+ * method.
  */
 public class IssueCollector implements IssueAcceptor {
 
-	private final IssueFilter issueFilter;
-	private final Collection<Issue> collectedIssues;
-
-	/**
-	 * Creates a new issue collector instance that accepts only those issues that match the given issue filter.
-	 *
-	 * @param issueFilter
-	 *            the issue filter to use, which must not be <code>null</code>
-	 */
-	public IssueCollector(IssueFilter issueFilter) {
-		this.issueFilter = Objects.requireNonNull(issueFilter);
-		this.collectedIssues = new LinkedList<>();
-	}
-
-	/**
-	 * Creates a new issue collector instance that accepts all issues.
-	 */
-	public IssueCollector() {
-		this(new AcceptingIssueFilter());
-	}
+	private final List<Issue> collectedIssues = new LinkedList<>();
 
 	@Override
 	public void accept(Issue issue) {
-		if (issueFilter.matches(issue))
-			collectedIssues.add(issue);
+		collectedIssues.add(issue);
 	}
 
 	/**
@@ -55,7 +33,7 @@ public class IssueCollector implements IssueAcceptor {
 	 *
 	 * @return a collection containing the collected issues
 	 */
-	public Collection<Issue> getCollectedIssues() {
+	public List<Issue> getCollectedIssues() {
 		return collectedIssues;
 	}
 }

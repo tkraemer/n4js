@@ -1170,9 +1170,9 @@ public class N4HeadlessCompiler {
 	private void validateProject(MarkedProject markedProject, N4ProgressStateRecorder recorder,
 			IssueAcceptor issueAcceptor) throws N4JSCompileErrorException {
 
-		// TODO IDE-2479: Replace this with a wrapping issue acceptor that collects all errors and warnings instead to
-		// save one parameter.
-		List<Issue> allErrorsAndWarnings = new LinkedList<>();
+		IssueCollector issueCollector = new IssueCollector();
+		IssueFilter issueFilter = new IssueFilter(issueCollector, issue -> issue.getSeverity() == Severity.ERROR);
+		issueAcceptor = new IssueAcceptorTee(issueAcceptor, issueFilter);
 
 		// validation TODO see IDE-1426 redesign validation calls with generators
 		for (Resource resource : markedProject.resources) {
@@ -1203,47 +1203,36 @@ public class N4HeadlessCompiler {
 
 				if (!issues.isEmpty()) {
 					recorder.markResourceIssues(resource, issues);
-					for (Issue issue : issues) {
-						allErrorsAndWarnings.add(issue);
-						issueAcceptor.accept(issue);
-					}
+					issueAcceptor.acceptAll(issues);
+					printIssues(issues);
 				}
 			}
 		}
 
-		printIssues(allErrorsAndWarnings);
-
 		// Projects should not compile if there are severe errors:
 		if (!isKeepOnCompiling()) {
-			failOnErrors(allErrorsAndWarnings, markedProject.project.getProjectId());
+			failOnErrors(issueCollector.getCollectedIssues(), markedProject.project.getProjectId());
 		}
 	}
 
 	/**
 	 * In case of errors: print all non-error issues and throw exception.
 	 *
-	 * @param issues
-	 *            list of issues and warnings
+	 * @param errors
+	 *            list of errors
 	 * @param projectId
 	 *            projectId of the bad project.
 	 * @throws N4JSCompileErrorException
 	 *             if the given issues contain errors
 	 */
-	private void failOnErrors(List<Issue> issues, String projectId)
+	private void failOnErrors(List<Issue> errors, String projectId)
 			throws N4JSCompileErrorException {
 
-		List<Issue> errors = new LinkedList<>();
-		Iterables.addAll(errors, Iterables.filter(issues, i -> i.getSeverity() == Severity.ERROR));
-
 		if (errors.size() != 0) {
-			// Print other issues first.
-			Iterables.filter(issues, i -> i.getSeverity() != Severity.ERROR).forEach(i -> issue(i));
-
-			String msg = "Cannot compile project " + projectId + " due to " + errors.size() + " errors.";
-			for (Issue err : errors) {
-				msg = msg + "\n  " + err;
-			}
-			throw new N4JSCompileErrorException(msg, projectId);
+			StringBuilder message = new StringBuilder();
+			message.append("Cannot compile project " + projectId + " due to " + errors.size() + " errors.");
+			errors.forEach(error -> message.append("\n").append(error));
+			throw new N4JSCompileErrorException(message.toString(), projectId);
 		}
 
 	}
