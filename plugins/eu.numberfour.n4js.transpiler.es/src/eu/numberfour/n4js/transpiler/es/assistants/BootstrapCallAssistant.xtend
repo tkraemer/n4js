@@ -343,6 +343,7 @@ class BootstrapCallAssistant extends TransformationAssistant {
 		};
 		result._lok = template._lok; // reuse existing LocalArgumentsVariable (if existent)
 		result.body = template.body; // reuse existing body!
+		result.generator = if(template instanceof FunctionDefinition) template.generator else false;
 		if( ! template.annotations.isEmpty  ) {
 			result.annotationList = _ExprAnnoList( template.annotations ) // reuse existing annotations
 		}

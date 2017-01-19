@@ -168,7 +168,6 @@ export external public function watchFile(filename: string, options: ~Object wit
 export external public function unwatchFile(filename: string, listener: {function(Stats, Stats): void}?): void;
 export external public function watch(filename: string, options: ~Object with {persistent: boolean?;}, listener: {function(string, string): any}?): FSWatcher;
 
-@Promisifiable
 export external public function exists(path: string, callback: {function(boolean): void}?): void;
 export external public function existsSync(path: string): boolean;
 export external public const F_OK: number;

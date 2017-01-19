@@ -150,16 +150,54 @@ package abstract class AbstractProcessor {
 			if(tFunction instanceof TFunction) {
 				val innerReturnTypeRef = tFunction.returnTypeRef;
 				if(innerReturnTypeRef!==null && !(innerReturnTypeRef instanceof DeferredTypeRef)) {
-					val outerReturnTypeRef = TypeUtils.createPromiseTypeRef(G.builtInTypeScope, innerReturnTypeRef, null);
-					EcoreUtilN4.doWithDeliver(false, [
-						tFunction.returnTypeRef = outerReturnTypeRef;
-					], tFunction);
+					val scope = G.builtInTypeScope;
+				    if (!TypeUtils.isPromise(innerReturnTypeRef, scope)) {
+						val outerReturnTypeRef = TypeUtils.createPromiseTypeRef(scope, innerReturnTypeRef, null);
+						EcoreUtilN4.doWithDeliver(false, [
+							tFunction.returnTypeRef = outerReturnTypeRef;
+						], tFunction);
+					}
 				}
 			}
 		}
 	}
 
 
+	/**
+	 * Some special handling for generator functions (including methods): we have to wrap their inner return type
+	 * <code>R</code> into a {@code Generator<R,TReturn,TNext>} and use that as their actual, outer return type. This means
+	 * for generator functions, the types builder will create a <code>TFunction</code> with the inner return type and during
+	 * post-processing this method will change that return type to a <code>Generator</code> (only the return type of the
+	 * TFunction in the types model is changed; the declared return type in the AST remains unchanged).
+	 * <p>
+	 * In addition, a return type of <code>void</code> will be replaced by <code>undefined</code>, i.e. will produce an
+	 * outer return type of {@code Generator<undefined,undefined,TNext>}. This will be taken care of by method
+	 * {@link TypeUtils#createGeneratorTypeRef(BuiltInTypeScope,FunctionDefinition)}.
+	 * <p>
+	 * NOTES:
+	 * <ol>
+	 * <li>normally, this wrapping could easily be done in the types builder, but because we have to check if the inner
+	 * return type is <code>void</code> we need to resolve proxies, which is not allowed in the types builder.
+	 * </ol>
+	 */
+	def protected void handleGeneratorFunctionDefinition(RuleEnvironment G, FunctionDefinition funDef, ASTMetaInfoCache cache) {
+		if(funDef.isGenerator) {
+			val tFunction = funDef.definedType;
+			if(tFunction instanceof TFunction) {
+				val innerReturnTypeRef = tFunction.returnTypeRef;
+				if (innerReturnTypeRef !== null && !(innerReturnTypeRef instanceof DeferredTypeRef)) {
+					val scope = G.builtInTypeScope;
+					if (!TypeUtils.isGenerator(innerReturnTypeRef, scope)) {
+					    val outerReturnTypeRef = TypeUtils.createGeneratorTypeRef(scope, funDef);
+						EcoreUtilN4.doWithDeliver(false, [
+							tFunction.returnTypeRef = outerReturnTypeRef;
+						], tFunction);
+				    }
+				}
+			}
+		}
+	}
+	
 	def protected static String getObjectInfo(EObject obj) {
 		if (obj === null) {
 			"<null>"

@@ -1,0 +1,15 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+let o2 = {
+    string g() { return "hello"; }
+};
+
+// XPECT warnings --> "A reference to method g is created detached from a (correct) this-instance." at "g"
+let ref = o2.g;
+// XPECT type of 'ref' --> {function():string}
+ref;
+
+// XPECT type of 'o2.g' --> {function():string}
+o2.g;
+

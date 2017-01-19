@@ -44,14 +44,14 @@ export public class TestExecutor {
         } else if (typeof ex === "string") {
             ex = new Error(ex as string);
         }
-        let e: Object = ex instanceof AssertionError ? ex as AssertionError: ex as Object
+        let e: Object+ = ex instanceof AssertionError ? ex as AssertionError: ex as Object
           , reason = e.toString()
           , tr: TestResult
           , status: TestStatus
           , trace: Array<string>
         ;
         if (reason.charAt(0) === "[") {
-            reason = e["name"]? e["name"] + ": " + description: description;
+            reason = e.name? `${e.name} : ${description}`: description;
         }
         if (ex instanceof AssertionError) {
             status = TestStatus.failed;
@@ -63,19 +63,16 @@ export public class TestExecutor {
             status = TestStatus.error;
         }
 
-        if (!(e["actual"] == null && e["expected"] === undefined) &&e["operator"] == null) {
-            reason += "( "+e["actual"] +" not " + e["operator"]
-                      + " " + e["expected"] + " )";
-        } else if (e["message"]) {
+        if (e.message) {
             reason = String(e);
         }
-        if (e["stack"]) {
-            if (typeof e["stack"] === "string") {
-                trace = (e["stack"] as string).split("\n");
-            } else if (Array.isArray(e["stack"])) {
-                trace = e["stack"] as Array<string>;
+        if (e.stack) {
+            if (typeof e.stack === "string") {
+                trace = (e.stack as string).split("\n");
+            } else if (Array.isArray(e.stack)) {
+                trace = e.stack as Array<string>;
             } else {
-                trace = [(e["stack"] as Object).toString()]
+                trace = [(e.stack as Object).toString()]
             }
             trace = trace.map(function(line) {
                  return line.trim();
@@ -86,8 +83,8 @@ export public class TestExecutor {
             , message: reason
             , Array<string>trace: trace
             , description: description
-            , string expected: e.hasOwnProperty("expected") ? this.getStringFromAbiguous(e["expected"]): undefined
-            , actual: e.hasOwnProperty("actual") ? this.getStringFromAbiguous(e["actual"]): undefined
+            , string expected: e.hasOwnProperty("expected") ? this.getStringFromAbiguous(e.expected): undefined
+            , actual: e.hasOwnProperty("actual") ? this.getStringFromAbiguous(e.actual): undefined
         });
         return tr;
     }
@@ -120,15 +117,15 @@ export public class TestExecutor {
             async function doPromise (resolve: {function(TestResult)}, reject: {function(any)}) {
                 let res;
                 timeoutId = setTimeout(function() {
-                    reject(new Error("Test object"
+                    reject(new Error("Test object "
                         + testMethodDescriptor.name
-                        + "timed out after"
+                        + " timed out after "
                         + testMethodDescriptor.timeout
                         + " milliseconds"
                      ))
                 }, testMethodDescriptor.timeout);
                 try {
-                    res = await testMethodDescriptor.value.call(instrumentedTest.testObject);
+                    res = await Promise.resolve(testMethodDescriptor.value.call(instrumentedTest.testObject));
                 } catch (error) {
                     reject(error);
                 } finally {
@@ -140,7 +137,7 @@ export public class TestExecutor {
             return testResult;
         }
         if (testMethodDescriptors) {
-             results = ((await Promise.all(testMethodDescriptors.<any,Array<TestMethodDescriptor>>map(runTest))) as Object) as Array<TestResult>;
+             results = (await Promise.all(testMethodDescriptors.<any,Array<TestMethodDescriptor>>map(runTest))) as Array<TestResult>;
         }
         return results;
     }
@@ -156,7 +153,8 @@ export public class TestExecutor {
         }
         // get all of the methods top down.
         do {
-            nodeTestMethods = (node as Object)[testMethodName] as Array<TestMethodDescriptor>
+            let nodeObj: Object = node;
+            nodeTestMethods = nodeObj[testMethodName] as Array<TestMethodDescriptor>
             if (nodeTestMethods && nodeTestMethods.length) {
                 testMethods = testMethods.concat( nodeTestMethods);
             }

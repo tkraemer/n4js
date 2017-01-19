@@ -82,7 +82,7 @@
     function $makeEnum(enumeration, stringBased/* TODO obsolete */, members, n4type) {
         var length, index, member, name, value, values, literal;
 
-        enumeration.__proto__ = global.N4Enum;
+        Object.setPrototypeOf(enumeration, global.N4Enum);
         enumeration.prototype = Object.create(global.N4Enum.prototype, {});
         Object.defineProperty(enumeration, 'n4type', {
             value: n4type(function () {})
@@ -132,33 +132,18 @@
      * @param supertpye - type to check against
      * @return boolean true if instance-parameter is an instance of supertype-parameter
      */
-    function $instanceof(instance, supertype){
-        if (typeof supertype === "object"){ /* interface type*/
-
-            var t = ((supertype )["n4type"] || null);
-            var fqn = t ? t.fqn : "";
-
-            return $implements(instance, fqn);
+    function $instanceof(instance, supertype) {
+        switch (typeof instance) {
+            case "object":
+            case "function":
+                if (typeof supertype === "object") { // interface type
+                    var t = (supertype["n4type"] || null);
+                    var fqn = t ? t.fqn : "";
+                    return $implements(instance, fqn);
+                }
+                return instance instanceof supertype;
         }
-        return instance instanceof supertype;
-    }
-
-    /**
-     * Check whether a value can be cast to the specified target type.
-     *
-     * @param v - The value
-     * @param t - The fully qualified name (incl. package identifier) of the target type of the cast
-     */
-    function $cast(v, t) {
-        if (!v || !v.constructor || !v.constructor.n4type || !v.constructor.n4type.superTypes) {
-            throw new TypeError('cast: value is not a ' + t);
-        }
-
-        if (v.constructor.n4type.superTypes.indexOf(t) === -1) {
-            throw new TypeError('cast: value is not a ' + t);
-        }
-
-        return v;
+        return false;
     }
 
     /**
@@ -173,9 +158,11 @@
         if (Array.isArray(arr)) {
             return arr;
         } else if (Symbol.iterator in Object(arr)) {
-            var ret = [];
-            for (var p of arr) {
-                ret.push(p);
+            var ret = [],
+                it = arr[Symbol.iterator](),
+                entry;
+            while (!(entry = it.next()).done) {
+                ret.push(entry.value);
                 if (ret.length >= max) {
                     break;
                 }
@@ -250,7 +237,6 @@
     global.$makeEnum = $makeEnum;
     global.$implements = $implements;
     global.$instanceof = $instanceof;
-    global.$cast = $cast;
     global.$sliceToArrayForDestruct = $sliceToArrayForDestruct;
     global.$spawn = $spawn;
     global.$n4promisifyFunction = $n4promisifyFunction;

@@ -55,7 +55,7 @@
 				}
 			],
 			execute: function() {
-				$makeClass(NodeTestRunner, Object, [], {
+				$makeClass(NodeTestRunner, N4Object, [], {
 					run: {
 						value: function run___n4() {
 							return $spawn(function*() {
@@ -183,7 +183,7 @@
 						]
 					}
 				});
-				$makeClass(TestBinder, Object, [], {}, {}, function(instanceProto, staticProto) {
+				$makeClass(TestBinder, N4Object, [], {}, {}, function(instanceProto, staticProto) {
 					var metaClass = new N4Class({
 						name: 'TestBinder',
 						origin: 'eu.numberfour.mangelhaft.runner.node',
@@ -231,7 +231,7 @@
 						fieldsInjectedTypes: []
 					}
 				});
-				$makeClass(Root, Object, [], {
+				$makeClass(Root, N4Object, [], {
 					runner: {
 						value: undefined,
 						writable: true

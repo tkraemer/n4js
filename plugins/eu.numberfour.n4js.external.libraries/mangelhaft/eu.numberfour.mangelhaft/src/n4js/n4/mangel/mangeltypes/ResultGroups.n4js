@@ -14,7 +14,6 @@
 
 import {ResultGroup} from "n4/mangel/mangeltypes/ResultGroup"
 import { TestResult } from "n4/mangel/mangeltypes/TestResult"
-import { TestStatus } from "n4/mangel/mangeltypes/TestStatus"
 import { aggregateTestStatuses } from "n4/mangel/mangeltypes/TestStatus"
 export public class ResultGroups {
     public results: Array<ResultGroup>;

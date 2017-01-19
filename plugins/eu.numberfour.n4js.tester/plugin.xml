@@ -12,13 +12,4 @@ Contributors:
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="eu.numberfour.n4js.tester.testers" name="N4JS Testers" schema="schema/eu.numberfour.n4js.tester.testers.exsd"/>
-   <extension-point id="eu.numberfour.n4js.tester.testFileExtensions" name="Test File Extensions" schema="schema/eu.numberfour.n4js.tester.testfileExtensions.exsd"/>
-   
-   <!-- Register .n4js file extension as test file extension -->
-   <extension
-      point="eu.numberfour.n4js.tester.testFileExtensions">
-         <testFileExtension
-         	fileExtension="n4js">
-         </testFileExtension>
-   </extension>
 </plugin>

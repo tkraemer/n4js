@@ -54,7 +54,10 @@ import java.util.Collections
 import java.util.Iterator
 import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.ecore.EObject
+import eu.numberfour.n4js.ts.types.TFunction
 
+type IteratorOfExpression wraps Iterator<Expression>
+type IteratorOfYieldExpression wraps Iterator<YieldExpression>
 type IteratorOfStatement wraps Iterator<Statement>
 type IteratorOfReturnStatement wraps Iterator<ReturnStatement>
 
@@ -468,6 +471,11 @@ abstract class FunctionDefinition extends FunctionOrFieldAccessor, TypeDefiningE
 		return declaredAsync;
 	}
 
+	/* Convenience method returning the 'definedType' if it is a TFunction, otherwise <code>null</code>. */
+	op TFunction getDefinedFunction() {
+		val defType = definedType;
+		return if(defType instanceof TFunction) { defType };
+	}
 }
 
 /*
@@ -600,6 +608,41 @@ class Block extends Statement, VariableEnvironmentElement {
 		true
 	}
 
+	/*
+	 * Returns all return expressions contained in this block, including those in nested blocks
+	 * but without delving into nested classes, or into nested expressions including functions.
+	 */
+	op IteratorOfExpression getAllExpressions() {
+		EcoreUtilN4.getAllContentsFiltered(this, [!(it instanceof FunctionDefinition)]).filter(Expression)
+	}
+	/*
+	 * Returns all return yield expressions contained in this block, including those in nested blocks
+	 * but without delving into nested classes, or into nested expressions including functions.
+	 */
+	op IteratorOfYieldExpression getAllYieldExpressions() {
+		getAllExpressions().filter(YieldExpression)
+	}
+	/*
+	 * Returns all return yield expressions contained in this block that dont't return any value, including those in nested blocks
+	 * but without delving into nested classes, or into nested expressions including functions.
+	 */
+	op IteratorOfYieldExpression getAllVoidYieldExpressions() {
+		getAllYieldExpressions().filter([it.expression == null])
+	}
+	/*
+	 * Returns all return yield expressions contained in this block that return some value, including those in nested blocks
+	 * but without delving into nested classes, or into nested expressions including functions.
+	 */
+	op IteratorOfYieldExpression getAllNonVoidYieldExpressions() {
+		getAllYieldExpressions().filter([it.expression != null])
+	}
+	/*
+	 * True iff one or more yield expressions exist in this block that return some value.
+	 */
+	op boolean hasNonVoidYield() {
+		!(allNonVoidYieldExpressions.isEmpty)
+	}
+	
 	/*
 	 * Returns all statements that belong to this block. This includes statements of nested blocks
 	 * but excludes statements in nested classes, nested functions, etc.
@@ -1085,10 +1128,13 @@ class PropertyNameValuePairSingleName extends PropertyNameValuePair {
 }
 
 class PropertyMethodDeclaration extends AnnotablePropertyAssignment, MethodDeclaration, TypeProvidingElement  {
-	refers TStructMethod definedMethod
+	// IMPORTANT: don't introduce a property 'definedMethod' here, because PropertyMethodDeclaration inherits from
+	// TypeDefiningElement (via FunctionDefinition) and that class already has a property 'definedType' for this
+	// purpose; if we were using a separate property, it would break code that handles instances of
+	// PropertyMethodDeclaration as instances of TypeDefiningElement or FunctionDefinition!
 
 	op TStructMethod getDefinedMember() {
-		definedMethod
+		definedType as TStructMethod
 	}
 }
 

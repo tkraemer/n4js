@@ -16,6 +16,7 @@
 			this.targetPlatformInstallLocation = undefined;
 			this.targetPlatformSkipInstall = undefined;
 			this.debug = undefined;
+			this.inspect = undefined;
 		};
 		$n4Export('default', NodeTestOptions);
 		return {
@@ -63,6 +64,10 @@
 						writable: true
 					},
 					debug: {
+						value: undefined,
+						writable: true
+					},
+					inspect: {
 						value: undefined,
 						writable: true
 					}
@@ -121,6 +126,11 @@
 							}),
 							new N4DataField({
 								name: 'debug',
+								isStatic: false,
+								annotations: []
+							}),
+							new N4DataField({
+								name: 'inspect',
 								isStatic: false,
 								annotations: []
 							})

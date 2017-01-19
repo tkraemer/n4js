@@ -46,59 +46,102 @@
         return n4.mapModulePath(id);
     }
 
+    function identity(x) { return x; }
+
+    /**
+     * Create a require registry for static deps/bundling.
+     */
+    function createStaticRequire() {
+        var cache = {};
+        function req(id) {
+            id = mapId(id);
+            var mod = cache[id];
+            return mod ? mod.exports : null;
+        }
+        req.cache = cache;
+        req.resolve = identity;
+        return req;
+    }
+
     /**
      * Mocks/emulates System(JS) ES2015 loader interface.
      */
     function Loader(req_, mod) {
-        var req = this._nodeRequire = function(id) {
-                id = mapId(id);
-                if (testMode) {
-                    try {
-                        id = req_.resolve(id);
-                    } catch (exc) {
-                        if (!id.startsWith("404/")) { // intentionally excluded for NOT_FOUND, i.e. no API-not-impl
-                            throw new N4ApiNotImplementedError("Not implemented: " + id);
+        if (req_) {
+            var req = this._nodeRequire = function(id) {
+                    id = mapId(id);
+                    if (testMode) {
+                        try {
+                            id = req_.resolve(id);
+                        } catch (exc) {
+                            if (!id.startsWith("404/")) { // intentionally excluded for NOT_FOUND, i.e. no API-not-impl
+                                throw new N4ApiNotImplementedError("Not implemented: " + id);
+                            }
                         }
                     }
-                }
-                return req_(id);
-            };
-        req.cache = req_.cache;
-        req.resolve = req_.resolve;
+                    return req_(id);
+                };
+
+            req.cache = req_.cache;
+            req.resolve = req_.resolve;
+        } else {
+            this._nodeRequire = createStaticRequire();
+        }
 
         this.mod = mod;
     }
     Loader.prototype = {
         _commonJS: true,
 
-        register: function(deps, declareFn) {
-            var exp = this.mod.exports;
+        register: function(deps, declareFn, mod, id) {
+            if (!mod) {
+                mod = this.mod;
+            }
+            var req = this._nodeRequire,
+                exp = mod.exports;
 
             Object.defineProperty(exp, "__esModule", { value: true });
             exp[sjsSetters] = [];
+            if (id) {
+                req.cache[id] = mod;
+            }
 
-            var req = this._nodeRequire,
-                decl = declareFn.call(null, exportFn.bind(null, exp));
+            var decl = declareFn.call(null, exportFn.bind(null, exp));
             if (decl) {
                 (decl.setters || []).forEach(function(setter, i) {
-                    var imp = getESModule(req(deps[i])),
-                        setters = imp[sjsSetters];
+                    var imp = deps[i];
+                    if (typeof imp === "string") {
+                        imp = req(imp);
+                    }
+                    imp = getESModule(imp);
+                    var setters = imp[sjsSetters];
                     if (setters) {
                         setters.push(setter);
                     }
                     setter(imp);
-                }, this);
+                });
                 decl.execute();
             }
         },
 
-        registerDynamic: function(deps, executingRequire, declareFn) {
-            var req = this._nodeRequire,
+        registerDynamic: function(deps, executingRequire, declareFn, mod, id) {
+            var req = this._nodeRequire;
+            if (!mod) {
                 mod = this.mod;
+            }
+
             if (!executingRequire) {
-                deps.forEach(req);
+                deps.forEach(function(dep) {
+                    if (typeof dep === "string") {
+                        req(dep);
+                    }
+                });
             }
             mod.exports = declareFn.call(null, req, mod.exports, mod) || mod.exports;
+
+            if (id) {
+                req.cache[id] = mod;
+            }
         },
 
         normalize: function(name) {
@@ -132,5 +175,8 @@
         }
     };
 
-    exports.Loader = Loader;
-})();
+    module.exports = {
+        Loader: Loader
+    };
+
+}());

@@ -77,7 +77,6 @@ import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.ForStatement
 import eu.numberfour.n4js.n4JS.FormalParameter
-import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.GetterDeclaration
 import eu.numberfour.n4js.n4JS.IdentifierRef
@@ -314,7 +313,7 @@ from {
  * handled by client code (i.e. call TypeUtils#createTypeRef() directly) but supporting it
  * here relieves client code of handling special cases.
  */
-axiom typeTypeDefiningElement G |- TypeDefiningElement elem : TypeUtils.wrapTypeInTypeRef(elem.definedType)
+axiom typeTypeDefiningElement G |- TypeDefiningElement elem : TypeUtils.wrapTypeInTypeRef(elem.definedType) ?: TypeRefsFactory.eINSTANCE.createUnknownTypeRef
 
 /* @see [N4JS] 6.1.5. Object Literal */
 rule typeObjectLiteral
@@ -569,7 +568,31 @@ from  {
 rule typeYieldExpression
 	G |- YieldExpression y : TypeRef T
 from {
-	T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef // yield is unsupported, at the moment
+	var TypeRef t;
+	if (y.isMany()) {
+		val yieldValue = y.getExpression();
+		G |- yieldValue : var TypeRef yieldValueTypeRef;
+		val scope = G.getPredefinedTypes().builtInTypeScope;
+		if (TypeUtils.isGenerator(yieldValueTypeRef, scope)) {
+			t = typeSystemHelper.getGeneratorTReturn(G, yieldValueTypeRef);
+		} else {
+			val itTypeRef = G.iterableTypeRef(TypeUtils.createWildcard);
+			val isIterable = {G |- yieldValueTypeRef <: itTypeRef};
+			if (isIterable) {
+				t = scope.anyTypeRef;
+			}
+		}
+	} else {
+		val actualGenTypeRef = typeSystemHelper.getActualGeneratorReturnType(G, y);
+		if (actualGenTypeRef !== null) {
+			t = typeSystemHelper.getGeneratorTNext(G, actualGenTypeRef);
+		}
+	}
+	
+	if (t == null) {
+		t = G.anyTypeRef;
+	}
+	T = t;
 }
 
 
@@ -748,13 +771,13 @@ from {
 				TypeRefsFactory.eINSTANCE.createUnknownTypeRef
 			};
 		}
-		else if(receiverTypeRef.dynamic && expr.property!==null && expr.property.eIsProxy) {
+		else if(receiverTypeRef.dynamic && prop!==null && prop.eIsProxy) {
 			// access to an unknown property of a dynamic type
 			propTypeRef = G.anyTypeRefDynamic;
 		}
 		else {
 			// TODO: Is wrapping really required here?
-			G2.wrap |- expr.property : propTypeRef
+			G2.wrap |- prop : propTypeRef
 
 			if(expr.parameterized) {
 				typeSystemHelper.addSubstitutions(G2,expr);
@@ -866,14 +889,6 @@ rule typeArgument
 	G |- Argument arg : TypeRef T
 from {
 	G |- arg.expression: T
-}
-
-
-// this rule applies to AST nodes of type N4MethodDeclaration, FunctionDeclaration and FunctionExpression
-rule typeFunctionDefinition
-	G |- FunctionDefinition fe : TypeRef T
-from {
-	T = fe.definedType?.ref ?: TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
 }
 
 /* @see [N4JS] 6.1.11. Postfix Expression */
@@ -2180,6 +2195,15 @@ rule expectedTypeInReturnStatement
 	G |- ReturnStatement stmt |> Expression expression : TypeRef T
 from {
 	T = typeSystemHelper.getExpectedTypeOfReturnValueExpression(G, expression);
+}
+
+
+/* @see [N4JS] 6.3.1. Generator Functions */
+rule expectedTypeInYieldStatement
+	G |- YieldExpression yieldExpr |> Expression expression : TypeRef T
+from {
+	G |- expression : var TypeRef exprTypeRef;
+	T = typeSystemHelper.getExpectedTypeOfYieldValueExpression(G, yieldExpr, exprTypeRef);
 }
 
 /*

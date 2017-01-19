@@ -4,12 +4,12 @@
 		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/ITestReporter',
 		'eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestSpy'
 	], function($n4Export) {
-		var ITestReporter, TestSpy, q, getLocation, updateURLParameter, getParm, filterClickHandler, HTMLReporter;
+		var ITestReporter, TestSpy, getLocation, updateURLParameter, getParm, filterClickHandler, HTMLReporter;
 		getLocation = function getLocation() {
 			return location.href;
 		};
 		updateURLParameter = function updateURLParameter(url, param, paramVal) {
-			let urlObj = new URL(url), queryParts, rowsTxt;
+			let urlObj = new URL(url), queryParts;
 			;
 			queryParts = urlObj.search.split("&").filter((function(part) {
 				return part.split('=')[0] != param;
@@ -92,7 +92,6 @@
 			this.testsElm.classList.add("mangelhaft");
 			this.spinner = document.createElement("pre");
 			this.spinner.classList.add("mangelhaft-spinner");
-			let ii = 0;
 			this.spinnerHandle = setInterval((function() {
 				this.spinner.innerText += this.spinnerChar;
 			}).bind(this), 500);
@@ -113,8 +112,7 @@
 				}
 			],
 			execute: function() {
-				q = document.querySelectorAll.bind(document);
-				$makeClass(HTMLReporter, Object, [
+				$makeClass(HTMLReporter, N4Object, [
 					ITestReporter
 				], {
 					setFavIconRed: {
@@ -442,8 +440,7 @@
 									if (this.reRunning) {
 										return null;
 									}
-									let done = document.createElement("span"), timers = document.createElement("div"), groupElm;
-									;
+									let done = document.createElement("span");
 									this.testingTime = new Date().getTime() - this.testingTime;
 									this.timers.innerHTML = ("Fetching catalog: " + (this.catalogTime / 1000) + "s Testing: " + (this.testingTime / 1000) + "s");
 									done.innerText = "DONE";
