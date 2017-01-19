@@ -66,6 +66,10 @@ import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.xpect.config.Config;
 import eu.numberfour.n4js.xpect.config.VarDef;
 import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
+import eu.numberfour.n4js.xpect.methods.N4JSOffsetAdapter;
+import eu.numberfour.n4js.xpect.methods.ResourceTweaker;
+import eu.numberfour.n4js.xpect.methods.XpectCommentRemovalUtil;
+import eu.numberfour.n4js.xpect.methods.XpectN4JSES5TranspilerHelper;
 
 /**
  * Provides XPEXT test methods for quick fixes

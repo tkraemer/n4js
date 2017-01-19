@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect;
+package eu.numberfour.n4js.xpect.methods;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import eu.numberfour.n4js.formatting2.N4JSFormatterPreferenceKeys;
-import eu.numberfour.n4js.xpect.FormatterXpectMethod.TextRegionAccessFactory;
+import eu.numberfour.n4js.xpect.methods.FormatterXpectMethod.TextRegionAccessFactory;
 
 /**
  * @author Moritz Eysholdt

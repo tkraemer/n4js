@@ -38,7 +38,7 @@ import eu.numberfour.n4js.ui.organize.imports.BreakException;
 import eu.numberfour.n4js.ui.organize.imports.Interaction;
 import eu.numberfour.n4js.ui.organize.imports.N4JSOrganizeImportsHandler;
 import eu.numberfour.n4js.xpect.N4ContentAssistProcessorTestBuilderHelper;
-import eu.numberfour.n4js.xpect.XpectCommentRemovalUtil;
+import eu.numberfour.n4js.xpect.methods.XpectCommentRemovalUtil;
 import junit.framework.AssertionFailedError;
 
 /**

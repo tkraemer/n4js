@@ -47,6 +47,8 @@ import eu.numberfour.n4js.ui.xpect.N4ContentAssistProcessorTestBuilder;
 import eu.numberfour.n4js.xpect.config.Config;
 import eu.numberfour.n4js.xpect.config.VarDef;
 import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
+import eu.numberfour.n4js.xpect.methods.N4JSOffsetAdapter;
+import eu.numberfour.n4js.xpect.methods.XpectCommentRemovalUtil;
 import junit.framework.AssertionFailedError;
 
 /**

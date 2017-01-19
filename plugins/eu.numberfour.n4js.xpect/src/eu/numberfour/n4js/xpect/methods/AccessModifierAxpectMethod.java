@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect;
+package eu.numberfour.n4js.xpect.methods;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -26,7 +26,7 @@ import eu.numberfour.n4js.n4JS.N4MemberDeclaration;
 import eu.numberfour.n4js.n4JS.N4TypeDeclaration;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
 import eu.numberfour.n4js.n4JS.VariableStatement;
-import eu.numberfour.n4js.xpect.N4JSOffsetAdapter.IEObjectCoveringRegion;
+import eu.numberfour.n4js.xpect.methods.N4JSOffsetAdapter.IEObjectCoveringRegion;
 
 /**
  */

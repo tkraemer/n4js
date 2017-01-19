@@ -19,9 +19,9 @@ import org.xpect.runner.XpectTestFiles.FileRoot;
 import org.xpect.xtext.lib.tests.ResourceDescriptionTest;
 import org.xpect.xtext.lib.tests.ValidationTest;
 
-import eu.numberfour.n4js.xpect.OutputXpectMethod;
-import eu.numberfour.n4js.xpect.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.linking.LinkingXpectMethod;
+import eu.numberfour.n4js.xpect.methods.OutputXpectMethod;
+import eu.numberfour.n4js.xpect.methods.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.scoping.ScopeXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
 import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;

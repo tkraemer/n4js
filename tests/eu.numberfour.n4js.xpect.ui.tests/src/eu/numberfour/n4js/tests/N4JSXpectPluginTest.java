@@ -20,8 +20,8 @@ import org.xpect.xtext.lib.tests.LinkingTest;
 import org.xpect.xtext.lib.tests.ResourceDescriptionTest;
 import org.xpect.xtext.lib.tests.ValidationTest;
 
-import eu.numberfour.n4js.xpect.OutputXpectMethod;
-import eu.numberfour.n4js.xpect.TypeXpectMethod;
+import eu.numberfour.n4js.xpect.methods.OutputXpectMethod;
+import eu.numberfour.n4js.xpect.methods.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.references.FindReferencesXpectMethod;
 import eu.numberfour.n4js.xpect.scoping.ScopeXpectMethod;
 import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;

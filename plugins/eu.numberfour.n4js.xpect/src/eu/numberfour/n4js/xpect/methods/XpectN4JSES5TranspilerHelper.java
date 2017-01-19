@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect;
+package eu.numberfour.n4js.xpect.methods;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Preconditions.checkState;
@@ -69,6 +69,7 @@ import eu.numberfour.n4js.runner.SystemLoaderInfo;
 import eu.numberfour.n4js.runner.extension.RunnerRegistry;
 import eu.numberfour.n4js.runner.nodejs.NodeRunner;
 import eu.numberfour.n4js.runner.nodejs.NodeRunner.NodeRunnerDescriptorProvider;
+import eu.numberfour.n4js.runner.ui.ChooseImplementationHelper;
 import eu.numberfour.n4js.transpiler.es.EcmaScriptSubGenerator;
 
 /**
@@ -91,6 +92,9 @@ public class XpectN4JSES5TranspilerHelper {
 
 	@Inject
 	private RunnerRegistry runnerRegistry;
+
+	@Inject
+	private ChooseImplementationHelper chooseImplHelper;
 
 	private ReadOutConfiguration readOutConfiguration;
 
@@ -256,7 +260,12 @@ public class XpectN4JSES5TranspilerHelper {
 				&& (((ReadOutWorkspaceConfiguration) readOutConfiguration).getXpectConfiguredWorkspace() == null)) {
 			// If we are in the IDE, execute the test the same as for "Run in Node.js" and this way avoid
 			// the effort of calculating dependencies etc.
-			runConfig = runnerFrontEnd.createConfiguration(NodeRunner.ID, null,
+
+			final String implementationId = chooseImplHelper.chooseImplementationIfRequired(NodeRunner.ID,
+					resource.getURI().trimFileExtension());
+
+			runConfig = runnerFrontEnd.createConfiguration(NodeRunner.ID,
+					(implementationId == ChooseImplementationHelper.CANCEL) ? null : implementationId,
 					systemLoader.getId(),
 					resource.getURI().trimFileExtension());
 		} else {

@@ -58,6 +58,7 @@ import eu.numberfour.n4js.xpect.QuickFixTestHelper.ChangeInfo;
 import eu.numberfour.n4js.xpect.config.Config;
 import eu.numberfour.n4js.xpect.config.VarDef;
 import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
+import eu.numberfour.n4js.xpect.methods.N4JSOffsetAdapter;
 import junit.framework.AssertionFailedError;
 import junit.framework.ComparisonFailure;
 

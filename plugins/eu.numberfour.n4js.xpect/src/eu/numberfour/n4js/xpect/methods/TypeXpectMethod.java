@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect;
+package eu.numberfour.n4js.xpect.methods;
 
 import static eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.newRuleEnvironment;
 
@@ -36,7 +36,7 @@ import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions;
-import eu.numberfour.n4js.xpect.N4JSOffsetAdapter.IEObjectCoveringRegion;
+import eu.numberfour.n4js.xpect.methods.N4JSOffsetAdapter.IEObjectCoveringRegion;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
 
