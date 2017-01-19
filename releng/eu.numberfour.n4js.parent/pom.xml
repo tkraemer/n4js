@@ -153,6 +153,49 @@ Contributors:
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<!--
+				Here the target file
+				deployed in the build of the targetplatform project is referenced via
+				the classifier used in the attach-artifacts process. Please note that it
+				is possible to use multiple target files in Maven build but in Eclipse
+				you can only choose one target file.
+				-->
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<resolver>p2</resolver>
+					<target>
+						<artifact>
+							<groupId>eu.numberfour.n4js</groupId>
+							<artifactId>eu.numberfour.n4js.targetplatform</artifactId>
+							<version>${project.version}</version>
+							<classifier>eu.numberfour.n4js.targetplatform</classifier>
+							<relativePath>../eu.numberfour.n4js.targetplatform/pom.xml</relativePath>
+						</artifact>
+					</target>
+
+					<pomDependencies>consider</pomDependencies>
+					<environments>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
