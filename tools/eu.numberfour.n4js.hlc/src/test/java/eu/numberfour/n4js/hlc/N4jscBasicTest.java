@@ -56,7 +56,7 @@ public class N4jscBasicTest extends AbstractN4jscTest {
 	}
 
 	/**
-	 * normal compile all test with flag "--keepCompiling"
+	 * normal compile all test without flag "--keepCompiling"
 	 */
 	@Test
 	public void testMainArgsCompileAllKeepCompiling() {
@@ -73,8 +73,10 @@ public class N4jscBasicTest extends AbstractN4jscTest {
 		} catch (ExitCodeException e) {
 			assertEquals(N4jsc.EXITCODE_COMPILE_ERROR, e.getExitCode());
 		}
-		// Assert that 13 files are compiled.
-		assertFilesCompiledToES(13, proot);
+		// Assert that 8 files are compiled. The number depends on chosen algorithm for the build order.
+		// breadth first: 13
+		// depth first: 8
+		assertFilesCompiledToES(8, proot);
 	}
 
 	/**
