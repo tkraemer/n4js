@@ -10,13 +10,11 @@
  */
 package eu.numberfour.n4js.generator.headless;
 
-import java.lang.management.ManagementFactory;
-import java.lang.management.MemoryUsage;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Small util to track used memory and present it in ASCII table format.
+ * Small utility to track used memory and present it in ASCII table format.
  */
 public class MemoryTracker {
 
@@ -149,9 +147,7 @@ public class MemoryTracker {
 	}
 
 	private static long getUsedMemory() {
-		MemoryUsage usage = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage();
-		return usage.getUsed();
-		// return RUNTIME.totalMemory() - RUNTIME.freeMemory();
+		return RUNTIME.totalMemory() - RUNTIME.freeMemory();
 	}
 
 	private String formatLabel(String label) {
