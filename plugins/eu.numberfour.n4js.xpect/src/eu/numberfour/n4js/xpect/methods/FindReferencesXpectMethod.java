@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package eu.numberfour.n4js.xpect.references;
+package eu.numberfour.n4js.xpect.methods;
 
 import java.util.ArrayList;
 
@@ -38,8 +38,8 @@ import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.PropertyNameOwner;
 import eu.numberfour.n4js.ts.findReferences.SimpleResourceAccess;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
-import eu.numberfour.n4js.xpect.scoping.IN4JSCommaSeparatedValuesExpectation;
-import eu.numberfour.n4js.xpect.scoping.N4JSCommaSeparatedValuesExpectation;
+import eu.numberfour.n4js.xpect.methods.scoping.IN4JSCommaSeparatedValuesExpectation;
+import eu.numberfour.n4js.xpect.methods.scoping.N4JSCommaSeparatedValuesExpectation;
 
 /**
  * This class provides a XPECT method to specify tests regarding the {@link IReferenceFinder}

@@ -18,11 +18,11 @@ import org.xpect.runner.XpectSuiteClasses;
 import org.xpect.xtext.lib.tests.ResourceDescriptionTest;
 import org.xpect.xtext.lib.tests.ValidationTest;
 
-import eu.numberfour.n4js.xpect.linking.LinkingXpectMethod;
+import eu.numberfour.n4js.xpect.methods.LinkingXpectMethod;
 import eu.numberfour.n4js.xpect.methods.NoerrorsXpectMethod;
 import eu.numberfour.n4js.xpect.methods.OutputXpectMethod;
 import eu.numberfour.n4js.xpect.methods.TypeXpectMethod;
-import eu.numberfour.n4js.xpect.scoping.ScopeXpectMethod;
+import eu.numberfour.n4js.xpect.methods.scoping.ScopeXpectMethod;
 import eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestFilesCollector.N4IDEXpectTestURIProvider;
 
 /**

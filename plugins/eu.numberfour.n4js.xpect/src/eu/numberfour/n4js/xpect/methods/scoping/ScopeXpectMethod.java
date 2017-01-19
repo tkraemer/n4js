@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package eu.numberfour.n4js.xpect.scoping;
+package eu.numberfour.n4js.xpect.methods.scoping;
 
 import java.util.Collections;
 

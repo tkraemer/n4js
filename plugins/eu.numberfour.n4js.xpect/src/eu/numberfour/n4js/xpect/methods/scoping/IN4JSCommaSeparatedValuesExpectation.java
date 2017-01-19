@@ -8,12 +8,12 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.scoping;
+package eu.numberfour.n4js.xpect.methods.scoping;
 
 import org.xpect.XpectImport;
 import org.xpect.expectation.ICommaSeparatedValuesExpectation;
 
-import eu.numberfour.n4js.xpect.scoping.N4JSCommaSeparatedValuesExpectation.N4JSCommaSeparatedValuesExpectationImpl;
+import eu.numberfour.n4js.xpect.methods.scoping.N4JSCommaSeparatedValuesExpectation.N4JSCommaSeparatedValuesExpectationImpl;
 
 /**
  */

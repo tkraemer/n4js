@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.methods;
+package eu.numberfour.n4js.xpect.common;
 
 import static com.google.common.collect.FluentIterable.from;
 

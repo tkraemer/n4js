@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.methods;
+package eu.numberfour.n4js.xpect.common;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Preconditions.checkState;
@@ -261,6 +261,7 @@ public class XpectN4JSES5TranspilerHelper {
 			// If we are in the IDE, execute the test the same as for "Run in Node.js" and this way avoid
 			// the effort of calculating dependencies etc.
 
+			// User may need to select implementation projects for API projects
 			final String implementationId = chooseImplHelper.chooseImplementationIfRequired(NodeRunner.ID,
 					resource.getURI().trimFileExtension());
 

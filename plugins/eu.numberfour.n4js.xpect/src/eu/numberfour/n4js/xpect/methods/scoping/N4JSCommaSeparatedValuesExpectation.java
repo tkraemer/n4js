@@ -5,10 +5,10 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package eu.numberfour.n4js.xpect.scoping;
+package eu.numberfour.n4js.xpect.methods.scoping;
 
-import static eu.numberfour.n4js.xpect.scoping.EObjectDescriptionToNameWithPositionMapper.descriptionToNameWithPosition;
-import static eu.numberfour.n4js.xpect.scoping.EObjectDescriptionToNameWithPositionMapper.getNameFromNameWithPosition;
+import static eu.numberfour.n4js.xpect.methods.scoping.EObjectDescriptionToNameWithPositionMapper.descriptionToNameWithPosition;
+import static eu.numberfour.n4js.xpect.methods.scoping.EObjectDescriptionToNameWithPositionMapper.getNameFromNameWithPosition;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

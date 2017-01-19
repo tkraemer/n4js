@@ -30,6 +30,8 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.runner.SystemLoaderInfo;
+import eu.numberfour.n4js.xpect.common.XpectCommentRemovalUtil;
+import eu.numberfour.n4js.xpect.common.XpectN4JSES5TranspilerHelper;
 
 /**
  * Provides execution output xpect test methods. Provided resource compiled on the fly and executed, captured output is

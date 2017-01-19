@@ -8,11 +8,11 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.scoping;
+package eu.numberfour.n4js.xpect.methods.scoping;
 
-import static eu.numberfour.n4js.xpect.scoping.EObjectDescriptionToNameWithPositionMapper.descriptionToNameWithPosition;
-import static eu.numberfour.n4js.xpect.scoping.EObjectDescriptionToNameWithPositionMapper.getNameFromNameWithPosition;
-import static eu.numberfour.n4js.xpect.scoping.EObjectDescriptionToNameWithPositionMapper.getPositionFromNameWithPosition;
+import static eu.numberfour.n4js.xpect.methods.scoping.EObjectDescriptionToNameWithPositionMapper.descriptionToNameWithPosition;
+import static eu.numberfour.n4js.xpect.methods.scoping.EObjectDescriptionToNameWithPositionMapper.getNameFromNameWithPosition;
+import static eu.numberfour.n4js.xpect.methods.scoping.EObjectDescriptionToNameWithPositionMapper.getPositionFromNameWithPosition;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.xtext.naming.IQualifiedNameConverter;

@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.methods;
+package eu.numberfour.n4js.xpect.common;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.nodemodel.INode;
@@ -23,7 +23,7 @@ import org.xpect.text.IRegion;
 import org.xpect.xtext.lib.setup.ThisResource;
 import org.xpect.xtext.lib.util.XtextOffsetAdapter.IEObjectOwner;
 
-import eu.numberfour.n4js.xpect.methods.N4JSOffsetAdapter.EObjectCoveringRegionProvider;
+import eu.numberfour.n4js.xpect.common.N4JSOffsetAdapter.EObjectCoveringRegionProvider;
 
 /**
  * Extension of default parameter adapter providing support for {@link IEObjectCoveringRegion}, which basically is an

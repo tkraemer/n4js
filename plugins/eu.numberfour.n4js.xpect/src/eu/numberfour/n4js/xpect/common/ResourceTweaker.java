@@ -8,14 +8,18 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.validation;
+package eu.numberfour.n4js.xpect.common;
+
+import org.eclipse.xtext.resource.XtextResource;
 
 /**
- * *** NOTE *** NOTE *** NOTE ***
- *
- * There exists an exact copy of this file at:
- * /eu.numberfour.n4js.xpect.ui/src/eu/numberfour/n4js/xpect/ui/xpectmethods/NoerrorsXpectMethod.java
+ * Hook-provider for just-before compilation resource tweaks. Required by quick-fix tests
  */
-public class NoerrorsXpectMethod {
-	// noop
+public interface ResourceTweaker {
+
+	/**
+	 * @param resource
+	 *            resource to modify
+	 */
+	void tweak(XtextResource resource);
 }

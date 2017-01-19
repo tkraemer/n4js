@@ -24,9 +24,9 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  eu.numberfour.n4js.utils,
  eu.numberfour.n4js.n4mf.ui.tests.helper,
  eu.numberfour.n4js.regex.ui,
- eu.numberfour.n4js.ui.tests.helper
-Import-Package: eu.numberfour.n4js.xpect.validation,
- org.apache.log4j,
+ eu.numberfour.n4js.ui.tests.helper,
+ eu.numberfour.n4js.xpect;bundle-version="0.0.1"
+Import-Package: org.apache.log4j,
  org.hamcrest.core,
  org.junit;version="4.5.0",
  org.junit.runner;version="4.5.0",

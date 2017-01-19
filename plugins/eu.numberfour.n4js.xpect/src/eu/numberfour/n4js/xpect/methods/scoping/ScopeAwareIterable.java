@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.scoping;
+package eu.numberfour.n4js.xpect.methods.scoping;
 
 import java.util.Iterator;
 

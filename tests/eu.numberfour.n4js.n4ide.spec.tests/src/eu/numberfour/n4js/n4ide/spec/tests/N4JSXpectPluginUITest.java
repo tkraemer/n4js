@@ -25,7 +25,7 @@ import eu.numberfour.n4js.xpect.ContentAssistXpectMethod;
 import eu.numberfour.n4js.xpect.HyperlinkXpectMethod;
 import eu.numberfour.n4js.xpect.ProposalXpectMethod;
 import eu.numberfour.n4js.xpect.QuickFixXpectMethod;
-import eu.numberfour.n4js.xpect.validation.NoerrorsXpectMethod;
+import eu.numberfour.n4js.xpect.methods.NoerrorsXpectMethod;
 import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**

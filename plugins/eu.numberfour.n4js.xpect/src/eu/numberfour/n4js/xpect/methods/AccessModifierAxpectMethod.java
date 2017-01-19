@@ -26,7 +26,8 @@ import eu.numberfour.n4js.n4JS.N4MemberDeclaration;
 import eu.numberfour.n4js.n4JS.N4TypeDeclaration;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
 import eu.numberfour.n4js.n4JS.VariableStatement;
-import eu.numberfour.n4js.xpect.methods.N4JSOffsetAdapter.IEObjectCoveringRegion;
+import eu.numberfour.n4js.xpect.common.N4JSOffsetAdapter;
+import eu.numberfour.n4js.xpect.common.N4JSOffsetAdapter.IEObjectCoveringRegion;
 
 /**
  */
