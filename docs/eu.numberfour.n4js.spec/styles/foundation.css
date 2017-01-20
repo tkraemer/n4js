@@ -297,7 +297,7 @@ b.button:before { content: "["; padding: 0 3px 0 2px; }
 
 b.button:after { content: "]"; padding: 0 2px 0 3px; }
 
-#header, #content, #footnotes, #footer { max-width:1300px; margin-right: 80px; margin-top: 0; margin-bottom: 0; *zoom: 1; position: relative; padding-left: 0.9375em; padding-right: 0.9375em; left: 40px;}
+#header, #content, #footnotes, #footer { max-width:1300px; margin-right: 80px; margin-top: 0; margin-bottom: 0;  position: relative; padding-left: 0.9375em; padding-right: 0.9375em; left: 40px;}
 
 @media only screen and (max-width: 1360px) {
 	#toc {width: 200px }
@@ -434,7 +434,7 @@ div#features-nav li:before {
   #toc.toc2 ul.sectlevel0 ul.sectlevel1 { padding-left: 0; margin-top: 0.5em; margin-bottom: 0.5em; }
   body.toc2.toc-right { padding-left: 2em; padding-right: 2em; }
   body.toc2.toc-right #toc.toc2 { border-right-width: 0; border-left: 1px solid #dddddd; left: auto; right: -13rem; } }
-  body.toc2.toc-left #toc.toc2 { left: -13rem; } }
+  body.toc2.toc-left #toc.toc2 { left: -13rem; }
 @media only screen and (min-width: 1535px) { 
   body.toc2 { padding-left: 2em; padding-right: 2em; }
   #toctitle { padding-top: 0rem; font-size: 1.375em; }
@@ -450,7 +450,7 @@ div#features-nav li:before {
 #footer {  padding: 1.25em; padding-bottom: 0rem;  margin-top: 2rem; color: white}
 div.social  {    
 	padding: 1.25em;
-	padding-left: 20%
+	padding-left: 20%;
     padding-bottom: 0rem;
     margin-top: 2rem;
     color: white;  }
@@ -499,7 +499,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-si
 .exampleblock > .content > :first-child { margin-top: 0; }
 .exampleblock > .content > :last-child { margin-bottom: 0; }
 
-.sidebarblock { position: absolute; border-style: solid; width: 90px; border-width: 1px; border-color: #d9d9d9; right: -85px; padding: .1rem; background: #f2f2f2; -webkit-border-radius: 0; border-radius: 0; text-align: left; border-radius: 5px;}
+.sidebarblock { position: absolute; border-style: solid; width: 90px; border-width: 1px; border-color: #d9d9d9; right: -85px; padding: .1rem; background: #f2f2f2; -webkit-border-radius: 0; border-radius: 0; text-align: left; border-radius: 5px;overflow-wrap: break-word;}
 .sidebarblock > :first-child { margin-top: 0; }
 .sidebarblock > :last-child { margin-bottom: 0; }
 .sidebarblock > .content > .title { color: #6999d6; margin-top: 0; }
@@ -1194,7 +1194,7 @@ body.toc2.toc-right a:hover.back-to-top {
 @media only screen and (max-width: 768px) {
 	body.toc2.toc-left #tocbutton {visibility: hidden;}
 	#toc.toc2 {width: 100%; left: 0px;}
-	#header, #content, #footnotes, #footer {  margin-left: 0px; ,margin-right: 50px }
+	#header, #content, #footnotes, #footer {  margin-left: 0px; margin-right: 50px; }
 }
 
 @media only screen and (max-width: 1462px) {
