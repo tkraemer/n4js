@@ -10,7 +10,7 @@
  */
 package eu.numberfour.n4js.test.helpers.tests
 
-import eu.numberfour.n4js.xpect.ui.methods.QuickFixTestHelper
+import eu.numberfour.n4js.xpect.ui.common.QuickFixTestHelper
 import org.junit.Test
 
 import static extension org.junit.Assert.*

@@ -8,11 +8,11 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.ui.methods;
+package eu.numberfour.n4js.xpect.ui.methods.contentassist;
 
-import static eu.numberfour.n4js.xpect.ui.methods.QuickFixTestHelper.asString2;
-import static eu.numberfour.n4js.xpect.ui.methods.QuickFixTestHelper.extractSingleChangedLine;
-import static eu.numberfour.n4js.xpect.ui.methods.QuickFixTestHelper.separateOnCommaAndQuote;
+import static eu.numberfour.n4js.xpect.ui.common.QuickFixTestHelper.asString2;
+import static eu.numberfour.n4js.xpect.ui.common.QuickFixTestHelper.extractSingleChangedLine;
+import static eu.numberfour.n4js.xpect.ui.common.QuickFixTestHelper.separateOnCommaAndQuote;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -57,7 +57,8 @@ import eu.numberfour.n4js.xpect.common.N4JSOffsetAdapter;
 import eu.numberfour.n4js.xpect.config.Config;
 import eu.numberfour.n4js.xpect.config.VarDef;
 import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
-import eu.numberfour.n4js.xpect.ui.methods.QuickFixTestHelper.ChangeInfo;
+import eu.numberfour.n4js.xpect.ui.common.QuickFixTestHelper.ChangeInfo;
+import eu.numberfour.n4js.xpect.ui.common.XtextResourceCleanUtil;
 import junit.framework.AssertionFailedError;
 import junit.framework.ComparisonFailure;
 

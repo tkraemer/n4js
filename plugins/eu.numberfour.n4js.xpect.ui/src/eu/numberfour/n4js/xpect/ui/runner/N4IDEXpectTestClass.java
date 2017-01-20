@@ -18,14 +18,20 @@ import org.xpect.runner.XpectSuiteClasses;
 import org.xpect.xtext.lib.tests.ResourceDescriptionTest;
 import org.xpect.xtext.lib.tests.ValidationTest;
 
+import eu.numberfour.n4js.xpect.methods.AccessModifierAxpectMethod;
+import eu.numberfour.n4js.xpect.methods.FindReferencesXpectMethod;
+import eu.numberfour.n4js.xpect.methods.FormatterXpectMethod;
 import eu.numberfour.n4js.xpect.methods.LinkingXpectMethod;
 import eu.numberfour.n4js.xpect.methods.NoerrorsXpectMethod;
-import eu.numberfour.n4js.xpect.methods.TypeXpectMethod;
+import eu.numberfour.n4js.xpect.methods.ReturnXpectMethod;
 import eu.numberfour.n4js.xpect.methods.scoping.ScopeXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.HyperlinkXpectMethod;
 import eu.numberfour.n4js.xpect.ui.methods.OrganizeImportXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.OutlineXpectMethod;
 import eu.numberfour.n4js.xpect.ui.methods.OutputXpectMethod;
 import eu.numberfour.n4js.xpect.ui.methods.ProposalXpectMethod;
-import eu.numberfour.n4js.xpect.ui.methods.QuickFixXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.contentassist.ContentAssistXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.quickfix.QuickFixXpectMethod;
 import eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestFilesCollector.N4IDEXpectTestURIProvider;
 
 /**
@@ -34,16 +40,24 @@ import eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestFilesCollector.N4IDEXpec
  * - {@link N4IDEXpectTestURIProvider} that will be used by {@link XpectRunner}
  */
 @XpectSuiteClasses({
-		ValidationTest.class,
-		NoerrorsXpectMethod.class,
-		OutputXpectMethod.class,
-		TypeXpectMethod.class,
-		ScopeXpectMethod.class,
-		ResourceDescriptionTest.class,
+		AccessModifierAxpectMethod.class,
+		FindReferencesXpectMethod.class,
+		FormatterXpectMethod.class,
 		LinkingXpectMethod.class,
-		QuickFixXpectMethod.class,
+		NoerrorsXpectMethod.class,
+		ReturnXpectMethod.class,
+		ReturnXpectMethod.class,
+		ValidationTest.class,
+		ScopeXpectMethod.class,
+
+		HyperlinkXpectMethod.class,
+		OrganizeImportXpectMethod.class,
+		OutlineXpectMethod.class,
+		OutputXpectMethod.class,
 		ProposalXpectMethod.class,
-		OrganizeImportXpectMethod.class
+		ContentAssistXpectMethod.class,
+		QuickFixXpectMethod.class,
+		ResourceDescriptionTest.class
 })
 @RunWith(XpectRunner.class)
 @XpectImport({ N4IDEXpectFileSetup.class })

@@ -37,6 +37,9 @@ import eu.numberfour.n4js.n4JS.NamedElement;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.ts.types.IdentifiableElement;
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement;
+import eu.numberfour.n4js.xpect.ui.common.XtextResourceCleanUtil;
+import eu.numberfour.n4js.xpect.ui.methods.contentassist.N4ContentAssistProcessorTestBuilderHelper;
+import eu.numberfour.n4js.xpect.ui.methods.contentassist.RegionWithCursor;
 
 /**
  */

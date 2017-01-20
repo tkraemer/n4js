@@ -10,7 +10,7 @@
  */
 package eu.numberfour.n4js.xpect.ui.methods;
 
-import static eu.numberfour.n4js.xpect.ui.methods.QuickFixTestHelper.asString2;
+import static eu.numberfour.n4js.xpect.ui.common.QuickFixTestHelper.asString2;
 
 import java.io.StringReader;
 import java.util.Arrays;
@@ -48,6 +48,12 @@ import eu.numberfour.n4js.xpect.common.XpectCommentRemovalUtil;
 import eu.numberfour.n4js.xpect.config.Config;
 import eu.numberfour.n4js.xpect.config.VarDef;
 import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
+import eu.numberfour.n4js.xpect.ui.common.XtextResourceCleanUtil;
+import eu.numberfour.n4js.xpect.ui.methods.contentassist.ContentAssistXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.contentassist.N4ContentAssistProcessorTestBuilder;
+import eu.numberfour.n4js.xpect.ui.methods.contentassist.N4ContentAssistProcessorTestBuilderHelper;
+import eu.numberfour.n4js.xpect.ui.methods.contentassist.RegionWithCursor;
+import eu.numberfour.n4js.xpect.ui.methods.quickfix.QuickFixXpectMethod;
 import junit.framework.AssertionFailedError;
 
 /**

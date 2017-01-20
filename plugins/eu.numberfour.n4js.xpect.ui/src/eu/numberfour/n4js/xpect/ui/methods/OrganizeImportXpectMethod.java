@@ -39,6 +39,8 @@ import eu.numberfour.n4js.ui.organize.imports.Interaction;
 import eu.numberfour.n4js.ui.organize.imports.N4JSOrganizeImportsHandler;
 import eu.numberfour.n4js.xpect.common.EclipseGracefulUIShutdownEnabler;
 import eu.numberfour.n4js.xpect.common.XpectCommentRemovalUtil;
+import eu.numberfour.n4js.xpect.ui.methods.contentassist.N4ContentAssistProcessorTestBuilder;
+import eu.numberfour.n4js.xpect.ui.methods.contentassist.N4ContentAssistProcessorTestBuilderHelper;
 import junit.framework.AssertionFailedError;
 
 /**

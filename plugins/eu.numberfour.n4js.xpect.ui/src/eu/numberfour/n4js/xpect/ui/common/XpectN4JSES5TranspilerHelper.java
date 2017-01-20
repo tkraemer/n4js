@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.ui.methods;
+package eu.numberfour.n4js.xpect.ui.common;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Preconditions.checkState;
