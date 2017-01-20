@@ -71,7 +71,7 @@ A var statement can declare the type of the variable with a type
 reference. This is described with the following grammar similar to
 cite:[ECMA11a(S12.2,p.87)]:
 
-[source,n4js]
+[source,xtext]
 ----
 VariableStatement <In, Yield>:
     =>({VariableStatement}
@@ -213,7 +213,7 @@ inferred type of the initializer expression:
 
 Cf. cite:[ECMA11a(S12.5,p.89)]
 
-[source,n4js]
+[source,xtext]
 ----
 IfStatement <Yield>:
     'if' '(' expression=Expression<In=true,Yield> ')'
@@ -244,7 +244,7 @@ Cf. cite:[ECMA11a(S12.6,p.90ff)]
 
 The syntax already considers the for-of style described in <<_for-of-statement,For ... of Statement>>.
 
-[source,n4js]
+[source,xtext]
 ----
 IterationStatement <Yield>:
         DoStatement<Yield>
@@ -326,7 +326,7 @@ string, i.e. any):
 
 The returns statement is defined as in cite:[ECMA11a(S12.9,p.93)] with
 
-[source,n4js]
+[source,xtext]
 ----
 ReturnStatement <Yield>:
     'return' (expression=Expression<In=true,Yield>)? Semi;
@@ -364,7 +364,7 @@ statement, for example, must not be a top-level statement.
 
 The with statement is not allowed in N4JS, thus an error is issued.
 
-[source,n4js]
+[source,xtext]
 ----
 WithStatement <Yield>:
     'with' '(' expression=Expression<In=true,Yield> ')'
@@ -390,7 +390,7 @@ With statements are not allowed in N4JS or strict mode.
 
 Cf. cite:[ECMA11a(S12.11,p.94ff)]
 
-[source,n4js]
+[source,xtext]
 ----
 SwitchStatement <Yield>:
     'switch' '(' expression=Expression<In=true,Yield> ')' '{'
@@ -423,7 +423,7 @@ the constraints defined in <<Equality Expression>>.
 
 Cf. cite:[ECMA11a(S12.13/14,p.96ff)]
 
-[source,n4js]
+[source,xtext]
 ----
 ThrowStatement <Yield>:
     'throw' expression=Expression<In=true,Yield> Semi;
@@ -465,7 +465,7 @@ The type of the catch variable is always assumed to be .
 
 Cf. cite:[ECMA11a(S12.15,p.97ff)])
 
-[source,n4js]
+[source,xtext]
 ----
 DebuggerStatement: {DebuggerStatement} 'debugger' Semi;
 ----
@@ -494,7 +494,7 @@ declaring variables which must be assigned to a value in the declaration
 and their value must not change. That is to say that constants are not
 allowed to be on the left-hand side of other assignments.
 
-[source,n4js]
+[source,xtext]
 ----
 ConstStatement returns VariableStatement: 'const' varDecl+=ConstDeclaration ( ',' varDecl+=ConstDeclaration )* Semi;
 
@@ -581,7 +581,7 @@ Cf. ES6 import cite:[ECMA15a(15.2.2)], see also https://babeljs.io/docs/usage/mo
 
 The grammar of import declarations is defined as follows:
 
-[source,n4js]
+[source,xtext]
 ----
 ImportDeclaration:
     {ImportDeclaration}
@@ -927,7 +927,7 @@ Cf. ES6 import cite:[ECMA15a(15.2.3)]
 
 Grammar of export declarations is defined as follows:
 
-[source,n4js]
+[source,xtext]
 ----
 ExportDeclaration:
     {ExportDeclaration}

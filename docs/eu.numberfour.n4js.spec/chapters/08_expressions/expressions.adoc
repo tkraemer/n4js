@@ -433,7 +433,7 @@ TIP: Using constructor functions is not recommended and an error or warning will
 Identifiers as expressions are identifier references. They are defined
 as follows:
 
-[source,n4js]
+[source,xtext]
 ----
 IdentifierRef <Yield>:
     id=[types::IdentifiableElement|BindingIdentifier<Yield>]
@@ -599,7 +599,7 @@ positive integer literal (inferred to `number`).
 
 cf cite:[ECMA11a(S11.1.4,p.63)]
 
-[source,n4js]
+[source,xtext]
 ----
 ArrayLiteral <Yield> returns ArrayLiteral:
     {ArrayLiteral} '['
@@ -696,7 +696,7 @@ An empty array literal will be inferred as follows:
 Cf. cite:[ECMA11a(S11.1.5,p.65ff)]
 The syntax of an object literal is given by:
 
-[source,n4js]
+[source,xtext]
 ----
 ObjectLiteral <Yield>: {ObjectLiteral}
     '{'
@@ -929,7 +929,7 @@ The grouping operator is defined here as a parenthesized expression.
 
 cf. cite:[ECMA11a(S11.1.6,p.67)]
 
-[source,n4js]
+[source,xtext]
 ----
 ParenExpression <Yield>: '(' expression=Expression<In=true,Yield> ')';
 ----
@@ -980,7 +980,7 @@ accessing properties of an object, but also for accessing members of a
 class instance. In order to support parameterized calls, the syntax is
 extended to optionally allow type arguments.
 
-[source,n4js]
+[source,xtext]
 ----
 ParameterizedPropertyAccessExpression:
     target=PrimaryExpression<Yield> ParameterizedPropertyAccessExpressionTail<Yield>
@@ -1223,7 +1223,7 @@ cf. cite:[ECMA11a(S11.2.2,p.68)]
 [discrete]
 ==== Syntax [[new-expression-syntax]]
 
-[source,n4js]
+[source,xtext]
 ----
 NewExpression: 'new' callee=MemberExpression<Yield> (-> TypeArguments)?
         (=> withArgs?='(' Arguments<Yield>? ')' )?
@@ -1358,7 +1358,7 @@ task:IDE-177[] [[function-calls-syntax]]
 
 Similar to cite:[ECMA11a(S11.2.3,p.68ff)], a function call is defined as follows:
 
-[source,n4js]
+[source,xtext]
 ----
 CallExpression <Yield>:
     target=IdentifierRef<Yield>
@@ -1487,7 +1487,7 @@ the type variable `T` can be automatically bound to the type of variable `contex
 [discrete]
 ==== Syntax [[postfix-expression-syntax]]
 
-[source,n4js]
+[source,xtext]
 ----
 PostfixExpression returns Expression: LeftHandSideExpression
          (=>({PostfixExpression.expression=current} /* no line terminator here */ op=PostfixOperator))?
@@ -1527,7 +1527,7 @@ $set$ _p_ must be defined. task:IDE-737[]
 
 We define the following unary operators and expression, similar to cite:[ECMA11a(p.70ff)]:
 
-[source,n4js]
+[source,xtext]
 ----
 UnaryExpression returns Expression:
       PostfixExpression
@@ -1653,7 +1653,7 @@ task:IDE-244[] task:IDE-345[]
 
 Cf. cite:[ECMA11a(p.73ff)]
 
-[source,n4js]
+[source,xtext]
 ----
 MultiplicativeExpression returns Expression: UnaryExpression
       (=>({MultiplicativeExpression.lhs=current} op=MultiplicativeOperator) rhs=UnaryExpression)*;
@@ -1697,7 +1697,7 @@ The inferred type of a multiplicative expression always is number:
 
 Cf. cite:[ECMA11a(p.75ff)]
 
-[source,n4js]
+[source,xtext]
 ----
 AdditiveExpression returns Expression: MultiplicativeExpression
     (=>({AdditiveExpression.lhs=current} op=AdditiveOperator) rhs=MultiplicativeExpression)*;
@@ -1781,7 +1781,7 @@ false+1;        // number 1
 
 task:IDE-288[] Cf. cite:[ECMA11a(p.76f)]
 
-[source,n4js]
+[source,xtext]
 ----
 ShiftExpression returns Expression: AdditiveExpression
     (=>({ShiftExpression.lhs=current} op=ShiftOperator rhs=AdditiveExpression))*
@@ -1830,7 +1830,7 @@ The type returned by a bitwise shift expression is always `boolean`:
 
 Cf. cite:[ECMA11a(p.77ff)]
 
-[source,n4js]
+[source,xtext]
 ----
 RelationalExpression returns Expression: ShiftExpression
     (=>({RelationalExpression.lhs=current} op=RelationalOperator) rhs=ShiftExpression)*;
@@ -1992,7 +1992,7 @@ The type of a relational expression always is `boolean`;
 
 Cf. cite:[ECMA11a(p.80ff)]
 
-[source,n4js]
+[source,xtext]
 ----
 EqualityExpression returns Expression: RelationalExpression
     (=>({EqualityExpression.lhs=current} op=EqualityOperator) rhs=RelationalExpression)*;
@@ -2054,7 +2054,7 @@ The inferred type of an equality expression always is `boolean`.
 
 Cf. cite:[ECMA11a(p.82ff)]
 
-[source,n4js]
+[source,xtext]
 ----
 BitwiseANDExpression returns Expression: EqualityExpression
     (=> ({BitwiseANDExpression.lhs=current} '&') rhs=EqualityExpression)*;
@@ -2111,7 +2111,7 @@ The type returned by a binary bitwise expression is always $number$:
 [discrete]
 ==== Syntax [[binary-logical-expression-syntax]]
 
-[source,n4js]
+[source,xtext]
 ----
 LogicalANDExpression returns Expression: BitwiseORExpression
     (=> ({LogicalANDExpression.lhs=current} '&&') rhs=BitwiseORExpression)*;
@@ -2160,7 +2160,7 @@ affect the result in case one of the types is `null` either or `undefined`, whic
 
 Cf. cite:[ECMA11a(S11.12,p.84)]
 
-[source,n4js]
+[source,xtext]
 ----
 ConditionalExpression returns Expression: LogicalORExpression
     (=> ({ConditionalExpression.expression=current} '?') trueExpression=AssignmentExpression  ':' falseExpression=AssignmentExpression)?;
@@ -2252,9 +2252,8 @@ cond ? ga : gb;                         // union{G<A>,G<B>}
 [discrete]
 ==== Syntax [[assignment-expression-syntax]]
 
-[source,n4js]
+[source,xtext]
 ----
-[language=n4bnf,caption={Syntax Assignment Expression},label={lst:EBNFAssignment},escapeinside={^}{^}]
 AssignmentExpression <In, Yield>:
     lhs=Expression op=AssignmentOperator rhs=AssignmentExpression<In,Yield>
 ;
@@ -2383,7 +2382,7 @@ of the latter is the right-hand side, we can define:
 
 Cf. cite:[ECMA11a(S11.14,p.85)]
 
-[source,n4js]
+[source,xtext]
 ----
 CommaExpression <In, Yield>:
     exprs+=AssignmentExpression<In,Yield> ',' exprs+=AssignmentExpression<In,Yield>
@@ -2674,7 +2673,7 @@ task:IDE-161[]
 [discrete]
 ==== Syntax [[cast-as-expression-syntax]]
 
-[source,n4js]
+[source,xtext]
 ----
 CastExpression <Yield> returns Expression: expression=Expression 'as' targetTypeRef=TypeRefForCast;
 

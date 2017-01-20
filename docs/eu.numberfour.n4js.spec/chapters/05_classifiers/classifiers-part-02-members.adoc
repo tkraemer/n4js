@@ -25,7 +25,7 @@ described in <<_redefinition-of-members,Redefiniton of Members>>.
 == Syntax
 
 .Syntax N4JS member access modifier
-[source,n4js]
+[source,xtext]
 ----
 enum N4JSMemberAccessModifier: private | project | protected | public;
 
@@ -153,7 +153,7 @@ and some modifiers.
 === Syntax
 
 .Syntax Method Declaration
-[source,n4js]
+[source,xtext]
 ----
 N4MethodDeclaration <Yield>:
     => ({N4MethodDeclaration}
@@ -1060,7 +1060,7 @@ Data fields in N4JS are similar to these implicit fields in ECMAScript 6 except 
 === Syntax [[data-fields-syntax]]
 
 
-[source,n4js]
+[source,xtext]
 ----
 N4FieldDeclaration <Yield>:
     {N4FieldDeclaration}
@@ -1255,7 +1255,7 @@ to the accuser methods in object literals:
 ==== Syntax [[field-acessors-syntax]]
 task:IDE-8[]
 
-[source,n4js]
+[source,xtext]
 ----
 N4GetterDeclaration <Yield>:
     => ({N4GetterDeclaration}

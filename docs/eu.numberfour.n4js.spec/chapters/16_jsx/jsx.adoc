@@ -46,7 +46,7 @@ task:IDE-2411[]
 
 The following JSX syntax is supported (EBNF with model element assignments as used in Xtext). All other ECMAScript 2015 and N4JS syntax constructs are unaffected by this addition.
 
-[source,jsx]
+[source,xtext]
 ----
 PrimaryExpression <Yield> returns n4js::Expression:
 	... // as in N4JS
@@ -111,7 +111,7 @@ task:IDE-2414[]
 .JSX Syntax With Free Text
 [req,id=IDE-241401,version=1]
 --
-[source,jsx]
+[source,xtext]
 ----
 JSXChild:
 	JSXElement | JSXExpression | JSXText

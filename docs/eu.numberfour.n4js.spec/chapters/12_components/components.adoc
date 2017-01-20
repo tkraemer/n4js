@@ -192,7 +192,7 @@ task:IDE-18[]
 === Syntax
 
 
-[source,n4js]
+[source,xtext]
 ----
 ProjectDescription:
         ('ProjectId'        ':' projectId=N4mfIdentifier)
@@ -431,7 +431,7 @@ DeclaredVersion ::
 The _version_ of the project. The version consists of a major, minor and
 micro version. The syntax of the version is given by:
 
-[source,n4js]
+[source,xtext]
 ----
     DeclaredVersion :
         major=INT ('.' minor=INT ('.' micro=INT)?)? ('-' qualifier=ID)?
@@ -647,8 +647,10 @@ Examples of using external source fragments and filters are given in (<<_impleme
 .No validation and module wrapping example
 [example]
 ====
-The following manifest shows the use of filters to disable validation
-and module wrapping.
+The following manifest shows the use of filters to disable validation and module wrapping.
+
+// TODO add N4MF syntax highlighting
+
 
 [source,n4js]
 ----
@@ -783,7 +785,7 @@ task:IDE-8[]
 All N4JS files are modules, sometimes also called compilation unit (CU).
 This is the overall structure of a module, based on cite:[ECMA15a(S14)].
 
-[source,n4js]
+[source,xtext]
 ----
 Script: {Script}
     annotations+=ScriptAnnotation*
@@ -883,8 +885,9 @@ A nfar archive has the following structure:
 
 // todo[N4 Deployment Descriptor]{Why is it needed? Where is it generated? Does it has to be changed?
 
-The N4 deployment descriptor of a project `p` is a NFON
-formatted file with the following structure:
+The N4 deployment descriptor of a project `p` is a NFON formatted file with the following structure:
+
+//TODO add NFON syntax highlighting
 
 [source,n4js]
 ----
@@ -940,7 +943,7 @@ The key is used during runtime to retrieve text localized to the user’s locale
 
 The syntax of a resource file is defined as:
 
-[source,n4js,subs="macros"]
+[source,xtext]
 ----
 ResourceFile:   Comment* | $entry+=$ Entry*;
 Comment:        'pass:[#]' .* EOL;

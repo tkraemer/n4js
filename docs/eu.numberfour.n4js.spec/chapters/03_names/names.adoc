@@ -59,7 +59,7 @@ The same is true for variable declarations and function declarations defined as 
 
 The following type access modifiers are supported by N4JS:
 
-[source,n4js]
+[source,xtext]
 ----
 enum TypeAccessModifier:      project
                             | public;
@@ -202,7 +202,7 @@ the consuming class (cf. <<_implementation-of-members,Implementation of Members>
 
 The following member access modifiers are supported by N4JS:
 
-[source,n4js]
+[source,xtext]
 ----
 enum MemberAccessModifier:    private
                             | project

@@ -372,7 +372,7 @@ definition. A type variable is declared in a type parameter as follows.
 ==== Syntax
 
 
-[source,n4js]
+[source,xtext]
 ----
 TypeVariable:
     name=IDENTIFIER
@@ -566,7 +566,7 @@ type.
 ==== Syntax [[parameterized-types-syntax]]
 
 
-[source,n4js]
+[source,xtext]
 ----
 ParameterizedTypeRef:
     ParameterizedTypeRefNominal | ParameterizedTypeRefStructural;
@@ -761,7 +761,7 @@ Let classes A, B, and C are defined as in the chapter beginning
 ($C <: B <: A$). The following subtype relations are
 evaluated as indicated:
 
-[source,n4js]
+[source,xtext]
 ----
 G<A> <: G<B>                        -> false
 G<B> <: G<A>                        -> false
@@ -807,7 +807,7 @@ class H<T> extends G<T> {}
 Given a simple, non-parameterized class _A_, the following
 subtype relations are evaluated as indicated:
 
-[source,n4js]
+[source,xtext]
 ----
 G<A> <: G<A>                        -> true
 H<A> <: G<A>                        -> true
@@ -877,7 +877,7 @@ $upper(T) = lower(T) = T$
 Assuming the given classes listed above, the
 following upper and lower bounds are expected:
 
-[source,n4js]
+[source,xtext]
 ----
 G<A>            -> upperBound = lowerBound = A
 G<? extends A>  -> lowerBound = null, upperBound = A
@@ -887,7 +887,7 @@ G<?>            -> lowerBound = null, upperBound = any
 
 This leads to the following expected subtype relations: task:IDEBUG-260[]
 
-[source,n4js]
+[source,xtext]
 ----
 (? extends A) <: A  -> true
 (? super A) <: A    -> false
@@ -1632,7 +1632,7 @@ footnote:[For type theory about union types, cite:[Pierce02a(15.7)] and cite:[Ig
 For convenience, we repeat the definition of union type expression:
 
 [.language,n4js]
-[source,n4js,subs="macros"]
+[source,xtext]
 ----
 pass:[UnionTypeExpression: 'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';]
 ----
@@ -1956,7 +1956,7 @@ footnote:[For type theory about intersection types, see cite:[Pierce02a(15.7)] a
 
 For convenience, we repeat the definition of intersection type expression and of type variables in which intersection types can be defined as in Java:
 
-[source,n4js]
+[source,xtext]
 ----
 InterSectionTypeExpression: 'intersection' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
 
@@ -2061,7 +2061,7 @@ Let A, B, and C be defined as in the chapter beginning ($C <: B <: A$)
 The following subtyping relations with intersection types are to be
 evaluated as follows footnote:[See Example <<ex:class-hierarchy>> for class definitions.]:
 
-[source,n4js]
+[source,xtext]
 ----
 A <: intersection{A}                            -> true
 A <: intersection{A,A}                          -> true
@@ -2663,7 +2663,7 @@ the declaring class (i.e. this type used in a class `{A}` actually means `<? ext
 
 === Syntax [[this-type-syntax]]
 
-[source,n4js]
+[source,xtext]
 ----
 ThisTypeRef returns ThisTypeRef:
     ThisTypeRefNominal | ThisTypeRefStructural;
@@ -2857,7 +2857,7 @@ console.log(us.toString()); // --> 840
 ==== Syntax [[enums-syntax]]
 task:IDE-8[] task:IDE-327[]
 
-[source,n4js]
+[source,xtext]
 ----
 N4EnumDeclaration:
         annotations+=Annotation*

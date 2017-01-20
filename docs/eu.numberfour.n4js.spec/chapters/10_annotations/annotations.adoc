@@ -32,7 +32,7 @@ here.
 Annotations are used similarly as in Java (although new annotations
 cannot be defined by the user). They are formally defined as follows:
 
-[source,n4js]
+[source,xtext]
 ----
 Annotation:'@' AnnotationNoAtSign;
 ScriptAnnotation returns Annotation: '@@' AnnotationNoAtSign;
@@ -107,7 +107,7 @@ This is to be used for known IDE bugs only.
 
 === Syntax [[idebug-syntax]]
 
-[source,n4js]
+[source,xtext]
 ----
 '@IDEBUG' '(' bugID = INT ',' errorMessage=STRING ')'
 ----

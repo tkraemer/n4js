@@ -20,7 +20,7 @@ following sections.
 
 All of these metatypes can be marked with type access modifiers:
 
-[source,n4js]
+[source,xtext]
 ----
 enum N4JSTypeAccessModifier: project | public;
 ----
@@ -165,7 +165,7 @@ restriction.
 ==== Syntax [[class-syntax]]
 
 .Syntax N4 Class Declaration and Expression
-[source,n4js]
+[source,xtext]
 ----
 N4ClassDeclaration <Yield>:
     =>(
@@ -495,7 +495,7 @@ task:IDE-12[] task:IDE-169[] task:IDE-328[] task:IDE-1236[]
 task:IDE-8[]
 
 .Syntax N4 Interface Declaration
-[source,n4js]
+[source,xtext]
 ----
 N4InterfaceDeclaration <Yield>:
     => (

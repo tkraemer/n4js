@@ -569,7 +569,7 @@ plain JS files. task:IDE-1043[]
 
 
 .Syntax Function Declaration and Expression
-[source,n4js]
+[source,xtext]
 ----
 FunctionDeclaration <Yield>:
     => ({FunctionDeclaration}
@@ -655,7 +655,7 @@ most details are explained in <<_ecmascript-5-function-definition,Function Defin
 
 ==== Syntax [[function-expression-syntax]]
 
-[source,n4js]
+[source,xtext]
 ----
 FunctionExpression:
          ({FunctionExpression}
@@ -881,7 +881,7 @@ The notation `pass:[@=>]` stands for an async arrow function (<<Asynchronous Arr
 
 The simplified syntax reads like this:
 
-[source,n4js]
+[source,xtext]
 ----
 ArrowExpression returns ArrowFunction:
     =>(
@@ -959,7 +959,7 @@ The following syntax rules are extracted from the real syntax rules.
 They only display parts relevant to declaring a function or method as
 asynchronous.
 
-[source,n4js]
+[source,xtext]
 ----
 AsyncFunctionDeclaration <Yield>:
         (declaredModifiers+=N4Modifier)*

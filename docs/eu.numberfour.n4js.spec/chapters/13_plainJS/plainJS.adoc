@@ -373,7 +373,7 @@ The following snippet demonstrates how to define a polyfill of the built-in clas
 This snippet has to be defined in a runtime library or environment.
 
 
-[source,javascript]
+[source,n4js]
 ----
 @@ProvidedByRuntime
 @@Global

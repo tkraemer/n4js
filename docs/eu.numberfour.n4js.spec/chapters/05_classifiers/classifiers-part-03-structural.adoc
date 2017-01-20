@@ -42,7 +42,7 @@ structural typing.
 
 [[lst:Structural_Type_Operator_and_References]]
 .Structural Type Operator and References
-[source,n4js]
+[source,xtext]
 ----
 TypingStrategyUseSiteOperator returns TypingStrategy:
     '~' ('~' | STRUCTMODSUFFIX)?;
