@@ -20,8 +20,10 @@ import org.xpect.xtext.lib.tests.ValidationTest;
 
 import eu.numberfour.n4js.xpect.methods.LinkingXpectMethod;
 import eu.numberfour.n4js.xpect.methods.NoerrorsXpectMethod;
-import eu.numberfour.n4js.xpect.methods.OutputXpectMethod;
 import eu.numberfour.n4js.xpect.methods.TypeXpectMethod;
+import eu.numberfour.n4js.xpect.methods.quickfix.OutputXpectMethod;
+import eu.numberfour.n4js.xpect.methods.quickfix.ProposalXpectMethod;
+import eu.numberfour.n4js.xpect.methods.quickfix.QuickFixXpectMethod;
 import eu.numberfour.n4js.xpect.methods.scoping.ScopeXpectMethod;
 import eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestFilesCollector.N4IDEXpectTestURIProvider;
 
@@ -37,7 +39,9 @@ import eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestFilesCollector.N4IDEXpec
 		TypeXpectMethod.class,
 		ScopeXpectMethod.class,
 		ResourceDescriptionTest.class,
-		LinkingXpectMethod.class
+		LinkingXpectMethod.class,
+		QuickFixXpectMethod.class,
+		ProposalXpectMethod.class
 })
 @RunWith(XpectRunner.class)
 @XpectImport({ N4IDEXpectFileSetup.class })

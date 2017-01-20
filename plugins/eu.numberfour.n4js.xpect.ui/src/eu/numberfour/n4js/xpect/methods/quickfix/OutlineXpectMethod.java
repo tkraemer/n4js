@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.xpect;
+package eu.numberfour.n4js.xpect.methods.quickfix;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

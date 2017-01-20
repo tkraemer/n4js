@@ -23,5 +23,7 @@ Require-Bundle: org.xpect.xtext.lib;bundle-version="0.1.0",
  eu.numberfour.n4js.generator.common,
  eu.numberfour.n4js.environments,
  eu.numberfour.n4js.generator,
- eu.numberfour.n4js.xpect;bundle-version="0.0.1"
+ eu.numberfour.n4js.xpect;bundle-version="0.0.1",
+ eu.numberfour.n4js.xpect.ui
 Export-Package: eu.numberfour.n4js.transpiler.es5.xpect.tests
+

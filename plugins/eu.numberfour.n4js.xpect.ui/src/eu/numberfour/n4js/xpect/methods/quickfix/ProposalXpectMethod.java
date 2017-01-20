@@ -8,9 +8,9 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect;
+package eu.numberfour.n4js.xpect.methods.quickfix;
 
-import static eu.numberfour.n4js.xpect.QuickFixTestHelper.asString2;
+import static eu.numberfour.n4js.xpect.methods.quickfix.QuickFixTestHelper.asString2;
 
 import java.io.StringReader;
 import java.util.Arrays;
@@ -43,7 +43,6 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-import eu.numberfour.n4js.ui.xpect.N4ContentAssistProcessorTestBuilder;
 import eu.numberfour.n4js.xpect.common.N4JSOffsetAdapter;
 import eu.numberfour.n4js.xpect.common.XpectCommentRemovalUtil;
 import eu.numberfour.n4js.xpect.config.Config;

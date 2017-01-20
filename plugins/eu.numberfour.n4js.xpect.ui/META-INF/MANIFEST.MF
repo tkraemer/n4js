@@ -12,9 +12,17 @@ Require-Bundle: org.eclipse.debug.ui,
  org.eclipse.ui.console,
  org.eclipse.compare,
  org.eclipse.core.expressions,
- eu.numberfour.n4js.xpect
+ eu.numberfour.n4js.xpect,
+ eu.numberfour.n4js.ui.tests.helper;bundle-version="0.0.1",
+ eu.numberfour.n4js.runner;bundle-version="0.0.1",
+ eu.numberfour.n4js.ts;bundle-version="0.0.1",
+ eu.numberfour.n4js.runner.ui,
+ eu.numberfour.n4js.generator.common,
+ eu.numberfour.n4js.runner.nodejs,
+ eu.numberfour.n4js.transpiler.es
 Bundle-ActivationPolicy: lazy
-Export-Package: eu.numberfour.n4js.xpect.ui,
+Export-Package: eu.numberfour.n4js.xpect.methods.quickfix,
+ eu.numberfour.n4js.xpect.ui,
  eu.numberfour.n4js.xpect.ui.results,
  eu.numberfour.n4js.xpect.ui.runner
 Bundle-Activator: eu.numberfour.n4js.xpect.ui.N4IDEXpectUIPlugin

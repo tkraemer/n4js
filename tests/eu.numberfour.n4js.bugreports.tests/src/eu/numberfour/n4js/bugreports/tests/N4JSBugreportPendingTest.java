@@ -21,8 +21,8 @@ import org.xpect.xtext.lib.tests.ResourceDescriptionTest;
 import org.xpect.xtext.lib.tests.ValidationTest;
 
 import eu.numberfour.n4js.xpect.methods.NoerrorsXpectMethod;
-import eu.numberfour.n4js.xpect.methods.OutputXpectMethod;
 import eu.numberfour.n4js.xpect.methods.TypeXpectMethod;
+import eu.numberfour.n4js.xpect.methods.quickfix.OutputXpectMethod;
 import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**

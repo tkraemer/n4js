@@ -24,6 +24,4 @@ Export-Package: eu.numberfour.n4js,
  eu.numberfour.n4js.editor.syntaxcoloring,
  eu.numberfour.n4js.tests.builder,
  eu.numberfour.n4js.tests.outline,
- eu.numberfour.n4js.tests.util,
- eu.numberfour.n4js.ui.xpect,
- eu.numberfour.n4js.xpect
+ eu.numberfour.n4js.tests.util

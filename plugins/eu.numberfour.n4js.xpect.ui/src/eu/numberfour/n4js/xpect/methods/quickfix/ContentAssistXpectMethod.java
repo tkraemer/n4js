@@ -8,11 +8,11 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect;
+package eu.numberfour.n4js.xpect.methods.quickfix;
 
-import static eu.numberfour.n4js.xpect.QuickFixTestHelper.asString2;
-import static eu.numberfour.n4js.xpect.QuickFixTestHelper.extractSingleChangedLine;
-import static eu.numberfour.n4js.xpect.QuickFixTestHelper.separateOnCommaAndQuote;
+import static eu.numberfour.n4js.xpect.methods.quickfix.QuickFixTestHelper.asString2;
+import static eu.numberfour.n4js.xpect.methods.quickfix.QuickFixTestHelper.extractSingleChangedLine;
+import static eu.numberfour.n4js.xpect.methods.quickfix.QuickFixTestHelper.separateOnCommaAndQuote;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -53,12 +53,11 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
-import eu.numberfour.n4js.ui.xpect.N4ContentAssistProcessorTestBuilder;
-import eu.numberfour.n4js.xpect.QuickFixTestHelper.ChangeInfo;
 import eu.numberfour.n4js.xpect.common.N4JSOffsetAdapter;
 import eu.numberfour.n4js.xpect.config.Config;
 import eu.numberfour.n4js.xpect.config.VarDef;
 import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
+import eu.numberfour.n4js.xpect.methods.quickfix.QuickFixTestHelper.ChangeInfo;
 import junit.framework.AssertionFailedError;
 import junit.framework.ComparisonFailure;
 
@@ -182,7 +181,7 @@ public class ContentAssistXpectMethod {
 	 contentAssistList              at 'a.<|>methodA'       proposals             unordered --> methodA2, methodA
 	 contentAssistList              at 'a.<|>methodA'       display   'methodA2'            --> 'methodA2(): any - A'
 	 contentAssistList kind 'smart' at 'a.<|>methodA'       display   'methodA2'            --> 'methodA2(): any - A'
-	
+
 	                    kind        offset                  checkType  selected    mode
 	                    arg4        arg2                    arg3       arg5        arg6
 	 */

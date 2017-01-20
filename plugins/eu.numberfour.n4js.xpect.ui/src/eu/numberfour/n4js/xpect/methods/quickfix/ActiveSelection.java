@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect;
+package eu.numberfour.n4js.xpect.methods.quickfix;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

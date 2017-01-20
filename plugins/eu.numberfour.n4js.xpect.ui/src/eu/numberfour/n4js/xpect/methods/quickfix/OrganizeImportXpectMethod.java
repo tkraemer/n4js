@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.xpect;
+package eu.numberfour.n4js.xpect.methods.quickfix;
 
 import static org.junit.Assert.assertEquals;
 
@@ -37,7 +37,7 @@ import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.ui.organize.imports.BreakException;
 import eu.numberfour.n4js.ui.organize.imports.Interaction;
 import eu.numberfour.n4js.ui.organize.imports.N4JSOrganizeImportsHandler;
-import eu.numberfour.n4js.xpect.N4ContentAssistProcessorTestBuilderHelper;
+import eu.numberfour.n4js.xpect.common.EclipseGracefulUIShutdownEnabler;
 import eu.numberfour.n4js.xpect.common.XpectCommentRemovalUtil;
 import junit.framework.AssertionFailedError;
 

@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect;
+package eu.numberfour.n4js.xpect.methods.quickfix;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -66,7 +66,6 @@ import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.xpect.common.N4JSOffsetAdapter;
 import eu.numberfour.n4js.xpect.common.ResourceTweaker;
 import eu.numberfour.n4js.xpect.common.XpectCommentRemovalUtil;
-import eu.numberfour.n4js.xpect.common.XpectN4JSES5TranspilerHelper;
 import eu.numberfour.n4js.xpect.config.Config;
 import eu.numberfour.n4js.xpect.config.VarDef;
 import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
@@ -361,7 +360,7 @@ public class QuickFixXpectMethod {
 			return xpectN4JSES5TranpilerHelper.doCompileAndExecute(resource, init,
 					fileSetupContext,
 					false,
-					resourceTweaker, SystemLoaderInfo.SYSTEM_JS);
+					resourceTweaker, SystemLoaderInfo.SYSTEM_JS, false);
 		} catch (IOException e) {
 			throw new RuntimeException("Error while compiling script.", e);
 		}
@@ -433,8 +432,7 @@ public class QuickFixXpectMethod {
 		for (Issue issue : allIssues) {
 			if (issue.getLineNumber() == offsetNode.getStartLine()
 					&& issue.getLineNumber() <= offsetNode.getEndLine()) {
-				List<IssueResolution> is = quickfixProvider.getResolutions(issue);
-				Display.getDefault().syncExec(() -> resolutions.addAll(is));
+				Display.getDefault().syncExec(() -> resolutions.addAll(quickfixProvider.getResolutions(issue)));
 			}
 		}
 		return resolutions;

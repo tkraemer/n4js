@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect;
+package eu.numberfour.n4js.xpect.methods.quickfix;
 
 import java.io.InputStream;
 
@@ -16,8 +16,6 @@ import org.eclipse.xtext.junit4.util.ResourceLoadHelper;
 import org.eclipse.xtext.resource.XtextResource;
 
 import com.google.inject.Inject;
-
-import eu.numberfour.n4js.ui.xpect.N4ContentAssistProcessorTestBuilder;
 
 /**
  */

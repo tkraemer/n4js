@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.methods;
+package eu.numberfour.n4js.xpect.methods.quickfix;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -31,7 +31,6 @@ import com.google.inject.Inject;
 import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.runner.SystemLoaderInfo;
 import eu.numberfour.n4js.xpect.common.XpectCommentRemovalUtil;
-import eu.numberfour.n4js.xpect.common.XpectN4JSES5TranspilerHelper;
 
 /**
  * Provides execution output xpect test methods. Provided resource compiled on the fly and executed, captured output is
@@ -77,7 +76,7 @@ public class OutputXpectMethod {
 
 			String executionResult = xpectN4JSES5TranpilerHelper.doCompileAndExecute(resource, init,
 					fileSetupContext,
-					true, null, loader);
+					true, null, loader, true);
 			try {
 				expectation.assertEquals(executionResult);
 			} catch (Throwable th) {
@@ -120,7 +119,7 @@ public class OutputXpectMethod {
 		ConsumerX<SystemLoaderInfo> func = (loader) -> {
 
 			String executionResult = xpectN4JSES5TranpilerHelper.doCompileAndExecute(resource, init, fileSetupContext,
-					true, null, loader);
+					true, null, loader, true);
 			AbstractExpectation abstractEexpectation = (AbstractExpectation) expectation;
 
 			String escapedActual = abstractEexpectation.getTargetSyntaxLiteral().escape(executionResult);

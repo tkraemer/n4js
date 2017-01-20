@@ -20,14 +20,14 @@ import org.xpect.xtext.lib.tests.LinkingTest;
 import org.xpect.xtext.lib.tests.ResourceDescriptionTest;
 import org.xpect.xtext.lib.tests.ValidationTest;
 
-import eu.numberfour.n4js.ui.xpect.OrganizeImportXpectMethod;
-import eu.numberfour.n4js.ui.xpect.OutlineXpectMethod;
-import eu.numberfour.n4js.xpect.ContentAssistXpectMethod;
-import eu.numberfour.n4js.xpect.HyperlinkXpectMethod;
-import eu.numberfour.n4js.xpect.ProposalXpectMethod;
-import eu.numberfour.n4js.xpect.QuickFixXpectMethod;
 import eu.numberfour.n4js.xpect.methods.NoerrorsXpectMethod;
 import eu.numberfour.n4js.xpect.methods.TypeXpectMethod;
+import eu.numberfour.n4js.xpect.methods.quickfix.ContentAssistXpectMethod;
+import eu.numberfour.n4js.xpect.methods.quickfix.HyperlinkXpectMethod;
+import eu.numberfour.n4js.xpect.methods.quickfix.OrganizeImportXpectMethod;
+import eu.numberfour.n4js.xpect.methods.quickfix.OutlineXpectMethod;
+import eu.numberfour.n4js.xpect.methods.quickfix.ProposalXpectMethod;
+import eu.numberfour.n4js.xpect.methods.quickfix.QuickFixXpectMethod;
 import eu.numberfour.n4js.xpect.methods.scoping.ScopeXpectMethod;
 import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 

@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.common;
+package eu.numberfour.n4js.xpect.methods.quickfix;
 
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Preconditions.checkState;
@@ -71,6 +71,8 @@ import eu.numberfour.n4js.runner.nodejs.NodeRunner;
 import eu.numberfour.n4js.runner.nodejs.NodeRunner.NodeRunnerDescriptorProvider;
 import eu.numberfour.n4js.runner.ui.ChooseImplementationHelper;
 import eu.numberfour.n4js.transpiler.es.EcmaScriptSubGenerator;
+import eu.numberfour.n4js.xpect.common.DuplicateResourceAwareFileSetupContext;
+import eu.numberfour.n4js.xpect.common.ResourceTweaker;
 
 /**
  * Xpect helper that allows to compile and execute resources on demand in xpect tests. Uses
@@ -201,7 +203,7 @@ public class XpectN4JSES5TranspilerHelper {
 		@Override
 		public List<Resource> getResources() {
 			final List<Resource> configuredResources = newArrayList();
-			if (configuredWorkspace != null && fileSetupCtx != null) {
+			if (fileSetupCtx != null) { // configuredWorkspace != null &&
 				for (IResourceDescription res : index.getAllResourceDescriptions()) {
 					if (fileExtensionProvider.isValid(res.getURI().fileExtension())) {
 						configuredResources.add(resourceSet.getResource(res.getURI(), true));
@@ -244,7 +246,7 @@ public class XpectN4JSES5TranspilerHelper {
 	 */
 	public String doCompileAndExecute(final XtextResource resource, org.xpect.setup.ISetupInitializer<Object> init,
 			FileSetupContext fileSetupContext, boolean decorateStdStreams, ResourceTweaker resourceTweaker,
-			SystemLoaderInfo systemLoader)
+			SystemLoaderInfo systemLoader, boolean triggeredByOutputTest)
 			throws IOException {
 
 		// Apply some modification to the resource here.
@@ -257,11 +259,11 @@ public class XpectN4JSES5TranspilerHelper {
 		RunConfiguration runConfig;
 		// if Xpect configured workspace is null, this has been triggered directly in the IDE
 		if (Platform.isRunning()
-				&& (((ReadOutWorkspaceConfiguration) readOutConfiguration).getXpectConfiguredWorkspace() == null)) {
+				&& (((ReadOutWorkspaceConfiguration) readOutConfiguration).getXpectConfiguredWorkspace() == null)
+				&& triggeredByOutputTest) {
 			// If we are in the IDE, execute the test the same as for "Run in Node.js" and this way avoid
 			// the effort of calculating dependencies etc.
 
-			// User may need to select implementation projects for API projects
 			final String implementationId = chooseImplHelper.chooseImplementationIfRequired(NodeRunner.ID,
 					resource.getURI().trimFileExtension());
 
