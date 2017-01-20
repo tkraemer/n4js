@@ -124,6 +124,20 @@ public class RunConfiguration {
 
 	private String systemLoader;
 
+	private String additionalPath;
+
+	/**
+	 * Additional path to be added to NODE_PATH if needed
+	 */
+	public String getAdditionalPath() {
+		return additionalPath;
+	}
+
+	/** @see #getAdditionalPath() */
+	public void setAdditionalPath(String file) {
+		this.additionalPath = file;
+	}
+
 	/**
 	 * Human-readable name of the run configuration.
 	 */

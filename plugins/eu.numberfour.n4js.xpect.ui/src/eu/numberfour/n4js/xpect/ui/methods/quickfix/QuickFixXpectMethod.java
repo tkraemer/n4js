@@ -363,7 +363,7 @@ public class QuickFixXpectMethod {
 			return xpectN4JSES5TranpilerHelper.doCompileAndExecute(resource, init,
 					fileSetupContext,
 					false,
-					resourceTweaker, SystemLoaderInfo.SYSTEM_JS, false);
+					resourceTweaker, SystemLoaderInfo.SYSTEM_JS);
 		} catch (IOException e) {
 			throw new RuntimeException("Error while compiling script.", e);
 		}

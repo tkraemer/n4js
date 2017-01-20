@@ -77,7 +77,7 @@ public class OutputXpectMethod {
 
 			String executionResult = xpectN4JSES5TranpilerHelper.doCompileAndExecute(resource, init,
 					fileSetupContext,
-					true, null, loader, true);
+					true, null, loader);
 			try {
 				expectation.assertEquals(executionResult);
 			} catch (Throwable th) {
@@ -120,7 +120,7 @@ public class OutputXpectMethod {
 		ConsumerX<SystemLoaderInfo> func = (loader) -> {
 
 			String executionResult = xpectN4JSES5TranpilerHelper.doCompileAndExecute(resource, init, fileSetupContext,
-					true, null, loader, true);
+					true, null, loader);
 			AbstractExpectation abstractEexpectation = (AbstractExpectation) expectation;
 
 			String escapedActual = abstractEexpectation.getTargetSyntaxLiteral().escape(executionResult);

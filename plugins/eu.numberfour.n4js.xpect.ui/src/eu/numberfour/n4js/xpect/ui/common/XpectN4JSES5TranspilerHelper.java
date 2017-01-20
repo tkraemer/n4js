@@ -203,7 +203,7 @@ public class XpectN4JSES5TranspilerHelper {
 		@Override
 		public List<Resource> getResources() {
 			final List<Resource> configuredResources = newArrayList();
-			if (fileSetupCtx != null) { // configuredWorkspace != null &&
+			if (configuredWorkspace != null && fileSetupCtx != null) {
 				for (IResourceDescription res : index.getAllResourceDescriptions()) {
 					if (fileExtensionProvider.isValid(res.getURI().fileExtension())) {
 						configuredResources.add(resourceSet.getResource(res.getURI(), true));
@@ -246,7 +246,7 @@ public class XpectN4JSES5TranspilerHelper {
 	 */
 	public String doCompileAndExecute(final XtextResource resource, org.xpect.setup.ISetupInitializer<Object> init,
 			FileSetupContext fileSetupContext, boolean decorateStdStreams, ResourceTweaker resourceTweaker,
-			SystemLoaderInfo systemLoader, boolean triggeredByOutputTest)
+			SystemLoaderInfo systemLoader)
 			throws IOException {
 
 		// Apply some modification to the resource here.
@@ -259,18 +259,24 @@ public class XpectN4JSES5TranspilerHelper {
 		RunConfiguration runConfig;
 		// if Xpect configured workspace is null, this has been triggered directly in the IDE
 		if (Platform.isRunning()
-				&& (((ReadOutWorkspaceConfiguration) readOutConfiguration).getXpectConfiguredWorkspace() == null)
-				&& triggeredByOutputTest) {
+				&& (((ReadOutWorkspaceConfiguration) readOutConfiguration).getXpectConfiguredWorkspace() == null)) {
 			// If we are in the IDE, execute the test the same as for "Run in Node.js" and this way avoid
 			// the effort of calculating dependencies etc.
 
 			final String implementationId = chooseImplHelper.chooseImplementationIfRequired(NodeRunner.ID,
 					resource.getURI().trimFileExtension());
 
+			boolean replaceQuotes = false;
+			// We have to generate JS code for the resource. Because if Xpect test is quickfixAndRun the resource
+			// contains
+			// errors and hence no generated JS code is available for execution.
+			// Then sneak in the path to the generated JS code.
+			Script script = (Script) resource.getContents().get(0);
+			createTempJsFileWithScript(script, replaceQuotes); // IDE-2094 use a specific temp-folder
 			runConfig = runnerFrontEnd.createConfiguration(NodeRunner.ID,
 					(implementationId == ChooseImplementationHelper.CANCEL) ? null : implementationId,
 					systemLoader.getId(),
-					resource.getURI().trimFileExtension());
+					resource.getURI().trimFileExtension(), getTempFolder().toAbsolutePath().toString());
 		} else {
 			// In the non-GUI case, we need to calculate dependencies etc. manually
 			final Iterable<Resource> dependencies = from(getDependentResources());

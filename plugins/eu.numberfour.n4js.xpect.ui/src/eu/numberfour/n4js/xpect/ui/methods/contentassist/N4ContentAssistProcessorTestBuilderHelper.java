@@ -18,7 +18,6 @@ import org.eclipse.xtext.resource.XtextResource;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.xpect.ui.common.XtextResourceCleanUtil;
-import eu.numberfour.n4js.xpect.ui.methods.contentassist.N4ContentAssistProcessorTestBuilder.Factory;
 
 /**
  */
