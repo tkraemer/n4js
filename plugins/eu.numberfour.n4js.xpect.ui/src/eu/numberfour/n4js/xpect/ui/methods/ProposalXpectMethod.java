@@ -10,7 +10,7 @@
  */
 package eu.numberfour.n4js.xpect.ui.methods;
 
-import static eu.numberfour.n4js.xpect.methods.quickfix.QuickFixTestHelper.asString2;
+import static eu.numberfour.n4js.xpect.ui.methods.QuickFixTestHelper.asString2;
 
 import java.io.StringReader;
 import java.util.Arrays;

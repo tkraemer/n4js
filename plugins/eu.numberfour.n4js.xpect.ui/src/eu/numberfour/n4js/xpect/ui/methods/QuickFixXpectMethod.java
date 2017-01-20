@@ -69,8 +69,6 @@ import eu.numberfour.n4js.xpect.common.XpectCommentRemovalUtil;
 import eu.numberfour.n4js.xpect.config.Config;
 import eu.numberfour.n4js.xpect.config.VarDef;
 import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
-import eu.numberfour.n4js.xpect.methods.quickfix.LineBasedTokenizer;
-import eu.numberfour.n4js.xpect.methods.quickfix.QuickFixTestHelper;
 
 /**
  * Provides XPEXT test methods for quick fixes

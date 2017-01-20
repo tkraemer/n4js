@@ -35,5 +35,5 @@ Import-Package: org.apache.log4j,
 Export-Package: eu.numberfour.n4js.xpect.common,
  eu.numberfour.n4js.xpect.config,
  eu.numberfour.n4js.xpect.methods,
- eu.numberfour.n4js.xpect.methods.quickfix,
+ eu.numberfour.n4js.xpect.common,
  eu.numberfour.n4js.xpect.methods.scoping
