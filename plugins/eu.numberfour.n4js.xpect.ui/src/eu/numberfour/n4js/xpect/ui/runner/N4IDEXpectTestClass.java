@@ -24,6 +24,7 @@ import eu.numberfour.n4js.xpect.methods.FormatterXpectMethod;
 import eu.numberfour.n4js.xpect.methods.LinkingXpectMethod;
 import eu.numberfour.n4js.xpect.methods.NoerrorsXpectMethod;
 import eu.numberfour.n4js.xpect.methods.ReturnXpectMethod;
+import eu.numberfour.n4js.xpect.methods.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.methods.scoping.ScopeXpectMethod;
 import eu.numberfour.n4js.xpect.ui.methods.HyperlinkXpectMethod;
 import eu.numberfour.n4js.xpect.ui.methods.OrganizeImportXpectMethod;
@@ -47,6 +48,7 @@ import eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestFilesCollector.N4IDEXpec
 		NoerrorsXpectMethod.class,
 		ReturnXpectMethod.class,
 		ReturnXpectMethod.class,
+		TypeXpectMethod.class,
 		ValidationTest.class,
 		ScopeXpectMethod.class,
 
