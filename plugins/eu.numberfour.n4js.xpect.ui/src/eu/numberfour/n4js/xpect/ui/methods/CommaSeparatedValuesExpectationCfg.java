@@ -1,4 +1,4 @@
-package eu.numberfour.n4js.xpect.methods.quickfix;
+package eu.numberfour.n4js.xpect.ui.methods;
 
 import java.lang.annotation.Annotation;
 

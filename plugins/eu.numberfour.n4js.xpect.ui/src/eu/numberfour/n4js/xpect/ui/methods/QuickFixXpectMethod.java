@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.methods.quickfix;
+package eu.numberfour.n4js.xpect.ui.methods;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -69,6 +69,8 @@ import eu.numberfour.n4js.xpect.common.XpectCommentRemovalUtil;
 import eu.numberfour.n4js.xpect.config.Config;
 import eu.numberfour.n4js.xpect.config.VarDef;
 import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
+import eu.numberfour.n4js.xpect.methods.quickfix.LineBasedTokenizer;
+import eu.numberfour.n4js.xpect.methods.quickfix.QuickFixTestHelper;
 
 /**
  * Provides XPEXT test methods for quick fixes

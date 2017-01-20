@@ -26,8 +26,8 @@ import eu.numberfour.n4js.xpect.methods.FormatterXpectMethod;
 import eu.numberfour.n4js.xpect.methods.NoerrorsXpectMethod;
 import eu.numberfour.n4js.xpect.methods.ReturnXpectMethod;
 import eu.numberfour.n4js.xpect.methods.TypeXpectMethod;
-import eu.numberfour.n4js.xpect.methods.quickfix.OutputXpectMethod;
 import eu.numberfour.n4js.xpect.methods.scoping.ScopeXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.OutputXpectMethod;
 import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**

@@ -13,7 +13,7 @@ package eu.numberfour.n4js.expectmatrix.tests.utils;
 import org.junit.Ignore;
 import org.xpect.runner.XpectSuiteClasses;
 
-import eu.numberfour.n4js.xpect.methods.quickfix.OutputXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.OutputXpectMethod;
 
 /**
  */

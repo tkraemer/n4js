@@ -21,8 +21,8 @@ Require-Bundle: org.eclipse.debug.ui,
  eu.numberfour.n4js.runner.nodejs,
  eu.numberfour.n4js.transpiler.es
 Bundle-ActivationPolicy: lazy
-Export-Package: eu.numberfour.n4js.xpect.methods.quickfix,
- eu.numberfour.n4js.xpect.ui,
+Export-Package: eu.numberfour.n4js.xpect.ui,
+ eu.numberfour.n4js.xpect.ui.methods,
  eu.numberfour.n4js.xpect.ui.results,
  eu.numberfour.n4js.xpect.ui.runner
 Bundle-Activator: eu.numberfour.n4js.xpect.ui.N4IDEXpectUIPlugin

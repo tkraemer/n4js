@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.methods.quickfix
+package eu.numberfour.n4js.xpect.ui.methods
 
 import com.google.common.collect.Multimap
 import java.util.ArrayList

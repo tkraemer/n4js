@@ -22,10 +22,10 @@ import org.xpect.xtext.lib.tests.ValidationTest;
 import eu.numberfour.n4js.xpect.config.Config;
 import eu.numberfour.n4js.xpect.config.VarDef;
 import eu.numberfour.n4js.xpect.config.XpEnvironmentData;
-import eu.numberfour.n4js.xpect.methods.quickfix.ContentAssistXpectMethod;
-import eu.numberfour.n4js.xpect.methods.quickfix.HyperlinkXpectMethod;
-import eu.numberfour.n4js.xpect.methods.quickfix.ProposalXpectMethod;
-import eu.numberfour.n4js.xpect.methods.quickfix.QuickFixXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.ContentAssistXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.HyperlinkXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.ProposalXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.QuickFixXpectMethod;
 import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**

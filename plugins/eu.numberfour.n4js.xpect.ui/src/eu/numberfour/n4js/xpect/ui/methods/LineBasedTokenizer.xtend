@@ -8,7 +8,17 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
+package eu.numberfour.n4js.xpect.ui.methods
+
+import com.google.common.base.Function
+
 /**
- * UI related classes for user to be able to trigger expect execution.
+ * Tokenize on linebreak only.
  */
-package eu.numberfour.n4js.xpect.ui;
+class LineBasedTokenizer implements Function<String, Iterable<String>> {
+
+	override apply(String input) {
+		return input.split("\\n").map[#[it, "\n"]].flatten
+	}
+
+}
