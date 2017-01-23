@@ -265,18 +265,14 @@ public class UtilN4 {
 
 	/**
 	 * Same as {@link #getServiceForContext(URI, Class)}, but accepts any EObject contained in an Xtext language
-	 * resource.
-	 * <p>
-	 * Throws exception if the given context object is not contained in a {@link Resource}.
+	 * resource. Returns <code>null</code> if the given context object is not contained in a {@link Resource}.
 	 */
 	public static <T> T getServiceForContext(EObject context, Class<T> serviceType) {
 		Objects.requireNonNull(context);
 		Objects.requireNonNull(serviceType);
 		final Resource res = context.eResource();
-		if (res == null) {
-			throw new IllegalArgumentException("context object not contained in a resource: " + context);
-		}
-		return getServiceForContext(res.getURI(), serviceType);
+		final URI uri = res != null ? res.getURI() : null;
+		return uri != null ? getServiceForContext(uri, serviceType) : null;
 	}
 
 	/**
