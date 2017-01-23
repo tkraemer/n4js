@@ -73,10 +73,10 @@ public class N4jscBasicTest extends AbstractN4jscTest {
 		} catch (ExitCodeException e) {
 			assertEquals(N4jsc.EXITCODE_COMPILE_ERROR, e.getExitCode());
 		}
-		// Assert that 8 files are compiled. The number depends on chosen algorithm for the build order.
-		// breadth first: 13
-		// depth first: 8
-		assertFilesCompiledToES(8, proot);
+		// Assert that at most 13 files are compiled. The actual number depends on the chosen algorithm for the build
+		// order and on the order in which the project dependency graph is traversed. 13 is the maximum number of files
+		// that can be transpiled without error.
+		assertTrue(countFilesCompiledToES(proot) <= 13);
 	}
 
 	/**
