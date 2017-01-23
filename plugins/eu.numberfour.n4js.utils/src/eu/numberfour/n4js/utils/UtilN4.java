@@ -16,6 +16,7 @@ import static org.eclipse.xtext.util.Tuples.pair;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
@@ -29,6 +30,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.SyntaxErrorMessage;
 import org.eclipse.xtext.nodemodel.impl.LeafNodeWithSyntaxError;
+import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.util.Pair;
 import org.osgi.framework.Bundle;
 
@@ -261,4 +263,42 @@ public class UtilN4 {
 		return false;
 	}
 
+	/**
+	 * Same as {@link #getServiceForContext(URI, Class)}, but accepts any EObject contained in an Xtext language
+	 * resource.
+	 * <p>
+	 * Throws exception if the given context object is not contained in a {@link Resource}.
+	 */
+	public static <T> T getServiceForContext(EObject context, Class<T> serviceType) {
+		Objects.requireNonNull(context);
+		Objects.requireNonNull(serviceType);
+		final Resource res = context.eResource();
+		if (res == null) {
+			throw new IllegalArgumentException("context object not contained in a resource: " + context);
+		}
+		return getServiceForContext(res.getURI(), serviceType);
+	}
+
+	/**
+	 * Utility method for obtaining the correct instance of a language-specific service for the context identified by
+	 * the given {@link URI}. For example, if the URI denotes an N4JS resource, this method will return the service
+	 * instance for N4JS, if it denotes an N4JSX resource the service instance for N4JSX will be returned.
+	 * <p>
+	 * Using this method is like injecting a service with <code>@Inject</code> but makes sure that the correct service
+	 * instance is used for the given context URI.
+	 *
+	 * @param uri
+	 *            the URI of an Xtext language resource, e.g. an N4JS, N4JSX, or N4IDL resource.
+	 * @param serviceType
+	 *            the type of the service to obtain.
+	 * @return the service instance or <code>null</code> if no Xtext resource service provide was found for the given
+	 *         URI.
+	 */
+	public static <T> T getServiceForContext(URI uri, Class<T> serviceType) {
+		Objects.requireNonNull(uri);
+		Objects.requireNonNull(serviceType);
+		final IResourceServiceProvider serviceProvider = IResourceServiceProvider.Registry.INSTANCE
+				.getResourceServiceProvider(uri);
+		return serviceProvider != null ? serviceProvider.get(serviceType) : null;
+	}
 }

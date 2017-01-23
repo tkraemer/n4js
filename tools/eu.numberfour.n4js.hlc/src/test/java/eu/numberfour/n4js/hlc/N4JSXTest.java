@@ -67,4 +67,30 @@ public class N4JSXTest extends AbstractN4jscTest {
 		new N4jsc().doMain("-pl", WS_ROOT, "-t", "singlefile", p2Root + "/src/bar2.n4jsx");
 		assertFilesCompiledToES(3, p2Root);
 	}
+
+	/** Compile two n4js and n4jsx files, with cyclic cross-references. */
+	@Test
+	public void testCyclicReferencesWithN4JS() throws ExitCodeException {
+		System.out.println(logMethodname());
+
+		String p3Root = WS_ROOT + "/" + "P3";
+
+		new N4jsc().doMain("-pl", WS_ROOT, "-t", "projects", p3Root);
+		assertFilesCompiledToES(2, p3Root);
+	}
+
+	/**
+	 * Same as {@link #testCyclicReferencesWithN4JS()}, but the files are compiled individually using 'singlefile' mode.
+	 */
+	@Test
+	public void testCyclicReferencesWithN4JS_singleFile() throws ExitCodeException {
+		System.out.println(logMethodname());
+
+		String p3Root = WS_ROOT + "/" + "P3";
+
+		new N4jsc().doMain("-pl", WS_ROOT, "-t", "singlefile", p3Root + "/src/foo.n4js");
+		assertFilesCompiledToES(1, p3Root);
+		new N4jsc().doMain("-pl", WS_ROOT, "-t", "singlefile", p3Root + "/src/bar.n4jsx");
+		assertFilesCompiledToES(2, p3Root);
+	}
 }

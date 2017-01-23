@@ -1,0 +1,60 @@
+
+
+3x  UnicodeStandaloneSetup (via RegularExpressionStandaloneSetup, TypesStandaloneSetup, and TypeExpressionsStandaloneSetup)
+2x  TypeExpressionsStandaloneSetup  (via TypesStandaloneSetup and directly)
+
+
+
+
+class eu.numberfour.n4js.common.unicode.UnicodeRuntimeModule
+SETUP CLASSES: [eu.numberfour.n4js.common.unicode.UnicodeStandaloneSetup, eu.numberfour.n4js.regex.RegularExpressionStandaloneSetup]
+-----
+class eu.numberfour.n4js.regex.RegularExpressionRuntimeModule
+SETUP CLASSES: [eu.numberfour.n4js.regex.RegularExpressionStandaloneSetup]
+
+
+
+
+
+class eu.numberfour.n4js.common.unicode.UnicodeRuntimeModule
+SETUP CLASSES: [eu.numberfour.n4js.common.unicode.UnicodeStandaloneSetup, eu.numberfour.n4js.ts.TypeExpressionsStandaloneSetup, eu.numberfour.n4js.ts.TypesStandaloneSetup]
+-----
+class eu.numberfour.n4js.ts.TypeExpressionsRuntimeModule
+SETUP CLASSES: [eu.numberfour.n4js.ts.TypeExpressionsStandaloneSetup, eu.numberfour.n4js.ts.TypesStandaloneSetup]
+-----
+class eu.numberfour.n4js.ts.TypesRuntimeModule
+SETUP CLASSES: [eu.numberfour.n4js.ts.TypesStandaloneSetup]
+
+
+
+
+
+class org.eclipse.xtext.common.TerminalsRuntimeModule
+SETUP CLASSES: [org.eclipse.xtext.common.TerminalsStandaloneSetup, eu.numberfour.n4js.n4mf.N4MFStandaloneSetup]
+-----
+class eu.numberfour.n4js.n4mf.N4MFRuntimeModule
+SETUP CLASSES: [eu.numberfour.n4js.n4mf.N4MFStandaloneSetup]
+
+
+
+
+
+class eu.numberfour.n4js.common.unicode.UnicodeRuntimeModule
+SETUP CLASSES: [eu.numberfour.n4js.common.unicode.UnicodeStandaloneSetup, eu.numberfour.n4js.ts.TypeExpressionsStandaloneSetup]
+-----
+class eu.numberfour.n4js.ts.TypeExpressionsRuntimeModule
+SETUP CLASSES: [eu.numberfour.n4js.ts.TypeExpressionsStandaloneSetup]
+
+
+
+
+class com.google.inject.util.Modules$2    <--- this is the N4JS injector! (using a combined module, cf. Modules#combine())
+SETUP CLASSES: []
+
+
+
+
+class eu.numberfour.n4jsx.N4JSXRuntimeModule
+SETUP CLASSES: []
+
+

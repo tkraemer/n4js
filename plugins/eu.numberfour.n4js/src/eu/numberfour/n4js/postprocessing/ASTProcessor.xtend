@@ -46,6 +46,8 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
+import org.eclipse.xtext.resource.IResourceServiceProvider
+import eu.numberfour.n4js.utils.UtilN4
 
 /**
  * Main processor used during {@link N4JSPostProcessor post-processing} of N4JS resources. It controls the overall
@@ -317,9 +319,11 @@ public class ASTProcessor extends AbstractProcessor {
 		// references to other files via import statements:
 		if (node instanceof NamedImportSpecifier) {
 			val elem = node.importedElement;
+			// make sure to use the correct type system for the other file (using our type system as a fall back)
+			val tsCorrect = (if(elem!==null) UtilN4.getServiceForContext(elem, N4JSTypeSystem)) ?: ts;
 			// we're not interested in the type here, but invoking the type system will let us reuse
 			// all the logic from method #xsemantics_type() above for handling references to other resources
-			ts.type(G, elem);
+			tsCorrect.type(G, elem);
 		}
 
 		arrowFunctionProcessor.tweakArrowFunctions(G, node, cache);
