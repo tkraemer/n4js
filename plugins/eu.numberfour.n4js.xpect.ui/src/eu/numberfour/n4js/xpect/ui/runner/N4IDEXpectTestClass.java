@@ -59,6 +59,7 @@ import eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestFilesCollector.N4IDEXpec
 		QuickFixXpectMethod.class,
 		ResourceDescriptionTest.class
 })
+
 @RunWith(XpectRunner.class)
 @XpectImport({ N4IDEXpectFileSetup.class })
 @N4IDEXpectTestFilesCollector

@@ -99,7 +99,6 @@ Contributors:
    </extension>
    
    <!-- Register .n4jsx file extension to XPECT -->
-   <!--
    <extension
       point="org.xpect.testSuite">
          <testSuite
@@ -107,5 +106,4 @@ Contributors:
                 fileExtension="n4jsx">
          </testSuite>
    </extension>
-	-->
 </plugin>

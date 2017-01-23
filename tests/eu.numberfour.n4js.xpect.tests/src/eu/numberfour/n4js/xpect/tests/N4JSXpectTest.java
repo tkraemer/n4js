@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.tests;
+package eu.numberfour.n4js.xpect.tests;
 
 import org.junit.runner.RunWith;
 import org.xpect.XpectImport;

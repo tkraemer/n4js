@@ -12,9 +12,9 @@ Contributors:
 <?eclipse version="3.4"?>
 <fragment>
    <extension point="org.xpect.testSuite">
-		<testSuite class="eu.numberfour.n4js.tests.N4JSXpectTest" fileExtension="n4js" />
+		<testSuite class="eu.numberfour.n4js.xpect.tests.N4JSXpectTest" fileExtension="n4js" />
 	</extension>
 	<extension point="org.xpect.testSuite">
-		<testSuite class="eu.numberfour.n4js.tests.N4JSXpectTest" fileExtension="js" />
+		<testSuite class="eu.numberfour.n4js.xpect.tests.N4JSXpectTest" fileExtension="js" />
 	</extension>
 </fragment>

@@ -34,4 +34,4 @@ Import-Package: org.apache.log4j,
  org.junit.runners.model;version="4.5.0",
  org.hamcrest.core
 Bundle-Vendor: NumberFour AG
-Export-Package: eu.numberfour.n4js.tests
+Export-Package: eu.numberfour.n4js.xpect.tests
