@@ -707,7 +707,11 @@ public class N4HeadlessCompiler {
 		for (IN4JSSourceContainer container : srcCont) {
 			// Conditionally filter test-resources if not desired
 			if (shouldReadResources(container)) {
-				container.forEach(uri -> {
+				URI[] uris = Iterables.toArray(container, URI.class);
+//				URI[] urisReordered = { uris[0], uris[1], uris[2] };
+//				for (URI uri : urisReordered) {
+				for (URI uri : uris) {
+					// container.forEach(uri -> {
 					Resource resource = resSet.createResource(uri);
 					if (resource != null) {
 						if (createDebugOutput) {
@@ -722,7 +726,8 @@ public class N4HeadlessCompiler {
 						rec.markFailedCreateResource(uri);
 						warn("Skipped file: could not create resource for URI=" + uri);
 					}
-				});
+					// });
+				}
 			}
 		}
 		installIndex(resSet, markedProject.project.getManifestLocation());
