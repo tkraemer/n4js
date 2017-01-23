@@ -529,6 +529,9 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	protected void doUnload() {
 		aboutToBeUnloaded = false;
 		super.doUnload();
+
+		// TODO IDE-2479: Should we really call this here? These are cleared when linking takes place.
+		// We eagerly clear them here as a memory optimization, and all tests are green.
 		clearLazyProxyInformation();
 	}
 
@@ -542,11 +545,15 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 		getErrors().clear();
 		getWarnings().clear();
 		setParseResult(null);
+
+		// TODO IDE-2479: We cannot call this method (produces a warning). Do we want to?
 		// setIsLoadedFromStorage(false);
 
-		// TODO: Should this be false or what.
+		// TODO IDE-2479: Should this be false or what.
 		// fullyPostProcessed = false;
 
+		// TODO IDE-2479: Should we really call this here? These are cleared when linking takes place.
+		// We eagerly clear them here as a memory optimization, and all tests are green.
 		clearLazyProxyInformation();
 	}
 
@@ -985,10 +992,5 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	 */
 	public void clearResolving() {
 		resolving.clear();
-	}
-
-	@Override
-	public int addLazyProxyInformation(EObject obj, EReference ref, INode node) {
-		return super.addLazyProxyInformation(obj, ref, node);
 	}
 }
