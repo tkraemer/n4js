@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.generator.headless;
+package eu.numberfour.n4js.utils;
 
 import java.util.ArrayList;
 import java.util.List;
