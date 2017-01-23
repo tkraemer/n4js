@@ -10,11 +10,11 @@ Contributors:
   NumberFour AG - Initial API and implementation
 -->
 <?eclipse version="3.4"?>
-<fragment>
+<plugin>
    <extension point="org.xpect.testSuite">
 		<testSuite class="eu.numberfour.n4js.xpect.tests.N4JSXpectTest" fileExtension="n4js" />
 	</extension>
 	<extension point="org.xpect.testSuite">
 		<testSuite class="eu.numberfour.n4js.xpect.tests.N4JSXpectTest" fileExtension="js" />
 	</extension>
-</fragment>
+</plugin>

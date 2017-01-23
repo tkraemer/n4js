@@ -231,5 +231,12 @@ Contributors:
             fileExtension="n4js">
       </testSuite>
 	</extension>
+	
+	<extension
+         point="org.xpect.fileExtensions">
+      <fileExtension
+            fileExtension="xt">
+      </fileExtension>
+   </extension>
 
 </plugin>
