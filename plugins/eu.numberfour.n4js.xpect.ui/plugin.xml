@@ -133,14 +133,7 @@ Contributors:
           </contextualLaunch>
        </shortcut>
 	</extension>
-   <!-- Register .n4js file extension to XPECT -->
-	<extension
-          point="org.xpect.testSuite">
-      <testSuite
-            class="eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestClass"
-            fileExtension="n4js">
-      </testSuite>
-	</extension>
+
 	<!-- JIRA/GitHub bug command -->
 	<extension point="org.eclipse.ui.commands">
 	     <command
@@ -229,5 +222,14 @@ Contributors:
 	          type="org.eclipse.jface.viewers.IStructuredSelection">
 	    </propertyTester>
    </extension>
+   
+   <!-- Register .n4js file extension to XPECT -->
+	<extension
+          point="org.xpect.testSuite">
+      <testSuite
+            class="eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestClass"
+            fileExtension="n4js">
+      </testSuite>
+	</extension>
 
 </plugin>

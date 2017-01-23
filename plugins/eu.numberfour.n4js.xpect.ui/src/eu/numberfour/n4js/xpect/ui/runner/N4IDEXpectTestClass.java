@@ -47,11 +47,9 @@ import eu.numberfour.n4js.xpect.ui.runner.N4IDEXpectTestFilesCollector.N4IDEXpec
 		LinkingXpectMethod.class,
 		NoerrorsXpectMethod.class,
 		ReturnXpectMethod.class,
-		ReturnXpectMethod.class,
 		TypeXpectMethod.class,
 		ValidationTest.class,
 		ScopeXpectMethod.class,
-
 		HyperlinkXpectMethod.class,
 		OrganizeImportXpectMethod.class,
 		OutlineXpectMethod.class,
