@@ -37,6 +37,17 @@ public final class N4JSGlobals {
 	 * Files extension of N4JS source files (<b>not</b> including the separator dot).
 	 */
 	public static final String N4JS_FILE_EXTENSION = "n4js";
+	/**
+	 * Files extension of JSX source files (<b>not</b> including the separator dot). TODO: This will be OK when JSX is
+	 * merged into N4JS.
+	 */
+	public static final String JSX_FILE_EXTENSION = "jsx";
+
+	/**
+	 * Files extension of N4JSX source files (<b>not</b> including the separator dot). TODO: This will be OK when JSX is
+	 * merged into N4JS.
+	 */
+	public static final String N4JSX_FILE_EXTENSION = "n4jsx";
 
 	/**
 	 * Files extension of N4JS definition files (<b>not</b> including the separator dot).
@@ -59,6 +70,7 @@ public final class N4JSGlobals {
 	public static final Collection<String> ALL_N4_FILE_EXTENSIONS = unmodifiableCollection(newLinkedHashSet(asList(
 			N4JS_FILE_EXTENSION,
 			N4JSD_FILE_EXTENSION,
+			N4JSX_FILE_EXTENSION,
 			JS_FILE_EXTENSION)));
 
 	/**

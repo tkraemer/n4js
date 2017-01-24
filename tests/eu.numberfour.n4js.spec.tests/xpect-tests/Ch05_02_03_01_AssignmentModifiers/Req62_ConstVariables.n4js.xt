@@ -49,3 +49,11 @@ class C {
 		cLocal = "not";
 	}
 }
+
+
+
+for (const foo = 9; ;
+	// XPECT errors --> "Const variable foo is read-only." at "foo"
+	foo = 3
+);
+

@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"DirectInjectionTest.js",
-"lineCount":183,
-"mappings":"A;;;EAUA,yC;EAEA,yD;EACA,+D;EACA,qE;EACA,gE;;MALQ,M,EACA,O,EACA,M,EACA,U,EACA,Y,EACA,e;EAIF,kD;EAEN;;;I;;;;;KAXQ,qF;KACA,uF;;;KACA,+G;;;KACA,kI;;;KACA,uI;;;KACA,mI;;;;IAIF;;;;;;;;;;;;;;;;;;;;;;;;O;;;;;;;;;;;;;IAKc;;+CAOI;OAChB,IAAG,YAAA,QAAA,+BAA+B,KAA/B,IAAwC,YAAA,SAAA,gCAAiC,KAA5E;QACI,kBAAkB,2BAAlB,EACM,2DADN,EADJ;QADgB;OAPJ;;;4CAgBA;OACZ,aAAa,eAAb,EAA8B,2BAA9B,EAA2D,2BAA3D,EADY;OAhBA;;;sCAoBN;OACN,aAAa,gBAAb,EAA+B,qBAA/B,EAAsD,qBAAtD,EADM;OApBM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
-"sources":["/sources/eu.numberfour.mangelhaft.test/n4/mangel/test/DirectInjectionTest.n4js"],
-"names":[]
-}
