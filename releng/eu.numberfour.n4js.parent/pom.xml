@@ -153,6 +153,49 @@ Contributors:
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<!--
+				Here the target file
+				deployed in the build of the targetplatform project is referenced via
+				the classifier used in the attach-artifacts process. Please note that it
+				is possible to use multiple target files in Maven build but in Eclipse
+				you can only choose one target file.
+				-->
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<resolver>p2</resolver>
+					<target>
+						<artifact>
+							<groupId>eu.numberfour.n4js</groupId>
+							<artifactId>eu.numberfour.n4js.targetplatform</artifactId>
+							<version>${project.version}</version>
+							<classifier>eu.numberfour.n4js.targetplatform</classifier>
+							<relativePath>../eu.numberfour.n4js.targetplatform/pom.xml</relativePath>
+						</artifact>
+					</target>
+
+					<pomDependencies>consider</pomDependencies>
+					<environments>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -477,146 +520,6 @@ Contributors:
 	</dependencyManagement>
 
 	<profiles>
-		<!--
-			Profile mirrored-targetplatform is activated if the property ${mirrored-targetplatform} is set.
-			The value is required and denotes the URL of the resolved targetplatform to use,
-			e.g. -Dmirrored-targetplatform=http://localhost/tp
-			or   -Dmirrored-targetplatform=file:///Users/....
-		-->
-		<profile>
-			<id>mirrored-targetplatform</id>
-			<activation>
-				<property>
-					<name>REMOVEME_mirrored-targetplatform</name>
-				</property>
-			</activation>
-			<properties>
-				<timestamp>${maven.build.timestamp}</timestamp>
-				<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss (z)</maven.build.timestamp.format>
-				<checksum></checksum>
-			</properties>
-			<build>
-				<plugins>
-					<plugin>
-						<!--Here the both target files
-								deployed in the build of the targetplatform project are referenced via
-								the classifier used in the attach-artifacts process. Please note that it
-								is possible to use multiple target files in Maven build but in Eclipse
-								you can only choose one target file.-->
-						<groupId>org.eclipse.tycho</groupId>
-						<artifactId>target-platform-configuration</artifactId>
-						<version>${tycho.version}</version>
-						<executions>
-							<execution>
-								<phase>generate-sources</phase>
-								<configuration>
-									<resolver>p2</resolver>
-									<!--NOTE: target given by reopsitory below
-									<plugins />.-->
-									<target>
-										<artifact>
-											<groupId>eu.numberfour.n4js</groupId>
-											<artifactId>eu.numberfour.n4js.targetplatform</artifactId>
-											<version>${project.version}</version>
-											<classifier>eu.numberfour.n4js.targetplatform-mirror</classifier>
-											<relativePath>../eu.numberfour.n4js.targetplatform/pom.xml</relativePath>
-										</artifact>
-									</target>
-								</configuration>
-							</execution>
-						</executions>
-						<configuration>
-							<pomDependencies>consider</pomDependencies>
-							<environments>
-								<environment>
-									<os>win32</os>
-									<ws>win32</ws>
-									<arch>x86_64</arch>
-								</environment>
-								<environment>
-									<os>macosx</os>
-									<ws>cocoa</ws>
-									<arch>x86_64</arch>
-								</environment>
-								<environment>
-									<os>linux</os>
-									<ws>gtk</ws>
-									<arch>x86_64</arch>
-								</environment>
-							</environments>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-			<repositories>
-				<repository>
-					<id>mirrored-targetplatform</id>
-					<url>${mirrored-targetplatform}_${checksum}/final</url>
-					<layout>p2</layout>
-				</repository>
-			</repositories>
-		</profile>
-		<!-- opposite to "mirrored-targetplatform" profile,
-				activated if the property ${mirrored-targetplatform} is empty
-				configures the targetplatform based on target-file-definitions.
-				-->
-		<profile>
-					<id>noMirrored-targetplatform</id>
-				<activation>
-					<!-- TODO move the whole block to standard build-section. -->
-					<property><name>!REMOVEME_mirrored-targetplatform</name></property>
-				</activation>
-				<build>
-					<plugins>
-						<plugin>
-						<!--
-						Here the both target files
-						deployed in the build of the targetplatform project are referenced via
-						the classifier used in the attach-artifacts process. Please note that it
-						is possible to use multiple target files in Maven build but in Eclipse
-						you can only choose one target file.
-						-->
-						<groupId>org.eclipse.tycho</groupId>
-						<artifactId>target-platform-configuration</artifactId>
-						<version>${tycho.version}</version>
-						<configuration>
-							<resolver>p2</resolver>
-							<target>
-								<artifact>
-									<groupId>eu.numberfour.n4js</groupId>
-									<artifactId>eu.numberfour.n4js.targetplatform</artifactId>
-									<version>${project.version}</version>
-									<classifier>eu.numberfour.n4js.targetplatform</classifier>
-									<relativePath>../eu.numberfour.n4js.targetplatform/pom.xml</relativePath>
-								</artifact>
-							</target>
-
-							<pomDependencies>consider</pomDependencies>
-							<environments>
-								<!--environment> <os>win32</os> <ws>win32</ws> <arch>x86</arch> </environment -->
-								<environment>
-									<os>win32</os>
-									<ws>win32</ws>
-									<arch>x86_64</arch>
-								</environment>
-								<environment>
-									<os>macosx</os>
-									<ws>cocoa</ws>
-									<arch>x86_64</arch>
-								</environment>
-								<!-- environment> <os>macosx</os> <ws>cocoa</ws> <arch>x86</arch> </environment -->
-								<!-- environment> <os>linux</os> <ws>gtk</ws> <arch>x86</arch> </environment -->
-								<environment>
-									<os>linux</os>
-									<ws>gtk</ws>
-									<arch>x86_64</arch>
-								</environment>
-							</environments>
-						</configuration>
-					</plugin>
-					</plugins>
-				</build>
-		</profile>
 		<profile>
 			<id>vpn</id>
 			<activation>
