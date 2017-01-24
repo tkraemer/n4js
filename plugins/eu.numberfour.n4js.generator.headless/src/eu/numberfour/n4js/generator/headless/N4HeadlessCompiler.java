@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js.generator.headless;
 
-import static eu.numberfour.n4js.utils.UtilN4.concatUnique;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -80,6 +78,7 @@ import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.resource.OrderedResourceDescriptionsData;
 import eu.numberfour.n4js.utils.Lazy;
 import eu.numberfour.n4js.utils.ResourceType;
+import eu.numberfour.n4js.utils.collections.Collections2;
 
 /**
  * Entry for headless compilation.
@@ -437,7 +436,8 @@ public class N4HeadlessCompiler {
 
 		BuildSet buildSet = collectAndRegisterProjects(searchPaths, projectPaths, singleSourceFiles);
 
-		List<N4JSProject> allProjects = concatUnique(buildSet.discoveredProjects, buildSet.requestedProjects);
+		List<N4JSProject> allProjects = Collections2.concatUnique(buildSet.discoveredProjects,
+				buildSet.requestedProjects);
 		List<N4JSProject> requestedProjects = buildSet.requestedProjects;
 		Predicate<URI> singleSourceFilter = buildSet.projectFilter;
 
@@ -487,7 +487,7 @@ public class N4HeadlessCompiler {
 		List<File> singleSourceProjectLocations = findProjectsForSingleFiles(absSingleSourceFiles);
 
 		// Register single-source projects as to be compiled as well.
-		List<File> absRequestedProjectLocations = concatUnique(absProjectPaths,
+		List<File> absRequestedProjectLocations = Collections2.concatUnique(absProjectPaths,
 				singleSourceProjectLocations);
 
 		// Convert absolute locations to file URIs

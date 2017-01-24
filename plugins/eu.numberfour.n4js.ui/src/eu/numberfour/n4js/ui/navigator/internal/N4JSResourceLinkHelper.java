@@ -36,7 +36,7 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.external.ExternalLibraryWorkspace;
 import eu.numberfour.n4js.ts.ui.navigation.URIBasedStorage;
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 import eu.numberfour.n4js.utils.resources.IExternalResource;
 
 /**

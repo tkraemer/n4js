@@ -15,10 +15,8 @@ import static org.eclipse.xtext.util.Tuples.pair;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
@@ -37,7 +35,8 @@ import org.eclipse.xtext.util.Pair;
 import org.osgi.framework.Bundle;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Sets;
+
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Basic utility methods that do not require any N4JS-specific code.
@@ -72,21 +71,6 @@ public class UtilN4 {
 			return s.get();
 		}
 	};
-
-	/**
-	 * Concatenate the given lists while omitting duplicates.
-	 *
-	 * @param listA
-	 *            the first list
-	 * @param listB
-	 *            the second list
-	 * @return the unique concatenation of the given lists
-	 */
-	public static <T> List<T> concatUnique(List<T> listA, List<T> listB) {
-		Set<T> result = Sets.newLinkedHashSet(listA);
-		result.addAll(listB);
-		return new LinkedList<>(result);
-	}
 
 	/**
 	 * Finds and returns the first cycle in the directed graph defined by the given edge relation

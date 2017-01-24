@@ -18,8 +18,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.ui.IWorkingSet;
 
 import eu.numberfour.n4js.ui.workingsets.ManualAssociationAwareWorkingSetManager.ManualAssociationWorkingSet;
-import eu.numberfour.n4js.utils.Arrays2;
 import eu.numberfour.n4js.utils.Diff;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Strategy for creating and adding a new working set to the {@link WorkingSetManager working set manager}.

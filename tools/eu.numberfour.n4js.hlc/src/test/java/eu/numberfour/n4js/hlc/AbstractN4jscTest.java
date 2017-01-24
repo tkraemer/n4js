@@ -30,7 +30,7 @@ import org.junit.After;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 import eu.numberfour.n4js.utils.io.FileCopier;
 import eu.numberfour.n4js.utils.io.FileDeleter;
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
