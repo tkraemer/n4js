@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP  */
 
 
 // XPECT warnings --> "Reference to variable v0 within the initializer expression of the declaration of v0." at "v0"

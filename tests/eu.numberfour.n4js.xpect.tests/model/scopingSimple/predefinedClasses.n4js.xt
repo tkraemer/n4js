@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest  END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest  END_SETUP */
 class MyClassX {
 	/* as here it cannot be decided if "string field" or "string field() should be written, void is included in scope"*/
 /* XPECT scope at 'string' ---

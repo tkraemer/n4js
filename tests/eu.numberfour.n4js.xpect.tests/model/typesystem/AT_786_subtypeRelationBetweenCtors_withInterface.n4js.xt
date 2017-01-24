@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP  */
 
 
 // exact same example as in AT_786_subtypeRelationBetweenCtors.n4js.xt, but "AbstractSoda" is now an interface!
