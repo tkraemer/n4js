@@ -12,11 +12,19 @@ package eu.numberfour.n4jsx.transpiler.utils;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.naming.IQualifiedNameConverter;
+import org.eclipse.xtext.resource.IContainer;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider;
 
@@ -34,29 +42,44 @@ import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4jsx.N4JSXGlobals;
 
 /**
- * Helper for working with JSX backends, e.g. Ract, Preact, etc. Internally it supports only React not, but API wise
- * should work for other backends once their support is added.
+ * Helper for working with JSX backends, e.g. Ract, Preact, etc. Internally it supports only React, but API wise should
+ * work for other backends once their support is added.
  */
 public final class JSXBackendHelper {
-	/** Local cache of JSX backends. */
+
+	/**
+	 * This is hacky scope. Unlike normal scopes it is not using any {@link EReference} or {@link EClass} to obtain
+	 * proper scope for that element, instead it just accessing internals of the {@link DefaultGlobalScopeProvider} to
+	 * find all {@link IContainer}s to get all resources visible from given resource.
+	 */
+	private final static class JSXBackendsScopeProvider extends DefaultGlobalScopeProvider {
+		public final Stream<IResourceDescription> visibleResourceDescriptions(Resource resource) {
+			return getVisibleContainers(resource).parallelStream()
+					.flatMap(ic -> StreamSupport.stream(ic.getResourceDescriptions().spliterator(), true));
+		}
+	}
+
+	/**
+	 * Local cache of JSX backends.
+	 *
+	 * We don't bother with proper caching, due to the way this helper is currently used in the transpiler.
+	 */
 	private final Map<String, IResourceDescription> jsxBackends = new ConcurrentHashMap<>();
 
 	@Inject
-	private DefaultGlobalScopeProvider globalScope;
-
-	@Inject
-	private IN4JSCore n4jsCore;
+	private JSXBackendsScopeProvider jsxGlobalScope;
 	@Inject
 	private IQualifiedNameConverter qualifiedNameConverter;
 	@Inject
 	private ModuleNameComputer nameComputer;
-
+	@Inject
+	private IN4JSCore n4jsCore;
 	@Inject
 	ProjectUtils projectUtils;
 
-	private static String JSX_BACKEND_MODULE_NAME = "react";
-	private static String JSX_BACKEND_FACADE_NAME = "React";
-	private static String JSX_BACKEND_ELEMENT_FACTORY_NAME = "createElement";
+	private final static String JSX_BACKEND_MODULE_NAME = "react";
+	private final static String JSX_BACKEND_FACADE_NAME = "React";
+	private final static String JSX_BACKEND_ELEMENT_FACTORY_NAME = "createElement";
 
 	/** @return name of the JSX backend module, i.e. "react" */
 	public String getBackendModuleName() {
@@ -126,24 +149,44 @@ public final class JSXBackendHelper {
 	}
 
 	/**
-	 * Searches through scope of the provided resource for the JSX backend. When found returns its module qualified
-	 * name, other throws {@link NoSuchElementException}.
+	 * Looks up JSX backend for a provided resource. If more than one available, picks one at <b>random</b>. When no
+	 * backend is available throws {@link NoSuchElementException}.
+	 *
+	 * @return qualified name of the selected JSX backend module
 	 */
 	public String jsxBackendModuleQualifiedName(Resource resource) {
+		Objects.requireNonNull(resource);
 
-		/* if this doesn't work try DefaultGlobalScopeProvider#getVisibleContainers(resource); */
-		globalScope.getResourceDescriptions(resource).getAllResourceDescriptions().spliterator()
-				.forEachRemaining(r -> {
-					String uriVal = r.getURI().toString();
-					if (looksLikeReactFile(uriVal)) {
-						jsxBackends.put(
-								qualifiedNameConverter.toString(nameComputer.getQualifiedModuleName(r)), r);
-					}
-				});
-		// TODO pick in a smarter way
-		java.util.Optional<String> ores = jsxBackends.keySet().stream().findAny();
+		// maybe this is first call to the helper, populate cached backends
+		if (jsxBackends.isEmpty()) {
+			populateBeckendsCache(resource);
+		}
 
-		return ores.get();
+		// since we have no info about which backend to use, use any
+		return getAnyBackend();
+	}
+
+	/**
+	 * Selects JSX backend at random from {@link #jsxBackends} cache. If we get exception below that means that either:
+	 * method was called before cache was populated, or it was not populated correctly. Latter is unusual and means that
+	 * either resource validation is broken and did not put error marker on compiled resource (error should say that
+	 * there is no JSX backend available), or custom scope used to populate cache is broken and is not finding any JSX
+	 * backend.
+	 */
+	private final String getAnyBackend() {
+		return jsxBackends.keySet().stream().findAny().get();
+	}
+
+	/**
+	 * Populates {@link #jsxBackends} with backends visible from provided resource.
+	 */
+	private final void populateBeckendsCache(Resource resource) {
+		jsxBackends.putAll(
+				jsxGlobalScope.visibleResourceDescriptions(resource)
+						.filter(ird -> looksLikeReactFile(ird))
+						.collect(Collectors.toMap(
+								ird -> qualifiedNameConverter.toString(nameComputer.getQualifiedModuleName(ird)),
+								Function.identity())));
 	}
 
 	/**
@@ -151,25 +194,34 @@ public final class JSXBackendHelper {
 	 * for given QN, performs lookup via scope of the provided resource. and returned.
 	 *
 	 */
-	private URI getOrFindJSXBackend(Resource resource, String qualifiedName) {
+	private final URI getOrFindJSXBackend(Resource resource, String qualifiedName) {
+		if (jsxBackends.isEmpty()) {
+			populateBeckendsCache(resource);
+		}
 		IResourceDescription iResourceDescription = jsxBackends.get(qualifiedName);
 		if (iResourceDescription == null) {
-			iResourceDescription = jsxBackends.get(jsxBackendModuleQualifiedName(resource));
+			iResourceDescription = jsxBackends.get(getAnyBackend());
 		}
-		URI uri = iResourceDescription.getURI();
-		return uri;
+		return iResourceDescription.getURI();
 	}
 
-	private boolean looksLikeReactFile(String qn) {
-		String definition = JSX_BACKEND_MODULE_NAME + "." + N4JSGlobals.N4JSD_FILE_EXTENSION;
-		String typed = JSX_BACKEND_MODULE_NAME + "." + N4JSGlobals.N4JS_FILE_EXTENSION;
-		String typedX = JSX_BACKEND_MODULE_NAME + "." + N4JSXGlobals.N4JSX_FILE_EXTENSION;
-		String raw = JSX_BACKEND_MODULE_NAME + "." + N4JSGlobals.JS_FILE_EXTENSION;
-		String rawX = JSX_BACKEND_MODULE_NAME + "." + N4JSXGlobals.JSX_FILE_EXTENSION;
-		return qn != null && (qn.endsWith(definition)
-				|| qn.endsWith(typed)
-				|| qn.endsWith(raw)
-				|| qn.endsWith(typedX)
-				|| qn.endsWith(rawX));
+	/** @return <code>true</code> if provided resourceDescription looks like JSX backend file. */
+	private final static boolean looksLikeReactFile(IResourceDescription ird) {
+		if (ird == null)
+			return false;
+
+		URI uri = ird.getURI();
+		if (uri == null)
+			return false;
+
+		String sqn = uri.toString();
+		if (sqn == null)
+			return false;
+
+		return sqn.endsWith(JSX_BACKEND_MODULE_NAME + "." + N4JSGlobals.N4JSD_FILE_EXTENSION) // e.g. react.n4jsd
+				|| sqn.endsWith(JSX_BACKEND_MODULE_NAME + "." + N4JSGlobals.N4JS_FILE_EXTENSION) // e.g. react.n4js
+				|| sqn.endsWith(JSX_BACKEND_MODULE_NAME + "." + N4JSGlobals.JS_FILE_EXTENSION) // e.g. react.js
+				|| sqn.endsWith(JSX_BACKEND_MODULE_NAME + "." + N4JSXGlobals.N4JSX_FILE_EXTENSION) // e.g. rect.n4jsx
+				|| sqn.endsWith(JSX_BACKEND_MODULE_NAME + "." + N4JSXGlobals.JSX_FILE_EXTENSION);// e.g. react.jsx
 	}
 }
