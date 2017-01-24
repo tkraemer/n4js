@@ -10,6 +10,7 @@ package eu.numberfour.n4js.n4JS.impl;
 import eu.numberfour.n4js.n4JS.AnnotableElement;
 import eu.numberfour.n4js.n4JS.Annotation;
 import eu.numberfour.n4js.n4JS.Expression;
+import eu.numberfour.n4js.n4JS.ForStatement;
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.NamedElement;
 import eu.numberfour.n4js.n4JS.TypeProvidingElement;
@@ -316,6 +317,12 @@ public class VariableDeclarationImpl extends VariableDeclarationOrBindingImpl im
 			EObject _eContainer_1 = this.eContainer();
 			VariableStatementKeyword _varStmtKeyword = ((VariableStatement) _eContainer_1).getVarStmtKeyword();
 			return (_varStmtKeyword == VariableStatementKeyword.CONST);
+		}
+		EObject _eContainer_2 = this.eContainer();
+		if ((_eContainer_2 instanceof ForStatement)) {
+			EObject _eContainer_3 = this.eContainer();
+			VariableStatementKeyword _varStmtKeyword_1 = ((ForStatement) _eContainer_3).getVarStmtKeyword();
+			return (_varStmtKeyword_1 == VariableStatementKeyword.CONST);
 		}
 		return false;
 	}
