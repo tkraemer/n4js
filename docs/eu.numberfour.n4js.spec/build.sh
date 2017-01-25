@@ -16,7 +16,7 @@ cp -r styles images scripts ./$GEN_FOLDER/
 
 
 ############## Build HTML for gh-pages #############
-asciispec -a data-uri=true -a stylesheet=foundation.css -D $GEN_FOLDER/ N4JSSpec.adoc 
+asciispec -a data-uri=true -a stylesheet=foundation.css -a docinfodir=headers -D $GEN_FOLDER/ N4JSSpec.adoc 
 
 # running "./build.sh -p" (preview) will skip PDF and launch index.html
 if [ "${1}" == "--preview" ] || [ "${1}" == "-p" ]; then
