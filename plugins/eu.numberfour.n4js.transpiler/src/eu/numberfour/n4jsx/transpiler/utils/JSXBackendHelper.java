@@ -101,8 +101,7 @@ public final class JSXBackendHelper {
 		if (module == null) {
 			return false;
 		}
-		String qualifiedName = module.getQualifiedName();
-		return qualifiedName.endsWith(JSX_BACKEND_MODULE_NAME);
+		return module.getQualifiedName().endsWith(JSX_BACKEND_MODULE_NAME);
 	}
 
 	/** Checks if given import declaration looks like JSX backend import, e.g. "(...) from "react" */
@@ -120,14 +119,12 @@ public final class JSXBackendHelper {
 	 * artificial modules that were patched in by the transpiler for JSX backend.
 	 */
 	public String jsxBackendModuleSpecifier(TModule module, Resource resource) {
-
-		String qualifiedName = module.getQualifiedName();
-		URI uri = getOrFindJSXBackend(resource, qualifiedName);
+		URI uri = getOrFindJSXBackend(resource, module.getQualifiedName());
 
 		Optional<? extends IN4JSProject> optionalProject = n4jsCore.findProject(uri);
 		if (!optionalProject.isPresent()) {
 			throw new RuntimeException(
-					"Cannot handle resource without containing project. Resource URI was: «n4jsSourceURI».");
+					"Cannot handle resource without containing project. Resource URI was: " + uri);
 		}
 		return ProjectUtils.formatDescriptor(optionalProject.get(),
 				module.getModuleSpecifier(), "-", ".", "/", false);
@@ -139,8 +136,7 @@ public final class JSXBackendHelper {
 	 * artificial modules that were patched in by the transpiler for JSX backend.
 	 */
 	public String getJsxBackendCompleteModuleSpecifierAsIdentifier(TModule module) {
-		String qualifiedName = module.getQualifiedName();
-		URI uri = getOrFindJSXBackend(module.eResource(), qualifiedName);
+		URI uri = getOrFindJSXBackend(module.eResource(), module.getQualifiedName());
 
 		IN4JSProject resolveProject = projectUtils.resolveProject(uri);
 
@@ -183,10 +179,27 @@ public final class JSXBackendHelper {
 	private final void populateBeckendsCache(Resource resource) {
 		jsxBackends.putAll(
 				jsxGlobalScope.visibleResourceDescriptions(resource)
-						.filter(ird -> looksLikeReactFile(ird))
-						.collect(Collectors.toMap(
+						.filter(JSXBackendHelper::looksLikeReactFile)
+						.collect(Collectors.toConcurrentMap(
 								ird -> qualifiedNameConverter.toString(nameComputer.getQualifiedModuleName(ird)),
-								Function.identity())));
+								Function.identity(),
+								// IDE-2505
+								JSXBackendHelper::stubMerger)));
+	}
+
+	/**
+	 * Helper function that allows to deal with duplicate resources with that have the same FQN in the same scope. In
+	 * general this is configuration error and, normally, should not happen.Due to lack of proper validations, it can
+	 * happen. Validations preventing this situation are expected to be added with IDE-2505. Once that is done this
+	 * merger should be removed.
+	 *
+	 * For reasons described above, we provide just some merging function, without much thought about its internals.
+	 *
+	 */
+	private static IResourceDescription stubMerger(IResourceDescription first, IResourceDescription second) {
+		if (first.getURI().lastSegment().compareToIgnoreCase(second.getURI().lastSegment()) > 0)
+			return first;
+		return second;
 	}
 
 	/**
