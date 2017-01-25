@@ -10,23 +10,23 @@
  */
 package eu.numberfour.n4jsx.transpiler.utils;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.naming.IQualifiedNameConverter;
-import org.eclipse.xtext.resource.IContainer;
-import org.eclipse.xtext.resource.IResourceDescription;
-import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider;
+import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.IScopeProvider;
 
 import com.google.common.base.Optional;
 import com.google.inject.Inject;
@@ -38,6 +38,7 @@ import eu.numberfour.n4js.naming.ModuleNameComputer;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.projectModel.ProjectUtils;
+import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4jsx.N4JSXGlobals;
 
@@ -48,14 +49,24 @@ import eu.numberfour.n4jsx.N4JSXGlobals;
 public final class JSXBackendHelper {
 
 	/**
-	 * This is hacky scope. Unlike normal scopes it is not using any {@link EReference} or {@link EClass} to obtain
-	 * proper scope for that element, instead it just accessing internals of the {@link DefaultGlobalScopeProvider} to
-	 * find all {@link IContainer}s to get all resources visible from given resource.
+	 * Scoping helper used to locate JSX backends. In principle similar to the {@code ReactHelper}.
 	 */
-	private final static class JSXBackendsScopeProvider extends DefaultGlobalScopeProvider {
-		public final Stream<IResourceDescription> visibleResourceDescriptions(Resource resource) {
-			return getVisibleContainers(resource).parallelStream()
-					.flatMap(ic -> StreamSupport.stream(ic.getResourceDescriptions().spliterator(), true));
+	private final static class JSXBackendsScopeHelper {
+		@Inject
+		private IScopeProvider isp;
+
+		public final Set<Resource> visibleBackends(Resource resource, Predicate<? super URI> predicate) {
+			Set<Resource> backends = new HashSet<>();
+
+			EObject eo = resource.getContents().get(0);
+			IScope scope = isp.getScope(eo, TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE);
+			scope.getAllElements().forEach(ieod -> {
+				if (predicate.test(ieod.getEObjectURI().trimFragment())) {
+					backends.add(ieod.getEObjectOrProxy().eResource());
+				}
+			});
+
+			return Collections.unmodifiableSet(backends);
 		}
 	}
 
@@ -64,10 +75,10 @@ public final class JSXBackendHelper {
 	 *
 	 * We don't bother with proper caching, due to the way this helper is currently used in the transpiler.
 	 */
-	private final Map<String, IResourceDescription> jsxBackends = new ConcurrentHashMap<>();
+	private final Map<String, Resource> jsxBackends = new ConcurrentHashMap<>();
 
 	@Inject
-	private JSXBackendsScopeProvider jsxGlobalScope;
+	private JSXBackendsScopeHelper jsxBackendsScopeHelper;
 	@Inject
 	private IQualifiedNameConverter qualifiedNameConverter;
 	@Inject
@@ -160,7 +171,7 @@ public final class JSXBackendHelper {
 
 		// maybe this is first call to the helper, populate cached backends
 		if (jsxBackends.isEmpty()) {
-			populateBeckendsCache(resource);
+			populateBackendsCache(resource);
 		}
 
 		// since we have no info about which backend to use, use any
@@ -181,15 +192,16 @@ public final class JSXBackendHelper {
 	/**
 	 * Populates {@link #jsxBackends} with backends visible from provided resource.
 	 */
-	private final void populateBeckendsCache(Resource resource) {
+	private final void populateBackendsCache(Resource resource) {
 		jsxBackends.putAll(
-				jsxGlobalScope.visibleResourceDescriptions(resource)
-						.filter(JSXBackendHelper::looksLikeReactFile)
+				jsxBackendsScopeHelper.visibleBackends(resource, JSXBackendHelper::looksLikeReactUri)
+						.parallelStream()
 						.collect(Collectors.toConcurrentMap(
 								ird -> qualifiedNameConverter.toString(nameComputer.getQualifiedModuleName(ird)),
 								Function.identity(),
 								// IDE-2505
-								JSXBackendHelper::stubMerger)));
+								JSXBackendHelper::stubMerger2)));
+
 	}
 
 	/**
@@ -201,7 +213,7 @@ public final class JSXBackendHelper {
 	 * For reasons described above, we provide just some merging function, without much thought about its internals.
 	 *
 	 */
-	private static IResourceDescription stubMerger(IResourceDescription first, IResourceDescription second) {
+	private static Resource stubMerger2(Resource first, Resource second) {
 		if (first.getURI().lastSegment().compareToIgnoreCase(second.getURI().lastSegment()) > 0)
 			return first;
 		return second;
@@ -214,24 +226,21 @@ public final class JSXBackendHelper {
 	 */
 	private final URI getOrFindJSXBackend(Resource resource, String qualifiedName) {
 		if (jsxBackends.isEmpty()) {
-			populateBeckendsCache(resource);
+			populateBackendsCache(resource);
 		}
-		IResourceDescription iResourceDescription = jsxBackends.get(qualifiedName);
-		if (iResourceDescription == null) {
+		Resource backendResource = jsxBackends.get(qualifiedName);
+		if (backendResource == null) {
 			// Normally we would throw error here, but there are few grey areas with JSX support.
 			// To avoid blocking other teams using JSX, we are a bit defensive and try to keep system running.
 			// With less complicated setups, this will HAPPEN to be correct.
-			iResourceDescription = jsxBackends.get(getAnyBackend());
+			backendResource = jsxBackends.get(getAnyBackend());
 		}
-		return iResourceDescription.getURI();
+
+		return backendResource.getURI();
 	}
 
-	/** @return <code>true</code> if provided resourceDescription looks like JSX backend file. */
-	private final static boolean looksLikeReactFile(IResourceDescription ird) {
-		if (ird == null)
-			return false;
-
-		URI uri = ird.getURI();
+	/** @return {@code true} if provided {@code URI} looks like JSX backend file. */
+	private static boolean looksLikeReactUri(URI uri) {
 		if (uri == null)
 			return false;
 
