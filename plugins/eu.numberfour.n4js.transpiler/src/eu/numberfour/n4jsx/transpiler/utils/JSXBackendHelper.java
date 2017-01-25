@@ -148,6 +148,11 @@ public final class JSXBackendHelper {
 	 * Looks up JSX backend for a provided resource. If more than one available, picks one at <b>random</b>. When no
 	 * backend is available throws {@link NoSuchElementException}.
 	 *
+	 * Note that this method is expected to be called only from <code>SanitizeImportsTransformation</code>, and only in
+	 * case patching react import is required. This is expected to be a corner case. If this becomes normal execution
+	 * path, this method has to be redesigned to work in more reliable way, i.e. it needs more information to reliably
+	 * select proper JSX backend.
+	 *
 	 * @return qualified name of the selected JSX backend module
 	 */
 	public String jsxBackendModuleQualifiedName(Resource resource) {
@@ -213,6 +218,9 @@ public final class JSXBackendHelper {
 		}
 		IResourceDescription iResourceDescription = jsxBackends.get(qualifiedName);
 		if (iResourceDescription == null) {
+			// Normally we would throw error here, but there are few grey areas with JSX support.
+			// To avoid blocking other teams using JSX, we are a bit defensive and try to keep system running.
+			// With less complicated setups, this will HAPPEN to be correct.
 			iResourceDescription = jsxBackends.get(getAnyBackend());
 		}
 		return iResourceDescription.getURI();
