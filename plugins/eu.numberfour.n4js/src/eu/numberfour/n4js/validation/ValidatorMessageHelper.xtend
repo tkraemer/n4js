@@ -349,7 +349,7 @@ class ValidatorMessageHelper {
 	}
 
 	private def boolean isAsyncOrPromise(TFunction tfunction) {
-		if (! tfunction.declaredAsync) {
+		if (!tfunction.declaredAsync) {
 			return false;
 		}
 
@@ -361,7 +361,7 @@ class ValidatorMessageHelper {
 	}
 
 	private def boolean isGenerator(TFunction tfunction) {
-		if (! tfunction.declaredGenerator) {
+		if (!tfunction.declaredGenerator) {
 			return false;
 		}
 
