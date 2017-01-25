@@ -26,8 +26,6 @@ stderr:
 import * as React from "reactFiles/react"
 import { replacer } from "reactFiles/replacer"
 
-var zzzz: React.Element; // Avoid unused import warnings
-
 class ~Props {
 	public myProp: string;
 }

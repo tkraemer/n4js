@@ -7,7 +7,7 @@ export public function replacer(key: string, value: any): any {
 		let fnName = (value as Function).toString();
 		fnName = fnName.substring('function '.length);
 		fnName = fnName.substring(0, fnName.indexOf('('));
-		return fnName.trim();
+		return fnName.trim()? fnName.trim() : "function" ;
 	} else {
 		return value;
 	}

@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
 
 var test1FunVar = function() { console.log("test1FunVar"); }
 /* accessed via variable (=> no type) XPECT scopeWithPosition at '|test1FunVar();' --- 

@@ -32,6 +32,12 @@ Contributors:
 NumberFour AG - Initial API and implementation
    </copyright>
 
+	<plugin
+         id="eu.numberfour.n4js.xpect"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
    <plugin
          id="eu.numberfour.n4js.xpect.ui"
          download-size="0"
