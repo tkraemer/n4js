@@ -11,12 +11,12 @@
 package eu.numberfour.n4jsx.transpiler.utils;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -55,14 +55,15 @@ public final class JSXBackendHelper {
 		@Inject
 		private IScopeProvider isp;
 
-		public final Set<Resource> visibleBackends(Resource resource, Predicate<? super URI> predicate) {
-			Set<Resource> backends = new HashSet<>();
+		public final Set<URI> visibleBackends(Resource resource, Predicate<? super URI> predicate) {
+			Set<URI> backends = new HashSet<>();
 
 			EObject eo = resource.getContents().get(0);
 			IScope scope = isp.getScope(eo, TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE);
 			scope.getAllElements().forEach(ieod -> {
-				if (predicate.test(ieod.getEObjectURI().trimFragment())) {
-					backends.add(ieod.getEObjectOrProxy().eResource());
+				URI uri = ieod.getEObjectURI().trimFragment();
+				if (predicate.test(uri)) {
+					backends.add(uri);
 				}
 			});
 
@@ -75,7 +76,7 @@ public final class JSXBackendHelper {
 	 *
 	 * We don't bother with proper caching, due to the way this helper is currently used in the transpiler.
 	 */
-	private final Map<String, Resource> jsxBackends = new ConcurrentHashMap<>();
+	private final Map<String, URI> jsxBackends = new HashMap<>();
 
 	@Inject
 	private JSXBackendsScopeHelper jsxBackendsScopeHelper;
@@ -195,12 +196,12 @@ public final class JSXBackendHelper {
 	private final void populateBackendsCache(Resource resource) {
 		jsxBackends.putAll(
 				jsxBackendsScopeHelper.visibleBackends(resource, JSXBackendHelper::looksLikeReactUri)
-						.parallelStream()
-						.collect(Collectors.toConcurrentMap(
-								ird -> qualifiedNameConverter.toString(nameComputer.getQualifiedModuleName(ird)),
+						.stream()
+						.collect(Collectors.toMap(
+								uri -> qualifiedNameConverter.toString(nameComputer.getQualifiedModuleName(uri)),
 								Function.identity(),
 								// IDE-2505
-								JSXBackendHelper::stubMerger2)));
+								JSXBackendHelper::stubMerger)));
 
 	}
 
@@ -213,8 +214,8 @@ public final class JSXBackendHelper {
 	 * For reasons described above, we provide just some merging function, without much thought about its internals.
 	 *
 	 */
-	private static Resource stubMerger2(Resource first, Resource second) {
-		if (first.getURI().lastSegment().compareToIgnoreCase(second.getURI().lastSegment()) > 0)
+	private static URI stubMerger(URI first, URI second) {
+		if (first.lastSegment().compareToIgnoreCase(second.lastSegment()) > 0)
 			return first;
 		return second;
 	}
@@ -228,15 +229,15 @@ public final class JSXBackendHelper {
 		if (jsxBackends.isEmpty()) {
 			populateBackendsCache(resource);
 		}
-		Resource backendResource = jsxBackends.get(qualifiedName);
-		if (backendResource == null) {
+		URI backendURI = jsxBackends.get(qualifiedName);
+		if (backendURI == null) {
 			// Normally we would throw error here, but there are few grey areas with JSX support.
 			// To avoid blocking other teams using JSX, we are a bit defensive and try to keep system running.
 			// With less complicated setups, this will HAPPEN to be correct.
-			backendResource = jsxBackends.get(getAnyBackend());
+			backendURI = jsxBackends.get(getAnyBackend());
 		}
 
-		return backendResource.getURI();
+		return backendURI;
 	}
 
 	/** @return {@code true} if provided {@code URI} looks like JSX backend file. */
