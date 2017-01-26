@@ -73,10 +73,10 @@ public class N4jscJarUtils {
 	}
 
 	/**
-	 * Calls {@link #buildHeadlessWithN4jscJar(File, List, List)} with <code>-Xmx4096mb</code> and not N4JSC options.
+	 * Calls {@link #buildHeadlessWithN4jscJar(File, List, List)} with <code>-Xmx2000mb</code> and not N4JSC options.
 	 */
 	public static void buildHeadlessWithN4jscJar(File workspaceRoot) {
-		List<String> javaOpts = Arrays.asList("-Xmx4096mb");
+		List<String> javaOpts = Arrays.asList("-Xmx2000mb");
 		List<String> n4jscOpts = Collections.emptyList();
 		buildHeadlessWithN4jscJar(Collections.singletonList(workspaceRoot), javaOpts, n4jscOpts);
 	}
