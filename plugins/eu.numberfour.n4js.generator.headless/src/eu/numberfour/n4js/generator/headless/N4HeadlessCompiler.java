@@ -1178,6 +1178,19 @@ public class N4HeadlessCompiler {
 	 * ===============================================================================================================
 	 */
 
+	/**
+	 * Validates all non-external Xtext resources of the given project. Prints issues and adds them to the given issue
+	 * acceptor.
+	 *
+	 * @param markedProject
+	 *            the project to validate
+	 * @param recorder
+	 *            the progress recorder
+	 * @param issueAcceptor
+	 *            the issue acceptor
+	 * @throws N4JSCompileErrorException
+	 *             if an error occurs during validation
+	 */
 	private void validateProject(MarkedProject markedProject, N4ProgressStateRecorder recorder,
 			IssueAcceptor issueAcceptor) throws N4JSCompileErrorException {
 
