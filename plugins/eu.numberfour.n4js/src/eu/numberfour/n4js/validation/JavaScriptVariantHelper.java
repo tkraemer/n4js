@@ -12,8 +12,6 @@ package eu.numberfour.n4js.validation;
 
 import org.eclipse.emf.ecore.EObject;
 
-import com.google.inject.Singleton;
-
 /**
  * The N4JS type system and validation is used not only for pure N4JS, but in the context of certain variants as plain
  * JavaScript in unrestricted or strict mode, type definition files (N4JSD) etc. It also is re-used by sublanguage (such
@@ -22,7 +20,6 @@ import com.google.inject.Singleton;
  * helper is to be provided by the injector; N4Js uses the {@link N4JSJavaScriptVariantHelper}, sub-languages may bind
  * to a different implementation.
  */
-@Singleton
 public interface JavaScriptVariantHelper {
 
 	/**
