@@ -527,7 +527,6 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 	/**
 	 * Bind JavaScriptVariantHelper
 	 */
-	@SingletonBinding
 	public Class<? extends JavaScriptVariantHelper> bindJavaScriptVariantHelper() {
 		return N4JSJavaScriptVariantHelper.class;
 	}
