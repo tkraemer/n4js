@@ -40,7 +40,6 @@ import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.projectModel.ProjectUtils;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.types.TModule;
-import eu.numberfour.n4jsx.N4JSXGlobals;
 
 /**
  * Helper for working with JSX backends, e.g. Ract, Preact, etc. Internally it supports only React, but API wise should
@@ -249,10 +248,6 @@ public final class JSXBackendHelper {
 		if (sqn == null)
 			return false;
 
-		return sqn.endsWith(JSX_BACKEND_MODULE_NAME + "." + N4JSGlobals.N4JSD_FILE_EXTENSION) // e.g. react.n4jsd
-				|| sqn.endsWith(JSX_BACKEND_MODULE_NAME + "." + N4JSGlobals.N4JS_FILE_EXTENSION) // e.g. react.n4js
-				|| sqn.endsWith(JSX_BACKEND_MODULE_NAME + "." + N4JSGlobals.JS_FILE_EXTENSION) // e.g. react.js
-				|| sqn.endsWith(JSX_BACKEND_MODULE_NAME + "." + N4JSXGlobals.N4JSX_FILE_EXTENSION) // e.g. rect.n4jsx
-				|| sqn.endsWith(JSX_BACKEND_MODULE_NAME + "." + N4JSXGlobals.JSX_FILE_EXTENSION);// e.g. react.jsx
+		return sqn.endsWith(JSX_BACKEND_MODULE_NAME + "." + N4JSGlobals.N4JSD_FILE_EXTENSION); // i.e. react.n4jsd
 	}
 }
