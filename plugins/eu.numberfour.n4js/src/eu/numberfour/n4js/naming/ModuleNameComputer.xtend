@@ -42,7 +42,7 @@ class ModuleNameComputer {
 	 * like {@code ".n4js.xt"}. The calculation will handle this as a hole file extension, so {@code ".n4js"} will be pruned, too.
 	 */
 	def QualifiedName getQualifiedModuleName(Resource resource) {
-		resource.getURI().getQualifiedModuleNameFromUri
+		resource.getURI().getQualifiedModuleName
 	}
 
 	/**
@@ -52,10 +52,16 @@ class ModuleNameComputer {
 	 * like {@code ".n4js.xt"}. The calculation will handle this as a hole file extension, so {@code ".n4js"} will be pruned, too.
 	 */
 	def QualifiedName getQualifiedModuleName(IResourceDescription resourceDesc) {
-		resourceDesc.getURI().getQualifiedModuleNameFromUri
+		resourceDesc.getURI().getQualifiedModuleName
 	}
 
-	def private getQualifiedModuleNameFromUri(URI uri){
+	/**
+	 * Returns the qualified module name which is explicitly defined by the given uri.
+	 * <p>
+	 * Please note there is also a special treatment for Xpect test files that may have a file extension
+	 * like {@code ".n4js.xt"}. The calculation will handle this as a hole file extension, so {@code ".n4js"} will be pruned, too.
+	 */
+	def getQualifiedModuleName(URI uri){
 		val maybeSourceContainer = findN4JSSourceContainer(uri)
 		if (maybeSourceContainer.present) {
 			val sourceContainer = maybeSourceContainer.get
@@ -75,6 +81,7 @@ class ModuleNameComputer {
 
 	def private createDefaultQualifiedName(URI uri) {
 		var segmentList = uri.trimFileExtension.segmentsList
+		//TODO IDE-2506
 		val srcFolder = Math.max(segmentList.indexOf('src'), segmentList.indexOf('src-test'))
 		if (srcFolder != -1) {
 			segmentList = segmentList.subList(srcFolder + 1, segmentList.size)
