@@ -73,10 +73,20 @@ public class N4jscJarUtils {
 	}
 
 	/**
-	 * Same as {@link #buildHeadlessWithN4jscJar(Collection, String...)}, but for a single workspace root.
+	 * Calls {@link #buildHeadlessWithN4jscJar(File, List, List)} with <code>-Xmx4096mb</code> and not N4JSC options.
 	 */
-	public static void buildHeadlessWithN4jscJar(File workspaceRoot, String... options) {
-		buildHeadlessWithN4jscJar(Collections.singletonList(workspaceRoot), options);
+	public static void buildHeadlessWithN4jscJar(File workspaceRoot) {
+		List<String> javaOpts = Arrays.asList("-Xmx4096mb");
+		List<String> n4jscOpts = Collections.emptyList();
+		buildHeadlessWithN4jscJar(Collections.singletonList(workspaceRoot), javaOpts, n4jscOpts);
+	}
+
+	/**
+	 * Same as {@link #buildHeadlessWithN4jscJar(Collection, List, List)}, but for a single workspace root.
+	 */
+	public static void buildHeadlessWithN4jscJar(File workspaceRoot, List<String> javaOpts,
+			List<String> n4jscOpts) {
+		buildHeadlessWithN4jscJar(Collections.singletonList(workspaceRoot), javaOpts, n4jscOpts);
 	}
 
 	/**
@@ -84,12 +94,16 @@ public class N4jscJarUtils {
 	 *
 	 * @param workspaceRoots
 	 *            one or more workspace roots to build.
-	 * @param options
-	 *            zero or more additional command line optional that will be sent to the {@code n4jsc.jar}.
+	 * @param javaOpts
+	 *            zero or more additional command line options that will be sent to the JVM
+	 * @param n4jscOpts
+	 *            zero or more additional command line options that will be sent to the {@code n4jsc.jar}.
 	 */
-	public static void buildHeadlessWithN4jscJar(Collection<? extends File> workspaceRoots, String... options) {
+	public static void buildHeadlessWithN4jscJar(Collection<? extends File> workspaceRoots, List<String> javaOpts,
+			List<String> n4jscOpts) {
 		Objects.requireNonNull(workspaceRoots);
-		Objects.requireNonNull(options);
+		Objects.requireNonNull(javaOpts);
+		Objects.requireNonNull(n4jscOpts);
 		if (workspaceRoots.isEmpty())
 			throw new IllegalArgumentException("at least one workspace root must be given");
 
@@ -98,13 +112,13 @@ public class N4jscJarUtils {
 				.collect(Collectors.toList());
 
 		final List<String> cmdline = new ArrayList<>();
+		cmdline.add("java");
+		cmdline.addAll(javaOpts);
 		cmdline.addAll(Arrays.asList(
-				"java",
-				"-Xmx4096m", // TODO make this configurable
 				"-jar", getAbsoluteRunnableN4jsc().getAbsolutePath(),
 				// "--debug", "-v", // generate more output
 				"-t", "allprojects"));
-		cmdline.addAll(Arrays.asList(options));
+		cmdline.addAll(n4jscOpts);
 		cmdline.add("-pl");
 		cmdline.addAll(workspaceRootsAbsolute);
 
