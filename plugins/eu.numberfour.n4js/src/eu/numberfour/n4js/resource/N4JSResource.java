@@ -530,30 +530,61 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 		aboutToBeUnloaded = false;
 		super.doUnload();
 
-		// TODO IDE-2479: Should we really call this here? These are cleared when linking takes place.
-		// We eagerly clear them here as a memory optimization, and all tests are green.
+		// These are cleared when linking takes place., but we eagerly clear them here as a memory optimization.
 		clearLazyProxyInformation();
 	}
 
 	/**
-	 * Unloads the AST, but leaves the type model intact. Also resets the errors and warnings and the parse result.
+	 * Unloads the AST, but leaves the type model intact. Calling this method puts this resource into the same state as
+	 * if it was loaded from the index.
+	 *
+	 * <ul>
+	 * <li>The AST is discarded and all references to it are proxified.</li>
+	 * <li>The parse result (node model) is set to <code>null</code>.</li>
+	 * <li>All errors and warnings are cleared.</li>
+	 * <li>The flags are set as follows:
+	 * <ul>
+	 * <li><code>fullyInitialized</code> is <code>true</code></li>
+	 * <li><code>fullyPostProcessed</code> is <code>true</code></li>
+	 * <li><code>aboutToBeUnloaded</code> is <code>false</code></li>
+	 * <li><code>isInitializing</code> is <code>false</code></li>
+	 * <li><code>isLoading</code> is <code>false</code></li>
+	 * <li><code>isLoaded</code> is <code>false</code></li>
+	 * <li><code>isPostProcessing</code> is <code>false</code></li>
+	 * <li><code>isUpdating</code> is <code>false</code></li>
+	 * <li><code>isLoadedFromStorage</code> is unchanged due to API restrictions</li>
+	 * </ul>
+	 * </li>
+	 * <li>Finally, all lazy proxy information is cleared by calling {@link #clearLazyProxyInformation()}.</li>
+	 * </ul>
+	 * Also resets the errors and warnings and the parse result.
 	 */
 	public void unloadAST() {
-		aboutToBeUnloaded = false;
-
+		// Discard AST and proxify all references.
 		discardAST();
-		getErrors().clear();
-		getWarnings().clear();
+
+		// Discard the parse result (node model).
 		setParseResult(null);
 
-		// TODO IDE-2479: We cannot call this method (produces a warning). Do we want to?
+		// Clear errors and warnings.
+		getErrors().clear();
+		getWarnings().clear();
+
+		// The state of the resource should be exactly the same as if it was loaded from the index.
+		fullyInitialized = true;
+		fullyPostProcessed = true;
+		aboutToBeUnloaded = false;
+		isInitializing = false;
+		isLoading = false;
+		isLoaded = false;
+		isPostProcessing = false;
+		isUpdating = false;
+
+		// We cannot call this method because it is not API. We leave this comment as documentation that the flag
+		// isLoadedFromStorage should be false at this point.
 		// setIsLoadedFromStorage(false);
 
-		// TODO IDE-2479: Should this be false or what.
-		// fullyPostProcessed = false;
-
-		// TODO IDE-2479: Should we really call this here? These are cleared when linking takes place.
-		// We eagerly clear them here as a memory optimization, and all tests are green.
+		// These are cleared when linking takes place., but we eagerly clear them here as a memory optimization.
 		clearLazyProxyInformation();
 	}
 
@@ -938,29 +969,7 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	 * preLinkingPhase}==true if the module isn't fully initialized yet. It is safe to call this method at any time.
 	 */
 	public TModule getModule() {
-		return hasModule() ? (TModule) getContents().get(1) : null;
-	}
-
-	/**
-	 * Indicates whether a module has been built already. Returns <code>true</code> regardless of whether the module has
-	 * {@link TModule#isPreLinkingPhase()} set or not.
-	 *
-	 * @return <code>true</code> if a module has already been built and <code>false</code> otherwise
-	 */
-	public boolean hasModule() {
-		return getContents().size() >= 2;
-	}
-
-	/**
-	 * Indicates whether a module has been built and is fully initialized, i.e., whether
-	 * {@link TModule#isPreLinkingPhase()} is set.
-	 *
-	 * @return <code>true</code> if a module has already been built and is fully initialized and <code>false</code>
-	 *         otherwise
-	 */
-	public boolean hasFullyInitializedModule() {
-		TModule module = getModule();
-		return module != null && !module.isPreLinkingPhase();
+		return getContents().size() >= 2 ? (TModule) getContents().get(1) : null;
 	}
 
 	/**

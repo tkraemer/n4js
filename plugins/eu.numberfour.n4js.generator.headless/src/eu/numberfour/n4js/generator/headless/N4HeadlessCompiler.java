@@ -25,7 +25,6 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.Queue;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -400,15 +399,33 @@ public class N4HeadlessCompiler {
 	 * Encapsulates the result of {@link N4HeadlessCompiler#collectAndRegisterProjects(List, List, List)}.
 	 */
 	private static class BuildSet {
+
+		/**
+		 * The projects which the user explicitly requested to be compiled. If the user requested compilation of
+		 * specific single files, then this list contains the projects containing the files.
+		 */
 		public final List<N4JSProject> requestedProjects;
+
+		/**
+		 * The projects which were discovered as dependencies of the above projects, without having been requested to be
+		 * compiled by the user. In other words, these projects are only being compiled because a requested project
+		 * depends on them.
+		 */
 		public final List<N4JSProject> discoveredProjects;
-		public final Predicate<URI> projectFilter;
+
+		/**
+		 * A predicate that indicates whether or not a given resource, identified by its URI, should be processed. If
+		 * the user requested compilation of specific single files, then this predicate applies only to those files, and
+		 * no others. In all other cases, the predicate applies to every file, i.e., it always returns
+		 * <code>true</code>.
+		 */
+		public final Predicate<URI> resourceFilter;
 
 		public BuildSet(List<N4JSProject> requestedProjects, List<N4JSProject> discoveredProjects,
 				Predicate<URI> projectFilter) {
 			this.requestedProjects = requestedProjects;
 			this.discoveredProjects = discoveredProjects;
-			this.projectFilter = projectFilter;
+			this.resourceFilter = projectFilter;
 		}
 
 	}
@@ -439,7 +456,7 @@ public class N4HeadlessCompiler {
 		List<N4JSProject> allProjects = Collections2.concatUnique(buildSet.discoveredProjects,
 				buildSet.requestedProjects);
 		List<N4JSProject> requestedProjects = buildSet.requestedProjects;
-		Predicate<URI> singleSourceFilter = buildSet.projectFilter;
+		Predicate<URI> singleSourceFilter = buildSet.resourceFilter;
 
 		configureResourceSetContainerState(allProjects);
 
@@ -490,7 +507,7 @@ public class N4HeadlessCompiler {
 		List<File> absRequestedProjectLocations = Collections2.concatUnique(absProjectPaths,
 				singleSourceProjectLocations);
 
-		// Convert absolute locations to file URIs
+		// Convert absolute locations to file URIs.
 		List<URI> requestedProjectURIs = createFileURIs(absRequestedProjectLocations);
 		List<URI> discoveredProjectURIs = createFileURIs(discoveredProjectLocations);
 
@@ -508,15 +525,15 @@ public class N4HeadlessCompiler {
 		}
 
 		// Create a filter that applies only to the given single source files if any were requested to be compiled.
-		Predicate<URI> compileFilter;
+		Predicate<URI> resourceFilter;
 		if (absSingleSourceFiles.isEmpty()) {
-			compileFilter = u -> true;
+			resourceFilter = u -> true;
 		} else {
 			Set<URI> singleSourceURIs = new HashSet<>(createFileURIs(absSingleSourceFiles));
-			compileFilter = u -> singleSourceURIs.contains(u);
+			resourceFilter = u -> singleSourceURIs.contains(u);
 		}
 
-		return new BuildSet(requestedProjects, discoveredProjects, compileFilter);
+		return new BuildSet(requestedProjects, discoveredProjects, resourceFilter);
 	}
 
 	/**
@@ -591,6 +608,14 @@ public class N4HeadlessCompiler {
 		rsbAcs.configure(containers, container2Uris);
 	}
 
+	/*
+	 * ===============================================================================================================
+	 *
+	 * COMPUTING THE PROJECT BUILD ORDER AND INITIALIZING THE MARKINGS
+	 *
+	 * ===============================================================================================================
+	 */
+
 	/**
 	 * Sort in build-order. Wraps each element of {@code toSort} with {@link MarkedProject} and applies all
 	 * {@code buildMarker} for which the element is a (transitively) declared dependency
@@ -625,7 +650,6 @@ public class N4HeadlessCompiler {
 			markDependencies(project, project, markedProjects, dependencies);
 
 		return computeBuildOrderDepthFirst(markedProjects, pendencies, dependencies, independentProjects);
-		// return computeBuildOrderBreadthFirst(markedProjects, pendencies, dependencies, independentProjects);
 	}
 
 	/**
@@ -715,47 +739,35 @@ public class N4HeadlessCompiler {
 	}
 
 	/**
-	 * Compute the build order by processing the dependency graph in a breadth first manner.
+	 * Compute the build order by processing the dependency graph in a depth first manner. We use a depth first
+	 * traversal here because it is more likely to result in projects being unloaded as early as possible.
 	 *
-	 * @param markedProjects
-	 *            the projects to be compiled
-	 * @param pendencies
-	 *            maps projects to the projects that depend on them
-	 * @param dependencies
-	 *            maps projects to the projects they depend on
-	 * @param independentProjects
-	 *            projects without dependencies
-	 * @return a build order in which each project only depends on projects to its left
-	 */
-	@SuppressWarnings("unused")
-	private static List<MarkedProject> computeBuildOrderBreadthFirst(Map<IN4JSProject, MarkedProject> markedProjects,
-			HashMultimap<IN4JSProject, IN4JSProject> pendencies, HashMultimap<IN4JSProject, IN4JSProject> dependencies,
-			Queue<IN4JSProject> independentProjects) {
-
-		List<MarkedProject> result = new LinkedList<>();
-
-		while (!independentProjects.isEmpty()) {
-			IN4JSProject currentProject = independentProjects.poll();
-			result.add(markedProjects.get(currentProject));
-
-			// The projects that depend on the current project.
-			Set<IN4JSProject> dependentProjects = pendencies.removeAll(currentProject);
-			for (IN4JSProject dependentProject : dependentProjects) {
-				// The preconditions of the current dependent project; this contains the current project itself.
-				Set<IN4JSProject> currentDependencies = dependencies.get(dependentProject);
-				currentDependencies.remove(currentProject);
-
-				// All dependencies of the current dependent project are now processed, so it is ready to be processed.
-				if (currentDependencies.isEmpty())
-					independentProjects.offer(dependentProject);
-			}
-		}
-
-		return result;
-	}
-
-	/**
-	 * Compute the build order by processing the dependency graph in a depth first manner.
+	 * <p>
+	 * In a breath first traversal, we would first compile all the dependencies, and we would most likely get to the
+	 * leaves of the graph last. The leaves represent projects on which no other projects depend. This results in a
+	 * build that takes up more and more memory as it proceeds since projects will only be unloaded in the very end,
+	 * when the leafs are processed.
+	 * </p>
+	 *
+	 * <p>
+	 * In a depth first traversal, we attempt to process the leafs as early as possible. However, we have to consider
+	 * that not all dependencies have already been processed when we reach a leaf, so there is no guarantee that a depth
+	 * first traversal will really free projects earlier than a breadth first traversal, but it is more likely.
+	 * </p>
+	 *
+	 * <p>
+	 * When we reach a leaf with unvisited dependencies, we return to its parent and continue with its siblings. The
+	 * leaf will only be added to the build order when all of its dependencies have already been visited in the normal
+	 * depth first traversal.
+	 * </p>
+	 *
+	 * <p>
+	 * It may be possible to optimize this by changing the traversal order when we reach a leaf with unvisited
+	 * dependencies. We might choose to attempt to visit those dependencies right away by following them "upwards" from
+	 * the leaf to the unvisited dependencies until the leaf can finally be unloaded. However, at this point we decided
+	 * not to implement this optimization due to its inherent complexities. Furthermore, it is unclear whether it truly
+	 * delivers any significant improvements for memory consumption during a large build.
+	 * </p>
 	 *
 	 * @param markedProjects
 	 *            the projects to be compiled
@@ -907,6 +919,8 @@ public class N4HeadlessCompiler {
 	 * @return the resource set
 	 */
 	private ResourceSet createResourceSet() {
+		// TODO try to reuse code from IN4JSCore.createResourceSet
+
 		XtextResourceSet resourceSet = xtextResourceSetProvider.get();
 		resourceSet.setClasspathURIContext(classLoader);
 
@@ -974,7 +988,6 @@ public class N4HeadlessCompiler {
 
 		markedProject.clearResources();
 
-		// TODO try to reuse code from IN4JSCore.createResourceSet
 		for (IN4JSSourceContainer container : markedProject.project.getSourceContainers()) {
 			// Conditionally filter test resources if not desired
 			if (shouldLoadSourceContainer(container)) {
@@ -1081,8 +1094,6 @@ public class N4HeadlessCompiler {
 	 *            the resource set that contains the index
 	 */
 	private void indexResources(MarkedProject markedProject, ResourceSet resourceSet) {
-		// TODO try to reuse code from IN4JSCore.createResourceSet
-
 		ResourceDescriptionsData index = ResourceDescriptionsData.ResourceSetAdapter
 				.findResourceDescriptionsData(resourceSet);
 
@@ -1176,23 +1187,6 @@ public class N4HeadlessCompiler {
 
 		// validation TODO see IDE-1426 redesign validation calls with generators
 		for (Resource resource : markedProject.resources) {
-			// TODO enable if fabelhaft code doesn't contain *.xt files any more.
-			/*-
-			if (isXpectFile(resource.getURI())) {
-				IssueImpl i = new IssueImpl();
-				i.setMessage("Xpect files are not allowed in headless compilation. (They may contain unrecognizable errros.)");
-				i.setUriToProblem(resource.getURI());
-				i.setLength(0);
-				i.setLineNumber(0);
-				i.setOffset(0);
-				i.setSeverity(Severity.ERROR);
-				i.setType(CheckType.NORMAL);
-				i.setSyntaxError(false);
-				// create error for invalid xpect-files
-				allErrorsAndWarnings.add(i);
-				rec.markResourceIssues(resource, Arrays.asList(i));
-			} */
-
 			if (resource instanceof XtextResource && // is Xtext resource
 					(!n4jsCore.isNoValidate(resource.getURI())) && // is validating
 					(!markedProject.externalResources.contains(resource)) // not in external folder
