@@ -22,7 +22,8 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.xpect.xtext.lib;bundle-version="0.1.0",
  eu.numberfour.n4js.utils;bundle-version="0.0.1",
  eu.numberfour.n4js.n4mf.ui.tests.helper;bundle-version="0.0.1",
- eu.numberfour.n4js.tests.helper
+ eu.numberfour.n4js.tests.helper,
+ eu.numberfour.n4js.xpect
 Import-Package: org.apache.log4j,
  org.junit;version="4.5.0",
  org.junit.runner;version="4.5.0",

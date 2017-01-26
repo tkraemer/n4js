@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
 
 // TODO: can't parse this, it causes foo in 'var foo \n function f();' to be parsed as type
 // var int x = 5   

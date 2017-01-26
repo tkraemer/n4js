@@ -11,11 +11,12 @@
 package eu.numberfour.n4js.naming
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.N4JSGlobals
 import eu.numberfour.n4js.projectModel.IN4JSCore
+import eu.numberfour.n4js.utils.ResourceType
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.naming.QualifiedName
-import eu.numberfour.n4js.utils.ResourceType
 import org.eclipse.xtext.resource.IResourceDescription
 
 /**
@@ -67,8 +68,7 @@ class ModuleNameComputer {
 			val location = sourceContainer.location
 			if(uri.uriStartsWith(location)) {
 				var relativeURI = uri.deresolve(location.appendSegment(""))
-				//TODO IDE-2506
-				if (ResourceType.xtHidesOtherExtension(uri)) { // support Xpect tests with files having additional file extension .xt
+				if (ResourceType.xtHidesOtherExtension(uri) || (N4JSGlobals.XT_FILE_EXTENSION == uri.fileExtension.toLowerCase)) { // support Xpect tests with files having additional file extension .xt
 					relativeURI = relativeURI.trimFileExtension.trimFileExtension
 				} else {
 					relativeURI = relativeURI.trimFileExtension

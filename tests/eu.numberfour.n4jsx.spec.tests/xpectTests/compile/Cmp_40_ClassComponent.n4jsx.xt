@@ -34,8 +34,6 @@ stderr:
 import * as React from "reactFiles/react"
 import { replacer } from "reactFiles/replacer"
 
-var zzzz: React.Element; // Avoid unused import warnings
-
 class LowerComponent extends React.Component<~Object with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
 	@Override
 	public render() : React.Element{

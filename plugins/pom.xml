@@ -64,6 +64,7 @@ Contributors:
 		<!-- jsdoc -->
 		<module>eu.numberfour.n4js.jsdoc</module>
 		<!-- xpect -->
+		<module>eu.numberfour.n4js.xpect</module>
 		<module>eu.numberfour.n4js.xpect.ui</module>
 		<module>eu.numberfour.n4js.product</module>
 		<!-- tester -->

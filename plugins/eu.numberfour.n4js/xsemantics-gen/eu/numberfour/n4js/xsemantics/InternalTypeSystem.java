@@ -3900,7 +3900,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
                           sneakyThrowRuleFailedException("true");
                         }
                       } else {
-                        if ((((leftDeclType instanceof TInterface) && (!(rightDeclType instanceof TInterface))) && (!(((rightDeclType == RuleEnvironmentExtensions.n4ObjectType(G)) || (rightDeclType == RuleEnvironmentExtensions.objectType(G))) || (rightDeclType == RuleEnvironmentExtensions.anyType(G)))))) {
+                        if (((((leftDeclType instanceof TInterface) && (!(rightDeclType instanceof TInterface))) && Objects.equal(right.getTypingStrategy(), TypingStrategy.NOMINAL)) && (!(((rightDeclType == RuleEnvironmentExtensions.n4ObjectType(G)) || (rightDeclType == RuleEnvironmentExtensions.objectType(G))) || (rightDeclType == RuleEnvironmentExtensions.anyType(G)))))) {
                           /* false */
                           if (!false) {
                             sneakyThrowRuleFailedException("false");
