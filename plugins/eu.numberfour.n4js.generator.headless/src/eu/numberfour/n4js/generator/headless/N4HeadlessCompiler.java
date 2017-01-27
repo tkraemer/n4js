@@ -899,9 +899,6 @@ public class N4HeadlessCompiler {
 					}
 				} finally {
 					markedProject.unloadASTAndClearCaches();
-
-					// TODO IDE-2479: Remove this!
-					boolean b = true;
 					unmarkAndUnloadProjects(loadedProjects, markedProject, resourceSet, recorder);
 					resetFSA();
 				}
@@ -913,10 +910,6 @@ public class N4HeadlessCompiler {
 
 		if (collectedErrors.isInitialized()) {
 			throw collectedErrors.get();
-		}
-
-		for (Resource resource : resourceSet.getResources()) {
-			System.out.println(resource.getURI());
 		}
 	}
 
