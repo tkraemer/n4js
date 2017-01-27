@@ -79,9 +79,9 @@ class ModuleNameComputer {
 		return uri.createDefaultQualifiedName
 	}
 
+	/** Called only for URIs without container, e.g. from tests, or built-ins. Hardcoded values should be fine for those cases.*/
 	def private createDefaultQualifiedName(URI uri) {
 		var segmentList = uri.trimFileExtension.segmentsList
-		//TODO IDE-2506
 		val srcFolder = Math.max(segmentList.indexOf('src'), segmentList.indexOf('src-test'))
 		if (srcFolder != -1) {
 			segmentList = segmentList.subList(srcFolder + 1, segmentList.size)
