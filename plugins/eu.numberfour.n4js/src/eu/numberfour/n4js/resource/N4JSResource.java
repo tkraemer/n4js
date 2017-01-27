@@ -69,6 +69,7 @@ import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.parser.InternalSemicolonInjectingParser;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInSchemeRegistrar;
+import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.utils.EcoreUtilN4;
@@ -622,8 +623,34 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	protected void discardAST() {
 		ModuleAwareContentsList theContents = (ModuleAwareContentsList) contents;
 		if (contents != null && !theContents.isEmpty()) {
+			TModule module = getModule();
+			proxifyASTReferences(module);
+
 			List<EObject> toBeUnloaded = theContents.subList(0, 1);
 			unloadElements(toBeUnloaded);
+
+			theContents.sneakyClear();
+
+			EObject astProxy = module.getAstElement();
+			theContents.sneakyAdd(astProxy);
+			theContents.sneakyAdd(module);
+			module.setAstElement(astProxy);
+		}
+	}
+
+	private void proxifyASTReferences(EObject object) {
+		if (object instanceof SyntaxRelatedTElement) {
+			SyntaxRelatedTElement element = (SyntaxRelatedTElement) object;
+			EObject astElement = element.getAstElement();
+			if (astElement != null && !astElement.eIsProxy()) {
+				InternalEObject proxy = (InternalEObject) EcoreUtil.create(astElement.eClass());
+				proxy.eSetProxyURI(EcoreUtil.getURI(astElement));
+				element.setAstElement(proxy);
+			}
+		}
+
+		for (EObject child : object.eContents()) {
+			proxifyASTReferences(child);
 		}
 	}
 
