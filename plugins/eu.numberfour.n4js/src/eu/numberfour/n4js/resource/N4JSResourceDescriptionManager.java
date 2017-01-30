@@ -134,7 +134,8 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 	 * always be true. This is slightly different semantics from original code, that was checking if provided URI
 	 * belonged to {@link N4JSResource}, but with addition of new languages (e.g. {@code N4JSX}) that logic is invalid.
 	 *
-	 * We add this method temporary to fix IDE-2501, but we treat it as placeholder for solution of IDE-2509.
+	 * We add this method temporary to fix IDE-2501, but we treat it as placeholder for solution of IDE-2509. See also
+	 * IDE-2493.
 	 */
 	private boolean isValid(URI uri) {
 		Optional<FileExtensionProvider> contextualFileExtensionProvider = N4LanguageUtils
