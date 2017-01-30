@@ -226,7 +226,7 @@
         name="it.xsemantics.sdk.feature.group"
         versionRange="[1.10.1,1.11.0)"/>
     <repository
-        url="https://dl.bintray.com/lorenzobettini/xsemantics/snapshots/releases/1.10.1.v20170123-1415/"/>
+        url="https://dl.bintray.com/lorenzobettini/xsemantics/snapshots/releases/1.10.1.v20170130-1512/"/>
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"
@@ -428,7 +428,7 @@
         <repository
             url="http://boothen.github.io/Json-Eclipse-Plugin"/>
         <repository
-            url="https://dl.bintray.com/lorenzobettini/xsemantics/snapshots/releases/1.10.1.v20170123-1415/"/>
+            url="https://dl.bintray.com/lorenzobettini/xsemantics/snapshots/releases/1.10.1.v20170130-1512/"/>
         <repository
             url="https://meysholdt.github.io/eclipse_jdt_junit_runners/updatesite"/>
         <repository
@@ -467,7 +467,7 @@
         <repository
             url="http://boothen.github.io/Json-Eclipse-Plugin"/>
         <repository
-            url="https://dl.bintray.com/lorenzobettini/xsemantics/snapshots/releases/1.10.1.v20170123-1415/"/>
+            url="https://dl.bintray.com/lorenzobettini/xsemantics/snapshots/releases/1.10.1.v20170130-1512/"/>
         <repository
             url="https://meysholdt.github.io/eclipse_jdt_junit_runners/updatesite"/>
         <repository
