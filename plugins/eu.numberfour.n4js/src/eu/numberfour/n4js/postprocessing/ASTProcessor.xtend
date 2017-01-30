@@ -344,7 +344,7 @@ public class ASTProcessor extends AbstractProcessor {
 			val elem = node.importedElement;
 			if(elem!==null) {
 				// make sure to use the correct type system for the other file (using our type system as a fall back)
-				val tsCorrect = N4LanguageUtils.getServiceForContext(elem, N4JSTypeSystem) ?: ts;
+				val tsCorrect = N4LanguageUtils.getServiceForContext(elem, N4JSTypeSystem).orElse(ts);
 				// we're not interested in the type here, but invoking the type system will let us reuse
 				// all the logic from method #xsemantics_type() above for handling references to other resources
 				tsCorrect.type(G, elem);
