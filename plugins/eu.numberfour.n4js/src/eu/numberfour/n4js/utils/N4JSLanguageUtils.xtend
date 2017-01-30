@@ -14,12 +14,16 @@ import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.common.unicode.CharTypes
 import eu.numberfour.n4js.conversion.IdentifierValueConverter
 import eu.numberfour.n4js.n4JS.AbstractAnnotationList
+import eu.numberfour.n4js.n4JS.AdditiveExpression
+import eu.numberfour.n4js.n4JS.AdditiveOperator
 import eu.numberfour.n4js.n4JS.AnnotableElement
+import eu.numberfour.n4js.n4JS.BooleanLiteral
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.FunctionDefinition
+import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.IndexedAccessExpression
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
@@ -30,13 +34,18 @@ import eu.numberfour.n4js.n4JS.N4JSASTUtils
 import eu.numberfour.n4js.n4JS.N4MemberAnnotationList
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
+import eu.numberfour.n4js.n4JS.NullLiteral
 import eu.numberfour.n4js.n4JS.NumericLiteral
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
+import eu.numberfour.n4js.n4JS.ParenExpression
 import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.PropertyAssignmentAnnotationList
 import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
+import eu.numberfour.n4js.n4JS.RegularExpressionLiteral
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.StringLiteral
+import eu.numberfour.n4js.n4JS.TemplateLiteral
+import eu.numberfour.n4js.n4JS.TemplateSegment
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
@@ -56,6 +65,7 @@ import eu.numberfour.n4js.ts.types.MemberAccessModifier
 import eu.numberfour.n4js.ts.types.TAnnotableElement
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
+import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TEnumLiteral
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFunction
@@ -75,6 +85,7 @@ import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 import it.xsemantics.runtime.RuleEnvironment
+import java.math.BigDecimal
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.naming.QualifiedName
@@ -654,5 +665,120 @@ class N4JSLanguageUtils {
 				}
 			};
 		}
+	}
+
+	public static final Object VALUE_NULL = new Object() {
+		override toString() {
+			return "null";
+		}
+	}
+	public static final Object VALUE_UNDEFINED = new Object() {
+		override toString() {
+			return "undefined";
+		}
+	}
+	def static boolean isConstantExpression(RuleEnvironment G, Expression expr) {
+		return computeValueIfConstantExpression(G, expr)!==null;
+	}
+	// NOTE: in case of numbers, an instance of any subclass of java.lang.Number may be returned!
+	def static dispatch Object computeValueIfConstantExpression(RuleEnvironment G, Expression expr) {
+		return switch(expr) {
+			NullLiteral:
+				VALUE_NULL
+			IdentifierRef case isUndefinedLiteral(G, expr):
+				VALUE_UNDEFINED
+			BooleanLiteral:
+				expr.isTrue
+			NumericLiteral:
+				expr.value
+			StringLiteral:
+				expr.value
+			RegularExpressionLiteral:
+				null
+			TemplateSegment:
+				expr.rawValue
+			ParenExpression:
+				return computeValueIfConstantExpression(G, expr.expression)
+			default:
+				null
+		};
+	}
+	def static dispatch Object computeValueIfConstantExpression(RuleEnvironment G, TemplateLiteral expr) {
+		val buff = new StringBuilder;
+		for(seg : expr.segments) {
+			val segValue = computeValueIfConstantExpression(G, seg);
+			if(segValue!==null) {
+				buff.append(segValue.toString);
+			} else {
+				return null;
+			}
+		}
+		return buff.toString;
+	}
+	def static dispatch Object computeValueIfConstantExpression(RuleEnvironment G, UnaryExpression expr) {
+		val value = computeValueIfConstantExpression(G, expr.expression);
+		if(value instanceof BigDecimal) {
+			return switch(expr.op) {
+				case POS: value
+				case NEG: value.negate()
+				default: null
+			};
+		} else if(value instanceof Boolean) {
+			return switch(expr.op) {
+				case NOT: !value
+				default: null
+			};
+		}
+		return null;
+	}
+	def static dispatch Object computeValueIfConstantExpression(RuleEnvironment G, AdditiveExpression expr) {
+		val op = expr.op;
+		if(op===AdditiveOperator.ADD) {
+			val leftValue = computeValueIfConstantExpression(G, expr.lhs);
+			val rightValue = computeValueIfConstantExpression(G, expr.rhs);
+			if(leftValue instanceof BigDecimal && rightValue instanceof BigDecimal) {
+				return (leftValue as BigDecimal).add(rightValue as BigDecimal);
+			} else if(leftValue instanceof String && rightValue!==null) {
+				return leftValue + rightValue.toString;
+			} else if(leftValue!==null && rightValue instanceof String) {
+				return leftValue.toString + rightValue;
+			}
+		} else if(op===AdditiveOperator.SUB) {
+			val leftValue = computeValueIfConstantExpression(G, expr.lhs);
+			if(leftValue instanceof BigDecimal) {
+				val rightValue = computeValueIfConstantExpression(G, expr.rhs);
+				if(rightValue instanceof BigDecimal) {
+					return leftValue.subtract(rightValue);
+				}
+			}
+		}
+		return null;
+	}
+	def static dispatch Object computeValueIfConstantExpression(RuleEnvironment G, ParameterizedPropertyAccessExpression expr) {
+		// is expr an access to a built-in symbol, e.g. Symbol.iterator?
+		val builtInSymbol = G.getAccessedBuiltInSymbol(expr);
+		if(builtInSymbol!==null) {
+			return builtInSymbol;
+		}
+		// all other cases:
+		val prop = expr.property;
+		val propParent = prop?.eContainer;
+		return switch(prop) {
+			TEnumLiteral case propParent instanceof TEnum && AnnotationDefinition.STRING_BASED.hasAnnotation(propParent as TEnum):
+				prop.valueOrName
+// FIXME:
+//			TField case prop.const && prop.eResource===expr.eResource: { // only if in same resource!!! (otherwise we would have to store the initExpr's value in the TModule
+//				val initExpr = (prop.astElement as N4FieldDeclaration).expression;
+//				computeValueIfConstantExpression(G, initExpr)
+//			}
+			default:
+				null
+		};
+	}
+	def static boolean isUndefinedLiteral(RuleEnvironment G, Expression expr) {
+		if(expr instanceof IdentifierRef) {
+			return expr.id===G.globalObjectScope.fieldUndefined;
+		}
+		return false;
 	}
 }

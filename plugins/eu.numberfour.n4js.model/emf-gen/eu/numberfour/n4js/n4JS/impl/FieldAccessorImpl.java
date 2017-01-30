@@ -154,6 +154,16 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean hasComputedPropertyName() {
+		final LiteralOrComputedPropertyName declName = this.getDeclaredName();
+		return ((declName != null) && declName.hasComputedPropertyName());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isValidName() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -312,6 +322,7 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.FIELD_ACCESSOR___GET_NAME;
+				case N4JSPackage.PROPERTY_NAME_OWNER___HAS_COMPUTED_PROPERTY_NAME: return N4JSPackage.FIELD_ACCESSOR___HAS_COMPUTED_PROPERTY_NAME;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.FIELD_ACCESSOR___IS_VALID_NAME;
 				default: return -1;
 			}
@@ -333,6 +344,8 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 				return getDefinedAccessor();
 			case N4JSPackage.FIELD_ACCESSOR___GET_NAME:
 				return getName();
+			case N4JSPackage.FIELD_ACCESSOR___HAS_COMPUTED_PROPERTY_NAME:
+				return hasComputedPropertyName();
 			case N4JSPackage.FIELD_ACCESSOR___IS_VALID_NAME:
 				return isValidName();
 		}

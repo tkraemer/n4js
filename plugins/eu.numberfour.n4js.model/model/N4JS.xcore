@@ -1022,8 +1022,14 @@ abstract class PropertyAssignment extends AnnotableElement, VariableEnvironmentE
  */
 abstract class PropertyNameOwner extends NamedElement {
 	contains LiteralOrComputedPropertyName declaredName
+	/* Convenience method; same as {@link LiteralOrComputedPropertyName#getName()}. */
 	op String getName() {
 		return declaredName?.name;
+	}
+	/* Convenience method; same as {@link LiteralOrComputedPropertyName#hasComputedPropertyName()}. */
+	op boolean hasComputedPropertyName() {
+		val declName = declaredName;
+		return declName!==null && declName.hasComputedPropertyName;
 	}
 	/**
 	 * Used to detect early errors according the the ES6 spec.
@@ -1044,6 +1050,16 @@ class LiteralOrComputedPropertyName {
 	/* The expression provided in the source code for computing the property name, or <code>null</code>. */
 	contains Expression expression
 
+	/* Tells if this element has a name computed from an expression instead of a literal name given in the source code. */
+	op boolean hasComputedPropertyName() {
+		return literalName===null && expression!==null;
+	}
+
+	/*
+	 * Returns either the literal name given in the source code or the computed name.
+	 * In case of computed names, this method will return <code>null</code> if the expression is invalid (e.g.
+	 * not a constant expression) or if it has not yet been evaluated (this happens during AST traversal).
+	 */
 	op String getName() {
 		return literalName ?: computedName;
 	}

@@ -20,6 +20,7 @@ import eu.numberfour.n4js.n4JS.ForStatement
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4GetterDeclaration
@@ -76,6 +77,8 @@ public class ASTProcessor extends AbstractProcessor {
 	@Inject
 	private ASTMetaInfoCacheHelper astMetaInfoCacheHelper;
 	@Inject
+	private ComputedNameProcessor computedNameProcessor;
+	@Inject
 	private TypeProcessor typeProcessor;
 	@Inject
 	private TypeDeferredProcessor typeDeferredProcessor;
@@ -116,8 +119,12 @@ public class ASTProcessor extends AbstractProcessor {
 		val cache = astMetaInfoCacheHelper.getOrCreate(resource);
 		cache.startProcessing(cancelIndicator); // will throw exception if processing already in progress or completed
 		try {
-			// step 1: main processing
 			val script = resource.script;
+			// step 0: process computed property names
+			for(node : script.eAllContents.filter(LiteralOrComputedPropertyName).toIterable) {
+				computedNameProcessor.computedName(G, node, cache, 0);
+			}
+			// step 1: main processing
 			processSubtree(G, script, cache, 0);
 			// step 2: processing of postponed subtrees (only Blocks, so far)
 			var Block block;
@@ -351,6 +358,14 @@ public class ASTProcessor extends AbstractProcessor {
 	// ---------------------------------------------------------------------------------------------------------------
 
 
+	/**
+	 * This method defines which children of the given object are to be processed *and* defines the order in which they
+	 * are to be processed. By default, all directly contained child objects are to be processed (according to EMF
+	 * terminology) and the order is irrelevant, meaning we can simply use <code>obj.eContents()</code> by default.
+	 * <p>
+	 * In other words, whenever some contents need to be ignored during processing or whenever the order of processing
+	 * between two or more siblings is relevant, a special case needs to be added to this method.
+	 */
 	def private List<EObject> childrenToBeProcessed(RuleEnvironment G, EObject obj) {
 		// order in return value is important!
 		return switch (obj) {

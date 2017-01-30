@@ -190,6 +190,13 @@ class RuleEnvironmentExtensions {
 	}
 
 	/**
+	 * Convenience method returning the {@link GlobalObjectScope} via this rule environment's {@link PredefinedTypes}.
+	 */
+	def static GlobalObjectScope getGlobalObjectScope(RuleEnvironment G) {
+		return G?.predefinedTypes?.globalObjectScope;
+	}
+
+	/**
 	 * Returns the resource used to load built-in types and to resolve proxies. This is the resource of the object
 	 */
 	public def static Resource getContextResource(RuleEnvironment G) {

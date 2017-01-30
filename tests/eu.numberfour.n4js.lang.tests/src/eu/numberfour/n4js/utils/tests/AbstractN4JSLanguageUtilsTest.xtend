@@ -11,7 +11,10 @@
 package eu.numberfour.n4js.utils.tests
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 import eu.numberfour.n4js.N4JSParseHelper
+import eu.numberfour.n4js.n4JS.ExpressionStatement
+import eu.numberfour.n4js.n4JS.ParenExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.util.Variance
@@ -22,7 +25,8 @@ import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
+
+import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
 /**
  *
@@ -55,5 +59,25 @@ abstract class AbstractN4JSLanguageUtilsTest {
 			N4JSLanguageUtils.getVarianceOfPosition(ref2TypeVar)
 		};
 		assertEquals(expectedVariance, computedVariance);
+	}
+
+
+	def protected void assertValueOfConstExpr(CharSequence expression, Object expectedValue) {
+		assertValueOfConstExpr("", expression, expectedValue);
+	}
+	def protected void assertValueOfConstExpr(CharSequence preamble, CharSequence expression, Object expectedValue) {
+		val script = '''
+			«preamble»;
+			(«expression»);
+		'''.parse;
+		script.assertNoParseErrors;
+		val issues = script.validate;
+		assertTrue(issues.toString, issues.empty);
+		val lastStatement = script.scriptElements.last as ExpressionStatement;
+		val expressionInAST = (lastStatement.expression as ParenExpression).expression;
+		assertNotNull(expressionInAST);
+		val G = script.newRuleEnvironment;
+		val computedValue = N4JSLanguageUtils.computeValueIfConstantExpression(G, expressionInAST);
+		assertEquals(expectedValue, computedValue);
 	}
 }

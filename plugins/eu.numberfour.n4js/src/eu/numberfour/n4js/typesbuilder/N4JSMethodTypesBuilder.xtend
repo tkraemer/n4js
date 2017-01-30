@@ -43,7 +43,7 @@ package class N4JSMethodTypesBuilder extends AbstractFunctionDefinitionTypesBuil
 		if (methodDecl.definedType !== null && ! methodDecl.definedType.eIsProxy) {
 			throw new IllegalStateException("TMethod already created for N4MethodDeclaration");
 		}
-		if (methodDecl.name === null && !methodDecl.callableConstructor) {
+		if (methodDecl.name === null && !methodDecl.hasComputedPropertyName && !methodDecl.callableConstructor) {
 			return null
 		}
 		val methodType = TypesFactory::eINSTANCE.createTMethod();

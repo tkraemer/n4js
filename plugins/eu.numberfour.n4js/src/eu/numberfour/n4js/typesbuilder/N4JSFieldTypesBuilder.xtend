@@ -25,8 +25,8 @@ package class N4JSFieldTypesBuilder {
 	@Inject extension N4JSTypesBuilderHelper
 
 	def package createField(N4FieldDeclaration n4Field, TClassifier classifierType, boolean preLinkingPhase) {
-		if (n4Field.name === null)
-			return null
+		if (n4Field.name === null && !n4Field.hasComputedPropertyName)
+			return null;
 
 		val field = TypesFactory::eINSTANCE.createTField();
 		field.name = n4Field.name;
