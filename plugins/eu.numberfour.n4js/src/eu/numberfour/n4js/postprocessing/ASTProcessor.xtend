@@ -19,6 +19,7 @@ import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ForStatement
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionExpression
+import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4GetterDeclaration
@@ -123,6 +124,18 @@ public class ASTProcessor extends AbstractProcessor {
 			while ((block = cache.postponedSubTrees.poll) !== null) {
 				// note: we need to allow adding more postponed subtrees inside this loop!
 				processSubtree(G, block, cache, 0);
+			}
+			// step 3: processing of LocalArgumentsVariable
+			// (a LocalArgumentsVariable may be created on demand at any time, which means new AST nodes may appear
+			// while processing the AST (see {@link FunctionOrFieldAccessor#getLocalArgumentsVariable()}); to support
+			// these cases, we will now look for and process these newly created AST nodes:
+			for (potentialContainer : cache.potentialContainersOfLocalArgumentsVariable) {
+				val lav = potentialContainer._lok; // obtain the LocalArgumentsVariable without(!) triggering its on-demand creation
+				if (lav!==null) {
+					if (cache.getTypeFailSafe(lav)===null) { // only if not processed yet
+						processSubtree(G, lav, cache, 0);
+					}
+				}
 			}
 		} finally {
 			if (cache.canceled) {
@@ -297,6 +310,10 @@ public class ASTProcessor extends AbstractProcessor {
 	 * Top-down processing of AST nodes happens here, i.e. this method will see all AST nodes in a top-down order.
 	 */
 	def private void processNode_preChildren(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
+
+		if (node instanceof FunctionOrFieldAccessor) {
+			cache.potentialContainersOfLocalArgumentsVariable.add(node); // remember for later
+		}
 
 		if (node instanceof FunctionDefinition) {
 			handleAsyncFunctionDefinition(G, node, cache);

@@ -153,6 +153,19 @@ if(isValueToBeDestructured) {
 					expectedElemTypeRefs, G);
 				cache.storeType(arrLit, fallback);
 			}
+			// PolyProcessor#isResponsibleFor(TypableElement) claims responsibility of AST nodes of type 'ArrayElement'
+			// contained in an ArrayLiteral which is poly, so we are responsible for storing the types of those
+			// 'ArrayElement' nodes in cache
+			// (note: compare this with similar handling of 'Argument' nodes in PolyProcessor_CallExpression)
+			for (arrElem : arrLit.elements) {
+				val expr = arrElem?.expression;
+				if (expr!==null) {
+					val exprType = getFinalResultTypeOfNestedPolyExpression(expr);
+					if (exprType!==null) {
+						cache.storeType(arrElem, exprType);
+					}
+				}
+			}
 		];
 
 		// return temporary type of arrLit (i.e. may contain inference variables)

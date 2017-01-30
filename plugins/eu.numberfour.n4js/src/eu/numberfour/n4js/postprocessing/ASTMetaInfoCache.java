@@ -31,6 +31,7 @@ import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.OnChangeEvictingCache.CacheAdapter;
 
 import eu.numberfour.n4js.n4JS.Block;
+import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
 import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
@@ -176,11 +177,16 @@ public final class ASTMetaInfoCache {
 
 	private boolean isProcessingInProgress = false;
 	private boolean isFullyProcessed = false;
-	CancelIndicator cancelIndicator = null;
+	/* package */ CancelIndicator cancelIndicator = null;
 
-	final Set<EObject> forwardProcessedSubTrees = new LinkedHashSet<>();
-	final Set<EObject> astNodesCurrentlyBeingTyped = new LinkedHashSet<>();
-	final Queue<Block> postponedSubTrees = new LinkedList<>(); // using LinkedList as FIFO queue, here
+	// @formatter:off
+
+	/* package */ final Set<EObject> forwardProcessedSubTrees = new LinkedHashSet<>();
+	/* package */ final Set<EObject> astNodesCurrentlyBeingTyped = new LinkedHashSet<>();
+	/* package */ final Queue<Block> postponedSubTrees = new LinkedList<>(); // using LinkedList as FIFO queue, here
+	/* package */ final List<FunctionOrFieldAccessor> potentialContainersOfLocalArgumentsVariable = new LinkedList<>();
+
+	// @formatter:on
 
 	/* package */ boolean isProcessingInProgress() {
 		return isProcessingInProgress;
@@ -221,6 +227,7 @@ public final class ASTMetaInfoCache {
 		forwardProcessedSubTrees.clear();
 		astNodesCurrentlyBeingTyped.clear();
 		postponedSubTrees.clear();
+		potentialContainersOfLocalArgumentsVariable.clear();
 	}
 
 	/**
