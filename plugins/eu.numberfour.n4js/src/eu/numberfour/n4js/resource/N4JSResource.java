@@ -561,6 +561,12 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	 * Also resets the errors and warnings and the parse result.
 	 */
 	public void unloadAST() {
+		if (getScript() == null || getScript().eIsProxy()) {
+			// We are either freshly created and not loaded or we are loaded from resource description and thus already
+			// have an AST proxy.
+			return;
+		}
+
 		// Discard AST and proxify all references.
 		discardAST();
 
@@ -571,9 +577,14 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 		getErrors().clear();
 		getWarnings().clear();
 
-		// The state of the resource should be exactly the same as if it was loaded from the index.
-		fullyInitialized = true;
-		fullyPostProcessed = true;
+		if (fullyInitialized) {
+			// If we already had a TModule we want to appear as if we had just been loaded from a resource description.
+			fullyPostProcessed = true;
+		} else {
+			// Otherwise, we want to appear as if we had just been created.
+			fullyPostProcessed = false;
+		}
+
 		aboutToBeUnloaded = false;
 		isInitializing = false;
 		isLoading = false;
@@ -623,18 +634,27 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	protected void discardAST() {
 		ModuleAwareContentsList theContents = (ModuleAwareContentsList) contents;
 		if (contents != null && !theContents.isEmpty()) {
-			TModule module = getModule();
-			proxifyASTReferences(module);
+			// Create a proxy for the AST.
+			EObject script = getScript();
+			InternalEObject scriptProxy = (InternalEObject) EcoreUtil.create(script.eClass());
+			scriptProxy.eSetProxyURI(EcoreUtil.getURI(script));
 
+			// Unload the AST.
 			List<EObject> toBeUnloaded = theContents.subList(0, 1);
 			unloadElements(toBeUnloaded);
 
-			theContents.sneakyClear();
+			if (isFullyInitialized()) {
+				TModule module = getModule();
+				proxifyASTReferences(module);
+				module.setAstElement(scriptProxy);
 
-			EObject astProxy = module.getAstElement();
-			theContents.sneakyAdd(astProxy);
-			theContents.sneakyAdd(module);
-			module.setAstElement(astProxy);
+				theContents.sneakyClear();
+				theContents.sneakyAdd(scriptProxy);
+				theContents.sneakyAdd(module);
+			} else {
+				theContents.sneakyClear();
+				theContents.sneakyAdd(scriptProxy);
+			}
 		}
 	}
 
