@@ -475,7 +475,6 @@ class N4JSResourceTest {
 		assertTrue("Script is proxified after unloading AST", res.script.eIsProxy);
 		assertNotNull("TModule is available after unloading AST", res.module);
 		assertFalse("TModule is not proxified after unloading AST", res.module.eIsProxy);
-		assertTrue("TModule AST node is script proxy after unloading AST", res.script === res.module.astElement);
 	}
 }
 
