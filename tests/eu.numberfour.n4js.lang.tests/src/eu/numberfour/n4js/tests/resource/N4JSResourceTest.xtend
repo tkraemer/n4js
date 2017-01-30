@@ -356,6 +356,9 @@ class N4JSResourceTest {
 		assertFalse("Resource is not loading after unloading AST", res.loading);
 		assertFalse("Resource is not fully initialized after unloading AST", res.fullyInitialized);
 		assertFalse("Resource is not fully processed after unloading AST", res.fullyProcessed);
+
+		assertNull("Script is null after unloading AST", res.script);
+		assertNull("TModule is null after unloading AST", res.module);
 	}
 	
 	@Test
@@ -376,6 +379,10 @@ class N4JSResourceTest {
 		assertFalse("Resource is not loading after unloading AST", res.loading);
 		assertFalse("Resource is not fully initialized after unloading AST", res.fullyInitialized);
 		assertFalse("Resource is not fully processed after unloading AST", res.fullyProcessed);
+
+		assertNotNull("Script is null after unloading AST", res.script);
+		assertTrue("Script is proxified after unloading AST", res.script.eIsProxy);
+		assertNull("TModule is null after unloading AST", res.module);
 	}
 	
 	@Test
@@ -396,6 +403,10 @@ class N4JSResourceTest {
 		assertFalse("Resource is not loading after unloading AST", res.loading);
 		assertFalse("Resource is not fully initialized after unloading AST", res.fullyInitialized);
 		assertFalse("Resource is not fully processed after unloading AST", res.fullyProcessed);
+
+		assertNotNull("Script is null after unloading AST", res.script);
+		assertTrue("Script is proxified after unloading AST", res.script.eIsProxy);
+		assertNull("TModule is null after unloading AST", res.module);
 	}
 	
 	@Test
@@ -416,6 +427,12 @@ class N4JSResourceTest {
 		assertFalse("Resource is not loading after unloading AST", res.loading);
 		assertTrue("Resource is fully initialized after unloading AST", res.fullyInitialized);
 		assertTrue("Resource is fully processed after unloading AST", res.fullyProcessed);
+
+		assertNotNull("Script is null after unloading AST", res.script);
+		assertTrue("Script is proxified after unloading AST", res.script.eIsProxy);
+		assertNotNull("TModule is available after unloading AST", res.module);
+		assertFalse("TModule is not proxified after unloading AST", res.module.eIsProxy);
+		assertTrue("TModule AST node is script proxy after unloading AST", res.script === res.module.astElement);
 	}
 	
 	@Test
@@ -453,6 +470,12 @@ class N4JSResourceTest {
 		assertFalse("Resource is not loading after unloading AST", res.loading);
 		assertTrue("Resource is fully initialized after unloading AST", res.fullyInitialized);
 		assertTrue("Resource is fully processed after unloading AST", res.fullyProcessed);
+
+		assertNotNull("Script is null after unloading AST", res.script);
+		assertTrue("Script is proxified after unloading AST", res.script.eIsProxy);
+		assertNotNull("TModule is available after unloading AST", res.module);
+		assertFalse("TModule is not proxified after unloading AST", res.module.eIsProxy);
+		assertTrue("TModule AST node is script proxy after unloading AST", res.script === res.module.astElement);
 	}
 }
 

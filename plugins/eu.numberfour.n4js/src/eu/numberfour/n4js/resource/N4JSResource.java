@@ -545,8 +545,8 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	 * <li>All errors and warnings are cleared.</li>
 	 * <li>The flags are set as follows:
 	 * <ul>
-	 * <li><code>fullyInitialized</code> is <code>true</code></li>
-	 * <li><code>fullyPostProcessed</code> is <code>true</code></li>
+	 * <li><code>fullyInitialized</code> remains unchanged</li>
+	 * <li><code>fullyPostProcessed</code> is set to the same value as <code>fullyInitialized</code></li>
 	 * <li><code>aboutToBeUnloaded</code> is <code>false</code></li>
 	 * <li><code>isInitializing</code> is <code>false</code></li>
 	 * <li><code>isLoading</code> is <code>false</code></li>
@@ -558,7 +558,17 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	 * </li>
 	 * <li>Finally, all lazy proxy information is cleared by calling {@link #clearLazyProxyInformation()}.</li>
 	 * </ul>
-	 * Also resets the errors and warnings and the parse result.
+	 * Calling this method takes the resources either to the same state as if it was just created, or to the same state
+	 * as if it was just loaded from a resource description, depending on which state the resource is in.
+	 * <ul>
+	 * <li>If the resource was just <b>created</b>, then it will remain so.</li>
+	 * <li>If the resource was <b>loaded</b>, then it will be taken back to the <b>created</b> state.</li>
+	 * <li>If the resource was <b>initialized</b>, then it will be taken to the <b>loaded from description</b>
+	 * state.</li>
+	 * <li>If the resource was <b>fully processed</b>, then it will be taken to the <b>loaded from description</b>
+	 * state.</li>
+	 * <li>If the resource was <b>loaded from description</b>, then it will remain so.</li>
+	 * </ul>
 	 */
 	public void unloadAST() {
 		if (getScript() == null || getScript().eIsProxy()) {
@@ -577,14 +587,7 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 		getErrors().clear();
 		getWarnings().clear();
 
-		if (fullyInitialized) {
-			// If we already had a TModule we want to appear as if we had just been loaded from a resource description.
-			fullyPostProcessed = true;
-		} else {
-			// Otherwise, we want to appear as if we had just been created.
-			fullyPostProcessed = false;
-		}
-
+		fullyPostProcessed = fullyInitialized;
 		aboutToBeUnloaded = false;
 		isInitializing = false;
 		isLoading = false;
