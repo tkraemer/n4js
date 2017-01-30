@@ -65,18 +65,25 @@ public class TypeProcessor extends AbstractProcessor {
 	private TypeSystemHelper tsh;
 
 
-	def void typeNode(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
-		if (node instanceof TypableElement) {
+	/**
+	 * If the given AST node is typable this method will infer its type and store the result in the given cache.
+	 * <p>
+	 * This method mainly checks if the given node is typable. Main processing is done in
+	 * {@link #typeNode2(RuleEnvironment, TypableElement, ASTMetaInfoCache, int) typeNode2()}.
+	 */
+	def public void typeNode(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
+		if (node.isTypableNode) {
+			val nodeCasted = node as TypableElement; // because #isTypableNode() returned true
 			// we have a typable node
 			if (N4JSASTUtils.isArrayOrObjectLiteralUsedAsDestructuringPattern(node)
-				&& polyProcessor.isEntryPoint(node)) {
+				&& polyProcessor.isEntryPoint(nodeCasted)) {
 				// special case: array or object literal being used as a destructuring pattern
 				log(indentLevel, "ignored (array or object literal being used as a destructuring pattern)")
 				destructureProcessor.typeDestructuringPattern(G, node, cache, indentLevel);
 
 			} else {
 				// standard case
-				typeNode(G, node, cache, indentLevel);
+				typeNode2(G, nodeCasted, cache, indentLevel);
 			}
 		} else {
 			// not a typable node
@@ -84,7 +91,25 @@ public class TypeProcessor extends AbstractProcessor {
 		}
 	}
 
-	def private void typeNode(RuleEnvironment G, TypableElement node, ASTMetaInfoCache cache, int indentLevel) {
+	/**
+	 * Infers type of given AST node and stores the result in the given cache.
+	 * <p>
+	 * More precisely:
+	 * <ol>
+	 * <li>if given node is part of a poly expression:
+	 *     <ol>
+	 *     <li>if given node is the root of a tree of nested poly expressions (including the case that node is a poly
+	 *         expression without any nested poly expressions):<br>
+	 *         --> inference of entire tree of nested poly expressions AND storage of all results in cache is delegated
+	 *             to class {@link PolyProcessor}.
+	 *     <li>otherwise:<br>
+	 *         --> ignore this node ({@code PolyProcessor} will deal with it when processing the parent poly expression)
+	 *     </ol>
+	 * <li>otherwise (standard case):<br>
+	 *     --> infer type of node by asking Xsemantics + store the result in the given cache.
+	 * </ol>
+	 */
+	def private void typeNode2(RuleEnvironment G, TypableElement node, ASTMetaInfoCache cache, int indentLevel) {
 		try {
 			if (polyProcessor.isResponsibleFor(node)) {
 				if (polyProcessor.isEntryPoint(node)) {
@@ -98,7 +123,7 @@ public class TypeProcessor extends AbstractProcessor {
 					]);
 				} else {
 					// we have a poly expression, but one that is nested in another poly expression
-					// -> ignore here, because polyComputer will deal with it when computing the parent poly expression
+					// -> ignore here, because polyProcessor will deal with it when processing the parent poly expression
 					log(indentLevel,
 						"deferred (nested in poly expression --> will be inferred during inference of outer poly expression)");
 
