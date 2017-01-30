@@ -632,28 +632,31 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	 * Discard the AST and proxify all referenced nodes. Does nothing if the AST is already unloaded.
 	 */
 	protected void discardAST() {
-		ModuleAwareContentsList theContents = (ModuleAwareContentsList) contents;
-		if (contents != null && !theContents.isEmpty()) {
+		EObject script = getScript();
+		if (script != null && !script.eIsProxy()) {
+
 			// Create a proxy for the AST.
-			EObject script = getScript();
 			InternalEObject scriptProxy = (InternalEObject) EcoreUtil.create(script.eClass());
 			scriptProxy.eSetProxyURI(EcoreUtil.getURI(script));
 
-			// Unload the AST.
-			List<EObject> toBeUnloaded = theContents.subList(0, 1);
-			unloadElements(toBeUnloaded);
-
+			TModule module = null;
+			ModuleAwareContentsList theContents = (ModuleAwareContentsList) contents;
 			if (isFullyInitialized()) {
-				TModule module = getModule();
-				proxifyASTReferences(module);
-				module.setAstElement(scriptProxy);
+				module = getModule();
+				if (module != null && !module.eIsProxy()) {
+					proxifyASTReferences(module);
+					module.setAstElement(scriptProxy);
+				}
+			}
 
-				theContents.sneakyClear();
-				theContents.sneakyAdd(scriptProxy);
+			// Unload the AST.
+			unloadElements(theContents.subList(0, 1));
+
+			theContents.sneakyClear();
+			theContents.sneakyAdd(scriptProxy);
+
+			if (module != null) {
 				theContents.sneakyAdd(module);
-			} else {
-				theContents.sneakyClear();
-				theContents.sneakyAdd(scriptProxy);
 			}
 		}
 	}
