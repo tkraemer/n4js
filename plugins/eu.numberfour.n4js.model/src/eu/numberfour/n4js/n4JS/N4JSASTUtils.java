@@ -445,16 +445,17 @@ public abstract class N4JSASTUtils {
 				return ((TStructMember) obj).getDefinedMember();
 			return obj;
 		}
-		// is obj an AST node that defined a type model element?
+		// is obj an AST node that defines a type model element?
 		if (obj instanceof TypeDefiningElement)
 			return ((TypeDefiningElement) obj).getDefinedType();
 		if (obj instanceof N4MemberDeclaration)
 			return ((N4MemberDeclaration) obj).getDefinedTypeElement();
+		if (obj instanceof PropertyAssignment)
+			return ((PropertyAssignment) obj).getDefinedMember();
 		if (obj instanceof FormalParameter)
 			return ((FormalParameter) obj).getDefinedTypeElement();
-		if (obj instanceof ExportedVariableDeclaration) {
+		if (obj instanceof ExportedVariableDeclaration)
 			return ((ExportedVariableDeclaration) obj).getDefinedVariable();
-		}
 		// no type model element found
 		return null;
 	}

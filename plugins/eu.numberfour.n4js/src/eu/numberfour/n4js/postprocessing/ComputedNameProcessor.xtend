@@ -73,6 +73,9 @@ class ComputedNameProcessor {
 
 	def private void discardTypeModelElement(EObject astNode) {
 		val elem = N4JSASTUtils.getCorrespondingTypeModelElement(astNode);
+		if(elem===null) {
+			throw new IllegalArgumentException("given AST node does not have a type model element to discard");
+		}
 		if(elem instanceof SyntaxRelatedTElement) {
 			elem.astElement = null;
 		}
