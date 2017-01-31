@@ -23,8 +23,6 @@ import eu.numberfour.n4js.n4JS.PropertySetterDeclaration
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
-import eu.numberfour.n4js.utils.ConstantValue.ValueString
-import eu.numberfour.n4js.utils.ConstantValue.ValueSymbol
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import it.xsemantics.runtime.RuleEnvironment
@@ -62,12 +60,33 @@ class ComputedNameProcessor {
 		}
 	}
 
+	/**
+	 * Returns the property/member name to use for the given expression or <code>null</code> if the expression is not a
+	 * valid constant expression.
+	 * <p>
+	 * IMPLEMENTATION NOTE: we can simply use #toString() on the non-null value, even if we have a ValueBoolean,
+	 * ValueNumber, or ValueSymbol.
+	 * <p>
+	 * For booleans and numbers: they are equivalent to their corresponding string literal, as illustrated in this
+	 * snippet:
+	 * <pre>
+	 *     var obj = {
+	 *         41     : 'a',
+	 *         [42]   : 'b',
+	 *         [false]: 'c'
+	 *     };
+	 *
+	 *     console.log( obj[41]    === obj['41']    ); // will print true!
+	 *     console.log( obj[42]    === obj['42']    ); // will print true!
+	 *     console.log( obj[false] === obj['false'] ); // will print true!
+	 * </pre>
+	 * <p>
+	 * For symbols: the #toString() method in ValueSymbol prepends {@link N4JSLanguageUtils#SYMBOL_IDENTIFIER_PREFIX},
+	 * so we can simply use that.
+	 */
 	def private String getPropertyNameFromExpression(RuleEnvironment G, Expression expr) {
 		val value = N4JSLanguageUtils.computeValueIfConstantExpression(G, expr);
-		if(value instanceof ValueString || value instanceof ValueSymbol) {
-			return value.toString;
-		}
-		return null;
+		return value?.toString; // see API doc for why we can simply use #toString() here
 	}
 
 	def private void discardTypeModelElement(EObject astNode) {

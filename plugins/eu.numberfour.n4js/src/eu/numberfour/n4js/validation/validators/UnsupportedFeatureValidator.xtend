@@ -24,7 +24,6 @@ import eu.numberfour.n4js.n4JS.NamedElement
 import eu.numberfour.n4js.n4JS.NewTarget
 import eu.numberfour.n4js.n4JS.PropertyNameKind
 import eu.numberfour.n4js.n4JS.TaggedTemplateString
-import eu.numberfour.n4js.utils.ConstantValue
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.validation.ASTStructureValidator
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
@@ -115,22 +114,13 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 
 
 	@Check
-	def void checkNumericPropertyName(LiteralOrComputedPropertyName decl) {
-		if(decl.kind===PropertyNameKind.NUMBER) {
-			unsupported("numeric property/member name", decl);
-		}
-	}
-
-
-	@Check
 	def void checkComputedPropertyName(LiteralOrComputedPropertyName decl) {
 		if(decl.kind===PropertyNameKind.COMPUTED) {
 			val expr = decl.expression;
 			if(expr!==null) {
 				val G = decl.newRuleEnvironment;
-				val exprValue = N4JSLanguageUtils.computeValueIfConstantExpression(G, expr);
-				if(!(exprValue instanceof ConstantValue.ValueString)) {
-					unsupported("computed property/member name using an expression other than a constant expression evaluating to a string", expr);
+				if(!N4JSLanguageUtils.isConstantExpression(G, expr)) {
+					unsupported("computed property/member name using an expression other than a constant expression", expr);
 				}
 			}
 		}

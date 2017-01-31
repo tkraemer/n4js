@@ -9,41 +9,35 @@ function foo(): string {
 
 class C {
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "foo()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "foo()"
 	get [foo()]() {return null;}
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "foo()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "foo()"
 	set [foo()](value) {}
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "foo()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "foo()"
 	[foo()]() {}
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "42"
-	[42]() {}
-	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "Symbol()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "Symbol()"
 	[Symbol()]() {}
 }
 
 
 var ol = {
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "foo()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "foo()"
 	[foo()]: "one",
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "foo()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "foo()"
 	get [foo()]() {return null;},
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "foo()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "foo()"
 	set [foo()](value) {},
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "foo()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "foo()"
 	[foo()]() {},
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "42"
-	[42]() {},
-	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "Symbol()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "Symbol()"
 	[Symbol()]() {}
 }
 
