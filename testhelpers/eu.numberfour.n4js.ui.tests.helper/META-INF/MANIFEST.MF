@@ -19,12 +19,11 @@ Require-Bundle: eu.numberfour.n4js.ui,
  org.eclipse.xtext.builder,
  org.eclipse.xtext.ui.shared,
  org.eclipse.emf.ecore,
- eu.numberfour.n4js.runner
+ eu.numberfour.n4js.runner,
+ eu.numberfour.n4js.xpect
 Export-Package: eu.numberfour.n4js,
  eu.numberfour.n4js.annotation,
  eu.numberfour.n4js.editor.syntaxcoloring,
  eu.numberfour.n4js.tests.builder,
  eu.numberfour.n4js.tests.outline,
- eu.numberfour.n4js.tests.util,
- eu.numberfour.n4js.ui.xpect,
- eu.numberfour.n4js.xpect
+ eu.numberfour.n4js.tests.util

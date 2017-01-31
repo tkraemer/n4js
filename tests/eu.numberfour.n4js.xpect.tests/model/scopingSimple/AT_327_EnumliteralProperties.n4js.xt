@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
 
 enum Color { RED, GREEN, BLUE }
 enum Country { DE : "276", US : "840", TR : "792" }

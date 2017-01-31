@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
 
 // TODO: checking comments only (without any other language-feature) fails to compute correct lines in the test. 
 

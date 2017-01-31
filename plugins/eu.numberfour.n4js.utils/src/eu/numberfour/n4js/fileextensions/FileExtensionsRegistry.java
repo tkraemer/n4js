@@ -63,9 +63,8 @@ public class FileExtensionsRegistry {
 	private final Collection<String> runnableFileExtensions = new ArrayList<>();
 
 	/**
-	 * Register a runnable file extension. This method should only be invoked by client code directly in headless mode.
-	 * When running in Eclipse, runnable file extensions will be registered via the 'runnableFileExtensions' extension
-	 * point.
+	 * Register a file extension. This method should only be invoked by client code directly in headless mode. When
+	 * running in Eclipse, file extensions will be registered via the 'fileExtensions' extension point.
 	 */
 	public void register(String fileExtension, FileExtensionType extensionType) {
 		switch (extensionType) {
@@ -81,7 +80,7 @@ public class FileExtensionsRegistry {
 	}
 
 	/**
-	 * Return runnable file extensions
+	 * Return file extensions
 	 */
 	public Collection<String> getFileExtensions(FileExtensionType extensionType) {
 		if (!isInitialized) {
@@ -133,10 +132,12 @@ public class FileExtensionsRegistry {
 	}
 
 	/**
-	 * Reset the list of runnable file extensions to empty
+	 * Reset the lists of file extensions to empty
 	 */
 	public void reset() {
 		isInitialized = false;
+		transpilableFileExtensions.clear();
+		testFileExtensions.clear();
 		runnableFileExtensions.clear();
 	}
 }

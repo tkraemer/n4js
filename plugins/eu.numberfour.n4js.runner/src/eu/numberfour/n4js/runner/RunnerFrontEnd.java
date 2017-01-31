@@ -128,6 +128,16 @@ public class RunnerFrontEnd {
 	}
 
 	/**
+	 * Allows for adding additional path if needed.
+	 */
+	public RunConfiguration createConfiguration(String runnerId, String implementationId, String systemLoader,
+			URI moduleToRun, String additionalPath) {
+		RunConfiguration runConfig = createConfiguration(runnerId, implementationId, systemLoader, moduleToRun);
+		runConfig.setAdditionalPath(additionalPath);
+		return runConfig;
+	}
+
+	/**
 	 * Restores a run configuration that was previously "serialized" with method
 	 * {@link RunConfiguration#readPersistentValues()}. This method should only be used by
 	 * <code>RunConfigurationConverter</code>.

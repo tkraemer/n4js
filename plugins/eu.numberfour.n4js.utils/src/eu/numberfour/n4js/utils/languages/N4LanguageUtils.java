@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.utils.languages;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -29,12 +30,12 @@ public class N4LanguageUtils {
 	 * Same as {@link #getServiceForContext(URI, Class)}, but accepts any EObject contained in an Xtext language
 	 * resource. Returns <code>null</code> if the given context object is not contained in a {@link Resource}.
 	 */
-	public static <T> T getServiceForContext(EObject context, Class<T> serviceType) {
+	public static <T> Optional<T> getServiceForContext(EObject context, Class<T> serviceType) {
 		Objects.requireNonNull(context);
 		Objects.requireNonNull(serviceType);
 		final Resource res = context.eResource();
 		final URI uri = res != null ? res.getURI() : null;
-		return uri != null ? getServiceForContext(uri, serviceType) : null;
+		return uri != null ? getServiceForContext(uri, serviceType) : Optional.empty();
 	}
 
 	/**
@@ -49,14 +50,14 @@ public class N4LanguageUtils {
 	 *            the URI of an Xtext language resource, e.g. an N4JS, N4JSX, or N4IDL resource.
 	 * @param serviceType
 	 *            the type of the service to obtain.
-	 * @return the service instance or <code>null</code> if no Xtext resource service provide was found for the given
-	 *         URI.
+	 * @return the service instance or {@link Optional#empty()} if no Xtext resource service provide was found for the
+	 *         given URI.
 	 */
-	public static <T> T getServiceForContext(URI uri, Class<T> serviceType) {
+	public static <T> Optional<T> getServiceForContext(URI uri, Class<T> serviceType) {
 		Objects.requireNonNull(uri);
 		Objects.requireNonNull(serviceType);
 		final IResourceServiceProvider serviceProvider = IResourceServiceProvider.Registry.INSTANCE
 				.getResourceServiceProvider(uri);
-		return serviceProvider != null ? serviceProvider.get(serviceType) : null;
+		return serviceProvider != null ? Optional.ofNullable(serviceProvider.get(serviceType)) : Optional.empty();
 	}
 }
