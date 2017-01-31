@@ -15,9 +15,10 @@ import eu.numberfour.n4js.common.unicode.CharTypes
 import eu.numberfour.n4js.conversion.IdentifierValueConverter
 import eu.numberfour.n4js.n4JS.AbstractAnnotationList
 import eu.numberfour.n4js.n4JS.AdditiveExpression
-import eu.numberfour.n4js.n4JS.AdditiveOperator
 import eu.numberfour.n4js.n4JS.AnnotableElement
+import eu.numberfour.n4js.n4JS.BinaryLogicalExpression
 import eu.numberfour.n4js.n4JS.BooleanLiteral
+import eu.numberfour.n4js.n4JS.ConditionalExpression
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FormalParameter
@@ -83,9 +84,10 @@ import eu.numberfour.n4js.ts.types.util.ExtendedClassesIterable
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
+import eu.numberfour.n4js.utils.ConstantValue.ValueBoolean
+import eu.numberfour.n4js.utils.ConstantValue.ValueNumber
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 import it.xsemantics.runtime.RuleEnvironment
-import java.math.BigDecimal
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.naming.QualifiedName
@@ -94,6 +96,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.n4JS.MultiplicativeExpression
 
 /**
  * Intended for small, static utility methods that
@@ -667,43 +670,33 @@ class N4JSLanguageUtils {
 		}
 	}
 
-	public static final Object VALUE_NULL = new Object() {
-		override toString() {
-			return "null";
-		}
-	}
-	public static final Object VALUE_UNDEFINED = new Object() {
-		override toString() {
-			return "undefined";
-		}
-	}
 	def static boolean isConstantExpression(RuleEnvironment G, Expression expr) {
 		return computeValueIfConstantExpression(G, expr)!==null;
 	}
-	// NOTE: in case of numbers, an instance of any subclass of java.lang.Number may be returned!
-	def static dispatch Object computeValueIfConstantExpression(RuleEnvironment G, Expression expr) {
+
+	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, Expression expr) {
 		return switch(expr) {
 			NullLiteral:
-				VALUE_NULL
+				ConstantValue.NULL
 			IdentifierRef case isUndefinedLiteral(G, expr):
-				VALUE_UNDEFINED
+				ConstantValue.UNDEFINED
 			BooleanLiteral:
-				expr.isTrue
+				ConstantValue.of(expr.isTrue)
 			NumericLiteral:
-				expr.value
+				ConstantValue.of(expr.value)
 			StringLiteral:
-				expr.value
+				ConstantValue.of(expr.value)
 			RegularExpressionLiteral:
-				null
+				null // not a constant expression
 			TemplateSegment:
-				expr.rawValue
+				ConstantValue.of(expr.rawValue)
 			ParenExpression:
 				return computeValueIfConstantExpression(G, expr.expression)
 			default:
 				null
 		};
 	}
-	def static dispatch Object computeValueIfConstantExpression(RuleEnvironment G, TemplateLiteral expr) {
+	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, TemplateLiteral expr) {
 		val buff = new StringBuilder;
 		for(seg : expr.segments) {
 			val segValue = computeValueIfConstantExpression(G, seg);
@@ -713,59 +706,68 @@ class N4JSLanguageUtils {
 				return null;
 			}
 		}
-		return buff.toString;
+		return ConstantValue.of(buff.toString);
 	}
-	def static dispatch Object computeValueIfConstantExpression(RuleEnvironment G, UnaryExpression expr) {
+	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, UnaryExpression expr) {
 		val value = computeValueIfConstantExpression(G, expr.expression);
-		if(value instanceof BigDecimal) {
-			return switch(expr.op) {
-				case POS: value
-				case NEG: value.negate()
-				default: null
-			};
-		} else if(value instanceof Boolean) {
-			return switch(expr.op) {
-				case NOT: !value
-				default: null
+		return switch(expr.op) {
+			case NOT: if(value instanceof ValueBoolean) ConstantValue.negate(value)
+			case POS: if(value instanceof ValueNumber) value
+			case NEG: if(value instanceof ValueNumber) ConstantValue.negate(value)
+			case VOID: ConstantValue.UNDEFINED
+			default: null
+		};
+	}
+	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, AdditiveExpression expr) {
+		val leftValue = computeValueIfConstantExpression(G, expr.lhs);
+		val rightValue = computeValueIfConstantExpression(G, expr.rhs);
+		return switch(expr.op) {
+			case ADD: ConstantValue.add(leftValue, rightValue)
+			case SUB: ConstantValue.subtract(leftValue, rightValue)
+		};
+	}
+	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, MultiplicativeExpression expr) {
+		val leftValue = computeValueIfConstantExpression(G, expr.lhs);
+		val rightValue = computeValueIfConstantExpression(G, expr.rhs);
+		return switch(expr.op) {
+			case TIMES: ConstantValue.multiply(leftValue, rightValue)
+			case DIV: ConstantValue.divide(leftValue, rightValue)
+			case MOD: ConstantValue.remainder(leftValue, rightValue)
+		};
+	}
+	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, BinaryLogicalExpression expr) {
+		val leftValue = computeValueIfConstantExpression(G, expr.lhs);
+		val rightValue = computeValueIfConstantExpression(G, expr.rhs);
+		return switch(expr.op) {
+			case AND: ConstantValue.and(leftValue, rightValue)
+			case OR: ConstantValue.or(leftValue, rightValue)
+		};
+	}
+	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, ConditionalExpression expr) {
+		val value = computeValueIfConstantExpression(G, expr.expression);
+		val trueValue = computeValueIfConstantExpression(G, expr.trueExpression);
+		val falseValue = computeValueIfConstantExpression(G, expr.falseExpression);
+		if(value instanceof ValueBoolean) {
+			return if(value.getValue().booleanValue()) {
+				trueValue
+			} else {
+				falseValue
 			};
 		}
 		return null;
 	}
-	def static dispatch Object computeValueIfConstantExpression(RuleEnvironment G, AdditiveExpression expr) {
-		val op = expr.op;
-		if(op===AdditiveOperator.ADD) {
-			val leftValue = computeValueIfConstantExpression(G, expr.lhs);
-			val rightValue = computeValueIfConstantExpression(G, expr.rhs);
-			if(leftValue instanceof BigDecimal && rightValue instanceof BigDecimal) {
-				return (leftValue as BigDecimal).add(rightValue as BigDecimal);
-			} else if(leftValue instanceof String && rightValue!==null) {
-				return leftValue + rightValue.toString;
-			} else if(leftValue!==null && rightValue instanceof String) {
-				return leftValue.toString + rightValue;
-			}
-		} else if(op===AdditiveOperator.SUB) {
-			val leftValue = computeValueIfConstantExpression(G, expr.lhs);
-			if(leftValue instanceof BigDecimal) {
-				val rightValue = computeValueIfConstantExpression(G, expr.rhs);
-				if(rightValue instanceof BigDecimal) {
-					return leftValue.subtract(rightValue);
-				}
-			}
-		}
-		return null;
-	}
-	def static dispatch Object computeValueIfConstantExpression(RuleEnvironment G, ParameterizedPropertyAccessExpression expr) {
+	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, ParameterizedPropertyAccessExpression expr) {
 		// is expr an access to a built-in symbol, e.g. Symbol.iterator?
 		val builtInSymbol = G.getAccessedBuiltInSymbol(expr);
 		if(builtInSymbol!==null) {
-			return builtInSymbol;
+			return ConstantValue.of(builtInSymbol);
 		}
 		// all other cases:
 		val prop = expr.property;
 		val propParent = prop?.eContainer;
 		return switch(prop) {
 			TEnumLiteral case propParent instanceof TEnum && AnnotationDefinition.STRING_BASED.hasAnnotation(propParent as TEnum):
-				prop.valueOrName
+				ConstantValue.of(prop.valueOrName)
 // FIXME:
 //			TField case prop.const && prop.eResource===expr.eResource: { // only if in same resource!!! (otherwise we would have to store the initExpr's value in the TModule
 //				val initExpr = (prop.astElement as N4FieldDeclaration).expression;

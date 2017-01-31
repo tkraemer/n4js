@@ -7,8 +7,8 @@
 }
 
 let obj = {
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "E.LitA"
-	[E.LitA]: "not allowed",
+	// XPECT noerrors -->
+	[E.LitA]: "now allowed (since IDE-2500)",
 	// XPECT noerrors -->
 	[E.LitB]: "ok"
 };

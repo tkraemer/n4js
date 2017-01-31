@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.utils.tests
 
+import eu.numberfour.n4js.utils.ConstantValue
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import java.math.BigDecimal
 import org.junit.Test
@@ -21,11 +22,17 @@ class N4JSLanguageUtils_computeValueIfConstantExpressionTest extends AbstractN4J
 
 	@Test
 	def public void testSimple() {
-		assertValueOfConstExpr("null", N4JSLanguageUtils.VALUE_NULL);
-		assertValueOfConstExpr("undefined", N4JSLanguageUtils.VALUE_UNDEFINED);
-		assertValueOfConstExpr("false", false);
+		assertValueOfConstExpr("null", ConstantValue.NULL);
+		assertValueOfConstExpr("undefined", ConstantValue.UNDEFINED);
+		assertValueOfConstExpr("true", ConstantValue.TRUE);
+		assertValueOfConstExpr("false", ConstantValue.FALSE);
 		assertValueOfConstExpr("true", true);
+		assertValueOfConstExpr("false", false);
+		assertValueOfConstExpr("42", 42);
+		assertValueOfConstExpr("42", 42.0);
 		assertValueOfConstExpr("42", BigDecimal.valueOf(42));
+		assertValueOfConstExpr("42", BigDecimal.valueOf(42.0));
+		assertValueOfConstExpr("42.1", 42.1);
 		assertValueOfConstExpr("42.1", BigDecimal.valueOf(42.1));
 		assertValueOfConstExpr("'hello'", "hello");
 	}
@@ -39,8 +46,8 @@ class N4JSLanguageUtils_computeValueIfConstantExpressionTest extends AbstractN4J
 
 	@Test
 	def public void testAddition() {
-		assertValueOfConstExpr("39 + 3", BigDecimal.valueOf(42));
-		assertValueOfConstExpr("1.2 + 3.4", BigDecimal.valueOf(4.6));
+		assertValueOfConstExpr("39 + 3", 42);
+		assertValueOfConstExpr("1.2 + 3.4", 4.6);
 		assertValueOfConstExpr("'1.2' + 3.4", "1.23.4");
 		assertValueOfConstExpr("1.2 + '3.4'", "1.23.4");
 		assertValueOfConstExpr("'Hello ' + \"world\" + `!`", "Hello world!");
@@ -48,14 +55,61 @@ class N4JSLanguageUtils_computeValueIfConstantExpressionTest extends AbstractN4J
 
 	@Test
 	def public void testSubtraction() {
-		assertValueOfConstExpr("45 - 3", BigDecimal.valueOf(42));
-		assertValueOfConstExpr("1.2 - 3.4", BigDecimal.valueOf(-2.2));
+		assertValueOfConstExpr("45 - 3", 42);
+		assertValueOfConstExpr("1.2 - 3.4", -2.2);
+	}
+
+	@Test
+	def public void testMultiplication() {
+		assertValueOfConstExpr("21 * 2", 42);
+		assertValueOfConstExpr("-21 * 2", -42);
+		assertValueOfConstExpr("21 * -2", -42);
+		assertValueOfConstExpr("-21 * -2", 42);
+	}
+
+	@Test
+	def public void testDivision() {
+		assertValueOfConstExpr("21 / 2", 10.5);
+		assertValueOfConstExpr("-21 / 2", -10.5);
+		assertValueOfConstExpr("21 / -2", -10.5);
+		assertValueOfConstExpr("-21 / -2", 10.5);
+
+		assertValueOfConstExpr("0 / 1", 0);
+		assertValueOfConstExpr("0 / -1", 0); // TODO support for -0 in constant expressions
+
+		assertValueOfConstExpr("-21 / 0", null); // TODO support for Infinity in constant expressions
+	}
+
+	@Test
+	def public void testModulo() {
+		assertValueOfConstExpr("5 % 4", 1);
+		assertValueOfConstExpr("-5 % 4", -1);
+		assertValueOfConstExpr("5 % -4", 1);
+		assertValueOfConstExpr("-5 % -4", -1);
 	}
 
 	@Test
 	def public void testUnaryExpression() {
-		assertValueOfConstExpr("+3", BigDecimal.valueOf(3));
-		assertValueOfConstExpr("-3", BigDecimal.valueOf(-3));
+		assertValueOfConstExpr("+3", 3);
+		assertValueOfConstExpr("-3", -3);
+		assertValueOfConstExpr("!true", false);
+		assertValueOfConstExpr("!false", true);
+	}
+
+	@Test
+	def public void testLogicalExpressions() {
+		assertValueOfConstExpr("false && false", false);
+		assertValueOfConstExpr("false && true", false);
+		assertValueOfConstExpr("true && false", false);
+		assertValueOfConstExpr("true && true", true);
+		assertValueOfConstExpr("false || false", false);
+		assertValueOfConstExpr("false || true", true);
+		assertValueOfConstExpr("true || false", true);
+		assertValueOfConstExpr("true || true", true);
+		assertValueOfConstExpr("!(true && false)", true);
+		assertValueOfConstExpr("!(true || false)", false);
+		assertValueOfConstExpr("true && false ? 'yep' : 'nope'", 'nope');
+		assertValueOfConstExpr("true || false ? 'yep' : 'nope'", 'yep');
 	}
 
 	@Test

@@ -9,35 +9,41 @@ function foo(): string {
 
 class C {
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "foo()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "foo()"
 	get [foo()]() {return null;}
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "foo()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "foo()"
 	set [foo()](value) {}
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "foo()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "foo()"
 	[foo()]() {}
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "Symbol()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "42"
+	[42]() {}
+	
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "Symbol()"
 	[Symbol()]() {}
 }
 
 
 var ol = {
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "foo()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "foo()"
 	[foo()]: "one",
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "foo()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "foo()"
 	get [foo()]() {return null;},
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "foo()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "foo()"
 	set [foo()](value) {},
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "foo()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "foo()"
 	[foo()]() {},
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "Symbol()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "42"
+	[42]() {},
+	
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression evaluating to a string." at "Symbol()"
 	[Symbol()]() {}
 }
 

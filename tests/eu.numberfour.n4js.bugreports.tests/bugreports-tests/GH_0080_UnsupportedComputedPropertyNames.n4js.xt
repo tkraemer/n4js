@@ -4,10 +4,10 @@
 let some: any+;
 
 class C {
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "some.field"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "some.field"
 	[some.field];
 
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "anotherField()"
+	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "anotherField()"
 	[anotherField()];
 }
 

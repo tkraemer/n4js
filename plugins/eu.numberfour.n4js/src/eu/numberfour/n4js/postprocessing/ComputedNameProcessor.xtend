@@ -23,7 +23,8 @@ import eu.numberfour.n4js.n4JS.PropertySetterDeclaration
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
-import eu.numberfour.n4js.ts.types.TField
+import eu.numberfour.n4js.utils.ConstantValue.ValueString
+import eu.numberfour.n4js.utils.ConstantValue.ValueSymbol
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import it.xsemantics.runtime.RuleEnvironment
@@ -63,10 +64,8 @@ class ComputedNameProcessor {
 
 	def private String getPropertyNameFromExpression(RuleEnvironment G, Expression expr) {
 		val value = N4JSLanguageUtils.computeValueIfConstantExpression(G, expr);
-		if(value instanceof String) {
-			return value;
-		} else if(value instanceof TField) {
-			return N4JSLanguageUtils.SYMBOL_IDENTIFIER_PREFIX + value.name;
+		if(value instanceof ValueString || value instanceof ValueSymbol) {
+			return value.toString;
 		}
 		return null;
 	}

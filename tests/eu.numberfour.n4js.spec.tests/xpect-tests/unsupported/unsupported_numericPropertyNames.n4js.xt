@@ -1,0 +1,40 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP  */
+
+
+function foo(): string {
+	return "someName";
+}
+
+
+
+class C {
+
+	// XPECT errors --> "Unsupported feature: numeric property/member name." at "42"
+	42 = "one";
+
+	// XPECT errors --> "Unsupported feature: numeric property/member name." at "43"
+	get 43() {return null;}
+
+	// XPECT errors --> "Unsupported feature: numeric property/member name." at "43"
+	set 43(value) {}
+
+	// XPECT errors --> "Unsupported feature: numeric property/member name." at "44"
+	44() {}
+}
+
+
+var ol = {
+	
+	// XPECT errors --> "Unsupported feature: numeric property/member name." at "42"
+	42: "one",
+	
+	// XPECT errors --> "Unsupported feature: numeric property/member name." at "43"
+	get 43() {return null;},
+	
+	// XPECT errors --> "Unsupported feature: numeric property/member name." at "43"
+	set 43(value) {},
+	
+	// XPECT errors --> "Unsupported feature: numeric property/member name." at "44"
+	44() {},
+}
+

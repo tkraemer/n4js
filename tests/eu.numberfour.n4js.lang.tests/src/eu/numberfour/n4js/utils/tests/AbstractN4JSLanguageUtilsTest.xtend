@@ -18,6 +18,7 @@ import eu.numberfour.n4js.n4JS.ParenExpression
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.util.Variance
+import eu.numberfour.n4js.utils.ConstantValue
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
@@ -78,6 +79,7 @@ abstract class AbstractN4JSLanguageUtilsTest {
 		assertNotNull(expressionInAST);
 		val G = script.newRuleEnvironment;
 		val computedValue = N4JSLanguageUtils.computeValueIfConstantExpression(G, expressionInAST);
-		assertEquals(expectedValue, computedValue);
+		val expectedConstantValue = ConstantValue.of(expectedValue);
+		assertEquals(expectedConstantValue, computedValue);
 	}
 }

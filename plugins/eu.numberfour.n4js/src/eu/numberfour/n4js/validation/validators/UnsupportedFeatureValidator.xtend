@@ -10,25 +10,22 @@
  */
 package eu.numberfour.n4js.validation.validators
 
-import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.n4JS.Argument
 import eu.numberfour.n4js.n4JS.BindingPattern
 import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.ExportableElement
-import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.ImportDeclaration
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName
 import eu.numberfour.n4js.n4JS.N4ClassDefinition
 import eu.numberfour.n4js.n4JS.N4ClassExpression
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.NamedElement
 import eu.numberfour.n4js.n4JS.NewTarget
-import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
-import eu.numberfour.n4js.n4JS.PropertyNameOwner
-import eu.numberfour.n4js.n4JS.StringLiteral
+import eu.numberfour.n4js.n4JS.PropertyNameKind
 import eu.numberfour.n4js.n4JS.TaggedTemplateString
-import eu.numberfour.n4js.ts.types.TEnum
-import eu.numberfour.n4js.ts.types.TEnumLiteral
+import eu.numberfour.n4js.utils.ConstantValue
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.validation.ASTStructureValidator
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
@@ -118,37 +115,25 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 
 
 	@Check
-	def void checkComputedPropertyName(PropertyNameOwner decl) {
-		val expr = decl.computedNameFrom;
-		if(expr!==null) {
-			if(!isLegalExpressionInComputedPropertyName(expr)) {
-				unsupported("computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value", expr);
-			}
+	def void checkNumericPropertyName(LiteralOrComputedPropertyName decl) {
+		if(decl.kind===PropertyNameKind.NUMBER) {
+			unsupported("numeric property/member name", decl);
 		}
 	}
-	def private boolean isLegalExpressionInComputedPropertyName(Expression expr) {
-		// case 1: string literals
-		if(expr instanceof StringLiteral) {
-			return true;
-		}
-		// case 2: built-in symbols, i.e. a property access such as: Symbol.iterator
-		val G = expr.newRuleEnvironment;
-		if(G.getAccessedBuiltInSymbol(expr)!==null) {
-			return true;
-		}
-		// case 3: literals @StringBased enums
-		if(expr instanceof ParameterizedPropertyAccessExpression) {
-			val prop = expr.property;
-			if(prop instanceof TEnumLiteral) {
-				if(prop.value===null) {
-					val parent = prop.eContainer;
-					if(parent instanceof TEnum && AnnotationDefinition.STRING_BASED.hasAnnotation(parent as TEnum)) {
-						return true;
-					}
+
+
+	@Check
+	def void checkComputedPropertyName(LiteralOrComputedPropertyName decl) {
+		if(decl.kind===PropertyNameKind.COMPUTED) {
+			val expr = decl.expression;
+			if(expr!==null) {
+				val G = decl.newRuleEnvironment;
+				val exprValue = N4JSLanguageUtils.computeValueIfConstantExpression(G, expr);
+				if(!(exprValue instanceof ConstantValue.ValueString)) {
+					unsupported("computed property/member name using an expression other than a constant expression evaluating to a string", expr);
 				}
 			}
 		}
-		return false;
 	}
 
 
@@ -207,10 +192,6 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 			source,
 			offset, length,
 			IssueCodes.UNSUPPORTED);
-	}
-
-	def private Expression getComputedNameFrom(PropertyNameOwner eobj) {
-		return eobj?.declaredName?.expression;
 	}
 
 	/**
