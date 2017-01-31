@@ -11,8 +11,6 @@
 package eu.numberfour.n4js.binaries.nodejs;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static eu.numberfour.n4js.binaries.nodejs.NodeBinariesConstants.DEFAULT_NODE_PATH;
-import static eu.numberfour.n4js.utils.OSInfo.isWindows;
 import static java.util.Collections.singletonList;
 
 import java.io.File;
@@ -36,11 +34,8 @@ import eu.numberfour.n4js.utils.Version;
 @Singleton
 public class NodeJsBinary implements Binary {
 
-	/** The minimum {@code Node.js} version. */
-	private static final Version MIN_VERSION = new Version(5, 0, 0);
-	private static final String LABEL = "Node.js";
-	private static final String BINARY_NAME = isWindows() ? "node.exe" : "node";
-	private static final String VERSION_ARGUMENT = "-v";
+	/** don't access directly, use {@link #getDefaultNodePath()} */
+	private String memoizedCalclatedNodePath = null;
 
 	@Inject
 	private BinariesValidator validator;
@@ -51,6 +46,9 @@ public class NodeJsBinary implements Binary {
 	@Inject
 	private BinariesPreferenceStore preferenceStore;
 
+	@Inject
+	private NodeBinaryLocatorHelper nodeBinaryLocatorHelper;
+
 	@Override
 	public String getId() {
 		return NodeJsBinary.class.getName();
@@ -58,13 +56,13 @@ public class NodeJsBinary implements Binary {
 
 	@Override
 	public String getLabel() {
-		return LABEL;
+		return NodeBinariesConstants.NODE_LABEL;
 	}
 
 	@Override
 	public String getDescription() {
 		return "Node.js\u00AE configuration preference page. The root folder location of the Node.js\u00AE executable "
-				+ "can be configured here. If not given, then the '" + NodeBinariesConstants.DEFAULT_NODE_PATH
+				+ "can be configured here. If not given, then the '" + getDefaultNodePath()
 				+ "' location will be used as the default location. The required minimum version for Node.js is '"
 				+ getMinimumVersion() + "' and the required minimum version for npm is '"
 				+ npmBinaryProvider.get().getMinimumVersion() + "'.";
@@ -72,17 +70,17 @@ public class NodeJsBinary implements Binary {
 
 	@Override
 	public Version getMinimumVersion() {
-		return MIN_VERSION;
+		return NodeBinariesConstants.NODE_MIN_VERSION;
 	}
 
 	@Override
 	public String getBinaryAbsolutePath() {
-		return getUserNodePathOrDefault() + File.separator + BINARY_NAME;
+		return getUserNodePathOrDefault() + File.separator + NodeBinariesConstants.NODE_BINARY_NAME;
 	}
 
 	@Override
 	public String getVersionArgument() {
-		return VERSION_ARGUMENT;
+		return NodeBinariesConstants.VERSION_ARGUMENT;
 	}
 
 	@Override
@@ -157,7 +155,15 @@ public class NodeJsBinary implements Binary {
 	 */
 	String getUserNodePathOrDefault() {
 		final URI userConfiguredLocation = getUserConfiguredLocation();
-		return null == userConfiguredLocation ? DEFAULT_NODE_PATH : new File(userConfiguredLocation).getAbsolutePath();
+		return null == userConfiguredLocation ? getDefaultNodePath()
+				: new File(userConfiguredLocation).getAbsolutePath();
+	}
+
+	private String getDefaultNodePath() {
+		if (memoizedCalclatedNodePath == null) {
+			memoizedCalclatedNodePath = nodeBinaryLocatorHelper.findNodePath();
+		}
+		return memoizedCalclatedNodePath;
 	}
 
 }
