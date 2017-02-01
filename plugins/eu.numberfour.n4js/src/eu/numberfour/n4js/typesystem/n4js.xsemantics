@@ -1823,11 +1823,14 @@ from {
 //	G |- EObject o |> Expression e : (null as TypeRef) // null is the default and means 'no type expectation' (even void is allowed!)
 
 
-rule expectedTypeOfDefaultFormalParameter
-	G |- FormalParameter formalParam |> Expression initializer: TypeRef T
-from {
-	T = formalParam.declaredTypeRef;
-}
+// TODO: IDE-2514, When the bug in the polymorphic dispatcher is solved,
+//       enable this rule in return for also removing the temporary solution
+//       in N4JSTypeValidator#checkTypeMatchesExpectedType
+//rule expectedTypeOfDefaultFormalParameter
+//	G |- FormalParameter formalParam |> Expression initializer: TypeRef T
+//from {
+//	T = formalParam.declaredTypeRef;
+//}
 
 
 rule expectedTypeOfArgument

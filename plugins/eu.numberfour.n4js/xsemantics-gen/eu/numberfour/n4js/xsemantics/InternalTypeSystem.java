@@ -377,8 +377,6 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   public final static String EQUALTYPETYPEREF = "eu.numberfour.n4js.xsemantics.EqualTypeTypeRef";
   
-  public final static String EXPECTEDTYPEOFDEFAULTFORMALPARAMETER = "eu.numberfour.n4js.xsemantics.ExpectedTypeOfDefaultFormalParameter";
-  
   public final static String EXPECTEDTYPEOFARGUMENT = "eu.numberfour.n4js.xsemantics.ExpectedTypeOfArgument";
   
   public final static String EXPECTEDTYPEINPOSTFIXEXPRESSION = "eu.numberfour.n4js.xsemantics.ExpectedTypeInPostfixExpression";
@@ -4920,32 +4918,6 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     /* G |- right <: left */
     subtypeInternal(G, _trace_, right, left);
     return new Result<Boolean>(true);
-  }
-  
-  protected Result<TypeRef> expectedTypeInImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FormalParameter formalParam, final Expression initializer) throws RuleFailedException {
-    try {
-    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-    	final Result<TypeRef> _result_ = applyRuleExpectedTypeOfDefaultFormalParameter(G, _subtrace_, formalParam, initializer);
-    	addToTrace(_trace_, new Provider<Object>() {
-    		public Object get() {
-    			return ruleName("expectedTypeOfDefaultFormalParameter") + stringRepForEnv(G) + " |- " + stringRep(formalParam) + " |> " + stringRep(initializer) + " : " + stringRep(_result_.getFirst());
-    		}
-    	});
-    	addAsSubtrace(_trace_, _subtrace_);
-    	return _result_;
-    } catch (Exception e_applyRuleExpectedTypeOfDefaultFormalParameter) {
-    	expectedTypeInThrowException(ruleName("expectedTypeOfDefaultFormalParameter") + stringRepForEnv(G) + " |- " + stringRep(formalParam) + " |> " + stringRep(initializer) + " : " + "TypeRef",
-    		EXPECTEDTYPEOFDEFAULTFORMALPARAMETER,
-    		e_applyRuleExpectedTypeOfDefaultFormalParameter, formalParam, initializer, new ErrorInformation[] {new ErrorInformation(formalParam), new ErrorInformation(initializer)});
-    	return null;
-    }
-  }
-  
-  protected Result<TypeRef> applyRuleExpectedTypeOfDefaultFormalParameter(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FormalParameter formalParam, final Expression initializer) throws RuleFailedException {
-    TypeRef T = null; // output parameter
-    TypeRef _declaredTypeRef = formalParam.getDeclaredTypeRef();
-    T = _declaredTypeRef;
-    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> expectedTypeInImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Argument argument, final Expression argumentExpression) throws RuleFailedException {

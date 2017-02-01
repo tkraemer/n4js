@@ -16,6 +16,7 @@ import eu.numberfour.n4js.ts.types.TAnnotation;
 import eu.numberfour.n4js.ts.types.TFormalParameter;
 import eu.numberfour.n4js.ts.types.TFunction;
 import eu.numberfour.n4js.ts.types.TypesPackage;
+import eu.numberfour.n4js.ts.types.UndefModifier;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -335,6 +336,9 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	 * @generated
 	 */
 	public boolean isOptional() {
+		if (((this.getTypeRef() != null) && (this.getTypeRef().getUndefModifier() == UndefModifier.OPTIONAL))) {
+			return true;
+		}
 		EList<TFormalParameter> _switchResult = null;
 		EObject _eContainer = this.eContainer();
 		boolean _matched = false;
