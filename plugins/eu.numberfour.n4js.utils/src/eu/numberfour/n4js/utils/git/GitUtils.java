@@ -24,6 +24,7 @@ import static org.eclipse.jgit.api.Git.open;
 import static org.eclipse.jgit.api.ListBranchCommand.ListMode.REMOTE;
 import static org.eclipse.jgit.api.ResetCommand.ResetType.HARD;
 import static org.eclipse.jgit.lib.Constants.HEAD;
+import static org.eclipse.jgit.lib.Constants.MASTER;
 import static org.eclipse.jgit.lib.Constants.R_REMOTES;
 
 import java.io.File;
@@ -244,7 +245,7 @@ public abstract class GitUtils {
 	 * @return the name of the master branch.
 	 */
 	public static String getMasterBranch() {
-		return "IDE-145"; // MASTER;
+		return MASTER;
 	}
 
 	/**
