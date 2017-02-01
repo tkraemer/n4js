@@ -260,5 +260,4 @@ public class UtilN4 {
 		}
 		return false;
 	}
-
 }

@@ -24,7 +24,7 @@ function MyReactFuncComponent(props: ~MyProps): React.Element {
 	);
 }
 
-//XPECT warnings --> "Non-optional property a,x should be specified." at "MyReactFuncComponent"
+//XPECT errors --> "Non-optional property a,x should be specified." at "MyReactFuncComponent"
 <MyReactFuncComponent y="Hi"/>;
 
 //XPECT errors --> "field z is not available for structurally referenced type ~MyProps." at "z"

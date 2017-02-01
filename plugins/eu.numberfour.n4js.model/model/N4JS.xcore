@@ -766,6 +766,9 @@ class VariableDeclaration extends VariableDeclarationOrBinding, AnnotableElement
 		if (eContainer instanceof VariableStatement) {
 			return (eContainer as VariableStatement).varStmtKeyword === VariableStatementKeyword.CONST
 		}
+		if (eContainer instanceof ForStatement) {
+			return (eContainer as ForStatement).varStmtKeyword === VariableStatementKeyword.CONST
+		}
 		return false;
 	}
 }

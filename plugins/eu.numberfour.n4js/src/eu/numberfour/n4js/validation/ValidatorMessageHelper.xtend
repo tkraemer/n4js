@@ -30,6 +30,7 @@ import it.xsemantics.runtime.Result
 import javax.inject.Singleton
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
+import eu.numberfour.n4js.n4JS.FunctionDeclaration
 
 /**
  */
@@ -276,7 +277,6 @@ class ValidatorMessageHelper {
 
 	public def String fullFunctionSignature(TFunction tfunction) {
 		val StringBuilder strb = new StringBuilder();
-		val async = isAsyncOrPromise(tfunction);
 
 		strb.
 			append('''«FOR a : tfunction.annotations.filter[it.name!=AnnotationDefinition.INTERNAL.name]»«a.annotationAsString» «ENDFOR»''');
@@ -296,6 +296,9 @@ class ValidatorMessageHelper {
 			if (tfunction.isAsyncOrPromise) strb.append("async ");
 			strb.append("function ")
 		}
+		if (tfunction.isGenerator) {
+			strb.append("* ");
+		}
 		if (tfunction.generic) {
 			strb.append("<" + tfunction.typeVars.map[typeAsString].join(",") + "> ");
 		}
@@ -305,15 +308,31 @@ class ValidatorMessageHelper {
 		}
 		strb.append(tfunction.name + "(" + tfunction.fpars.map[formalParameterAsString].join(", ") + ")");
 		strb.append(": ");
-		appendPromisedReturnType(strb, tfunction, async)
+		appendPromisedReturnType(strb, tfunction)
 		return strb.toString();
 	}
 
 	/**
 	 * Returns true if a type ref has been appended.
 	 */
-	def boolean appendPromisedReturnType(StringBuilder strb, TFunction tfunction, boolean async) {
-		if (async) {
+	def boolean appendPromisedReturnType(StringBuilder strb, TFunction tfunction) {
+		val async = isAsyncOrPromise(tfunction);
+		val generator = isGenerator(tfunction);
+		if (async || generator) {
+			// use the return type that is declared in the AST, rather than the actual return type
+			val astElem = tfunction.astElement;
+			switch (astElem) {
+				FunctionDeclaration: {
+					val retType = astElem.returnTypeRef
+					strb.append(retType.typeRefAsString);
+					return true;
+				}
+				FunctionDefinition: {
+					val retType = astElem.returnTypeRef
+					strb.append(retType.typeRefAsString);
+					return true;
+				}
+			}
 			val ptr = tfunction.returnTypeRef as ParameterizedTypeRef;
 			val asyncReturnType = ptr.typeArgs.get(0);
 			if (asyncReturnType !== null) {
@@ -330,7 +349,7 @@ class ValidatorMessageHelper {
 	}
 
 	private def boolean isAsyncOrPromise(TFunction tfunction) {
-		if (! tfunction.declaredAsync) {
+		if (!tfunction.declaredAsync) {
 			return false;
 		}
 
@@ -341,4 +360,15 @@ class ValidatorMessageHelper {
 		return TypeUtils.isPromise(tfunction.returnTypeRef, BuiltInTypeScope.get(rs));
 	}
 
+	private def boolean isGenerator(TFunction tfunction) {
+		if (!tfunction.declaredGenerator) {
+			return false;
+		}
+
+		val rs = tfunction.eResource?.resourceSet
+		if (rs === null) { // should not happen, but in case of messages the tfunction may be a temp. instance
+			return false;
+		}
+		return TypeUtils.isGenerator(tfunction.returnTypeRef, BuiltInTypeScope.get(rs));
+	}
 }

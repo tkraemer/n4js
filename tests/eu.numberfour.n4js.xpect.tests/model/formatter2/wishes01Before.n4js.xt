@@ -1,5 +1,5 @@
 
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest 
 	ResourceSet {
 		ThisFile {}
 		File "wishesImported.n4js" {  }

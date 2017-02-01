@@ -70,6 +70,7 @@ import * as React from "reactFiles/react"
 import { replacer } from "reactFiles/replacer"
 
 var zzzz: React.Element; // Avoid unused import warnings
+zzzz;
 
 export public function logElements(): void {
 	let ss = <div/>

@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
 
 // Bug of x-pect. Ask Moritz, he knows. IDE-1662 XPECT FIXME findReferences at T --> T - 14, T - 15, T - 6
 class T {

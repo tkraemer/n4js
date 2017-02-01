@@ -1,0 +1,3 @@
+import { getMessage } from "foo";
+
+export public const baz = <div align="center">{getMessage()}</div>;
