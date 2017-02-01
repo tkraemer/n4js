@@ -68,6 +68,8 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 			result1.ownedTypeVars += fun.typeVars.map[tv|TypeUtils.copy(tv)];
 		}
 
+		val expectedFunctionTypeExprOrRef = if (expectedTypeRef instanceof FunctionTypeExprOrRef) { expectedTypeRef };
+
 		// fpars (also introduce inference variables for types of fpars, where needed)
 		val len = Math.min(funExpr.fpars.size, fun.fpars.size);
 		for (var i = 0; i < len; i++) {
@@ -86,6 +88,21 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 				val iv = infCtx.newInferenceVariable;
 				fparResult.typeRef = TypeUtils.createTypeRef(iv); // <-- set new inference variable as type
 				result1.fpars += fparResult;
+			}
+
+			// if the corresponding fpar in the type expectation is optional, we make the fpar in the
+			// function expression optional as well
+			// Example:
+			//   let fun: {function(string=)} = function(p) {};
+			if (expectedFunctionTypeExprOrRef!==null) {
+				val fparExpected = expectedFunctionTypeExprOrRef.getFparForArgIdx(i);
+				if (fparExpected!==null && fparExpected.optional && !fparExpected.variadic) {
+					result1.fpars.last.hasInitializerAssignment = true;
+					EcoreUtilN4.doWithDeliver(false, [
+						fparAST.hasInitializerAssignment = true;
+						fparT.hasInitializerAssignment = true;
+					], fparAST, fparT);
+				}
 			}
 		}
 
