@@ -16,7 +16,6 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
@@ -35,18 +34,20 @@ public class ExecutableLookupUtil {
 	private static String PATH = "PATH";
 
 	/**
+	 * <p>
 	 * Creates process builder that when invoked will use OS specific tool to locate desired binary.
+	 * </p>
 	 *
-	 * <p/>
 	 * For *nix family, OS is queried with {@code which} command.
 	 * <ul>
+	 * <li>works only if product is started from terminal (otherwise user shell config is not inherited)</li>
 	 * </ul>
 	 *
 	 * For MS family, OS is queried with {@code where} command.
 	 * <ul>
 	 * <li>for server family OS needs to be Win2K3 or newer</li>
 	 * <li>for desktop family OS needs to be Win7 or newer</li>
-	 * <li>does not work with %PATH$% quoted values</li>
+	 * <li>does not work with %PATH% quoted values</li>
 	 * <li>does not take %PATHEXT% into account</li>
 	 * <li>%windir%\system32 needs to be in the %PATH% ({@code where} is not shell built in).</li>
 	 * </ul>
@@ -76,9 +77,14 @@ public class ExecutableLookupUtil {
 	 * first matching path or {@code null}.
 	 */
 	public static String findInPath(String exec) {
-		return Stream.of(System.getenv(PATH).split(Pattern.quote(File.pathSeparator)))
+		String path = System.getenv(PATH);
+		if (path == null) {
+			return null;
+		}
+		return Pattern.compile(Pattern.quote(File.pathSeparator))
+				.splitAsStream(path)
 				.map(Paths::get)
-				.filter(path -> Files.exists(path.resolve(exec)))
+				.filter(p -> Files.exists(p.resolve(exec)))
 				.findFirst()
 				.map(p -> p.toString())
 				.orElse(null);

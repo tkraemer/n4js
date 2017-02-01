@@ -48,22 +48,10 @@ public class NodeBinaryLocatorHelper {
 	@Inject
 	private ProcessExecutor processExecutor;
 
-	private String lookForNode(String binaryName) {
-		ProcessResult processResult = processExecutor.createAndExecute(
-				ExecutableLookupUtil.getExebutableLookupProcessBuilder(binaryName), "look for " + binaryName,
-				OutputRedirection.SUPPRESS);
-		// if found, result will have trailing new line, sanitize whole result
-		return processResult.getStdOut().replace(System.lineSeparator(), "");
-	}
-
 	/**
 	 * Performs lookup of the node binary. Uses {@link NodeBinariesConstants} properties to perform lookup. When binary
 	 * not found, will ask OS to locate node binary via {@link #lookForNode}. If everything else fails returns (not
 	 * verified) path configured by {@link NodeBinariesConstants#BUILT_IN_DEFAULT_NODE_PATH}
-	 *
-	 * Helper will do its best to return proper path, but as a fallback it may return OS default path, whether it is
-	 * actual path to Node.js or not. It is up to the caller to validate and use different lookup (e.g. eclipse
-	 * preference store).
 	 *
 	 * @return string with absolute path to the binary
 	 */
@@ -75,50 +63,58 @@ public class NodeBinaryLocatorHelper {
 		String nodePathCandidate = null;
 
 		// 1. lookup by DEFAULT_NODE_PATH_VM_ARG
-		nodePathCandidate = resolveFolerContaingNode(
+		nodePathCandidate = resolveFolderContaingNode(
 				tryGetEnvOrSystemVariable(NodeBinariesConstants.DEFAULT_NODE_PATH_VM_ARG));
 		if (!isNullOrEmptyOrNullString(nodePathCandidate)) {
-			warn("User specified default Node.js path will be used: '" + nodePathCandidate
+			info("User specified default Node.js path will be used: '" + nodePathCandidate
 					+ ".' based on the '" + NodeBinariesConstants.DEFAULT_NODE_PATH_VM_ARG + "' VM argument.");
 			return nodePathCandidate;
 		}
-		info("Could not resolve node path from '" + NodeBinariesConstants.DEFAULT_NODE_PATH_VM_ARG
+		debug("Could not resolve node path from '" + NodeBinariesConstants.DEFAULT_NODE_PATH_VM_ARG
 				+ "' VM argument.");
 
 		// 2. lookup by NODEJS_PATH_ENV
-		nodePathCandidate = resolveFolerContaingNode(
+		nodePathCandidate = resolveFolderContaingNode(
 				tryGetEnvOrSystemVariable(NodeBinariesConstants.NODEJS_PATH_ENV));
 		if (!isNullOrEmptyOrNullString(nodePathCandidate)) {
-			warn("User specified default Node.js path will be used: '" + nodePathCandidate
+			info("User specified default Node.js path will be used: '" + nodePathCandidate
 					+ ".' based on the '" + NodeBinariesConstants.NODEJS_PATH_ENV + "' VM argument.");
 			return nodePathCandidate;
 		}
-		info("Could not resolve node path from '" + NodeBinariesConstants.NODEJS_PATH_ENV
+		debug("Could not resolve node path from '" + NodeBinariesConstants.NODEJS_PATH_ENV
 				+ "' VM argument.");
 
 		// 3. lookup by PATH
-		nodePathCandidate = resolveFolerContaingNode(ExecutableLookupUtil.findInPath(NODE));
+		nodePathCandidate = resolveFolderContaingNode(ExecutableLookupUtil.findInPath(NODE));
 		if (!isNullOrEmptyOrNullString(nodePathCandidate)) {
-			warn("Obtained default Node.js path will be used: '" + nodePathCandidate
+			info("Obtained default Node.js path will be used: '" + nodePathCandidate
 					+ ".' based on the OS PATH.");
 			return nodePathCandidate;
 		}
-		info("Could not resolve node path from OS PATH variable.");
+		debug("Could not resolve node path from OS PATH variable.");
 
 		// 4. lookup by OS query
-		nodePathCandidate = resolveFolerContaingNode(lookForNode(NODE));
+		nodePathCandidate = resolveFolderContaingNode(lookForNode(NODE));
 		if (!isNullOrEmptyOrNullString(nodePathCandidate)) {
-			warn("Obtained default Node.js path will be used: '" + nodePathCandidate
+			info("Obtained default Node.js path will be used: '" + nodePathCandidate
 					+ ".' based on the OS dynamic lookup.");
 			return nodePathCandidate;
 
 		}
-		info("Could not resolve node path from OS dynamic lookup.");
+		debug("Could not resolve node path from OS dynamic lookup.");
 
 		// 5. use default, whether it is correct or not.
 		info("Could not resolve node path. Falling back to default path: " + nodePathCandidate);
 		nodePathCandidate = NodeBinariesConstants.BUILT_IN_DEFAULT_NODE_PATH;
 		return nodePathCandidate;
+	}
+
+	private String lookForNode(String binaryName) {
+		ProcessResult processResult = processExecutor.createAndExecute(
+				ExecutableLookupUtil.getExebutableLookupProcessBuilder(binaryName), "look for " + binaryName,
+				OutputRedirection.SUPPRESS);
+		// if found, result will have trailing new line, sanitize whole result
+		return processResult.getStdOut().trim();
 	}
 
 	/**
@@ -134,9 +130,9 @@ public class NodeBinaryLocatorHelper {
 	}
 
 	/** Tries to resolve node folder from provided string. Returns path to the folder as string or null. */
-	private static String resolveFolerContaingNode(String nodePathCandidate) {
+	private static String resolveFolderContaingNode(String nodePathCandidate) {
 		if (isNullOrEmptyOrNullString(nodePathCandidate)) {
-			warn("provided potential node directory path was null");
+			debug("provided potential node directory path was null");
 			return null;
 		}
 		File nodeDir = new File(nodePathCandidate);
@@ -146,15 +142,15 @@ public class NodeBinaryLocatorHelper {
 	/** Tries to resolve node folder from provided file. Returns path to the folder as string or null. */
 	private static String resolveNodeFolderPath(File nodeDir) {
 		if (!nodeDir.exists()) {
-			warn("cannot obtain file system object from provided string");
+			debug("cannot obtain file system object from provided string");
 			return null;
 		}
 		if (nodeDir.isFile()) {
-			warn("provided potential node directory is actually a file, obtaining parent");
+			debug("provided potential node directory is actually a file, obtaining parent");
 			nodeDir = nodeDir.getParentFile();
 		}
 		if (!nodeDir.exists() || !nodeDir.isDirectory()) {
-			warn("could not safely resolve node directory");
+			debug("could not safely resolve node directory");
 			return null;
 		}
 
@@ -208,13 +204,12 @@ public class NodeBinaryLocatorHelper {
 		}
 	}
 
-	private static void warn(final Object message) {
+	private static void debug(final Object message) {
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.warn(message);
+			LOGGER.debug(message);
 		}
 		if (LOG_TO_STD_OUT) {
 			System.out.println(message);
 		}
 	}
-
 }

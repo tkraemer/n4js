@@ -35,7 +35,7 @@ import eu.numberfour.n4js.utils.Version;
 public class NodeJsBinary implements Binary {
 
 	/** don't access directly, use {@link #getDefaultNodePath()} */
-	private String memoizedCalclatedNodePath = null;
+	private String memoizedCalculatedNodePath = null;
 
 	@Inject
 	private BinariesValidator validator;
@@ -160,10 +160,10 @@ public class NodeJsBinary implements Binary {
 	}
 
 	private String getDefaultNodePath() {
-		if (memoizedCalclatedNodePath == null) {
-			memoizedCalclatedNodePath = nodeBinaryLocatorHelper.findNodePath();
+		if (memoizedCalculatedNodePath == null) {
+			memoizedCalculatedNodePath = nodeBinaryLocatorHelper.findNodePath();
 		}
-		return memoizedCalclatedNodePath;
+		return memoizedCalculatedNodePath;
 	}
 
 }
