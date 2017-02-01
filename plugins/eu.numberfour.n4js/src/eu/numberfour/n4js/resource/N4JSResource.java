@@ -69,6 +69,7 @@ import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.parser.InternalSemicolonInjectingParser;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInSchemeRegistrar;
+import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement;
 import eu.numberfour.n4js.ts.types.TModule;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.utils.EcoreUtilN4;
@@ -529,6 +530,77 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	protected void doUnload() {
 		aboutToBeUnloaded = false;
 		super.doUnload();
+
+		// These are cleared when linking takes place., but we eagerly clear them here as a memory optimization.
+		clearLazyProxyInformation();
+	}
+
+	/**
+	 * Unloads the AST, but leaves the type model intact. Calling this method puts this resource into the same state as
+	 * if it was loaded from the index.
+	 *
+	 * <ul>
+	 * <li>The AST is discarded and all references to it are proxified.</li>
+	 * <li>The parse result (node model) is set to <code>null</code>.</li>
+	 * <li>All errors and warnings are cleared.</li>
+	 * <li>The flags are set as follows:
+	 * <ul>
+	 * <li><code>fullyInitialized</code> remains unchanged</li>
+	 * <li><code>fullyPostProcessed</code> is set to the same value as <code>fullyInitialized</code></li>
+	 * <li><code>aboutToBeUnloaded</code> is <code>false</code></li>
+	 * <li><code>isInitializing</code> is <code>false</code></li>
+	 * <li><code>isLoading</code> is <code>false</code></li>
+	 * <li><code>isLoaded</code> is <code>false</code></li>
+	 * <li><code>isPostProcessing</code> is <code>false</code></li>
+	 * <li><code>isUpdating</code> is <code>false</code></li>
+	 * <li><code>isLoadedFromStorage</code> is unchanged due to API restrictions</li>
+	 * </ul>
+	 * </li>
+	 * <li>Finally, all lazy proxy information is cleared by calling {@link #clearLazyProxyInformation()}.</li>
+	 * </ul>
+	 * Calling this method takes the resources either to the same state as if it was just created, or to the same state
+	 * as if it was just loaded from a resource description, depending on which state the resource is in.
+	 * <ul>
+	 * <li>If the resource was just <b>created</b>, then it will remain so.</li>
+	 * <li>If the resource was <b>loaded</b>, then it will be taken back to the <b>created</b> state.</li>
+	 * <li>If the resource was <b>initialized</b>, then it will be taken to the <b>loaded from description</b>
+	 * state.</li>
+	 * <li>If the resource was <b>fully processed</b>, then it will be taken to the <b>loaded from description</b>
+	 * state.</li>
+	 * <li>If the resource was <b>loaded from description</b>, then it will remain so.</li>
+	 * </ul>
+	 */
+	public void unloadAST() {
+		if (getScript() == null || getScript().eIsProxy()) {
+			// We are either freshly created and not loaded or we are loaded from resource description and thus already
+			// have an AST proxy.
+			return;
+		}
+
+		// Discard AST and proxify all references.
+		discardAST();
+
+		// Discard the parse result (node model).
+		setParseResult(null);
+
+		// Clear errors and warnings.
+		getErrors().clear();
+		getWarnings().clear();
+
+		fullyPostProcessed = fullyInitialized;
+		aboutToBeUnloaded = false;
+		isInitializing = false;
+		isLoading = false;
+		isLoaded = false;
+		isPostProcessing = false;
+		isUpdating = false;
+
+		// We cannot call this method because it is not API. We leave this comment as documentation that the flag
+		// isLoadedFromStorage should be false at this point.
+		// setIsLoadedFromStorage(false);
+
+		// These are cleared when linking takes place., but we eagerly clear them here as a memory optimization.
+		clearLazyProxyInformation();
 	}
 
 	/**
@@ -557,6 +629,55 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 	public void forceSetLoaded() {
 		isLoaded = true;
 		aboutToBeUnloaded = true;
+	}
+
+	/**
+	 * Discard the AST and proxify all referenced nodes. Does nothing if the AST is already unloaded.
+	 */
+	protected void discardAST() {
+		EObject script = getScript();
+		if (script != null && !script.eIsProxy()) {
+
+			// Create a proxy for the AST.
+			InternalEObject scriptProxy = (InternalEObject) EcoreUtil.create(script.eClass());
+			scriptProxy.eSetProxyURI(EcoreUtil.getURI(script));
+
+			TModule module = null;
+			ModuleAwareContentsList theContents = (ModuleAwareContentsList) contents;
+			if (isFullyInitialized()) {
+				module = getModule();
+				if (module != null && !module.eIsProxy()) {
+					proxifyASTReferences(module);
+					module.setAstElement(scriptProxy);
+				}
+			}
+
+			// Unload the AST.
+			unloadElements(theContents.subList(0, 1));
+
+			theContents.sneakyClear();
+			theContents.sneakyAdd(scriptProxy);
+
+			if (module != null) {
+				theContents.sneakyAdd(module);
+			}
+		}
+	}
+
+	private void proxifyASTReferences(EObject object) {
+		if (object instanceof SyntaxRelatedTElement) {
+			SyntaxRelatedTElement element = (SyntaxRelatedTElement) object;
+			EObject astElement = element.getAstElement();
+			if (astElement != null && !astElement.eIsProxy()) {
+				InternalEObject proxy = (InternalEObject) EcoreUtil.create(astElement.eClass());
+				proxy.eSetProxyURI(EcoreUtil.getURI(astElement));
+				element.setAstElement(proxy);
+			}
+		}
+
+		for (EObject child : object.eContents()) {
+			proxifyASTReferences(child);
+		}
 	}
 
 	/**
@@ -685,6 +806,8 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 					// apparently we have an astProxy at index 0 but no module
 					// was deserialized from the index
 					// try to obtain the module from a freshly loaded ast
+
+					// Note: this would be a good place to track when a proxified AST is being reloaded.
 					contents.get(0);
 				}
 			}

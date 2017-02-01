@@ -23,7 +23,7 @@ import java.util.List;
 
 import com.google.common.base.Joiner;
 
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Contains some annotation classes for declaring dependencies between {@link Transformation}s.

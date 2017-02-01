@@ -473,7 +473,7 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 	/**
 	 * Binds a special language-independent validator checking project setups, mainly used for polyfill-clashes.
 	 */
-	@org.eclipse.xtext.service.SingletonBinding(eager = true)
+	@SingletonBinding(eager = true)
 	public Class<? extends eu.numberfour.n4js.validation.validators.N4JSProjectSetupValidator> bindN4JSProjectSetupValidator() {
 		return eu.numberfour.n4js.validation.validators.N4JSProjectSetupValidator.class;
 	}

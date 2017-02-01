@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.utils;
+package eu.numberfour.n4js.utils.collections;
 
 import java.util.AbstractSequentialList;
 import java.util.Collections;

@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Representation of a preference store for external libraries.

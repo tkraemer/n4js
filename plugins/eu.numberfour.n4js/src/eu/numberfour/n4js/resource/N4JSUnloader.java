@@ -48,7 +48,7 @@ import eu.numberfour.n4js.ts.types.TypesPackage;
 public class N4JSUnloader implements IReferableElementsUnloader {
 
 	/**
-	 * Set to true if you want to enable a debugging mode where each handcrafted URI is compared to the one returend
+	 * Set to true if you want to enable a debugging mode where each handcrafted URI is compared to the one returned
 	 * from {@link Resource#getURIFragment(EObject)}.
 	 */
 	private static final boolean DEBUG = false;
@@ -176,7 +176,8 @@ public class N4JSUnloader implements IReferableElementsUnloader {
 	 * The implementation from {@link ResourceImpl} uses a {@link SegmentSequence} rather than a {@link StringBuilder}.
 	 * Since we have to concatenate the string in the end anyway.
 	 */
-	private static Iterator<ObjectToFragment> getAllProperContents(ObjectToFragment eObject, final StringBuilder result) {
+	private static Iterator<ObjectToFragment> getAllProperContents(ObjectToFragment eObject,
+			final StringBuilder result) {
 		// we inherit from the AbstractTreeIterator which will help us getting a proper pre-order traversal
 		return new AbstractTreeIterator<ObjectToFragment>(eObject, false /* don't resolve containment proxies */) {
 

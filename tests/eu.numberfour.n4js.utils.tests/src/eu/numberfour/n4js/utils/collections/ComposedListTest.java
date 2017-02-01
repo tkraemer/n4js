@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.utils;
+package eu.numberfour.n4js.utils.collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -20,6 +20,8 @@ import java.util.ListIterator;
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
+
+import eu.numberfour.n4js.utils.collections.ComposedList;
 
 /**
  */

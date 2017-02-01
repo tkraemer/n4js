@@ -8,12 +8,11 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.utils
+package eu.numberfour.n4js.utils.collections
 
-import org.junit.Test
-
-import static extension eu.numberfour.n4js.utils.Iterables2.*
+import static extension eu.numberfour.n4js.utils.collections.Iterables2.*
 import static extension org.junit.Assert.*
+import org.junit.Test
 
 /**
  * Tests for {@link Iterables2}.
