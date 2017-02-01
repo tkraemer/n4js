@@ -134,7 +134,7 @@ class N4JSQuickfixProvider extends AbstractN4JSQuickfixProvider {
 	def fixOldSyntaxForOptionalFpars(Issue issue, IssueResolutionAcceptor acceptor) {
 		acceptor.accept(issue, 'Change to Default Parameter', 'Some enlightening description.', ImageNames.REORDER) [ context, marker, offset, length, element |
 			return #[
-				replace(context.xtextDocument, offset + length - 1, 1, " =") // replace the ? with a =
+				replace(context.xtextDocument, offset + length - 1, 1, "=undefined") // replace the '?' with a '=undefined'
 			];
 		]
 	}
