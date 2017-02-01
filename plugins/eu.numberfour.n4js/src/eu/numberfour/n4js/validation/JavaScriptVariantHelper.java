@@ -261,6 +261,14 @@ public interface JavaScriptVariantHelper {
 	public boolean isPlainJS(EObject eobj);
 
 	/**
+	 * Return true if "use strict" is declared.
+	 *
+	 * @param eobj
+	 *            The EObject providing the context for the check.
+	 */
+	public boolean isStrictMode(EObject eobj);
+
+	/**
 	 * Return the variant mode.
 	 *
 	 * @param eobj
