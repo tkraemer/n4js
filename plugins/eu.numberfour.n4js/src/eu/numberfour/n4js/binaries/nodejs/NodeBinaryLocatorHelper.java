@@ -32,12 +32,6 @@ import eu.numberfour.n4js.utils.process.ProcessResult;
 public class NodeBinaryLocatorHelper {
 	private static final Logger LOGGER = Logger.getLogger(NodeBinaryLocatorHelper.class);
 
-	/**
-	 * Name used to obtain path from OS. Similar to {@link NodeBinariesConstants#NODE_BINARY_NAME}, but dynamic lookup
-	 * and path parsing may produce different results in regards of file extension.
-	 */
-	private static final String NODE = "node";
-
 	/** debug api */
 	private static final boolean LOG_SYSTEM_PROPERTIES = false;
 	/** debug api */
@@ -85,7 +79,8 @@ public class NodeBinaryLocatorHelper {
 				+ "' VM argument.");
 
 		// 3. lookup by PATH
-		nodePathCandidate = resolveFolderContaingNode(ExecutableLookupUtil.findInPath(NODE));
+		nodePathCandidate = resolveFolderContaingNode(
+				ExecutableLookupUtil.findInPath(NodeBinariesConstants.NODE_BINARY_NAME));
 		if (!isNullOrEmptyOrNullString(nodePathCandidate)) {
 			info("Obtained default Node.js path will be used: '" + nodePathCandidate
 					+ ".' based on the OS PATH.");
@@ -94,7 +89,7 @@ public class NodeBinaryLocatorHelper {
 		debug("Could not resolve node path from OS PATH variable.");
 
 		// 4. lookup by OS query
-		nodePathCandidate = resolveFolderContaingNode(lookForNode(NODE));
+		nodePathCandidate = resolveFolderContaingNode(lookForNode(NodeBinariesConstants.NODE_BINARY_NAME));
 		if (!isNullOrEmptyOrNullString(nodePathCandidate)) {
 			info("Obtained default Node.js path will be used: '" + nodePathCandidate
 					+ ".' based on the OS dynamic lookup.");
