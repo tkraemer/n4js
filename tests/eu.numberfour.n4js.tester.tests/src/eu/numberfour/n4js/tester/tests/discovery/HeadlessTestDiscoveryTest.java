@@ -37,8 +37,8 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import eu.numberfour.n4js.N4JSGlobals;
+import eu.numberfour.n4js.fileextensions.FileExtensionType;
 import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
-import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry.FileExtensionType;
 import eu.numberfour.n4js.internal.FileBasedWorkspace;
 import eu.numberfour.n4js.tester.TestDiscoveryHelper;
 import eu.numberfour.n4js.tester.TesterModule;
@@ -102,8 +102,8 @@ public class HeadlessTestDiscoveryTest {
 		fbWorkspace.registerProject(URI.createFileURI(TEST_PROJECT_IDEBUG_572.getAbsolutePath()));
 		fbWorkspace.registerProject(URI.createFileURI(TEST_N4JSX_PROJECT.getAbsolutePath()));
 		// Register test file extensions
-		fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION, FileExtensionType.TEST_FILE_EXTENSION);
-		fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION, FileExtensionType.TEST_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION, FileExtensionType.TESTABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION, FileExtensionType.TESTABLE_FILE_EXTENSION);
 		// Register runnable file extensions
 		fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
 		fileExtensionsRegistry.register(N4JSGlobals.JS_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);

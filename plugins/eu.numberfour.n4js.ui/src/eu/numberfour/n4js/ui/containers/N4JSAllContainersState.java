@@ -47,6 +47,7 @@ import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.fileextensions.FileExtensionTypeHelper;
 import eu.numberfour.n4js.projectModel.IN4JSArchive;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
@@ -69,6 +70,9 @@ public class N4JSAllContainersState extends AbstractAllContainersState {
 
 	@Inject
 	private FileExtensionProvider fileExtensionProvider;
+
+	@Inject
+	private FileExtensionTypeHelper fileExtensionTypeHelper;
 
 	@Inject
 	private IN4JSCore core;
@@ -101,6 +105,15 @@ public class N4JSAllContainersState extends AbstractAllContainersState {
 	protected boolean isAffectingContainerState(IResourceDelta delta) {
 		if (delta.getKind() == IResourceDelta.ADDED || delta.getKind() == IResourceDelta.REMOVED) {
 			String fileExtension = delta.getFullPath().getFileExtension();
+			// TODO IDE-2509
+			System.out.println(" ");
+			System.out.println(
+					"-> checking <" + fileExtension + "> with " + fileExtensionProvider.getFileExtensions()
+							+ " result {"
+							+ fileExtensionProvider.isValid(fileExtension) + "} for " + delta.getFullPath());
+			System.out.println(
+					"=> checking <" + fileExtension + "> with fileExtensionTypeHelper result {"
+							+ fileExtensionTypeHelper.isTypable(fileExtension) + "} for " + delta.getFullPath());
 			if (null != fileExtension && fileExtensionProvider.isValid(fileExtension)) {
 				return true;
 			}

@@ -67,8 +67,8 @@ import eu.numberfour.n4js.external.TypeDefinitionGitLocationProvider;
 import eu.numberfour.n4js.external.libraries.PackageJson;
 import eu.numberfour.n4js.external.libraries.TargetPlatformFactory;
 import eu.numberfour.n4js.external.libraries.TargetPlatformModel;
+import eu.numberfour.n4js.fileextensions.FileExtensionType;
 import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
-import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry.FileExtensionType;
 import eu.numberfour.n4js.generator.headless.HeadlessHelper;
 import eu.numberfour.n4js.generator.headless.N4HeadlessCompiler;
 import eu.numberfour.n4js.generator.headless.N4JSCompileException;
@@ -386,24 +386,10 @@ public class N4jsc {
 			// Wire up available runners and testers, test file extensions and runnable file extensions
 			runnerRegistry.register(nodeRunnerDescriptorProvider.get());
 			testerRegistry.register(nodeTesterDescriptorProvider.get());
-			// Register test file extensions
-			fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION, FileExtensionType.TEST_FILE_EXTENSION);
-			fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION, FileExtensionType.TEST_FILE_EXTENSION);
-			// Register runnable file extensions
-			fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
-			fileExtensionsRegistry.register(N4JSGlobals.JS_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
-			fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION,
-					FileExtensionType.RUNNABLE_FILE_EXTENSION);
-			fileExtensionsRegistry.register(N4JSXGlobals.JSX_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
-			// Register transpilable file extensions
-			fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION,
-					FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
-			fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION,
-					FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
-			fileExtensionsRegistry.register(N4JSGlobals.JS_FILE_EXTENSION,
-					FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
-			fileExtensionsRegistry.register(N4JSXGlobals.JSX_FILE_EXTENSION,
-					FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+			registerTestableFiles();
+			registerRunnableFiles();
+			registerTranspilableFiles();
+			registerTypableFiles();
 
 			if (listRunners) {
 				printAvailableRunners(System.out);
@@ -508,6 +494,59 @@ public class N4jsc {
 			targetPlatformFile = null;
 			targetPlatformInstallLocation = null;
 		}
+	}
+
+	/**
+	 * Registers files to {@link FileExtensionType#TESTABLE_FILE_EXTENSION}
+	 */
+	private void registerTestableFiles() {
+		// Register test file extensions
+		fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION, FileExtensionType.TESTABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION, FileExtensionType.TESTABLE_FILE_EXTENSION);
+	}
+
+	/**
+	 * Registers files to {@link FileExtensionType#RUNNABLE_FILE_EXTENSION}
+	 */
+	private void registerRunnableFiles() {
+		// Register runnable file extensions
+		fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSGlobals.JS_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION,
+				FileExtensionType.RUNNABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSXGlobals.JSX_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
+	}
+
+	/**
+	 * Registers files to {@link FileExtensionType#TRANSPILABLE_FILE_EXTENSION}
+	 */
+	private void registerTranspilableFiles() {
+		// Register transpilable file extensions
+		fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION,
+				FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION,
+				FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSGlobals.JS_FILE_EXTENSION,
+				FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSXGlobals.JSX_FILE_EXTENSION,
+				FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+	}
+
+	/**
+	 * Registers files to {@link FileExtensionType#TYPABLE_FILE_EXTENSION}
+	 */
+	private void registerTypableFiles() {
+		// Register typable file extensions
+		fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION,
+				FileExtensionType.TYPABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION,
+				FileExtensionType.TYPABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSGlobals.JS_FILE_EXTENSION,
+				FileExtensionType.TYPABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSXGlobals.JSX_FILE_EXTENSION,
+				FileExtensionType.TYPABLE_FILE_EXTENSION);
+		fileExtensionsRegistry.register(N4JSGlobals.N4JSD_FILE_EXTENSION,
+				FileExtensionType.TYPABLE_FILE_EXTENSION);
 	}
 
 	private void validateBinaries() throws ExitCodeException {

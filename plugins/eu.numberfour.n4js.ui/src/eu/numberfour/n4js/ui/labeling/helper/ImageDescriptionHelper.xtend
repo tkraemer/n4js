@@ -307,6 +307,10 @@ class ImageDescriptionHelper {
 	}
 
 	private def boolean isN4Resource(Resource res) {
+		val fileExtension = res?.URI?.fileExtension;
+		System.out.println(
+					"checking <" + fileExtension + "> with " + fileExtensionProvider.getFileExtensions() + " result {"
+							+ fileExtensionProvider.isValid(fileExtension) + "} for " + res?.URI);
 		if (fileExtensionProvider.fileExtensions.contains(res?.URI?.fileExtension)) {
 			return (res instanceof N4JSResource)
 		}

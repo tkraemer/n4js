@@ -2,9 +2,9 @@
 <!-- Schema file written by PDE -->
 <schema targetNamespace="eu.numberfour.n4js.utils" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appInfo>
+      <appinfo>
          <meta.schema plugin="eu.numberfour.n4js.utils" id="eu.numberfour.n4js.utils.fileExtensions" name="Runnable File Extensions"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          This extension point should be used by sub-language plugins to register transpilable, test and runnable file extensions. These file extensions are used by for openning generated source, runner and tester.
       </documentation>
@@ -12,15 +12,16 @@
 
    <element name="extension">
       <annotation>
-         <appInfo>
+         <appinfo>
             <meta.element />
-         </appInfo>
+         </appinfo>
       </annotation>
       <complexType>
          <sequence>
             <element ref="transpilableFileExtensions"/>
             <element ref="runnableFileExtensions"/>
             <element ref="testFileExtensions"/>
+            <element ref="typableFileExtensions"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -41,9 +42,9 @@
                <documentation>
                   
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -85,19 +86,31 @@
       </complexType>
    </element>
 
+   <element name="typableFileExtensions">
+      <complexType>
+         <attribute name="extensions" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="since"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          0.0.1
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="examples"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          The following is an example demonstrating how to declare transpilable, runnable and test file extensions for n4js language:
 &lt;p&gt; 
@@ -114,27 +127,27 @@
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="apiinfo"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          See example for usage.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="implementation"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          [Enter information about supplied implementation of this extension point.]
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="copyright"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          &lt;pre&gt;
 Copyright (c) 2017 NumberFour AG.

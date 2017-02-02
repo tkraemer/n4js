@@ -246,6 +246,10 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 	 */
 	private boolean shouldHandleFile(IFile object) {
 		String fileExtension = object.getFileExtension();
+		// TODO IDE-2509
+		// System.out.println(
+		// "org_checking <" + fileExtension + "> with " + fileExtensionsProvider.getFileExtensions() + " result {"
+		// + fileExtensionsProvider.isValid(fileExtension) + "} for " + object.getFullPath());
 		return fileExtension != null && getN4FileExtensions().contains(fileExtension);
 	}
 
