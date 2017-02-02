@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.validation.BaseJavaScriptVariantHelper;
 import eu.numberfour.n4js.validation.N4JSJavaScriptVariantHelper;
 
@@ -24,8 +25,8 @@ import eu.numberfour.n4js.validation.N4JSJavaScriptVariantHelper;
 @Singleton
 public class N4JSXJavaScriptVariantHelper extends BaseJavaScriptVariantHelper {
 
-	private final static String EXT_N4JSX = "n4jsx";
-	private final static String EXT_JSX = "jsx";
+	private final static String EXT_N4JSX = N4JSGlobals.N4JSX_FILE_EXTENSION;
+	private final static String EXT_JSX = N4JSGlobals.JSX_FILE_EXTENSION;
 
 	/**
 	 * Initialize an instance of {@link N4JSJavaScriptVariantHelper} as successor in the chain of responsibility

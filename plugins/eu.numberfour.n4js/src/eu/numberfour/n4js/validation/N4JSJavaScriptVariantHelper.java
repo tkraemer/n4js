@@ -12,14 +12,16 @@ package eu.numberfour.n4js.validation;
 
 import org.eclipse.emf.ecore.EObject;
 
+import eu.numberfour.n4js.N4JSGlobals;
+
 /**
  * This class defines the constraints to be checked N4JS and N4JSD.
  *
  */
 public class N4JSJavaScriptVariantHelper extends BaseJavaScriptVariantHelper {
 
-	private final static String EXT_N4JS = "n4js";
-	private final static String EXT_N4JSD = "n4jsd";
+	private final static String EXT_N4JS = N4JSGlobals.N4JS_FILE_EXTENSION;
+	private final static String EXT_N4JSD = N4JSGlobals.N4JSD_FILE_EXTENSION;
 
 	/**
 	 * Constructor

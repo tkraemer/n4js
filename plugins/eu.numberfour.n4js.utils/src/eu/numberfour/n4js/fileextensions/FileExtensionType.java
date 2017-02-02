@@ -30,7 +30,7 @@ public enum FileExtensionType {
 	 * Files affect type resolution. Note that this might include some surprising entries, e.g. JS or N4JSD. In general
 	 * expect here all file extensions for all supported languages that you can encounter as files in the N4IDE. This
 	 * information may be used in various context, e.g. calculating changes in source containers, organizing imports is
-	 * source files, etc.
+	 * source files, e tc.
 	 *
 	 * Some unexpected entries here would include {@code MANIFEST} files, {@code TS} files.
 	 */
