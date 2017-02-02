@@ -21,7 +21,7 @@ import org.eclipse.swt.graphics.Image;
 
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Node for representing an external N4JS library in the Project Explorer view.

@@ -33,7 +33,7 @@ import org.eclipse.xtext.util.Arrays;
 import com.google.common.base.Supplier;
 import com.google.common.collect.Iterables;
 
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Bridge between {@link WorkingSet N4JS specific} and {@link IWorkingSet Eclipse based} working sets.

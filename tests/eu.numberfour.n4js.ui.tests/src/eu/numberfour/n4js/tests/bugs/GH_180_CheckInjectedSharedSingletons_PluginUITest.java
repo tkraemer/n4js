@@ -20,7 +20,7 @@ import com.google.inject.Singleton;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.ui.utils.N4JSGuiceUIPlugin;
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Class for checking whether singleton instances are shared among parent-child injectors.

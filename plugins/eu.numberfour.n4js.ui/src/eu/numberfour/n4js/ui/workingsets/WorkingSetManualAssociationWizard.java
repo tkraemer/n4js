@@ -50,7 +50,7 @@ import eu.numberfour.n4js.ui.navigator.N4JSProjectExplorerLabelProvider;
 import eu.numberfour.n4js.ui.utils.UIUtils;
 import eu.numberfour.n4js.ui.viewer.TableViewerBuilder;
 import eu.numberfour.n4js.ui.workingsets.ManualAssociationAwareWorkingSetManager.ManualAssociationWorkingSet;
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Wizard for creating and editing working sets based on manual associations between working sets and workspace
