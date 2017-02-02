@@ -1148,7 +1148,8 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//fragment BindingElementFragment <Yield> *:
 	//	(=> bindingPattern=BindingPattern<Yield> | annotations+=Annotation* BogusTypeRefFragment? variadic?='...'?
-	//	name=BindingIdentifier<Yield> ColonSepTypeRef?) ('=' initializer=AssignmentExpression<In=true,Yield>)?;
+	//	name=BindingIdentifier<Yield> ColonSepTypeRef?) (hasInitializerAssignment?='='
+	//	initializer=AssignmentExpression<In=true,Yield>?)?;
 	public N4JSGrammarAccess.BindingElementFragmentElements getBindingElementFragmentAccess() {
 		return gaN4JS.getBindingElementFragmentAccess();
 	}
@@ -3461,7 +3462,8 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	/// **
 	// * Used in type expressions, name is optional.
 	// * / TAnonymousFormalParameter:
-	//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef;
+	//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef
+	//	DefaultFormalParameter;
 	public TypeExpressionsGrammarAccess.TAnonymousFormalParameterElements getTAnonymousFormalParameterAccess() {
 		return gaTypeExpressions.getTAnonymousFormalParameterAccess();
 	}
@@ -3473,13 +3475,30 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	/// **
 	// * Used in Types language only.
 	// * / TFormalParameter:
-	//	variadic?='...'? name=BindingIdentifier<Yield=false> ':' typeRef=TypeRef;
+	//	variadic?='...'? name=BindingIdentifier<Yield=false>
+	//	':' typeRef=TypeRef
+	//	DefaultFormalParameter;
 	public TypeExpressionsGrammarAccess.TFormalParameterElements getTFormalParameterAccess() {
 		return gaTypeExpressions.getTFormalParameterAccess();
 	}
 	
 	public ParserRule getTFormalParameterRule() {
 		return getTFormalParameterAccess().getRule();
+	}
+	
+	/// **
+	// * Default initializers in FunctionTypeExpressions or TFunctions
+	// * are necessary to specify optional formal parameters. Hence, their
+	// * initializer expression is rather uninteresting and limited by validations
+	// * to 'undefined'. The shorthand form, that is omitting the initializer, is supported.
+	// * / fragment DefaultFormalParameter *:
+	//	(hasInitializerAssignment?='=' astInitializer=super::TypeReferenceName?)?;
+	public TypeExpressionsGrammarAccess.DefaultFormalParameterElements getDefaultFormalParameterAccess() {
+		return gaTypeExpressions.getDefaultFormalParameterAccess();
+	}
+	
+	public ParserRule getDefaultFormalParameterRule() {
+		return getDefaultFormalParameterAccess().getRule();
 	}
 	
 	//UnionTypeExpressionOLD UnionTypeExpression:

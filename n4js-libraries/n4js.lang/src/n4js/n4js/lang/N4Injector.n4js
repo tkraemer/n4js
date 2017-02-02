@@ -157,7 +157,7 @@ export public class DIUnsatisfiedBindingError extends DIConfigurationError {
      * Creates a new unsatisfied binding error instance with the N4 type of the
      * unsatisfied binding and the optional error message arguments.
      */
-    public constructor(unsatisfiedBinding: type{N4Object}, message: string?) {
+    public constructor(unsatisfiedBinding: type{N4Object}, message: string =) {
         super(message || '');
         this.binding = unsatisfiedBinding;
     }
@@ -182,7 +182,7 @@ export public class N4Injector{
     /** parent injector used to delegate creation of some types, or getting singleton instances */
     private parent: N4Injector;
 
-    private constructor(dicInfo: string, bindings: Map<string, N4Object>, parent: N4Injector?){
+    private constructor(dicInfo: string, bindings: Map<string, N4Object>, parent: N4Injector =){
         this.dicInfo = dicInfo;
         if(parent){
             this.parent = parent;
@@ -600,7 +600,7 @@ export public class N4Injector{
      * Note that only information about which binder has binding for given type is stored,
      * not binding information itself.
      */
-    private static prepareBindingsMap(providedBinders: Array<N4Object>, expectedBindersTypes: Array<constructor{? extends N4Object}>?): Map<string, N4Object>{
+    private static prepareBindingsMap(providedBinders: Array<N4Object>, expectedBindersTypes: Array<constructor{? extends N4Object}> =): Map<string, N4Object>{
         let bindings: Array<N4Object> = [];
         if(expectedBindersTypes){
             let expectedBindersMap = new Map<string, constructor{? extends N4Object}>();
@@ -644,7 +644,7 @@ export public class N4Injector{
         return getOFQN(parent);
     }
 
-    private static checkParent(dic: constructor{? extends N4Object}, parent: N4Injector?): void{
+    private static checkParent(dic: constructor{? extends N4Object}, parent: N4Injector =): void{
         let expectedParent =getDIComponentMeta(dic).parent;
         if(parent){
             if(!expectedParent){
@@ -675,7 +675,7 @@ export public class N4Injector{
     /**
      * Factory method for the N4Injector.
      */
-    public static of(type: constructor{? extends N4Object}, parent: N4Injector?, ... providedBinders: N4Object): N4Injector{
+    public static of(type: constructor{? extends N4Object}, parent: N4Injector =, ... providedBinders: N4Object): N4Injector{
         let dicMeta = N4Injector.getMetaData(type);
         N4Injector.checkParent(type, parent);
         let bindings = N4Injector.prepareBindingsMap(providedBinders, dicMeta.binders);

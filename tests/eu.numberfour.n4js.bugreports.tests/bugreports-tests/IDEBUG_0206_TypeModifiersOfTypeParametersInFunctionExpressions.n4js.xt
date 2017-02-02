@@ -4,7 +4,7 @@
 
 class Test<S> {
     public then(
-        onFulfilled : {function(S?):void}
+        onFulfilled : {function(S=undefined):void}
     ) : void {}
 }
 
@@ -12,7 +12,7 @@ class Test<S> {
 
 var test1 : Test<string>;
 test1.then(
-	// XPECT errors --> "{function(string):void} is not a subtype of {function(string?):void}." at "function(param : string) {}"
+	// XPECT errors --> "{function(string):void} is not a subtype of {function(string=…):void}." at "function(param : string) {}"
 	function(param : string) {}
 );
 
@@ -20,6 +20,6 @@ test1.then(
 
 var test2 : Test<Array<string>>;
 test2.then(
-	// XPECT errors --> "{function(Array<string>):void} is not a subtype of {function(Array<string>?):void}." at "function(param : Array<string>) {}"
+	// XPECT errors --> "{function(Array<string>):void} is not a subtype of {function(Array<string>=…):void}." at "function(param : Array<string>) {}"
 	function(param : Array<string>) {}
 );

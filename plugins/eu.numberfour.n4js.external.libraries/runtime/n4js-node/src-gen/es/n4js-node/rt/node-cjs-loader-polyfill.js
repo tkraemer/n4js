@@ -158,12 +158,14 @@
         get: function(normalizedName) {
             var mod = this._nodeRequire.cache[normalizedName];
             // in sync with SystemJS: either the System.register'ed ES module or the __useDefault tagged CJS exports:
-            return mod ? mod.exports : null;
+            return mod ? getESModule(mod.exports) : null;
         },
         import: function(name) {
             var req = this._nodeRequire;
             return new Promise(function(resolveFn) {
-                resolveFn(req(name));
+                var mod = req(name);
+                mod = getESModule(mod);
+                resolveFn(mod);
             });
         },
 

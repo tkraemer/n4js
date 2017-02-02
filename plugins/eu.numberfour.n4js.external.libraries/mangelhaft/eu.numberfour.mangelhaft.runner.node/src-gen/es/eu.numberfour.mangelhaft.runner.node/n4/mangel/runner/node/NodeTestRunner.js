@@ -58,7 +58,7 @@
 				$makeClass(NodeTestRunner, N4Object, [], {
 					run: {
 						value: function run___n4() {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let options = NodeTestCLI.parseCommandLine(), testCatalog;
 								if (!options) {
 									return;

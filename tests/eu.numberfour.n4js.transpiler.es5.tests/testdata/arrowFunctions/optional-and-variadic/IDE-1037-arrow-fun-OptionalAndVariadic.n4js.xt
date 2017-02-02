@@ -17,12 +17,12 @@ stderr:
 ==>
 --- */
 
-	var f = (fixed : string, start : string?, ... s : string) => {
+	var f = (fixed : string, start : string=undefined, ... s : string) => {
 		console.log("Fixed: " + fixed)
 		console.log("Optional: " + start)
 		console.log("Variadic length: " + s.length)
-		for(var i=0, l = s.length; i < l; i++){	
-			console.log("Variadic: " + s[i])	
+		for(var i=0, l = s.length; i < l; i++){
+			console.log("Variadic: " + s[i])
 		}
 	}
 

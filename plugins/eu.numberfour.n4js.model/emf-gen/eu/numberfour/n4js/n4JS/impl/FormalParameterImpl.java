@@ -58,6 +58,7 @@ import org.eclipse.xtext.EcoreUtil2;
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FormalParameterImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FormalParameterImpl#isVariadic <em>Variadic</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FormalParameterImpl#getDefinedTypeElement <em>Defined Type Element</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.impl.FormalParameterImpl#isHasInitializerAssignment <em>Has Initializer Assignment</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FormalParameterImpl#getInitializer <em>Initializer</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FormalParameterImpl#getBindingPattern <em>Binding Pattern</em>}</li>
  * </ul>
@@ -144,6 +145,26 @@ public class FormalParameterImpl extends AnnotableElementImpl implements FormalP
 	 * @ordered
 	 */
 	protected TFormalParameter definedTypeElement;
+
+	/**
+	 * The default value of the '{@link #isHasInitializerAssignment() <em>Has Initializer Assignment</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isHasInitializerAssignment()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean HAS_INITIALIZER_ASSIGNMENT_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isHasInitializerAssignment() <em>Has Initializer Assignment</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isHasInitializerAssignment()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean hasInitializerAssignment = HAS_INITIALIZER_ASSIGNMENT_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getInitializer() <em>Initializer</em>}' containment reference.
@@ -367,6 +388,27 @@ public class FormalParameterImpl extends AnnotableElementImpl implements FormalP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isHasInitializerAssignment() {
+		return hasInitializerAssignment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setHasInitializerAssignment(boolean newHasInitializerAssignment) {
+		boolean oldHasInitializerAssignment = hasInitializerAssignment;
+		hasInitializerAssignment = newHasInitializerAssignment;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.FORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT, oldHasInitializerAssignment, hasInitializerAssignment));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Expression getInitializer() {
 		return initializer;
 	}
@@ -509,6 +551,8 @@ public class FormalParameterImpl extends AnnotableElementImpl implements FormalP
 			case N4JSPackage.FORMAL_PARAMETER__DEFINED_TYPE_ELEMENT:
 				if (resolve) return getDefinedTypeElement();
 				return basicGetDefinedTypeElement();
+			case N4JSPackage.FORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT:
+				return isHasInitializerAssignment();
 			case N4JSPackage.FORMAL_PARAMETER__INITIALIZER:
 				return getInitializer();
 			case N4JSPackage.FORMAL_PARAMETER__BINDING_PATTERN:
@@ -544,6 +588,9 @@ public class FormalParameterImpl extends AnnotableElementImpl implements FormalP
 				return;
 			case N4JSPackage.FORMAL_PARAMETER__DEFINED_TYPE_ELEMENT:
 				setDefinedTypeElement((TFormalParameter)newValue);
+				return;
+			case N4JSPackage.FORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT:
+				setHasInitializerAssignment((Boolean)newValue);
 				return;
 			case N4JSPackage.FORMAL_PARAMETER__INITIALIZER:
 				setInitializer((Expression)newValue);
@@ -581,6 +628,9 @@ public class FormalParameterImpl extends AnnotableElementImpl implements FormalP
 			case N4JSPackage.FORMAL_PARAMETER__DEFINED_TYPE_ELEMENT:
 				setDefinedTypeElement((TFormalParameter)null);
 				return;
+			case N4JSPackage.FORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT:
+				setHasInitializerAssignment(HAS_INITIALIZER_ASSIGNMENT_EDEFAULT);
+				return;
 			case N4JSPackage.FORMAL_PARAMETER__INITIALIZER:
 				setInitializer((Expression)null);
 				return;
@@ -611,6 +661,8 @@ public class FormalParameterImpl extends AnnotableElementImpl implements FormalP
 				return variadic != VARIADIC_EDEFAULT;
 			case N4JSPackage.FORMAL_PARAMETER__DEFINED_TYPE_ELEMENT:
 				return definedTypeElement != null;
+			case N4JSPackage.FORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT:
+				return hasInitializerAssignment != HAS_INITIALIZER_ASSIGNMENT_EDEFAULT;
 			case N4JSPackage.FORMAL_PARAMETER__INITIALIZER:
 				return initializer != null;
 			case N4JSPackage.FORMAL_PARAMETER__BINDING_PATTERN:
@@ -779,6 +831,8 @@ public class FormalParameterImpl extends AnnotableElementImpl implements FormalP
 		result.append(name);
 		result.append(", variadic: ");
 		result.append(variadic);
+		result.append(", hasInitializerAssignment: ");
+		result.append(hasInitializerAssignment);
 		result.append(')');
 		return result.toString();
 	}

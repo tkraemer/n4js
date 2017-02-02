@@ -1534,10 +1534,10 @@ public class N4JSXSemanticSequencer extends N4JSSemanticSequencer {
 		else if (epackage == TypesPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case TypesPackage.TANONYMOUS_FORMAL_PARAMETER:
-				sequence_TAnonymousFormalParameter(context, (TAnonymousFormalParameter) semanticObject); 
+				sequence_DefaultFormalParameter_TAnonymousFormalParameter(context, (TAnonymousFormalParameter) semanticObject); 
 				return; 
 			case TypesPackage.TFORMAL_PARAMETER:
-				sequence_TFormalParameter(context, (TFormalParameter) semanticObject); 
+				sequence_DefaultFormalParameter_TFormalParameter(context, (TFormalParameter) semanticObject); 
 				return; 
 			case TypesPackage.TSTRUCT_FIELD:
 				sequence_TStructField(context, (TStructField) semanticObject); 

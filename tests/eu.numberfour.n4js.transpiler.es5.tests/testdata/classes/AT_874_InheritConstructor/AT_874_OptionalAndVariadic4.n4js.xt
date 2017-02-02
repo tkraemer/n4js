@@ -13,7 +13,7 @@ stderr:
 ==>
 --- */
 class E {
-	constructor(start : string?) {
+	constructor(start : string=undefined) {
 		console.log("Optional: " + start)
 	}
 }
