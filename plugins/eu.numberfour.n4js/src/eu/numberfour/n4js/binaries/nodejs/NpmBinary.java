@@ -31,13 +31,6 @@ import eu.numberfour.n4js.utils.Version;
  */
 public class NpmBinary implements Binary {
 
-	/** The minimum {@code npm} version. */
-	public static final Version MIN_VERSION = new Version(3, 0, 0);
-
-	private static final String LABEL = "npm";
-	private static final String BINARY_NAME = "npm";
-	private static final String VERSION_ARGUMENT = "-v";
-
 	@Inject
 	private BinariesValidator validator;
 
@@ -54,23 +47,23 @@ public class NpmBinary implements Binary {
 
 	@Override
 	public String getLabel() {
-		return LABEL;
+		return NodeBinariesConstants.NPM_LABEL;
 	}
 
 	@Override
 	public Version getMinimumVersion() {
-		return MIN_VERSION;
+		return NodeBinariesConstants.NPM_MIN_VERSION;
 	}
 
 	@Override
 	public String getBinaryAbsolutePath() {
 		final NodeJsBinary nodeJsBinary = nodeJsBinaryProvider.get();
-		return nodeJsBinary.getUserNodePathOrDefault() + File.separator + BINARY_NAME;
+		return nodeJsBinary.getUserNodePathOrDefault() + File.separator + NodeBinariesConstants.NPM_BINARY_NAME;
 	}
 
 	@Override
 	public String getVersionArgument() {
-		return VERSION_ARGUMENT;
+		return NodeBinariesConstants.VERSION_ARGUMENT;
 	}
 
 	@Override

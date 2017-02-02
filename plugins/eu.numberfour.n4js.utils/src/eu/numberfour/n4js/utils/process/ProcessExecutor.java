@@ -47,17 +47,17 @@ public class ProcessExecutor {
 	 *
 	 * @param process
 	 *            the process to execute
-	 * @param name
+	 * @param processName
 	 *            name used in debug messages, null empty string used
 	 * @param redirect
-	 *            indicates if captured output should be swallowed or not. If {@link OutputRedirection#SUPPRESS}, then the
-	 *            captured process output will not be flushed to an output streams, in other words, it will not be
+	 *            indicates if captured output should be swallowed or not. If {@link OutputRedirection#SUPPRESS}, then
+	 *            the captured process output will not be flushed to an output streams, in other words, it will not be
 	 *            redirected.
 	 * @return a new result object that represents the actual result of the created process execution
 	 */
-	public ProcessResult execute(final Process process, String name, OutputRedirection redirect) {
+	public ProcessResult execute(final Process process, final String processName, final OutputRedirection redirect) {
 		// prepare name to be used in log messages
-		name = name == null ? " " : " '" + name + "' ";
+		final String name = processName == null ? " " : " '" + processName + "' ";
 
 		try {
 
