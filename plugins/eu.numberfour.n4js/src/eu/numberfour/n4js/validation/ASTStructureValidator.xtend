@@ -97,9 +97,16 @@ import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*
 import static extension eu.numberfour.n4js.conversion.AbstractN4JSStringValueConverter.*
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.isDestructuringAssignment
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.isDestructuringForStatement
+import static extension eu.numberfour.n4js.validation.helper.FunctionValidationHelper.*;
 
 /**
  * A utility that validates the structure of the AST in one pass.
+ * 
+ * Note:
+ * The validations here are important for using plain JavaScript,
+ * especially the EcmaScript test suite relies on validations here.
+ * Validations that are in the package 'validators' are not considered
+ * when the EcmaScript test suite is executed.
  */
 class ASTStructureValidator {
 
@@ -852,7 +859,20 @@ class ASTStructureValidator {
 		var allowYieldInInit = false
 		if (container instanceof FunctionDefinition) {
 			allowYieldInInit = !container.isGenerator
+			
+			val issueConsumer = [String msg, String id, EObject eObj |
+				producer.node = NodeModelUtils.findActualNodeFor(eObj);
+				producer.addDiagnostic(new DiagnosticMessage(msg, IssueCodes.getDefaultSeverity(id), id));
+			];
+			<FormalParameter>internalCheckFormalParameter(
+				container.fpars,
+				model,
+				[variadic],
+				[hasInitializerAssignment],
+				issueConsumer
+			);
 		}
+		
 		_validateASTStructure(
 			model as Variable,
 			producer,
