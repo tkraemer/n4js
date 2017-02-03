@@ -65,6 +65,9 @@ class ImageDescriptionHelper {
 	@Inject
 	private N4JSCache cache
 
+	/** Injecting language specific instance of {@link FileExtensionProvider} is fine, assuming this class is always called in
+	 * context of the editor, which is language specific.
+	 */
 	@Inject
 	private FileExtensionProvider fileExtensionProvider
 
@@ -307,10 +310,6 @@ class ImageDescriptionHelper {
 	}
 
 	private def boolean isN4Resource(Resource res) {
-		val fileExtension = res?.URI?.fileExtension;
-		System.out.println(
-					"checking <" + fileExtension + "> with " + fileExtensionProvider.getFileExtensions() + " result {"
-							+ fileExtensionProvider.isValid(fileExtension) + "} for " + res?.URI);
 		if (fileExtensionProvider.fileExtensions.contains(res?.URI?.fileExtension)) {
 			return (res instanceof N4JSResource)
 		}
