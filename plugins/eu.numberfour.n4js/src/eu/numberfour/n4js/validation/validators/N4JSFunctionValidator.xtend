@@ -70,6 +70,10 @@ import org.eclipse.xtext.EcoreUtil2
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 
+
+
+import static extension eu.numberfour.n4js.validation.helper.FunctionValidationHelper.*;
+
 /**
  */
 class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
@@ -600,7 +604,10 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		// Optionals have a usable type
 		internalCheckOptionalsHaveType(fun.fpars);
 		// all other checks
-		<TFormalParameter>internalCheckFormalParameter(fun.fpars, [variadic], [hasInitializerAssignment], [typeRef], [typeRef?.declaredType?.name]);
+		val issueConsumer = [String msg, String id, EObject eObj |
+			addIssue(msg, eObj, id);
+		];
+		<TFormalParameter>internalCheckFormalParameters(fun.fpars, [variadic], [hasInitializerAssignment], [typeRef?.declaredType?.name], issueConsumer);
 	}
 
 	@Check
@@ -608,7 +615,10 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		// Optionals have a usable type
 		internalCheckOptionalsHaveType(fun.fpars);
 		// all other checks
-		<TFormalParameter>internalCheckFormalParameter(fun.fpars, [variadic], [hasInitializerAssignment], [typeRef], [typeRef?.declaredType?.name]);
+		val issueConsumer = [String msg, String id, EObject eObj |
+			addIssue(msg, eObj, id);
+		];
+		<TFormalParameter>internalCheckFormalParameters(fun.fpars, [variadic], [hasInitializerAssignment], [typeRef?.declaredType?.name], issueConsumer);
 	}
 	
 	private def void internalCheckOptionalsHaveType(TFormalParameter[] fpars) {
@@ -627,12 +637,15 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def checkFormalParametersIn(FunctionDefinition fun) {
 		// 1. check if default parameter initializers could bind to identifiers within the body
-		checkInitializerBindings(fun);
+		internalCheckInitializerBindings(fun);
 		// 2. all other checks
-		<FormalParameter>internalCheckFormalParameter(fun.fpars, [variadic], [hasInitializerAssignment], [declaredTypeRef], [name]);
+		val issueConsumer = [String msg, String id, EObject eObj |
+			addIssue(msg, eObj, id);
+		];
+		<FormalParameter>internalCheckFormalParameters(fun.fpars, [variadic], [hasInitializerAssignment], [name], issueConsumer);
 	}
 	
-	private def checkInitializerBindings(FunctionDefinition fun) {
+	private def internalCheckInitializerBindings(FunctionDefinition fun) {
 		if (fun.body === null)
 			return;
 		
@@ -651,12 +664,11 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 
 	/**
 	 * IDEBUG-211, IDE-145  Check for ..., ?, and missing name in formal parameters.
-	 */
+	 *//* 
 	private def <T extends EObject> internalCheckFormalParameter(
 		T[] fpars,
 		(T)=>boolean variadic,
 		(T)=>boolean hasInitAssgn,
-		(T)=>TypeRef typeRef,
 		(T)=>String name
 	) {
 
@@ -704,7 +716,7 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 			}
 		}
 	}
-
+*/
 	/* IDEBUG-211 checking Undefined, Variadic and missing Typenames. */
 	@Check
 	def void checkStructuralTField(TStructField tfield) {
