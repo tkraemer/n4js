@@ -1,0 +1,162 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+interface A {}
+interface B {}
+
+let a:A;
+let b:B;
+let ab:A|B;
+
+interface I1<S,T> {
+	onlyIn1(a:S):T;
+	
+	sameReturnType():S;
+	sameParType1(a:S);
+	
+	diffReturnType():S;
+	diffParType1(a:S);
+	
+	diffNoOfParmsSameType(a:S);
+	
+	diffNoOfParmsDiffType(a:S);
+	
+	varArg(...a:S);
+	varArgBoth(...a:S);
+}
+
+interface I2<S,T> {
+	onlyIn2(b:T):S;
+	
+	sameReturnType():S;
+	sameParType1(a:S);
+
+	diffReturnType():T;
+	diffParType1(b:T);
+
+	diffNoOfParmsSameType(a:S, b:T);
+	
+	diffNoOfParmsDiffType(a:T, b:T);
+
+	varArg(a:S, b:T);
+	varArgBoth(a:S, ...b:T);
+}
+
+var i12 : I1<A,B> & I2<A,B>;
+
+// onlyIn1(a:A):B
+
+// XPECT noerrors
+i12.onlyIn1(a);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.onlyIn1(b);
+
+// XPECT type of 'i12.onlyIn1(a)' --> B
+i12.onlyIn1(a);
+
+
+
+// onlyIn2(b:B):A
+
+// XPECT noerrors
+i12.onlyIn2(b);
+
+// XPECT errors --> 'A is not a subtype of B' at 'a'
+i12.onlyIn2(a);
+
+// XPECT type of 'i12.onlyIn2(b)' --> A
+i12.onlyIn2(b);
+
+
+
+// sameReturnType():A
+
+// XPECT type of 'i12.sameReturnType()' --> A
+i12.sameReturnType();
+
+
+
+// sameParType(a:A)
+
+// XPECT noerrors
+i12.sameParType1(a);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.sameParType1(b);
+
+
+
+// diffReturnType():A&B
+
+// XPECT type of 'i12.diffReturnType()' --> A&B
+i12.diffReturnType();
+
+
+
+// diffParType1(ab:A|B)
+
+// XPECT noerrors
+i12.diffParType1(ab);
+
+
+
+// diffNoOfParmsSameType(a:A, b:B)
+
+// XPECT noerrors
+i12.diffNoOfParmsSameType(a, b);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.diffNoOfParmsSameType(b, b);
+
+// XPECT errors --> 'A is not a subtype of B' at 'a'
+i12.diffNoOfParmsSameType(a, a);
+
+
+
+// diffNoOfParmsDiffType(ab:A|B, b:B)
+
+// XPECT noerrors
+i12.diffNoOfParmsDiffType(ab, b);
+
+// XPECT errors --> 'A is not a subtype of B' at 'a'
+i12.diffNoOfParmsDiffType(ab, a);
+
+
+// varArg(a:A, ab:A|B, ...a:A)
+
+// XPECT errors --> 'Incorrect number of arguments: expected 3, got 1.' at 'i12.varArg(a)' 
+i12.varArg(a);
+
+// XPECT noerrors
+i12.varArg(a, ab);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.varArg(b, ab);
+
+// XPECT noerrors
+i12.varArg(a, ab, a);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.varArg(a, ab, b);
+
+
+
+// varArgBoth(a:A, ...ab:A|B) 
+
+// XPECT noerrors
+i12.varArgBoth(a);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.varArgBoth(b);
+
+// XPECT noerrors
+i12.varArgBoth(a, ab);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.varArgBoth(b, ab);
+
+// XPECT noerrors
+i12.varArgBoth(a, ab, ab);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.varArgBoth(b, ab, ab);

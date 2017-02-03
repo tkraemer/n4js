@@ -1,0 +1,48 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest 
+    ResourceSet {
+		ThisFile {}
+		File "ABC.n4js" {}
+	}
+	
+   END_SETUP 
+ */
+
+// TODO: add Xpect method to check accessibility of a PropertyAccessExpression, e.g
+// XPECT accessibility of 'ab.m' --> private
+ab.m();
+
+import {A,B,C} from "Ch04_10_IntersectionType/ABC"
+
+let ab : A&B;
+let bc : B&C;
+let ac : A&C;
+let abc : A&B&C;
+
+// should have project visiblity from B.s
+// XPECT noerrors
+ab.s;
+
+// XPECT noerrors
+ab.m();
+
+// should have public visiblity from C.s
+// XPECT noerrors
+bc.s;
+
+// XPECT noerrors
+bc.m();
+
+// should have public visiblity from C.s
+// XPECT noerrors
+ac.s;
+
+// XPECT noerrors
+ac.m();
+
+// should have public visiblity from C.s
+// XPECT noerrors
+abc.s;
+
+// XPECT noerrors
+abc.m();
+

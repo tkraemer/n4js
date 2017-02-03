@@ -1,0 +1,122 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+interface A {}
+interface B {}
+
+let a:A;
+let b:B;
+let ab:A|B;
+
+interface I1 {
+	onlyIn1: A;
+	inBothSameType: A;
+	inBothDiffType: A;
+	inBothInheritedDiffType:A
+}
+
+interface I2 {
+	onlyIn2: B;
+	inBothSameType: A;
+	inBothDiffType: B;
+}
+
+interface I3 extends I2 {
+	onlyIn3: B;
+	inBothInheritedDiffType:B
+}
+
+var i13 : I1&I3;
+
+// get onlyIn1(): A
+// set onlyIn1(a:A)
+
+// XPECT noerrors
+i13.onlyIn1;
+
+// XPECT type of 'i13.onlyIn1' --> A
+i13.onlyIn1
+
+// XPECT noerrors
+i13.onlyIn1 = a;
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i13.onlyIn1 = b;
+
+
+
+// get onlyIn2(): B
+// set onlyIn2(b:B)
+
+// XPECT noerrors
+i13.onlyIn2;
+
+// XPECT type of 'i13.onlyIn2' --> B
+i13.onlyIn2
+
+// XPECT errors --> 'A is not a subtype of B' at 'a'
+i13.onlyIn2 = a;
+
+// XPECT noerrors
+i13.onlyIn2 = b;
+
+
+
+// get onlyIn3(): B
+// set onlyIn3(b:B)
+
+// XPECT noerrors
+i13.onlyIn3;
+
+// XPECT type of 'i13.onlyIn3' --> B
+i13.onlyIn3
+
+// XPECT errors --> 'A is not a subtype of B' at 'a'
+i13.onlyIn3 = a;
+
+// XPECT noerrors
+i13.onlyIn3 = b;
+
+
+
+// get inBothSameType(): A
+// set inBothSameType(a:A)
+
+// XPECT noerrors
+i13.inBothSameType;
+
+// XPECT type of 'i13.inBothSameType' --> A
+i13.inBothSameType
+
+// XPECT noerrors
+i13.inBothSameType = a;
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i13.inBothSameType = b;
+
+
+
+// get inBothDiffType(): A&B
+// set inBothDiffType(ab:A|B)
+
+// XPECT noerrors
+i13.inBothDiffType;
+
+// XPECT type of 'i13.inBothDiffType' --> A&B
+i13.inBothDiffType;
+
+// XPECT noerrors
+i13.inBothDiffType = ab;
+
+
+
+// get inBothInheritedDiffType(): A&B
+// set inBothInheritedDiffType(ab:A|B)
+
+// XPECT noerrors
+i13.inBothInheritedDiffType;
+
+// XPECT type of 'i13.inBothInheritedDiffType' --> A&B
+i13.inBothInheritedDiffType;
+
+// XPECT noerrors
+i13.inBothInheritedDiffType = ab;

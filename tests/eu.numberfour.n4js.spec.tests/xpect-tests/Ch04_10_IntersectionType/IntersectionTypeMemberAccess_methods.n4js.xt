@@ -1,0 +1,193 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+interface A {}
+interface B {}
+
+let a:A;
+let b:B;
+let ab:A|B;
+
+interface I1 {
+	onlyIn1(a:A):B;
+	
+	sameReturnType():A;
+	sameParType1(a:A);
+	
+	diffReturnType():A;
+	diffParType1(a:A);
+	
+	diffNoOfParmsSameType(a:A);
+	
+	diffNoOfParmsDiffType(a:A);
+	
+	varArg(...a:A);
+	varArgBoth(...a:A);
+	
+	inBothInheritedAllDiffTypes(a:A):B;
+}
+
+interface I3<S,T> {
+	onlyIn3(b:T):S;
+
+	inBothInheritedAllDiffTypes(b:T):S;
+}
+
+interface I2 extends I3<A,B> {
+	onlyIn2(b:B):A;
+	
+	sameReturnType():A;
+	sameParType1(a:A);
+
+	diffReturnType():B;
+	diffParType1(b:B);
+
+	diffNoOfParmsSameType(a:A, b:B);
+	
+	diffNoOfParmsDiffType(a:B, b:B);
+
+	varArg(a:A, b:B);
+	varArgBoth(a:A, ...b:B);
+}
+
+var i12 : I1&I2;
+
+// onlyIn1(a:A):B
+
+// XPECT noerrors
+i12.onlyIn1(a);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.onlyIn1(b);
+
+// XPECT type of 'i12.onlyIn1(a)' --> B
+i12.onlyIn1(a);
+
+
+
+// onlyIn2(b:B):A
+
+// XPECT noerrors
+i12.onlyIn2(b);
+
+// XPECT errors --> 'A is not a subtype of B' at 'a'
+i12.onlyIn2(a);
+
+// XPECT type of 'i12.onlyIn2(b)' --> A
+i12.onlyIn2(b);
+
+
+
+// onlyIn3(b:B):A
+
+// XPECT noerrors
+i12.onlyIn3(b);
+
+// XPECT errors --> 'A is not a subtype of B' at 'a'
+i12.onlyIn3(a);
+
+// XPECT type of 'i12.onlyIn3(b)' --> A
+i12.onlyIn3(b);
+
+
+
+// sameReturnType():A
+
+// XPECT type of 'i12.sameReturnType()' --> A
+i12.sameReturnType();
+
+
+
+// sameParType(a:A)
+
+// XPECT noerrors
+i12.sameParType1(a);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.sameParType1(b);
+
+
+
+// diffReturnType():A&B
+
+// XPECT type of 'i12.diffReturnType()' --> A&B
+i12.diffReturnType();
+
+
+
+// diffParType1(ab:A|B)
+
+// XPECT noerrors
+i12.diffParType1(ab);
+
+
+
+// diffNoOfParmsSameType(a:A, b:B)
+
+// XPECT noerrors
+i12.diffNoOfParmsSameType(a, b);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.diffNoOfParmsSameType(b, b);
+
+// XPECT errors --> 'A is not a subtype of B' at 'a'
+i12.diffNoOfParmsSameType(a, a);
+
+
+
+// diffNoOfParmsDiffType(ab:A|B, b:B)
+
+// XPECT noerrors
+i12.diffNoOfParmsDiffType(ab, b);
+
+// XPECT errors --> 'A is not a subtype of B' at 'a'
+i12.diffNoOfParmsDiffType(ab, a);
+
+
+// varArg(a:A, ab:A|B, ...a:A)
+
+// XPECT errors --> 'Incorrect number of arguments: expected 3, got 1.' at 'i12.varArg(a)' 
+i12.varArg(a);
+
+// XPECT noerrors
+i12.varArg(a, ab);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.varArg(b, ab);
+
+// XPECT noerrors
+i12.varArg(a, ab, a);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.varArg(a, ab, b);
+
+
+
+// varArgBoth(a:A, ...ab:A|B) 
+
+// XPECT noerrors
+i12.varArgBoth(a);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.varArgBoth(b);
+
+// XPECT noerrors
+i12.varArgBoth(a, ab);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.varArgBoth(b, ab);
+
+// XPECT noerrors
+i12.varArgBoth(a, ab, ab);
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.varArgBoth(b, ab, ab);
+
+
+
+// inBothInheritedAllDiffTypes(ab:A|B):A&B
+
+// XPECT noerrors
+i12.inBothInheritedAllDiffTypes(ab);
+
+// XPECT type of 'i12.inBothInheritedAllDiffTypese()' --> A&B
+i12.inBothInheritedAllDiffTypes(ab);

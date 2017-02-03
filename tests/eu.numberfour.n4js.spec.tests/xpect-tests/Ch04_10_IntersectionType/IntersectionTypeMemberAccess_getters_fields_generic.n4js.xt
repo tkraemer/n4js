@@ -1,0 +1,122 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+interface A {}
+interface B {}
+
+let a:A;
+let b:B;
+
+let ab:A|B;
+
+interface I1<T> {
+	m1:T;
+	get m2(): T;
+}
+
+interface I2<T> {
+	get m1(): T;
+	m2: T;
+}
+
+interface I3<T> {
+	get m1(): T;
+	m2: T;
+}
+
+var i12: I1<A> & I2<B>;
+
+// set m1(a:A)
+// get m1():A
+
+// XPECT noerrors
+i12.m1;
+
+// XPECT type of 'i12.m1' --> A
+i12.m1;
+
+// XPECT noerrors
+i12.m1 = a;
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.m1 = b;
+
+
+
+// set m2(a:A)
+// get m2():A
+
+// XPECT noerrors
+i12.m2;
+
+// XPECT type of 'i12.m2' --> A
+i12.m2;
+
+// XPECT noerrors
+i12.m2 = a;
+
+// XPECT errors --> 'B is not a subtype of A' at 'b'
+i12.m2 = b;
+
+
+
+var i13: I1<A> & I3<B>;
+
+// set m1(a:A)
+// get m1():A&B
+
+// XPECT noerrors
+i13.m1;
+
+// XPECT type of 'i13.m1' --> A&B
+i13.m1;
+
+// XPECT noerrors
+i13.m1 = a;
+
+// XPECT errors --> 'B is not a subtype of A.' at 'b'
+i13.m1 = b;
+
+
+// set m2(b:B)
+// get m2():A&B
+
+// XPECT noerrors
+i13.m2;
+
+// XPECT type of 'i13.m2' --> A&B
+i13.m2;
+
+// XPECT errors --> 'A is not a subtype of B.' at 'a'
+i13.m2 = a;
+
+// XPECT noerrors
+i13.m2 = b;
+
+
+
+var i23: I2<A> & I3<B>;
+
+// get m1():A&B
+
+// XPECT noerrors
+i23.m1;
+
+// XPECT type of 'i23.m1' --> A&B
+i23.m1;
+
+// XPECT errors --> "The accessor m1 is read-only." at 'm1'
+i23.m1 = null;
+
+
+
+// set m2(ab:A|B)
+// get m2():A&B
+
+// XPECT noerrors
+i23.m2;
+
+// XPECT type of 'i13.m2' --> A&B
+i23.m2;
+
+// XPECT noerrors
+i23.m2 = ab;
