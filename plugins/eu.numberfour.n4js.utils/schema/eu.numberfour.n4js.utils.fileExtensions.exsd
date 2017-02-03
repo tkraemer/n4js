@@ -6,7 +6,7 @@
          <meta.schema plugin="eu.numberfour.n4js.utils" id="eu.numberfour.n4js.utils.fileExtensions" name="Runnable File Extensions"/>
       </appinfo>
       <documentation>
-         This extension point should be used by sub-language plugins to register transpilable, test and runnable file extensions. These file extensions are used by for openning generated source, runner and tester.
+         This extension point should be used by all language plugins to register their file extensions to specific categories. These categories are used by the system to enable / disable certain features for a given file extension.
       </documentation>
    </annotation>
 
@@ -22,6 +22,7 @@
             <element ref="runnableFileExtensions"/>
             <element ref="testFileExtensions"/>
             <element ref="typableFileExtensions"/>
+            <element ref="rawFileExtensions"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -55,7 +56,7 @@
          <attribute name="extensions" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  Used by IDE runners to decided if a given file is of a runnable type.
                </documentation>
             </annotation>
          </attribute>
@@ -67,7 +68,7 @@
          <attribute name="extensions" type="string">
             <annotation>
                <documentation>
-                  
+                  Used by IDE o decided if a given file should be subject of transpilatuion (even is pass through copy is made with no source code transformation). This also affects features like jumping to generated code.
                </documentation>
             </annotation>
          </attribute>
@@ -79,7 +80,7 @@
          <attribute name="extensions" type="string">
             <annotation>
                <documentation>
-                  
+                  Used by IDE testers to decided if a given file is of a testable type.
                </documentation>
             </annotation>
          </attribute>
@@ -91,7 +92,19 @@
          <attribute name="extensions" type="string">
             <annotation>
                <documentation>
-                  
+                  Used by IDE in various places, where building AST or TModel of file is need. Also when calulating if changes to that file are affecting containing or other source containers (used e.g. by the eclipse/xtext builder).
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="rawFileExtensions">
+      <complexType>
+         <attribute name="extensions" type="string">
+            <annotation>
+               <documentation>
+                  Used in various places, mainly to filter files out. For example file may be parsed, AST and TModel built, but IDE will not organize imports in those files.
                </documentation>
             </annotation>
          </attribute>
@@ -117,9 +130,11 @@
 &lt;pre&gt;
    &lt;extension
      point=&quot;eu.numberfour.n4js.utils.fileExtensions&quot;&gt;
-     &lt;transpilableFileExtensions extensions=&quot;.n4js, .js&quot;/&gt;
-     &lt;runnableFileExtensions extensions=&quot;.n4js, .js&quot;/&gt;
-     &lt;testFileExtensions extensions=&quot;.n4js&quot;/&gt;
+     &lt;transpilableFileExtensions extensions=&quot;n4js, js&quot;/&gt;
+     &lt;runnableFileExtensions extensions=&quot;n4js, js&quot;/&gt;
+     &lt;testFileExtensions extensions=&quot;n4js&quot;/&gt;
+     &lt;typableFileExtensions extensions=&quot;n4jsd, n4js, js&quot;/&gt;
+     &lt;rawFileExtensions extensions=&quot;js&quot;/&gt;
    &lt;/extension&gt;
 &lt;/pre&gt; 
 &lt;/p&gt;

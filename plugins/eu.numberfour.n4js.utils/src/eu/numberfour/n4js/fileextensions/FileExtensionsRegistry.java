@@ -39,6 +39,7 @@ public class FileExtensionsRegistry {
 	private static final String ATT_TEST_FILE_EXTENSIONS = "testFileExtensions";
 	private static final String ATT_RUNNABLE_FILE_EXTENSIONS = "runnableFileExtensions";
 	private static final String ATT_TYPABLE_FILE_EXTENSIONS = "typableFileExtensions";
+	private static final String ATT_RAW_FILE_EXTENSIONS = "rawFileExtensions";
 
 	private static final String ATT_FILE_EXTENSION = "extensions";
 	private boolean isInitialized = false;
@@ -46,6 +47,7 @@ public class FileExtensionsRegistry {
 	private final Collection<String> testFileExtensions = new ArrayList<>();
 	private final Collection<String> runnableFileExtensions = new ArrayList<>();
 	private final Collection<String> typableFileExtensions = new ArrayList<>();
+	private final Collection<String> rawFileExtensions = new ArrayList<>();
 
 	/**
 	 * Register a file extension. This method should only be invoked by client code directly in headless mode. When
@@ -67,6 +69,9 @@ public class FileExtensionsRegistry {
 			break;
 		case TYPABLE_FILE_EXTENSION:
 			typableFileExtensions.add(fileExtension);
+			break;
+		case RAW_FILE_EXTENSION:
+			rawFileExtensions.add(fileExtension);
 			break;
 		default:
 			throw new UnsupportedOperationException(
@@ -90,6 +95,8 @@ public class FileExtensionsRegistry {
 			return Collections.unmodifiableCollection(runnableFileExtensions);
 		case TYPABLE_FILE_EXTENSION:
 			return Collections.unmodifiableCollection(typableFileExtensions);
+		case RAW_FILE_EXTENSION:
+			return Collections.unmodifiableCollection(rawFileExtensions);
 		default:
 			throw new UnsupportedOperationException(
 					"This file extension type " + extensionType + " is not supported yet");
@@ -124,9 +131,12 @@ public class FileExtensionsRegistry {
 							runnableFileExtensions.addAll(fileExtensions);
 						} else if (ATT_TYPABLE_FILE_EXTENSIONS.equals(elementName)) {
 							typableFileExtensions.addAll(fileExtensions);
+						} else if (ATT_RAW_FILE_EXTENSIONS.equals(elementName)) {
+							rawFileExtensions.addAll(fileExtensions);
+						} else {
+							LOGGER.error(new UnsupportedOperationException(
+									"This file extension type " + elementName + " is not supported yet"));
 						}
-						LOGGER.error(new UnsupportedOperationException(
-								"This file extension type " + elementName + " is not supported yet"));
 					} catch (Exception ex) {
 						LOGGER.error("Error while reading extensions for extension point " + FILE_EXTENSIONS_POINT_ID,
 								ex);

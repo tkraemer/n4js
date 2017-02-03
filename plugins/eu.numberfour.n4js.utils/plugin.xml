@@ -39,5 +39,6 @@ See: http://help.eclipse.org/kepler/index.jsp?topic=/org.eclipse.platform.doc.is
 	     <runnableFileExtensions extensions="n4js, js"/>
 	     <testFileExtensions extensions="n4js"/>
 	     <typableFileExtensions extensions="n4jsd, n4js, js"/>
+	     <rawFileExtensions extensions="js"/>
    </extension>
 </plugin>
