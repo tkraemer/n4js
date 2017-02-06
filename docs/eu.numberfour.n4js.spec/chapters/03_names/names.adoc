@@ -142,7 +142,7 @@ That is, this modifier is assumed if no modifier is explicitly specified.
 --
 The function $\alpha_T: TypeReference \times TypeDeclaration \to Boolean$ computes whether a given type, (top-level) variable or function
 reference can access the declaration that it references.
-$\alpha_T$ is defined with <<tab:typeAccessControl>>.
+$\alpha_T$ is defined with <<tab:type-access-control>>.
 
 Formally, we define $\alpha_T$ for a given reference
 $r$ and a module top level variable, function or type

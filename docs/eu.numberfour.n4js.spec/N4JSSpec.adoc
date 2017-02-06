@@ -22,7 +22,7 @@ image::{find}images/n4jslogo.png[400,400,align="center"]
 *Version: {revnumber}*
 
 [.center]
-*Revision Date: {revdate}*
+*Last Updated: {docdate}*
 
 [.center]
 *(C) 2016 NumberFour AG*

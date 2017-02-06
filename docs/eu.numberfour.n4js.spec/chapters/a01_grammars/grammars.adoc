@@ -8,8 +8,8 @@ These grammars are post-processed and combined with additional validators so not
 
 == Type Expressions Grammar
 
-[[EBNFTypeExpression]]
-
+[[lst:EBNFTypeExpression]]
+.EBNF Type Exprtession Grammar
 [source,xtext]
 ----
 TypeRef:

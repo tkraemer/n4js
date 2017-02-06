@@ -151,7 +151,7 @@ to specify the type of variables.
 
 === Syntax
 
-The listing <<EBNFTypeExpression>> summarizes the type expression grammar.
+The listing <<lst:EBNFTypeExpression>> summarizes the type expression grammar.
 Depending on the context, not all constructs are allowed.
 For example, the variadic modifier is only allowed for function parameters.
 
