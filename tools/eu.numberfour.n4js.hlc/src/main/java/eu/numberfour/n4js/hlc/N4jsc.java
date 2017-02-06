@@ -316,7 +316,14 @@ public class N4jsc {
 	private TypeDefinitionGitLocationProvider gitLocationProvider;
 
 	@Inject
-	private FileExtensionsRegistry fileExtensionsRegistry;
+	private FileExtensionsRegistry n4jsFileExtensionsRegistry;
+
+	// TODO IDE-2493 remove duplicated singletons
+	/**
+	 * Due to issues described in {@code IDE-2493} we need to duplicate singletons that have state.
+	 */
+	@Inject
+	private FileExtensionsRegistry n4jsxFileExtensionsRegistry;
 
 	/**
 	 * Entry point to start the compiler. Parses the Parameters.
@@ -505,7 +512,8 @@ public class N4jsc {
 	 */
 	private void registerTestableFiles(String... extensions) {
 		for (String extension : extensions) {
-			fileExtensionsRegistry.register(extension, FileExtensionType.TESTABLE_FILE_EXTENSION);
+			n4jsFileExtensionsRegistry.register(extension, FileExtensionType.TESTABLE_FILE_EXTENSION);
+			n4jsxFileExtensionsRegistry.register(extension, FileExtensionType.TESTABLE_FILE_EXTENSION);
 		}
 	}
 
@@ -514,7 +522,8 @@ public class N4jsc {
 	 */
 	private void registerRunnableFiles(String... extensions) {
 		for (String extension : extensions) {
-			fileExtensionsRegistry.register(extension, FileExtensionType.RUNNABLE_FILE_EXTENSION);
+			n4jsFileExtensionsRegistry.register(extension, FileExtensionType.RUNNABLE_FILE_EXTENSION);
+			n4jsxFileExtensionsRegistry.register(extension, FileExtensionType.RUNNABLE_FILE_EXTENSION);
 		}
 	}
 
@@ -523,7 +532,8 @@ public class N4jsc {
 	 */
 	private void registerTranspilableFiles(String... extensions) {
 		for (String extension : extensions) {
-			fileExtensionsRegistry.register(extension, FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+			n4jsFileExtensionsRegistry.register(extension, FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+			n4jsxFileExtensionsRegistry.register(extension, FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
 		}
 	}
 
@@ -532,7 +542,8 @@ public class N4jsc {
 	 */
 	private void registerTypableFiles(String... extensions) {
 		for (String extension : extensions) {
-			fileExtensionsRegistry.register(extension, FileExtensionType.TYPABLE_FILE_EXTENSION);
+			n4jsFileExtensionsRegistry.register(extension, FileExtensionType.TYPABLE_FILE_EXTENSION);
+			n4jsxFileExtensionsRegistry.register(extension, FileExtensionType.TYPABLE_FILE_EXTENSION);
 		}
 	}
 
@@ -541,7 +552,8 @@ public class N4jsc {
 	 */
 	private void registerRawFiles(String... extensions) {
 		for (String extension : extensions) {
-			fileExtensionsRegistry.register(extension, FileExtensionType.TESTABLE_FILE_EXTENSION);
+			n4jsFileExtensionsRegistry.register(extension, FileExtensionType.TESTABLE_FILE_EXTENSION);
+			n4jsxFileExtensionsRegistry.register(extension, FileExtensionType.TESTABLE_FILE_EXTENSION);
 		}
 	}
 
@@ -856,7 +868,10 @@ public class N4jsc {
 		// we have to avoid this implicit setup of N4JS, because N4JS was already initialized (another initialization
 		// would create a second injector for the language N4JS, which might lead to follow-up issues, e.g. multiple
 		// instances of singletons per language).
-		N4JSXStandaloneSetup.doSetupWithoutParentLanguages();
+		// N4JSXStandaloneSetup.doSetupWithoutParentLanguages();
+		Injector n4jsxInjector = new N4JSXStandaloneSetup().createInjectorAndDoEMFRegistration();
+		this.n4jsxFileExtensionsRegistry = n4jsxInjector.getInstance(FileExtensionsRegistry.class);
+
 	}
 
 	/**
