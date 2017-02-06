@@ -662,61 +662,6 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
-	/**
-	 * IDEBUG-211, IDE-145  Check for ..., ?, and missing name in formal parameters.
-	 *//* 
-	private def <T extends EObject> internalCheckFormalParameter(
-		T[] fpars,
-		(T)=>boolean variadic,
-		(T)=>boolean hasInitAssgn,
-		(T)=>String name
-	) {
-
-		// 1. Variadic only once
-		val variadicsCount = fpars.filter[variadic.apply(it)].size
-		if (variadicsCount > 1) {
-			val variadicParams = fpars.filter[variadic.apply(it)]
-			addIssue(messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head, FUN_PARAM_VARIADIC_ONLY_LAST)
-		}
-		// 2. Variadic is last
-		if (variadicsCount == 1) {
-			val variadicParams = fpars.filter[variadic.apply(it)]
-			if (!variadic.apply(fpars.last)) {
-				addIssue(messageForFUN_PARAM_VARIADIC_ONLY_LAST, variadicParams.head, FUN_PARAM_VARIADIC_ONLY_LAST)
-			}
-		}
-		for (fp:fpars) {
-			if (hasInitAssgn.apply(fp)) {
-				// 3.a reference to succeeding parameter
-				val fpPos = fpars.indexOf(fp);
-				val List<IdentifierRef> irs = EcoreUtil2.getAllContentsOfType(fp, IdentifierRef);
-				for (ir : irs) {
-					if (fpars.indexOf(ir.id) >= fpPos) {
-						val String msg = getMessageForFUN_PARAM_INITIALIZER_ILLEGAL_FORWARD_REFERENCE();
-						addIssue(msg, ir, FUN_PARAM_INITIALIZER_ILLEGAL_FORWARD_REFERENCE)
-					}
-				}
-				// 3.b both variadic and initializerAssignment
-				if (variadic.apply(fp)) {
-					addIssue(messageForFUN_PARAM_VARIADIC_WITH_INITIALIZER, fp, FUN_PARAM_VARIADIC_WITH_INITIALIZER)
-				}
-			}
-		}
-		// 4. Implicit default formal parameters
-		var boolean initAssgnVisited = false;
-		val iter = fpars.iterator;
-		while (iter.hasNext() && !initAssgnVisited) {
-			initAssgnVisited = hasInitAssgn.apply(iter.next());
-		}
-		while (initAssgnVisited && iter.hasNext()) {
-			val T fpar = iter.next();
-			if (!hasInitAssgn.apply(fpar) && !variadic.apply(fpar)) {
-				val String msg = getMessageForFUN_PARAM_IMPLICIT_DEFAULT_PARAM(name.apply(fpar));
-				addIssue(msg, fpar, FUN_PARAM_IMPLICIT_DEFAULT_PARAM)
-			}
-		}
-	}
-*/
 	/* IDEBUG-211 checking Undefined, Variadic and missing Typenames. */
 	@Check
 	def void checkStructuralTField(TStructField tfield) {
