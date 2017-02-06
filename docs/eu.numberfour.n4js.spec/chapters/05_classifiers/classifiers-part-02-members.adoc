@@ -538,7 +538,8 @@ N4JS implements the async/await concept proposed for ECMAScript 7, which
 provides a more convenient and readable syntax for writing asynchronous
 code compared to using built-in type Promise directly. This concept can
 be applied to methods in exactly the same way as to declared functions.
-See <<_asynchronous-functions>> and <<_asynchronous-arrow-functions>> for details.
+See <<Asynchronous Functions>> and <<Asynchronous Arrow Functions>> for details.
+
 
 [.language-n4js]
 == Constructors

@@ -943,12 +943,11 @@ In N4JS, a top-level arrow function can’t include usages of `arguments` in its
 [.language-n4js]
 == ECMAScript Proposals Function Definition
 
+
 === Asynchronous Functions
 task:IDE-1175[] task:IDE-1593[]
 
-To improve language-level support for asynchronous code, there exists an
-ECMAScript proposal
-footnote:[see http://tc39.github.io/ecmascript-asyncawait/] based on Promises which are provided by ES6 as built-in types.
+To improve language-level support for asynchronous code, there exists an ECMAScript proposal footnote:[see http://tc39.github.io/ecmascript-asyncawait/] based on Promises which are provided by ES6 as built-in types.
 N4JS implements this proposal.
 This concept is supported for declared functions and methods (<<_asynchronous-methods>>) as well
 as for function expressions and arrow functions (<<Asynchronous Arrow Functions>>).
@@ -1121,6 +1120,7 @@ function snafu(I<int> i1, I<Promise<int>> i2) {
 ----
 
 ====
+
 
 ==== Asynchronous Arrow Functions
 task:IDE-1494[]

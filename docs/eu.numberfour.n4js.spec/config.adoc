@@ -37,6 +37,7 @@
 :doctype: book
 
 // Numbered section titles with auto-generated anchors
+:sectnumlevels: 5
 :sectnums:
 :sectanchors:
 :idseparator: -
