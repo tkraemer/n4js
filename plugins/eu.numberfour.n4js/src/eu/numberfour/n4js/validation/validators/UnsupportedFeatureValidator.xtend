@@ -113,13 +113,15 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Check
 	def void checkComputedPropertyName(PropertyNameOwner decl) {
-		if(decl instanceof PropertyAssignment && decl.eContainer instanceof ObjectLiteral) {
-			// special case: in object literals, anything goes
-			return;
-		}
 		val expr = decl.computedNameFrom;
 		if(expr!==null) {
 			if(!isLegalExpressionInComputedPropertyName(expr)) {
+				if(decl instanceof PropertyAssignment && decl.eContainer instanceof ObjectLiteral) {
+					// special case: in object literals, anything goes
+					// (but show a warning)
+					addIssue(IssueCodes.getMessageForEXP_COMPUTED_PROP_NAME_DISCOURAGED, expr, IssueCodes.EXP_COMPUTED_PROP_NAME_DISCOURAGED);
+					return;
+				}
 				unsupported("computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value", expr);
 			}
 		}

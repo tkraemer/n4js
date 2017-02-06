@@ -28,19 +28,19 @@ var ol = {
 
 	// NOTE: as of IDE-2500, arbitrary computed property names are allowed in object literals
 
-	// XPECT noerrors -->
+	// XPECT warnings --> "Computed property name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without custom value; this property won't be type-checked at compile time." at "foo()"
 	[foo()]: "one",
 	
-	// XPECT noerrors -->
+	// XPECT warnings --> "Computed property name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without custom value; this property won't be type-checked at compile time." at "foo()"
 	get [foo()]() {return null;},
 	
-	// XPECT noerrors -->
+	// XPECT warnings --> "Computed property name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without custom value; this property won't be type-checked at compile time." at "foo()"
 	set [foo()](value) {},
 	
-	// XPECT noerrors -->
+	// XPECT warnings --> "Computed property name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without custom value; this property won't be type-checked at compile time." at "foo()"
 	[foo()]() {},
 	
-	// XPECT noerrors -->
+	// XPECT warnings --> "Computed property name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without custom value; this property won't be type-checked at compile time." at "Symbol()"
 	[Symbol()]() {}
 }
 
