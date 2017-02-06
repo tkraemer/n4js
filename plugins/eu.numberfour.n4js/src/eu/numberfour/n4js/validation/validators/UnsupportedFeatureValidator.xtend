@@ -116,12 +116,9 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def void checkComputedPropertyName(LiteralOrComputedPropertyName decl) {
 		if(decl.kind===PropertyNameKind.COMPUTED) {
-			val expr = decl.expression;
-			if(expr!==null) {
-				val G = decl.newRuleEnvironment;
-				if(!N4JSLanguageUtils.isConstantExpression(G, expr)) {
-					unsupported("computed property/member name using an expression other than a constant expression", expr);
-				}
+			val G = decl.newRuleEnvironment;
+			if(!N4JSLanguageUtils.isValidComputedPropertyName(G, decl)) {
+				unsupported("computed property/member name using an expression other than a constant expression", decl.expression);
 			}
 		}
 	}

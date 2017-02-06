@@ -26,6 +26,8 @@ import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.IndexedAccessExpression
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName
+import eu.numberfour.n4js.n4JS.MultiplicativeExpression
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4EnumLiteral
@@ -37,11 +39,13 @@ import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.NullLiteral
 import eu.numberfour.n4js.n4JS.NumericLiteral
+import eu.numberfour.n4js.n4JS.ObjectLiteral
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ParenExpression
 import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.PropertyAssignmentAnnotationList
 import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
+import eu.numberfour.n4js.n4JS.PropertyNameKind
 import eu.numberfour.n4js.n4JS.RegularExpressionLiteral
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.StringLiteral
@@ -96,7 +100,6 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.n4JS.MultiplicativeExpression
 
 /**
  * Intended for small, static utility methods that
@@ -632,6 +635,28 @@ class N4JSLanguageUtils {
 	 */
 	def static TypeRef getTypeVariableImplicitUpperBound(RuleEnvironment G) {
 		return G.anyTypeRef;
+	}
+
+	/**
+	 * Returns <code>true</code> iff the given name is a computed property name with a valid expression.
+	 */
+	def static boolean isValidComputedPropertyName(RuleEnvironment G, LiteralOrComputedPropertyName name) {
+		if(name.kind===PropertyNameKind.COMPUTED) {
+			val expr = name.expression;
+			if(expr!==null) {
+				// case #1: constant expressions are valid in computed property names
+				if(N4JSLanguageUtils.isConstantExpression(G, expr)) {
+					return true;
+				}
+				// case #2: in object literals
+				val parent = name.eContainer;
+				val grandParent = parent?.eContainer;
+				if(parent instanceof PropertyAssignment && grandParent instanceof ObjectLiteral) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
