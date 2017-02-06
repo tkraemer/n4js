@@ -948,7 +948,7 @@ Following annotations describe API used to configure N4JSDI.
 
 ==== N4JS DI @GenerateInjector
 
-[horizontal]
+
 name::
   @GenerateInjector
 targets::
@@ -968,7 +968,7 @@ its dependencies.
 
 ==== N4JS DI @WithParentInjector
 
-[horizontal]
+
 name::
   @WithParentInjector
 targets::
@@ -1000,7 +1000,7 @@ Additional _WithParentInjector_ constraints:
 
 ==== N4JS DI @UseBinder
 
-[horizontal]
+
 name::
   @UseBinder
 targets::
@@ -1026,7 +1026,7 @@ arguments are optional::
 
 ==== N4JS DI @Binder
 
-[horizontal]
+
 name::
   @Binder
 targets::
@@ -1054,7 +1054,7 @@ That can be either `@Bind` annotations on `@Binder` itself or its factory method
 
 ==== N4JS DI @Bind
 
-[horizontal]
+
 name::
   @Bind
 targets::
@@ -1083,7 +1083,7 @@ See also <<_validation-of-callsites-targeting-n4injector-methods>> for descripti
 
 ==== N4JS DI @Provides
 
-[horizontal]
+
 name::
   @Provides
 targets::
@@ -1114,7 +1114,7 @@ described in _injectable values_  <<_validation-of-callsites-targeting-n4injecto
 
 ==== N4JS DI @Inject
 
-[horizontal]
+
 name::
   @Inject
 targets::
@@ -1143,7 +1143,7 @@ Class fields, methods and constructors can be annotated. See <<_injection-points
 ==== N4JS DI @Singleton
 
 
-[horizontal]
+
 name::
   @Singleton
 targets::

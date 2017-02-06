@@ -30,7 +30,7 @@ enum N4JSTypeAccessModifier: project | public;
 
 *Properties defined by syntactic elements:*
 
-[horizontal]
+
 `annotations` ::
 Arbitrary annotations, see <<Annotations>> for details.
 
@@ -39,7 +39,7 @@ N4JS type access modifier: `public`, or `project`;  `public` can be combined wit
 *export* is `true` the default is else the default is `private`. task:IDE-84[]
 // TODO missing notation above
 
-[horizontal]
+
 `name` ::
 The simple name of a classifier. If the classifier is defined by an
 anonymous class expression, an artificial but unique name is created.
@@ -61,7 +61,7 @@ See <<_structural-typing>> for details.
 
 *The following pseudo properties are defined via annotations:*
 
-[horizontal]
+
 `export` ::
 Boolean property set to true if the `export` modifier is set. If value is true,
 the classifier may be accessible outside the project.
@@ -80,7 +80,7 @@ task:IDE-138[]
 
 *We additionally define the following pseudo properties:*
 
-[horizontal]
+
 `acc` ::
 Type access modifier as described in <<_accessibility-types-variables-functions>>, it is the aggregated value of the
 `accessModifier` and the *export* property.
@@ -211,7 +211,7 @@ fragment Members <Yield>*:
 These are the properties of class, which can be specified by the user:
 Syntax N4 Class Declaration and Expression
 
-[horizontal]
+
 `abstract` ::
 Boolean flag indicating whether class may be instantiable; default is
 `false`, see <<_abstract-classes>>.
@@ -244,7 +244,7 @@ Explicit constructor of a class (if any), see <<_constructor-and-classifier-type
 
 And we additionally define the following pseudo properties:
 
-[horizontal]
+
 `ctor` ::
 Explicit or implicit constructor of a class, see <<_constructor-and-classifier-type>>.
 
@@ -522,7 +522,7 @@ fragment InterfaceImplementsList*:
 These are the additional properties of interfaces, which can be
 specified by the user:
 
-[horizontal]
+
 `superInterfaces`::
 Collection of interfaces extended by this interface; empty by default.
 Instead of `superInterfaces`, we simply write `interfaces`.

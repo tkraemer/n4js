@@ -35,7 +35,7 @@ In any case, a function type declares the signature of a function and
 allows validation of calls to that function. A function type has the
 following properties:
 
-[horizontal]
+
 `typePars`  ::
 (0-indexed) list of type parameters (i.e. type variables) for generic
 functions.
@@ -56,7 +56,7 @@ The body is null if a function type is defined in a type expression, and it is t
 
 Additionally, the following pseudo properties for functions are defined:
 
-[horizontal]
+
 `thisTypeRef` ::
 The this type ref is the type to which the `this`-keyword would be evaluated
 if used inside the function or member. The inference rules are described
@@ -77,7 +77,7 @@ tfpars = \lif & \ \textbf{this is used or explicitly declared}\ \\
 
 Parameters (in $pars$) have the following properties:
 
-[horizontal]
+
 `name` ::
 Name of the parameter.
 

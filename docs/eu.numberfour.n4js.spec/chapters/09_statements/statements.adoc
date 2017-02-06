@@ -15,7 +15,7 @@ For all statements, we define the following pseudo properties:
 
 [.language-n4js]
 --
-[horizontal]
+
 `containingFunction` ::
 The function or method in which the statement is (indirectly) contained,
 this may be null.
@@ -620,7 +620,7 @@ ModuleSpecifier: STRING;
 
 These are the properties of import declaration which can be specified by the user:
 
-[horizontal]
+
 `annotations` ::
 Arbitrary annotations, see <<Annotations>> and below for details.
 
@@ -969,7 +969,7 @@ ExportableElement:
 This are the properties of export declaration, which can be specified by
 the user:
 
-[horizontal]
+
 `exportedElement` ::
 The element to be exported, can be a declaration or a variable/const statement.
 

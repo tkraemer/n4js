@@ -35,7 +35,7 @@ N4MemberDeclaration: N4MethodDeclaration | N4FieldDeclaration | N4GetterDeclarat
 === Properties
 
 Members share the following properties:
-[horizontal]
+
 `annotations` ::
 Arbitrary annotations, see <<Annotations>> for details.
 
@@ -53,7 +53,7 @@ Boolean property to distinguish instance from classifier members, see <<_static-
 
 The following pseudo properties are defined via annotations:
 
-[horizontal]
+
 `deprecated` ::
 Boolean property set to true if annotation `@Deprecated` is set. footnote:[ version 0.4  - not implemented in version 0.3]
 
@@ -61,7 +61,7 @@ task:IDE-138[]
 
 And we additionally define the following pseudo properties:
 
-[horizontal]
+
 `acc` ::
 Member access modifier as described in <<_accessibility-of-members>>, it is the aggregated value of
 the $accessModifier$ and the $export$ property.
@@ -97,7 +97,7 @@ enumeration as follows: +
 ++++
 
 
-[horizontal]
+
 `abstract` ::
 All members have a flag $abstract$, which is user-defined
 for methods, getters and setter, but which is always false for fields.
@@ -106,7 +106,7 @@ for methods, getters and setter, but which is always false for fields.
 The following pseudo property is set to make fields compatible with
 properties of an object literal, however it cannot be changed:
 
-[horizontal]
+
 `configurable` ::
 Boolean flag reflecting the property descriptor
 $configurable$, this is always set to false for members.
@@ -230,7 +230,7 @@ fragment ColonSepTypeRef*:
 Methods have all the properties of members and the following additional
 properties can be explicitly defined:
 
-[horizontal]
+
 `abstract` ::
 Method is declared but not defined.
 
@@ -251,7 +251,7 @@ The body of the method (this is not available in the pure types model)
 
 The following pseudo properties are defined via annotations:
 
-[horizontal]
+
 `final` ::
 Boolean flag set to true if annotation `@Final` is set. Flag indicates that
 method must not be overridden in subclasses; see <<_final-methods>>.
@@ -262,7 +262,7 @@ override a method of a superclass; see <<_overriding-of-members>>.
 
 Additionally, we define the following pseudo properties:
 
-[horizontal]
+
 `overrides` ::
 True if method overrides a super method or implements an interface
 method, false otherwise.
@@ -553,7 +553,7 @@ implicitly and every class has an (implicit) constructor.
 For a given a class `C`, the constructor is available via
 two properties:
 
-[horizontal]
+
 $ownedCtor$:: the explicitly defined constructor (if any).
 
 $ctor$:: the explicit or implicit constructor.
@@ -1080,7 +1080,7 @@ fragment FieldDeclarationImpl <Yield>*:
 
 Fields have the following properties which can be explicitly defined:
 
-[horizontal]
+
 `typeRef` ::
 Type of the field; default value is $Any$.
 
@@ -1101,7 +1101,7 @@ NOTE: $const$ is _not_ the (reversed) value of the property descriptor $writable
 
 The following pseudo properties are defined via annotations for setting the values of the property descriptor:
 
-[horizontal]
+
 `enumerable` ::
 Boolean flag reflecting the property descriptor
 $enumerable$, set via annotation `@Enumerable(true|false)`.
@@ -1123,7 +1123,7 @@ constructor. Also see <<_assignment-modifiers>>.
 [discrete]
 ==== Derived values for fields
 
-[horizontal]
+
 `readable` ::
 Always true for fields.
 
@@ -1328,7 +1328,7 @@ class C {
 
 Derived values for field accessors:
 
-[horizontal]
+
 `readable` ::
 True for getters and false for setters.
 

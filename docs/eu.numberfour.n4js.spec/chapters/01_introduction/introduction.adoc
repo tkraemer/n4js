@@ -38,7 +38,7 @@ explicitly if it can be defined by the user.
 
 The following lists informally defines the grammar:
 
-[horizontal]
+
 Terminal::
   Terminals (or terminal strings) are enclosed in single quotes, e.g., `terminal`.
 Enumerations::
@@ -99,7 +99,7 @@ if $P_1$, $P_2$, and $P_3$ are all true, then $C$ is true as well.
 
 The following judgments (with relation symbols) are used:
 
-[horizontal]
+
 subtype $<$ ::
 -
 
@@ -151,7 +151,7 @@ These types are not type declarations but type references, in fact, as they may 
 For the sake of simplicity, we often omit the `Ref` suffix to shorten formulas.
 Consequently, we define the following properties and pseudo properties for typed elements such as variables:
 
-[horizontal]
+
 declaredType$Ref$ :: The explicitly declared type, this is usually a real property of the construct.
 Not all elements allow the specification of a declared type, such as expressions.
 
@@ -254,7 +254,7 @@ Properties which define sets are usually ordered and we assume 0-indexed access 
 
 We use the following symbols and font conventions:
 
-[horizontal]
+
 $\land$, $\lor$, $\lxor$, $\lnot$::
 Logical and, or, exclusive or (xor), and not.
 

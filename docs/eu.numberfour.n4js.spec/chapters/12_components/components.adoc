@@ -27,7 +27,7 @@ image::{find}fig/cmpd_components_in_n4js.png[]
 The N4JS platform distinguishes several types of components. The
 following components can only be created by internal developers:
 
-[horizontal]
+
 Runtime Environment::
   Definition of a runtime environment such as ECMAScript 5. A Runtime
   Environment describes the base types provided by the runtime directly
@@ -50,7 +50,7 @@ Test Library::
 
 The following components can be created by external developers:
 
-[horizontal]
+
 Apps::
   User-written N4JS applications running in a web browser (the reference
   browser is Chrome).
@@ -64,7 +64,7 @@ These components are described in detail later.
 A component is similar to a single project in the N4JS IDE. It is
 shipped as <<_numberfour-archives-nfar,NFAR>> archive and contains:
 
-[horizontal]
+
 Manifest::
   The manifest describing the components, dependencies and metadata.
 Resources::
@@ -401,7 +401,7 @@ enum ModuleLoader:
 
 The manifest, called `manifest.n4mf`, specifies the following information:
 
-[horizontal]
+
 ProjectId ::
 Compare to Maven pom / manifest symbolic name.
 
@@ -451,7 +451,7 @@ four digits.
   \todo[jr: qualifier]{Do we need support for distinction of build numbers and qualifier?}
 ////
 
-[horizontal]
+
 MainModule ::
 (optional) A plain module specifier defining the project’s `main
 module`. If this property is defined, other projects can import from
@@ -509,7 +509,7 @@ Resources ::
 List of paths to resources, that is, folders in which images, CSS etc.
 is found.
 
-[horizontal]
+
 Sources ::
 List of source fragments. A source fragment is a path to sources (n4js
 or js), which are typically compiled to the output path, with a given
@@ -537,7 +537,7 @@ to modules matching the given module specifier which may contain
 wildcards, optionally restricted to modules defined in a specific source
 path. The following filters are supported:
 
-[horizontal]
+
 noValidate::
 Modules matching this filter are not semantically validated. That is,
 they are still syntactically validated. If they are contained in
@@ -553,7 +553,7 @@ n4js code.
 Optional property that defines what module loader are supported by the
 modules in this component. Possible values are
 
-[horizontal]
+
 n4js::
 (default) The modules in this component can be loaded with SystemJS or
 with CommonJS.
@@ -695,7 +695,7 @@ ModuleFilters {
 
 There are several dependencies between components. We can distinguish
 between `require` dependencies and `provide` dependencies.
-[horizontal]
+
 require::
   _N4JS Components_ require:
 * _APIs_
@@ -819,7 +819,7 @@ its project’s source folder’s relative path without any extension, see
 
 This are the properties of script, which can be specified by the user:
 
-[horizontal]
+
 `annotations` :: Arbitrary annotations, see <<_annotations>> and below for details.
 
 `scriptElements`:: The content of the script.
@@ -861,7 +861,7 @@ to:
 
 A nfar archive has the following structure:
 
-[horizontal]
+
 `/resources/`::
   contains all resources such as images and css files
 `/src/`::
