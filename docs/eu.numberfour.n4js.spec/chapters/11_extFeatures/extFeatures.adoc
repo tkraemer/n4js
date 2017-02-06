@@ -220,7 +220,7 @@ task:IDE-1264[] task:IDEBUG-441[]
 The injector may use a provider method (of a binder) to create nested instances.
 
 The injector is configured with _Binders_ and it tracks _Bindings_
-between types (<<sec:N4JS_DI_Binders_and_Bindings>>).
+between types (<<Binders and Bindings>>).
 An N4JS developer normally would not interact with this object directly except when defining an entry-point to his application.
 __Injector__s are configured with _Binder_s which contain explicit __Binding__s defined by an N4JS developer.
 A set of these combined with _implicit bindings_ creates the _di configuration_ used by
@@ -229,13 +229,14 @@ To configure given __Injector__s with given _Binder_(s) use `@UseBinder` annotat
 
 --
 
+
 ==== DIComponent Relations
 
 A Parent-Child relation can be established between two DIComponents.
 Child DIComponents use the parent bindings but can also be configured
 with their own bindings or _change_ targets used by a parent. The final
 circumstance is local to the child and is referred to as __rebinding__.
-For more information about bindings see <<_binders-and-bindings>>.
+For more information about bindings see <<Binders and Bindings>>.
 A Child-Parent relation is expressed by the `@WithParentInjector` annotation attached to a given DIComponent.
 When this relation is defined between DIComponents, the user needs to take care to preserve the proper relation between injectors.
 In other words, the user must provide an instance of the parent injector (the injector of the
@@ -332,7 +333,7 @@ N4Injector.of(Y, injectorD2);//throws DIConfigurationError, incompatible parent 
 ----
 ====
 
-[[sec:N4JS_DI_Binders_and_Bindings]]
+
 === Binders and Bindings
 
 _Binder_ allows an N4JS developer to (explicitly) define a set of
@@ -1425,6 +1426,7 @@ Note that the containing project has two source folders configured: +
 `Project/src/n4js` and `Project/src/n4js-gen`.
 
 [[ex:staticpolyfill-polyfillmod]]
+.Static Polyfill, Polyfillmod
 [source,n4js]
 ----
 @@StaticPolyfillAware
@@ -1440,6 +1442,7 @@ export public class B {
 
 
 [[ex:staticpolyfill-genmod]]
+.Static Polyfill, Genmod
 [source,n4js]
 ----
 @@StaticPolyfillModule

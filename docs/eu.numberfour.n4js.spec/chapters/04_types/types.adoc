@@ -2587,13 +2587,13 @@ This means we have the constructor function of class `{C}` (but only if is non-a
 * that can be used for instantiation (i.e. the represented class is not abstract).
 +
 So, same situation as before except that we know nothing about the constructor function’s signature.
-However, if `{C}` has a covariant constructor, cf. <<_covariant_constructors>>, we can still conclude that we have an override compatible constructor function to that of `{C}`, because classes with covariant constructors enforce all their subclasses to have override compatible constructors.
+However, if `{C}` has a covariant constructor, cf. <<_covariant-constructors>>, we can still conclude that we have an override compatible constructor function to that of `{C}`, because classes with covariant constructors enforce all their subclasses to have override compatible constructors.
 3.  have a value of type `type{? extends C}` or `type{C}` (the two types are equivalent), we know we have:
 * an object representing a type (often constructor functions are used for this, e.g. in the case of classes, but could also be a plain object, e.g. in the case of interfaces),
 * that represents type `{C}` or a subtype thereof,
 * that cannot be used for instantiation (e.g. could be the constructor function of an abstract class, the object representing an interface, etc.).
 
-Slightly simplified, we can say that in the first above case we can always use the value for creating an instance with `new`, in the second case only if the referenced type has a covariant constructor, cf. <<_covariant_constructors>>, and never in the third case.
+Slightly simplified, we can say that in the first above case we can always use the value for creating an instance with `new`, in the second case only if the referenced type has a covariant constructor, cf. <<_covariant-constructors>>, and never in the third case.
 
 === Constructors and Prototypes in ECMAScript 2015
 

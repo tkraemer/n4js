@@ -82,7 +82,7 @@ task:IDE-138[]
 
 
 `acc` ::
-Type access modifier as described in <<_accessibility-types-variables-functions>>, it is the aggregated value of the
+Type access modifier as described in <<_accessibility-of-types-top-level-variables-and-function-declarations>>, it is the aggregated value of the
 `accessModifier` and the *export* property.
 
 `owned{Fields|Methods|Getters|Setters|Accessors}` ::

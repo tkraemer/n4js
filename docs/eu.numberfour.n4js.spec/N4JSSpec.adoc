@@ -40,6 +40,8 @@ include::{find}abstract.adoc[]
 
 include::{find}chapters/00a_revisionhistory/revisionhistory.adoc[]
 
+ifdef::backend-docbook5[<<<]
+
 include::{find}chapters/00b_license/license.adoc[]
 
 include::{find}chapters/01_introduction/introduction.adoc[]

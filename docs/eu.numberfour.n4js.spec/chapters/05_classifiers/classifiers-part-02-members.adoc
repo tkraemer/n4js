@@ -470,7 +470,7 @@ A method can be declared without defining it, i.e. without providing a
 method body, and is then called an __abstract method__. Such methods
 must be declared with modifier `abstract` and have their property
 $abstract$ set to true. Constraints for abstract methods are
-covered in <<Req-IDE-46>> (see <<_abstract-classess>>).
+covered in <<Req-IDE-46>> (see <<_abstract-classes>>).
 
 In interfaces, methods are always abstract by default and they do not
 have to be marked as abstract. If a method in an interface provides a

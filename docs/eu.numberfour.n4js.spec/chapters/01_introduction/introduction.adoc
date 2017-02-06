@@ -15,9 +15,8 @@ Contributors:
 
 This specification defines the N4JS language.
 
-In general, the N4 JavaScript dialect used is identical to the standard
-ECMAScript as defined in the 6th edition of ECMA-262, also known as
-ECMAScript 2015, referred to as cite:[ECMA15a].
+In general, the N4 JavaScript dialect used is identical to the standard ECMAScript as defined in the 6th edition of
+ECMA-262, also known as ECMAScript 2015, referred to as cite:[ECMA15a].
 
 [.language-n4js]
 == Notation
@@ -27,14 +26,11 @@ ECMAScript 2015, referred to as cite:[ECMA15a].
 For the specification of the syntax and structure of elements, we use a
 slightly augmented similar to the grammar language of Xtext http://www.eclipse.org/Xtext/documentation/301_grammarlanguage.html[Grammar Language].
 
-Similar to cite:[ECMA11a], we define types with properties only for the purpose of
-explanation and usage within this specification. We use the Xtext
-notation style to assign values to meta-properties. Particularly, we use
-the Xtext notation for collection (`+=`) and boolean (`?=`) values. These
-properties are written in italics. Enumerations are defined similar to
-Xtext. In order to allow the specification of default values, which are
-often defined by omitting the value, we always define the literal
-explicitly if it can be defined by the user.
+Similar to cite:[ECMA11a], we define types with properties only for the purpose of explanation and usage within this specification.
+We use the Xtext notation style to assign values to meta-properties.
+Particularly, we use the Xtext notation for collection (`+=`) and boolean (`?=`) values.
+These properties are written in italics. Enumerations are defined similar to Xtext.
+In order to allow the specification of default values, which are often defined by omitting the value, we always define the literal explicitly if it can be defined by the user.
 
 The following lists informally defines the grammar:
 

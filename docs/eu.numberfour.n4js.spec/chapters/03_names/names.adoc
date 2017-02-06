@@ -275,7 +275,7 @@ is a totally ordered set footnote:[That is, for application developers not provi
 
 [[tab:Member-Access-Controls]]
 .Member Access Control
-[cols="<m,^,^,^,^,^,^"]
+[cols="<2m,^,^,^,^,^,^"]
 |===
 | Access Modifier | Inside Module | Inside Project | Vendor | Vendor Subtypes  | Other Projects |Everywhere
 
