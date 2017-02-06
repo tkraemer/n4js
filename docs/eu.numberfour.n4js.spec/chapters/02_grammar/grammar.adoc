@@ -1,5 +1,4 @@
 
-
 = Grammar
 ////
 Copyright (c) 2017 NumberFour AG.
@@ -55,34 +54,25 @@ As can be seen, a computed-name must be either
 names contain special characters (e.g., a field name starting with
 commercial-at)
 
-In N4JS, identifiers are further constrained in order to avoid
-ambiguities and to make code more readable. Some of these constraints
-will lead to errors, others only to warnings. They do not apply for
-identifiers declared in definitions file (n4jsd) in order to enable
-declaration of external entities.
+In N4JS, identifiers are further constrained in order to avoid ambiguities and to make code more readable.
+Some of these constraints will lead to errors, others only to warnings.
+They do not apply for identifiers declared in definitions file (n4jsd) in order to enable declaration of external entities.
 
 .N4JS Identifier Restrictions
 [req,id=IDE-1,version=1]
 --
 . If the following constraints do not hold, errors are created.
-..  Leading `$` (dollar sign) character is prohibited for any variable
-name such as fields, variables, types functions and methods.
-..  Leading `pass:[_]` (underscore) character is not allowed for identifying any
-functions or methods.
+..  Leading `$` (dollar sign) character is prohibited for any variable name such as fields, variables, types functions and methods.
+..  Leading `pass:[_]` (underscore) character is not allowed for identifying any functions or methods.
 --
 
 .N4JS identifier recommendations
 [req,id=IDE-2,version=1]
 --
 . If the following constraints do not hold, warnings are created.
-
-. Variable names should, in general, be constructed form the 26 ASCII
-upper and lower case alphabetic letters (a..z, A..Z), from the 10
-decimal digits (0..9) and from the _ (underline). Although the usage of
-the international characters are allowed (according to the ECMAScript
-specification) it is discouraged because these characters may not be
-read or understood well in every circumstance.
-footnote:[http://javascript.crockford.com/code.html]
+. Variable names should, in general, be constructed form the 26 ASCII upper and lower case alphabetic letters (a..z, A..Z), from the 10 decimal digits (0..9) and from the `pass:[_]` (underscore).
+Although the usage of the international characters are allowed (according to the ECMAScript specification)
+it is discouraged because these characters may not be read or understood well in every circumstance. footnote:[http://javascript.crockford.com/code.html]
 
 1.  Type (and Type Variable) Identifiers
 +
@@ -125,10 +115,9 @@ MethodIdentifier: [_a-z][_a-zA-Z0-9]*;
 AnnotationIdentifier: [_A-Z][_a-zA-Z0-9]*
 ----
 
-The following rules describe how fully qualified names of elements are
-created. Note that these fully qualified names cannot be used in N4JS
-directly. Though they may be shown in error messages etc. to identify
-elements.
+The following rules describe how fully qualified names of elements are created.
+Note that these fully qualified names cannot be used in N4JS directly.
+Though they may be shown in error messages etc. to identify elements.
 
 [source,xtext]
 ----
@@ -160,11 +149,9 @@ Cf. cite:[ECMA11a(S7.9)]
 
 task:IDE-56[] task:IDE-57[]
 
-JSDoc are comments similar to JavaDoc in Java for documenting types,
-functions and members. There is no semantic information expressed in
-JSDoc, that is, the behavior of a program must not change if all the
-JSDoc is removed. The JSDoc tags and overall syntax is a mixture of tags
-defined by the https://developers.google.com/closure/compiler/docs/js-for-compiler[Google Closure Compiler], Java's http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html[JavaDoc] tool and N4-specific tags.
+JSDoc are comments similar to JavaDoc in Java for documenting types, functions and members.
+There is no semantic information expressed in JSDoc, that is, the behavior of a program must not change if all the JSDoc is removed.
+The JSDoc tags and overall syntax is a mixture of tags defined by the https://developers.google.com/closure/compiler/docs/js-for-compiler[Google Closure Compiler], Java's http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html[JavaDoc] tool and N4-specific tags.
 
 JSDoc comments are multiline comments, starting with ``pass:[/**]`` (instead of simple multiline comments, starting with ``pass:[/*]``).
 
@@ -174,13 +161,11 @@ MultiLineComment: '/*' MultiLineCommentChars? '*/'  // from ECMAScript specifica
 JSDoc:            '/**' MultiLineCommentChars? '*/'
 ----
 
-In general, JSDoc comments are placed directly before the annotated
-language element. In some cases, this is slightly different, such as for
-method parameters, for example, where it is then explicitly specified.
+In general, JSDoc comments are placed directly before the annotated language element.
+In some cases, this is slightly different, such as for method parameters, for example, where it is then explicitly specified.
 
-The content of JSDoc comments will be covered in more detail in upcoming
-chapters. For documentation purposes, multi- and single-line
-descriptions are used in several constructs.
+The content of JSDoc comments will be covered in more detail in upcoming chapters.
+For documentation purposes, multi- and single-line descriptions are used in several constructs.
 
 [source,xtext]
 ----
@@ -189,13 +174,11 @@ SLVALUE:         ([^\n]+);
 ----
 
 `MLVALUE` ::
-short for `multi-line value`. This is usually only used for the
-general description of types or members.
+short for `multi-line value`. This is usually only used for the general description of types or members.
 
 `SLVALUE` ::
-short for `single-line value`. This is a description which ends at
-the end of a line. It is usually used in combination with other tags,
-e.g., to further describe a parameter of a method.
+short for `single-line value`. This is a description which ends at the end of a line.
+It is usually used in combination with other tags, e.g., to further describe a parameter of a method.
 
 //\todo[jvp: JSDoc documentation tags]{JSDoc documentation tags, such as see, link etc. Mozair suggested inheritDoc}
 

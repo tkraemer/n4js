@@ -231,7 +231,7 @@ pseudo properties are used for type expressions:
 
 Properties of ``TypeExpression``:
 
-[horizontal]
+
 $var$ ::
 If true, variable of that type is variadic. This is only allowed for
 parameters. Default value: `false`.
@@ -273,7 +273,7 @@ be visible in the given scope.
 [discrete]
 ==== ECMAScript Types
 
-[horizontal]
+
 Predefined Type::
   Predefined types, such as String, Number, or Object; and .
 Array Type::
@@ -286,7 +286,7 @@ Any Type::
 [discrete]
 ==== N4Types
 
-[horizontal]
+
 Declared Type::
   (Unparameterized) Reference to defined class <<Classes>> or enum <<Enums>>.
 Parameterized Type::
@@ -346,7 +346,7 @@ At the moment, N4JS does not support type guards or, more general, effect system
 
 Some notes on terminology:
 
-[horizontal]
+
 Type Parameter vs. Type Argument::
 A type parameter is a declaration containing type variables. A type
 argument is a binding of a type parameter to a concrete type or to
@@ -406,7 +406,7 @@ with an upper bound.
 
 Properties of `TypeVariable`:
 
-[horizontal]
+
 $name$ :: Type variable, as type variable contains only an identifier, we use type parameter instead of type variable (and vice versa) if the correct
 element is clear from the context.
 
@@ -599,7 +599,7 @@ Wildcard returns Wildcard:
 
 Properties of parameterized type references (nominal or structural):
 
-[horizontal]
+
 `declaredType` ::
 Referenced type by type reference name (either the simple name or a
 qualified name, e.g. in case of namespace imports).
@@ -618,7 +618,7 @@ the structural type, see <<_structural-typing>> for details.
 
 *Pseudo Properties:*
 
-[horizontal]
+
 `importSpec` ::
 The `ImportSpecifier`, may be null if this is a local type reference. Note that this may
 be a `NamedImportSpecifier`. See <<_import-statement>> for details for details.
@@ -1161,7 +1161,7 @@ For more details, see <<_symbol>>.
 Additionally to the primitive ECMAScript types, the following
 N4JS-specific primitive types are supported:
 
-[horizontal]
+
 `any`:: enables ECMAScript-like untyped variable declarations
 `void`:: almost similar to undefined, except it can be used as a return type of functions and methods
 `unknown`:: inferred in case of a type inference error

@@ -19,10 +19,10 @@ mathinclude::{find}commands.tex[]
 image::{find}images/n4jslogo.png[400,400,align="center"]
 
 [.center]
-*Version 0.4*
+*Version: {revnumber}*
 
 [.center]
-*Revision Date: 28/11/2016*
+*Revision Date: {revdate}*
 
 [.center]
 *(C) 2016 NumberFour AG*

@@ -50,3 +50,7 @@
 
 // Allows for UI macros, see http://asciidoctor.org/docs/user-manual/#user-interface-macros
 :experimental: true
+
+// =================== Project-Specific Attributes ================= //
+
+:revnumber: 0.4

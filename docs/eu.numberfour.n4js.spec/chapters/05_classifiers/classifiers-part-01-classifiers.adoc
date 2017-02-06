@@ -295,10 +295,10 @@ Class expressions are not fully supported at the moment. task:IDE-171[]
 .Transitive closure of members
 [def]
 --
-The reflexive transitive closure of members of a class is indirectly defined
-by the override and implementation constraints defined in .
+The reflexive transitive closure of members of a class is indirectly defined by the override and implementation constraints defined in <<_redefinition-of-members>>.
 
-Note that since overloading is forbidden, the following constraint is true:footnote:[ $accessorPair(m_1,m_2)$ is defined as follows: $(\mu(m_1)=\type{getter}\land \mu(m_2)=\type{setter}) \lor (\mu(m_1)=\type{setter}\land \mu(m_2)=\type{getter})$
+Note that since overloading is forbidden, the following constraint is true:
+footnote:[$accessorPair(m_1,m_2)$ is defined as follows: $(\mu(m_1)=\type{getter}\land \mu(m_2)=\type{setter}) \lor (\mu(m_1)=\type{setter}\land \mu(m_2)=\type{getter})$]
 
 
 [math]

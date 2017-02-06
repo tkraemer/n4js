@@ -24,7 +24,7 @@ Contributors:
 |2016-05-31 | task:IDE-2226[] |mor |support for definition-site variance,
 cf. <<sec:definition-site-variance>>
 |2016-07-18 | task:GH-107[] |mor |rename manifest property `artifactId` to `projectId`; remove `projectName`
-|2016-09-09 | task:IDE-2314[] |mor |add `@CovariantConstructor`, cf. <<_covariant_constructors>>, plus related
+|2016-09-09 | task:IDE-2314[] |mor |add `@CovariantConstructor`, cf. <<_covariant-constructors>>, plus related
 adjustments
 |2016-11-9 | task:IDE-2402[] |bsmith |convert from `LaTeX` to AsciiDoc
 |===
