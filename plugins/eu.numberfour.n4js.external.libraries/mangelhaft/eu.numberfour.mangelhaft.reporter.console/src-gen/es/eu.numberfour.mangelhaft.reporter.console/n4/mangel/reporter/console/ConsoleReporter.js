@@ -120,7 +120,7 @@
 					},
 					register: {
 						value: function register___n4() {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let indent = 0;
 								this.spy.testingStarted.add((function(numAllGroups, sid, numAllTests) {
 									this.logger.call(this, ("" + "   ".repeat(indent) + "Begin tests"));
@@ -174,9 +174,24 @@
 												this.logger.call(this, ("" + "   ".repeat(indent) + " " + test.name + " : " + this.cliColor.cyan("SKIPPED_NOT_IMPLEMENTED") + ""));
 												break;
 											}
+										case 'SKIPPED_IGNORE':
+											{
+												this.logger.call(this, ("" + "   ".repeat(indent) + " " + test.name + " : " + this.cliColor.yellow("SKIPPED_IGNORE") + ""));
+												break;
+											}
+										case 'SKIPPED_FIXME':
+											{
+												this.logger.call(this, ("" + "   ".repeat(indent) + " " + test.name + " : " + this.cliColor.yellow("SKIPPED_FIXME") + ""));
+												break;
+											}
 										case 'SKIPPED':
 											{
 												this.logger.call(this, ("" + "   ".repeat(indent) + " " + test.name + " : " + this.cliColor.yellow("SKIPPED") + ""));
+												break;
+											}
+										default:
+											{
+												this.logger.call(this, ("" + "   ".repeat(indent) + " " + test.name + " : " + this.cliColor.red("UNKNOWN_TEST_RESULT") + ""));
 												break;
 											}
 									}
@@ -189,7 +204,7 @@
 									--indent;
 								}).bind(this));
 								this.spy.testingFinished.add((function(resultGroups) {
-									return $spawn(function*() {
+									return $spawn(function *() {
 										this.logger.call(this, "Tests done.");
 									}.apply(this, arguments));
 								}).bind(this));

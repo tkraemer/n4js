@@ -28,13 +28,13 @@ class A extends Error {
 }
 
 class B extends Error {
-	constructor(n : number, message : string?) {
+	constructor(n : number, message : string=undefined) {
 		super(message);
 	}
 }
 
 class C extends Error {
-	constructor(n : number, message : string?) {
+	constructor(n : number, message : string=undefined) {
 		var originalmessage = message;
 		var originalN = n;
 		n = 36;

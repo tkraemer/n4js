@@ -40,7 +40,7 @@
 				], {
 					send: {
 						value: function send___n4(uri, method, headers, body) {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let ret, bodyStr;
 								try {
 									bodyStr = JSON.stringify(body, (function(key, value) {
@@ -73,11 +73,11 @@
 					},
 					register: {
 						value: function register___n4() {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let that = this, sessionId = null, inParameterized = false;
 								;
 								var handleTestingStart = function handleTestingStart(numAllGroups, sid, numAllTests) {
-									return $spawn(function*() {
+									return $spawn(function *() {
 										sessionId = sid;
 										let response = (yield that.send([
 											"/n4.ide/testing/sessions",
@@ -95,7 +95,7 @@
 									return inParameterized = true;
 								}).bind(this));
 								var handleTestStart = function handleTestStart(groupName, testName, timeout) {
-									return $spawn(function*() {
+									return $spawn(function *() {
 										if (inParameterized) {
 											return;
 										}
@@ -117,12 +117,12 @@
 									}.apply(this, arguments));
 								};
 								this.spy.testStarted.add((function(group, test) {
-									return $spawn(function*() {
+									return $spawn(function *() {
 										(yield handleTestStart(group.name, test.name, test.timeout));
 									}.apply(this, arguments));
 								}).bind(this));
 								var handleTestFinished = function handleTestFinished(groupName, testName, testResult) {
-									return $spawn(function*() {
+									return $spawn(function *() {
 										if (inParameterized) {
 											return;
 										}
@@ -142,12 +142,12 @@
 									}.apply(this, arguments));
 								};
 								this.spy.testFinished.add((function(group, test, testResult) {
-									return $spawn(function*() {
+									return $spawn(function *() {
 										(yield handleTestFinished(group.name, test.name, testResult));
 									}.apply(this, arguments));
 								}).bind(this));
 								this.spy.parameterizedGroupsFinished.add((function(resultGroups) {
-									return $spawn(function*() {
+									return $spawn(function *() {
 										inParameterized = false;
 										let resultGroup = resultGroups.aggregate();
 										for(let testResult of resultGroup.testResults) {
@@ -157,7 +157,7 @@
 									}.apply(this, arguments));
 								}).bind(this));
 								var handleTestingFinished = function handleTestingFinished(resultGroups) {
-									return $spawn(function*() {
+									return $spawn(function *() {
 										let response = (yield that.send([
 											"/n4.ide/testing/sessions",
 											sessionId,

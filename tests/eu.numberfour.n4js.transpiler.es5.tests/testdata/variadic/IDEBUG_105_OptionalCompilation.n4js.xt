@@ -25,37 +25,37 @@ stderr:
 
 class C{}
 
-function foo(n : number, m : number?) {
+function foo(n : number, m : number=undefined) {
 	console.log("function declaration foo: " + n + ", " + m)
 }
 
 @This(C)
-function foo2(n : number, m : number?) {
+function foo2(n : number, m : number=undefined) {
 	console.log("annotated function declaration foo2: " + n + ", " + m)
 }
 
-var f = function f(n : number, m : number?) {
+var f = function f(n : number, m : number=undefined) {
 	console.log("function expression f: " + n + ", " + m)
 }
 
-var f2 = @This(C) function f2(n : number, m : number?) {
+var f2 = @This(C) function f2(n : number, m : number=undefined) {
 	console.log("annotated function expression f2: " + n + ", " + m)
 }
 
 class Class1 {
 	
-	constructor(n : number, m : number?) {
+	constructor(n : number, m : number=undefined) {
 		console.log("class constructor: " + n + ", " + m)
 	}
 	
-	foo(n : number, m : number?) {
+	foo(n : number, m : number=undefined) {
 		console.log("class method foo: " + n + ", " + m)
 	}
 }
 
 interface Role1 {
 	
-	foo(n : number, m : number?) {
+	foo(n : number, m : number=undefined) {
 		console.log("interface method foo: " + n + ", " + m)
 	}
 }
@@ -65,7 +65,7 @@ class Class2 implements Role1 {
 }
 
 var ol = {
-	foo : function foo(n : number, m : number?) {
+	foo : function foo(n : number, m : number=undefined) {
 		console.log("object literal function foo: " + n + ", " + m)
 	} 
 }

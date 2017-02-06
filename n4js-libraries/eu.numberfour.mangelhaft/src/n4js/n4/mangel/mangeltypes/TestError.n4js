@@ -13,7 +13,7 @@ export public class TestError extends Error {
      * Throws a new TestError with the provided message. Pretends to return type T
      * to satisfy type checking.
      */
-    public static <T> throw(message: string?): T {
+    public static <T> throw(message: string =): T {
         throw new TestError(message);
     }
 }

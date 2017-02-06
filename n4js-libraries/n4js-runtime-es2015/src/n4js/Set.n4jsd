@@ -13,7 +13,7 @@
 import {IteratorExt} from "Iterator"
 
 export external public class Set<ValueT> extends Object implements Iterable<ValueT> {
-    public constructor(arg: Iterable<ValueT>?);
+    public constructor(arg: Iterable<ValueT> =);
 
     @Override public [Symbol.iterator](): IteratorExt<ValueT>;
 
@@ -48,7 +48,7 @@ export external public class Set<ValueT> extends Object implements Iterable<Valu
     /**
      * Calls callbackFn for each value, in insertion order.
      */
-    public forEach(callbackFn: {function(ValueT, ValueT, Set<ValueT>):void}, thisArg: Object?): void;
+    public forEach(callbackFn: {function(ValueT, ValueT, Set<ValueT>):void}, thisArg: Object =): void;
 
     /**
      * Tests whether an element is part of this set.

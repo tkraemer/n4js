@@ -1,7 +1,7 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
 class C<T> {
-	f(p2 : T?) {}
+	f(p2 : T=undefined) {}
 }
 
 var c : C<string>;

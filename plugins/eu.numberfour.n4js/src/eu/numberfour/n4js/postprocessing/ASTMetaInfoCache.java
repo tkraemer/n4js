@@ -30,7 +30,6 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.OnChangeEvictingCache.CacheAdapter;
 
-import eu.numberfour.n4js.n4JS.Block;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
 import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
@@ -180,7 +179,7 @@ public final class ASTMetaInfoCache {
 
 	final Set<EObject> forwardProcessedSubTrees = new LinkedHashSet<>();
 	final Set<EObject> astNodesCurrentlyBeingTyped = new LinkedHashSet<>();
-	final Queue<Block> postponedSubTrees = new LinkedList<>(); // using LinkedList as FIFO queue, here
+	final Queue<EObject> postponedSubTrees = new LinkedList<>(); // using LinkedList as FIFO queue, here
 
 	/* package */ boolean isProcessingInProgress() {
 		return isProcessingInProgress;

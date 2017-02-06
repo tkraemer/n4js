@@ -3,11 +3,11 @@
 class C{
 	f1(){}
 	f2(s : string){}
-	f3(s : string?){}
+	f3(s : string=undefined){}
 	f4(... s : string){}
-	f5(s : string, ss : string?){}
+	f5(s : string, ss : string=undefined){}
 	f6(s : string, ... sss : string){}
-	f7(s : string, ss : string?, ... sss : string){}
+	f7(s : string, ss : string=undefined, ... sss : string){}
 }
 var c : C;
 

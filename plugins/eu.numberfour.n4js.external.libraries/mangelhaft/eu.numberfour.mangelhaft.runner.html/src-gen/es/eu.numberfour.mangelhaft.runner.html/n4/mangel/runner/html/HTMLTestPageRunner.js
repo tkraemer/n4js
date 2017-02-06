@@ -53,7 +53,7 @@
 				$makeClass(HTMLTestPageRunner, N4Object, [], {
 					run: {
 						value: function run___n4() {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let groupsStr = getParm("groups"), groupsFilter = getParm("filter"), groupsArray, testsStr = getParm("tests"), testsArray, tests, buffer = [], resultGroups;
 								;
 								try {

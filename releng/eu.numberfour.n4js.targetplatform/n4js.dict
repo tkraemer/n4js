@@ -154,6 +154,13 @@ lexer
 versionable
 versioned
 unversioned
+multimap
+multimaps
+pendencies
+markee
+proxification
+handcrafted
+transpilable
 backends
 backend
 hacky
@@ -165,3 +172,6 @@ jsx
 transpilable
 txt
 ts
+fallback
+api
+whitespaces

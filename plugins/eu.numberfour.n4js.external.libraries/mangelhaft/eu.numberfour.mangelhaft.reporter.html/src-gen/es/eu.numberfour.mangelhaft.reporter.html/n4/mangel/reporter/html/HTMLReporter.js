@@ -197,7 +197,7 @@
 					},
 					register: {
 						value: function register___n4() {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let testsElm = this.testsElm, header = document.createElement("div"), countersElm = this.countersElm, numGroupsElm = document.createElement("span"), numGroups = 0, numTestsElm = document.createElement("span"), numTests = 0, numTestsOkElm = document.createElement("span"), numTestsOk = 0, numTestsFailElm = document.createElement("span"), numTestsFail = 0, totalTestsElm = document.createElement("span"), numTestsRun = 0, numTestsSkipped = 0, numTestsSkippedElm = document.createElement("span"), that = this;
 								;
 								countersElm.classList.add("mangelhaft-counters");
@@ -432,7 +432,7 @@
 									}
 								}).bind(this));
 								this.spy.parameterizedGroupsFinished.add((function(resultGroups) {
-									return $spawn(function*() {
+									return $spawn(function *() {
 										testsElm = this.testsElm;
 									}.apply(this, arguments));
 								}).bind(this));

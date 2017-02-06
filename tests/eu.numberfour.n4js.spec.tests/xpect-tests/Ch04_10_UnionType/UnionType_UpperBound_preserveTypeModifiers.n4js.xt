@@ -10,7 +10,7 @@ class C {
 }
 
 class D extends C {
-	@Final m(p1 : number, p2 : union{number,string}?) {}
+	@Final m(p1 : number, p2 : union{number,string}=undefined) {}
 }
 
 var d : D;

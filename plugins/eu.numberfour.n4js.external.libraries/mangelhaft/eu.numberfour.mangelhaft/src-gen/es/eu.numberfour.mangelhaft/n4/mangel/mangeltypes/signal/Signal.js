@@ -126,7 +126,7 @@
 					},
 					dispatch: {
 						value: function dispatch___n4(params) {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								if (!this.active) {
 									return;
 								}

@@ -95,7 +95,7 @@ import eu.numberfour.n4js.ui.binaries.IllegalBinaryStateDialog;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.ui.utils.UIUtils;
 import eu.numberfour.n4js.ui.viewer.TreeViewerBuilder;
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Preference page for managing external libraries.

@@ -68,6 +68,7 @@ import eu.numberfour.n4js.n4JS.ImportDeclaration;
 import eu.numberfour.n4js.n4JS.IndexedAccessExpression;
 import eu.numberfour.n4js.n4JS.IntLiteral;
 import eu.numberfour.n4js.n4JS.LabelledStatement;
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName;
 import eu.numberfour.n4js.n4JS.LocalArgumentsVariable;
 import eu.numberfour.n4js.n4JS.MultiplicativeExpression;
 import eu.numberfour.n4js.n4JS.N4Modifier;
@@ -85,6 +86,7 @@ import eu.numberfour.n4js.n4JS.PostfixExpression;
 import eu.numberfour.n4js.n4JS.PropertyAssignmentAnnotationList;
 import eu.numberfour.n4js.n4JS.PropertyGetterDeclaration;
 import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration;
+import eu.numberfour.n4js.n4JS.PropertyNameKind;
 import eu.numberfour.n4js.n4JS.PropertyNameOwner;
 import eu.numberfour.n4js.n4JS.PropertyNameValuePair;
 import eu.numberfour.n4js.n4JS.PropertySetterDeclaration;
@@ -308,6 +310,10 @@ import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 		processAnnotations(original.getAnnotations(), false);
 		write(original.getName());
 		processTypeRef(original.getDeclaredTypeRef());
+		if (original.getInitializer() != null) {
+			write("=");
+			process(original.getInitializer());
+		}
 		return DONE;
 	}
 
@@ -1012,20 +1018,29 @@ import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 	}
 
 	private void processPropertyName(PropertyNameOwner owner) {
-		final String propName = owner.getName();
-		if (propName.startsWith(N4JSLanguageUtils.SYMBOL_IDENTIFIER_PREFIX)) {
-			// we have a name like "#iterator" that represents a Symbol --> emit as: "[Symbol.iterator]"
-			// (note: we have to do this special handling here in the pretty printer because there is, at the moment,
-			// no way to represent a property assignment with a Symbol as name other than using a name starting with
-			// the SYMBOL_IDENTIFIER_PREFIX)
-			write("[Symbol.");
-			write(propName.substring(1));
+		final LiteralOrComputedPropertyName name = owner.getDeclaredName();
+		final PropertyNameKind kind = name.getKind();
+		if (kind == PropertyNameKind.COMPUTED) {
+			// computed property names:
+			write('[');
+			process(name.getExpression());
 			write(']');
 		} else {
-			// standard case:
-			writeQuotedIfNonIdentifier(propName);
+			// all other cases than computed property names: IDENTIFIER, STRING, NUMBER
+			final String propName = name.getName();
+			if (propName.startsWith(N4JSLanguageUtils.SYMBOL_IDENTIFIER_PREFIX)) {
+				// we have a name like "#iterator" that represents a Symbol --> emit as: "[Symbol.iterator]"
+				// (note: we have to do this special handling here in the pretty printer because there is, at the
+				// moment, no way to represent a property assignment with a Symbol as name other than using a name
+				// starting with the SYMBOL_IDENTIFIER_PREFIX)
+				write("[Symbol.");
+				write(propName.substring(1));
+				write(']');
+			} else {
+				// standard case:
+				writeQuotedIfNonIdentifier(propName);
+			}
 		}
-
 	}
 
 	private void processModifiers(EList<N4Modifier> modifiers) {

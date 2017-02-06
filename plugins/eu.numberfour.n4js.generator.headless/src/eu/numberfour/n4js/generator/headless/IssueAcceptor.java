@@ -23,4 +23,14 @@ public interface IssueAcceptor {
 	 *            the issue to accept
 	 */
 	void accept(Issue issue);
+
+	/**
+	 * Accept all of the given issues.
+	 *
+	 * @param issues
+	 *            the issues to accept
+	 */
+	default void acceptAll(Iterable<? extends Issue> issues) {
+		issues.forEach(issue -> accept(issue));
+	}
 }

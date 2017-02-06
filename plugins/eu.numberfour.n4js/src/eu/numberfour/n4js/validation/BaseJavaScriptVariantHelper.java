@@ -17,6 +17,7 @@ import java.util.Objects;
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.resource.XpectAwareFileExtensionCalculator;
@@ -28,6 +29,7 @@ import eu.numberfour.n4js.resource.XpectAwareFileExtensionCalculator;
  * calling the method {@link BaseJavaScriptVariantHelper#addEntry(String, ValidationFeature, Object)} in the
  * constructor.
  */
+@Singleton
 public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 
 	/**

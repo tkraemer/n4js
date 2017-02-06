@@ -10,7 +10,7 @@
 	], function($n4Export) {
 		var ITestReporter, TestSpy, lib_path, lib_fs, os, xmlbuilder, mkdirp, isOK, XUnitReportSpec, XUnitReporter;
 		mkdirp = function mkdirp(path, mode) {
-			return $spawn(function*() {
+			return $spawn(function *() {
 				if (!lib_fs.existsSync(path)) {
 					(yield mkdirp(path.substring(0, path.lastIndexOf(lib_path.sep)), mode));
 					(yield (lib_fs.mkdir(path, mode)));
@@ -126,7 +126,7 @@
 					},
 					testingFinished: {
 						value: function testingFinished___n4(resultGroups) {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let spec = this.spec, endTime = Date.now(), xml = xmlbuilder.create("testsuites"), suite = xml.ele("testsuite", {
 									name: spec.xunitReportName,
 									package: spec.xunitReportPackage,
@@ -191,7 +191,7 @@
 					},
 					register: {
 						value: function register___n4() {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								this.spy.testingStarted.add(this.testingStarted.bind(this));
 								this.spy.testFinished.add(this.testFinished.bind(this));
 								this.spy.testingFinished.add(this.testingFinished.bind(this));

@@ -12,7 +12,7 @@ Optional: s3
 stderr:
 ==>
 --- */
-	var f = (fixed1 : string, fixed2 : string, start : string?) => {
+	var f = (fixed1 : string, fixed2 : string, start : string=undefined) => {
 		console.log("Fixed1: " + fixed1)
 		console.log("Fixed2: " + fixed2)
 		console.log("Optional: " + start)

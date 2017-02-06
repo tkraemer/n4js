@@ -81,8 +81,8 @@ import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBrokerImpl;
 import eu.numberfour.n4js.ui.workingsets.internal.HideWorkingSetAction;
 import eu.numberfour.n4js.ui.workingsets.internal.N4JSProjectInWorkingSetDropAdapterAssistant;
-import eu.numberfour.n4js.utils.Arrays2;
 import eu.numberfour.n4js.utils.Diff;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Class for testing the functionality of the N4JS working set support.

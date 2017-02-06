@@ -14,7 +14,7 @@ f2('foo');
 // XPECT errors --> "Incorrect number of arguments: expected 1, got 2." at "f2('foo','bar')"
 f2('foo','bar');
 
-function f3(s : string?){}
+function f3(s : string=undefined){}
 f3();
 f3('foo');
 // XPECT errors --> "Incorrect number of arguments: expected 1, got 2." at "f3('foo','bar')"
@@ -28,7 +28,7 @@ f4('foo','bar', 'baz');
 f4('foo','bar', 'baz', 'qux');
 f4('foo','bar', 'baz', 'qux', 'something');
 
-function f5(s : string, ss : string?){}
+function f5(s : string, ss : string=undefined){}
 // XPECT errors --> "Incorrect number of arguments: expected 2, got 0." at "f5()"
 f5();
 f5('foo');
@@ -45,7 +45,7 @@ f6('foo','bar', 'baz');
 f6('foo','bar', 'baz', 'qux');
 f6('foo','bar', 'baz', 'qux', 'something');
 
-function f7(s : string, ss : string?, ... sss : string){}
+function f7(s : string, ss : string=undefined, ... sss : string){}
 // XPECT errors --> "Incorrect number of arguments: expected 3, got 0." at "f7()"
 f7();
 // XPECT noerrors --> "fpar 2 is optional, 3 is variadic (0..), so 1 is ok" at "f7('foo')"
@@ -57,7 +57,7 @@ f7('foo','bar', 'baz', 'qux');
 f7('foo','bar', 'baz', 'qux', 'something');
 
 
-function f8(s1 : string?, s2 : string?, s3 : string?, s4 : string?) {}
+function f8(s1 : string=undefined, s2 : string=undefined, s3 : string=undefined, s4 : string=undefined) {}
 // XPECT noerrors --> "all args are optional, so 0 args are ok" at "f8()"
 f8();
 // XPECT noerrors --> "all args are optional, so 1 arg is ok" at "f8('1')"
@@ -72,7 +72,7 @@ f8('1','2','3','4');
 f8('1','2','3','4','5');
 
 
-function ft(s : string, ssa : string?, ssb : string?, ... sss : string){}
+function ft(s : string, ssa : string=undefined, ssb : string=undefined, ... sss : string){}
 // XPECT errors --> "Incorrect number of arguments: expected 4, got 0." at "ft()"
 ft();
 // XPECT noerrors --> "fpar 2 is optional, 3 is optional, 4 is variadic (0..), so 1 is ok" at "ft('foo')"

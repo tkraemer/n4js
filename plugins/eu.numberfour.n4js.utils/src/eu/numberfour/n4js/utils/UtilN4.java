@@ -34,6 +34,8 @@ import org.osgi.framework.Bundle;
 
 import com.google.common.collect.ImmutableList;
 
+import eu.numberfour.n4js.utils.collections.Arrays2;
+
 /**
  * Basic utility methods that do not require any N4JS-specific code.
  */

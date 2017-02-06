@@ -89,6 +89,7 @@ import static eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage.Literals.PARAMETERI
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.n4JS.FormalParameter
 
 /**
  * Class for validating the N4JS types.
@@ -441,7 +442,19 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 		// use a fresh environment for expectations
 		G = newRuleEnvironment(expression);
 
-		val expectedType = ts.expectedTypeIn(G, expression.eContainer, expression);
+// ########################################################
+// TODO: IDE-2514, When the bug in the polymorphic dispatcher is solved, remove the
+//       following work-around (and apply corresponding change in Xsemantics file!):
+// work-around:
+		val expressionContainer = expression.eContainer;
+		val expectedType = if(expressionContainer instanceof FormalParameter) {
+			new Result(expressionContainer.declaredTypeRef)
+		} else {
+			ts.expectedTypeIn(G, expressionContainer, expression)
+		};
+// original code:
+//		val expectedType = ts.expectedTypeIn(G, expression.eContainer, expression);
+// ########################################################
 		if (expectedType.value !== null) {
 
 			// for certain problems in single-expression arrow functions, we want a special error message

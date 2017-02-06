@@ -22,7 +22,7 @@ c2 = new C2('foo');
 c2 = new C2('foo','bar');
 
 class C3{
-	public constructor(s : string?) {}
+	public constructor(s : string=undefined) {}
 }
 var c3 : C3;
 c3 = new C3();
@@ -42,7 +42,7 @@ c4 = new C4('foo','bar', 'baz', 'qux');
 c4 = new C4('foo','bar', 'baz', 'qux', 'something');
 
 class C5{
-	public constructor(s : string, ss : string?) {}
+	public constructor(s : string, ss : string=undefined) {}
 }
 var c5 : C5;
 // XPECT errors --> "Incorrect number of arguments: expected 2, got 0." at "new C5()"
@@ -65,7 +65,7 @@ c6 = new C6('foo','bar', 'baz', 'qux');
 c6 = new C6('foo','bar', 'baz', 'qux', 'something');
 
 class C7{
-	public constructor(s : string, ss : string?, ... sss : string) {}
+	public constructor(s : string, ss : string=undefined, ... sss : string) {}
 }
 var c7 : C7;
 // XPECT errors --> "Incorrect number of arguments: expected 3, got 0." at "new C7()"

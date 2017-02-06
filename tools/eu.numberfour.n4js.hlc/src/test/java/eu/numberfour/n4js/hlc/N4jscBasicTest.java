@@ -56,7 +56,7 @@ public class N4jscBasicTest extends AbstractN4jscTest {
 	}
 
 	/**
-	 * normal compile all test with flag "--keepCompiling"
+	 * normal compile all test without flag "--keepCompiling"
 	 */
 	@Test
 	public void testMainArgsCompileAllKeepCompiling() {
@@ -73,8 +73,10 @@ public class N4jscBasicTest extends AbstractN4jscTest {
 		} catch (ExitCodeException e) {
 			assertEquals(N4jsc.EXITCODE_COMPILE_ERROR, e.getExitCode());
 		}
-		// Assert that 13 files are compiled.
-		assertFilesCompiledToES(13, proot);
+		// Assert that at most 13 files are compiled. The actual number depends on the chosen algorithm for the build
+		// order and on the order in which the project dependency graph is traversed. 13 is the maximum number of files
+		// that can be transpiled without error.
+		assertTrue(countFilesCompiledToES(proot) <= 13);
 	}
 
 	/**
