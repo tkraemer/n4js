@@ -23,7 +23,9 @@ import eu.numberfour.n4js.n4JS.N4ClassExpression
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.NamedElement
 import eu.numberfour.n4js.n4JS.NewTarget
+import eu.numberfour.n4js.n4JS.ObjectLiteral
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
+import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.PropertyNameOwner
 import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.n4JS.TaggedTemplateString
@@ -111,6 +113,10 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Check
 	def void checkComputedPropertyName(PropertyNameOwner decl) {
+		if(decl instanceof PropertyAssignment && decl.eContainer instanceof ObjectLiteral) {
+			// special case: in object literals, anything goes
+			return;
+		}
 		val expr = decl.computedNameFrom;
 		if(expr!==null) {
 			if(!isLegalExpressionInComputedPropertyName(expr)) {

@@ -23,21 +23,24 @@ class C {
 }
 
 
+// XPECT type of 'ol' --> ~Object
 var ol = {
-	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "foo()"
+
+	// NOTE: as of IDE-2500, arbitrary computed property names are allowed in object literals
+
+	// XPECT noerrors -->
 	[foo()]: "one",
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "foo()"
+	// XPECT noerrors -->
 	get [foo()]() {return null;},
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "foo()"
+	// XPECT noerrors -->
 	set [foo()](value) {},
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "foo()"
+	// XPECT noerrors -->
 	[foo()]() {},
 	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "Symbol()"
+	// XPECT noerrors -->
 	[Symbol()]() {}
 }
 
