@@ -10,7 +10,7 @@ These grammars are post-processed and combined with additional validators so not
 
 [[EBNFTypeExpression]]
 
-[source,ebnf]
+[source,xtext]
 ----
 TypeRef:
     TypeRefWithoutModifiers =>undefModifier=UndefModifierToken?
@@ -216,7 +216,7 @@ terminal DOT_DOT:
 
 == N4JS Language Grammar
 
-[source,ebnf]
+[source,xtext]
 ----
 Script: annotations+=ScriptAnnotation*
     scriptElements+=ScriptElement*;

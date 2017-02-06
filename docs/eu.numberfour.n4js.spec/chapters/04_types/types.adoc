@@ -20,7 +20,7 @@ In the following sections we will describe how types are defined and used in N4J
 
 Besides standard JavaScript types, the following metatypes are introduced:
 
-* Classifiers, that is class or interface (see <<_classifiers,Classifiers>>)
+* Classifiers, that is class or interface (see <<_classifiers>>)
 * Enum
 
 Classifiers, methods and functions may be declared generic.
@@ -40,7 +40,7 @@ We write $<$ to refer to the transitive non-reflexive relation, that is $T < S \
 --
 
 Whether nominal or structural typing is used depends on the declaration of the type or the reference.
-This is explained further in <<_structural-typing,Structural Typing>>.
+This is explained further in <<_structural-typing>>.
 
 For convenience reasons, we sometimes revert the operator, that is $T \subtype S \iff S :> T$.
 We write $T \notsubtype S$ if _T_ is not type conforming to $S$. (cf. cite:[Gosling12a(S4.10)])
@@ -78,7 +78,7 @@ M \subtype  T\\
 Note that this declarative definition needs to be specified in detail for special cases, such as union and intersection types.
 Usually, the union type of two types is also the join.
 
-<<fig-cd-predefined-type-hierarchy,The Predefined Types Heirarchy figure>> summarizes all predefined types,
+<<fig-cd-predefined-type-hierarchy>> summarizes all predefined types,
 that is primitive and built-in ECMAScript and N4JS types.
 Specific rules for the subtype relation are defined in the following sections.
 This type hierarchy shows `any` and `undefined` as the top and bottom type (cf. cite:[Pierce02a(15.4)]) We define these types here explicitly:
@@ -91,10 +91,11 @@ We call $Bot$ the bottom type, if for all types _T_ the relation $Bot<:T$ is tru
 In N4JS, $Top=`any}$, the bottom type $Bot=`undefined}$.
 --
 
-`null` is almost similar to $Bot$, except that it is not a subtype
-of `undefined`.[[fig-cd-predefined-type-hierarchy]]
+`null` is almost similar to $Bot$, except that it is not a subtype of `undefined`.
 
-image::{find}fig/cdPredefinedTypesHierarchy.png[title="Predefined Types Hierarchy"]
+[[fig-cd-predefined-type-hierarchy]]
+.Predefined Types Hierarchy
+image::{find}fig/cdPredefinedTypesHierarchy.png[]
 
 For every primitive type there is a corresponding built-in type as
 defined in cite:[ECMA11a], e.g. `string` and `String`. There is no inheritance supported for
@@ -150,15 +151,15 @@ to specify the type of variables.
 
 === Syntax
 
-The listing <<EBNFTypeExpression,EBNF Type Expression>> summarizes the type expression grammar.
+The listing <<EBNFTypeExpression>> summarizes the type expression grammar.
 Depending on the context, not all constructs are allowed.
 For example, the variadic modifier is only allowed for function parameters.
 
 References to user-declared types are expressed via `ParameterizedTypeRef`.
 This is also true for non-generic types, as the type arguments are optional.
-See <<_parameterized-types,Parameterized Types>> for details on that reference.
+See <<_parameterized-types>> for details on that reference.
 
-For qualified names and type reference names, see <<_qualified-names,Qualified Names>>
+For qualified names and type reference names, see <<_qualified-names>>
 
 The type expressions are usually added to parameter, field, or variable declarations as a suffix, separated with colon (``:``).
 The same is true for function, method, getter or setter return types.
@@ -276,11 +277,11 @@ be visible in the given scope.
 Predefined Type::
   Predefined types, such as String, Number, or Object; and .
 Array Type::
-  <<_array-object-type,Array Object Type>>.
+  <<_array-object-type>>.
 Function Type::
-  Described in <<_functions,Functions>>, <<_function-type,Function Type>>.
+  Described in <<_functions>>, <<_function-type>>.
 Any Type::
-  <<_any-type,Any Type>>.
+  <<_any-type>>.
 
 [discrete]
 ==== N4Types
@@ -289,16 +290,16 @@ Any Type::
 Declared Type::
   (Unparameterized) Reference to defined class <<Classes>> or enum <<Enums>>.
 Parameterized Type::
-  Parameterized reference to defined generic class or interface; <<_parameterized-types,Parameterized Types>>.
+  Parameterized reference to defined generic class or interface; <<_parameterized-types>>.
 This Type::
-<<_this-type,This Type>>.
+<<_this-type>>.
 Constructor and Type Type::
-  Class type, that is the meta class of a defined class or interface, <<_constructor-and-classifier-type,Constructor and Classifier Type>>.
+  Class type, that is the meta class of a defined class or interface, <<_constructor-and-classifier-type>>.
 
 Union Types::
-Union of types, <<_union-type,Union Type>>.
+Union of types, <<_union-type>>.
 Type Variable::
-Type variable, <<_type-variables,Type Variables>>.
+Type variable, <<_type-variables>>.
 
 Type expressions are used to explicitly declare the type of a variable,
 parameter and return type of a function or method, fields (and object
@@ -608,11 +609,11 @@ The type arguments, may be empty.
 
 
 `definedTypingStrategy` ::
-Typing strategy, by default nominal, see <<_structural-typing,Structural Typing>> for details
+Typing strategy, by default nominal, see <<_structural-typing>> for details
 
 `structuralMembers` ::
 in case of structural typing, reference can add additional members to
-the structural type, see <<_structural-typing,Structural Typing>> for details.
+the structural type, see <<_structural-typing>> for details.
 
 
 *Pseudo Properties:*
@@ -620,7 +621,7 @@ the structural type, see <<_structural-typing,Structural Typing>> for details.
 [horizontal]
 `importSpec` ::
 The `ImportSpecifier`, may be null if this is a local type reference. Note that this may
-be a `NamedImportSpecifier`. See <<_import-statement,Import Statement>> for details for details.
+be a `NamedImportSpecifier`. See <<_import-statement>> for details for details.
 
 `moduleWideName` ::
 Returns simple name of type, that is either the simple name as declared,
@@ -726,7 +727,7 @@ To avoid problems due to different interpretations, usage of raw types
 is not allowed in N4JS. footnote:[Although raw type usage is prohibited, the N4JS validator interprets raw types according to the first case, which may lead to consequential errors.]
 
 Calls to generic functions and methods can also be parameterized, this
-is described in <<_function-calls,Function Calls>>. Note that invocation of generic
+is described in <<_function-calls>>. Note that invocation of generic
 functions or methods does not need to be parameterized.
 
 .Type Conformance
@@ -790,7 +791,8 @@ G<? extends A> <: G<?>              -> true
 The figure <<cdVarianceChart>> shows the subtype relations of parameterized types (of a single generic type), which can be used as a cheat sheet.
 
 [[cdVarianceChart]]
-image::{find}fig/cdVarianceChart.png[title="Cheat Sheet: Subtype Relation of Parameterized Types"]
+.Cheat Sheet: Subtype Relation of Parameterized Types
+image::{find}fig/cdVarianceChart.png[]
 
 
 .Subtyping between different generic types
@@ -906,9 +908,9 @@ supported.
 In case an upper bound of a type variable shall consist only of a few
 members, it seems convenient to use additional structural members, like
 on interface I2 in the
-example <<ex:use-declared-interfaces-for-lower-bounds,Use declared interfaces for lower bounds>> below. However,
+example <<ex:use-declared-interfaces-for-lower-bounds>> below. However,
 type variables must not be constrained using structural types (see
-constraint <<Req-IDE-76,Use-Site Structural Typing>>). Hence, the recommended
+constraint <<Req-IDE-76>>). Hence, the recommended
 solution is to use an explicitly declared interface that uses definition
 site structural typing for these constraints as an upper bound (see
 interface in the example).
@@ -949,7 +951,7 @@ with lower case letters::
 * `string` cite:[ECMA11a(S8.4)]
 * `number` cite:[ECMA11a(S8.5)]
 
-Although Object is a primitive type in cite:[ECMA11a(S8.5)], it is interpreted here as an object type and described in <<_object-type,Object Type>>.
+Although Object is a primitive type in cite:[ECMA11a(S8.5)], it is interpreted here as an object type and described in <<_object-type>>.
 
 Please note that primitive types are values (= no objects) so they have
 no properties and you cannot inherit from them.
@@ -976,7 +978,7 @@ Although it is not possible to use `undefined` in a type expression, there are t
 ways of declaring an element as undefined:
 
 * For functions, the return type can be declared `void`, which is almost
-similar to `undefined`, see <<_void-type,Void Type>>.
+similar to `undefined`, see <<_void-type>>.
 * (Local) Variables can be declared as by using the annotation `@Undefined`. This does not only set the type to `undefined`, but also prevents users from assigning a value to this variable. That is, `@Undefined` basically means that the value of the
 variable is constantly set to `undefined`.
 
@@ -1032,7 +1034,7 @@ for variable declarations. For example in
 var x = null;
 ----
 
-the type of variable `x` is inferred to `any` (cf. <<_variable-statement,Var Statement>>).
+the type of variable `x` is inferred to `any` (cf. <<_variable-statement>>).
 
 The type `null` will be inferred to false in a boolean expression.
 
@@ -1067,7 +1069,7 @@ The type `boolean` is subtype of `any`:
 \inferSup{\type{boolean} <: \type{any}}{}
 ++++
 
-Variables of type `boolean` can be auto-converted (coerced) to `Boolean`, as described in <<_autoboxing-and-coercing,Autoboxing and Coercing>>.
+Variables of type `boolean` can be auto-converted (coerced) to `Boolean`, as described in <<_autoboxing-and-coercing>>.
 
 === Primitive String Type
 
@@ -1108,9 +1110,9 @@ The `string` type is a subtype of `any`:
 ++++
 
 It is supertype of the N4JS primitive type `pathselector`, `typeName` and `i18nKey`.
-<<_primitive-pathselector-and-i18nkey,Primitive Pathselector and I18nKey>>
+<<_primitive-pathselector-and-i18nkey>>
 
-However, variables of type `string` can be auto-converted (coerced) to `string`, as described in <<_autoboxing-and-coercing,Autoboxing and coercing>>.
+However, variables of type `string` can be auto-converted (coerced) to `string`, as described in <<_autoboxing-and-coercing>>.
 
 === Primitive Number Type
 
@@ -1138,7 +1140,7 @@ described in <<_integer-literals,Integer Literals>> .
 Actually ECMAScript defines an internal type `int32`.
 A number of this type is returned by the binary or operation using zero as operand, e.g. ECMAScript’s internal type int32 can be represented in N4JS by a
 built-in primitive type called `int`.
-For details on how numeric literals map to types `number` and `int`, refer to <<_integer-literals,Integer Literals>>.
+For details on how numeric literals map to types `number` and `int`, refer to <<_integer-literals>>.
 
 IMPORTANT: for the time being, built-in type `int` is synonymous to type `number`. This means one can be assigned to the other and a value declared to be of type `int` may actually be a 64-bit floating point number.
 footnote:[The rationale for having this limited implementation of type is that API designers already want to start providing hints where later only 32-bit integers will be used. For the time being, **this is checked neither statically nor at runtime**!]
@@ -1148,11 +1150,10 @@ footnote:[The rationale for having this limited implementation of type is that A
 
 === Primitive Symbol Type
 
-
 The primitive type `symbol` is directly as in ECMAScript 6. Support for symbols is kept to a minimum in N4JS. While this primitive type can be used
 without any restrictions, the only value of this type available in N4JS
 is the built-in symbol `Symbol.iterator`. Other built-in symbols from ECMAScript 6 and the creation of new symbols are not supported.
-For more details, see <<_symbol,Primitive Symbol Type Object Type>>.
+For more details, see <<_symbol>>.
 
 [.language-n4js]
 == Primitive N4JS Types
@@ -1199,7 +1200,7 @@ In that case, the inferred type of that variable will always be `any` as well.
 If an initializer is provided, the declared type of the variable will be
 set to the inferred type of the initializer. Therefore in the latter
 case, the inferred type of the variable will always be the type of the
-initializer (cf. <<_variable-statement,Var Statement>>).
+initializer (cf. <<_variable-statement>>).
 
 If a variable is declared as type , it can be used just as every
 variable can be used in raw ECMAScript. Since every property can be get
@@ -1208,7 +1209,7 @@ formally expressed in <<Identifier>>.
 
 === Void Type
 
-The type `void` is the type returned by the ECMAScript `void` operator (see <<_unary-expression,Unary Expressions>>), which is similar to `undefined`. However, the type `undefined` cannot be expressed explicitly in type
+The type `void` is the type returned by the ECMAScript `void` operator (see <<_unary-expression>>), which is similar to `undefined`. However, the type `undefined` cannot be expressed explicitly in type
 expressions. Instead, it is possible to declare the return type of a
 function or method as `void` in order to state that the function does not return anything.
 
@@ -1332,8 +1333,8 @@ required by certain expressions.
 
 
 *  `Object`   cite:[ECMA11a(p111)];
-*  `Function`  cite:[ECMA11a(p117)]; representing functions and function objects <<_function-type,Function Type>> but also methods (<<_methods,Methods>>)
-*  `Array`    cite:[ECMA11a(1p122)], representing array objects, see <<_array-object-type,Array Object Type>>
+*  `Function`  cite:[ECMA11a(p117)]; representing functions and function objects <<_function-type>> but also methods (<<_methods>>)
+*  `Array`    cite:[ECMA11a(1p122)], representing array objects, see <<_array-object-type>>
 *  `String` cite:[ECMA11a(p141)]
 *  `Boolean` cite:[ECMA11a(p141)]
 *  `Number` cite:[ECMA11a(p141)]
@@ -1361,13 +1362,13 @@ are all final.
 `Object` cite:[ECMA11a(S8.6)] is the (implicit) supertype of all declared (i.e., non-primtive) types, including native types.
 It models the ECMAScript type `Object`, except that no properties may be dynamically added to it.
 In order to declare a variable to which properties can be dynamically added, the type `Object+` has to be declared
-(cf. <<_type-modifiers,Type Modifiers>>).
+(cf. <<_type-modifiers>>).
 
 === Function-Object-Type
 
 The built-in object type `Function`, a subtype of `Object`, represents all functions, regardless of how they are defined (either via function expression,
 function declaration, or method declaration).
-They are described in detail in <<_function-object-type,Function Object Type>>.
+They are described in detail in <<_function-object-type>>.
 
 Since `Function` is the supertype of all functions regardless of number and types
 of formal parameters, return type, and number and bounds of type
@@ -1375,14 +1376,14 @@ parameters, it would not normally be possible to invoke an instance of `Function
 For the time being, however, an instance of `Function` can be invoked, any number
 of arguments may be provided and the invocation may be parameterized
 with any number of type arguments (which will be ignored), i.e. 
-<<Req-IDE-101,Function Call Constraints>> and <<Req-IDE-102,Parameterized Function Call Constraints>> do not apply.
+<<Req-IDE-101>> and <<Req-IDE-102>> do not apply.
 
 === Array Object Type
 
 The `Array` type is generic with one type parameter,
 which is the item type. An array is accessed with the index operator,
 the type of the index parameter is `Number`. The type of the stored values is
-_typeArgs[0]_ (cf. <<_array-literal,Array Literal>>). Due to type erasure, the item type is not
+_typeArgs[0]_ (cf. <<_array-literal>>). Due to type erasure, the item type is not
 available during runtime, that is to say there are no reflective methods
 returning the item type of an array.
 
@@ -1440,7 +1441,7 @@ application in the `for...of` loop with as little support for symbols as possibl
 === Promise
 
 `Promise` is provided as a built-in type as in ECMAScript 2015. Also see
-<<_asynchronous-functions,Asynchronous Functions>> for asynchronous functions.
+<<_asynchronous-functions>> for asynchronous functions.
 
 === Iterator Interface
 task:IDE-1220[]
@@ -1563,7 +1564,7 @@ optional parameter also has to be optional or variadic.
 
 An optional return type indicates that the function / method need not be
 left via a return statement with an expression; in that case the return
-value is `undefined`. For constraints on using the optional modifier, see <<_function-object-type,Function Object Type>>.
+value is `undefined`. For constraints on using the optional modifier, see <<_function-object-type>>.
 
 // TODO : {The optional modifier will be replaced with the default argument concept.}
 
@@ -1603,7 +1604,7 @@ This must be true even if preceding parameters are optionally and not
 arguments are passed at runtime.
 --
 
-For more constraints on using the variadic modifier, see <<_function-object-type,Function Object Type>>.
+For more constraints on using the variadic modifier, see <<_function-object-type>>.
 
 [.language-n4js]
 == Union and Intersection Type (Composed Types)
@@ -2468,10 +2469,10 @@ classifier type `constructor{B}` also is a subtype of `constructor_{A}_` :
 \infer{constructor{B}  <: constructor{A}}{B <: A & B.ctor <: A.ctor}
 ++++
 +
-The subtype relation of the constructor function is defined in <<_function-type,Function Type>>.
+The subtype relation of the constructor function is defined in <<_function-type>>.
 In the case of the default `N4Object` constructor, the type of the object literal argument depends on required attributes.
 +
-This subtype relation for the constructor type is enforced if the constructor of the super class is marked as `final`, see <<_constructor-and-classifier-type,Constructor>> for details.
+This subtype relation for the constructor type is enforced if the constructor of the super class is marked as `final`, see <<_constructor-and-classifier-type>> for details.
 .  The type of a classifier declaration or classifier expression is the constructor of that class:
 +
 [math]
@@ -2505,7 +2506,8 @@ A constructor type with a wildcard is never a subtype of a constructor type with
 The figure <<cdConstructorClassifierType>> shows the subtype relations defined by the preceding rules.
 
 [[cdConstructorClassifierType]]
-image::{find}fig/cdConstructorClassifierType.png[title="Classifier and Constructor Type Subtype Relations"]
+.Classifier and Constructor Type Subtype Relations
+image::{find}fig/cdConstructorClassifierType.png[]
 
 Consequences:
 
@@ -2585,13 +2587,13 @@ This means we have the constructor function of class `{C}` (but only if is non-a
 * that can be used for instantiation (i.e. the represented class is not abstract).
 +
 So, same situation as before except that we know nothing about the constructor function’s signature.
-However, if `{C}` has a covariant constructor, cf. <<_covariant_constructors,Covariant Constructors>>, we can still conclude that we have an override compatible constructor function to that of `{C}`, because classes with covariant constructors enforce all their subclasses to have override compatible constructors.
+However, if `{C}` has a covariant constructor, cf. <<_covariant_constructors>>, we can still conclude that we have an override compatible constructor function to that of `{C}`, because classes with covariant constructors enforce all their subclasses to have override compatible constructors.
 3.  have a value of type `type{? extends C}` or `type{C}` (the two types are equivalent), we know we have:
 * an object representing a type (often constructor functions are used for this, e.g. in the case of classes, but could also be a plain object, e.g. in the case of interfaces),
 * that represents type `{C}` or a subtype thereof,
 * that cannot be used for instantiation (e.g. could be the constructor function of an abstract class, the object representing an interface, etc.).
 
-Slightly simplified, we can say that in the first above case we can always use the value for creating an instance with `new`, in the second case only if the referenced type has a covariant constructor, cf. <<_covariant_constructors,Covariant Constructors>>, and never in the third case.
+Slightly simplified, we can say that in the first above case we can always use the value for creating an instance with `new`, in the second case only if the referenced type has a covariant constructor, cf. <<_covariant_constructors>>, and never in the third case.
 
 === Constructors and Prototypes in ECMAScript 2015
 
@@ -2613,17 +2615,18 @@ defined `A` as `class A extends Object {}` in the listing above, then the constr
 arrow), which would make a more consistent overall picture.
 
 [[fig-constructors-and-prototypes]]
-image::{find}fig/ctorsProtosInES6.png[title="Constructors and prototypes for two classes A and B in ECMAScript 2015 (not N4JS!)"]
+.Constructors and prototypes for two classes A and B in ECMAScript 2015 (not N4JS!)
+image::{find}fig/ctorsProtosInES6.png[]
 
 Base classes in the above sense are not available in N4JS. If an N4JS
 class does not provide an `extends` clause, it will implicitly inherit from
-built-in class `N4Object`, if it provides an `extends` clause stating `Object` as its super type, then it corresponds to what is shown in <<fig-constructors-and-prototypes,Constructors and prototypes>> with the red dashed arrow.
+built-in class `N4Object`, if it provides an `extends` clause stating `Object` as its super type, then it corresponds to what is shown in <<fig-constructors-and-prototypes>> with the red dashed arrow.
 
 [.language-n4js]
 == This Type
 task:IDE-377[] task:IDE-785[] task:IDEBUG-228[]
 
-The `this` keyword may represent either a `this` literal (cf. <<ex:this-keyword-and-type-in-instance-and-static-context,example: This keyword and type in instance and static context>>) or may refer to the `this` type. In this section, we describe the latter case.
+The `this` keyword may represent either a `this` literal (cf. <<ex:this-keyword-and-type-in-instance-and-static-context>>) or may refer to the `this` type. In this section, we describe the latter case.
 
 Typical use cases of the `this` type include:
 
@@ -2636,7 +2639,7 @@ type of a method parameter
 * the parameter type in a return type expression ($type$`{this}`,`constructor{this}`)
 * an existential type argument inside a return type expression for methods (e.g.`ArrayList<? extends this> method(){...}`)
 
-The precise rule where it may appear is given below in <<Req-IDE-37,requirement: This Type>>.
+The precise rule where it may appear is given below in <<Req-IDE-37>>.
 
 The `this` type is similar to a type variable, and it is bound to the declared
 or inferred type of the receiver. If it is used as return type, all
@@ -2683,7 +2686,7 @@ The keyword `this` and the type expression `this` look similar, however they can
 to different types. The type always refers to the type of instances of a
 class. The `this` keyword refers to the type of instances of the class in case
 of instance methods, but to the classifier the of the class in case of
-static methods. See  <<_this-keyword,This Keyword>> for details.
+static methods. See  <<_this-keyword>> for details.
 
 [[ex:this-keyword-and-type-in-instance-and-static-context]]
 .This keyword and type in instance and static context
@@ -2706,7 +2709,7 @@ class C {
 --
 
 Structural typing and additional members in structural referenced types
-is described in <<_structural-typing,Structural Typing>>.
+is described in <<_structural-typing>>.
 
 === Semantics [[this-keyword-semantics]]
 
@@ -3033,7 +3036,7 @@ a result, the actual type in JavaScript will be `string`. To provide the N4JS
 user with some validations regarding the validity of a statement at
 compile time, a special kind of subtypes of `string` are introduced: the
 string-based enum using the `@StringBased` annotation. (See also other string-based
-types like `pathSelector<T>` and `i18nKey` in <<_primitive-pathselector-and-i18nkey,Primitive Pathselector and I18nKey>>.)
+types like `pathSelector<T>` and `i18nKey` in <<_primitive-pathselector-and-i18nkey>>.)
 
 // TODO check for typename<T>
 
@@ -3085,8 +3088,8 @@ $E_S$ is of the type of the string-based enumeration.
 ++++
 \infer{ \tee l \subtype E_S }{l \in E_S.L_S}
 ++++
-.  <<Req-IDE-39,requirement: Unique Literal Names>> also applies for `N4StringBasedEnum`.
-.  <<Req-IDE-40,requirement: Enum Literals are Singletons>> also applies for `N4StringBasedEnum`.
+.  <<Req-IDE-39>> also applies for `N4StringBasedEnum`.
+.  <<Req-IDE-40>> also applies for `N4StringBasedEnum`.
 .  References to string-based enums may only be used in the following places:
 ..  in type annotations
 ..  in property access expressions to refer to one of the enum’s literals

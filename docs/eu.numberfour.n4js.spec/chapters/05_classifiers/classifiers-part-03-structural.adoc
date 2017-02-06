@@ -192,7 +192,7 @@ The initializer structural typing provides readable fields for every writeable f
 |public readable field | | | |$\emptyset$ |writable fields
 |===
 
-Multiple structural typing strategies can be nested when there are multiple use sites, like in the example <<ex:nested-structural-typing-strategies,Nested Structural Typing Strategies>> below at the locations ST1 and ST2.
+Multiple structural typing strategies can be nested when there are multiple use sites, like in the example <<ex:nested-structural-typing-strategies>> below at the locations ST1 and ST2.
 In the example, the datafield `a.field` has the nested structural
 //TODO: check formatting below
 type `{\tsInitFld A}` and thus the datafield `a.field.df` is readable.
@@ -515,8 +515,8 @@ footnote:[This is already constrained by the grammar.]
 --
 
 Note that all members of `N4Object` are excluded.
-This implies that extended reflective features (cf. <<_reflection-meta-information,Reflection Meta Information>> ) are not available in the context of structural typing.
-The `instanceof` operator is still working as described in <<_relational-expression,Relational Expression>>, in that it can be used to check the type of an instance.
+This implies that extended reflective features (cf. <<_reflection-meta-information>> ) are not available in the context of structural typing.
+The `instanceof` operator is still working as described in <<_relational-expression>>, in that it can be used to check the type of an instance.
 
 If a type $X$ is a (nominal) subtype of T, it is, of course,
 also a subtype of $\tsStr T$:
@@ -531,7 +531,7 @@ This is only a shortcut for the type inference defined above.
 [req,id=IDE-77,version=1]
 --
 If a type is structurally typed on both definition and use-site, the rules for
-use-site structural typing (<<Req-IDE-76,Use-Site Structural Typing>>) are
+use-site structural typing (<<Req-IDE-76>>) are
 applied.
 
 
@@ -876,12 +876,12 @@ It is only possible to add additional members to a type if use-site structural t
 
 The following constraints must hold:
 
-1.  For all additional members defined in a structural type reference, the constraints for member overriding (<<Req-IDE-72,requirement Overriding Members>>) apply as well.
+1.  For all additional members defined in a structural type reference, the constraints for member overriding (<<Req-IDE-72>>) apply as well.
 2.  All additional members have the access modifier set to `public`.
 3.  Type variables must not be augmented with additional structural members.
 
 Additional fields may be declared optional in the same way as fields in classes.
-The rules given in <<_structural-types-with-optional-fields,Structural Types With Optional Fields>> apply accordingly.
+The rules given in <<_structural-types-with-optional-fields>> apply accordingly.
 Consider the following example:
 
 --

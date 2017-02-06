@@ -19,7 +19,7 @@ implicitly define an accessor field. Similar to object literals, there
 must be no data field with the same name as a getter or setter.
 
 (overriding, implementation and consumption) is
-described in <<_redefinition-of-members,Redefiniton of Members>>.
+described in <<_redefinition-of-members>>.
 
 [.language-n4js]
 == Syntax
@@ -45,10 +45,10 @@ N4JS member access modifier: `private`, `project`, `potected`, or `public`; the 
 task:IDE-84[]
 
 `name` ::
-The simple name of the member, that is an identifier name (cf. <<_valid-names,Valid Names>>).
+The simple name of the member, that is an identifier name (cf. <<_valid-names>>).
 
 `static` ::
-Boolean property to distinguish instance from classifier members, see <<_static-members,Static Members>>.
+Boolean property to distinguish instance from classifier members, see <<_static-members>>.
 
 
 The following pseudo properties are defined via annotations:
@@ -63,7 +63,7 @@ And we additionally define the following pseudo properties:
 
 [horizontal]
 `acc` ::
-Member access modifier as described in <<_accessibility-of-members,Accessibility of Members>>, it is the aggregated value of
+Member access modifier as described in <<_accessibility-of-members>>, it is the aggregated value of
 the $accessModifier$ and the $export$ property.
 
 `owner` ::
@@ -129,12 +129,12 @@ other is non-static:
 \forall m_1,m_2 \in C.ownedMembers, m_1\neq m_2: m_1.name\neq m_2.name \lor m_1.static\neq m_2.static
 \endalign
 ++++
-2.  The member name must be a valid identifier name, see <<_identifier-names-and-identifiers,Identifier Grammar>>.
+2.  The member name must be a valid identifier name, see <<_identifier-names-and-identifiers>>.
 
 --
 
 Thus, over__loading__ of methods is not supported footnote:[In order to emulate method overloading, union types are to be used.] and no field may have the same name as a method.
-However, over__riding__ of methods, getters, and setters are possible, see <<_redefinition-of-members,Redefinition of Members>>.
+However, over__riding__ of methods, getters, and setters are possible, see <<_redefinition-of-members>>.
 Static members may also have the same name as non-static members.
 
 footnote:[cite[ECMA15a(p214)], `ClassBody : ClassElementList` indicates that it is possible to have the same name for instance and static members.]
@@ -222,7 +222,7 @@ fragment ColonSepTypeRef*:
     ':' declaredTypeRef=TypeRef
 ;
 ----
-<1> See the <<_asynchronous-functions,Asynchronous Functions>> section.
+<1> See the <<_asynchronous-functions>> section.
 
 [.language-n4js]
 === Properties
@@ -254,11 +254,11 @@ The following pseudo properties are defined via annotations:
 [horizontal]
 `final` ::
 Boolean flag set to true if annotation `@Final` is set. Flag indicates that
-method must not be overridden in subclasses; see <<_final-methods,Final Methods>>.
+method must not be overridden in subclasses; see <<_final-methods>>.
 
 `declaresOverride` ::
 Flag set to true if annotation `@Overrides` is set. Flag indicates that method must
-override a method of a superclass; see <<_overriding-of-members,Overriding of Members>>.
+override a method of a superclass; see <<_overriding-of-members>>.
 
 Additionally, we define the following pseudo properties:
 
@@ -281,15 +281,15 @@ $enumerable$, this is always set to false for methods.
 === Semantics
 
 Since methods are ECMAScript functions, all constraints specified in
-<<_function-type,Function Type>> apply to methods as well. This section describes default values and
+<<_function-type>> apply to methods as well. This section describes default values and
 function type conformance which is required for overriding and
 implementing methods.
 
 In addition, method declarations and definitions have to comply with the
-constraints for naming members of classifiers (cf. <<Req-IDE-52,Member Names>>)
+constraints for naming members of classifiers (cf. <<Req-IDE-52>>)
 and with the constraints detailed in the following sections on final
-methods (<<_final-methods,Final Methods>>), abstract methods (<<_abstract-methods,Abstract Methods>>
-and method overriding and implementation (<<_overriding-of-members,Overriding of Members>>, <<_implementation-of-members,Implementation of Members>>).
+methods (<<_final-methods>>), abstract methods (<<_abstract-methods>>
+and method overriding and implementation (<<_overriding-of-members>>, <<_implementation-of-members>>).
 
 The following constraints are defined for methods in ECMAScript 6 cite:[ECMA15a(207)]
 
@@ -304,7 +304,7 @@ StrictFormalParameters also occurs in the LexicallyDeclaredNames of
 FunctionBody.
 --
 
-Methods – like functions – define a variable execution environment and therefore provide access to the actual passed-in parameters through the implicit `arguments` variable inside of their bodies (c.f. <<_arguments-object,Arguments Objects>>).
+Methods – like functions – define a variable execution environment and therefore provide access to the actual passed-in parameters through the implicit `arguments` variable inside of their bodies (c.f. <<_arguments-object>>).
 
 Methods are similar to function definitions but they must not be
 assigned to or from variables. The following code issues an error
@@ -323,7 +323,7 @@ var v: {function():void} = new C().m;
 [req,id=IDE-54,version=1]
 --
 . In contrast to ECMAScript 2015, methods are defined as readonly, that is, it is not possible to dynamically re-assign a property defined as method with a new value.
-This is because assigning or re-assigning a method breaks encapsulation. Methods are the <<Acronyms,API>> of a class, their implementation is internal to the class.
+This is because assigning or re-assigning a method breaks encapsulation. Methods are the <<Acronyms>> of a class, their implementation is internal to the class.
 .  When assigning a method to a variable, a warning is issued since this would lead to an detached this reference inside the method when it is called without explicitly providing the receiver. No warning is issued only if it is guaranteed that no problems will occur:
 ..  The method’s body can be determined at compile time (i.e., it has been declared `@Final`) and it lacks usages of `this` or `super`. This is true for instance and static methods.
 ..  The method is the constructor. task:GH-224[]
@@ -430,11 +430,11 @@ By default, methods can be overridden. To prevent a method from being
 overridden, it must be annotated with `@Final`.
 
 Of course, a method cannot be declared both abstract and final
-(cf. <<Req-IDE-46,Abstract Member>>). Private methods are implicitly declared
+(cf. <<Req-IDE-46>>). Private methods are implicitly declared
 final. Because static methods can be overridden in subclasses (which is
 different to Java), they also can be marked as final.
 
-Default methods in interfaces, cf. <<_default-methods-in-interfaces,Default Methods in Interfaces>>, may also be declared `@Final`.
+Default methods in interfaces, cf. <<_default-methods-in-interfaces>>, may also be declared `@Final`.
 
 
 .Final Methods in Interfaces
@@ -470,11 +470,11 @@ A method can be declared without defining it, i.e. without providing a
 method body, and is then called an __abstract method__. Such methods
 must be declared with modifier `abstract` and have their property
 $abstract$ set to true. Constraints for abstract methods are
-covered in <<Req-IDE-46,Abstract Member>> (see <<_abstract-classes,Abstract Classes>>).
+covered in <<Req-IDE-46>> (see <<_abstract-classess>>).
 
 In interfaces, methods are always abstract by default and they do not
 have to be marked as abstract. If a method in an interface provides a
-body, then this is the default implementation. See <<_implementation-of-members,Implementation-of-Members>> about how the default implementation may be mixed in the consumer.
+body, then this is the default implementation. See <<_implementation-of-members>> about how the default implementation may be mixed in the consumer.
 
 [.language-n4js]
 === Generic Methods
@@ -486,7 +486,7 @@ are used similarly to predefined or declared types. Additionally,
 methods may be declared generic independently from their containing
 class. That is to say that type parameters (with type variables) can be
 defined for methods as well, just like for generic functions (see
-<<_generic-functions,Generic Functions>>).
+<<_generic-functions>>).
 
 .Type variable names for generic methods
 [req,id=IDE-55,version=1]
@@ -520,15 +520,15 @@ so-called _default implementation_ and the method is called a __default
 method__. This will be mixed into an implementor of the interface if,
 and only if, neither the implementing class nor any of its direct or
 indirect superclasses already provides an implementation for this
-method; for details see <<_member-consumption,Member Consumption>>. Since the implementor is not known, some constraints exist for the body. I.e., no access to super is possible,
-cf. <<Req-IDE-124,Access Super Member with Super Literal>>.
+method; for details see <<_member-consumption>>. Since the implementor is not known, some constraints exist for the body. I.e., no access to super is possible,
+cf. <<Req-IDE-124>>.
 
 In order to declare an interface to provide a default implementation in
 a definition file, annotation `@ProvidesDefaultImplementation` can be used, cf.
-<<Req-IDE-167,External Class/Interface Members>>.
+<<Req-IDE-167>>.
 
 When a method in an interface is provided with a default implementation,
-it may even be declared `@Final`, see <<_final-methods,Final Methods>>.
+it may even be declared `@Final`, see <<_final-methods>>.
 
 //todo{it is currently unclear whether default methods are allowed in structural interfaces; see task IDE-1666 for details} task:IDE-1666[]
 
@@ -538,7 +538,7 @@ N4JS implements the async/await concept proposed for ECMAScript 7, which
 provides a more convenient and readable syntax for writing asynchronous
 code compared to using built-in type Promise directly. This concept can
 be applied to methods in exactly the same way as to declared functions.
-See <<_asynchronous-functions,Asynchronous Functions>> and <<_asynchronous-arrow-functions,Asynchronous Arrow Functions>> for details.
+See <<_asynchronous-functions>> and <<_asynchronous-arrow-functions>> for details.
 
 [.language-n4js]
 == Constructors
@@ -644,7 +644,7 @@ class A{
 
 Remarks:
 
-* The type of the formal parameter `pass:[~~this]` refers to the structural field type, see <<_structural-typing,Structural Typing>> for details on structural typing.
+* The type of the formal parameter `pass:[~~this]` refers to the structural field type, see <<_structural-typing>> for details on structural typing.
 It contains all public fields of the type.
 * Subclasses may override the constructor and introduce additional parameters.
 They have to call the super constructor explicitly, however, providing a parameter with at least all required attributes of the superclass.
@@ -706,7 +706,7 @@ name as $SM$:
 [example]
 ====
 
-The situation described in <<Req-IDE-58,Names of additional members of structural this type in constructor>> is demonstrated in the following code fragment:
+The situation described in <<Req-IDE-58>> is demonstrated in the following code fragment:
 
 [source,n4js]
 ----
@@ -729,7 +729,7 @@ class B extends A {
 The tedious process of copying the members of the parameter to the
 fields of the class can be automated via the `@Spec` annotation if the argument
 has `pass:[~i~this]` structural initializer field typing.
-For more details about this typing can be found in <<_structural-read-only-write-only-and-initializer-field-typing,Structural Read-only, Write-only and Initializer Field Typing>>.
+For more details about this typing can be found in <<_structural-read-only-write-only-and-initializer-field-typing>>.
 This can be used as shown in the following listing:
 
 [source,n4js]
@@ -839,7 +839,7 @@ class E extends A3 {
 ----
 
 The last case (class E) demonstrates a special feature of the typing
-strategy modifier in combination with the `this` type, see <<_structural-typing,Structural Typing>> for details.
+strategy modifier in combination with the `this` type, see <<_structural-typing>> for details.
 
 
 The constructor in class `B` contains an error because the super constructor
@@ -903,7 +903,7 @@ The `@CovariantConstructor` annotation may be applied to the constructor, the co
 classifier, or both. It can also be used for interfaces; in fact,
 constructors are allowed in interfaces only if they themselves or the
 interface is annotated with `@CovariantConstructor` (see
-<<Req-IDE-60,Requirement: Covariant Constructors>>).
+<<Req-IDE-60>>).
 
 .Covariant Constructor
 [def]
@@ -934,7 +934,7 @@ constructors. Annotating a constructor with this annotation, or its
 containing classifier, or both have all the same effect.
 .  Given a class `C` with an owned constructor
 $ctor$ and a super class $Sup$ that has a
-covariant constructor (owned or inherited, see <<covariant_constructor,Covariant Constructor>>), then
+covariant constructor (owned or inherited, see <<covariant_constructor>>), then
 ..  $Sup.constructor$ must be accessible from
 `C`,
 ..  $ctor$ must be override compatible with
@@ -942,21 +942,21 @@ $S.constructor$:
 +
 $overrideCompatible(ctor, S.constructor)$
 +
-This constraint corresponds to <<Req-IDE-72,requirement: Overriding Members>> except for the `Override` annotation which is not required here.
+This constraint corresponds to <<Req-IDE-72>> except for the `Override` annotation which is not required here.
 .  Given a classifier `C` implementing interface
 `I` and `I` has a covariant constructor (owned
-or inherited, see <<covariant_constructor,Covariant Constructor>>), we require
+or inherited, see <<covariant_constructor>>), we require
 ..  $I.constructor$ must be accessible from `C`,
 ..  an implementation-compatible constructor $ctor$ must be
 defined in C with
 +
 $overrideCompatible(ctor, I.constructor)$
 +
-This constraint corresponds to <<Req-IDE-74,Implementation of Interface Members>>
+This constraint corresponds to <<Req-IDE-74>>
 except for the `@Override` annotation, which is not required, here.
 ..  Given a classifier `C` without an owned constructor and
 an extended class or interface $Sup$ that has a covariant
-constructor (owned or inherited, see <<covariant_constructor,definition: Covariant Constructor>>), we require the inherited constructor $ctor$ of `C` within the context of
+constructor (owned or inherited, see <<covariant_constructor>>), we require the inherited constructor $ctor$ of `C` within the context of
 `C` to be override compatible to itself in the context of
 $Sup$. Using notation $m[T]$ to denote that a
 member `M` is to be treated as defined in container type
@@ -1006,7 +1006,7 @@ y = createAnother(x, new B());
 
 ====
 
-In the code of <<ex:covariant_constructors,Covariant Constructors example>>, we would get an error if we changed the type of parameter `p` in the constructor of `Cls2` to some other type that is not a super type of `B`,
+In the code of <<ex:covariant_constructors>>, we would get an error if we changed the type of parameter `p` in the constructor of `Cls2` to some other type that is not a super type of `B`,
 i.e. the type of the corresponding parameter of `Cls`’s constructor. If we
 removed the `@CovariantConstructor` annotation on `Cls`, we would get an error in the new expression inside function `createAnother`.
 
@@ -1037,7 +1037,7 @@ class D extends C {
 
 Interface `I` declares a covariant constructor expecting a single parameter of type `number`.
 Even though class `C` implements `I`, it does not need to define an owned constructor with such a parameter.
-According to <<Req-IDE-60,requirement Covariant Constructor>>, it is enough for `C` to have a constructor,
+According to <<Req-IDE-60>>, it is enough for `C` to have a constructor,
 either owned or inherited, that is override compatible with the one declared by `I`. Class `C` inherits the default constructor from `N4Object`, which does not have any arguments and is thus override compatible to `I`’s constructor.
 
 In addition, subclasses are now required to have constructors which are
@@ -1091,7 +1091,7 @@ Boolean flag set to true if field is a static field.
 
 `const` ::
 Boolean flag set to true if field cannot be changed. Note that const fields are automatically static. Const fields need an initializer.
-Also see <<_assignment-modifiers,Assignment Modifiers>>.
+Also see <<_assignment-modifiers>>.
 
 task:IDE-946[]
 
@@ -1116,7 +1116,7 @@ footnote:[ This cannot be done w/o `null`/`undefined` analysis]
 
 `final` ::
 Boolean flag making the field read-only, and it must be set in the
-constructor. Also see <<_assignment-modifiers,Assignment Modifiers>>.
+constructor. Also see <<_assignment-modifiers>>.
 
 [[data-fields-derived-values]]
 [discrete]
@@ -1131,7 +1131,7 @@ Always false for fields.
 
 `writeable` ::
 Set to false if field is declared const or final. In the latter case, it
-may be set in the constructor (cf. <<_assignment-modifiers,Assignment Modifiers>>).
+may be set in the constructor (cf. <<_assignment-modifiers>>).
 
 ==== Semantics [[data-fields-semantics]]
 
@@ -1153,7 +1153,7 @@ If a subclass should set a different default value, this has to be done
 in the constructor of the subclass.
 
 For the relation of data fields and field accessors in the context of
-extending classes or implementing interfaces see <<_redefinition-of-members,Redefinition of Members>>.
+extending classes or implementing interfaces see <<_redefinition-of-members>>.
 --
 
 ==== Type Inference [[data-fields-type-inference]]
@@ -1210,7 +1210,7 @@ $\nexists sub \in f.expr^*: sub="this"$
 // ** syntax highlighting in editor
 .  A constant data field must not be annotated with `@Final`:
 $f.const \Rightarrow \lnot f.final$
-. Constant data fields are not writeable (cf. <<Req-IDE-68,requirement Write-Acccess>>):
+. Constant data fields are not writeable (cf. <<Req-IDE-68>>):
 $f.const \Rightarrow \lnot f.writeable$
 --
 
@@ -1225,7 +1225,7 @@ $f.final \Rightarrow \lnot f.const \land \lnot f.declaredStatic$
 .  A final data field is not writeable:
 $f.final \Rightarrow \lnot f.writeable$
 A final field may, however, be set in the constructor.
-See <<Req-IDE-68,requirement Write-Acccess>> for details.
+See <<Req-IDE-68>> for details.
 .  A final data field must be either initialized by an initializer expression or in the constructor.
 If the field is initialized in the constructor, this may be done either explicitly or via a spec-styleconstructor.
 task:IDEBUG-575[]
@@ -1337,7 +1337,7 @@ False for getters and true for setters.
 ==== Semantics [[field-accessors-semantics]]
 
 There must be no field or method with the same name as a field accessor
-(follows from <<Req-IDE-52,requirement Member Names>>). In addition, the following
+(follows from <<Req-IDE-52>>). In addition, the following
 constraints must hold:
 
 
@@ -1348,21 +1348,19 @@ constraints must hold:
 
 * The return type of a getter must not be `void`.
 * The type of the parameter of a setter must not be `void`.
-* If a getter $g$ is defined or consumed (from an interface)
-or merged-in (via static polyfill) in a class `C` and a
-setter `S` with
-$s.name=g.name \land s.static=g.static$ is inherited by
+* If a getter $g$ is defined or consumed (from an interface) or merged-in (via static polyfill) in a class `C` and a setter `S` with $s.name=g.name \land s.static=g.static$ is inherited by
 `C` from one of its super classes, then `C` must
 define a setter $s'$ with
-$s'.name=g.name \land s'.static=g.static$
-footnote:[This is required, because in Javascript a getter shadows a corresponding setter defined further up in the prototype chain; likewise a setter shadows a corresponding getter.].
+$s'.name=g.name \land s'.static=g.static$ footnote:[This is required, because in Javascript a getter shadows a corresponding setter defined further up in the prototype chain; likewise a setter shadows a corresponding getter.].
 The same applies to setters, accordingly.
-* <<Req-IDE-72,requirement Overriding Members>>, <<Req-IDE-73,requirement Consumption of Interface Members>>, and <<Req-IDE-74,Implementation of Interface Members>> apply to field accessors accordingly (getter / setter overriding).
+* <<Req-IDE-72>>, <<Req-IDE-73>>, and <<Req-IDE-74>> apply to field accessors accordingly (getter / setter overriding).
 
-NOTE: A getter and setter with the same name need not have the same type, i.e. the getter’s return type need not be the same as a subtype of
-the type of the setter’s parameter (the types can be completely unrelated).
-footnote:[Thus, the type of one accessor is not used to infer the type of the other one. E.g., from [language-n4js]`set x(string s)`, we cannot infer [language-n4js]`get x()` to return [language-n4js]`string` — instead, the getter is inferred to return [language-n4js]`any`.]
-
+[.language-n4js]
+[NOTE]
+---
+A getter and setter with the same name need not have the same type, i.e. the getter’s return type need not be the same as a subtype of
+the type of the setter’s parameter (the types can be completely unrelated).footnote:[Thus, the type of one accessor is not used to infer the type of the other one. E.g., from `set x(string s)`, we cannot infer `get x()` to return `string` — instead, the getter is inferred to return `any`.]
+---
 --
 
 Getters and setters – like functions – define a variable execution
@@ -1386,7 +1384,7 @@ possible that a static member has the same name as an instance member.
 Note that static members are not only allowed in classes but also in
 interfaces, but there are important differences (for example, no
 inheritance of static members of interfaces, cf. Section
-<<_static-members-of-interfaces,Static Members of Interfaces>>) .
+<<_static-members-of-interfaces>>) .
 
 .Static member not abstract
 [req,id=IDE-65,version=1]
@@ -1523,7 +1521,7 @@ method can, however, be declared generic. Generic static methods are
 defined similarly to generic instance methods. Since they cannot refer
 to type variables of a generic class, the constraint to avoid type
 variables with equal names (see
-<<Req-IDE-55,requirement Type Variable Names for Generic Methods>>) does not need to hold for
+<<Req-IDE-55>>) does not need to hold for
 generic static methods.
 
 === Static Members of Interfaces
@@ -1537,13 +1535,13 @@ static. A few restrictions apply:
 
 1.  Static members of interfaces may only be accessed directly via the
 containing interface’s type name task:IDEBUG-386[] (this means, of the four ways of
-accessing static members of classes defined in <<Req-IDE-66,requirement Accessing Static Members>> above, only the first one applies to static members of interfaces).
+accessing static members of classes defined in <<Req-IDE-66>> above, only the first one applies to static members of interfaces).
 2.  The `this` literal may not be used in static methods or field accessors of
 interfaces and it may not be used in the initializer expression of
-static fields of interfaces. See <<Req-IDE-173,requirement Valid location for this literal>>.
+static fields of interfaces. See <<Req-IDE-173>>.
 3.  The `super` literal may not be used in static methods or field accessors of
 interfaces (in fact, it may not be used in interfaces at all,
-cf. <<Req-IDE-123,requirement Access Super Constructor with Super Literal>>).
+cf. <<Req-IDE-123>>).
 
 --
 
@@ -1553,12 +1551,12 @@ instance methods and as an argument type only in constructors
 static interface methods in the constraints above.
 
 In general, static members may not be abstract,
-cf. <<Req-IDE-46,requirement Abstract Member>>, which applies here as well. Static methods
+cf. <<Req-IDE-46>>, which applies here as well. Static methods
 and field accessors of interfaces, therefore, always have to provide a
 body.
 
 Static members of interfaces are much more restricted than those of classes.
-Compare the following example to <<_polymorphism-and-static-methods,Polymorphism and Static Methods>> for classes above:
+Compare the following example to <<_polymorphism-and-static-methods>> for classes above:
 
 .Static members of interfaces
 [example]
@@ -1872,7 +1870,7 @@ Methods defined in interfaces are automatically declared abstract if
 they do not provide a default implementation. This can also be expressed
 explicitly via adding the `abstract` modifier. If a class implementing an abstract
 interface does not implement a method declared in the interface, the
-class needs to be declared abstract (cf. <<_abstract-classes,Abstract Classes>>).
+class needs to be declared abstract (cf. <<_abstract-classes>>).
 
 Consequences for method implementation:
 
@@ -1889,7 +1887,7 @@ methods from implemented interfaces, that is
 \spc \hspace{2em} M.name=M'.name \Rightarrow M.acc \neq private \to M.acc \geq M'.acc
 \endalign
 ++++
-3.  Methods in the implementor must be a supertype footnote:[As defined in <<_function-type,Function Type>> for function types.] of methods from implemented interfaces.
+3.  Methods in the implementor must be a supertype footnote:[As defined in <<_function-type>> for function types.] of methods from implemented interfaces.
 That is to say the implemented methods are override-compatible.
 4.  There may be several methods $M_1, ..., M_n$ defined in
 different implemented interfaces and a single owned method
@@ -1920,7 +1918,7 @@ We always use the `@Override` annotation.
 [example]
 --
 
-<<tab:methodConsumption,Table Method Consumption>> shows simple examples of above rules.
+<<tab:methodConsumption>> shows simple examples of above rules.
 Assuming that `class C` extends super `class S` and implements interface `I1` and `I2`:
 
 [source,n4js]

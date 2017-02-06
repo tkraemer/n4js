@@ -19,7 +19,7 @@ _Access control_ defines the extent to which types and members are accessible be
 Access control may, therefore, restrict the visibility of a declaration by limiting its scope.
 
 _Extensibility_ refers to whether a given type can be subtyped, or in the case of members, whether they can be overridden.
-Access control is a prerequisite for extensibility which is further explained in <<_n4js_specific_classifiers,N4JS Specific Classifiers>>
+Access control is a prerequisite for extensibility which is further explained in <<_n4js_specific_classifiers>>
 
 [.language-n4js]
 == Access Control
@@ -99,10 +99,10 @@ export @Internal public function f3() {} // public@Internal
 export public function f2() {}      // public
 ----
 
-The access control levels are defined as listed in <<tab:type-access-control,Table, Type Access Control>>.
+The access control levels are defined as listed in <<tab:type-access-control>>.
 
 [[tab:type-access-control]]
-.Table: Type Access Control
+.Type Access Control
 [cols="^m,^,^,^,^"]
 |===
 5+^|*Type Access*
@@ -142,7 +142,7 @@ That is, this modifier is assumed if no modifier is explicitly specified.
 --
 The function $\alpha_T: TypeReference \times TypeDeclaration \to Boolean$ computes whether a given type, (top-level) variable or function
 reference can access the declaration that it references.
-$\alpha_T$ is defined with <<tab:typeAccessControl,Access Control>>.
+$\alpha_T$ is defined with <<tab:typeAccessControl>>.
 
 Formally, we define $\alpha_T$ for a given reference
 $r$ and a module top level variable, function or type
@@ -198,7 +198,7 @@ class) become members of a class. For example, if `B extends A`, and if `A` is n
 accessible to some client `C` but `B` is, then the members of `A` are indirectly
 accessible to `C` in so far as they are accessed via `B`. This is true in
 particular for interfaces, as their properties are possibly merged into
-the consuming class (cf. <<_implementation-of-members,Implementation of Members>>).
+the consuming class (cf. <<_implementation-of-members>>).
 
 The following member access modifiers are supported by N4JS:
 
@@ -271,7 +271,7 @@ is a totally ordered set footnote:[That is, for application developers not provi
 ++++
 
 
-<<tab:Member-Access-Controls,Table Member Access Controls>> shows which members are accessible from where.
+<<tab:Member-Access-Controls>> shows which members are accessible from where.
 
 [[tab:Member-Access-Controls]]
 .Member Access Control
@@ -337,8 +337,7 @@ Note that $alpha_m$ and $bind$ are different functions.
 A reference can only bind to a declaration if it can access the declaration.
 However, bind requires more condition to work (correct metatypes, no shadowing etc).
 
-Formally, we define $\alpha_m$ for a given reference $r$ and member declaration $M$ as follows:
-footnote:[See <<_n4js_specific_classifiers,N4-Specific Classifiers>> for definitions of metatype properties. Note that $r.receiver$ always refers to a type declaration in the context of an expression as the receiver type of $r$. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member declaration.]
+Formally, we define $\alpha_m$ for a given reference $r$ and member declaration $M$ as follows: footnote:[See <<_n4js_specific_classifiers>> for definitions of metatype properties. Note that $r.receiver$ always refers to a type declaration in the context of an expression as the receiver type of $r$. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member declaration.]
 
 footnote:[Note the Java-like access restriction for members of visibility [language-n4js]`protected` or [language-n4js]`protected@Internal` to code that is responsible for the implementation of that object. cite:[Gosling15a(S6.6.2,p.166)]]
 
@@ -357,7 +356,7 @@ footnote:[Note the Java-like access restriction for members of visibility [langu
 
 If the type of the arguments is clear from the context, we simply write $\alpha(r,M)$ instead of $\alpha_m(r,M)$.
 
-Although private members are accessible inside a module, it is not possible to redefine (override etc.) these members (see <<_redefinition-of-members,Redefinition of Members>>).
+Although private members are accessible inside a module, it is not possible to redefine (override etc.) these members (see <<_redefinition-of-members>>).
 
 .Default Member Access Modifiers
 [req,id=IDE-4,version=1]
@@ -570,7 +569,7 @@ In some cases, however, we need to define references to types or even members.
 For example, if we want to reference certain members in JSDoc comments or for unambiguous error messages.
 For this reason, we formally define qualified names even if they cannot occur in source code.
 
-<<tab:typenames,Type Names>> shows the different names of a given type `C`, defined in a module
+<<tab:typenames>> shows the different names of a given type `C`, defined in a module
 `M.n4js`, defined in a package `p` of a project `MyProject`.
 
 Simple type names are used throughout N4JS code in order to refer to types.
@@ -637,7 +636,7 @@ Two elements with the same name declared in the same lexical environment (cf. ci
 An element defined in an environment _shadows_ all elements with the same name in outer environments.
 
 In class hierarchies, a member with the same name as a member defined in a supertype is said to override the latter.
-Overriding is discussed in <<_redefinition-of-members,Redefinition of Members>>.
+Overriding is discussed in <<_redefinition-of-members>>.
 
 For the following constraints, we make the following assumptions:
 
@@ -674,7 +673,7 @@ But it is not allowed in the following cases:
 ’arguments’.
 footnote:[This conflicts with the implicit parameter arguments introduced by the transpiler when wrapping the script/module into a definition function.]
 +
-The figure Forbidden Shadowing below shows nested lexical environments with named elements declared inside (all named `x` here), the forbidden cases are marked with arrows (the numbers at the left side refer to the numbers in <<Req-IDE-8,Forbidden Shadowing>>.
+The figure Forbidden Shadowing below shows nested lexical environments with named elements declared inside (all named `x` here), the forbidden cases are marked with arrows (the numbers at the left side refer to the numbers in <<Req-IDE-8>>.
 +
 .Forbidden Shadowing
 image::{find}fig/shadowing.png[scaledwidth=60%]

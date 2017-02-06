@@ -17,12 +17,12 @@ Contributors:
 
 === Overview
 
-<<fig-cmpd_components_in_n4js,Fig. Components in N4JS>> shows the N4JS components described in detail in this
-chapter.
-footnote:[Note that this diagram does not necessarily reflect the actual internal implementation but only the external view.]
+<<fig-cmpd_components_in_n4js>> shows the N4JS components described in detail in this
+chapter.footnote:[Note that this diagram does not necessarily reflect the actual internal implementation but only the external view.]
 
 [[fig-cmpd_components_in_n4js]]
-image::{find}fig/cmpd_components_in_n4js.png[title="N4JS Component Overview"]
+.N4JS Component Overview
+image::{find}fig/cmpd_components_in_n4js.png[]
 
 The N4JS platform distinguishes several types of components. The
 following components can only be created by internal developers:
@@ -79,11 +79,12 @@ Tests::
 Source Maps::
   Optional source maps.
 
-Components contain modules. <<fig-component_content,Component Content>> describes what can be contained in a
+Components contain modules. <<fig-component_content>> describes what can be contained in a
 component.
 
 [[fig-component_content]]
-image::{find}fig/cmpd_component_content.png[title="Content of a Component"]
+.Content of a Component
+image::{find}fig/cmpd_component_content.png[]
 
 [.language-n4js]
 == Component Types
@@ -455,7 +456,7 @@ MainModule ::
 (optional) A plain module specifier defining the project’s `main
 module`. If this property is defined, other projects can import from
 this project using imports where the string following keyword `from` states the
-project name and not the complete module specifier (see <<import-statement-semantics,Import Statement Semantics>>).
+project name and not the complete module specifier (see <<import-statement-semantics>>).
 
 CompatibleWith ::
 In the case of a runtime environment or library, this specifies to which
@@ -528,7 +529,7 @@ type. There exist three different source fragment types:
 * *external*: Implementation of modules defined in definition files (n4jsd). These
   implementations are never validated nor fully compiled. Instead, they
   are only wrapped into module definitions and copied to the output
-  folder. See <<_external-declarations,External Declarations>> and <<_implementation-of-external-declarations,Implementation of External Declarations>> for details.
+  folder. See <<_external-declarations>> and <<_implementation-of-external-declarations>> for details.
 
 
 Filters for fine-tuning the validator and compiler. A filter is applied
@@ -642,7 +643,7 @@ extensions will then be used to match the file).
 --
 
 Examples of using external source fragments and filters are given in (<<_implementation-of-external-declarations>>).
-<<_implementation-of-external-declarations,Implementation of External Declarations>>
+<<_implementation-of-external-declarations>>
 
 .No validation and module wrapping example
 [example]
@@ -805,8 +806,8 @@ ScriptElement:
 ;
 ----
 
-Grammar and semantics of import statement is described in <<_import-statement,Import Statement>>; of export
-statement described in <<_export-statement,Export Statement>>.
+Grammar and semantics of import statement is described in <<_import-statement>>; of export
+statement described in <<_export-statement>>.
 
 task:IDE-179[]
 An import statement imports a variable declaration, function
@@ -814,12 +815,12 @@ declaration, or N4 type declaration defined and exported by another
 module into the current module under the given alias (which is similar
 to the original name if no alias is defined). The name of the module is
 its project’s source folder’s relative path without any extension, see
-<<_qualified-names,Qualified Names>> for details.
+<<_qualified-names>> for details.
 
 This are the properties of script, which can be specified by the user:
 
 [horizontal]
-`annotations` :: Arbitrary annotations, see <<_annotations,Annotations>> and below for details.
+`annotations` :: Arbitrary annotations, see <<_annotations>> and below for details.
 
 `scriptElements`:: The content of the script.
 
@@ -844,7 +845,7 @@ version `1.0.0`, the `expandedPath` is `lib-1.0.0/n4/lang/List`.
 
 `allDeps` :: Pseudo property contains all dependencies of this module. This is the union of `loadtimeDeps` and `runtimeDeps` which maintains the ordering of both lists, with the `loadtimeDeps` at the front.
 
-Pseudo properties to be set via annotations are explained in <<_annotations,Annotations>>.
+Pseudo properties to be set via annotations are explained in <<_annotations>>.
 
 [.language-n4js]
 == NumberFour Archives (NFAR)
@@ -935,7 +936,7 @@ The N4 deployment descriptor of a project `p` is a NFON formatted file with the 
 //\todo{review}
 
 Properties files have the file extension `properties` and describe how to localize text in a project.
-They basically define keys <<_primitive-pathselector-and-i18nkey,Primitive Pathselector I18nKey>> with their values.
+They basically define keys <<_primitive-pathselector-and-i18nkey>> with their values.
 The key is used during runtime to retrieve text localized to the user’s locale.
 
 [[n4-deployment-descriptor-syntax]]
@@ -1023,24 +1024,27 @@ output folder (esp. when constructing a `class path`) and when loading or impor
 [.language-n4js]
 == API and Implementation With DI
 
-API projects may use N4JS DI (<<_dependency-injection,Dependency Injection>>) language features which require Implementation projects to provide DI-compatible behaviour in order to allow a Client (implemented against an API project) to be executed with a given Implementation project.
+API projects may use N4JS DI (<<_dependency-injection>>) language features which require Implementation projects to provide DI-compatible behaviour in order to allow a Client (implemented against an API project) to be executed with a given Implementation project.
 This is essential for normal execution and for test execution.
 Figure <<diag_APITestsDI_Overview>> shows some of those considerations from test client point of view.
 
 [[diag_APITestsDI_Overview]]
-image::{find}fig/diag_ApiTestsDI_Overview.png[title="Overview of API tests with DI"]
+.Overview of API tests with DI
+image::{find}fig/diag_ApiTestsDI_Overview.png[]
 
 Static DI mechanisms in N4JS allow an API project to enforce Implementation projects to provide all necessary information.
 This allows clients to work seamlessly with various implementations without specific knowledge about them or without relying on extra tools for proper project wiring.
 Figure <<diag_ApiTestsDI_StaticDI>> shows how API project defines project wiring and enforces certain level of testability.
 
 [[diag_ApiTestsDI_StaticDI]]
-image::{find}fig/diag_ApiTestsDI_StaticDI.png[title="API tests with static DI"]
+.API tests with static DI
+image::{find}fig/diag_ApiTestsDI_StaticDI.png[]
 
 During Client execution, weather it is test execution or not, N4JS mechanisms will replace the API project with a proper Implementation project.
 During runtime DI mechanisms will take care of providing proper instances of implantation types.
 Figure <<diag_ApiTestsDI_Views>> shows Types View perspective of the client, and Instances View perspective of the client.
 
 [[diag_ApiTestsDI_Views]]
-image::{find}fig/diag_ApiTestsDI_Views.png[title="Types view and Instances view"]
+.Types view and Instances view
+image::{find}fig/diag_ApiTestsDI_Views.png[]
 

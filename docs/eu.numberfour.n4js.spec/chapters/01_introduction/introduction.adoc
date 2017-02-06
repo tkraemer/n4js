@@ -185,7 +185,7 @@ bind: VariableReference \times VariableDeclaration
 which binds a reference, i.e. an identifier, to a declaration (e.g.,variable declaration).
 
 Binding of variable references to declaration is defined by ECMAScript already.
-Type references only occur in type expressions, how these are handled is explained in <<_type-expressions,Type Expressions>>.
+Type references only occur in type expressions, how these are handled is explained in <<_type-expressions>>.
 
 We usually omit this binding mechanism in most rules and use the reference similarly to the declaration or definition it is bound to.
 If a variable reference $r$, for example, is bound to a variable declaration $D$, i.e. $bind(r,D)$, we

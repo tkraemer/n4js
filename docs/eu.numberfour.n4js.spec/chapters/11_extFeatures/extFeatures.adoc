@@ -94,7 +94,7 @@ for(var {key,value} of arr2) {
 
 Array and object destructuring pattern can appear in many different places:
 
-* In a variable declaration (not just in variable statements but also in other places where variable declarations are allowed, e.g. plain for loops; called _destructuring binding_; see <<_variable-statement,Var Statement>>).
+* In a variable declaration (not just in variable statements but also in other places where variable declarations are allowed, e.g. plain for loops; called _destructuring binding_; see <<_variable-statement>>).
 * On the left-hand side of an assignment expression (the assignment expression is then called _destructuring assignment_; see <<_assignment-expression>>).
 * In a `for..in` or `for..of` loop on the left side of the `in`/`of` (see <<_for-of-statement>>).
 +
@@ -142,7 +142,9 @@ support) it is difficult for nontrivial applications. The solutions that <<Acron
 provides should empower N4JS users to achieve the above goals without
 the burden of maintaining so-called ’boilerplate’ code.
 
-image::{find}fig/diTerms.png[title="DI Terms"]
+[[fig-di-terms]]
+.DI Terms
+image::{find}fig/diTerms.png[]
 
 _key: pass the dependency instead of letting the client create or find it_
 
@@ -209,7 +211,7 @@ Of course, an appropriate binding must exist. footnote:[Usually, only the itself
 ..  If a provider has been injected (i.e., an instance of `N4Provider}`), then its method can be used to create a root object causing a new injection phase to take place.
 .  If $C.ctor$ is marked as injection point, all its arguments are set by the injector.
 This is also true for an inherited constructor marked as an injection point.
-See <<Req-IDE-143,requirement: Constructor Injection>> task:IDE-1264[].
+See <<Req-IDE-143>> task:IDE-1264[].
 For all arguments the injection phase constraints have to hold as well.
 . All fields of $C$, including _inherited_ once, marked as injection points are set by the injector.
 For all fields the injection phase constraints have to hold as well.
@@ -218,7 +220,7 @@ task:IDE-1264[] task:IDEBUG-441[]
 The injector may use a provider method (of a binder) to create nested instances.
 
 The injector is configured with _Binders_ and it tracks _Bindings_
-between types (<<sec:N4JS_DI_Binders_and_Bindings,N4JS DI Binders and Bindings>>).
+between types (<<sec:N4JS_DI_Binders_and_Bindings>>).
 An N4JS developer normally would not interact with this object directly except when defining an entry-point to his application.
 __Injector__s are configured with _Binder_s which contain explicit __Binding__s defined by an N4JS developer.
 A set of these combined with _implicit bindings_ creates the _di configuration_ used by
@@ -233,7 +235,7 @@ A Parent-Child relation can be established between two DIComponents.
 Child DIComponents use the parent bindings but can also be configured
 with their own bindings or _change_ targets used by a parent. The final
 circumstance is local to the child and is referred to as __rebinding__.
-For more information about bindings see <<_binders-and-bindings,N4JS Binder and Bindings>>.
+For more information about bindings see <<_binders-and-bindings>>.
 A Child-Parent relation is expressed by the `@WithParentInjector` annotation attached to a given DIComponent.
 When this relation is defined between DIComponents, the user needs to take care to preserve the proper relation between injectors.
 In other words, the user must provide an instance of the parent injector (the injector of the
@@ -279,9 +281,11 @@ in other component bindings.
 NOTE: Although subtype notation $<:$ is used here it does *not* imply actual subtype relations. It was used in this instance for of lack of formal notations for DI concepts and because this is similar to the Liskov Substitution principle.
 
 A complex Child-Parent relation between components is depicted in DIC Parent Child diagram and
-<<ex:complex-dicomponents-relations,Complex DIComponent Relations example>> below.
+<<ex:complex-dicomponents-relations>> below.
 
-image::{find}fig/diagDICParentChild.png[title="Complex DIComponents Relations",align=center]
+[[fig-Complex DIComponents Relations]]
+.Complex DIComponents Relations
+image::{find}fig/diagDICParentChild.png[align=center]
 
 --
 
@@ -339,11 +343,11 @@ annotations and a method annotated with `@Provides`.
 _Binder_ is declared by annotating a class with the `@Binder` annotation.
 
 A _Binding_ is part of a configuration that defines which instance of
-what type should be injected into an _injection point_ (<<_injection-points,N4JS DI Injection Points>>) with an expected type.
+what type should be injected into an _injection point_ (<<_injection-points>>) with an expected type.
 
 _Provider Method_ is essentially a _factory method_ that is used to
 create an instance of a type. N4JS allows a developer to declare those
-methods (see <<_n4js-di-provides,N4JS DI @Provides>>) which gives them a hook in instance creation process.
+methods (see <<_n4js-di-provides>>) which gives them a hook in instance creation process.
 Those methods will be used when creating instances by the _Injector_
 configured with the corresponding _Binder_. A provider method is a
 special kind of binding ($key$) in which the return type of
@@ -478,7 +482,7 @@ will be injected as well.
 .Simple Field Injection
 [example]
 --
-<<ex:field-injection,The listing below>> demonstrates simple field injection using default bindings. Note that all inherited fields
+<<ex:field-injection>> demonstrates simple field injection using default bindings. Note that all inherited fields
 (i.e. `A.xInA`) are injected and also fields in injected fields (i.e. `x.y`)
 
 [[ex:field-injection]]
@@ -664,8 +668,9 @@ class A { @Inject b: B; }
 class B { @Inject a: A; }
 ----
 
-
-image::{find}fig/injectionGraph_cycleField.png[title="Field Cycle",align=center]
+[[fig-field-cycle]]
+.Field Cycle
+image::{find}fig/injectionGraph_cycleField.png[align=center]
 
 [source,n4js]
 ----
@@ -673,8 +678,9 @@ class C { @Inject constructor(d: D) {} }
 class D { @Inject c: C; }
 ----
 
-
-image::{find}fig/injectionGraph_cycleCtorField.png[title="Ctor Field Cycle",align=center]
+[[fig-ctor-field-cycle]]
+.Ctor Field Cycle
+image::{find}fig/injectionGraph_cycleCtorField.png[align=center]
 
 [source,n4js]
 ----
@@ -682,7 +688,9 @@ class E { @Inject constructor(f: F) {} }
 class F { @Inject constructor(e: E) {} }
 ----
 
-image::{find}fig/injectionGraph_cycleCtor.png[title="Ctor Cycle",align=center]
+[[fig-ctor-cycle]]
+.Ctor Cycle
+image::{find}fig/injectionGraph_cycleCtor.png[align=center]
 
 
 The injector needs to detect these cycles and resolve them.
@@ -1061,15 +1069,15 @@ arguments are optional::
   NO
 
 Defines _binding_ between type and subtype that will be used by injector
-when configured with target <<_n4js-di-binder,DI Binder>>.
-See also <<_validation-of-callsites-targeting-n4injector-methods,Callsites>> for description of injectable types.
+when configured with target <<_n4js-di-binder>>.
+See also <<_validation-of-callsites-targeting-n4injector-methods>> for description of injectable types.
 
 
 .DI Bind
 [req,id=IDE-148,version=1]
 --
 1.  Allowed only on `N4ClassDeclarations` that are annotated with `@Binder`(<<N4JS DI @Binder>>).
-2.  Parameters are instances of one of the values described in <<_validation-of-callsites-targeting-n4injector-methods,Validation of callsites targeting N4Injector methods>>.
+2.  Parameters are instances of one of the values described in <<_validation-of-callsites-targeting-n4injector-methods>>.
 3.  The second parameter must be a subtype of the first one.
 --
 
@@ -1101,7 +1109,7 @@ Can be used to implement custom scopes.
 
 1.  Allowed only on `N4MethodDeclarations` that are part of a classifier annotated with `@Binder`.
 2.  Annotated method declared type returns instance of one of the types
-described in _injectable values_  <<_validation-of-callsites-targeting-n4injector-methods,Validation of callsites targeting N4Injector methods>>.
+described in _injectable values_  <<_validation-of-callsites-targeting-n4injector-methods>>.
 --
 
 ==== N4JS DI @Inject
@@ -1121,7 +1129,7 @@ arguments::
   NO
 
 `@Inject` defines the injection point into which an instance object will be injected. The specific instance depends on the injector configuration (bindings) used.
-Class fields, methods and constructors can be annotated. See <<_injection-points,Injection Points>> for more information.
+Class fields, methods and constructors can be annotated. See <<_injection-points>> for more information.
 
 
 .DI Inject
@@ -1129,7 +1137,7 @@ Class fields, methods and constructors can be annotated. See <<_injection-points
 --
 1.  Injection point bindings need to be resolvable.
 2.  Binding for given type must not be duplicated.
-3.  Annotated types must be instances of one of the types described in <<_validation-of-callsites-targeting-n4injector-methods,Validation of callsites targeting N4Injector methods>>.
+3.  Annotated types must be instances of one of the types described in <<_validation-of-callsites-targeting-n4injector-methods>>.
 --
 
 ==== N4JS DI @Singleton
@@ -1261,9 +1269,9 @@ parameters (with no further modifications):
 &   \hspace{3em} P.typePars_i=F.typePars_i \\
 &   \hspace{3em} \land P.typePars_i.name=P.super.typeArgs_i.name \\
 ++++
-. All constraints related to member redefinition (cf. <<_redefinition-of-members,Redefinition of Members>>) have to hold.
+. All constraints related to member redefinition (cf. <<_redefinition-of-members>>) have to hold.
 In the case of polyfills, this is true for constructors (cf.
-<<Req-IDE-72,requirement: Overriding Members>>) and private members.
+<<Req-IDE-72>>) and private members.
 --
 
 === Runtime Polyfill Definitions
@@ -1308,7 +1316,7 @@ task:IDE-1735[]
 
 Static polyfilling is a compile time feature to enrich the definition
 and usually also the implementation of generated code in N4JS. It is
-related to runtime polyfilling described in <<_runtime-polyfill-definitions,Runtime Polyfill Definitions>> in a sense that both
+related to runtime polyfilling described in <<_runtime-polyfill-definitions>> in a sense that both
 fillings enrich the types they address. Despite this, static polyfilling
 and runtime polyfilling differ in the way they are handled.
 
@@ -1346,7 +1354,7 @@ must hold in addition to constraints :
 --
 For a static polyfill class $P$ annotated with `@StaticPolyfill`, that is
 $P.staticpolyfill=\TRUE$, all the following constraints must
-hold in addition to <<Req-IDE-152,requirement: Polyfill Class>>:
+hold in addition to <<Req-IDE-152>>:
 
 1.  $P$’s name equals the name of the filled class and is
 contained in a module with the same qualified name:
@@ -1410,8 +1418,8 @@ M_1.specifier = M_2.specifier
 [example]
 ====
 
-<<ex:staticpolyfill-genmod,Static Polyfill GenMod example>> shows an example of generated code.
-<<ex:staticpolyfill-polyfillmod,Static Polyfill Mod example>> demonstrates the static polyfill.
+<<ex:staticpolyfill-genmod>> shows an example of generated code.
+<<ex:staticpolyfill-polyfillmod>> demonstrates the static polyfill.
 
 Note that the containing project has two source folders configured: +
 `Project/src/n4js` and `Project/src/n4js-gen`.

@@ -242,7 +242,7 @@ in particular, the called function must not be declared to return `void`.
 
 Cf. cite:[ECMA11a(S12.6,p.90ff)]
 
-The syntax already considers the for-of style described in <<_for-of-statement,For ... of Statement>>.
+The syntax already considers the for-of style described in <<_for-of-statement>>.
 
 [source,xtext]
 ----
@@ -286,7 +286,7 @@ ContinueStatement <Yield>: {ContinueStatement} 'continue' (label=[LabelledStatem
 BreakStatement <Yield>: {BreakStatement} 'break' (label=[LabelledStatement|BindingIdentifier<Yield>])? Semi;
 ----
 
-Since $varDecl(s)$ are ``VariableStatement``s as described in <<_variable-statement,Var Statement>>, the declared variables can be type annotated.
+Since $varDecl(s)$ are ``VariableStatement``s as described in <<_variable-statement>>, the declared variables can be type annotated.
 
 TIP: Using for-in is not recommended, instead ``pass:[_each]`` should be used.
 
@@ -505,8 +505,8 @@ ConstDeclaration returns VariableDeclaration: typeRef=TypeRef? name=IDENTIFIER c
 ==== Semantics [[const-semantics]]
 
 A const variable statement is more or less a normal variable statement
-(see <<_variable-statement,Variable Statement>>), except that all variables declared by that statement are not
-writable (cf. <<Req-IDE-121,requirement: Write-Acccess>>). This is similar to constant data
+(see <<_variable-statement>>), except that all variables declared by that statement are not
+writable (cf. <<Req-IDE-121>>). This is similar to constant data
 fields (cf. <<_assignment-modifiers>>).
 
 .Writability of const variables
@@ -525,7 +525,7 @@ ES6 introduced a new form of `for` statement: `for ... of` to iterate over the e
 [discrete]
 ==== Syntax [[for-of-statement-syntax]]
 
-See <<_iteration-statements,Iteration Statements>>
+See <<_iteration-statements>>
 
 [discrete]
 ==== Semantics [[for-of-statement-semantics]]
@@ -999,9 +999,9 @@ have to be explicitly imported with an import statement.
 
 Imported namespaces cannot be exported.
 
-Declared elements (types, variables, functions) are usually only visible outside the declaring module if the elements are exported and imported (by the using module, cf. <<_import-statement,Import Statement>>).
+Declared elements (types, variables, functions) are usually only visible outside the declaring module if the elements are exported and imported (by the using module, cf. <<_import-statement>>).
 
-Some special components (runtime environment and libraries, cf. <<_runtime-environment-and-runtime-libraries>>, may export elements globally. This is done by annotating the export (or the whole module) with `@Global`, see <<_global-definitions,Global Definitions>> for details.
+Some special components (runtime environment and libraries, cf. <<_runtime-environment-and-runtime-libraries>>, may export elements globally. This is done by annotating the export (or the whole module) with `@Global`, see <<_global-definitions>> for details.
 
 By adding `default` after the keyword `export`, the identifiable element can be exported as ’the default’.
 This can then be imported from other modules via default imports (see <<_import-statement>>).

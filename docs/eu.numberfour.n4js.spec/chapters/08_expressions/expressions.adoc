@@ -92,7 +92,7 @@ both static and non-static).
 3.  static methods of interfaces and static field accessors of
 interfaces.
 
-See also <<Req-IDE-69,requirement: Static Members of Interfaces>>.
+See also <<Req-IDE-69>>.
 
 --
 
@@ -267,7 +267,7 @@ If the actual this type is defined as a structural type, the structural type inf
 This is transparent to the user in general but maybe visible in case of error messages.
 That is to say that the actual this type is always a nominal type.
 This is indicated by the nominal modifier f
-(cf. <<Req-IDE-90,requirement: Type Inference Heuristic for This Keyword>> .1. and 2.).
+(cf. <<Req-IDE-90>> .1. and 2.).
 
 ////
 
@@ -465,15 +465,16 @@ members of a class or properties of an object literal are to be accessed
 via `this`. Identifier references always reference declared elements, that is
 to say either variable, function, or class declarations. Properties of
 object literals or members of a class are referenced via
-$PropertyAccess-Expression.property$ (see <<_property-accessors,Property Accessors>>).
+$PropertyAccess-Expression.property$ (see <<_property-accessors>>).
 
 [[fig:scopes]]
-image::{find}fig/scopes.png[title="Scopes",align=center]
+.Scopes
+image::{find}fig/scopes.png[align=center]
 
 An identifier may be bound to a variable (global or local variable,
 parameter, variable defined in a function’s closure), or to a property
 of an object. The latter case is known as property access as further
-described in <<_property-accessors,Property Accessors>>.
+described in <<_property-accessors>>.
 
 .Read Access to Identifier
 [req,id=IDE-93,version=1]
@@ -1173,8 +1174,8 @@ must be subtypes of the boundaries of the parameters of the called
 generic method.
 //\todo[JvP, LB]{How to formalize that best?}
 
-Also see constraints on read (<<Req-IDE-93,requirement: Read Access to Identifier>>) and write
-(<<Req-IDE-121,requirement: Write-Acccess>>) access.
+Also see constraints on read (<<Req-IDE-93>>) and write
+(<<Req-IDE-121>>) access.
 
 --
 
@@ -1328,7 +1329,7 @@ The type of a new expression $ne$ is inferred as follows:
 \infer{\tee ne: C}{\tee ne.callee: \type{constructor{C}}}
 ++++
 
-For classes, constructors are described in <<_constructor-and-classifier-type,Constructor>>.
+For classes, constructors are described in <<_constructor-and-classifier-type>>.
 
 In N4JS it is not allowed to call new on a plain function. For example:
 
@@ -1342,7 +1343,7 @@ will issue an error.
 
 === Function Expression
 
-See <<_functions,Functions>> for details.
+See <<_functions>> for details.
 
 === Function Calls
 task:IDE-186[] task:IDE-851[]
@@ -1417,8 +1418,8 @@ declared upper boundaries of the type parameters of the called generic
 function.
 
 Note that (for a limited time), constraints
-<<Req-IDE-101,Function Call Constraints>> and
-<<Req-IDE-102,Parameterized Function Call Constraints>> are not applied if the the
+<<Req-IDE-101>> and
+<<Req-IDE-102>> are not applied if the the
 type of $F$ is `Function`. See <<_function-object-type>>.
 
 --
@@ -1428,7 +1429,7 @@ type of $F$ is `Function`. See <<_function-object-type>>.
 task:IDE-244[]
 
 A call expression $expr$ is bound to a method (<<Methods>>) or function
-declaration (which may be part of a function definition (<<_function-declaration,Function Definition>> or specified via a function type <<_function-type>>) $F$ (via evaluation of `MemberExpression`. The type of the call is inferred from the function declaration or type $F$ as follows:
+declaration (which may be part of a function definition (<<_function-declaration>> or specified via a function type <<_function-type>>) $F$ (via evaluation of `MemberExpression`. The type of the call is inferred from the function declaration or type $F$ as follows:
 
 
 [math]
@@ -2340,7 +2341,7 @@ The value of writeable is true for setters and usually for variables and
 data fields. Assignability of variables and data fields can be
 restricted via `const` or the `@Final` annotation. See <<_assignment-modifiers>>(data fields) and <<Const>> (const variables) for details.
 
-Also see <<Req-IDE-93,requirement: Read Access to Identifier>> for read access constraint.
+Also see <<Req-IDE-93>> for read access constraint.
 
 The left-hand side of an assignment expression may be an array or object
 literal and the assignment expression is then treated as a destructuring
@@ -2529,7 +2530,7 @@ Then, the following constraint must hold: footnote:[$e \in^* c$ is the transitiv
 &\hspace{3em} \mu(i) \in \types{ThisLiteral, ReturnStatement}
 ++++
 
-Further constraints with regard to super constructor calls are described in <<_constructor-and-classifier-type,Constructor>>.
+Further constraints with regard to super constructor calls are described in <<_constructor-and-classifier-type>>.
 task:IDE-1753[]
 
 --
@@ -2577,7 +2578,7 @@ of the class defining the method).
 .Super Literal Usage
 [req,id=IDE-125,version=1]
 --
-For super literals, either <<Req-IDE-123,requirement: Access Super Constructor with Super Literal>> or <<Req-IDE-124,requirement: Access Super Member with Super Literal>> must hold, no other usage
+For super literals, either <<Req-IDE-123>> or <<Req-IDE-124>> must hold, no other usage
 is allowed.
 
 Consequences:
@@ -2704,4 +2705,4 @@ exceptions thrown at the cast until later when accessing properties
 which may not be present in case of a failed cast.
 
 An error is issued if the cast is either unnecessary or cannot succeed.
-See further details in <<_type-cast,Type Cast>>.
+See further details in <<_type-cast>>.

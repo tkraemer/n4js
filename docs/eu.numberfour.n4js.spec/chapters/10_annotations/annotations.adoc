@@ -76,7 +76,7 @@ corresponding sections:
 |@Undefined             |Variable                                      |<<_undefined-type>>
 |@StringBased           |Enum                                          |<<_string-based-enums>>
 |@Final                 |Class, Member                                 |<<_final-methods>>
-|@Spec                  |FPar                                          |<<Req-IDE-59,Spec-Style Constructor>>
+|@Spec                  |FPar                                          |<<Req-IDE-59>>
 |@Override              |Method                                        |<<_redefinition-of-members>>
 |@Promisifiable         |Function                                      |<<_promisifiable-functions>>
 |@Promisify             |CallExpression                                |<<_promisifiable-functions>>
@@ -90,11 +90,10 @@ corresponding sections:
 |@StaticPolyfill        |Class                                         |<<_static-polyfill-definitions>>
 |@StaticPolyfillAware   |Script                                        |<<_static-polyfill-definitions>>
 |@StaticPolyfillModule  |Script                                        |<<_static-polyfill-definitions>>
-|@Transient             |Field                                         | *
+|@Transient             |Field                                         ^| *
 |===
 
-
-* intended for internal use only; will be removed.
+pass:[*] intended for internal use only; will be removed.
 
 === General Annotations
 
@@ -162,7 +161,7 @@ IDEBUG-166: {function(number):void} is not a subtype of {function(T):void}.
 `IDEBUG-166` refers to the corresponding bug report, that is https://github.com/NumberFour/n4js/issues/166.
 
 The annotation on line 3 was proposed as a workaround for `IDEBUG-91` which has
-been fixed. footnote:[Hopefully IDEBUG-166 task:IDEBUG-166[] is fixed at time of publication.]. No error message is produced and an error will be issued on line 3 instead:
+been fixed. No error message is produced and an error will be issued on line 3 instead:
 
 [source,n4js]
 ----

@@ -24,9 +24,9 @@ A function type is modeled as `Object` (see cite:[ECMA11a(S13,p.98)] in ECMAScri
 
 Function types can be defined by means of;
 
-* A function object (<<_function-object-type,Function Object Type>>).
-* A function type expression (<<_type-expressions ,Type Expressions>>).
-* A function declaration (<<_function-declaration,Function Definition>>).
+* A function object (<<_function-object-type>>).
+* A function type expression (<<_type-expressions>>).
+* A function declaration (<<_function-declaration>>).
 * A method declaration (<<Methods>>).
 
 === Properties
@@ -60,7 +60,7 @@ Additionally, the following pseudo properties for functions are defined:
 `thisTypeRef` ::
 The this type ref is the type to which the `this`-keyword would be evaluated
 if used inside the function or member. The inference rules are described
-in <<_this-keyword,This Keyword>>.
+in <<_this-keyword>>.
 
 `fpars` ::
 List of formal parameters and the this type ref. This is only used for
@@ -176,7 +176,8 @@ else ($k>n$):
 <<cdVarianceFunctionChart>> shows a simple example with the function type conformance relations.
 
 [[cdVarianceFunctionChart]]
-image::{find}fig/cdVarianceFunctionChart.png[title="Function Variance Chart"]
+.Function Variance Chart
+image::{find}fig/cdVarianceFunctionChart.png[]
 
 `{function()}` $<:$ `{function(A)}` $<:$ `{function(A, A)}` might be surprising for Java programmers. However, in JavaScript it is
 possible to call a function with any number of arguments independently
@@ -353,16 +354,16 @@ function_type_conformance_non_parameterized
 
 * if $|F_{left}.typePars|=|F_{right}.typePars|=0$:
 ** $F_{left} <: F_{right}$
-(cf. <<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>>)
+(cf. <<function_type_conformance_non_parameterized>>)
 * else if
 $|F_{left}.typePars|>0 \land |F_{right}.typePars|=0$:
 ** $\exists \typeSubs: ( \typeEnvAdd \typeSubs ) \entails F_{left} <: F_{right}$
-(cf. <<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>>)
+(cf. <<function_type_conformance_non_parameterized>>)
 +
 (i.e. there exists a substitution $\typeSubs$ of type
 variables in $F_{left}$ so that after substitution it
 becomes a subtype of $F_{right}$ as defined by
-<<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>>)
+<<function_type_conformance_non_parameterized>>)
 * else if $|F_{left}.typePars|=|F_{right}.typePars|$:
 ** $\typeEnvAdd \{ V^r_i \leftarrow V^l_i | 0 \leq i \leq n \} \entails F_{left} <: F_{right}$
 ( accordingly)
@@ -380,7 +381,7 @@ with $F_{left}.typePars=V^l_0, V^l_1, ... V^l_n$ and
 $F_{right}.typePars=V^r_0, V^r_1, ... V^r_n$ +
 (i.e. we replace each type variable in $F_{right}$ by the
 corresponding type variable at the same index in $F_{left}$
-and check the constraints from<<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>> as if $F_{left}$ and
+and check the constraints from<<function_type_conformance_non_parameterized>> as if $F_{left}$ and
 $F_{right}$ were non-parameterized functions and, in
 addition, the upper bounds on the left side need to be supertypes of the
 upper bounds on the right side).
@@ -414,8 +415,8 @@ Method `m` in `Y` may return an `A`, thus breaking the contract of m in `X`, but
 --
 
 The subtype relation for function types is also applied for method overriding to ensure that an overriding method’s signature conforms to that of the overridden method,
-see <<Req-IDE-72,requirement: Overriding Members>> (applies to method comnsumption and implementation accordingly,
-see <<Req-IDE-73,requirement: Consumption of Interface Members>> and <<Req-IDE-74,requirement: Implementation of Interface Members>>).
+see <<Req-IDE-72>> (applies to method comnsumption and implementation accordingly,
+see <<Req-IDE-73>> and <<Req-IDE-74>>).
 Note that this is very different from Java which is far more restrictive when checking overriding methods.
 As Java also supports method overloading: given two types $A, B$ with $B <: A$ and a super class method `void m(B param)`, it is valid to override
 `m` as `void m(A param)` in N4JS but not in Java.
@@ -511,7 +512,7 @@ In N4JS and in ES strict mode the use of `arguments.callee` is prohibited.
 [req,id=IDE-82,version=1]
 --
 In N4JS, the formal parameters of the function cannot be named `arguments`.
-This applies to all variable execution environments like field accessors (getter/setter, <<_field-accessors-getter-setter>>), methods (<<Methods>>) and constructors (<<_constructor-and-classifier-type,Constructor>>), where `FormalParameter` type is used.
+This applies to all variable execution environments like field accessors (getter/setter, <<_field-accessors-getter-setter>>), methods (<<Methods>>) and constructors (<<_constructor-and-classifier-type>>), where `FormalParameter` type is used.
 
 .Usage of arguments object
 [example]
@@ -603,8 +604,7 @@ fragment FunctionBody <Yield, Expression>*:
 ;
 ----
 
-Properties of the function declaration and expression are described in
-in <<_function-type,Function Type>>.
+Properties of the function declaration and expression are described in <<_function-type>>.
 
 For this specification, we introduce a supertype
 $FunctionDefinition$ for both,
@@ -629,8 +629,8 @@ function f(p: string): number { return p.length }
 task:IDE-224[]
 
 A function defined in a class’s method (or method modifier) builder is a method, see <<Methods>> for details and additional constraints.
-The metatype of a function definition is function type (<<_function-type,Function Type>>), as a function declaration is only a different syntax for creating a `Function` object.
-Constraints for function type are described in <<_function-type,Function Type>>. Another consequence is that the inferred type of a function definition $fdecl$ is simply its function type $F$.
+The metatype of a function definition is function type (<<_function-type>>), as a function declaration is only a different syntax for creating a `Function` object.
+Constraints for function type are described in <<_function-type>>. Another consequence is that the inferred type of a function definition $fdecl$ is simply its function type $F$.
 
 [math]
 ++++
@@ -651,7 +651,7 @@ Since this is supported by most JavaScript engines, only a warning is issued.
 === Function Expression
 
 A function expression cite:[ECMA11a(S11.2.5)] is quite similar to a function declaration. Thus,
-most details are explained in <<_ecmascript-5-function-definition,Function Definition>>.
+most details are explained in <<_ecmascript-5-function-definition>>.
 
 ==== Syntax [[function-expression-syntax]]
 
@@ -667,7 +667,7 @@ FunctionExpression:
 ==== Semantics and Type Inference
 
 In general, the inferred type of a function expression simply is the
-function type as described in <<_function-type,Function Type>>. Often, the signature of a function
+function type as described in <<_function-type>>. Often, the signature of a function
 expression is not explicitly specified but it can be inferred from the
 context. The following context information is used to infer the full
 signature:
@@ -689,7 +689,7 @@ the next example.
 .Inference Of Function Expression’s Signature
 [example]
 --
-In general, `{function():any}` is a subtype of `{function():void}` (cf. <<_function-type,Function Type>>). When the return type of a function
+In general, `{function():any}` is a subtype of `{function():void}` (cf. <<_function-type>>). When the return type of a function
 expression is inferred, this relation is taken into account which may
 lead to unexpected results as shown in the following code snippet:
 
@@ -1225,13 +1225,13 @@ footnote:[Even in this case, the function will actually be called with the callb
 
 --
 
-According to <<Req-IDE-87,requirement: Promisifiable>>, a promisifiable function or method may or may not have a non-void return type, and that only the first parameter of the callback is allowed to be of type `Error`, all other parameters must be of other types.
+According to <<Req-IDE-87>>, a promisifiable function or method may or may not have a non-void return type, and that only the first parameter of the callback is allowed to be of type `Error`, all other parameters must be of other types.
 
 .@Promisify and await with promisifiable functions
 [req,id=IDE-88,version=1]
 --
 A promisifiable function $f$ with one of the two valid
-signatures given in <<Req-IDE-87,requirement: Promisifiable>> can be promisified with `Promisify` or
+signatures given in <<Req-IDE-87>> can be promisified with `Promisify` or
 used with `await`, if and only if the following constraints hold:
 
 1.  Function $f$ must be annotated with `@Promisifiable`.

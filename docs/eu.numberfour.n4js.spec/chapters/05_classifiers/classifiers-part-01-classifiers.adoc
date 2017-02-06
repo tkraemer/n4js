@@ -43,7 +43,7 @@ N4JS type access modifier: `public`, or `project`;  `public` can be combined wit
 `name` ::
 The simple name of a classifier. If the classifier is defined by an
 anonymous class expression, an artificial but unique name is created.
-The name needs to be a valid identifier, see <<_valid-names,Valid Names>>.
+The name needs to be a valid identifier, see <<_valid-names>>.
 
 `typePars` ::
 Collection of type parameters of a generic classifier; empty by default.
@@ -57,7 +57,7 @@ defined.
 
 `typingStrategy` ::
 The definition-site typing strategy. By default nominal typing is used.
-See <<_structural-typing,Structural Typing>> for details.
+See <<_structural-typing>> for details.
 
 *The following pseudo properties are defined via annotations:*
 
@@ -70,7 +70,7 @@ task:IDE-84[]
 
 `final` ::
 Boolean property which is set to final if annotation `@Final` is set. Also see
-<<_final-modifier,Final Extensibility>>
+<<_final-modifier>>
 
 `deprecated` ::
 Boolean property set to true if annotation `@Deprecated` is set.
@@ -82,7 +82,7 @@ task:IDE-138[]
 
 [horizontal]
 `acc` ::
-Type access modifier as described in <<_accessibility-of-types-top-level-variables-and-function-declarations,Accessibility of types>>, it is the aggregated value of the
+Type access modifier as described in <<_accessibility-types-variables-functions>>, it is the aggregated value of the
 `accessModifier` and the *export* property.
 
 `owned{Fields|Methods|Getters|Setters|Accessors}` ::
@@ -133,7 +133,7 @@ property $members$ to refer to all members of a classifier.
 This includes all members directly declared by the classifier itself,
 i.e. the $ownedMember$, and all members inherited from its
 super classifiers. The concrete mechanisms for inheriting a member are
-different and further constraint (cf. <<_redefinition-of-members,Redefinition of Members>> ). A classifier only inherits its members from its direct supertypes, although the supertypes may contains
+different and further constraint (cf. <<_redefinition-of-members>> ). A classifier only inherits its members from its direct supertypes, although the supertypes may contains
 members inherited from their supertypes.
 --
 
@@ -214,16 +214,16 @@ Syntax N4 Class Declaration and Expression
 [horizontal]
 `abstract` ::
 Boolean flag indicating whether class may be instantiable; default is
-`false`, see <<_abstract-classes,Abstract Classes>>.
+`false`, see <<_abstract-classes>>.
 
 `external` ::
 Boolean flag indicating whether class is a declaration without
 implementation or with an external (non-N4JS) implementation; default is
-`false`, see <<_definition-site-structural-typing,Definition-Site Structural Typing>>.
+`false`, see <<_definition-site-structural-typing>>.
 
 `defStructural` ::
 Boolean flag indicating whether subtype relation uses nominal or
-structural typing, see <<_definition-site-structural-typing,Definition-Site Structural Typing>> for details.
+structural typing, see <<_definition-site-structural-typing>> for details.
 
 `superType/sup` ::
 The type referenced by $superType$ is called direct
@@ -240,13 +240,13 @@ default. Instead of `implementedInterfaces`, we simply write
 `interfaces`.
 
 `ownedCtor` ::
-Explicit constructor of a class (if any), see <<_constructor-and-classifier-type,Constructor>>.
+Explicit constructor of a class (if any), see <<_constructor-and-classifier-type>>.
 
 And we additionally define the following pseudo properties:
 
 [horizontal]
 `ctor` ::
-Explicit or implicit constructor of a class, see <<_constructor-and-classifier-type,Constructor>>.
+Explicit or implicit constructor of a class, see <<_constructor-and-classifier-type>>.
 
 `fields` ::
 Further derived properties for retrieving all methods (property
@@ -386,7 +386,7 @@ explicit supertype are inherited from `N4Object`.
 2.  If the supertype is explicitly set to `Object`, then the class is not
 derived from `N4Object`. Meta-information is created similar to an `N4Object`-derived class. Usually, there is no reason to explicitly derive a class from `Object`.
 3.  External classes are implicitly derived from , unless they are
-annotated with `@N4JS`(cf.<<_external-declarations,External-Declarations>>).
+annotated with `@N4JS`(cf.<<_external-declarations>>).
 --
 
 === Final Modifier
@@ -592,7 +592,7 @@ of an interface. +
 This restriction is required, because the order of implementation of
 these fields in an implementing class cannot be guaranteed. This applies
 to both instance and static fields in interfaces, but in case of static
-fields, `this` is also disallowed due to <<_static-members-of-interfaces,Static Members Of Interfaces>>.
+fields, `this` is also disallowed due to <<_static-members-of-interfaces>>.
 
 --
 
@@ -608,7 +608,7 @@ modeled in N4JS 1:1.
 
 // todo[IDE-1236]{check current implementation: fields and methods}
 
-As specified in <<Req-IDE-56,Defining and calling Constructors,Defining and Calling Constructors>>, interfaces
+As specified in <<Req-IDE-56>>, interfaces
 cannot contain a constructor i.e.
 $\forall m \in I.ownedMethods: m.name \neq 'constructor'$.
 
@@ -640,7 +640,7 @@ If a classifier `C` _implements_ an interface
 default implementations are _mixed in_ or _consumed by_ `C`.
 We all cases we call `C` the __implementor__.
 
-Besides the general constraints described in <<_common-semantics-of-classifiers,Common Semantics of Classifiers>>, the following constraints must hold for extending or implementing interfaces:
+Besides the general constraints described in <<_common-semantics-of-classifiers>>, the following constraints must hold for extending or implementing interfaces:
 
 .Extending Interfaces
 [req,id=IDE-49,version=1]
@@ -708,7 +708,7 @@ $I_i$).
 
 --
 
-For default methods in interfaces, see <<_default-methods-in-interfaces,Default Methods in Interfaces>>.
+For default methods in interfaces, see <<_default-methods-in-interfaces>>.
 
 [.language-n4js]
 == Generic Classifiers
@@ -727,15 +727,15 @@ $|C.typePars|\geq 1$.
 If a classifier does not define any type parameters, it is not generic,
 even if its superclass or any implemented interface is generic.
 
-The format of the type parameter expression is described in <<_parameterized-types,Parameterized Types>>. The type variable defined by the type parameter’s type expression can be used
+The format of the type parameter expression is described in <<_parameterized-types>>. The type variable defined by the type parameter’s type expression can be used
 just like a normal type inside the class definition.
 
 If using a generic classifier as type of a variable, it may be
 parameterized. This is usually done via a type expression (cf.
-<<_parameterized-types,Parameterized Types>>) or via `typearg` in case of supertypes. If a generic
+<<_parameterized-types>>) or via `typearg` in case of supertypes. If a generic
 classifier defines multiple type variables, these variables are bound in
 the order of their definition. In any case, all type variables have to
-be bound. That means in particular that raw types are not allowed. (cf <<_parameterized-types,Parameterized Types>> for details).
+be bound. That means in particular that raw types are not allowed. (cf <<_parameterized-types>> for details).
 
 If a generic classifier is used as super classifier, the type arguments
 can be type variables. Note that the type variable of the super
