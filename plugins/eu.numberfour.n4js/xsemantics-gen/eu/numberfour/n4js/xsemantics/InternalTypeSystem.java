@@ -3603,25 +3603,13 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         }
       }
     }
-    if ((T != null)) {
-      TypeRef _xifexpression_1 = null;
-      boolean _isVariadic = fpar.isVariadic();
-      if (_isVariadic) {
-        ParameterizedTypeRef _xblockexpression = null;
-        {
-          final TypeRef finalT = T;
-          TObjectPrototype _arrayType = RuleEnvironmentExtensions.arrayType(G);
-          ParameterizedTypeRef _createTypeRef = null;
-          if (_arrayType!=null) {
-            _createTypeRef=TypeUtils.createTypeRef(_arrayType, finalT);
-          }
-          _xblockexpression = (_createTypeRef);
-        }
-        _xifexpression_1 = _xblockexpression;
-      } else {
-        _xifexpression_1 = T;
+    if (((T != null) && fpar.isVariadic())) {
+      TObjectPrototype _arrayType = RuleEnvironmentExtensions.arrayType(G);
+      ParameterizedTypeRef _createTypeRef = null;
+      if (_arrayType!=null) {
+        _createTypeRef=TypeUtils.createTypeRef(_arrayType, T);
       }
-      T = _xifexpression_1;
+      T = _createTypeRef;
     }
     return new Result<TypeRef>(T);
   }

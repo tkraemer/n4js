@@ -17,7 +17,7 @@ import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.TypesFactory
 import eu.numberfour.n4js.ts.utils.TypeUtils
-import eu.numberfour.n4js.n4JS.FunctionDeclaration
+import eu.numberfour.n4js.n4JS.FunctionDefinition
 
 package class N4JSFormalParameterTypesBuilder {
 	@Inject extension N4JSTypesBuilderHelper
@@ -68,7 +68,7 @@ package class N4JSFormalParameterTypesBuilder {
 		FormalParameter astFormalParameter, BuiltInTypeScope builtInTypeScope) {
 		
 		if (copyOfDeclaredTypeRef === null) {
-			if (astFormalParameter.initializer !== null && astFormalParameter.initializer instanceof FunctionDeclaration) {
+			if (astFormalParameter.initializer !== null && astFormalParameter.eContainer instanceof FunctionDefinition) {
 				TypeUtils.createDeferredTypeRef
 			}
 			else if (defaultTypeRef === null)

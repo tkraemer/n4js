@@ -1,5 +1,6 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
+
 class A {}
 function getA() : A { return null;}
 let v = "string";
@@ -18,6 +19,15 @@ function fa3(z=v) {}
 // XPECT type of 'function fa4(z=getA()) {}' --> {function(A=…):void}
 function fa4(z=getA()) {}
 
+// XPECT type of 'z' --> any
+function fa5(z=undefined) {}
+
+// XPECT type of 'z' --> any
+function fa6(z=null) {}
+
+// XPECT type of 'z' --> any
+function fa7(z=) {}
+
 
 /** Now the same tests on Methods */
 
@@ -33,6 +43,15 @@ class Y {
 	
 	// XPECT type of 'fb4(z=getA()) {}' --> {function(A=…):void}
 	fb4(z=getA()) {}	
+	
+	// XPECT type of 'z' --> any
+	fb5(z=undefined) {}
+	
+	// XPECT type of 'z' --> any
+	fb6(z=null) {}
+	
+	// XPECT type of 'z' --> any
+	fb7(z=) {}
 }
 
 
@@ -52,6 +71,18 @@ fc3;
 // XPECT type of 'function (z=getA()) {}' --> {function(A=…):void}
 let fc4 = function (z=getA()) {}
 fc4;
+	
+// XPECT type of 'z' --> any
+let fc5 = function (z=undefined) {}
+fc5;
+
+// XPECT type of 'z' --> any
+let fc6 = function (z=null) {}
+fc6;
+
+// XPECT type of 'z' --> any
+let fc7 = function (z=) {}
+fc7;
 
 
 /** Now the same tests on Arrow Function Expressions */
@@ -70,6 +101,18 @@ fd3;
 // XPECT type of 'fd4' --> {function(A=…):void}
 let fd4 = (z=getA()) => {}
 fd4;
+	
+// XPECT type of 'z' --> any
+let fd5 = (z=undefined) => {}
+fd5;
+
+// XPECT type of 'z' --> any
+let fd6 = (z=null) => {}
+fd6;
+
+// XPECT type of 'z' --> any
+let fd7 = (z=) => {}
+fd7;
 
 
 /** (Arrow) Function Type Expressions always define a type and thus don't need type inferrence */
@@ -91,6 +134,18 @@ fe2;
 let fe3: {function(B=)} = function (x=new C()) : void {};
 fe3;
 
+// XPECT type of 'function (x=undefined) : void {}' --> {function(union{B,any}=…):void}
+let fe4: {function(B=)} = function (x=undefined) : void {};
+fe4;
+
+// XPECT type of 'function (x=null) : void {}' --> {function(union{B,any}=…):void}
+let fe5: {function(B=)} = function (x=null) : void {};
+fe5;
+
+// XPECT type of 'function (x=) : void {}' --> {function(union{B,any}=…):void}
+let fe6: {function(B=)} = function (x=) : void {};
+fe6;
+
 
 /** Now the same tests on Arrow Function Expressions */
 
@@ -105,3 +160,15 @@ ff2;
 // XPECT type of '(x=new C()) : void => {}' --> {function(union{B,C}=…):void}
 let ff3: {function(B=)} = (x=new C()) : void => {};
 ff3;
+
+// XPECT type of '(x=undefined) : void => {}' --> {function(union{B,any}=…):void}
+let ff4: {function(B=)} = (x=undefined) : void => {};
+ff4;
+
+// XPECT type of '(x=null) : void => {}' --> {function(union{B,any}=…):void}
+let ff5: {function(B=)} = (x=null) : void => {};
+ff5;
+
+// XPECT type of '(x=) : void => {}' --> {function(union{B,any}=…):void}
+let ff6: {function(B=)} = (x=) : void => {};
+ff6;

@@ -124,7 +124,9 @@ package class TypeDeferredProcessor extends AbstractProcessor {
 					}
 					FunctionDefinition: {
 						val tFPar = obj.definedTypeElement;
-						setTypeRef(obj, tFPar, G, cache);
+						if (tFPar.typeRef instanceof DeferredTypeRef) {
+							setTypeRef(obj, tFPar, G, cache);
+						}
 					}
 					SetterDeclaration: {
 						// do nothing since setters don't have Deferred Types (and cannot have a default initializer)

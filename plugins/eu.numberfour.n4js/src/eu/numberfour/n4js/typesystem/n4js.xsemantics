@@ -1221,11 +1221,8 @@ from {
 			T = G.anyTypeRef
 		}
 	}
-	if (T !== null) {
-		T = if(fpar.variadic) {
-			val finalT = T
-			G.arrayType?.createTypeRef(finalT)
-		} else T
+	if (T !== null && fpar.variadic) {
+		T = G.arrayType?.createTypeRef(T)
 	}
 }
 
