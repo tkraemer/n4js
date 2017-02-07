@@ -114,7 +114,7 @@ public class ImportsAwareReferenceProposalCreator {
 				} else // special handling for defaults:
 				if (input.getName().getLastSegment().equals(N4JSLanguageConstants.EXPORT_DEFAULT_NAME)) {
 					inputToUse = new AliasedEObjectDescription(
-							QualifiedName.create(input.getName().getSegment(input.getName().getSegmentCount() - 2)),
+							input.getQualifiedName().skipLast(1),
 							input);
 				}
 
