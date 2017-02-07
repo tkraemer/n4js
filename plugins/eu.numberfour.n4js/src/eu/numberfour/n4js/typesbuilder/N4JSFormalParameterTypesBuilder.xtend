@@ -17,6 +17,7 @@ import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.TypesFactory
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.n4JS.FunctionDeclaration
 
 package class N4JSFormalParameterTypesBuilder {
 	@Inject extension N4JSTypesBuilderHelper
@@ -56,20 +57,27 @@ package class N4JSFormalParameterTypesBuilder {
 	 */
 	def private setFormalParameterType(TFormalParameter formalParameterType, FormalParameter astFormalParameter,
 				TypeRef defaultTypeRef, BuiltInTypeScope builtInTypeScope, boolean preLinkingPhase) {
+		
 		setCopyOfReference(
-			[ TypeRef copyOfDeclaredTypeRef |
-				formalParameterType.typeRef = copyOfDeclaredTypeRef.orDefaultParameterType(defaultTypeRef, builtInTypeScope)
-			], astFormalParameter.declaredTypeRef, preLinkingPhase)
+		[ TypeRef copyOfDeclaredTypeRef |
+			formalParameterType.typeRef = copyOfDeclaredTypeRef.orDefaultParameterType(defaultTypeRef, astFormalParameter, builtInTypeScope)
+		], astFormalParameter.declaredTypeRef, preLinkingPhase)
 	}
 
-	def private TypeRef orDefaultParameterType(TypeRef copyOfDeclaredTypeRef, TypeRef defaultTypeRef, BuiltInTypeScope builtInTypeScope) {
+	def private TypeRef orDefaultParameterType(TypeRef copyOfDeclaredTypeRef, TypeRef defaultTypeRef,
+		FormalParameter astFormalParameter, BuiltInTypeScope builtInTypeScope) {
+		
 		if (copyOfDeclaredTypeRef === null) {
-			if (defaultTypeRef === null)
+			if (astFormalParameter.initializer !== null && astFormalParameter.initializer instanceof FunctionDeclaration) {
+				TypeUtils.createDeferredTypeRef
+			}
+			else if (defaultTypeRef === null)
 				builtInTypeScope.anyTypeRef
 			else
 				TypeUtils.copy(defaultTypeRef)
 		}
-		else
+		else {
 			copyOfDeclaredTypeRef
+		}
 	}
 }

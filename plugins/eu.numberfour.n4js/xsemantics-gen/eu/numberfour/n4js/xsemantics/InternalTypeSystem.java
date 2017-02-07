@@ -3544,35 +3544,56 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         T = _xifexpression;
       }
     } else {
-      TFormalParameter _definedTypeElement_2 = null;
+      Expression _initializer = null;
       if (fpar!=null) {
-        _definedTypeElement_2=fpar.getDefinedTypeElement();
+        _initializer=fpar.getInitializer();
       }
-      TypeRef _typeRef_1 = null;
-      if (_definedTypeElement_2!=null) {
-        _typeRef_1=_definedTypeElement_2.getTypeRef();
-      }
-      boolean _tripleNotEquals_1 = (_typeRef_1 != null);
+      boolean _tripleNotEquals_1 = (_initializer != null);
       if (_tripleNotEquals_1) {
-        TFormalParameter _definedTypeElement_3 = fpar.getDefinedTypeElement();
-        TypeRef _typeRef_2 = _definedTypeElement_3.getTypeRef();
-        T = _typeRef_2;
+        /* G |- fpar.initializer : var TypeRef E */
+        Expression _initializer_1 = fpar.getInitializer();
+        TypeRef E = null;
+        Result<TypeRef> result = typeInternal(G, _trace_, _initializer_1);
+        checkAssignableTo(result.getFirst(), TypeRef.class);
+        E = (TypeRef) result.getFirst();
+        
+        /* G |~ E /\ E */
+        Result<TypeRef> result_1 = upperBoundInternal(G, _trace_, E);
+        checkAssignableTo(result_1.getFirst(), TypeRef.class);
+        E = (TypeRef) result_1.getFirst();
+        
+        T = E;
       } else {
-        boolean _enforceDynamicTypes = this.jsVariantHelper.enforceDynamicTypes(fpar);
-        if (_enforceDynamicTypes) {
-          ParameterizedTypeRef _anyTypeRefDynamic = RuleEnvironmentExtensions.anyTypeRefDynamic(G);
-          T = _anyTypeRefDynamic;
+        TFormalParameter _definedTypeElement_2 = null;
+        if (fpar!=null) {
+          _definedTypeElement_2=fpar.getDefinedTypeElement();
+        }
+        TypeRef _typeRef_1 = null;
+        if (_definedTypeElement_2!=null) {
+          _typeRef_1=_definedTypeElement_2.getTypeRef();
+        }
+        boolean _tripleNotEquals_2 = (_typeRef_1 != null);
+        if (_tripleNotEquals_2) {
+          TFormalParameter _definedTypeElement_3 = fpar.getDefinedTypeElement();
+          TypeRef _typeRef_2 = _definedTypeElement_3.getTypeRef();
+          T = _typeRef_2;
         } else {
-          /* T = env(G, fpar, TypeRef) or T = G.anyTypeRef */
-          {
-            RuleFailedException previousFailure = null;
-            try {
-              TypeRef _env = this.<TypeRef>env(G, fpar, TypeRef.class);
-              T = _env;
-            } catch (Exception e) {
-              previousFailure = extractRuleFailedException(e);
-              ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
-              T = _anyTypeRef;
+          boolean _enforceDynamicTypes = this.jsVariantHelper.enforceDynamicTypes(fpar);
+          if (_enforceDynamicTypes) {
+            ParameterizedTypeRef _anyTypeRefDynamic = RuleEnvironmentExtensions.anyTypeRefDynamic(G);
+            T = _anyTypeRefDynamic;
+          } else {
+            /* T = env(G, fpar, TypeRef) or T = G.anyTypeRef */
+            {
+              RuleFailedException previousFailure = null;
+              try {
+                TypeRef _env = this.<TypeRef>env(G, fpar, TypeRef.class);
+                T = _env;
+              } catch (Exception e) {
+                previousFailure = extractRuleFailedException(e);
+                ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
+                T = _anyTypeRef;
+              }
             }
           }
         }

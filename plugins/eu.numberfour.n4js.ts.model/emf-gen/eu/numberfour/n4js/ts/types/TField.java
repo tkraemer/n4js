@@ -7,7 +7,6 @@
  */
 package eu.numberfour.n4js.ts.types;
 
-import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,14 +23,13 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.TField#isConst <em>Const</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TField#isHasExpression <em>Has Expression</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.TField#getTypeRef <em>Type Ref</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.ts.types.TypesPackage#getTField()
  * @model
  * @generated
  */
-public interface TField extends TMemberWithAccessModifier {
+public interface TField extends TMemberWithAccessModifier, TypeReferenceContainer {
 	/**
 	 * Returns the value of the '<em><b>Const</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -83,32 +81,6 @@ public interface TField extends TMemberWithAccessModifier {
 	 * @generated
 	 */
 	void setHasExpression(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Type Ref</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Type Ref</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Type Ref</em>' containment reference.
-	 * @see #setTypeRef(TypeRef)
-	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTField_TypeRef()
-	 * @model containment="true"
-	 * @generated
-	 */
-	TypeRef getTypeRef();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TField#getTypeRef <em>Type Ref</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Type Ref</em>' containment reference.
-	 * @see #getTypeRef()
-	 * @generated
-	 */
-	void setTypeRef(TypeRef value);
 
 	/**
 	 * <!-- begin-user-doc -->

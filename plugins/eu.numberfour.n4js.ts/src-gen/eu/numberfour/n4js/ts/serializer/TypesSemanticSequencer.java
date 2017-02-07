@@ -725,8 +725,8 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 */
 	protected void sequence_TAnnotationTypeRefArgument(ISerializationContext context, TAnnotationTypeRefArgument semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, TypesPackage.Literals.TANNOTATION_TYPE_REF_ARGUMENT__TYPE_REF) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypesPackage.Literals.TANNOTATION_TYPE_REF_ARGUMENT__TYPE_REF));
+			if (transientValues.isValueTransient(semanticObject, TypesPackage.Literals.TYPE_REFERENCE_CONTAINER__TYPE_REF) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, TypesPackage.Literals.TYPE_REFERENCE_CONTAINER__TYPE_REF));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getTAnnotationTypeRefArgumentAccess().getTypeRefTypeRefParserRuleCall_0(), semanticObject.getTypeRef());

@@ -27,6 +27,12 @@ import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import it.xsemantics.runtime.RuleEnvironment
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.ts.types.util.Variance
+import eu.numberfour.n4js.ts.types.ContainerType
+import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.n4JS.FormalParameter
+import eu.numberfour.n4js.ts.types.TFormalParameter
+import eu.numberfour.n4js.ts.types.InferenceVariable
 
 /**
  * {@link PolyProcessor} delegates here for processing array literals.
@@ -39,6 +45,9 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 
 	@Inject
 	private N4JSTypeSystem ts;
+
+	@Inject
+	private TypeSystemHelper tsh;
 
 	/**
 	 * BEFORE CHANGING THIS METHOD, READ THIS:
@@ -88,6 +97,9 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 				val iv = infCtx.newInferenceVariable;
 				fparResult.typeRef = TypeUtils.createTypeRef(iv); // <-- set new inference variable as type
 				result1.fpars += fparResult;
+
+				addConstraintForDefaultInitializers(fparAST, fparT, G, iv, infCtx);
+
 
 				// if the corresponding fpar in the type expectation is optional, we make the fpar in the
 				// function expression optional as well
@@ -162,6 +174,24 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 
 		// return temporary type of funExpr (i.e. may contain inference variables)
 		return resultTypeRef;
+	}
+
+	/**
+	 * When a function expression contains an initializer (in a default parameter),
+	 * the type of this initializer is taken into account when calculating the parameter's type.
+	*/
+	private def addConstraintForDefaultInitializers(FormalParameter fparAST, TFormalParameter fparT, 
+		RuleEnvironment G, InferenceVariable iv, InferenceContext infCtx
+	){
+		if(fparAST.initializer !== null) {
+			val context = if (fparT.eContainer instanceof ContainerType<?>)
+					TypeUtils.createTypeRef(fparT.eContainer as ContainerType<?>) else null;
+			val G_withContext = ts.createRuleEnvironmentForContext(context, G.contextResource);
+			val fieldTypeRef = askXsemanticsForType(G_withContext, null, fparAST).value; // delegate to Xsemantics rule typeN4FieldDeclaration
+			val fieldTypeRefSubst = ts.substTypeVariables(G_withContext, fieldTypeRef).value;
+			val fieldTypeRefSane = tsh.sanitizeTypeOfVariableFieldProperty(G, fieldTypeRefSubst);
+			infCtx.addConstraint(TypeUtils.createTypeRef(iv), TypeUtils.copy(fieldTypeRefSane), Variance.CONTRA);
+		}
 	}
 
 	/**
