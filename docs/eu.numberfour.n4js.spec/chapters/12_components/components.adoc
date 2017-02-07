@@ -48,6 +48,8 @@ Test Library::
   running tests and viewing test reports directly within the , such as
   __Mangelhaft__.
 
+// TODO missing annotation here
+
 The following components can be created by external developers:
 
 
@@ -60,6 +62,7 @@ Libraries::
   User-written libraries used by apps, processors or other libraries.
 
 These components are described in detail later.
+// TODO where ^^
 
 A component is similar to a single project in the N4JS IDE. It is
 shipped as <<_numberfour-archives-nfar,NFAR>> archive and contains:
@@ -112,51 +115,33 @@ an N4 environment so that other developers can use its services.
 A library is a user project providing modules with declaration.
 
 === Runtime Environment and Runtime Libraries
+Runtime environments and libraries define globally available elements (types, variables, functions) provided by the JavaScript engine.
+Both must contain _only_ definition files (n4jsd) of which all elements are marked as `@ProvidedByRuntime` (<<_runtime-definitions>>) and `@Global` (<<_global-definitions>>).
+
+Other projects may refer to a _single_ runtime environment in their manifest via `RequiredRuntimeEnvironment`  and to _multiple_ runtime libraries via `RequiredRuntimeLibraries`
+
+Both types of components are referenced, similarly to libraries, by their artifact Id.
+It is possible, however, to state that a specific component may be used instead of another one via the `CompatibleWith` field defined by an environment or library.
+
+The concrete runtime environment and library are selected by the JavaScript engine.
+Deployment and execution scripts must ensure that a component can run on the given engine; the required environments and libraries must all be compatible with the provided environment.
+If no runtime environment is specified, a default an ECMAScript 5 runtime is assumed to be present.
+
+Typical runtime environments are ES5 or ES6, typical runtime libraries are DOM or HTML.
+
+In JavaScript, browsers and other execution environments provide built-in objects.
+In browsers, for example, the whole DOM is made available via built-in object types.
+In this case, even the global object also becomes a different type (in N4JS terms).
+Besides execution environments such as browsers or Node.js, libraries also provide functionality by exposing globally available functions.
+This is often used to bridge execution environment inconsistencies.
+When browser API differences are adapted by a library, this is called a __polyfil__.
+Other adaptations, such as enabling ECMSScript 6 object types in ECMAScript 5 environments, are known as __shim__.
+Instead of directly supporting these kind of 'hacks', other components specify which runtime environment and libraries they depend on by specifying unique runtime ids.
+Possible shims (in case of environments) or polyfils (in case of libraries) are transparently provided by the execution environment and the bootstrap code.
+
 task:IDE-1036[]
 
-
-Runtime environments and libraries define globally available elements
-(types, variables, functions) provided by the JavaScript engine. Both
-must contain _only_ definition files (n4jsd) of which all elements are
-marked as (`@ProvidedByRuntime`) and (`@Global`)
-
-Other projects may refer to a _single_ runtime environment in their
-manifest via `RequiredRuntimeEnvironment`  and to _multiple_ runtime libraries via `RequiredRuntimeLibraries`
-
-Both types of components are referenced, similarly to libraries, by
-their project Id. It is possible, however, to state that a specific
-component may be used instead of another one via the `CompatibleWith` field defined by an environment or library.
-
-The concrete runtime environment and library are selected by the
-JavaScript engine. Deployment and execution scripts must ensure that a
-component can run on the given engine; the required environments and
-libraries must all be compatible with the provided environment. If no
-runtime environment is specified, a default an ECMAScript 5 runtime is
-assumed to be present.
-
-Typical runtime environments are ES5 or ES6, typical runtime libraries
-are DOM or HTML.
-
-In JavaScript, browsers and other execution environments provide
-built-in objects. In browsers, for example, the whole DOM is made
-available via built-in object types. In this case, even the global
-object also becomes a different type (in N4JS terms). Besides execution
-environments such as browsers or Node.js, libraries also provide
-functionality by exposing globally available functions. This is often
-used to bridge execution environment inconsistencies. When browser API
-differences are adapted by a library, this is called a __polyfil__.
-Other adaptations, such as enabling ECMSScript 6 object types in
-ECMAScript 5 environments, are known as __shim__. Instead of directly
-supporting these kind of `hacks`, other components specify which
-runtime environment and libraries they depend on by specifying unique
-runtime ids. Possible shims (in case of environments) or polyfils (in
-case of libraries) are transparently provided by the execution
-environment and the bootstrap code.
-
 === Tests
-task:IDE-1400[]
-
-
 Tests are special projects which contain tests for other projects.
 
 
@@ -164,10 +149,9 @@ Tests are special projects which contain tests for other projects.
 [req,id=IDE-157,version=1]
 --
 
-1.  Tests have full access to the tested project including elements with
-visibility.
-2.  Only other test projects can depend on tests project. In other
-words, other components must not depend on test components.
+1.  Tests have full access to the tested project including elements with `project` visibility.
+2.  Only other test projects can depend on tests project.
+In other words, other components must not depend on test components.
 
 In a test project, the tested projects can be specified via `testee`.
 --
@@ -176,15 +160,14 @@ In a test project, the tested projects can be specified via `testee`.
 == Component Content
 
 
-A component is similar to a project in the N4JS IDE. It consists of
-sources, test sources, resources (such as images) and libraries (nears).
-These items are contained in separate folders alongside output folders
-and settings specified in the manifest file. The manifest file is stored
-at the root of the project (and explained in ).
+A component is similar to a project in the N4JS IDE. It consists of sources, test sources, resources (such as images) and libraries (nears).
+These items are contained in separate folders alongside output folders and settings specified in the manifest file.
+The manifest file `manifest.n4mf` is stored at the root of the project (and explained in <<Component Manifest>>).
 
-For build and production purposes, other files such as `pom.xml` or
-`.project` files are automatically derived from the . These files are
-not to be added manually.
+For build and production purposes, other files such as `pom.xml` or `.project` files are automatically derived from the `manifest.n4mf`.
+These files are not to be added manually.
+
+task:IDE-1400[]
 
 [.language-n4js]
 == Component Manifest
@@ -414,24 +397,25 @@ specified, vendor id is used as vendor name.
 
 ProjectType ::
 The _type_ of the project. The following types of projects exists:
-
-app::
-  Application
-lib::
-  Library
-test::
-
-api::
++
+[horizontal]
+app:::
+  Application. See <<Apps>>.
+lib:::
+  Library. See <<Libraries>>.
+test:::
 -
-runtimeEnvironment::
-  Runtime Environment
-runtimeLibrary::
-  Runtime Library
+api:::
+-
+runtimeEnvironment:::
+  Runtime Environment. See <<Runtime Environment Resolution>>.
+runtimeLibrary:::
+  Runtime Library. See <<Runtime Environment and Runtime Libraries>>.
 
 DeclaredVersion ::
 The _version_ of the project. The version consists of a major, minor and
 micro version. The syntax of the version is given by:
-
++
 [source,xtext]
 ----
     DeclaredVersion :
@@ -439,7 +423,7 @@ micro version. The syntax of the version is given by:
     ;
 
 ----
-
++
 We use `qualifier=SNAPSHOT` in our Maven builds so that each
 build uses the latest available version of a project. The qualifier is
 only supported for this tooling and is removed during deployment. The
@@ -453,14 +437,11 @@ four digits.
 
 
 MainModule ::
-(optional) A plain module specifier defining the project’s `main
-module`. If this property is defined, other projects can import from
-this project using imports where the string following keyword `from` states the
-project name and not the complete module specifier (see <<import-statement-semantics>>).
+(optional) A plain module specifier defining the project’s 'main module'.
+If this property is defined, other projects can import from this project using imports where the string following keyword `from` states the project name and not the complete module specifier (see <<import-statement-semantics>>).
 
 CompatibleWith ::
-In the case of a runtime environment or library, this specifies to which
-other component this one is compatible to.
+In the case of a runtime environment or library, this specifies to which other component this one is compatible to.
 
 RequiredRuntimeEnvironment ::
 Environment this project depends on. This is a simple project ID,
@@ -479,25 +460,24 @@ requires. A _dependency_ has the following properties:
 * The __vendorId__. This is optional. If no vendor id is given, the
 vendor id of the current project is also used as vendor id for this
 project dependency.
-* The _projectId_
+* The _artifactId_
 * Either the minimum excluded or included version and the maximum
 excluded or included version. If no version (range) is given [0.0.0,
 infinity) is assumed. If only one version (e.g. 1.0) is given this is
 interpreted as [1.0, infinity]. Writing (1.0) means (1.0, infinity).
 * The _scope_ of the dependency. The scopes are inspired by Maven cite:[MavenDependencies] and
 the following scopes are supported:
-
-compile::
++
+compile:::
   This dependency is needed for compilation of the project _and_ it
   needs to exist on the environment when deploying it.
-test::
+test:::
   This dependency is only needed for compiling and running tests. _Types
   imported from a test dependency are only accessible from a test source
   fragment._
 +
-The deployment descriptor of a project only contains dependencies with
-scope compile. If there is no scope explicitly set, the scope is set to
-[compile].
+The deployment descriptor of a project only contains dependencies with scope compile.
+If there is no scope explicitly set, the scope is set to compile.
 
 Output ::
 Path to output folder, compilers may use subfolders inside this folder.
@@ -531,7 +511,7 @@ type. There exist three different source fragment types:
   are only wrapped into module definitions and copied to the output
   folder. See <<_external-declarations>> and <<_implementation-of-external-declarations>> for details.
 
-
++
 Filters for fine-tuning the validator and compiler. A filter is applied
 to modules matching the given module specifier which may contain
 wildcards, optionally restricted to modules defined in a specific source
@@ -549,15 +529,14 @@ Files matching this filter are not wrapped into modules and they are
 not semantically validated. Since they are assumed to be wrapped into
 modules, declarations inside these modules cannot be referenced by
 n4js code.
-
++
 Optional property that defines what module loader are supported by the
 modules in this component. Possible values are
 
-
-n4js::
+n4js:::
 (default) The modules in this component can be loaded with SystemJS or
 with CommonJS.
-commonjs::
+commonjs:::
 Modules in this component must be loaded with CommonJS. When these
 modules are referenced in generated code (i.e. when importing from
 these modules), the module specifier will be prefixed with ``@@cjs/``.
@@ -642,14 +621,12 @@ navigation.
 extensions will then be used to match the file).
 --
 
-Examples of using external source fragments and filters are given in (<<_implementation-of-external-declarations>>).
-<<_implementation-of-external-declarations>>
+Examples of using external source fragments and filters are given in <<_implementation-of-external-declarations>>, see <<external-definitions-and-implementations>>.
 
 .No validation and module wrapping example
 [example]
 ====
 The following manifest shows the use of filters to disable validation and module wrapping.
-
 // TODO add N4MF syntax highlighting
 
 
@@ -694,7 +671,7 @@ ModuleFilters {
 
 
 There are several dependencies between components. We can distinguish
-between `require` dependencies and `provide` dependencies.
+between _require_ dependencies and _provide_ dependencies.
 
 require::
   _N4JS Components_ require:
@@ -706,7 +683,7 @@ provide::
 other _Runtime Environments_ (which means they provide the same
 runtime libraries as the extended environments and the same base
 types).
-* _SysLibs_ implement (`provide implementations` of) _APIs_
+* _SysLibs_ implement (__provide implementations__ of) _APIs_
 
 === Runtime Environment Resolution
 
@@ -831,10 +808,7 @@ And we additionally define the following pseudo properties:
 * `src/n4/lang/List.js` is `n4/lang/List`
 * `src/n4/lang/Objects.prototypes` is `n4/lang/Objects`
 
-`expandedPath` :: Pseudo property consists of the project name and project version of the module followed by the path, the concrete syntax is:
-+
-`<project.name>-<project.version>/<module.path>` +
-where project version includes all version parts except the qualifier.
+`expandedPath` :: Pseudo property consists of the project name and project version of the module followed by the path, the concrete syntax is: `<project.name>-<project.version>/<module.path>` where project version includes all version parts except the qualifier.
 +
 E.g. given a module with path `n4/lang/List` in a project `lib` with
 version `1.0.0`, the `expandedPath` is `lib-1.0.0/n4/lang/List`.
@@ -843,7 +817,7 @@ version `1.0.0`, the `expandedPath` is `lib-1.0.0/n4/lang/List`.
 
 `runtimeDeps` :: Pseudo property contains all runtime dependencies of this module.
 
-`allDeps` :: Pseudo property contains all dependencies of this module. This is the union of `loadtimeDeps` and `runtimeDeps` which maintains the ordering of both lists, with the `loadtimeDeps` at the front.
+`allDeps` :: Pseudo property contains all dependencies of this module. This is the union of _loadtimeDeps_ and _runtimeDeps_ which maintains the ordering of both lists, with the _loadtimeDeps_ at the front.
 
 Pseudo properties to be set via annotations are explained in <<_annotations>>.
 
@@ -957,7 +931,7 @@ KeyIdentifier:  LETTER (DIGIT | LETTER | '.')*;
 === Constraints
 
 Properties files have to be stored in source fragment of type source.
-The _base folder_ for storing the properties files of a project `p` is $p.name\lstnfjs{/nls}$.
+The _base folder_ for storing the properties files of a project $p$ is $p.name\lstnfjs{/nls}$.
 The language-specific resource files are stored in subfolders of the base folder.
 The base language (normally english) has to be located in a subfolder of the base folder.
 The resource files for other languages have to be located in a subfolder with the name given by syntax `<ISO Language Code>pass:[_]<ISO Country Code>`, where ISO Language Code is given by the ISO-639 standard and ISO Country Code is given by the ISO-3166 standard.
@@ -1002,13 +976,10 @@ For concrete classes, we want all members in `C` in order to be complete and avo
 
 === Execution of API and Implementation Components
 
-When launching an N4JS component `C` under runtime
-environment <<AC,RE>>, the user may(!) provide an implementation
-ID $I\!I\!D$ to run. Then, for each API project
-`A` in the direct or indirect dependencies of
-`C` an implementation project is chosen as follows:
+When launching an N4JS component _C_ under runtime environment <<AC,RE>>, the user may(!) provide an implementation ID $I\!I\!D$ to run.
+Then, for each API project _A_ in the direct or indirect dependencies of _C_ an implementation project is chosen as follows:
 
-. Collect all implementation projects for `A` (i.e. projects that specify `A` in their manifest under `ImplementedProjects`).
+. Collect all implementation projects for _A_ (i.e. projects that specify _A_ in their manifest under `ImplementedProjects`).
 . Remove implementation projects that cannot be run under runtime environment <<AC,RE>>, using the same logic as for running ordinary N4JS components (this step is not implemented yet!).
 .  If there are no implementation projects left, show an error.
 .  If $I\!I\!D$ is defined (i.e. user specified an implementation ID to run), then:

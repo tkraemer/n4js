@@ -213,7 +213,7 @@ links.
 
 .testeeType and testeeMethod with omitted constraints
 [example]
---
+====
 
 Assume testees similar as in <<ex:testeetype-and-testeemethod>>. Since the semantics of `bar` is not changed in `B`, it is probably not necessary to generate the same constraint in the documentation for `bar` twice (one in the section for class `A` and another one in the section of class `B`).
 Still, we want the test to be executed for both receivers. This is how it is achieved:
@@ -251,15 +251,13 @@ constraint is created in the spec by the spec exporter:
 Although a test for receiver of type `B` is run, no additional constraint is
 created since there is no `@testeeType` available neither in `BTest` nor in `BaseTest`.
 
---
+====
 
 ==== @reqid in Tests [[jsdoc_tag_reqid_in_Tests]]
 
-ID of feature used in LaTeX-code for the requirements section. If no
+ID of feature used in `JSDoc` for the requirements section. If no
 testee (via one of the tags above) is given, then the test is linked to
 the requirement with given id.
-
-// TODO: LaTeX reference, deprecated in regards to this document.
 
 [.language-n4js]
 == N4JSDoc for API and Implementation Projects

@@ -192,11 +192,12 @@ If no such implementation is found, a warning is generated.
 
 --
 
+[[external-definitions-and-implementations]]
 .External Definitions and Their Implementations
 [example]
 ====
 
-If, in addition to standard `source`, the `source-external` fragment is provided in `Sources`, $n4jsd$ files in the folder tree below source folders will be related to modules of the same name in the external folders. This is shown in External Class Implementation Naming below.
+If, in addition to standard `source`, the `source-external` fragment is provided in `Sources`, $n4jsd$ files in the folder tree below source folders will be related to modules of the same name in the external folders. This is shown in <<fig-external-class-naming>>.
 
 [[fig-external-class-naming]]
 .External Class Implementation, Naming Convention
@@ -204,10 +205,13 @@ image::{find}fig/externalClassImplementation_naming.png[]
 
 ====
 
-=== Example [[ex:External_Classes_Example]]
+=== Example
 
 Assume the following non-N4JS module:
 
+[[ex:External_Classes_Example]]
+.External Classes
+====
 [source,javascript]
 ----
 module.exports = {
@@ -270,6 +274,7 @@ export external public class Circle implements Scalable {
 }
 ----
 --
+====
 
 [.language-n4js]
 == Global Definitions
@@ -286,6 +291,7 @@ globally defined.footnote:[Global basically means that the module defines no nam
 We introduce a new pseudo property $global$ on all declared
 elements accordingly:
 
+`@Global` ::
 Boolean flag set to true if annotation `@Global` is set in containing module. The flag indicates that the exported element is globally available and must not be imported. task:IDE-1036[]
 
 Since definition of global elements is not supported by N4JS directly, this can be only used in external definitions.
@@ -333,6 +339,7 @@ This annotation can be defined
 
 We introduce a new pseudo property $providedByRuntime$ accordingly:
 
+`@ProvidedByRuntime` ::
 Boolean flag set to true if the annotation `@ProvidedByRuntime` is set.
 Flag indicates that the element is only declared in the module but its implementation is
 provided by the runtime.
@@ -342,9 +349,8 @@ Since built-in types are usually defined globally, the annotation `@ProvidedByRu
 .Provided By Runtime
 [req,id=IDE-171,version=1]
 --
-Provided By Runtime
-
 task:IDE-1036[]
+
 For a declaration
 $D$ with $D.providedByRuntime=\TRUE$, the
 following constraints must hold:
@@ -371,7 +377,7 @@ Here, an example of applying a runtime polyfill is detailed.
 .Object.observe with Polyfill
 [example]
 --
-The following snippet demonstrates how to define a polyfill of the built-in class to add the new ECMAScript 7 observer functionality.
+The following snippet demonstrates how to define a polyfill of the built-in class `Object` to add the new ECMAScript 7 observer functionality.
 This snippet has to be defined in a runtime library or environment.
 
 
