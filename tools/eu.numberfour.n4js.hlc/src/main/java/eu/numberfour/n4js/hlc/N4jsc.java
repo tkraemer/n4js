@@ -868,8 +868,7 @@ public class N4jsc {
 		// we have to avoid this implicit setup of N4JS, because N4JS was already initialized (another initialization
 		// would create a second injector for the language N4JS, which might lead to follow-up issues, e.g. multiple
 		// instances of singletons per language).
-		// N4JSXStandaloneSetup.doSetupWithoutParentLanguages();
-		Injector n4jsxInjector = new N4JSXStandaloneSetup().createInjectorAndDoEMFRegistration();
+		Injector n4jsxInjector = N4JSXStandaloneSetup.doSetupWithoutParentLanguages();
 		this.n4jsxFileExtensionsRegistry = n4jsxInjector.getInstance(FileExtensionsRegistry.class);
 
 	}
