@@ -104,16 +104,17 @@ In general, Autoboxing is only supported for accessing built-in
 read-only (immutable) properties. For example, `"some string value".split(" ");` is supported but `"some string value".foo=1;` will be rejected as String does not allow properties to be added (cf. `String` vs. `String+`, see <<_dynamic>>).
 
 Autoboxing often leads to problems, in particular in combination with
-dynamic types – this is why it is not directly supported in N4JS. For
-example,
+dynamic types – this is why it is not directly supported in N4JS.
 
 [source,n4js]
 ----
-var s: String+ = "Hello"; // will produce an error to prevent the following scenario:
-s.prop = 1;
-console.log(s.prop); // prints "undefined"
-----
+var s: String+ = "Hello"; // <1>
 
+s.prop = 1;
+console.log(s.prop); // <2>
+----
+<1> will produce an error to prevent the following scenario:
+<2> prints "undefined"
 // todo[wk: restrict coercing]{\url{http://restrictmode.org/} describes some restrictions on operators with regards to coercing and common bugs, we should consider implementing some of these restrictions as well. Also see chapter type inference}
 
 === Autoboxing of Function Expressions and Declarations
@@ -218,7 +219,7 @@ We first define helper rules for the type cast constraints as follows:
 
 
 
-.Cast Validation At Compile Time]]
+.Cast Validation At Compile Time
 [req,id=IDE-89,version=1]
 --
 Given a type cast expression `e` in which
@@ -234,8 +235,8 @@ following constraints must hold:
 \spc \type{FunctionTypeExpression}, \type{ClassifierType}, \type{TypeVariable}, \type{Union}, \type{Intersection} \}
 \endalign
 ++++
-2. `S` is a subtype of `T`, the cast is unnecessary and a warning will be generated.
-3.  `S` and `T` are classes, enums or primitive types, then `T` must be a subtype of `S`.
+2. if `S` is a subtype of `T`, the cast is unnecessary and a warning will be generated.
+3. if `S` and `T` are classes, enums or primitive types, then `T` must be a subtype of `S`.
 This is also true if `T` is an interface and the type of `S` cannot have subtypes, or vice versa.
 +
 [math]
@@ -249,7 +250,7 @@ This is also true if `T` is an interface and the type of `S` cannot have subtype
 \endalign
 ++++
 // Doesn't work for daimond-relationships with S and T on left and right. --> limit to classes only.
-4.  `S` is a class, enum or primitive type and `T` is a type-variable, then for each given boundary $T^{up}_i$ of `T`
+4. if `S` is a class, enum or primitive type and `T` is a type-variable, then for each given boundary $T^{up}_i$ of `T`
 of type class, enum or primitive `S` must be a member of the type hierarchy: footnote:[`i` iterates over all boundaries]
 +
 [math]
@@ -259,8 +260,8 @@ of type class, enum or primitive `S` must be a member of the type hierarchy: foo
 & \to  \forall_{T^{up}_i \in T.upperBounds} (isCPOE({T^{up}_i}) \to \tee ( {T^{up}_i} <: S \lor  {T^{up}_i} :> S ) )
 \endalign
 ++++
-5.  `S` is a union or intersection type, then the type cast is valid if it is valid for at least one element of `S`.
-6.  `S` and `T` are generics, and if $S^0=T^0$,
+5. if `S` is a union or intersection type, then the type cast is valid if it is valid for at least one element of `S`.
+6. if `S` and `T` are generics, and if $S^0=T^0$,
 a cast is possible if type arguments are sub- or supertypes of each other: footnote:[`i` iterates over all type args]
 +
 [math]
@@ -273,8 +274,7 @@ a cast is possible if type arguments are sub- or supertypes of each other: footn
 7.  If `T` is a union type, then the type cast is valid if it is valid for at least one element of `T`.
 8.  If `T` is an intersection type, then the type cast is valid if it is valid for all elements of `T`.
 
-NOTE: `any` is a supertype of all other types, thus it is always possible
-to cast a variable of type `any` to other (non-composed) types.
+NOTE: `any` is a supertype of all other types, thus it is always possibleto cast a variable of type `any` to other (non-composed) types.
 
 --
 
@@ -380,7 +380,7 @@ from instances as well.
 
 This getter is of type `N4Class` which is a built-in type just like `N4Object`. It contains the following members:
 
-[horizontal]
+
 `fqn` ::
 The $FQN$ of the type.
 

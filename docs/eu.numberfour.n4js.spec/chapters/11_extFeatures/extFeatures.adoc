@@ -16,8 +16,8 @@ Contributors:
 == Array and Object Destructuring
 
 N4JS supports array and object destructuring as provided in ES6.
-This is used to conveniently assign selected elements of an array or object to a number of newly-declared or pre-existing variables or to further
-destructure them by using nested destructuring patterns. footnote:[Further reading on <<Acronyms,DI>> Basics: cite:[Fowler04b,Prasanna09a], Verification cite:[Zhu13a,Hudli13a], Frameworks cite:[Lesiecki08a,Betts13a,Knol13a,Dagger]]
+This is used to conveniently assign selected elements of an array or object to a number of newly-declared or pre-existing variables or to further destructure them by using nested
+destructuring patterns footnote:[Further reading on <<Acronyms,DI>> Basics: cite:[Fowler04b,Prasanna09a], Verification cite:[Zhu13a,Hudli13a], Frameworks cite:[Lesiecki08a,Betts13a,Knol13a,Dagger]].
 
 === Syntax
 
@@ -203,29 +203,30 @@ If an instance $C$ is newly created by the injector $I$ (regardless of the injec
 The following constraints have to hold:
 
 .  Root objects are created by one of the following mechanisms:
-..  Any class or interface can be created as root objects via an injector associated to a <<Acronyms,DIC>>: `var x: X = N4Injector.of(DIC).create(X);`
+..  Any class or interface can be created as root objects via an injector associated to a <<Acronyms,DIC>>: +
+`var x: X = N4Injector.of(DIC).create(X);` +
 in which `DIC` is a <<Acronyms,DIC>>.
-Of course, an appropriate binding must exist. footnote:[Usually, only the itself is created like that, e.g., [language-n4js]`ar dic = N4Injector.of(DIC).create(DIC);}`]
+
+Of course, an appropriate binding must exist. footnote:[Usually, only the `DIC` itself is created like that, e.g., [language-n4js]`var dic = N4Injector.of(DIC).create(DIC);`]
 ..  If a type has the injector being injected, e.g. via field injection
 `@Inject injector: N4Injector;`, then this injector can be used anytime in the control flow to create a new root object similar as above (using `create` method).
-..  If a provider has been injected (i.e., an instance of `N4Provider}`), then its method can be used to create a root object causing a new injection phase to take place.
+..  If a provider has been injected (i.e. an instance of `{N4Provider}`), then its `get()` method can be used to create a root object causing a new injection phase to take place.
 .  If $C.ctor$ is marked as injection point, all its arguments are set by the injector.
 This is also true for an inherited constructor marked as an injection point.
 See <<Req-IDE-143>> task:IDE-1264[].
 For all arguments the injection phase constraints have to hold as well.
 . All fields of $C$, including _inherited_ once, marked as injection points are set by the injector.
 For all fields the injection phase constraints have to hold as well.
+
 task:IDE-1264[] task:IDEBUG-441[]
 
 The injector may use a provider method (of a binder) to create nested instances.
 
-The injector is configured with _Binders_ and it tracks _Bindings_
-between types (<<Binders and Bindings>>).
+The injector is configured with _Binders_ and it tracks _Bindings_ between types (<<Binders and Bindings>>).
 An N4JS developer normally would not interact with this object directly except when defining an entry-point to his application.
-__Injector__s are configured with _Binder_s which contain explicit __Binding__s defined by an N4JS developer.
-A set of these combined with _implicit bindings_ creates the _di configuration_ used by
-a given injector.
-To configure given __Injector__s with given _Binder_(s) use `@UseBinder` annotation.
+__Injector__s are configured with __Binder__s which contain explicit __Binding__s defined by an N4JS developer.
+A set of these combined with _implicit bindings_ creates the _di configuration_ used by a given injector.
+To configure given __Injector__s with given __Binder__(s) use `@UseBinder` annotation.
 
 --
 
@@ -233,19 +234,17 @@ To configure given __Injector__s with given _Binder_(s) use `@UseBinder` annotat
 ==== DIComponent Relations
 
 A Parent-Child relation can be established between two DIComponents.
-Child DIComponents use the parent bindings but can also be configured
-with their own bindings or _change_ targets used by a parent. The final
-circumstance is local to the child and is referred to as __rebinding__.
+Child DIComponents use the parent bindings but can also be configured with their own bindings or _change_ targets used by a parent.
+The final circumstance is local to the child and is referred to as __rebinding__.
 For more information about bindings see <<Binders and Bindings>>.
 A Child-Parent relation is expressed by the `@WithParentInjector` annotation attached to a given DIComponent.
 When this relation is defined between DIComponents, the user needs to take care to preserve the proper relation between injectors.
-In other words, the user must provide an instance of the parent injector (the injector of the
-DIComponent passes as a parameter to `@WithParentInjector`) when creating the child injector
+In other words, the user must provide an instance of the parent injector (the injector of the DIComponent passes as a parameter to `@WithParentInjector`) when creating the child injector
 (injector of the DIComponent annotated with `@WithParentInjector`).
 
 .Simple DIComponents Relation
 [example]
---
+====
 
 [source,n4js]
 ----
@@ -259,7 +258,7 @@ class ChildDIComponent{}
 var parentInejctor = N4Inejctor.of(ParentDiCompoennt);
 var childInjector = N4Inejctor.of(ChildDIComponent, parentInjector);
 ----
---
+====
 
 With complex DIComponent structures, injector instances can be created
 with a directly-declared parent and also with any of its children. This
@@ -270,9 +269,7 @@ parents.
 .Compatible DIComponent
 [def]
 --
-A given DIComponent
-is compatible with another DIComponent if it has bindings for all keys
-in other component bindings.
+A given DIComponent is compatible with another DIComponent if it has bindings for all keys  in other component bindings.
 
 [math]
 ++++
@@ -281,8 +278,7 @@ in other component bindings.
 
 NOTE: Although subtype notation $<:$ is used here it does *not* imply actual subtype relations. It was used in this instance for of lack of formal notations for DI concepts and because this is similar to the Liskov Substitution principle.
 
-A complex Child-Parent relation between components is depicted in DIC Parent Child diagram and
-<<ex:complex-dicomponents-relations>> below.
+A complex Child-Parent relation between components is depicted in DIC Parent Child diagram and <<ex:complex-dicomponents-relations>> below.
 
 [[fig-Complex DIComponents Relations]]
 .Complex DIComponents Relations
@@ -436,7 +432,7 @@ $b_1$).
 N4JS <<acronyms,DI>> mechanisms don’t allow for injection of primitives or built-in
 types. Only user-defined N4Types can be used. In cases where a user
 needs to inject a primitive or a built-in type, the developer must wrap
-it into its own class. footnote:[Also cf. blog posting about http://www.markhneedham.com/blog/2009/03/10/oo-micro-types/[micro types], http://darrenhobbs.com/2007/04/11/tiny-types/[tiny types]].
+it into its own class footnote:[Cf. a blog post about micro types - http://www.markhneedham.com/blog/2009/03/10/oo-micro-types/, and tiny types - http://darrenhobbs.com/2007/04/11/tiny-types/ ].
 This is to say that none of the following metatypes can be bound: primitive
 types, enumerations, functions, object types, union- or intersection
 types. It is possible to (implicitly) bind to built-in classes.
@@ -450,8 +446,7 @@ following order:
 
 1.  Try to use explicit binding, if this is not available:
 2.  Try to delegate to parent injectors (order of lookup is not guaranteed, first found is selected). If this is not available then:
-3.  Try to use use implicit binding, which is simply to attempt to
-create the instance.
+3.  Try to use use implicit binding, which is simply to attempt to create the instance.
 
 If no binding for a requested type is available an error will be thrown.
 
@@ -464,8 +459,8 @@ By _injection point_ we mean a place in the source code which, atruntime, will b
 ==== Field Injection
 
 In its simplest form, this is a class field annotated with `@Inject` annotation.
-At runtime, an instance of the containing class will be expected to hold
-reference to an instance of the field declared type. Usually that case
+At runtime, an instance of the containing class will be expected to hold reference to an instance of the field declared type.
+Usually that case
 is called __Field Injection__.
 
 .Field Injection
@@ -476,15 +471,14 @@ following fields:
 
 1.  All directly contained fields annotated with `@Inject`.
 2.  All inherited fields annotated with `@Inject`. task:IDEBUG-400[]
-3.  The injected fields will be created by the injector and their fields
-will be injected as well.
+3.  The injected fields will be created by the injector and their fields will be injected as well.
 --
 
 .Simple Field Injection
 [example]
 --
-<<ex:field-injection>> demonstrates simple field injection using default bindings. Note that all inherited fields
-(i.e. `A.xInA`) are injected and also fields in injected fields (i.e. `x.y`)
+<<ex:field-injection>> demonstrates simple field injection using default bindings.
+Note that all inherited fields (i.e. `A.xInA`) are injected and also fields in injected fields (i.e. `x.y`)
 
 [[ex:field-injection]]
 .Simple Field Injection
@@ -764,16 +758,25 @@ task:IDE-1260[]
 
 The singleton scope (per injector) creates one instance (of the type with `@Singleton` scope) per injector, which is then shared between clients.
 
-The injector will preserve a single instance of the type of `S` and will provide it to all injection points where type of `S` is used. Assuming nested injectors without any declared binding where the second parameter is `S`, the same preserved singleton instance will be available for all nested injectors at all injection points as well.
+The injector will preserve a single instance of the type of `S` and will provide it to all injection points where type of `S` is used.
+Assuming nested injectors without any declared binding where the second parameter is `S`, the same preserved singleton instance will be available for all nested injectors at all injection points as well.
 
-The singleton preservation behavior changes when explicit bindings are declared for type `S` on the nested injector level. Let's assume that the type `S` exists and the type is annotated with `@Singleton`. Furthermore, there is a declared binding where the binding's second argument is `S`. In that case, unlike in other dependency injection frameworks, nested injectors may preserve a singleton for itself and all descendant injectors with `@Bind` annotation. In this case, the preserved singleton at the child injector level will be a different instance than the one at the parent injectors.
+The singleton preservation behavior changes when explicit bindings are declared for type `S` on the nested injector level.
+Let's assume that the type `S` exists and the type is annotated with `@Singleton`.
+Furthermore, there is a declared binding where the binding's second argument is `S`.
+In that case, unlike in other dependency injection frameworks, nested injectors may preserve a singleton for itself and all descendant injectors with `@Bind` annotation.
+In this case, the preserved singleton at the child injector level will be a different instance than the one at the parent injectors.
 
 The tables below depict the expected runtime behavior of singletons used at different injector levels.
-Assume the following are injectors: `C`, `D`, `E`, `F` and `G`. Injector `C` is the top most injector and its nesting injector `D`, hence injector `C` is the parent of the injector `D`. Injector `D` is nesting `E` and so on. The most nested injector is `G`. Let's assume `J` is an interface, class `U` implements interface `J` and class `V` extends class `U`. Finally assume both `U` and `V` are annotated with `@Singleton` at definition-site.
+Assume the following are injectors: `C`, `D`, `E`, `F` and `G`. Injector `C` is the top most injector and its nesting injector `D`, hence injector `C` is the parent of the injector `D`.
+Injector `D` is nesting `E` and so on.
+The most nested injector is `G`. Let's assume `J` is an interface, class `U` implements interface `J` and class `V` extends class `U`.
+Finally assume both `U` and `V` are annotated with `@Singleton` at definition-site.
 
-The example below depicts the singleton preservation for nested injectors without any bindings. All injectors use the same instance from a type. Type `J` is not available at all since it is not bound to any concrete implementation:
+<<tab:diNoBindings>> depicts the singleton preservation for nested injectors without any bindings.
+All injectors use the same instance from a type.
+Type `J` is not available at all since it is not bound to any concrete implementation:
 
-//TODO : check tables
 [[tab:diNoBindings]]
 .DI No Bindings
 [cols="^,^,^,^,^,^"]
@@ -791,9 +794,13 @@ The example below depicts the singleton preservation for nested injectors withou
 |$V_0$ |$V_0$
 |===
 
-The following example is configured by explicit bindings. At the root injector level, type `J` is binded to type `U`. Since the second argument of the binding is declared as a singleton at the definition-site, this explicit binding implicitly ensures that the injector and all of its descendants preserve a singleton of the bound type `U`. At injector level `C`, `D` and `E`, the same instance is used for type `J` which is type `U` at runtime. At injector level `E` there is an additional binding from type `U` to type `V` that overrules the binding declared at the root injector level. With this binding, each places where `J` is declared, type `U` is used at runtime. Furthermore, since `V` is declared as a singleton, both injector `F` and `G` are using a shared singleton instance of type `V`. Finally, for type `V`; injector `C`, `D` and `E` should use a separate instance of `V` other than injector level `F` and `G` because `V` is preserved at injector level `F` with the `U` $\rightarrow$ `V` binding.
+<<tab:diTransitiveBindings>> is configured by explicit bindings. At the root injector level, type `J` is bound to type `U`.
+Since the second argument of the binding is declared as a singleton at the definition-site, this explicit binding implicitly ensures that the injector and all of its descendants preserve a singleton of the bound type `U`.
+At injector level `C`, `D` and `E`, the same instance is used for type `J` which is type `U` at runtime.
+At injector level `E` there is an additional binding from type `U` to type `V` that overrules the binding declared at the root injector level.
+With this binding, each places where `J` is declared, type `U` is used at runtime. Furthermore, since `V` is declared as a singleton, both injector `F` and `G` are using a shared singleton instance of type `V`.
+Finally, for type `V`, injector `C`, `D` and `E` should use a separate instance of `V` other than injector level `F` and `G` because `V` is preserved at injector level `F` with the `U` $\rightarrow$ `V` binding.
 
-//TODO : check tables
 .DI Transitive Bindings
 [[tab:diTransitiveBindings]]
 [cols="^,^,^,^,^,^"]
@@ -811,10 +818,9 @@ The following example is configured by explicit bindings. At the root injector l
 |$V_0$ |$V_0$
 |===
 
-The following table depicts the singleton behaviour but unlike the above
+<<tab:diReBinding>> depicts the singleton behaviour but unlike the above
 table, the bindings are declared for the interface `J`.
 
-//TODO : check tables
 [[tab:diReBinding]]
 .DI Re - Binding
 [cols="^,^,^,^,^,^"]
@@ -832,10 +838,8 @@ table, the bindings are declared for the interface `J`.
 |$V_0$ |$V_0$
 |===
 
-This table describes the singleton behavior when both bindings are
-configured at child injector levels but not the root injector level.
+<<tab:diChildBinding>> describes the singleton behavior when both bindings are configured at child injector levels but not the root injector level.
 
-//TODO : check tables
 [[tab:diChildBinding]]
 .DI Child Binding
 [cols="^,^,^,^,^,^",options="header"]
@@ -856,10 +860,9 @@ U |
 
 ==== Per Injection Chain Singleton
 
-The per injection chain singleton is ’between’ the default and singleton
-scope. It can be used in order to explicitly describe the situation
-which happens when a simple cycle is resolved automatically. It has more
-effects that lead to a more deterministic behavior.
+The per injection chain singleton is ’between’ the default and singleton scope.
+It can be used in order to explicitly describe the situation which happens when a simple cycle is resolved automatically.
+It has more effects that lead to a more deterministic behavior.
 
 Assume a provider declared as
 
@@ -941,7 +944,7 @@ we can recap that at runtime:
 
 Validations in effect for `pass:[N4Injector.create(type{T} ctor)]` callsites:
 
-* `T` should be injectable (in particular, it may be an `N4Provider`).
+* `type{T}` should be injectable (in particular, it may be an `N4Provider`).
 
 === N4JS DI Annotations
 
@@ -949,19 +952,21 @@ Following annotations describe API used to configure N4JSDI.
 
 ==== N4JS DI @GenerateInjector
 
-
-name::
+[cols="a,a,a"]
+|===
+| name::
   @GenerateInjector
-targets::
+| targets::
   N4Class
-retention policy::
+| retention policy::
   RUNTIME
-transitive::
+| transitive::
   NO
-repeatable::
+|repeatable::
   NO
-arguments::
+| arguments::
   NO
+|===
 
 `@GenerateInjector` marks a given class as DIComponent of the graph. The generated injector
 will be responsible for creating an instance of that class and all of
@@ -969,21 +974,16 @@ its dependencies.
 
 ==== N4JS DI @WithParentInjector
 
-
-name::
-  @WithParentInjector
-targets::
-  N4Class
-retention policy::
-  RUNTIME
-transitive::
-  NO
-repeatable::
-  NO
-arguments::
-  TypeRef
-arguments are optional::
-  NO
+[cols="a,a,a"]
+|===
+| name::    @WithParentInjector
+| targets::    N4Class
+| retention policy::    RUNTIME
+| transitive::    NO
+| repeatable::   NO
+| arguments::    TypeRef
+| arguments are optional::    NO
+|===
 
 `@WithParentInjector` marks given _injector_ as depended on other __injector__. The depended
 _injector_ may use provided _injector_ to create instances of objects
@@ -995,25 +995,28 @@ Additional _WithParentInjector_ constraints:
 .DI WithParentInjector
 [req,id=IDE-145,version=1]
 --
-1.  Allowed only on annotated with `@GenerateInjector`.
-2.  Its parameter can only be annotated with .
+1.  Allowed only on `N4ClassDeclarations` annotated with `@GenerateInjector`.
+2.  Its parameter can only be `N4ClassDeclarations` annotated with .
 --
 
 ==== N4JS DI @UseBinder
 
 
-name::
+[cols="a,a,a"]
+|===
+| name::
   @UseBinder
-targets::
+| targets::
   N4Class
-retention policy::
+| retention policy::
   RUNTIME
-transitive::
+| transitive::
   NO
-arguments::
+| arguments::
   TypeRef
-arguments are optional::
+| arguments are optional::
   NO
+|===
 
 `@UseBinder` describes _Binder_ to be used (configure) target __Injector__.
 
@@ -1021,28 +1024,30 @@ arguments are optional::
 .DI UseInjector
 [req,id=IDE-146,version=1]
 --
-1.  Allowed only on annotated with `@GenerateInjector`.
-2.  Its parameter can only be annotated with `@Binder`.
+1.  Allowed only on `N4ClassDeclarations` annotated with `@GenerateInjector`.
+2.  Its parameter can only be `N4ClassDeclarations` annotated with `@Binder`.
 --
 
 ==== N4JS DI @Binder
 
-
-name::
+[cols="a,a,a"]
+|===
+| name::
   @Binder
-targets::
+| targets::
   N4Class
-retention policy::
+| retention policy::
   RUNTIME
-transitive::
+| transitive::
   NO
-repeatable::
+|repeatable::
   NO
-arguments::
+| arguments::
   NONE
+|===
 
 `@Binder` defines a list of bind configurations.
-That can be either `@Bind` annotations on `@Binder` itself or its factory methods annotated with `@Bind`.
+That can be either `@Bind` annotations on `@Binder` itself or its factory methods annotated with `@Provides`.
 
 
 .DI binder
@@ -1055,19 +1060,21 @@ That can be either `@Bind` annotations on `@Binder` itself or its factory method
 
 ==== N4JS DI @Bind
 
-
-name::
+[cols="a,a,a"]
+|===
+| name::
   @Bind
-targets::
+| targets::
   N4ClassDeclaration
-retention policy::
+| retention policy::
   RUNTIME
-transitive::
+| transitive::
   NO
-arguments::
+| arguments::
   TypeRef key, TypeRef target
-arguments are optional::
+| arguments are optional::
   NO
+|===
 
 Defines _binding_ between type and subtype that will be used by injector
 when configured with target <<_n4js-di-binder>>.
@@ -1084,22 +1091,23 @@ See also <<_validation-of-callsites-targeting-n4injector-methods>> for descripti
 
 ==== N4JS DI @Provides
 
-
-name::
+[cols="a,a,a"]
+|===
+| name::
   @Provides
-targets::
+| targets::
   N4MethodDeclaration
-retention policy::
+| retention policy::
   RUNTIME
-transitive::
+| transitive::
   NO
-repeatable::
+|repeatable::
   NO
-arguments::
+| arguments::
   NONE
-arguments are optional::
+| arguments are optional::
   NO
-
+|===
 `@Provides` marks _factory method_ to be used as part <<AC,DI>>. This is treated as _explicit binding_ between declared return type and actual return type. This method is expected to be part of the `@Binder`.
 Can be used to implement custom scopes.
 
@@ -1115,20 +1123,21 @@ described in _injectable values_  <<_validation-of-callsites-targeting-n4injecto
 
 ==== N4JS DI @Inject
 
-
-name::
+[cols="a,a,a"]
+|===
+| name::
   @Inject
-targets::
+| targets::
   N4Field, N4Method, constructor
-retention policy::
+| retention policy::
   RUNTIME
-transitive::
+| transitive::
   NO
-repeatable::
+| repeatable::
   NO
-arguments::
+| arguments::
   NO
-
+|===
 `@Inject` defines the injection point into which an instance object will be injected. The specific instance depends on the injector configuration (bindings) used.
 Class fields, methods and constructors can be annotated. See <<_injection-points>> for more information.
 
@@ -1144,19 +1153,21 @@ Class fields, methods and constructors can be annotated. See <<_injection-points
 ==== N4JS DI @Singleton
 
 
-
-name::
+[cols="a,a,a"]
+|===
+| name::
   @Singleton
-targets::
+| targets::
   N4Class
-retention policy::
+| retention policy::
   RUNTIME
-transitive::
+| transitive::
   NO
-repeatable::
+| repeatable::
   NO
-arguments::
+| arguments::
   NO
+|===
 
 In the case of annotating a class `S` with `@Singleton` on the definition-site, the
 singleton scope will be used as described in <<Singleton Scope>>.
@@ -1290,7 +1301,7 @@ environments and thus are limited to n4jsd files.
 --
 For a runtime-polyfill class $P$ annotated with `@Polyfill`, that is
 $P.staticpolyfill=\FALSE$, all the following constraints
-must hold in addition to :
+must hold in addition to <<Req-IDE-152>>:
 
 1.  Both the polyfill and filled class are provided by the runtime
 (annotated with `@ProvidedByRuntime`): footnote:[This restriction has two reasons: Firstly, user-defined types with implementations would require to ’bootstrap’ the polyfill, which is impossible to do automatically without serious constraints on bootstrap code in general. Secondly, instead of filling user-defined types, they can be subclasses. Mechanisms such as dependency injection could then solve almost all remaining problems.]
@@ -1421,7 +1432,7 @@ M_1.specifier = M_2.specifier
 <<ex:staticpolyfill-polyfillmod>> demonstrates the static polyfill.
 
 Note that the containing project has two source folders configured: +
-`Project/src/n4js` and `Project/src/n4js-gen`.
+`Project/src/n4js` and `Project/src/n4jsgen`.
 
 [[ex:staticpolyfill-polyfillmod]]
 .Static Polyfill, Polyfillmod

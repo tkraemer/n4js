@@ -260,12 +260,13 @@ The type of a class declaration or class expression `C`
 (i.e., a class definition in general) is of type `constructor{C}` if it is not abstract,
 that is if it can be instantiated. If it is abstract, the type of the
 definition simply is `type{C}`:
+
 [math]
 ++++
-&\infer{\tee C : \type{constructor\{C\}}}
-      {\lnot C.abstract}\\
-&\infer{\tee C : \type{type\{C\}}}
-      {C.abstract}
+\beginalign
+\infer{\tee C : \type{constructor\{C\}}}{\lnot C.abstract}\\
+\infer{\tee C : \type{type\{C\}}}{C.abstract}
+\endalign
 ++++
 
 
@@ -277,8 +278,10 @@ if the supertype is declared structurally.
 
 [math]
 ++++
-& \infer{\tee T.sup: \tsNom \tee S}{bind(T.sup, S)} \\
-& \infer{\tee I: \tsNom \tee S}{I \in T.interfaces & bind(I, S)}
+\beginalign
+\infer{\tee T.sup: \tsNom \tee S}{bind(T.sup, S)} \\
+\infer{\tee I: \tsNom \tee S}{I \in T.interfaces & bind(I, S)}
+\endalign
 ++++
 
 --
@@ -398,7 +401,7 @@ The following table shows how to prevent other projects or vendors from
 subtyping by also restricting the accessibility of the constructor:
 
 .Extensibility of Types
-[cols="<3,^,^,^"]
+[cols="<5,^,^,^"]
 |===
 ^|Type `C` Settings 3+| Subclassed in
 
@@ -515,29 +518,21 @@ fragment InterfaceImplementsList*:
 
 
 ==== Properties [[interfaces-properties]]
-
-
 These are the additional properties of interfaces, which can be
 specified by the user:
-
 
 `superInterfaces`::
 Collection of interfaces extended by this interface; empty by default.
 Instead of `superInterfaces`, we simply write `interfaces`.
 
-
 ==== Type Inference [[interfaces-type-inference]]
-
 
 The type of an interface declaration `I` is of type `type{I}`:
 
-
 [math]
 ++++
-\infer{\tee I: \type{type{I}}}{}
+\infer{\tee I: \type{type\{I\}}}{}
 ++++
-
-
 
 ==== Semantics [[interfaces-semantics]]
 
@@ -569,11 +564,9 @@ constraints apply:
 For any interface `I`, the following must hold:
 
 . Interfaces may not be instantiated.
-. Interfaces cannot be set to final (with annotation @Final):
-$\neg I.final$.
-. Members of an interface must not be declared private. The default
-access modifier in interfaces is the the type’s visibility or `project`, if the
-type’s visibility is `private`.
+. Interfaces cannot be set to final (with annotation @Final): $\neg I.final$.
+. Members of an interface must not be declared private.
+The default access modifier in interfaces is the the type’s visibility or `project`, if the type’s visibility is `private`.
 . Members of an interface, except methods, must not be declared `@Final`:
 +
 [math]
@@ -581,16 +574,10 @@ type’s visibility is `private`.
 \forall m \in I.member: m.final \Rightarrow m \in I.methods
 ++++
 +
-NOTE: not allowing field accessors to be declared
-final was a deliberate decision, because it would complicate the
-internal handling of member redefinition; might be reconsidered at a
-later time
-. The literal may not be used in the initializer expression of a field
-of an interface. +
-This restriction is required, because the order of implementation of
-these fields in an implementing class cannot be guaranteed. This applies
-to both instance and static fields in interfaces, but in case of static
-fields, `this` is also disallowed due to <<_static-members-of-interfaces>>.
+NOTE: not allowing field accessors to be declared final was a deliberate decision, because it would complicate the internal handling of member redefinition; might be reconsidered at a later time
+. The literal may not be used in the initializer expression of a field of an interface. +
+This restriction is required, because the order of implementation of these fields in an implementing class cannot be guaranteed.
+This applies to both instance and static fields in interfaces, but in case of static fields, `this` is also disallowed due to <<_static-members-of-interfaces>>.
 
 --
 
@@ -598,16 +585,13 @@ It is possible to declare members in interfaces with a smaller
 visibility as the interface itself. In that case, clients of the
 interface may be able to use the interface but not to implement it.
 
-In order to simplify modeling of runtime types, such as elements,
-interfaces do not only support the notation of static methods but
-constant data fields as well. Since <<Acronyms,IDL>> cite:[OMG14a] is used to describe these elements in specifications (and mapped to JavaScript via rules described in cite:[W3C12a])
-constant data fields are an often-used technique there and they can be
-modeled in N4JS 1:1.
+In order to simplify modeling of runtime types, such as elements, interfaces do not only support the notation of static methods but constant data fields as well.
+Since <<Acronyms,IDL>> cite:[OMG14a] is used to describe these elements in specifications (and mapped to JavaScript via rules described in cite:[W3C12a])
+constant data fields are an often-used technique there and they can be modeled in N4JS 1:1.
 
 // todo[IDE-1236]{check current implementation: fields and methods}
 
-As specified in <<Req-IDE-56>>, interfaces
-cannot contain a constructor i.e.
+As specified in <<Req-IDE-56>>, interfaces cannot contain a constructor i.e.
 $\forall m \in I.ownedMethods: m.name \neq 'constructor'$.
 
 .Simple Interfaces
@@ -630,12 +614,9 @@ interface I2 extends I {
 ----
 --
 
-If a classifier `C` _implements_ an interface
-`I`, we say `I` is _implemented_ by
-`C`. If `C` redefines members declared in
-`I`, we say that these members are _implemented_ by
-`C`. Members not redefined by `C` but with a
-default implementations are _mixed in_ or _consumed by_ `C`.
+If a classifier `C` _implements_ an interface `I`, we say `I` is _implemented_ by `C`.
+If `C` redefines members declared in `I`, we say that these members are _implemented_ by `C`.
+Members not redefined by `C` but with a default implementations are _mixed in_ or _consumed by_ `C`.
 We all cases we call `C` the __implementor__.
 
 Besides the general constraints described in <<_common-semantics-of-classifiers>>, the following constraints must hold for extending or implementing interfaces:
@@ -659,9 +640,7 @@ $J$ more than once only if
 ..  in all cases $J$ is extended with the same type
 arguments for all invariant type parameters.
 +
-Note: for type parameters of $J$ that are declared covariant
-or contravariant on definition site, different type arguments may be
-used.
+NOTE: For type parameters of $J$ that are declared covariant or contravariant on definition site, different type arguments may be used.
 .  All abstract members in $I_i$,
 $i \in \{1, ..., n\}$, must be accessible from
 `I`: +
@@ -860,22 +839,23 @@ For example, given a parameterized type `G<T>` and plain types `A` and `B`, we k
 +
 [math]
 ++++
-\lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G&lt;B&gt;} \subtype \lstnfjs{G&lt;A&gt;}
+\lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G<B>} \subtype \lstnfjs{G<A>}
 ++++
 
 * if `G` is *contravariant* w.r.t. its parameter `T`, then
 +
 [math]
 ++++
-\lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G&lt;A&lt;} \subtype \lstnfjs{G&lt;B&gt;}
+\lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}
 ++++
-
 * if `G` is *invariant* w.r.t. its parameter `T`, then
 +
 [math]
 ++++
-\lstnfjs{B} \subtype \lstnfjs{A} & \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}\\
-\lstnfjs{B} \subtype \lstnfjs{A} & \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}
+\beginalign
+\lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}\\
+\lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}
+\endalign
 ++++
 
 
@@ -884,13 +864,11 @@ parameterized type with more than one type parameter may be, for
 example, covariant w.r.t. one type parameter and contravariant
 w.r.t. another.
 
-Strictly speaking, a type parameter/variable itself is not co- or
-contravariant; however, for the sake of simplicity we say " `T` is
-covariant" as a short form for "`G` is covariant with respect to its type
-parameter `T` " (for contravariant and invariant accordingly).
+Strictly speaking, a type parameter/variable itself is not co- or contravariant;
+however, for the sake of simplicity we say "``T`` is covariant" as a short form for "``G`` is covariant with respect to its type parameter ``T``"
+(for contravariant and invariant accordingly).
 
-To declare the variance of a parameterized classifier on definition
-site, simply add keyword `in` or `out` before the corresponding type parameter:
+To declare the variance of a parameterized classifier on definition site, simply add keyword `in` or `out` before the corresponding type parameter:
 
 [source,n4js]
 ----

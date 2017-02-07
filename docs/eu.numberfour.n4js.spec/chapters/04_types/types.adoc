@@ -1588,10 +1588,9 @@ describe later on.footnote:[For type theory about union types, cite:[Pierce02a(1
 
 For convenience, we repeat the definition of union type expression:
 
-[.language,n4js]
 [source,xtext]
 ----
-pass:[UnionTypeExpression: 'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';]
+UnionTypeExpression: 'union' '{' typeRefs+=TypeRefWithoutModifiers (',' typeRefs+=TypeRefWithoutModifiers)* '}';
 ----
 
 ==== Semantics [[union-type-semantics]]

@@ -685,9 +685,11 @@ name as $SM$:
 +
 [math]
 ++++
+\beginalign
 &S <: C, S.ctor = C.ctor \\
     &\hspace{3em}\to \nexists M \in S.members: \\
     &\hspace{5em}M.acc=\lenum{public} \land M.name = SM.name
+\endalign
 ++++
 2.  `C` itself must not contain a public member with same
 name as $SM$:
@@ -1141,9 +1143,12 @@ class `C`, the following constraints must hold:
 1.  A required data field must not define an initializer: +
 $a.required \to a.init=null$
 2.  There must be no other member with the same name of a data field
-`f`. In particular, there must be no getter or setter
-defined with the same name:
-$\spc \forall\ m \in f.owner.members : m \neq f \to m.name \neq f.name$
+`f`. In particular, there must be no getter or setter defined with the same name:
++
+[math]
+++++
+\spc \forall\ m \in f.owner.members : m \neq f \to m.name \neq f.name
+++++
 
 
 If a subclass should set a different default value, this has to be done
@@ -1169,9 +1174,14 @@ inferred type of the initializer expression:
 ++++
 \beginalign
 \spc \infer{\tee d: T}{d.declaredType \neq \NULL \spc T = d.declaredType} \\
-\spc \infer{\tee d: T}{
-    d.declaredType = \NULL \spc d.expression \neq \NULL \\
-    E = \tee d.expression \spc E \not\in \{\type{null, undefined}\} \spc T = E} \\
+\spc \infer{\tee d: T}{d.declaredType = \NULL \spc d.expression \neq \NULL}
+\endalign
+++++
+
+[math]
+++++
+\beginalign
+\spc E = \tee d.expression \spc E \not\in \{\type{null, undefined}\} \spc T = E} \\
 \spc \infer{\tee d: \type{any}}{else}
 \endalign
 ++++
@@ -1181,8 +1191,7 @@ type parameters which are provided by the reference:
 
 [math]
 ++++
-\infer{\typeEnv \entails \type{TField}\ tfield: T}
-        {\typeEnv \entails tfield.typeRef: T}
+\infer{\typeEnv \entails \type{TField}\ tfield: T}{\typeEnv \entails tfield.typeRef: T}
 ++++
 
 === Assignment Modifiers
@@ -1195,19 +1204,15 @@ Assignment of data fields can be modified by the assignment modifiers `const` (s
 --
 For a data field `f` marked as `const`, the following constraints must hold:
 
-.  An initializer expression must be provided in the declaration
-(except in n4jsd files):
-+
+.  An initializer expression must be provided in the declaration (except in n4jsd files): +
 $f.expr \neq \NULL$
-.  A constant data field is implicitly static and must be accessed only
-via the classifier type. It is not possible, therefore, to use the `this`
-keyword in the initializer expression of a constant field:
-+
+.  A constant data field is implicitly static and must be accessed only via the classifier type.
+It is not possible, therefore, to use the `this` keyword in the initializer expression of a constant field: +
 $\nexists sub \in f.expr^*: sub="this"$
-// ** syntax highlighting in editor
-.  A constant data field must not be annotated with `@Final`:
+// **
+.  A constant data field must not be annotated with `@Final`: +
 $f.const \Rightarrow \lnot f.final$
-. Constant data fields are not writeable (cf. <<Req-IDE-68>>):
+. Constant data fields are not writeable (cf. <<Req-IDE-68>>): +
 $f.const \Rightarrow \lnot f.writeable$
 --
 

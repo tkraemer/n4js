@@ -124,19 +124,23 @@ statement:
 +
 [math]
 ++++
+\beginalign
 F.typeRef \neq Undefined \to \\
-& |f.body.stmts|>0 \\
-& \land f.body.stmts^*_{|f.body.stmts^*|-1} isa\ \lstnfbnf{ReturnStatement}
+|f.body.stmts|>0 \\
+\land f.body.stmts^*_{|f.body.stmts^*|-1} isa\ \lstnfbnf{ReturnStatement}
+\endalign
 ++++
 4.  If a function explicitly defines a return type, all return
 statements must return a type conform to that type:
 +
 [math]
 ++++
+\beginalign
 & F.typeRef \neq Undefined \\
 & \iff \\
 & \forall r \in F.body.stmts, r\ isa\ \lstnfbnf{ReturnStatement}: \\
 & r.expr\neq null \land \infType{r.expr.typeRef} <: \infType{F.typeRef}
+\endalign
 ++++
 
 --
@@ -177,7 +181,7 @@ else ($k>n$):
 
 [[cdVarianceFunctionChart]]
 .Function Variance Chart
-image::{find}fig/cdVarianceFunctionChart.png[]
+image::{find}fig/cdVarianceFunctionChart.png[scaledwidth="60%"]
 
 `{function()}` $<:$ `{function(A)}` $<:$ `{function(A, A)}` might be surprising for Java programmers. However, in JavaScript it is
 possible to call a function with any number of arguments independently
@@ -190,21 +194,24 @@ other constraint violations.
 
 [math]
 ++++
+\beginalign
 & \infer{\tee f \lstnfbnf{'('} arglist\ \lstnfbnf{')'}: \type{any}}
         {binds(f,F)&F.returnType=\NULL & \exists r \in returns(F): r.expression \neq \NULL} \\
 & \infer{\tee f \lstnfbnf{'('} arglist\ \lstnfbnf{')'}: \type{void}}
         {binds(f,F)&F.returnType=\NULL & \forall r \in returns(F): r.expression \neq \NULL}
+\endalign
 ++++
 
 with
 
 [math]
 ++++
-
+\beginalign
 & \infer{returns(F): RETS}
         {\{r \in F.body.statements | \mu(r)=\type{ReturnStatement}\} \cup \bigcup_{s\in F.body.statements} returns(s)} \\
 & \infer{returns(s): RETS}
         {\{sub \in s.statements | \mu(sub)=\type{ReturnStatement}\} \cup \bigcup_{sub\in s.statements} returns(sub)}
+\endalign
 ++++
 
 --
@@ -223,7 +230,7 @@ Thus, the type of $f2$ must be a subtype of the $f1$’s type.
 ----
 function bar(f1: {function(A,B):C}) { ... }
 
-var f1: {function(A,B):C} = function(p1,p2){...};
+var f2: {function(A,B):C} = function(p1,p2){...};
 bar(f1);
 ----
 --
@@ -426,22 +433,20 @@ In Java this would be handled as method overloading and therefore an `@Override`
 .Upper and Lower Bound of a Function Type
 [req,id=IDE-80,version=1]
 --
-The upper bound of a function type $F$ is a function type with the lower bound types of the parameters and the upper bound of the return type:
-$upper(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( lower(P_1),\dots,lower(P_n) ): upper(R)$
-The lower bound of a function type $F$ is a function type
-with the upper bound types of the parameters and the lower bound of the
-return type:
+The upper bound of a function type $F$ is a function type with the lower bound types of the parameters and the upper bound of the return type: +
+$upper(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( lower(P_1),\dots,lower(P_n) ): upper(R)$\
+
+The lower bound of a function type $F$ is a function type with the upper bound types of the parameters and the lower bound of the return type: +
 $lower(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( upper(P_1),\dots,upper(P_n) ): lower(R)$
 --
 
 === Autoboxing of Function Type
 task:IDE-830[]
 
-Function types, compared to other types like String, come only in on
-flavour: the Function object representation. There is no primitive
-function type. Nevertheless, for function type expressions and function
-declarations, it is possible to call the properties of Function object
-directly. This is similar to autoboxing for strings.
+Function types, compared to other types like String, come only in on flavour: the Function object representation.
+There is no primitive function type.
+Nevertheless, for function type expressions and function declarations, it is possible to call the properties of Function object directly.
+This is similar to autoboxing for strings.
 
 .Access of Function properties on functions
 [source,n4js]
@@ -490,31 +495,27 @@ unless it is shadowed by a local variable, a formal parameter or a
 function named `arguments` or in the rare case that the function
 itself is called ’arguments’ cite:[ECMA11a(S10.5,pp59)]. The argument object has array-like behavior even though it is not of type `array`:
 
-* All actual passed-in parameters of the current execution context can
-be retrieved by $0-based$ index access.
-* The `length` property of the arguments object stores the actual number of
-passed-in arguments which may differ from the number of formally defined
-number of parameters $fpars$ of the containing function.
-* It is possible to store custom values in the arguments object, even
-outside the original index boundaries.
+* All actual passed-in parameters of the current execution context can be retrieved by $0-based$ index access.
+* The `length` property of the arguments object stores the actual number of passed-in arguments which may differ from the number of formally defined number of parameters $fpars$ of the containing function.
+* It is possible to store custom values in the arguments object, even outside the original index boundaries.
 * All obtained values from the arguments object are of type `any`.
 
 In non-strict ES mode the `callee` property holds a reference to the function executed cite:[ECMA11a(S10.6,pp61)].
 
-.arguments.callee
+.Arguments.callee
 [req,id=IDE-81,version=1]
 --
 In N4JS and in ES strict mode the use of `arguments.callee` is prohibited.
 --
 
 
-.arguments as formal parameter name
+.Arguments as formal parameter name
 [req,id=IDE-82,version=1]
 --
 In N4JS, the formal parameters of the function cannot be named `arguments`.
 This applies to all variable execution environments like field accessors (getter/setter, <<_field-accessors-getter-setter>>), methods (<<Methods>>) and constructors (<<_constructor-and-classifier-type>>), where `FormalParameter` type is used.
 
-.Usage of arguments object
+.Usage of Arguments Object
 [example]
 --
 [source,n4js]
@@ -563,9 +564,8 @@ A function can be defined as described in cite:[ECMA11a(S13,p.98)] and additiona
 Since N4JS is based on cite:[ECMA15a], the syntax contains constructs not available in cite:[ECMA11a].
 The newer constructs defined only in cite:[ECMA15a] and proposals already implemented in N4JS are described in <<ECMAScript 2015 Function Definition>> and <<ECMAScript Proposals Function Definition>>.
 
-In contrast to plain JavaScript, function declarations can be used in
-blocks in N4JSl. This is only true, however, for N4JS files, not for
-plain JS files. task:IDE-1043[]
+NOTE: In contrast to plain JavaScript, function declarations can be used in blocks in N4JS.
+This is only true, however, for N4JS files, not for plain JS files. task:IDE-1043[]
 
 
 .Syntax Function Declaration and Expression
@@ -697,16 +697,15 @@ lead to unexpected results as shown in the following code snippet:
 function f(cb: {function():void}) { cb() }
 f(function() { return 1; });
 ----
---
 
-No error is issued: The type of the function expression actually is
-inferred to `{function():any}`, because there is a return statement with an expression.
+No error is issued: The type of the function expression actually is inferred to `{function():any}`, because there is a return statement with an expression.
 It is not inferred to `{function():void}`, even if the formal parameter of `f` suggests that.
 Due to the previously-stated relation `{function():any} <: {function():void}` this is correct – the client (in this
 case function `f`) works perfectly well even if `cb` returns something.
 The contract of arguments states that the type of the argument is a subtype
-of the type of the formal parameter. This is what the inferencer takes
-into account!
+of the type of the formal parameter.
+This is what the inferencer takes into account!
+--
 
 [.language-n4js]
 == ECMAScript 2015 Function Definition
@@ -1012,13 +1011,13 @@ for them).
 variety or not, the usage of `super` isn’t allowed in the body of arrow
 functions.
 
-.no.this.in.top.level.arrow.function in N4JS Mode
+.No This in Top Level Arrow Function in N4JS Mode
 [req,id=IDE-84,version=1]
 --
 In N4JS, a top-level arrow function can’t refer to `this` as there’s no outer lexical context that provides a binding for it.
 --
 
-.no.arguments.in.top.level.arrow.function
+.No Arguments in Top Level Arrow Function
 [req,id=IDE-85,version=1]
 --
 In N4JS, a top-level arrow function can’t include usages of `arguments` in its body, again because of the missing binding for it.
