@@ -257,7 +257,7 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 
 			// TODO IDE-2520 enable for N4JSX
 			//
-			// Once we enable Organize Imports with IDE-2502 filtering below should be removed. Populating list as above
+			// Once we enable Organize Imports with IDE-2520 filtering below should be removed. Populating list as above
 			// will be enough.
 			n4FileExtensions.remove(N4JSGlobals.N4JSX_FILE_EXTENSION);
 		}

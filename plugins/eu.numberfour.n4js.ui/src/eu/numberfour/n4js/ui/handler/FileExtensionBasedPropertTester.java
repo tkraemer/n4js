@@ -100,7 +100,6 @@ public class FileExtensionBasedPropertTester extends PropertyTester {
 		return false;
 	}
 
-	// TODO IDE-2509 refactor
 	private Collection<String> getExpectedFileExtensions(final Object expectedValue) {
 		if (null == expectedValue) {
 			return emptyList();

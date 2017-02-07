@@ -20,12 +20,30 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.RegistryFactory;
+import org.eclipse.xtext.resource.FileExtensionProvider;
 
 import com.google.common.base.Splitter;
 import com.google.inject.Singleton;
 
 /**
- * This class collect runnable file extensions from extensions to extension point.
+ * This class is providing alternative to {@link FileExtensionProvider}. Implementations of that interface are language
+ * specific, thus instances you use are context specific. When using those you need to be certain if you want to use
+ * that specific implementation. When working against interface you also need to be sure you get instance you want
+ * (especially when you work with injected instances, you might get different implementation at runtime than you expect
+ * at compile time).
+ *
+ * This class provides a way to get extensions with certain characteristics (defined by the {@link FileExtensionType}
+ * across all supported languages (in practice all supported languages that have registered themselves to this
+ * registry). Main use case it to allow caller ask about file extensions from a given language, without directly
+ * depending on that language. Note that while extension point provides some hints about meaning of the characteristics
+ * (defined by the {@link FileExtensionType} it is up to the caller to interpret this information at use site. When
+ * meanings get blurred it may be required to introduce more fined grained {@link FileExtensionType file extension
+ * types} and re-examine all use sites.
+ *
+ *
+ * Note that is different from {@code FileExtensionInfoRegistry} in Xpect. That registry is used to setup different
+ * languages for Xpect tests.
+ *
  */
 // TODO IDE-2509 how does this relate to org.xpect.registry.FileExtensionInfoRegistry
 @Singleton

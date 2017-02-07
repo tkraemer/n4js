@@ -6,7 +6,7 @@
          <meta.schema plugin="eu.numberfour.n4js.utils" id="eu.numberfour.n4js.utils.fileExtensions" name="Runnable File Extensions"/>
       </appinfo>
       <documentation>
-         This extension point should be used by all language plugins to register their file extensions to specific categories. These categories are used by the system to enable / disable certain features for a given file extension.
+         This extension point should be used by sub-language plugins to register their file extensions to specific categories. These categories are used by the system to enable / disable certain features for a given file extension.
       </documentation>
    </annotation>
 
@@ -68,7 +68,7 @@
          <attribute name="extensions" type="string">
             <annotation>
                <documentation>
-                  Used by IDE o decided if a given file should be subject of transpilatuion (even is pass through copy is made with no source code transformation). This also affects features like jumping to generated code.
+                  Used by the IDE decided if a given file should be subject of transpilation (even if pass through copy is made with no source code transformation). This also affects features like jumping to generated code.
                </documentation>
             </annotation>
          </attribute>
@@ -80,7 +80,7 @@
          <attribute name="extensions" type="string">
             <annotation>
                <documentation>
-                  Used by IDE testers to decided if a given file is of a testable type.
+                  Used by the IDE testers to decide if a given file is of a testable type.
                </documentation>
             </annotation>
          </attribute>
@@ -92,7 +92,7 @@
          <attribute name="extensions" type="string">
             <annotation>
                <documentation>
-                  Used by IDE in various places, where building AST or TModel of file is need. Also when calulating if changes to that file are affecting containing or other source containers (used e.g. by the eclipse/xtext builder).
+                  Used by the IDE in various places, where building AST or TModel of file is need. Also when calulating if changes to that file are affecting containing or other source containers (used e.g. by the eclipse/xtext builder).
                </documentation>
             </annotation>
          </attribute>
