@@ -249,8 +249,8 @@ This is also true if `T` is an interface and the type of `S` cannot have subtype
 \endalign
 ++++
 // Doesn't work for daimond-relationships with S and T on left and right. --> limit to classes only.
-4.  `S` is a class, enum or primitive type and `T` is a type-variable, then for each given boundary $T^{up}_i$ of `T` of type class, enum or primitive `S` must be a member of the type hierarchy:
-footnote:[`i` iterates over all boundaries]
+4.  `S` is a class, enum or primitive type and `T` is a type-variable, then for each given boundary $T^{up}_i$ of `T`
+of type class, enum or primitive `S` must be a member of the type hierarchy: footnote:[`i` iterates over all boundaries]
 +
 [math]
 ++++
@@ -260,7 +260,8 @@ footnote:[`i` iterates over all boundaries]
 \endalign
 ++++
 5.  `S` is a union or intersection type, then the type cast is valid if it is valid for at least one element of `S`.
-6.  `S` and `T` are generics, and if $S^0=T^0$, a cast is possible if type arguments are sub- or supertypes of each other: footnote:[`i` iterates over all type args]
+6.  `S` and `T` are generics, and if $S^0=T^0$,
+a cast is possible if type arguments are sub- or supertypes of each other: footnote:[`i` iterates over all type args]
 +
 [math]
 ++++

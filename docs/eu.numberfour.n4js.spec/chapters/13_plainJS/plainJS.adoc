@@ -280,8 +280,8 @@ Although it is not recommended to use global definitions, this cannot always be
 avoided.
 
 N4JS supports global definitions via the annotation `Global`.
-This annotation can only be defined on modules (via `@@Global`) – this means that all declarations in the module are globally defined.
-footnote:[Global basically means that the module defines no namespace on its own. Thus the annotation is a script/module related annotation.]
+This annotation can only be defined on modules (via `@@Global`) – this means that all declarations in the module are
+globally defined.footnote:[Global basically means that the module defines no namespace on its own. Thus the annotation is a script/module related annotation.]
 
 We introduce a new pseudo property $global$ on all declared
 elements accordingly:

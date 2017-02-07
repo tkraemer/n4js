@@ -1220,8 +1220,7 @@ A function or method $f$ can be annotated with `@Promisifiable` if and only if t
 in which $E$ is type `Error` or a subtype thereof, $T_0, ..., T_n$ are arbitrary types except or its subtypes.
 $E$, if given, is then the type of the error value, and $T_0, ..., T_n$ are the types of the success values of the asynchronous operation. +
 Since the return value of the synchronous function call is not available when using `@Promisify`, $V$ is recommended to be `void`, but it can be any type.
-3.  The callback parameter may be optional.
-footnote:[Even in this case, the function will actually be called with the callback method which is then created by the transpiler. However, the callback is not given in the N4JS code).]
+3.  The callback parameter may be optional.footnote:[Even in this case, the function will actually be called with the callback method which is then created by the transpiler. However, the callback is not given in the N4JS code).]
 
 --
 

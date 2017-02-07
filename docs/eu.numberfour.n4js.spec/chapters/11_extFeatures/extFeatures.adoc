@@ -1293,9 +1293,7 @@ $P.staticpolyfill=\FALSE$, all the following constraints
 must hold in addition to :
 
 1.  Both the polyfill and filled class are provided by the runtime
-(annotated with `@ProvidedByRuntime`+
-):
-footnote:[This restriction has two reasons: Firstly, user-defined types with implementations would require to ’bootstrap’ the polyfill, which is impossible to do automatically without serious constraints on bootstrap code in general. Secondly, instead of filling user-defined types, they can be subclasses. Mechanisms such as dependency injection could then solve almost all remaining problems.]
+(annotated with `@ProvidedByRuntime`): footnote:[This restriction has two reasons: Firstly, user-defined types with implementations would require to ’bootstrap’ the polyfill, which is impossible to do automatically without serious constraints on bootstrap code in general. Secondly, instead of filling user-defined types, they can be subclasses. Mechanisms such as dependency injection could then solve almost all remaining problems.]
 
 $& P.providedByRuntime = \TRUE \land F.providedByRuntime = \TRUE$
 

@@ -1882,8 +1882,7 @@ For a given relational expression $e$ with
 task:IDE-345[] $e.op = \lstnfjs{instanceof}$, the following constraints
 must hold:
 
-* The right operand of the instanceof operator must be a `Function`
-footnote:[Only [language-n4js]`Function` implements the ECMAScript specification property [language-n4js]`hasInstance`. Thus instanceof expressions are rewritten by the compiler for other types. Note that a reference to a class returns the constructor type, which actually is a function itself.]
+* The right operand of the instanceof operator must be a `Function` footnote:[Only [language-n4js]`Function` implements the ECMAScript specification property [language-n4js]`hasInstance`. Thus instanceof expressions are rewritten by the compiler for other types. Note that a reference to a class returns the constructor type, which actually is a function itself.]
 In other words,
 +
 [math]
@@ -1893,8 +1892,7 @@ In other words,
 +
 is contained in the the first type rule.] task:IDE-652[]
 // TODO check for missing reference
-, an object type reference
-footnote:[Includes interfaces, since an interface type reference is a subtype of object type reference: $\type{type{Interface}} <: \type{type{Object}}$]
+, an object type reference footnote:[Includes interfaces, since an interface type reference is a subtype of object type reference: $\type{type{Interface}} <: \type{type{Object}}$]
 or an enum type reference. task:IDE-681[] task:IDEBUG-631[]
 
 [math]
@@ -2472,8 +2470,7 @@ task:IDE-645[]
 
 
 `super` can be used to access the supertype’s constructor, methods, getters and setters.
-The supertype is defined lexically, which is different from how `this` works.
-footnote:[See cite:[ECMA15a], Chapter 12.3.5 "The Super Keyword"; note the use of "HomeObject" instead of "thisValue"; also see this http://www.2ality.com/2011/11/super-references.html[blog]).]
+The supertype is defined lexically, which is different from how `this` works.footnote:[See cite:[ECMA15a], Chapter 12.3.5 "The Super Keyword"; note the use of "HomeObject" instead of "thisValue"; also see this http://www.2ality.com/2011/11/super-references.html[blog]).]
 
 Note that in cite:[ECMA15a] Chapter 12.3.5 `The Super Keyword`, `super` is defined as a keyword but the syntax and semantics are defined in conjunction of member access.
 

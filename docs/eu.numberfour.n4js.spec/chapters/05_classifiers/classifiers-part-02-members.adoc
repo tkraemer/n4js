@@ -294,8 +294,7 @@ The following constraints are defined for methods in ECMAScript 6 cite:[ECMA15a(
 .Method Definition ECMAScript 6
 [req,id=IDE-53,version=1]
 --
-* It is a Syntax Error if any element of the BoundNames of
-StrictFormalParameters also occurs in the VarDeclaredNames of
+* It is a Syntax Error if any element of the BoundNames of StrictFormalParameters also occurs in the VarDeclaredNames of
 FunctionBody.
 * It is a Syntax Error if any element of the BoundNames of
 StrictFormalParameters also occurs in the LexicallyDeclaredNames of
@@ -328,8 +327,7 @@ This is because assigning or re-assigning a method breaks encapsulation. Methods
 
 --
 
-NOTE: The following code demonstrates problems arising when
-methods are assigned to variables in terms of function expressions.
+NOTE: The following code demonstrates problems arising when methods are assigned to variables in terms of function expressions.
 Given are two classes and instances of each class as follows:
 
 [source,n4js]
@@ -1355,11 +1353,9 @@ The same applies to setters, accordingly.
 * <<Req-IDE-72>>, <<Req-IDE-73>>, and <<Req-IDE-74>> apply to field accessors accordingly (getter / setter overriding).
 
 [.language-n4js]
-[NOTE]
----
-A getter and setter with the same name need not have the same type, i.e. the getter’s return type need not be the same as a subtype of
+NOTE: A getter and setter with the same name need not have the same type, i.e. the getter’s return type need not be the same as a subtype of
 the type of the setter’s parameter (the types can be completely unrelated).footnote:[Thus, the type of one accessor is not used to infer the type of the other one. E.g., from `set x(string s)`, we cannot infer `get x()` to return `string` — instead, the getter is inferred to return `any`.]
----
+
 --
 
 Getters and setters – like functions – define a variable execution
