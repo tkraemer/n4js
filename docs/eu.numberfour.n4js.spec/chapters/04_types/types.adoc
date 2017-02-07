@@ -1809,15 +1809,13 @@ A \spc  \mathbf{join} \spc  \union{B,C} \neq A \spc  \mathbf{join} \spc   B \spc
 --
 The meet of union types is defined as the meet of the elements.
 That is
-+
+
 [math]
 ++++
-\infer{\union{T_1,\dots,T_n} \meet S }{T_1 \meet S \meet \dots \meet T_n \meet S}\\
-++++
-[math]
-++++
-\infer{\union{T_1,\dots,T_n} \meet \union{S_1,\dots,S_m} }
-{T_1 \meet S_1,\dots,T_1 \meet S_m, \dots,  T_n \meet S_1,\dots,T_n \meet S_m}
+\beginalign
+\infer{\union{T_1,\dots,T_n} \meet S }{T_1 \meet S \meet \dots \meet T_n \meet S} \\
+\infer{\union{T_1,\dots,T_n} \meet \union{S_1,\dots,S_m} }{T_1 \meet S_1,\dots,T_1 \meet S_m, \dots,  T_n \meet S_1,\dots,T_n \meet S_m}
+\endalign
 ++++
 
 Remarks:
@@ -2146,7 +2144,7 @@ constraints apply footnote:[see "Covariance and contravariance with unions and i
 A composed type may appear as the upper or lower bound of a wildcard. In the covariant case,
 the following subtype relations apply:
 
-[source,n4js]
+[source,ebnf]
 ----
 union{ G<? extends A>, G<? extends B> }  <:  G<? extends union{A,B}>
 G<? extends intersection{A,B}>  <:  intersection{ G<? extends A>, G<? extends B> }
@@ -2154,7 +2152,7 @@ G<? extends intersection{A,B}>  <:  intersection{ G<? extends A>, G<? extends B>
 
 In the contra variant case, the following subtype relations apply:
 
-[source,n4js]
+[source,ebnf]
 ----
 union{ G<? super A>, G<? super B> }  <:  G<? super intersection{A,B}>
 G<? super union{A,B}>  <:  intersection{ G<? super A>, G<? super B> }
@@ -2398,16 +2396,16 @@ task:IDE-786[]
 +
 [math]
 ++++
-\forall T: constructor{T}  <: type{T}
+\forall T: constructor\{T\}  <: type\{T\}
 ++++
 . If a class _B_ is a subtype (subclass) of a class _A_, then the classifier type `type{B}` also is a subtype of `type{A}`:
 +
 [math]
 ++++
-\infer{type{B} <: type{A}}{B <: A}
+\infer{type\{B\} <: type\{A\}}{B <: A}
 ++++
 .  If a class _B_ is a subtype (subclass) of a class _A_, and if the constructor function of _B_ is a subtype of the constructor function of _A_, then the
-classifier type `constructor{B}` also is a subtype of `constructor_{A}_` :
+classifier type `constructor{B}` also is a subtype of `constructor{A}` :
 +
 [math]
 ++++
@@ -2422,7 +2420,7 @@ This subtype relation for the constructor type is enforced if the constructor of
 +
 [math]
 ++++
-\infer{\tee C: \lstnfjs{constructor[C]}}{\mu(C) \in { {classifierDefinition} } }
+\infer{\tee C: \lstnfjs{constructor[C]}}{\mu(C) \in \{ {classifierDefinition} \} }
 ++++
 . A class cannot be called as a function in ECMAScript.
 Thus, the constructor and type type are only subtype of :
@@ -2431,9 +2429,8 @@ Thus, the constructor and type type are only subtype of :
 ++++
 \beginalign
 \forall T: \\
-\forall T: \\
-\lstnfjs{constructor{T}} <: \type{Object} \\
-\lstnfjs{type{T}} <: \type{Object} \\
+\lstnfjs{constructor\{T\}} <: \type{Object} \\
+\lstnfjs{type\{T\}} <: \type{Object} \\
 \endalign
 ++++
 .  If the type argument of the constructor is not a declared type (i.e., a wildcard or a type variable with bounds), the constructor cannot be used in a new expression.
@@ -2442,9 +2439,11 @@ In that case, the following rules apply: task:GH-221[]
 +
 [math]
 ++++
-\infer{\lstnfjs{constructor{S}} <: \lstnfjs{constructor{T}}}{S.upper <: T.upper &&  T.lower <: S.lower && \mu(T) \neq \type{DeclaredTypeWithAccessModifier}}
+\beginalign
+\infer{\lstnfjs{constructor{S}} <: \lstnfjs{constructor{T}}}{S.upper <: T.upper \spc  T.lower <: S.lower \spc \mu(T) \neq \type{DeclaredTypeWithAccessModifier}}
+\endalign
 ++++
-
++
 Note that this is only true for the right hand side of the subtyping rule.
 A constructor type with a wildcard is never a subtype of a constructor type without a wildcard.
 
