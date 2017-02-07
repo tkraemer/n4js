@@ -170,8 +170,7 @@ Exceptions in the cases of object literals or destructuring are explained later 
 --
 
 The following two listings show the very same code and type annotations are provided on
-the left hand side. For simplicity, `string` is always used as type expression.
-footnote:[In the N4JS IDE, type annotations are highlighted differently than ordinary code.]
+the left hand side. For simplicity, `string` is always used as type expression.footnote:[In the N4JS IDE, type annotations are highlighted differently than ordinary code.]
 
 [source,n4js]
 ----
@@ -498,7 +497,8 @@ class X<T extends A, S extends B> {
 <1> Even though the upper bound of `S` is a subtype of `T`’s upper bound (since $B <: A$), we cannot infer that `S` is a subtype of `T`,
 because there are valid concrete bindings for which this would not be
 true: for example, if `T` were bound to `C` and `S` to `B`.
-<2> This differs from existential types (see `ga` and `gb` and line 21): `G<? extends B>` $<:$ `G<? extends A>` ).
+<2> This differs from existential types (see `ga` and `gb` and line 21): +
+`G<? extends B>` $<:$ `G<? extends A>` ).
 
 ====
 
@@ -1142,8 +1142,7 @@ A number of this type is returned by the binary or operation using zero as opera
 built-in primitive type called `int`.
 For details on how numeric literals map to types `number` and `int`, refer to <<_integer-literals>>.
 
-IMPORTANT: for the time being, built-in type `int` is synonymous to type `number`. This means one can be assigned to the other and a value declared to be of type `int` may actually be a 64-bit floating point number.
-footnote:[The rationale for having this limited implementation of type is that API designers already want to start providing hints where later only 32-bit integers will be used. For the time being, **this is checked neither statically nor at runtime**!]
+IMPORTANT: for the time being, built-in type `int` is synonymous to type `number`. This means one can be assigned to the other and a value declared to be of type `int` may actually be a 64-bit floating point number.footnote:[The rationale for having this limited implementation of type is that API designers already want to start providing hints where later only 32-bit integers will be used. For the time being, **this is checked neither statically nor at runtime**!]
 
 
 // \todo{change built-in type \type{int} to always hold values of ECMAScript  \type{int32}}
@@ -1624,9 +1623,7 @@ used almost everywhere (e.g., in variable declarations or in formal
 method parameters). The type inferencer usually avoids returning union
 types and prefers single typed joins or meets. __The most common use
 case for union types is for emulating method overloading__, as we
-describe later on.
-
-footnote:[For type theory about union types, cite:[Pierce02a(15.7)] and cite:[Igarashi07a], other languages that explicitly support the notion of union type include Ceylon cite:[King13a(3.2.4/5)]]
+describe later on.footnote:[For type theory about union types, cite:[Pierce02a(15.7)] and cite:[Igarashi07a], other languages that explicitly support the notion of union type include Ceylon cite:[King13a(3.2.4/5)]]
 
 ==== Syntax [[union-type-syntax]]
 
@@ -1757,9 +1754,7 @@ Remarks:
 
 * The simplification rules may be applied recursively.
 * For given types $B <: A$, and the union type $U=\union{A,B}$, $U \neq B$.
-The types are equivalent, however: $A <:= U$ and $U <:= A$.
-
-footnote:[This is different from Ceylon ( cite:[King13a(3.2.3)]), in which the union is defined to be `the same type as` _A_. Although the meaning of `same` is not clear, it is possibly used as a synonym for `equivalent`.]
+The types are equivalent, however: $A <:= U$ and $U <:= A$.footnote:[This is different from Ceylon ( cite:[King13a(3.2.3)]), in which the union is defined to be `the same type as` _A_. Although the meaning of `same` is not clear, it is possibly used as a synonym for `equivalent`.]
 
 .Subtyping with union type
 [example]
@@ -1949,9 +1944,7 @@ task:IDE-142[] task:IDE-385[] task:IDE-383[]
 Intersection type reflects the dynamic nature of JavaScript, similar to union type.
 As in Java, intersection type is used to define the type boundaries of type variables in type parameter definitions.
 They are inferred by the type inferencer for type checking (as a result of join or meet).
-In contrast to Java, however, intersection type can be declared explicitly by means of intersection type expression.
-
-footnote:[For type theory about intersection types, see cite:[Pierce02a(15.7)] and cite:[Laurent12a], other languages supporting explicit notion of intersection type include Ceylon cite:[King13a(3.2.4/5)].]
+In contrast to Java, however, intersection type can be declared explicitly by means of intersection type expression.footnote:[For type theory about intersection types, see cite:[Pierce02a(15.7)] and cite:[Laurent12a], other languages supporting explicit notion of intersection type include Ceylon cite:[King13a(3.2.4/5)].]
 
 ==== Syntax [[intersection-type-syntax]]
 
@@ -2043,11 +2036,7 @@ intersection:
 ++++
 
 
-These subtyping rules are similar to Ceylon.
-
-footnote:[In Ceylon, for a given union type $U=T_1|T_2$ and intersection type $I=T_1\&T_2$ (with ’|’ is union and ’&’ is intersection),
-$T_1<:U$ and $T_2<:U$ is true, and $T_1<:I$ and $T_2<:I$ is true.
-We should define that as well (if it is not already defined). Cf cite:[King13a(3.2.4/5)]]
+These subtyping rules are similar to Ceylon. footnote:[In Ceylon, for a given union type $U=T_1|T_2$ and intersection type $I=T_1\&T_2$ (with ’|’ is union and ’&’ is intersection), $T_1<:U$ and $T_2<:U$ is true, and $T_1<:I$ and $T_2<:I$ is true. We should define that as well (if it is not already defined). Cf cite:[King13a(3.2.4/5)]]
 
 During validation, intersection types containing union or other
 intersection types may be inferred. In this case, the composed types are
@@ -2190,8 +2179,7 @@ intersection type.
 === Composed Types in Wildcards
 
 Composed types may appear as the bound of a wildcard. The following
-constraints apply
-footnote:[see "Covariance and contravariance with unions and intersections" at http://ceylon-lang.org/documentation/1.1/tour/generics/]
+constraints apply footnote:[see "Covariance and contravariance with unions and intersections" at http://ceylon-lang.org/documentation/1.1/tour/generics/]
 :
 
 .Composed Types as Bound of a Wildcard
@@ -2426,8 +2414,7 @@ types.
 
 A class definition as described in <<Classes>> declares types.
 Often, it is necessary to access these types directly, for example to access staticmembers or for dynamic construction of instances.
-These two use cases are actually slightly different and N4JS provides two different types, one for each use case: constructor and classifier type.
-footnote:[The classifier type is, in fact, the `type type` or `metatype` of atype. We use the term classifier type in the specification to avoid the bogus `type type` terminology.]
+These two use cases are actually slightly different and N4JS provides two different types, one for each use case: constructor and classifier type.footnote:[The classifier type is, in fact, the `type type` or `metatype` of atype. We use the term classifier type in the specification to avoid the bogus `type type` terminology.]
 The constructor is basically the classifier type with the additional possibility to call it via `new` in order to create new instances of the declared type.
 
 Both `meta` types are different from Java’s type `Class<T>`, as the latter has a defined set of members, while the N4JS metatypes will have members according to a class definition.
@@ -2767,6 +2754,8 @@ Instead of using $this$ in these cases, the type expressions in the `@This` anno
 * The $this$ type is always bound to the instance-type regardless of the
 context it occurs in (non-static or static). To refer to the
 this-classifier (static type) the construct `type{this}` is used. task:IDE-785[]
+
+<<<
 
 .This type in function-type-expression
 [example]

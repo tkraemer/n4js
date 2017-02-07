@@ -156,8 +156,7 @@ supported. Although the `diamond problem` (of functions being defined
 in both superclasses) could be solved via union and intersection types,
 this would lead to problems when calling these super implementations.
 This is particularly an issue due to JavaScript not supporting multiple
-prototypes.
-footnote:[E.g., for given [language-n4js]`class A{ foo(A):A{}} class B{ foo(B):B{}}`, a class C could be defined as [language-n4js]`class C{ foo(union{A,B}):intersection{A,B}{}}`. In this case it would then be a syntactical problem (and even worse - a conceptual problem) of how to call the super methods defined in A and Bfrom C.]
+prototypes.footnote:[E.g., for given [language-n4js]`class A{ foo(A):A{}} class B{ foo(B):B{}}`, a class C could be defined as [language-n4js]`class C{ foo(union{A,B}):intersection{A,B}{}}`. In this case it would then be a syntactical problem (and even worse - a conceptual problem) of how to call the super methods defined in A and Bfrom C.]
 Interfaces, however, allow for multi-inheritance. Since the
 former can also define functions with bodies, this is not a hard
 restriction.
@@ -297,8 +296,7 @@ Class expressions are not fully supported at the moment. task:IDE-171[]
 --
 The reflexive transitive closure of members of a class is indirectly defined by the override and implementation constraints defined in <<_redefinition-of-members>>.
 
-Note that since overloading is forbidden, the following constraint is true:
-footnote:[$accessorPair(m_1,m_2)$ is defined as follows: $(\mu(m_1)=\type{getter}\land \mu(m_2)=\type{setter}) \lor (\mu(m_1)=\type{setter}\land \mu(m_2)=\type{getter})$]
+Note that since overloading is forbidden, the following constraint is true footnote:[$accessorPair(m_1,m_2)$ is defined as follows: $(\mu(m_1)=\type{getter}\land \mu(m_2)=\type{setter}) \lor (\mu(m_1)=\type{setter}\land \mu(m_2)=\type{getter})$]:
 
 
 [math]
@@ -400,7 +398,7 @@ The following table shows how to prevent other projects or vendors from
 subtyping by also restricting the accessibility of the constructor:
 
 .Extensibility of Types
-[cols="<,^,^,^"]
+[cols="<3,^,^,^"]
 |===
 ^|Type `C` Settings 3+| Subclassed in
 
@@ -681,26 +679,17 @@ For a given type
 `C`, and $\{I_1,..., I_n\}$ directly implemented
 by `C`, the following constraints must be true:
 
-.  Only classes can implement interfaces: `C` must be a
-Class.
-.  A class can only implement interfaces: $I_1, ..., I_n$
-must be interfaces.
-.  A class may not directly implement the same interface more than
-once: +
-$I_i=I_j \Rightarrow i=j$ for any
-$i,j \in \{1..n\}$.
-.  A class may (indirectly) implement the same interface
-$J$ more than once only if
+.  Only classes can implement interfaces: `C` must be a Class.
+.  A class can only implement interfaces: $I_1, ..., I_n$ must be interfaces.
+.  A class may not directly implement the same interface more than once: +
+$I_i=I_j \Rightarrow i=j$ for any $i,j \in \{1..n\}$.
+.  A class may (indirectly) implement the same interface $J$ more than once only if
 ..  $J$ is not parameterized, or
-..  in all cases $J$ is implemented with the same type
-arguments for all invariant type parameters.
+..  in all cases $J$ is implemented with the same type arguments for all invariant type parameters.
 +
-Note: for type parameters of $J$ that are declared covariant
-or contravariant on definition site, different type arguments may be
-used.
+NOTE: for type parameters of $J$ that are declared covariant or contravariant on definition site, different type arguments may be used.
 .  All abstract members in $I_i$,
-$i \in \{1, ..., n\}$, must be accessible from
-`C`: +
+$i \in \{1, ..., n\}$, must be accessible from `C`: +
 $\forall i \in \{1, ..., n\} : M \in I_i.members \land M.abstract \Rightarrow $
 `M` is accessible from `C` +
 (note that `M` need not be an owned member of

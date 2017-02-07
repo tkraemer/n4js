@@ -135,9 +135,7 @@ other is non-static:
 
 Thus, over__loading__ of methods is not supported footnote:[In order to emulate method overloading, union types are to be used.] and no field may have the same name as a method.
 However, over__riding__ of methods, getters, and setters are possible, see <<_redefinition-of-members>>.
-Static members may also have the same name as non-static members.
-
-footnote:[cite[ECMA15a(p214)], `ClassBody : ClassElementList` indicates that it is possible to have the same name for instance and static members.]
+Static members may also have the same name as non-static members.footnote:[ cite:[ECMA15a(p214)], `ClassBody : ClassElementList` indicates that it is possible to have the same name for instance and static members.]
 
 The dollar character `\$` is not allowed for user-defined member identifiers as the dollar sign is used for rewriting private members.
 
@@ -1105,15 +1103,15 @@ The following pseudo properties are defined via annotations for setting the valu
 `enumerable` ::
 Boolean flag reflecting the property descriptor
 $enumerable$, set via annotation `@Enumerable(true|false)`.
-The default value is $\TRUE$.
+The default value is $\TRUE$.footnote:[ version 4.0]
 
-footnote:[ version 4.0]
+
 
 `declaredWriteable` ::
 Boolean flag reflecting the property descriptor $writeable$,
-set via annotation `@Writeable(true|false)`. The default value is $\TRUE$.
+set via annotation `@Writeable(true|false)`. The default value is $\TRUE$.footnote:[ This cannot be done w/o `null`/`undefined` analysis]
 
-footnote:[ This cannot be done w/o `null`/`undefined` analysis]
+
 
 `final` ::
 Boolean flag making the field read-only, and it must be set in the
@@ -1447,8 +1445,7 @@ In the special case of `M` being a static data field,
 write-access is only possible via the defining type name `C.m`: . So in the
 list above, only the first line can be used when assigning values to a
 field. Note that this only applies to fields and
-set-accessors.
-footnote:[The technical reason for this rule is the way properties are stored in JavaScript. Take for an example subclass-write access : [language-n4js]`class C { static f="a";}` with [language-n4js]`class D extends C { }`. Now the data field `f` on `C` can also be queried using `D` ([language-n4js]`var q=D.f;`) but writing ([language-n4js]`D.f="b";`) would introduce a newly created property `f` on class `D`, which differs from the one defined on `C`. It would do this without explicitly overriding the inherited property. Subsequent reads to [language-n4js]`D.f` would route to this ’accidentally’ introduced property. Such a behavior would not be expected and therefore has been disallowed. Note that this write restriction applies to data-fields and to field setters.]
+set-accessors.footnote:[The technical reason for this rule is the way properties are stored in JavaScript. Take for an example subclass-write access : [language-n4js]`class C { static f="a";}` with [language-n4js]`class D extends C { }`. Now the data field `f` on `C` can also be queried using `D` ([language-n4js]`var q=D.f;`) but writing ([language-n4js]`D.f="b";`) would introduce a newly created property `f` on class `D`, which differs from the one defined on `C`. It would do this without explicitly overriding the inherited property. Subsequent reads to [language-n4js]`D.f` would route to this ’accidentally’ introduced property. Such a behavior would not be expected and therefore has been disallowed. Note that this write restriction applies to data-fields and to field setters.]
 
 It is even possible to call a static field accessor or method of a class
 using dynamic polymorphism, as demonstrated in the following example:
