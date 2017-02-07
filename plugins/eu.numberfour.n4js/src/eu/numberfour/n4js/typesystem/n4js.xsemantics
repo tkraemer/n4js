@@ -1837,7 +1837,7 @@ from {
 
 // TODO: IDE-2514, When the bug in the polymorphic dispatcher is solved,
 //       enable this rule in return for also removing the temporary solution
-//       in N4JSTypeValidator#checkTypeMatchesExpectedType
+//       in N4JSTypeSystem#expectedTypeIn(RuleEnvironment, EObject, Expression)
 //rule expectedTypeOfDefaultFormalParameter
 //	G |- FormalParameter formalParam |> Expression initializer: TypeRef T
 //from {
