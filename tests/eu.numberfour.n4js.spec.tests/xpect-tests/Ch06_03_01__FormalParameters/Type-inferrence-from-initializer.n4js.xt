@@ -1,3 +1,4 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
 class A {}
 function getA() : A { return null;}

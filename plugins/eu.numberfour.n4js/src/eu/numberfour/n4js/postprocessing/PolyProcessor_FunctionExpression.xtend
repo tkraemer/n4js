@@ -183,7 +183,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 	private def addConstraintForDefaultInitializers(FormalParameter fparAST, TFormalParameter fparT, 
 		RuleEnvironment G, InferenceVariable iv, InferenceContext infCtx
 	){
-		if(fparAST.initializer !== null) {
+		if(fparAST.hasInitializerAssignment) {
 			val context = if (fparT.eContainer instanceof ContainerType<?>)
 					TypeUtils.createTypeRef(fparT.eContainer as ContainerType<?>) else null;
 			val G_withContext = ts.createRuleEnvironmentForContext(context, G.contextResource);

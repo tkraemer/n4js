@@ -1196,12 +1196,19 @@ from {
 //			T = fparTypeRef
 		}
 	}
-	else if (fpar?.initializer !== null) {
-		G |- fpar.initializer : var TypeRef E
-		G |~ E /\ E // take upper bound to get rid of ExistentialTypeRef (if any)
-		T = E
+	else if (fpar.hasInitializerAssignment) {
+		if (fpar.initializer !== null) {
+			G |- fpar.initializer : var TypeRef E
+			G |~ E /\ E // take upper bound to get rid of ExistentialTypeRef (if any)
+			T = E
+			if (E.declaredType === G.undefinedType || E.declaredType === G.nullType || E.declaredType === G.voidType) {
+				T = G.anyTypeRef
+			}
+		} else {
+			T = G.anyTypeRef
+		}
 	}
-	else if (fpar?.definedTypeElement?.typeRef!==null) {
+	else if (fpar.definedTypeElement?.typeRef!==null) {
 		// undeclared type of fpar, but we have inferred a type that is stored in the TModule
 		T = fpar.definedTypeElement.typeRef;
 	}
