@@ -60,13 +60,13 @@
 					},
 					callAll: {
 						value: function callAll___n4(instrumentedTest, testMethodDescriptors) {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let results = [];
 								var runTest = function runTest(testMethodDescriptor) {
-									return $spawn(function*() {
+									return $spawn(function *() {
 										let timeoutId, testResult;
 										function doPromise(resolve, reject) {
-											return $spawn(function*() {
+											return $spawn(function *() {
 												let res;
 												timeoutId = setTimeout(function() {
 													reject(new Error("Test object " + testMethodDescriptor.name + " timed out after " + testMethodDescriptor.timeout + " milliseconds"));
@@ -111,7 +111,7 @@
 					},
 					runTestAsync: {
 						value: function runTestAsync___n4(instrumentedTest) {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								return this.runTestsAsync([
 									instrumentedTest
 								]);
@@ -120,7 +120,7 @@
 					},
 					runGroup: {
 						value: function runGroup___n4(iTest) {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let rg, testObject, testRes, testResults = [], beforeAlls = this.getAncestorTestMethods(iTest, "beforeAlls"), befores = this.getAncestorTestMethods(iTest, "befores"), afters = this.getAncestorTestMethods(iTest, "afters").reverse(), afterAlls = this.getAncestorTestMethods(iTest, "afterAlls").reverse(), numTests, ii, start, end;
 								;
 								(yield this.spy.groupStarted.dispatch([
@@ -170,7 +170,7 @@
 												testObject,
 												testRes,
 												(function() {
-													return $spawn(function*() {
+													return $spawn(function *() {
 														let allTests = iTest.tests;
 														;
 														iTest.tests = [
@@ -205,7 +205,7 @@
 					},
 					runTestsAsync: {
 						value: function runTestsAsync___n4(instrumentedTests) {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let results = [];
 								for(let test of instrumentedTests) {
 									if (test) {
@@ -235,7 +235,7 @@
 					},
 					errorTests: {
 						value: function errorTests___n4(instrumentedTest, error) {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let len = instrumentedTest.tests.length, testResult, testResults = [], test, ii;
 								;
 								for(ii = 0;ii < len;++ii) {

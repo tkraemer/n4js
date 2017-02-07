@@ -552,7 +552,6 @@ function z(){
 }
 ----
 
-
 [.language-n4js]
 == ECMAScript 5 Function Definition
 
@@ -713,6 +712,91 @@ into account!
 == ECMAScript 2015 Function Definition
 
 
+=== Formal Parameters
+Parameter handling has been significantly upgraded in ECMAScript 6.
+It now supports parameter default values, rest parameters (variadics) and destructuring.
+Formal parameters can be modified to be either default or variadic.
+In case a formal parameter has no modifier, it is called normal.
+Modified parameters also become optional.
+
+Modifiers of formal parameters such as default or rest are neither evaluated nor rewritten in the transpiler.
+
+
+
+==== Optional Parameters [[Type_Modifiers_Optional]]
+task:IDE-145[]
+An optional formal parameter can be omitted when calling a function/method.
+An omitted parameter has the value `undefined`.
+In case the omitted parameter is variadic, the value is an empty array.
+
+Parameters can not be declared as optional explicitly.
+Instead, being optional is true when a parameter is declared as default or variadic.
+Note that any formal parameter that follows a default parameter is itself also a default thus an optional parameter.
+
+
+==== Default Parameters [[Type_Modifiers_Default]]
+A default parameter value is specified for a parameter via an equals sign (`=`).
+If a caller doesn’t provide a value for the parameter, the default value is used.
+
+Default initializers of parameters are specified at a formal parameter of a function or method after the equal sign using an arbitrary initializer expression, such as `var = "s"`.
+However, this default initializer can be omitted.
+When a formal parameter has a declared type, the default initializer is specified at the end, such as: `var : string = "s"`.
+The initializer expression is only evaluated in case no actual argument is given for the formal parameter.
+Also, the initializer expression is evaluated when the actual argument value is `undefined`.
+
+Formal parameters become default parameters implicitly when they are preceded by an explicit default parameter.
+In such cases, the default initializer is `undefined`.
+
+.Default parameters
+[req,id=IDE-14501,version=1]
+--
+Any normal parameter which is preceded by a default parameter also becomes a default parameter.
+Its initializer is `undefined`.
+--
+
+When a method is overwritten, its default parameters are not part of the overwriting method.
+Consequently, initializers of default parameters in abstract methods are obsolete.
+
+
+==== Variadic [[Type_Modifiers_Variadic]]
+task:IDE-145[] task:IDE-146[]
+
+Variadic parameters are also called _rest parameters_.
+Marking a parameter as variadic indicates that method accepts a variable number of parameters.
+A variadic parameter implies that the parameter is also optional as the cardinality is defined as $[0..*]$.
+No further parameter can be defined after a variadic parameter.
+When no argument is given for a variadic parameter, an empty array is provided when using the parameter in the body of the function or method.
+
+.Variadic and optional parameters
+[req,id=IDE-16,version=1]
+--
+For a parameter $p$, the following condition must hold:
+$p.var \to p.opt$.
+
+A parameter can not be declared both variadic and with a default value.
+That is to say that one can either write $varName=$ (default) or $...varName$, but not $...varName=$.
+--
+
+
+Declaring a variadic parameter of type $T$ causes the type of the method parameter to become `Array<T>`.
+That is, declaring `function(...tags : string)` causes `tags` to be an `Array<string>` and not just a scalar `string` value.
+
+To make this work at runtime, the compiler will generate code that constructs the `parameter` from the `arguments` parameter explicitly passed to the function.
+
+.Variadic at Runtime
+[req,id=IDE-17,version=1]
+--
+task:IDEBUG-106[]
+At runtime, a variadic parameter is never set to undefined.
+Instead, the array may be empty.
+This must be true even if preceding parameters are optional and no arguments are passed at runtime.
+--
+
+For more constraints on using the variadic modifier, see <<_function-object-type>>.
+
+
+
+
 === Generator Functions
 task:IDE-1347[]
 
@@ -728,7 +812,7 @@ The following syntax rules are extracted from the real syntax rules.
 They only display parts relevant to declaring a function or method as a generator.
 
 
-[source]
+[source,xtext]
 ----
 GeneratorFunctionDeclaration <Yield>:
         (declaredModifiers+=N4Modifier)*

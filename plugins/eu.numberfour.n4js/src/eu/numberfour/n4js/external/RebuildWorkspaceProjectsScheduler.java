@@ -21,7 +21,7 @@ import org.eclipse.core.runtime.Platform;
 
 import com.google.common.collect.Iterables;
 
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Schedules on-demand Eclipse workspace project builds. Requires running platform.

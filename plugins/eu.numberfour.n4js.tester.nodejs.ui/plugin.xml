@@ -57,5 +57,12 @@ Contributors:
          </configurationType>
       </shortcut>
    </extension>
- 
+ 	<extension
+   		point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+   		<launchConfigurationTypeImage
+   				id="eu.numberfour.n4js.runner.nodejs.ui.launchConfigurationTypeImage"
+   				configTypeID="eu.numberfour.n4js.tester.nodejs.ui.launchConfigurationType"
+   				icon="icons/icon_tester_nodejs.png">
+   		</launchConfigurationTypeImage>
+   	</extension>	
 </plugin>

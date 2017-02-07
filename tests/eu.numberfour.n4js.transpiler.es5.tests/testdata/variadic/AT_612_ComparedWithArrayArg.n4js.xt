@@ -32,7 +32,7 @@ function f_variadic(i : number, ... names : string) {
 	console.log(name + ', l='+ (names && names.length || '-1'))
 }
 
-function f_opt_variadic(i : number?, ... names : string) {
+function f_opt_variadic(i : number=undefined, ... names : string) {
 	var name = ((i>=0) && ( (names && (names[i] || 'out of range')) || 'no names')) || 'no args';
 	console.log(name + ', l='+ (names && names.length || '-1'))
 }

@@ -129,6 +129,8 @@ public class NodeRunner implements IRunner {
 			File workingDirectory = Files.createTempDirectory(null).toFile();
 
 			paths.addAll(runConfig.getCoreProjectPaths());
+			if (runConfig.getAdditionalPath() != null && !runConfig.getAdditionalPath().isEmpty())
+				paths.add(runConfig.getAdditionalPath());
 
 			String nodePaths = on(NODE_PATH_SEP).join(paths);
 

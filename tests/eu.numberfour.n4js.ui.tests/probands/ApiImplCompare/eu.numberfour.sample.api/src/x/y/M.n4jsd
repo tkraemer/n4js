@@ -27,7 +27,7 @@ export external public class Clazz {
 	// ---
 	public methodGetType() : type{ClazzOther};
 	public methodReducedVisibility() : void;
-	public methodWithSurplusOptionalFparsOnApiSide(p1 : A, p2 : B?, p3 : C?) : void;
+	public methodWithSurplusOptionalFparsOnApiSide(p1 : A, p2 : B=undefined, p3 : C=undefined) : void;
 	public methodWithSurplusOptionalFparsOnImplSide(p1 : A) : void;
 }
 

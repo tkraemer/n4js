@@ -11,11 +11,12 @@
 package eu.numberfour.n4js.naming
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.N4JSGlobals
 import eu.numberfour.n4js.projectModel.IN4JSCore
+import eu.numberfour.n4js.utils.ResourceType
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.naming.QualifiedName
-import eu.numberfour.n4js.utils.ResourceType
 import org.eclipse.xtext.resource.IResourceDescription
 
 /**
@@ -41,7 +42,7 @@ class ModuleNameComputer {
 	 * like {@code ".n4js.xt"}. The calculation will handle this as a hole file extension, so {@code ".n4js"} will be pruned, too.
 	 */
 	def QualifiedName getQualifiedModuleName(Resource resource) {
-		resource.getURI().getQualifiedModuleNameFromUri
+		resource.getURI().getQualifiedModuleName
 	}
 
 	/**
@@ -51,17 +52,23 @@ class ModuleNameComputer {
 	 * like {@code ".n4js.xt"}. The calculation will handle this as a hole file extension, so {@code ".n4js"} will be pruned, too.
 	 */
 	def QualifiedName getQualifiedModuleName(IResourceDescription resourceDesc) {
-		resourceDesc.getURI().getQualifiedModuleNameFromUri
+		resourceDesc.getURI().getQualifiedModuleName
 	}
 
-	def private getQualifiedModuleNameFromUri(URI uri){
+	/**
+	 * Returns the qualified module name which is explicitly defined by the given uri.
+	 * <p>
+	 * Please note there is also a special treatment for Xpect test files that may have a file extension
+	 * like {@code ".n4js.xt"}. The calculation will handle this as a hole file extension, so {@code ".n4js"} will be pruned, too.
+	 */
+	def getQualifiedModuleName(URI uri){
 		val maybeSourceContainer = findN4JSSourceContainer(uri)
 		if (maybeSourceContainer.present) {
 			val sourceContainer = maybeSourceContainer.get
 			val location = sourceContainer.location
 			if(uri.uriStartsWith(location)) {
 				var relativeURI = uri.deresolve(location.appendSegment(""))
-				if (ResourceType.xtHidesOtherExtension(uri)) { // support Xpect tests with files having additional file extension .xt
+				if (ResourceType.xtHidesOtherExtension(uri) || (N4JSGlobals.XT_FILE_EXTENSION == uri.fileExtension.toLowerCase)) { // support Xpect tests with files having additional file extension .xt
 					relativeURI = relativeURI.trimFileExtension.trimFileExtension
 				} else {
 					relativeURI = relativeURI.trimFileExtension
@@ -72,6 +79,7 @@ class ModuleNameComputer {
 		return uri.createDefaultQualifiedName
 	}
 
+	/** Called only for URIs without container, e.g. from tests, or built-ins. Hardcoded values should be fine for those cases.*/
 	def private createDefaultQualifiedName(URI uri) {
 		var segmentList = uri.trimFileExtension.segmentsList
 		val srcFolder = Math.max(segmentList.indexOf('src'), segmentList.indexOf('src-test'))

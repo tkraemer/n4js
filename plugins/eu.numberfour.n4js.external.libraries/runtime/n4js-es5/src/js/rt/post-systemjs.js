@@ -9,12 +9,13 @@
  *   NumberFour AG - Initial API and implementation
  */
 /*eslint-disable new-cap */
-/*global N4ApiNotImplementedError */
+/*global N4ApiNotImplementedError, SystemJS */
 
-(function() {
+(function(global) {
     "use strict";
 
-    var options = n4.runtimeOptions,
+    var __sys = global.System || {},
+        options = n4.runtimeOptions,
         testMode = options["test-mode"],
         isNodeJs = n4.runtimeInfo.platformId === "nodejs",
         windows = isNodeJs && !!process.platform.match(/^win/),
@@ -25,7 +26,7 @@
         apisuffix_re = new RegExp(apisuffix_re);
     }
 
-    n4.handleMainModule = function(system) {
+    n4.handleMainModule = function(sys) {
         var mod = options["main"] || options["exec"],
             mainSym;
 
@@ -33,6 +34,8 @@
         if (!mod) {
             return Promise.reject(new Error("No main nor exec option given!"));
         }
+
+        sys = sys || __sys;
 
         var mainSymIndex = mod.lastIndexOf(":");
         if (mainSymIndex > 0) {
@@ -63,8 +66,8 @@
         if (options.debug) {
             console.log("## Loading " + mod);
         }
-        return (system || System).import(mod).then(function(exp) {
-            System.throwPendingError(exp);
+        return sys.import(mod).then(function(exp) {
+            sys.throwPendingError(exp);
             if (n4.stylesheetsReady) { // i.e. web
                 // Wait til the last moment to check whether all stylesheets have been loaded:
                 return new Promise(function(resolveFn, rejectFn) {
@@ -140,13 +143,20 @@
     }
     n4.mapModulePath = mapModulePath;
 
-    System.normalize = function(name, parentName, parentAddress) {
+    __sys.throwPendingError = function(mod) {
+        if (mod.__moduleError) {
+            throw mod.__moduleError;
+        }
+        return mod;
+    };
+
+    __sys.normalize = function(name, parentName, parentAddress) {
         return new Promise(function(resolveFn) {
             if (isNodeJs) {
                 var cjs = name.replace(n4.cjsModulesPrefix_re, "");
                 if (cjs.length !== name.length) { // i.e. node/npm; we actually install the module synchronously
-                    var mod = cjsCreateModule(System._nodeRequire(cjs));
-                    System.set(name, System.newModule(mod));
+                    var mod = cjsCreateModule(__sys._nodeRequire(cjs));
+                    __sys.set(name, __sys.newModule(mod));
                     resolveFn(name);
                 }
             }
@@ -154,7 +164,7 @@
         });
     };
 
-    System.locate = function(load) { // is actually NOT called for node/npm modules which are installed in the normalize step
+    __sys.locate = function(load) { // is actually NOT called for node/npm modules which are installed in the normalize step
         var md = load.metadata,
             path = load.name;
 
@@ -178,13 +188,6 @@
         }
 
         return path;
-    };
-
-    System.throwPendingError = function(module) {
-        if (module.__moduleError) {
-            throw module.__moduleError;
-        }
-        return module;
     };
 
     function interceptDeclare(origDeclareFn, exportFn) {
@@ -218,26 +221,26 @@
         };
     }
 
-    if (testMode) {
+    if (testMode && global.SystemJS) {
         //
         // In test mode we intercept the fetch and register.
         // We always instantiate unimplemented modules, to not break the loading phase, since it's not exception safe.
         // We serve module stubs from LDE to not run into CSP issues on web.
         //
 
-        var systemFetch = System.fetch.bind(System),
-            systemRegister = System.register.bind(System);
+        var systemFetch = SystemJS.fetch.bind(SystemJS),
+            systemRegister = SystemJS.register.bind(SystemJS);
 
-        System.fetch = function(load) {
+        SystemJS.fetch = function(load) {
             if (load.metadata.nodejs_fileNotFound && !load.name.startsWith("404/") /* intentionally excluded for NOT_FOUND, i.e. no fallback module */) {
                 return "System.register([], function() { throw new N4ApiNotImplementedError('Not implemented: " + load.name + "'); });\n";
             }
             return systemFetch(load);
         };
 
-        System.register = function(deps, declareFn) {
+        SystemJS.register = function(deps, declareFn) {
             systemRegister(deps, interceptDeclare.bind(null, declareFn));
         };
     }
 
-}());
+})(typeof global === "object" ? global : self);

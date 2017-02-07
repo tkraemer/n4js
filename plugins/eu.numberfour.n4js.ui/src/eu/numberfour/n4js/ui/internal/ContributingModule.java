@@ -38,6 +38,7 @@ import eu.numberfour.n4js.binaries.BinariesProvider;
 import eu.numberfour.n4js.binaries.BinariesValidator;
 import eu.numberfour.n4js.binaries.BinaryCommandFactory;
 import eu.numberfour.n4js.binaries.OsgiBinariesPreferenceStore;
+import eu.numberfour.n4js.binaries.nodejs.NodeBinaryLocatorHelper;
 import eu.numberfour.n4js.binaries.nodejs.NodeJsBinary;
 import eu.numberfour.n4js.binaries.nodejs.NodeProcesBuilder;
 import eu.numberfour.n4js.binaries.nodejs.NpmBinary;
@@ -160,6 +161,7 @@ public class ContributingModule implements Module {
 		binder.bind(BinariesValidator.class).in(SINGLETON);
 		binder.bind(BinariesProvider.class).in(SINGLETON);
 
+		binder.bind(NodeBinaryLocatorHelper.class);
 		binder.bind(NodeJsBinary.class).in(SINGLETON);
 		binder.bind(NpmBinary.class).in(SINGLETON);
 

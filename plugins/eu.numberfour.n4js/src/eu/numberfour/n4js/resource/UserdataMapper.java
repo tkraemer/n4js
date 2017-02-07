@@ -223,4 +223,21 @@ public final class UserdataMapper {
 		xres.getContents().clear();
 		return module;
 	}
+
+	/**
+	 * Checks whether the given {@link IEObjectDescription} instance contains a serialized types module in its user
+	 * data.
+	 * <p>
+	 * Note that this method does not check whether the serialized types module is an empty string, or whether the
+	 * deserialized module is empty.
+	 * </p>
+	 *
+	 * @param eObjectDescription
+	 *            the object to check
+	 * @return <code>true</code> if the given object description contains a serialized types module and
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean hasSerializedModule(IEObjectDescription eObjectDescription) {
+		return eObjectDescription.getUserData(USERDATA_KEY_SERIALIZED_SCRIPT) != null;
+	}
 }

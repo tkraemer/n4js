@@ -3161,17 +3161,21 @@ ruleBindingElementFragment
 		)
 	)
 	(
-		EqualsSignKeyword_1_0=EqualsSign
-		 {
-			announce($EqualsSignKeyword_1_0, grammarAccess.getBindingElementFragmentAccess().getEqualsSignKeyword_1_0());
-		}
+		(
+			(
+				HasInitializerAssignmentEqualsSignKeyword_1_0_0=EqualsSign
+				 {
+					announce($HasInitializerAssignmentEqualsSignKeyword_1_0_0, grammarAccess.getBindingElementFragmentAccess().getHasInitializerAssignmentEqualsSignKeyword_1_0_0());
+				}
+			)
+		)
 		(
 			(
 				InitializerAssignmentExpressionParserRuleCall_1_1_0=norm1_AssignmentExpression{
 					announce($InitializerAssignmentExpressionParserRuleCall_1_1_0.start, $InitializerAssignmentExpressionParserRuleCall_1_1_0.stop, grammarAccess.getBindingElementFragmentAccess().getInitializerAssignment_1_1());
 				}
 			)
-		)
+		)?
 	)?
 )
 ;
@@ -3227,17 +3231,21 @@ norm1_BindingElementFragment
 		)
 	)
 	(
-		EqualsSignKeyword_1_0=EqualsSign
-		 {
-			announce($EqualsSignKeyword_1_0, grammarAccess.getBindingElementFragmentAccess().getEqualsSignKeyword_1_0());
-		}
+		(
+			(
+				HasInitializerAssignmentEqualsSignKeyword_1_0_0=EqualsSign
+				 {
+					announce($HasInitializerAssignmentEqualsSignKeyword_1_0_0, grammarAccess.getBindingElementFragmentAccess().getHasInitializerAssignmentEqualsSignKeyword_1_0_0());
+				}
+			)
+		)
 		(
 			(
 				InitializerAssignmentExpressionParserRuleCall_1_1_0=norm3_AssignmentExpression{
 					announce($InitializerAssignmentExpressionParserRuleCall_1_1_0.start, $InitializerAssignmentExpressionParserRuleCall_1_1_0.stop, grammarAccess.getBindingElementFragmentAccess().getInitializerAssignment_1_1());
 				}
 			)
-		)
+		)?
 	)?
 )
 ;
@@ -19992,7 +20000,32 @@ ruleTAnonymousFormalParameter
 			}
 		)
 	)
+	DefaultFormalParameterParserRuleCall_3=ruleDefaultFormalParameter{ announce($DefaultFormalParameterParserRuleCall_3.start, $DefaultFormalParameterParserRuleCall_3.stop, grammarAccess.getTAnonymousFormalParameterAccess().getDefaultFormalParameterParserRuleCall_3()); }
 )
+;
+
+
+// Rule DefaultFormalParameter
+ruleDefaultFormalParameter
+@init {
+}:
+(
+	(
+		(
+			HasInitializerAssignmentEqualsSignKeyword_0_0=EqualsSign
+			 {
+				announce($HasInitializerAssignmentEqualsSignKeyword_0_0, grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignmentEqualsSignKeyword_0_0());
+			}
+		)
+	)
+	(
+		(
+			AstInitializerTypeReferenceNameParserRuleCall_1_0=ruleTypeReferenceName{
+				announce($AstInitializerTypeReferenceNameParserRuleCall_1_0.start, $AstInitializerTypeReferenceNameParserRuleCall_1_0.stop, grammarAccess.getDefaultFormalParameterAccess().getAstInitializerAssignment_1());
+			}
+		)
+	)?
+)?
 ;
 
 // Entry rule entryRuleUnionTypeExpressionOLD

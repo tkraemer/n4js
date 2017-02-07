@@ -46,7 +46,7 @@ import eu.numberfour.n4js.ui.navigator.internal.N4JSProjectExplorerHelper;
 import eu.numberfour.n4js.ui.workingsets.WorkingSet;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBroker;
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Customized content provider for tuning the Project Explorer view with N4JS specific content.

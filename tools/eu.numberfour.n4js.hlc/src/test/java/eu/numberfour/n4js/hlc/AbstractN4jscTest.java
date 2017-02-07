@@ -30,7 +30,7 @@ import org.junit.After;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 import eu.numberfour.n4js.utils.io.FileCopier;
 import eu.numberfour.n4js.utils.io.FileDeleter;
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
@@ -145,6 +145,17 @@ public class AbstractN4jscTest {
 	 *            subtree to search in passed as argument to {@link File}
 	 */
 	protected void assertFilesCompiledToES(int expectedCompiledModuleCount, String workspaceRootPath) {
+		assertEquals("Files expected", expectedCompiledModuleCount, countFilesCompiledToES(workspaceRootPath));
+	}
+
+	/**
+	 * Counts the number of files ending in .js in the {@value #SUBGENERATOR_PATH} folder.
+	 *
+	 * @param workspaceRootPath
+	 *            the directory to recursively search
+	 * @return the number of files ending in .js
+	 */
+	protected int countFilesCompiledToES(String workspaceRootPath) {
 		final File workspaceRoot = new File(workspaceRootPath);
 
 		final File gitRoot = new File(new File("").getAbsolutePath()).getParentFile().getParentFile();
@@ -199,7 +210,8 @@ public class AbstractN4jscTest {
 			e.printStackTrace();
 			assertTrue("Could not parse file tree of path '" + workspaceRootPath + "' exc = " + e.getMessage(), false);
 		}
-		assertEquals("Files expected", expectedCompiledModuleCount, counter.get());
+
+		return counter.get();
 	}
 
 	/**

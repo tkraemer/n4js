@@ -13,7 +13,7 @@
 import {IteratorExt} from "Iterator"
 
 export external public class Map<KeyT, ValueT> extends Object implements Iterable<Iterable2<KeyT, ValueT>> {
-    public constructor(arg: Iterable<Iterable2<KeyT, ValueT>>?);
+    public constructor(arg: Iterable<Iterable2<KeyT, ValueT>> =);
 
     @Override public [Symbol.iterator](): IteratorExt<Iterable2<KeyT, ValueT>>;
 
@@ -40,7 +40,7 @@ export external public class Map<KeyT, ValueT> extends Object implements Iterabl
     /**
      * Calls callbackFn for each key/value pai, in insertion order.
      */
-    public forEach(callbackFn: {function(ValueT, KeyT, Map<KeyT, ValueT>):void}, thisArg: Object?): void;
+    public forEach(callbackFn: {function(ValueT, KeyT, Map<KeyT, ValueT>):void}, thisArg: Object =): void;
 
     /**
      * Value associated with key.

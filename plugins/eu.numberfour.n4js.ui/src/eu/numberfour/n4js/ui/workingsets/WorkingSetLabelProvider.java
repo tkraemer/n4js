@@ -10,7 +10,7 @@
  */
 package eu.numberfour.n4js.ui.workingsets;
 
-import static eu.numberfour.n4js.utils.Arrays2.transform;
+import static eu.numberfour.n4js.utils.collections.Arrays2.transform;
 import static org.eclipse.jface.viewers.StyledString.COUNTER_STYLER;
 
 import java.util.List;

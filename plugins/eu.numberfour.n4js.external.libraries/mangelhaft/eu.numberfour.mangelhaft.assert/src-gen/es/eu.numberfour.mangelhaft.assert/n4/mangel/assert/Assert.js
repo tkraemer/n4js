@@ -338,7 +338,7 @@
 					},
 					throwsAsync: {
 						value: function throwsAsync___n4(testFunction, expectedErrorType, message) {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let actual, threw = false;
 								try {
 									(yield Promise.resolve(testFunction()));
@@ -355,7 +355,7 @@
 					},
 					doesNotThrowAsync: {
 						value: function doesNotThrowAsync___n4(testFunction, error, message) {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let actual, threw = false;
 								try {
 									(yield Promise.resolve(testFunction()));

@@ -1346,10 +1346,12 @@ constraints must hold:
 * The return type of a getter must not be `void`.
 * The type of the parameter of a setter must not be `void`.
 * If a getter $g$ is defined or consumed (from an interface) or merged-in (via static polyfill) in a class `C` and a setter `S` with $s.name=g.name \land s.static=g.static$ is inherited by
-`C` from one of its super classes, then `C` must
-define a setter $s'$ with
+`C` from one of its super classes, then `C` must define a setter $s'$ with
 $s'.name=g.name \land s'.static=g.static$ footnote:[This is required, because in Javascript a getter shadows a corresponding setter defined further up in the prototype chain; likewise a setter shadows a corresponding getter.].
+* A setter must have exactly one formal parameter, i.e. variadic or default modifiers are not allowed.
+
 The same applies to setters, accordingly.
+
 * <<Req-IDE-72>>, <<Req-IDE-73>>, and <<Req-IDE-74>> apply to field accessors accordingly (getter / setter overriding).
 
 [.language-n4js]

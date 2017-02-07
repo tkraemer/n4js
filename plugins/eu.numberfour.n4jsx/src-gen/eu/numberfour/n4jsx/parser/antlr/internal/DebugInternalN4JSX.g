@@ -1369,6 +1369,7 @@ ruleBindingElementFragment:
 	(
 		'='
 		norm1_AssignmentExpression
+		?
 	)?
 ;
 
@@ -1392,6 +1393,7 @@ norm1_BindingElementFragment:
 	(
 		'='
 		norm3_AssignmentExpression
+		?
 	)?
 ;
 
@@ -8621,6 +8623,16 @@ ruleTAnonymousFormalParameter:
 		':'
 	)?
 	ruleTypeRef
+	ruleDefaultFormalParameter
+;
+
+// Rule DefaultFormalParameter
+ruleDefaultFormalParameter:
+	(
+		'='
+		ruleTypeReferenceName
+		?
+	)?
 ;
 
 // Rule UnionTypeExpressionOLD

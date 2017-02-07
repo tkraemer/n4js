@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
 
 /* XPECT errors ---
 "The annotation @MyAnno is not defined." at "MyAnno"
@@ -13,8 +13,8 @@ class Test {
 		get value(): String? {
 			return this.key;
 		},
-// // XPECT errors --> "The optional modifier isn't allowed here." at "String?"
-		set value(value : String?) {
+// // XPECT errors --> "Default parameter is not allowed in setter declarations." at "value : String=undefined"
+		set value(value : String=undefined) {
 			this.key = value;
 		}
 	};
@@ -51,7 +51,7 @@ class Test {
 		return null;
 	}
 
-	<T> create(object : T, extra : String?) {
+	<T> create(object : T, extra : String=undefined) {
 		console.log(object);
 	}
 }

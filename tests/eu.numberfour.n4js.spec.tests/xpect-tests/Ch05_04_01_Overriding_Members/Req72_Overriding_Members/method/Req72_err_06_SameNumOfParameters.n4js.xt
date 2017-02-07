@@ -30,11 +30,11 @@ class Y3 extends X {
 }
 class Y4 extends X {
 	@Override
-	m(p1 : A, p2 : A, p3 : A, p4 : A?) : void {}			// adding optional parameter is ok!
+	m(p1 : A, p2 : A, p3 : A, p4 : A=undefined) : void {}			// adding optional parameter is ok!
 }
 class Y5 extends X {
 	@Override
-	m(p1 : A, p2 : A, p3 : A?) : void {}				// making parameter optional is ok!
+	m(p1 : A, p2 : A, p3 : A=undefined) : void {}				// making parameter optional is ok!
 }
 
 
@@ -56,11 +56,11 @@ class Y8 implements I_X {
 }
 class Y9 implements I_X {
 	@Override
-	m(p1 : A, p2 : A, p3 : A, p4 : A?) : void {}			// adding optional parameter is ok!
+	m(p1 : A, p2 : A, p3 : A, p4 : A=undefined) : void {}			// adding optional parameter is ok!
 }
 class Y10 implements I_X {
 	@Override
-	m(p1 : A, p2 : A, p3 : A?) : void {}				// making parameter optional is ok!
+	m(p1 : A, p2 : A, p3 : A=undefined) : void {}				// making parameter optional is ok!
 }
 
 
@@ -82,10 +82,10 @@ interface I_Y3 extends I_X {
 }
 interface I_Y4 extends I_X {
 	@Override
-	m(p1 : A, p2 : A, p3 : A, p4 : A?) : void				// adding optional parameter is ok!
+	m(p1 : A, p2 : A, p3 : A, p4 : A=undefined) : void				// adding optional parameter is ok!
 }
 interface I_Y5 extends I_X {
 	@Override
-	m(p1 : A, p2 : A, p3 : A?) : void					// making parameter optional is ok!
+	m(p1 : A, p2 : A, p3 : A=undefined) : void					// making parameter optional is ok!
 }
 

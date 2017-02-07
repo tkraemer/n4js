@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginUITest END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.xpect.ui.tests.N4JSXpectPluginUITest END_SETUP */
 
 const constOne = null;
 const constTwo = null;

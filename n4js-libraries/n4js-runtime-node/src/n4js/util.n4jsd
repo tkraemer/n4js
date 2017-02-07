@@ -18,7 +18,7 @@ export external public function inspect(object: Object+, options: ~Object with {
     depth: number;
     colors: boolean;
     customInspect: boolean;
-}?): string;
+} =): string;
 export external public function log(string: string): void;
 
 /* -*- mode: typescript;-*- */

@@ -97,9 +97,16 @@ import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.*
 import static extension eu.numberfour.n4js.conversion.AbstractN4JSStringValueConverter.*
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.isDestructuringAssignment
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.isDestructuringForStatement
+import static extension eu.numberfour.n4js.validation.helper.FunctionValidationHelper.*;
 
 /**
  * A utility that validates the structure of the AST in one pass.
+ * 
+ * Note:
+ * The validations here are important for using plain JavaScript,
+ * especially the EcmaScript test suite relies on validations here.
+ * Validations that are in the package 'validators' are not considered
+ * when the EcmaScript test suite is executed.
  */
 class ASTStructureValidator {
 
@@ -851,31 +858,21 @@ class ASTStructureValidator {
 		val container = model.eContainer
 		var allowYieldInInit = false
 		if (container instanceof FunctionDefinition) {
-			if (model.isVariadic) {
-				if (container.fpars.last !== model) {
-					val nodes = NodeModelUtils.findNodesForFeature(model, N4JSPackage.Literals.FORMAL_PARAMETER__VARIADIC)
-					val target = nodes.head ?: NodeModelUtils.findActualNodeFor(model)
-					if(target !== null) {
-						producer.node = target
-						producer.addDiagnostic(
-							new DiagnosticMessage(IssueCodes.messageForFUN_PARAM_VARIADIC_ONLY_LAST,
-								IssueCodes.getDefaultSeverity(IssueCodes.FUN_PARAM_VARIADIC_ONLY_LAST),
-								IssueCodes.FUN_PARAM_VARIADIC_ONLY_LAST))
-					}
-				} else if (model.initializer !== null) {
-					val nodes = NodeModelUtils.findNodesForFeature(model, N4JSPackage.Literals.FORMAL_PARAMETER__INITIALIZER)
-					val target = nodes.head ?: NodeModelUtils.findActualNodeFor(model)
-					if(target !== null) {
-						producer.node = target
-						producer.addDiagnostic(
-							new DiagnosticMessage(IssueCodes.messageForFUN_PARAM_VARIADIC_WITH_INITIALIZER,
-								IssueCodes.getDefaultSeverity(IssueCodes.FUN_PARAM_VARIADIC_WITH_INITIALIZER),
-								IssueCodes.FUN_PARAM_VARIADIC_WITH_INITIALIZER))
-					}
-				}
-			}
 			allowYieldInInit = !container.isGenerator
+			
+			val issueConsumer = [String msg, String id, EObject eObj |
+				producer.node = NodeModelUtils.findActualNodeFor(eObj);
+				producer.addDiagnostic(new DiagnosticMessage(msg, IssueCodes.getDefaultSeverity(id), id));
+			];
+			<FormalParameter>internalCheckFormalParameter(
+				container.fpars,
+				model,
+				[variadic],
+				[hasInitializerAssignment],
+				issueConsumer
+			);
 		}
+		
 		_validateASTStructure(
 			model as Variable,
 			producer,

@@ -21,7 +21,7 @@
     public static acosh(x: number): number;
     public static asinh(x: number): number;
     public static atanh(x: number): number;
-    public static hypot(value1: number, value2: number, value3: number?): number;
+    public static hypot(value1: number, value2: number, value3: number =): number;
     public static trunc(x: number): number;
     public static sign(x: number): number;
     public static cbrt(x: number): number;
