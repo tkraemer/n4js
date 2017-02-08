@@ -67,8 +67,8 @@ var [a,b] = ["hello", 42];
 var {prop1:x, prop2} = {prop1:"hello", prop2:42};
 ----
 
-In the case of `prop2`, we do not provide a property name and variable name separately; this is useful in cases where the property name also makes
-for a suitable variable name (called `single name binding`).
+In the case of `prop2`, we do not provide a property name and variable name separately; this is useful in cases where the property name also makes for a
+suitable variable name (called `single name binding`).
 
 One of the most useful use cases of destructuring is in a `for..of` loop.
 Take this example:
@@ -139,7 +139,7 @@ The solutions that <<Acronyms,DI>> provides should empower N4JS users to achieve
 
 [[fig-di-terms]]
 .DI Terms
-image::{find}fig/diTerms.png[]
+image::{find}fig/diTerms.png[scaledwidth="60%",align="center"]
 
 _key: pass the dependency instead of letting the client create or find it_
 
@@ -270,11 +270,11 @@ A given DIComponent is compatible with another DIComponent if it has bindings fo
 NOTE: Although subtype notation $<:$ is used here it does *not* imply actual subtype relations.
 It was used in this instance for of lack of formal notations for DI concepts and because this is similar to the Liskov Substitution principle.
 
-A complex Child-Parent relation between components is depicted in DIC Parent Child diagram and <<ex:complex-dicomponents-relations>> below.
+A complex Child-Parent relation between components is depicted in <<fig-complex-dicomponents-relations>> and <<ex:complex-dicomponents-relations>> below.
 
-[[fig-Complex DIComponents Relations]]
+[[fig-complex-dicomponents-relations]]
 .Complex DIComponents Relations
-image::{find}fig/diagDICParentChild.png[align=center]
+image::{find}fig/diagDICParentChild.png[scaledwidth="50%",align=center]
 
 --
 
@@ -605,37 +605,44 @@ One cycle in this graph is an injection cycle.
 When injecting instances into an object, cycles have to be detected and handled independently from the scope.
 If this is not done, the following examples would result in an infinite loop causing the entire script to freeze until the engine reports an error:
 
+[cols=".>4a,^3a",grid=rows,frame=none]
+|===
+|
 [source,n4js]
 ----
 class A { @Inject b: B; }
 class B { @Inject a: A; }
 ----
-
+|
 [[fig-field-cycle]]
 .Field Cycle
 image::{find}fig/injectionGraph_cycleField.png[scaledwidth="40%",align="center"]
 
+|
 [source,n4js]
 ----
 class C { @Inject constructor(d: D) {} }
 class D { @Inject c: C; }
 ----
 
-[[fig-ctor-field-cycle]]
+|
+[[fig-ctor-field]]
 .Ctor Field Cycle
 image::{find}fig/injectionGraph_cycleCtorField.png[scaledwidth="40%",align="center"]
 
+|
 [source,n4js]
 ----
 class E { @Inject constructor(f: F) {} }
 class F { @Inject constructor(e: E) {} }
 ----
 
+|
 [[fig-ctor-cycle]]
 .Ctor Cycle
 image::{find}fig/injectionGraph_cycleCtor.png[scaledwidth="40%",align="center"]
 
-
+|===
 The injector needs to detect these cycles and resolve them.
 
 .Resolution of Injection Cycles
@@ -719,7 +726,7 @@ Type `J` is not available at all since it is not bound to any concrete implement
 
 [[tab:diNoBindings]]
 .DI No Bindings
-[cols="^,^,^,^,^,^"]
+[cols="^2h,^,^,^,^,^"]
 |===
 |Binding | | | | |
 |Injector nesting ($>$) |C |D |E |F |G
@@ -746,9 +753,10 @@ Finally, for type `V`, injector `C`, `D` and `E` should use a separate instance 
 
 .DI Transitive Bindings
 [[tab:diTransitiveBindings]]
-[cols="^,^,^,^,^,^"]
+[cols="^2h,^,^,^,^,^"]
 |===
 |Binding |J -> U | | |U -> V |
+
 |Injector nesting (>) |C |D |E |F |G
 
 |J |$U_0$ |$U_0$ |$U_0$
@@ -766,9 +774,10 @@ table, the bindings are declared for the interface `J`.
 
 [[tab:diReBinding]]
 .DI Re - Binding
-[cols="^,^,^,^,^,^"]
+[cols="^2h,^,^,^,^,^"]
 |===
 |Binding |J -> U | | |J -> V |
+
 |Injector nesting ($>$) |C |D |E |F |G
 
 |J |$U_0$ |$U_0$ |$U_0$
@@ -785,10 +794,10 @@ table, the bindings are declared for the interface `J`.
 
 [[tab:diChildBinding]]
 .DI Child Binding
-[cols="^,^,^,^,^,^",options="header"]
+[cols="^2h,^,^,^,^,^"]
 |===
-|Binding | |U $\rightarrow$ V | |J $\rightarrow$
-U |
+|Binding | |U $\rightarrow$ V | |J $\rightarrow$ U |
+
 |Injector nesting ($>$) |C |D |E |F |G
 
 |J |$NaN$ |$NaN$ |$NaN$
@@ -895,7 +904,7 @@ Following annotations describe API used to configure N4JSDI.
 
 ==== N4JS DI @GenerateInjector
 
-[cols="a,a,a"]
+[cols="a,a,a",frame=none,grid=none]
 |===
 | name::
   @GenerateInjector
@@ -916,7 +925,7 @@ The generated injector will be responsible for creating an instance of that clas
 
 ==== N4JS DI @WithParentInjector
 
-[cols="a,a,a"]
+[cols="a,a,a",frame=none,grid=none]
 |===
 | name::
     @WithParentInjector
@@ -950,7 +959,7 @@ Additional _WithParentInjector_ constraints:
 ==== N4JS DI @UseBinder
 
 
-[cols="a,a,a"]
+[cols="a,a,a",frame=none,grid=none]
 |===
 | name::
   @UseBinder
@@ -978,7 +987,7 @@ Additional _WithParentInjector_ constraints:
 
 ==== N4JS DI @Binder
 
-[cols="a,a,a"]
+[cols="a,a,a",frame=none,grid=none]
 |===
 | name::
   @Binder
@@ -1008,7 +1017,7 @@ That can be either `@Bind` annotations on `@Binder` itself or its factory method
 
 ==== N4JS DI @Bind
 
-[cols="a,a,a"]
+[cols="a,a,a",frame=none,grid=none]
 |===
 | name::
   @Bind
@@ -1038,7 +1047,7 @@ See also <<_validation-of-callsites-targeting-n4injector-methods>> for descripti
 
 ==== N4JS DI @Provides
 
-[cols="a,a,a"]
+[cols="a,a,a",frame=none,grid=none]
 |===
 | name::
   @Provides
@@ -1072,7 +1081,7 @@ Can be used to implement custom scopes.
 
 ==== N4JS DI @Inject
 
-[cols="a,a,a"]
+[cols="a,a,a",frame=none,grid=none]
 |===
 | name::
   @Inject
@@ -1104,7 +1113,7 @@ Class fields, methods and constructors can be annotated. See <<_injection-points
 ==== N4JS DI @Singleton
 
 
-[cols="a,a,a"]
+[cols="a,a,a",frame=none,grid=none]
 |===
 | name::
   @Singleton

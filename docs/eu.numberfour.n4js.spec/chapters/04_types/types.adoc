@@ -33,7 +33,7 @@ Types are related to each other by the subtype relation.
 We use $subtype$ for the general subtype relation or type conformance.
 
 In nominal typing, $T\subtype S$ means that $S$ is a (transitive) supertype of _T_.
-Generally in structural typing, this means that _T_ conforms to $S$.
+Generally in structural typing, this means that _T_ _conforms_ to $S$.
 $\subtype$ is defined transitive reflexive by default.
 
 We write $<$ to refer to the transitive non-reflexive relation, that is $T < S \iff T \subtype S \land T \neq S$
@@ -68,7 +68,7 @@ Similarly, we say that a type $M$ is a _meet_ (or greatest common subtype, ) of 
 \beginalign
 M \subtype  S\\
 M \subtype  T\\
-\forall L: (L\subtype S) \land (L\subtype T) \to L\subtype M
+\forall L : (L\subtype S) \land (L\subtype T) \to L\subtype M
 \endalign
 ++++
 --
@@ -86,7 +86,7 @@ This type hierarchy shows `any` and `undefined` as the top and bottom type (cf. 
 --
 We call $Top$ the top type, if for all types _T_ the relation  $T \subtype  Top$ is true.
 We call $Bot$ the bottom type, if for all types _T_ the relation $Bot<:T$ is true.
-In N4JS, $Top=`any}$, the bottom type $Bot=`undefined}$.
+In N4JS, $Top=any$, the bottom type $Bot=undefined$.
 --
 
 `null` is almost similar to $Bot$, except that it is not a subtype of `undefined`.
@@ -234,7 +234,7 @@ This actually means that the type _T_ actually is a union type of `Undef|_T_`.
 Default value: `false`.
 
 $optvar$ ::
-$optvar=var \lor opt$, reflect the facts that a variadic parameter is also optional (as its cardinality is $[0..n]).$
+$optvar=var \lor opt$, reflect the facts that a variadic parameter is also optional (as its cardinality is $[0 \dots n]).$
 
 $entity$ ::
 Pseudo property referencing the variable declaration (or expression) which `owns` the type expression.
@@ -628,7 +628,7 @@ We define for types in general:
 
 // TODO replace ^o^ with correct math symbol
 
-* The erasure $G$^o^ of a parameterized type $G<T_1, ..., T_n>$ is simply $G$.
+* The erasure $G$^o^ of a parameterized type $G<T_1, \dots, T_n>$ is simply $G$.
 * The erasure of a type variable is the erasure of its upper bound.
 * The erasure of any other type is the type itself.
 --
@@ -691,7 +691,7 @@ We define type conformance for non-primitive type references as follows:
 ++++
 \infer{ T^0 < : S^0}{S^0 \in T^0.sup^* \cup T^0.interfaces^* }
 ++++
-* For two parameterized types $T<T_1,...,T_n>$ and $S<S_1,...,S_m>$
+* For two parameterized types $T<T_1,\dots,T_n>$ and $S<S_1,\dots,S_m>$
 +
 [math]
 ++++

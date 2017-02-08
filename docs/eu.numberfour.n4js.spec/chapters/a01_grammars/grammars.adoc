@@ -9,7 +9,7 @@ These grammars are post-processed and combined with additional validators so not
 == Type Expressions Grammar
 
 [[lst:EBNFTypeExpression]]
-.EBNF Type Exprtession Grammar
+.EBNF Type Expression Grammar
 [source,xtext]
 ----
 TypeRef:

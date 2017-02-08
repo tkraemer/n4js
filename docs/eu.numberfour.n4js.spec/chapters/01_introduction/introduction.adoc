@@ -98,7 +98,7 @@ subtype $<$ ::
 
 type $:$ ::
 in which the left hand side is a declaration or expression, and the right hand side a type.
-We also use $\infType{..}$ as a function returning the (inferred) type of an expression.
+We also use $\infType{\dots}$ as a function returning the (inferred) type of an expression.
 expectedTypeIn $ \lhd :$ ::
 a relation with three arguments:
   $container \lhd expression: type$ means, that
@@ -148,7 +148,7 @@ Consequently, we define the following properties and pseudo properties for typed
 declaredType$Ref$ :: The explicitly declared type, this is usually a real property of the construct.
 Not all elements allow the specification of a declared type, such as expressions.
 
-inferredType$Ref$ or $\infType{..}$:: This pseudo property is the inferred type computed by the type inferencer.
+inferredType$Ref$ or $\infType{\dots}$:: This pseudo property is the inferred type computed by the type inferencer.
 
 type$Ref$ :: A pseudo property for elements with a $declaredType$ property.
 It is similar to the inferred type, i.e. $e.type = \infType{e}$
@@ -268,14 +268,14 @@ Power set of $X$, i.e.
 $\powerset(X) = \{ U: U \subseteq X \}$.
 
 $\exists$, $\nexists$, $\forall$::
-Exists, not exists, for all; we write $\exists x,...,z: P(x,...,z)$ and say
+Exists, not exists, for all; we write $\exists x,\dots,z: P(x,\dots,z)$ and say
 +
 [quote]
-"there exists $x,...,z$ such that predicate $P$ is true".
+"there exists $x,\dots,z$ such that predicate $P$ is true".
 +
 Note that $\nexists x: P(x) \iff \forall x: \lnot P(x)$.
 
-$\mu(..)$::
+$\mu(\dots)$::
 (mu) read "*metatype of*"; metatype of a variable or property, e.g.,
 +
 [math]

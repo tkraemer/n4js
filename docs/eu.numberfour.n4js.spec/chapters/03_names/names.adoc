@@ -576,8 +576,7 @@ N4JS handles scopes similar to ECMAScript, so that function scope is applied to 
 In general, ECMAScript defines _Lexical Environments_ as a specification type used to define the association of Identifiers to specific variables and functions based upon the lexical nesting structure of ECMAScript code cite:[ECMA11a(10.2)].
 
 Elements that introduce lexical environments: ::
-`FunctionDefinition`, `VariableDeclaration`, `CatchBlock`, `WithStatement`,
-`ImportDeclaration`
+`FunctionDefinition`, `VariableDeclaration`, `CatchBlock`, `WithStatement`, `ImportDeclaration`
 
 
 N4JS specific declarations: ::
