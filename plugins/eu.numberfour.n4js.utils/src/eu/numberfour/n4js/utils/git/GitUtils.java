@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Iterables.size;
 import static com.google.common.collect.Iterables.toArray;
-import static eu.numberfour.n4js.utils.Arrays2.isEmpty;
+import static eu.numberfour.n4js.utils.collections.Arrays2.isEmpty;
 import static java.nio.file.Files.createDirectories;
 import static org.apache.log4j.Logger.getLogger;
 import static org.eclipse.jgit.api.Git.cloneRepository;

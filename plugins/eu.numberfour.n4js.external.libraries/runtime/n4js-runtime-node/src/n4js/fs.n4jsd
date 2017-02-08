@@ -54,121 +54,121 @@ export external public class WriteStream extends stream.Writable {
 //export external public function lchmodSync(string path, union{number,string} mode): void;
 
 @Promisifiable
-export external public function rename(oldPath: string, newPath: string, callback: {function(Error?):void}?): void;
+export external public function rename(oldPath: string, newPath: string, callback: {function(Error =):void} =): void;
 export external public function renameSync(oldPath: string, newPath: string): void;
 
 @Promisifiable
-export external public function truncate(path: string, callback: {function(Error?):void}?): void;
-export external public function truncateSync(path: string, len: number?): void;
+export external public function truncate(path: string, callback: {function(Error =):void} =): void;
+export external public function truncateSync(path: string, len: number =): void;
 
 @Promisifiable
-export external public function ftruncate(fd: number, callback: {function(Error?):void}?): void;
-export external public function ftruncateSync(fd: number, len: number?): void;
+export external public function ftruncate(fd: number, callback: {function(Error =):void} =): void;
+export external public function ftruncateSync(fd: number, len: number =): void;
 
 @Promisifiable
-export external public function chown(path: string, uid: number, gid: number, callback: {function(Error?):void}?): void;
+export external public function chown(path: string, uid: number, gid: number, callback: {function(Error =):void} =): void;
 export external public function chownSync(path: string, uid: number, gid: number): void;
 
 @Promisifiable
-export external public function fchown(fd: number, uid: number, gid: number, callback: {function(Error?):void}?): void;
+export external public function fchown(fd: number, uid: number, gid: number, callback: {function(Error =):void} =): void;
 export external public function fchownSync(fd: number, uid: number, gid: number): void;
 
 @Promisifiable
-export external public function chmod(path: string, mode: union{number,string}, callback: {function(Error?):void}?): void;
+export external public function chmod(path: string, mode: union{number,string}, callback: {function(Error =):void} =): void;
 export external public function chmodSync(path: string, mode: union{number,string}): void;
 
 @Promisifiable
-export external public function fchmod(fd: number, mode: union{number,string}, callback: {function(Error?):void}?): void;
+export external public function fchmod(fd: number, mode: union{number,string}, callback: {function(Error =):void} =): void;
 export external public function fchmodSync(fd: number, mode: union{number,string}): void;
 
 @Promisifiable
-export external public function stat(path: string, callback: {function(Error, Stats): any}?): void;
+export external public function stat(path: string, callback: {function(Error, Stats): any} =): void;
 export external public function statSync(path: string): Stats;
 
 @Promisifiable
-export external public function lstat(path: string, callback: {function(Error, Stats): any}?): void;
+export external public function lstat(path: string, callback: {function(Error, Stats): any} =): void;
 export external public function lstatSync(path: string): Stats;
 
 @Promisifiable
-export external public function fstat(fd: number, callback: {function(Error, Stats): any}?): void;
+export external public function fstat(fd: number, callback: {function(Error, Stats): any} =): void;
 export external public function fstatSync(fd: number): Stats;
 
 @Promisifiable
-export external public function link(srcpath: string, dstpath: string, callback: {function(Error?):void}?): void;
+export external public function link(srcpath: string, dstpath: string, callback: {function(Error =):void} =): void;
 export external public function linkSync(srcpath: string, dstpath: string): void;
 
 @Promisifiable
-export external public function symlink(srcpath: string, dstpath: string, type: string?, callback: {function(Error?):void}?): void;
-export external public function symlinkSync(srcpath: string, dstpath: string, type: string?): void;
+export external public function symlink(srcpath: string, dstpath: string, type: string =, callback: {function(Error =):void} =): void;
+export external public function symlinkSync(srcpath: string, dstpath: string, type: string =): void;
 
 @Promisifiable
-export external public function readlink(path: string, callback: {function(Error, string): any}?): void;
+export external public function readlink(path: string, callback: {function(Error, string): any} =): void;
 export external public function readlinkSync(path: string): string;
 
 @Promisifiable
-export external public function realpath(path: string, callback: {function(Error, string): any}?): void;
+export external public function realpath(path: string, callback: {function(Error, string): any} =): void;
 
 @Promisifiable
-export external public function unlink(path: string, callback: {function(Error?):void}?): void;
+export external public function unlink(path: string, callback: {function(Error =):void} =): void;
 export external public function unlinkSync(path: string): void;
 
 @Promisifiable
-export external public function rmdir(path: string, callback: {function(Error?):void}?): void;
+export external public function rmdir(path: string, callback: {function(Error =):void} =): void;
 export external public function rmdirSync(path: string): void;
 
 @Promisifiable
-export external public function mkdir(path: string, mode: union{number, string}?, callback: {function(Error?):void}?): void;
-export external public function mkdirSync(path: string, mode: union{number, string}?): void;
+export external public function mkdir(path: string, mode: union{number, string} =, callback: {function(Error =):void} =): void;
+export external public function mkdirSync(path: string, mode: union{number, string} =): void;
 
 @Promisifiable
-export external public function mkdtemp(prefix: string, callback: {function(Error, string):void}?): void;
+export external public function mkdtemp(prefix: string, callback: {function(Error, string):void} =): void;
 export external public function mkdtempSync(prefix: string): string;
 
 @Promisifiable
-export external public function readdir(path: string, callback: {function(Error, Array<string>): void}?): void;
+export external public function readdir(path: string, callback: {function(Error, Array<string>): void} =): void;
 export external public function readdirSync(path: string): Array<string>;
 
 @Promisifiable
-export external public function close(fd: number, callback: {function(Error?):void}?): void;
+export external public function close(fd: number, callback: {function(Error =):void} =): void;
 export external public function closeSync(fd: number): void;
 
 @Promisifiable
-export external public function open(path: string, flags: string, callback: {function(Error, number): any}?): void;
-export external public function openSync(path: string, flags: string, mode: union{number, string}?): number;
+export external public function open(path: string, flags: string, callback: {function(Error, number): any} =): void;
+export external public function openSync(path: string, flags: string, mode: union{number, string} =): number;
 
 @Promisifiable
-export external public function utimes(path: string, atime: union{number, Date}, mtime: union{number, Date}, callback: {function(Error?):void}?): void;
+export external public function utimes(path: string, atime: union{number, Date}, mtime: union{number, Date}, callback: {function(Error =):void} =): void;
 export external public function utimesSync(path: string, atime: union{number, Date}, mtime: union{number, Date}): void;
 
 @Promisifiable
-export external public function futimes(fd: number, atime: union{number, Date}, mtime: union{number, Date}, callback: {function(Error?):void}?): void;
+export external public function futimes(fd: number, atime: union{number, Date}, mtime: union{number, Date}, callback: {function(Error =):void} =): void;
 export external public function futimesSync(fd: number, atime: union{number, Date}, mtime: union{number, Date}): void;
 
 @Promisifiable
-export external public function fsync(fd: number, callback: {function(Error?):void}?): void;
+export external public function fsync(fd: number, callback: {function(Error =):void} =): void;
 export external public function fsyncSync(fd: number): void;
 
 @Promisifiable
-export external public function read(fd: number, buffer: Buffer, offset: number, length: number, position: int, callback: {function(Error, number, Buffer): void}?): void;
+export external public function read(fd: number, buffer: Buffer, offset: number, length: number, position: int, callback: {function(Error, number, Buffer): void} =): void;
 export external public function readSync(fd: number, buffer: Buffer, offset: number, length: number, position: int): number;
 
 @Promisifiable
-export external public function readFile(filename: string, options: ~Object with {encoding: string?; flag: string?;}, callback: {function(Error, string)}?): void;
+export external public function readFile(filename: string, options: ~Object with {encoding: string?; flag: string?;}, callback: {function(Error, string)} =): void;
 export external public function readFileSync(filename: string, options: ~Object with { encoding: string?; flag: string?;}): string;
 
 @Promisifiable
-export external public function writeFile(filename: string, data: any, options: ~Object with {encoding: string?; mode: union{number, string}?; flag: string?; }, callback: {function(Error): void}?): void;
+export external public function writeFile(filename: string, data: any, options: ~Object with {encoding: string?; mode: union{number, string}?; flag: string?; }, callback: {function(Error): void} =): void;
 export external public function writeFileSync(filename: string, data: any, options: ~Object with {encoding: string?; mode: union{number, string}?; flag: string?; }): void;
 
 @Promisifiable
-export external public function appendFile(filename: string, data: any, options: ~Object with {encoding: string?; mode: union{number, string}?; flag: string?; }, callback: {function(Error): void}?): void;
+export external public function appendFile(filename: string, data: any, options: ~Object with {encoding: string?; mode: union{number, string}?; flag: string?; }, callback: {function(Error): void} =): void;
 export external public function appendFileSync(filename: string, data: any, options: ~Object with {encoding: string?; mode: union{number, string}?; flag: string?; }): void;
 
 export external public function watchFile(filename: string, options: ~Object with {persistent: boolean?; listener: number?; }, listener: {function(Stats, Stats): void}): void;
-export external public function unwatchFile(filename: string, listener: {function(Stats, Stats): void}?): void;
-export external public function watch(filename: string, options: ~Object with {persistent: boolean?;}, listener: {function(string, string): any}?): FSWatcher;
+export external public function unwatchFile(filename: string, listener: {function(Stats, Stats): void} =): void;
+export external public function watch(filename: string, options: ~Object with {persistent: boolean?;}, listener: {function(string, string): any} =): FSWatcher;
 
-export external public function exists(path: string, callback: {function(boolean): void}?): void;
+export external public function exists(path: string, callback: {function(boolean): void} =): void;
 export external public function existsSync(path: string): boolean;
 export external public const F_OK: number;
 export external public const R_OK: number;
@@ -177,7 +177,7 @@ export external public const X_OK: number;
 
 @Promisifiable
 export external public function access(path: string, mode: number, callback: {function(Error): void}): void;
-export external public function accessSync(path: string, mode: number?): void;
+export external public function accessSync(path: string, mode: number =): void;
 
 export external public function createReadStream(path: string, options: ~Object with {
     flags: string?;
@@ -185,12 +185,12 @@ export external public function createReadStream(path: string, options: ~Object 
     fd: number?;
     mode: number?;
     autoClose: boolean?;
-}?): ReadStream;
+} =): ReadStream;
 export external public function createWriteStream(path: string, options: ~Object with {
     flags: string?;
     encoding: string?;
     fd: number?;
     mode: number?;
-}?): WriteStream;
+} =): WriteStream;
 
 /* -*- mode: typescript;-*- */

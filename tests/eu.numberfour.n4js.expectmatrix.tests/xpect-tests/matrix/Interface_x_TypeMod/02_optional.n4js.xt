@@ -6,13 +6,13 @@
 
 interface I {
 	// in method XPECT noerrors -->
-	public f (b : boolean?, z : number?, w : string?) : union{string,boolean}
+	public f (b : boolean=undefined, z : number=undefined, w : string=undefined) : union{string,boolean}
 };
 
 class A implements I {
 	@Override
 	// in method XPECT noerrors -->
-	public f (b : boolean?, z : number?, w : string?) : union{string,boolean} {
+	public f (b : boolean=undefined, z : number=undefined, w : string=undefined) : union{string,boolean} {
 		if (b !== undefined) {
 			return b;
 		}
@@ -29,7 +29,7 @@ a.f();
 // not enough arguments XPECT noerrors -->
 a.f(true);
 
-// argument in wrong place XPECT errors --> "int is not a subtype of boolean?." at "5"
+// argument in wrong place XPECT errors --> "int is not a subtype of boolean." at "5"
 a.f(5);
 
 // good arguments XPECT noerrors -->

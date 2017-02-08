@@ -17,5 +17,7 @@ Contributors:
 	     <transpilableFileExtensions extensions="n4jsx, jsx"/>
 	     <runnableFileExtensions extensions="n4jsx, jsx"/>
 	     <testFileExtensions extensions="n4jsx"/>
+	     <typableFileExtensions extensions="n4jsx, jsx"/>
+	     <rawFileExtensions extensions="jsx"/>
    </extension>
 </plugin>

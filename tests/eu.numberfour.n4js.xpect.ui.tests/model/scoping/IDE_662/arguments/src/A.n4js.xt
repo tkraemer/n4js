@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.xpect.ui.tests.N4JSXpectPluginTest END_SETUP */
 
 // The following are replicated to AT_662_arguments_localvar.n4js.xt (model/scopingSimple/arguments/src)
 // but with a local definition of class "ArgumentsType" - so they still should work!

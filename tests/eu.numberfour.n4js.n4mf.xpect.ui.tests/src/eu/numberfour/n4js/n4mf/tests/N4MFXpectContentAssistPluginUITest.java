@@ -17,7 +17,7 @@ import org.xpect.runner.XpectRunner;
 import org.xpect.runner.XpectSuiteClasses;
 import org.xpect.runner.XpectTestFiles;
 
-import eu.numberfour.n4js.xpect.ContentAssistXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.contentassist.ContentAssistXpectMethod;
 
 /**
  * N4 manifest content assist UI tests.

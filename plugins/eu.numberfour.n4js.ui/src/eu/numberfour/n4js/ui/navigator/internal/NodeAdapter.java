@@ -12,7 +12,7 @@ package eu.numberfour.n4js.ui.navigator.internal;
 
 import org.eclipse.swt.graphics.Image;
 
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Base {@link Node navigator node} implementation.

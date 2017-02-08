@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSNotValidatingXpectPluginUITest
+/* XPECT_SETUP eu.numberfour.n4js.xpect.ui.tests.N4JSNotValidatingXpectPluginUITest
 
 	Workspace {
 		JavaProject "N4JSXPECTTests" {

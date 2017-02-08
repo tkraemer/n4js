@@ -23,7 +23,8 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  eu.numberfour.n4js.ui,
  eu.numberfour.n4js.utils,
  eu.numberfour.n4js.regex.ui;bundle-version="0.0.1",
- eu.numberfour.n4js.n4mf.ui
+ eu.numberfour.n4js.n4mf.ui,
+ eu.numberfour.n4js.xpect
 Import-Package: org.apache.log4j,
  org.junit;version="4.5.0",
  org.junit.runner;version="4.5.0",
@@ -33,4 +34,4 @@ Import-Package: org.apache.log4j,
  org.junit.runners.model;version="4.5.0",
  org.hamcrest.core
 Bundle-Vendor: NumberFour AG
-Export-Package: eu.numberfour.n4js.tests
+Export-Package: eu.numberfour.n4js.xpect.tests

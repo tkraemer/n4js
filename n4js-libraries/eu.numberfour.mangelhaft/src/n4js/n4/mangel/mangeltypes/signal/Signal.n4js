@@ -112,7 +112,7 @@ function validateListener(listener: Function, fnName: string) {
      * @param {Number} [priority] The priority level of the event listener. Listeners with higher priority will be executed before listeners with lower priority. Listeners with same priority level will be executed at the same order as they were added. (default = 0)
      * @return {SignalBinding} An Object representing the binding between the Signal and listener.
      */
-    public add (listener: TCallback, listenerContext: any?, priority: number?): SignalBinding<TCallback> {
+    public add (listener: TCallback, listenerContext: any =, priority: number =): SignalBinding<TCallback> {
         validateListener(listener, 'add');
         return this.registerListener(listener, false, listenerContext, priority);
     }
@@ -124,7 +124,7 @@ function validateListener(listener: Function, fnName: string) {
      * @param {Number} [priority] The priority level of the event listener. Listeners with higher priority will be executed before listeners with lower priority. Listeners with same priority level will be executed at the same order as they were added. (default = 0)
      * @return {SignalBinding} An Object representing the binding between the Signal and listener.
      */
-    public addOnce (listener: TCallback, listenerContext: any?, priority: number?): SignalBinding<TCallback> {
+    public addOnce (listener: TCallback, listenerContext: any =, priority: number =): SignalBinding<TCallback> {
         validateListener(listener, 'addOnce');
         return this.registerListener(listener, true, listenerContext, priority);
     }

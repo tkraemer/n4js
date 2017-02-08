@@ -9,6 +9,6 @@
  *   NumberFour AG - Initial API and implementation
  */
 
-export external public function start(options: Object?): any+;
+export external public function start(options: Object =): any+;
 
 /* -*- mode: typescript;-*- */

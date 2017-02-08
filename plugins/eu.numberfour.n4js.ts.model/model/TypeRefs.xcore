@@ -990,7 +990,7 @@ abstract class FunctionTypeExprOrRef extends StaticBaseTypeRef {
 			+ (if (generic) {
 				"<" + typeVars.map[it.getTypeVariableAsString(getTypeVarUpperBound(it))].join(",") + ">"
 			} else "")
-			+ "(" + fpars.map[if (it.typeRef !== null) it.typeRef.typeRefAsString else "null"].join(",") + ")"
+			+ "(" + fpars.map[it.getFormalParameterAsTypesString].join(",") + ")"
 			+ (if (returnTypeRef !== null) ":" + returnTypeRef.typeRefAsString else "")
 			+ "}" + getModifiersAsString();
 	}

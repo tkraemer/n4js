@@ -5,148 +5,42 @@
 class A {}
 
 
-// XPECT errors --> "Missing type name for type modifier ?." at "?"
-var f1 : {function(?)}; // missing type name for type modifier!
+// XPECT errors --->"Variadic parameters must not have a default initializer." at "...int="
+var f2 : {function(...int=)}; // missing type name for type modifier!
 
 
-
-/* XPECT errors ---
-"Invalid combination of type modifiers: ? and ...." at "...?"
-"Missing type name for type modifier ?." at "?"
----
-*/
-var f2 : {function(...?)}; // missing type name for type modifier!
-
-
-
-
-// XPECT errors --> "Invalid combination of type modifiers: ? and ...." at "...A?"
-var f3 : {function(...A?)}; // invalid combination of type modifiers: ? and ...
-
-
-
-
-// XPECT errors --> "Missing type name for type modifier ?." at "?"
-var f4 = function(param : ?) {} // missing type name for type modifier! (this causes a strange follow-up error)
-
+// XPECT errors --> "Variadic parameters must not have a default initializer." at "...A="
+var f3 : {function(...A=)}; // invalid combination of type modifiers: ? and ...
 
 
 // union ok. XPECT noerrors --> "Missing type name for type modifier ?." at "union{number,string}"
-var f4a = function(param : union{number,string}?) {} 
+var f4a = function(param : union{number,string}=undefined) {} 
 
 
-
-/* XPECT errors ---
-"Missing type name for type modifier ?." at "?"
-"Invalid combination of type modifiers: ? and ...." at "... param : ?"
----
-*/
-var f5 = function(... param : ?) {} // missing type name for type modifier! (this causes a strange follow-up error)
-
-
-
-
-// XPECT errors --> "Invalid combination of type modifiers: ? and ...." at "... param : A?"
-var f6 = function(... param : A?) {} // invalid combination of type modifiers: ? and ...
-
-
-
-
-// XPECT errors --> "Missing type name for type modifier ?." at "?"
-function f7(param : ?) {} // missing type name for type modifier!
-
-
-
-
-/* XPECT errors ---
-"Missing type name for type modifier ?." at "?"
-"Invalid combination of type modifiers: ? and ...." at "... param : ?"
----
-*/
-function f8(... param : ?) {} // missing type name for type modifier!
-
-
-
-
-/* XPECT errors ---
-"Missing type name for type modifier ?." at "?"
-"Invalid combination of type modifiers: ? and ...." at "... param : ?"
----
-*/
-function f9(... param : ?) {} // invalid combination of type modifiers: ? and ...
+// XPECT errors --> "Variadic parameters must not have a default initializer." at "... param : A=undefined"
+var f6 = function(... param : A=undefined) {} // invalid combination of type modifiers: ? and ...
 
 
 class C {
-	
-	// XPECT errors --> "Missing type name for type modifier ?." at "?"
-	m10(param : ?) {} // missing type name for type modifier!
-
-
-
-
-	/* XPECT errors ---
-	"Invalid combination of type modifiers: ? and ...." at "... param : ?"
-	"Missing type name for type modifier ?." at "?"
-	---
-	*/
-	m11(... param : ?) {} // missing type name for type modifier!
-
-
-
-
-	// XPECT errors --> "Invalid combination of type modifiers: ? and ...." at "... param : A?"
-	m12(... param : A?) {} // invalid combination of type modifiers: ? and ...
+	// XPECT errors --> "Variadic parameters must not have a default initializer." at "... param : A=undefined"
+	m12(... param : A=undefined) {} // invalid combination of type modifiers: ? and ...
 }
-
-
 
 
 // XPECT errors --> "Missing type name for type modifier ?." at "?"
 var st1 : ~Object with {prop: ?;}; // missing type name for type modifier! (this causes a strange follow-up error)
 
 
-
-
-// XPECT errors --> "Missing type name for type modifier ?." at "?"
-var st2 : ~Object with { m(?) }; // missing type name for type modifier! (this causes a strange follow-up error)
-
-
-
-
-/* XPECT errors ---
-"Missing type name for type modifier ?." at "?"
-"Invalid combination of type modifiers: ? and ...." at "...?"
----
-*/
-var st3 : ~Object with { m(...?) }; // missing type name for type modifier! (this causes a strange follow-up error)
-
-
-
-
-
-/* XPECT errors ---
-"Missing type name for type modifier ?." at "?"
-"Invalid combination of type modifiers: ? and ...." at "...param: ?"
----
-*/
-var st4 : ~Object with { m(...param: ?) }; // invalid combination of type modifiers: ? and ...
-
-
+// XPECT errors --->"Variadic parameters must not have a default initializer." at "...param: int="
+var st4 : ~Object with { m(...param: int=) }; // invalid combination of type modifiers: ? and ...
 
 
 // XPECT errors --> "Variadic parameter is not allowed in setter declarations." at "...number"
 var st5 : ~Object with { set g ( ...number)};
 
 
-
-
 /* XPECT errors ---
-"The optional modifier isn't allowed here." at "?"
-"Variadic parameter is not allowed in setter declarations." at "... ?"
----
-*/
-var st6 : ~Object with { set g ( ... ? )};
-
-
-
-
+"Default parameter is not allowed in setter declarations." at "... int="
+"Variadic parameter is not allowed in setter declarations." at "... int="
+---*/
+var st6 : ~Object with { set g ( ... int= )};

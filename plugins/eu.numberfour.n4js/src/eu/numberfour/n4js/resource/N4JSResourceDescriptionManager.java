@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.DerivedStateAwareResourceDescriptionManager;
-import org.eclipse.xtext.resource.FileExtensionProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
@@ -30,6 +29,7 @@ import org.eclipse.xtext.resource.impl.EObjectDescriptionLookUp;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.fileextensions.FileExtensionTypeHelper;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ts.scoping.builtin.N4Scheme;
@@ -53,10 +53,10 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 	private N4JSCrossReferenceComputer crossReferenceComputer;
 
 	@Inject
-	private FileExtensionProvider fileExtensionProvider;
+	private IN4JSCore n4jsCore;
 
 	@Inject
-	private IN4JSCore n4jsCore;
+	private FileExtensionTypeHelper fileExtensionTypeHelper;
 
 	@Override
 	protected IResourceDescription createResourceDescription(final Resource resource,
@@ -109,8 +109,8 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 		Collection<QualifiedName> namesImportedByCandidate = null;
 
 		for (IResourceDescription.Delta delta : deltas) {
-			if (delta.haveEObjectDescriptionsChanged() &&
-					fileExtensionProvider.isValid(delta.getUri().fileExtension())) {
+			if (delta.haveEObjectDescriptionsChanged()
+					&& fileExtensionTypeHelper.isTypable(delta.getUri().fileExtension())) {
 
 				if (null == namesImportedByCandidate) {
 					// note: this does not only contain the explicitly imported names, but indirectly

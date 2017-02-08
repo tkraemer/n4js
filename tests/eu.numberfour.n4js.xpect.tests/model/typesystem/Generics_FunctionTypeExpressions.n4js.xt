@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP  */
 
 
 // XPECT errors --> "{function(string):number} is not a subtype of {function<T>(T):T}." at "function(p : string) : number {return 42;}"

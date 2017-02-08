@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP  */
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP  */
 
 //IDEBUG-192 allows following
 // item Elements defined in catch blocks can shadow elements defined in all parent catch blocks and the (indirectly) parent non-catch-block environment.

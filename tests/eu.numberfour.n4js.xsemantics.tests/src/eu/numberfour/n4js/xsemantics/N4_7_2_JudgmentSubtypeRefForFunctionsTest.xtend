@@ -47,33 +47,33 @@ class N4_7_2_JudgmentSubtypeRefForFunctionsTest extends AbstractJudgmentSubtypeT
 		assertSubType("{function(A, ...A)}", "{function(A)}");
 		assertSubType("{function(A)}", "{function(A,...A)}", true); // !
 		assertSubType("{function(A, ...A)}", "{function(B)}");
-		assertSubType("{function(A?)}", "{function(A?)}");
+		assertSubType("{function(A=undefined)}", "{function(A=undefined)}");
 		assertSubType("{function(...A)}", "{function(...A)}");
-		assertSubType("{function(A?)}", "{function(A)}");
-		assertSubType("{function(A)}", "{function(A?)}", false);
-		assertSubType("{function(...A)}", "{function(A?)}");
-		assertSubType("{function(A?)}", "{function(...A)}", true); // !
+		assertSubType("{function(A=undefined)}", "{function(A)}");
+		assertSubType("{function(A)}", "{function(A=undefined)}", false);
+		assertSubType("{function(...A)}", "{function(A=undefined)}");
+		assertSubType("{function(A=undefined)}", "{function(...A)}", true); // !
 		assertSubType("{function(A,...A)}", "{function(...A)}", false);
-		assertSubType("{function(A,A?)}", "{function(...A)}", false);
-		assertSubType("{function(A?,...A)}", "{function(...A)}");
-		assertSubType("{function(...A)}", "{function(A?,...A)}");
-		assertSubType("{function(...A)}", "{function(A?)}");
-		assertSubType("{function(A?,A?)}", "{function(...A)}", true); // !
-		assertSubType("{function(A?,A?,A?)}", "{function(...A)}", true); // !
+		assertSubType("{function(A,A=undefined)}", "{function(...A)}", false);
+		assertSubType("{function(A=undefined,...A)}", "{function(...A)}");
+		assertSubType("{function(...A)}", "{function(A=undefined,...A)}");
+		assertSubType("{function(...A)}", "{function(A=undefined)}");
+		assertSubType("{function(A=undefined,A=undefined)}", "{function(...A)}", true); // !
+		assertSubType("{function(A=undefined,A=undefined,A=undefined)}", "{function(...A)}", true); // !
 	}
 
 	@Test
 	def void testSubTypeFunctionRefsSpecExampleVarOptWithNoneOnRHS() {
-		assertSubType("{function(A?)}", "{function()}");
+		assertSubType("{function(A=undefined)}", "{function()}");
 		assertSubType("{function(...A)}", "{function()}");
-		assertSubType("{function(A?,A?)}", "{function()}");
-		assertSubType("{function(A?,...A)}", "{function()}");
+		assertSubType("{function(A=undefined,A=undefined)}", "{function()}");
+		assertSubType("{function(A=undefined,...A)}", "{function()}");
 		assertSubType("{function(A)}", "{function()}", false);
 	}
 
 //	@Test
 //	def void testSingle() {
-//		assertSubType("{function(A?,A...)}", "{function(A...)}");
+//		assertSubType("{function(A=undefined,A...)}", "{function(A...)}");
 //	}
 
 	@Test

@@ -65,7 +65,7 @@ async function testWithFunction(allDone : {function()}) {
 	
 	console.log('use case #3: use Promise directly');
 	var p = @Promisify foo('some path');
-	p.then(function(res03){
+	p.then(function(res03 = undefined){
 		console.log('-> res03:', res03);
 		
 		console.log('use case #4: pass in a callback (don\'t use promisify at all)');
@@ -153,7 +153,7 @@ async function testWithMethod(allDone : {function()}) {
 	
 	console.log('use case #3: use Promise directly');
 	var p = @Promisify c.mOne('some path');
-	p.then(function(res73){
+	p.then(function(res73 = undefined){
 		console.log('-> res73:', res73);
 		
 		console.log('use case #4: pass in a callback (don\'t use promisify at all)');
@@ -182,7 +182,7 @@ async function testWithMethodStatic(allDone : {function()}) {
 	
 	console.log('use case #3: use Promise directly');
 	var p = @Promisify C.mStatic('some path');
-	p.then(function(res93){
+	p.then(function(res93 = undefined){
 		console.log('-> res93:', res93);
 		
 		console.log('use case #4: pass in a callback (don\'t use promisify at all)');

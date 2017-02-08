@@ -338,6 +338,144 @@ class N4JSResourceTest {
 		assertTrue("Main module data missing.",udata.containsKey( UserdataMapper.USERDATA_KEY_SERIALIZED_SCRIPT))
 		assertFalse("Time stamp not expected.",udata.containsKey( UserdataMapper.USERDATA_KEY_TIMESTAMP))
 	}	
+	
+	@Test
+	def void testUnloadASTAfterCreated() {
+		val rs = resourceSetProvider.get();
+		val N4JSResource res = rs.createResource(URI.createURI("src/eu/numberfour/n4js/tests/scoping/Supplier.n4js")) as N4JSResource;
+		
+		// Just to make sure that our assumptions are correct.
+		assertFalse("Resource is not initially loaded", res.loaded);
+		assertFalse("Resource is not initially loading", res.loading);
+		assertFalse("Resource is not initially fully initialized", res.fullyInitialized);
+		assertFalse("Resource is not initially fully processed", res.fullyProcessed);
+		
+		res.unloadAST();
+
+		assertFalse("Resource is not loaded after unloading AST", res.loaded);
+		assertFalse("Resource is not loading after unloading AST", res.loading);
+		assertFalse("Resource is not fully initialized after unloading AST", res.fullyInitialized);
+		assertFalse("Resource is not fully processed after unloading AST", res.fullyProcessed);
+
+		assertNull("Script is null after unloading AST", res.script);
+		assertNull("TModule is null after unloading AST", res.module);
+	}
+	
+	@Test
+	def void testUnloadASTAfterLoad() {
+		val rs = resourceSetProvider.get();
+		val N4JSResource res = rs.createResource(URI.createURI("src/eu/numberfour/n4js/tests/scoping/Supplier.n4js")) as N4JSResource;
+		res.load(newHashMap());
+		
+		// Just to make sure that our assumptions are correct.
+		assertTrue("Resource is initially loaded", res.loaded);
+		assertFalse("Resource is not initially loading", res.loading);
+		assertFalse("Resource is not initially fully initialized", res.fullyInitialized);
+		assertFalse("Resource is not initially fully processed", res.fullyProcessed);
+		
+		res.unloadAST();
+
+		assertFalse("Resource is not loaded after unloading AST", res.loaded);
+		assertFalse("Resource is not loading after unloading AST", res.loading);
+		assertFalse("Resource is not fully initialized after unloading AST", res.fullyInitialized);
+		assertFalse("Resource is not fully processed after unloading AST", res.fullyProcessed);
+
+		assertNotNull("Script is null after unloading AST", res.script);
+		assertTrue("Script is proxified after unloading AST", res.script.eIsProxy);
+		assertNull("TModule is null after unloading AST", res.module);
+	}
+	
+	@Test
+	def void testUnloadASTAfterPrelinking() {
+		val rs = resourceSetProvider.get();
+		val N4JSResource res = rs.createResource(URI.createURI("src/eu/numberfour/n4js/tests/scoping/Supplier.n4js")) as N4JSResource;
+		res.load(newHashMap());
+		res.initializedDescription // Trigger prelinking
+		
+		assertTrue("Resource is initially loaded", res.loaded);
+		assertFalse("Resource is not initially loading", res.loading);
+		assertFalse("Resource is not initially fully initialized", res.fullyInitialized);
+		assertFalse("Resource is not initially fully processed", res.fullyProcessed);
+		
+		res.unloadAST();
+
+		assertFalse("Resource is not loaded after unloading AST", res.loaded);
+		assertFalse("Resource is not loading after unloading AST", res.loading);
+		assertFalse("Resource is not fully initialized after unloading AST", res.fullyInitialized);
+		assertFalse("Resource is not fully processed after unloading AST", res.fullyProcessed);
+
+		assertNotNull("Script is null after unloading AST", res.script);
+		assertTrue("Script is proxified after unloading AST", res.script.eIsProxy);
+		assertNull("TModule is null after unloading AST", res.module);
+	}
+	
+	@Test
+	def void testUnloadASTAfterFullyProcessed() {
+		val rs = resourceSetProvider.get();
+		val N4JSResource res = rs.createResource(URI.createURI("src/eu/numberfour/n4js/tests/scoping/Supplier.n4js")) as N4JSResource;
+		res.load(newHashMap());
+		res.performPostProcessing
+		
+		assertTrue("Resource is initially loaded", res.loaded);
+		assertFalse("Resource is not initially loading", res.loading);
+		assertTrue("Resource is initially fully initialized", res.fullyInitialized);
+		assertTrue("Resource is not initially fully processed", res.fullyProcessed);
+		
+		res.unloadAST();
+
+		assertFalse("Resource is loaded after unloading AST", res.loaded);
+		assertFalse("Resource is not loading after unloading AST", res.loading);
+		assertTrue("Resource is fully initialized after unloading AST", res.fullyInitialized);
+		assertTrue("Resource is fully processed after unloading AST", res.fullyProcessed);
+
+		assertNotNull("Script is null after unloading AST", res.script);
+		assertTrue("Script is proxified after unloading AST", res.script.eIsProxy);
+		assertNotNull("TModule is available after unloading AST", res.module);
+		assertFalse("TModule is not proxified after unloading AST", res.module.eIsProxy);
+		assertTrue("TModule AST node is script proxy after unloading AST", res.script === res.module.astElement);
+	}
+	
+	@Test
+	def void testUnloadASTAfterLoadFromDescription() {
+		var rs = resourceSetProvider.get();
+		val supplierResource = "src/eu/numberfour/n4js/tests/scoping/Supplier.n4js".loadAndResolve(rs)
+
+		val resourceDescription = supplierResource.initializedDescription
+
+		supplierResource.unload
+
+		val qn = QualifiedName.create("eu", "numberfour", "n4js", "tests", "scoping", "Supplier");
+		val typeDescription = resourceDescription.getExportedObjects(
+			TypesPackage.Literals.TMODULE,
+			qn, false
+		).head
+
+		assertNotNull("Did not find module with name " + qualifiedNameConverter.toString(qn), typeDescription)
+		val typeFromDescription = typeDescription.EObjectOrProxy
+		assertTrue('typeFromDescription.eIsProxy', typeFromDescription.eIsProxy)
+
+		rs.resources.clear
+
+		val res = rs.createResource(URI.createURI("src/eu/numberfour/n4js/tests/scoping/Supplier.n4js")) as N4JSResource
+		res.loadFromDescription(resourceDescription)
+		
+		assertFalse("Resource is initially loaded", res.loaded);
+		assertFalse("Resource is not initially loading", res.loading);
+		assertTrue("Resource is initially fully initialized", res.fullyInitialized);
+		assertTrue("Resource is not initially fully processed", res.fullyProcessed);
+		
+		res.unloadAST();
+
+		assertFalse("Resource is loaded after unloading AST", res.loaded);
+		assertFalse("Resource is not loading after unloading AST", res.loading);
+		assertTrue("Resource is fully initialized after unloading AST", res.fullyInitialized);
+		assertTrue("Resource is fully processed after unloading AST", res.fullyProcessed);
+
+		assertNotNull("Script is null after unloading AST", res.script);
+		assertTrue("Script is proxified after unloading AST", res.script.eIsProxy);
+		assertNotNull("TModule is available after unloading AST", res.module);
+		assertFalse("TModule is not proxified after unloading AST", res.module.eIsProxy);
+	}
 }
 
 package class RecordingAdapter extends AdapterImpl {

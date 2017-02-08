@@ -41,7 +41,7 @@
 				$makeClass(IDENodeTestRunner, N4Object, [], {
 					run: {
 						value: function run___n4() {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								try {
 									let testCatalog, catalogDef = n4.runtimeOptions["test-catalog"];
 									if (typeof catalogDef === "string") {

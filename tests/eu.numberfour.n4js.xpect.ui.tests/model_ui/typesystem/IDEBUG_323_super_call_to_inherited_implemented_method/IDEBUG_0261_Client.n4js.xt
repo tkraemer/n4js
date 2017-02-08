@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginUITest  
+/* XPECT_SETUP eu.numberfour.n4js.xpect.ui.tests.N4JSXpectPluginUITest  
    Workspace {
    	 Project "IDEBUG-323" {
    	 	Folder "src" { File "IDEBUG_0261_Imported.n4js" {} }

@@ -287,15 +287,6 @@ class N4_7_1_11_ArrowExpressionTest extends AbstractParserTest {
 	}
 
 	@Test
-	def void testTraceur_Error_SpreadNotLast() {
-		'''
-			{
-			  var f = (...xs, x) => xs;
-			}
-		'''.parseWithError
-	}
-
-	@Test
 	def void testTraceur_Error_SpreadOutsideFormals() {
 		'''
 			var f = (x, ...xs);

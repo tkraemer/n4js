@@ -17,7 +17,9 @@ import java.util.Objects;
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.resource.XpectAwareFileExtensionCalculator;
 
 /**
@@ -27,6 +29,7 @@ import eu.numberfour.n4js.resource.XpectAwareFileExtensionCalculator;
  * calling the method {@link BaseJavaScriptVariantHelper#addEntry(String, ValidationFeature, Object)} in the
  * constructor.
  */
+@Singleton
 public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 
 	/**
@@ -37,7 +40,7 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	/**
 	 * Default variant mode: JS
 	 */
-	public static final String EXT_JS = "js";
+	public static final String EXT_JS = N4JSGlobals.JS_FILE_EXTENSION;
 
 	/**
 	 * This file extension calculator calculates file extensions of resource
@@ -607,7 +610,8 @@ public class BaseJavaScriptVariantHelper implements JavaScriptVariantHelper {
 	/**
 	 * Return true if "use strict" is declared. Override this method for sub-languages!
 	 */
-	protected boolean isStrictMode(EObject eobj) {
+	@Override
+	public boolean isStrictMode(EObject eobj) {
 		return JavaScriptVariant.isContainedInStrictFunctionOrScript(eobj);
 	}
 }

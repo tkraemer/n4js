@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectPluginTest	END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.xpect.ui.tests.N4JSXpectPluginTest	END_SETUP */
 
 interface R {
 	abstract m() : void;

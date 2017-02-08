@@ -71,6 +71,8 @@ public class ComposedMemberDescriptor {
 		private final List<TypeRef> typeRefs = new ArrayList<>();
 		private boolean optional = true;
 		private boolean variadic = true;
+		// astInitializer is not merged
+		private boolean hasInitializerAssignment = true;
 
 		public TFormalParameter create() {
 			final TFormalParameter fpar = TypesFactory.eINSTANCE.createTFormalParameter();
@@ -87,6 +89,7 @@ public class ComposedMemberDescriptor {
 			if (this.optional && null != fpar.getTypeRef())
 				fpar.getTypeRef().setUndefModifier(UndefModifier.OPTIONAL);
 			fpar.setVariadic(this.variadic);
+			fpar.setHasInitializerAssignment(this.hasInitializerAssignment);
 			return fpar;
 		}
 	}
@@ -198,6 +201,8 @@ public class ComposedMemberDescriptor {
 			}
 			desc.optional &= nextFpar.isOptional(); // remember if ALL were optional
 			desc.variadic &= nextFpar.isVariadic(); // remember if ALL were variadic
+			desc.hasInitializerAssignment &= nextFpar.isHasInitializerAssignment(); // remember if ALL had an
+																					// initializer assignment
 		}
 	}
 

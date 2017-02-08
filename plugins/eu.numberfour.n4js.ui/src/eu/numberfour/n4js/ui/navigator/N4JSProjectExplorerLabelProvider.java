@@ -32,7 +32,7 @@ import eu.numberfour.n4js.ui.workingsets.WorkingSet;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetLabelProvider;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBroker;
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Label provider extension for the N4JS specific Project Explorer view.

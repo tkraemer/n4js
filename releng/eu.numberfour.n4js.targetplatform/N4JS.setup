@@ -176,13 +176,14 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="n4js.target.platform"
+      defaultValue="N4JS_Neon.2"
       storageURI="scope://Workspace">
-    <choice
-        value="N4JS_Neon"
-        label="N4JS_Neon"/>
     <choice
         value="N4JS_Neon.2"
         label="N4JS_Neon.2"/>
+    <choice
+        value="N4JS_Neon"
+        label="N4JS_Neon"/>
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"

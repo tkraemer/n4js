@@ -1303,17 +1303,15 @@ In order to declare a variable to which properties can be dynamically added, the
 
 === Function-Object-Type
 
-The built-in object type `Function`, a subtype of `Object`, represents all functions, regardless of how they are defined (either via function expression,
-function declaration, or method declaration).
+The built-in object type `Function`, a subtype of `Object`, represents all functions, regardless of how they are defined 
+(either via function expression, function declaration, or method declaration).
 They are described in detail in <<_function-object-type,Function Object Type>>.
 
-Since `Function` is the supertype of all functions regardless of number and types
-of formal parameters, return type, and number and bounds of type
-parameters, it would not normally be possible to invoke an instance of `Function`.
-For the time being, however, an instance of `Function` can be invoked, any number
-of arguments may be provided and the invocation may be parameterized
-with any number of type arguments (which will be ignored), i.e. 
-<<IDE-101,Function Call Constraints>> and <<IDE-102,Parameterized Function Call Constraints>> do not apply.
+Since `Function` is the supertype of all functions regardless of number and types of formal parameters, return type, and number and bounds of type parameters,
+it would not normally be possible to invoke an instance of `Function`.
+For the time being, however, an instance of `Function` can be invoked,
+any number of arguments may be provided and the invocation may be parameterized with any number of type arguments (which will be ignored), 
+i.e. <<IDE-101,Function Call Constraints>> and <<IDE-102,Parameterized Function Call Constraints>> do not apply.
 
 === Array Object Type
 
@@ -1490,14 +1488,11 @@ on a subtype of is not allowed.
 declared dynamic. footnote:[This is a consequence of the syntax definition.]
 --
 
-=== Optional
-task:IDE-145[] task:IDE-1076[]
+
+=== Optional Return Types
+task:IDE-1076[] task:IDE-2405[]
 
 Only formal parameters and return types can be marked as optional.
-
-An optional formal parameter can be omitted when calling the function /
-method; an omitted parameter has the value `undefined`. Every parameter after an
-optional parameter also has to be optional or variadic.
 
 An optional return type indicates that the function / method need not be
 left via a return statement with an expression; in that case the return
@@ -1505,47 +1500,7 @@ value is `undefined`. For constraints on using the optional modifier, see <<_fun
 
 // TODO : {The optional modifier will be replaced with the default argument concept.}
 
-=== Variadic [[Type_Modifiers_Variadic]]
-task:IDE-146[]
 
-Only method parameters can be marked as
-variadic. Marking a parameter as variadic indicates that method accepts
-a variable number of parameters. A variadic parameter implies that the
-parameter is also optional as the cardinality is defined as
-math:[$[0..*]$]. No further parameter can be defined after a
-variadic parameter.
-
-.Variadic and optional parameters
-[req,id=IDE-16,version=1]
---
-For a parameter math:[$p$], the
-following condition must hold: math:[$p.var \to p.opt$].
-
-A parameter can, however, be declared either optional or variadic. That
-is to say that one can either write math:[$Type=$] (optional) or
-math:[$...Type$], but not math:[$...Type=$]
-
---
-
-
-Declaring a variadic method parameter of type math:[$T$] causes the
-type of the method parameter to become `Array<T>`. That is, declaring `function(string ..tags)` causes `tags` to be
-an `Array<string>` and not just a scalar `string` value.
-
-To make this work at runtime, the compiler will generate code that
-constructs the `method parameter` from the `arguments` parameter explicitly passed to the function.
-
-.Variadic at Runtime
-[req,id=IDE-17,version=1]
---
-task:IDEBUG-106[]
-At runtime, a variadic
-parameter is never set to undefined. Instead, the array may be empty.
-This must be true even if preceding parameters are optionally and not
-arguments are passed at runtime.
---
-
-For more constraints on using the variadic modifier, see <<_function-object-type,Function Object Type>>.
 
 == Union and Intersection Type (Composed Types)
 

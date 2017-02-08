@@ -11,7 +11,7 @@ class MyMap<KeyT, ValueT> {
     	arg : union{
     		Iterable<Array<union{KeyT, ValueT}>>,
     		Iterator<Array<union{KeyT, ValueT}>>
-    	}?
+    	}=undefined
     ) {
     }
 }

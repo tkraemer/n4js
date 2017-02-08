@@ -6131,10 +6131,20 @@ ruleBindingElementFragment[EObject in_current]  returns [EObject current=in_curr
 			)
 		)
 		(
-			otherlv_6=EqualsSign
-			{
-				newLeafNode(otherlv_6, grammarAccess.getBindingElementFragmentAccess().getEqualsSignKeyword_1_0());
-			}
+			(
+				(
+					lv_hasInitializerAssignment_6_0=EqualsSign
+					{
+						newLeafNode(lv_hasInitializerAssignment_6_0, grammarAccess.getBindingElementFragmentAccess().getHasInitializerAssignmentEqualsSignKeyword_1_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getBindingElementFragmentRule());
+						}
+						setWithLastConsumed($current, "hasInitializerAssignment", true, "=");
+					}
+				)
+			)
 			(
 				(
 					{
@@ -6153,7 +6163,7 @@ ruleBindingElementFragment[EObject in_current]  returns [EObject current=in_curr
 						afterParserOrEnumRuleCall();
 					}
 				)
-			)
+			)?
 		)?
 	)
 ;
@@ -6275,10 +6285,20 @@ norm1_BindingElementFragment[EObject in_current]  returns [EObject current=in_cu
 			)
 		)
 		(
-			otherlv_6=EqualsSign
-			{
-				newLeafNode(otherlv_6, grammarAccess.getBindingElementFragmentAccess().getEqualsSignKeyword_1_0());
-			}
+			(
+				(
+					lv_hasInitializerAssignment_6_0=EqualsSign
+					{
+						newLeafNode(lv_hasInitializerAssignment_6_0, grammarAccess.getBindingElementFragmentAccess().getHasInitializerAssignmentEqualsSignKeyword_1_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getBindingElementFragmentRule());
+						}
+						setWithLastConsumed($current, "hasInitializerAssignment", true, "=");
+					}
+				)
+			)
 			(
 				(
 					{
@@ -6297,7 +6317,7 @@ norm1_BindingElementFragment[EObject in_current]  returns [EObject current=in_cu
 						afterParserOrEnumRuleCall();
 					}
 				)
-			)
+			)?
 		)?
 	)
 ;
@@ -34853,7 +34873,64 @@ ruleTAnonymousFormalParameter returns [EObject current=null]
 				}
 			)
 		)
+		{
+			if ($current==null) {
+				$current = createModelElement(grammarAccess.getTAnonymousFormalParameterRule());
+			}
+			newCompositeNode(grammarAccess.getTAnonymousFormalParameterAccess().getDefaultFormalParameterParserRuleCall_3());
+		}
+		this_DefaultFormalParameter_4=ruleDefaultFormalParameter[$current]
+		{
+			$current = $this_DefaultFormalParameter_4.current;
+			afterParserOrEnumRuleCall();
+		}
 	)
+;
+
+
+// Rule DefaultFormalParameter
+ruleDefaultFormalParameter[EObject in_current]  returns [EObject current=in_current]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_hasInitializerAssignment_0_0=EqualsSign
+				{
+					newLeafNode(lv_hasInitializerAssignment_0_0, grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignmentEqualsSignKeyword_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getDefaultFormalParameterRule());
+					}
+					setWithLastConsumed($current, "hasInitializerAssignment", true, "=");
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerTypeReferenceNameParserRuleCall_1_0());
+				}
+				lv_astInitializer_1_0=ruleTypeReferenceName
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getDefaultFormalParameterRule());
+					}
+					set(
+						$current,
+						"astInitializer",
+						lv_astInitializer_1_0,
+						"eu.numberfour.n4js.N4JS.TypeReferenceName");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)?
+	)?
 ;
 
 // Entry rule entryRuleUnionTypeExpressionOLD
