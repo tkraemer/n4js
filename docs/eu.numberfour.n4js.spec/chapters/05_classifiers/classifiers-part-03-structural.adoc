@@ -355,6 +355,7 @@ interface ~i~I {
 
 |===
 
+<<<
 
 Note that even if a type is defined without the structural modifier, it is not possible to use `instanceof` for variables declared as structural, as shown in the next example:
 
@@ -657,27 +658,27 @@ class A5 {
 [.small]
 [cols="19"]
 |===
-|  h| A1 h| pass:[~A1] h| pass:[~~A1] h| pass:[~r~A1] h| pass:[~r~A2] h| pass:[~r~A3] h| pass:[~r~A4] h| pass:[~r~A5] h| pass:[~w~A1]
-h| pass:[~w~A2] h| pass:[~w~A3] h| pass:[~w~A4] h| pass:[~w~A5] h| pass:[~i~A1] h| pass:[~i~A2]  h| pass:[~i~A3] h| pass:[~r~A4] h| pass:[~r~A5]
+|  | A1 | pass:[~A1] | pass:[~~A1] | pass:[~r~A1] | pass:[~r~A2] | pass:[~r~A3] | pass:[~r~A4] | pass:[~r~A5] | pass:[~w~A1]
+| pass:[~w~A2] | pass:[~w~A3] | pass:[~w~A4] | pass:[~w~A5] | pass:[~i~A1] | pass:[~i~A2]  | pass:[~i~A3] | pass:[~r~A4] | pass:[~r~A5]
 
-h| A1          |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓
-h| pass:[~A1]  |  |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓
-h| pass:[~~A1] |  |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓
-h| pass:[~r~A1]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
-h| pass:[~r~A2]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
-h| pass:[~r~A3]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
-h| pass:[~r~A4]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
-h| pass:[~r~A5]|  |  |  |  |  |  |  |✓ |  |  |✓ |✓ |  |  |  |✓ |✓ |
-h| pass:[~w~A1]|  |  |  |  |  |  |  |✓ |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |
-h| pass:[~w~A2]|  |  |  |  |  |  |  |✓ |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |
-h| pass:[~w~A3]|  |  |  |  |  |  |  |✓ |  |  |✓ |✓ |  |  |  |✓ |✓ |
-h| pass:[~w~A4]|  |  |  |  |  |  |  |✓ |  |  |✓ |✓ |  |  |  |✓ |✓ |
-h| pass:[~w~A5]|  |  |  |  |  |  |  |✓ |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |
-h| pass:[~i~A1]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
-h| pass:[~i~A2]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
-h| pass:[~i~A3]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
-h| pass:[~r~A4]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
-h| pass:[~r~A5]|  |  |  |  |  |  |  |✓ |  |  |✓ |✓ |  |  |  |✓ |✓ |
+| A1          |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓
+| pass:[~A1]  |  |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓
+| pass:[~~A1] |  |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓ |✓
+| pass:[~r~A1]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
+| pass:[~r~A2]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
+| pass:[~r~A3]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
+| pass:[~r~A4]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
+| pass:[~r~A5]|  |  |  |  |  |  |  |✓ |  |  |✓ |✓ |  |  |  |✓ |✓ |
+| pass:[~w~A1]|  |  |  |  |  |  |  |✓ |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |
+| pass:[~w~A2]|  |  |  |  |  |  |  |✓ |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |
+| pass:[~w~A3]|  |  |  |  |  |  |  |✓ |  |  |✓ |✓ |  |  |  |✓ |✓ |
+| pass:[~w~A4]|  |  |  |  |  |  |  |✓ |  |  |✓ |✓ |  |  |  |✓ |✓ |
+| pass:[~w~A5]|  |  |  |  |  |  |  |✓ |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |
+| pass:[~i~A1]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
+| pass:[~i~A2]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
+| pass:[~i~A3]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
+| pass:[~r~A4]|  |  |  |✓ |✓ |✓ |✓ |✓ |  |  |✓ |✓ |  |✓ |✓ |✓ |✓ |✓
+| pass:[~r~A5]|  |  |  |  |  |  |  |✓ |  |  |✓ |✓ |  |  |  |✓ |✓ |
 |===
 
 ====
@@ -810,7 +811,7 @@ declared type.
 
 === Syntax
 
-[source,n4js]
+[source,xtext]
 ----
 TStructMember:
     TStructGetter | TStructGetterES4 | TStructSetter | TStructMethod | TStructMethodES4 | TStructField;

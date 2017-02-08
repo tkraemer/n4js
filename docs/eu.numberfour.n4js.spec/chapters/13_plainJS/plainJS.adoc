@@ -235,10 +235,11 @@ export external public class Circle {
 ----
 
 Note that the class and interface names in n4jsd files must match those in the js files, respectively.
+====
 
 .Structurally-typed external interfaces
 [example]
---
+====
 
 [source,javascript]
 ----
@@ -257,8 +258,8 @@ export external public class Circle implements Scalable {
     constructor(center: Point, radius: number);
 }
 ----
---
 ====
+
 
 [.language-n4js]
 == Global Definitions

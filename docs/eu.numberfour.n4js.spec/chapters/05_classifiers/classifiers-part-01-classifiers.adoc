@@ -34,9 +34,9 @@ Arbitrary annotations, see <<Annotations>> for details.
 
 `accessModifier` ::
 N4JS type access modifier: `public`, or `project`;  `public` can be combined with `@Internal`; if
-*export* is `true` the default is else the default is `private`. task:IDE-84[]
-// TODO missing notation above
+*export* is `true` the default is else the default is `private`.
 
+task:IDE-84[]
 
 `name` ::
 The simple name of a classifier. If the classifier is defined by an anonymous class expression, an artificial but unique name is created.
@@ -69,7 +69,8 @@ Also see <<_final-modifier>>
 
 `deprecated` ::
 Boolean property set to true if annotation `@Deprecated` is set.
-// Version 0.4, not implemented in Version 0.3
++
+NOTE: Version 0.4, not implemented in Version 0.3
 
 task:IDE-138[]
 
@@ -417,7 +418,7 @@ This can be used for singletons.
 .Superclass
 [req,id=IDE-47,version=1]
 --
-For a class `C` with a supertype $S=C.sup$, the following constraints must hold
+For a class `C` with a supertype $S=C.sup$, the following constraints must hold;
 
 * $C.sup$ must reference a class declaration `S`
 * `S` must be be extendable in the project of `C`
@@ -425,10 +426,9 @@ For a class `C` with a supertype $S=C.sup$, the following constraints must hold
 * All abstract members in `S` must be accessible from `C`:
 +
 $\forall M \in S.members : M.abstract \Rightarrow $
-`M` is accessible from `C` +
-(note that `M` need not be an owned member of
-`S` and that this constraint applies even if `C`
-is abstract).
+`M` is accessible from `C`
++
+NOTE: `M` need not be an owned member of `S` and that this constraint applies even if `C` is abstract).
 
 All members of superclasses become members of a class.
 This is true even if the owning classes are not directly accessible to a class.

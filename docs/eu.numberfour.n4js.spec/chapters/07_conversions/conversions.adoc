@@ -526,7 +526,7 @@ Conversion between primitives is given as follows:
 var n: number; var b: boolean; var s: string;
 ----
 
-[cols="^.^1m,^.^1m,<.^3m,<4m"]
+[cols="^.^1m,^.^1m,<.^4m,<3m"]
 |===
 |From |To |Conversion ^|Example
 
@@ -576,9 +576,9 @@ a|
 Remarks:
 
 1.  ECMAScript doesn’t define explicit conversion from string content.
-Implicit handling states all strings with $>$0==true. `N4Primitives.parseBoolean( x )` yields true for `x.trim().toLowerCase().equals("true")`
-2.  The call to `Boolean(..)` for the arguments `0, -0, null, false, NaN, undefined` and `""` evaluate to `false`.
+Implicit handling states all strings with $>0==true$. `N4Primitives.parseBoolean(x)` yields true for `x.trim().toLowerCase().equals("true")`
+2.  The call to `Boolean(..)` for the arguments `0`, `-0`, `null`, `false`, `NaN`, `undefined` and `""` evaluate to `false`.
 All other values evaluate to `true`.
-3.  `Number` has several methods for converting a value to string cite:[ECMA11a(S15.7.4)]: `toExponential(), to Fixed(), toPrecision()`.
+3.  `Number` has several methods for converting a value to string cite:[ECMA11a(S15.7.4)]: `toExponential()`, to `Fixed()`, `toPrecision()`.
 4.  ECMAScript doesn’t define explicit conversion from boolean to number.
 Implicit handling states true $\rightarrow$ 1 and false $\rightarrow$ 0, which `N4Primitives.toNumber()` yields.

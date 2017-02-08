@@ -85,8 +85,7 @@ Enumeration, may be one of the following values:
 This is the default setting for fields.
 
 NOTE: $assignability$ is related but not equal to writable modifiers used for fields.
-We define a partial order on this enumeration as follows:
-+
+We define a partial order on this enumeration as follows: +
 [math]
 ++++
 <(l,r) \spc ::= \spc \{ (\lenum{set}, \lenum{any}), (\lenum{get}, \lenum{any})  \}
@@ -834,21 +833,21 @@ The following rules apply to covariant constructors.
 --
 .  Annotation `@CovariantConstructor` may only be applied to classes, interfaces, and constructors.
 Annotating a constructor with this annotation, or its containing classifier, or both have all the same effect.
-.  Given a class `C` with an owned constructor $ctor$ and a super class $Sup$ that has a covariant constructor (owned or inherited, see <<covariant_constructor>>),
+.  Given a class `C` with an owned constructor $ctor$ and a super class $Sup$ that has a covariant constructor (owned or inherited, see <<_covariant-constructors>>),
 then $Sup.constructor$ must be accessible from `C`,
 ..  $ctor$ must be override compatible with $S.constructor$:
 +
 $overrideCompatible(ctor, S.constructor)$
 +
 This constraint corresponds to <<Req-IDE-72>> except for the `Override` annotation which is not required here.
-.  Given a classifier `C` implementing interface `I` and `I` has a covariant constructor (owned or inherited, see <<covariant_constructor>>), we require
+.  Given a classifier `C` implementing interface `I` and `I` has a covariant constructor (owned or inherited, see <<_covariant-constructors>>), we require
 ..  $I.constructor$ must be accessible from `C`,
 ..  an implementation-compatible constructor $ctor$ must be defined in C with
 +
 $overrideCompatible(ctor, I.constructor)$
 +
 This constraint corresponds to <<Req-IDE-74>> except for the `@Override` annotation, which is not required, here.
-..  Given a classifier `C` without an owned constructor and an extended class or interface $Sup$ that has a covariant constructor (owned or inherited, see <<covariant_constructor>>),
+..  Given a classifier `C` without an owned constructor and an extended class or interface $Sup$ that has a covariant constructor (owned or inherited, see <<_covariant-constructors>>),
 we require the inherited constructor $ctor$ of `C` within the context of `C` to be override compatible to itself in the context of $Sup$.
 Using notation $m[T]$ to denote that a member `M` is to be treated as defined in container type `T`, which means the this-binding is set to `T`, we can write:
 +

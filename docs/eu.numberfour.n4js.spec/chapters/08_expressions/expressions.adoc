@@ -1189,7 +1189,7 @@ The following constraints must hold:
 
 .  [[new-expression-1]] The callee must be a constructor type: $C <: \type{constructor\{?\}}$  or a constructable type.
 .  [[new-expression-2]] Let $O$ be the type argument of $C$, that is $C = constructor\{O\}$. In that case,
-..  $O$ must not be an interface or enum: $\mu(C) \not\in \{ \type{Interface}, \type{Enum}\}}$
+..  $O$ must not be an interface or enum: $\mu(C) \not\in \{ \type{Interface}, \type{Enum}\}$
 ..  $O$ must not contain any wildcards.
 ..  $O$ must not be a type variable.
 .  [[new-expression-3]] If $C$ is not a constructor type, it must be a constructable type, that is one of the following:
@@ -1212,12 +1212,12 @@ N4JS.
 
 Remarks:
 
-to <<new-expression-1>> The type of an abstract class `A` is $type\{A\}$.
+to <<new-expression-1,1>> The type of an abstract class `A` is $type\{A\}$.
 Or in other words: Only instantiable classes have an inferred type of $constructor\{..\}$.
 
-to <<new-expression-2>> Even though it is possible to use the constructor type of an abstract class – concrete subclasses with override compatible constructor signature will be subclasses of this constructor.
+to <<new-expression-2,2>> Even though it is possible to use the constructor type of an abstract class – concrete subclasses with override compatible constructor signature will be subclasses of this constructor.
 
-to <<new-expression-3>> It is not possible to refer to union or intersection at that location. So this is not explicitly denied here since it is not possible anyway.
+to <<new-expression-3,3>> It is not possible to refer to union or intersection at that location. So this is not explicitly denied here since it is not possible anyway.
 
 .Abstract classes and construction
 [example]

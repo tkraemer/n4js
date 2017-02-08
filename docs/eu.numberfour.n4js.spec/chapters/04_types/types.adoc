@@ -1820,7 +1820,7 @@ its contained types is a subtype of that type: footnote:[This rule is a generali
 ++++
 
 * A type is a subtype of an intersection type, if it is a subtype of all
-types contained in the intersection type: footnote:[This rule is a generalization of the subtyping rules given in cite:[Laurent12a]Table 2, $\cap_r$]
+types contained in the intersection type: footnote:[This rule is a generalization of the subtyping rules given in cite:[Laurent12a] Table 2, $\cap_r$]
 
 [math]
 ++++

@@ -389,7 +389,6 @@ ProjectType ::
 The _type_ of the project.
 The following types of projects exists:
 +
-[horizontal]
 app:::
   Application. See <<Apps>>.
 lib:::
