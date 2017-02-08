@@ -181,8 +181,8 @@ Binding of variable references to declaration is defined by ECMAScript already.
 Type references only occur in type expressions, how these are handled is explained in <<_type-expressions>>.
 
 We usually omit this binding mechanism in most rules and use the reference similarly to the declaration or definition it is bound to.
-If a variable reference $r$, for example, is bound to a variable declaration $D$, i.e. $bind(r,D)$, we
-simply write $r.type$ instead of $bind(r,D), D.type$ to refer to the type expression (of the variable).footnote:[One can interpret this similar to delegate methods, that is, instead of writing [.language-n4js]``r.binding().getType()``, a method [.language-n4js]``r.getType()\{return binding().getType();`` is defined.]
+If a variable reference $r$, for example, is bound to a variable declaration $D$, i.e. $bind(r,D)$, we simply write $r.type$ instead of $bind(r,D), D.type$ to refer to the type expression
+(of the variable).footnote:[One can interpret this similar to delegate methods, that is, instead of writing [.language-n4js]`r.binding().getType()`, a method [.language-n4js]`r.getType()\{return binding().getType();` is defined.]
 
 --
 

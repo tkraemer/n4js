@@ -1,8 +1,6 @@
 
-
-= Names
-
 :find:
+= Names
 ////
 Copyright (c) 2017 NumberFour AG.
 All rights reserved. This program and the accompanying materials
@@ -25,13 +23,10 @@ Access control is a prerequisite for extensibility which is further explained in
 == Access Control
 task:IDE-84[] task:IDE-556[]
 
-Types from one project may or may not be made
-accessible to another project. Likewise, members from a given type may
-or may not be made accessible to members existing outside that type. For
-example, if a developer writes an application which uses a library,
-which types within that library can the application see? Given a type
-that is set as visible, which members of that type can the application
-see?
+Types from one project may or may not be made accessible to another project.
+Likewise, members from a given type may or may not be made accessible to members existing outside that type.
+For example, if a developer writes an application which uses a library, which types within that library can the application see?
+Given a type that is set as visible, which members of that type can the application see?
 
 Accessing a type or member actually means that a reference is bound to a
 declaration with the same identifier.
@@ -125,9 +120,7 @@ h|Modifier h|Module h| Project h| Vendor h| World
 .Type Access Modifiers
 [req,id=IDE-3,version=1]
 --
-The following constraints for type access modifiers for a given type $T$
-(which may be a classifier declaration, a function or a variable) must
-hold:
+The following constraints for type access modifiers for a given type $T$ (which may be a classifier declaration, a function or a variable) must hold:
 
 * It is an error if $T$ is not exported but defined as `project`, `public` or `public@Internal`.
 * It is an error if an annotation `@Internal` is present on a module private or `project` visible type.
@@ -144,9 +137,7 @@ The function $\alpha_T: TypeReference \times TypeDeclaration \to Boolean$ comput
 reference can access the declaration that it references.
 $\alpha_T$ is defined with <<tab:type-access-control>>.
 
-Formally, we define $\alpha_T$ for a given reference
-$r$ and a module top level variable, function or type
-declaration $D$ as follows: footnote:[See for definitions of metatype properties.]
+Formally, we define $\alpha_T$ for a given reference $r$ and a module top level variable, function or type declaration $D$ as follows footnote:[See for definitions of metatype properties.]:
 
 [math]
 ++++
@@ -160,11 +151,11 @@ declaration $D$ as follows: footnote:[See for definitions of metatype properties
 
 If the type of the arguments is clear from the context, we simply write $\alpha(r,D)$ instead of $\alpha_T(r,D)$.
 
-Accessibility for types is only checked for types that manifest
-themselves in the concrete syntax of the N4JS file. Types that do not
-have to be written to concrete syntax may be used even if they are
-generally not accessible. This is illustrated by the following example:
+Accessibility for types is only checked for types that manifest themselves in the concrete syntax of the N4JS file.
+Types that do not have to be written to concrete syntax may be used even if they are generally not accessible.
+This is illustrated by <<ex:implicit-type-references>>:
 
+[[ex:implicit-type-references]]
 .Implicit, allowed type references in N4JS
 [example]
 ====
@@ -191,14 +182,11 @@ d.acceptC( d.takeC() )
 === Accessibility of Members
 task:IDE-84[] task:IDE-556[] task:IDE-707[]
 
-Accessibility at the member level is only applicable when the type
-itself is accessible. If you cannot access the type, you cannot access
-any of its members. Note that inherited members (from an interface or
-class) become members of a class. For example, if `B extends A`, and if `A` is not
-accessible to some client `C` but `B` is, then the members of `A` are indirectly
-accessible to `C` in so far as they are accessed via `B`. This is true in
-particular for interfaces, as their properties are possibly merged into
-the consuming class (cf. <<_implementation-of-members>>).
+Accessibility at the member level is only applicable when the type itself is accessible.
+If you cannot access the type, you cannot access any of its members.
+Note that inherited members (from an interface or class) become members of a class.
+For example, if `B extends A`, and if `A` is not accessible to some client `C` but `B` is, then the members of `A` are indirectly accessible to `C` in so far as they are accessed via `B`.
+This is true in particular for interfaces, as their properties are possibly merged into the consuming class (cf. <<_implementation-of-members>>).
 
 The following member access modifiers are supported by N4JS:
 
@@ -363,22 +351,15 @@ Although private members are accessible inside a module, it is not possible to r
 --
 The following constraints for member access modifiers must hold:
 
-1.  The _default modifier_ for members of user-declared classes is
-`project`.
-2.  The _default modifier_ for members of interfaces is the same as the
-visibility of the interface itself, except for private interfaces. For
-private interfaces, the default modifier for members is
-`project`.
-3.  The modifier for enum literals is always
-`public`.
-4.  Private members of a classifier are visible and accessible within a
-module, i.e. you can access the private method of a class, for instance,
-when the use of the class as receiver is in the same module where the
-class has been defined. In case of inheritance, private members are
-visible if the host (e.g. the class) is in the same module as the
-provider (the extended class). This also means that abstract members of
-a class are allowed to be defined private as they may be overridden
-within a module.
+1.  The _default modifier_ for members of user-declared classes is `project`.
+2.  The _default modifier_ for members of interfaces is the same as the visibility of the interface itself, except for private interfaces.
+For private interfaces, the default modifier for members is `project`.
+3.  The modifier for enum literals is always `public`.
+4.  Private members of a classifier are visible and accessible within a module, i.e. you can access the private method of a class, for instance,
+when the use of the class as receiver is in the same module where the class has been defined.
+In case of inheritance, private members are visible if the host (e.g. the class) is in the same module as the provider (the extended class).
+This also means that abstract members of a class are allowed to be defined private as they may be overridden within a module.
+
 // TODO {Rework visibility concept for private members. If private members are hidden with symbols an overriding is not possible, even in the same module.}
 --
 
@@ -433,9 +414,8 @@ var c: C = C.instance();
 ====
 
 Members of non-visible types are, in general, not visible for a client.
-Members may become visible, however, if they are accessed via a visible
-type which inherits these members. The following examples demonstrate
-two different scenarios:
+Members may become visible, however, if they are accessed via a visible type which inherits these members.
+The following examples demonstrate two different scenarios:
 
 
 .Declaring type vs receiver type
@@ -470,9 +450,7 @@ The receiver of the property access is `t` of type `ApiType`.
 That type is exported and accessible.
 Therefore, the inherited member `m` is also considered valid since it is also defined `public`.
 
-This rule allows for defining a common functionality in module or
-project visible types that becomes accessible via exported, visible
-subtypes.
+This rule allows for defining a common functionality in module or project visible types that becomes accessible via exported, visible subtypes.
 
 .Member Access and Type Access Interplay
 [example]
@@ -547,13 +525,10 @@ In N4JS mode, warnings are generated in the following cases:
 .  The name of a member (of a non external type)
 ..  equals the name of a base type footnote:[[.language-n4js]`string, boolean, number, any, null`] but the type of the variable is different from that type
 ..  is not static nor const but starts with an upper case letter
-.  The name of a non-external n4 types (class, interface, enum) starts
-with a lower case letter
-.  The name of a variable (incl. formal parameter or catch variable and
-fields)
+.  The name of a non-external n4 types (class, interface, enum) starts with a lower case letter
+.  The name of a variable (incl. formal parameter or catch variable and fields)
 ..  equals an N4JS keyword
-..  equals the name of a base type but the type of the variable is
-different from that type
+..  equals the name of a base type but the type of the variable is different from that type
 ..  is not const but starts with an upper case letter
 
 --
@@ -597,12 +572,8 @@ Rule of thumb is that N4JS allows everything that is allowed in JavaScript Stric
 
 ==== Lexical Environment
 
-N4JS handles scopes similar to ECMAScript, so that function scope is
-applied to variables declared with `var` (and parameters), and block scope for
-variables is declared with `let` or `const`. In general, ECMAScript defines _Lexical
-Environments_ as a specification type used to define the association of
-Identifiers to specific variables and functions based upon the lexical
-nesting structure of ECMAScript code. cite:[ECMA11a(10.2)].
+N4JS handles scopes similar to ECMAScript, so that function scope is applied to variables declared with `var` (and parameters), and block scope for variables is declared with `let` or `const`.
+In general, ECMAScript defines _Lexical Environments_ as a specification type used to define the association of Identifiers to specific variables and functions based upon the lexical nesting structure of ECMAScript code cite:[ECMA11a(10.2)].
 
 Elements that introduce lexical environments: ::
 `FunctionDefinition`, `VariableDeclaration`, `CatchBlock`, `WithStatement`,
@@ -614,12 +585,10 @@ N4JS specific declarations: ::
 `N4EnumDeclaration`, `N4MethodDeclaration`.
 
 
-Additionally, a built-in lexical environment that defines global scope
-exists for every `Script`.
+Additionally, a built-in lexical environment that defines global scope exists for every `Script`.
 
-Since N4JS is extended (and a bit more strict) JS strict mode, __Object
-environment record__s created by `WithStatement` are not taken into account when
-resolving duplicates. This applies to both N4JS mode and JS strict mode.
+Since N4JS is extended (and a bit more strict) JS strict mode, __Object environment record__s created by `WithStatement` are not taken into account when resolving duplicates.
+This applies to both N4JS mode and JS strict mode.
 In unrestricted JS the `WithStatement` is allowed but duplicates are not validated.
 
 NOTE: In case of names introduced by ``ImportDeclaration``s only ``NamedImportSpecifiers``s are taken into account (their import name or its alias if available).
@@ -672,8 +641,10 @@ But it is not allowed in the following cases:
 1. In the script environment, it is not allowed to use the name
 ’arguments’.footnote:[This conflicts with the implicit parameter arguments introduced by the transpiler when wrapping the script/module into a definition function.]
 +
-The figure Forbidden Shadowing below shows nested lexical environments with named elements declared inside (all named `x` here), the forbidden cases are marked with arrows (the numbers at the left side refer to the numbers in <<Req-IDE-8>>.
-+
+<<fig-forbidden-shadowing>> shows nested lexical environments with named elements declared inside (all named `x` here), the forbidden cases are marked with arrows
+(the numbers at the left side refer to the numbers in <<Req-IDE-8>>.
+
+[[fig-forbidden-shadowing]]
 .Forbidden Shadowing
 image::{find}fig/shadowing.png[scaledwidth=60%,align="center"]
 
