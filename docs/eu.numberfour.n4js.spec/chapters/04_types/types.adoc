@@ -95,7 +95,7 @@ In N4JS, $Top=`any}$, the bottom type $Bot=`undefined}$.
 
 [[fig-cd-predefined-type-hierarchy]]
 .Predefined Types Hierarchy
-image::{find}fig/cdPredefinedTypesHierarchy.png[]
+image::{find}fig/cdPredefinedTypesHierarchy.png[scaledwidth=80%,align="center"]
 
 For every primitive type there is a corresponding built-in type as
 defined in cite:[ECMA11a], e.g. `string` and `String`. There is no inheritance supported for
@@ -2451,7 +2451,7 @@ The figure <<cdConstructorClassifierType>> shows the subtype relations defined b
 
 [[cdConstructorClassifierType]]
 .Classifier and Constructor Type Subtype Relations
-image::{find}fig/cdConstructorClassifierType.png[]
+image::{find}fig/cdConstructorClassifierType.png[scaledwidth=60%,align="center"]
 
 Consequences:
 
@@ -2480,9 +2480,7 @@ B.bar(); // will return "B", as foo() is called polymorphical
 ====
 
 * It is even possible to refer to the constructor of an abstract class.
-The abstract class itself cannot provide this constructor (it only
-provides a type..), that is to say only concrete subclasses can provide
-constructors compatible to the constructor.
+The abstract class itself cannot provide this constructor (it only provides a type..), that is to say only concrete subclasses can provide constructors compatible to the constructor.
 +
 .Constructor of Abstract Class
 [example]
@@ -2500,19 +2498,12 @@ f(B); // ok
 ====
 
 Allowing wildcards on constructor type references has pragmatic reasons.
-The usage of constructor references usually indicates very dynamic
-scenarios. In some of these scenarios, e.g., in case of dynamic creation
-of objects in the context of generic testing or injectors, arbitrary
-constructors may be used. Of course, it won’t be possible to check the
-correct new expression call in these cases – and using new expressions
-is prevented by N4JS if the constructor reference contains a wildcard.
-But other constraints, implemented by the client logic, may guarantee
-correct instantiation via more dynamic constructors, for example via the
-ECMAScript 2015 reflection API. In order to simplify these scenarios and
-preventing the use of `any`, wildcards are supported in constructors. Since a
-constructor with a wildcard cannot be used in a new expression anyway,
-using a classifier type is usually better than using a constructor type
-with wildcard.
+The usage of constructor references usually indicates very dynamic scenarios.
+In some of these scenarios, e.g., in case of dynamic creation of objects in the context of generic testing or injectors, arbitrary constructors may be used.
+Of course, it won’t be possible to check the correct new expression call in these cases – and using new expressions is prevented by N4JS if the constructor reference contains a wildcard.
+But other constraints, implemented by the client logic, may guarantee correct instantiation via more dynamic constructors, for example via the ECMAScript 2015 reflection API.
+In order to simplify these scenarios and preventing the use of `any`, wildcards are supported in constructors. Since a constructor with a wildcard cannot be used
+in a new expression anyway, using a classifier type is usually better than using a constructor type with wildcard.
 
 Using wildcards on classifier types would have the same meaning as using
 the upper bound directly. That is, a type reference `type{? extends C}` can simply be replaced with `type{c}`, and `type{?}` with `type{any}`.
@@ -2525,13 +2516,15 @@ above depending on whether they are used with wildcards or not:
 * that can be used for instantiation (i.e. the represented class is not abstract),
 * that has a signature compatible to the owned or inherited constructor of `{C}`.
 +
-This means we have the constructor function of class `{C}` (but only if is non-abstract) or the constructor function of any non-abstract subclass of `{C}` with an override compatible signature to that of ``{C}``'s constructor function.
+This means we have the constructor function of class `{C}` (but only if is non-abstract) or the constructor function of any non-abstract subclass of `{C}` with an
+override compatible signature to that of ``{C}``'s constructor function.
 2.  having a value of type `constructor{? extends C}`, we know we have
 * a constructor function of `{C}` or a subclass of `{C}`,
 * that can be used for instantiation (i.e. the represented class is not abstract).
 +
 So, same situation as before except that we know nothing about the constructor function’s signature.
-However, if `{C}` has a covariant constructor, cf. <<_covariant-constructors>>, we can still conclude that we have an override compatible constructor function to that of `{C}`, because classes with covariant constructors enforce all their subclasses to have override compatible constructors.
+However, if `{C}` has a covariant constructor, cf. <<_covariant-constructors>>, we can still conclude that we have an override compatible constructor function
+to that of `{C}`, because classes with covariant constructors enforce all their subclasses to have override compatible constructors.
 3.  have a value of type `type{? extends C}` or `type{C}` (the two types are equivalent), we know we have:
 * an object representing a type (often constructor functions are used for this, e.g. in the case of classes, but could also be a plain object, e.g. in the case of interfaces),
 * that represents type `{C}` or a subtype thereof,
@@ -2541,7 +2534,8 @@ Slightly simplified, we can say that in the first above case we can always use t
 
 === Constructors and Prototypes in ECMAScript 2015
 
-<<fig-constructors-and-prototypes>> for two classes A and B in ECMAScript 2015 shows the constructors, prototypes, and the relations between them for the ECMAScript 2015 code shown in <<ex-constructors-and-prototypes>>.
+<<fig-constructors-and-prototypes>> for two classes A and B in ECMAScript 2015 shows the constructors, prototypes, and the relations between them for the ECMAScript 2015
+code shown in <<ex-constructors-and-prototypes>>.
 
 [[ex-constructors-and-prototypes]]
 .Constructors and Prototypes
@@ -2558,42 +2552,40 @@ var b = new B();
 
 ====
 
-NOTE: The diagram <<fig-constructors-and-prototypes>> shows plain ECMAScript 2015 only.
+NOTE: <<fig-constructors-and-prototypes>> shows plain ECMAScript 2015 only.
 Also note that `A` is defined without an `extends` clause, which is what ECMAScript 2015 calls a _base class_ (as opposed to a __derived class__).
 The constructor of a base class always has Function.prototype as its prototype.
-If we had defined `A` as `class A extends Object {}` in the listing above, then the constructor of `A` would have Object’s constructor as its prototype (depicted in as a dashed red arrow), which would make a more consistent overall picture.
+If we had defined `A` as `class A extends Object {}` in the listing above, then the constructor of `A` would have Object’s constructor as its prototype
+(depicted in as a dashed red arrow), which would make a more consistent overall picture.
 
 [[fig-constructors-and-prototypes]]
 .Constructors and prototypes for two classes A and B in ECMAScript 2015 (not N4JS!)
 image::{find}fig/ctorsProtosInES6.png[]
 
-Base classes in the above sense are not available in N4JS. If an N4JS
-class does not provide an `extends` clause, it will implicitly inherit from
-built-in class `N4Object`, if it provides an `extends` clause stating `Object` as its super type, then it corresponds to what is shown in <<fig-constructors-and-prototypes>> with the red dashed arrow.
+Base classes in the above sense are not available in N4JS.
+If an N4JS class does not provide an `extends` clause, it will implicitly inherit from built-in class `N4Object`,
+if it provides an `extends` clause stating `Object` as its super type, then it corresponds to what is shown in <<fig-constructors-and-prototypes>> with the red dashed arrow.
 
 [.language-n4js]
 == This Type
 task:IDE-377[] task:IDE-785[] task:IDEBUG-228[]
 
-The `this` keyword may represent either a `this` literal (cf. <<ex:this-keyword-and-type-in-instance-and-static-context>>) or may refer to the `this` type. In this section, we describe the latter case.
+The `this` keyword may represent either a `this` literal (cf. <<ex:this-keyword-and-type-in-instance-and-static-context>>) or may refer to the `this` type.
+In this section, we describe the latter case.
 
 Typical use cases of the `this` type include:
 
 * declaring the return type of instance methods
 * declaring the return type of static methods
-* as formal parameter type of constructors in conjunction with use-site
-structural typing
-* the parameter type of a function type expression, which appears as
-type of a method parameter
+* as formal parameter type of constructors in conjunction with use-site structural typing
+* the parameter type of a function type expression, which appears as type of a method parameter
 * the parameter type in a return type expression ($type$`{this}`,`constructor{this}`)
 * an existential type argument inside a return type expression for methods (e.g.`ArrayList<? extends this> method(){...}`)
 
 The precise rule where it may appear is given below in <<Req-IDE-37>>.
 
-The `this` type is similar to a type variable, and it is bound to the declared
-or inferred type of the receiver. If it is used as return type, all
-return statements of the methods must return the `this` keyword or a variable
-value implicitly inferred to a `this` type (e.g. `var x = this; return x;`).
+The `this` type is similar to a type variable, and it is bound to the declared or inferred type of the receiver.
+If it is used as return type, all return statements of the methods must return the `this` keyword or a variable value implicitly inferred to a `this` type (e.g. `var x = this; return x;`).
 
 .Simple This Type
 [source,n4js]
@@ -2610,8 +2602,7 @@ a.f(); // returns something with the type of A
 b.f(); // returns something with the type of B
 ----
 
-`this` can be thought of as a type variable which is implicitly substituted with
-the declaring class (i.e. this type used in a class `{A}` actually means `<? extends A>`).
+`this` can be thought of as a type variable which is implicitly substituted with the declaring class (i.e. this type used in a class `{A}` actually means `<? extends A>`).
 
 === Syntax [[this-type-syntax]]
 
@@ -2631,11 +2622,10 @@ ThisTypeRefStructural  returns ThisTypeRefStructural:
 ;
 ----
 
-The keyword `this` and the type expression `this` look similar, however they can refer
-to different types. The type always refers to the type of instances of a
-class. The `this` keyword refers to the type of instances of the class in case
-of instance methods, but to the classifier the of the class in case of
-static methods. See  <<_this-keyword>> for details.
+The keyword `this` and the type expression `this` look similar, however they can refer to different types.
+The type always refers to the type of instances of a class.
+The `this` keyword refers to the type of instances of the class in case of instance methods, but to the classifier the of the class in case of static methods.
+See <<_this-keyword>> for details.
 
 [[ex:this-keyword-and-type-in-instance-and-static-context]]
 .This keyword and type in instance and static context
@@ -2675,11 +2665,8 @@ task:IDE-538[]
 
 Remarks
 
-* Due to the function subtype relation and constraints on overriding
-methods (in which the overriding method has to be a subtype of the
-overridden method), it is not possible to use the `this` type in formal
-parameters but only as return type. The following listing demonstrates
-that problem:
+* Due to the function subtype relation and constraints on overriding methods (in which the overriding method has to be a subtype of the overridden method),
+it is not possible to use the `this` type in formal parameters but only as return type. The following listing demonstrates that problem:
 +
 [source,n4js]
 ----
@@ -2692,30 +2679,20 @@ class B extends A {
 }
 ----
 +
-As the $this$ type is replaced similar to a type variable, the virtually
-defined method `bar` in is not override compatible with `bar` in `A`.
+As the $this$ type is replaced similar to a type variable, the virtually defined method `bar` in is not override compatible with `bar` in `A`.
 +
-In case of constructors, this problem does not occur because a subclass
-constructor does not need to be override compatible with the constructor
-of the super class. Using $this$ as the type of a constructor’s parameter,
-however, would mean that you can only create an instance of the class if
-you already have an instance (considering that due to the lack of method
-overloading a class can have only a single constructor), making creation
-of the first instance impossible. Therefore, $this$ is also disallowed as the
-type of a constructor’s parameter.
-* The difference between the type $this$ and the keyword `this` is when and how the
-actual type is set: The actual type of the $this$ type is computed at compile
-(or validation) time and is always the containing type (of the member in
-which the type expression is used) or a subtype of that type – this is
-not a heuristic, this is so by definition. In contrast, the actual type
-of the keyword `this` is only available at runtime, while the type used at
-compilation time is only a heuristically computed type, in other words,
-a good guess.
+In case of constructors, this problem does not occur because a subclass constructor does not need to be override compatible with the constructor of the super class.
+Using $this$ as the type of a constructor’s parameter, however, would mean that you can only create an instance of the class if you already have
+an instance (considering that due to the lack of method overloading a class can have only a single constructor), making creation of the first instance impossible.
+Therefore, $this$ is also disallowed as the type of a constructor’s parameter.
+* The difference between the type $this$ and the keyword `this` is when and how theactual type is set:
+the actual type of the $this$ type is computed at compile(or validation) time and is always the containing type (of the member in which the type expression is used)
+or a subtype of that type – this isnot a heuristic, this is so by definition.
+In contrast, the actual typeof the keyword `this` is only available at runtime, while the type used at compilation time is only a heuristically-computed type, in other words,a good guess.
 * The value of the $this$ type is, in fact, not influenced by any `@This` annotations.
 Instead of using $this$ in these cases, the type expressions in the `@This` annotations can be used.
-* The $this$ type is always bound to the instance-type regardless of the
-context it occurs in (non-static or static). To refer to the
-this-classifier (static type) the construct `type{this}` is used. task:IDE-785[]
+* The $this$ type is always bound to the instance-type regardless of the context it occurs in (non-static or static).
+To refer to the this-classifier (static type) the construct `type{this}` is used. task:IDE-785[]
 
 <<<
 
@@ -2759,7 +2736,7 @@ b.store.value = funcA  // OK, since {function(A)} <: {function(B)}
 b.store.value = funcB  // OK.
 
 var a2: A = b; // OK, since B is a subtype of A
-a2.store.value( a ) // RUNTIME ERROR, the types are all correct, but remember b.store.value was assigned to funcB, which can only handle subtypes of B !
+a2.store.value( a ) // RUNTIME ERROR, the types are all correct, but remember b.store.value was assigned to funcB, which can only handle subtypes of B!
 ----
 
 --
@@ -2828,11 +2805,9 @@ N4EnumLiteral:
 [.language-n4js]
 ==== Semantics [[enums-semantics]]
 
-The enum declaration $E$ is of type `type{E}` and every enumeration is
-implicitly derived from `N4Enum`. There are similarities to other languages such
-as Java, for example, where the literals of an enum are treated as final
-static fields with the type of the enumeration and the concrete
-enumeration provides specific static methods including the literals.
+The enum declaration $E$ is of type `type{E}` and every enumeration is implicitly derived from `N4Enum`.
+There are similarities to other languages such as Java, for example, where the literals of an enum are treated as final static fields with the type
+of the enumeration and the concrete enumeration provides specific static methods including the literals.
 This leads to the following typing rules:
 
 .Enum Type Rules
@@ -2978,29 +2953,17 @@ var c: Color = colors.get();
 task:IDE-1221[]
 
 In current web standards cite:[W3C:Steen:14:XL], definitions of enumerations are often given in webIDL syntax.
-While the webIDL-definition assembles a set of unique
-string literals as a named enum-entity, the language binding to
-ECMAScript refers to the usage of the members of these enumerations
-only. Hence, if an element of an enumeration is stored in a variable or
-field, passed as a parameter into a method or function or given back as
-a result, the actual type in JavaScript will be `string`. To provide the N4JS
-user with some validations regarding the validity of a statement at
-compile time, a special kind of subtypes of `string` are introduced: the
-string-based enum using the `@StringBased` annotation. (See also other string-based
-types like `pathSelector<T>` and `i18nKey` in <<_primitive-pathselector-and-i18nkey>>.)
+While the webIDL-definition assembles a set of unique string literals as a named enum-entity, the language binding to ECMAScript refers to the usage of the members of these enumerations only.
+Hence, if an element of an enumeration is stored in a variable or field, passed as a parameter into a method or function or given back as a result, the actual type in JavaScript will be `string`.
+To provide the N4JS user with some validations regarding the validity of a statement at compile time, a special kind of subtypes of `string` are introduced: the string-based enum using the `@StringBased` annotation.
+(See also other string-based types like `pathSelector<T>` and `i18nKey` in <<_primitive-pathselector-and-i18nkey>>.)
 
 // TODO check for typename<T>
 
-String-based enums do not have any kind of runtime representation;
-instead, the transpiler will replace each reference to a literal of a
-string-based enum by a corresponding string literal in the output code.
-Furthermore, no meta-information is available for string-based enums,
-i.e. the `n4type` property is not available. The only exception is the static
-getter `literals`: it is available also for string-based enums and has the same
-meaning. In case of string-based enums, however, there won’t be a getter
-used at runtime; instead, the transpiler replaces every read access to
-this getter by an array literal containing a string literal for each of
-the enum’s literals.
+String-based enums do not have any kind of runtime representation; instead, the transpiler will replace each reference to a literal of a string-based enum by a corresponding string literal in the output code.
+Furthermore, no meta-information is available for string-based enums, i.e. the `n4type` property is not available.
+The only exception is the static getter `literals`: it is available also for string-based enums and has the same meaning.
+In case of string-based enums, however, there won’t be a getter used at runtime; instead, the transpiler replaces every read access to this getter by an array literal containing a string literal for each of the enum’s literals.
 
 .String-Based Enum Type Rules
 [req,id=IDE-41,version=1]
@@ -3010,7 +2973,7 @@ For a string-based enum declaration $E_S$ with literals $L_S$ the following type
 
 // TODO - original math below = \inferSup{ \tee \type{type\{E_S\}} \subtype \type{N4StringBasedEnum} }{}
 
-.  Every string-based enumeration $E_S$ is a subtype of the base type `N4StringBasedEnum`:
+. Every string-based enumeration $E_S$ is a subtype of the base type `N4StringBasedEnum`:
 +
 [math]
 ++++

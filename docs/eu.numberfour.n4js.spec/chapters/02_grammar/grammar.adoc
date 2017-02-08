@@ -50,9 +50,8 @@ StringLiteralComputedName: STRING ;
 As can be seen, a computed-name must be either
 
 * task:IDE-1220[] a symbol reference, e.g., `Symbol.iterator`
-* task:IDE-1734[] a string literal, i.e., a compile time known constant. This notation is useful when interoperating with libraries that define members whose
-names contain special characters (e.g., a field name starting with
-commercial-at)
+* task:IDE-1734[] a string literal, i.e., a compile time known constant.
+This notation is useful when interoperating with libraries that define members whose names contain special characters (e.g., a field name starting with commercial-at)
 
 In N4JS, identifiers are further constrained in order to avoid ambiguities and to make code more readable.
 Some of these constraints will lead to errors, others only to warnings.
@@ -72,7 +71,7 @@ They do not apply for identifiers declared in definitions file (n4jsd) in order 
 . If the following constraints do not hold, warnings are created.
 . Variable names should, in general, be constructed form the 26 ASCII upper and lower case alphabetic letters (a..z, A..Z), from the 10 decimal digits (0..9) and from the `pass:[_]` (underscore).
 Although the usage of the international characters are allowed (according to the ECMAScript specification)
-it is discouraged because these characters may not be read or understood well in every circumstance. footnote:[http://javascript.crockford.com/code.html]
+it is discouraged because these characters may not be read or understood well in every circumstance footnote:[http://javascript.crockford.com/code.html].
 
 1.  Type (and Type Variable) Identifiers
 +
