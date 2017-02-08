@@ -67,8 +67,8 @@ import eu.numberfour.n4js.external.TypeDefinitionGitLocationProvider;
 import eu.numberfour.n4js.external.libraries.PackageJson;
 import eu.numberfour.n4js.external.libraries.TargetPlatformFactory;
 import eu.numberfour.n4js.external.libraries.TargetPlatformModel;
+import eu.numberfour.n4js.fileextensions.FileExtensionType;
 import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
-import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry.FileExtensionType;
 import eu.numberfour.n4js.generator.headless.HeadlessHelper;
 import eu.numberfour.n4js.generator.headless.N4HeadlessCompiler;
 import eu.numberfour.n4js.generator.headless.N4JSCompileException;
@@ -316,7 +316,14 @@ public class N4jsc {
 	private TypeDefinitionGitLocationProvider gitLocationProvider;
 
 	@Inject
-	private FileExtensionsRegistry fileExtensionsRegistry;
+	private FileExtensionsRegistry n4jsFileExtensionsRegistry;
+
+	// TODO IDE-2493 remove duplicated singletons
+	/**
+	 * Due to issues described in {@code IDE-2493} we need to duplicate singletons that have state.
+	 */
+	@Inject
+	private FileExtensionsRegistry n4jsxFileExtensionsRegistry;
 
 	/**
 	 * Entry point to start the compiler. Parses the Parameters.
@@ -386,24 +393,14 @@ public class N4jsc {
 			// Wire up available runners and testers, test file extensions and runnable file extensions
 			runnerRegistry.register(nodeRunnerDescriptorProvider.get());
 			testerRegistry.register(nodeTesterDescriptorProvider.get());
-			// Register test file extensions
-			fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION, FileExtensionType.TEST_FILE_EXTENSION);
-			fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION, FileExtensionType.TEST_FILE_EXTENSION);
-			// Register runnable file extensions
-			fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
-			fileExtensionsRegistry.register(N4JSGlobals.JS_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
-			fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION,
-					FileExtensionType.RUNNABLE_FILE_EXTENSION);
-			fileExtensionsRegistry.register(N4JSXGlobals.JSX_FILE_EXTENSION, FileExtensionType.RUNNABLE_FILE_EXTENSION);
-			// Register transpilable file extensions
-			fileExtensionsRegistry.register(N4JSGlobals.N4JS_FILE_EXTENSION,
-					FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
-			fileExtensionsRegistry.register(N4JSXGlobals.N4JSX_FILE_EXTENSION,
-					FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
-			fileExtensionsRegistry.register(N4JSGlobals.JS_FILE_EXTENSION,
-					FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
-			fileExtensionsRegistry.register(N4JSXGlobals.JSX_FILE_EXTENSION,
-					FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+			registerTestableFiles(N4JSGlobals.N4JS_FILE_EXTENSION, N4JSXGlobals.N4JSX_FILE_EXTENSION);
+			registerRunnableFiles(N4JSGlobals.N4JS_FILE_EXTENSION, N4JSGlobals.JS_FILE_EXTENSION,
+					N4JSXGlobals.N4JSX_FILE_EXTENSION, N4JSXGlobals.JSX_FILE_EXTENSION);
+			registerTranspilableFiles(N4JSGlobals.N4JS_FILE_EXTENSION, N4JSXGlobals.N4JSX_FILE_EXTENSION,
+					N4JSGlobals.JS_FILE_EXTENSION, N4JSXGlobals.JSX_FILE_EXTENSION);
+			registerTypableFiles(N4JSGlobals.N4JSD_FILE_EXTENSION, N4JSGlobals.N4JS_FILE_EXTENSION,
+					N4JSXGlobals.N4JSX_FILE_EXTENSION, N4JSGlobals.JS_FILE_EXTENSION, N4JSXGlobals.JSX_FILE_EXTENSION);
+			registerRawFiles(N4JSGlobals.JS_FILE_EXTENSION, N4JSGlobals.JSX_FILE_EXTENSION);
 
 			if (listRunners) {
 				printAvailableRunners(System.out);
@@ -507,6 +504,56 @@ public class N4jsc {
 		} finally {
 			targetPlatformFile = null;
 			targetPlatformInstallLocation = null;
+		}
+	}
+
+	/**
+	 * Registers files to {@link FileExtensionType#TESTABLE_FILE_EXTENSION}
+	 */
+	private void registerTestableFiles(String... extensions) {
+		for (String extension : extensions) {
+			n4jsFileExtensionsRegistry.register(extension, FileExtensionType.TESTABLE_FILE_EXTENSION);
+			n4jsxFileExtensionsRegistry.register(extension, FileExtensionType.TESTABLE_FILE_EXTENSION);
+		}
+	}
+
+	/**
+	 * Registers files to {@link FileExtensionType#RUNNABLE_FILE_EXTENSION}
+	 */
+	private void registerRunnableFiles(String... extensions) {
+		for (String extension : extensions) {
+			n4jsFileExtensionsRegistry.register(extension, FileExtensionType.RUNNABLE_FILE_EXTENSION);
+			n4jsxFileExtensionsRegistry.register(extension, FileExtensionType.RUNNABLE_FILE_EXTENSION);
+		}
+	}
+
+	/**
+	 * Registers files to {@link FileExtensionType#TRANSPILABLE_FILE_EXTENSION}
+	 */
+	private void registerTranspilableFiles(String... extensions) {
+		for (String extension : extensions) {
+			n4jsFileExtensionsRegistry.register(extension, FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+			n4jsxFileExtensionsRegistry.register(extension, FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+		}
+	}
+
+	/**
+	 * Registers files to {@link FileExtensionType#TYPABLE_FILE_EXTENSION}
+	 */
+	private void registerTypableFiles(String... extensions) {
+		for (String extension : extensions) {
+			n4jsFileExtensionsRegistry.register(extension, FileExtensionType.TYPABLE_FILE_EXTENSION);
+			n4jsxFileExtensionsRegistry.register(extension, FileExtensionType.TYPABLE_FILE_EXTENSION);
+		}
+	}
+
+	/**
+	 * Registers files to {@link FileExtensionType#RAW_FILE_EXTENSION}
+	 */
+	private void registerRawFiles(String... extensions) {
+		for (String extension : extensions) {
+			n4jsFileExtensionsRegistry.register(extension, FileExtensionType.TESTABLE_FILE_EXTENSION);
+			n4jsxFileExtensionsRegistry.register(extension, FileExtensionType.TESTABLE_FILE_EXTENSION);
 		}
 	}
 
@@ -821,7 +868,9 @@ public class N4jsc {
 		// we have to avoid this implicit setup of N4JS, because N4JS was already initialized (another initialization
 		// would create a second injector for the language N4JS, which might lead to follow-up issues, e.g. multiple
 		// instances of singletons per language).
-		N4JSXStandaloneSetup.doSetupWithoutParentLanguages();
+		Injector n4jsxInjector = N4JSXStandaloneSetup.doSetupWithoutParentLanguages();
+		this.n4jsxFileExtensionsRegistry = n4jsxInjector.getInstance(FileExtensionsRegistry.class);
+
 	}
 
 	/**

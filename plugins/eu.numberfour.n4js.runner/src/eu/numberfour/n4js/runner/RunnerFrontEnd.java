@@ -30,8 +30,8 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.fileextensions.FileExtensionType;
 import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
-import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry.FileExtensionType;
 import eu.numberfour.n4js.generator.common.CompilerUtils;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.runner.RunnerHelper.ApiUsage;
@@ -60,7 +60,6 @@ public class RunnerFrontEnd {
 
 	@Inject
 	private FileExtensionsRegistry fileExtensionsRegistry;
-	// private TranspilableFileExtensionsProvider transpilableFileExtensionsProvider;
 
 	/**
 	 * Returns true iff the runner with the given id can run the given moduleToRun. Takes same arguments as

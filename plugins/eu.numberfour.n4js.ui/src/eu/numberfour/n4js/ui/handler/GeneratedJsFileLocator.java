@@ -21,8 +21,8 @@ import org.eclipse.emf.common.util.URI;
 import com.google.common.base.Optional;
 import com.google.inject.Inject;
 
+import eu.numberfour.n4js.fileextensions.FileExtensionType;
 import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
-import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry.FileExtensionType;
 import eu.numberfour.n4js.generator.common.CompilerUtils;
 import eu.numberfour.n4js.generator.common.GeneratorException;
 import eu.numberfour.n4js.projectModel.IN4JSCore;

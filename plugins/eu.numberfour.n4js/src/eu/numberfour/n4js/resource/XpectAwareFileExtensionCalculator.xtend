@@ -14,10 +14,12 @@ import com.google.inject.Singleton
 import eu.numberfour.n4js.N4JSGlobals
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
+import com.google.common.base.Strings
 
 /**
  * This class provides methods for calculating file extensions. The calculation takes into account Xpect file extension
- * .xt
+ * {@code .xt}. Custom file Xpect file extensions are not supported e.g. when your Xpect tests are configured to run with {@code .xxt} file extension.
+ * Deeply nested structures are also not supported e.g. using {@code file.n4js.xt.xt}.
  */
  @Singleton
 public class XpectAwareFileExtensionCalculator {
@@ -36,21 +38,15 @@ public class XpectAwareFileExtensionCalculator {
 		if (uri === null) {
 			return "";
 		}
-		val uriAsString = uri.toString().toLowerCase();
-		val fileExt = uriAsString.getXpectAwareFileExtensionRec;
-		return fileExt;
+		return uri.getXpectAwareFileExtensionOrEmpty
 	}
 	
-	def private String getXpectAwareFileExtensionRec(String fileName) {
-		if (fileName.endsWith(N4JSGlobals.XT_FILE_EXTENSION)) {
-			return fileName.substring(0, fileName.lastIndexOf('.')).xpectAwareFileExtensionRec
-		} else {
-			val i = fileName.lastIndexOf('.');
-			if (i >= 0) {
-				return fileName.substring(i+1);	
-			} else {
-				return "";
-			}
-		} 
+	def private String getXpectAwareFileExtensionOrEmpty(URI uri){
+		var ext = uri.fileExtension;
+		if(N4JSGlobals.XT_FILE_EXTENSION.equals(ext)){
+			//get nested file ext
+			ext = uri.trimFileExtension.fileExtension
+		}
+		return Strings.nullToEmpty(ext)
 	}
 }
