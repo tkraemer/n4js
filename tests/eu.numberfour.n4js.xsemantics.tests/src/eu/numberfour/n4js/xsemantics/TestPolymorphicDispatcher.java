@@ -86,6 +86,7 @@ import it.xsemantics.runtime.internal.PatchedPolymorphicDispatcher;
 /**
  *
  */
+@SuppressWarnings({ "javadoc", "restriction", "unused" })
 public class TestPolymorphicDispatcher extends PolymorphicDispatcher<Object> {
 
 	/**
@@ -375,176 +376,234 @@ public class TestPolymorphicDispatcher extends PolymorphicDispatcher<Object> {
 	 */
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, AdditiveExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, Argument x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, ArrayElement x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, ArrayLiteral x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, ArrayPadding x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, AssignmentExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, AwaitExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, BinaryBitwiseExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, BinaryLogicalExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, BooleanLiteral x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, CastExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, CatchVariable x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, CommaExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, ConditionalExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, EqualityExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, Expression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, FormalParameter x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, FunctionExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, GetterDeclaration x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, IdentifierRef x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, IndexedAccessExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, LocalArgumentsVariable x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, ModuleNamespaceVirtualType x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, MultiplicativeExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, N4ClassExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, N4EnumLiteral x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, N4FieldDeclaration x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, NewExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, NewTarget x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, NullLiteral x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, NumericLiteral x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, ObjectLiteral x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, ParameterizedCallExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, ParameterizedPropertyAccessExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, ParenExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, PostfixExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, PromisifyExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, PropertyNameValuePair x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, RegularExpressionLiteral x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, RelationalExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, SetterDeclaration x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, ShiftExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, StringLiteral x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, SuperLiteral x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, TaggedTemplateString x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, TemplateLiteral x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, TemplateSegment x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, TEnumLiteral x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, TField x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, TGetter x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, ThisLiteral x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, TSetter x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, TVariable x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, Type x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, TypeDefiningElement x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, UnaryExpression x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, VariableDeclaration x) {
+		// empty
 	}
 
 	public void typeImpl(RuleEnvironment e, RuleApplicationTrace t, YieldExpression x) {
+		// empty
 	}
 }
