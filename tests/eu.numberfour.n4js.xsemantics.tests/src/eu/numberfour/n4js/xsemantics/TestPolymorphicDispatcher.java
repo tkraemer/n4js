@@ -84,7 +84,9 @@ import it.xsemantics.runtime.RuleEnvironment;
 import it.xsemantics.runtime.internal.PatchedPolymorphicDispatcher;
 
 /**
+ * This class is solely used to analyze and demonstrate a bug in Xtext's PolymorphicDispatcher.
  *
+ * @see https://github.com/eclipse/xtext-core/issues/238
  */
 @SuppressWarnings({ "javadoc", "restriction", "unused" })
 public class TestPolymorphicDispatcher extends PolymorphicDispatcher<Object> {
