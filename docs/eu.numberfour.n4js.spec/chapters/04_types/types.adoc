@@ -2525,7 +2525,7 @@ above depending on whether they are used with wildcards or not:
 * that can be used for instantiation (i.e. the represented class is not abstract),
 * that has a signature compatible to the owned or inherited constructor of `{C}`.
 +
-This means we have the constructor function of class `{C}` (but only if is non-abstract) or the constructor function of any non-abstract subclass of `{C}` with an override compatible signature to that of `{C}`'s constructor function.
+This means we have the constructor function of class `{C}` (but only if is non-abstract) or the constructor function of any non-abstract subclass of `{C}` with an override compatible signature to that of ``{C}``'s constructor function.
 2.  having a value of type `constructor{? extends C}`, we know we have
 * a constructor function of `{C}` or a subclass of `{C}`,
 * that can be used for instantiation (i.e. the represented class is not abstract).
@@ -2541,8 +2541,12 @@ Slightly simplified, we can say that in the first above case we can always use t
 
 === Constructors and Prototypes in ECMAScript 2015
 
-Constructors and prototypes, The figure below for two classes A and B in ECMAScript 2015>> shows the constructors, prototypes, and the relations between them for
-the following ECMAScript 2015 code.
+<<fig-constructors-and-prototypes>> for two classes A and B in ECMAScript 2015 shows the constructors, prototypes, and the relations between them for the ECMAScript 2015 code shown in <<ex-constructors-and-prototypes>>.
+
+[[ex-constructors-and-prototypes]]
+.Constructors and Prototypes
+[example]
+====
 
 [source,javascript]
 ----
@@ -2552,11 +2556,12 @@ class B extends A {}
 var b = new B();
 ----
 
-Note that the diagram shows plain ECMAScript 2015 only. Further note
-that `A` is defined without an  `extends` clause, which is what ECMAScript 2015 calls a _base class_ (as opposed to a __derived class__). The constructor of a
-base class always has Function.prototype as its prototype. If we had
-defined `A` as `class A extends Object {}` in the listing above, then the constructor of `A` would have Object’s constructor as its prototype (depicted in as a dashed red
-arrow), which would make a more consistent overall picture.
+====
+
+NOTE: The diagram <<fig-constructors-and-prototypes>> shows plain ECMAScript 2015 only.
+Also note that `A` is defined without an `extends` clause, which is what ECMAScript 2015 calls a _base class_ (as opposed to a __derived class__).
+The constructor of a base class always has Function.prototype as its prototype.
+If we had defined `A` as `class A extends Object {}` in the listing above, then the constructor of `A` would have Object’s constructor as its prototype (depicted in as a dashed red arrow), which would make a more consistent overall picture.
 
 [[fig-constructors-and-prototypes]]
 .Constructors and prototypes for two classes A and B in ECMAScript 2015 (not N4JS!)
