@@ -64,22 +64,19 @@ simplification.
 .Rule
 [def]
 --
-We use the common notation for rules such as type inference rules
-footnote:[A brief introduction can be found at http://www.cs.cornell.edu/~ross/publications/mixedsite/tutorial.html. In general, we refer the reader to cite:[Pierce02a]]
-, that is
+We use the common notation for rules such as type inference rules footnote:[A brief introduction can be found at http://www.cs.cornell.edu/~ross/publications/mixedsite/tutorial.html. In general, we refer the reader to cite:[Pierce02a]], that is
 
 [math]
 ++++
 \frac{premises}{conclusion} \hspace{5mm} \textrm{rule name}
 ++++
 
-$premises$ is the rule’s premises (e.g., the expression to
-be inferred), $conclusion$ the result of the rule.
+$premises$ is the rule’s premises (e.g., the expression to be inferred), $conclusion$ the result of the rule.
 $rule name$ is an optional condition which may be omitted.
 
-
-Both parts of the rule may contain multiple expressions, which are
-concatenated via and. For example, the following
+Both parts of the rule may contain multiple expressions, which are concatenated via and.
+// TODO missing notation here ^
+For example, the following
 
 [math]
 ++++
@@ -233,7 +230,7 @@ Within constraints (also within the inference rules), the properties defined in 
 In some rules, it is necessary to type the rule variables.
 Instead of explicitly checking the metatype (via $\mu(X)=:{MetaType}$), we precede the variable with the type, that is: $:{MetaType} X$.
 
-Instead of `type casting` elements, often properties are simply accessed.
+Instead of "type casting" elements, often properties are simply accessed.
 If an element does not define that element, it is either assumed to be false or null by default.
 
 If a property $p$ is optional and not set, we write $p=null$ to test its absence.

@@ -333,7 +333,7 @@ references.
 
 --
 
-Note that $alpha_m$ and $bind$ are different functions.
+Note that $\alpha_m$ and $bind$ are different functions.
 A reference can only bind to a declaration if it can access the declaration.
 However, bind requires more condition to work (correct metatypes, no shadowing etc).
 
@@ -670,24 +670,20 @@ But it is not allowed in the following cases:
 [req,id=IDE-9,version=1]
 --
 1. In the script environment, it is not allowed to use the name
-’arguments’.
-footnote:[This conflicts with the implicit parameter arguments introduced by the transpiler when wrapping the script/module into a definition function.]
+’arguments’.footnote:[This conflicts with the implicit parameter arguments introduced by the transpiler when wrapping the script/module into a definition function.]
 +
 The figure Forbidden Shadowing below shows nested lexical environments with named elements declared inside (all named `x` here), the forbidden cases are marked with arrows (the numbers at the left side refer to the numbers in <<Req-IDE-8>>.
 +
 .Forbidden Shadowing
-image::{find}fig/shadowing.png[scaledwidth=60%]
+image::{find}fig/shadowing.png[scaledwidth=60%,align="center"]
 
 Rationale:
 
-* We expect only few named nested functions. Since this is expected to
-be a rare case, no shadowing should occur there as this is maybe not
-expected by the programmer.
-* It is typical that nested environments define local variables. In
-particular helper variables (such as `i: number i` or `s: string` ) are expected to be used quite
-often. Since this is a typical case, we allow shadowing for local
-variables.
-* Function declarations may shadow type declarations. However, both
-entities are to be handled completely differently, so that an error will
-occur if the shadowing is ignored by the programmer anyway.
+* We expect only few named nested functions.
+Since this is expected to be a rare case, no shadowing should occur there as this is maybe not expected by the programmer.
+* It is typical that nested environments define local variables.
+In particular helper variables (such as `i: number i` or `s: string` ) are expected to be used quite often.
+Since this is a typical case, we allow shadowing for local variables.
+* Function declarations may shadow type declarations.
+However, both entities are to be handled completely differently, so that an error will occur if the shadowing is ignored by the programmer anyway.
 --
