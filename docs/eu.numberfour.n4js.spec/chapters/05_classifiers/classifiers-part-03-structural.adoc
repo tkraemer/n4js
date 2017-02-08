@@ -436,8 +436,8 @@ We call the following:
 \spc \hspace{6em}\lor T.refStructuralInitField)
 \endalign
 ++++
-That is, the following code will always issue an error: ``pass:[x instanceof ~T]``.footnote:[Since this is already prevented by the parser (the tilde is interpreted as an unary operator), error messages are likely to look a little strange.]
-6.  A type $X$ is a subtype of a structural version of a type $\tsStr T$, if it contains all public, non-static members of the type $T$: footnote:[Note that due to this relaxed definition (compared with definition-site structural types) it is possible to pass an `N4Object` instance to a function of method with a declared structural type parameter.]
+That is, the following code will always issue an error: ``pass:[x instanceof ~T]`` footnote:[Since this is already prevented by the parser (the tilde is interpreted as an unary operator), error messages are likely to look a little strange.].
+6. A type $X$ is a subtype of a structural version of a type $\tsStr T$, if it contains all public, non-static members of the type $T$: footnote:[Note that due to this relaxed definition (compared with definition-site structural types) it is possible to pass an `N4Object` instance to a function of method with a declared structural type parameter.]
 +
 [math]
 ++++
@@ -506,7 +506,7 @@ _All fields which have an initializer are handled as if they were optional._
     {X.methods \setminus \lstnfjs{Object}.methods = \emptyset \land \tee \tsFld T \subtype \tsFld X}
 ++++
 12. Use-site structural typing cannot be used for declaring supertypes of classes or interfaces.
-That is to say that structural types cannot be used after `extends`, `implements` or `with` in type declarations.footnote:[This is already constrained by the grammar.]
+That is to say that structural types cannot be used after `extends`, `implements` or `with` in type declarations footnote:[This is already constrained by the grammar.].
 
 --
 

@@ -16,17 +16,20 @@ Contributors:
 == Autoboxing and Coercing
 
 Coercing is the ability to implicitly cast one (primitive) type to another.
-Autoboxing is a special kind of coercing in that is the ability to automatically convert a primitive value type, such as `string`, `number`, or `boolean`, to its corresponding Object type version `String`, `Number`, `Boolean`.
+Autoboxing is a special kind of coercing in that is the ability to automatically convert a primitive value type, such as `string`, `number`, or `boolean`,
+to its corresponding Object type version `String`, `Number`, `Boolean`.
 The capital letters in the latter are an essential distinction.
 
-Conversion between primitives and object-representations of a datatype are not automatic in N4JS. Only in the cases of object-method invocations on a primitive type (for `string` to call `"abc".length`, for example) automatic conversion is applied.
+Conversion between primitives and object-representations of a datatype are not automatic in N4JS. Only in the cases of object-method invocations on a primitive type
+(for `string` to call `"abc".length`, for example) automatic conversion is applied.
 
 Note that N4JS specific primitive types `pathselector` and `i18nkey` are handled similarly to `string`.
 
 === Coercing
 task:IDE-379[]
 
-In cite:[ECMA11a], coercing is defined by means of the abstract specification method `ToPrimitive` cite:[ECMA11a(S9.1)], also see cite:[ECMA11a(S9.10)]). Other conversions, such as `ToNumber`, are not directly supported but reflected in the typing rules of expressions.
+In cite:[ECMA11a], coercing is defined by means of the abstract specification method `ToPrimitive` cite:[ECMA11a(S9.1)], also see cite:[ECMA11a(S9.10)]).
+Other conversions, such as `ToNumber`, are not directly supported but reflected in the typing rules of expressions.
 
 We express absence of automatic coercion here by means of subtype
 relations:
@@ -40,8 +43,6 @@ relations:
 \endalign
 ++++
 
-
-
 and for the N4JS specific types:
 
 [math]
@@ -53,10 +54,8 @@ and for the N4JS specific types:
 ++++
 
 
-If a conversion between primitive and object type is desired, we require
-the user of N4JS to actively convert the values. The reason for that is
-the notably different behavior of object- and primitive-variants of a
-type in expression evaluation:
+If a conversion between primitive and object type is desired, we require the user of N4JS to actively convert the values.
+The reason for that is the notably different behavior of object- and primitive-variants of a type in expression evaluation:
 
 [source,n4js]
 ----
@@ -67,8 +66,8 @@ console.log( bool ? "true" : "false"); // prints "false"
 console.log( Bool ? "true" : "false"); // prints "true"!
 ----
 
-Conversion between a primitive type to its object-variant is achieved by
-the `new` operator. The `valueOf()` method converts the object-variant back to a primitive value.
+Conversion between a primitive type to its object-variant is achieved by the `new` operator.
+The `valueOf()` method converts the object-variant back to a primitive value.
 
 [source,n4js]
 ----
@@ -88,8 +87,8 @@ no = new Number( n );
 so = new String( s );
 ----
 
-Conversion of variables of type `Object` or from one primitive type to another is expressed in terms of typing rules for expressions. That is, it is not
-possible to convert any `Object` to a primitive in general, but it is possible to do so in the context of certain expressions such as additive operator.
+Conversion of variables of type `Object` or from one primitive type to another is expressed in terms of typing rules for expressions.
+That is, it is not possible to convert any `Object` to a primitive in general, but it is possible to do so in the context of certain expressions such as additive operator.
 The applied conversions are described in <<_auto-conversion-of-class-instances>>
 
 === Autoboxing of Primitives
@@ -97,14 +96,12 @@ task:IDE-835[]
 
 In cite:[ECMA11a], autoboxing is defined by `ToObject` cite:[ECMA11a(S9.9)].
 
-Autoboxing is not directly supported in N4JS. Instead, primitive types
-virtually have the same members as their corresponding object types. It
-is then possible to use the Autoboxing feature when calling a member.
-In general, Autoboxing is only supported for accessing built-in
-read-only (immutable) properties. For example, `"some string value".split(" ");` is supported but `"some string value".foo=1;` will be rejected as String does not allow properties to be added (cf. `String` vs. `String+`, see <<_dynamic>>).
+Autoboxing is not directly supported in N4JS. Instead, primitive types virtually have the same members as their corresponding object types.
+It is then possible to use the Autoboxing feature when calling a member.
+In general, Autoboxing is only supported for accessing built-in read-only (immutable) properties.
+For example, `"some string value".split(" ");` is supported but `"some string value".foo=1;` will be rejected as String does not allow properties to be added (cf. `String` vs. `String+`, see <<_dynamic>>).
 
-Autoboxing often leads to problems, in particular in combination with
-dynamic types – this is why it is not directly supported in N4JS.
+Autoboxing often leads to problems, in particular in combination with dynamic types – this is why it is not directly supported in N4JS.
 
 [source,n4js]
 ----
@@ -140,8 +137,8 @@ The same auto-conversion rules defined for JavaScript `Object` therefore apply t
 The basic conversion uses the abstract JavaScript function `ToPrimitive` cite:[ECMA11a(S9.1)], which relays on the specification method `Object` cite:[ECMA11a(S8.12.8)].
 `DefaultValue` calls `valueOf` or `toString` methods if they are defined by the class (in the `methods`-builder).
 
-Note that according to the cite:[ECMA11a], in most cases, objects are first converted into primitives. That is, in most cases, no extra hint is passed to
-`DefaultValue`. Thus `valueOf` usually takes precedence over toString as demonstrated in the following example:
+Note that according to the cite:[ECMA11a], in most cases, objects are first converted into primitives.
+That is, in most cases, no extra hint is passed to `DefaultValue`. Thus `valueOf` usually takes precedence over toString as demonstrated in the following example:
 
 .Auto-Conversion
 [example]
@@ -216,8 +213,6 @@ We first define helper rules for the type cast constraints as follows:
 \infer{isFinalByType(T)}{\mu(T) \in \{\ \type{TEnum}, \type{Primitive} \} \lor (\mu(T)=\type{Class} \land T.extensibility=\lenum{final} \})}
 \endalign
 ++++
-
-
 
 .Cast Validation At Compile Time
 [req,id=IDE-89,version=1]

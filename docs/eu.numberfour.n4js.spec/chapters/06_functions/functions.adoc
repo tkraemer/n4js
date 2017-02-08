@@ -14,7 +14,7 @@ Contributors:
 Functions, be they function declarations, expressions or even methods, are internally modeled by means of a function type.
 In this chapter, the general function type is described along with its semantics and type constraints.
 Function definitions and expressions are then introduced in terms of statements and expressions.
-Method definitions and special usages are described in <<Methods>>
+Method definitions and special usages are described in <<Methods>>.
 
 [.language-n4js]
 == Function Type
@@ -31,14 +31,12 @@ Function types can be defined by means of;
 
 === Properties
 
-In any case, a function type declares the signature of a function and
-allows validation of calls to that function. A function type has the
-following properties:
+In any case, a function type declares the signature of a function and allows validation of calls to that function.
+A function type has the following properties:
 
 
 `typePars`  ::
-(0-indexed) list of type parameters (i.e. type variables) for generic
-functions.
+(0-indexed) list of type parameters (i.e. type variables) for generic functions.
 
 `fpars`  ::
 (0-indexed) list of formal parameters.
@@ -47,8 +45,7 @@ functions.
 (possibly inferred) return type (expression) of the function or method.
 
 `name` ::
-Name of function or method, may be empty or automatically generated (for
-messages).
+Name of function or method, may be empty or automatically generated (for messages).
 
 `body` ::
 The body of the function, it contains statements $stmts$.
@@ -63,11 +60,11 @@ if used inside the function or member. The inference rules are described
 in <<_this-keyword>>.
 
 `fpars` ::
-List of formal parameters and the this type ref. This is only used for
-sub typing rules. If `this` is not used inside the function, then `any` is set
-instead of the inferred thisTypeRef to allow for more usages. The
-property is computed as follows: +
-
+List of formal parameters and the this type ref.
+This is only used for sub typing rules.
+If `this` is not used inside the function, then `any` is set instead of the inferred thisTypeRef to allow for more usages.
+The property is computed as follows:
++
 [math]
 ++++
 tfpars = \lif & \ \textbf{this is used or explicitly declared}\ \\
@@ -77,7 +74,6 @@ tfpars = \lif & \ \textbf{this is used or explicitly declared}\ \\
 
 Parameters (in $pars$) have the following properties:
 
-
 `name` ::
 Name of the parameter.
 
@@ -85,9 +81,9 @@ Name of the parameter.
 Type (expression) of the parameter. Note that only parameter types can
 be variadic or optional.
 
-The function definition can be annotated similar to <<Methods>> except that
-the `final` and `abstract` modifiers aren’t supported for function declarations. A function declaration is always final and never abstract. Also, a function has no
-property advice set.
+The function definition can be annotated similar to <<Methods>> except that the `final` and `abstract` modifiers aren’t supported for function declarations.
+A function declaration is always final and never abstract.
+Also, a function has no property advice set.
 
 [discrete]
 === Semantics
@@ -97,30 +93,25 @@ property advice set.
 .Function Type
 [req,id=IDE-79,version=1]
 --
-Type Given a function type $F$, the following
-constraints must be true:
+Type Given a function type $F$, the following constraints must be true:
 
 
 // TODO check math expression "\nexists k>i:" below
 
-1.  Optional parameters must be defined at the end of the (formal)
-parameter list. In particular, an optional parameter must not be
-followed by a non-optional parameter:
+1.  Optional parameters must be defined at the end of the (formal) parameter list.
+In particular, an optional parameter must not be followed by a non-optional parameter:
 +
 [math]
 ++++
 F.fpars_i.optional \to \nexists k>i: \lnot F.fpars_k.optvar
 ++++
-2.  Only the last parameter of a method may be defined as variadic
-parameter:
+2.  Only the last parameter of a method may be defined as variadic parameter:
 +
 [math]
 ++++
 F.fpars_i.variadic \to i = |F.fpars|-1
 ++++
-3.  If a function explicitly defines a return type, the last statement
-of the transitive closure of statements of the body must be a return
-statement:
+3.  If a function explicitly defines a return type, the last statement of the transitive closure of statements of the body must be a return statement:
 +
 [math]
 ++++
@@ -266,8 +257,7 @@ fA(p);      // --> error    void !<: A
 If classes A, B, and C are defined as previously mentioned
 ($C <: B <: A$)
 
-The following subtyping relations with function types are to be
-evaluated as follows:
+The following subtyping relations with function types are to be evaluated as follows:
 
 [source,n4js]
 ----
@@ -286,8 +276,7 @@ evaluated as follows:
 
 
 
-The following examples demonstrate the effect of optional and variadic
-parameters:
+The following examples demonstrate the effect of optional and variadic parameters:
 
 [source,n4js]
 ----
@@ -344,7 +333,8 @@ The following examples show the effect of the `@This` annotation:
 ----
 --
 
-
+//TODO check where this anchor goes
+[[function_type_conformance_non_parameterized]]
 .Function Type Conformance
 [def]
 --
@@ -353,24 +343,16 @@ $F_{left}$ with
 $F_{left}.tfpars=L_0, L_1, ... L_k$ +
 $F_{right}$ with
 $F_{right}.tfpars=R_0, R_1, ... R_n$, +
-we say $F_{left}$ conforms to $F_{right}$,
-written as $F_{left} <: F_{right}$, if and only if:
-
-function_type_conformance_non_parameterized
-
+we say $F_{left}$ conforms to $F_{right}$, written as $F_{left} <: F_{right}$, if and only if:
 
 * if $|F_{left}.typePars|=|F_{right}.typePars|=0$:
 ** $F_{left} <: F_{right}$
 (cf. <<function_type_conformance_non_parameterized>>)
-* else if
+* else if +
 $|F_{left}.typePars|>0 \land |F_{right}.typePars|=0$:
-** $\exists \typeSubs: ( \typeEnvAdd \typeSubs ) \entails F_{left} <: F_{right}$
-(cf. <<function_type_conformance_non_parameterized>>)
+** $\exists \typeSubs: ( \typeEnvAdd \typeSubs ) \entails F_{left} <: F_{right}$ (cf. <<function_type_conformance_non_parameterized>>)
 +
-(i.e. there exists a substitution $\typeSubs$ of type
-variables in $F_{left}$ so that after substitution it
-becomes a subtype of $F_{right}$ as defined by
-<<function_type_conformance_non_parameterized>>)
+(i.e. there exists a substitution $\typeSubs$ of type variables in $F_{left}$ so that after substitution it becomes a subtype of $F_{right}$ as defined by <<function_type_conformance_non_parameterized>>)
 * else if $|F_{left}.typePars|=|F_{right}.typePars|$:
 ** $\typeEnvAdd \{ V^r_i \leftarrow V^l_i | 0 \leq i \leq n \} \entails F_{left} <: F_{right}$
 ( accordingly)
@@ -384,21 +366,15 @@ becomes a subtype of $F_{right}$ as defined by
 \endalign
 ++++
 +
-with $F_{left}.typePars=V^l_0, V^l_1, ... V^l_n$ and
-$F_{right}.typePars=V^r_0, V^r_1, ... V^r_n$ +
-(i.e. we replace each type variable in $F_{right}$ by the
-corresponding type variable at the same index in $F_{left}$
-and check the constraints from<<function_type_conformance_non_parameterized>> as if $F_{left}$ and
-$F_{right}$ were non-parameterized functions and, in
-addition, the upper bounds on the left side need to be supertypes of the
-upper bounds on the right side).
+with $F_{left}.typePars=V^l_0, V^l_1, ... V^l_n$ and $F_{right}.typePars=V^r_0, V^r_1, ... V^r_n$ +
+(i.e. we replace each type variable in $F_{right}$ by the corresponding type variable at the same index in $F_{left}$
+and check the constraints from<<function_type_conformance_non_parameterized>> as if $F_{left}$ and $F_{right}$ were non-parameterized functions and, in
+addition, the upper bounds on the left side need to be supertypes of the upper bounds on the right side).
 --
 
-Note that the upper bounds on the left must be supertypes of the
-right-side upper bounds (for similar reasons why types of formal
-parameters on the left are required to be supertypes of the formal
-parameters’ types in ). Where a particular type variable is used, on co-
-or contra-variant position, is not relevant:
+Note that the upper bounds on the left must be supertypes of the right-side upper bounds (for similar reasons why types of formal parameters on the left are
+required to be supertypes of the formal parameters’ types in ).
+Where a particular type variable is used, on co- or contra-variant position, is not relevant:
 
 .Bounded type variable at co-variant position in function type
 [example]
@@ -418,15 +394,14 @@ class Y extends X {
 }
 ----
 
-Method `m` in `Y` may return an `A`, thus breaking the contract of m in `X`, but only if it is parameterized to do so, which is not allowed for clients of `X`, only those of `Y`. Therefore, the override in the above example is valid.
+Method `m` in `Y` may return an `A`, thus breaking the contract of m in `X`, but only if it is parameterized to do so, which is not allowed for clients of `X`, only those of `Y`.
+Therefore, the override in the above example is valid.
 --
 
 The subtype relation for function types is also applied for method overriding to ensure that an overriding method’s signature conforms to that of the overridden method,
-see <<Req-IDE-72>> (applies to method comnsumption and implementation accordingly,
-see <<Req-IDE-73>> and <<Req-IDE-74>>).
+see <<Req-IDE-72>> (applies to method comnsumption and implementation accordingly, see <<Req-IDE-73>> and <<Req-IDE-74>>).
 Note that this is very different from Java which is far more restrictive when checking overriding methods.
-As Java also supports method overloading: given two types $A, B$ with $B <: A$ and a super class method `void m(B param)`, it is valid to override
-`m` as `void m(A param)` in N4JS but not in Java.
+As Java also supports method overloading: given two types $A, B$ with $B <: A$ and a super class method `void m(B param)`, it is valid to override `m` as `void m(A param)` in N4JS but not in Java.
 In Java this would be handled as method overloading and therefore an `@Override` annotation on `m` would produce an error.
 
 
@@ -489,11 +464,12 @@ m.toString(); // returns: function sayS(){ return this.s; }
 === Arguments Object
 task:IDE-662[]
 
-A special arguments object is defined within the body of a function. It
-is accessible through the implicitly-defined local variable named ,
+//TODO missing notation below
+A special arguments object is defined within the body of a function.
+It is accessible through the implicitly-defined local variable named ,
 unless it is shadowed by a local variable, a formal parameter or a
-function named `arguments` or in the rare case that the function
-itself is called ’arguments’ cite:[ECMA11a(S10.5,pp59)]. The argument object has array-like behavior even though it is not of type `array`:
+function named `arguments` or in the rare case that the function itself is called ’arguments’ cite:[ECMA11a(S10.5,pp59)].
+The argument object has array-like behavior even though it is not of type `array`:
 
 * All actual passed-in parameters of the current execution context can be retrieved by $0-based$ index access.
 * The `length` property of the arguments object stores the actual number of passed-in arguments which may differ from the number of formally defined number of parameters $fpars$ of the containing function.
@@ -513,7 +489,8 @@ In N4JS and in ES strict mode the use of `arguments.callee` is prohibited.
 [req,id=IDE-82,version=1]
 --
 In N4JS, the formal parameters of the function cannot be named `arguments`.
-This applies to all variable execution environments like field accessors (getter/setter, <<_field-accessors-getter-setter>>), methods (<<Methods>>) and constructors (<<_constructor-and-classifier-type>>), where `FormalParameter` type is used.
+This applies to all variable execution environments like field accessors (getter/setter, <<_field-accessors-getter-setter>>),
+methods (<<Methods>>) and constructors (<<_constructor-and-classifier-type>>), where `FormalParameter` type is used.
 
 .Usage of Arguments Object
 [example]
@@ -605,12 +582,8 @@ fragment FunctionBody <Yield, Expression>*:
 
 Properties of the function declaration and expression are described in <<_function-type>>.
 
-For this specification, we introduce a supertype
-$FunctionDefinition$ for both,
-$FunctionDeclaration$ and
-$FunctionExpression$. This supertype contains all common
-properties of these two subtypes, that is, all properties of
-$FunctionExpression$.
+For this specification, we introduce a supertype $FunctionDefinition$ for both, $FunctionDeclaration$ and $FunctionExpression$.
+This supertype contains all common properties of these two subtypes, that is, all properties of $FunctionExpression$.
 
 .Function Declaration with Type Annotation
 [example]
@@ -629,7 +602,8 @@ task:IDE-224[]
 
 A function defined in a class’s method (or method modifier) builder is a method, see <<Methods>> for details and additional constraints.
 The metatype of a function definition is function type (<<_function-type>>), as a function declaration is only a different syntax for creating a `Function` object.
-Constraints for function type are described in <<_function-type>>. Another consequence is that the inferred type of a function definition $fdecl$ is simply its function type $F$.
+Constraints for function type are described in <<_function-type>>.
+Another consequence is that the inferred type of a function definition $fdecl$ is simply its function type $F$.
 
 [math]
 ++++
@@ -649,8 +623,8 @@ Since this is supported by most JavaScript engines, only a warning is issued.
 
 === Function Expression
 
-A function expression cite:[ECMA11a(S11.2.5)] is quite similar to a function declaration. Thus,
-most details are explained in <<_ecmascript-5-function-definition>>.
+A function expression cite:[ECMA11a(S11.2.5)] is quite similar to a function declaration.
+Thus, most details are explained in <<_ecmascript-5-function-definition>>.
 
 ==== Syntax [[function-expression-syntax]]
 
@@ -665,32 +639,23 @@ FunctionExpression:
 
 ==== Semantics and Type Inference
 
-In general, the inferred type of a function expression simply is the
-function type as described in <<_function-type>>. Often, the signature of a function
-expression is not explicitly specified but it can be inferred from the
-context. The following context information is used to infer the full
-signature:
+In general, the inferred type of a function expression simply is the function type as described in <<_function-type>>.
+Often, the signature of a function expression is not explicitly specified but it can be inferred from the context.
+The following context information is used to infer the full signature:
 
-* If the function expression is used on the right hand side of an
-assignment, the expected return type can be inferred from the left hand
-side.
-* If the function expression is used as an argument in a call to another
-function, the full signature can be inferred from the corresponding type
-of the formal parameter declaration.
+* If the function expression is used on the right hand side of an assignment, the expected return type can be inferred from the left hand side.
+* If the function expression is used as an argument in a call to another function, the full signature can be inferred from the corresponding type of the formal parameter declaration.
 
 // todo[lb,jvp]{give some examples}
 
-Although the signature of the function expression may be inferred from
-the formal parameter if the function expression is used as argument,
-this inference has some conceptual limitations. This is demonstrated in
-the next example.
+Although the signature of the function expression may be inferred from the formal parameter if the function expression is used as argument, this inference has some conceptual limitations.
+This is demonstrated in the next example.
 
 .Inference Of Function Expression’s Signature
 [example]
 --
-In general, `{function():any}` is a subtype of `{function():void}` (cf. <<_function-type>>). When the return type of a function
-expression is inferred, this relation is taken into account which may
-lead to unexpected results as shown in the following code snippet:
+In general, `{function():any}` is a subtype of `{function():void}` (cf. <<_function-type>>).
+When the return type of a function expression is inferred, this relation is taken into account which may lead to unexpected results as shown in the following code snippet:
 
 [source,n4js]
 ----
@@ -702,8 +667,7 @@ No error is issued: The type of the function expression actually is inferred to 
 It is not inferred to `{function():void}`, even if the formal parameter of `f` suggests that.
 Due to the previously-stated relation `{function():any} <: {function():void}` this is correct – the client (in this
 case function `f`) works perfectly well even if `cb` returns something.
-The contract of arguments states that the type of the argument is a subtype
-of the type of the formal parameter.
+The contract of arguments states that the type of the argument is a subtype of the type of the formal parameter.
 This is what the inferencer takes into account!
 --
 
@@ -840,8 +804,12 @@ GeneratorMethodDeclaration:
 The basic idea is to make code dealing with Generators easier to write and more readable without changing their functionality.
 Take this example:
 
+[[ex:two-simple-generator-functions]]
+.Two simple generator functions
+[example]
+====
+
 [source,n4js]
-.Two simple generator functions.
 ----
 // explicit form of the return type
 function * countTo(iMax:int) : Generator<int,string,undefined> {
@@ -866,7 +834,7 @@ val lastObj2 = genObj2.next(); // is {value="finished",done=true}
 
 In the example above, two generator functions are declared.
 The first declares its return type explicitly whereas the second uses a shorthand form.
-
+====
 
 Generator functions and methods return objects of the type `Generator<TYield,TReturn,TNext>` which is a subtype of the `Iterable<TYield>` and `Iterator<TYield>` interfaces.
 Moreover, it provides the methods `throw(exception:any)` and `return(value:TNext?)` for advanced control of the generator object.
@@ -945,19 +913,14 @@ For more information, please refer to https://esdiscuss.org/topic/generator-arro
 === Arrow Function Expression
 task:IDE-252[]
 
-This is an ECMAScript 6 expression (see cite:[ECMA15a(S14.2)]) for simplifying the definition of anonymous function expressions, aka
-lambdas or closures. The ECMAScript Specification calls this a function
-definition even though they may only appear in the context of
-expressions.
+This is an ECMAScript 6 expression (see cite:[ECMA15a(S14.2)]) for simplifying the definition of anonymous function expressions, a.k.a. lambdas or closures.
+The ECMAScript Specification calls this a function definition even though they may only appear in the context of expressions.
 
-Along with Assignments, Arrow function expressions have the least
-precedence, e.g. they serve as the entry point for the expression tree.
+Along with Assignments, Arrow function expressions have the least precedence, e.g. they serve as the entry point for the expression tree.
 
-Arrow function expressions can be considered syntactic window-dressing
-for old-school function expressions and therefore do not support the
-benefits regarding parameter annotations although parameter types may be
-given explicitly. The return type can be given as type hint if desired,
-but this is not mandatory (if left out, the return type is inferred).
+Arrow function expressions can be considered syntactic window-dressing for old-school function expressions and therefore do not support the
+benefits regarding parameter annotations although parameter types may be given explicitly.
+The return type can be given as type hint if desired, but this is not mandatory (if left out, the return type is inferred).
 The notation `pass:[@=>]` stands for an async arrow function (<<Asynchronous Arrow Functions>>).
 
 ==== Syntax [[arrow-function-expression-syntax]]
@@ -1001,15 +964,11 @@ AssignmentExpressionStatement returns ExpressionStatement: expression=Assignment
 Generally speaking, the semantics are very similar to the function
 expressions but the devil’s in the details:
 
-* `arguments`: Unlike normal function expressions, an arrow function does not
-introduce an implicit `arguments` variable (<<Arguments Object>>), therefore any occurrence of it in the arrow function’s body has always the same binding as an occurrence of `arguments` in the lexical context enclosing the arrow function.
-* `this`: An arrow function does not introduce a binding of its own for the `this` keyword. That explains why uses in the body of arrow function have the
-same meaning as occurrences in the enclosing lexical scope. As a
-consequence, an arrow function at the top level has both usages of `arguments` and `this` flagged as error (the outer lexical context doesn’t provide definitions
-for them).
-* `super`: As with function expressions in general, whether of the arrow
-variety or not, the usage of `super` isn’t allowed in the body of arrow
-functions.
+* `arguments`: Unlike normal function expressions, an arrow function does not introduce an implicit `arguments` variable (<<Arguments Object>>),
+therefore any occurrence of it in the arrow function’s body has always the same binding as an occurrence of `arguments` in the lexical context enclosing the arrow function.
+* `this`: An arrow function does not introduce a binding of its own for the `this` keyword. That explains why uses in the body of arrow function have the same meaning as occurrences in the enclosing lexical scope.
+As a consequence, an arrow function at the top level has both usages of `arguments` and `this` flagged as error (the outer lexical context doesn’t provide definitionsfor them).
+* `super`: As with function expressions in general, whether of the arrow variety or not, the usage of `super` isn’t allowed in the body of arrow functions.
 
 .No This in Top Level Arrow Function in N4JS Mode
 [req,id=IDE-84,version=1]
@@ -1081,7 +1040,7 @@ keyword, as shown in the next example.
 
 .Async as keyword and identifier
 [example]
---
+====
 
 [source,n4js]
 ----
@@ -1096,7 +1055,7 @@ non-asynchronous function. The automatic semicolon insertion adds a
 semicolon after the reference on line 1.
 <2> In contrast, `async` on line 4 is recognized as a modifier declaring the function as asynchronous.
 
---
+====
 
 ==== Semantics [[asynchronous-functions-semantics]]
 
