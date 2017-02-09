@@ -57,12 +57,12 @@ import eu.numberfour.n4js.ts.types.TStructMember;
 import eu.numberfour.n4js.ts.types.TStructMethod;
 import eu.numberfour.n4js.ts.types.TStructSetter;
 import eu.numberfour.n4js.ts.types.TStructuralType;
+import eu.numberfour.n4js.ts.types.TTypedElement;
 import eu.numberfour.n4js.ts.types.TVariable;
 import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypeAccessModifier;
 import eu.numberfour.n4js.ts.types.TypeDefs;
-import eu.numberfour.n4js.ts.types.TypeReferenceContainer;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.types.TypesPackage;
@@ -159,7 +159,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass typeReferenceContainerEClass = null;
+	private EClass tTypedElementEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -909,8 +909,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getTypeReferenceContainer() {
-		return typeReferenceContainerEClass;
+	public EClass getTTypedElement() {
+		return tTypedElementEClass;
 	}
 
 	/**
@@ -918,8 +918,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTypeReferenceContainer_TypeRef() {
-		return (EReference)typeReferenceContainerEClass.getEStructuralFeatures().get(0);
+	public EReference getTTypedElement_TypeRef() {
+		return (EReference)tTypedElementEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -2981,8 +2981,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEAttribute(tAnnotationStringArgumentEClass, TANNOTATION_STRING_ARGUMENT__VALUE);
 		createEOperation(tAnnotationStringArgumentEClass, TANNOTATION_STRING_ARGUMENT___GET_ARG_AS_STRING);
 
-		typeReferenceContainerEClass = createEClass(TYPE_REFERENCE_CONTAINER);
-		createEReference(typeReferenceContainerEClass, TYPE_REFERENCE_CONTAINER__TYPE_REF);
+		tTypedElementEClass = createEClass(TTYPED_ELEMENT);
+		createEReference(tTypedElementEClass, TTYPED_ELEMENT__TYPE_REF);
 
 		tAnnotationTypeRefArgumentEClass = createEClass(TANNOTATION_TYPE_REF_ARGUMENT);
 		createEOperation(tAnnotationTypeRefArgumentEClass, TANNOTATION_TYPE_REF_ARGUMENT___GET_ARG_AS_STRING);
@@ -3293,7 +3293,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		tExportableElementEClass.getESuperTypes().add(this.getIdentifiableElement());
 		tAnnotationStringArgumentEClass.getESuperTypes().add(this.getTAnnotationArgument());
 		tAnnotationTypeRefArgumentEClass.getESuperTypes().add(this.getTAnnotationArgument());
-		tAnnotationTypeRefArgumentEClass.getESuperTypes().add(this.getTypeReferenceContainer());
+		tAnnotationTypeRefArgumentEClass.getESuperTypes().add(this.getTTypedElement());
 		typeVariableEClass.getESuperTypes().add(this.getType());
 		inferenceVariableEClass.getESuperTypes().add(this.getTypeVariable());
 		tFunctionEClass.getESuperTypes().add(this.getDeclaredTypeWithAccessModifier());
@@ -3352,10 +3352,10 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		tFormalParameterEClass.getESuperTypes().add(this.getIdentifiableElement());
 		tFormalParameterEClass.getESuperTypes().add(this.getTAnnotableElement());
 		tFormalParameterEClass.getESuperTypes().add(this.getSyntaxRelatedTElement());
-		tFormalParameterEClass.getESuperTypes().add(this.getTypeReferenceContainer());
+		tFormalParameterEClass.getESuperTypes().add(this.getTTypedElement());
 		tAnonymousFormalParameterEClass.getESuperTypes().add(this.getTFormalParameter());
 		tFieldEClass.getESuperTypes().add(this.getTMemberWithAccessModifier());
-		tFieldEClass.getESuperTypes().add(this.getTypeReferenceContainer());
+		tFieldEClass.getESuperTypes().add(this.getTTypedElement());
 		tStructFieldEClass.getESuperTypes().add(this.getTField());
 		tStructFieldEClass.getESuperTypes().add(this.getTStructMember());
 		fieldAccessorEClass.getESuperTypes().add(this.getTMemberWithAccessModifier());
@@ -3375,7 +3375,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		tVariableEClass.getESuperTypes().add(this.getSyntaxRelatedTElement());
 		tVariableEClass.getESuperTypes().add(this.getTAnnotableElement());
 		tVariableEClass.getESuperTypes().add(this.getAccessibleTypeElement());
-		tVariableEClass.getESuperTypes().add(this.getTypeReferenceContainer());
+		tVariableEClass.getESuperTypes().add(this.getTTypedElement());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(typeDefsEClass, TypeDefs.class, "TypeDefs", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3427,8 +3427,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		initEOperation(getTAnnotationStringArgument__GetArgAsString(), theEcorePackage.getEString(), "getArgAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
-		initEClass(typeReferenceContainerEClass, TypeReferenceContainer.class, "TypeReferenceContainer", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTypeReferenceContainer_TypeRef(), theTypeRefsPackage.getTypeRef(), null, "typeRef", null, 0, 1, TypeReferenceContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(tTypedElementEClass, TTypedElement.class, "TTypedElement", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTTypedElement_TypeRef(), theTypeRefsPackage.getTypeRef(), null, "typeRef", null, 0, 1, TTypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tAnnotationTypeRefArgumentEClass, TAnnotationTypeRefArgument.class, "TAnnotationTypeRefArgument", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

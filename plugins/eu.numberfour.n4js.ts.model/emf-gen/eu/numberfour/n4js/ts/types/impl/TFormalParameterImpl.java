@@ -15,7 +15,7 @@ import eu.numberfour.n4js.ts.types.TAnnotableElement;
 import eu.numberfour.n4js.ts.types.TAnnotation;
 import eu.numberfour.n4js.ts.types.TFormalParameter;
 import eu.numberfour.n4js.ts.types.TFunction;
-import eu.numberfour.n4js.ts.types.TypeReferenceContainer;
+import eu.numberfour.n4js.ts.types.TTypedElement;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
 import java.lang.reflect.InvocationTargetException;
@@ -577,9 +577,9 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 				default: return -1;
 			}
 		}
-		if (baseClass == TypeReferenceContainer.class) {
+		if (baseClass == TTypedElement.class) {
 			switch (derivedFeatureID) {
-				case TypesPackage.TFORMAL_PARAMETER__TYPE_REF: return TypesPackage.TYPE_REFERENCE_CONTAINER__TYPE_REF;
+				case TypesPackage.TFORMAL_PARAMETER__TYPE_REF: return TypesPackage.TTYPED_ELEMENT__TYPE_REF;
 				default: return -1;
 			}
 		}
@@ -605,9 +605,9 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 				default: return -1;
 			}
 		}
-		if (baseClass == TypeReferenceContainer.class) {
+		if (baseClass == TTypedElement.class) {
 			switch (baseFeatureID) {
-				case TypesPackage.TYPE_REFERENCE_CONTAINER__TYPE_REF: return TypesPackage.TFORMAL_PARAMETER__TYPE_REF;
+				case TypesPackage.TTYPED_ELEMENT__TYPE_REF: return TypesPackage.TFORMAL_PARAMETER__TYPE_REF;
 				default: return -1;
 			}
 		}

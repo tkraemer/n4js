@@ -18,7 +18,7 @@ package eu.numberfour.n4js.ts.types;
  * @model
  * @generated
  */
-public interface TAnnotationTypeRefArgument extends TAnnotationArgument, TypeReferenceContainer {
+public interface TAnnotationTypeRefArgument extends TAnnotationArgument, TTypedElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -127,9 +127,9 @@ public class TypesSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case TypesPackage.TYPE_REFERENCE_CONTAINER: {
-				TypeReferenceContainer typeReferenceContainer = (TypeReferenceContainer)theEObject;
-				T result = caseTypeReferenceContainer(typeReferenceContainer);
+			case TypesPackage.TTYPED_ELEMENT: {
+				TTypedElement tTypedElement = (TTypedElement)theEObject;
+				T result = caseTTypedElement(tTypedElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -137,7 +137,7 @@ public class TypesSwitch<T> extends Switch<T> {
 				TAnnotationTypeRefArgument tAnnotationTypeRefArgument = (TAnnotationTypeRefArgument)theEObject;
 				T result = caseTAnnotationTypeRefArgument(tAnnotationTypeRefArgument);
 				if (result == null) result = caseTAnnotationArgument(tAnnotationTypeRefArgument);
-				if (result == null) result = caseTypeReferenceContainer(tAnnotationTypeRefArgument);
+				if (result == null) result = caseTTypedElement(tAnnotationTypeRefArgument);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -514,7 +514,7 @@ public class TypesSwitch<T> extends Switch<T> {
 				if (result == null) result = caseIdentifiableElement(tFormalParameter);
 				if (result == null) result = caseTAnnotableElement(tFormalParameter);
 				if (result == null) result = caseSyntaxRelatedTElement(tFormalParameter);
-				if (result == null) result = caseTypeReferenceContainer(tFormalParameter);
+				if (result == null) result = caseTTypedElement(tFormalParameter);
 				if (result == null) result = caseTypableElement(tFormalParameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -526,7 +526,7 @@ public class TypesSwitch<T> extends Switch<T> {
 				if (result == null) result = caseIdentifiableElement(tAnonymousFormalParameter);
 				if (result == null) result = caseTAnnotableElement(tAnonymousFormalParameter);
 				if (result == null) result = caseSyntaxRelatedTElement(tAnonymousFormalParameter);
-				if (result == null) result = caseTypeReferenceContainer(tAnonymousFormalParameter);
+				if (result == null) result = caseTTypedElement(tAnonymousFormalParameter);
 				if (result == null) result = caseTypableElement(tAnonymousFormalParameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -535,7 +535,7 @@ public class TypesSwitch<T> extends Switch<T> {
 				TField tField = (TField)theEObject;
 				T result = caseTField(tField);
 				if (result == null) result = caseTMemberWithAccessModifier(tField);
-				if (result == null) result = caseTypeReferenceContainer(tField);
+				if (result == null) result = caseTTypedElement(tField);
 				if (result == null) result = caseTMember(tField);
 				if (result == null) result = caseIdentifiableElement(tField);
 				if (result == null) result = caseTAnnotableElement(tField);
@@ -550,7 +550,7 @@ public class TypesSwitch<T> extends Switch<T> {
 				if (result == null) result = caseTField(tStructField);
 				if (result == null) result = caseTStructMember(tStructField);
 				if (result == null) result = caseTMemberWithAccessModifier(tStructField);
-				if (result == null) result = caseTypeReferenceContainer(tStructField);
+				if (result == null) result = caseTTypedElement(tStructField);
 				if (result == null) result = caseTMember(tStructField);
 				if (result == null) result = caseIdentifiableElement(tStructField);
 				if (result == null) result = caseTAnnotableElement(tStructField);
@@ -664,7 +664,7 @@ public class TypesSwitch<T> extends Switch<T> {
 				if (result == null) result = caseSyntaxRelatedTElement(tVariable);
 				if (result == null) result = caseTAnnotableElement(tVariable);
 				if (result == null) result = caseAccessibleTypeElement(tVariable);
-				if (result == null) result = caseTypeReferenceContainer(tVariable);
+				if (result == null) result = caseTTypedElement(tVariable);
 				if (result == null) result = caseIdentifiableElement(tVariable);
 				if (result == null) result = caseTypableElement(tVariable);
 				if (result == null) result = defaultCase(theEObject);
@@ -795,17 +795,17 @@ public class TypesSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Type Reference Container</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>TTyped Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Type Reference Container</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>TTyped Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseTypeReferenceContainer(TypeReferenceContainer object) {
+	public T caseTTypedElement(TTypedElement object) {
 		return null;
 	}
 

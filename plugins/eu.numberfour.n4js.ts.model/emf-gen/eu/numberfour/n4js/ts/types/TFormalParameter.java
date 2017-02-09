@@ -26,7 +26,7 @@ package eu.numberfour.n4js.ts.types;
  * @model
  * @generated
  */
-public interface TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRelatedTElement, TypeReferenceContainer {
+public interface TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRelatedTElement, TTypedElement {
 	/**
 	 * Returns the value of the '<em><b>Variadic</b></em>' attribute.
 	 * <!-- begin-user-doc -->

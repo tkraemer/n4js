@@ -607,14 +607,14 @@ public interface TypesPackage extends EPackage {
 	int TANNOTATION_STRING_ARGUMENT_OPERATION_COUNT = TANNOTATION_ARGUMENT_OPERATION_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.TypeReferenceContainer <em>Type Reference Container</em>}' class.
+	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.TTypedElement <em>TTyped Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see eu.numberfour.n4js.ts.types.TypeReferenceContainer
-	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTypeReferenceContainer()
+	 * @see eu.numberfour.n4js.ts.types.TTypedElement
+	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTTypedElement()
 	 * @generated
 	 */
-	int TYPE_REFERENCE_CONTAINER = 8;
+	int TTYPED_ELEMENT = 8;
 
 	/**
 	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
@@ -623,25 +623,25 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REFERENCE_CONTAINER__TYPE_REF = 0;
+	int TTYPED_ELEMENT__TYPE_REF = 0;
 
 	/**
-	 * The number of structural features of the '<em>Type Reference Container</em>' class.
+	 * The number of structural features of the '<em>TTyped Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REFERENCE_CONTAINER_FEATURE_COUNT = 1;
+	int TTYPED_ELEMENT_FEATURE_COUNT = 1;
 
 	/**
-	 * The number of operations of the '<em>Type Reference Container</em>' class.
+	 * The number of operations of the '<em>TTyped Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REFERENCE_CONTAINER_OPERATION_COUNT = 0;
+	int TTYPED_ELEMENT_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TAnnotationTypeRefArgumentImpl <em>TAnnotation Type Ref Argument</em>}' class.
@@ -11569,25 +11569,25 @@ public interface TypesPackage extends EPackage {
 	EOperation getTAnnotationStringArgument__GetArgAsString();
 
 	/**
-	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.TypeReferenceContainer <em>Type Reference Container</em>}'.
+	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.TTypedElement <em>TTyped Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Type Reference Container</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TypeReferenceContainer
+	 * @return the meta object for class '<em>TTyped Element</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TTypedElement
 	 * @generated
 	 */
-	EClass getTypeReferenceContainer();
+	EClass getTTypedElement();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.types.TypeReferenceContainer#getTypeRef <em>Type Ref</em>}'.
+	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.types.TTypedElement#getTypeRef <em>Type Ref</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Type Ref</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TypeReferenceContainer#getTypeRef()
-	 * @see #getTypeReferenceContainer()
+	 * @see eu.numberfour.n4js.ts.types.TTypedElement#getTypeRef()
+	 * @see #getTTypedElement()
 	 * @generated
 	 */
-	EReference getTypeReferenceContainer_TypeRef();
+	EReference getTTypedElement_TypeRef();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.TAnnotationTypeRefArgument <em>TAnnotation Type Ref Argument</em>}'.
@@ -14180,14 +14180,14 @@ public interface TypesPackage extends EPackage {
 		EOperation TANNOTATION_STRING_ARGUMENT___GET_ARG_AS_STRING = eINSTANCE.getTAnnotationStringArgument__GetArgAsString();
 
 		/**
-		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.TypeReferenceContainer <em>Type Reference Container</em>}' class.
+		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.TTypedElement <em>TTyped Element</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see eu.numberfour.n4js.ts.types.TypeReferenceContainer
-		 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTypeReferenceContainer()
+		 * @see eu.numberfour.n4js.ts.types.TTypedElement
+		 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTTypedElement()
 		 * @generated
 		 */
-		EClass TYPE_REFERENCE_CONTAINER = eINSTANCE.getTypeReferenceContainer();
+		EClass TTYPED_ELEMENT = eINSTANCE.getTTypedElement();
 
 		/**
 		 * The meta object literal for the '<em><b>Type Ref</b></em>' containment reference feature.
@@ -14195,7 +14195,7 @@ public interface TypesPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TYPE_REFERENCE_CONTAINER__TYPE_REF = eINSTANCE.getTypeReferenceContainer_TypeRef();
+		EReference TTYPED_ELEMENT__TYPE_REF = eINSTANCE.getTTypedElement_TypeRef();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.impl.TAnnotationTypeRefArgumentImpl <em>TAnnotation Type Ref Argument</em>}' class.

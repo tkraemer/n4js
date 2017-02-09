@@ -246,11 +246,11 @@ class  TAnnotationStringArgument extends TAnnotationArgument {
 	}
 }
 
-interface TypeReferenceContainer {
+interface TTypedElement {
 	contains TypeRef typeRef
 }
 
-class TAnnotationTypeRefArgument extends TAnnotationArgument, TypeReferenceContainer {
+class TAnnotationTypeRefArgument extends TAnnotationArgument, TTypedElement {
 	op String getArgAsString() {
 		return typeRef.typeRefAsString
 	}
@@ -1261,7 +1261,7 @@ class TMethod extends TFunction, TMemberWithAccessModifier {
 class TStructMethod extends TMethod, TStructMember {
 }
 
-class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRelatedTElement, TypeReferenceContainer {
+class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRelatedTElement, TTypedElement {
 	boolean variadic
 	/*
 	 * If and only if the TFormalParameter is used as an AST node, this property holds the initializer
@@ -1368,7 +1368,7 @@ class TAnonymousFormalParameter extends TFormalParameter {
 /*
  * Field of a class, optionally complemented by getter(s) and setter(s).
  */
-class TField extends TMemberWithAccessModifier, TypeReferenceContainer {
+class TField extends TMemberWithAccessModifier, TTypedElement {
 	boolean const
 	boolean hasExpression
 
@@ -1539,7 +1539,7 @@ abstract class SyntaxRelatedTElement {
  * to Types (such as TClass, TInterface, TFunction). It references the variable declaration of the
  * export declaration (via SyntaxRelatedTElement's astElement).
  */
-class TVariable extends TExportableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement, TypeReferenceContainer {
+class TVariable extends TExportableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement, TTypedElement {
 	boolean const
 	boolean external
 

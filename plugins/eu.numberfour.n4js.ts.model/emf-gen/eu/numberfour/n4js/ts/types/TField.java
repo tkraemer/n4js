@@ -29,7 +29,7 @@ package eu.numberfour.n4js.ts.types;
  * @model
  * @generated
  */
-public interface TField extends TMemberWithAccessModifier, TypeReferenceContainer {
+public interface TField extends TMemberWithAccessModifier, TTypedElement {
 	/**
 	 * Returns the value of the '<em><b>Const</b></em>' attribute.
 	 * <!-- begin-user-doc -->

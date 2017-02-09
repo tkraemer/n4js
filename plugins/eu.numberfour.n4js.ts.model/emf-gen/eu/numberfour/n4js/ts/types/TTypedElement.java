@@ -13,21 +13,21 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Type Reference Container</b></em>'.
+ * A representation of the model object '<em><b>TTyped Element</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.types.TypeReferenceContainer#getTypeRef <em>Type Ref</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TTypedElement#getTypeRef <em>Type Ref</em>}</li>
  * </ul>
  *
- * @see eu.numberfour.n4js.ts.types.TypesPackage#getTypeReferenceContainer()
+ * @see eu.numberfour.n4js.ts.types.TypesPackage#getTTypedElement()
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface TypeReferenceContainer extends EObject {
+public interface TTypedElement extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -38,14 +38,14 @@ public interface TypeReferenceContainer extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type Ref</em>' containment reference.
 	 * @see #setTypeRef(TypeRef)
-	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTypeReferenceContainer_TypeRef()
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTTypedElement_TypeRef()
 	 * @model containment="true"
 	 * @generated
 	 */
 	TypeRef getTypeRef();
 
 	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TypeReferenceContainer#getTypeRef <em>Type Ref</em>}' containment reference.
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TTypedElement#getTypeRef <em>Type Ref</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type Ref</em>' containment reference.
@@ -54,4 +54,4 @@ public interface TypeReferenceContainer extends EObject {
 	 */
 	void setTypeRef(TypeRef value);
 
-} // TypeReferenceContainer
+} // TTypedElement

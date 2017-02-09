@@ -10,7 +10,7 @@ package eu.numberfour.n4js.ts.types.impl;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.TAnnotationTypeRefArgument;
-import eu.numberfour.n4js.ts.types.TypeReferenceContainer;
+import eu.numberfour.n4js.ts.types.TTypedElement;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
 import java.lang.reflect.InvocationTargetException;
@@ -200,9 +200,9 @@ public class TAnnotationTypeRefArgumentImpl extends TAnnotationArgumentImpl impl
 	 */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == TypeReferenceContainer.class) {
+		if (baseClass == TTypedElement.class) {
 			switch (derivedFeatureID) {
-				case TypesPackage.TANNOTATION_TYPE_REF_ARGUMENT__TYPE_REF: return TypesPackage.TYPE_REFERENCE_CONTAINER__TYPE_REF;
+				case TypesPackage.TANNOTATION_TYPE_REF_ARGUMENT__TYPE_REF: return TypesPackage.TTYPED_ELEMENT__TYPE_REF;
 				default: return -1;
 			}
 		}
@@ -216,9 +216,9 @@ public class TAnnotationTypeRefArgumentImpl extends TAnnotationArgumentImpl impl
 	 */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == TypeReferenceContainer.class) {
+		if (baseClass == TTypedElement.class) {
 			switch (baseFeatureID) {
-				case TypesPackage.TYPE_REFERENCE_CONTAINER__TYPE_REF: return TypesPackage.TANNOTATION_TYPE_REF_ARGUMENT__TYPE_REF;
+				case TypesPackage.TTYPED_ELEMENT__TYPE_REF: return TypesPackage.TANNOTATION_TYPE_REF_ARGUMENT__TYPE_REF;
 				default: return -1;
 			}
 		}

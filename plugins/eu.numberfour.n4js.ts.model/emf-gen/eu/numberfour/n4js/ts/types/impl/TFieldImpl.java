@@ -12,7 +12,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TMember;
-import eu.numberfour.n4js.ts.types.TypeReferenceContainer;
+import eu.numberfour.n4js.ts.types.TTypedElement;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.ts.types.UndefModifier;
 
@@ -362,9 +362,9 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	 */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == TypeReferenceContainer.class) {
+		if (baseClass == TTypedElement.class) {
 			switch (derivedFeatureID) {
-				case TypesPackage.TFIELD__TYPE_REF: return TypesPackage.TYPE_REFERENCE_CONTAINER__TYPE_REF;
+				case TypesPackage.TFIELD__TYPE_REF: return TypesPackage.TTYPED_ELEMENT__TYPE_REF;
 				default: return -1;
 			}
 		}
@@ -378,9 +378,9 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	 */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == TypeReferenceContainer.class) {
+		if (baseClass == TTypedElement.class) {
 			switch (baseFeatureID) {
-				case TypesPackage.TYPE_REFERENCE_CONTAINER__TYPE_REF: return TypesPackage.TFIELD__TYPE_REF;
+				case TypesPackage.TTYPED_ELEMENT__TYPE_REF: return TypesPackage.TFIELD__TYPE_REF;
 				default: return -1;
 			}
 		}
@@ -405,7 +405,7 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
-		if (baseClass == TypeReferenceContainer.class) {
+		if (baseClass == TTypedElement.class) {
 			switch (baseOperationID) {
 				default: return -1;
 			}

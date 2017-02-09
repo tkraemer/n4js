@@ -31,7 +31,7 @@ package eu.numberfour.n4js.ts.types;
  * @model
  * @generated
  */
-public interface TVariable extends TExportableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement, TypeReferenceContainer {
+public interface TVariable extends TExportableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement, TTypedElement {
 	/**
 	 * Returns the value of the '<em><b>Const</b></em>' attribute.
 	 * <!-- begin-user-doc -->

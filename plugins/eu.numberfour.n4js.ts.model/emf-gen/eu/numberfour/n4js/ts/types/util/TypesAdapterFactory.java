@@ -107,8 +107,8 @@ public class TypesAdapterFactory extends AdapterFactoryImpl {
 				return createTAnnotationStringArgumentAdapter();
 			}
 			@Override
-			public Adapter caseTypeReferenceContainer(TypeReferenceContainer object) {
-				return createTypeReferenceContainerAdapter();
+			public Adapter caseTTypedElement(TTypedElement object) {
+				return createTTypedElementAdapter();
 			}
 			@Override
 			public Adapter caseTAnnotationTypeRefArgument(TAnnotationTypeRefArgument object) {
@@ -415,16 +415,16 @@ public class TypesAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.types.TypeReferenceContainer <em>Type Reference Container</em>}'.
+	 * Creates a new adapter for an object of class '{@link eu.numberfour.n4js.ts.types.TTypedElement <em>TTyped Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see eu.numberfour.n4js.ts.types.TypeReferenceContainer
+	 * @see eu.numberfour.n4js.ts.types.TTypedElement
 	 * @generated
 	 */
-	public Adapter createTypeReferenceContainerAdapter() {
+	public Adapter createTTypedElementAdapter() {
 		return null;
 	}
 
