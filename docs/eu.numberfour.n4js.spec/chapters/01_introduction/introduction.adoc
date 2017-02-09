@@ -74,8 +74,8 @@ We use the common notation for rules such as type inference rules footnote:[A br
 $premises$ is the rule’s premises (e.g., the expression to be inferred), $conclusion$ the result of the rule.
 $rule name$ is an optional condition which may be omitted.
 
-Both parts of the rule may contain multiple expressions, which are concatenated via and.
-// TODO missing notation here ^
+Both parts of the rule may contain multiple expressions, which are concatenated via 'and'.
+
 For example, the following
 
 [math]
@@ -86,7 +86,7 @@ For example, the following
 can be read as
 
 [quote]
-if $P_1$, $P_2$, and $P_3$ are all true, then $C$ is true as well.
+if $P_1$, $P_2$, _and_ $P_3$ are all true, then $C$ is true as well.
 
 --
 

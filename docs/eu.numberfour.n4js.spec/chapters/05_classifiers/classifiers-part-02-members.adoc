@@ -1020,14 +1020,9 @@ class `C`, the following constraints must hold:
 
 1.  A required data field must not define an initializer: +
 $a.required \to a.init=null$
-2.  There must be no other member with the same name of a data field
-`f`. In particular, there must be no getter or setter defined with the same name:
-+
-[math]
-++++
-\spc \forall\ m \in f.owner.members : m \neq f \to m.name \neq f.name
-++++
-
+2.  There must be no other member with the same name of a data field `f`.
+In particular, there must be no getter or setter defined with the same name: +
+$\spc \forall\ m \in f.owner.members : m \neq f \to m.name \neq f.name$
 
 If a subclass should set a different default value, this has to be done  in the constructor of the subclass.
 
@@ -1043,20 +1038,13 @@ The type of a field is the type of its declaration:
 \infer{\tee f: \tee d}{}
 ++++
 
-The type of a field declaration is either the declared type or the
-inferred type of the initializer expression:
+The type of a field declaration is either the declared type or the inferred type of the initializer expression:
 
 [math]
 ++++
 \beginalign
 \spc \infer{\tee d: T}{d.declaredType \neq \NULL \spc T = d.declaredType} \\
-\spc \infer{\tee d: T}{d.declaredType = \NULL \spc d.expression \neq \NULL}
-\endalign
-++++
-
-[math]
-++++
-\beginalign
+\spc \infer{\tee d: T}{d.declaredType = \NULL \spc d.expression \neq \NULL} \\
 \spc E = \tee d.expression \spc E \not\in \{\type{null, undefined}\} \spc T = E} \\
 \spc \infer{\tee d: \type{any}}{else}
 \endalign
@@ -1097,11 +1085,11 @@ $f.const \Rightarrow \lnot f.writeable$
 --
 For a data field `f` marked as `@Final`, the following constraints must hold:
 
-.  A final data field must not be modified with `const` or `static`:
+.  A final data field must not be modified with `const` or `static`: +
 $f.final \Rightarrow \lnot f.const \land \lnot f.declaredStatic$
 +
-.  A final data field is not writeable:
-$f.final \Rightarrow \lnot f.writeable$
+.  A final data field is not writeable: +
+$f.final \Rightarrow \lnot f.writeable$ +
 A final field may, however, be set in the constructor.
 See <<Req-IDE-68>> for details.
 .  A final data field must be either initialized by an initializer expression or in the constructor.
@@ -1212,11 +1200,7 @@ False for getters and true for setters.
 
 ==== Semantics [[field-accessors-semantics]]
 
-There must be no field or method with the same name as a field accessor
-(follows from <<Req-IDE-52>>). In addition, the following
-constraints must hold:
-
-
+There must be no field or method with the same name as a field accessor (follows from <<Req-IDE-52>>). In addition, the following constraints must hold:
 
 .Field Accessors
 [req,id=IDE-64,version=1]

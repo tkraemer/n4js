@@ -755,7 +755,7 @@ The _variance_ of a parameterized type states how its subtyping relates to its t
 For example, given a parameterized type `G<T>` and plain types `A` and `B`, we know
 
 * if `G` is *covariant* w.r.t. its parameter `T`, then
-+
+
 [math]
 ++++
 \lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G<B>} \subtype \lstnfjs{G<A>}

@@ -621,12 +621,10 @@ for the erasure of type _T_.footnote:[The notation $|T|$ used in cite:[Gosling12
 .Parameterized Type
 [def]
 --
-A parameterized type reference $R$ defines a parameterized type _T_, in which all type parameters of $R.declaredTpe$ are substituted with the actual values of the type arguments.
+A parameterized type reference $R$ defines a parameterized type _T_, in which all type parameters of $R.declaredType$ are substituted with the actual values of the type arguments.
 We call the type $T^0$, in which all type parameters of $R.declaredType$ are ignored, the _raw type_ or _erasure_ of _T_.
 
 We define for types in general:
-
-// TODO replace ^o^ with correct math symbol
 
 * The erasure $G$^o^ of a parameterized type $G<T_1, \dots, T_n>$ is simply $G$.
 * The erasure of a type variable is the erasure of its upper bound.
@@ -701,7 +699,6 @@ We define type conformance for non-primitive type references as follows:
 \hspace{1em} \land {T_i.lowerBound :> S_i.lowerBound}))}
 ++++
 
-//TODO - fix math here
 --
 
 .Subtyping with parameterized types
@@ -1197,12 +1194,15 @@ They are solely defined for enabling additional validation.
 A path selector is defined as a string literal that has to conform to the path selector grammar cite:[PathSelector].
 The context type is then used to perform a semantic
 // TODO: The path selector grammar along with base classes using these selectors are not part of the public version yet. Path selectors are not yet validated at compile time.
-* `i18nKey` is a string which refers to an internationalization key. The `i18nKey` type is used to reference resource keys specified in resource files.
-In a project $p$, the `i18nKey` type defines the transitive set of all resource keys accessible from $p$. Since resource keys are specified as strings,
-this means that the `i18nKey` type defines a subset of all string literals that can be assigned to a variable of type `i18nKey` in the current project.
+* `i18nKey` is a string which refers to an internationalization key.
+The `i18nKey` type is used to reference resource keys specified in resource files.
+In a project $p$, the `i18nKey` type defines the transitive set of all resource keys accessible from $p$.
+Since resource keys are specified as strings, this means that the `i18nKey` type defines a subset of all string literals that can be assigned to a variable of type `i18nKey` in the current project.
 That means that an assignment of a string literal to a variable of type `i18nKey` is only valid if that string literal is contained in the set defined by `i18nKey`.
 Resource keys are declared in the properties files of a project and all resource keys from a project are accessible to any project depending on it.
-// TODO: I18nkeys are not yet validated
+
+[.todo]
+I18nkeys are not yet validated
 
 ==== Semantics [[pathselector-semantics]]
 
@@ -1217,7 +1217,7 @@ Thus, they are completely interchangeable with string types:
 \infer{\type{pathSelector&lt;T&gt;} <: \type{string}}{}   && \infer{\type{string} <: \type{pathSelector&gt;T&gt;}}{}
 \endalign
 ++++
-//TODO - check math here, is something missing?
+
 
 As special literals for these N4JS types do not exist, the type has to be explicitly specified in order to enable the additional validation.
 Note that this validation cannot be applied for more complicated expressions with parts which cannot be evaluated at compile time.
@@ -1394,11 +1394,13 @@ It is a subtype of `Object`.
 
 The type `N4Class` is used for extended reflection in N4JS.
 
-// TODO: Add further docs for this type
+[.todo]
+Add further docs for this type
 
 === IterableN
 
-// TODO: work in progress
+[.todo]
+Work in progress.
 
 Currently there are built-in types `Iterable2<T1,T2>`...`Iterable9<T1,...,T9>`.
 They are mainly intended for type system support of array destructuring literals.
@@ -1544,7 +1546,7 @@ If a union type contains only one element, it is reduced to the element:
 ++++
 
 * Simplification of union types of union types:
-A union type $U$ containing another union types $V$ is reduced to a single union type $W$, with
+A union type $U$ containing another union type $V$ is reduced to a single union type $W$, with
 $W.typeRefs = U.typeRefs \cup V.typeRefs$:
 +
 [math]
@@ -1562,9 +1564,6 @@ Since undefined is the bottom type, and null is kind of a second button type, th
 \infer{\union{T_1,\dots,T_{k-1},null},T_k,\dots,T_n}{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}}
 \endalign
 ++++
-// TODO - fix expression above
-
-//`
 
 NOTE: Simplification rules for union types with one element are applied first.
 
@@ -1575,8 +1574,6 @@ union:
 ++++
 \infer{\union{\tsStr T_1, \ldots, \tsStr T_n}}{\tsStr \union{T_1, \dots, T_n}}
 ++++
-
-//TODO check if expression above is complete
 
 --
 
@@ -1592,7 +1589,7 @@ The types are equivalent, however: $A <:= U$ and $U <:= A$.footnote:[This is dif
 --
 Let A, B, and C be defined as in the chapter beginning ($C <: B <: A$)
 
-The following subtyping relations with union types are to be evaluated as follows footnote:[See Example <<ex:class-hierarchy>> for class definitions.]:
+The following subtyping relations with union types are to be evaluated as follows: footnote:[See Example <<ex:class-hierarchy>> for class definitions.]
 
 [source,n4js]
 ----
@@ -1859,7 +1856,7 @@ We also implicitly use this representation in this specification.
 Let A, B, and C be defined as in the chapter beginning ($C <: B <: A$)
 
 The following subtyping relations with intersection types are to be
-evaluated as follows footnote:[See Example <<ex:class-hierarchy>> for class definitions.]:
+evaluated as follows: footnote:[See Example <<ex:class-hierarchy>> for class definitions.]
 
 [source,xtext]
 ----
@@ -1892,13 +1889,10 @@ That is:
 
 [math]
 ++++
-\infer{\intersection{T_1,\dots,T_n} \join S }{ T_1 \join S \join \dots \join T_n \join S}
-++++
-
-[math]
-++++
-\infer{\intersection{T_1,\dots,T_n} \join \intersection{S_1,\dots,S_m} }{T_1 \join S_1,\dots,T_1 \join S_m,
-\dots,T_n \join S_1,\dots,T_n \join S_m}
+\beginalign
+\infer{\intersection{T_1,\dots,T_n} \join S }{ T_1 \join S \join \dots \join T_n \join S} \\
+\infer{\intersection{T_1,\dots,T_n} \join \intersection{S_1,\dots,S_m} }{T_1 \join S_1,\dots,T_1 \join S_m,\dots,T_n \join S_1,\dots,T_n \join S_m}
+\endalign
 ++++
 
 --
@@ -1911,14 +1905,10 @@ That is:
 
 [math]
 ++++
-\infer{\intersection{T_1,\dots,T_n} \meet S}{\intersection{T_1 \meet S,\dots,T_n \meet S}}
-++++
-
-[math]
-++++
-\infer{\intersection{T_1,\dots,T_n} \meet \intersection{S_1,\dots,S_m}}{\intersection{T_1\meet S_1,\dots,T_1\meet S_m,
-\quad \dots,
-\quad T_n\meet S_1,\dots,T_n\meet S_m}}
+\beginalign
+\infer{\intersection{T_1,\dots,T_n} \meet S}{\intersection{T_1 \meet S,\dots,T_n \meet S}} \\
+\infer{\intersection{T_1,\dots,T_n} \meet \intersection{S_1,\dots,S_m}}{\intersection{T_1\meet S_1,\dots,T_1\meet S_m,\quad \dots, \quad T_n\meet S_1,\dots,T_n\meet S_m}}
+\endalign
 ++++
 
 
@@ -1935,11 +1925,10 @@ The upper and lower bound of an intersection type $I$ is a union type $I'$ conta
 
 [math]
 ++++
-upper(\intersection{T_1, \dots, T_n}) := \intersection{upper(T_1), \dots, upper(T_1)}
-++++
-[math]
-++++
+\beginalign
+upper(\intersection{T_1, \dots, T_n}) := \intersection{upper(T_1), \dots, upper(T_1)} \\
 lower(\intersection{T_1, \dots, T_n}) := \intersection{lower(T_1), \dots, lower(T_1)} \\
+\endalign
 ++++
 --
 
@@ -1983,7 +1972,7 @@ Intersection types shall not contain class or interface types which are a supert
 === Composed Types in Wildcards
 
 Composed types may appear as the bound of a wildcard.
-The following constraints apply footnote:[see "Covariance and contravariance with unions and intersections" at http://ceylon-lang.org/documentation/1.1/tour/generics/]:
+The following constraints apply: footnote:[see "Covariance and contravariance with unions and intersections" at http://ceylon-lang.org/documentation/1.1/tour/generics/]
 
 .Composed Types as Bound of a Wildcard
 [req,id=IDE-34,version=1]
@@ -2207,7 +2196,7 @@ Remarks on intersection type’s methods:
 
 A class definition as described in <<Classes>> declares types.
 Often, it is necessary to access these types directly, for example to access staticmembers or for dynamic construction of instances.
-These two use cases are actually slightly different and N4JS provides two different types, one for each use case: constructor and classifier type.footnote:[The classifier type is, in fact, the `type type` or `metatype` of atype. We use the term classifier type in the specification to avoid the bogus `type type` terminology.]
+These two use cases are actually slightly different and N4JS provides two different types, one for each use case: constructor and classifier type.footnote:[The classifier type is, in fact, the `type type` or `metatype` of a type. We use the term classifier type in the specification to avoid the bogus `type type` terminology.]
 The constructor is basically the classifier type with the additional possibility to call it via `new` in order to create new instances of the declared type.
 
 Both `meta` types are different from Java’s type `Class<T>`, as the latter has a defined set of members, while the N4JS metatypes will have members according to a class definition.
@@ -2648,15 +2637,13 @@ This leads to the following typing rules:
 .Enum Type Rules
 [req,id=IDE-38,version=1]
 --
-For a given enumeration declaration $E$ with literals $L$, the following
-type rules are defined:
+For a given enumeration declaration $E$ with literals $L$, the following type rules are defined:
 
-// TODO check constraints in this section
 1. Every enumeration $E$ is a subtype of the base type `N4Enum`:
 +
 [math]
 ++++
-\inferSup{\tee type{E} \subtype type{N4Enum}}{}
+\inferSup{\tee type\{E\} \subtype type\{N4Enum\}}{}
 ++++
 2.  Every literal $L$ of an enumeration $E$ is
 of the type of the enumeration:
@@ -2747,6 +2734,7 @@ Still, enums could be used similarly to objects:
 [req,id=IDE-39,version=1]
 --
 * $\forall i,j: literals[i].name = literals[j].name \iff i = j$
+
 Literal names have to be unique.
 --
 
@@ -2791,9 +2779,7 @@ In current web standards cite:[W3C:Steen:14:XL], definitions of enumerations are
 While the webIDL-definition assembles a set of unique string literals as a named enum-entity, the language binding to ECMAScript refers to the usage of the members of these enumerations only.
 Hence, if an element of an enumeration is stored in a variable or field, passed as a parameter into a method or function or given back as a result, the actual type in JavaScript will be `string`.
 To provide the N4JS user with some validations regarding the validity of a statement at compile time, a special kind of subtypes of `string` are introduced: the string-based enum using the `@StringBased` annotation.
-(See also other string-based types like `pathSelector<T>` and `i18nKey` in <<_primitive-pathselector-and-i18nkey>>.)
-
-// TODO check for typename<T>
+(See also other string-based types like `typename<T>` `pathSelector<T>` and `i18nKey` in <<_primitive-pathselector-and-i18nkey>>.)
 
 String-based enums do not have any kind of runtime representation; instead, the transpiler will replace each reference to a literal of a string-based enum by a corresponding string literal in the output code.
 Furthermore, no meta-information is available for string-based enums, i.e. the `n4type` property is not available.
@@ -2805,8 +2791,6 @@ In case of string-based enums, however, there won’t be a getter used at runtim
 --
 
 For a string-based enum declaration $E_S$ with literals $L_S$ the following type rules are defined:
-
-// TODO - original math below = \inferSup{ \tee \type{type\{E_S\}} \subtype \type{N4StringBasedEnum} }{}
 
 . Every string-based enumeration $E_S$ is a subtype of the base type `N4StringBasedEnum`:
 +
