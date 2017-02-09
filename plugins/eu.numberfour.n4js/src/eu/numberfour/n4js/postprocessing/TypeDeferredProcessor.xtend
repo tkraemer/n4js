@@ -37,6 +37,8 @@ import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.SetterDeclaration
 import eu.numberfour.n4js.ts.types.TypeReferenceContainer
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 
 /**
  * Processor for handling {@link DeferredTypeRef}s, <b>except</b> those related to poly expressions, which are handled
@@ -99,22 +101,12 @@ package class TypeDeferredProcessor extends AbstractProcessor {
 		// DeferredTypeRefs related to poly expressions should not be handled here (poly computer responsible for this!)
 		switch (obj) {
 			ExportedVariableDeclaration: {
-				if (obj.declaredTypeRef === null) {
-					val tVariable = obj.definedVariable;
-					if (tVariable !== null) { // note: tVariable===null happens if obj.name===null (see types builder)
-						assertTrueIfRigid(cache, "return type of TVariable in TModule should be a DeferredTypeRef",
-							tVariable.typeRef instanceof DeferredTypeRef);
-						val variableTypeRef = askXsemanticsForType(G, null, obj).value; // delegate to Xsemantics rule typeVariableDeclaration
-						val variableTypeRefSane = tsh.sanitizeTypeOfVariableFieldProperty(G, variableTypeRef);
-						EcoreUtilN4.doWithDeliver(false, [
-							tVariable.typeRef = TypeUtils.copy(variableTypeRefSane);
-						], tVariable);
-					}
-				}
+				val tVariable = obj.definedVariable;
+				setTypeRef(obj, tVariable, false, G, cache);
 			}
 			N4FieldDeclaration: {
 				val tField = obj.definedField;
-				setTypeRef(obj, tField, G, cache);
+				setTypeRef(obj, tField, true, G, cache);
 			}
 			FormalParameter: {
 				val parent = obj.eContainer;
@@ -125,7 +117,7 @@ package class TypeDeferredProcessor extends AbstractProcessor {
 					FunctionDefinition: {
 						val tFPar = obj.definedTypeElement;
 						if (tFPar.typeRef instanceof DeferredTypeRef) {
-							setTypeRef(obj, tFPar, G, cache);
+							setTypeRef(obj, tFPar, true, G, cache);
 						}
 					}
 					SetterDeclaration: {
@@ -138,17 +130,26 @@ package class TypeDeferredProcessor extends AbstractProcessor {
 		}
 	}
 	
-	private def <T extends TypableElement & TypedElement> void setTypeRef(T typedElem, TypeReferenceContainer trc, RuleEnvironment G, ASTMetaInfoCache cache) {
+	private def <T extends TypableElement & TypedElement> void setTypeRef(T typedElem, TypeReferenceContainer trc, boolean useContext,
+		RuleEnvironment G, ASTMetaInfoCache cache
+	) {
 		if (typedElem.declaredTypeRef === null) {
-			if (trc !== null) { // note: tFPar===null happens if obj.name===null (see types builder)
+			if (trc !== null) { // note: trc===null happens if obj.name===null (see types builder)
 				assertTrueIfRigid(cache, "return type of "+ typedElem.class.name +" in TModule should be a DeferredTypeRef",
 					trc.typeRef instanceof DeferredTypeRef);
-				val context = if (trc.eContainer instanceof ContainerType<?>) TypeUtils.createTypeRef(
-						trc.eContainer as ContainerType<?>) else null;
-				val G_withContext = ts.createRuleEnvironmentForContext(context, G.contextResource);
-				val fieldTypeRef = askXsemanticsForType(G_withContext, null, typedElem).value; // delegate to Xsemantics rule typeN4FieldDeclaration
-				val fieldTypeRefSubst = ts.substTypeVariables(G_withContext, fieldTypeRef).value;
-				val fieldTypeRefSane = tsh.sanitizeTypeOfVariableFieldProperty(G, fieldTypeRefSubst);
+				
+				var RuleEnvironment G2 = G;
+				if (useContext) {
+					var ParameterizedTypeRef context = null;
+					if (trc.eContainer instanceof ContainerType<?>) 
+						context = TypeUtils.createTypeRef(trc.eContainer as ContainerType<?>);
+					G2 = ts.createRuleEnvironmentForContext(context, G.contextResource);
+				}
+				var TypeArgument fieldTypeRef = askXsemanticsForType(G2, null, typedElem).value; // delegate to Xsemantics rule typeN4FieldDeclaration
+				if (useContext) {
+					fieldTypeRef = ts.substTypeVariables(G2, fieldTypeRef).value;
+				}
+				val fieldTypeRefSane = tsh.sanitizeTypeOfVariableFieldProperty(G, fieldTypeRef);
 				EcoreUtilN4.doWithDeliver(false, [
 					trc.typeRef = TypeUtils.copy(fieldTypeRefSane);
 				], trc);
