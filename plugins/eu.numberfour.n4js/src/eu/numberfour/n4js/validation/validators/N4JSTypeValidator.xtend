@@ -62,6 +62,7 @@ import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TSetter
 import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.ts.types.VoidType
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
@@ -202,6 +203,9 @@ class N4JSTypeValidator extends AbstractN4JSDeclarativeValidator {
 				) || (
 					typeRef.eContainer instanceof FunctionTypeExpression
 					&& typeRef.eContainmentFeature===TypeRefsPackage.eINSTANCE.functionTypeExpression_ReturnTypeRef
+				) || (
+					typeRef.eContainer instanceof TFunction
+					&& typeRef.eContainmentFeature===TypesPackage.eINSTANCE.TFunction_ReturnTypeRef
 				) || (
 					// void is not truly allowed as the return type of a getter, but there's a separate validation for
 					// that; so treat this case as legal here:
