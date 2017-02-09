@@ -1510,9 +1510,11 @@ $overrideCompatible(M, S)$
 +
 [math]
 ++++
+\beginalign
 \spc \mu(S)=\type{Field} \land \mu(M)={Accessor} \\
 \spc \Rightarrow \exists M'\in C.member: \\
 \spc \hspace{4em} overrideCompatible(M',S) \land \{\mu(M),\mu(M')\}=\types{Getter,Setter}
+\endalign
 ++++
 4.  `M` must be declared as override: +
 `M.override`
@@ -1531,6 +1533,7 @@ The same is true for other combination of accessors and fields.
 === Implementation of Members
 task:IDE-12[] task:IDE-158[] task:IDE-700[] task:IDE-1236[]
 
+[[def:Interface_and_Class_Member_Sets]]
 .Interface and Class Member Sets
 [def]
 --
@@ -1572,7 +1575,7 @@ It is not, therefore, possible to consume a field defined in two implemented int
 .Consumption of Interface Members
 [req,id=IDE-73,version=1]
 --
-Given a classifier `C` footnote:[`C` could either be a class or an interface.], and interfaces $I_1,..., I_n$ implemented (or extended) by `C`, and sets $M_C$ and $M_I$ as defined in .
+Given a classifier `C` footnote:[`C` could either be a class or an interface.], and interfaces $I_1,..., I_n$ implemented (or extended) by `C`, and sets $M_C$ and $M_I$ as defined in <<def:Interface_and_Class_Member_Sets>>.
 // TODO add ref to def:Interface_and_Class_Member_Sets above
 A non-static member `M` defined in any interface $I_i$ is merged into the consumer (`C`), if for all other (possible) members $M'$ of `C`
 
@@ -1611,8 +1614,10 @@ the following constraints hold:
 +
 [math]
 ++++
-\mu(M) \in \types{Method, Getter, Field} \land \mu(M') \neq \type{Setter}   \spc \Rightarrow \tee M \subtype M' \\
-\mu(M) \in \types{Setter, Field} \land \mu(M') \neq \type{Getter}           \spc \Rightarrow \tee M' \subtype M
+\beginalign
+\mu(M) \in \types{\{Method, Getter, Field\}} \land \mu(M') \neq \type{Setter}   \spc \Rightarrow \tee M \subtype M' \\
+\mu(M) \in \types{\{Setter, Field\}} \land \mu(M') \neq \type{Getter}           \spc \Rightarrow \tee M' \subtype M
+\endalign
 ++++
 
 --

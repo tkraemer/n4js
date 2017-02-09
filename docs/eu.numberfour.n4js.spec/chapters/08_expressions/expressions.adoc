@@ -219,7 +219,10 @@ The inferred type is always nominal.
 +
 [math]
 ++++
-\infer{\tee \lstnfbnf{"this"}: \tsNom T}{f=\lstnfbnf{"this"}.containingFunctionOrAccessor \\ f.hasAnnotation(\lstnfbnf{"@This"}) & T = f.annotation\lstnfjs{["@This"]}}\\
+\beginalign
+\infer{\tee \lstnfbnf{"this"}: \tsNom T}{f=\lstnfbnf{"this"}.containingFunctionOrAccessor \\
+f.hasAnnotation(\lstnfbnf{"@This"}) \spc T = f.annotation\lstnfjs{["@This"]}}\\
+\endalign
 ++++
 . [[this-keyword-constraint-2]] If the this keyword is used in some _instance_ method of a  classifier or in an _instance_ field initializer,`this` is bound to the `T` itself.
 If the this keyword is used in some _static_ method of a classifier `T` or in a _static_ field initializer, the prototype type (or constructor) of the classifier is used, that is `type[T]`.
@@ -229,7 +232,7 @@ Note that usually this is the `this` type in instance methods, and the `this` ty
 +
 [math]
 ++++
-\infer{\tee \lstnfbnf{"this"}: \tsNom T}{T=\lstnfbnf{"this"}.probableThisTarget & T\neq\NULL}\\
+\infer{\tee \lstnfbnf{"this"}: \tsNom T}{T=\lstnfbnf{"this"}.probableThisTarget \spc T\neq\NULL} \\
 ++++
 . task:IDE-185[] In all other cases: Non-strict mode:
 +
@@ -539,7 +542,7 @@ There are differences to numeric literals in Java:
 
 [cols="2m,2e,1m,2e,1m"]
 |===
-| 2+^| Java  2+^| JavaScript & N4JS
+| 2+^| Java  2+^| JavaScript  N4JS
 
 h|Literal  h| Value h| Type h| Value h| Type
 
@@ -604,7 +607,7 @@ The type of an array padding _p_ is inferred as follows:
 
 [math]
 ++++
-&\infer{\tee p: \type{undefined}}{} \\
+\infer{\tee p: \type{undefined}}{} \\
 ++++
 
 
@@ -613,7 +616,7 @@ Thus, the type of an array literal $a$ is inferred as follows:
 
 [math]
 ++++
-\infer{\tee(a): Array<T>}{\tee a.\seq{elements}: \seq{T_e} &  T = \bigcup \seq{T_e}}
+\infer{\tee(a): Array<T>}{\tee a.\seq{elements}: \seq{T_e}   T = \bigcup \seq{T_e}}
 ++++
 
 
@@ -788,9 +791,9 @@ For a given object literal $ol$ the following constraints must hold (cf. cite:[E
 [math]
 ++++
 \beginalign
-mode=\lenum{strict} \to & \forall pa \in ol.propertyAssignments, pa.isData:\\
-& \nexists pa' \in ol.propertyAssignments:\\
-& pa'.isAccessor \land pa'.name = pa.name
+mode=\lenum{strict} \to \spc \forall pa \in ol.propertyAssignments, pa.isData:\\
+\spc \nexists pa' \in ol.propertyAssignments:\\
+\spc pa'.isAccessor \land pa'.name = pa.name
 \endalign
 ++++
 
@@ -799,8 +802,8 @@ mode=\lenum{strict} \to & \forall pa \in ol.propertyAssignments, pa.isData:\\
 [math]
 ++++
 \beginalign
-\forall & pa \in ol.propertyAssignments, pa.isData : \\
-\nexists & pgsd \in ol.propertyAssignments : \\
+\forall \spc pa \in ol.propertyAssignments, pa.isData : \\
+\nexists \spc pgsd \in ol.propertyAssignments : \\
 \mu(pgsd) \neq\type{PropertyNameValuePair} \land pgsd.name = pa.name
 \endalign
 ++++
@@ -810,9 +813,9 @@ mode=\lenum{strict} \to & \forall pa \in ol.propertyAssignments, pa.isData:\\
 [math]
 ++++
 \beginalign
-\forall & pg \in ol.propertyAssignments, pg.isAccessor:\\
-\nexists & pg' \in ol.propertyAssignments\{pg\}: \\
-& \mu(pg')=\mu(pg) \land pg'.name = pg.name
+\forall \spc pg \in ol.propertyAssignments, pg.isAccessor:\\
+\nexists \spc pg' \in ol.propertyAssignments\{pg\}: \\
+\spc \mu(pg')=\mu(pg) \land pg'.name = pg.name
 \endalign
 ++++
 
@@ -829,8 +832,8 @@ That is to say that the inferred (but not declared) type of all assignments must
 [math]
 ++++
 \beginalign
-mode=\lenum{n4js} \to & \forall pa \in ol.propertyAssignments:\\
-& \mu(pa.name)=\type{N4JSIdentifier}
+mode=\lenum{n4js} \to \spc \forall pa \in ol.propertyAssignments:\\
+\spc \mu(pa.name)=\type{N4JSIdentifier}
 \endalign
 ++++
 
@@ -1006,15 +1009,15 @@ The constraints are basically similar.
 +
 [math]
 ++++
-& pae.isDotAccess \land \lnot R.dyn \to \\
-& \exists m \in pae.target.type.properties: m.name=pae.name
+\spc pae.isDotAccess \land \lnot R.dyn \to \\
+\spc \exists m \in pae.target.type.properties: m.name=pae.name
 ++++
 +
 2.  If dot notation is used and the referenced property exists, then the property must be accessible:
 +
 [math]
 ++++
-& pae.isDotAccess \land \lnot R.dyn \to\\
+\spc pae.isDotAccess \land \lnot R.dyn \to\\
 & (\exists m \in pae.target.type.properties : m.name=pae.name) \to  \alpha(pae, m)
 ++++
 +
@@ -1703,7 +1706,7 @@ The type returned by a bitwise shift expression is always `boolean`:
 
 [math]
 ++++
-&\infer{\tee\ (\lstnfbnf{Expression ('<<'|'>>'|'>>>')\ Expression}): \type{number}}{}  \\
+\spc\infer{\tee\ (\lstnfbnf{Expression ('<<'|'>>'|'>>>')\ Expression}): \type{number}}{}  \\
 ++++
 
 // TODO - check  \tag{\S 11.7.1/2}
@@ -1744,14 +1747,14 @@ the following constraints must hold:
 +
 [math]
 ++++
-&\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}
-        { \tee rhs: T & T\in \{\type{number,string,boolean}\}} \\
-&\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}
-        { \tee rhs: O & O \not\in \{\type{number,string,boolean}\} & T=\type{\union{number,string,boolean}}  } \\
-&\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ rhs: T}
-        { \tee lhs: T & T\in \{\type{number,string,boolean}\}} \\
-&\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ rhs: T}
-        { \tee lhs: O & O \not\in \{\type{number,string,boolean}\} & T=\type{\union{number,string,boolean}}  } \\
+\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}
+        { \tee rhs: T \spc T\in \{\type{number,string,boolean}\}} \\
+\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}
+        { \tee rhs: O \spc O \not\in \{\type{number,string,boolean}\} \spc T=\type{\union{number,string,boolean}}  } \\
+\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ rhs: T}
+        { \tee lhs: T \spc T\in \{\type{number,string,boolean}\}} \\
+\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ rhs: T}
+        { \tee lhs: O \spc O \not\in \{\type{number,string,boolean}\} \spc T=\type{\union{number,string,boolean}}  } \\
 ++++
 
 
@@ -1771,16 +1774,14 @@ In other words,
 \inferSup{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type{Class}}}{}
 ++++
 
-is contained in the the first type rule. task:IDE-652[]
-// TODO check for missing reference
-, an object type reference footnote:[Includes interfaces, since an interface type reference is a subtype of object type reference: $\type{type{Interface}} <: \type{type{Object}}$]
-or an enum type reference. task:IDE-681[] task:IDEBUG-631[]
+is contained in the the first type rule, an object type reference footnote:[Includes interfaces, since an interface type reference is a subtype of object type reference: $\type{type\{Interface\}} <: \type{type\{Object\}}$]
+or an enum type reference. task:IDE-681[] task:IDEBUG-631[] task:IDE-652[]
 
 [math]
 ++++
-&\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{Function}}{} \\
-&\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{Object\}}}{} \\
-&\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{N4Enum\}}}{}
+\spc\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{Function}}{} \\
+\spc\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{Object\}}}{} \\
+\spc\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{N4Enum\}}}{}
 ++++
 
 The type of a definition site structural classifier $C$ is not of type `C`.
@@ -1799,13 +1800,13 @@ For a given relational expression $e$ with $e.op = \lstnfjs{in}$, the following 
 +
 [math]
 ++++
-&\infer{\tee lhs\ \lstnfbnf{'in'}\  rhs\  \expectType\ rhs: \type{Object}}{}
+\spc\infer{\tee lhs\ \lstnfbnf{'in'}\  rhs\  \expectType\ rhs: \type{Object}}{}
 ++++
 2.  In N4JS mode, the left operand is restricted to be of type `string` or `number`:
 +
 [math]
 ++++
-&\infer{\tee  lhs\ \lstnfbnf{'in'}\ rhs\  \expectType\ lhs: \type{\union{string,number}}}{}
+\spc\infer{\tee  lhs\ \lstnfbnf{'in'}\ rhs\  \expectType\ lhs: \type{\union{string,number}}}{}
 ++++
 
 --
@@ -1858,7 +1859,7 @@ The type of a relational expression always is `boolean`;
 
 [math]
 ++++
-&\infer{\tee lhs\ \lstnfbnf{('<'|'<='|'>'|'>='|'instanceof'|'in')}\ rhs\ : \type{boolean}}{}
+\spc\infer{\tee lhs\ \lstnfbnf{('<'|'<='|'>'|'>='|'instanceof'|'in')}\ rhs\ : \type{boolean}}{}
 ++++
 
 
@@ -1922,7 +1923,7 @@ The inferred type of an equality expression always is `boolean`.
 
 [math]
 ++++
-&\infer{\tee lhs\ \lstnfbnf{('=='|'!='|'==='|'!==')}\ rhs\ : \type{boolean}}{}
+\spc\infer{\tee lhs\ \lstnfbnf{('=='|'!='|'==='|'!==')}\ rhs\ : \type{boolean}}{}
 ++++
 
 === Binary Bitwise Expression
@@ -1970,9 +1971,11 @@ For a given bitwise bitwise expression $e$ the following constraints must hold i
 
 --
 
+task:IDE-244[] task:IDE-345[]
+
 [discrete]
 ==== Type Inference [[type-inference-14]]
-task:IDE-244[] task:IDE-345[]
+
 
 The type returned by a binary bitwise expression is always $number$:
 
@@ -2025,7 +2028,7 @@ either or `undefined`, which is not allowed in N4JS mode.
 
 [math]
 ++++
-\infer{\tee lhs \lstnfbnf{'&&'|'||'} rhs : union \{ \tee lhs, \tee rhs \}}{}
+\infer{\tee lhs \lstnfbnf{'\&\&'|'||'} rhs : union \{ \tee lhs, \tee rhs \}}{}
 ++++
 
 === Conditional Expression
@@ -2160,7 +2163,7 @@ In the following inference rule and the constraint, ’@’ is to be replaced wi
 +
 [math]
 ++++
-@ \in \{\lstnfbnf{'*', '/', '\%', '+', '-', '<<', '>>', '>>>', '&', '\^', '|'}\}
+@ \in \{\lstnfbnf{'*', '/', '\%', '+', '-', '<<', '>>', '>>>', '\&', '\^', '|'}\}
 ++++
 // TODO fix block
 --
@@ -2194,10 +2197,10 @@ Let $v$ be the bound variable (or field) with $bind(assignExpr.left, v)$
 \beginalign
 v.writeable \lor
     v.final \land
-    & \hspace{2em} v.expr = \NULL \\
-    & \hspace{2em} \land assignExpr.containingFunction = v.owner.constructor \\
-    & \hspace{2em} \land \mu(assignExpr.left)=\type{PropertyAccess} \\
-    & \hspace{4em} \land assignExpr.left.target = \lstnfjs{"this"}
+    \spc \hspace{2em} v.expr = \NULL \\
+    \spc \hspace{2em} \land assignExpr.containingFunction = v.owner.constructor \\
+    \spc \hspace{2em} \land \mu(assignExpr.left)=\type{PropertyAccess} \\
+    \spc \hspace{4em} \land assignExpr.left.target = \lstnfjs{"this"}
 \endalign
 ++++
 
@@ -2223,7 +2226,7 @@ The type of the assignment is simply the type of the right-hand side:
 
 [math]
 ++++
-&\infer{\tee left\ \lstnfbnf{'='} right: T}{\tee right: T}
+\spc\infer{\tee left\ \lstnfbnf{'='} right: T}{\tee right: T}
 ++++
 
 // TODO check \tag{\S 11.13.1}
@@ -2369,8 +2372,8 @@ exprStmt = cexpr.container \land \mu(cexpr.container) = \type{ExpressionStatemen
 [math]
 ++++
 \beginalign
-&\mu(exprStmt.containingFunction)=\type{Constructor}) \\
-&\land exprStmt.container = exprStmt.containingFunction.body
+\spc\mu(exprStmt.containingFunction)=\type{Constructor}) \\
+\spc\land exprStmt.container = exprStmt.containingFunction.body
 \endalign
 ++++
 4.  There must be no access to and not return statement before the containing statement $exprStmt$. task:IDEBUG-147[]
@@ -2386,8 +2389,8 @@ Then, the following constraint must hold: footnote:[$e \in^* c$ is the transitiv
 +
 [math]
 ++++
-&\forall i < si: \nexists element \in^* exprStmt.container.stmts_{i}:\\
-&\hspace{3em} \mu(i) \in \types{ThisLiteral, ReturnStatement}
+\spc\forall i < si: \nexists element \in^* exprStmt.container.stmts_{i}:\\
+\spc\hspace{3em} \mu(i) \in \types{ThisLiteral, ReturnStatement}
 ++++
 
 Further constraints with regard to super constructor calls are described in <<_constructor-and-classifier-type>>.
@@ -2405,9 +2408,9 @@ If the super literal $s$ is used to access a member of the super class, all of t
 [math]
 ++++
 \beginalign
-& \mu(c)=\type{CallExpression}\\
-\land & c.target = \type{PropertyAccessExpression} \\
-\land & c.target.target=s
+\spc \mu(c)=\type{CallExpression}\\
+\land \spc c.target = \type{PropertyAccessExpression} \\
+\land \spc c.target.target=s
 \endalign
 ++++
 2.  The super literal is used in a method or field accessor of a class:
@@ -2425,7 +2428,7 @@ $\mu(s..containingClass) = \type{Class}$
 ++++
 \infer
 {\type{function():T} \subtype s.m}
-{s.containingClass=T & \mu(m)=\type{Method} & m.returnType=\type{this}}
+{s.containingClass=T \spc \mu(m)=\type{Method} \spc m.returnType=\type{this}}
 ++++
 
 --
