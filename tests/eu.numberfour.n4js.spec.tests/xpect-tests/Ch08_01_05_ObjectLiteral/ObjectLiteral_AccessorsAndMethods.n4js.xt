@@ -27,3 +27,11 @@ str = ol.g0;
 // XPECT noerrors -->
 ol.s0 = str;
 
+
+// XPECT noerrors -->
+let v1: ~Object with { m():void };
+v1;
+
+// XPECT type of 'm' --> {function():void}
+let v2: ~Object with { m():void };
+v2;
