@@ -12,7 +12,6 @@ package eu.numberfour.n4js.hlc;
 
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.inject.util.Modules.override;
-import static eu.numberfour.n4js.utils.git.GitUtils.getMasterBranch;
 import static eu.numberfour.n4js.utils.git.GitUtils.hardReset;
 import static eu.numberfour.n4js.utils.git.GitUtils.pull;
 
@@ -627,7 +626,7 @@ public class N4jsc {
 					.getTargetPlatformLocalGitRepositoryLocation();
 			Path localClonePath = new File(gitRepositoryLocation).toPath();
 			hardReset(gitLocationProvider.getGitLocation().getRepositoryRemoteURL(), localClonePath,
-					getMasterBranch(), true);
+					gitLocationProvider.getGitLocation().getRemoteBranch(), true);
 			pull(localClonePath);
 
 			// Convert target platform file into package JSON for now.
