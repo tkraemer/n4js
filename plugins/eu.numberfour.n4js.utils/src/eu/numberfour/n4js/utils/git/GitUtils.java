@@ -463,8 +463,11 @@ public abstract class GitUtils {
 	 *             if an error occurs while accessing the given repository
 	 */
 	private static Optional<RemoteConfig> getOriginRemote(Git git) throws GitAPIException {
-		final String origin = getDefaultRemote();
 		List<RemoteConfig> remotes = git.remoteList().call();
+		if (remotes.isEmpty())
+			return Optional.absent();
+
+		final String origin = getDefaultRemote();
 		return from(remotes).firstMatch((remote) -> {
 			return remote.getName().equals(origin);
 		});

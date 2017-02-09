@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import com.google.inject.ImplementedBy;
 
 import eu.numberfour.n4js.external.TypeDefinitionGitLocationProvider.TypeDefinitionGitLocationProviderImpl;
+import eu.numberfour.n4js.utils.git.GitUtils;
 
 /**
  * Representation of a Git repository location provider.
@@ -100,22 +101,25 @@ public interface TypeDefinitionGitLocationProvider {
 		 * The default location for the type definition file. Used in the production code.
 		 */
 		// TODO: Do NOT forget to change this before merging!
-		PUBLIC_DEFINITION_LOCATION("n4jsd", "https://github.com/kduske-n4/n4jsd.git"),
+		PUBLIC_DEFINITION_LOCATION("n4jsd", "https://github.com/NumberFour/n4jsd.git", GitUtils.getMasterBranch()),
 
 		/**
 		 * Type definition location for testing purposes.
 		 */
 		// TODO: Do NOT forget to change this before merging!
-		TEST_DEFINITION_LOCATION("n4jsd-sandbox", "https://github.com/kduske-n4/n4jsd-sandbox.git");
+		TEST_DEFINITION_LOCATION("n4jsd-sandbox", "https://github.com/NumberFour/n4jsd-sandbox.git", GitUtils.getMasterBranch());
 
 		private static final String N4JSD_URL_SYSTEM_PROPERTY_PREFIX = "numberfour.n4jsd-repository.url";
 
 		private final String repositoryName;
 		private final String remoteUrl;
+		private final String remoteBranch;
 
-		private TypeDefinitionGitLocation(final String repositoryName, final String defaultRemoteUrl) {
+		private TypeDefinitionGitLocation(final String repositoryName, final String defaultRemoteUrl,
+				final String remoteBranch) {
 			this.repositoryName = repositoryName;
 			this.remoteUrl = getActualRemoteUrl(repositoryName, defaultRemoteUrl);
+			this.remoteBranch = remoteBranch;
 		}
 
 		private String getActualRemoteUrl(final String systemPropertySuffix, final String defaultRemoteUrl) {
@@ -144,12 +148,23 @@ public interface TypeDefinitionGitLocationProvider {
 			return remoteUrl;
 		}
 
+		/**
+		 * Returns with the remote branch of the Git repository.
+		 *
+		 * @return the remote branch of the Git repository.
+		 */
+		public String getRemoteBranch() {
+			return remoteBranch;
+		}
+
 		@Override
 		public String toString() {
 			final StringBuilder sb = new StringBuilder();
 			sb.append(repositoryName);
 			sb.append(" URL: ");
 			sb.append(remoteUrl);
+			sb.append(" Branch: ");
+			sb.append(remoteBranch);
 			return sb.toString();
 		}
 
