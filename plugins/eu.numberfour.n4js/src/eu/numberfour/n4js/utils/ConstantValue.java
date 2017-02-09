@@ -14,12 +14,12 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 import eu.numberfour.n4js.n4JS.Expression;
+import eu.numberfour.n4js.postprocessing.ASTMetaInfoCache;
 import eu.numberfour.n4js.ts.types.TField;
-import it.xsemantics.runtime.RuleEnvironment;
 
 /**
- * The value of a constant expression as returned by
- * {@link N4JSLanguageUtils#computeValueIfConstantExpression(RuleEnvironment, Expression)}.
+ * The value of a constant expression as returned by {@link ASTMetaInfoCache#getEvaluationResult(Expression)} and
+ * computed by {@code ConstantExpressionProcessor#computeValueIfConstantExpression()}.
  */
 public abstract class ConstantValue {
 

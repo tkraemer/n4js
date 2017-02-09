@@ -17,6 +17,7 @@ import eu.numberfour.n4js.n4JS.CatchBlock
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ForStatement
+import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor
@@ -33,6 +34,7 @@ import eu.numberfour.n4js.n4JS.PropertyNameValuePair
 import eu.numberfour.n4js.n4JS.PropertySetterDeclaration
 import eu.numberfour.n4js.n4JS.SetterDeclaration
 import eu.numberfour.n4js.n4JS.VariableDeclaration
+import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.resource.N4JSPostProcessor
 import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.ts.types.TypableElement
@@ -49,8 +51,6 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import eu.numberfour.n4js.n4JS.YieldExpression
-import eu.numberfour.n4js.n4JS.FormalParameter
 
 /**
  * Main processor used during {@link N4JSPostProcessor post-processing} of N4JS resources. It controls the overall
@@ -86,6 +86,8 @@ public class ASTProcessor extends AbstractProcessor {
 	private TypeDeferredProcessor typeDeferredProcessor;
 	@Inject
 	private ArrowFunctionProcessor arrowFunctionProcessor;
+	@Inject
+	private ConstantExpressionProcessor constantExpressionProcessor;
 
 	/**
 	 * Called from N4JSPostProcessor.
@@ -122,9 +124,13 @@ public class ASTProcessor extends AbstractProcessor {
 		cache.startProcessing(cancelIndicator); // will throw exception if processing already in progress or completed
 		try {
 			val script = resource.script;
-			// step 0: process computed property names
+			// step 0: process constant expressions & computed property names
+			// FIXME improve order, etc.
+			for(node : script.eAllContents.filter(Expression).toIterable) {
+				constantExpressionProcessor.evaluateConstantExpression(G, node, cache, 0);
+			}
 			for(node : script.eAllContents.filter(LiteralOrComputedPropertyName).toIterable) {
-				computedNameProcessor.computedName(G, node, cache, 0);
+				computedNameProcessor.computeName(G, node, cache, 0);
 			}
 			// step 1: main processing
 			processSubtree(G, script, cache, 0);

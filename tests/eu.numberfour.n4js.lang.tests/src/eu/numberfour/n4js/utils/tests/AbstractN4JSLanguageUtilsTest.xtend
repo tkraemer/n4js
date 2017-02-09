@@ -15,6 +15,7 @@ import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 import eu.numberfour.n4js.N4JSParseHelper
 import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.ParenExpression
+import eu.numberfour.n4js.postprocessing.ConstantExpressionProcessor
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.util.Variance
@@ -35,11 +36,11 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 @RunWith(XtextRunner)
 @InjectWith(N4JSInjectorProviderWithIssueSuppression)
 abstract class AbstractN4JSLanguageUtilsTest {
-	
+
 	@Inject private extension N4JSParseHelper parseHelper;
 	@Inject private extension ValidationTestHelper;
-	
-	
+
+
 	def protected void assertVarianceOfPosition(CharSequence code, Variance expectedVariance) {
 		assertVarianceOfPosition(code, expectedVariance, false);
 	}
@@ -78,7 +79,7 @@ abstract class AbstractN4JSLanguageUtilsTest {
 		val expressionInAST = (lastStatement.expression as ParenExpression).expression;
 		assertNotNull(expressionInAST);
 		val G = script.newRuleEnvironment;
-		val computedValue = N4JSLanguageUtils.computeValueIfConstantExpression(G, expressionInAST);
+		val computedValue = ConstantExpressionProcessor.ONLY_FOR_TESTING__computeValueIfConstantExpression(G, expressionInAST);
 		val expectedConstantValue = ConstantValue.of(expectedValue);
 		assertEquals(expectedConstantValue, computedValue);
 	}

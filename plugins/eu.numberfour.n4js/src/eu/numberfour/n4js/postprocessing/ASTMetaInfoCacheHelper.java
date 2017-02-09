@@ -19,12 +19,14 @@ import org.eclipse.xtext.util.OnChangeEvictingCache;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
+import eu.numberfour.n4js.utils.ConstantValue;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
 
@@ -54,6 +56,13 @@ public final class ASTMetaInfoCacheHelper {
 	 */
 	public List<TypeRef> getInferredTypeArgs(ParameterizedCallExpression callExpr) {
 		return getOrCreate((N4JSResource) callExpr.eResource()).getInferredTypeArgs(callExpr);
+	}
+
+	/**
+	 * Convenience method for {@link ASTMetaInfoCache#getEvaluationResult(Expression)}.
+	 */
+	public ConstantValue getEvaluationResult(Expression expr) {
+		return getOrCreate((N4JSResource) expr.eResource()).getEvaluationResult(expr);
 	}
 
 	/**

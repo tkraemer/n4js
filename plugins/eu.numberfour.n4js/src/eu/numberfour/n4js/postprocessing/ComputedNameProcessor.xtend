@@ -35,9 +35,9 @@ import org.eclipse.xtext.EcoreUtil2
 @Singleton
 class ComputedNameProcessor {
 
-	def public void computedName(RuleEnvironment G, LiteralOrComputedPropertyName nameDecl, ASTMetaInfoCache cache, int indentLevel) {
+	def public void computeName(RuleEnvironment G, LiteralOrComputedPropertyName nameDecl, ASTMetaInfoCache cache, int indentLevel) {
 		if(nameDecl.hasComputedPropertyName) {
-			val name = getPropertyNameFromExpression(G, nameDecl.expression);
+			val name = getPropertyNameFromExpression(G, nameDecl.expression, cache);
 			if(name!==null) {
 				// 1) cache the computed name in the LiteralOrComputedPropertyName AST node
 				EcoreUtilN4.doWithDeliver(false, [
@@ -84,8 +84,8 @@ class ComputedNameProcessor {
 	 * For symbols: the #toString() method in ValueSymbol prepends {@link N4JSLanguageUtils#SYMBOL_IDENTIFIER_PREFIX},
 	 * so we can simply use that.
 	 */
-	def private String getPropertyNameFromExpression(RuleEnvironment G, Expression expr) {
-		val value = N4JSLanguageUtils.computeValueIfConstantExpression(G, expr);
+	def private String getPropertyNameFromExpression(RuleEnvironment G, Expression expr, ASTMetaInfoCache cache) {
+		val value = cache.getEvaluationResult(expr);
 		return value?.toString; // see API doc for why we can simply use #toString() here
 	}
 

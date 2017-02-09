@@ -15,7 +15,7 @@ class C {
 
 let obj = {
 	// XPECT noerrors -->
-	[E.LitA]: "now allowed, because it's a constant expression (since IDE-2468)",
+	[E.litA]: "now allowed, because it's a constant expression (since IDE-2468)",
 	// XPECT noerrors -->
 	[E.litB]: "ok"
 };

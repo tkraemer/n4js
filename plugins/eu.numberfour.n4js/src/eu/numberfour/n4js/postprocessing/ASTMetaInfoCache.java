@@ -30,6 +30,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.OnChangeEvictingCache.CacheAdapter;
 
+import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
 import eu.numberfour.n4js.n4JS.Script;
@@ -39,6 +40,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
 import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
+import eu.numberfour.n4js.utils.ConstantValue;
 import eu.numberfour.n4js.utils.UtilN4;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
@@ -63,10 +65,11 @@ public final class ASTMetaInfoCache {
 	private final boolean hasBrokenAST;
 	private final Map<TypableElement, Result<TypeRef>> actualTypes = new HashMap<>();
 	private final Map<ParameterizedCallExpression, List<TypeRef>> inferredTypeArgs = new HashMap<>();
+	private final Map<Expression, ConstantValue> evalResults = new HashMap<>();
 
 	private final Map<VariableDeclaration, List<EObject>> localVariableReferences = new HashMap<>();
 
-	ASTMetaInfoCache(N4JSResource resource, boolean hasBrokenAST) {
+	/* package */ ASTMetaInfoCache(N4JSResource resource, boolean hasBrokenAST) {
 		this.resource = resource;
 		this.hasBrokenAST = hasBrokenAST;
 	}
@@ -113,11 +116,11 @@ public final class ASTMetaInfoCache {
 		return result;
 	}
 
-	void storeType(TypableElement astNode, TypeRef actualType) {
+	/* package */ void storeType(TypableElement astNode, TypeRef actualType) {
 		storeType(astNode, new Result<>(actualType));
 	}
 
-	void storeType(TypableElement astNode, Result<TypeRef> actualType) {
+	/* package */ void storeType(TypableElement astNode, Result<TypeRef> actualType) {
 		if (!isProcessingInProgress()) {
 			throw new IllegalStateException();
 		}
@@ -140,11 +143,27 @@ public final class ASTMetaInfoCache {
 		return inferredTypeArgs.get(callExpr);
 	}
 
-	void storeInferredTypeArgs(ParameterizedCallExpression callExpr, List<TypeRef> typeArgs) {
+	/* package */ void storeInferredTypeArgs(ParameterizedCallExpression callExpr, List<TypeRef> typeArgs) {
 		if (!isProcessingInProgress()) {
 			throw new IllegalStateException();
 		}
 		inferredTypeArgs.put(callExpr, Collections.unmodifiableList(new ArrayList<>(typeArgs)));
+	}
+
+	public ConstantValue getEvaluationResult(Expression expr) {
+		return evalResults.get(expr); // FIXME reconsider what to return for expression that aren't required to be
+										// constant expressions!
+	}
+
+	/* package */ void storeEvaluationResult(Expression expr, ConstantValue evalResult) {
+		if (!isProcessingInProgress()) {
+			throw new IllegalStateException();
+		}
+		if (evalResults.put(expr, evalResult) != null) {
+			throw UtilN4.reportError(new IllegalStateException(
+					"cache collision: multiple evaluation results put into cache for AST node: " + expr
+							+ " in resource: " + resource.getURI()));
+		}
 	}
 
 	/**
@@ -160,7 +179,7 @@ public final class ASTMetaInfoCache {
 		}
 	}
 
-	void storeLocalVariableReference(VariableDeclaration varDecl, EObject sourceNode) {
+	/* package */ void storeLocalVariableReference(VariableDeclaration varDecl, EObject sourceNode) {
 		if (localVariableReferences.containsKey(varDecl)) {
 			final List<EObject> references = localVariableReferences.get(varDecl);
 			references.add(sourceNode);

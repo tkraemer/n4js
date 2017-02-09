@@ -8,16 +8,16 @@ function foo(): string {
 
 
 class C {
-	
+
 	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "foo()"
 	get [foo()]() {return null;}
-	
+
 	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "foo()"
 	set [foo()](value) {}
-	
+
 	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "foo()"
 	[foo()]() {}
-	
+
 	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "Symbol()"
 	[Symbol()]() {}
 }
@@ -30,16 +30,16 @@ var ol = {
 
 	// XPECT warnings --> "Computed property name using an expression other than a constant expression; this property won't be type-checked at compile time." at "foo()"
 	[foo()]: "one",
-	
+
 	// XPECT warnings --> "Computed property name using an expression other than a constant expression; this property won't be type-checked at compile time." at "foo()"
 	get [foo()]() {return null;},
-	
+
 	// XPECT warnings --> "Computed property name using an expression other than a constant expression; this property won't be type-checked at compile time." at "foo()"
 	set [foo()](value) {},
-	
+
 	// XPECT warnings --> "Computed property name using an expression other than a constant expression; this property won't be type-checked at compile time." at "foo()"
 	[foo()]() {},
-	
+
 	// XPECT warnings --> "Computed property name using an expression other than a constant expression; this property won't be type-checked at compile time." at "Symbol()"
 	[Symbol()]() {}
 }

@@ -14,11 +14,7 @@ import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.common.unicode.CharTypes
 import eu.numberfour.n4js.conversion.IdentifierValueConverter
 import eu.numberfour.n4js.n4JS.AbstractAnnotationList
-import eu.numberfour.n4js.n4JS.AdditiveExpression
 import eu.numberfour.n4js.n4JS.AnnotableElement
-import eu.numberfour.n4js.n4JS.BinaryLogicalExpression
-import eu.numberfour.n4js.n4JS.BooleanLiteral
-import eu.numberfour.n4js.n4JS.ConditionalExpression
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FormalParameter
@@ -27,7 +23,6 @@ import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.IndexedAccessExpression
 import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName
-import eu.numberfour.n4js.n4JS.MultiplicativeExpression
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4EnumLiteral
@@ -37,20 +32,14 @@ import eu.numberfour.n4js.n4JS.N4JSASTUtils
 import eu.numberfour.n4js.n4JS.N4MemberAnnotationList
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
-import eu.numberfour.n4js.n4JS.NullLiteral
 import eu.numberfour.n4js.n4JS.NumericLiteral
-import eu.numberfour.n4js.n4JS.ObjectLiteral
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
-import eu.numberfour.n4js.n4JS.ParenExpression
 import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.PropertyAssignmentAnnotationList
 import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
 import eu.numberfour.n4js.n4JS.PropertyNameKind
-import eu.numberfour.n4js.n4JS.RegularExpressionLiteral
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.StringLiteral
-import eu.numberfour.n4js.n4JS.TemplateLiteral
-import eu.numberfour.n4js.n4JS.TemplateSegment
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
@@ -70,7 +59,6 @@ import eu.numberfour.n4js.ts.types.MemberAccessModifier
 import eu.numberfour.n4js.ts.types.TAnnotableElement
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
-import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TEnumLiteral
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFunction
@@ -88,8 +76,6 @@ import eu.numberfour.n4js.ts.types.util.ExtendedClassesIterable
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
-import eu.numberfour.n4js.utils.ConstantValue.ValueBoolean
-import eu.numberfour.n4js.utils.ConstantValue.ValueNumber
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants
 import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EObject
@@ -161,6 +147,16 @@ class N4JSLanguageUtils {
 	def static boolean isASTNode(EObject obj) {
 		// note: despite its name, #getContainerOfType() returns 'obj' if instance of Script
 		return EcoreUtil2.getContainerOfType(obj, Script)!==null;
+	}
+
+	/**
+	 * Tells if given expression denotes the value 'undefined'.
+	 */
+	def static boolean isUndefinedLiteral(RuleEnvironment G, Expression expr) {
+		if(expr instanceof IdentifierRef) {
+			return expr.id===G.globalObjectScope.fieldUndefined;
+		}
+		return false;
 	}
 
 	/**
@@ -638,28 +634,6 @@ class N4JSLanguageUtils {
 	}
 
 	/**
-	 * Returns <code>true</code> iff the given name is a computed property name with a valid expression.
-	 */
-	def static boolean isValidComputedPropertyName(RuleEnvironment G, LiteralOrComputedPropertyName name) {
-		if(name.kind===PropertyNameKind.COMPUTED) {
-			val expr = name.expression;
-			if(expr!==null) {
-				// case #1: constant expressions are valid in computed property names
-				if(N4JSLanguageUtils.isConstantExpression(G, expr)) {
-					return true;
-				}
-				// case #2: in object literals
-				val parent = name.eContainer;
-				val grandParent = parent?.eContainer;
-				if(parent instanceof PropertyAssignment && grandParent instanceof ObjectLiteral) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * Tells if the given expression is valid as an index within an {@link IndexedAccessExpression}.
 	 */
 	def static boolean isValidIndexExpression(RuleEnvironment G, Expression indexExpr) {
@@ -695,116 +669,18 @@ class N4JSLanguageUtils {
 		}
 	}
 
-	def static boolean isConstantExpression(RuleEnvironment G, Expression expr) {
-		return computeValueIfConstantExpression(G, expr)!==null;
-	}
-
-	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, Expression expr) {
-		return switch(expr) {
-			NullLiteral:
-				ConstantValue.NULL
-			IdentifierRef case isUndefinedLiteral(G, expr):
-				ConstantValue.UNDEFINED
-			BooleanLiteral:
-				ConstantValue.of(expr.isTrue)
-			NumericLiteral:
-				ConstantValue.of(expr.value)
-			StringLiteral:
-				ConstantValue.of(expr.value)
-			RegularExpressionLiteral:
-				null // not a constant expression
-			TemplateSegment:
-				ConstantValue.of(expr.rawValue)
-			ParenExpression:
-				return computeValueIfConstantExpression(G, expr.expression)
-			default:
-				null
-		};
-	}
-	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, TemplateLiteral expr) {
-		val buff = new StringBuilder;
-		for(seg : expr.segments) {
-			val segValue = computeValueIfConstantExpression(G, seg);
-			if(segValue!==null) {
-				buff.append(segValue.toString);
-			} else {
-				return null;
-			}
-		}
-		return ConstantValue.of(buff.toString);
-	}
-	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, UnaryExpression expr) {
-		val value = computeValueIfConstantExpression(G, expr.expression);
-		return switch(expr.op) {
-			case NOT: if(value instanceof ValueBoolean) ConstantValue.negate(value)
-			case POS: if(value instanceof ValueNumber) value
-			case NEG: if(value instanceof ValueNumber) ConstantValue.negate(value)
-			case VOID: ConstantValue.UNDEFINED
-			default: null
-		};
-	}
-	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, AdditiveExpression expr) {
-		val leftValue = computeValueIfConstantExpression(G, expr.lhs);
-		val rightValue = computeValueIfConstantExpression(G, expr.rhs);
-		return switch(expr.op) {
-			case ADD: ConstantValue.add(leftValue, rightValue)
-			case SUB: ConstantValue.subtract(leftValue, rightValue)
-		};
-	}
-	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, MultiplicativeExpression expr) {
-		val leftValue = computeValueIfConstantExpression(G, expr.lhs);
-		val rightValue = computeValueIfConstantExpression(G, expr.rhs);
-		return switch(expr.op) {
-			case TIMES: ConstantValue.multiply(leftValue, rightValue)
-			case DIV: ConstantValue.divide(leftValue, rightValue)
-			case MOD: ConstantValue.remainder(leftValue, rightValue)
-		};
-	}
-	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, BinaryLogicalExpression expr) {
-		val leftValue = computeValueIfConstantExpression(G, expr.lhs);
-		val rightValue = computeValueIfConstantExpression(G, expr.rhs);
-		return switch(expr.op) {
-			case AND: ConstantValue.and(leftValue, rightValue)
-			case OR: ConstantValue.or(leftValue, rightValue)
-		};
-	}
-	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, ConditionalExpression expr) {
-		val value = computeValueIfConstantExpression(G, expr.expression);
-		val trueValue = computeValueIfConstantExpression(G, expr.trueExpression);
-		val falseValue = computeValueIfConstantExpression(G, expr.falseExpression);
-		if(value instanceof ValueBoolean) {
-			return if(value.getValue().booleanValue()) {
-				trueValue
-			} else {
-				falseValue
-			};
-		}
-		return null;
-	}
-	def static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, ParameterizedPropertyAccessExpression expr) {
-		// is expr an access to a built-in symbol, e.g. Symbol.iterator?
-		val builtInSymbol = G.getAccessedBuiltInSymbol(expr);
-		if(builtInSymbol!==null) {
-			return ConstantValue.of(builtInSymbol);
-		}
-		// all other cases:
-		val prop = expr.property;
-		val propParent = prop?.eContainer;
-		return switch(prop) {
-			TEnumLiteral case propParent instanceof TEnum && AnnotationDefinition.STRING_BASED.hasAnnotation(propParent as TEnum):
-				ConstantValue.of(prop.valueOrName)
-// FIXME:
-//			TField case prop.const && prop.eResource===expr.eResource: { // only if in same resource!!! (otherwise we would have to store the initExpr's value in the TModule
-//				val initExpr = (prop.astElement as N4FieldDeclaration).expression;
-//				computeValueIfConstantExpression(G, initExpr)
-//			}
-			default:
-				null
-		};
-	}
-	def static boolean isUndefinedLiteral(RuleEnvironment G, Expression expr) {
-		if(expr instanceof IdentifierRef) {
-			return expr.id===G.globalObjectScope.fieldUndefined;
+	/**
+	 * Tells if the given expression is required to be a constant expression, according to the N4JS language
+	 * specification.
+	 * <p>
+	 * IMPORTANT: this method will return true only for root expressions directly required to be constant expressions,
+	 * not for expressions that are only indirectly required to be a constant expression because they are nested in
+	 * another expression which is directly or indirectly required to be a constant expression.
+	 */
+	def static boolean isRequiredToBeConstantExpression(Expression expr) {
+		val parent = expr.eContainer;
+		if(parent instanceof LiteralOrComputedPropertyName) {
+			return parent.kind===PropertyNameKind.COMPUTED && parent.expression===expr;
 		}
 		return false;
 	}
