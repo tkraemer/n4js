@@ -65,6 +65,9 @@ class ImageDescriptionHelper {
 	@Inject
 	private N4JSCache cache
 
+	/** Injecting language specific instance of {@link FileExtensionProvider} is fine, assuming this class is always called in
+	 * context of the editor, which is language specific.
+	 */
 	@Inject
 	private FileExtensionProvider fileExtensionProvider
 

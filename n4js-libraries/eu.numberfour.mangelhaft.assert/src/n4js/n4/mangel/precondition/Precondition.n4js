@@ -14,7 +14,7 @@ import {Assert} from "n4/mangel/assert/Assert"
 import {PreconditionNotMet} from "n4/mangel/precondition/PreconditionNotMet"
 export public class Precondition extends Assert {
     @Override
-    public static fail_(actual: any, expected: any, message: string?, operator: string?, stackStartFunction: Function?) {
+    public static fail_(actual: any, expected: any, message: string =, operator: string =, stackStartFunction: Function =) {
         let error = new PreconditionNotMet(message);
         throw error;
     }

@@ -310,6 +310,10 @@ import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 		processAnnotations(original.getAnnotations(), false);
 		write(original.getName());
 		processTypeRef(original.getDeclaredTypeRef());
+		if (original.getInitializer() != null) {
+			write("=");
+			process(original.getInitializer());
+		}
 		return DONE;
 	}
 

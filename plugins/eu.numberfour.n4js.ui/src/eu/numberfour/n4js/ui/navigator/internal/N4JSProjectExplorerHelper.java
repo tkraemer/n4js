@@ -43,7 +43,7 @@ import eu.numberfour.n4js.n4mf.ProjectType;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 import eu.numberfour.n4js.utils.resources.ExternalProject;
 import eu.numberfour.n4js.utils.resources.IExternalResource;
 

@@ -276,10 +276,10 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 		else if (epackage == TypesPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case TypesPackage.TANONYMOUS_FORMAL_PARAMETER:
-				sequence_TAnonymousFormalParameter(context, (TAnonymousFormalParameter) semanticObject); 
+				sequence_DefaultFormalParameter_TAnonymousFormalParameter(context, (TAnonymousFormalParameter) semanticObject); 
 				return; 
 			case TypesPackage.TFORMAL_PARAMETER:
-				sequence_TFormalParameter(context, (TFormalParameter) semanticObject); 
+				sequence_DefaultFormalParameter_TFormalParameter(context, (TFormalParameter) semanticObject); 
 				return; 
 			case TypesPackage.TSTRUCT_FIELD:
 				sequence_TStructField(context, (TStructField) semanticObject); 
@@ -385,6 +385,30 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     ((fpars+=TAnonymousFormalParameter fpars+=TAnonymousFormalParameter*)? returnTypeRef=PrimaryTypeExpression)
 	 */
 	protected void sequence_ArrowFunctionTypeExpression_TAnonymousFormalParameterList(ISerializationContext context, FunctionTypeExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TAnonymousFormalParameter returns TAnonymousFormalParameter
+	 *
+	 * Constraint:
+	 *     (variadic?='...'? name=BindingIdentifier? typeRef=TypeRef (hasInitializerAssignment?='=' astInitializer=TypeReferenceName?)?)
+	 */
+	protected void sequence_DefaultFormalParameter_TAnonymousFormalParameter(ISerializationContext context, TAnonymousFormalParameter semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TFormalParameter returns TFormalParameter
+	 *
+	 * Constraint:
+	 *     (variadic?='...'? name=BindingIdentifier typeRef=TypeRef (hasInitializerAssignment?='=' astInitializer=TypeReferenceName?)?)
+	 */
+	protected void sequence_DefaultFormalParameter_TFormalParameter(ISerializationContext context, TFormalParameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -628,30 +652,6 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     )
 	 */
 	protected void sequence_TAnonymousFormalParameterList_TStructMethod(ISerializationContext context, TStructMethod semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     TAnonymousFormalParameter returns TAnonymousFormalParameter
-	 *
-	 * Constraint:
-	 *     (variadic?='...'? name=BindingIdentifier? typeRef=TypeRef)
-	 */
-	protected void sequence_TAnonymousFormalParameter(ISerializationContext context, TAnonymousFormalParameter semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     TFormalParameter returns TFormalParameter
-	 *
-	 * Constraint:
-	 *     (variadic?='...'? name=BindingIdentifier typeRef=TypeRef)
-	 */
-	protected void sequence_TFormalParameter(ISerializationContext context, TFormalParameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

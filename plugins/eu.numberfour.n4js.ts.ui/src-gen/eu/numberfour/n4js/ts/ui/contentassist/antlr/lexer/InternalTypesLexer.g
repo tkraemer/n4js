@@ -189,6 +189,8 @@ Semicolon : ';';
 
 LessThanSign : '<';
 
+EqualsSign : '=';
+
 GreaterThanSign : '>';
 
 QuestionMark : '?';

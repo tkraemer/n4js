@@ -34,11 +34,13 @@ function <T> FA02() : T  { return null; }
 function <T> FA03(p1 : T) : T  { return null; }
 
 // OK XPECT noerrors -->
-function <T,S> FA04(p1 : T, p2 : S?) : T  { return null; }
+function <T,S> FA04(p1 : T, p2 : S=undefined) : T  { return null; }
 
 // Wrong use of optional in combination with TypeVar
-// XPECT errors --> "Optional parameters can only appear after the non-optional parameters." at "p2 : S?"
-function <T,S> FA05(p1 : T, p2 : S?, p3 : T, ...p4 : S) : T  { return null; }
+/* XPECT warnings ---
+"This parameter is changed to the default parameter 'p3=undefined' since it follows a default parameter." at "p3 : T"
+---*/
+function <T,S> FA05(p1 : T, p2 : S=undefined, p3 : T, ...p4 : S) : T  { return null; }
 
 // OK XPECT noerrors -->
 function <T,S> FA06(p1 : T, ...p2 : S) : T  { return null; }

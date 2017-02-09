@@ -1321,6 +1321,7 @@ constraints must hold:
 
 * The return type of a getter must not be `void`.
 * The type of the parameter of a setter must not be `void`.
+* A setter must have exactly one formal parameter, i.e. variadic or default modifiers are not allowed.
 * If a getter math:[$g$] is defined or consumed (from an interface)
 or merged-in (via static polyfill) in a class math:[$C$] and a
 setter math:[$s$] with

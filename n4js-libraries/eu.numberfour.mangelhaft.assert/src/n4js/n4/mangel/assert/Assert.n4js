@@ -79,7 +79,7 @@ const Object_keys = typeof Object.keys === 'function'
     }
 ;
 
-function objEquiv(aAny: any, bAny: any, ignorePrototype: boolean?): boolean {
+function objEquiv(aAny: any, bAny: any, ignorePrototype: boolean =): boolean {
     let a = aAny as Object,
         b = bAny as Object,
         ka: Array<string>, kb: Array<string>,
@@ -123,7 +123,7 @@ function objEquiv(aAny: any, bAny: any, ignorePrototype: boolean?): boolean {
     return true;
 }
 
-function  _deepEqual(actual: any, expected: any, ignorePrototype: boolean?):boolean {
+function  _deepEqual(actual: any, expected: any, ignorePrototype: boolean =):boolean {
   if (actual === expected) {
     return true;
 
@@ -170,7 +170,7 @@ export public class Assert {
     private const RETHROWN_SPECIAL_ERROR_TYPES = [  N4ApiNotImplementedError
                                                   , PreconditionNotMet
                                                  ];
-    private static rethrowIfSpecialError(error: any, expected: any?) {
+    private static rethrowIfSpecialError(error: any, expected: any =) {
         let objError: Object
           , ctor: type{Object}
         ;
@@ -193,9 +193,9 @@ export public class Assert {
      */
     protected static fail_(actual: any
                         , expected: any
-                        , message: string?
-                        , operator: string?
-                        , stackStartFunction: Function?
+                        , message: string =
+                        , operator: string =
+                        , stackStartFunction: Function =
     ) {
         
         let error = new AssertionError({
@@ -208,7 +208,7 @@ export public class Assert {
         throw error;
     }
 
-    public static fail(message: string, error: any?) {
+    public static fail(message: string, error: any =) {
         this.fail_(error, null, message, null, this.fail);
     }
 
@@ -228,7 +228,7 @@ export public class Assert {
      * @param  expected expected value (what actual should be)
      * @param  message  optional message describing what was tested
      */
-    public static equal (actual: any, expected: any, message: string?) {
+    public static equal (actual: any, expected: any, message: string =) {
         if (actual != expected) {
             this.fail_(actual, expected, message, '==', this.equal);
         }
@@ -236,7 +236,7 @@ export public class Assert {
     /**
      * Tests if actual is greater than ( > operator) expected
      */
-    public static greaterThan(actual: union{number,string,boolean}, expected: union{number,string,boolean}, message: string?) {
+    public static greaterThan(actual: union{number,string,boolean}, expected: union{number,string,boolean}, message: string =) {
         if (!(actual > expected)) {
             this.fail_(actual, expected, message, '>', this.greaterThan);
         }
@@ -244,7 +244,7 @@ export public class Assert {
     /**
      * Tests if actual is less than ( < operator) expected
      */
-    public static lessThan(actual: union{number,string,boolean}, expected: union{number,string,boolean}, message: string?) {
+    public static lessThan(actual: union{number,string,boolean}, expected: union{number,string,boolean}, message: string =) {
         if (!(actual < expected)) {
             this.fail_(actual, expected, message, '<', this.lessThan);
         }
@@ -253,7 +253,7 @@ export public class Assert {
     /**
      * Tests if actual is greater than or equal( >= operator) expected
      */
-    public static greaterThanOrEqual(actual: union{number,string,boolean}, expected: union{number,string,boolean}, message: string?) {
+    public static greaterThanOrEqual(actual: union{number,string,boolean}, expected: union{number,string,boolean}, message: string =) {
         if (!(actual >= expected)) {
             this.fail_(actual, expected, message, '>', this.greaterThanOrEqual);
         }
@@ -261,7 +261,7 @@ export public class Assert {
     /**
      * Tests if actual is less than or equal ( <= operator) expected
      */
-    public static lessThanOrEqual(actual: union{number,string,boolean}, expected: union{number,string,boolean}, message: string?) {
+    public static lessThanOrEqual(actual: union{number,string,boolean}, expected: union{number,string,boolean}, message: string =) {
         if (!(actual <= expected)) {
             this.fail_(actual, expected, message, '<', this.lessThanOrEqual);
         }
@@ -269,7 +269,7 @@ export public class Assert {
     /**
      * Tests if actual is strictly equal to null
      */
-    public static isNull(actual: any, message: string?) {
+    public static isNull(actual: any, message: string =) {
         if (actual !== null) {
             this.fail_(actual, null, message, "=== null", this.isNull);
         }
@@ -277,7 +277,7 @@ export public class Assert {
     /**
      * tests if actual is strictly equal to Undefined
      */
-    public static isUndefined(actual: any, message: string?) {
+    public static isUndefined(actual: any, message: string =) {
         let undef;
         if (actual !== undef) {
             this.fail_(actual, null, message, "=== undefined", this.isUndefined);
@@ -286,7 +286,7 @@ export public class Assert {
     /**
      * tests if actual is strictly not equal to null
      */
-    public static isNotNull(actual: any, message: string?) {
+    public static isNotNull(actual: any, message: string =) {
         if (actual === null) {
             this.fail_(actual, null, message, "!== null", this.isNotNull);
         }
@@ -294,7 +294,7 @@ export public class Assert {
     /**
      * tests if actual is strictly not equal to undefined
      */
-    public static isNotUndefined(actual: any, message: string?) {
+    public static isNotUndefined(actual: any, message: string =) {
         let undef;
         if (actual === undef) {
             this.fail_(actual, null, message, "!== undefined", this.isNotUndefined);
@@ -303,7 +303,7 @@ export public class Assert {
     /**
      * Tests if actual is strictly equal to null or undefined
      */
-    public static isNullOrUndefined(actual: any, message: string?) {
+    public static isNullOrUndefined(actual: any, message: string =) {
         let undef;
         if (!(actual === null || actual === undef)) {
             this.fail_(actual, null, message, "=== null || undefined", this.isNullOrUndefined);
@@ -312,7 +312,7 @@ export public class Assert {
     /**
      * Tests if actual is not strictly equal to null or undefined
      */
-    public static isNotNullOrUndefined(actual: any, message: string?) {
+    public static isNotNullOrUndefined(actual: any, message: string =) {
         let undef;
         if ((actual === null || actual === undefined)) {
             this.fail_(actual, null, message, "!== null || undefined", this.isNotNullOrUndefined);
@@ -325,7 +325,7 @@ export public class Assert {
      * @param  expected expected value (what actual should be)
      * @param  message  optional message describing what was tested
      */
-    public static notEqual(actual: any, expected: any, message: string?) {
+    public static notEqual(actual: any, expected: any, message: string =) {
         if (actual == expected) {
             this.fail_(actual, expected, message, '!=', this.notEqual);
         }
@@ -338,7 +338,7 @@ export public class Assert {
      * @param  message  optional message describing what was tested
      * @param ignorePrototype optional flag to not test for prototypical identicalness
      */
-    public static deepEqual(actual: any, expected: any, message: string?, ignorePrototype: boolean?) {
+    public static deepEqual(actual: any, expected: any, message: string =, ignorePrototype: boolean =) {
         actual = decycle(actual);
         expected = decycle(expected);
 
@@ -359,7 +359,7 @@ export public class Assert {
      * @param  message  optional message describing what was tested
      * @param ignorePrototype optional flag to not test for prototypical identicalness
      */
-    public static notDeepEqual(actual: any, expected: any, message: string?, ignorePrototype: boolean?) {
+    public static notDeepEqual(actual: any, expected: any, message: string =, ignorePrototype: boolean =) {
         if (_deepEqual(actual, expected, ignorePrototype)) {
             this.fail_(actual, expected, message, 'NotDeepEqual', this.deepEqual);
         }
@@ -370,7 +370,7 @@ export public class Assert {
      * @param  expected expected value (what actual should be)
      * @param  message  optional message describing what was tested
      */
-    public static strictEqual (actual: any, expected: any, message: string?) {
+    public static strictEqual (actual: any, expected: any, message: string =) {
         if (!(actual === expected)) {
             this.fail_(actual, expected, message, '===', this.strictEqual);
         }
@@ -381,7 +381,7 @@ export public class Assert {
      * @param  expected expected value (what actual should be)
      * @param  message  optional message describing what was tested
      */
-    public static notStrictEqual (actual: any, expected: any, message: string?) {
+    public static notStrictEqual (actual: any, expected: any, message: string =) {
         if (!(actual !== expected)) {
             this.fail_(actual, expected, message, '!==', this.notStrictEqual);
         }
@@ -392,7 +392,7 @@ export public class Assert {
      * @param  actual   actual value to be tested
      * @param  message  optional message describing what was tested
      */
-    public static isTrue (actual: any, message: string?) {
+    public static isTrue (actual: any, message: string =) {
         if(!(!!actual)) {
             this.fail_(actual, true, message, "== true", this.isTrue)
         }
@@ -402,7 +402,7 @@ export public class Assert {
      * @param  actual   actual value to be tested
      * @param  message  optional message describing what was tested
      */
-    public static isFalse (actual: any, message: string?) {
+    public static isFalse (actual: any, message: string =) {
         if(!!actual) {
             this.fail_(actual, true, message, "!== true", this.isFalse)
         }
@@ -411,7 +411,7 @@ export public class Assert {
     /**
      * checks that the actual object is an instance of the expected object
      */
-    public static isInstanceOf(actual: any, expected: type{Object}, message: string?) {
+    public static isInstanceOf(actual: any, expected: type{Object}, message: string =) {
         if (!_isInstanceOf(actual, expected)) {
             let actualName: string = getTypeName((actual as Object).constructor),
                 expectedName: string = getTypeName(expected);
@@ -422,7 +422,7 @@ export public class Assert {
     /**
      * checks that the actual object is not an instance of the expected object
      */
-    public static isNotInstanceOf(actual: any, expected: type{Object}, message: string?) {
+    public static isNotInstanceOf(actual: any, expected: type{Object}, message: string =) {
         if (_isInstanceOf(actual, expected)) {
             let actualName: string = getTypeName((actual as Object).constructor),
                 expectedName: string = getTypeName(expected);
@@ -436,7 +436,7 @@ export public class Assert {
      * @param  error        optional error if provided will ensure the thrown error is of the same type.
      * @param  message      optional message describing what was tested
      */
-    public static throws (testFunction: {function()}, error: union{ErrorPrimitiveType, type{Error}}?, message: string?): any {
+    public static throws (testFunction: {function()}, error: union{ErrorPrimitiveType, type{Error}} =, message: string =): any {
         let actual: any+
           , threw = false;
         try {
@@ -456,7 +456,7 @@ export public class Assert {
      * @param  error        optional error if provided will ensure the thrown error is of the same type.
      * @param  message      optional message describing what was tested
      */
-    public static doesNotThrow(testFunction: {function()}, error: union{ErrorPrimitiveType, type{Object}}?, message: string?) {
+    public static doesNotThrow(testFunction: {function()}, error: union{ErrorPrimitiveType, type{Object}} =, message: string =) {
         let actual: any+
           , threw = false;
 
@@ -477,7 +477,7 @@ export public class Assert {
      * @param  expectedErrorType        optional error if provided will ensure the thrown error is of the same type.
      * @param  message      optional message describing what was tested
      */
-    public static async throwsAsync (testFunction: {function()}, expectedErrorType: union{ErrorPrimitiveType, constructor{? extends Error}}?, message: string?): any {
+    public static async throwsAsync (testFunction: {function()}, expectedErrorType: union{ErrorPrimitiveType, constructor{? extends Error}} =, message: string =): any {
         let actual: any+
           , threw = false
         ;
@@ -498,7 +498,7 @@ export public class Assert {
      * @param  error        optional error if provided will ensure the thrown error is of the same type.
      * @param  message      optional message describing what was tested
      */
-    public static async doesNotThrowAsync(testFunction: {function()}, error: union{ErrorPrimitiveType, type{Object}}?, message: string?) {
+    public static async doesNotThrowAsync(testFunction: {function()}, error: union{ErrorPrimitiveType, type{Object}} =, message: string =) {
         let actual: any+
           , threw = false;
         try {
@@ -529,7 +529,7 @@ export public class Assert {
      * @param timeoutMillisecs optional timeout in millisecs
      * @param intervalMillisecs optional polling interval in millisecs
      */
-    public static <T> waitForCondition(resultFn: {function(): T?}, message: string?, timeoutMillisecs: number?, intervalMillisecs: number?): Promise<T, any> {
+    public static <T> waitForCondition(resultFn: {function(): T?}, message: string =, timeoutMillisecs: number =, intervalMillisecs: number =): Promise<T, any> {
         timeoutMillisecs = timeoutMillisecs || DEFAULT_TIMEOUT;
         intervalMillisecs = intervalMillisecs || DEFAULT_POLLING_INTERVAL;
 
@@ -556,7 +556,7 @@ export public class Assert {
         });
     }
 
-    private static thrownCheck(shouldThrow: boolean, actual: any+, expected: union{ErrorPrimitiveType, type{Error}}?, message: string?, operator: string?, stackStartFunction: Function?): any {
+    private static thrownCheck(shouldThrow: boolean, actual: any+, expected: union{ErrorPrimitiveType, type{Error}} =, message: string =, operator: string =, stackStartFunction: Function =): any {
         this.rethrowIfSpecialError(actual, expected);
         
         let msg = ".";

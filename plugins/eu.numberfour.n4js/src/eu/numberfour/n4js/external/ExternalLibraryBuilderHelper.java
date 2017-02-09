@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
-import static eu.numberfour.n4js.utils.Arrays2.transform;
+import static eu.numberfour.n4js.utils.collections.Arrays2.transform;
 import static eu.numberfour.n4js.utils.resources.ExternalProjectBuildOrderProvider.getBuildOrder;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.eclipse.core.runtime.SubMonitor.SUPPRESS_BEGINTASK;
@@ -57,7 +57,7 @@ import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 import eu.numberfour.n4js.utils.resources.ExternalProject;
 
 /**

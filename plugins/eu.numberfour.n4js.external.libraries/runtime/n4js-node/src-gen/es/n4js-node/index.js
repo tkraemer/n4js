@@ -11,7 +11,7 @@
 (function() {
     "use strict";
 
-    if (typeof $makeClass === "undefined") {
+    if (!global.$makeClass) {
         require("./rt/node-bootstrap.js").installN4JSRuntime();
     }
     var CJSLoader = require("./rt/node-cjs-loader-polyfill.js").Loader,

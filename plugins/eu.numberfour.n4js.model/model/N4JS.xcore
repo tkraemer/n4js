@@ -596,6 +596,13 @@ class FormalParameter extends AnnotableElement, Variable {
 	contains Annotation[] annotations
 	boolean variadic
 	refers transient TFormalParameter definedTypeElement
+	/* A formal parameter with a default value in a function 'foo' can look like this:
+	 * foo(defParam = undefined){}, with 'undefined' as the initializing expression, which can be omitted.
+	 * When the initializer is omitted, it evaluates to 'undefined'. To know whether a parameter is a
+	 * default parameter, we need to know about the existence of the initializer assignment sign '='.
+	 * Hence, the following boolean property exists. */
+	boolean hasInitializerAssignment
+	/* The initializer can be null despite being a default parameter. */
 	contains Expression initializer
 	contains BindingPattern bindingPattern
 }

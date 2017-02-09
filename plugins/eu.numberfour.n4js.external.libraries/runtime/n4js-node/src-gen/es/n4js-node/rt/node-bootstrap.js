@@ -62,7 +62,14 @@
         });
         require("./node-url-polyfill.js");
 
-        require("systemjs");
+        if (!global.System || !global.System.import) {
+            if (options.cjs) { // enforce commonJS
+                var CJSLoader = require("./node-cjs-loader-polyfill.js").Loader;
+                global.System = new CJSLoader(require, { exports: {} });
+            } else { // install SystemJS
+                require("systemjs");
+            }
+        }
         require("n4js-es5/rt");
 
         return options;

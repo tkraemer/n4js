@@ -13,7 +13,7 @@ package eu.numberfour.n4js.ui.workingsets;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Lists.newArrayList;
 import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_ID;
-import static eu.numberfour.n4js.utils.Arrays2.isEmpty;
+import static eu.numberfour.n4js.utils.collections.Arrays2.isEmpty;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -48,8 +48,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SelectionDialog;
 
 import eu.numberfour.n4js.ui.utils.UIUtils;
-import eu.numberfour.n4js.utils.Arrays2;
 import eu.numberfour.n4js.utils.Diff;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Dialog for configuring the currently active working set for the navigator.

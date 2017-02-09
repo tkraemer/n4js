@@ -59,7 +59,7 @@
 					},
 					run: {
 						value: function run___n4() {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let options = this.parseCommandLine();
 								if (options) {
 									(yield NodeTestAPI.exec(options));

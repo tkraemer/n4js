@@ -2,7 +2,7 @@
 class A {
 
 	foo(s : string, y : string) : void {}
-	bar(s : string, y : string?) : void {}
+	bar(s : string, y : string=undefined) : void {}
 	baz(s : string, ... y : string) : void {}
 
 	
@@ -21,7 +21,7 @@ a.foo("Hello", "world", "!");
 
 // ok
 a.bar("Hello", "world");
-// XPECT errors --> "int is not a subtype of string?." at "1"
+// XPECT errors --> "int is not a subtype of string." at "1"
 a.bar("Hello", 1);
 // ok
 a.bar("Hello");

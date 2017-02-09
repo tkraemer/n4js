@@ -11,7 +11,7 @@
 @@Global @@ProvidedByRuntime
 
 export external public class WeakSet<ValueT extends Object> extends Object {
-    public constructor(arg: Iterable<ValueT>?);
+    public constructor(arg: Iterable<ValueT> =);
 
     /**
      * Length property is 1.

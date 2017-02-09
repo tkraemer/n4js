@@ -2486,8 +2486,17 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getFormalParameter_HasInitializerAssignment() {
+		return (EAttribute)formalParameterEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getFormalParameter_Initializer() {
-		return (EReference)formalParameterEClass.getEStructuralFeatures().get(3);
+		return (EReference)formalParameterEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -2496,7 +2505,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * @generated
 	 */
 	public EReference getFormalParameter_BindingPattern() {
-		return (EReference)formalParameterEClass.getEStructuralFeatures().get(4);
+		return (EReference)formalParameterEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -6262,6 +6271,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEReference(formalParameterEClass, FORMAL_PARAMETER__ANNOTATIONS);
 		createEAttribute(formalParameterEClass, FORMAL_PARAMETER__VARIADIC);
 		createEReference(formalParameterEClass, FORMAL_PARAMETER__DEFINED_TYPE_ELEMENT);
+		createEAttribute(formalParameterEClass, FORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT);
 		createEReference(formalParameterEClass, FORMAL_PARAMETER__INITIALIZER);
 		createEReference(formalParameterEClass, FORMAL_PARAMETER__BINDING_PATTERN);
 
@@ -7227,6 +7237,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEReference(getFormalParameter_Annotations(), this.getAnnotation(), null, "annotations", null, 0, -1, FormalParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFormalParameter_Variadic(), theEcorePackage.getEBoolean(), "variadic", null, 0, 1, FormalParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFormalParameter_DefinedTypeElement(), theTypesPackage.getTFormalParameter(), null, "definedTypeElement", null, 0, 1, FormalParameter.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFormalParameter_HasInitializerAssignment(), theEcorePackage.getEBoolean(), "hasInitializerAssignment", null, 0, 1, FormalParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFormalParameter_Initializer(), this.getExpression(), null, "initializer", null, 0, 1, FormalParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFormalParameter_BindingPattern(), this.getBindingPattern(), null, "bindingPattern", null, 0, 1, FormalParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

@@ -2,14 +2,21 @@
 
 
 @StringBased enum E {
-	LitA: 'hello',
-	LitB
+	litA: 'hello',
+	litB
+}
+
+class C {
+	// XPECT noerrors -->
+	[E.litA] = "now allowed, because it's a constant expression (since IDE-2468)";
+	// XPECT noerrors -->
+	[E.litB] = "ok";
 }
 
 let obj = {
 	// XPECT noerrors -->
-	[E.LitA]: "now allowed (since IDE-2500)",
+	[E.LitA]: "now allowed, because it's a constant expression (since IDE-2468)",
 	// XPECT noerrors -->
-	[E.LitB]: "ok"
+	[E.litB]: "ok"
 };
 

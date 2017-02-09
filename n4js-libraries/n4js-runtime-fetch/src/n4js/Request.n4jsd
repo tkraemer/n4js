@@ -19,7 +19,7 @@ import { RequestMode } from "fetch/RequestMode"
 import { RequestInit } from "fetch/RequestInit"
 
 export external public class ~Request implements Body {
-    public constructor(input: union{Request, string}, init: RequestInit?);
+    public constructor(input: union{Request, string}, init: RequestInit =);
 
     @Final public method: Method;
     @Final public url: string;

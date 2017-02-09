@@ -2332,8 +2332,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTFormalParameter_TypeRef() {
-		return (EReference)tFormalParameterEClass.getEStructuralFeatures().get(1);
+	public EAttribute getTFormalParameter_AstInitializer() {
+		return (EAttribute)tFormalParameterEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2341,7 +2341,25 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTFormalParameter__IsOptional() {
+	public EAttribute getTFormalParameter_HasInitializerAssignment() {
+		return (EAttribute)tFormalParameterEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTFormalParameter_TypeRef() {
+		return (EReference)tFormalParameterEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTFormalParameter__HasASTInitializer() {
 		return tFormalParameterEClass.getEOperations().get(0);
 	}
 
@@ -2350,7 +2368,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTFormalParameter__IsVariadicOrOptional() {
+	public EOperation getTFormalParameter__IsOptional() {
 		return tFormalParameterEClass.getEOperations().get(1);
 	}
 
@@ -2359,8 +2377,26 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTFormalParameter__GetFormalParameterAsString() {
+	public EOperation getTFormalParameter__IsVariadicOrOptional() {
 		return tFormalParameterEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTFormalParameter__GetFormalParameterAsTypesString() {
+		return tFormalParameterEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTFormalParameter__GetFormalParameterAsString() {
+		return tFormalParameterEClass.getEOperations().get(4);
 	}
 
 	/**
@@ -3143,9 +3179,13 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		tFormalParameterEClass = createEClass(TFORMAL_PARAMETER);
 		createEAttribute(tFormalParameterEClass, TFORMAL_PARAMETER__VARIADIC);
+		createEAttribute(tFormalParameterEClass, TFORMAL_PARAMETER__AST_INITIALIZER);
+		createEAttribute(tFormalParameterEClass, TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT);
 		createEReference(tFormalParameterEClass, TFORMAL_PARAMETER__TYPE_REF);
+		createEOperation(tFormalParameterEClass, TFORMAL_PARAMETER___HAS_AST_INITIALIZER);
 		createEOperation(tFormalParameterEClass, TFORMAL_PARAMETER___IS_OPTIONAL);
 		createEOperation(tFormalParameterEClass, TFORMAL_PARAMETER___IS_VARIADIC_OR_OPTIONAL);
+		createEOperation(tFormalParameterEClass, TFORMAL_PARAMETER___GET_FORMAL_PARAMETER_AS_TYPES_STRING);
 		createEOperation(tFormalParameterEClass, TFORMAL_PARAMETER___GET_FORMAL_PARAMETER_AS_STRING);
 
 		tAnonymousFormalParameterEClass = createEClass(TANONYMOUS_FORMAL_PARAMETER);
@@ -3687,11 +3727,17 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		initEClass(tFormalParameterEClass, TFormalParameter.class, "TFormalParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTFormalParameter_Variadic(), theEcorePackage.getEBoolean(), "variadic", null, 0, 1, TFormalParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTFormalParameter_AstInitializer(), theEcorePackage.getEString(), "astInitializer", null, 0, 1, TFormalParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTFormalParameter_HasInitializerAssignment(), theEcorePackage.getEBoolean(), "hasInitializerAssignment", null, 0, 1, TFormalParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTFormalParameter_TypeRef(), theTypeRefsPackage.getTypeRef(), null, "typeRef", null, 0, 1, TFormalParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getTFormalParameter__HasASTInitializer(), theEcorePackage.getEBoolean(), "hasASTInitializer", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTFormalParameter__IsOptional(), theEcorePackage.getEBoolean(), "isOptional", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTFormalParameter__IsVariadicOrOptional(), theEcorePackage.getEBoolean(), "isVariadicOrOptional", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTFormalParameter__GetFormalParameterAsTypesString(), theEcorePackage.getEString(), "getFormalParameterAsTypesString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTFormalParameter__GetFormalParameterAsString(), theEcorePackage.getEString(), "getFormalParameterAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

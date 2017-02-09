@@ -4708,6 +4708,17 @@ ruleTAnonymousFormalParameter returns [EObject current=null]
 				}
 			)
 		)
+		{
+			if ($current==null) {
+				$current = createModelElement(grammarAccess.getTAnonymousFormalParameterRule());
+			}
+			newCompositeNode(grammarAccess.getTAnonymousFormalParameterAccess().getDefaultFormalParameterParserRuleCall_3());
+		}
+		this_DefaultFormalParameter_4=ruleDefaultFormalParameter[$current]
+		{
+			$current = $this_DefaultFormalParameter_4.current;
+			afterParserOrEnumRuleCall();
+		}
 	)
 ;
 
@@ -4783,7 +4794,64 @@ ruleTFormalParameter returns [EObject current=null]
 				}
 			)
 		)
+		{
+			if ($current==null) {
+				$current = createModelElement(grammarAccess.getTFormalParameterRule());
+			}
+			newCompositeNode(grammarAccess.getTFormalParameterAccess().getDefaultFormalParameterParserRuleCall_4());
+		}
+		this_DefaultFormalParameter_4=ruleDefaultFormalParameter[$current]
+		{
+			$current = $this_DefaultFormalParameter_4.current;
+			afterParserOrEnumRuleCall();
+		}
 	)
+;
+
+
+// Rule DefaultFormalParameter
+ruleDefaultFormalParameter[EObject in_current]  returns [EObject current=in_current]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_hasInitializerAssignment_0_0=EqualsSign
+				{
+					newLeafNode(lv_hasInitializerAssignment_0_0, grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignmentEqualsSignKeyword_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getDefaultFormalParameterRule());
+					}
+					setWithLastConsumed($current, "hasInitializerAssignment", true, "=");
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerTypeReferenceNameParserRuleCall_1_0());
+				}
+				lv_astInitializer_1_0=ruleTypeReferenceName
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getDefaultFormalParameterRule());
+					}
+					set(
+						$current,
+						"astInitializer",
+						lv_astInitializer_1_0,
+						"eu.numberfour.n4js.ts.Types.TypeReferenceName");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)?
+	)?
 ;
 
 // Entry rule entryRuleUnionTypeExpressionOLD

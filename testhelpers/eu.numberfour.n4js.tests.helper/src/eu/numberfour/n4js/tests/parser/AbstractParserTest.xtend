@@ -38,7 +38,8 @@ public abstract class AbstractParserTest extends Assert {
 
 	protected def parseWithError(CharSequence js) {
 		val script = js.parseUnrestricted
-		assertFalse(script.eResource.errors.toString, script.eResource.errors.empty)
+		val errors = script.eResource.errors;
+		assertFalse(errors.toString, errors.empty)
 		return script
 	}
 

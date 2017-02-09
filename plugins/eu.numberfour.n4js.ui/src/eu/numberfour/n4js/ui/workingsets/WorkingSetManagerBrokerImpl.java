@@ -67,9 +67,9 @@ import com.google.inject.Singleton;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.ui.utils.UIUtils;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerStateChangedListener.WorkingSetManagerChangeEvent;
-import eu.numberfour.n4js.utils.Arrays2;
 import eu.numberfour.n4js.utils.Diff;
 import eu.numberfour.n4js.utils.StatusHelper;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Implementation of a working set manager broker.

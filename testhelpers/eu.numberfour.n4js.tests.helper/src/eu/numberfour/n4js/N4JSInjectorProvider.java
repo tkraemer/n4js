@@ -21,6 +21,7 @@ import org.eclipse.xtext.junit4.util.ResourceHelper;
 import org.eclipse.xtext.service.AbstractGenericModule;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.SingletonBinding;
+import org.eclipse.xtext.util.PolymorphicDispatcher;
 import org.eclipse.xtext.validation.IDiagnosticConverter;
 
 import com.google.inject.Guice;
@@ -73,7 +74,36 @@ public class N4JSInjectorProvider implements IInjectorProvider, IRegistryConfigu
 	public Injector getInjector() {
 		if (injector == null) {
 			stateBeforeInjectorCreation = GlobalRegistries.makeCopyOfGlobalState();
-			this.injector = internalCreateInjector();
+			try {
+				this.injector = internalCreateInjector();
+
+			} catch (Throwable e) {
+				// #############################################################################
+				// IDE-2514: Temporarily exists on exception due to PolymorphicDispatcher problem
+				boolean polymorphicDispatchProblem = false;
+				if (e.getMessage().contains("Comparison method violates its general contract!")) {
+					String pdName = PolymorphicDispatcher.class.getName();
+					for (StackTraceElement ste : e.getStackTrace()) {
+						String steName = ste.toString();
+						if (steName.contains(pdName)) {
+							polymorphicDispatchProblem = true;
+						}
+					}
+				}
+
+				if (polymorphicDispatchProblem) {
+					String msg = "Comparison method violates its general contract!\n\t";
+					msg += "at eu.numberfour.n4js.N4JSInjectorProvider.getInjector(N4JSInjectorProvider.java:90)\\n\\t";
+					msg += "Reason might be the PolymorphicDispatcher";
+					msg += "Exit.";
+					System.err.println(msg);
+					System.exit(-1);
+				} else {
+					throw e;
+				}
+				// Fail fast End
+				// #############################################################################
+			}
 			stateAfterInjectorCreation = GlobalRegistries.makeCopyOfGlobalState();
 		}
 		return injector;

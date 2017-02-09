@@ -43,6 +43,7 @@ import eu.numberfour.n4js.ts.services.TypesGrammarAccess;
 		tokenNameToValue.put("Colon", "':'");
 		tokenNameToValue.put("Semicolon", "';'");
 		tokenNameToValue.put("LessThanSign", "'<'");
+		tokenNameToValue.put("EqualsSign", "'='");
 		tokenNameToValue.put("GreaterThanSign", "'>'");
 		tokenNameToValue.put("QuestionMark", "'?'");
 		tokenNameToValue.put("CommercialAt", "'@'");
@@ -1361,6 +1362,23 @@ ruleTFormalParameter
 		{ before(grammarAccess.getTFormalParameterAccess().getGroup()); }
 		(rule__TFormalParameter__Group__0)
 		{ after(grammarAccess.getTFormalParameterAccess().getGroup()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+// Rule DefaultFormalParameter
+ruleDefaultFormalParameter 
+	@init {
+		int stackSize = keepStackSize();
+	}
+	:
+	(
+		{ before(grammarAccess.getDefaultFormalParameterAccess().getGroup()); }
+		(rule__DefaultFormalParameter__Group__0)?
+		{ after(grammarAccess.getDefaultFormalParameterAccess().getGroup()); }
 	)
 ;
 finally {
@@ -11480,6 +11498,7 @@ rule__TAnonymousFormalParameter__Group__2
 	}
 :
 	rule__TAnonymousFormalParameter__Group__2__Impl
+	rule__TAnonymousFormalParameter__Group__3
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -11494,6 +11513,32 @@ rule__TAnonymousFormalParameter__Group__2__Impl
 	{ before(grammarAccess.getTAnonymousFormalParameterAccess().getTypeRefAssignment_2()); }
 	(rule__TAnonymousFormalParameter__TypeRefAssignment_2)
 	{ after(grammarAccess.getTAnonymousFormalParameterAccess().getTypeRefAssignment_2()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__TAnonymousFormalParameter__Group__3
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__TAnonymousFormalParameter__Group__3__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__TAnonymousFormalParameter__Group__3__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getTAnonymousFormalParameterAccess().getDefaultFormalParameterParserRuleCall_3()); }
+	ruleDefaultFormalParameter
+	{ after(grammarAccess.getTAnonymousFormalParameterAccess().getDefaultFormalParameterParserRuleCall_3()); }
 )
 ;
 finally {
@@ -11642,6 +11687,7 @@ rule__TFormalParameter__Group__3
 	}
 :
 	rule__TFormalParameter__Group__3__Impl
+	rule__TFormalParameter__Group__4
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -11656,6 +11702,86 @@ rule__TFormalParameter__Group__3__Impl
 	{ before(grammarAccess.getTFormalParameterAccess().getTypeRefAssignment_3()); }
 	(rule__TFormalParameter__TypeRefAssignment_3)
 	{ after(grammarAccess.getTFormalParameterAccess().getTypeRefAssignment_3()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__TFormalParameter__Group__4
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__TFormalParameter__Group__4__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__TFormalParameter__Group__4__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getTFormalParameterAccess().getDefaultFormalParameterParserRuleCall_4()); }
+	ruleDefaultFormalParameter
+	{ after(grammarAccess.getTFormalParameterAccess().getDefaultFormalParameterParserRuleCall_4()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__DefaultFormalParameter__Group__0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__DefaultFormalParameter__Group__0__Impl
+	rule__DefaultFormalParameter__Group__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__DefaultFormalParameter__Group__0__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignmentAssignment_0()); }
+	(rule__DefaultFormalParameter__HasInitializerAssignmentAssignment_0)
+	{ after(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignmentAssignment_0()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__DefaultFormalParameter__Group__1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__DefaultFormalParameter__Group__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__DefaultFormalParameter__Group__1__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerAssignment_1()); }
+	(rule__DefaultFormalParameter__AstInitializerAssignment_1)?
+	{ after(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerAssignment_1()); }
 )
 ;
 finally {
@@ -16600,6 +16726,40 @@ rule__TFormalParameter__TypeRefAssignment_3
 		{ before(grammarAccess.getTFormalParameterAccess().getTypeRefTypeRefParserRuleCall_3_0()); }
 		ruleTypeRef
 		{ after(grammarAccess.getTFormalParameterAccess().getTypeRefTypeRefParserRuleCall_3_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__DefaultFormalParameter__HasInitializerAssignmentAssignment_0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignmentEqualsSignKeyword_0_0()); }
+		(
+			{ before(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignmentEqualsSignKeyword_0_0()); }
+			EqualsSign
+			{ after(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignmentEqualsSignKeyword_0_0()); }
+		)
+		{ after(grammarAccess.getDefaultFormalParameterAccess().getHasInitializerAssignmentEqualsSignKeyword_0_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__DefaultFormalParameter__AstInitializerAssignment_1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerTypeReferenceNameParserRuleCall_1_0()); }
+		ruleTypeReferenceName
+		{ after(grammarAccess.getDefaultFormalParameterAccess().getAstInitializerTypeReferenceNameParserRuleCall_1_0()); }
 	)
 ;
 finally {

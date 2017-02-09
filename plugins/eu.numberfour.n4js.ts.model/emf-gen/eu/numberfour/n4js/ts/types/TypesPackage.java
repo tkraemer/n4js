@@ -8215,13 +8215,31 @@ public interface TypesPackage extends EPackage {
 	int TFORMAL_PARAMETER__VARIADIC = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Ast Initializer</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFORMAL_PARAMETER__AST_INITIALIZER = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Has Initializer Assignment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
 	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER__TYPE_REF = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 3;
+	int TFORMAL_PARAMETER__TYPE_REF = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>TFormal Parameter</em>' class.
@@ -8230,7 +8248,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER_FEATURE_COUNT = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 4;
+	int TFORMAL_PARAMETER_FEATURE_COUNT = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -8242,13 +8260,22 @@ public interface TypesPackage extends EPackage {
 	int TFORMAL_PARAMETER___GET_CONTAINING_MODULE = IDENTIFIABLE_ELEMENT___GET_CONTAINING_MODULE;
 
 	/**
+	 * The operation id for the '<em>Has AST Initializer</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFORMAL_PARAMETER___HAS_AST_INITIALIZER = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER___IS_OPTIONAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 0;
+	int TFORMAL_PARAMETER___IS_OPTIONAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Is Variadic Or Optional</em>' operation.
@@ -8257,7 +8284,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER___IS_VARIADIC_OR_OPTIONAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 1;
+	int TFORMAL_PARAMETER___IS_VARIADIC_OR_OPTIONAL = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Get Formal Parameter As Types String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFORMAL_PARAMETER___GET_FORMAL_PARAMETER_AS_TYPES_STRING = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Get Formal Parameter As String</em>' operation.
@@ -8266,7 +8302,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER___GET_FORMAL_PARAMETER_AS_STRING = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 2;
+	int TFORMAL_PARAMETER___GET_FORMAL_PARAMETER_AS_STRING = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>TFormal Parameter</em>' class.
@@ -8275,7 +8311,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER_OPERATION_COUNT = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 3;
+	int TFORMAL_PARAMETER_OPERATION_COUNT = IDENTIFIABLE_ELEMENT_OPERATION_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TAnonymousFormalParameterImpl <em>TAnonymous Formal Parameter</em>}' class.
@@ -8324,6 +8360,24 @@ public interface TypesPackage extends EPackage {
 	int TANONYMOUS_FORMAL_PARAMETER__VARIADIC = TFORMAL_PARAMETER__VARIADIC;
 
 	/**
+	 * The feature id for the '<em><b>Ast Initializer</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TANONYMOUS_FORMAL_PARAMETER__AST_INITIALIZER = TFORMAL_PARAMETER__AST_INITIALIZER;
+
+	/**
+	 * The feature id for the '<em><b>Has Initializer Assignment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TANONYMOUS_FORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT = TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT;
+
+	/**
 	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8351,6 +8405,15 @@ public interface TypesPackage extends EPackage {
 	int TANONYMOUS_FORMAL_PARAMETER___GET_CONTAINING_MODULE = TFORMAL_PARAMETER___GET_CONTAINING_MODULE;
 
 	/**
+	 * The operation id for the '<em>Has AST Initializer</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TANONYMOUS_FORMAL_PARAMETER___HAS_AST_INITIALIZER = TFORMAL_PARAMETER___HAS_AST_INITIALIZER;
+
+	/**
 	 * The operation id for the '<em>Is Optional</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8367,6 +8430,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TANONYMOUS_FORMAL_PARAMETER___IS_VARIADIC_OR_OPTIONAL = TFORMAL_PARAMETER___IS_VARIADIC_OR_OPTIONAL;
+
+	/**
+	 * The operation id for the '<em>Get Formal Parameter As Types String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TANONYMOUS_FORMAL_PARAMETER___GET_FORMAL_PARAMETER_AS_TYPES_STRING = TFORMAL_PARAMETER___GET_FORMAL_PARAMETER_AS_TYPES_STRING;
 
 	/**
 	 * The operation id for the '<em>Get Formal Parameter As String</em>' operation.
@@ -13101,6 +13173,28 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTFormalParameter_Variadic();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TFormalParameter#getAstInitializer <em>Ast Initializer</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Ast Initializer</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TFormalParameter#getAstInitializer()
+	 * @see #getTFormalParameter()
+	 * @generated
+	 */
+	EAttribute getTFormalParameter_AstInitializer();
+
+	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializerAssignment <em>Has Initializer Assignment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Has Initializer Assignment</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TFormalParameter#isHasInitializerAssignment()
+	 * @see #getTFormalParameter()
+	 * @generated
+	 */
+	EAttribute getTFormalParameter_HasInitializerAssignment();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.types.TFormalParameter#getTypeRef <em>Type Ref</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13110,6 +13204,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTFormalParameter_TypeRef();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TFormalParameter#hasASTInitializer() <em>Has AST Initializer</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Has AST Initializer</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TFormalParameter#hasASTInitializer()
+	 * @generated
+	 */
+	EOperation getTFormalParameter__HasASTInitializer();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TFormalParameter#isOptional() <em>Is Optional</em>}' operation.
@@ -13130,6 +13234,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTFormalParameter__IsVariadicOrOptional();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TFormalParameter#getFormalParameterAsTypesString() <em>Get Formal Parameter As Types String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Formal Parameter As Types String</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TFormalParameter#getFormalParameterAsTypesString()
+	 * @generated
+	 */
+	EOperation getTFormalParameter__GetFormalParameterAsTypesString();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TFormalParameter#getFormalParameterAsString() <em>Get Formal Parameter As String</em>}' operation.
@@ -15384,12 +15498,36 @@ public interface TypesPackage extends EPackage {
 		EAttribute TFORMAL_PARAMETER__VARIADIC = eINSTANCE.getTFormalParameter_Variadic();
 
 		/**
+		 * The meta object literal for the '<em><b>Ast Initializer</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TFORMAL_PARAMETER__AST_INITIALIZER = eINSTANCE.getTFormalParameter_AstInitializer();
+
+		/**
+		 * The meta object literal for the '<em><b>Has Initializer Assignment</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT = eINSTANCE.getTFormalParameter_HasInitializerAssignment();
+
+		/**
 		 * The meta object literal for the '<em><b>Type Ref</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference TFORMAL_PARAMETER__TYPE_REF = eINSTANCE.getTFormalParameter_TypeRef();
+
+		/**
+		 * The meta object literal for the '<em><b>Has AST Initializer</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TFORMAL_PARAMETER___HAS_AST_INITIALIZER = eINSTANCE.getTFormalParameter__HasASTInitializer();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Optional</b></em>' operation.
@@ -15406,6 +15544,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TFORMAL_PARAMETER___IS_VARIADIC_OR_OPTIONAL = eINSTANCE.getTFormalParameter__IsVariadicOrOptional();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Formal Parameter As Types String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TFORMAL_PARAMETER___GET_FORMAL_PARAMETER_AS_TYPES_STRING = eINSTANCE.getTFormalParameter__GetFormalParameterAsTypesString();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Formal Parameter As String</b></em>' operation.

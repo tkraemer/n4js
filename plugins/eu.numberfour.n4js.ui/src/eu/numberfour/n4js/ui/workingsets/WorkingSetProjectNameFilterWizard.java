@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Text;
 import com.google.common.base.Optional;
 
 import eu.numberfour.n4js.ui.workingsets.ProjectNameFilterAwareWorkingSetManager.ProjectNameFilterWorkingSet;
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Wizard for creating and editing project name filter based working sets.

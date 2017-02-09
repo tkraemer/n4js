@@ -35,6 +35,8 @@ import java.util.List
 import org.eclipse.emf.ecore.EMap
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.emf.common.util.EList
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 
 type IterableOfTClassifier wraps Iterable<? extends TClassifier>
 type Variance wraps Variance
@@ -1259,14 +1261,57 @@ class TStructMethod extends TMethod, TStructMember {
 
 class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRelatedTElement {
 	boolean variadic
+	/*
+	 * If and only if the TFormalParameter is used as an AST node, this property holds the initializer
+	 * type reference. This occurs in a situation like this:
+	 * <pre>
+	 * val fn : function(p : int = undefined) => void;
+	 * </pre>
+	 */
+	String astInitializer
+	boolean hasInitializerAssignment
 	contains TypeRef typeRef
-	/* Convenience method, returns true if typeRef undef modifier is optional. If type ref is not set, false is returned. */
+
+	/* Convenience method, returns true if this fparam has an initializer. */
+	op boolean hasASTInitializer() {
+		return astInitializer !== null;
+	}
+	
+	/* Convenience method, returns true if this or one of the preceding parameters have an initializer. */
 	op boolean isOptional() {
-		typeRef !== null && typeRef.undefModifier === UndefModifier.OPTIONAL
+		val EList<TFormalParameter> fpars = switch(eContainer) {
+            TFunction: (eContainer as TFunction).fpars
+            FunctionTypeExprOrRef: (eContainer as FunctionTypeExprOrRef).fpars
+            default: return false
+        };
+		
+		for (var i=fpars.indexOf(this); i>=0; i--) {
+			val fpar = fpars.get(i);
+			if (fpar.isVariadic || fpar.hasInitializerAssignment) {
+				return true;
+			}
+		}
+		return false;
 	}
 	/* Convenience method, returns true if typeRef undef modifier is optional or variadic. */
 	op boolean isVariadicOrOptional() {
 		return variadic || optional;
+	}
+	/**
+	 * Returns string representation of formal parameter according to syntax definition, including
+	 * preceding variadic modifier and type. The parameter name is omitted. Use when displaying the
+	 * parameter as part of an type or a type expression.
+	 */
+	op String getFormalParameterAsTypesString() {
+		val StringBuilder strb = new StringBuilder();
+		if (variadic) strb.append("...");
+		if (typeRef !== null) {
+			strb.append(typeRef.typeRefAsString);
+		} else {
+			strb.append("null");
+		}
+		if (hasInitializerAssignment) strb.append("=…");
+		return strb.toString();
 	}
 	/**
 	 * Returns string representation of formal parameter according to syntax definition, including
@@ -1277,6 +1322,7 @@ class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRel
 		if (variadic) strb.append("...");
 		strb.append(name);
 		if (typeRef!==null) strb.append(": ").append(typeRef.typeRefAsString);
+		if (hasInitializerAssignment) strb.append("=…");
 		return strb.toString();
 	}
 //	op String getFormalParameterAsHTML() {
