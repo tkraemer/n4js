@@ -33,12 +33,8 @@ import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.InferenceVariable
-import org.eclipse.xtext.EcoreUtil2
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.FunctionDefinition
-import org.eclipse.emf.ecore.util.EcoreUtil
-import eu.numberfour.n4js.n4JS.Block
-import eu.numberfour.n4js.n4JS.ArrowFunction
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import java.util.Map
 import java.util.HashMap
@@ -210,13 +206,25 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 			var refIsInitializer = false;
 			if (allRefs.size === 1) {
 				val ref = allRefs.get(0);
-				refIsInitializer = ref.eContainmentFeature === N4JSPackage.Literals.FORMAL_PARAMETER__INITIALIZER;
+				refIsInitializer = ref.eContainer === fparAST;
 			}
 			
 			if (refIsInitializer) {
-				val refID = allRefs.get(0).getId();
-				val fparTCopy = typeRefMap.get(refID);
-				infCtx.addConstraint(TypeUtils.createTypeRef(iv), TypeUtils.copy(fparTCopy.typeRef), Variance.CONTRA);
+				val fparam = allRefs.get(0).getId() as FormalParameter;
+				val fparTCopy = typeRefMap.get(fparam);
+				var TypeRef tRef = null;
+				if (fparTCopy !== null) {
+					// happens when the initializer is a parameter ('a') is of the same function
+					// example: f(a, b = a) {}
+					tRef = fparTCopy.typeRef;
+				} else {
+					// happens when the initializer is a parameter ('a') of another function
+					// example: f(a, b = (z=a)=>{} ) {}
+					tRef = fparam.definedTypeElement?.typeRef;
+				}
+				if (tRef !== null) {
+					infCtx.addConstraint(TypeUtils.createTypeRef(iv), TypeUtils.copy(tRef), Variance.CONTRA);
+				}
 			} else if (!referenceToFunctionsParameter) {
 				val context = if (fparT.eContainer instanceof ContainerType<?>)
 						TypeUtils.createTypeRef(fparT.eContainer as ContainerType<?>) else null;
