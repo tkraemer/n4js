@@ -3546,41 +3546,56 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     } else {
       boolean _isHasInitializerAssignment = fpar.isHasInitializerAssignment();
       if (_isHasInitializerAssignment) {
-        Expression _initializer = fpar.getInitializer();
-        boolean _tripleNotEquals_1 = (_initializer != null);
-        if (_tripleNotEquals_1) {
-          /* G |- fpar.initializer : var TypeRef E */
-          Expression _initializer_1 = fpar.getInitializer();
-          TypeRef E = null;
-          Result<TypeRef> result = typeInternal(G, _trace_, _initializer_1);
-          checkAssignableTo(result.getFirst(), TypeRef.class);
-          E = (TypeRef) result.getFirst();
-          
-          /* G |~ E /\ E */
-          Result<TypeRef> result_1 = upperBoundInternal(G, _trace_, E);
-          checkAssignableTo(result_1.getFirst(), TypeRef.class);
-          E = (TypeRef) result_1.getFirst();
-          
-          T = E;
-          if ((((E.getDeclaredType() == RuleEnvironmentExtensions.undefinedType(G)) || (E.getDeclaredType() == RuleEnvironmentExtensions.nullType(G))) || (E.getDeclaredType() == RuleEnvironmentExtensions.voidType(G)))) {
-            ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
-            T = _anyTypeRef;
-          }
-        } else {
-          ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
-          T = _anyTypeRef_1;
+        TFormalParameter _definedTypeElement_2 = null;
+        if (fpar!=null) {
+          _definedTypeElement_2=fpar.getDefinedTypeElement();
         }
-      } else {
-        TFormalParameter _definedTypeElement_2 = fpar.getDefinedTypeElement();
         TypeRef _typeRef_1 = null;
         if (_definedTypeElement_2!=null) {
           _typeRef_1=_definedTypeElement_2.getTypeRef();
         }
-        boolean _tripleNotEquals_2 = (_typeRef_1 != null);
-        if (_tripleNotEquals_2) {
+        boolean _tripleNotEquals_1 = (_typeRef_1 != null);
+        if (_tripleNotEquals_1) {
           TFormalParameter _definedTypeElement_3 = fpar.getDefinedTypeElement();
           TypeRef _typeRef_2 = _definedTypeElement_3.getTypeRef();
           T = _typeRef_2;
+        } else {
+          Expression _initializer = fpar.getInitializer();
+          boolean _tripleNotEquals_2 = (_initializer != null);
+          if (_tripleNotEquals_2) {
+            /* G |- fpar.initializer : var TypeRef E */
+            Expression _initializer_1 = fpar.getInitializer();
+            TypeRef E = null;
+            Result<TypeRef> result = typeInternal(G, _trace_, _initializer_1);
+            checkAssignableTo(result.getFirst(), TypeRef.class);
+            E = (TypeRef) result.getFirst();
+            
+            /* G |~ E /\ E */
+            Result<TypeRef> result_1 = upperBoundInternal(G, _trace_, E);
+            checkAssignableTo(result_1.getFirst(), TypeRef.class);
+            E = (TypeRef) result_1.getFirst();
+            
+            T = E;
+            if ((((E.getDeclaredType() == RuleEnvironmentExtensions.undefinedType(G)) || (E.getDeclaredType() == RuleEnvironmentExtensions.nullType(G))) || (E.getDeclaredType() == RuleEnvironmentExtensions.voidType(G)))) {
+              ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
+              T = _anyTypeRef;
+            }
+          } else {
+            ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
+            T = _anyTypeRef_1;
+          }
+        }
+      } else {
+        TFormalParameter _definedTypeElement_4 = fpar.getDefinedTypeElement();
+        TypeRef _typeRef_3 = null;
+        if (_definedTypeElement_4!=null) {
+          _typeRef_3=_definedTypeElement_4.getTypeRef();
+        }
+        boolean _tripleNotEquals_3 = (_typeRef_3 != null);
+        if (_tripleNotEquals_3) {
+          TFormalParameter _definedTypeElement_5 = fpar.getDefinedTypeElement();
+          TypeRef _typeRef_4 = _definedTypeElement_5.getTypeRef();
+          T = _typeRef_4;
         } else {
           boolean _enforceDynamicTypes = this.jsVariantHelper.enforceDynamicTypes(fpar);
           if (_enforceDynamicTypes) {

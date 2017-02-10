@@ -1197,7 +1197,9 @@ from {
 		}
 	}
 	else if (fpar.hasInitializerAssignment) {
-		if (fpar.initializer !== null) {
+		if (fpar?.definedTypeElement?.typeRef!==null) {
+			T = fpar.definedTypeElement.typeRef;
+		} else if (fpar.initializer !== null) {
 			G |- fpar.initializer : var TypeRef E
 			G |~ E /\ E // take upper bound to get rid of ExistentialTypeRef (if any)
 			T = E

@@ -10,12 +10,16 @@
  */
 package eu.numberfour.n4js.utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.eclipse.emf.common.util.AbstractTreeIterator;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -28,6 +32,7 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure0;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterators;
+import com.google.common.collect.Lists;
 
 /**
  */
@@ -112,6 +117,42 @@ public class EcoreUtilN4 {
 				return (Iterator<? extends EObject>) Iterators.filter(((EObject) element).eContents().iterator(), type);
 			}
 		};
+	}
+
+	/**
+	 * Returns all content of a given type, ignoring all elements which are not of the given type. This filters out also
+	 * elements of the given type, if their container has a different type. The given object itself is neither added to
+	 * the result nor is it tested against the predicate.
+	 *
+	 * @param eobj
+	 *            the root object, may be null
+	 * @return the tree iterator, may be an empty iterator but never null
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> List<T> getAllContentsOfTypeStopAt(EObject eobj, final Class<T> filterType,
+			final EReference... stopReferences) {
+
+		if (eobj == null) {
+			return Collections.EMPTY_LIST;
+		}
+
+		List<EReference> stopReferencesL = Arrays.asList(stopReferences);
+		TreeIterator<EObject> tit = new AbstractTreeIterator<EObject>(eobj, false) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Iterator<EObject> getChildren(Object element) {
+				EReference eRef = ((EObject) element).eContainmentFeature();
+				if (stopReferencesL != null && stopReferencesL.contains(eRef))
+					return emptyTreeIterator();
+
+				EList<EObject> children = ((EObject) element).eContents();
+				return children.iterator();
+			}
+		};
+
+		ArrayList<T> contentList = Lists.newArrayList(Iterators.filter(tit, filterType));
+		return contentList;
 	}
 
 	/**

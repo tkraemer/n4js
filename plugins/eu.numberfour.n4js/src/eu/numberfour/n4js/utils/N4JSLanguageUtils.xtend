@@ -169,7 +169,8 @@ class N4JSLanguageUtils {
 	}
 
 	def static boolean isIdentifiableSubtree(EObject astNode) {
-		astNode instanceof IdentifiableElement || astNode.getDefinedTypeModelElement instanceof IdentifiableElement
+		astNode instanceof IdentifiableElement
+		|| astNode.getDefinedTypeModelElement instanceof IdentifiableElement
 		|| astNode instanceof FunctionDeclaration
 		// classes with compile error, e.g. missing name, do not necessarily have DefinedTypeModelElement
 		// thus the additional check below
