@@ -75,6 +75,8 @@ public abstract class GitUtils {
 	 */
 	private static final Logger LOGGER = getLogger(GitUtils.class);
 
+	private static final String ORIGIN = DEFAULT_REMOTE_NAME;
+
 	/** Callback that configures the SSH factory for the transport if possible, otherwise does nothing at all. */
 	private static final TransportConfigCallback TRANSPORT_CALLBACK = transport -> {
 		if (transport instanceof SshTransport) {
@@ -314,7 +316,7 @@ public abstract class GitUtils {
 						git.pull().setProgressMonitor(createMonitor()).call();
 						// check if the remote desired branch exists or not.
 						final Ref remoteBranchRef = from(git.branchList().setListMode(REMOTE).call())
-								.firstMatch(ref -> ref.getName().equals(R_REMOTES + "origin/" + branch)).orNull();
+								.firstMatch(ref -> ref.getName().equals(R_REMOTES + ORIGIN + "/" + branch)).orNull();
 						// since repository might be cloned via --depth 1 (aka shallow clone) we cannot just switch to
 						// any remote branch those ones do not exist. and we cannot run 'pull --unshallow' either.
 						// we have to delete the repository content and run a full clone from scratch.
