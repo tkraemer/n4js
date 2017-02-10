@@ -114,22 +114,25 @@ public abstract class GitUtils {
 				LOGGER.info("Current branch is: '" + currentBranch + "'.");
 				LOGGER.info("Switching to desired '" + branch + "' branch...");
 				git.pull().setProgressMonitor(createMonitor()).call();
-				final Iterable<Ref> localBranchRefs = git.branchList().call();
-				final boolean createLocalBranch = !from(localBranchRefs).transform(ref -> ref.getName()).toSet()
-						.contains(branch);
+
+				final boolean createLocalBranch = !hasLocalBranch(git, branch);
 				LOGGER.info("Creating local branch '" + branch + "'? --> " + (createLocalBranch ? "yes" : "no"));
 				git.checkout().setCreateBranch(createLocalBranch).setName(branch)
 						.setStartPoint(R_REMOTES + "origin/" + branch).call();
-				checkState(currentBranch.equals(branch),
+
+				checkState(git.getRepository().getBranch().equals(branch),
 						"Error when checking out '" + branch + "' branch.");
-				LOGGER.info("Switched to '" + currentBranch + "' branch.");
+				LOGGER.info("Switched to '" + branch + "' branch.");
 				git.pull().setProgressMonitor(createMonitor()).call();
 			}
+
 			LOGGER.info("Hard resetting local repository HEAD of the '" + branch + "' in '" + remoteUri + "'...");
 			LOGGER.info("Local repository location: " + localClonePath + ".");
+
 			final ResetCommand resetCommand = git.reset().setMode(HARD).setRef(HEAD);
 			final Ref ref = resetCommand.call();
 			LOGGER.info("Repository content has been successfully reset to '" + ref + "'.");
+
 			final Collection<String> deletedFiles = git.clean().setCleanDirectories(true).call();
 			LOGGER.info("Cleaned up " + deletedFiles.size() + " files:\n" + Joiner.on(",\n").join(deletedFiles));
 		} catch (final RepositoryNotFoundException e) {
@@ -354,6 +357,11 @@ public abstract class GitUtils {
 			LOGGER.info("Inconsistent checkout directory was successfully cleaned up.");
 			throw new RuntimeException(message, e);
 		}
+	}
+
+	private static boolean hasLocalBranch(Git git, final String branchName) throws GitAPIException {
+		final Iterable<Ref> localBranchRefs = git.branchList().call();
+		return from(localBranchRefs).anyMatch(ref -> ref.getName().endsWith(branchName));
 	}
 
 	/**
