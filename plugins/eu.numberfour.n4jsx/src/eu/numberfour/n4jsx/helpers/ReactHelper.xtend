@@ -114,8 +114,7 @@ class ReactHelper {
 		val index = rdp.getResourceDescriptions((o.eResource));
 		val rd = index.getResourceDescription(o.eResource.URI)
 		cm.getVisibleContainers(rd, index);
-	}
-	
+	}	
 	
 	/**
 	 * Calculate the type that an JSX element is binding to, usually class/function type
