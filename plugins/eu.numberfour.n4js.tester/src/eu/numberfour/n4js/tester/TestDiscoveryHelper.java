@@ -48,8 +48,8 @@ import com.google.common.base.Optional;
 import com.google.common.collect.HashMultimap;
 import com.google.inject.Inject;
 
+import eu.numberfour.n4js.fileextensions.FileExtensionType;
 import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
-import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry.FileExtensionType;
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration;
 import eu.numberfour.n4js.naming.QualifiedNameComputer;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
@@ -419,7 +419,7 @@ public class TestDiscoveryHelper {
 	}
 
 	private boolean isTestFile(final URI uri) {
-		return fileExtensionRegistry.getFileExtensions(FileExtensionType.TEST_FILE_EXTENSION)
+		return fileExtensionRegistry.getFileExtensions(FileExtensionType.TESTABLE_FILE_EXTENSION)
 				.contains(uri.fileExtension());
 	}
 

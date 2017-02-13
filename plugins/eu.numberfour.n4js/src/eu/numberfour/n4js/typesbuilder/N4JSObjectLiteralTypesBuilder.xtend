@@ -40,7 +40,7 @@ public class N4JSObjectLiteralTypesBuilder {
 	def package createObjectLiteral(ObjectLiteral objectLiteral, TModule target, boolean preLinkingPhase) {
 		val builtInTypeScope = BuiltInTypeScope.get(objectLiteral.eResource.resourceSet)
 		val TStructuralType structType = TypesFactory.eINSTANCE.createTStructuralType
-		objectLiteral.propertyAssignments.forEach [
+		objectLiteral.propertyAssignments.filter[name!==null].forEach [
 			val TStructMember typeModelElement = createTypeModelElement(structType, objectLiteral, it, builtInTypeScope, preLinkingPhase);
 			if(typeModelElement!==null) {
 				typeModelElement.astElement = it;
