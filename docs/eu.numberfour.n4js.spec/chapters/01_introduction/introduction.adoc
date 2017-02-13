@@ -96,7 +96,7 @@ The following judgments (with relation symbols) are used:
 subtype $<$ ::
 -
 
-type $\type$ ::
+type $\texttt{:}$ ::
 in which the left hand side is a declaration or expression, and the right hand side a type.
 We also use $\infType{\dots}$ as a function returning the (inferred) type of an expression.
 

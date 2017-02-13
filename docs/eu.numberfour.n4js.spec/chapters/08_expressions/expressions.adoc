@@ -458,16 +458,12 @@ The latter case is known as property access as further described in <<_property-
 --
 If an identifier $i$ is accessed, the bound declared element $D$ must be readable if it is not used on the left-hand side of an assignment expression.
 
-[math]
-++++
-\beginalign
-& bind(i, D) \\
-& \hspace{2em}\land \nexists\ \type{AssignmentExpression}\ ae \in i.container^*: \\
-& \hspace{3em} ae.left = i \\
-& \hspace{4em}\lor (\mu(ae.left)=\type{PropertyAccessExpression} \land ae.left.property=i): \\
-& \Rightarrow D.readable \\
-\endalign
-++++
+[%hardbreaks]
+$\spc bind(i, D) $
+$\spc \hspace{2em}\land \nexists\ \type{AssignmentExpression}\ ae \in i.container^*: $
+$\spc \hspace{3em} ae.left = i $
+$\spc \hspace{4em}\lor (\mu(ae.left)=\type{PropertyAccessExpression} \land ae.left.property=i): $
+$\spc \to D.readable $
 
 --
 
@@ -546,17 +542,17 @@ There are differences to numeric literals in Java:
 
 h|Literal  h| Value h| Type h| Value h| Type
 
-|2147483648  |  -2147483648  |  int  |  -2147483648  |  int
-|2147483647  |  2147483647  |  int  |  2147483647  |  int
-|0x7fffffff  |  2147483647  |  int  |  2147483647  |  int
-|0x80000000  |  -2147483648  |  int  | +2147483648 |  number
-|0xffffffff  |  -1  |  int  |  4294967295  |  number
-|0x100000000  2+^h| n/a e|  4294967296  m|  number
-|017777777777  |  2147483647  |  int  |  2147483647  |  int
-|020000000000  |  -2147483648  |  int  |  +2147483648  |  number
-|037777777777  |  -1  |  int  |  4294967295  |  number
-|040000000000  |  0  |  int  |  4294967296  |  number
-|0100000000000  2+^h|  n/a  e|  8589934592  m|  number
+|2147483648         |  -2147483648      |  int          |  -2147483648  |  int
+|2147483647         |  2147483647       |  int          |  2147483647   |  int
+|0x7fffffff         |  2147483647       |  int          |  2147483647   |  int
+|0x80000000         |  -2147483648      |  int          | +2147483648   |  number
+|0xffffffff         |  -1               |  int          |  4294967295   |  number
+|0x100000000    2+^h| n/a                              e|  4294967296  m|  number
+|017777777777       |  2147483647       |  int          |  2147483647   |  int
+|020000000000       |  -2147483648      |  int          |  +2147483648  |  number
+|037777777777       |  -1               |  int          |  4294967295   |  number
+|040000000000       |  0                |  int          |  4294967296   |  number
+|0100000000000  2+^h|  n/a                             e|  8589934592  m|  number
 |===
 
 The literals `0x100000000` and `0100000000000` produce a syntax error in Java.
@@ -788,36 +784,24 @@ For a given object literal $ol$ the following constraints must hold (cf. cite:[E
 
 * Object literal may not have two PropertyNameValuePairs with the same name in strict mode (cf. 4.a):
 +
-[math]
-++++
-\beginalign
-mode=\lenum{strict} \to \spc \forall pa \in ol.propertyAssignments, pa.isData:\\
-\spc \nexists pa' \in ol.propertyAssignments:\\
-\spc pa'.isAccessor \land pa'.name = pa.name
-\endalign
-++++
+[%hardbreaks]
+$mode=\lenum{strict} \to \spc \forall pa \in ol.propertyAssignments, pa.isData:$
+$\spc \nexists pa' \in ol.propertyAssignments:$
+$\spc pa'.isAccessor \land pa'.name = pa.name$
 
 * Object literal may not have PropertyNameValuePair and ``PropertyGetterDeclaration``/``PropertySetterDeclaration`` with the same name (cf. 4.b/c):
 +
-[math]
-++++
-\beginalign
-\forall \spc pa \in ol.propertyAssignments, pa.isData : \\
-\nexists \spc pgsd \in ol.propertyAssignments : \\
-\mu(pgsd) \neq\type{PropertyNameValuePair} \land pgsd.name = pa.name
-\endalign
-++++
+[%hardbreaks]
+$\forall \spc pa \in ol.propertyAssignments, pa.isData : $
+$\nexists \spc pgsd \in ol.propertyAssignments : $
+$\mu(pgsd) \neq\type{PropertyNameValuePair} \land pgsd.name = pa.name$
 
 * Object literal may not have multiple `PropertyGetterDeclaration` or `PropertySetterDeclaration` with the same name (cf. 4.d):
 +
-[math]
-++++
-\beginalign
-\forall \spc pg \in ol.propertyAssignments, pg.isAccessor:\\
-\nexists \spc pg' \in ol.propertyAssignments\{pg\}: \\
-\spc \mu(pg')=\mu(pg) \land pg'.name = pg.name
-\endalign
-++++
+[%hardbreaks]
+$\forall \spc pg \in ol.propertyAssignments, pg.isAccessor:$
+$\nexists \spc pg' \in ol.propertyAssignments\{pg\}: $
+$\spc \mu(pg')=\mu(pg) \land pg'.name = pg.name$
 
 [quote]
 It is a SyntaxError if the Identifier `eval` or the Identifier `arguments` occurs as the Identifier in a `PropertySetParameterList` of a `PropertyAssignment` that is contained in strict code or if its
@@ -829,13 +813,10 @@ That is to say that the inferred (but not declared) type of all assignments must
 
 * In N4JS mode, the name of a property must be a valid N4JSIdentifier:
 +
-[math]
-++++
-\beginalign
-mode=\lenum{n4js} \to \spc \forall pa \in ol.propertyAssignments:\\
-\spc \mu(pa.name)=\type{N4JSIdentifier}
-\endalign
-++++
+[%hardbreaks]
+$mode=\lenum{n4js} \to \spc \forall pa \in ol.propertyAssignments:$
+$\spc \mu(pa.name)=\type{N4JSIdentifier}$
+
 
 // TODO check math here
 
@@ -1018,7 +999,7 @@ The constraints are basically similar.
 [math]
 ++++
 \spc pae.isDotAccess \land \lnot R.dyn \to\\
-& (\exists m \in pae.target.type.properties : m.name=pae.name) \to  \alpha(pae, m)
+\spc (\exists m \in pae.target.type.properties : m.name=pae.name) \to  \alpha(pae, m)
 ++++
 +
 3.  If dot notation is used and the referenced property exists and this property is a member with a declared `@This` type (only possible for methods or field accessors),
@@ -1045,40 +1026,34 @@ That is to say, for an indexed-access expression $iae$, the following constraint
 [math]
 ++++
 \beginalign
-&\tee ia.target \subtype T, T \in \types{Array, ArgumentType, string, String, Iterable} \\
-&\lor\\
-&\tee ia.target = \type{Object}
+\spc\tee ia.target \subtype T, T \in \types{Array, ArgumentType, string, String, Iterable} \\
+\spc\lor\\
+\spc\tee ia.target = \type{Object}
 \endalign
 ++++
 +
 3. In N4JS mode, if the receiver is an array and is not dynamic, in case of index access the index expression must be a number:
 +
-[math]
-++++
-& mode=\lenum{n4js} \land pae.target.type=\type{Array} \land pae.isIndexAccess \\
-& \Rightarrow \tee pae.index \subtype[number]
-++++
+[%hardbreaks]
+$\spc mode=\lenum{n4js} \land pae.target.type=\type{Array} \land pae.isIndexAccess $
+$\spc \to \tee pae.index \subtype[number]$
 4.  In N4JS mode, if the receiver is a subtype of types or and is not dynamic, in case of index access the index expression must be a number:  task:IDE-837[]
 +
-[math]
-++++
-\beginalign
-& mode=\lenum{n4js} \\
-& \hspace{3em} \land (\tee pae.target\subtype {string} \lor \tee pae.target \subtype {String}) \\
-& \hspace{3em} \land pae.isIndexAccess \\
-& \Rightarrow \tee pae.index \subtype{number}
-\endalign
-++++
+[%hardbreaks]
+$\spc mode=\lenum{n4js} $
+$\spc \hspace{3em} \land (\tee pae.target\subtype {string} \lor \tee pae.target \subtype {String}) $
+$\spc \hspace{3em} \land pae.isIndexAccess $
+$\spc \to \tee pae.index \subtype{number}
 5.  In N4JS mode, if the receiver is an iterable and is not dynamic, in case of index access the index expression must be a property access expression to the built-in symbol `Symbol.iterator`:
 +
 [math]
 ++++
-& mode=\lenum{n4js} \land pae.target.type=\type{Iterable} \land pae.isIndexAccess \\
-& \Rightarrow \\
-& \hspace{3em} \mu(pae.index)=\type{IndexedAccessExpression} \\
-& \hspace{3em} \land pae.index.isDotAccess \\
-& \hspace{3em} \land pae.index.target = \type{Symbol} \\
-& \hspace{3em} \land pae.index.property = "iterator" \\
+\spc mode=\lenum{n4js} \land pae.target.type=\type{Iterable} \land pae.isIndexAccess \\
+\spc \to \\
+\spc \hspace{3em} \mu(pae.index)=\type{IndexedAccessExpression} \\
+\spc \hspace{3em} \land pae.index.isDotAccess \\
+\spc \hspace{3em} \land pae.index.target = \type{Symbol} \\
+\spc \hspace{3em} \land pae.index.property = "iterator" \\
 ++++
 
 --
@@ -1130,7 +1105,7 @@ We define the following type inferencing rules for property accessors:
 [math]
 ++++
 \beginalign
-\infer{\tee p: T}{\lnot p.target.dyn \lor p.index.type \subtype[number] & \tee p.target: \type{Array<T>}} \\
+\infer{\tee p: T}{\lnot p.target.dyn \lor p.index.type \subtype[number] \spc \tee p.target: \type{Array<T>}} \\
 \infer{\tee p: \type{any}}{else}
 \endalign
 ++++
@@ -1139,7 +1114,7 @@ We define the following type inferencing rules for property accessors:
 [math]
 ++++
 \beginalign
-\infer{\type{PropertyAccessExpression}\ expr: T}{\typeEnvAdd \typeSubs(R) \entails expr.target : R & \typeEnv \entails expr.property : T}
+\infer{\type{PropertyAccessExpression}\ expr: T}{\typeEnvAdd \typeSubs(R) \entails expr.target : R \spc \typeEnv \entails expr.property : T}
 \endalign
 ++++
 
@@ -1148,7 +1123,7 @@ We define the following type inferencing rules for property accessors:
 [math]
 ++++
 \beginalign
-\infer{\tee p: T}{\exists m \in p.target: m.name=p.name & \tee m: T}
+\infer{\tee p: T}{\exists m \in p.target: m.name=p.name \spc \tee m: T}
 \infer{\tee p: \type{any}}{}
 \endalign
 ++++
@@ -1356,7 +1331,7 @@ The type of the call is inferred from the function declaration or type $F$ as fo
 
 [math]
 ++++
-\infer{\tee expr: T}{bind(expr.target, F) & F.returnType: T}
+\infer{\tee expr: T}{bind(expr.target, F) \spc F.returnType: T}
 ++++
 
 task:IDE-205[]
@@ -1529,16 +1504,12 @@ There are no specific constraints defined for with $u.op=\lstnfjs{!}$.
 
 The following operators have fixed types independent of their operand types: task:IDE-244[] task:IDE-345[]
 
-[math]
-++++
-\beginalign
-\spc \infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{} \\
-\spc \infer{\tee \lstnfbnf{'void'}\ expression: \type{undefined}}{}\\
-\spc \infer{\tee \lstnfbnf{'typeof'}\ expression: \type{string}}{}\\
-\spc \infer{\tee \lstnfbnf{('++'|'$--$'|'+'|'$-$'|'~')}\ expression: \type{number}}{}\\
-\spc \infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{}\\
-\endalign
-++++
+[%hardbreaks]
+$ \spc \infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{}  $
+$ \spc \infer{\tee \lstnfbnf{'void'}\ expression: \type{undefined}}{} $
+$ \spc \infer{\tee \lstnfbnf{'typeof'}\ expression: \type{string}}{} $
+$ \spc \infer{\tee \lstnfbnf{('++'|'$--$'|'+'|'$-$'|'~')}\ expression: \type{number}}{} $
+$ \spc \infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{} $
 
 === Multiplicative Expression
 
@@ -1745,17 +1716,11 @@ the following constraints must hold:
 
 * The operands must have the same type and the type must be either a number, string, or boolean:
 +
-[math]
-++++
-\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}
-        { \tee rhs: T \spc T\in \{\type{number,string,boolean}\}} \\
-\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}
-        { \tee rhs: O \spc O \not\in \{\type{number,string,boolean}\} \spc T=\type{\union{number,string,boolean}}  } \\
-\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ rhs: T}
-        { \tee lhs: T \spc T\in \{\type{number,string,boolean}\}} \\
-\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ rhs: T}
-        { \tee lhs: O \spc O \not\in \{\type{number,string,boolean}\} \spc T=\type{\union{number,string,boolean}}  } \\
-++++
+[%hardbreaks]
+$\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}{ \tee rhs: T \spc T\in \{\type{number,string,boolean}\}}$
+$\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}{ \tee rhs: O \spc O \not\in \{\type{number,string,boolean}\} \spc T=\type{\union{number,string,boolean}}  } $
+$\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ rhs: T}{ \tee lhs: T \spc T\in \{\type{number,string,boolean}\}} $
+$\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ rhs: T}{ \tee lhs: O \spc O \not\in \{\type{number,string,boolean}\} \spc T=\type{\union{number,string,boolean}}  } $
 
 
 --
@@ -2056,14 +2021,11 @@ task:IDE-776[]
 --
 For a given conditional expression $e$ with
 
-[math]
-++++
-\beginalign
-e.expression.type: C,
-e.trueExpression.type: T,
-e.false-Expression.type: F
-\endalign
-++++
+[%hardbreaks]
+$e.expression.type: C,$
+$e.trueExpression.type: T,$
+$e.false-Expression.type: F$
+
 
 the following constraints must hold:
 

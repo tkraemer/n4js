@@ -264,10 +264,10 @@ A given DIComponent is compatible with another DIComponent if it has bindings fo
 
 [math]
 ++++
-\exists DIC1,DIC2 : DIC1.\seq{binding}.\seq{key} \to DIC2.\seq{binding}.\seq{key} \iff DIC2<:DIC1
+\exists DIC1,DIC2 : DIC1.\seq{binding}.\seq{key} \to DIC2.\seq{binding}.\seq{key} \iff DIC2 \subtype DIC1
 ++++
 
-NOTE: Although subtype notation $<:$ is used here it does *not* imply actual subtype relations.
+NOTE: Although subtype notation $\subtype$ is used here it does *not* imply actual subtype relations.
 It was used in this instance for of lack of formal notations for DI concepts and because this is similar to the Liskov Substitution principle.
 
 A complex Child-Parent relation between components is depicted in <<fig-complex-dicomponents-relations>> and <<ex:complex-dicomponents-relations>> below.
@@ -1212,7 +1212,7 @@ $P.implementedInterfaces=\emptyset$
 +
 [math]
 ++++
-\exists P.ownedCtor: P.ownedCtor <: F.ctor
+\exists P.ownedCtor: P.ownedCtor \subtype F.ctor
 ++++
 . $P$ must define the same type variables as the filled class $F$ and the arguments must be in the same order as the parameters (with no further modifications):
 +

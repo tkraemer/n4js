@@ -32,7 +32,7 @@ Types are related to each other by the subtype relation.
 --
 We use $subtype$ for the general subtype relation or type conformance.
 
-In nominal typing, $T\subtype S$ means that $S$ is a (transitive) supertype of _T_.
+In nominal typing, $T \subtype S$ means that $S$ is a (transitive) supertype of _T_.
 Generally in structural typing, this means that _T_ _conforms_ to $S$.
 $\subtype$ is defined transitive reflexive by default.
 
@@ -52,25 +52,19 @@ Join and meet are defined as follows:
 --
 A type $J$ is called a _join_ (or least common supertype, ) of a pair of types $S$ and _T_, written $S \join T = J$, if
 
-[math]
-++++
-\beginalign
-S \subtype J \\
-T \subtype J \\
-\forall L: (S \subtype L) \land (T \subtype L) \to J\subtype L
-\endalign
-++++
+[%hardbreaks]
+$ S \subtype J $
+$ T \subtype J $
+$ \forall L: (S \subtype L) \land (T \subtype L) \to J \subtype L $
+
 
 Similarly, we say that a type $M$ is a _meet_ (or greatest common subtype, ) of $S$ and _T_, written $S \meet T = M$, if +
 
-[math]
-++++
-\beginalign
-M \subtype  S\\
-M \subtype  T\\
-\forall L : (L\subtype S) \land (L\subtype T) \to L\subtype M
-\endalign
-++++
+[%hardbreaks]
+$ M \subtype  S  $
+$ M \subtype  T $
+$ \forall L : (L \subtype S) \land (L \subtype T) \to L \subtype M $
+
 --
 
 Note that this declarative definition needs to be specified in detail for special cases, such as union and intersection types.
@@ -85,7 +79,7 @@ This type hierarchy shows `any` and `undefined` as the top and bottom type (cf. 
 [def]
 --
 We call $Top$ the top type, if for all types _T_ the relation  $T \subtype  Top$ is true.
-We call $Bot$ the bottom type, if for all types _T_ the relation $Bot<:T$ is true.
+We call $Bot$ the bottom type, if for all types _T_ the relation $Bot \subtype T$ is true.
 In N4JS, $Top=any$, the bottom type $Bot=undefined$.
 --
 
@@ -464,10 +458,10 @@ class X<T extends A, S extends B> {
     }
 }
 ----
-<1> Even though the upper bound of `S` is a subtype of `T`’s upper bound (since $B <: A$), we cannot infer that `S` is a subtype of `T`,
+<1> Even though the upper bound of `S` is a subtype of `T`’s upper bound (since $B \subtype A$), we cannot infer that `S` is a subtype of `T`,
 because there are valid concrete bindings for which this would not be true: for example, if `T` were bound to `C` and `S` to `B`.
 <2> This differs from existential types (see `ga` and `gb` and line 21): +
-`G<? extends B>` $<:$ `G<? extends A>` ).
+`G<? extends B>` $\subtype$ `G<? extends A>` ).
 
 ====
 
@@ -477,26 +471,26 @@ If we have a subtype relation in which a type variable appears on one or both si
 1.  If we have type variables on both sides: the result is true if and only if there is the identical type variable on both sides.
 2.  If we have a type variable on the left side and no type variable on the right side: +
 the result is true if and only if the type variable on the left has one or more declared upper bounds. +
-$intersection(left.declaredUpperBounds) <: right$ +
+$intersection(left.declaredUpperBounds) \subtype right$ +
 This is the case for
 +
 [math]
 ++++
-(T \spc extends \spc B) <: A
+(T \spc extends \spc B) \subtype A
 ++++
-in which T is an unbound type variable and A, B two classes with $B <: A$.
+in which T is an unbound type variable and A, B two classes with $B \subtype A$.
 3.  In all other cases the result is false. +
 This includes cases such as
 +
 [math]
 ++++
-B <: (T \spc extends \spc A)
+B \subtype (T \spc extends \spc A)
 ++++
-which is always false, even if $B <: A$ or
+which is always false, even if $B \subtype A$ or
 +
 [math]
 ++++
-(T \spc extends \spc A) <: (S \spc extends \spc B)
+(T \spc extends \spc A) \subtype (S \spc extends \spc B)
 ++++
 which is always false, even if $A = B$.
 
@@ -511,13 +505,13 @@ For two types $T, S$ of which at least one is a type variable, we define
 +
 [math]
 ++++
-\infer{T <: S}{T = S}
+\infer{T \subtype S}{T = S}
 ++++
 * if _T_ is a type variable and $S$ is not:
 +
 [math]
 ++++
-\infer{T <: S}{{T.\mathit{declaredUpperBounds}.\mathit{size} > 0} {\ \land\ \forall t \in T.\mathit{declaredUpperBounds}: t <: S}}
+\infer{T \subtype S}{{T.\mathit{declaredUpperBounds}.\mathit{size} > 0} {\ \land\ \forall t \in T.\mathit{declaredUpperBounds}: t \subtype S}}
 ++++
 
 --
@@ -603,13 +597,10 @@ For a given parameterized type reference $R$ with $G=R.declaredType$, the follow
 
 * The actual type arguments must conform to the type parameters, that is:
 +
-[math]
-++++
-\beginalign
-|G.typePars|=|R.typeArgs|
-\land \forall\ i, 0 < i < |R.typeArgs|: \infType{R.typeArgs_i} <: \infType{R.typePars_i}
-\endalign
-++++
+[%hardbreaks]
+$ | G.typePars |=| R.typeArgs | $
+$ \land \forall\ i, 0 < i < | R.typeArgs |: \infType{R.typeArgs_i} \subtype \infType{R.typePars_i} $
+
 
 --
 
@@ -691,20 +682,18 @@ We define type conformance for non-primitive type references as follows:
 ++++
 * For two parameterized types $T<T_1,\dots,T_n>$ and $S<S_1,\dots,S_m>$
 +
-[math]
-++++
-\infer{\hspace{10em}T <: S\hspace{10em}}{{T^0<:S^0} \\
-{(n=0 \lor m=0 \lor (n=m \to \forall i:}\\
-\hspace{2em} {T_i.upperBound <: S_i.upperBound} \\
-\hspace{1em} \land {T_i.lowerBound :> S_i.lowerBound}))}
-++++
+[%hardbreaks]
+$\infer{\hspace{10em}T \subtype S\hspace{10em}}{{T^0 \subtype S^0}
+${(n=0 \lor m=0 \lor (n=m \to \forall i:} $
+$\hspace{2em} {T_i.upperBound \subtype S_i.upperBound} $
+$\hspace{1em} \land {T_i.lowerBound :> S_i.lowerBound}))}$
 
 --
 
 .Subtyping with parameterized types
 [example]
 ====
-Let classes A, B, and C are defined as in the chapter beginning ($C <: B <: A$).
+Let classes A, B, and C are defined as in the chapter beginning ($C \subtype B \subtype A$).
 The following subtype relations are evaluated as indicated:
 
 [source,xtext]
@@ -924,7 +913,7 @@ undef = 1; // will issue an error!
 The type `undefined` is a subtype of all types. That is,
 [math]
 ++++
-\infer{\tee \type{undefined} <: T }{}
+\infer{\tee \type{undefined} \subtype T }{}
 ++++
 
 is an axiom and true for all types _T_.
@@ -945,7 +934,7 @@ That is, the type `null` is a subtype of all other types except `undefined`:
 
 [math]
 ++++
-\infer{\tee \type{null}\ left <: \type{Type} right}{right \neq \type{undefined}}
+\infer{\tee \type{null}\ left \subtype \type{Type} right}{right \neq \type{undefined}}
 ++++
 
 Please note that
@@ -994,7 +983,7 @@ The type `boolean` is subtype of `any`:
 
 [math]
 ++++
-\inferSup{\type{boolean} <: \type{any}}{}
+\inferSup{\type{boolean} \subtype \type{any}}{}
 ++++
 
 Variables of type `boolean` can be auto-converted (coerced) to `Boolean`, as described in <<_autoboxing-and-coercing>>.
@@ -1031,7 +1020,7 @@ The `string` type is a subtype of `any`:
 
 [math]
 ++++
-\inferSup{\type{string} <: \type{any}}{}
+\inferSup{\type{string} \subtype \type{any}}{}
 ++++
 
 It is supertype of the N4JS primitive type `pathselector`, `typeName` and `i18nKey`.
@@ -1054,7 +1043,7 @@ The type `number` is subtype of `any`:
 
 [math]
 ++++
-\inferSup{\type{number} <: \type{any}}{}
+\inferSup{\type{number} \subtype \type{any}}{}
 ++++
 
 However, variables of type `number` can be auto-converted (coerced) to `Number`, as described in <<_integer-literals,Integer Literals>> .
@@ -1141,23 +1130,13 @@ Instead, it is possible to declare the return type of a function or method as `v
 
 * If a function $f$ is declared to return `void`, an error is created if a return statement contains an expression:
 +
-[math]
-++++
-\beginalign
-f.returnType=\type{void} \to \\
-\forall r, \mu(r)=\type{ReturnStatement}, r.containingFunction=f: r.expression=\NULL
-\endalign
-++++
+$f.returnType=\type{void} \to $ +
+$\forall r, \mu(r)=\type{ReturnStatement}, r.containingFunction=f: r.expression=\NULL$
 
 * If a function $f$ is declared to return `void`, an error is issued if the function is called in any statement or expression but an expression statement directly:
 +
-[math]
-++++
-\beginalign
-f.returnType=\type{void} \to \\
-\forall e, bind(e, f): \mu(e.container)=\type{ExpressionStatement}
-\endalign
-++++
+$f.returnType=\type{void} \to $ +
+$\forall e, bind(e, f): \mu(e.container)=\type{ExpressionStatement}$
 
 --
 
@@ -1165,7 +1144,7 @@ The following type hierarchy is defined: `void` is only a subtype of itself but 
 
 [math]
 ++++
-\inferSup{\type{void} <: \type{void}}
+\inferSup{\type{void} \subtype \type{void}}
 ++++
 
 Since `void` cannot be used as the type of variables, fields, formal parameters, etc., a function or method with a return type of void cannot be used as an lvalue,
@@ -1209,15 +1188,10 @@ I18nkeys are not yet validated
 The N4JS primitive types `pathSelector<T>`, `i18nKey` and `pathSelector<T>` are basically only marker types of strings for enabling additional validation.
 Thus, they are completely interchangeable with string types:
 
-[math]
-++++
-\beginalign
-\infer{\type{typeName&lt;T&gt;} <: \type{string}}{}             && \infer{\type{string} <: \type{typeName&lt;T&gt;}}{}        \\
-\infer{\type{i18nKey} <: \type{string}}{}             && \infer{\type{string} <: \type{i18nKey}}{}        \\
-\infer{\type{pathSelector&lt;T&gt;} <: \type{string}}{}   && \infer{\type{string} <: \type{pathSelector&gt;T&gt;}}{}
-\endalign
-++++
-
+[%hardbreaks]
+$ \infer{\type{typeName&lt;T&gt;} \subtype \type{string}}{} \spc  \infer{\type{string} \subtype \type{typeName&lt;T&gt;}}{}$
+$ \infer{\type{i18nKey} \subtype \type{string}}{} \spc \infer{\type{string} \subtype \type{i18nKey}}{} $
+$ \infer{\type{pathSelector&lt;T&gt;} \subtype \type{string}}{} \spc \infer{\type{string} \subtype \type{pathSelector&gt;T&gt;}}{}$
 
 As special literals for these N4JS types do not exist, the type has to be explicitly specified in order to enable the additional validation.
 Note that this validation cannot be applied for more complicated expressions with parts which cannot be evaluated at compile time.
@@ -1387,7 +1361,7 @@ It is a subtype of `Object`.
 
 [math]
 ++++
-\infer{\type{N4Object} <: \type{Object}}{}
+\infer{\type{N4Object} \subtype \type{Object}}{}
 ++++
 
 === N4Class
@@ -1424,7 +1398,7 @@ The dynamic type modifier marks a type as being dynamic.
 A dynamic type behaves like a normal JavaScript object, so you can read/write any property and call any method on it.
 The default behavior for a type is to be static, that is no new properties can be added and no unknown properties can be accessed.
 
-`T` $<:$ `T+` and `T+` $<:$ `T` is always true.
+`T` $\subtype$ `T+` and `T+` $\subtype$ `T` is always true.
 Using dynamically added members of a dynamic type is never type safe.
 Using the `delete` operator on a subtype of `N4Object` is not allowed.
 
@@ -1498,14 +1472,14 @@ Let $U$ be an union type.
 +
 [math]
 ++++
-\infer{T <: U}{T \in U.typeRefs}
+\infer{T \subtype U}{T \in U.typeRefs}
 ++++
 * More generally, a type is a subtype of a union type, if it is a
 subtype of at least one type contained in the union:
 +
 [math]
 ++++
-\infer{S <: U}{\exists T \in U.typeRefs: S <: T}
+\infer{S \subtype U}{\exists T \in U.typeRefs: S \subtype T}
 ++++
 
 * A union type is a subtype of a type $S$, if all types of the union are subtypes of that type.
@@ -1513,7 +1487,7 @@ This rule is a generalization of the sub typing rules given in cite:[Igarashi07a
 +
 [math]
 ++++
-\infer{U <: S}{\forall T \in U.typeRefs: T <: S}
+\infer{U \subtype S}{\forall T \in U.typeRefs: T \subtype S}
 ++++
 
 * Commutativity: The order of element does not matter:
@@ -1557,13 +1531,10 @@ $W.typeRefs = U.typeRefs \cup V.typeRefs$:
 * Simplification of union type with undefined or null:
 Since undefined is the bottom type, and null is kind of a second button type, they are removed from the union:
 +
-[math]
-++++
-\beginalign
-\infer{\union{T_1,\dots,T_{k-1},undefined},T_k,\dots,T_n}{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}} \\
-\infer{\union{T_1,\dots,T_{k-1},null},T_k,\dots,T_n}{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}}
-\endalign
-++++
+[%hardbreaks]
+$ \infer{\union{T_1,\dots,T_{k-1},undefined},T_k,\dots,T_n}{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}} $
+$ \infer{\union{T_1,\dots,T_{k-1},null},T_k,\dots,T_n}{\union{T_1,\dots,T_{k-1},T_k,\dots,T_n}} $
+
 
 NOTE: Simplification rules for union types with one element are applied first.
 
@@ -1581,13 +1552,13 @@ union:
 Remarks:
 
 * The simplification rules may be applied recursively.
-* For given types $B <: A$, and the union type $U=\union{A,B}$, $U \neq B$.
-The types are equivalent, however: $A <:= U$ and $U <:= A$.footnote:[This is different from Ceylon ( cite:[King13a(3.2.3)]), in which the union is defined to be `the same type as` _A_. Although the meaning of `same` is not clear, it is possibly used as a synonym for `equivalent`.]
+* For given types $B \subtype A$, and the union type $U=\union{A,B}$, $U \neq B$.
+The types are equivalent, however: $A \subtype= U$ and $U \subtype= A$.footnote:[This is different from Ceylon ( cite:[King13a(3.2.3)]), in which the union is defined to be `the same type as` _A_. Although the meaning of `same` is not clear, it is possibly used as a synonym for `equivalent`.]
 
 .Subtyping with union type
 [example]
 --
-Let A, B, and C be defined as in the chapter beginning ($C <: B <: A$)
+Let A, B, and C be defined as in the chapter beginning ($C \subtype B <: A$)
 
 The following subtyping relations with union types are to be evaluated as follows: footnote:[See Example <<ex:class-hierarchy>> for class definitions.]
 
@@ -1690,7 +1661,7 @@ Remarks:
 
 * The meet of a union type with another type is not a union type itself.
 This gets clear when looking at the definition of meet and union type.
-While for a given $U=\union{A,B}$, $A<:U$ and $B<:U$, the opposite $U<:A$ is usually not true (unless $U$ can be simplified to _A_).
+While for a given $U=\union{A,B}$, $A \subtype U$ and $B \subtype U$, the opposite $U \subtype A$ is usually not true (unless $U$ can be simplified to _A_).
 So, for $A \meet U$, usually $U$ cannot be the meet.
 --
 
@@ -1745,7 +1716,7 @@ contain class or interface types which are a subtype of another class or interfa
 ++++
 \beginalign
 \nexists TT \in U.typeRefs : \exists T \in U.typeRefs : \\
-(TT <: T \wedge isClassOrInterface(T) \wedge isClassOrInterface(TT))
+(TT \subtype T \wedge isClassOrInterface(T) \wedge isClassOrInterface(TT))
 \endalign
 ++++
 
@@ -1813,7 +1784,7 @@ its contained types is a subtype of that type: footnote:[This rule is a generali
 
 [math]
 ++++
-\infer{I <: S}{\exists T \in I.typeRefs: T <: S}
+\infer{I \subtype S}{\exists T \in I.typeRefs: T \subtype S}
 ++++
 
 * A type is a subtype of an intersection type, if it is a subtype of all
@@ -1821,7 +1792,7 @@ types contained in the intersection type: footnote:[This rule is a generalizatio
 
 [math]
 ++++
-\infer{S <: I}{\forall T \in I.typeRefs: S <: T}
+\infer{S \subtype I}{\forall T \in I.typeRefs: S \subtype T}
 ++++
 
 
@@ -1843,7 +1814,7 @@ The following simplification rules are always automatically applied to intersect
 ++++
 
 
-These subtyping rules are similar to Ceylon. footnote:[In Ceylon, for a given union type $U=T_1|T_2$ and intersection type $I=T_1\&T_2$ (with ’|’ is union and ’&’ is intersection), $T_1<:U$ and $T_2<:U$ is true, and $T_1<:I$ and $T_2<:I$ is true. We should define that as well (if it is not already defined). Cf cite:[King13a(3.2.4/5)]]
+These subtyping rules are similar to Ceylon. footnote:[In Ceylon, for a given union type $U=T_1|T_2$ and intersection type $I=T_1\&T_2$ (with ’|’ is union and ’&’ is intersection), $T_1 \subtype U$ and $T_2 \subtype U$ is true, and $T_1 \subtype I$ and $T_2 \subtype I$ is true. We should define that as well (if it is not already defined). Cf cite:[King13a(3.2.4/5)]]
 
 During validation, intersection types containing union or other intersection types may be inferred.
 In this case, the composed types are flattened.
@@ -1887,13 +1858,9 @@ intersection{A,Any} <: A                        -> true
 The join of intersection types is defined as the join of the elements.
 That is:
 
-[math]
-++++
-\beginalign
-\infer{\intersection{T_1,\dots,T_n} \join S }{ T_1 \join S \join \dots \join T_n \join S} \\
-\infer{\intersection{T_1,\dots,T_n} \join \intersection{S_1,\dots,S_m} }{T_1 \join S_1,\dots,T_1 \join S_m,\dots,T_n \join S_1,\dots,T_n \join S_m}
-\endalign
-++++
+[%hardbreaks]
+$\infer{\intersection{T_1,\dots,T_n} \join S }{ T_1 \join S \join \dots \join T_n \join S} $
+$\infer{\intersection{T_1,\dots,T_n} \join \intersection{S_1,\dots,S_m} }{T_1 \join S_1,\dots,T_1 \join S_m,\dots,T_n \join S_1,\dots,T_n \join S_m}$
 
 --
 
@@ -1903,13 +1870,9 @@ That is:
 The meet of intersection types is defined over their elements.
 That is:
 
-[math]
-++++
-\beginalign
-\infer{\intersection{T_1,\dots,T_n} \meet S}{\intersection{T_1 \meet S,\dots,T_n \meet S}} \\
-\infer{\intersection{T_1,\dots,T_n} \meet \intersection{S_1,\dots,S_m}}{\intersection{T_1\meet S_1,\dots,T_1\meet S_m,\quad \dots, \quad T_n\meet S_1,\dots,T_n\meet S_m}}
-\endalign
-++++
+[%hardbreaks]
+$\infer{\intersection{T_1,\dots,T_n} \meet S}{\intersection{T_1 \meet S,\dots,T_n \meet S}} $
+$\infer{\intersection{T_1,\dots,T_n} \meet \intersection{S_1,\dots,S_m}}{\intersection{T_1\meet S_1,\dots,T_1\meet S_m,\quad \dots, \quad T_n\meet S_1,\dots,T_n\meet S_m}}$
 
 
 --
@@ -1923,13 +1886,10 @@ task:IDEBUG-260[]
 
 The upper and lower bound of an intersection type $I$ is a union type $I'$ containing the upper and lower bound of the elements of $I$:
 
-[math]
-++++
-\beginalign
-upper(\intersection{T_1, \dots, T_n}) := \intersection{upper(T_1), \dots, upper(T_1)} \\
-lower(\intersection{T_1, \dots, T_n}) := \intersection{lower(T_1), \dots, lower(T_1)} \\
-\endalign
-++++
+[%hardbreaks]
+$upper(\intersection{T_1, \dots, T_n}) := \intersection{upper(T_1), \dots, upper(T_1)} $
+$lower(\intersection{T_1, \dots, T_n}) := \intersection{lower(T_1), \dots, lower(T_1)} $
+
 --
 
 --
@@ -1964,7 +1924,7 @@ Intersection types shall not contain class or interface types which are a supert
 ++++
 \nexists T \in I.typeRefs :
 \exists TT \in I.typeRefs : \\
-(TT <: T \wedge isClassOrInterface(T) \wedge isClassOrInterface(TT))
+(TT \subtype T \wedge isClassOrInterface(T) \wedge isClassOrInterface(TT))
 ++++
 
 --
@@ -1982,16 +1942,16 @@ In the covariant case, the following subtype relations apply:
 
 [source,ebnf]
 ----
-union{ G<? extends A>, G<? extends B> }  <:  G<? extends union{A,B}>
-G<? extends intersection{A,B}>  <:  intersection{ G<? extends A>, G<? extends B> }
+union{ G<? extends A>, G<? extends B> }  \subtype  G<? extends union{A,B}>
+G<? extends intersection{A,B}>  \subtype  intersection{ G<? extends A>, G<? extends B> }
 ----
 
 In the contra variant case, the following subtype relations apply:
 
 [source,ebnf]
 ----
-union{ G<? super A>, G<? super B> }  <:  G<? super intersection{A,B}>
-G<? super union{A,B}>  <:  intersection{ G<? super A>, G<? super B> }
+union{ G<? super A>, G<? super B> }  \subtype  G<? super intersection{A,B}>
+G<? super union{A,B}>  \subtype  intersection{ G<? super A>, G<? super B> }
 ----
 --
 
@@ -2023,10 +1983,7 @@ $\forall\ a \in U.attributes:$
 \endalign
 ++++
 
-[math]
-++++
-\forall\ m \in U.methods:
-++++
+$\forall\ m \in U.methods:$
 
 [math]
 ++++
@@ -2222,20 +2179,20 @@ task:IDE-786[]
 +
 [math]
 ++++
-\forall T: constructor\{T\}  <: type\{T\}
+\forall T: constructor\{T\}  \subtype type\{T\}
 ++++
 . If a class _B_ is a subtype (subclass) of a class _A_, then the classifier type `type{B}` also is a subtype of `type{A}`:
 +
 [math]
 ++++
-\infer{type\{B\} <: type\{A\}}{B <: A}
+\infer{type\{B\} \subtype type\{A\}}{B \subtype A}
 ++++
 .  If a class _B_ is a subtype (subclass) of a class _A_, and if the constructor function of _B_ is a subtype of the constructor function of _A_, then the
 classifier type `constructor{B}` also is a subtype of `constructor{A}` :
 +
 [math]
 ++++
-\infer{constructor{B}  <: constructor{A}}{B <: A & B.ctor <: A.ctor}
+\infer{constructor\{B\}  \subtype constructor\{A\}}{B \subtype A \spc B.ctor \subtype A.ctor}
 ++++
 +
 The subtype relation of the constructor function is defined in <<_function-type>>.
@@ -2251,14 +2208,10 @@ This subtype relation for the constructor type is enforced if the constructor of
 . A class cannot be called as a function in ECMAScript.
 Thus, the constructor and type type are only subtype of :
 +
-[math]
-++++
-\beginalign
-\forall T: \\
-\lstnfjs{constructor\{T\}} <: \type{Object} \\
-\lstnfjs{type\{T\}} <: \type{Object} \\
-\endalign
-++++
+[%hardbreaks]
+$\forall T: $
+$\lstnfjs{constructor} \{\lstnfjs{T}\} \subtype \type{Object} $
+$\lstnfjs{type} \{\lstnfjs{T}\} \subtype \type{Object} $
 .  If the type argument of the constructor is not a declared type (i.e., a wildcard or a type variable with bounds), the constructor cannot be used in a new expression.
 Thus, the constructor function signature becomes irrelevant for subtype checking.
 In that case, the following rules apply: task:GH-221[]
@@ -2266,7 +2219,7 @@ In that case, the following rules apply: task:GH-221[]
 [math]
 ++++
 \beginalign
-\infer{\lstnfjs{constructor{S}} <: \lstnfjs{constructor{T}}}{S.upper <: T.upper \spc  T.lower <: S.lower \spc \mu(T) \neq \type{DeclaredTypeWithAccessModifier}}
+\infer{\lstnfjs{constructor{S}} \subtype \lstnfjs{constructor{T}}}{S.upper \subtype T.upper \spc  T.lower \subtype S.lower \spc \mu(T) \neq \type{DeclaredTypeWithAccessModifier}}
 \endalign
 ++++
 +

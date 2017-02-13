@@ -139,15 +139,11 @@ $\alpha_T$ is defined with <<tab:type-access-control>>.
 
 Formally, we define $\alpha_T$ for a given reference $r$ and a module top level variable, function or type declaration $D$ as follows footnote:[See for definitions of metatype properties.]:
 
-[math]
-++++
-\beginalign
-\infer{\alpha_T(r, D)}{D.acc=\lenum{public} }\\
-\infer{\alpha_T(r, D)}{D.acc=\lenum{public@Internal} \spc  r.vendor=D.vendor}\\
-\infer{\alpha_T(r, D)}{D.acc=\lenum{project} \spc  r.project=D.project}\\
-\infer{\alpha_T(r, D)}{D.acc=\lenum{private} \spc  r.module=D.module} \\
-\endalign
-++++
+[%hardbreaks]
+$\infer{\alpha_T(r, D)}{D.acc=\lenum{public} } $
+$\infer{\alpha_T(r, D)}{D.acc=\lenum{public@Internal} \spc  r.vendor=D.vendor} $
+$\infer{\alpha_T(r, D)}{D.acc=\lenum{project} \spc  r.project=D.project} $
+$\infer{\alpha_T(r, D)}{D.acc=\lenum{private} \spc  r.module=D.module}  $
 
 If the type of the arguments is clear from the context, we simply write $\alpha(r,D)$ instead of $\alpha_T(r,D)$.
 
@@ -327,19 +323,13 @@ However, bind requires more condition to work (correct metatypes, no shadowing e
 
 Formally, we define $\alpha_m$ for a given reference $r$ and member declaration $M$ as follows: footnote:[See <<_n4js-specific-classifiers>> for definitions of metatype properties. Note that $r.receiver$ always refers to a type declaration in the context of an expression as the receiver type of $r$. The declaring type of the member declaration is considered to be the receiver type of the member reference rather than the type that originally declares the member declaration.] footnote:[Note the Java-like access restriction for members of visibility [language-n4js]`protected` or [language-n4js]`protected@Internal` to code that is responsible for the implementation of that object. cite:[Gosling15a(S6.6.2,p.166)]]
 
-
-
-[math]
-++++
-\beginalign
-\infer{\alpha_m(r, M)}{M.acc = \lenum{public}} \\
-\infer{\alpha_m(r, M)}{r.vendor = M.vendor \spc M.acc = \lenum{public@Internal}} \\
-\infer{\alpha_m(r, M)}{r.owner \in r.receiver.super^* \spc M.acc = \lenum{protected}} \\
-\infer{\alpha_m(r, M)}{r.owner \in r.receiver.super^* \spc r.vendor = M.vendor \spc M.acc = \lenum{protected@Internal}} \\
-\infer{\alpha_m(r, M)}{r.project = M.project \spc M.acc = \lenum{project}} \\
-\infer{\alpha_m(r, M)}{r.module = r.module \spc M.acc =\lenum{private}} \\
-\endalign
-++++
+[%hardbreaks]
+$\infer{\alpha_m(r, M)}{M.acc = \lenum{public}} $
+$\infer{\alpha_m(r, M)}{r.vendor = M.vendor \spc M.acc = \lenum{public@Internal}} $
+$\infer{\alpha_m(r, M)}{r.owner \in r.receiver.super^* \spc M.acc = \lenum{protected}} $
+$\infer{\alpha_m(r, M)}{r.owner \in r.receiver.super^* \spc r.vendor = M.vendor \spc M.acc = \lenum{protected@Internal}} $
+$\infer{\alpha_m(r, M)}{r.project = M.project \spc M.acc = \lenum{project}} $
+$\infer{\alpha_m(r, M)}{r.module = r.module \spc M.acc =\lenum{private}} $
 
 
 If the type of the arguments is clear from the context, we simply write $\alpha(r,M)$ instead of $\alpha_m(r,M)$.

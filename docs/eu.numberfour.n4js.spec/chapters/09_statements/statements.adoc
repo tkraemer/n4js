@@ -291,7 +291,7 @@ ECMAScript operation `ToBoolean` cite:[ECMA11a(S9.2,p.43)] is used to convert an
 For a given $f$ the following conditions must hold:
 
 * The type of the expression must be conform to object: +
-$\tee f.expression <: \type{union{Object,string,ArgumentType}}$
+$\tee f.expression \subtype \type{union{Object,string,ArgumentType}}$
 * Either a new loop variable must be declared or an rvalue must be provided as init expression: +
 $f.varDecl \neq null \lor (f.initExpr \neq null \land isRValue(f.initExpr))$
 * The type of the loop variable must be a string (or a super type of string, i.e. any):

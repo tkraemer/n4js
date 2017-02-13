@@ -502,7 +502,7 @@ If `C` is provided with an explicit constructor, we have $C.ctor = C.ownedCtor$ 
 Note that $C.ctor \notin C.ownedMethods$ in all cases.
 
 The return type of the constructor of a class `C` is `C`.
-If `C` has type parameters $T_1,...T_n$, then the return type is $C<T_1,...,T_n>$. The constructor is called with the operator.
+If `C` has type parameters $T_1, \dots ,T_n$, then the return type is $C<T_1, \dots ,T_n>$. The constructor is called with the operator.
 Since the return type of a constructor is implicitly defined by the class, it is to be omitted.
 By this definition, a constructor looks like the following:
 
@@ -673,13 +673,9 @@ class A {
 6.  Even if the `@Spec` annotation is used, the super constructor must be calledaccordingly.
 7.  The type of an additional member which match owned non-public fieldmust be subtype of the field’s type:
 +
-[math]
-++++
-\beginalign
-\forall s \in ctor.fpar.structuralMembers, ctor.fpar.spec: \\
-\hspace{2em}\exists f \in ctor.owner.ownedFields \Rightarrow \tee s \subtype f
-\endalign
-++++
+[%hardbreaks]
+$\forall s \in ctor.fpar.structuralMembers, ctor.fpar.spec: $
+$\hspace{2em}\exists f \in ctor.owner.ownedFields \to \tee s \subtype f $
 8.  `pass:[~i~this]` constructor ignores superfluous properties provided by an object literal.
 These ignored properties are _not_ used to set non-$\lenum{public}$ fields.
 9.  Since use-site structural initializer field types can be defined via public, non-static, non-optional writable fields, `pass:[~i~this]` constructor accepts those properties provided by an object literal which has the corresponding readble fields.
@@ -1040,15 +1036,12 @@ The type of a field is the type of its declaration:
 
 The type of a field declaration is either the declared type or the inferred type of the initializer expression:
 
-[math]
-++++
-\beginalign
-\spc \infer{\tee d: T}{d.declaredType \neq \NULL \spc T = d.declaredType} \\
-\spc \infer{\tee d: T}{d.declaredType = \NULL \spc d.expression \neq \NULL} \\
-\spc E = \tee d.expression \spc E \not\in \{\type{null, undefined}\} \spc T = E} \\
-\spc \infer{\tee d: \type{any}}{else}
-\endalign
-++++
+[%hardbreaks]
+$\spc \infer{\tee d: T}{d.declaredType \neq \NULL \spc T = d.declaredType} $
+$\spc \infer{\tee d: T}{d.declaredType = \NULL \spc d.expression \neq \NULL} $
+$\spc E = \tee d.expression \spc E \not\in \{\type{null, undefined}\} \spc T = E} $
+$\spc \infer{\tee d: \type{any}}{else} $
+
 
 If the type contains type variables they are substituted according to
 type parameters which are provided by the reference:
@@ -1075,9 +1068,9 @@ It is not possible, therefore, to use the `this` keyword in the initializer expr
 $\nexists sub \in f.expr^*: sub="this"$
 // **
 .  A constant data field must not be annotated with `@Final`: +
-$f.const \Rightarrow \lnot f.final$
+$f.const \to \lnot f.final$
 . Constant data fields are not writeable (cf. <<Req-IDE-68>>): +
-$f.const \Rightarrow \lnot f.writeable$
+$f.const \to \lnot f.writeable$
 --
 
 .Final Data Fields
@@ -1086,10 +1079,10 @@ $f.const \Rightarrow \lnot f.writeable$
 For a data field `f` marked as `@Final`, the following constraints must hold:
 
 .  A final data field must not be modified with `const` or `static`: +
-$f.final \Rightarrow \lnot f.const \land \lnot f.declaredStatic$
+$f.final \to \lnot f.const \land \lnot f.declaredStatic$
 +
 .  A final data field is not writeable: +
-$f.final \Rightarrow \lnot f.writeable$ +
+$f.final \to \lnot f.writeable$ +
 A final field may, however, be set in the constructor.
 See <<Req-IDE-68>> for details.
 .  A final data field must be either initialized by an initializer expression or in the constructor.
@@ -1286,8 +1279,8 @@ This is true in particular for type variables defined by a generic classifier.
 task:IDE-1071[] task:IDEBUG-442[]
 For static data fields and static setter `f` the following constraint must hold:
 
-* For every assign expression $assignExpr$ with $f.static \land assignExpr.left = T.f \rightarrow T=f.owner$.
-* For every writing unary expression $u$ with $u.op \in \{++,--\}  \land   f.static \land  u.expression = T.f \rightarrow T=f.owner$.
+* For every assign expression $assignExpr$ with $f.static \land assignExpr.left = T.f \to T=f.owner$.
+* For every writing unary expression $u$ with $u.op \in \{++,--\}  \land   f.static \land  u.expression = T.f \to T=f.owner$.
 
 --
 
@@ -1435,15 +1428,11 @@ following constraints hold:
 .  The name and static modifiers are equal: $M.name=S.name \land M.static=S.static$
 .  The metatypes are compatible:
 +
-[math]
-++++
-\beginalign
-\mu(S)=\type{Method} \spc \Rightarrow \mu(M) = \type{Method} \\
-\mu(S)=\type{Field}  \spc \Rightarrow \mu(M) \in \type{Field, Getter, Setter} \\
-\mu(S)=\type{Getter} \spc \Rightarrow \mu(M) \in \type{Field, Getter} \\
-\mu(S)=\type{Setter} \spc \Rightarrow \mu(M) \in \type{Field, Setter} \\
-\endalign
-++++
+[%hardbreaks]
+$\mu(S)=\type{Method} \spc \to \mu(M) = \type{Method} $
+$\mu(S)=\type{Field}  \spc \to \mu(M) \in \type{Field, Getter, Setter} $
+$\mu(S)=\type{Getter} \spc \to \mu(M) \in \type{Field, Getter} $
+$\mu(S)=\type{Setter} \spc \to \mu(M) \in \type{Field, Setter} $
 . The overridden member must not be declared final: +
 $\lnot S.final$
 .  Overridden member declared const can only be overridden (redefined) by const members: +
@@ -1452,13 +1441,9 @@ $S.const \Leftrightarrow M.const$
 $\lnot M.abstract \lor S.abstract$
 .  The types are compatible:
 +
-[math]
-++++
-\beginalign
-(\mu(M) \in \types{Method, Getter, Field} \land \mu(S)\neq\type{Setter}) \spc  \Rightarrow \tee M \subtype S \\
-    (\mu(M) \in \type{Setter, Field}         \land \mu(S)\neq\type{Getter} \land \lnot S.const) \spc   \Rightarrow \tee S \subtype M \\
-\endalign
-++++
+[%hardbreaks]
+$(\mu(M) \in \types{Method, Getter, Field} \land \mu(S)\neq\type{Setter}) \spc  \to \tee M \subtype S $
+$(\mu(M) \in \type{Setter, Field}         \land \mu(S)\neq\type{Getter} \land \lnot S.const) \spc   \to \tee S \subtype M $4
 .  The access modifier is compatible: +
 $M.acc \geq S.acc$
 
@@ -1482,7 +1467,7 @@ That is the following constraint must hold:
 \spc \land \\
 \spc \nexists M' \in C.super.members \cup \bigcup^{n}_{i=1}I_i.members:\\
 \spc  M'.name=M.name \land M'.static=M.static \\
-\spc \land M'.acc>\lenum{private} \\
+\spc \land M'.acc> \lenum{private} \\
 \endalign
 ++++
 
@@ -1508,14 +1493,10 @@ In that case the following constraints must hold:
 $overrideCompatible(M, S)$
 3.  If `S` is a field and `M` is an accessor, then an additional accessor $M'$ must exists so that $M, M'$ are an accessor pair for `S`:
 +
-[math]
-++++
-\beginalign
-\spc \mu(S)=\type{Field} \land \mu(M)={Accessor} \\
-\spc \Rightarrow \exists M'\in C.member: \\
-\spc \hspace{4em} overrideCompatible(M',S) \land \{\mu(M),\mu(M')\}=\types{Getter,Setter}
-\endalign
-++++
+[%hardbreaks]
+$\spc \mu(S)=\type{Field} \land \mu(M)={Accessor} $
+$\spc \to \exists M'\in C.member: $
+$\spc \hspace{4em} overrideCompatible(M',S) \land \{\mu(M),\mu(M')\}=\types{Getter,Setter}$
 4.  `M` must be declared as override: +
 `M.override`
 --
@@ -1539,7 +1520,7 @@ task:IDE-12[] task:IDE-158[] task:IDE-700[] task:IDE-1236[]
 --
 For the following constraints, we define two helper sets $M_C$ and $M_I$ as follows:
 
-Given a `C`, and interface $I_1,..., I_n$, implemented by `C`, with
+Given a `C`, and interface $I_1, \dots , I_n$, implemented by `C`, with
 
 [math]
 ++++
@@ -1575,7 +1556,7 @@ It is not, therefore, possible to consume a field defined in two implemented int
 .Consumption of Interface Members
 [req,id=IDE-73,version=1]
 --
-Given a classifier `C` footnote:[`C` could either be a class or an interface.], and interfaces $I_1,..., I_n$ implemented (or extended) by `C`, and sets $M_C$ and $M_I$ as defined in <<def:Interface_and_Class_Member_Sets>>.
+Given a classifier `C` footnote:[`C` could either be a class or an interface.], and interfaces $I_1, \dots , I_n$ implemented (or extended) by `C`, and sets $M_C$ and $M_I$ as defined in <<def:Interface_and_Class_Member_Sets>>.
 // TODO add ref to def:Interface_and_Class_Member_Sets above
 A non-static member `M` defined in any interface $I_i$ is merged into the consumer (`C`), if for all other (possible) members $M'$ of `C`
 
@@ -1588,37 +1569,27 @@ the following constraints hold:
 
 .  The other member’s meta type matches the meta type of the merge candiate:
 +
-[math]
-++++
-\beginalign
-\mu(M)=\type{Method}    \spc \Rightarrow \mu(M') = \type{Method} \\
-\mu(M)\neq\type{Method} \spc \Rightarrow \mu(M') \in \types{Field, FieldAccessor} % Field, Accessor
-\endalign
-++++
+[%hardbreaks]
+$\mu(M)=\type{Method}    \spc \to \mu(M') = \type{Method} $
+$\mu(M)\neq\type{Method} \spc \to \mu(M') \in \types{Field, FieldAccessor} $
 .  The other member is abstract and not owned by the consumer:
 +
-[math]
-++++
-\spc \mu(M)=\mu(M') \lor \mu(M)=\type{Field} \\ % getter does no effect setter and vice versa
-\spc \hspace{2em}\Rightarrow M'.abstract \land M' \not\in C.ownedMembers
-++++
+[%hardbreaks]
+$\spc \mu(M)=\mu(M') \lor \mu(M)=\type{Field} $
+\\ TODO getter does no effect setter and vice versa
+$\spc \hspace{2em}\to M'.abstract \land M' \not\in C.ownedMembers $
 .  The merge candidate’s access modifier is not less than the modifier of the other member:
 +
-[math]
-++++
-\spc \mu(M)=\mu(M') \lor \mu(M)=\type{Field} \\ % getter does no effect setter and vice versa
-\spc \hspace{2em} \Rightarrow M.acc \geq M'.acc
-++++
+[%hardbreaks]
+$\spc \mu(M)=\mu(M') \lor \mu(M)=\type{Field}$
+\\ TODO - getter does no effect setter and vice versa
+$\spc \hspace{2em} \to M.acc \geq M'.acc$
 +
 .  The merge candidate’s type compatible with the other member:
 +
-[math]
-++++
-\beginalign
-\mu(M) \in \types{\{Method, Getter, Field\}} \land \mu(M') \neq \type{Setter}   \spc \Rightarrow \tee M \subtype M' \\
-\mu(M) \in \types{\{Setter, Field\}} \land \mu(M') \neq \type{Getter}           \spc \Rightarrow \tee M' \subtype M
-\endalign
-++++
+[%hardbreaks]
+$\mu(M) \in \types{\{Method, Getter, Field\}} \land \mu(M') \neq \type{Setter}   \spc \to \tee M \subtype M' $
+$\mu(M) \in \types{\{Setter, Field\}} \land \mu(M') \neq \type{Getter}           \spc \to \tee M' \subtype M $
 
 --
 
@@ -1636,33 +1607,25 @@ The implementing member(s) must be declared as override if they are directly def
 .  An implementation-compatible member $M'$ must exist in `C`:
 ..  if `M` is not a field:
 +
-[math]
-++++
-\beginalign
-    \mu(M) \neq\type{Field} \spc \Rightarrow \\
-                        \spc \exists M' \in C.members: \\
-                            \spc \hspace{3em} overrideCompatible(M',M) \\
-                            \spc \hspace{3em} \land (M' \in C.ownedMembers \Rightarrow M'.override)
-\endalign
-++++
+[%hardbreaks]
+$\mu(M) \neq\type{Field} \spc \to $
+            $\spc \exists M' \in C.members: $
+            $\spc \hspace{3em} overrideCompatible(M',M) $
+            $\spc \hspace{3em} \land (M' \in C.ownedMembers \to M'.override)$
 ..  if `M` is a field, then either an
 implementation-compatible field $F'$ or accessor pair $G', S'$ must exist:
 +
-[math]
-++++
-\beginalign
-    \mu(M)=\type{Field} \spc \Rightarrow \\
-                        \spc \exists F' \in C.fields: \\
-                            \spc \hspace{3em} overrideCompatible(F',M) \\
-                            \spc \hspace{3em} \land (F' \in C.ownedMembers \Rightarrow F'.override) \\
-                        \spc \lor \\
-                        \spc \exists G' \in C.getters, S' \in C.setters: \\
-                            \spc \hspace{3em} overrideCompatible(G',M) \\
-                            \spc \hspace{3em} \land overrideCompatible(S',M) \\
-                            \spc \hspace{3em} \land (G' \in C.ownedMembers \Rightarrow G'.override) \\
-                            \spc \hspace{3em} \land (S' \in C.ownedMembers \Rightarrow S'.override)
-\endalign
-++++
+[%hardbreaks]
+$\mu(M)=\type{Field} \spc \to $
+                        $\spc \exists F' \in C.fields: $
+                            $\spc \hspace{3em} overrideCompatible(F',M) $
+                            $\spc \hspace{3em} \land (F' \in C.ownedMembers \to F'.override) $
+                        $\spc \lor $
+                        $\spc \exists G' \in C.getters, S' \in C.setters: $
+                            $\spc \hspace{3em} overrideCompatible(G',M) $
+                            $\spc \hspace{3em} \land overrideCompatible(S',M) $
+                            $\spc \hspace{3em} \land (G' \in C.ownedMembers \to G'.override) $
+                            $\spc \hspace{3em} \land (S' \in C.ownedMembers \to S'.override) $
 
 --
 
@@ -1675,16 +1638,12 @@ Consequences for method implementation:
 1.  It may be require the implementor to explicitly define a method in order to solve type conflicts produced by methods of different interfaces with same name but different signatures.
 2.  Methods in an implementor cannot decrease the accessibility of methods from implemented interfaces, that is
 +
-[math]
-++++
-\beginalign
-\spc \forall M \in C.methods, M' \in I_i.methods (i=1\dots n): \\
-\spc \hspace{2em} M.name=M'.name \Rightarrow M.acc \neq private \to M.acc \geq M'.acc
-\endalign
-++++
+[%hardbreaks]
+$\spc \forall M \in C.methods, M' \in I_i.methods (i=1\dots n): $
+$\spc \hspace{2em} M.name=M'.name \to M.acc \neq private \to M.acc \geq M'.acc $
 3.  Methods in the implementor must be a supertype footnote:[As defined in <<_function-type>> for function types.] of methods from implemented interfaces.
 That is to say the implemented methods are override-compatible.
-4.  There may be several methods $M_1, ..., M_n$ defined in different implemented interfaces and a single owned method $M'$ in $M_C$.
+4.  There may be several methods $M_1, \dots , M_n$ defined in different implemented interfaces and a single owned method $M'$ in $M_C$.
 In this case, the above constraints must hold for _all_ methods. In particular, $M'$’s signature must conform to all conflicting methods’ signatures.
 This is possible by using union types for the arguments and an intersection type as return type.
 Such a method $M'$ is said to _resolve_ the conflict between the implemented (and also inherited) methods.

@@ -45,14 +45,9 @@ relations:
 
 and for the N4JS specific types:
 
-[math]
-++++
-\beginalign
-\infer{\tee \type{pathSelector<T>} \subtype{\type{string}}}{} \\
-\infer{\tee \type{i18nKey} \subtype{\type{string}}}{}
-\endalign
-++++
-
+[%hardbreaks]
+$\infer{\tee \type{pathSelector<T>} \subtype{\type{string}}}{} $
+$\infer{\tee \type{i18nKey} \subtype{\type{string}}}{}$
 
 If a conversion between primitive and object type is desired, we require the user of N4JS to actively convert the values.
 The reason for that is the notably different behavior of object- and primitive-variants of a type in expression evaluation:
@@ -223,49 +218,33 @@ following constraints must hold:
 
 1.  `T` must be a classifier, enum, primitive, function type expression, classifier type, type variable, union or intersection type:
 +
-[math]
-++++
-\beginalign
-\mu(T) \in \spc \{ \type{any}, \type{Class}, \type{Interface}, \type{Enum}, \type{Primitive}, \type{ObjectType}, \\
-\spc \type{FunctionTypeExpression}, \type{ClassifierType}, \type{TypeVariable}, \type{Union}, \type{Intersection} \}
-\endalign
-++++
+[%hardbreaks]
+$\mu(T) \in \spc \{ \type{any}, \type{Class}, \type{Interface}, \type{Enum}, \type{Primitive}, \type{ObjectType}, $
+$\spc \type{FunctionTypeExpression}, \type{ClassifierType}, \type{TypeVariable}, \type{Union}, \type{Intersection} \} $
 2. if `S` is a subtype of `T`, the cast is unnecessary and a warning will be generated.
 3. if `S` and `T` are classes, enums or primitive types, then `T` must be a subtype of `S`.
 This is also true if `T` is an interface and the type of `S` cannot have subtypes, or vice versa.
 +
-[math]
-++++
-\beginalign
-(   & (isCPOE(T) \\
-& \hspace{2em}\land (isCPOE(S) \\
-& \hspace{4em}\lor (\mu(S)=\type{Intersection} \land \exists S' \in S: isCPOE(S'))) \\
-& \lor (isInterface(T)  \land isFinalByType(S) ) \\
-& \lor (isFinalByType(T) \land isInterface(S) )  ) \to \tee T <: S
-\endalign
-++++
+[%hardbreaks]
+$(isCPOE(T) $
+$ \hspace{2em}\land (isCPOE(S) $
+$ \hspace{4em}\lor (\mu(S)=\type{Intersection} \land \exists S' \in S: isCPOE(S'))) $
+$ \lor (isInterface(T)  \land isFinalByType(S) ) $
+$ \lor (isFinalByType(T) \land isInterface(S) )  ) \to \tee T <: S $
 // Doesn't work for daimond-relationships with S and T on left and right. --> limit to classes only.
 4. if `S` is a class, enum or primitive type and `T` is a type-variable, then for each given boundary $T^{up}_i$ of `T`
 of type class, enum or primitive `S` must be a member of the type hierarchy: footnote:[`i` iterates over all boundaries]
 +
-[math]
-++++
-\beginalign
-& (isBoundTypeVar(T) \land isCPOE(S) ) \\
-& \to  \forall_{T^{up}_i \in T.upperBounds} (isCPOE({T^{up}_i}) \to \tee ( {T^{up}_i} <: S \lor  {T^{up}_i} :> S ) )
-\endalign
-++++
+[%hardbreaks]
+$(isBoundTypeVar(T) \land isCPOE(S) ) $
+$ \to  \forall_{T^{up}_i \in T.upperBounds} (isCPOE({T^{up}_i}) \to \tee ( {T^{up}_i} <: S \lor  {T^{up}_i} :> S ) ) $
 5. if `S` is a union or intersection type, then the type cast is valid if it is valid for at least one element of `S`.
 6. if `S` and `T` are generics, and if $S^0=T^0$,
 a cast is possible if type arguments are sub- or supertypes of each other: footnote:[`i` iterates over all type args]
 +
-[math]
-++++
-\beginalign
-& \mu(S)=\type{Classifier} \land \mu(T)=\type{Classifier} \land S^0=T^0 \to \\
-& \hspace{2em} (\forall\ S.typeArg_i <: T.typeArg_i) \lor (\forall\ T.typeArg_i <: S.typeArg_i)
-\endalign
-++++
+[%hardbreaks]
+$\mu(S)=\type{Classifier} \land \mu(T)=\type{Classifier} \land S^0=T^0 \to $
+$\hspace{2em} (\forall\ S.typeArg_i <: T.typeArg_i) \lor (\forall\ T.typeArg_i <: S.typeArg_i)$
 7.  If `T` is a union type, then the type cast is valid if it is valid for at least one element of `T`.
 8.  If `T` is an intersection type, then the type cast is valid if it is valid for all elements of `T`.
 
@@ -581,4 +560,4 @@ Implicit handling states all strings with $>0==true$. `N4Primitives.parseBoolean
 All other values evaluate to `true`.
 3.  `Number` has several methods for converting a value to string cite:[ECMA11a(S15.7.4)]: `toExponential()`, to `Fixed()`, `toPrecision()`.
 4.  ECMAScript doesn’t define explicit conversion from boolean to number.
-Implicit handling states true $\rightarrow$ 1 and false $\rightarrow$ 0, which `N4Primitives.toNumber()` yields.
+Implicit handling states true $\to$ 1 and false $\to$ 0, which `N4Primitives.toNumber()` yields.

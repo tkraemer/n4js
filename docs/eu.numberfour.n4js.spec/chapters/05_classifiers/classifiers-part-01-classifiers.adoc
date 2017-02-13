@@ -383,7 +383,7 @@ Other classes are called _concrete_ classes.
 --
 
 1.  A class `C` must be declared abstract if it owns or inherits one or more abstract members and neither C nor any interfaces implemented by C implements these members. task:IDE-553[]
-//% $\exists m \in C.members: m.abstract \Rightarrow C.abstract$ \task*{IDE-553}
+//% $\exists m \in C.members: m.abstract \to C.abstract$ \task*{IDE-553}
 A concrete class has to, therefore, implement all abstract members of its superclasses’ implemented interfaces.
 Note that a class may implement fields with field accessors and vice versa. task:IDE-553[]
 2.  An abstract class may not be instantiated. task:IDE-148[]
@@ -422,10 +422,10 @@ For a class `C` with a supertype $S=C.sup$, the following constraints must hold;
 
 * $C.sup$ must reference a class declaration `S`
 * `S` must be be extendable in the project of `C`
-* $C \not\in C.sup^+$
+* $ C \not\in C.sup^+ $
 * All abstract members in `S` must be accessible from `C`:
 +
-$\forall M \in S.members : M.abstract \Rightarrow $
+$\forall M \in S.members : M.abstract \to $
 `M` is accessible from `C`
 +
 NOTE: `M` need not be an owned member of `S` and that this constraint applies even if `C` is abstract).
@@ -510,7 +510,7 @@ The default access modifier in interfaces is the the type’s visibility or `pro
 +
 [math]
 ++++
-\forall m \in I.member: m.final \Rightarrow m \in I.methods
+\forall m \in I.member: m.final \to m \in I.methods
 ++++
 +
 NOTE: not allowing field accessors to be declared final was a deliberate decision, because it would complicate the internal handling of member redefinition; might be reconsidered at a later time
@@ -566,7 +566,7 @@ For a given type
 
 .  Only interfaces can extend interfaces: $I, I_1, ..., I_n$ must be interfaces.
 .  An interface may not directly extend the same interface more than once: +
-$I_i=I_j \Rightarrow i=j$ for any
+$I_i=I_j \to i=j$ for any
 $i,j \in \{1..n\}$.
 .  An interface may (indirectly) extend the same interface $J$ more than once only if
 ..  $J$ is not parameterized, or
@@ -574,7 +574,7 @@ $i,j \in \{1..n\}$.
 +
 NOTE: For type parameters of $J$ that are declared covariant or contravariant on definition site, different type arguments may be used.
 .  All abstract members in $I_i$, $i \in \{1, ..., n\}$, must be accessible from `I`: +
-$\forall i \in \{1, ..., n\} : M \in I_i.members \land M.abstract \Rightarrow $
+$\forall i \in \{1, ..., n\} : M \in I_i.members \land M.abstract \to $
 `M` is accessible from `I` +
 (note that `M` need not be an owned member of $I_i$).
 --
@@ -590,14 +590,14 @@ by `C`, the following constraints must be true:
 .  Only classes can implement interfaces: `C` must be a Class.
 .  A class can only implement interfaces: $I_1, ..., I_n$ must be interfaces.
 .  A class may not directly implement the same interface more than once: +
-$I_i=I_j \Rightarrow i=j$ for any $i,j \in \{1..n\}$.
+$I_i=I_j \to i=j$ for any $i,j \in \{1..n\}$.
 .  A class may (indirectly) implement the same interface $J$ more than once only if
 ..  $J$ is not parameterized, or
 ..  in all cases $J$ is implemented with the same type arguments for all invariant type parameters.
 +
 NOTE: for type parameters of $J$ that are declared covariant or contravariant on definition site, different type arguments may be used.
 .  All abstract members in $I_i$, $i \in \{1, ..., n\}$, must be accessible from `C`: +
-$\forall i \in \{1, ..., n\} : M \in I_i.members \land M.abstract \Rightarrow $ `M` is accessible from `C` +
+$\forall i \in \{1, ..., n\} : M \in I_i.members \land M.abstract \to $ `M` is accessible from `C` +
 (note that `M` need not be an owned member of $I_i$).
 
 --
@@ -755,28 +755,17 @@ The _variance_ of a parameterized type states how its subtyping relates to its t
 For example, given a parameterized type `G<T>` and plain types `A` and `B`, we know
 
 * if `G` is *covariant* w.r.t. its parameter `T`, then
-
-[math]
-++++
-\lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G<B>} \subtype \lstnfjs{G<A>}
-++++
++
+$\lstnfjs{B} \subtype \lstnfjs{A} \to \lstnfjs{G} < \lstnfjs{B} > \subtype \lstnfjs{G}< \lstnfjs{A} >$
 
 * if `G` is *contravariant* w.r.t. its parameter `T`, then
 +
-[math]
-++++
-\lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}
-++++
+$\lstnfjs{B} \subtype \lstnfjs{A} \to \lstnfjs{G}< \lstnfjs{A} > \subtype \lstnfjs{G}< \lstnfjs{B} >$
 * if `G` is *invariant* w.r.t. its parameter `T`, then
 +
-[math]
-++++
-\beginalign
-\lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}\\
-\lstnfjs{B} \subtype \lstnfjs{A} \Rightarrow \lstnfjs{G<A>} \subtype \lstnfjs{G<B>}
-\endalign
-++++
-
+[%hardbreaks]
+$\lstnfjs{B} \subtype \lstnfjs{A} \to \lstnfjs{G}< \lstnfjs{A} > \subtype \lstnfjs{G}< \lstnfjs{B} >$
+$\lstnfjs{B} \subtype \lstnfjs{A} \to \lstnfjs{G}< \lstnfjs{A} > \subtype \lstnfjs{G}< \lstnfjs{B} >$
 
 Note that variance is declared per type parameter, so a single parameterized type with more than one type parameter may be, for example, covariant w.r.t. one type parameter and contravariant w.r.t. another.
 
