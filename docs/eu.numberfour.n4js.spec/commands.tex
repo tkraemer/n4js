@@ -3,7 +3,7 @@
 \newcommand{\FALSE}{\texttt{false}}
 \newcommand{\NULL}{\texttt{null}}
 \newcommand{\dots}{.\hspace{1mm}.\hspace{1mm}.\hspace{1mm}}
-\newcommand{\subtype}{<}
+\newcommand{\subtype}{<\texttt{:}\hspace{1mm}}
 \newcommand{\lhd}{\triangleleft}
 \newcommand{\typeSubs}{\theta}
 \newcommand{\lif}{\textbf{if}\dots}
@@ -13,7 +13,7 @@
 \newcommand{\lxor}{\oplus}
 \newcommand{\to}{\longrightarrow}
 \newcommand{\powerset}{\mathcal{P}}
-\newcommand{\typeOf}{\tee{:}}
+\newcommand{\typeOf}{\tee{:}\hspace{1mm}}
 \newcommand{\lenum}{\texttt}
 
 \newcommand{\typeEnv}{\Gamma}
@@ -28,7 +28,7 @@
 \newcommand{\llbracket}{[\![}
 \newcommand{\rrbracket}{{]\!]}}
 \newcommand{\iff}{\Leftrightarrow}
-\newcommand{\seq}{\overline{x}}
+\newcommand{\seq}[1]{\overline{#1}}
 \newcommand{\nfjstilde}{~}
 \newcommand{\lstnfjs}[1]{\texttt{#1}}
 \newcommand{\lstnfbnf}[1]{\texttt{#1}}
@@ -54,9 +54,12 @@
 \newcommand{\endleft}{\end{matrix}}
 \newcommand{\type}[1]{\texttt{#1}}
 \newcommand{\infTypeNF}[1]{ {[\![} {#1} {]\!]} }
+
+%\newcommand{\end}{\ding{115}} 
 %placeholder symbols 
 \newcommand{\nexists}{|E}
 \newcommand{\notsubtype}{\not \prec}
+
 
 
 % For alternatives to \texttt above, see http://www2.ph.ed.ac.uk/snuggletex/documentation/verbatim-mode.html

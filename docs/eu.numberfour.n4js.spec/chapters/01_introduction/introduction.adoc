@@ -96,9 +96,10 @@ The following judgments (with relation symbols) are used:
 subtype $<$ ::
 -
 
-type $:$ ::
+type $\type$ ::
 in which the left hand side is a declaration or expression, and the right hand side a type.
 We also use $\infType{\dots}$ as a function returning the (inferred) type of an expression.
+
 expectedTypeIn $ \lhd :$ ::
 a relation with three arguments:
   $container \lhd expression: type$ means, that
@@ -110,7 +111,7 @@ The following statement, for example, defines transitivity of subtypes
 
 [math]
 ++++
-\frac{\Gamma B \vdash <: A \hspace{7mm} \Gamma \vdash C <: B}{\Gamma \vdash C: < A}
+\frac{\Gamma \vdash B  \subtype A \hspace{5mm} \Gamma \vdash C \subtype B}{\Gamma \vdash C \subtype A}
 ++++
 
 $\entails$ is the context containing (bound) type variables etc., $\entails$ can be read as `entails`.
@@ -135,13 +136,13 @@ A variable or other typed element may be associated with three types:
 
 1.  Declared type: the type explicitly specified in the code, e.g., `var s: string`.
 2.  Inferred type: the type inferred by the type inferencer, e.g., `var s = "Hello"` infers the type of s to `string`. I.e.
-$\Gamma \vdash s :{string}$ will be true, or $[\![s]\!] < :string $.
+$\Gamma \vdash s :{string}$ will be true, or $\infType{s} \subtype string $.
 If an element is annotated with a type ,i.e. it has a declared type, the inferred type will always be the declared type.
 3.  Actual type: the actual type of a variable during runtime.
 This type information is not available at compile time and ignored in this specification.
 
 These types are not type declarations but type references, in fact, as they may be parameterized.
-For the sake of simplicity, we often omit the `Ref` suffix to shorten formulas.
+For the sake of simplicity, we often omit the $Ref$ suffix to shorten formulas.
 Consequently, we define the following properties and pseudo properties for typed elements such as variables:
 
 
@@ -222,13 +223,13 @@ For example; if a union type contains two type expressions $te_1$ and $te_k$, an
 The order of the elements is lost, however.
 --
 
-==== Logic Formulars
+==== Logic Formulas
 
 In general, we use a pragmatic mixture of pseudo code, predicate logic, and OCL.
 Within constraints (also within the inference rules), the properties defined in the grammar are used.
 
 In some rules, it is necessary to type the rule variables.
-Instead of explicitly checking the metatype (via $\mu(X)=:{MetaType}$), we precede the variable with the type, that is: $:{MetaType} X$.
+Instead of explicitly checking the metatype (via $\mu(X)=:{MetaType}$), we precede the variable with the type, that is: ${MetaType} X$.
 
 Instead of "type casting" elements, often properties are simply accessed.
 If an element does not define that element, it is either assumed to be false or null by default.
