@@ -13,6 +13,7 @@ package eu.numberfour.n4jsx.transpiler.utils;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -24,7 +25,10 @@ import java.util.stream.Collectors;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.naming.IQualifiedNameConverter;
-import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider;
+import org.eclipse.xtext.resource.IContainer;
+import org.eclipse.xtext.resource.IResourceDescription;
+import org.eclipse.xtext.resource.IResourceDescriptions;
+import org.eclipse.xtext.resource.IResourceDescriptionsProvider;
 
 import com.google.common.base.Optional;
 import com.google.inject.Inject;
@@ -43,29 +47,9 @@ import eu.numberfour.n4js.ts.types.TModule;
  * work for other backends once their support is added.
  */
 public final class JSXBackendHelper {
-
-	/**
-	 * Scoping helper used to locate JSX backends. In principle similar to the {@code ReactHelper}.
-	 */
-	private final static class JSXBackendsScopeHelper {
-		@Inject
-		private DefaultGlobalScopeProvider globalScope;
-
-		public final Set<URI> visibleBackends(Resource resource, Predicate<? super URI> predicate) {
-			Set<URI> backends = new HashSet<>();
-
-			/* based on DefaultGlobalScopeProvider#getVisibleContainers(resource); */
-			globalScope.getResourceDescriptions(resource).getAllResourceDescriptions().spliterator()
-					.forEachRemaining(r -> {
-						URI uri = r.getURI();
-						if (predicate.test(uri)) {
-							backends.add(uri);
-						}
-					});
-
-			return Collections.unmodifiableSet(backends);
-		}
-	}
+	private final static String JSX_BACKEND_MODULE_NAME = "react";
+	private final static String JSX_BACKEND_FACADE_NAME = "React";
+	private final static String JSX_BACKEND_ELEMENT_FACTORY_NAME = "createElement";
 
 	/**
 	 * Local cache of JSX backends.
@@ -75,19 +59,19 @@ public final class JSXBackendHelper {
 	private final Map<String, URI> jsxBackends = new HashMap<>();
 
 	@Inject
-	private JSXBackendsScopeHelper jsxBackendsScopeHelper;
-	@Inject
 	private IQualifiedNameConverter qualifiedNameConverter;
 	@Inject
 	private ModuleNameComputer nameComputer;
 	@Inject
 	private IN4JSCore n4jsCore;
 	@Inject
-	ProjectUtils projectUtils;
-
-	private final static String JSX_BACKEND_MODULE_NAME = "react";
-	private final static String JSX_BACKEND_FACADE_NAME = "React";
-	private final static String JSX_BACKEND_ELEMENT_FACTORY_NAME = "createElement";
+	private ProjectUtils projectUtils;
+	@Inject
+	private IContainer.Manager containerManager;
+	@Inject
+	private IResourceDescription.Manager descriptionManager;
+	@Inject
+	private IResourceDescriptionsProvider provider;
 
 	/** @return name of the JSX backend module, i.e. "react" */
 	public String getBackendModuleName() {
@@ -191,7 +175,7 @@ public final class JSXBackendHelper {
 	 */
 	private final void populateBackendsCache(Resource resource) {
 		jsxBackends.putAll(
-				jsxBackendsScopeHelper.visibleBackends(resource, JSXBackendHelper::looksLikeReactUri)
+				visibleBackends(resource, JSXBackendHelper::looksLikeReactUri)
 						.stream()
 						.collect(Collectors.toMap(
 								uri -> qualifiedNameConverter.toString(nameComputer.getQualifiedModuleName(uri)),
@@ -199,6 +183,37 @@ public final class JSXBackendHelper {
 								// IDE-2505
 								JSXBackendHelper::stubMerger)));
 
+	}
+
+	/**
+	 * Collects all {@link IContainer}s visible from provided resources. Returned colelction is filter with frovided
+	 * predicate.
+	 *
+	 * Similar to {code DefaultGlobalScopeProvider.getVisibleContainers(Resource)}.
+	 *
+	 * @param resource
+	 *            for which we look for visible containers
+	 * @param predicate
+	 *            used to filter collected containers
+	 * @return filtered set of visible containers
+	 */
+	private Set<URI> visibleBackends(Resource resource, Predicate<? super URI> predicate) {
+		Set<URI> backends = new HashSet<>();
+
+		IResourceDescriptions resourceDescriptions = provider.getResourceDescriptions(resource.getResourceSet());
+		IResourceDescription resourceDescription = descriptionManager.getResourceDescription(resource);
+		List<IContainer> visibleContainers = containerManager.getVisibleContainers(resourceDescription,
+				resourceDescriptions);
+
+		visibleContainers.parallelStream().map(c -> c.getResourceDescriptions()).forEach(iIR -> iIR.spliterator()
+				.forEachRemaining(r -> {
+					URI uri = r.getURI();
+					if (predicate.test(uri)) {
+						backends.add(uri);
+					}
+				}));
+
+		return Collections.unmodifiableSet(backends);
 	}
 
 	/**
