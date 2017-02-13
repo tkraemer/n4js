@@ -20,67 +20,85 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.RegistryFactory;
+import org.eclipse.xtext.resource.FileExtensionProvider;
 
 import com.google.common.base.Splitter;
 import com.google.inject.Singleton;
 
 /**
- * This class collect runnable file extensions from extensions to extension point.
+ * This class is providing alternative to {@link FileExtensionProvider}. Implementations of that interface are language
+ * specific, thus instances you use are context specific. When using those you need to be certain if you want to use
+ * that specific implementation. When working against interface you also need to be sure you get instance you want
+ * (especially when you work with injected instances, you might get different implementation at runtime than you expect
+ * at compile time).
+ *
+ * This class provides a way to get extensions with certain characteristics (defined by the {@link FileExtensionType}
+ * across all supported languages (in practice all supported languages that have registered themselves to this
+ * registry). Main use case it to allow caller ask about file extensions from a given language, without directly
+ * depending on that language. Note that while extension point provides some hints about meaning of the characteristics
+ * (defined by the {@link FileExtensionType} it is up to the caller to interpret this information at use site. When
+ * meanings get blurred it may be required to introduce more fined grained {@link FileExtensionType file extension
+ * types} and re-examine all use sites.
+ *
+ *
+ * Note that is different from {@code FileExtensionInfoRegistry} in Xpect. That registry is used to setup different
+ * languages for Xpect tests.
+ *
  */
+// TODO IDE-2509 how does this relate to org.xpect.registry.FileExtensionInfoRegistry
 @Singleton
 public class FileExtensionsRegistry {
 
-	/**
-	 * The type of file extension, e.g. runnable file extension.
-	 */
-	public static enum FileExtensionType {
-		/**
-		 * Transpilable file extension
-		 */
-		TRANSPILABLE_FILE_EXTENSION,
-		/**
-		 * Test file extension
-		 */
-		TEST_FILE_EXTENSION,
-		/**
-		 * Runnable file extension
-		 */
-		RUNNABLE_FILE_EXTENSION
-	}
-
-	private final static Logger log = Logger.getLogger(FileExtensionsRegistry.class);
+	private final static Logger LOGGER = Logger.getLogger(FileExtensionsRegistry.class);
 
 	/* The extension point to file extensions */
 	private static final String FILE_EXTENSIONS_POINT_ID = "eu.numberfour.n4js.utils.fileExtensions";
 	private static final String ATT_TRANSPILABLE_FILE_EXTENSIONS = "transpilableFileExtensions";
 	private static final String ATT_TEST_FILE_EXTENSIONS = "testFileExtensions";
 	private static final String ATT_RUNNABLE_FILE_EXTENSIONS = "runnableFileExtensions";
+	private static final String ATT_TYPABLE_FILE_EXTENSIONS = "typableFileExtensions";
+	private static final String ATT_RAW_FILE_EXTENSIONS = "rawFileExtensions";
 
 	private static final String ATT_FILE_EXTENSION = "extensions";
 	private boolean isInitialized = false;
 	private final Collection<String> transpilableFileExtensions = new ArrayList<>();
 	private final Collection<String> testFileExtensions = new ArrayList<>();
 	private final Collection<String> runnableFileExtensions = new ArrayList<>();
+	private final Collection<String> typableFileExtensions = new ArrayList<>();
+	private final Collection<String> rawFileExtensions = new ArrayList<>();
 
 	/**
 	 * Register a file extension. This method should only be invoked by client code directly in headless mode. When
 	 * running in Eclipse, file extensions will be registered via the 'fileExtensions' extension point.
+	 *
+	 * @param fileExtension
+	 *            without the leading dot e.g. {@code txt} (not {@code .txt})
 	 */
 	public void register(String fileExtension, FileExtensionType extensionType) {
 		switch (extensionType) {
 		case TRANSPILABLE_FILE_EXTENSION:
 			transpilableFileExtensions.add(fileExtension);
 			break;
-		case TEST_FILE_EXTENSION:
+		case TESTABLE_FILE_EXTENSION:
 			testFileExtensions.add(fileExtension);
 			break;
 		case RUNNABLE_FILE_EXTENSION:
 			runnableFileExtensions.add(fileExtension);
+			break;
+		case TYPABLE_FILE_EXTENSION:
+			typableFileExtensions.add(fileExtension);
+			break;
+		case RAW_FILE_EXTENSION:
+			rawFileExtensions.add(fileExtension);
+			break;
+		default:
+			throw new UnsupportedOperationException(
+					"This file extension type " + extensionType + " is not supported yet");
 		}
 	}
 
 	/**
-	 * Return file extensions
+	 * Return registered file extensions.
 	 */
 	public Collection<String> getFileExtensions(FileExtensionType extensionType) {
 		if (!isInitialized) {
@@ -89,12 +107,18 @@ public class FileExtensionsRegistry {
 		switch (extensionType) {
 		case TRANSPILABLE_FILE_EXTENSION:
 			return Collections.unmodifiableCollection(transpilableFileExtensions);
-		case TEST_FILE_EXTENSION:
+		case TESTABLE_FILE_EXTENSION:
 			return Collections.unmodifiableCollection(testFileExtensions);
 		case RUNNABLE_FILE_EXTENSION:
 			return Collections.unmodifiableCollection(runnableFileExtensions);
+		case TYPABLE_FILE_EXTENSION:
+			return Collections.unmodifiableCollection(typableFileExtensions);
+		case RAW_FILE_EXTENSION:
+			return Collections.unmodifiableCollection(rawFileExtensions);
+		default:
+			throw new UnsupportedOperationException(
+					"This file extension type " + extensionType + " is not supported yet");
 		}
-		throw new UnsupportedOperationException("This file extension type " + extensionType + " is not supported yet");
 	}
 
 	/**
@@ -116,15 +140,24 @@ public class FileExtensionsRegistry {
 						List<String> fileExtensions = Splitter.on(',').trimResults().omitEmptyStrings()
 								.splitToList(elem.getAttribute(ATT_FILE_EXTENSION));
 
-						if (ATT_TRANSPILABLE_FILE_EXTENSIONS.equals(elem.getName())) {
+						String elementName = elem.getName();
+						if (ATT_TRANSPILABLE_FILE_EXTENSIONS.equals(elementName)) {
 							transpilableFileExtensions.addAll(fileExtensions);
-						} else if (ATT_TEST_FILE_EXTENSIONS.equals(elem.getName())) {
+						} else if (ATT_TEST_FILE_EXTENSIONS.equals(elementName)) {
 							testFileExtensions.addAll(fileExtensions);
-						} else if (ATT_RUNNABLE_FILE_EXTENSIONS.equals(elem.getName())) {
+						} else if (ATT_RUNNABLE_FILE_EXTENSIONS.equals(elementName)) {
 							runnableFileExtensions.addAll(fileExtensions);
+						} else if (ATT_TYPABLE_FILE_EXTENSIONS.equals(elementName)) {
+							typableFileExtensions.addAll(fileExtensions);
+						} else if (ATT_RAW_FILE_EXTENSIONS.equals(elementName)) {
+							rawFileExtensions.addAll(fileExtensions);
+						} else {
+							LOGGER.error(new UnsupportedOperationException(
+									"This file extension type " + elementName + " is not supported yet"));
 						}
 					} catch (Exception ex) {
-						log.error("Error while reading extensions for extension point " + FILE_EXTENSIONS_POINT_ID, ex);
+						LOGGER.error("Error while reading extensions for extension point " + FILE_EXTENSIONS_POINT_ID,
+								ex);
 					}
 				}
 			}

@@ -1279,11 +1279,6 @@ class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRel
 	
 	/* Convenience method, returns true if this or one of the preceding parameters have an initializer. */
 	op boolean isOptional() {
-		// backward compatibility: old type of optional using '?' also optional
-		// TODO: remove this when IDE-145 task is finished (and no warnings are shown)
- 		if (typeRef !== null && typeRef.undefModifier === UndefModifier.OPTIONAL)
- 			return true;
-
 		val EList<TFormalParameter> fpars = switch(eContainer) {
             TFunction: (eContainer as TFunction).fpars
             FunctionTypeExprOrRef: (eContainer as FunctionTypeExprOrRef).fpars

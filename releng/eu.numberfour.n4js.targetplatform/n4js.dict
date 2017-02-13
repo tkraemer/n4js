@@ -168,6 +168,10 @@ ract
 preact
 uri
 hardcoded
+jsx
+transpilable
+txt
+ts
 fallback
 api
 whitespaces

@@ -31,8 +31,8 @@ public class N4JSXStandaloneSetup extends N4JSXStandaloneSetupGenerated {
 	 * Same as {@link #doSetup()}, but won't invoke {@code N4JSStandaloneSetup#doSetup()}. For details, see
 	 * {@link #createInjectorAndDoEMFRegistrationWithoutParentLanguages()}.
 	 */
-	public static void doSetupWithoutParentLanguages() {
-		new N4JSXStandaloneSetup().createInjectorAndDoEMFRegistrationWithoutParentLanguages();
+	public static Injector doSetupWithoutParentLanguages() {
+		return new N4JSXStandaloneSetup().createInjectorAndDoEMFRegistrationWithoutParentLanguages();
 	}
 
 	@Override

@@ -39,7 +39,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.xtext.resource.FileExtensionProvider;
 import org.eclipse.xtext.ui.containers.AbstractAllContainersState;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 
@@ -47,6 +46,7 @@ import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.fileextensions.FileExtensionTypeHelper;
 import eu.numberfour.n4js.projectModel.IN4JSArchive;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
@@ -68,7 +68,7 @@ public class N4JSAllContainersState extends AbstractAllContainersState {
 	private N4JSProjectsStateHelper projectsHelper;
 
 	@Inject
-	private FileExtensionProvider fileExtensionProvider;
+	private FileExtensionTypeHelper fileExtensionTypeHelper;
 
 	@Inject
 	private IN4JSCore core;
@@ -101,7 +101,7 @@ public class N4JSAllContainersState extends AbstractAllContainersState {
 	protected boolean isAffectingContainerState(IResourceDelta delta) {
 		if (delta.getKind() == IResourceDelta.ADDED || delta.getKind() == IResourceDelta.REMOVED) {
 			String fileExtension = delta.getFullPath().getFileExtension();
-			if (null != fileExtension && fileExtensionProvider.isValid(fileExtension)) {
+			if (null != fileExtension && fileExtensionTypeHelper.isTypable(fileExtension)) {
 				return true;
 			}
 			if (IN4JSProject.N4MF_MANIFEST.equals(delta.getFullPath().lastSegment())) {
