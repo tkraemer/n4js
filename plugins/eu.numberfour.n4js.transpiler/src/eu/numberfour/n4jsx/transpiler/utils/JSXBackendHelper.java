@@ -209,13 +209,15 @@ public final class JSXBackendHelper {
 		List<IContainer> visibleContainers = containerManager.getVisibleContainers(resourceDescription,
 				resourceDescriptions);
 
-		visibleContainers.parallelStream().map(c -> c.getResourceDescriptions()).forEach(iIR -> iIR.spliterator()
-				.forEachRemaining(r -> {
-					URI uri = r.getURI();
-					if (predicate.test(uri)) {
-						backends.add(uri);
-					}
-				}));
+		visibleContainers.stream()
+				.map(container -> container.getResourceDescriptions())
+				.forEach(resourceDscriptions -> resourceDscriptions.iterator()
+						.forEachRemaining(candidateResourceDescription -> {
+							URI uri = candidateResourceDescription.getURI();
+							if (predicate.test(uri)) {
+								backends.add(uri);
+							}
+						}));
 
 		return Collections.unmodifiableSet(backends);
 	}
