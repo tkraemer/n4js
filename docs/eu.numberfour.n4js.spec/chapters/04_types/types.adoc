@@ -2770,7 +2770,9 @@ which itself is not related to the standard enumeration type `N4Enum`
 +
 [math]
 ++++
-infer{ \type{N4StringBasedEnum} \subtype \type{string} }{}
+\beginalign
+\infer{ \type{N4StringBasedEnum} \subtype \type{string}}{}\\
+\endalign
 ++++
 .  Each literal in $L_S$ of a string-based enumeration
 $E_S$ is of the type of the string-based enumeration.
