@@ -192,7 +192,7 @@ public final class JSXBackendHelper {
 	}
 
 	/**
-	 * Collects all {@link IContainer}s visible from provided resources. Returned colelction is filter with frovided
+	 * Collects all {@link IContainer}s visible from provided resources. Returned collection is filter with provided
 	 * predicate.
 	 *
 	 * Similar to {code DefaultGlobalScopeProvider.getVisibleContainers(Resource)}.
