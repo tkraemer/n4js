@@ -567,7 +567,7 @@ For a given type
 .  Only interfaces can extend interfaces: $I, I_1, \dots, I_n$ must be interfaces.
 .  An interface may not directly extend the same interface more than once: +
 $I_i=I_j \to i=j$ for any
-$i,j \in \{1..n\}$.
+$i,j \in \{1 \dots n\}$.
 .  An interface may (indirectly) extend the same interface $J$ more than once only if
 ..  $J$ is not parameterized, or
 ..  in all cases $J$ is extended with the same type arguments for all invariant type parameters.

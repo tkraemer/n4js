@@ -1538,12 +1538,11 @@ $ \infer{\union{T_1,\dots,T_{k-1},null},T_k,\dots,T_n}{\union{T_1,\dots,T_{k-1},
 
 NOTE: Simplification rules for union types with one element are applied first.
 
-* The structural typing strategy is propagated to the types of the
-union:
+* The structural typing strategy is propagated to the types of the union:
 +
 [math]
 ++++
-\infer{\union{\tsStr T_1, \ldots, \tsStr T_n}}{\tsStr \union{T_1, \dots, T_n}}
+\infer{\union{\tsStr T_1, \ldots, \tsStr T_n}}{\nfjstilde \union{T_1, \dots, T_n}}
 ++++
 
 --
@@ -1810,7 +1809,7 @@ The following simplification rules are always automatically applied to intersect
 +
 [math]
 ++++
-\infer{\intersection{\tsStr T_1, \ldots, \tsStr T_n}}{\tsStr \intersection{T_1, \dots, T_n}}
+\infer{\intersection{\tsStr T_1, \ldots, \tsStr T_n}}{\nfjstilde \intersection{T_1, \dots, T_n}}
 ++++
 
 
