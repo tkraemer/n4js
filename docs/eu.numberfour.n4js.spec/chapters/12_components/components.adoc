@@ -420,8 +420,8 @@ The qualifier is only supported for this tooling and is removed during deploymen
 The lengths of the major, minor and micro numbers is additionally limited to four digits.
 
 ////
-  %\todo[wk: micro versions]{Should we support micro versions at all?}A: Yes we should since they are part of the spec on code and data versioning.
-  \todo[jr: qualifier]{Do we need support for distinction of build numbers and qualifier?}
+  %\Rightarrowdo[wk: micro versions]{Should we support micro versions at all?}A: Yes we should since they are part of the spec on code and data versioning.
+  \Rightarrowdo[jr: qualifier]{Do we need support for distinction of build numbers and qualifier?}
 ////
 
 
@@ -844,7 +844,7 @@ The N4 deployment descriptor of a project `p` is a NFON formatted file with the 
 [.language-n4js]
 == Properties Files
 
-//\todo{review}
+//\Rightarrowdo{review}
 
 Properties files have the file extension `properties` and describe how to localize text in a project.
 They basically define keys <<_primitive-pathselector-and-i18nkey>> with their values.

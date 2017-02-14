@@ -264,7 +264,7 @@ A given DIComponent is compatible with another DIComponent if it has bindings fo
 
 [math]
 ++++
-\exists DIC1,DIC2 : DIC1.\seq{binding}.\seq{key} \to DIC2.\seq{binding}.\seq{key} \iff DIC2 \subtype DIC1
+\exists DIC1,DIC2 : DIC1.\seq{binding}.\seq{key} \Rightarrow DIC2.\seq{binding}.\seq{key} \iff DIC2 \subtype DIC1
 ++++
 
 NOTE: Although subtype notation $\subtype$ is used here it does *not* imply actual subtype relations.
@@ -689,9 +689,9 @@ The following scopes are supported by the N4JS <<acronyms,DI>>, other scopes, cf
 This algorithm is not working for constructor injection because it is possible to already access all fields of the arguments passed to the constructor.
 In the algorithm, however, the instances may not be completely initialized.
 
-// \todo{add static validations for detecting injection cycles at runtime}
+// \Rightarrowdo{add static validations for detecting injection cycles at runtime}
 
-//\todo{add warning even if resolvable cycles are detected, use new scope "@PerInjectionSingleton" for A to ensure that per injection call A behaves like a singleton (what the algorithm implicitly does).
+//\Rightarrowdo{add warning even if resolvable cycles are detected, use new scope "@PerInjectionSingleton" for A to ensure that per injection call A behaves like a singleton (what the algorithm implicitly does).
 
 
 

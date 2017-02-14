@@ -217,13 +217,9 @@ A heuristic is defined, however, to compute the probable this type:
 .  [[this-keyword-constraint-1]] If the this keyword is used in some function annotated with an annotation `@This`, the type specified in the annotation is used.
 The inferred type is always nominal.
 +
-[math]
-++++
-\beginalign
-\infer{\tee \lstnfbnf{"this"}: \tsNom T}{f=\lstnfbnf{"this"}.containingFunctionOrAccessor \\
-f.hasAnnotation(\lstnfbnf{"@This"}) \spc T = f.annotation\lstnfjs{["@This"]}}\\
-\endalign
-++++
+[%hardbreaks]
+$f=\lstnfbnf{"this"}.containingFunctionOrAccessor$
+$\infer{\tee \lstnfbnf{"this"}: \tsNom T}{f.hasAnnotation(\lstnfbnf{"@This"}) \spc T = f.annotation\lstnfjs{["@This"]}}$
 . [[this-keyword-constraint-2]] If the this keyword is used in some _instance_ method of a  classifier or in an _instance_ field initializer,`this` is bound to the `T` itself.
 If the this keyword is used in some _static_ method of a classifier `T` or in a _static_ field initializer, the prototype type (or constructor) of the classifier is used, that is `type[T]`.
 In both cases, the target is determined by using the expressions’s pseudo property `probableThisTarget`.
@@ -463,7 +459,7 @@ $\spc bind(i, D) $
 $\spc \hspace{2em}\land \nexists\ \type{AssignmentExpression}\ ae \in i.container^*: $
 $\spc \hspace{3em} ae.left = i $
 $\spc \hspace{4em}\lor (\mu(ae.left)=\type{PropertyAccessExpression} \land ae.left.property=i): $
-$\spc \to D.readable $
+$\spc \Rightarrow D.readable $
 
 --
 
@@ -490,16 +486,12 @@ cf. cite:[ECMA11a(S11.1.3p.63,S7.8p.19ff)].
 The type of a literal can directly be derived from the grammar.
 The following axioms are defined for literals:
 
-[math]
-++++
-\beginalign
-\infer{\type{NullLiteral}: \type{null}}{} \\
-\infer{\type{BooleanLiteral}: \type{boolean}}{}  \\
-\infer{\type{NumericLiteral}: \type{int} or \type{number}}{} \\
-\infer{\type{StringLiteral}: \type{string}}{} \\
-\infer{\type{RegularExpressionLiteral}: \type{RegExpr}}{} \\
-\endalign
-++++
+[%hardbreaks]
+$ \lspc \infer{\type{NullLiteral}: \type{null}}{} $
+$ \lspc \infer{\type{BooleanLiteral}: \type{boolean}}{}  $
+$ \lspc \infer{\type{NumericLiteral}: \type{int} or \type{number}}{} $
+$ \lspc \infer{\type{StringLiteral}: \type{string}}{} $
+$ \lspc \infer{\type{RegularExpressionLiteral}: \type{RegExpr}}{} $
 
 ////
 TODO - convert tags to section links
@@ -785,7 +777,7 @@ For a given object literal $ol$ the following constraints must hold (cf. cite:[E
 * Object literal may not have two PropertyNameValuePairs with the same name in strict mode (cf. 4.a):
 +
 [%hardbreaks]
-$mode=\lenum{strict} \to \spc \forall pa \in ol.propertyAssignments, pa.isData:$
+$mode=\lenum{strict} \rightarrow \spc \forall pa \in ol.propertyAssignments, pa.isData:$
 $\spc \nexists pa' \in ol.propertyAssignments:$
 $\spc pa'.isAccessor \land pa'.name = pa.name$
 
@@ -814,7 +806,7 @@ That is to say that the inferred (but not declared) type of all assignments must
 * In N4JS mode, the name of a property must be a valid N4JSIdentifier:
 +
 [%hardbreaks]
-$mode=\lenum{n4js} \to \spc \forall pa \in ol.propertyAssignments:$
+$mode=\lenum{n4js} \rightarrow \spc \forall pa \in ol.propertyAssignments:$
 $\spc \mu(pa.name)=\type{N4JSIdentifier}$
 
 
@@ -990,7 +982,7 @@ The constraints are basically similar.
 +
 [math]
 ++++
-\spc pae.isDotAccess \land \lnot R.dyn \to \\
+\spc pae.isDotAccess \land \lnot R.dyn \rightarrow \\
 \spc \exists m \in pae.target.type.properties: m.name=pae.name
 ++++
 +
@@ -998,8 +990,8 @@ The constraints are basically similar.
 +
 [math]
 ++++
-\spc pae.isDotAccess \land \lnot R.dyn \to\\
-\spc (\exists m \in pae.target.type.properties : m.name=pae.name) \to  \alpha(pae, m)
+\spc pae.isDotAccess \land \lnot R.dyn \rightarrow\\
+\spc (\exists m \in pae.target.type.properties : m.name=pae.name) \rightarrow  \alpha(pae, m)
 ++++
 +
 3.  If dot notation is used and the referenced property exists and this property is a member with a declared `@This` type (only possible for methods or field accessors),
@@ -1036,25 +1028,24 @@ That is to say, for an indexed-access expression $iae$, the following constraint
 +
 [%hardbreaks]
 $\spc mode=\lenum{n4js} \land pae.target.type=\type{Array} \land pae.isIndexAccess $
-$\spc \to \tee pae.index \subtype[number]$
+$\spc \Rightarrow \tee pae.index \subtype[number]$
 4.  In N4JS mode, if the receiver is a subtype of types or and is not dynamic, in case of index access the index expression must be a number:  task:IDE-837[]
 +
 [%hardbreaks]
 $\spc mode=\lenum{n4js} $
 $\spc \hspace{3em} \land (\tee pae.target\subtype {string} \lor \tee pae.target \subtype {String}) $
 $\spc \hspace{3em} \land pae.isIndexAccess $
-$\spc \to \tee pae.index \subtype{number}
+$\spc \Rightarrow \tee pae.index \subtype{number}
 5.  In N4JS mode, if the receiver is an iterable and is not dynamic, in case of index access the index expression must be a property access expression to the built-in symbol `Symbol.iterator`:
 +
-[math]
-++++
-\spc mode=\lenum{n4js} \land pae.target.type=\type{Iterable} \land pae.isIndexAccess \\
-\spc \to \\
-\spc \hspace{3em} \mu(pae.index)=\type{IndexedAccessExpression} \\
-\spc \hspace{3em} \land pae.index.isDotAccess \\
-\spc \hspace{3em} \land pae.index.target = \type{Symbol} \\
-\spc \hspace{3em} \land pae.index.property = "iterator" \\
-++++
+[%hardbreaks]
+$\spc mode=\lenum{n4js} \land pae.target.type=\type{Iterable} \land pae.isIndexAccess $
+$\spc \Rightarrow $
+$\spc \hspace{3em} \mu(pae.index)=\type{IndexedAccessExpression} $
+$\spc \hspace{3em} \land pae.index.isDotAccess $
+$\spc \hspace{3em} \land pae.index.target = \type{Symbol} $
+$\spc \hspace{3em} \land pae.index.property = "iterator" $
+
 
 --
 
@@ -1105,7 +1096,7 @@ We define the following type inferencing rules for property accessors:
 [math]
 ++++
 \beginalign
-\infer{\tee p: T}{\lnot p.target.dyn \lor p.index.type \subtype[number] \spc \tee p.target: \type{Array<T>}} \\
+\infer{\tee p: T}{\lnot p.target.dyn \lor p.index.type \subtype[number] \spc \tee p.target: \type{Array}< \type{T} > } \\
 \infer{\tee p: \type{any}}{else}
 \endalign
 ++++
@@ -1123,7 +1114,7 @@ We define the following type inferencing rules for property accessors:
 [math]
 ++++
 \beginalign
-\infer{\tee p: T}{\exists m \in p.target: m.name=p.name \spc \tee m: T}
+\infer{\tee p: T}{\exists m \in p.target: m.name=p.name \spc \tee m: T} \\
 \infer{\tee p: \type{any}}{}
 \endalign
 ++++
@@ -1165,7 +1156,7 @@ var c = new C<string>("hello");
 Let $ne$ be a new expression, with $\tee ne.callee: C$.
 The following constraints must hold:
 
-.  [[new-expression-1]] The callee must be a constructor type: $C <: \type{constructor\{?\}}$  or a constructable type.
+.  [[new-expression-1]] The callee must be a constructor type: $C <: \type{constructor}\{?\}}$  or a constructable type.
 .  [[new-expression-2]] Let $O$ be the type argument of $C$, that is $C = constructor\{O\}$. In that case,
 ..  $O$ must not be an interface or enum: $\mu(C) \not\in \{ \type{Interface}, \type{Enum}\}$
 ..  $O$ must not contain any wildcards.
@@ -1191,7 +1182,7 @@ N4JS.
 Remarks:
 
 to <<new-expression-1,1>> The type of an abstract class `A` is $type\{A\}$.
-Or in other words: Only instantiable classes have an inferred type of $constructor\{..\}$.
+Or in other words: Only instantiable classes have an inferred type of $constructor\{ \dots \}$.
 
 to <<new-expression-2,2>> Even though it is possible to use the constructor type of an abstract class – concrete subclasses with override compatible constructor signature will be subclasses of this constructor.
 
@@ -1299,9 +1290,9 @@ fragment Arguments <Yield>*:
 For a given call expression $f$ bound to a method or function declaration $F$, the following constraints must hold:
 
 * If less arguments are provided than formal parameters were declared, the missing formal parameters must have been declared optional: +
-$|f.args|<|F.pars| \to \forall |f.args|<i\leq|F.pars|: F_pars_i.optional$
+$|f.args|<|F.pars| \rightarrow \forall |f.args|<i\leq|F.pars|: F_pars_i.optional$
 * If more arguments are provided than formal parameters were declared, the last formal parameter must have been declared variadic: +
-$|f.args|>|F.pars| \to F.pars_{|F.pars|-1}.variadic$
+$|f.args|>|F.pars| \rightarrow F.pars_{|F.pars|-1}.variadic$
 * Types of provided arguments must be subtypes of the formal parameter types: +
 $\forall 0<i<min(|f.args|,|F.pars|): f.args_i <: F.pars_i$
 * If more arguments are provided than formal parameters were declared, the type of the exceeding arguments must be a subtype of the last (variadic) formal parameter type: +
@@ -1404,7 +1395,7 @@ task:IDE-345[]
 For a given postfix expression $u$ $u$ with $u.op \in \{++,--\}$ and $u.expression.type: T$, the following constraints must hold:
 
 * In N4JS mode, the type $T$ of the expression must be a number.
-* If $u.expression = PropertyAccess \; pa(p) \land pa.isDotAccess \to $ both $get$ _p_ and $set$ _p_ must be defined. task:IDE-737[]
+* If $u.expression = PropertyAccess \; pa(p) \land pa.isDotAccess \rightarrow $ both $get$ _p_ and $set$ _p_ must be defined. task:IDE-737[]
 --
 
 === Unary Expression
@@ -1464,7 +1455,7 @@ For a given unary expression $u$ $u$ with $u.op \in \{++,--\}$ and $u.expression
 \infer{\tee \type{UnaryExpression} \expectType \type{Expression}: \type{number}}{}
 ++++
 
-* If $u.expression = PropertyAccess \; pa(p)  \land  pa.isDotAccess$ $\to$ both $get$ _p_ and $set$ _p_ must be defined. task:IDE-768[]
+* If $u.expression = PropertyAccess \; pa(p)  \land  pa.isDotAccess$ $\rightarrow$ both $get$ _p_ and $set$ _p_ must be defined. task:IDE-768[]
 
 --
 
@@ -1508,7 +1499,7 @@ The following operators have fixed types independent of their operand types: tas
 $ \spc \infer{\tee \lstnfbnf{'delete'}\ expression: \type{boolean}}{}  $
 $ \spc \infer{\tee \lstnfbnf{'void'}\ expression: \type{undefined}}{} $
 $ \spc \infer{\tee \lstnfbnf{'typeof'}\ expression: \type{string}}{} $
-$ \spc \infer{\tee \lstnfbnf{('++'|'$--$'|'+'|'$-$'|'~')}\ expression: \type{number}}{} $
+$ \spc \infer{\tee \lstnfbnf{('++'|'--'|'+'|'-'|'~')}\ expression: \type{number}}{} $
 $ \spc \infer{\tee \lstnfbnf{'!'}\ expression: \type{boolean}}{} $
 
 === Multiplicative Expression
@@ -1717,10 +1708,10 @@ the following constraints must hold:
 * The operands must have the same type and the type must be either a number, string, or boolean:
 +
 [%hardbreaks]
-$\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}{ \tee rhs: T \spc T\in \{\type{number,string,boolean}\}}$
-$\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ lhs: T}{ \tee rhs: O \spc O \not\in \{\type{number,string,boolean}\} \spc T=\type{\union{number,string,boolean}}  } $
-$\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ rhs: T}{ \tee lhs: T \spc T\in \{\type{number,string,boolean}\}} $
-$\spc\infer{\tee  lhs\ \lstnfbnf{('<'|'<='|'>'|'>=')}\  rhs\  \expectType\ rhs: T}{ \tee lhs: O \spc O \not\in \{\type{number,string,boolean}\} \spc T=\type{\union{number,string,boolean}}  } $
+$\spc\infer{\tee  lhs\ ('<'|'<='|'>'|'>=')  rhs\  \expectType\ lhs: T}{ \tee rhs: T \spc T\in \{\type{number,string,boolean}\}}$
+$\spc\infer{\tee  lhs\ ('<'|'<='|'>'|'>=')  rhs\  \expectType\ lhs: T}{ \tee rhs: O \spc O \not\in \{\type{number,string,boolean}\} \spc T=\union{\type {number,string,boolean}}}   $
+$\spc\infer{\tee  lhs\ ('<'|'<='|'>'|'>=')  rhs\  \expectType\ rhs: T}{ \tee lhs: T \spc T\in \{\type{number,string,boolean}\}} $
+$\spc\infer{\tee  lhs\ ('<'|'<='|'>'|'>=')  rhs\  \expectType\ rhs: T}{ \tee lhs: O \spc O \not\in \{\type{number,string,boolean}\} \spc T=\union{\type{number,string,boolean}}}   $
 
 
 --
@@ -1736,17 +1727,17 @@ In other words,
 
 [math]
 ++++
-\inferSup{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type{Class}}}{}
+\inferSup{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type}\{\type{Class}\}}{}
 ++++
 
-is contained in the the first type rule, an object type reference footnote:[Includes interfaces, since an interface type reference is a subtype of object type reference: $\type{type\{Interface\}} <: \type{type\{Object\}}$]
+is contained in the the first type rule, an object type reference footnote:[Includes interfaces, since an interface type reference is a subtype of object type reference: $\type{type}\{\type{Interface}\} <: \type{type}\{\type{Object}\}$]
 or an enum type reference. task:IDE-681[] task:IDEBUG-631[] task:IDE-652[]
 
 [math]
 ++++
 \spc\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{Function}}{} \\
-\spc\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{Object\}}}{} \\
-\spc\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type\{N4Enum\}}}{}
+\spc\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type}\{ \type{Object}\}}{} \\
+\spc\infer{\tee  lhs\ \lstnfbnf{'instanceof'}\  rhs\  \expectType\ rhs: \type{type}\{ \type{N4Enum}\}}{}
 ++++
 
 The type of a definition site structural classifier $C$ is not of type `C`.
@@ -1771,7 +1762,7 @@ For a given relational expression $e$ with $e.op = \lstnfjs{in}$, the following 
 +
 [math]
 ++++
-\spc\infer{\tee  lhs\ \lstnfbnf{'in'}\ rhs\  \expectType\ lhs: \type{\union{string,number}}}{}
+\spc\infer{\tee  lhs\ \lstnfbnf{'in'}\ rhs\  \expectType\ lhs: \union{\type{string,number}}}{}
 ++++
 
 --
@@ -1993,7 +1984,7 @@ either or `undefined`, which is not allowed in N4JS mode.
 
 [math]
 ++++
-\infer{\tee lhs \lstnfbnf{'\&\&'|'||'} rhs : union \{ \tee lhs, \tee rhs \}}{}
+\infer{\tee lhs \lstnfbnf{'} \&\& \lstnfbnf{'|'||'} rhs : union \{ \tee lhs, \tee rhs \}}{}
 ++++
 
 === Conditional Expression

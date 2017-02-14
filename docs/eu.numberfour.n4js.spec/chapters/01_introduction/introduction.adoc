@@ -215,7 +215,7 @@ We define a pseudo function
 
 [math]
 ++++
-merge: Type \times \dots \times Type \to \powerset(Type)
+merge: Type \times \dots \times Type \Rightarrow \powerset(Type)
 ++++
 
 The idea of this function is to remove duplicates.
@@ -252,7 +252,7 @@ We use the following symbols and font conventions:
 $\land$, $\lor$, $\lxor$, $\lnot$::
 Logical and, or, exclusive or (xor), and not.
 
-$\to$, $\iff$, $\lif$, $\lthen$, $\lelse$ ::
+$\Rightarrow$, $\iff$, $\lif$, $\lthen$, $\lelse$ ::
 Logical implication, if and only if, and if-then-else.
 
 $\TRUE$, $\FALSE$, $\NULL$, $\emptyset$::

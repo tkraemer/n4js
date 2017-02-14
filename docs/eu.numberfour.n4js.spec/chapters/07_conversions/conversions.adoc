@@ -37,16 +37,16 @@ relations:
 [math]
 ++++
 \beginalign
-\infer{\tee \type{Boolean} \notsubtype{\type{boolean}}}{} | \infer{\tee \type{boolean} \notsubtype{\type{Boolean}}}{} \\
-\infer{\tee \type{Number} \notsubtype{\type{number}}}{} | \infer{\tee \type{number} \notsubtype{\type{Number}}}{}  \\
-\infer{\tee \type{String} \notsubtype{\type{string}}}{} | \infer{\tee \type{string} \notsubtype{\type{String}}}{}
+\infer{\tee \type{Boolean} \notsubtype{\type{boolean}}}{} \spc \infer{\tee \type{boolean} \notsubtype{\type{Boolean}}}{} \\
+\infer{\tee \type{Number} \notsubtype{\type{number}}}{} \spc \infer{\tee \type{number} \notsubtype{\type{Number}}}{}  \\
+\infer{\tee \type{String} \notsubtype{\type{string}}}{} \spc \infer{\tee \type{string} \notsubtype{\type{String}}}{}
 \endalign
 ++++
 
 and for the N4JS specific types:
 
 [%hardbreaks]
-$\infer{\tee \type{pathSelector<T>} \subtype{\type{string}}}{} $
+$\infer{\tee \type{pathSelector}< \type{T}>\subtype{\type{string}}}{} $
 $\infer{\tee \type{i18nKey} \subtype{\type{string}}}{}$
 
 If a conversion between primitive and object type is desired, we require the user of N4JS to actively convert the values.
@@ -230,20 +230,20 @@ $(isCPOE(T) $
 $ \hspace{2em}\land (isCPOE(S) $
 $ \hspace{4em}\lor (\mu(S)=\type{Intersection} \land \exists S' \in S: isCPOE(S'))) $
 $ \lor (isInterface(T)  \land isFinalByType(S) ) $
-$ \lor (isFinalByType(T) \land isInterface(S) )  ) \to \tee T <: S $
+$ \lor (isFinalByType(T) \land isInterface(S) )  ) \rightarrow \tee T <: S $
 // Doesn't work for daimond-relationships with S and T on left and right. --> limit to classes only.
 4. if `S` is a class, enum or primitive type and `T` is a type-variable, then for each given boundary $T^{up}_i$ of `T`
 of type class, enum or primitive `S` must be a member of the type hierarchy: footnote:[`i` iterates over all boundaries]
 +
 [%hardbreaks]
 $(isBoundTypeVar(T) \land isCPOE(S) ) $
-$ \to  \forall_{T^{up}_i \in T.upperBounds} (isCPOE({T^{up}_i}) \to \tee ( {T^{up}_i} <: S \lor  {T^{up}_i} :> S ) ) $
+$ \rightarrow  \forall_{T^{up}_i \in T.upperBounds} (isCPOE({T^{up}_i}) \rightarrow \tee ( {T^{up}_i} <: S \lor  {T^{up}_i} :> S ) ) $
 5. if `S` is a union or intersection type, then the type cast is valid if it is valid for at least one element of `S`.
 6. if `S` and `T` are generics, and if $S^0=T^0$,
 a cast is possible if type arguments are sub- or supertypes of each other: footnote:[`i` iterates over all type args]
 +
 [%hardbreaks]
-$\mu(S)=\type{Classifier} \land \mu(T)=\type{Classifier} \land S^0=T^0 \to $
+$\mu(S)=\type{Classifier} \land \mu(T)=\type{Classifier} \land S^0=T^0 \rightarrow $
 $\hspace{2em} (\forall\ S.typeArg_i <: T.typeArg_i) \lor (\forall\ T.typeArg_i <: S.typeArg_i)$
 7.  If `T` is a union type, then the type cast is valid if it is valid for at least one element of `T`.
 8.  If `T` is an intersection type, then the type cast is valid if it is valid for all elements of `T`.
@@ -560,4 +560,4 @@ Implicit handling states all strings with $>0==true$. `N4Primitives.parseBoolean
 All other values evaluate to `true`.
 3.  `Number` has several methods for converting a value to string cite:[ECMA11a(S15.7.4)]: `toExponential()`, to `Fixed()`, `toPrecision()`.
 4.  ECMAScript doesn’t define explicit conversion from boolean to number.
-Implicit handling states true $\to$ 1 and false $\to$ 0, which `N4Primitives.toNumber()` yields.
+Implicit handling states true $\rightarrow$ 1 and false $\rightarrow$ 0, which `N4Primitives.toNumber()` yields.

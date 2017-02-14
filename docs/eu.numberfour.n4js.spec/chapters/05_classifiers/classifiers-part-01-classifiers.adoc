@@ -106,11 +106,11 @@ We distinguish the directly subtyped classifiers and from the transitive closure
 .Subtyping of Classifiers
 [req,id=IDE-42,version=1]
 --
-For a given type `C`, and supertypes $superClassifiers = \{S_1,..., S_n\}$ directly subtyped
+For a given type `C`, and supertypes $superClassifiers = \{S_1,\dots, S_n\}$ directly subtyped
 `C`, the following constraints must be true:
 
 1.  The supertypes must be accessible to the subtype: +
-$S_1, ..., S_n$ must be accessible to `C`.
+$S_1, \dots, S_n$ must be accessible to `C`.
 2.  All type parameters of the direct supertypes have to be bound by type arguments in the subtype and the type arguments have to be substitutable types of the type parameters.
 +
 $\forall 0<i\leq k: \forall P \in S_i:$ +
@@ -232,8 +232,8 @@ If it is abstract, the type of the definition simply is `type{C}`:
 [math]
 ++++
 \beginalign
-\infer{\tee C : \type{constructor\{C\}}}{\lnot C.abstract}\\
-\infer{\tee C : \type{type\{C\}}}{C.abstract}
+\infer{\tee C : \type{constructor}\{C\}}{\lnot C.abstract}\\
+\infer{\tee C : \type{type}\{C\}}{C.abstract}
 \endalign
 ++++
 
@@ -383,7 +383,7 @@ Other classes are called _concrete_ classes.
 --
 
 1.  A class `C` must be declared abstract if it owns or inherits one or more abstract members and neither C nor any interfaces implemented by C implements these members. task:IDE-553[]
-//% $\exists m \in C.members: m.abstract \to C.abstract$ \task*{IDE-553}
+//% $\exists m \in C.members: m.abstract \Rightarrow C.abstract$ \task*{IDE-553}
 A concrete class has to, therefore, implement all abstract members of its superclasses’ implemented interfaces.
 Note that a class may implement fields with field accessors and vice versa. task:IDE-553[]
 2.  An abstract class may not be instantiated. task:IDE-148[]
@@ -425,7 +425,7 @@ For a class `C` with a supertype $S=C.sup$, the following constraints must hold;
 * $ C \not\in C.sup^+ $
 * All abstract members in `S` must be accessible from `C`:
 +
-$\forall M \in S.members : M.abstract \to $
+$\forall M \in S.members : M.abstract \Rightarrow $ +
 `M` is accessible from `C`
 +
 NOTE: `M` need not be an owned member of `S` and that this constraint applies even if `C` is abstract).
@@ -479,7 +479,7 @@ The type of an interface declaration `I` is of type `type{I}`:
 
 [math]
 ++++
-\infer{\tee I: \type{type\{I\}}}{}
+\infer{\tee I: \type{type}\{I\}}{}
 ++++
 
 ==== Semantics [[interfaces-semantics]]
@@ -562,9 +562,9 @@ Besides the general constraints described in <<_common-semantics-of-classifiers>
 [req,id=IDE-49,version=1]
 --
 For a given type
-`I`, and $\{I_1,..., I_n\}$ directly extended by `I`, the following constraints must be true:
+`I`, and $\{I_1,\dots, I_n\}$ directly extended by `I`, the following constraints must be true:
 
-.  Only interfaces can extend interfaces: $I, I_1, ..., I_n$ must be interfaces.
+.  Only interfaces can extend interfaces: $I, I_1, \dots, I_n$ must be interfaces.
 .  An interface may not directly extend the same interface more than once: +
 $I_i=I_j \to i=j$ for any
 $i,j \in \{1..n\}$.
@@ -573,8 +573,8 @@ $i,j \in \{1..n\}$.
 ..  in all cases $J$ is extended with the same type arguments for all invariant type parameters.
 +
 NOTE: For type parameters of $J$ that are declared covariant or contravariant on definition site, different type arguments may be used.
-.  All abstract members in $I_i$, $i \in \{1, ..., n\}$, must be accessible from `I`: +
-$\forall i \in \{1, ..., n\} : M \in I_i.members \land M.abstract \to $
+.  All abstract members in $I_i$, $i \in \{1, \dots, n\}$, must be accessible from `I`: +
+$\forall i \in \{1, \dots, n\} : M \in I_i.members \land M.abstract \to $
 `M` is accessible from `I` +
 (note that `M` need not be an owned member of $I_i$).
 --
@@ -584,20 +584,20 @@ $\forall i \in \{1, ..., n\} : M \in I_i.members \land M.abstract \to $
 --
 
 For a given type
-`C`, and $\{I_1,..., I_n\}$ directly implemented
+`C`, and $\{I_1,\dots, I_n\}$ directly implemented
 by `C`, the following constraints must be true:
 
 .  Only classes can implement interfaces: `C` must be a Class.
-.  A class can only implement interfaces: $I_1, ..., I_n$ must be interfaces.
+.  A class can only implement interfaces: $I_1, \dots, I_n$ must be interfaces.
 .  A class may not directly implement the same interface more than once: +
-$I_i=I_j \to i=j$ for any $i,j \in \{1..n\}$.
+$I_i=I_j \Rightarrow i=j$ for any $i,j \in \{1, \dots, n\}$.
 .  A class may (indirectly) implement the same interface $J$ more than once only if
 ..  $J$ is not parameterized, or
 ..  in all cases $J$ is implemented with the same type arguments for all invariant type parameters.
 +
 NOTE: for type parameters of $J$ that are declared covariant or contravariant on definition site, different type arguments may be used.
-.  All abstract members in $I_i$, $i \in \{1, ..., n\}$, must be accessible from `C`: +
-$\forall i \in \{1, ..., n\} : M \in I_i.members \land M.abstract \to $ `M` is accessible from `C` +
+.  All abstract members in $I_i$, $i \in \{1, \dots, n\}$, must be accessible from `C`: +
+$\forall i \in \{1, \dots, n\} : M \in I_i.members \land M.abstract \to $ `M` is accessible from `C` +
 (note that `M` need not be an owned member of $I_i$).
 
 --

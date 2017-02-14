@@ -140,7 +140,7 @@ For a given variable declaration $d$, the following constraints must hold:
 ++++
 \beginalign
 d.expression\neq \NULL \land d.declaredTypeRef\neq \NULL\\
-         \to \tee d.expression.type \subtype \tee d.declaredTypeRef
+         \rightarrow \tee d.expression.type \subtype \tee d.declaredTypeRef
 \endalign
 ++++
 * The initializer expression should not contain a reference to $d$ except where the reference is contained in a class expression or function expression and

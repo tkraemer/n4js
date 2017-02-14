@@ -67,9 +67,9 @@ The property is computed as follows:
 +
 [math]
 ++++
-tfpars = \lif & \ \textbf{this is used or explicitly declared}\ \\
-& \lthen thisTypeRef + fpars \\
-& \lelse any + fpars
+tfpars = \lif \spc  \textbf{this is used or explicitly declared}
+\spc \lthen thisTypeRef + fpars
+\spc \lelse any + fpars
 ++++
 
 Parameters (in $pars$) have the following properties:
@@ -103,35 +103,28 @@ In particular, an optional parameter must not be followed by a non-optional para
 +
 [math]
 ++++
-F.fpars_i.optional \to \nexists k>i: \lnot F.fpars_k.optvar
+F.fpars_i.optional \rightarrow \nexists k>i: \lnot F.fpars_k.optvar
 ++++
 2.  Only the last parameter of a method may be defined as variadic parameter:
 +
 [math]
 ++++
-F.fpars_i.variadic \to i = |F.fpars|-1
+F.fpars_i.variadic \rightarrow i = |F.fpars|-1
 ++++
 3.  If a function explicitly defines a return type, the last statement of the transitive closure of statements of the body must be a return statement:
-[math]
-++++
-\beginalign
-F.typeRef \neq Undefined \to \\
-|f.body.stmts|>0 \\
-\land f.body.stmts^*_{|f.body.stmts^*|-1} isa\ \lstnfbnf{ReturnStatement}
-\endalign
-++++
-4.  If a function explicitly defines a return type, all return
++
+[%hardbreaks]
+$F.typeRef \neq Undefined \rightarrow $
+$|f.body.stmts|>0 $
+$\land f.body.stmts^*_{|f.body.stmts^*|-1} isa\ \lstnfbnf{ReturnStatement}$
+4. If a function explicitly defines a return type, all return
 statements must return a type conform to that type:
 +
-[math]
-++++
-\beginalign
-& F.typeRef \neq Undefined \\
-& \iff \\
-& \forall r \in F.body.stmts, r\ isa\ \lstnfbnf{ReturnStatement}: \\
-& r.expr\neq null \land \infType{r.expr.typeRef} <: \infType{F.typeRef}
-\endalign
-++++
+[%hardbreaks]
+$\spc F.typeRef \neq Undefined $
+$\spc \iff $
+$\spc \forall r \in F.body.stmts, r\ isa\ \lstnfbnf{ReturnStatement}: $
+$\spc r.expr\neq null \land \infType{r.expr.typeRef} <: \infType{F.typeRef}$
 
 --
 
@@ -146,10 +139,10 @@ statements must return a type conform to that type:
 --
 _For the given non-parameterized function types_
 $F_{left}$ with
-$F_{left}.tfpars=L_0, L_1, ... L_k$ and
+$F_{left}.tfpars=L_0, L_1, \dots L_k$ and
 $|F_{left}.typesPars|=0$ +
 $F_{right}$ with
-$F_{right}.tfpars=R_0, R_1, ... R_n$ and
+$F_{right}.tfpars=R_0, R_1, \dots R_n$ and
 $|F_{right}.typesPars|=0$, +
 we say $F_{left}$ conforms to $F_{right}$,
 written as $F_{left} <: F_{right}$, if and only if:
@@ -158,15 +151,15 @@ written as $F_{left} <: F_{right}$, if and only if:
 $\lor (F_{left}.returnType = \type{void} \land F_{right}.opt)$ +
 $\lor (F_{left}.returnType <: F_{right}.returnType \land \neg (F_{left}.opt \land \neg F_{right}.opt))$
 * if $k\leq n$:
-** $\forall\ i, 1\leq i\leq k: (R_i.opt \to (L_i.opt \lor L_i.var)) \land (R_i.var \to L_i.var)$
+** $\forall\ i, 1\leq i\leq k: (R_i.opt \rightarrow (L_i.opt \lor L_i.var)) \land (R_i.var \rightarrow L_i.var)$
 ** $\forall\ i, 1\leq i\leq k: L_i :> R_i$
-** $L_k.var=true \to \forall\ i, k<i\leq n: L_K :> R_i$
+** $L_k.var=true \rightarrow \forall\ i, k<i\leq n: L_K :> R_i$
 +
 else ($k>n$):
-** $\forall\ i, 1\leq i\leq n: (R_i.opt \to (L_i.opt \lor L_i.var)) \land (R_i.var \to L_i.var)$
+** $\forall\ i, 1\leq i\leq n: (R_i.opt \rightarrow (L_i.opt \lor L_i.var)) \land (R_i.var \rightarrow L_i.var)$
 ** $\forall\ i, 1\leq i\leq n: L_i :> R_i$
 ** $\forall\ n<i\leq k: L_i.opt \lor L_i.var$
-** $R_n.var=true \to \forall\ i, n<i\leq k: L_i :> R_n$
+** $R_n.var=true \rightarrow \forall\ i, n<i\leq k: L_i :> R_n$
 
 <<cdVarianceFunctionChart>> shows a simple example with the function type conformance relations.
 
@@ -186,10 +179,10 @@ other constraint violations.
 [math]
 ++++
 \beginalign
-& \infer{\tee f \lstnfbnf{'('} arglist\ \lstnfbnf{')'}: \type{any}}
-        {binds(f,F)&F.returnType=\NULL & \exists r \in returns(F): r.expression \neq \NULL} \\
-& \infer{\tee f \lstnfbnf{'('} arglist\ \lstnfbnf{')'}: \type{void}}
-        {binds(f,F)&F.returnType=\NULL & \forall r \in returns(F): r.expression \neq \NULL}
+\spc \infer{\tee f \lstnfbnf{'('} arglist\ \lstnfbnf{')'}: \type{any}}
+        {binds(f,F) \spc F.returnType=\NULL \spc \exists r \in returns(F): r.expression \neq \NULL} \\
+\spc \infer{\tee f \lstnfbnf{'('} arglist\ \lstnfbnf{')'}: \type{void}}
+        {binds(f,F) \spc F.returnType=\NULL \spc \forall r \in returns(F): r.expression \neq \NULL}
 \endalign
 ++++
 
@@ -198,9 +191,9 @@ with
 [math]
 ++++
 \beginalign
-& \infer{returns(F): RETS}
+\spc \infer{returns(F): RETS}
         {\{r \in F.body.statements | \mu(r)=\type{ReturnStatement}\} \cup \bigcup_{s\in F.body.statements} returns(s)} \\
-& \infer{returns(s): RETS}
+\spc \infer{returns(s): RETS}
         {\{sub \in s.statements | \mu(sub)=\type{ReturnStatement}\} \cup \bigcup_{sub\in s.statements} returns(sub)}
 \endalign
 ++++
@@ -340,16 +333,16 @@ The following examples show the effect of the `@This` annotation:
 --
 For the given function types +
 $F_{left}$ with
-$F_{left}.tfpars=L_0, L_1, ... L_k$ +
+$F_{left}.tfpars=L_0, L_1, \dots L_k$ +
 $F_{right}$ with
-$F_{right}.tfpars=R_0, R_1, ... R_n$, +
+$F_{right}.tfpars=R_0, R_1, \dots R_n$, +
 we say $F_{left}$ conforms to $F_{right}$, written as $F_{left} <: F_{right}$, if and only if:
 
-* if $|F_{left}.typePars|=|F_{right}.typePars|=0$:
+* if $| F_{left}.typePars |=| F_{right}.typePars |=0$:
 ** $F_{left} <: F_{right}$
 (cf. <<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>>)
 * else if +
-$|F_{left}.typePars|>0 \land |F_{right}.typePars|=0$:
+$|F_{left}.typePars |>0 \land | F_{right}.typePars |=0$:
 ** $\exists \typeSubs: ( \typeEnvAdd \typeSubs ) \entails F_{left} <: F_{right}$ (cf. <<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>> )
 +
 (i.e. there exists a substitution $\typeSubs$ of type variables in $F_{left}$ so that after substitution it becomes a subtype of $F_{right}$ as defined by <<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>>)
@@ -366,7 +359,7 @@ $|F_{left}.typePars|>0 \land |F_{right}.typePars|=0$:
 \endalign
 ++++
 +
-with $F_{left}.typePars=V^l_0, V^l_1, ... V^l_n$ and $F_{right}.typePars=V^r_0, V^r_1, ... V^r_n$ +
+with $F_{left}.typePars=V^l_0, V^l_1, \dots V^l_n$ and $F_{right}.typePars=V^r_0, V^r_1, \dots V^r_n$ +
 (i.e. we replace each type variable in $F_{right}$ by the corresponding type variable at the same index in $F_{left}$
 and check the constraints from <<function_type_conformance_non_parameterized,Function Type Conformance Non-Parameterized>>  as if $F_{left}$ and $F_{right}$ were non-parameterized functions and, in
 addition, the upper bounds on the left side need to be supertypes of the upper bounds on the right side).
@@ -409,7 +402,7 @@ In Java this would be handled as method overloading and therefore an `@Override`
 [req,id=IDE-80,version=1]
 --
 The upper bound of a function type $F$ is a function type with the lower bound types of the parameters and the upper bound of the return type: +
-$upper(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( lower(P_1),\dots,lower(P_n) ): upper(R)$\
+$upper(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( lower(P_1),\dots,lower(P_n) ): upper(R)$
 
 The lower bound of a function type $F$ is a function type with the upper bound types of the parameters and the lower bound of the return type: +
 $lower(\lstnfjs{function}(P_1,\dots,P_n):R) := \lstnfjs{function}( upper(P_1),\dots,upper(P_n) ): lower(R)$
@@ -734,10 +727,10 @@ When no argument is given for a variadic parameter, an empty array is provided w
 [req,id=IDE-16,version=1]
 --
 For a parameter $p$, the following condition must hold:
-$p.var \to p.opt$.
+$p.var \rightarrow p.opt$.
 
 A parameter can not be declared both variadic and with a default value.
-That is to say that one can either write $varName=$ (default) or $...varName$, but not $...varName=$.
+That is to say that one can either write $varName=$ (default) or $\dots varName$, but not $\dots varName=$.
 --
 
 
@@ -1259,8 +1252,8 @@ A function or method $f$ can be annotated with `@Promisifiable` if and only if t
 * `{function(E, T0, T1, ..., Tn): V}`, or
 * `{function(T0, T1, ..., Tn): V}`
 +
-in which $E$ is type `Error` or a subtype thereof, $T_0, ..., T_n$ are arbitrary types except or its subtypes.
-$E$, if given, is then the type of the error value, and $T_0, ..., T_n$ are the types of the success values of the asynchronous operation. +
+in which $E$ is type `Error` or a subtype thereof, $T_0, \dots, T_n$ are arbitrary types except or its subtypes.
+$E$, if given, is then the type of the error value, and $T_0, \dots, T_n$ are the types of the success values of the asynchronous operation. +
 Since the return value of the synchronous function call is not available when using `@Promisify`, $V$ is recommended to be `void`, but it can be any type.
 3.  The callback parameter may be optional.footnote:[Even in this case, the function will actually be called with the callback method which is then created by the transpiler. However, the callback is not given in the N4JS code).]
 

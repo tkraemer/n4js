@@ -25,7 +25,7 @@ Cf. cite:[ECMA11a(S7.6)], cite:[ECMA11a(S11.1.2,p.63)] and cite:[ECMA11a(S01.2,p
 
 As a reminder, identifiers are defined as follows in the ECMAScript specification:
 
-//\todo{add grammar snippet from our grammar, probably simplified, adjust with ECMA spec}
+//\Rightarrowdo{add grammar snippet from our grammar, probably simplified, adjust with ECMA spec}
 
 [source,xtext]
 ----
@@ -179,5 +179,5 @@ short for `multi-line value`. This is usually only used for the general descript
 short for `single-line value`. This is a description which ends at the end of a line.
 It is usually used in combination with other tags, e.g., to further describe a parameter of a method.
 
-//\todo[jvp: JSDoc documentation tags]{JSDoc documentation tags, such as see, link etc. Mozair suggested inheritDoc}
+//\Rightarrowdo[jvp: JSDoc documentation tags]{JSDoc documentation tags, such as see, link etc. Mozair suggested inheritDoc}
 

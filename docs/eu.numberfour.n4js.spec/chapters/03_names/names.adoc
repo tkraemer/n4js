@@ -133,7 +133,7 @@ That is, this modifier is assumed if no modifier is explicitly specified.
 .Type Accessibility T
 [def]
 --
-The function $\alpha_T: TypeReference \times TypeDeclaration \to Boolean$ computes whether a given type, (top-level) variable or function
+The function $\alpha_T: TypeReference \times TypeDeclaration \Rightarrow Boolean$ computes whether a given type, (top-level) variable or function
 reference can access the declaration that it references.
 $\alpha_T$ is defined with <<tab:type-access-control>>.
 
@@ -309,7 +309,7 @@ The function
 
 [math]
 ++++
-\alpha_m: MemberReference \times MemberDeclaration \to Boolean
+\alpha_m: MemberReference \times MemberDeclaration \Rightarrow Boolean
 ++++
 
 computes if a given reference can access the member declaration that it

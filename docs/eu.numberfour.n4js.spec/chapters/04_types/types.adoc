@@ -55,7 +55,7 @@ A type $J$ is called a _join_ (or least common supertype, ) of a pair of types $
 [%hardbreaks]
 $ S \subtype J $
 $ T \subtype J $
-$ \forall L: (S \subtype L) \land (T \subtype L) \to J \subtype L $
+$ \forall L: (S \subtype L) \land (T \subtype L) \rightarrow J \subtype L $
 
 
 Similarly, we say that a type $M$ is a _meet_ (or greatest common subtype, ) of $S$ and _T_, written $S \meet T = M$, if +
@@ -63,7 +63,7 @@ Similarly, we say that a type $M$ is a _meet_ (or greatest common subtype, ) of 
 [%hardbreaks]
 $ M \subtype  S  $
 $ M \subtype  T $
-$ \forall L : (L \subtype S) \land (L \subtype T) \to L \subtype M $
+$ \forall L : (L \subtype S) \land (L \subtype T) \rightarrow L \subtype M $
 
 --
 
@@ -684,7 +684,7 @@ We define type conformance for non-primitive type references as follows:
 +
 [%hardbreaks]
 $\infer{\hspace{10em}T \subtype S\hspace{10em}}{{T^0 \subtype S^0}
-${(n=0 \lor m=0 \lor (n=m \to \forall i:} $
+${(n=0 \lor m=0 \lor (n=m \rightarrow \forall i:} $
 $\hspace{2em} {T_i.upperBound \subtype S_i.upperBound} $
 $\hspace{1em} \land {T_i.lowerBound :> S_i.lowerBound}))}$
 
@@ -1130,12 +1130,12 @@ Instead, it is possible to declare the return type of a function or method as `v
 
 * If a function $f$ is declared to return `void`, an error is created if a return statement contains an expression:
 +
-$f.returnType=\type{void} \to $ +
+$f.returnType=\type{void} \rightarrow $ +
 $\forall r, \mu(r)=\type{ReturnStatement}, r.containingFunction=f: r.expression=\NULL$
 
 * If a function $f$ is declared to return `void`, an error is issued if the function is called in any statement or expression but an expression statement directly:
 +
-$f.returnType=\type{void} \to $ +
+$f.returnType=\type{void} \rightarrow $ +
 $\forall e, bind(e, f): \mu(e.container)=\type{ExpressionStatement}$
 
 --
@@ -1460,7 +1460,7 @@ $U.typeRefs \neq \emptyset$ ($n\geq 1)$
 2.  Non-dynamic: The union type itself must not be declared dynamic:
 $\lnot U.dynamic$
 3.  Non-optional elements:
-$ \forall T \in U.typeRefs \to \lnot T.opt  $
+$ \forall T \in U.typeRefs \rightarrow \lnot T.opt  $
 --
 
 .Union Type Subtyping Rules
@@ -1760,7 +1760,7 @@ $I.typeRefs \neq \emptyset$
 +
 [math]
 ++++
-(\exists C \in I.typeRefs: \mu(C)=\type{Class}) \to \nexists T \in I.typeRefs \setminus\{C\}: \mu(T)=\type{Class}
+(\exists C \in I.typeRefs: \mu(C)=\type{Class}) \rightarrow \nexists T \in I.typeRefs \setminus\{C\}: \mu(T)=\type{Class}
 ++++
 //`
 +
@@ -1769,7 +1769,7 @@ For the time being, only a warning is produced when more than one class is conta
 +
 [math]
 ++++
-\forall T \in I.typeRefs \to \lnot T.opt
+\forall T \in I.typeRefs \rightarrow \lnot T.opt
 ++++
 
 --
@@ -1797,7 +1797,7 @@ types contained in the intersection type: footnote:[This rule is a generalizatio
 
 
 * Non-optional elements:
-$ \forall T \in I.typeRefs \to \lnot T.opt  $
+$ \forall T \in I.typeRefs \rightarrow \lnot T.opt  $
 --
 
 .Implicit simplification of intersection types
