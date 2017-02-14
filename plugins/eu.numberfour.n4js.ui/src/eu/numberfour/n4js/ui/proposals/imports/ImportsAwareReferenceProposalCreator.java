@@ -95,26 +95,32 @@ public class ImportsAwareReferenceProposalCreator {
 			// with a FQNImporter as custom text applier
 			final Function<IEObjectDescription, ICompletionProposal> wrappedProposalFactory = (input) -> {
 				IEObjectDescription inputToUse = input;
+
 				// Content assist at a location where only simple names are allowed:
 				// We found a qualified name and we'd need an import to be allowed to use
 				// that name. Consider only the simple name of the element from the index
 				// and make sure that the import is inserted as soon as the proposal is applied
-				if (reference == N4JSPackage.Literals.IDENTIFIER_REF__ID && input.getName().getSegmentCount() > 1) {
+				QualifiedName inputQN = input.getName();
+				int inputNameSegmentCount = inputQN.getSegmentCount();
+				if (reference == N4JSPackage.Literals.IDENTIFIER_REF__ID && inputNameSegmentCount > 1) {
 					inputToUse = new AliasedEObjectDescription(
-							QualifiedName.create(input.getName().getLastSegment()),
+							QualifiedName.create(inputQN.getLastSegment()),
 							input);
 				}
 				// filter out non-importable things:
 				// globally provided things should never be imported:
-				if (input.getName().getSegmentCount() == 2 && N4TSQualifiedNameProvider.GLOBAL_NAMESPACE_SEGMENT
-						.equals(input.getName().getFirstSegment())) {
+				if (inputNameSegmentCount == 2 && N4TSQualifiedNameProvider.GLOBAL_NAMESPACE_SEGMENT
+						.equals(inputQN.getFirstSegment())) {
 					inputToUse = new AliasedEObjectDescription(
-							QualifiedName.create(input.getName().getLastSegment()),
+							QualifiedName.create(inputQN.getLastSegment()),
 							input);
-				} else // special handling for defaults:
-				if (input.getName().getLastSegment().equals(N4JSLanguageConstants.EXPORT_DEFAULT_NAME)) {
+				} else // special handling for default imports:
+				if (inputQN.getLastSegment().equals(N4JSLanguageConstants.EXPORT_DEFAULT_NAME)) {
+					QualifiedName nameNoDefault = inputQN.skipLast(1);
+					QualifiedName moduleName = nameNoDefault.getSegmentCount() > 1
+							? QualifiedName.create(nameNoDefault.getLastSegment()) : nameNoDefault;
 					inputToUse = new AliasedEObjectDescription(
-							QualifiedName.create(input.getName().getSegment(input.getName().getSegmentCount() - 2)),
+							moduleName,
 							input);
 				}
 
