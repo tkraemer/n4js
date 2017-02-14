@@ -73,7 +73,7 @@ public final class JSXBackendHelper {
 	@Inject
 	private IResourceDescription.Manager descriptionManager;
 	@Inject
-	private IResourceDescriptionsProvider provider;
+	private IResourceDescriptionsProvider descriptionsProvider;
 
 	/** @return name of the JSX backend module, i.e. "react" */
 	public String getBackendModuleName() {
@@ -206,7 +206,7 @@ public final class JSXBackendHelper {
 	private Set<URI> visibleBackends(Resource resource, Predicate<? super URI> predicate) {
 		Set<URI> backends = new HashSet<>();
 
-		IResourceDescriptions resourceDescriptions = provider.getResourceDescriptions(resource.getResourceSet());
+		IResourceDescriptions resourceDescriptions = descriptionsProvider.getResourceDescriptions(resource.getResourceSet());
 		IResourceDescription resourceDescription = descriptionManager.getResourceDescription(resource);
 		List<IContainer> visibleContainers = containerManager.getVisibleContainers(resourceDescription,
 				resourceDescriptions);
