@@ -23,6 +23,7 @@ import static org.eclipse.jgit.api.Git.cloneRepository;
 import static org.eclipse.jgit.api.Git.open;
 import static org.eclipse.jgit.api.ListBranchCommand.ListMode.REMOTE;
 import static org.eclipse.jgit.api.ResetCommand.ResetType.HARD;
+import static org.eclipse.jgit.lib.Constants.DEFAULT_REMOTE_NAME;
 import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.eclipse.jgit.lib.Constants.MASTER;
 import static org.eclipse.jgit.lib.Constants.R_REMOTES;
@@ -30,8 +31,12 @@ import static org.eclipse.jgit.lib.Constants.R_REMOTES;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -47,10 +52,14 @@ import org.eclipse.jgit.errors.RepositoryNotFoundException;
 import org.eclipse.jgit.lib.ProgressMonitor;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.TextProgressMonitor;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.SshTransport;
+import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Iterables;
 
@@ -65,6 +74,8 @@ public abstract class GitUtils {
 	 * Shared logger instance.
 	 */
 	private static final Logger LOGGER = getLogger(GitUtils.class);
+
+	private static final String ORIGIN = DEFAULT_REMOTE_NAME;
 
 	/** Callback that configures the SSH factory for the transport if possible, otherwise does nothing at all. */
 	private static final TransportConfigCallback TRANSPORT_CALLBACK = transport -> {
@@ -100,26 +111,30 @@ public abstract class GitUtils {
 		}
 
 		try (final Git git = open(localClonePath.toFile())) {
-			if (!branch.equals(git.getRepository().getBranch())) {
-				LOGGER.info("Current branch is: '" + git.getRepository().getBranch() + "'.");
+			final String currentBranch = git.getRepository().getBranch();
+			if (!currentBranch.equals(branch)) {
+				LOGGER.info("Current branch is: '" + currentBranch + "'.");
 				LOGGER.info("Switching to desired '" + branch + "' branch...");
 				git.pull().setProgressMonitor(createMonitor()).call();
-				final Iterable<Ref> localBranchRefs = git.branchList().call();
-				final boolean createLocalBranch = !from(localBranchRefs).transform(ref -> ref.getName()).toSet()
-						.contains(branch);
+
+				final boolean createLocalBranch = !hasLocalBranch(git, branch);
 				LOGGER.info("Creating local branch '" + branch + "'? --> " + (createLocalBranch ? "yes" : "no"));
 				git.checkout().setCreateBranch(createLocalBranch).setName(branch)
 						.setStartPoint(R_REMOTES + "origin/" + branch).call();
-				checkState(branch.equals(git.getRepository().getBranch()),
+
+				checkState(git.getRepository().getBranch().equals(branch),
 						"Error when checking out '" + branch + "' branch.");
-				LOGGER.info("Switched to '" + git.getRepository().getBranch() + "' branch.");
+				LOGGER.info("Switched to '" + branch + "' branch.");
 				git.pull().setProgressMonitor(createMonitor()).call();
 			}
+
 			LOGGER.info("Hard resetting local repository HEAD of the '" + branch + "' in '" + remoteUri + "'...");
 			LOGGER.info("Local repository location: " + localClonePath + ".");
+
 			final ResetCommand resetCommand = git.reset().setMode(HARD).setRef(HEAD);
 			final Ref ref = resetCommand.call();
 			LOGGER.info("Repository content has been successfully reset to '" + ref + "'.");
+
 			final Collection<String> deletedFiles = git.clean().setCleanDirectories(true).call();
 			LOGGER.info("Cleaned up " + deletedFiles.size() + " files:\n" + Joiner.on(",\n").join(deletedFiles));
 		} catch (final RepositoryNotFoundException e) {
@@ -281,39 +296,51 @@ public abstract class GitUtils {
 
 		final File[] existingFiles = destinationFolder.listFiles();
 		if (!isEmpty(existingFiles)) {
-			LOGGER.info("Repository already exists. Aborting clone phase. Files in " + destinationFolder + " are: "
-					+ Joiner.on(',').join(existingFiles));
 			try (final Git git = open(localClonePath.toFile())) {
-				final String currentBranch = git.getRepository().getBranch();
-				if (!currentBranch.equals(branch)) {
-					LOGGER.info("Desired branch differs from the current one. Desired: '" + branch + "' current: '"
-							+ currentBranch + "'.");
-					git.pull().setProgressMonitor(createMonitor()).call();
-					// check if the remote desired branch exists or not.
-					final Ref remoteBranchRef = from(git.branchList().setListMode(REMOTE).call())
-							.firstMatch(ref -> ref.getName().equals(R_REMOTES + "origin/" + branch)).orNull();
-					// since repository might be cloned via --depth 1 (aka shallow clone) we cannot just switch to
-					// any remote branch those ones do not exist. and we cannot run 'pull --unshallow' either.
-					// we have to delete the repository content and run a full clone from scratch.
-					if (null == remoteBranchRef) {
-						LOGGER.info("Cleaning up current git clone and running clone phase from scratch.");
-						deleteRecursively(destinationFolder);
-						clone(remoteUri, localClonePath, currentBranch);
-					} else {
+				LOGGER.info(
+						"Repository already exists. Aborting clone phase. Files in " + destinationFolder + " are: "
+								+ Joiner.on(',').join(existingFiles));
+				final List<URIish> originUris = getOriginUris(git);
+				if (!hasRemote(originUris, remoteUri)) {
+					LOGGER.info(
+							"Desired remote URI differs from the current one. Desired: '" + remoteUri
+									+ "' origin URIs: '" + Joiner.on(',').join(originUris) + "'.");
+					LOGGER.info("Cleaning up current git clone and running clone phase from scratch.");
+					deleteRecursively(destinationFolder);
+					clone(remoteUri, localClonePath, branch);
+				} else {
+					final String currentBranch = git.getRepository().getBranch();
+					if (!currentBranch.equals(branch)) {
+						LOGGER.info("Desired branch differs from the current one. Desired: '" + branch + "' current: '"
+								+ currentBranch + "'.");
 						git.pull().setProgressMonitor(createMonitor()).call();
-						LOGGER.info("Pulled from upstream.");
+						// check if the remote desired branch exists or not.
+						final Ref remoteBranchRef = from(git.branchList().setListMode(REMOTE).call())
+								.firstMatch(ref -> ref.getName().equals(R_REMOTES + ORIGIN + "/" + branch)).orNull();
+						// since repository might be cloned via --depth 1 (aka shallow clone) we cannot just switch to
+						// any remote branch those ones do not exist. and we cannot run 'pull --unshallow' either.
+						// we have to delete the repository content and run a full clone from scratch.
+						if (null == remoteBranchRef) {
+							LOGGER.info("Cleaning up current git clone and running clone phase from scratch.");
+							deleteRecursively(destinationFolder);
+							clone(remoteUri, localClonePath, currentBranch);
+						} else {
+							git.pull().setProgressMonitor(createMonitor()).call();
+							LOGGER.info("Pulled from upstream.");
+						}
 					}
 				}
+				return;
 			} catch (final Exception e) {
 				final String msg = "Error when performing git pull in " + localClonePath + " from " + remoteUri + ".";
 				LOGGER.error(msg, e);
 				throw new RuntimeException(
 						"Error when performing git pull in " + localClonePath + " from " + remoteUri + ".", e);
 			}
-			return;
 		}
 
 		LOGGER.info("Cloning repository from '" + remoteUri + "'...");
+
 		final CloneCommand cloneCommand = cloneRepository()
 				.setURI(remoteUri)
 				.setDirectory(destinationFolder)
@@ -332,6 +359,137 @@ public abstract class GitUtils {
 			LOGGER.info("Inconsistent checkout directory was successfully cleaned up.");
 			throw new RuntimeException(message, e);
 		}
+	}
+
+	private static boolean hasLocalBranch(Git git, final String branchName) throws GitAPIException {
+		final Iterable<Ref> localBranchRefs = git.branchList().call();
+		return from(localBranchRefs).anyMatch(ref -> ref.getName().endsWith(branchName));
+	}
+
+	/**
+	 * Checks whether the given URIs contain the given URI.
+	 *
+	 * @param uris
+	 *            the URIs
+	 * @param uriStr
+	 *            the URI to check
+	 * @return <code>true</code> if the given repository's origin has the given URI and <code>false</code> otherwise
+	 * @throws URISyntaxException
+	 *             if the given URI is malformed
+	 */
+	private static boolean hasRemote(Iterable<URIish> uris, final String uriStr) throws URISyntaxException {
+		final URIish uri = new URIish(uriStr);
+		return from(uris).anyMatch((originUri) -> {
+			return equals(originUri, uri);
+		});
+	}
+
+	/**
+	 * Compare the two given git remote URIs. This method is a reimplementation of {@link URIish#equals(Object)} with
+	 * one difference. The scheme of the URIs is only considered if both URIs have a non-null and non-empty scheme part.
+	 *
+	 * @param lhs
+	 *            the left hand side
+	 * @param rhs
+	 *            the right hand side
+	 * @return <code>true</code> if the two URIs are to be considered equal and <code>false</code> otherwise
+	 */
+	private static boolean equals(URIish lhs, URIish rhs) {
+		// We only consider the scheme if both URIs have one
+		if (!StringUtils.isEmptyOrNull(lhs.getScheme()) && !StringUtils.isEmptyOrNull(rhs.getScheme())) {
+			if (!Objects.equals(lhs.getScheme(), rhs.getScheme()))
+				return false;
+		}
+		if (!equals(lhs.getUser(), rhs.getUser()))
+			return false;
+		if (!equals(lhs.getPass(), rhs.getPass()))
+			return false;
+		if (!equals(lhs.getHost(), rhs.getHost()))
+			return false;
+		if (lhs.getPort() != rhs.getPort())
+			return false;
+		if (!pathEquals(lhs.getPath(), rhs.getPath()))
+			return false;
+		return true;
+	}
+
+	/**
+	 * A helper method for comparing strings. If both of the given strings are empty or <code>null</code>, they are
+	 * considered equal.
+	 *
+	 * @param lhs
+	 *            the left hand side
+	 * @param rhs
+	 *            the right hand side
+	 * @return <code>true</code> if the two strings are to be considered equal and <code>false</code> otherwise
+	 */
+	private static boolean equals(String lhs, String rhs) {
+		if (StringUtils.isEmptyOrNull(lhs) && StringUtils.isEmptyOrNull(rhs))
+			return true;
+		return Objects.equals(lhs, rhs);
+	}
+
+	private static boolean pathEquals(String lhs, String rhs) {
+		if (StringUtils.isEmptyOrNull(lhs) && StringUtils.isEmptyOrNull(rhs))
+			return true;
+
+		// Skip leading slashes in both paths.
+		int lhsIndex = 0;
+		while (lhsIndex < lhs.length() && lhs.charAt(lhsIndex) == '/')
+			++lhsIndex;
+
+		int rhsIndex = 0;
+		while (rhsIndex < rhs.length() && rhs.charAt(rhsIndex) == '/')
+			++rhsIndex;
+
+		String lhsRel = lhs.substring(lhsIndex);
+		String rhsRel = rhs.substring(rhsIndex);
+		return lhsRel.equals(rhsRel);
+	}
+
+	/**
+	 * Returns all URIs of the given repository's origin remote.
+	 *
+	 * @param git
+	 *            the git repository
+	 * @return the list of URIs or an empty list if the given repository has no origin or if that origin has no URIs
+	 * @throws GitAPIException
+	 *             if an error occurs while accessing the given repository
+	 */
+	private static List<URIish> getOriginUris(Git git) throws GitAPIException {
+		Optional<RemoteConfig> origin = getOriginRemote(git);
+		if (origin.isPresent())
+			return origin.get().getURIs();
+		return Collections.emptyList();
+	}
+
+	/**
+	 * Returns the origin of the given repository.
+	 *
+	 * @param git
+	 *            the git repository
+	 * @return the origin
+	 * @throws GitAPIException
+	 *             if an error occurs while accessing the given repository
+	 */
+	private static Optional<RemoteConfig> getOriginRemote(Git git) throws GitAPIException {
+		List<RemoteConfig> remotes = git.remoteList().call();
+		if (remotes.isEmpty())
+			return Optional.absent();
+
+		final String origin = getDefaultRemote();
+		return from(remotes).firstMatch((remote) -> {
+			return remote.getName().equals(origin);
+		});
+	}
+
+	/**
+	 * Returns the name of the default remote.
+	 *
+	 * @return the name of the default remote
+	 */
+	public static String getDefaultRemote() {
+		return DEFAULT_REMOTE_NAME;
 	}
 
 	private static TextProgressMonitor createMonitor() {
