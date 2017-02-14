@@ -50,6 +50,8 @@ public final class JSXBackendHelper {
 	private final static String JSX_BACKEND_MODULE_NAME = "react";
 	private final static String JSX_BACKEND_FACADE_NAME = "React";
 	private final static String JSX_BACKEND_ELEMENT_FACTORY_NAME = "createElement";
+	private final static String JSX_BACKEND_DEFINITION_NAME = JSX_BACKEND_MODULE_NAME + "."
+			+ N4JSGlobals.N4JSD_FILE_EXTENSION;
 
 	/**
 	 * Local cache of JSX backends.
@@ -266,6 +268,6 @@ public final class JSXBackendHelper {
 		if (sqn == null)
 			return false;
 
-		return sqn.endsWith(JSX_BACKEND_MODULE_NAME + "." + N4JSGlobals.N4JSD_FILE_EXTENSION); // i.e. react.n4jsd
+		return sqn.endsWith(JSX_BACKEND_DEFINITION_NAME); // i.e. react.n4jsd
 	}
 }
