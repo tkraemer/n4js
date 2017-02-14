@@ -136,13 +136,9 @@ For a given variable declaration $d$, the following constraints must hold:
 
 * The type of the initializer expression must conform to the declared type:
 +
-[math]
-++++
-\beginalign
-d.expression\neq \NULL \land d.declaredTypeRef\neq \NULL\\
-         \rightarrow \tee d.expression.type \subtype \tee d.declaredTypeRef
-\endalign
-++++
+[%hardbreaks]
+$d.expression\neq \NULL \land d.declaredTypeRef\neq \NULL$
+$         \rightarrow \tee d.expression.type \subtype \tee d.declaredTypeRef$
 * The initializer expression should not contain a reference to $d$ except where the reference is contained in a class expression or function expression and
 the class is not immediately initialized or the function is not immediately invoked.
 In these cases, the code is executed later and the self-reference is not a problem. +

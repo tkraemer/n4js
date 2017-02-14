@@ -291,17 +291,11 @@ For a declaration $D$ with $D.global=\TRUE$, not a polyfill ($D.polyfill=\FALSE)
 1.  The name of the definition must not be equal to any primitive type (`string`, `number` etc.), `any`, or an built-in N4 type (`N4Object` etc.).
 2.  If the name of the definition equals a basic runtime time Object Type then the project must be a runtime environment:
 
-[math]
-++++
-\beginalign
-&D.name \in \{ \\
-&\hspace{3em} 'Object', 'Function', 'Array', 'String', 'Boolean'\\
-&\hspace{3em} 'Number', 'Math', 'Date', 'RegExp', 'Error', 'JSON' \\
-&\}\\
-&\Rightarrow D.containingProject.type=\lenum{runtimeEnvironment}
-\endalign
-++++
-
+$D.name \in \{ $
+$\hspace{3em} 'Object', 'Function', 'Array', 'String', 'Boolean'$
+$\hspace{3em} 'Number', 'Math', 'Date', 'RegExp', 'Error', 'JSON' $
+$\}$
+$\Rightarrow D.containingProject.type=\lenum{runtimeEnvironment}$
 
 --
 

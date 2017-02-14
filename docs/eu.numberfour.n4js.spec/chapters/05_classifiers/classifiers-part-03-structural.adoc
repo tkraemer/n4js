@@ -184,7 +184,7 @@ The initializer structural typing provides readable fields for every writeable f
 |===
 
 Multiple structural typing strategies can be nested when there are multiple use sites, like in the example <<ex:nested-structural-typing-strategies>> below at the locations ST1 and ST2.
-In the example, the datafield `a.field` has the nested structural type `$\tsRoFld{\tsInitFld{A}}$` and thus the datafield `a.field.df` is readable.
+In the example, the datafield `a.field` has the nested structural type `pass:[~r~ ~i~ A]` and thus the datafield `a.field.df` is readable.
 Nested structural types are evaluated on the fly when doing subtype checks.
 
 // todo{Not implemented yet. See GH-12, subtask 2}

@@ -1668,7 +1668,7 @@ The type returned by a bitwise shift expression is always `boolean`:
 
 [math]
 ++++
-\spc\infer{\tee\ (\lstnfbnf{Expression ('<<'|'>>'|'>>>')\ Expression}): \type{number}}{}  \\
+\spc\infer{\tee\ (\lstnfbnf{Expression ('}<<\lstnfbnf{'|'}>>\lstnfbnf{'|'} >>> \lstnfbnf{')\ Expression}): \type{number}}{}  \\
 ++++
 
 // TODO - check  \tag{\S 11.7.1/2}
