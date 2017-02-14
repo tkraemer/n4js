@@ -215,20 +215,7 @@ class WizardGeneratorHelper {
 	 * This method works in the background without opening the graphical editor.
 	 */
 	public def void organizeImports(IFile file, IProgressMonitor mon) throws CoreException {
-
-		val FileEditorInput fei = new FileEditorInput(file);
-
-		docProvider.connect(fei); // without connecting no document will be provided
-		val IXtextDocument document = (docProvider.getDocument(fei) as IXtextDocument);
-
-		docProvider.aboutToChange(fei);
-
-		organizeImportsHandler.doOrganizeImports(document, Interaction.takeFirst);
-	
-		docProvider.saveDocument(null, fei, document, true);
-
-		docProvider.changed(fei);
-		docProvider.disconnect(fei);
+		organizeImportsHandler.organizeImportsInFile(mon, file, Interaction.takeFirst);
 	}
 	
 	/**

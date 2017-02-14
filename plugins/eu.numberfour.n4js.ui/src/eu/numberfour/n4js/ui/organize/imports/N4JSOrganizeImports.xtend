@@ -80,6 +80,8 @@ import org.eclipse.xtext.nodemodel.SyntaxErrorMessage
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.nodemodel.ICompositeNode
 import org.eclipse.xtext.nodemodel.impl.HiddenLeafNode
+import eu.numberfour.n4js.utils.CallTraceUtil
+import eu.numberfour.n4js.utils.collections.Multimaps3
 
 /**
  */
@@ -108,6 +110,8 @@ public class N4JSOrganizeImports {
 
 	@Inject
 	private N4JSSimpleFormattingPreferenceProvider formattingPreferenceProvider
+		@Inject
+	private CallTraceUtil sysTraceUtil;
 
 	/**
 	 * Calculate destination region in Document for imports. If the offset is not 0,
@@ -148,7 +152,7 @@ public class N4JSOrganizeImports {
 	 * @return region for import statements, length 0
 	 */
 	public def InsertionPoint getImportRegion(XtextResource xtextResource) {
-
+sysTraceUtil.traceCall
 		// In N4js imports can appear anywhere in the Script as top-level elements. So even as a last
 		// statement and more importantly scattered around.
 		val InsertionPoint insertionPoint = new InsertionPoint;
@@ -563,7 +567,6 @@ public class N4JSOrganizeImports {
 
 	/** Creates a new named import of 'name' from 'moduleName'*/
 	private def ImportDeclaration createNamedImport(String name, String moduleName) {
-
 		val ret = N4JSFactory::eINSTANCE.createImportDeclaration
 
 		val namedImportSpec = N4JSFactory::eINSTANCE.createNamedImportSpecifier
@@ -587,7 +590,6 @@ public class N4JSOrganizeImports {
 
 	/** Creates a new default import with name 'name' from 'moduleName'*/
 	private def ImportDeclaration createDefaultImport(String name, String moduleName) {
-
 		val ret = N4JSFactory::eINSTANCE.createImportDeclaration
 
 		val defaultImportSpec = N4JSFactory::eINSTANCE.createDefaultImportSpecifier
@@ -668,7 +670,6 @@ public class N4JSOrganizeImports {
 
 	/** Compares two NamedImport specifier: e.g. "Z as A" <--> "X as B" */
 	final static private def int compNamedImport(NamedImportSpecifier o1, NamedImportSpecifier o2) {
-
 		// o1.findActualNodeFor().tokenText. compareTo( o2.findActualNodeFor.tokenText )
 		var name1 = o1?.importedElement?.name
 		var name2 = o2?.importedElement?.name
@@ -688,7 +689,6 @@ public class N4JSOrganizeImports {
 	 * a new generated import declaration.
 	 */
 	private def String extractPureText(ImportDeclaration declaration, XtextResource resource) {
-
 		// formatting decision: curly braces with whitespace
 		val prefValues = formattingPreferenceProvider.getPreferenceValues(resource)
 		val spacer = if (Boolean.valueOf(
@@ -742,7 +742,6 @@ public class N4JSOrganizeImports {
 			 */
 			private static def String rewriteTokenText(ICompositeNode node, String spacer,
 				String... ignoredSyntaxErrorIssues) {
-
 				val StringBuilder builder = new StringBuilder(Math.max(node.getTotalLength(), 1));
 
 				var boolean hiddenSeen = false;
@@ -800,7 +799,6 @@ public class N4JSOrganizeImports {
 			 */
 			public def List<IChange> getCleanupChanges(XtextResource xtextResource,
 				IXtextDocument document) throws BadLocationException {
-
 				val changes = newArrayList
 
 				// Remove nodes in all places.
@@ -889,7 +887,6 @@ public class N4JSOrganizeImports {
 			 */
 			private def <T> List<T> disambiguate(Multimap<String, T> multiMapName2Candidates,
 				Interaction interaction) throws BreakException {
-
 				// for each name exactly one solution must be picked:
 				val result = <T>newArrayList();
 				if (multiMapName2Candidates.empty) return result;
@@ -910,7 +907,7 @@ public class N4JSOrganizeImports {
 				// ILabelProvider labelProvider= new TypeNameMatchLabelProvider(TypeNameMatchLabelProvider.SHOW_FULLYQUALIFIED);
 				val ILabelProvider labelProvider = importProvidedElementLabelprovider;
 
-				val Object[][] openChoices = N4JSOrganizeImportsHelper.createOptions(multiMapName2Candidates);
+				val Object[][] openChoices = Multimaps3.createOptions(multiMapName2Candidates);
 
 				val MultiElementListSelectionDialog dialog = new MultiElementListSelectionDialog(null, labelProvider) {
 					@Override

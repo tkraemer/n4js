@@ -44,6 +44,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 import eu.numberfour.n4js.n4JS.YieldExpression
+import eu.numberfour.n4js.utils.CallTraceUtil
 
 /**
  * Processor for handling type inference during post-processing of an N4JS resource. Roughly corresponds to
@@ -64,6 +65,9 @@ public class TypeProcessor extends AbstractProcessor {
 	private DestructureProcessor destructureProcessor;
 	@Inject
 	private TypeSystemHelper tsh;
+	
+		@Inject
+	private CallTraceUtil sysTraceUtil;
 
 
 	def void typeNode(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
@@ -204,6 +208,8 @@ public class TypeProcessor extends AbstractProcessor {
 				// here we read from the cache (if AST node 'obj' was already processed) or forward-process 'obj'
 				val cache = astMetaInfoCacheHelper.getOrCreate(res);
 				if (!cache.isProcessingInProgress && !cache.isFullyProcessed) {
+					sysTraceUtil.traceCall
+					println("AST NOT PROCESSED " + res.URI)
 					// we have called #performPostProcessing() on the containing resource above, so this is "impossible"
 					// (HINT: if you get an exception here, this often indicates an accidental cache clear; use the
 					// debug code in ASTMetaInfoCacheHelper to track creation/deletion of typing caches to investigate this)
