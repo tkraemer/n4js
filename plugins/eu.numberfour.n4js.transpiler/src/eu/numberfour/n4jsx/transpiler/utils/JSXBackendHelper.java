@@ -165,9 +165,13 @@ public final class JSXBackendHelper {
 	 * either resource validation is broken and did not put error marker on compiled resource (error should say that
 	 * there is no JSX backend available), or custom scope used to populate cache is broken and is not finding any JSX
 	 * backend.
+	 *
+	 * @throws RuntimeException
+	 *             when no JSX backend is available
 	 */
 	private final String getAnyBackend() {
-		return jsxBackends.keySet().stream().findAny().get();
+		return jsxBackends.keySet().stream().findAny()
+				.orElseThrow(() -> new RuntimeException("Compiler cannot locate JSX backend to use for this resource"));
 	}
 
 	/**
