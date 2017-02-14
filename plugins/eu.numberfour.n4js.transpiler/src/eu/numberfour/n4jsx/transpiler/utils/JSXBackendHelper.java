@@ -203,10 +203,11 @@ public final class JSXBackendHelper {
 	 *            used to filter collected containers
 	 * @return filtered set of visible containers
 	 */
-	private Set<URI> visibleBackends(Resource resource, Predicate<? super URI> predicate) {
+	private Set<URI> visibleBackends(Resource resource, Predicate<URI> predicate) {
 		Set<URI> backends = new HashSet<>();
 
-		IResourceDescriptions resourceDescriptions = descriptionsProvider.getResourceDescriptions(resource.getResourceSet());
+		IResourceDescriptions resourceDescriptions = descriptionsProvider
+				.getResourceDescriptions(resource.getResourceSet());
 		IResourceDescription resourceDescription = descriptionManager.getResourceDescription(resource);
 		List<IContainer> visibleContainers = containerManager.getVisibleContainers(resourceDescription,
 				resourceDescriptions);
