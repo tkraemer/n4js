@@ -82,6 +82,7 @@ import org.eclipse.xtext.nodemodel.ICompositeNode
 import org.eclipse.xtext.nodemodel.impl.HiddenLeafNode
 import eu.numberfour.n4js.utils.CallTraceUtil
 import eu.numberfour.n4js.utils.collections.Multimaps3
+import org.eclipse.emf.ecore.EStructuralFeature.Setting
 
 /**
  */
@@ -445,9 +446,9 @@ sysTraceUtil.traceCall
 		// the following are named imports, that did not resolve. The issue lies in the Project-configuration and
 		// cannot be solved here. Candidate for quick fix.
 		// val unresolved = state.unresolved
-		val Map<EObject, Collection<EStructuralFeature.Setting>> unres = EcoreUtil.UnresolvedProxyCrossReferencer.find(
-			script)
-
+		val Map<EObject, Collection<EStructuralFeature.Setting>> unresolved = EcoreUtil.UnresolvedProxyCrossReferencer.find(
+			script).filter[ proxiedEobject, settings | filterFunction(proxiedEobject, settings)]
+			
 		val resolution = LinkedHashMultimap.<String, N4JSOrganizeImports.ImportableObject>create
 		val alreadyProcessedIdRef = <String>newHashSet()
 		val alreadyProcessedTypeRef = <String>newHashSet()
@@ -456,7 +457,7 @@ sysTraceUtil.traceCall
 
 		// Some of the ParemterizedTypeRefs might come from the types computer and
 		// don't have a name in the script --> usedName might be null and the possible
-		unres.forEach [ proxiedEobject, settings |
+		unresolved.forEach [ proxiedEobject, settings |
 			settings.forEach [
 				val obj = it.EObject
 				val String usedName = switch (obj) {
@@ -534,6 +535,85 @@ sysTraceUtil.traceCall
 
 		return ret;
 	}
+
+//TODO IDE-2520 move out >>>>>>
+
+	private static boolean FILTER_DEBUG = false;
+	
+	def private static logme(Object data){
+		if(FILTER_DEBUG) println(data)
+	}
+
+	def private boolean filterFunction(EObject proxiedEobject, Collection<EStructuralFeature.Setting> settings) {
+		settings.exists [
+
+			val obj = it.EObject
+			val String usedName = switch (obj) {
+				IdentifierRef:
+					obj.findIdentifierName
+				ParameterizedTypeRef:
+					obj.findTypeName
+				default:
+					obj.node.tokenText
+			}
+			val filterTest = isToBeIgnored
+			logme(proxiedEobject)
+			logme("::: " + obj.class.name + " :: " + usedName + " : filtered = " + filterTest)
+			return !filterTest
+		]
+	}
+
+	/** placeholder implementation for JSX.
+	 * In general languages should inject their own filter to filter the list.
+	 * For N4JS that does not matter much, but sub languages should provide those to deal with their special handling.
+	 * e.g. N4JSX needs provide filter to filter out html tags.
+	 */
+	def private boolean isToBeIgnored(Setting setting) {
+		logme("  ")
+		logme(" . is JSX?:")
+		var res = false;
+		val eo = setting.EObject
+		if (eo.class.name.contains(".n4jsx.")) {
+			res = true
+			logme(" .. yes, " + eo.class.name)
+		} else {
+			logme(" .. no, " + eo.class.name)
+			val container = eo.eContainer;
+			logme(" ... is container JSX?:")
+			if (container !== null) {
+				if (container.class.name.contains(".n4jsx.")) {
+					res = true
+					logme(" .... yes, " + container.class.name)
+				} else {
+					logme(" .... no, " + container.class.name)
+				}
+			} else {
+				logme(" .... container was null")
+			}
+		}
+
+		if (res) {
+			val String usedName = switch (eo) {
+				IdentifierRef:
+					eo.findIdentifierName
+				ParameterizedTypeRef:
+					eo.findTypeName
+				default:
+					eo.node.tokenText
+			}
+
+			logme(" . inspect based on name: " + usedName)
+			if (usedName === null || usedName.length <= 0) {
+				res = false
+			} else {
+				res = Character.isLowerCase(usedName.charAt(0));
+			}
+			logme(" .. name test passed " + res)
+		}
+
+		return res;
+	}
+//TODO IDE-2520 move out <<<<<<<
 
 	def boolean isDefaultExport(IEObjectDescription description) {
 		description.name.lastSegment == EXPORT_DEFAULT_NAME
