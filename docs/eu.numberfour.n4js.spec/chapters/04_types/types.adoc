@@ -625,7 +625,7 @@ We define for types in general:
 This concept of type erasure is purely defined for specification purposes.
 It is not to be confused with the `real` type erasure which takes place at runtime, in which almost no types (except primitive types) are available.
 
-That is, the type reference in `var G<string> gs;` actually defines a type `G<string>`, so that $\infTypeNF{gs} = \type{G<string>}$.
+That is, the type reference in `var G<string> gs;` actually defines a type `G<string>`, so that $\infTypeNF{gs} = \type{G}<\type{string}>$.
 It may reference a type defined by a class declaration `class G<T>`.
 It is important that the type `G<string>` is different from `G<T>`.
 
@@ -1962,7 +1962,7 @@ The following sections define which properties are accessible.
 
 ==== Properties of Union Type
 
-As an (unfortunately oversimplified) rule of thumb, the properties of a union type $U=T_1|T_2$ are simply the intersection of the properties $U.properties = T_1.properties \cap T_2.properties$.
+As an (unfortunately oversimplified) rule of thumb, the properties of a union type $U=T_1|T_2$ are simply the intersection of the properties $U.properties = T_{1}.properties \cap T_{2}.properties$.
 It is not quite that simple, however, as the question of "equality" with regards to properties has to be answered.
 
 .Members of an Union Type
@@ -1975,55 +1975,59 @@ $\forall\ a \in U.attributes:$
 [math]
 ++++
 \beginalign
-&\forall\ k\in\{1,2\}: \exists\ a_k\in T_k.attributes: a_k.acc > private\\
-&\land a.acc = min(a_1.acc, a_2.acc)\\
-&\land a.name=a_1.name=a_2.name\\
-&\land a.typeRef = a_1.typeRef = a_2.typeRef
+&\forall\ k\in\{1,2\}: \exists\ a_k\in T_{k}.attributes: a_{k}.acc > private\\
+&\land a.acc = min(a_{1}.acc, a_{2}.acc)\\
+&\land a.name=a_{1}.name=a_{2}.name\\
+&\land a.typeRef = a_{1}.typeRef = a_{2}.typeRef
 \endalign
 ++++
 
 $\forall\ m \in U.methods:$
 
+$\exists\ m_1 \in T_{1}.methods, m_2 \in T_{2}.methods,$ +
+$\hspace{2em} \mathbf{with} p=m .fpars \land p'=m_{1}.fpars \land p"=m_{2}.fpars, \mathbf{WLOG} |p' |\leq |p"|:$ +
+
 [math]
 ++++
 \beginalign
-&\exists\ m_1 \in T_1.methods, m_2 \in T_2.methods,\\
-&\hspace{2em} \mathbf{with} p=m.fpars \land p'=m_1.fpars \land p''=m_2.fpars, \mathbf{WLOG} |p'|\leq |p''|:\\
 &\hspace{1.2em} \forall k\in\{1,2\}: m_k.acc > private\\
-&\land m.acc = min(m_1.acc, m_2.acc)\\
-&\land m.name=m_1.name=m_2.name\\
-&\land m.typeRef = m_1.typeRef|m_2.typeRef \\
-&\land \forall\ i<|p''|: p_i \ \mathbf{exists with} \\
+&\land m.acc = min(m_{1}.acc, m_{2}.acc)\\
+&\land m.name=m_{1}.name=m_{2}.name\\
+&\land m.typeRef = m_{1}.typeRef|m_{2}.typeRef \\
+&\land \forall\ i<|p"|: p_i \ \mathbf{exists} \mm \mathbf{with} \\
 &\hspace{2em} p_i.name =
         \begin{cases}
-            {p''}_i.name                        & i \geq |p'| \lor {p'}_i.name={p''}_i.name \\
-            {p'}_i.name + \mathbf{"\_"} + {p''}_i.name
+            {p"}_{i}.name                        & i \geq |p' | \lor {p'}_{i}.name={p"}_{i}.name \\
+            {p'}_{i}.name + \mathbf{"\_"} + {p"}_i.name
                                             & \mathbf{else}
         \end{cases}\\
-&\hspace{2em} p_i.typeRef =
+&\hspace{2em} p_{i}.typeRef =
         \begin{cases}
-            {p'}_i.typeRef\&{p''}_i.typeRef         & i < |p'|\\
-            {p'}_{|p'|-1}.typeRef\&{p''}_i.typeRef  & i \geq |p'| \land {p'}_{|p'|-1}.var\\
-            {p''}_i.typeRef                     & \mathbf{else}
+            {p'}_{i}.typeRef\&{p"}_i.typeRef         & i < |p' |\\
+            {p'}_{|p' |-1}.typeRef\&{p"}_i.typeRef  & i \geq |p' | \land {p'}_{|p' |-1}.var\\
+            {p"}_{i}.typeRef                     & \mathbf{else}
         \end{cases}\\
 &\hspace{2em} p_i.opt =
         \begin{cases}
-            ({p'}_i.opt\land{p''}_i.opt)    & i < |p'|\\
-            {p''}_i.opt                         & \mathbf{else}
+            ({p'}_{i}.opt\land{p"}_{i}.opt)    & i < |p' |\\
+            {p"}_{i}.opt                         & \mathbf{else}
         \end{cases}\\
-&\hspace{2em} p_i.var =
+&\hspace{2em} p_{i}.var =
         \begin{cases}
-            {p'}_i.var\land{p''}_i.var  & i < |p'| \land i=|p''|-1\\
-            {p''}_i.var                     & i \geq |p'| \land i=|p''|-1 \\
+            {p'}_{i}.var\land{p"}_{i}.var  & i < |p' | \land i=|p"|-1\\
+            {p"}_{i}.var                     & i \geq |p' | \land i=|p"|-1 \\
             false                       & \mathbf{else}
         \end{cases}\\
-&\land (l=|p'|=|p''| \land \lnot({p'}_{l-1}.opt\land{p''}_{l-1}.opt) \land \exists v\in\{p'_{l-1}, p''_{l-1}\} {v}.var: p_l\ \mathbf{exists with} \\
-&\hspace{2em} p_l.name = v.name \\
-&\hspace{2em} p_i.typeRef = v.typeRef \\
-&\hspace{2em} p_i.opt = true \\
-&\hspace{2em} p_i.var  = true
+
 \endalign
 ++++
+[%hardbreaks]
+$\land (l=|p' |=|p"| \land \lnot({p'}_l-1 .opt\land{p"}_{l-1}.opt) \land \exists v\in\{p'_l-1, p"_l-1\} {v}.var: p_l\ \mathbf{exists} \mm \mathbf{with} $
+$\hspace{2em} p_{l}.name = v.name $
+$\hspace{2em} p_{i}.typeRef = v.typeRef $
+$\hspace{2em} p_{i}.opt = true $
+$\hspace{2em} p_{i}.var  = true $
+
 
 ---
 
@@ -2046,7 +2050,7 @@ In the third case above, types are combined independently for read- and write-ac
 
 ==== Properties of Intersection Type
 
-As an (unfortunately oversimplified) rule of thumb, the properties of an intersection type $I=T_1\&T_2$ are the union of properties $I.properties = T_1.properties \cup T_2.properties$.
+As an (unfortunately oversimplified) rule of thumb, the properties of an intersection type $I=T_1\&T_2$ are the union of properties $I.properties = T_{1}.properties \cup T_{2}.properties$.
 It is not quite that simple, however, as the question of "equality” with regards to properties has to be answered.
 
 .Members of an Intersection Type
@@ -2059,22 +2063,22 @@ $\forall a \in I.attributes:$
 [math]
 ++++
 \beginalign
-&(\exists a_1\in T_1.attributes, a_1.acc>private) \lor (\exists a_2\in T_2.attributes, a_2.acc>private) \\
+&(\exists a_1\in T_{1}.attributes, a_{1}.acc>private) \lor (\exists a_2\in T_{2}.attributes, a_{2}.acc>private) \\
 &\land a.name =
         \begin{cases}
-            a_1.name            & a_1\neq null \land (a_2=null \lor a_2.name=a_1.name) \\
-            a_2.name            & \mathbf{else}
+            a_{1}.name            & a_1\neq null \land (a_2=null \lor a_{2}.name=a_{1}.name) \\
+            a_{2}.name            & \mathbf{else}
         \end{cases}\\
 &\land a.acc =
         \begin{cases}
-            a_1.acc         & a_1\neq null \land (a_2=null \lor a_2.acc \leq a_1.acc) \\
-            a_2.acc         & \mathbf{else}
+            a_{1}.acc         & a_1\neq null \land (a_2=null \lor a_{2}.acc \leq a_{1}.acc) \\
+            a_{2}.acc         & \mathbf{else}
         \end{cases}\\
 &\land a.typeRef =
         \begin{cases}
-            a_1.typeRef\&a_2.typeRef    & a_1\neq null \land a_2\neq null \\
-            a_1.typeRef             & a_1\neq null \\
-            a_2.typeRef             & \mathbf{else} (a_2\neq null)
+            a_{1}.typeRef\&a_{2}.typeRef    & a_1\neq null \land a_2\neq null \\
+            a_{1}.typeRef             & a_1\neq null \\
+            a_{2}.typeRef             & \mathbf{else} (a_2\neq null)
         \end{cases}
 \endalign
 ++++
@@ -2084,58 +2088,60 @@ $\forall a \in I.attributes:$
 
 $\forall m \in I.methods$:
 
-$(\exists m_1 \in T_1.methods, m_1.acc>private) \lor (\exists m_2 \in T_1.methods, m_2.acc>private):$
+$(\exists m_1 \in T_{1}.methods, m_{1}.acc>private) \lor (\exists m_2 \in T_{1}.methods, m_{2}.acc>private):$
 
 [math]
 ++++
 \beginalign
 &\hspace{2em} \mathbf{with} p=m.fpars\\
-&\hspace{3em} \land \mathbf{if}\ m_1\ \mathbf{exists}\ p'=m_1.fpars\ \mathbf{(else p'=\emptyset)},\\
-&\hspace{3em} \land \mathbf{if}\ m_2\ \mathbf{exists}\ p''=m_2.fpars\ \mathbf{(else p''=\emptyset)}, \mathbf{\mathbf{WLOG}} |p'|\leq |p''|:\\
+&\hspace{3em} \land \mathbf{if}\ m_1\ \mathbf{exists}\ p'=m_{1}.fpars\ \mathbf{(else p'=\emptyset)},\\
+&\hspace{3em} \land \mathbf{if}\ m_2\ \mathbf{exists}\ p"=m_{2}.fpars\ \mathbf{(else p"=\emptyset)}, \mathbf{\mathbf{WLOG}} |p' |\leq |p"|:\\
 &\hspace{1em} m.name =
         \begin{cases}
-            m_1.name            & m_1\neq null \land (m_2=null \lor m_2.name=m_1.name)\\
-            m_2.name            & \mathbf{else}
+            m_{1}.name            & m_1\neq null \land (m_2=null \lor m_{2}.name=m_{1}.name)\\
+            m_{2}.name            & \mathbf{else}
         \end{cases}\\
 &\land m.acc =
         \begin{cases}
-            m_1.acc         & m_1\neq null \land (m_2=null \lor m_2.acc \leq m_1.acc)\\
-            m_2.acc         & \mathbf{else}
+            m_{1}.acc         & m_1\neq null \land (m_2=null \lor m_{2}.acc \leq m_{1}.acc)\\
+            m_{2}.acc         & \mathbf{else}
         \end{cases}\\
 &\land m.typeRef =
         \begin{cases}
-            m_1.typeRef\&m_2.typeRef    & m_1\neq null \land m_2\neq null \\
-            m_1.typeRef         & m_1\neq null \\
-            m_2.typeRef         & \mathbf{else} (m_2\neq null)
+            m_{1}.typeRef\&m_{2}.typeRef    & m_1\neq null \land m_2\neq null \\
+            m_{1}.typeRef         & m_1\neq null \\
+            m_{2}.typeRef         & \mathbf{else} (m_2\neq null)
         \end{cases}\\
-&\land \forall\ i<|p''|: p_i \ \mathbf{exists with} \\
+&\land \forall\ i<|p"|: p_i \ \mathbf{exists with} \\
 &\hspace{2em} p_i.name =
         \begin{cases}
-            {p''}_i.name                        & i \geq |p'| \lor {p''}_i.name={p'}_i.name \\
-            {p'}_i.name + \mathbf{"\_"} + {p''}_i.name
+            {p"}_i.name                        & i \geq |p' | \lor {p"}_i.name={p'}_i.name \\
+            {p'}_i.name + \mathbf{"\_"} + {p"}_i.name
                                             & \mathbf{else}
         \end{cases}\\
 &\hspace{2em} p_i.typeRef =
         \begin{cases}
-            {p'}_i.typeRef|{p''}_i.typeRef      & i < |p'|\\
-            {p'}_{|p'|-1}.typeRef|{p''}_i.typeRef   & i \geq |p'| \land {p'}_{|p'|-1}.var\\
-            {p''}_i.typeRef                     & \mathbf{else}
+            {p'}_i.typeRef|{p"}_i.typeRef      & i < |p' |\\
+            {p'}_{|p' |-1}.typeRef|{p"}_i.typeRef   & i \geq |p' | \land {p'}_{|p' |-1}.var\\
+            {p"}_i.typeRef                     & \mathbf{else}
         \end{cases}\\
 &\hspace{2em} p_i.opt =
-        (\exists k \leq min(|p'|-1, i): p'_k.opt) \lor (\exists k \leq i: p''_k.opt)\\
+        (\exists k \leq min(|p' |-1, i): p'_k.opt) \lor (\exists k \leq i: p"_k.opt)\\
 &\hspace{2em} p_i.var =
             \begin{cases}
-            p_i.opt \lor ({p'}_i.var\lor{p''}_i.var)    & i < |p'| \land i=|p''|-1\\
-            {p''}_i.var                     & i \geq |p'| \land i=|p''|-1 \\
+            p_i.opt \lor ({p'}_i.var\lor{p"}_i.var)    & i < |p' | \land i=|p"|-1\\
+            {p"}_i.var                     & i \geq |p' | \land i=|p"|-1 \\
             false                       & \mathbf{else}
         \end{cases} \\
-&\land (l=|p'|=|p''| \land l>0 \land \lnot({p}_{l-1}.opt) \land \exists v\in\{p'_{l-1}, p''_{l-1}\} {v}.var: p_l\ \mathbf{exists with} \\
-&\hspace{2em} p_l.name = v.name \\
-&\hspace{2em} p_i.typeRef = v.typeRef \\
-&\hspace{2em} p_i.opt = true \\
-&\hspace{2em} p_i.var  = true
 \endalign
 ++++
+[%hardbreaks]
+$\land (l=|p' |=|p"| \land l>0 \land \lnot({p}_{l-1}.opt) \land \exists v\in\{p'_{l-1}, p"_{l-1}\} {v}.var: p_l\ \mathbf{exists} \mm \mathbf{with} $
+$\hspace{2em} p_l.name = v.name $
+$\hspace{2em} p_i.typeRef = v.typeRef $
+$\hspace{2em} p_i.opt = true $
+$\hspace{2em} p_i.var  = true$
+
 
 --
 

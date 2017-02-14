@@ -770,8 +770,7 @@ $\lstnfjs{B} \subtype \lstnfjs{A} \to \lstnfjs{G}< \lstnfjs{A} > \subtype \lstnf
 Note that variance is declared per type parameter, so a single parameterized type with more than one type parameter may be, for example, covariant w.r.t. one type parameter and contravariant w.r.t. another.
 
 Strictly speaking, a type parameter/variable itself is not co- or contravariant; +
-however, for the sake of simplicity we say "``T`` is covariant" as a short form for "``G`` is covariant with respect to its type parameter ``T``"
-(for contravariant and invariant accordingly).
+however, for the sake of simplicity we say __``T`` is covariant__ as a short form for __``G`` is covariant with respect to its type parameter ``T``__ (for contravariant and invariant accordingly).
 
 To declare the variance of a parameterized classifier on definition site, simply add keyword `in` or `out` before the corresponding type parameter:
 
