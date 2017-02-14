@@ -184,7 +184,7 @@ IdentifierName: IDENTIFIER | ReservedWord | N4Keyword;
 NumericLiteralAsString: DOUBLE | INT | OCTAL_INT | HEX_INT | SCIENTIFIC_INT;
 StringLiteralAsName: STRING;
 
-fragment AsyncNoTrailingLineBreak *: (declaredAsync?='async' NoLineTerminator)?; // <1>
+fragment AsyncNoTrailingLineBreak *: (declaredAsync?='async' NoLineTerminator)?;  // <1>
 
 fragment StrictFormalParameters <Yield>*:
     '(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')'
@@ -1082,7 +1082,7 @@ $f.final \to \lnot f.writeable$ +
 A final field may, however, be set in the constructor.
 See <<Req-IDE-68>> for details.
 .  A final data field must be either initialized by an initializer expression or in the constructor.
-If the field is initialized in the constructor, this may be done either explicitly or via a spec-styleconstructor.
+If the field is initialized in the constructor, this may be done either explicitly or via a spec-style constructor.
 task:IDEBUG-575[]
 +
 [math]

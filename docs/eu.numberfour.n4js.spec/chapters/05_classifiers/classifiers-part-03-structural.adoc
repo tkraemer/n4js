@@ -95,7 +95,7 @@ $  \forall m \in T.members, m.acc=\lenum{public}, \neg m.static, m\neq T.ctor:}$
 $  \hspace{1em} \exists m' \in X.members:}$
 $  \hspace{2em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name} $
 $  \hspace{2em} \land \tee m' \subtype m}$
-$  \infer{\tee X \subtype T}{\hspace{2em} \land \mu(m)=\type{Field} \Rightarrow \tee m \subtype m'}$
+$  \infer{ \lspc \tee X \subtype T \lspc }{\hspace{2em} \land \mu(m)=\type{Field} \Rightarrow \tee m \subtype m'}$
 or
 ..  if it is a subtype of `N4Object` which explicitly extends or implements the
 structurally defined type.
