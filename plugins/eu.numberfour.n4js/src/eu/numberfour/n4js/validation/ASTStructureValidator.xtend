@@ -311,9 +311,7 @@ class ASTStructureValidator {
 				ExpressionStatement: {
 					switch it: next.expression {
 						StringLiteral: {
-
-							// TODO may this be defined everywhere?
-							return "use strict" == value
+							return BaseJavaScriptVariantHelper.STRICT_MODE_LITERAL_VALUE == value
 						}
 					}
 				}

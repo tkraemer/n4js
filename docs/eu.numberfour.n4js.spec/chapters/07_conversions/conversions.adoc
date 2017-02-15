@@ -1,6 +1,8 @@
+
+
 = Conversions and Reflection
 ////
-Copyright (c) 2016 NumberFour AG.
+Copyright (c) 2017 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -10,40 +12,47 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
+[.language-n4js]
 == Autoboxing and Coercing
 
 Coercing is the ability to implicitly cast one (primitive) type to another.
-Autoboxing is a special kind of coercing in that is the ability to automatically convert a primitive value type, such as `string`, `number`, or `boolean`, to its corresponding Object type version `String`, `Number`, `Boolean`.
+Autoboxing is a special kind of coercing in that is the ability to automatically convert a primitive value type, such as `string`, `number`, or `boolean`,
+to its corresponding Object type version `String`, `Number`, `Boolean`.
 The capital letters in the latter are an essential distinction.
 
-Conversion between primitives and object-representations of a datatype are not automatic in N4JS. Only in the cases of object-method invocations on a primitive type (for `string` to call `"abc".length`, for example) automatic conversion is applied.
+Conversion between primitives and object-representations of a datatype are not automatic in N4JS. Only in the cases of object-method invocations on a primitive type
+(for `string` to call `"abc".length`, for example) automatic conversion is applied.
 
 Note that N4JS specific primitive types `pathselector` and `i18nkey` are handled similarly to `string`.
 
 === Coercing
 task:IDE-379[]
 
-In cite:[ECMA11a], coercing is defined by means of the abstract specification method `ToPrimitive` cite:[ECMA11a(S9.1)], also see cite:[ECMA11a(S9.10)]). Other conversions, such as `ToNumber`, are not directly supported but reflected in the typing rules of expressions.
+In cite:[ECMA11a], coercing is defined by means of the abstract specification method `ToPrimitive` cite:[ECMA11a(S9.1)], also see cite:[ECMA11a(S9.10)]).
+Other conversions, such as `ToNumber`, are not directly supported but reflected in the typing rules of expressions.
 
 We express absence of automatic coercion here by means of subtype
 relations:
-math:[\[\begin{aligned} \infer{\tee \type{Boolean} \notsubtype{\type{boolean}}}{} | \infer{\tee \type{boolean} \notsubtype{\type{Boolean}}}{} \\
-\infer{\tee \type{Number} \notsubtype{\type{number}}}{} | \infer{\tee \type{number} \notsubtype{\type{Number}}}{}  \\
-\infer{\tee \type{String} \notsubtype{\type{string}}}{} | \infer{\tee \type{string} \notsubtype{\type{String}}}{}
-\\\end{aligned}\]]
+
+[math]
+++++
+\beginalign
+\infer{\tee \type{Boolean} \notsubtype{\type{boolean}}}{} \spc \infer{\tee \type{boolean} \notsubtype{\type{Boolean}}}{} \\
+\infer{\tee \type{Number} \notsubtype{\type{number}}}{} \spc \infer{\tee \type{number} \notsubtype{\type{Number}}}{}  \\
+\infer{\tee \type{String} \notsubtype{\type{string}}}{} \spc \infer{\tee \type{string} \notsubtype{\type{String}}}{}
+\endalign
+++++
 
 and for the N4JS specific types:
-math:[\[\begin{aligned}
-\infer{\tee \type{pathSelector<T>} \subtype{\type{string}}}{} \\
-\infer{\tee \type{i18nKey} \subtype{\type{string}}}{}
-\\\end{aligned}\]]
 
-If a conversion between primitive and object type is desired, we require
-the user of N4JS to actively convert the values. The reason for that is
-the notably different behavior of object- and primitive-variants of a
-type in expression evaluation:
+[%hardbreaks]
+$\infer{\tee \type{pathSelector}< \type{T}>\subtype{\type{string}}}{} $
+$\infer{\tee \type{i18nKey} \subtype{\type{string}}}{}$
 
-[source]
+If a conversion between primitive and object type is desired, we require the user of N4JS to actively convert the values.
+The reason for that is the notably different behavior of object- and primitive-variants of a type in expression evaluation:
+
+[source,n4js]
 ----
 var bool: boolean = false;
 var Bool: Boolean = new Boolean( false );
@@ -52,8 +61,8 @@ console.log( bool ? "true" : "false"); // prints "false"
 console.log( Bool ? "true" : "false"); // prints "true"!
 ----
 
-Conversion between a primitive type to its object-variant is achieved by
-the `new` operator. The `valueOf()` method converts the object-variant back to a primitive value.
+Conversion between a primitive type to its object-variant is achieved by the `new` operator.
+The `valueOf()` method converts the object-variant back to a primitive value.
 
 [source,n4js]
 ----
@@ -73,32 +82,31 @@ no = new Number( n );
 so = new String( s );
 ----
 
-Conversion of variables of type `Object` or from one primitive type to another is expressed in terms of typing rules for expressions. That is, it is not
-possible to convert any `Object` to a primitive in general, but it is possible to do so in the context of certain expressions such as additive operator.
-The applied conversions are described in <<_auto-conversion-of-class-instances,Auto-Conversion of Class Instances>>
+Conversion of variables of type `Object` or from one primitive type to another is expressed in terms of typing rules for expressions.
+That is, it is not possible to convert any `Object` to a primitive in general, but it is possible to do so in the context of certain expressions such as additive operator.
+The applied conversions are described in <<_auto-conversion-of-class-instances>>
 
 === Autoboxing of Primitives
 task:IDE-835[]
 
 In cite:[ECMA11a], autoboxing is defined by `ToObject` cite:[ECMA11a(S9.9)].
 
-Autoboxing is not directly supported in N4JS. Instead, primitive types
-virtually have the same members as their corresponding object types. It
-is then possible to use the Autoboxing feature when calling a member.
-In general, Autoboxing is only supported for accessing built-in
-read-only (immutable) properties. For example, `"some string value".split(" ");` is supported but `"some string value".foo=1;` will be rejected as String does not allow properties to be added (cf. vs. , see <<_dynamic,Dynamic Type Modifiers>>).
+Autoboxing is not directly supported in N4JS. Instead, primitive types virtually have the same members as their corresponding object types.
+It is then possible to use the Autoboxing feature when calling a member.
+In general, Autoboxing is only supported for accessing built-in read-only (immutable) properties.
+For example, `"some string value".split(" ");` is supported but `"some string value".foo=1;` will be rejected as String does not allow properties to be added (cf. `String` vs. `String+`, see <<_dynamic>>).
 
-Autoboxing often leads to problems, in particular in combination with
-dynamic types – this is why it is not directly supported in N4JS. For
-example,
+Autoboxing often leads to problems, in particular in combination with dynamic types – this is why it is not directly supported in N4JS.
 
-[source]
+[source,n4js]
 ----
-var s: String+ = "Hello"; // will produce an error to prevent the following scenario:
+var s: String+ = "Hello"; // <1>
+
 s.prop = 1;
-console.log(s.prop); // prints "undefined"
+console.log(s.prop); // <2>
 ----
-
+<1> will produce an error to prevent the following scenario:
+<2> prints "undefined"
 // todo[wk: restrict coercing]{\url{http://restrictmode.org/} describes some restrictions on operators with regards to coercing and common bugs, we should consider implementing some of these restrictions as well. Also see chapter type inference}
 
 === Autoboxing of Function Expressions and Declarations
@@ -108,28 +116,24 @@ task:IDE-830[]
 Function expressions and declarations always define an object of type `Function`, thus coercing or Autoboxing is not required in case of functions:
 
 It is always possible to use a function expression where a `Function` is required, and to use an object of type `Function` where a function expression is expected.
-This is only possible if the function signatures are subtype-compatible,
-see <<_function-type,Function Type>> for details.
+This is only possible if the function signatures are subtype-compatible, see <<_function-type>> for details.
 
-Still, it is always possible to call members of `Function`, e.g.,
-`function(){}.length()`.
+Still, it is always possible to call members of `Function`, e.g., `function(){}.length()`.
 
+[.language-n4js]
 == Auto-Conversion of Objects
 
 === Auto-Conversion of Class Instances
 task:IDE-833[]
 
-All classes defined in N4JS modules implicitly subclass `N4Object`, which is a
-plain JavaScript Object type. The same auto-conversion rules defined for
-JavaScript `Object` therefore apply to `N4Object` instances as well.
+All classes defined in N4JS modules implicitly subclass `N4Object`, which is a plain JavaScript Object type.
+The same auto-conversion rules defined for JavaScript `Object` therefore apply to `N4Object` instances as well.
 
-The basic conversion uses the abstract JavaScript function `ToPrimitive` cite:[ECMA11a(S9.1)], which relays on the specification method `Object`
-cite:[ECMA11a(S8.12.8)].
+The basic conversion uses the abstract JavaScript function `ToPrimitive` cite:[ECMA11a(S9.1)], which relays on the specification method `Object` cite:[ECMA11a(S8.12.8)].
 `DefaultValue` calls `valueOf` or `toString` methods if they are defined by the class (in the `methods`-builder).
 
-Note that according to the cite:[ECMA11a], in most cases, objects are first converted into primitives. That is, in most cases, no extra hint is passed to
-`DefaultValue`. Thus `valueOf` usually takes precedence over toString as
-demonstrated in the following example:
+Note that according to the cite:[ECMA11a], in most cases, objects are first converted into primitives.
+That is, in most cases, no extra hint is passed to `DefaultValue`. Thus `valueOf` usually takes precedence over toString as demonstrated in the following example:
 
 .Auto-Conversion
 [example]
@@ -137,7 +141,7 @@ demonstrated in the following example:
 
 Assume some classes and corresponding instances defined as follows:
 
-[source]
+[source,n4js]
 ----
 class A {}
 class B{
@@ -155,7 +159,7 @@ var a = new A(), b = new B(), c = new C(), d = new D();
 
 Instances of these classes will be converted as demonstrated as follows:
 
-[source]
+[source,n4js]
 ----
 console.log(a+"");                      // [object Object]
 console.log(a+1);                       // [object Object]1
@@ -175,15 +179,14 @@ console.log(d+1);                       // 21
 ==== Auto-Conversion of Interface Instances
 
 Instances of interfaces actually are instances of classes at runtime.
-The auto-conversion rules described in <<_auto-conversion-of-class-instances,Auto-Conversion of Class Instances>> are applied to instances declared as instances of interfaces as well.
+The auto-conversion rules described in <<_auto-conversion-of-class-instances>> are applied to instances declared as instances of interfaces as well.
 
 === Auto-Conversion of Enum Literals
 
-Enumeration values are objects and thus follow the behavior for
-ECMAScript math:[$Object$] and math:[$Function$]. They have a
-custom math:[$toString$] method which returns the name of the
-enumeration value.
+Enumeration values are objects and thus follow the behavior for ECMAScript `Object` and `Function`.
+They have a custom $toString$ method which returns the name of the enumeration value.
 
+[.language-n4js]
 == Type Cast and Type Check
 
 === Type Cast
@@ -191,71 +194,61 @@ enumeration value.
 task:IDE-161[] task:IDE-928[] (IDEBUG-56): Casting to TypeVars
 
 
-Type casts are expressed with the cast expression (`as`), see <<_cast-as-expression,As Expression>> for details.
+Type casts are expressed with the cast expression (`as`), see <<_cast-as-expression>> for details.
 
 We first define helper rules for the type cast constraints as follows:
-math:[\[\begin{aligned}
-|\infer{isCPOE(T)}{\mu(T) \in \{ \type{TEnum}, \type{Class}, \type{Primitive}, \type{ObjectType}\}}\\
-|\infer{isCPOE(T)}{\mu{T} \in\{\type{ClassifierType}, \type{TypeType} \} \land \mu(T.typeRef) \neq \type{TypeVariable} }\\
-|\infer{isInterface(T)}{\mu(T) \in \{ \type{Interface} \}}\\
-|\infer{isBoundTypeVar(T)}{\mu(T)=\type{TypeVariable}  \land T.upperBounds \neq  \emptyset }\\
-|\infer{isFinalByType(T)}{\mu(T) \in \{\ \type{TEnum}, \type{Primitive} \} \lor (\mu(T)=\type{Class} \land T.extensibility=\lenum{final} \})}\end{aligned}\]]
 
+[math]
+++++
+\beginalign
+\infer{isCPOE(T)}{\mu(T) \in \{ \type{TEnum}, \type{Class}, \type{Primitive}, \type{ObjectType}\}}\\
+\infer{isCPOE(T)}{\mu{T} \in\{\type{ClassifierType}, \type{TypeType} \} \land \mu(T.typeRef) \neq \type{TypeVariable} }\\
+\infer{isInterface(T)}{\mu(T) \in \{ \type{Interface} \}}\\
+\infer{isBoundTypeVar(T)}{\mu(T)=\type{TypeVariable}  \land T.upperBounds \neq  \emptyset }\\
+\infer{isFinalByType(T)}{\mu(T) \in \{\ \type{TEnum}, \type{Primitive} \} \lor (\mu(T)=\type{Class} \land T.extensibility=\lenum{final} \})}
+\endalign
+++++
 
-.Cast Validation At Compile Time]]
+.Cast Validation At Compile Time
 [req,id=IDE-89,version=1]
 --
-Given a type cast expression math:[$e$] in which
-math:[$\tee e.expr: S$] and and target type math:[$T$], the
+Given a type cast expression `e` in which
+$\tee e.expr: S$ and and target type `T`, the
 following constraints must hold:
 
-1.  math:[$T$] must be a classifier, enum, primitive, function type
-expression, classifier type, type variable, union or intersection type:
-math:[\[\begin{aligned}
-    \mu(T) \in & \{ \type{any}, \type{Class}, \type{Interface}, \type{Enum}, \type{Primitive}, \type{ObjectType}, \\
-        & \type{FunctionTypeExpression}, \type{ClassifierType}, \type{TypeVariable}, \type{Union}, \type{Intersection} \}
-    \end{aligned}\]]
-2.  If math:[$S$] is a subtype of math:[$T$], the cast is
-unnecessary and a warning will be generated.
-3.  If math:[$S$] and math:[$T$] are classes, enums or
-primitive types, then math:[$T$] must be a subtype of
-math:[$S$]. This is also true if math:[$T$] is an interface
-and the type of math:[$S$] cannot have subtypes, or vice versa.
+1.  `T` must be a classifier, enum, primitive, function type expression, classifier type, type variable, union or intersection type:
 +
-math:[\[\begin{aligned}
-            (   & (isCPOE(T) \\
-            & \hspace{2em}\land (isCPOE(S) \\
-            & \hspace{4em}\lor (\mu(S)=\type{Intersection} \land \exists S' \in S: isCPOE(S'))) \\
-            & \lor (isInterface(T)  \land isFinalByType(S) ) \\
-            & \lor (isFinalByType(T) \land isInterface(S) )  ) \to \tee T <: S
-    \end{aligned}\]]
+[%hardbreaks]
+$\mu(T) \in \spc \{ \type{any}, \type{Class}, \type{Interface}, \type{Enum}, \type{Primitive}, \type{ObjectType}, $
+$\spc \type{FunctionTypeExpression}, \type{ClassifierType}, \type{TypeVariable}, \type{Union}, \type{Intersection} \} $
+2. if `S` is a subtype of `T`, the cast is unnecessary and a warning will be generated.
+3. if `S` and `T` are classes, enums or primitive types, then `T` must be a subtype of `S`.
+This is also true if `T` is an interface and the type of `S` cannot have subtypes, or vice versa.
++
+[%hardbreaks]
+$(isCPOE(T) $
+$ \hspace{2em}\land (isCPOE(S) $
+$ \hspace{4em}\lor (\mu(S)=\type{Intersection} \land \exists S' \in S: isCPOE(S'))) $
+$ \lor (isInterface(T)  \land isFinalByType(S) ) $
+$ \lor (isFinalByType(T) \land isInterface(S) )  ) \rightarrow \tee T <: S $
 // Doesn't work for daimond-relationships with S and T on left and right. --> limit to classes only.
-4.  If math:[$S$] is a class, enum or primitive type and
-math:[$T$] is a type-variable, then for each given boundary
-math:[$T^{up}_i$] of math:[$T$] of type class, enum or
-primitive math:[$S$] must be a member of the type hierarchy:
-footnote:[math:[$i$] iterates over all boundaries]
-math:[\[\begin{aligned}
-               & (isBoundTypeVar(T) \land isCPOE(S) ) \\
-               & \to  \forall_{T^{up}_i \in T.upperBounds} (isCPOE({T^{up}_i}) \to \tee ( {T^{up}_i} <: S \lor  {T^{up}_i} :> S ) )
-    \end{aligned}\]]
-5.  If math:[$S$] is a union or intersection type, then the type
-cast is valid if it is valid for at least one element of
-math:[$S$].
-6.  If math:[$S$] and math:[$T$] are generics, and if
-math:[$S^0=T^0$], a cast is possible if type arguments are sub- or
-supertypes of each other: footnote:[math:[$i$] iterates over all
-type args] math:[\[\begin{aligned}
-               & \mu(S)=\type{Classifier} \land \mu(T)=\type{Classifier} \land S^0=T^0 \to \\
-               & \hspace{2em} (\forall\ S.typeArg_i <: T.typeArg_i) \lor (\forall\ T.typeArg_i <: S.typeArg_i)
-    \end{aligned}\]]
-7.  It math:[$T$] is a union type, then the type cast is valid if
-it is valid for at least one element of math:[$T$].
-8.  It math:[$T$] is an intersection type, then the type cast is
-valid if it is valid for all elements of math:[$T$].
+4. if `S` is a class, enum or primitive type and `T` is a type-variable, then for each given boundary $T^{up}_i$ of `T`
+of type class, enum or primitive `S` must be a member of the type hierarchy: footnote:[`i` iterates over all boundaries]
++
+[%hardbreaks]
+$(isBoundTypeVar(T) \land isCPOE(S) ) $
+$ \rightarrow  \forall_{T^{up}_i \in T.upperBounds} (isCPOE({T^{up}_i}) \rightarrow \tee ( {T^{up}_i} <: S \lor  {T^{up}_i} :> S ) ) $
+5. if `S` is a union or intersection type, then the type cast is valid if it is valid for at least one element of `S`.
+6. if `S` and `T` are generics, and if $S^0=T^0$,
+a cast is possible if type arguments are sub- or supertypes of each other: footnote:[`i` iterates over all type args]
++
+[%hardbreaks]
+$\mu(S)=\type{Classifier} \land \mu(T)=\type{Classifier} \land S^0=T^0 \rightarrow $
+$\hspace{2em} (\forall\ S.typeArg_i <: T.typeArg_i) \lor (\forall\ T.typeArg_i <: S.typeArg_i)$
+7.  If `T` is a union type, then the type cast is valid if it is valid for at least one element of `T`.
+8.  If `T` is an intersection type, then the type cast is valid if it is valid for all elements of `T`.
 
-NOTE: `any` is a supertype of all other types, thus it is always possible
-to cast a variable of type `any` to other (non-composed) types.
+NOTE: `any` is a supertype of all other types, thus it is always possibleto cast a variable of type `any` to other (non-composed) types.
 
 --
 
@@ -315,7 +308,7 @@ The same is true for string-based enums and arrays which cannot be tested during
 For all types for which the evaluation result of `instanceof` could be computed at compile time, the check is unnecessary and thus it is refused by the compiler.
 Using structural types on the right-hand side of `instancesof` constructs is also not permitted.
 
-In order to avoid errors at runtime, the `instanceof` operator defines appropriate constraints, see <<_relational-expression,Relational Expression>> for details.
+In order to avoid errors at runtime, the `instanceof` operator defines appropriate constraints, see <<_relational-expression>> for details.
 
 .Type Check Example
 [example]
@@ -323,7 +316,7 @@ In order to avoid errors at runtime, the `instanceof` operator defines appropria
 
 Given the following classes and variable:
 
-[source]
+[source,n4js]
 ----
 interface I{}
 class S{}
@@ -346,6 +339,7 @@ var x = new Sub();
 | x instanceof I  | false   | true
 |===
 
+[.language-n4js]
 == Reflection meta-information
 task:IDE-155[] task:IDE-561[] task:IDE-137[] task:IDE-980[]
 
@@ -362,13 +356,13 @@ This getter is of type `N4Class` which is a built-in type just like `N4Object`. 
 
 
 `fqn` ::
-The math:[$FQN$] of the type.
+The $FQN$ of the type.
 
 `n4superType` ::
 The `N4Class` of the supertype, may be null if supertype is a not an `N4Class`.
 
 `allImplementedInterfaces` ::
-List of The math:[$FQN$] of implemented interfaces (transitively
+List of The $FQN$ of implemented interfaces (transitively
 but without interfaces implemented by supertype)
 
 `get isClass` ::
@@ -404,7 +398,7 @@ console.log(B.n4class.constructor.n4class.fqn);
 
 Assuming this code is defined in file `A`, this will output
 
-[source]
+[source,n4js]
 ----
 A.B
 A.B
@@ -433,7 +427,7 @@ console.log('A.n4class.n4superType.fqn: ' + A.n4class.n4superType.fqn)
 
 Assuming this code is defined in file `A`, this will output
 
-[source]
+[source,n4js]
 ----
 N4Object.n4class.fqn:      N4Object
 N4Class.n4class.fqn:       N4Class
@@ -443,7 +437,7 @@ A.n4class.n4superType.fqn: N4Object
 
 Note that classes extending `Object` do not provide the static `n4class` getter, hat is
 
-[source]
+[source,n4js]
 ----
 class B extends Object {}
 console.log('B.n4class.fqn:             ' + B.n4class.fqn)
@@ -486,67 +480,73 @@ console.log(N4EnumType.of(e).fqn);
 task:IDE-980[]
 
 
-The meta-information of an interface math:[$X$] is available via
-getter `n4class` defined in the `type{X}`. This field is of type `N4Class` as well. Since an interface cannot have a super classs, the property `n4superTypes` will always be empty.
+The meta-information of an interface `X` is available via getter `n4class` defined in the `type{X}`.
+This field is of type `N4Class` as well.
+Since an interface cannot have a super classs, the property `n4superTypes` will always be empty.
 Calling `isInterface` respectively on the returned `N4Class` instance will return true.
 
 === Reflection for Enumerations
 
-[source]
+[source,n4js]
 ----
 var n: number; var b: boolean; var s: string;
 ----
 
-The meta-information for enumerations is available by means of the getter `n4class`, either statically by using the enumeration type or (in terms of an
-instance getter) via a literal.
+The meta-information for enumerations is available by means of the getter `n4class`, either statically by using the enumeration type or (in terms of an instance getter) via a literal.
 Calling `isEnum` on the returned `N4Class` instance will return true.
 
+[.language-n4js]
 == Conversion of primitive types
 
 Conversion between primitives is given as follows:
 
-[source]
+[source,n4js]
 ----
 var n: number; var b: boolean; var s: string;
 ----
 
-[cols="^.^1m,^.^1m,<.^3m,<4m"]
+[cols="^.^1m,^.^1m,<.^4m,<3m"]
 |===
 |From |To |Conversion ^|Example
 
 | string  | number  | Number...
 a|
-[source]
+[source,n4js]
 ----
 n = Number("42");//42
 ----
+
 | string  | boolean | N4Primitives.parseBoolean(...)
 a|
-[source]
+[source,n4js]
 ----
  b=N4Primitives.parseBoolean("false");
 ----
 | number  | boolean | Boolean(...)
+
 a|
-[source]
+[source,n4js]
 ----
 b=Boolean(17.5); //true
 ----
 | number  | string  | Number.toString()
+
 a|
-[source]
+[source,n4js]
 ----
 s=42.toString(); //"42"
 ----
 | boolean | number  | N4Primitives.toNumber(...)
+
 a|
-[source]
+[source,n4js]
 ----
 n=N4Primitives.toNumber(true);
 ----
 | boolean | string  | Boolean.toString()
+
 a|
-[source]
+[source,n4js]
 ----
  s=true.toString();//"true" }
 ----
@@ -555,11 +555,9 @@ a|
 Remarks:
 
 1.  ECMAScript doesn’t define explicit conversion from string content.
-Implicit handling states all strings with math:[$>$]0==true. `N4Primitives.parseBoolean( x )` yields
-true for `x.trim().toLowerCase().equals("true")`
-2.  The call to `Boolean(..)` for the arguments `0, -0, null, false, NaN, undefined` and `""` evaluate to `false`. All other values
-evaluate to `true`.
-3.  `Number` has several methods for converting a value to string cite:[ECMA11a(S15.7.4)]: `toExponential(), to Fixed(), toPrecision()`.
-4.  ECMAScript doesn’t define explicit conversion from boolean to
-number. Implicit handling states true math:[$\rightarrow$] 1 and
-false math:[$\rightarrow$] 0, which `N4Primitives.toNumber()` yields.
+Implicit handling states all strings with $>0==true$. `N4Primitives.parseBoolean(x)` yields true for `x.trim().toLowerCase().equals("true")`
+2.  The call to `Boolean(..)` for the arguments `0`, `-0`, `null`, `false`, `NaN`, `undefined` and `""` evaluate to `false`.
+All other values evaluate to `true`.
+3.  `Number` has several methods for converting a value to string cite:[ECMA11a(S15.7.4)]: `toExponential()`, to `Fixed()`, `toPrecision()`.
+4.  ECMAScript doesn’t define explicit conversion from boolean to number.
+Implicit handling states true $\rightarrow$ 1 and false $\rightarrow$ 0, which `N4Primitives.toNumber()` yields.

@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js.ui.organize.imports;
 
-import static eu.numberfour.n4js.N4JSGlobals.JS_FILE_EXTENSION;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -58,7 +56,6 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
-import org.eclipse.xtext.resource.FileExtensionProvider;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
@@ -67,12 +64,14 @@ import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 
+import eu.numberfour.n4js.N4JSGlobals;
 import eu.numberfour.n4js.documentation.N4JSDocumentationProvider;
+import eu.numberfour.n4js.fileextensions.FileExtensionType;
+import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
 import eu.numberfour.n4js.parser.InternalSemicolonInjectingParser;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.ts.services.TypeExpressionsGrammarAccess;
@@ -91,9 +90,6 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 
 	private static final Logger LOGGER = Logger.getLogger(N4JSOrganizeImportsHandler.class);
 
-	// list of FileExtensions to exclude:
-	private static final List<String> RAW_JS_FILES = ImmutableList.of(JS_FILE_EXTENSION);
-
 	@Inject
 	private N4JSOrganizeImports organizeImports;
 
@@ -103,9 +99,8 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 	@Inject
 	private XtextDocumentProvider docProvider;
 
-	// IDEBUG-239 we have to limit here to N4JS & N4JSD only. (see above of things to remove.)
 	@Inject
-	private FileExtensionProvider fileExtensionsProvider;
+	private FileExtensionsRegistry fileExtensionsRegistry;
 
 	// cleaned version of extensions got from fileExtensions
 	private Collection<String> n4FileExtensions;
@@ -255,10 +250,16 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 	 * @return Set of extensions for files on which organization should be applied
 	 */
 	private Collection<String> getN4FileExtensions() {
-		// Lazily obtain list of valid extensions:
 		if (n4FileExtensions == null) {
-			n4FileExtensions = new HashSet<>(fileExtensionsProvider.getFileExtensions());
-			n4FileExtensions.removeAll(RAW_JS_FILES);
+			n4FileExtensions = new HashSet<>(
+					fileExtensionsRegistry.getFileExtensions(FileExtensionType.TYPABLE_FILE_EXTENSION));
+			n4FileExtensions.removeAll(fileExtensionsRegistry.getFileExtensions(FileExtensionType.RAW_FILE_EXTENSION));
+
+			// TODO IDE-2520 enable for N4JSX
+			//
+			// Once we enable Organize Imports with IDE-2520 filtering below should be removed. Populating list as above
+			// will be enough.
+			n4FileExtensions.remove(N4JSGlobals.N4JSX_FILE_EXTENSION);
 		}
 		return n4FileExtensions;
 	}
@@ -342,7 +343,7 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 								return null; // user-triggered cancellation, nothing to report.
 							} catch (BreakException e) {
 								LOGGER.warn("Organize imports broke:", e);
-								throw new RuntimeException(e);
+								throw e;
 							}
 						}
 						return null;

@@ -12,7 +12,6 @@ package eu.numberfour.n4js.resource;
 
 import java.util.Collection;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
@@ -20,7 +19,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.DerivedStateAwareResourceDescriptionManager;
-import org.eclipse.xtext.resource.FileExtensionProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
@@ -31,11 +29,11 @@ import org.eclipse.xtext.resource.impl.EObjectDescriptionLookUp;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.fileextensions.FileExtensionTypeHelper;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ts.scoping.builtin.N4Scheme;
 import eu.numberfour.n4js.ts.utils.TypeHelper;
-import eu.numberfour.n4js.utils.languages.N4LanguageUtils;
 
 /**
  * Only differences to super class method are that a {@link N4JSResourceDescription} is created as well the call to
@@ -56,6 +54,9 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 
 	@Inject
 	private IN4JSCore n4jsCore;
+
+	@Inject
+	private FileExtensionTypeHelper fileExtensionTypeHelper;
 
 	@Override
 	protected IResourceDescription createResourceDescription(final Resource resource,
@@ -108,7 +109,8 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 		Collection<QualifiedName> namesImportedByCandidate = null;
 
 		for (IResourceDescription.Delta delta : deltas) {
-			if (delta.haveEObjectDescriptionsChanged() && isValid(delta.getUri())) {
+			if (delta.haveEObjectDescriptionsChanged()
+					&& fileExtensionTypeHelper.isTypable(delta.getUri().fileExtension())) {
 
 				if (null == namesImportedByCandidate) {
 					// note: this does not only contain the explicitly imported names, but indirectly
@@ -126,24 +128,6 @@ public class N4JSResourceDescriptionManager extends DerivedStateAwareResourceDes
 		}
 
 		return false;
-	}
-
-	/**
-	 * Contextual if provided URI is a valid file. It is a bit abstract check as based on the provided URI we get
-	 * {@link FileExtensionProvider} that will validate that URI. For URIs obtained from Xtext resources, this will
-	 * always be true. This is slightly different semantics from original code, that was checking if provided URI
-	 * belonged to {@link N4JSResource}, but with addition of new languages (e.g. {@code N4JSX}) that logic is invalid.
-	 *
-	 * We add this method temporary to fix IDE-2501, but we treat it as placeholder for solution of IDE-2509. See also
-	 * IDE-2493.
-	 */
-	private boolean isValid(URI uri) {
-		Optional<FileExtensionProvider> contextualFileExtensionProvider = N4LanguageUtils
-				.getServiceForContext(uri, FileExtensionProvider.class);
-
-		// TODO IDE-2509 clarify semantics of 'valid' uri
-		return contextualFileExtensionProvider.isPresent()
-				? contextualFileExtensionProvider.get().isValid(uri.fileExtension()) : false;
 	}
 
 	/**
