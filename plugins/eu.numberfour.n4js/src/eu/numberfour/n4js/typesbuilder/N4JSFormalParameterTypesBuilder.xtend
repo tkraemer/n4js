@@ -17,13 +17,12 @@ import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.TypesFactory
 import eu.numberfour.n4js.ts.utils.TypeUtils
-import eu.numberfour.n4js.n4JS.FunctionDefinition
 
 package class N4JSFormalParameterTypesBuilder {
 	@Inject extension N4JSTypesBuilderHelper
 
-	def package createFormalParameter(FormalParameter n4FormalParameter, BuiltInTypeScope builtInTypeScope, boolean preLinkingPhase) {
-		createFormalParameter(n4FormalParameter, null, builtInTypeScope, preLinkingPhase)
+	def package TFormalParameter createFormalParameter(FormalParameter n4FormalParameter, BuiltInTypeScope builtInTypeScope, boolean preLinkingPhase) {
+		return createFormalParameter(n4FormalParameter, null, builtInTypeScope, preLinkingPhase);
 	}
 
 	/**
@@ -33,7 +32,7 @@ package class N4JSFormalParameterTypesBuilder {
 	 *                        this may be <code>null</code> and in this case <code>any</code> will be
 	 *                        the formal parameter's actual type.
 	 */
-	def package createFormalParameter(FormalParameter astFormalParameter, TypeRef defaultTypeRef, BuiltInTypeScope builtInTypeScope, boolean preLinkingPhase) {
+	def package TFormalParameter createFormalParameter(FormalParameter astFormalParameter, TypeRef defaultTypeRef, BuiltInTypeScope builtInTypeScope, boolean preLinkingPhase) {
 		// note: we also build an fpar if astFormalParameter.name===null (otherwise the AST and types model
 		// would have different number of formal parameters in case of a broken AST, messing up indices, etc.)
 		val formalParameterType = TypesFactory::eINSTANCE.createTFormalParameter();
@@ -55,9 +54,9 @@ package class N4JSFormalParameterTypesBuilder {
 	 * @param formalParameterType the type system related parameter type to be set
 	 * @param astFormalParameter the AST related parameter which is to be copied to the former
 	 */
-	def private setFormalParameterType(TFormalParameter formalParameterType, FormalParameter astFormalParameter,
-				TypeRef defaultTypeRef, BuiltInTypeScope builtInTypeScope, boolean preLinkingPhase) {
-		
+	def private void setFormalParameterType(TFormalParameter formalParameterType, FormalParameter astFormalParameter,
+				TypeRef defaultTypeRef, BuiltInTypeScope builtInTypeScope, boolean preLinkingPhase
+	) {
 		setCopyOfReference(
 			[ TypeRef copyOfDeclaredTypeRef |
 				formalParameterType.typeRef = copyOfDeclaredTypeRef.orDefaultParameterType(defaultTypeRef, astFormalParameter, builtInTypeScope)
@@ -65,11 +64,10 @@ package class N4JSFormalParameterTypesBuilder {
 	}
 
 	def private TypeRef orDefaultParameterType(TypeRef copyOfDeclaredTypeRef, TypeRef defaultTypeRef,
-		FormalParameter astFormalParameter, BuiltInTypeScope builtInTypeScope) {
-		
+		FormalParameter astFormalParameter, BuiltInTypeScope builtInTypeScope
+	) {
 		if (copyOfDeclaredTypeRef === null) {
-			// TODOTODO typecheck entfernen?
-			if (astFormalParameter.initializer !== null && astFormalParameter.eContainer instanceof FunctionDefinition) {
+			if (astFormalParameter.initializer !== null) {
 				TypeUtils.createDeferredTypeRef
 			} else if (defaultTypeRef === null) {
 				builtInTypeScope.anyTypeRef

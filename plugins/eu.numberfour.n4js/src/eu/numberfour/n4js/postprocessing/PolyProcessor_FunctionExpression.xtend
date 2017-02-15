@@ -55,8 +55,8 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 	 * {@link PolyProcessor#processExpr(RuleEnvironment,eu.numberfour.n4js.n4JS.Expression,TypeRef,InferenceContext,ASTMetaInfoCache)}
 	 */
 	def package TypeRef processFunctionExpression(RuleEnvironment G, FunctionExpression funExpr, TypeRef expectedTypeRef,
-		InferenceContext infCtx, ASTMetaInfoCache cache) {
-
+		InferenceContext infCtx, ASTMetaInfoCache cache
+	) {
 		val fun = funExpr.definedType as TFunction; // types builder will have created this already
 
 		if (!funExpr.isPoly) { // funExpr has declared types on all fpars and explicitly declared return type
@@ -78,12 +78,8 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 			funTE.ownedTypeVars += fun.typeVars.map[tv|TypeUtils.copy(tv)];
 		}
 
-
 		processFormalParameters(G, cache, infCtx, funExpr, funTE, expectedTypeRef);
-
 		processReturnType(G, cache, infCtx, funExpr, funTE);
-
-		// TODOTODO: refactoring einzeln und für alle polys
 
 		// create temporary type (i.e. may contain inference variables)
 		val resultTypeRef = if (fun.typeVars.empty) {
@@ -155,38 +151,27 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 			// Check if the initializer refers to other fpars
 			val allFPars = (fparAST.eContainer as FunctionDefinition).fpars;
 			
-			var refIsInitializer = false;
 			val fparInitializer = fparAST.initializer;
+			var refIsInitializer = false;
+			val isPostponed = cache.postponedSubTrees.contains(fparInitializer);
 			if (fparInitializer instanceof IdentifierRef) {
 				val id = fparInitializer.getId();
 				refIsInitializer = allFPars.contains(id);
 			}
 			
-			val isPostponed = cache.postponedSubTrees.contains(fparAST.initializer);
-			
 			if (refIsInitializer) {
+				// example: f(a, b = a) {}
 				val iRef = fparInitializer as IdentifierRef;
 				val fparam = iRef.getId() as FormalParameter;
 				val fparTCopy = typeRefMap.get(fparam);
 				var TypeRef tRef = null;
-				if (fparTCopy !== null) {
-					// happens when the initializer is a parameter ('a') is of the same function
-					// example: f(a, b = a) {}
-					tRef = fparTCopy.typeRef;
-				} else {
-					// happens when the initializer is a parameter ('a') of another function
-					// example: f(a, b = (z=a)=>{} ) {}
-					//tRef = fparam.definedTypeElement?.typeRef;
-					println(" still needed ");
-				}
-				if (tRef !== null) {
-					infCtx.addConstraint(TypeUtils.createTypeRef(iv), TypeUtils.copy(tRef), Variance.CONTRA);
-				}
+				tRef = fparTCopy.typeRef;
+				infCtx.addConstraint(TypeUtils.createTypeRef(iv), TypeUtils.copy(tRef), Variance.CONTRA);
 			} else if (!isPostponed) {
 				val context = if (fparT.eContainer instanceof ContainerType<?>)
 						TypeUtils.createTypeRef(fparT.eContainer as ContainerType<?>) else null;
 				val G_withContext = ts.createRuleEnvironmentForContext(context, G.contextResource);
-				val TypeRef iniTypeRef = if (fparAST.initializer !== null) ts.type(G_withContext, fparAST.initializer).value else G.undefinedTypeRef;
+				val TypeRef iniTypeRef = if (fparInitializer !== null) ts.type(G_withContext, fparInitializer).value else G.undefinedTypeRef;
 				val iniTypeRefSubst = ts.substTypeVariables(G_withContext, iniTypeRef).value;
 				infCtx.addConstraint(TypeUtils.createTypeRef(iv), TypeUtils.copy(iniTypeRefSubst), Variance.CONTRA);
 			}

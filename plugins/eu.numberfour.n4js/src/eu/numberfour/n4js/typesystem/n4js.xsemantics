@@ -1833,7 +1833,9 @@ from {
 	if (formalParam.declaredTypeRef !== null) {
 		T = formalParam.declaredTypeRef;
 	} else if (formalParam.definedTypeElement?.typeRef !== null) {
-		// Other than in expectedTypeOfRightSideInVariableDeclaration, here we need ... TODOTODO
+		// Other than in expectedTypeOfRightSideInVariableDeclaration,
+		// here we need to return the typeRef of the TModule, since it
+		// might have been inferred by the PolyProcessor.
 		T = formalParam.definedTypeElement.typeRef;
 	} else {
 		T = G.anyTypeRef;
