@@ -317,8 +317,9 @@ public class N4JSResource extends PostProcessingAwareResource implements ProxyRe
 					break;
 				}
 			}
-			// TODO: It is possible that TModule is null (e.g. if a module becomes invalid and thus ResourceDescriptWithoutUserData is created).
-			// In that case, contents has an AST proxy without TModule. What is with this state??
+			// TODO: It is possible that TModule is null (e.g. if a module becomes invalid and thus
+			// ResourceDescriptionWithoutUserData is created).
+			// In that case, contents has an AST proxy without TModule. Is this an allowed state??
 			if (didLoadModule) {
 				fullyInitialized = true;
 				// TModule loaded from index had been fully post-processed prior to serialization
