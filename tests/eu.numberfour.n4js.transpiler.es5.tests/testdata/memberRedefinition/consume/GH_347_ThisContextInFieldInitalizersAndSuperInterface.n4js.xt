@@ -6,29 +6,24 @@
 <==
 stdout:
 5
-5
-5
-5
+4
 stderr:
 ==>
 --- */
 
 interface J {
-	numJ = 5;
-    fnJ = () => console.log(this.numJ);
+	numJ = 4;
 }
 
 interface I extends J {
     num = 5;
-    fnI = () => console.log(this.num);
-    fnIJ = () => console.log(this.numJ);
 }
 
 class C implements I {
-    fnC = () => console.log(this.num);
+    fn1 = () => console.log(this.num);
+    fn2 = () => console.log(this.numJ);
 }
 
-(new C).fnC();
-(new C).fnI();
-(new C).fnIJ();
-(new C).fnJ();
+(new C).fn1();
+(new C).fn2();
+
