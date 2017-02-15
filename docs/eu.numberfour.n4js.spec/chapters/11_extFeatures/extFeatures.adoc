@@ -135,11 +135,11 @@ This includes compiler, validation and language extensions that allow to achieve
 N4JS <<Acronyms,DI>> support specifies a means for obtaining objects in such a way as to maximize reusability, testability and maintainability,
 especially compared to traditional approaches such as constructors, factories and service locators.
 While this can be achieved manually (without tooling support) it is difficult for nontrivial applications.
-The solutions that <<Acronyms,DI>> provides should empower N4JS users to achieve the above goals without the burden of maintaining so-called ’boilerplate’ code.
+The solutions that DI provides should empower N4JS users to achieve the above goals without the burden of maintaining so-called ’boilerplate’ code.
 
 [[fig-di-terms]]
 .DI Terms
-image::{find}fig/diTerms.png[scaledwidth="60%",align="center"]
+image::{find}fig/diterms.png[scaledwidth="60%",align="center"]
 
 _key: pass the dependency instead of letting the client create or find it_
 
@@ -159,7 +159,7 @@ These are injectors, type factories/providers, fields initiators etc.
 
 === DI Components and Injectors
 
-N4JS’ <<Acronyms,DI>> systems is based on the notion of <<Acronyms,DIC>>.
+N4JS’ <<Dependency Injection>> systems is based on the notion of <<Acronyms,DIC>>.
 
 .DI Component
 [def]
@@ -170,9 +170,9 @@ A <<Acronyms,DIC>> is a N4Class annotated with `@GenerateInjector`.
 This annotation causes an _injector_ to be created for (and associated to) the <<Acronyms,DI>>.
 <<Acronyms,DIC>> can be composed; meaning that when requested to inject an instance of a type, a <<Acronyms,DIC>>’s injector can delegate this request to the injector of the containing <<Acronyms,DIC>>.
 An injector always prioritizes its own configuration before delegating to the container’s injector.
-For validation purposes, a child <<Acronyms,DI>> can be annotated with `@WithParent` to ensure that it is always used with a proper parent.
+For validation purposes, a child DI can be annotated with `@WithParent` to ensure that it is always used with a proper parent.
 
-_Injector_ is the main object of <<Acronyms,DI>> mechanisms responsible for creating object graphs of the application.
+_Injector_ is the main object of DI mechanisms responsible for creating object graphs of the application.
 At runtime, injectors are instances of `N4Injector`.
 
 .DI Component and Injector
@@ -181,11 +181,11 @@ At runtime, injectors are instances of `N4Injector`.
 
 The following constraints must hold for a class $C$ marked as <<Acronyms,DIC>>:
 
-1.  A subclass $S$ of $C$ is a <<Acronyms,DIC>> as well and it must be marked with `GenerateInjector` task:IDE-1563[].
-2.  If a parent <<DIComponent Relations,DIC>> $P$ is specified via `WithParent`, then $P$ must be a <<Acronyms,DIC>> as well.
-3.  The injector associated to a <<Acronyms,DIC>> is of type `N4Injector`. It can be retrieved via `N4Injector.of(DIC)` in which `DIC` is the `DIC`.
-4.  Injectors associated to <<Acronyms,DIC>> a are DI-singletons (cf. <<Singleton Scope>>).
-Two calls to `N4Injector.of(DIC)` are different (as different <<Acronyms,DIC>> are assumed).
+1.  A subclass $S$ of $C$ is a DIC as well and it must be marked with `GenerateInjector` task:IDE-1563[].
+2.  If a parent <<DIComponent Relations,DIC>> $P$ is specified via `WithParent`, then $P$ must be a DIC as well.
+3.  The injector associated to a DIC is of type `N4Injector`. It can be retrieved via `N4Injector.of(DIC)` in which `DIC` is the `DIC`.
+4.  Injectors associated to DIC a are DI-singletons (cf. <<Singleton Scope>>).
+Two calls to `N4Injector.of(DIC)` are different (as different DIC are assumed).
 --
 
 .Injection Phase
@@ -197,10 +197,10 @@ If an instance $C$ is newly created by the injector $I$ (regardless of the injec
 The following constraints have to hold:
 
 .  Root objects are created by one of the following mechanisms:
-..  Any class or interface can be created as root objects via an injector associated to a <<Acronyms,DIC>>: +
+..  Any class or interface can be created as root objects via an injector associated to a DIC: +
 `var x: X = N4Injector.of(DIC).create(X);` +
-in which `DIC` is a <<Acronyms,DIC>>.
-
+in which `DIC` is a DIC.
++
 Of course, an appropriate binding must exist. footnote:[Usually, only the `DIC` itself is created like that, e.g., [language-n4js]`var dic = N4Injector.of(DIC).create(DIC);`]
 ..  If a type has the injector being injected, e.g. via field injection `@Inject injector: N4Injector;`, then this injector can be used anytime in the control flow to create
 a new root object similar as above (using `create` method).
@@ -684,7 +684,7 @@ function doInjectionWithCylceAwareness(object, createdInstancesPerType) {
 The actual instance is created in line 10 via `createInstance`.
 This function then takes scopes into account.
 The `createdInstancesPerType` map is passed to that function in order to enable cycle detection for constructor injection.
-The following scopes are supported by the N4JS <<acronyms,DI>>, other scopes, cf. https://jersey.java.net/documentation/latest/ioc.html[Jersey custom scopes] and https://github.com/google/guice/wiki/CustomScopes[Guice custom scopes], may be added in the future.
+The following scopes are supported by the N4JS DI, other scopes, cf. https://jersey.java.net/documentation/latest/ioc.html[Jersey custom scopes] and https://github.com/google/guice/wiki/CustomScopes[Guice custom scopes], may be added in the future.
 
 This algorithm is not working for constructor injection because it is possible to already access all fields of the arguments passed to the constructor.
 In the algorithm, however, the instances may not be completely initialized.
