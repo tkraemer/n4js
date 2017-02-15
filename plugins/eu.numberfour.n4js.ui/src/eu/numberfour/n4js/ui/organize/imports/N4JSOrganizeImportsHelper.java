@@ -230,7 +230,7 @@ public class N4JSOrganizeImportsHelper {
 
 					@Override
 					public List<IChange> exec(XtextResource xtextResource) throws Exception {
-						sysTraceUtil.traceCall();
+						// sysTraceUtil.traceCall();
 						// Position, length 0
 						// N4JSOrganizeImports organizeImports = getOrganizeImports(xtextResource).orElse(null);
 						if (organizeImports == null) {

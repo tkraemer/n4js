@@ -80,7 +80,7 @@ public final class ASTMetaInfoCacheHelper {
 
 			// DEBUG: use the following code to track cache creation/deletion
 			if (DEBUG_TRACK_CACHE_CREATION_DELETION) {
-				System.out.println("\n");
+				// System.out.println("\n");
 				sysTraceUtil.printFullCallTrace();
 				final String newCacheId = Integer.toHexString(newCache.hashCode());
 				// System.out.println("!! creating new cache " + newCacheId

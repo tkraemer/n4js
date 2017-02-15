@@ -104,6 +104,10 @@ public final class ASTMetaInfoCache {
 			if (isCanceled()) {
 				return new Result<>(TypeRefsFactory.eINSTANCE.createUnknownTypeRef());
 			} else {
+				final String cacheId = Integer.toHexString(this.hashCode());
+				final String resourceId = Integer.toHexString(this.resource.hashCode());
+				System.out.println(this.getClass().getSimpleName() + "_" + cacheId + " cache miss for " + resourceId
+						+ "_" + resource.getURI());
 				throw UtilN4.reportError(new IllegalStateException(
 						"cache miss: no actual type in cache for AST node: " + astNode
 								+ " in resource: " + resource.getURI()));
@@ -124,6 +128,10 @@ public final class ASTMetaInfoCache {
 			throw new IllegalArgumentException("actualType may not be null");
 		}
 		if (actualTypes.put(astNode, actualType) != null) {
+			final String cacheId = Integer.toHexString(this.hashCode());
+			final String resourceId = Integer.toHexString(this.resource.hashCode());
+			System.out.println(this.getClass().getSimpleName() + "_" + cacheId + " cache collision for " + resourceId
+					+ "_" + resource.getURI());
 			throw UtilN4.reportError(new IllegalStateException(
 					"cache collision: multiple actual types put into cache for AST node: " + astNode +
 							" in resource: " + resource.getURI()));

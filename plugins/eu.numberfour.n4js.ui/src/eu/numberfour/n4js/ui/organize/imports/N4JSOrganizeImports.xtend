@@ -153,7 +153,7 @@ public class N4JSOrganizeImports {
 	 * @return region for import statements, length 0
 	 */
 	public def InsertionPoint getImportRegion(XtextResource xtextResource) {
-sysTraceUtil.traceCall
+//sysTraceUtil.traceCall
 		// In N4js imports can appear anywhere in the Script as top-level elements. So even as a last
 		// statement and more importantly scattered around.
 		val InsertionPoint insertionPoint = new InsertionPoint;
