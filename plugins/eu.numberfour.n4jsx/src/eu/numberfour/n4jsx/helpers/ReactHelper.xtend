@@ -94,7 +94,7 @@ class ReactHelper {
 	}
 	
 	private def boolean isReactClassifierDescription(IEObjectDescription desc, String suffix) {
-    	return desc.EObjectURI.trimFragment.lastSegment == REACT_DEFINITION_FILE && (desc.qualifiedName.toString.endsWith(suffix))
+    	return desc.EObjectURI.trimFragment.lastSegment == REACT_DEFINITION_FILE && desc.qualifiedName.toString.endsWith(suffix)
     }
 	
 	/**
