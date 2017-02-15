@@ -10,6 +10,8 @@
  */
 package eu.numberfour.n4js.ui.organize.imports;
 
+import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -27,6 +29,8 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceDescription;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -107,55 +111,83 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 				return null;
 			}
 
-			// Query unsaved
-			IWorkbench wbench = PlatformUI.getWorkbench();
-			IWorkbenchWindow activeWorkbenchWindow = wbench.getActiveWorkbenchWindow();
-			boolean allSaved = wbench.saveAll(activeWorkbenchWindow, activeWorkbenchWindow, null, true);
-			if (!allSaved) {
-				return null;
-			}
-
-			Shell shell = HandlerUtil.getActiveShell(event);
-
-			IRunnableWithProgress op = new IRunnableWithProgress() {
-				@Override
-				public void run(IProgressMonitor mon) throws InvocationTargetException, InterruptedException {
-					int totalWork = filesAsList.size();
-					SubMonitor subMon = SubMonitor.convert(mon, "Organize imports.", totalWork);
-					for (int i = 0; !subMon.isCanceled() && i < filesAsList.size(); i++) {
-						IFile currentFile = filesAsList.get(i);
-						subMon.setTaskName("Organize imports." + " - File (" + (i + 1) + " of " + totalWork + ")");
-						try {
-							organizeImportsInFile(subMon, currentFile, Interaction.breakBuild);
-
-						} catch (CoreException | RuntimeException e) {
-							String msg = "Exception in file " + currentFile.getFullPath().toString() + ".";
-							LOGGER.error(msg, e);
-							if (errorDialogWithStackTrace(msg + " Hit OK to continue.", e)) {
-								// - logged anyway
-							} else {
-								throw new InvocationTargetException(e);
-							}
-						}
-					}
-					if (subMon.isCanceled()) {
-						throw new InterruptedException();
-					}
-				}
-
-			};
+			final boolean wasAutobuilding = getWorkspaceAutobuild();
 
 			try {
+				// avoid auto-build when modifying batch of documents
+				setAutobuild(false);
+
+				// Query unsaved
+				IWorkbench wbench = PlatformUI.getWorkbench();
+				IWorkbenchWindow activeWorkbenchWindow = wbench.getActiveWorkbenchWindow();
+				boolean allSaved = wbench.saveAll(activeWorkbenchWindow, activeWorkbenchWindow, null, true);
+				if (!allSaved) {
+					return null;
+				}
+				final Shell shell = HandlerUtil.getActiveShell(event);
+
+				IRunnableWithProgress op = new IRunnableWithProgress() {
+					@Override
+					public void run(IProgressMonitor mon) throws InvocationTargetException, InterruptedException {
+						int totalWork = filesAsList.size();
+						SubMonitor subMon = SubMonitor.convert(mon, "Organize imports.", totalWork);
+						for (int i = 0; !subMon.isCanceled() && i < filesAsList.size(); i++) {
+							IFile currentFile = filesAsList.get(i);
+							subMon.setTaskName("Organize imports." + " - File (" + (i + 1) + " of " + totalWork + ")");
+							try {
+								organizeImportsInFile(subMon, currentFile, Interaction.breakBuild);
+
+							} catch (CoreException | RuntimeException e) {
+								String msg = "Exception in file " + currentFile.getFullPath().toString() + ".";
+								LOGGER.error(msg, e);
+								if (errorDialogWithStackTrace(msg + " Hit OK to continue.", e)) {
+									// - logged anyway
+								} else {
+									throw new InvocationTargetException(e);
+								}
+							}
+						}
+						if (subMon.isCanceled()) {
+							throw new InterruptedException();
+						}
+					}
+
+				};
+
 				new ProgressMonitorDialog(shell).run(true, true, op);
+
 			} catch (InvocationTargetException e) {
 				throw new ExecutionException("Error during organizing imports", e);
 			} catch (InterruptedException e) {
 				// user cancelled, ok
+			} finally {
+				// restore state of auto-build
+				setAutobuild(wasAutobuilding);
 			}
 
 		}
-
 		return null;
+	}
+
+	/**
+	 * Sets workspace auto-build according to the provided flag. Thrown exceptions are handled by logging.
+	 *
+	 */
+	private static void setAutobuild(boolean on) {
+		if (on)
+			try {
+				final IWorkspace workspace = getWorkspace();
+				final IWorkspaceDescription description = workspace.getDescription();
+				description.setAutoBuilding(on);
+				workspace.setDescription(description);
+			} catch (CoreException e) {
+				LOGGER.debug("Organize imports cannot set auto build to " + on + ".");
+			}
+	}
+
+	/** returns current setting of workspace auto-build */
+	private static boolean getWorkspaceAutobuild() {
+		return getWorkspace().getDescription().isAutoBuilding();
 	}
 
 	/**

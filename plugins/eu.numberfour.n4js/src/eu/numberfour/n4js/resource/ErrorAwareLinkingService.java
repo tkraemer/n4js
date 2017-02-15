@@ -60,6 +60,10 @@ public class ErrorAwareLinkingService extends DefaultLinkingService {
 	@Inject
 	private IN4JSCore n4jsCore;
 
+	/**
+	 * Override to get scope based on the context, otherwise we might get scope for main language, while context is from
+	 * sub-language.
+	 */
 	@Override
 	protected IScope getScope(EObject context, EReference reference) {
 		IScopeProvider scopeProvider = N4LanguageUtils.getServiceForContext(context, IScopeProvider.class)
@@ -82,7 +86,6 @@ public class ErrorAwareLinkingService extends DefaultLinkingService {
 
 		final String crossRefString = getCrossRefNodeAsString(context, ref, node);
 		if (crossRefString != null && !crossRefString.equals("")) {
-			// TODO why do we get here N4JSScopeProvider when processing EObject from N4JSX!!!!!!
 			final IScope scope = getScope(context, ref);
 			QualifiedName qualifiedLinkName = qualifiedNameConverter.toQualifiedName(crossRefString);
 			IEObjectDescription eObjectDescription = scope.getSingleElement(qualifiedLinkName);

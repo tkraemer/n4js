@@ -57,14 +57,6 @@ class N4JSXScopeProvider extends N4JSScopeProvider {
 			return new DynamicPseudoScope(scope);
 		}
 
-try{
 		return super.getScope(context, reference);
-		
-		}catch(IllegalStateException e){
-
-			println("@@@@@ " + context)			
-			println(context)
-			throw e;
-		}
 	}
 }
