@@ -60,9 +60,13 @@ package class PolyProcessor_ArrayLiteral extends AbstractPolyProcessor {
 
 		val numOfElems = arrLit.elements.size;
 
-		// the following will give us #[ T ] for an expectedTypeRef of the form Array<T> or Iterable<T>,
-		// and #[ T1, T2, ..., TN ] for an expectedTypeRef of the form IterableN<T1,T2,...,TN>,
-		// and #[] for any other kind of expectedTypeRef
+		// we have to analyze the type expectation:
+		// 1. we have to know up-front whether we aim for an actual type of Array/Iterable or for IterableN
+		// 2. we have to know if we have concrete expectations for the element type(s)
+		// To do so, we prepare a helper variable 'expectedElemTypeRefs' and initialize it as follows:
+		// #[ T ] for an expectedTypeRef of the form Array<T> or Iterable<T>,
+		// #[ T1, T2, ..., TN ] for an expectedTypeRef of the form IterableN<T1,T2,...,TN>,
+		// #[] for any other kind of expectedTypeRef
 		val expectedElemTypeRefs = {
 			if (expectedTypeRef !== null)
 				destructureHelper.extractIterableElementTypesUBs(G, expectedTypeRef).toList // will have len>1 only if expectation is IterableN
@@ -80,7 +84,7 @@ if(isValueToBeDestructured) {
 
 		// performance tweak:
 		val haveUsableExpectedType = !expectedElemTypeRefs.empty;
-		if (!haveUsableExpectedType) {
+		if (!haveUsableExpectedType && !TypeUtils.isInferenceVariable(expectedTypeRef)) {
 			// no type expectation or some entirely wrong type expectation (i.e. other than Array, Iterable, IterableN)
 			// -> just derive type from elements (and do not introduce a new inference variable for this ArrayLiteral!)
 			val elemTypeRefs = newArrayList;
@@ -125,7 +129,7 @@ if(isValueToBeDestructured) {
 				// -> add constraint currElemTypeRef <: Ti (Ti being the corresponding inf. variable in resultTypeRef)
 				val idxResult = Math.min(idxElem, resultLen - 1);
 				val currResultInfVar = resultInfVars.get(idxResult);
-				val currElemTypeRef = polyProcessor.processExpr(G, currElem.expression, null, infCtx, cache);
+				val currElemTypeRef = polyProcessor.processExpr(G, currElem.expression, TypeUtils.createTypeRef(currResultInfVar), infCtx, cache);
 				infCtx.addConstraint(currElemTypeRef, TypeUtils.createTypeRef(currResultInfVar), Variance.CO);
 			}
 		}
