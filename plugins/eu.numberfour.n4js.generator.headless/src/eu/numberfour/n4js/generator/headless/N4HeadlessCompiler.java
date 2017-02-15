@@ -29,7 +29,6 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -43,7 +42,6 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.resource.containers.DelegatingIAllContainerAdapter;
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsData;
 import org.eclipse.xtext.util.CancelIndicator;
-import org.eclipse.xtext.util.OnChangeEvictingCache;
 import org.eclipse.xtext.validation.CheckMode;
 import org.eclipse.xtext.validation.IResourceValidator;
 import org.eclipse.xtext.validation.Issue;
@@ -1860,13 +1858,6 @@ public class N4HeadlessCompiler {
 					// cross references to the elements inside the resources from dependent projects will fail.
 					n4jsResource.performPostProcessing();
 					n4jsResource.unloadAST();
-				}
-
-				for (Adapter adapter : resource.eAdapters()) {
-					if (adapter instanceof OnChangeEvictingCache.CacheAdapter) {
-						OnChangeEvictingCache.CacheAdapter cacheAdapter = (OnChangeEvictingCache.CacheAdapter) adapter;
-						cacheAdapter.clearValues();
-					}
 				}
 			});
 		}

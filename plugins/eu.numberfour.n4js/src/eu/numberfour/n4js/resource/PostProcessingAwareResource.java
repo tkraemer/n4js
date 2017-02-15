@@ -44,7 +44,15 @@ public class PostProcessingAwareResource extends DerivedStateAwareResource {
 	@Inject
 	private OutdatedStateManager outdatedStateManager;
 
-	/** True iff {@link #performPostProcessing(CancelIndicator)} has been invoked and has completed successfully. */
+	/**
+	 * New semantics to fix IDE-2503: Set to true if the resource is loaded and fully initialized and
+	 * {@link #performPostProcessing(CancelIndicator)} has been invoked for it. It does not matter whether or not
+	 * processing was successful. However, this can be set to false later. It is crucial that this flag is in sync with
+	 * ASTMetaInfoCache's isFullyPostProcessed at all time.
+	 *
+	 * Note that the previous semantics before IDE-2503 bug fix is: True iff
+	 * {@link #performPostProcessing(CancelIndicator)} has been invoked and has completed successfully.
+	 */
 	protected volatile boolean fullyPostProcessed = false;
 	/**
 	 * True iff {@link #performPostProcessing(CancelIndicator)} is in progress, i.e. has been invoked but has not yet
@@ -166,10 +174,13 @@ public class PostProcessingAwareResource extends DerivedStateAwareResource {
 				}
 				if (!cancelIndicator.isCanceled()) {
 					postProcessor.performPostProcessing(this, cancelIndicator);
-					fullyPostProcessed = true;
 				}
 			} finally {
 				isPostProcessing = false;
+				// note: doesn't matter if processing succeeded, failed or was canceled
+				// (even if it failed or was canceled, we do not want to try again)
+				// Identical behavior as in ASTProcessor.processAST(RuleEnvironment, N4JSResource, CancelIndicator)
+				fullyPostProcessed = true;
 			}
 		}
 	}
