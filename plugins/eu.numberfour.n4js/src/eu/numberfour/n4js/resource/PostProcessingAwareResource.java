@@ -166,10 +166,13 @@ public class PostProcessingAwareResource extends DerivedStateAwareResource {
 				}
 				if (!cancelIndicator.isCanceled()) {
 					postProcessor.performPostProcessing(this, cancelIndicator);
-					fullyPostProcessed = true;
 				}
 			} finally {
 				isPostProcessing = false;
+				// note: doesn't matter if processing succeeded, failed or was canceled
+				// (even if it failed or was canceled, we do not want to try again)
+				// Identical behavior as in ASTProcessor.processAST(RuleEnvironment, N4JSResource, CancelIndicator)
+				fullyPostProcessed = true;
 			}
 		}
 	}
