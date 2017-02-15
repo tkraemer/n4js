@@ -22,9 +22,11 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.naming.IQualifiedNameConverter;
-import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider;
+import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.IScopeProvider;
 
 import com.google.common.base.Optional;
 import com.google.inject.Inject;
@@ -36,6 +38,7 @@ import eu.numberfour.n4js.naming.ModuleNameComputer;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.projectModel.ProjectUtils;
+import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.types.TModule;
 
 /**
@@ -49,19 +52,19 @@ public final class JSXBackendHelper {
 	 */
 	private final static class JSXBackendsScopeHelper {
 		@Inject
-		private DefaultGlobalScopeProvider globalScope;
+		private IScopeProvider isp;
 
 		public final Set<URI> visibleBackends(Resource resource, Predicate<? super URI> predicate) {
 			Set<URI> backends = new HashSet<>();
 
-			/* based on DefaultGlobalScopeProvider#getVisibleContainers(resource); */
-			globalScope.getResourceDescriptions(resource).getAllResourceDescriptions().spliterator()
-					.forEachRemaining(r -> {
-						URI uri = r.getURI();
-						if (predicate.test(uri)) {
-							backends.add(uri);
-						}
-					});
+			EObject eo = resource.getContents().get(0);
+			IScope scope = isp.getScope(eo, TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE);
+			scope.getAllElements().forEach(ieod -> {
+				URI uri = ieod.getEObjectURI().trimFragment();
+				if (predicate.test(uri)) {
+					backends.add(uri);
+				}
+			});
 
 			return Collections.unmodifiableSet(backends);
 		}
