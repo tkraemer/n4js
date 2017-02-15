@@ -48,6 +48,8 @@ public final class JSXBackendHelper {
 	private final static String JSX_BACKEND_MODULE_NAME = "react";
 	private final static String JSX_BACKEND_FACADE_NAME = "React";
 	private final static String JSX_BACKEND_ELEMENT_FACTORY_NAME = "createElement";
+	private final static String JSX_BACKEND_DEFINITION_NAME = JSX_BACKEND_MODULE_NAME + "."
+			+ N4JSGlobals.N4JSD_FILE_EXTENSION;
 
 	/**
 	 * Local cache of JSX backends.
@@ -159,9 +161,13 @@ public final class JSXBackendHelper {
 	 * either resource validation is broken and did not put error marker on compiled resource (error should say that
 	 * there is no JSX backend available), or custom scope used to populate cache is broken and is not finding any JSX
 	 * backend.
+	 *
+	 * @throws RuntimeException
+	 *             when no JSX backend is available
 	 */
 	private final String getAnyBackend() {
-		return jsxBackends.keySet().stream().findAny().get();
+		return jsxBackends.keySet().stream().findAny()
+				.orElseThrow(() -> new RuntimeException("Compiler cannot locate JSX backend to use for this resource"));
 	}
 
 	/**
@@ -180,7 +186,7 @@ public final class JSXBackendHelper {
 	}
 
 	/**
-	 * Collects all {@link IContainer}s visible from provided resources. Returned colelction is filter with frovided
+	 * Collects all {@link IContainer}s visible from provided resources. Returned collection is filter with provided
 	 * predicate.
 	 *
 	 * Similar to {code DefaultGlobalScopeProvider.getVisibleContainers(Resource)}.
@@ -191,7 +197,7 @@ public final class JSXBackendHelper {
 	 *            used to filter collected containers
 	 * @return filtered set of visible containers
 	 */
-	private Set<URI> visibleBackends(Resource resource, Predicate<? super URI> predicate) {
+	private Set<URI> visibleBackends(Resource resource, Predicate<URI> predicate) {
 		Set<URI> backends = new HashSet<>();
 		List<IContainer> visibleContainers = xtextUtil.getVisibleContainers(resource);
 		visibleContainers.parallelStream().map(c -> c.getResourceDescriptions())
@@ -249,6 +255,6 @@ public final class JSXBackendHelper {
 		if (sqn == null)
 			return false;
 
-		return sqn.endsWith(JSX_BACKEND_MODULE_NAME + "." + N4JSGlobals.N4JSD_FILE_EXTENSION); // i.e. react.n4jsd
+		return sqn.endsWith(JSX_BACKEND_DEFINITION_NAME); // i.e. react.n4jsd
 	}
 }
