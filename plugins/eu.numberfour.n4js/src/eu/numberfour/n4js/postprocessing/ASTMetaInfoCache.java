@@ -230,10 +230,14 @@ public final class ASTMetaInfoCache {
 
 		final String uriStr = resource != null ? String.valueOf(resource.getURI()) : null;
 		sb.append("BEGIN ASTMetaInfoCache debug info for resource: " + uriStr + "\n");
-		sb.append("isProcessingInProgress == " + isProcessingInProgress + "\n");
-		sb.append("isFullyProcessed == " + isFullyProcessed + "\n");
-		sb.append("hasBrokenAST == " + hasBrokenAST + "\n");
-		sb.append("astNodesCurrentlyBeingTyped == " + astNodesCurrentlyBeingTyped + "\n");
+		sb.append("cache's isProcessingInProgress == " + isProcessingInProgress + "\n");
+		sb.append("cache's isFullyProcessed == " + isFullyProcessed + "\n");
+		sb.append("cache's hasBrokenAST == " + hasBrokenAST + "\n");
+		sb.append("cache's astNodesCurrentlyBeingTyped == " + astNodesCurrentlyBeingTyped + "\n");
+		sb.append("resource' fullyPostProcessed = " + (resource != null ? resource.isFullyProcessed()
+				: "dont know. Resource is null"));
+		sb.append("resource' isPostProcessing = "
+				+ (resource != null ? resource.isProcessing() : "dont know. Resource is null"));
 
 		if (showSourceCode) {
 			final Script script = resource != null ? resource.getScript() : null;
