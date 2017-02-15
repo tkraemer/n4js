@@ -200,10 +200,11 @@ public final class JSXBackendHelper {
 	private Set<URI> visibleBackends(Resource resource, Predicate<URI> predicate) {
 		Set<URI> backends = new HashSet<>();
 		List<IContainer> visibleContainers = xtextUtil.getVisibleContainers(resource);
-		visibleContainers.parallelStream().map(c -> c.getResourceDescriptions())
-				.forEach(iIR -> iIR.spliterator()
-						.forEachRemaining(r -> {
-							URI uri = r.getURI();
+		visibleContainers.stream()
+				.map(container -> container.getResourceDescriptions())
+				.forEach(resourceDscriptions -> resourceDscriptions.iterator()
+						.forEachRemaining(candidateResourceDescription -> {
+							URI uri = candidateResourceDescription.getURI();
 							if (predicate.test(uri)) {
 								backends.add(uri);
 							}
