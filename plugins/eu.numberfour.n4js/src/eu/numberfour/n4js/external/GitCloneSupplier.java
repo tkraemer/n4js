@@ -13,7 +13,6 @@ package eu.numberfour.n4js.external;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.getOrCreateNestedFolder;
 import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.log;
-import static eu.numberfour.n4js.utils.git.GitUtils.getMasterBranch;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,10 +63,11 @@ public class GitCloneSupplier implements Supplier<File> {
 		}
 		final String repositoryName = currentGitLocation.getRepositoryName();
 		final String remoteURL = currentGitLocation.getRepositoryRemoteURL();
+		final String remoteBranch = currentGitLocation.getRemoteBranch();
 		if (!successfullyCloned) {
 			final File gitRoot = getOrCreateNestedFolder(repositoryName);
 			try {
-				GitUtils.hardReset(remoteURL, gitRoot.toPath(), getMasterBranch(), true);
+				GitUtils.hardReset(remoteURL, gitRoot.toPath(), remoteBranch, true);
 				GitUtils.pull(gitRoot.toPath());
 				LOGGER.info("Local N4JS type definition files have been successfully prepared for npm support.");
 				successfullyCloned = true;

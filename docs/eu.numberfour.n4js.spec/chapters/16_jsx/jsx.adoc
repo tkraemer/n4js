@@ -1,6 +1,7 @@
+
 = JSX
 ////
-Copyright (c) 2016 NumberFour AG.
+Copyright (c) 2017 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -10,6 +11,7 @@ Contributors:
   NumberFour AG - Initial API and implementation
 ////
 
+[.language-jsx]
 == JSX Support
 N4JS scripts with file extension "n4jsx" support the special https://facebook.github.io/jsx/[JSX syntax]. Files ending with "jsx" are considered as plain Javascript.
 
@@ -22,12 +24,14 @@ There are two ways of defining a React component:
 
 * functional component: A function is a React component, iff
 ** its return type is React.Element
-** the function has at least one parameter. This first parameter is considered as the ``props`` property. The type of the first parameter only has public fields (or methods defined by Object). The fields may be defined as optional.
+** the function has at least one parameter. This first parameter is considered as the `props` property.
+The type of the first parameter only has public fields (or methods defined by Object).
+The fields may be defined as optional.
 * class component: A class is a React component, iff
-** it extends React.Component.
+** it extends `React.Component`.
 ** the type parameters must be structural types.
-*** The first parameter defines the ``props`` type, it must only define public fields (or methods defined by Object)
-*** The second parameter defines the ``state`` type, it must only define public fields (or methods defined by Object)
+*** The first parameter defines the `props` type, it must only define public fields (or methods defined by Object)
+*** The second parameter defines the `state` type, it must only define public fields (or methods defined by Object)
 
 In both cases, the name must be capitalized (i.e., start with an upper case letter).
 --
@@ -41,6 +45,8 @@ task:IDE-2411[]
 --
 
 The following JSX syntax is supported (EBNF with model element assignments as used in Xtext). All other ECMAScript 2015 and N4JS syntax constructs are unaffected by this addition.
+
+[source,xtext]
 ----
 PrimaryExpression <Yield> returns n4js::Expression:
 	... // as in N4JS
@@ -93,7 +99,7 @@ This syntax is similar to the syntax defined by https://facebook.github.io/jsx/[
 
 --
 
-Remarks on differences between the syntax defined in <<IDE-241102>> and https://facebook.github.io/jsx/[JSX]:
+Remarks on differences between the syntax defined in <<Req-IDE-241102>> and https://facebook.github.io/jsx/[JSX]:
 
 * JSXSelfClosingElement, JSXOpeningElement and JSXClosingElement are merged into one single rule JSXElement
 * JSXAttributes is defined as fragment, that is, the attributes become fields of the JSXElement
@@ -105,6 +111,7 @@ task:IDE-2414[]
 .JSX Syntax With Free Text
 [req,id=IDE-241401,version=1]
 --
+[source,xtext]
 ----
 JSXChild:
 	JSXElement | JSXExpression | JSXText
@@ -120,7 +127,6 @@ JSXChild:
 --
 
 
-
 .JSX Expression Type
 [req,id=IDE-241113,version=1]
 --
@@ -128,16 +134,15 @@ The type of a JSX expression is React.Element.
 --
 
 
-
 .React Symbol
 [req,id=IDE-241114,version=1]
 --
-
 If a JSX literal is used, it is an error if the React symbol is not imported via
+
+[source,jsx]
 ----
 import React from "react"
 ----
-
 --
 
 
@@ -147,12 +152,14 @@ import React from "react"
 * It is an error if a capitalized tag cannot be bound to a function or class declaration.
 --
 
+
 .JSXElements referring to React components
 [req,id=IDE-241116,version=1]
 --
 * It is an error, if a tag binds to a function declaration, which is not conform to the functional component definition.
 * It is an error, if a tag binds to a class declaration, which is not conform to the class component definition.
 --
+
 
 .JSXAttributes and React component properties
 [req,id=IDE-241117,version=1]
@@ -163,6 +170,7 @@ If the tag binds to a component, the following constraints must hold:
 * The tag should define attributes for all non-optional fields of the properties type. If no attribute is defined for a non-optional field, a warning is issued.
 * The type of the attribute expression must be conform to the type of the corresponding ``props``'s property
 --
+
 
 .JSXElements referring to XML elements
 [req,id=IDE-241118,version=1]
@@ -176,8 +184,8 @@ If the lower-case tag does not bind to a function or class declaration, the foll
 .JSXSpreadAttribute behavior
 [req,id=IDE-241119,version=1]
 --
-The use of spread operators within an JSX element for specifying multiple attributes should be allowed. In this case, all constraints regarding type conformity checking and non-optional properties mentioned in <<IDE-241117>> apply to the attributes specified in the spread operator. In particular,
+The use of spread operators within an JSX element for specifying multiple attributes should be allowed. In this case, all constraints regarding type conformity checking and non-optional properties mentioned in <<Req-IDE-241117>> apply to the attributes specified in the spread operator. In particular,
 
-* The type of each attribute specified in spread operator must be conform to the type of the corresponding property of ``props``.
-* If a non-optional property of ``props`` is specified neither as attribute nor in a spread operator, a warning is issued.
+* The type of each attribute specified in spread operator must be conform to the type of the corresponding property of `props`.
+* If a non-optional property of `props` is specified neither as attribute nor in a spread operator, a warning is issued.
 --
