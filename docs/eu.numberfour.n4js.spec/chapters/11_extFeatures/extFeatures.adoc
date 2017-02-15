@@ -138,8 +138,8 @@ While this can be achieved manually (without tooling support) it is difficult fo
 The solutions that <<Acronyms,DI>> provides should empower N4JS users to achieve the above goals without the burden of maintaining so-called ’boilerplate’ code.
 
 [[fig-di-terms]]
-.DI Terms
-image::{find}fig/diTerms.png[scaledwidth="60%",align="center"]
+.DI Basic Terms
+image::{find}fig/diBasicTerms.png[scaledwidth="60%",align="center"]
 
 _key: pass the dependency instead of letting the client create or find it_
 
