@@ -44,7 +44,12 @@ public class PostProcessingAwareResource extends DerivedStateAwareResource {
 	@Inject
 	private OutdatedStateManager outdatedStateManager;
 
-	/** True iff {@link #performPostProcessing(CancelIndicator)} has been invoked and has completed successfully. */
+	/**
+	 * New semantics to fix IDE-2503: True iff {@link #performPostProcessing(CancelIndicator)} has been invoked
+	 * regardless if the processing succeed, failed or was canceled. Note that the previous semantics before IDE-2503
+	 * bug fix is: True iff {@link #performPostProcessing(CancelIndicator)} has been invoked and has completed
+	 * successfully.
+	 */
 	protected volatile boolean fullyPostProcessed = false;
 	/**
 	 * True iff {@link #performPostProcessing(CancelIndicator)} is in progress, i.e. has been invoked but has not yet
