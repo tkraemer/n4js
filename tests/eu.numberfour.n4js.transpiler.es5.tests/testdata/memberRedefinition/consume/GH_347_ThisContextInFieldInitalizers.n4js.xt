@@ -1,0 +1,24 @@
+/* XPECT_SETUP eu.numberfour.n4js.transpiler.es5.xpect.tests.CompileAndExecuteTest  END_SETUP */
+
+// cf. https://github.com/NumberFour/n4js/issues/347
+ 
+ /* XPECT output --- 
+<==
+stdout:
+5
+5
+stderr:
+==>
+--- */
+
+interface I {
+    num = 5;
+    fn = () => console.log(this.num);
+}
+
+class C implements I {
+    fn1 = () => console.log(this.num);
+}
+
+(new C).fn();
+(new C).fn1();
