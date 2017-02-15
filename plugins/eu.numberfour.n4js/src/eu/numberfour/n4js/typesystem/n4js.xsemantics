@@ -1197,22 +1197,17 @@ from {
 		}
 	}
 	else if (fpar.hasInitializerAssignment) {
-		if (fpar?.definedTypeElement?.typeRef!==null) {
-			T = fpar.definedTypeElement.typeRef;
-		} else if (fpar.initializer !== null) {
+		if (fpar.initializer !== null) {
 			G |- fpar.initializer : var TypeRef E
 			G |~ E /\ E // take upper bound to get rid of ExistentialTypeRef (if any)
 			T = E
+			// TODO: use sanitizer
 			if (E.declaredType === G.undefinedType || E.declaredType === G.nullType || E.declaredType === G.voidType) {
 				T = G.anyTypeRef
 			}
 		} else {
 			T = G.anyTypeRef
 		}
-	}
-	else if (fpar.definedTypeElement?.typeRef!==null) {
-		// undeclared type of fpar, but we have inferred a type that is stored in the TModule
-		T = fpar.definedTypeElement.typeRef;
 	}
 	else {
 		if (jsVariantHelper.enforceDynamicTypes(fpar)) {//  e.g. plain ECMAScript
@@ -1223,9 +1218,7 @@ from {
 			T = G.anyTypeRef
 		}
 	}
-	if (T !== null && fpar.variadic) {
-		T = G.arrayType?.createTypeRef(T)
-	}
+	T = TypeUtils.wrapIfVariadic(G.getPredefinedTypes().builtInTypeScope, T, fpar);
 }
 
 axiom typeCatchVariable G |- CatchVariable catchVariable:
@@ -1834,14 +1827,18 @@ from {
 //	G |- EObject o |> Expression e : (null as TypeRef) // null is the default and means 'no type expectation' (even void is allowed!)
 
 
-// TODO: IDE-2514, When the bug in the polymorphic dispatcher is solved,
-//       enable this rule in return for also removing the temporary solution
-//       in N4JSTypeSystem#expectedTypeIn(RuleEnvironment, EObject, Expression)
-//rule expectedTypeOfDefaultFormalParameter
-//	G |- FormalParameter formalParam |> Expression initializer: TypeRef T
-//from {
-//	T = formalParam.declaredTypeRef;
-//}
+rule expectedTypeInFormalParameter
+	G |- FormalParameter formalParam |> Expression initializer: TypeRef T
+from {
+	if (formalParam.declaredTypeRef !== null) {
+		T = formalParam.declaredTypeRef;
+	} else if (formalParam.definedTypeElement?.typeRef !== null) {
+		// Other than in expectedTypeOfRightSideInVariableDeclaration, here we need ... TODOTODO
+		T = formalParam.definedTypeElement.typeRef;
+	} else {
+		T = G.anyTypeRef;
+	}
+}
 
 
 rule expectedTypeOfArgument

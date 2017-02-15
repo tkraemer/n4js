@@ -20,7 +20,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import eu.numberfour.n4js.n4JS.Expression;
-import eu.numberfour.n4js.n4JS.FormalParameter;
 import eu.numberfour.n4js.n4JS.TypeDefiningElement;
 import eu.numberfour.n4js.postprocessing.TypeProcessor;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
@@ -73,14 +72,6 @@ public class N4JSTypeSystem {
 	 * </ul>
 	 */
 	public Result<TypeRef> expectedTypeIn(RuleEnvironment G, EObject container, Expression expression) {
-		// ########################################################
-		// TODO: IDE-2514, When the bug in the polymorphic dispatcher is solved, remove the
-		// following work-around (and apply corresponding change in Xsemantics file!):
-		final EObject expressionContainer = expression.eContainer();
-		if (expressionContainer instanceof FormalParameter) {
-			return new Result<>(((FormalParameter) expressionContainer).getDeclaredTypeRef());
-		}
-		// ########################################################
 		return ts_internal.expectedTypeIn(G, container, expression);
 	}
 

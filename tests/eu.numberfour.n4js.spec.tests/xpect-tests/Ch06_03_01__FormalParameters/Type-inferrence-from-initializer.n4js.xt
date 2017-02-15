@@ -134,15 +134,15 @@ fe2;
 let fe3: {function(B=)} = function (x=new C()) : void {};
 fe3;
 
-// XPECT type of 'function (x=undefined) : void {}' --> {function(union{B,any}=…):void}
+// XPECT type of 'function (x=undefined) : void {}' --> {function(B=…):void}
 let fe4: {function(B=)} = function (x=undefined) : void {};
 fe4;
 
-// XPECT type of 'function (x=null) : void {}' --> {function(union{B,any}=…):void}
+// XPECT type of 'function (x=null) : void {}' --> {function(B=…):void}
 let fe5: {function(B=)} = function (x=null) : void {};
 fe5;
 
-// XPECT type of 'function (x=) : void {}' --> {function(union{B,any}=…):void}
+// XPECT type of 'function (x=) : void {}' --> {function(B=…):void}
 let fe6: {function(B=)} = function (x=) : void {};
 fe6;
 
@@ -161,14 +161,14 @@ ff2;
 let ff3: {function(B=)} = (x=new C()) : void => {};
 ff3;
 
-// XPECT type of '(x=undefined) : void => {}' --> {function(union{B,any}=…):void}
+// XPECT type of '(x=undefined) : void => {}' --> {function(B=…):void}
 let ff4: {function(B=)} = (x=undefined) : void => {};
 ff4;
 
-// XPECT type of '(x=null) : void => {}' --> {function(union{B,any}=…):void}
+// XPECT type of '(x=null) : void => {}' --> {function(B=…):void}
 let ff5: {function(B=)} = (x=null) : void => {};
 ff5;
 
-// XPECT type of '(x=) : void => {}' --> {function(union{B,any}=…):void}
+// XPECT type of '(x=) : void => {}' --> {function(B=…):void}
 let ff6: {function(B=)} = (x=) : void => {};
 ff6;

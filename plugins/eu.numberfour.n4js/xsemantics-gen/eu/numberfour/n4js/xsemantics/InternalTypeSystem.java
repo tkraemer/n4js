@@ -377,6 +377,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   public final static String EQUALTYPETYPEREF = "eu.numberfour.n4js.xsemantics.EqualTypeTypeRef";
   
+  public final static String EXPECTEDTYPEINFORMALPARAMETER = "eu.numberfour.n4js.xsemantics.ExpectedTypeInFormalParameter";
+  
   public final static String EXPECTEDTYPEOFARGUMENT = "eu.numberfour.n4js.xsemantics.ExpectedTypeOfArgument";
   
   public final static String EXPECTEDTYPEINPOSTFIXEXPRESSION = "eu.numberfour.n4js.xsemantics.ExpectedTypeInPostfixExpression";
@@ -3546,86 +3548,54 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     } else {
       boolean _isHasInitializerAssignment = fpar.isHasInitializerAssignment();
       if (_isHasInitializerAssignment) {
-        TFormalParameter _definedTypeElement_2 = null;
-        if (fpar!=null) {
-          _definedTypeElement_2=fpar.getDefinedTypeElement();
-        }
-        TypeRef _typeRef_1 = null;
-        if (_definedTypeElement_2!=null) {
-          _typeRef_1=_definedTypeElement_2.getTypeRef();
-        }
-        boolean _tripleNotEquals_1 = (_typeRef_1 != null);
+        Expression _initializer = fpar.getInitializer();
+        boolean _tripleNotEquals_1 = (_initializer != null);
         if (_tripleNotEquals_1) {
-          TFormalParameter _definedTypeElement_3 = fpar.getDefinedTypeElement();
-          TypeRef _typeRef_2 = _definedTypeElement_3.getTypeRef();
-          T = _typeRef_2;
-        } else {
-          Expression _initializer = fpar.getInitializer();
-          boolean _tripleNotEquals_2 = (_initializer != null);
-          if (_tripleNotEquals_2) {
-            /* G |- fpar.initializer : var TypeRef E */
-            Expression _initializer_1 = fpar.getInitializer();
-            TypeRef E = null;
-            Result<TypeRef> result = typeInternal(G, _trace_, _initializer_1);
-            checkAssignableTo(result.getFirst(), TypeRef.class);
-            E = (TypeRef) result.getFirst();
-            
-            /* G |~ E /\ E */
-            Result<TypeRef> result_1 = upperBoundInternal(G, _trace_, E);
-            checkAssignableTo(result_1.getFirst(), TypeRef.class);
-            E = (TypeRef) result_1.getFirst();
-            
-            T = E;
-            if ((((E.getDeclaredType() == RuleEnvironmentExtensions.undefinedType(G)) || (E.getDeclaredType() == RuleEnvironmentExtensions.nullType(G))) || (E.getDeclaredType() == RuleEnvironmentExtensions.voidType(G)))) {
-              ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
-              T = _anyTypeRef;
-            }
-          } else {
-            ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
-            T = _anyTypeRef_1;
+          /* G |- fpar.initializer : var TypeRef E */
+          Expression _initializer_1 = fpar.getInitializer();
+          TypeRef E = null;
+          Result<TypeRef> result = typeInternal(G, _trace_, _initializer_1);
+          checkAssignableTo(result.getFirst(), TypeRef.class);
+          E = (TypeRef) result.getFirst();
+          
+          /* G |~ E /\ E */
+          Result<TypeRef> result_1 = upperBoundInternal(G, _trace_, E);
+          checkAssignableTo(result_1.getFirst(), TypeRef.class);
+          E = (TypeRef) result_1.getFirst();
+          
+          T = E;
+          if ((((E.getDeclaredType() == RuleEnvironmentExtensions.undefinedType(G)) || (E.getDeclaredType() == RuleEnvironmentExtensions.nullType(G))) || (E.getDeclaredType() == RuleEnvironmentExtensions.voidType(G)))) {
+            ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
+            T = _anyTypeRef;
           }
+        } else {
+          ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
+          T = _anyTypeRef_1;
         }
       } else {
-        TFormalParameter _definedTypeElement_4 = fpar.getDefinedTypeElement();
-        TypeRef _typeRef_3 = null;
-        if (_definedTypeElement_4!=null) {
-          _typeRef_3=_definedTypeElement_4.getTypeRef();
-        }
-        boolean _tripleNotEquals_3 = (_typeRef_3 != null);
-        if (_tripleNotEquals_3) {
-          TFormalParameter _definedTypeElement_5 = fpar.getDefinedTypeElement();
-          TypeRef _typeRef_4 = _definedTypeElement_5.getTypeRef();
-          T = _typeRef_4;
+        boolean _enforceDynamicTypes = this.jsVariantHelper.enforceDynamicTypes(fpar);
+        if (_enforceDynamicTypes) {
+          ParameterizedTypeRef _anyTypeRefDynamic = RuleEnvironmentExtensions.anyTypeRefDynamic(G);
+          T = _anyTypeRefDynamic;
         } else {
-          boolean _enforceDynamicTypes = this.jsVariantHelper.enforceDynamicTypes(fpar);
-          if (_enforceDynamicTypes) {
-            ParameterizedTypeRef _anyTypeRefDynamic = RuleEnvironmentExtensions.anyTypeRefDynamic(G);
-            T = _anyTypeRefDynamic;
-          } else {
-            /* T = env(G, fpar, TypeRef) or T = G.anyTypeRef */
-            {
-              RuleFailedException previousFailure = null;
-              try {
-                TypeRef _env = this.<TypeRef>env(G, fpar, TypeRef.class);
-                T = _env;
-              } catch (Exception e) {
-                previousFailure = extractRuleFailedException(e);
-                ParameterizedTypeRef _anyTypeRef_2 = RuleEnvironmentExtensions.anyTypeRef(G);
-                T = _anyTypeRef_2;
-              }
+          /* T = env(G, fpar, TypeRef) or T = G.anyTypeRef */
+          {
+            RuleFailedException previousFailure = null;
+            try {
+              TypeRef _env = this.<TypeRef>env(G, fpar, TypeRef.class);
+              T = _env;
+            } catch (Exception e) {
+              previousFailure = extractRuleFailedException(e);
+              ParameterizedTypeRef _anyTypeRef_2 = RuleEnvironmentExtensions.anyTypeRef(G);
+              T = _anyTypeRef_2;
             }
           }
         }
       }
     }
-    if (((T != null) && fpar.isVariadic())) {
-      TObjectPrototype _arrayType = RuleEnvironmentExtensions.arrayType(G);
-      ParameterizedTypeRef _createTypeRef = null;
-      if (_arrayType!=null) {
-        _createTypeRef=TypeUtils.createTypeRef(_arrayType, T);
-      }
-      T = _createTypeRef;
-    }
+    PredefinedTypes _predefinedTypes = RuleEnvironmentExtensions.getPredefinedTypes(G);
+    TypeRef _wrapIfVariadic = TypeUtils.wrapIfVariadic(_predefinedTypes.builtInTypeScope, T, fpar);
+    T = _wrapIfVariadic;
     return new Result<TypeRef>(T);
   }
   
@@ -4946,6 +4916,51 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
     /* G |- right <: left */
     subtypeInternal(G, _trace_, right, left);
     return new Result<Boolean>(true);
+  }
+  
+  protected Result<TypeRef> expectedTypeInImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FormalParameter formalParam, final Expression initializer) throws RuleFailedException {
+    try {
+    	final RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+    	final Result<TypeRef> _result_ = applyRuleExpectedTypeInFormalParameter(G, _subtrace_, formalParam, initializer);
+    	addToTrace(_trace_, new Provider<Object>() {
+    		public Object get() {
+    			return ruleName("expectedTypeInFormalParameter") + stringRepForEnv(G) + " |- " + stringRep(formalParam) + " |> " + stringRep(initializer) + " : " + stringRep(_result_.getFirst());
+    		}
+    	});
+    	addAsSubtrace(_trace_, _subtrace_);
+    	return _result_;
+    } catch (Exception e_applyRuleExpectedTypeInFormalParameter) {
+    	expectedTypeInThrowException(ruleName("expectedTypeInFormalParameter") + stringRepForEnv(G) + " |- " + stringRep(formalParam) + " |> " + stringRep(initializer) + " : " + "TypeRef",
+    		EXPECTEDTYPEINFORMALPARAMETER,
+    		e_applyRuleExpectedTypeInFormalParameter, formalParam, initializer, new ErrorInformation[] {new ErrorInformation(formalParam), new ErrorInformation(initializer)});
+    	return null;
+    }
+  }
+  
+  protected Result<TypeRef> applyRuleExpectedTypeInFormalParameter(final RuleEnvironment G, final RuleApplicationTrace _trace_, final FormalParameter formalParam, final Expression initializer) throws RuleFailedException {
+    TypeRef T = null; // output parameter
+    TypeRef _declaredTypeRef = formalParam.getDeclaredTypeRef();
+    boolean _tripleNotEquals = (_declaredTypeRef != null);
+    if (_tripleNotEquals) {
+      TypeRef _declaredTypeRef_1 = formalParam.getDeclaredTypeRef();
+      T = _declaredTypeRef_1;
+    } else {
+      TFormalParameter _definedTypeElement = formalParam.getDefinedTypeElement();
+      TypeRef _typeRef = null;
+      if (_definedTypeElement!=null) {
+        _typeRef=_definedTypeElement.getTypeRef();
+      }
+      boolean _tripleNotEquals_1 = (_typeRef != null);
+      if (_tripleNotEquals_1) {
+        TFormalParameter _definedTypeElement_1 = formalParam.getDefinedTypeElement();
+        TypeRef _typeRef_1 = _definedTypeElement_1.getTypeRef();
+        T = _typeRef_1;
+      } else {
+        ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
+        T = _anyTypeRef;
+      }
+    }
+    return new Result<TypeRef>(T);
   }
   
   protected Result<TypeRef> expectedTypeInImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final Argument argument, final Expression argumentExpression) throws RuleFailedException {

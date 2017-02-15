@@ -115,8 +115,8 @@ package class TypeDeferredProcessor extends AbstractProcessor {
 						// do nothing since its DeferredTypes are computed in PolyProcessor_FunctionExpression
 					}
 					FunctionDefinition: {
-						val tFPar = obj.definedTypeElement;
-						if (tFPar.typeRef instanceof DeferredTypeRef) {
+						val tFPar = obj.definedTypeElement; // tFPar can be null if we have a broken AST
+						if (tFPar?.typeRef instanceof DeferredTypeRef) {
 							setTypeRef(obj, tFPar, true, G, cache);
 						}
 					}

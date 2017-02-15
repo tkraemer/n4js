@@ -36,6 +36,7 @@ import org.eclipse.xtext.EcoreUtil2;
 
 import com.google.common.collect.Iterables;
 
+import eu.numberfour.n4js.n4JS.FormalParameter;
 import eu.numberfour.n4js.n4JS.FunctionDefinition;
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope;
 import eu.numberfour.n4js.ts.scoping.builtin.N4Scheme;
@@ -1333,5 +1334,23 @@ public class TypeUtils {
 			return typeRef.getTypingStrategy();
 		}
 		return TypingStrategy.DEFAULT;
+	}
+
+	/**
+	 * Checks whether the given type ref is variadic and -- if positive -- wraps it in an array.
+	 *
+	 * @param scope
+	 *            BuiltInScope
+	 * @param typeRef
+	 *            TypeRef to check
+	 * @param fpar
+	 *            Formal Parameter which the type ref belongs to
+	 * @return wrapped type ref or original type ref
+	 */
+	public static TypeRef wrapIfVariadic(BuiltInTypeScope scope, TypeRef typeRef, FormalParameter fpar) {
+		if (typeRef != null && fpar.isVariadic()) {
+			return createTypeRef(scope.getArrayType(), typeRef);
+		}
+		return typeRef;
 	}
 }

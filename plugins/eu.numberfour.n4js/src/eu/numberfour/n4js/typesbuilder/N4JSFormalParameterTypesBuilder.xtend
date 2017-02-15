@@ -59,24 +59,24 @@ package class N4JSFormalParameterTypesBuilder {
 				TypeRef defaultTypeRef, BuiltInTypeScope builtInTypeScope, boolean preLinkingPhase) {
 		
 		setCopyOfReference(
-		[ TypeRef copyOfDeclaredTypeRef |
-			formalParameterType.typeRef = copyOfDeclaredTypeRef.orDefaultParameterType(defaultTypeRef, astFormalParameter, builtInTypeScope)
-		], astFormalParameter.declaredTypeRef, preLinkingPhase)
+			[ TypeRef copyOfDeclaredTypeRef |
+				formalParameterType.typeRef = copyOfDeclaredTypeRef.orDefaultParameterType(defaultTypeRef, astFormalParameter, builtInTypeScope)
+			], astFormalParameter.declaredTypeRef, preLinkingPhase)
 	}
 
 	def private TypeRef orDefaultParameterType(TypeRef copyOfDeclaredTypeRef, TypeRef defaultTypeRef,
 		FormalParameter astFormalParameter, BuiltInTypeScope builtInTypeScope) {
 		
 		if (copyOfDeclaredTypeRef === null) {
+			// TODOTODO typecheck entfernen?
 			if (astFormalParameter.initializer !== null && astFormalParameter.eContainer instanceof FunctionDefinition) {
 				TypeUtils.createDeferredTypeRef
-			}
-			else if (defaultTypeRef === null)
+			} else if (defaultTypeRef === null) {
 				builtInTypeScope.anyTypeRef
-			else
+			} else {
 				TypeUtils.copy(defaultTypeRef)
-		}
-		else {
+			}
+		} else {
 			copyOfDeclaredTypeRef
 		}
 	}

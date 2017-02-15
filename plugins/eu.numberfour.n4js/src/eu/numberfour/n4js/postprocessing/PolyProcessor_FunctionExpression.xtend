@@ -29,15 +29,14 @@ import it.xsemantics.runtime.RuleEnvironment
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.types.ContainerType
-import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.InferenceVariable
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.FunctionDefinition
-import eu.numberfour.n4js.n4JS.N4JSPackage
 import java.util.Map
 import java.util.HashMap
+import com.google.common.base.Optional
 
 /**
  * {@link PolyProcessor} delegates here for processing array literals.
@@ -47,12 +46,9 @@ import java.util.HashMap
  */
 @Singleton
 package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
-
 	@Inject
 	private N4JSTypeSystem ts;
 
-	@Inject
-	private TypeSystemHelper tsh;
 
 	/**
 	 * BEFORE CHANGING THIS METHOD, READ THIS:
@@ -83,36 +79,11 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 		}
 
 
-		processFormalParameters(G, funExpr, expectedTypeRef, infCtx, cache, funTE);
+		processFormalParameters(G, cache, infCtx, funExpr, funTE, expectedTypeRef);
 
-		// return type (also introduce inference variable for return type, if needed)
-		var TypeRef returnTypeRef;
-		if (funExpr.returnTypeRef !== null) {
-			// explicitly declared return type
-			// -> take the type reference created by the types builder (but wrap in Promise if required)
-			returnTypeRef = TypeUtils.copy(fun.returnTypeRef);
-		} else {
-			// undeclared return type
-			// -> create infVar for return type IFF funExpr contains return statements OR is single expr arrow function; otherwise use VOID as return type
-			assertTrueIfRigid(cache, "return type of TFunction in TModule should be a DeferredTypeRef",
-				fun.returnTypeRef instanceof DeferredTypeRef);
+		processReturnType(G, cache, infCtx, funExpr, funTE);
 
-			if (funExpr.isReturningValue) {
-				// introduce new inference variable for (inner) return type
-				val iv = infCtx.newInferenceVariable;
-				returnTypeRef = TypeUtils.createTypeRef(iv);
-			} else {
-				// void
-				returnTypeRef = G.voidTypeRef;
-			}
-			// to obtain outer return type: wrap in Promise if asynchronous and not Promise already
-			// for the time being, see N4JS Specification, Section 6.4.1 "Asynchronous Functions")
-			returnTypeRef = N4JSLanguageUtils.makePromiseIfAsync(funExpr, returnTypeRef, G.builtInTypeScope);
-			// to obtain outer return type: wrap in Generator if it is a generator function
-			// see N4JS Specification, Section 6.3.1 "Generator Functions")
-			returnTypeRef = N4JSLanguageUtils.makeGeneratorIfGeneratorFunction(funExpr, returnTypeRef, G.builtInTypeScope);
-		}
-		funTE.returnTypeRef = returnTypeRef;
+		// TODOTODO: refactoring einzeln und für alle polys
 
 		// create temporary type (i.e. may contain inference variables)
 		val resultTypeRef = if (fun.typeVars.empty) {
@@ -125,19 +96,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 			};
 
 		// register onSolved handlers to add final types to cache (i.e. may not contain inference variables)
-		infCtx.onSolved [ solution |
-			val solution2 = if (solution.present) solution.get else infCtx.createPseudoSolution(G.anyTypeRef);
-			val resultSolved = resultTypeRef.applySolution(G, solution2) as FunctionTypeExprOrRef;
-			cache.storeType(funExpr, resultSolved);
-			fun.replaceDeferredTypeRefs(resultSolved);
-			// store types of fpars in cache ...
-			for (currFpar : funExpr.fpars) {
-				// delegate to Xsemantics rule typeFormalParameter (because it contains special handling for 'this'-type
-				// and variadic that we do not want to duplicate here)
-				val currTypeRef = askXsemanticsForType(G, null, currFpar).getValue()
-				cache.storeType(currFpar, currTypeRef);
-			}
-		];
+		infCtx.onSolved [ solution | handleOnSolved(G, cache, infCtx, funExpr, resultTypeRef, solution)];
 
 		// return temporary type of funExpr (i.e. may contain inference variables)
 		return resultTypeRef;
@@ -146,8 +105,8 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 	/**
 	 * Process formal parameters and also introduce inference variables for types of fpars, where needed.
 	 */
-	private def processFormalParameters(RuleEnvironment G, FunctionExpression funExpr, TypeRef expectedTypeRef,
-		InferenceContext infCtx, ASTMetaInfoCache cache, FunctionTypeExpression funTE
+	private def void processFormalParameters(RuleEnvironment G, ASTMetaInfoCache cache, InferenceContext infCtx,
+		FunctionExpression funExpr, FunctionTypeExpression funTE, TypeRef expectedTypeRef
 	) {
 		val fun = funExpr.definedType as TFunction; // types builder will have created this already
 		val expectedFunctionTypeExprOrRef = if (expectedTypeRef instanceof FunctionTypeExprOrRef) { expectedTypeRef };
@@ -179,7 +138,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 			val fparTCopy = fparPair.value;
 			if (fparAST.declaredTypeRef === null) {
 				val iv = fparTCopy.typeRef.declaredType as InferenceVariable;
-				addConstraintForDefaultInitializers(fparAST, fparTCopy, G, iv, infCtx, typeRefMap);
+				addConstraintForDefaultInitializers(funExpr, fparAST, fparTCopy, G, cache, iv, infCtx, typeRefMap);
 				inferOptionalityFromExpectedFpar(funExpr, funTE, expectedFunctionTypeExprOrRef, fparAST, fparTCopy);
 			}
 		}
@@ -189,28 +148,25 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 	 * When a function expression contains an initializer (in a default parameter),
 	 * the type of this initializer is taken into account when calculating the parameter's type.
 	*/
-	private def addConstraintForDefaultInitializers(FormalParameter fparAST, TFormalParameter fparT,
-		RuleEnvironment G, InferenceVariable iv, InferenceContext infCtx, Map<FormalParameter,TFormalParameter> typeRefMap
-	){
-		if(fparAST.hasInitializerAssignment) {
+	private def void addConstraintForDefaultInitializers(FunctionExpression funExpr, FormalParameter fparAST, TFormalParameter fparT,
+		RuleEnvironment G, ASTMetaInfoCache cache, InferenceVariable iv, InferenceContext infCtx, Map<FormalParameter,TFormalParameter> typeRefMap
+	) {
+		if (fparAST.hasInitializerAssignment) {
 			// Check if the initializer refers to other fpars
 			val allFPars = (fparAST.eContainer as FunctionDefinition).fpars;
-			val allRefs = EcoreUtilN4.getAllContentsOfTypeStopAt(fparAST, IdentifierRef, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY);
-			var referenceToFunctionsParameter = false;
-			for (IdentifierRef ir : allRefs) {
-				val id = ir.getId();
-				if (allFPars.contains(id)) {
-					referenceToFunctionsParameter = true;
-				}
-			}
+			
 			var refIsInitializer = false;
-			if (allRefs.size === 1) {
-				val ref = allRefs.get(0);
-				refIsInitializer = ref.eContainer === fparAST;
+			val fparInitializer = fparAST.initializer;
+			if (fparInitializer instanceof IdentifierRef) {
+				val id = fparInitializer.getId();
+				refIsInitializer = allFPars.contains(id);
 			}
 			
+			val isPostponed = cache.postponedSubTrees.contains(fparAST.initializer);
+			
 			if (refIsInitializer) {
-				val fparam = allRefs.get(0).getId() as FormalParameter;
+				val iRef = fparInitializer as IdentifierRef;
+				val fparam = iRef.getId() as FormalParameter;
 				val fparTCopy = typeRefMap.get(fparam);
 				var TypeRef tRef = null;
 				if (fparTCopy !== null) {
@@ -220,19 +176,19 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 				} else {
 					// happens when the initializer is a parameter ('a') of another function
 					// example: f(a, b = (z=a)=>{} ) {}
-					tRef = fparam.definedTypeElement?.typeRef;
+					//tRef = fparam.definedTypeElement?.typeRef;
+					println(" still needed ");
 				}
 				if (tRef !== null) {
 					infCtx.addConstraint(TypeUtils.createTypeRef(iv), TypeUtils.copy(tRef), Variance.CONTRA);
 				}
-			} else if (!referenceToFunctionsParameter) {
+			} else if (!isPostponed) {
 				val context = if (fparT.eContainer instanceof ContainerType<?>)
 						TypeUtils.createTypeRef(fparT.eContainer as ContainerType<?>) else null;
 				val G_withContext = ts.createRuleEnvironmentForContext(context, G.contextResource);
-				val fieldTypeRef = askXsemanticsForType(G_withContext, null, fparAST).value; // delegate to Xsemantics rule typeN4FieldDeclaration
-				val fieldTypeRefSubst = ts.substTypeVariables(G_withContext, fieldTypeRef).value;
-				val fieldTypeRefSane = tsh.sanitizeTypeOfVariableFieldProperty(G, fieldTypeRefSubst);
-				infCtx.addConstraint(TypeUtils.createTypeRef(iv), TypeUtils.copy(fieldTypeRefSane), Variance.CONTRA);
+				val TypeRef iniTypeRef = if (fparAST.initializer !== null) ts.type(G_withContext, fparAST.initializer).value else G.undefinedTypeRef;
+				val iniTypeRefSubst = ts.substTypeVariables(G_withContext, iniTypeRef).value;
+				infCtx.addConstraint(TypeUtils.createTypeRef(iv), TypeUtils.copy(iniTypeRefSubst), Variance.CONTRA);
 			}
 		}
 	}
@@ -243,7 +199,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 	 * Example:
 	 * 		let fun: {function(string=)} = function(p) {};
 	 */
-	private def inferOptionalityFromExpectedFpar(FunctionExpression funExpr, FunctionTypeExpression funTE,
+	private def void inferOptionalityFromExpectedFpar(FunctionExpression funExpr, FunctionTypeExpression funTE,
 		FunctionTypeExprOrRef expectedFunctionTypeExprOrRef, FormalParameter fparAST, TFormalParameter fparTCopy
 	) {
 		if (expectedFunctionTypeExprOrRef !== null) {
@@ -256,6 +212,64 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 					fparTCopy.hasInitializerAssignment = true;
 				], fparAST, fparTCopy);
 			}
+		}
+	}
+	
+	/**
+	 * Processes return type (also introduce inference variable for return type, if needed)
+	 */
+	private def void processReturnType(RuleEnvironment G, ASTMetaInfoCache cache, InferenceContext infCtx,
+		FunctionExpression funExpr, FunctionTypeExpression funTE
+	) {
+		val fun = funExpr.definedType as TFunction; // types builder will have created this already
+		var TypeRef returnTypeRef;
+		if (funExpr.returnTypeRef !== null) {
+			// explicitly declared return type
+			// -> take the type reference created by the types builder (but wrap in Promise if required)
+			returnTypeRef = TypeUtils.copy(fun.returnTypeRef);
+		} else {
+			// undeclared return type
+			// -> create infVar for return type IFF funExpr contains return statements OR is single expr arrow function; otherwise use VOID as return type
+			assertTrueIfRigid(cache, "return type of TFunction in TModule should be a DeferredTypeRef",
+				fun.returnTypeRef instanceof DeferredTypeRef);
+
+			if (funExpr.isReturningValue) {
+				// introduce new inference variable for (inner) return type
+				val iv = infCtx.newInferenceVariable;
+				returnTypeRef = TypeUtils.createTypeRef(iv);
+			} else {
+				// void
+				returnTypeRef = G.voidTypeRef;
+			}
+			// to obtain outer return type: wrap in Promise if asynchronous and not Promise already
+			// for the time being, see N4JS Specification, Section 6.4.1 "Asynchronous Functions")
+			returnTypeRef = N4JSLanguageUtils.makePromiseIfAsync(funExpr, returnTypeRef, G.builtInTypeScope);
+			// to obtain outer return type: wrap in Generator if it is a generator function
+			// see N4JS Specification, Section 6.3.1 "Generator Functions")
+			returnTypeRef = N4JSLanguageUtils.makeGeneratorIfGeneratorFunction(funExpr, returnTypeRef, G.builtInTypeScope);
+		}
+		funTE.returnTypeRef = returnTypeRef;
+	}
+
+
+	/**
+	 * Writes final types to cache
+	 */
+	private def void handleOnSolved(RuleEnvironment G, ASTMetaInfoCache cache, InferenceContext infCtx, FunctionExpression funExpr,
+		FunctionTypeExpression resultTypeRef, Optional<Map<InferenceVariable, TypeRef>> solution
+	) {
+		val fun = funExpr.definedType as TFunction; // types builder will have created this already
+		val solution2 = if (solution.present) solution.get else infCtx.createPseudoSolution(G.anyTypeRef);
+		val resultSolved = resultTypeRef.applySolution(G, solution2) as FunctionTypeExprOrRef;
+		cache.storeType(funExpr, resultSolved);
+		fun.replaceDeferredTypeRefs(resultSolved);
+		// store types of fpars in cache ...
+		val len = Math.min(funExpr.fpars.size, fun.fpars.size);
+		for (var i = 0; i < len; i++) {
+			val fparAST = funExpr.fpars.get(i);
+			val fparT = fun.fpars.get(i);
+			val fparTw = TypeUtils.wrapIfVariadic(G.getPredefinedTypes().builtInTypeScope, fparT.typeRef, fparAST);
+			cache.storeType(fparAST, fparTw);
 		}
 	}
 
@@ -282,4 +296,5 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 			], fun);
 		}
 	}
+	
 }
