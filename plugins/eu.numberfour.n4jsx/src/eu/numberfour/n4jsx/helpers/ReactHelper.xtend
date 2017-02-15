@@ -23,12 +23,11 @@ import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.utils.XtextUtilN4
 import eu.numberfour.n4jsx.n4JSX.JSXElement
-import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
-import org.eclipse.xtext.resource.IContainer
-import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
+import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.util.IResourceScopeCache
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
@@ -41,13 +40,13 @@ class ReactHelper {
 	@Inject	protected N4JSTypeSystem ts;
 	@Inject protected TypeSystemHelper tsh
 	@Inject	private IResourceScopeCache resourceScopeCacheHelper;
-	@Inject IContainer.Manager cm;
-	@Inject ResourceDescriptionsProvider rdp;
+	@Inject extension XtextUtilN4; 
 			
 	public final static String REACT_MODULE = "react";
 	public final static String REACT_KEY = "KEY__" + REACT_MODULE;	
 	public final static String REACT_COMPONENT = "Component";
 	public final static String REACT_ELEMENT = "Element";
+	public final static String REACT_DEFINITION_FILE = REACT_MODULE + "." + N4JSGlobals.N4JSD_FILE_EXTENSION;
 	
 	/**
 	 * Look up React.Element in the index.
@@ -75,16 +74,11 @@ class ReactHelper {
 	 */
 	def private TClassifier lookUpReactClassifier(EObject context, String reactClassifierName) {
 		val String key = REACT_KEY + "." + reactClassifierName;
-		// Retrieve all visible object descriptions of type TClass that are visible from 'context'
-		val descs = context.getVisibleEObjectDescriptions(TypesPackage::eINSTANCE.TClass);		
 		return resourceScopeCacheHelper.get(key, context.eResource, [
-			val eod = descs.findFirst[ desc |
-				if ((desc.EObjectURI.trimFragment.lastSegment == REACT_MODULE + "." + N4JSGlobals.N4JSD_FILE_EXTENSION) && (desc.qualifiedName.toString.endsWith(REACT_MODULE + "." + reactClassifierName)))  {
-					return true;
-				} else {
-					return false;
-				}
-			]
+			// Retrieve all visible object descriptions of type TClass that are visible from 'context'
+			val descs = context.getVisibleEObjectDescriptions(TypesPackage::eINSTANCE.TClass);
+			val String reactClassifierFQNSuffix = REACT_MODULE + "." + reactClassifierName;
+			val eod = descs.findFirst[ desc | desc.isReactClassifierDescription(reactClassifierFQNSuffix) ]
 			
 			if (eod === null) return null;
 			var classifier = eod.EObjectOrProxy;
@@ -99,22 +93,9 @@ class ReactHelper {
 		])
 	}
 	
-	/** See Lorenzo's book page 260 */
-	def getVisibleEObjectDescriptions(EObject o) {
-		o.visibleContainers.map [ container | container.exportedObjects ].flatten;
-	}
-	
-	def getVisibleEObjectDescriptions(EObject o, EClass type) {
-		o.visibleContainers.map [ container | container.getExportedObjectsByType(type)			
-		].flatten;
-	}
-	
-	/** See Lorenzo's book page 260 */
-	def getVisibleContainers(EObject o) {
-		val index = rdp.getResourceDescriptions((o.eResource));
-		val rd = index.getResourceDescription(o.eResource.URI)
-		cm.getVisibleContainers(rd, index);
-	}	
+	private def boolean isReactClassifierDescription(IEObjectDescription desc, String suffix) {
+    	return desc.EObjectURI.trimFragment.lastSegment == REACT_DEFINITION_FILE && (desc.qualifiedName.toString.endsWith(suffix))
+    }
 	
 	/**
 	 * Calculate the type that an JSX element is binding to, usually class/function type

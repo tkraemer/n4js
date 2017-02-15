@@ -26,9 +26,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.naming.IQualifiedNameConverter;
 import org.eclipse.xtext.resource.IContainer;
-import org.eclipse.xtext.resource.IResourceDescription;
-import org.eclipse.xtext.resource.IResourceDescriptions;
-import org.eclipse.xtext.resource.IResourceDescriptionsProvider;
 
 import com.google.common.base.Optional;
 import com.google.inject.Inject;
@@ -41,6 +38,7 @@ import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.projectModel.ProjectUtils;
 import eu.numberfour.n4js.ts.types.TModule;
+import eu.numberfour.n4js.utils.XtextUtilN4;
 
 /**
  * Helper for working with JSX backends, e.g. Ract, Preact, etc. Internally it supports only React, but API wise should
@@ -67,11 +65,7 @@ public final class JSXBackendHelper {
 	@Inject
 	private ProjectUtils projectUtils;
 	@Inject
-	private IContainer.Manager containerManager;
-	@Inject
-	private IResourceDescription.Manager descriptionManager;
-	@Inject
-	private IResourceDescriptionsProvider provider;
+	XtextUtilN4 xtextUtil;
 
 	/** @return name of the JSX backend module, i.e. "react" */
 	public String getBackendModuleName() {
@@ -199,20 +193,15 @@ public final class JSXBackendHelper {
 	 */
 	private Set<URI> visibleBackends(Resource resource, Predicate<? super URI> predicate) {
 		Set<URI> backends = new HashSet<>();
-
-		IResourceDescriptions resourceDescriptions = provider.getResourceDescriptions(resource.getResourceSet());
-		IResourceDescription resourceDescription = descriptionManager.getResourceDescription(resource);
-		List<IContainer> visibleContainers = containerManager.getVisibleContainers(resourceDescription,
-				resourceDescriptions);
-
-		visibleContainers.parallelStream().map(c -> c.getResourceDescriptions()).forEach(iIR -> iIR.spliterator()
-				.forEachRemaining(r -> {
-					URI uri = r.getURI();
-					if (predicate.test(uri)) {
-						backends.add(uri);
-					}
-				}));
-
+		List<IContainer> visibleContainers = xtextUtil.getVisibleContainers(resource);
+		visibleContainers.parallelStream().map(c -> c.getResourceDescriptions())
+				.forEach(iIR -> iIR.spliterator()
+						.forEachRemaining(r -> {
+							URI uri = r.getURI();
+							if (predicate.test(uri)) {
+								backends.add(uri);
+							}
+						}));
 		return Collections.unmodifiableSet(backends);
 	}
 
