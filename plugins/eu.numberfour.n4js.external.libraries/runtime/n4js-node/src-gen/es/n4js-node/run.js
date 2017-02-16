@@ -24,10 +24,7 @@
         return new Promise(function(resolve) {
             options = require("./rt/node-bootstrap.js").installN4JSRuntime(options);
 
-            var CJSLoader = require("./rt/node-cjs-loader-polyfill.js").Loader;
-            var sys = options.cjs /* enforces commonJS */ ? new CJSLoader(require, module) : global.System;
-
-            resolve(n4.handleMainModule(sys).then(function(res) {
+            resolve(n4.handleMainModule().then(function(res) {
                 if (options.debug) {
                     console.log("## node.js exec done.");
                 }

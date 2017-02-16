@@ -4,8 +4,12 @@
 // Optional parameters //
 /////////////////////////
 
-// IDEBUG-188 all parameters after an optional one are optional XPECT errors --> "Optional parameters can only appear after the non-optional parameters." at "b : boolean?"
-var f = function (b : boolean?, z : number, w : string) : union{string,boolean} {
+// IDEBUG-188 all parameters after an optional one are optional
+/* XPECT warnings ---
+"This parameter is changed to the default parameter 'w=undefined' since it follows a default parameter." at "w : string"
+"This parameter is changed to the default parameter 'z=undefined' since it follows a default parameter." at "z : number"
+---*/
+var f = function (b : boolean=undefined, z : number, w : string) : union{string,boolean} {
 	if (b !== undefined) {
 		return b;
 	}
@@ -15,12 +19,11 @@ var f = function (b : boolean?, z : number, w : string) : union{string,boolean} 
 // no arguments XPECT noerrors -->
 f();
 
-// IDEBUG-188 not enough arguments XPECT errors -->"Incorrect number of arguments: expected 3, got 1." at "f(true)"
+// IDE-145 XPECT noerrors -->
 f(true);
 
 /* IDEBUG-188 argument in wrong place XPECT errors ---
-"Incorrect number of arguments: expected 3, got 1." at "f(5)"
-"int is not a subtype of boolean?." at "5"
+"int is not a subtype of boolean." at "5"
 ---*/
 f(5);
 
@@ -29,7 +32,7 @@ f(true, 5, "F");
 
 
 // all parameters after an optional one are optional XPECT noerrors -->
-var g = function (b : boolean?, z : number?, w : string?) : union{string,boolean} {
+var g = function (b : boolean=undefined, z : number=undefined, w : string=undefined) : union{string,boolean} {
 	if (b !== undefined) {
 		return b;
 	}
@@ -39,12 +42,11 @@ var g = function (b : boolean?, z : number?, w : string?) : union{string,boolean
 // no arguments XPECT noerrors -->
 f();
 
-// not enough arguments XPECT errors -->"Incorrect number of arguments: expected 3, got 1." at "f(true)"
+// IDE-145 XPECT noerrors -->
 f(true);
 
 /* argument in wrong place XPECT errors ---
-"Incorrect number of arguments: expected 3, got 1." at "f(5)"
-"int is not a subtype of boolean?." at "5"
+"int is not a subtype of boolean." at "5"
 ---*/
 f(5);
 

@@ -11,7 +11,7 @@
 (function(global) {
     "use strict";
 
-    if (typeof $makeClass === "undefined") {
+    if (!global.$makeClass) {
         var isBrowser = !!(typeof window !== 'undefined' && typeof navigator !== 'undefined' && window.document),
             isWebWorker = !isBrowser && typeof importScripts !== 'undefined';
 
@@ -29,7 +29,7 @@
     var CJSLoader = require("./rt/node-cjs-loader-polyfill.js").Loader,
         staticSystem = new CJSLoader();
 
-    if (typeof global.System === "undefined") {
+    if (!global.System || !global.System.import) {
         global.System = staticSystem;
     }
     require("n4js-es5/rt.js");

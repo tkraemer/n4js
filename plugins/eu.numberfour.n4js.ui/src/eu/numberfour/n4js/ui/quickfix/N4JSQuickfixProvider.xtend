@@ -130,6 +130,15 @@ class N4JSQuickfixProvider extends AbstractN4JSQuickfixProvider {
 		});
 	}
 
+	@Fix(IssueCodes.FUN_PARAM_OPTIONAL_WRONG_SYNTAX)
+	def fixOldSyntaxForOptionalFpars(Issue issue, IssueResolutionAcceptor acceptor) {
+		acceptor.accept(issue, 'Change to Default Parameter', 'Some enlightening description.', ImageNames.REORDER) [ context, marker, offset, length, element |
+			return #[
+				replace(context.xtextDocument, offset + length - 1, 1, " = undefined") // replace the '?' with a ' = undefined' (first space is mandatory!)
+			];
+		]
+	}
+
 	@Fix(IssueCodes.CLF_OVERRIDE_ANNOTATION)
 	def addOverrideAnnotation(Issue issue, IssueResolutionAcceptor acceptor) {
 		acceptor.accept(issue, 'Add @Override', 'Add missing @Override annotation.', ImageNames.ANNOTATION_ADD) [ context, marker, offset, length, element |

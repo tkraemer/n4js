@@ -46,7 +46,7 @@ export class ListBase<T extends ObservableItem> {
 	    this._$listeners = [];
 	    this._$trackChanges = true;
     }
-    fireListeners(event : Event, repetition : number?) {
+    fireListeners(event : Event, repetition : number=undefined) {
     	var  ce : ChangeEvent;
         if (this.observing && this._$trackChanges && event instanceof ChangeEvent) {
             ce = event as ChangeEvent;
@@ -148,7 +148,7 @@ export class ListBase<T extends ObservableItem> {
     	var self = this,
              entries : Array<CollectionChangedItemsEntry> = [];
         if (this.observing) {
-           _.each(this.items_, function(item, idx : number?){
+           _.each(this.items_, function(item, idx : number=undefined){
                self._$unobserveItem(item, true);
                entries.push(new CollectionChangedItemsEntry({indexOrKey: idx, oldValue: item}));
            });
@@ -227,11 +227,11 @@ export class ListBase<T extends ObservableItem> {
             }
            }
     }
-    _$unobserveItem(item : T, withoutMultipleCheck : boolean?) {
+    _$unobserveItem(item : T, withoutMultipleCheck : boolean=undefined) {
     	var list : ListBase<T>, repetition : number = 0;
         list = this;
         if (item && item._$observable) {
-            if (withoutMultipleCheck || !_.any(this.items_, function(itm, idx : Object?) {
+            if (withoutMultipleCheck || !_.any(this.items_, function(itm, idx : Object=undefined) {
                 return itm === item && 0 !== repetition++;
             })) {
                 item._$listeners = _.select(item._$listeners, function(cb : ChangeBroker) {

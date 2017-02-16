@@ -30,7 +30,6 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.OnChangeEvictingCache.CacheAdapter;
 
-import eu.numberfour.n4js.n4JS.Block;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
 import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
@@ -180,7 +179,7 @@ public final class ASTMetaInfoCache {
 
 	final Set<EObject> forwardProcessedSubTrees = new LinkedHashSet<>();
 	final Set<EObject> astNodesCurrentlyBeingTyped = new LinkedHashSet<>();
-	final Queue<Block> postponedSubTrees = new LinkedList<>(); // using LinkedList as FIFO queue, here
+	final Queue<EObject> postponedSubTrees = new LinkedList<>(); // using LinkedList as FIFO queue, here
 
 	/* package */ boolean isProcessingInProgress() {
 		return isProcessingInProgress;
@@ -231,10 +230,14 @@ public final class ASTMetaInfoCache {
 
 		final String uriStr = resource != null ? String.valueOf(resource.getURI()) : null;
 		sb.append("BEGIN ASTMetaInfoCache debug info for resource: " + uriStr + "\n");
-		sb.append("isProcessingInProgress == " + isProcessingInProgress + "\n");
-		sb.append("isFullyProcessed == " + isFullyProcessed + "\n");
-		sb.append("hasBrokenAST == " + hasBrokenAST + "\n");
-		sb.append("astNodesCurrentlyBeingTyped == " + astNodesCurrentlyBeingTyped + "\n");
+		sb.append("cache's isProcessingInProgress == " + isProcessingInProgress + "\n");
+		sb.append("cache's isFullyProcessed == " + isFullyProcessed + "\n");
+		sb.append("cache's hasBrokenAST == " + hasBrokenAST + "\n");
+		sb.append("cache's astNodesCurrentlyBeingTyped == " + astNodesCurrentlyBeingTyped + "\n");
+		sb.append("resource' fullyPostProcessed = " + (resource != null ? resource.isFullyProcessed()
+				: "dont know. Resource is null"));
+		sb.append("resource' isPostProcessing = "
+				+ (resource != null ? resource.isProcessing() : "dont know. Resource is null"));
 
 		if (showSourceCode) {
 			final Script script = resource != null ? resource.getScript() : null;

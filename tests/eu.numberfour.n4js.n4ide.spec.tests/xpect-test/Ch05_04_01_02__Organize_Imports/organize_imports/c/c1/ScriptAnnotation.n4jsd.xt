@@ -22,6 +22,6 @@ import { URLUtils } from "URLUtils"
 
 export public interface ~Location extends URLUtils {
     public assign(url : string) : void;
-    public reload(forcedReload : boolean?) : void;
+    public reload(forcedReload : boolean=undefined) : void;
     public replace(url : string) : void;
 }

@@ -8,7 +8,7 @@ The passed strings have a length of 1
 stderr:
 ==>
 --- */
-function fun1(string1 : string?, ... strings : string) {
+function fun1(string1 : string=undefined, ... strings : string) {
 	var length = strings.length;
 	console.log('The passed strings have a length of ' + length);
 }

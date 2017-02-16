@@ -11,11 +11,11 @@ class A {
 
     foo() {
 		// XPECT noerrors -->
-        A.throws(() =>  new B<number>().qux((n) => { return false; })); 
+        A.throws(() =>  new B<number>().qux((n) => { return false; }));
     }
 
-	static throws (testFunction : {function()}, error : any?, message : string?) : any {
-    	return null;	
-    } 
+	static throws (testFunction : {function()}, error : any=undefined, message : string=undefined) : any {
+    	return null;
+    }
     
 }

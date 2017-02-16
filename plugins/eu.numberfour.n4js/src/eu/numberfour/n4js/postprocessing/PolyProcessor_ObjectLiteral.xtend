@@ -20,6 +20,7 @@ import eu.numberfour.n4js.n4JS.PropertyNameValuePair
 import eu.numberfour.n4js.n4JS.PropertySetterDeclaration
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.FieldAccessor
 import eu.numberfour.n4js.ts.types.InferenceVariable
@@ -73,7 +74,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 		// performance tweak:
 		val haveUsableExpectedType = expectedTypeRef !== null
 				&& (expectedTypeRef.useSiteStructuralTyping || expectedTypeRef.defSiteStructuralTyping); // FIXME reconsider
-		val quickMode = !haveUsableExpectedType;
+		val quickMode = !haveUsableExpectedType && !TypeUtils.isInferenceVariable(expectedTypeRef);
 
 		// for each property in the object literal:
 		// a) introduce a new inference variable representing the property's type (except for methods)
@@ -83,7 +84,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 		val List<Pair<PropertyAssignment,InferenceVariable>> prop2InfVar = newArrayList; // only used in standard mode
 		val List<Pair<PropertyAssignment,TypeRef>> prop2FallbackType = newArrayList; // only used in quick mode
 		for (pa : objLit.propertyAssignments) {
-			if (pa !== null) {
+			if (pa !== null && pa.definedMember!==null) {
 				if (pa.isPoly) {
 					// pa is poly
 					val tMember = TypeUtils.copy(pa.definedMember);
@@ -103,7 +104,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 									// add a constraint for the initializer expression (if any)
 									if (pa instanceof PropertyNameValuePair) {
 										if (pa.expression !== null) {
-											val exprTypeRef = polyProcessor.processExpr(G, pa.expression, null, infCtx, cache);
+											val exprTypeRef = polyProcessor.processExpr(G, pa.expression, TypeUtils.createTypeRef(iv), infCtx, cache);
 											infCtx.addConstraint(exprTypeRef, TypeUtils.createTypeRef(iv), Variance.CO); // exprTypeRef <: iv
 										}
 									}
@@ -166,7 +167,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 			val prop2InfVarOrFallbackType = if(!quickMode) prop2InfVar else prop2FallbackType;
 			for (e : prop2InfVarOrFallbackType) {
 				val pa = e.key;
-				val memberInTModule = pa.definedMember;
+				val memberInTModule = pa.definedMember; // we know this is non-null, because pa's without defined member were not added to prop2InfVar / prop2FallbackType
 				val memberType = if (solution.present && !quickMode) {
 						// success case (standard mode):
 						val infVar = e.value as InferenceVariable; // processing prop2InfVar, so value is an infVar
@@ -216,10 +217,14 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 				objLit.definedType as TStructuralType);
 			cache.storeType(objLit, resultFinal);
 			for (currAss : objLit.propertyAssignments) {
-				if (currAss instanceof PropertyMethodDeclaration) {
-					cache.storeType(currAss, TypeUtils.createTypeRef(currAss.definedMember));
+				if (currAss.definedMember !== null) {
+					if (currAss instanceof PropertyMethodDeclaration) {
+						cache.storeType(currAss, TypeUtils.createTypeRef(currAss.definedMember));
+					} else {
+						cache.storeType(currAss, TypeUtils.copy(currAss.definedMember.typeOfMember));
+					}
 				} else {
-					cache.storeType(currAss, TypeUtils.copy(currAss.definedMember.typeOfMember));
+					cache.storeType(currAss, TypeRefsFactory.eINSTANCE.createUnknownTypeRef);
 				}
 			}
 		];

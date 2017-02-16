@@ -105,7 +105,7 @@ class Assert{
 		throw new Error("assert error, parameters don't match deeply < " + a + " :: " +  b + " >");
 	}
 	
-	public static fail(msg : string?){
+	public static fail(msg : string=undefined){
 		throw new Error(msg);
 	}
 }
@@ -261,7 +261,7 @@ async function T8(): void{
 async function T9() :any{
 	var e, finallyCalled = false,  innerResult = "dodo", innerErrorMsg = "dummy", innerChainResult = "fini";
 
-	async function inner(fail : boolean?): string {
+	async function inner(fail : boolean=undefined): string {
 		try {
 			console.log(" -", "inner try");
 			try {
@@ -286,7 +286,7 @@ async function T9() :any{
 	console.log(" -", "triggering inner fail chain");
 	// XPECT warnings -->"Calling async function without await, Promise should be made explicit." at "inner"
 	return inner(true /* fails with dummy */)
-		.<string,Error>catch(function(err : any?) {
+		.<string,Error>catch(function(err : any=undefined) {
 			/* unsafe cast, but will work fine */
 			Assert.equal((err as Error).message, innerErrorMsg);
 			console.log("  .", "inner failed with expected msg");
@@ -297,7 +297,7 @@ async function T9() :any{
 			console.log(" -", "triggering inner nested (pass) chain");
 			//using plain return here, since it's not an async-marked function:
 			// XPECT warnings -->"Calling async function without await, Promise should be made explicit." at "inner"
-			return inner(false).<string,Error>then(function(res : string?) {
+			return inner(false).<string,Error>then(function(res : string=undefined) {
 				Assert.equal(res, innerResult);
 				console.log("  .", "inner passed with expected result");
 				Assert.equal(finallyCalled, true);
@@ -305,11 +305,11 @@ async function T9() :any{
 				console.log(" - ", "return from inner nested chain");
 				return innerChainResult;
 			});
-		}).then(function(res : string?) {
+		}).then(function(res : string=undefined) {
 			Assert.equal(res, innerChainResult);
 			console.log(" -", "inner passed with expected result");
 			return true;
-		}).catch(function(err : any?) {
+		}).catch(function(err : any=undefined) {
 			console.log(" -", "unexpected fail handler called");
 			Assert.fail("SHOULD NOT REACH");
 			return new Error("unexpected execution path reached");

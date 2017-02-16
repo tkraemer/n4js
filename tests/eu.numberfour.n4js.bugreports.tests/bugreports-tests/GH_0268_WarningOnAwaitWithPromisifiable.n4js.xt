@@ -2,10 +2,10 @@
 
 
 @Promisifiable
-function foo1(a: int, callback: {function(Error, int):void}?): number { return 0; }
+function foo1(a: int, callback: {function(Error, int):void}=undefined): number { return 0; }
 
 @Promisifiable
-function foo2(a: int, callback: {function(Error, int):void}?) {}
+function foo2(a: int, callback: {function(Error, int):void}=undefined) {}
 
 async function bar() {
 	// XPECT type of 'foo1(5)' --> Promise<int, Error>

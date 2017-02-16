@@ -15,7 +15,7 @@ import {TestInfo} from "n4/mangel/mangeltypes/TestInfo"
 import {TestMethodDescriptor} from "n4/mangel/mangeltypes/TestMethodDescriptor"
 import {N4Injector} from "n4js/lang/N4Injector"
 
-function getAllPropertyNames (objProt: constructor{? extends N4Object}, propNames: Map<string, boolean>?):Map<string, boolean> {
+function getAllPropertyNames (objProt: constructor{? extends N4Object}, propNames: Map<string, boolean> =):Map<string, boolean> {
     propNames = propNames || new Map<string, boolean>;
     let  names = Object.getOwnPropertyNames(objProt as Object);
 
@@ -44,8 +44,8 @@ export public class InstrumentedTest implements IInstrumentedTest{
         })
     }
 
-    public constructor(testClass: constructor{? extends N4Object}?, info: TestInfo?, testObject: N4Object?,
-        parameterizedName: string?, parameterizedTests: Array<? extends IInstrumentedTest>?
+    public constructor(testClass: constructor{? extends N4Object} =, info: TestInfo =, testObject: N4Object =,
+        parameterizedName: string =, parameterizedTests: Array<? extends IInstrumentedTest> =
     ) {
         if (testClass) {
             this.load(testClass, info);
@@ -162,7 +162,7 @@ export public class InstrumentedTest implements IInstrumentedTest{
         return this;
     }
 
-    @Override public load(testClass: constructor{? extends N4Object}, info: TestInfo?): this {
+    @Override public load(testClass: constructor{? extends N4Object}, info: TestInfo =): this {
         let that = this
           , props = getAllPropertyNames(testClass).keys()
           , parentClass = Object.getPrototypeOf(testClass) as constructor{? extends N4Object}

@@ -205,17 +205,7 @@ public abstract class FunctionTypeExprOrRefImpl extends StaticBaseTypeRefImpl im
 		EList<TFormalParameter> _fpars = this.getFpars();
 		final Function1<TFormalParameter, String> _function_1 = new Function1<TFormalParameter, String>() {
 			public String apply(final TFormalParameter it) {
-				String _xifexpression = null;
-				TypeRef _typeRef = it.getTypeRef();
-				boolean _tripleNotEquals = (_typeRef != null);
-				if (_tripleNotEquals) {
-					TypeRef _typeRef_1 = it.getTypeRef();
-					_xifexpression = _typeRef_1.getTypeRefAsString();
-				}
-				else {
-					_xifexpression = "null";
-				}
-				return _xifexpression;
+				return it.getFormalParameterAsTypesString();
 			}
 		};
 		EList<String> _map_1 = XcoreEListExtensions.<TFormalParameter, String>map(_fpars, _function_1);

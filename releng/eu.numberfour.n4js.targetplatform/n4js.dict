@@ -154,6 +154,7 @@ lexer
 versionable
 versioned
 unversioned
+reimplementation
 multimap
 multimaps
 pendencies
@@ -168,3 +169,10 @@ ract
 preact
 uri
 hardcoded
+jsx
+transpilable
+txt
+ts
+fallback
+api
+whitespaces

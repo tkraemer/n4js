@@ -17,6 +17,7 @@ import eu.numberfour.n4js.n4JS.CatchBlock
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ForStatement
+import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
@@ -31,6 +32,7 @@ import eu.numberfour.n4js.n4JS.PropertyNameValuePair
 import eu.numberfour.n4js.n4JS.PropertySetterDeclaration
 import eu.numberfour.n4js.n4JS.SetterDeclaration
 import eu.numberfour.n4js.n4JS.VariableDeclaration
+import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.resource.N4JSPostProcessor
 import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.ts.types.TypableElement
@@ -118,11 +120,11 @@ public class ASTProcessor extends AbstractProcessor {
 			// step 1: main processing
 			val script = resource.script;
 			processSubtree(G, script, cache, 0);
-			// step 2: processing of postponed subtrees (only Blocks, so far)
-			var Block block;
-			while ((block = cache.postponedSubTrees.poll) !== null) {
+			// step 2: processing of postponed subtrees
+			var EObject eObj;
+			while ((eObj = cache.postponedSubTrees.poll) !== null) {
 				// note: we need to allow adding more postponed subtrees inside this loop!
-				processSubtree(G, block, cache, 0);
+				processSubtree(G, eObj, cache, 0);
 			}
 		} finally {
 			if (cache.canceled) {
@@ -182,14 +184,10 @@ public class ASTProcessor extends AbstractProcessor {
 
 			// process the children
 			val children = childrenToBeProcessed(G, node);
-			for(child : children) {
-				if(child instanceof Block && (
-						child.eContainer instanceof FunctionExpression
-						|| child.eContainer instanceof PropertyGetterDeclaration
-						|| child.eContainer instanceof PropertySetterDeclaration
-						|| child.eContainer instanceof PropertyMethodDeclaration)) {
+			for (child : children) {
+				if (isPostponedNode(child)) {
 					// postpone
-					cache.postponedSubTrees.add(child as Block);
+					cache.postponedSubTrees.add(child);
 				} else {
 					// process now
 					processSubtree(G, child, cache, indentLevel + 1);
@@ -214,6 +212,16 @@ public class ASTProcessor extends AbstractProcessor {
 		} finally {
 			cache.astNodesCurrentlyBeingTyped.remove(node);
 		}
+	}
+	
+	private def boolean isPostponedNode(EObject node) {
+		return 
+			(node instanceof Expression && node.eContainer instanceof FormalParameter)
+		||	(node instanceof Block 
+			 && (  node.eContainer instanceof FunctionExpression
+				|| node.eContainer instanceof PropertyGetterDeclaration
+				|| node.eContainer instanceof PropertySetterDeclaration
+				|| node.eContainer instanceof PropertyMethodDeclaration));
 	}
 
 	/**
@@ -259,6 +267,7 @@ public class ASTProcessor extends AbstractProcessor {
 				|| node instanceof N4GetterDeclaration || node instanceof N4SetterDeclaration
 				|| (node instanceof PropertyNameValuePair && (node as PropertyNameValuePair).expression instanceof FunctionExpression)
 				|| node instanceof PropertyGetterDeclaration || node instanceof PropertySetterDeclaration
+				|| (node instanceof Expression && node.eContainer instanceof YieldExpression)
 			)) {
 				return true;
 			}
@@ -334,8 +343,13 @@ public class ASTProcessor extends AbstractProcessor {
 	// ---------------------------------------------------------------------------------------------------------------
 
 
+	/**
+	 * This method returns the direct children of 'obj' that are to be processed, <em>in the order in which they are to
+	 * be processed</em>. By default, all direct children must be processed and the order is insignificant, so in the
+	 * default case this method simply returns {@link EObject#eContents()}. However, this method implements special
+	 * handling for some exception cases where the processing order is significant.
+	 */
 	def private List<EObject> childrenToBeProcessed(RuleEnvironment G, EObject obj) {
-		// order in return value is important!
 		return switch (obj) {
 			SetterDeclaration: {
 				// process formal parameter before body
@@ -354,6 +368,7 @@ public class ASTProcessor extends AbstractProcessor {
 				obj.eContents.bringToFront(obj.expression)
 			}
 			default: {
+				// standard case: order is insignificant (so we simply use the order provided by EMF)
 				obj.eContents
 			}
 		};

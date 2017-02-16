@@ -2759,13 +2759,22 @@ public interface N4JSPackage extends EPackage {
 	int FORMAL_PARAMETER__DEFINED_TYPE_ELEMENT = ANNOTABLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
+	 * The feature id for the '<em><b>Has Initializer Assignment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT = ANNOTABLE_ELEMENT_FEATURE_COUNT + 6;
+
+	/**
 	 * The feature id for the '<em><b>Initializer</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FORMAL_PARAMETER__INITIALIZER = ANNOTABLE_ELEMENT_FEATURE_COUNT + 6;
+	int FORMAL_PARAMETER__INITIALIZER = ANNOTABLE_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Binding Pattern</b></em>' containment reference.
@@ -2774,7 +2783,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FORMAL_PARAMETER__BINDING_PATTERN = ANNOTABLE_ELEMENT_FEATURE_COUNT + 7;
+	int FORMAL_PARAMETER__BINDING_PATTERN = ANNOTABLE_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The number of structural features of the '<em>Formal Parameter</em>' class.
@@ -2783,7 +2792,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FORMAL_PARAMETER_FEATURE_COUNT = ANNOTABLE_ELEMENT_FEATURE_COUNT + 8;
+	int FORMAL_PARAMETER_FEATURE_COUNT = ANNOTABLE_ELEMENT_FEATURE_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Get Annotations</em>' operation.
@@ -14833,6 +14842,17 @@ public interface N4JSPackage extends EPackage {
 	EReference getFormalParameter_DefinedTypeElement();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.n4JS.FormalParameter#isHasInitializerAssignment <em>Has Initializer Assignment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Has Initializer Assignment</em>'.
+	 * @see eu.numberfour.n4js.n4JS.FormalParameter#isHasInitializerAssignment()
+	 * @see #getFormalParameter()
+	 * @generated
+	 */
+	EAttribute getFormalParameter_HasInitializerAssignment();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.n4JS.FormalParameter#getInitializer <em>Initializer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -19945,6 +19965,14 @@ public interface N4JSPackage extends EPackage {
 		 * @generated
 		 */
 		EReference FORMAL_PARAMETER__DEFINED_TYPE_ELEMENT = eINSTANCE.getFormalParameter_DefinedTypeElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Has Initializer Assignment</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT = eINSTANCE.getFormalParameter_HasInitializerAssignment();
 
 		/**
 		 * The meta object literal for the '<em><b>Initializer</b></em>' containment reference feature.

@@ -11,7 +11,7 @@
 (function(global) {
     "use strict";
 
-    if (typeof $makeClass === "undefined") {
+    if (!global.$makeClass) {
         global.n4 = {
             runtimeOptions: global.n4 && global.n4.runtimeOptions || {},
             runtimeInfo: {
@@ -28,7 +28,7 @@
     var CJSLoader = require("./rt/node-cjs-loader-polyfill.js").Loader,
         staticSystem = new CJSLoader();
 
-    if (typeof global.System === "undefined") {
+    if (!global.System || !global.System.import) {
         global.System = staticSystem;
     }
     require("n4js-es5/rt.js");

@@ -870,6 +870,7 @@ ruleTAnonymousFormalParameter:
 		':'
 	)?
 	ruleTypeRef
+	ruleDefaultFormalParameter
 ;
 
 // Rule TFormalParameter
@@ -879,6 +880,16 @@ ruleTFormalParameter:
 	ruleBindingIdentifier
 	':'
 	ruleTypeRef
+	ruleDefaultFormalParameter
+;
+
+// Rule DefaultFormalParameter
+ruleDefaultFormalParameter:
+	(
+		'='
+		ruleTypeReferenceName
+		?
+	)?
 ;
 
 // Rule UnionTypeExpressionOLD

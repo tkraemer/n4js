@@ -8,7 +8,7 @@ export public class Change{
     public oldValue : string; 
     public position : NewPosition; 
     public isServerChange : boolean; 
-    public applyTo(object : Object, context : ContextForChangeApplyTo?) {
+    public applyTo(object : Object, context : ContextForChangeApplyTo=undefined) {
     }
     public applyAsUndoTo(object : Object) {
     }
@@ -30,7 +30,7 @@ export public class Change{
     public isEqual(other : Change) : boolean {
     	return null;
     }
-    public matchSelector(selector : string, checkViceVersa : boolean?) : boolean {
+    public matchSelector(selector : string, checkViceVersa : boolean=undefined) : boolean {
     	return null;
     }
     public static fromNFON(spec) {
@@ -42,7 +42,7 @@ export public class Change{
     public static applyToObject(object : Object, selector : string, type : ChangeType, 
     	valOrFunc : any, 
     	oldValOrFunc : any, 
-    		context : ContextForChangeApplyTo?
+    		context : ContextForChangeApplyTo=undefined
     ) {
     }
     public static getUndoTypeOfType(type : ChangeType) : ChangeType {

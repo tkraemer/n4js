@@ -207,7 +207,7 @@ class AT_802_ThisTypeAnnotationTest extends AbstractTypesystemTest {
 		val script = createScript(JavaScriptVariant.n4js, '''
 			console.log(
 			@This(any)
-			function <S extends Object, T, P> len(s: S, t: T, p: P, a, n: number?, ...vas: string) : number {
+			function <S extends Object, T, P> len(s: S, t: T, p: P, a, n: number=undefined, ...vas: string) : number {
 				return (s+t+p+a+n+vas).length
 			}
 			);
@@ -219,7 +219,7 @@ class AT_802_ThisTypeAnnotationTest extends AbstractTypesystemTest {
 
 		val fe = (argToLog.get(0) as FunctionExpression)
 		val inf = fe.infer;
-		assertEquals("{@This(any) function<S extends Object,T,P>(S,T,P,any,number?,string):number}",inf.typeRefAsString)
+		assertEquals("{@This(any) function<S extends Object,T,P>(S,T,P,any,number=…,...string):number}",inf.typeRefAsString)
 
 		inf.assertDeclaredThisType("any")
 

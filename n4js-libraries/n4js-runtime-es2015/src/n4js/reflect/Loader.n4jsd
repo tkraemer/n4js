@@ -11,12 +11,12 @@
 @@Global @@ProvidedByRuntime
 
 export external public interface Loader {
-    public async import(name: string, referrer: string?): Object;
+    public async import(name: string, referrer: string =): Object;
 
     /**
      * System.JS only!
      */
-    public async normalize(name: string, parentName: string?, parentAddress: string?): string;
+    public async normalize(name: string, parentName: string =, parentAddress: string =): string;
 
     /**
      * System.JS only!

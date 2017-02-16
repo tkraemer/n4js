@@ -713,14 +713,16 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
 		private final Assignment cTypeRefAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cTypeRefTypeRefParserRuleCall_2_0 = (RuleCall)cTypeRefAssignment_2.eContents().get(0);
+		private final RuleCall cDefaultFormalParameterParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
 		
 		/// **
 		// * Used in type expressions, name is optional.
 		// * / TAnonymousFormalParameter:
-		//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef;
+		//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef
+		//	DefaultFormalParameter;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef
+		//variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef DefaultFormalParameter
 		public Group getGroup() { return cGroup; }
 		
 		//variadic?='...'?
@@ -746,6 +748,9 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TypeRef
 		public RuleCall getTypeRefTypeRefParserRuleCall_2_0() { return cTypeRefTypeRefParserRuleCall_2_0; }
+		
+		//DefaultFormalParameter
+		public RuleCall getDefaultFormalParameterParserRuleCall_3() { return cDefaultFormalParameterParserRuleCall_3; }
 	}
 	public class TFormalParameterElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.TFormalParameter");
@@ -757,14 +762,17 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cTypeRefAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cTypeRefTypeRefParserRuleCall_3_0 = (RuleCall)cTypeRefAssignment_3.eContents().get(0);
+		private final RuleCall cDefaultFormalParameterParserRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
 		
 		/// **
 		// * Used in Types language only.
 		// * / TFormalParameter:
-		//	variadic?='...'? name=BindingIdentifier<Yield=false> ':' typeRef=TypeRef;
+		//	variadic?='...'? name=BindingIdentifier<Yield=false>
+		//	':' typeRef=TypeRef
+		//	DefaultFormalParameter;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//variadic?='...'? name=BindingIdentifier<Yield=false> ':' typeRef=TypeRef
+		//variadic?='...'? name=BindingIdentifier<Yield=false> ':' typeRef=TypeRef DefaultFormalParameter
 		public Group getGroup() { return cGroup; }
 		
 		//variadic?='...'?
@@ -787,6 +795,41 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TypeRef
 		public RuleCall getTypeRefTypeRefParserRuleCall_3_0() { return cTypeRefTypeRefParserRuleCall_3_0; }
+		
+		//DefaultFormalParameter
+		public RuleCall getDefaultFormalParameterParserRuleCall_4() { return cDefaultFormalParameterParserRuleCall_4; }
+	}
+	public class DefaultFormalParameterElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.DefaultFormalParameter");
+		private final Group cGroup = (Group)rule.eContents().get(0);
+		private final Assignment cHasInitializerAssignmentAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cHasInitializerAssignmentEqualsSignKeyword_0_0 = (Keyword)cHasInitializerAssignmentAssignment_0.eContents().get(0);
+		private final Assignment cAstInitializerAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cAstInitializerTypeReferenceNameParserRuleCall_1_0 = (RuleCall)cAstInitializerAssignment_1.eContents().get(0);
+		
+		/// **
+		// * Default initializers in FunctionTypeExpressions or TFunctions
+		// * are necessary to specify optional formal parameters. Hence, their
+		// * initializer expression is rather uninteresting and limited by validations
+		// * to 'undefined'. The shorthand form, that is omitting the initializer, is supported.
+		// * / fragment DefaultFormalParameter *:
+		//	(hasInitializerAssignment?='=' astInitializer=TypeReferenceName?)?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//(hasInitializerAssignment?='=' astInitializer=TypeReferenceName?)?
+		public Group getGroup() { return cGroup; }
+		
+		//hasInitializerAssignment?='='
+		public Assignment getHasInitializerAssignmentAssignment_0() { return cHasInitializerAssignmentAssignment_0; }
+		
+		//'='
+		public Keyword getHasInitializerAssignmentEqualsSignKeyword_0_0() { return cHasInitializerAssignmentEqualsSignKeyword_0_0; }
+		
+		//astInitializer=TypeReferenceName?
+		public Assignment getAstInitializerAssignment_1() { return cAstInitializerAssignment_1; }
+		
+		//TypeReferenceName
+		public RuleCall getAstInitializerTypeReferenceNameParserRuleCall_1_0() { return cAstInitializerTypeReferenceNameParserRuleCall_1_0; }
 	}
 	public class UnionTypeExpressionOLDElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.UnionTypeExpressionOLD");
@@ -2146,6 +2189,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final TAnonymousFormalParameterListElements pTAnonymousFormalParameterList;
 	private final TAnonymousFormalParameterElements pTAnonymousFormalParameter;
 	private final TFormalParameterElements pTFormalParameter;
+	private final DefaultFormalParameterElements pDefaultFormalParameter;
 	private final UnionTypeExpressionOLDElements pUnionTypeExpressionOLD;
 	private final IntersectionTypeExpressionOLDElements pIntersectionTypeExpressionOLD;
 	private final ParameterizedTypeRefElements pParameterizedTypeRef;
@@ -2211,6 +2255,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pTAnonymousFormalParameterList = new TAnonymousFormalParameterListElements();
 		this.pTAnonymousFormalParameter = new TAnonymousFormalParameterElements();
 		this.pTFormalParameter = new TFormalParameterElements();
+		this.pDefaultFormalParameter = new DefaultFormalParameterElements();
 		this.pUnionTypeExpressionOLD = new UnionTypeExpressionOLDElements();
 		this.pIntersectionTypeExpressionOLD = new IntersectionTypeExpressionOLDElements();
 		this.pParameterizedTypeRef = new ParameterizedTypeRefElements();
@@ -2481,7 +2526,8 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	/// **
 	// * Used in type expressions, name is optional.
 	// * / TAnonymousFormalParameter:
-	//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef;
+	//	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef
+	//	DefaultFormalParameter;
 	public TAnonymousFormalParameterElements getTAnonymousFormalParameterAccess() {
 		return pTAnonymousFormalParameter;
 	}
@@ -2493,13 +2539,30 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	/// **
 	// * Used in Types language only.
 	// * / TFormalParameter:
-	//	variadic?='...'? name=BindingIdentifier<Yield=false> ':' typeRef=TypeRef;
+	//	variadic?='...'? name=BindingIdentifier<Yield=false>
+	//	':' typeRef=TypeRef
+	//	DefaultFormalParameter;
 	public TFormalParameterElements getTFormalParameterAccess() {
 		return pTFormalParameter;
 	}
 	
 	public ParserRule getTFormalParameterRule() {
 		return getTFormalParameterAccess().getRule();
+	}
+	
+	/// **
+	// * Default initializers in FunctionTypeExpressions or TFunctions
+	// * are necessary to specify optional formal parameters. Hence, their
+	// * initializer expression is rather uninteresting and limited by validations
+	// * to 'undefined'. The shorthand form, that is omitting the initializer, is supported.
+	// * / fragment DefaultFormalParameter *:
+	//	(hasInitializerAssignment?='=' astInitializer=TypeReferenceName?)?;
+	public DefaultFormalParameterElements getDefaultFormalParameterAccess() {
+		return pDefaultFormalParameter;
+	}
+	
+	public ParserRule getDefaultFormalParameterRule() {
+		return getDefaultFormalParameterAccess().getRule();
 	}
 	
 	//UnionTypeExpressionOLD UnionTypeExpression:

@@ -66,7 +66,8 @@ class N4JSHoverProvider extends DefaultEObjectHoverProvider {
 	}
 
 	def private dispatch doGetLabel(FormalParameter fp) {
-		fp.labelFromTypeSystem;
+		val String optinonalMarker = if (fp.hasInitializerAssignment) "=…" else "";
+		fp.labelFromTypeSystem + optinonalMarker;
 	}
 
 	def private dispatch doGetLabel(FunctionExpression fe) {

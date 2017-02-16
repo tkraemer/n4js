@@ -45,7 +45,7 @@ class FormalParameterTrafoTest extends AbstractTranspilerTest {
 
 		val state = '''
 
-			function F (a, b : any?, ...c ) {
+			function F (a, b : any=undefined, ...c ) {
 				a = 3;
 				c[1] = 5;
 				c.length
@@ -102,7 +102,7 @@ class FormalParameterTrafoTest extends AbstractTranspilerTest {
 		val state = '''
 
 			class A {
-				methodF (a, b : any?, ...c ) {
+				methodF (a, b : any=undefined, ...c ) {
 					a = 3;
 					c[1] = 5;
 					c.length
@@ -156,7 +156,7 @@ class FormalParameterTrafoTest extends AbstractTranspilerTest {
 
 		val state = '''
 			class A {
-				methodF (a, b : any?, ...c ) {
+				methodF (a, b : any=undefined, ...c ) {
 
 					var g = function( a2, b2, c2, ...d2 ) {
 						console.log("Length of d2 is",d2.length)	;
@@ -245,7 +245,7 @@ class FormalParameterTrafoTest extends AbstractTranspilerTest {
 
 		val state = '''
 			class A {
-				methodF (a, b : any?, ...c ) {
+				methodF (a, b : any=undefined, ...c ) {
 
 					var g = function( a2, b2, c2, ...d2 ) {
 						console.log("Length of d2 is",d2.length)	;

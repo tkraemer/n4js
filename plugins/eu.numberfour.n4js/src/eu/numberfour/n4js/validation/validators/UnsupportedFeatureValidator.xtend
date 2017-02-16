@@ -23,7 +23,9 @@ import eu.numberfour.n4js.n4JS.N4ClassExpression
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.NamedElement
 import eu.numberfour.n4js.n4JS.NewTarget
+import eu.numberfour.n4js.n4JS.ObjectLiteral
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
+import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.PropertyNameOwner
 import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.n4JS.TaggedTemplateString
@@ -90,14 +92,6 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 
 
 	@Check
-	def void checkFparDefaultInitializer(FormalParameter fpar) {
-		if(fpar.initializer!==null) {
-			unsupported("default initializers for formal parameters", fpar.initializer);
-		}
-	}
-
-
-	@Check
 	def void checkTaggedTemplateLiteral(TaggedTemplateString tts) {
 		unsupported("tagged template literals", tts, N4JSPackage.eINSTANCE.taggedTemplateString_Target);
 	}
@@ -122,6 +116,12 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 		val expr = decl.computedNameFrom;
 		if(expr!==null) {
 			if(!isLegalExpressionInComputedPropertyName(expr)) {
+				if(decl instanceof PropertyAssignment && decl.eContainer instanceof ObjectLiteral) {
+					// special case: in object literals, anything goes
+					// (but show a warning)
+					addIssue(IssueCodes.getMessageForEXP_COMPUTED_PROP_NAME_DISCOURAGED, expr, IssueCodes.EXP_COMPUTED_PROP_NAME_DISCOURAGED);
+					return;
+				}
 				unsupported("computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value", expr);
 			}
 		}
