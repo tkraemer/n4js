@@ -6,19 +6,16 @@
 <==
 stdout:
 5
-5
 stderr:
 ==>
 --- */
 
 interface I {
-    num = 5;
-    fn = () => console.log(this.num);
+	num = 5;
 }
 
 class C implements I {
     fn1 = () => console.log(this.num);
 }
 
-(new C).fn();
 (new C).fn1();

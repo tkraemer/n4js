@@ -12,11 +12,11 @@ GEN_FOLDER=generated-docs/
 rm -rf ./$GEN_FOLDER/; mkdir -p ./$GEN_FOLDER/
 
 # Copy resources to ./$GEN_FOLDER/
-cp -r styles images scripts ./$GEN_FOLDER/
+cp -r styles images scripts chapters ./$GEN_FOLDER/
 
 
 ############## Build HTML for gh-pages #############
-asciispec -a data-uri=true -a stylesheet=foundation.css -a docinfodir=headers -D $GEN_FOLDER/ N4JSSpec.adoc 
+asciispec -a stylesheet=foundation.min.css -a docinfodir=headers -D $GEN_FOLDER/ N4JSSpec.adoc 
 
 # running "./build.sh -p" (preview) will skip PDF and launch index.html
 if [ "${1}" == "--preview" ] || [ "${1}" == "-p" ]; then
@@ -28,5 +28,10 @@ fi
 asciispec -b docbook N4JSSpec.adoc
 fopub N4JSSpec.xml 
 mv N4JSSpec.pdf ./$GEN_FOLDER/
+
+# Clean unwanted adoc/graffle files and delete empty subdirectories
+pushd ./$GEN_FOLDER/chapters
+	rm -rf **/*.adoc && rm -rf **/**/*.graffle &&	find . -type d -empty -print
+popd
 
 echo DONE: AsciiSpec conversion finished.
