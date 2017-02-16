@@ -39,6 +39,7 @@ import eu.numberfour.n4js.n4JS.SetterDeclaration
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument
 import eu.numberfour.n4js.ts.types.TTypedElement
+import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
 
 /**
  * Processor for handling {@link DeferredTypeRef}s, <b>except</b> those related to poly expressions, which are handled
@@ -113,6 +114,9 @@ package class TypeDeferredProcessor extends AbstractProcessor {
 				switch (parent) {
 					FunctionExpression: {
 						// do nothing since its DeferredTypes are computed in PolyProcessor_FunctionExpression
+					}
+					PropertyMethodDeclaration: {
+						// do nothing since its DeferredTypes are computed in PolyProcessor_ObjectLiteral
 					}
 					FunctionDefinition: {
 						val tFPar = obj.definedTypeElement; // tFPar can be null if we have a broken AST

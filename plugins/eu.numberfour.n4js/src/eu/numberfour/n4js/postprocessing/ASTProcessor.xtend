@@ -51,6 +51,7 @@ import org.eclipse.xtext.util.CancelIndicator
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.n4JS.IdentifierRef
+import eu.numberfour.n4js.n4JS.ThisLiteral
 
 /**
  * Main processor used during {@link N4JSPostProcessor post-processing} of N4JS resources. It controls the overall
@@ -233,11 +234,11 @@ public class ASTProcessor extends AbstractProcessor {
 	}
 	
 	/**
-	 * Is only postponed iff:
+	 * Initializers are postponed only iff:
 	 * <ul>
-	 * <li>Node is an initializer of a FormalParameter p</li>
-	 * <li>p is part of a Poly FunctionExpression f</li>
-	 * <li>p contains references to other FormalParameters of f, or f itself</li>
+	 * <li>Node is an initializer of a FormalParameter p,</li>
+	 * <li>and p is part of a Poly FunctionExpression f,</li>
+	 * <li>and p contains references to other FormalParameters of f, or f itself.</li>
 	 * </ul>
 	 */
 	private def boolean isPostponedInitializer(EObject node) {
@@ -247,7 +248,8 @@ public class ASTProcessor extends AbstractProcessor {
 			if (node instanceof Expression) {
 				if (fpar.hasInitializerAssignment) {
 					val funDef = fpar.eContainer;
-					if (funDef instanceof FunctionExpression) { // FunctionDefinitions or Setters are never Poly
+					// FunctionExpressions can be Poly
+					if (funDef instanceof FunctionExpression) {
 						// Check if the initializer refers to other fpars
 						val allFPars = funDef.fpars;
 						val allRefs = EcoreUtilN4.getAllContentsOfTypeStopAt(fpar, IdentifierRef, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY);
@@ -262,6 +264,14 @@ public class ASTProcessor extends AbstractProcessor {
 							}
 						}
 					}
+					// PropertyMethodDeclaration (as part of ObjectLiterals) can be Poly
+					if (funDef instanceof PropertyMethodDeclaration) {
+						val allRefs = EcoreUtilN4.getAllContentsOfTypeStopAt(fpar, ThisLiteral, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY);
+						if (!allRefs.isEmpty()) {
+							referenceToFunctionsParameter = true;
+						}
+					}
+					// other Types? -> FunctionDefinitions or Setters are never Poly.
 				}
 			}
 		}
