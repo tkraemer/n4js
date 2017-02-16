@@ -130,7 +130,7 @@ var {propOfOl: newVar: typeOfNewVar} = ol
 == Dependency Injection
 
 This chapter describes <<Acronyms,DI>> mechanisms for N4JS.
-This includes compiler, validation and language extensions that allow to achieve <<Acronyms,DI>> mechanisms built in into the N4JS language and IDE.
+This includes compiler, validation and language extensions that allow to achieve DI mechanisms built in into the N4JS language and IDE.
 
 N4JS <<Acronyms,DI>> support specifies a means for obtaining objects in such a way as to maximize reusability, testability and maintainability,
 especially compared to traditional approaches such as constructors, factories and service locators.
@@ -168,7 +168,7 @@ A <<Acronyms,DIC>> is a N4Class annotated with `@GenerateInjector`.
 --
 
 This annotation causes an _injector_ to be created for (and associated to) the <<Acronyms,DI>>.
-<<Acronyms,DIC>> can be composed; meaning that when requested to inject an instance of a type, a <<Acronyms,DIC>>’s injector can delegate this request to the injector of the containing <<Acronyms,DIC>>.
+DIC can be composed; meaning that when requested to inject an instance of a type, a DIC’s injector can delegate this request to the injector of the containing DIC.
 An injector always prioritizes its own configuration before delegating to the container’s injector.
 For validation purposes, a child DI can be annotated with `@WithParent` to ensure that it is always used with a proper parent.
 
@@ -179,7 +179,7 @@ At runtime, injectors are instances of `N4Injector`.
 [req,id=IDE-138,version=1]
 --
 
-The following constraints must hold for a class $C$ marked as <<Acronyms,DIC>>:
+The following constraints must hold for a class $C$ marked as DIC:
 
 1.  A subclass $S$ of $C$ is a DIC as well and it must be marked with `GenerateInjector` task:IDE-1563[].
 2.  If a parent <<DIComponent Relations,DIC>> $P$ is specified via `WithParent`, then $P$ must be a DIC as well.
