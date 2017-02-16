@@ -221,6 +221,8 @@ public class ComposedMemberScope extends AbstractScope {
 			return new UnionMemberDescriptionWithError(result, composedTypeRef, subScopes, writeAccess);
 		}
 		if (composedTypeRef instanceof IntersectionTypeExpression) {
+			System.err.println(
+					"error: change return value in ComposedMemberScope#createUnionMemberDescriptionWithErrors");
 			return new UnionMemberDescriptionWithError(result, composedTypeRef, subScopes, writeAccess);
 		}
 		throw new IllegalStateException("unknown composed member type");
