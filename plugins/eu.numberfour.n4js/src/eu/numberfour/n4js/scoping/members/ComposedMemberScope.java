@@ -128,7 +128,7 @@ public class ComposedMemberScope extends AbstractScope {
 		}
 
 		if (isErrorPlaceholder(member)) {
-			return createUnionMemberDescriptionWithErrors(EObjectDescription.create(member.getName(), member));
+			return createComposedMemberDescriptionWithErrors(EObjectDescription.create(member.getName(), member));
 		}
 		IEObjectDescription description = EObjectDescription.create(member.getName(), member);
 
@@ -136,7 +136,7 @@ public class ComposedMemberScope extends AbstractScope {
 		for (IScope currSubScope : subScopes) {
 			IEObjectDescription subDescription = currSubScope.getSingleElement(qn);
 			if (description == null || subDescription instanceof IEObjectDescriptionWithError) {
-				return createUnionMemberDescriptionWithErrors(description);
+				return createComposedMemberDescriptionWithErrors(description);
 			}
 		}
 		return description;
@@ -216,7 +216,7 @@ public class ComposedMemberScope extends AbstractScope {
 		throw new IllegalStateException("unknown composed member type");
 	}
 
-	private IEObjectDescription createUnionMemberDescriptionWithErrors(IEObjectDescription result) {
+	private IEObjectDescription createComposedMemberDescriptionWithErrors(IEObjectDescription result) {
 		if (composedTypeRef instanceof UnionTypeExpression) {
 			return new UnionMemberDescriptionWithError(result, composedTypeRef, subScopes, writeAccess);
 		}
