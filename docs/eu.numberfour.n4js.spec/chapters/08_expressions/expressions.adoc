@@ -84,8 +84,12 @@ See also <<Req-IDE-69>>.
 
 --
 
+
+Note: <<Req-IDE-173>> also applies for this literals inside arrow expressions in initializers. task:GH-348[]
+
 The use of `this` is illustrated with some examples as it can often be confusing.
 Type inference heuristics and explanations are provided in the next section.
+
 
 .This in Unrestricted Mode
 [example]

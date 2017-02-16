@@ -14,22 +14,20 @@ import com.google.inject.Inject
 import eu.numberfour.n4js.N4JSGlobals
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
-import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
 import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TMember
+import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.utils.XtextUtilN4
 import eu.numberfour.n4jsx.n4JSX.JSXElement
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
-import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.resource.IEObjectDescription
-import org.eclipse.xtext.scoping.IScope
-import org.eclipse.xtext.scoping.IScopeProvider
 import org.eclipse.xtext.util.IResourceScopeCache
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
@@ -41,14 +39,14 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 class ReactHelper {
 	@Inject	protected N4JSTypeSystem ts;
 	@Inject protected TypeSystemHelper tsh
-	@Inject	IScopeProvider scopeProvider
 	@Inject	private IResourceScopeCache resourceScopeCacheHelper;
-	@Inject private extension IQualifiedNameConverter qualifierNameConverter;
-		
+	@Inject extension XtextUtilN4; 
+			
 	public final static String REACT_MODULE = "react";
 	public final static String REACT_KEY = "KEY__" + REACT_MODULE;	
 	public final static String REACT_COMPONENT = "Component";
 	public final static String REACT_ELEMENT = "Element";
+	public final static String REACT_DEFINITION_FILE = REACT_MODULE + "." + N4JSGlobals.N4JSD_FILE_EXTENSION;
 	
 	/**
 	 * Look up React.Element in the index.
@@ -77,26 +75,12 @@ class ReactHelper {
 	def private TClassifier lookUpReactClassifier(EObject context, String reactClassifierName) {
 		val String key = REACT_KEY + "." + reactClassifierName;
 		return resourceScopeCacheHelper.get(key, context.eResource, [
-			val IScope scope = scopeProvider.getScope(context, TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE)
-			val IEObjectDescription eod = scope.allElements.findFirst [ e |
-				val classifier = e.EObjectOrProxy;
-				if (classifier instanceof TClassifier) {
-					// If the found react.Element, react.Component is a proxy, exportedName and containingModule will be null.
-					// That's why we need to resolve the proxy first
-					if ((e.EObjectURI.trimFragment.lastSegment != REACT_MODULE + "." + N4JSGlobals.N4JSD_FILE_EXTENSION)) {
-						return false;
-					}										
-					val resolvedClassifier = 
-						if (classifier.eIsProxy) {
-							EcoreUtil2.resolve(classifier, context.eResource) as TClassifier;
-						} else classifier;
-					return reactClassifierName == resolvedClassifier.exportedName &&
-						REACT_MODULE == resolvedClassifier.containingModule.qualifiedName.toQualifiedName.lastSegment;
-				}
-				return false;
-			]
-			if (eod === null)
-				return null;
+			// Retrieve all visible object descriptions of type TClass that are visible from 'context'
+			val descs = context.getVisibleEObjectDescriptions(TypesPackage::eINSTANCE.TClass);
+			val String reactClassifierFQNSuffix = REACT_MODULE + "." + reactClassifierName;
+			val eod = descs.findFirst[ desc | desc.isReactClassifierDescription(reactClassifierFQNSuffix) ]
+			
+			if (eod === null) return null;
 			var classifier = eod.EObjectOrProxy;
 			if (classifier.eIsProxy) {
 				classifier = EcoreUtil2.resolve(classifier, context.eResource)
@@ -109,6 +93,9 @@ class ReactHelper {
 		])
 	}
 	
+	private def boolean isReactClassifierDescription(IEObjectDescription desc, String suffix) {
+    	return desc.EObjectURI.trimFragment.lastSegment == REACT_DEFINITION_FILE && desc.qualifiedName.toString.endsWith(suffix)
+    }
 	
 	/**
 	 * Calculate the type that an JSX element is binding to, usually class/function type

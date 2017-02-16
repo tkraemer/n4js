@@ -130,6 +130,7 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.n4JS.ArrowFunction
 
 /**
  */
@@ -1607,7 +1608,13 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	@Check
 	def checkThisLiteral(ThisLiteral thisLiteral) {
-		val context = EcoreUtil2.getContainerOfType(thisLiteral, ThisArgProvider);
+		var context = EcoreUtil2.getContainerOfType(thisLiteral, ThisArgProvider);
+		
+		// cf. GH-348
+		while (context instanceof ArrowFunction) {
+			context = EcoreUtil2.getContainerOfType(context.eContainer, ThisArgProvider);
+		} 
+		
 		// 1) not in static members of interfaces
 		if(context instanceof N4MemberDeclaration) {
 			val tMember = context.definedTypeElement;
