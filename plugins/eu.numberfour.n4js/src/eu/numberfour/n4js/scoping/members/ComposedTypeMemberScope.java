@@ -48,7 +48,7 @@ import it.xsemantics.runtime.RuleEnvironment;
  * Note that there cannot be static access to a union or intersection type, since a definition of a composed type
  * actually is a reference.
  */
-public class UnionMemberScope extends AbstractScope {
+public class ComposedTypeMemberScope extends AbstractScope {
 
 	private final ComposedTypeRef composedTypeRef;
 	private final IScope[] subScopes;
@@ -61,7 +61,7 @@ public class UnionMemberScope extends AbstractScope {
 	 * Creates union type scope, passed subScopes are expected to be fully configured (i.e., including required filters
 	 * etc.)
 	 */
-	public UnionMemberScope(ComposedTypeRef composedTypeRef, EObject context, List<IScope> subScopes,
+	public ComposedTypeMemberScope(ComposedTypeRef composedTypeRef, EObject context, List<IScope> subScopes,
 			N4JSTypeSystem ts) {
 
 		super(IScope.NULLSCOPE, false);

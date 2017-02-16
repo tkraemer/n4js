@@ -23,7 +23,7 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.n4JS.N4JSPackage;
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression;
-import eu.numberfour.n4js.scoping.members.UnionMemberScope;
+import eu.numberfour.n4js.scoping.members.ComposedTypeMemberScope;
 import eu.numberfour.n4js.ts.scoping.builtin.N4Scheme;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
@@ -199,7 +199,7 @@ public class N4JSCrossReferenceComputer {
 	}
 
 	private void handleType(EObject from, IAcceptor<EObject> acceptor, Type to) {
-		if (to instanceof TMember && UnionMemberScope.isComposedMember((TMember) to)) {
+		if (to instanceof TMember && ComposedTypeMemberScope.isComposedMember((TMember) to)) {
 			// TODO IDE-1253 / IDE-1806: handling of composed members in N4JSCrossReferenceComputer
 			if (to.eResource() == null) {
 				return; // quick fix: ignore this member (would lead to an exception below)
