@@ -19,52 +19,46 @@ import eu.numberfour.n4js.formatting2.N4JSSimpleFormattingPreferenceProvider
 import eu.numberfour.n4js.n4JS.DefaultImportSpecifier
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.ImportDeclaration
-import eu.numberfour.n4js.n4JS.ImportSpecifier
-import eu.numberfour.n4js.n4JS.N4JSFactory
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.NamedImportSpecifier
-import eu.numberfour.n4js.n4JS.NamespaceImportSpecifier
 import eu.numberfour.n4js.n4JS.Script
-import eu.numberfour.n4js.organize.imports.ImportProvidedElement
 import eu.numberfour.n4js.organize.imports.ImportStateCalculator
 import eu.numberfour.n4js.parser.InternalSemicolonInjectingParser
 import eu.numberfour.n4js.scoping.N4JSScopeProvider
 import eu.numberfour.n4js.ts.services.TypeExpressionsGrammarAccess
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
-import eu.numberfour.n4js.ts.types.TypesFactory
 import eu.numberfour.n4js.ui.changes.ChangeProvider
 import eu.numberfour.n4js.ui.changes.IChange
 import eu.numberfour.n4js.ui.contentassist.N4JSCandidateFilter
 import eu.numberfour.n4js.ui.organize.imports.BreakException.UserCanceledBreakException
 import eu.numberfour.n4js.utils.UtilN4
+import eu.numberfour.n4js.utils.collections.Multimaps3
 import java.util.ArrayList
 import java.util.Collection
-import java.util.Collections
-import java.util.Comparator
 import java.util.List
 import java.util.Map
 import java.util.Set
 import org.eclipse.emf.common.notify.Adapter
 import org.eclipse.emf.common.notify.impl.AdapterImpl
-import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.emf.ecore.EStructuralFeature.Setting
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.jface.text.BadLocationException
 import org.eclipse.jface.viewers.ILabelProvider
 import org.eclipse.jface.window.Window
-import org.eclipse.swt.widgets.Display
-import org.eclipse.swt.widgets.Shell
-import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.RuleCall
 import org.eclipse.xtext.TerminalRule
-import org.eclipse.xtext.naming.IQualifiedNameConverter
-import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.nodemodel.BidiTreeIterator
+import org.eclipse.xtext.nodemodel.ICompositeNode
 import org.eclipse.xtext.nodemodel.ILeafNode
 import org.eclipse.xtext.nodemodel.INode
+import org.eclipse.xtext.nodemodel.SyntaxErrorMessage
+import org.eclipse.xtext.nodemodel.impl.HiddenLeafNode
 import org.eclipse.xtext.nodemodel.impl.LeafNode
+import org.eclipse.xtext.nodemodel.impl.LeafNodeWithSyntaxError
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.ui.editor.model.IXtextDocument
@@ -75,14 +69,6 @@ import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.EXPORT_
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
 import static extension eu.numberfour.n4js.organize.imports.RefNameUtil.*
 import static extension org.eclipse.xtext.nodemodel.util.NodeModelUtils.*
-import org.eclipse.xtext.nodemodel.impl.LeafNodeWithSyntaxError
-import org.eclipse.xtext.nodemodel.SyntaxErrorMessage
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils
-import org.eclipse.xtext.nodemodel.ICompositeNode
-import org.eclipse.xtext.nodemodel.impl.HiddenLeafNode
-import eu.numberfour.n4js.utils.CallTraceUtil
-import eu.numberfour.n4js.utils.collections.Multimaps3
-import org.eclipse.emf.ecore.EStructuralFeature.Setting
 
 /**
  */
@@ -95,7 +81,7 @@ public class N4JSOrganizeImports {
 	private N4JSScopeProvider scopeProvider;
 
 	@Inject
-	private IQualifiedNameConverter qualifiedNameConverter;
+	private ImportsFactory importsFactory;
 
 	@Inject
 	private ImportProvidedElementLabelprovider importProvidedElementLabelprovider;
@@ -111,8 +97,6 @@ public class N4JSOrganizeImports {
 
 	@Inject
 	private N4JSSimpleFormattingPreferenceProvider formattingPreferenceProvider
-		@Inject
-	private CallTraceUtil sysTraceUtil;
 
 	/**
 	 * Calculate destination region in Document for imports. If the offset is not 0,
@@ -153,7 +137,6 @@ public class N4JSOrganizeImports {
 	 * @return region for import statements, length 0
 	 */
 	public def InsertionPoint getImportRegion(XtextResource xtextResource) {
-//sysTraceUtil.traceCall
 		// In N4js imports can appear anywhere in the Script as top-level elements. So even as a last
 		// statement and more importantly scattered around.
 		val InsertionPoint insertionPoint = new InsertionPoint;
@@ -415,7 +398,7 @@ public class N4JSOrganizeImports {
 		resultingImports.forEach[EcoreUtil.resolveAll(it)]
 
 		// Sort all import
-		resultingImports.sortByImport
+		ImportsSorter.sortByImport(resultingImports)
 
 		// Add to output.
 		resultingImports.forEach [
@@ -449,7 +432,7 @@ public class N4JSOrganizeImports {
 		val Map<EObject, Collection<EStructuralFeature.Setting>> unresolved = EcoreUtil.UnresolvedProxyCrossReferencer.find(
 			script).filter[ proxiedEobject, settings | filterFunction(proxiedEobject, settings)]
 			
-		val resolution = LinkedHashMultimap.<String, N4JSOrganizeImports.ImportableObject>create
+		val resolution = LinkedHashMultimap.<String, ImportableObject>create
 		val alreadyProcessedIdRef = <String>newHashSet()
 		val alreadyProcessedTypeRef = <String>newHashSet()
 
@@ -497,7 +480,7 @@ public class N4JSOrganizeImports {
 
 		solutions.forEach [ name, importable |
 			val imp = importable.head;
-			ret.add(createImport(imp));
+			ret.add(importsFactory.createImport(imp));
 		]
 
 		// ignore broken names, for which imports will be added due to unresolved refs
@@ -505,7 +488,7 @@ public class N4JSOrganizeImports {
 
 		// Ask user to disambiguate things:
 		val ambiguousSolution = resolution.asMap.filter[p1, p2|p2.size > 1];
-		val forDisambiguation = LinkedHashMultimap.<String, N4JSOrganizeImports.ImportableObject>create;
+		val forDisambiguation = LinkedHashMultimap.<String, ImportableObject>create;
 		ambiguousSolution.forEach[p1, p2|forDisambiguation.putAll(p1, p2)];
 
 		// add potential solutions for still broken names
@@ -531,7 +514,7 @@ public class N4JSOrganizeImports {
 
 		val chosenSolutions = disambiguate(forDisambiguation, interaction);
 
-		chosenSolutions.forEach[ret.add(createImport(it))];
+		chosenSolutions.forEach[ret.add(importsFactory.createImport(it))];
 
 		return ret;
 	}
@@ -615,12 +598,12 @@ public class N4JSOrganizeImports {
 	}
 //TODO IDE-2520 move out <<<<<<<
 
-	def boolean isDefaultExport(IEObjectDescription description) {
+	private def boolean isDefaultExport(IEObjectDescription description) {
 		description.name.lastSegment == EXPORT_DEFAULT_NAME
 	}
 
 	/** return true if {@code description} is a possible candidate for an element with name {@code name}. */
-	def boolean isCandidate(IEObjectDescription description, String name) {
+	private def boolean isCandidate(IEObjectDescription description, String name) {
 		val qName = description.name;
 		return qName.lastSegment == name ||
 			( qName.lastSegment == EXPORT_DEFAULT_NAME && qName.segmentCount > 1 &&
@@ -628,142 +611,7 @@ public class N4JSOrganizeImports {
 				);
 	}
 
-	def createImport(ImportableObject imp) {
-		if (imp.isExportedAsDefault)
-			createDefaultImport(imp.name, imp.eobj.qualifiedName.skipLast(1))
-		else
-			createNamedImport(imp.name, imp.eobj.qualifiedName.skipLast(1))
-	}
 
-	/** For each name in names create a new ImportDeclaration using the Module from declaration. */
-	def createNamedImports(ImportDeclaration declaration, Iterable<String> names) {
-		names.map[createNamedImport(it, declaration.module.qualifiedName)]
-	}
-
-	/** Creates a new named import of 'name' from 'module'*/
-	private def ImportDeclaration createNamedImport(String name, QualifiedName module) {
-		return createNamedImport(name, qualifiedNameConverter.toString(module))
-	}
-
-	/** Creates a new named import of 'name' from 'moduleName'*/
-	private def ImportDeclaration createNamedImport(String name, String moduleName) {
-		val ret = N4JSFactory::eINSTANCE.createImportDeclaration
-
-		val namedImportSpec = N4JSFactory::eINSTANCE.createNamedImportSpecifier
-		val tmodule = TypesFactory.eINSTANCE.createTModule
-		tmodule.qualifiedName = moduleName
-		val idfEle = TypesFactory.eINSTANCE.createTExportableElement
-		idfEle.name = name
-		namedImportSpec.importedElement = idfEle
-
-		ret.importSpecifiers.add(namedImportSpec)
-		ret.eAdapters.add(nodelessMarker)
-		ret.module = tmodule
-
-		return ret
-	}
-
-	/** Creates a new default import with name 'name' from 'module'*/
-	private def ImportDeclaration createDefaultImport(String name, QualifiedName module) {
-		return createDefaultImport(name, qualifiedNameConverter.toString(module))
-	}
-
-	/** Creates a new default import with name 'name' from 'moduleName'*/
-	private def ImportDeclaration createDefaultImport(String name, String moduleName) {
-		val ret = N4JSFactory::eINSTANCE.createImportDeclaration
-
-		val defaultImportSpec = N4JSFactory::eINSTANCE.createDefaultImportSpecifier
-		val tmodule = TypesFactory.eINSTANCE.createTModule
-		tmodule.qualifiedName = moduleName
-		val idfEle = TypesFactory.eINSTANCE.createTExportableElement
-		idfEle.name = name
-		defaultImportSpec.importedElement = idfEle
-
-		ret.importSpecifiers.add(defaultImportSpec)
-		ret.eAdapters.add(nodelessMarker)
-		ret.module = tmodule
-
-		return ret
-	}
-
-	/**
-	 * Sorting a List of import declarations (mixed content Named / Namespace)
-	 * Order is: First all Named imports, then all Namespace imports.
-	 */
-	private def sortByImport(List<ImportDeclaration> declarations) {
-		declarations.sort(new Comparator<ImportDeclaration>() {
-			override compare(ImportDeclaration o1, ImportDeclaration o2) {
-				switch ( o1.importSpecifiers.get(0) ) {
-					NamespaceImportSpecifier: {
-						if (o2.importSpecifiers.get(0) instanceof NamespaceImportSpecifier) {
-							compModules(o1, o2)
-
-						} else {
-							1; // positive, since wildcards are lasts
-						}
-					}
-					NamedImportSpecifier: {
-						if (o2.importSpecifiers.get(0) instanceof NamespaceImportSpecifier) {
-							-1; // negative, wildcard last.
-						} else {
-							var cmp = compModules(o1, o2)
-							if (cmp === 0) {
-								compNamedImports(o1.importSpecifiers, o2.importSpecifiers)
-							} else
-								cmp
-						}
-					}
-					default:
-						throw new UnsupportedOperationException("Unknown ImportSpecifier")
-				}
-			}
-		}) // end sort.
-	}
-
-	private def sortByName(List<ImportSpecifier> list) {
-		Collections.sort(list, new Comparator<ImportSpecifier>() {
-			override compare(ImportSpecifier o1, ImportSpecifier o2) {
-				if (o1 instanceof NamespaceImportSpecifier) {
-					return 1;
-				} else if (o2 instanceof NamespaceImportSpecifier) {
-					return -1;
-				} else {
-					return compNamedImport(o1 as NamedImportSpecifier, o2 as NamedImportSpecifier);
-				}
-			}
-		})
-	}
-
-	/** Compare list of NamedImports.
-	 *  Comparing elements in sequential order until inequality is found.
-	 */
-	final static private def int compNamedImports(EList<ImportSpecifier> l1, EList<ImportSpecifier> l2) {
-		val comparable_elements = Math.min(l1.size, l2.size)
-		for (var int i = 0; i < comparable_elements; i++) {
-			val cmp = compNamedImport(l1.get(i) as NamedImportSpecifier, l2.get(i) as NamedImportSpecifier)
-			if (cmp !== 0) return cmp
-		}
-
-		// longer list below:
-		return l1.size - l2.size
-	}
-
-	/** Compares two NamedImport specifier: e.g. "Z as A" <--> "X as B" */
-	final static private def int compNamedImport(NamedImportSpecifier o1, NamedImportSpecifier o2) {
-		// o1.findActualNodeFor().tokenText. compareTo( o2.findActualNodeFor.tokenText )
-		var name1 = o1?.importedElement?.name
-		var name2 = o2?.importedElement?.name
-		val cmp1 = (name1 ?: "").compareTo(name2 ?: "")
-		if (cmp1 == 0) {
-			(o1.alias ?: "").compareTo(o2.alias ?: "")
-		} else
-			cmp1
-	}
-
-	/** compare based on Qualified name */
-	final static private def int compModules(ImportDeclaration o1, ImportDeclaration o2) {
-		(o1.module.qualifiedName ?: "").compareTo(o2.module.qualifiedName ?: "")
-	}
 
 	/** Extracts the token text for existing import-declaration or creates new textual representation for 
 	 * a new generated import declaration.
@@ -794,7 +642,7 @@ public class N4JSOrganizeImports {
 						}
 					} else {
 						// more then one, sort them:
-						impSpec.sortByName()
+					    ImportsSorter.sortByName(impSpec)
 						val defImp = impSpec.filter(DefaultImportSpecifier).head; // only one is possible
 						val defaultImport = if (defImp === null) "" else '''«defImp.importedElement.name», ''';
 
@@ -804,7 +652,7 @@ public class N4JSOrganizeImports {
 					}
 				} else {
 					val importNode = findActualNodeFor(declaration);
-					return eu.numberfour.n4js.ui.organize.imports.N4JSOrganizeImports.rewriteTokenText(importNode,
+					return N4JSOrganizeImports.rewriteTokenText(importNode,
 						spacer, SEMICOLON_INSERTED);
 				}
 			}
@@ -943,8 +791,6 @@ public class N4JSOrganizeImports {
 				return ChangeProvider.removeText(doc, offset, end - offset, true);
 			}
 
-			def Shell getShell() { return Display.getCurrent.activeShell }
-
 			private def <T> List<T> takefirst(Multimap<String, T> multimap) {
 				val result = <T>newArrayList();
 
@@ -1039,38 +885,6 @@ public class N4JSOrganizeImports {
 //		}
 //	}
 //	}
-			/** 
-			 * Enhanced information, not deducible from the IEObjectDescription:
-			 * <ul>
-			 *  <li>how to import {@link #exportedAsDefault}</li>
-			 *  <li>name used in script 
-			 * </ul>
-			 * Mainly it provides information used in cases of default exports, 
-			 * where the IEObjectdescription must be handled differently. 
-			 * 
-			 * Also overrides {@code equals()} and {@code hashCode()} to enable set-based operations.
-			 * 
-			 * It differs from {@link ImportProvidedElement} as this light-weight structure only describes potential imports, 
-			 * while instances of {@link ImportProvidedElement} are objects for tracking usage of already imported elements.
-			 * 
-			 */
-			@Data
-			public final static class ImportableObject {
-				String name;
-				IEObjectDescription eobj;
-				boolean exportedAsDefault;
 
-				override equals(Object o) {
-					if (o instanceof ImportableObject) {
-						return name == o.name && exportedAsDefault == o.exportedAsDefault &&
-							eobj.EObjectURI.equals(o.eobj.EObjectURI);
-					} else
-						return false;
-				}
-
-				override hashCode() {
-					return name.hashCode + (if (exportedAsDefault) 13 else 7) + eobj.EObjectURI.hashCode;
-				}
-			}
 		}
 		

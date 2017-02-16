@@ -73,6 +73,10 @@ public class N4JSOrganizeImportsHelper {
 	@Inject
 	private N4JSDocumentationProvider n4JSDocumentationProvider;
 
+	/**
+	 * Obtains {@link IXtextDocument} for the provided file and delegates to
+	 * {@link #doOrganizeImports(IXtextDocument, Interaction)}
+	 */
 	public void doOrganizeImports(IFile file, final Interaction interaction, IProgressMonitor mon)
 			throws CoreException {
 
@@ -111,49 +115,17 @@ public class N4JSOrganizeImportsHelper {
 			return null;
 		});
 
-		List<IChange> result = document.readOnly(
-				new IUnitOfWork<List<IChange>, XtextResource>() {
+		List<IChange> result = document.readOnly(prepareImportsChanges(document, interaction));
 
-					@Override
-					public List<IChange> exec(XtextResource xtextResource) throws Exception {
-						// sysTraceUtil.traceCall();
-						// Position, length 0
-						// N4JSOrganizeImports organizeImports = getOrganizeImports(xtextResource).orElse(null);
-						if (organizeImports == null) {
-							System.out.println("CANNOT ORGANISE " + xtextResource.getURI());
-							return null;
-						}
+		applyChangesToDocument(document, result);
 
-						InsertionPoint insertionPoint = organizeImports.getImportRegion(xtextResource);
+	}
 
-						if (insertionPoint.offset != -1) {
-							List<IChange> changes = new ArrayList<>();
-							try {
-								final String NL = ChangeProvider.lineDelimiter(document,
-										insertionPoint.offset);
-
-								final String organizedImportSection = organizeImports
-										.getOrganizedImportSection(xtextResource, NL, interaction);
-								if (organizedImportSection != null) {
-									// remove old imports
-									changes.addAll(organizeImports.getCleanupChanges(xtextResource, document));
-									// insert new imports
-									changes.addAll(prepareRealInsertion(document, xtextResource, insertionPoint, NL,
-											organizedImportSection));
-									return changes;
-								}
-							} catch (UserCanceledBreakException e) {
-								return null; // user-triggered cancellation, nothing to report.
-							} catch (BreakException e) {
-								LOGGER.warn("Organize imports broke:", e);
-								throw e;
-							}
-						}
-						return null;
-					}
-
-				});
-
+	/**
+	 * Modifies provided document with provided changes. If list of changes is not meaningful will not touch the
+	 * document.
+	 */
+	private void applyChangesToDocument(final IXtextDocument document, List<IChange> result) {
 		if (result != null && !result.isEmpty()) {
 			// do the changes really modify anything?
 			ChangeAnalysis changeAnalysis = condense(result);
@@ -179,7 +151,58 @@ public class N4JSOrganizeImportsHelper {
 					});
 
 		}
+	}
 
+	/**
+	 * Reads provided document and by analyzing it with {@link N4JSOrganizeImports} prepares list of changes to be made.
+	 *
+	 * @param document
+	 *            to analyze
+	 * @param interaction
+	 *            controls dealing with multiple choices
+	 */
+	private IUnitOfWork<List<IChange>, XtextResource> prepareImportsChanges(final IXtextDocument document,
+			final Interaction interaction) {
+		return new IUnitOfWork<List<IChange>, XtextResource>() {
+
+			@Override
+			public List<IChange> exec(XtextResource xtextResource) throws Exception {
+				// sysTraceUtil.traceCall();
+				// Position, length 0
+				// N4JSOrganizeImports organizeImports = getOrganizeImports(xtextResource).orElse(null);
+				if (organizeImports == null) {
+					System.out.println("CANNOT ORGANISE " + xtextResource.getURI());
+					return null;
+				}
+
+				InsertionPoint insertionPoint = organizeImports.getImportRegion(xtextResource);
+
+				if (insertionPoint.offset != -1) {
+					List<IChange> changes = new ArrayList<>();
+					try {
+						final String NL = ChangeProvider.lineDelimiter(document,
+								insertionPoint.offset);
+
+						final String organizedImportSection = organizeImports
+								.getOrganizedImportSection(xtextResource, NL, interaction);
+						if (organizedImportSection != null) {
+							// remove old imports
+							changes.addAll(organizeImports.getCleanupChanges(xtextResource, document));
+							// insert new imports
+							changes.addAll(prepareRealInsertion(document, xtextResource, insertionPoint, NL,
+									organizedImportSection));
+							return changes;
+						}
+					} catch (UserCanceledBreakException e) {
+						return null; // user-triggered cancellation, nothing to report.
+					} catch (BreakException e) {
+						LOGGER.warn("Organize imports broke:", e);
+						throw e;
+					}
+				}
+				return null;
+			}
+		};
 	}
 
 	/**
