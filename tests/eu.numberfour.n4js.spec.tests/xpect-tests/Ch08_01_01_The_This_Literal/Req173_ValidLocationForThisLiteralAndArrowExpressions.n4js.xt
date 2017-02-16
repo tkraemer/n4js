@@ -4,6 +4,9 @@ interface J {
 	static s = 5;
 	// XPECT errors --> "In interfaces, the this literal may not be used in static methods or field accessors and in initializers of static data fields." at "this"
     static fn = () => console.log(this.uups);
+    num = 5;
+    // XPECT errors --> "In interfaces, the this literal may not be used in initializers of data fields." at "this"
+    fnx = () => console.log(this.num);
 }
 
 class C {
