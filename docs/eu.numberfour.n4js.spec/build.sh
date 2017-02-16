@@ -31,7 +31,7 @@ mv N4JSSpec.pdf ./$GEN_FOLDER/
 
 # Clean unwanted adoc/graffle files and delete empty subdirectories
 pushd ./$GEN_FOLDER/chapters
-	rm -rf **/*.adoc && rm -rf **/**/*.graffle &&	find . -type d -empty -exec rmdir {} \;
+	rm -rf **/*.adoc && rm -rf **/**/*.graffle &&	find . -type d -empty -print
 popd
 
 echo DONE: AsciiSpec conversion finished.
