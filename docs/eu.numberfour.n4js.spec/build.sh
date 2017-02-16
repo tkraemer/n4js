@@ -29,9 +29,9 @@ asciispec -b docbook N4JSSpec.adoc
 fopub N4JSSpec.xml 
 mv N4JSSpec.pdf ./$GEN_FOLDER/
 
-# Clean unwanted adoc/graffle files
+# Clean unwanted adoc/graffle files and delete empty subdirectories
 pushd ./$GEN_FOLDER/chapters
-	find . -name "*.adoc" -delete && find . -name "*.graffle" -delete
+	rm -rf **/*.adoc && rm -rf **/**/*.graffle &&	find . -type d -empty -exec rmdir {} \;
 popd
 
 echo DONE: AsciiSpec conversion finished.
