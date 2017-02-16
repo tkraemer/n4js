@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.resource.IContainer
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
-import org.eclipse.xtext.resource.IResourceDescriptions
 import org.eclipse.xtext.resource.IResourceDescription
 
 /**

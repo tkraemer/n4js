@@ -40,10 +40,8 @@ import eu.numberfour.n4js.ts.types.InferenceVariable
  */
 @Singleton
 package class PolyProcessor_ArrayLiteral extends AbstractPolyProcessor {
-
 	@Inject
 	private PolyProcessor polyProcessor;
-
 	@Inject
 	private N4JSTypeSystem ts;
 	@Inject
@@ -96,19 +94,11 @@ if(isValueToBeDestructured) {
 		}
 
 		val resultLen = getResultLength(arrLit, expectedElemTypeRefs);
-		val isIterableN = resultLen >= 2;
 		val TypeVariable[] resultInfVars = infCtx.newInferenceVariables(resultLen);
 
 		processElements(G, cache, infCtx, arrLit, resultLen, resultInfVars);
 
-		// create temporary type (i.e. may contain inference variables):
-		// Array<T> (where T is a new inference variable) or
-		// Iterable<T> (where T is a new inference variable) or
-		// IterableN<T1,T2,...,TN> (where T1,...TN are new inference variables, N>=2)
-		val TypeRef resultTypeRef = TypeUtils.createTypeRef(
-			if (isIterableN) G.iterableNType(resultLen) else G.arrayType,
-			resultInfVars.map[TypeUtils.createTypeRef(it)]
-		);
+		val TypeRef resultTypeRef = getResultTypeRef(G, resultLen, resultInfVars);
 
 		// register onSolved handlers to add final types to cache (i.e. may not contain inference variables)
 		infCtx.onSolved [ solution | handleOnSolved(G, cache, arrLit, expectedElemTypeRefs, resultTypeRef, solution) ];
@@ -125,7 +115,7 @@ if(isValueToBeDestructured) {
 	 * <li>#[] for any other kind of expectedTypeRef</li>
 	 * </ul>
 	 */
-	def private List<TypeRef> getExpectedElemTypeRefs(RuleEnvironment G, TypeRef expectedTypeRef) {
+	private def List<TypeRef> getExpectedElemTypeRefs(RuleEnvironment G, TypeRef expectedTypeRef) {
 		if (expectedTypeRef !== null) {
 			val extractedTypeRefs = destructureHelper.extractIterableElementTypesUBs(G, expectedTypeRef);
 			return extractedTypeRefs.toList // will have len>1 only if expectation is IterableN
@@ -138,7 +128,7 @@ if(isValueToBeDestructured) {
 	 * Makes a best effort for building a type in case something went awry. It's only non-trivial in case we have an
 	 * expectation of IterableN.
 	 */
-	def private TypeRef buildFallbackTypeForArrayLiteral(boolean isIterableN, int resultLen,
+	private def TypeRef buildFallbackTypeForArrayLiteral(boolean isIterableN, int resultLen,
 		List<TypeRef> elemTypeRefs, List<TypeRef> expectedElemTypeRefs, RuleEnvironment G) {
 
 		if (isIterableN) {
@@ -224,6 +214,22 @@ if(isValueToBeDestructured) {
 			1 // ... but at least 1 (even if numOfElems is 0, for example)
 		);
 		return resultLen;
+	}
+	
+	/**
+	 * Creates temporary type (i.e. may contain inference variables):
+	 * <ul>
+	 * <li>Array<T> (where T is a new inference variable) or</li>
+	 * <li>Iterable<T> (where T is a new inference variable) or</li>
+	 * <li>IterableN<T1,T2,...,TN> (where T1,...TN are new inference variables, N>=2)</li>
+	 * </ul>
+	 */
+	private def TypeRef getResultTypeRef(RuleEnvironment G, int resultLen, TypeVariable[] resultInfVars) {
+		val isIterableN = resultLen >= 2;
+		val declaredType = if (isIterableN) G.iterableNType(resultLen) else G.arrayType;
+		val typeArgs = resultInfVars.map[TypeUtils.createTypeRef(it)];
+		val TypeRef resultTypeRef = TypeUtils.createTypeRef(declaredType, typeArgs);
+		return resultTypeRef;
 	}
 	
 	/**
