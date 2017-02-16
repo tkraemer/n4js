@@ -10,55 +10,32 @@
  */
 package eu.numberfour.n4js.ui.organize.imports;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.log4j.Logger;
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.MultiStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.window.Window;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 
 import eu.numberfour.n4js.documentation.N4JSDocumentationProvider;
-import eu.numberfour.n4js.fileextensions.FileExtensionType;
-import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
 import eu.numberfour.n4js.parser.InternalSemicolonInjectingParser;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.ts.services.TypeExpressionsGrammarAccess;
@@ -68,11 +45,14 @@ import eu.numberfour.n4js.ui.changes.IAtomicChange;
 import eu.numberfour.n4js.ui.changes.IChange;
 import eu.numberfour.n4js.ui.changes.Replacement;
 import eu.numberfour.n4js.ui.organize.imports.BreakException.UserCanceledBreakException;
-import eu.numberfour.n4js.utils.CallTraceUtil;
 import eu.numberfour.n4js.utils.UtilN4;
-import eu.numberfour.n4js.utils.languages.N4LanguageUtils;
 
 /**
+ * This XtextDocumentImportsOrganizer will read provided documents (to find proper insertion points) and then will
+ * modify those documents with organizes imports.
+ *
+ * Since many injected services depend on type of the organized document (i.e. language, e.g. N4JS) it is desired that
+ * callers use {@link OrganizeImportsHelperAccess} which will take care the injection mechanisms.
  */
 public class N4JSOrganizeImportsHelper {
 
@@ -88,104 +68,10 @@ public class N4JSOrganizeImportsHelper {
 	private XtextDocumentProvider docProvider;
 
 	@Inject
-	private FileExtensionsRegistry fileExtensionsRegistry;
-
-	@Inject
-	private CallTraceUtil sysTraceUtil;
-
-	// cleaned version of extensions got from fileExtensions
-	private Collection<String> n4FileExtensions;
-
-	@Inject
 	private TypeExpressionsGrammarAccess typeExpressionsGrammarAccess;
 
 	@Inject
 	private N4JSDocumentationProvider n4JSDocumentationProvider;
-
-	private Multimap<IProject, IFile> collectFiles(IStructuredSelection structuredSelection) {
-		Multimap<IProject, IFile> result = HashMultimap.create();
-		for (Object object : structuredSelection.toList()) {
-			collectRelevantFiles(object, result);
-		}
-		return result;
-	}
-
-	private void collectRelevantFiles(Object element, Multimap<IProject, IFile> result) {
-		if (element instanceof IWorkingSet) {
-			IWorkingSet workingSet = (IWorkingSet) element;
-			IAdaptable[] elements = workingSet.getElements();
-			for (int j = 0; j < elements.length; j++) {
-				collectRelevantFiles(elements[j], result);
-			}
-		} else if (element instanceof IContainer) {
-			IContainer container = (IContainer) element;
-			try {
-				for (IResource child : container.members(IContainer.EXCLUDE_DERIVED)) {
-					collectRelevantFiles(child, result);
-				}
-			} catch (CoreException c) {
-				LOGGER.warn("Error while collecting files", c);
-			}
-		} else if (element instanceof IFile) {
-			collectIFiles(result, new Object[] { element });
-		}
-	}
-
-	private void collectIFiles(Multimap<IProject, IFile> result, Object[] nonJavaResources) {
-		for (Object object : nonJavaResources) {
-			if (object instanceof IFile) {
-				IFile iFile = (IFile) object;
-				if (shouldHandleFile(iFile))
-					result.put(iFile.getProject(), iFile);
-			}
-		}
-	}
-
-	/**
-	 * Checking the file type by getting the known extensions from the FileExtensionProvider
-	 *
-	 * @param object
-	 *            file to judge
-	 * @return true if the file is a valid file for organize import
-	 */
-	private boolean shouldHandleFile(IFile object) {
-		String fileExtension = object.getFileExtension();
-		return fileExtension != null && getN4FileExtensions().contains(fileExtension);
-	}
-
-	/**
-	 * Access with lazy init to the desired file extensions to organize.
-	 *
-	 * @return Set of extensions for files on which organization should be applied
-	 */
-	private Collection<String> getN4FileExtensions() {
-		if (n4FileExtensions == null) {
-			n4FileExtensions = new HashSet<>(
-					fileExtensionsRegistry.getFileExtensions(FileExtensionType.TYPABLE_FILE_EXTENSION));
-			n4FileExtensions.removeAll(fileExtensionsRegistry.getFileExtensions(FileExtensionType.RAW_FILE_EXTENSION));
-
-			// TODO IDE-2520 enable for N4JSX
-			//
-			// Once we enable Organize Imports with IDE-2520 filtering below should be removed. Populating list as above
-			// will be enough.
-			// n4FileExtensions.remove(N4JSGlobals.N4JSX_FILE_EXTENSION);
-		}
-		return n4FileExtensions;
-	}
-
-	public void organizeEditor(XtextEditor editor, final Interaction interaction) {
-		try {
-			IXtextDocument document = editor.getDocument();
-			doOrganizeImports(document, interaction);
-		} catch (RuntimeException re) {
-			if (re.getCause() instanceof BreakException) {
-				LOGGER.debug("user canceled");
-			} else {
-				LOGGER.warn("Unrecognized RT-exception", re);
-			}
-
-		}
-	}
 
 	public void doOrganizeImports(IFile file, final Interaction interaction, IProgressMonitor mon)
 			throws CoreException {
@@ -294,10 +180,6 @@ public class N4JSOrganizeImportsHelper {
 
 		}
 
-	}
-
-	private Optional<N4JSOrganizeImports> getOrganizeImports(XtextResource xtextResource) {
-		return N4LanguageUtils.getServiceForContext(xtextResource.getURI(), N4JSOrganizeImports.class);
 	}
 
 	/**
@@ -461,8 +343,6 @@ public class N4JSOrganizeImportsHelper {
 		} else if (rText == atomicResult.get(atomicResult.size() - 1)) {
 			orderedChanges = Arrays.asList(current, rText);
 		} else {
-			// something is wrong here ?!
-			System.out.println("XXX");
 			return new ChangeAnalysis(atomicResult, false);
 		}
 
@@ -472,51 +352,4 @@ public class N4JSOrganizeImportsHelper {
 		return result;
 	}
 
-	static class ChangeAnalysis {
-		public ChangeAnalysis(List<IAtomicChange> changes, boolean noRealChanges) {
-			super();
-			this.changes = changes;
-			this.noRealChanges = noRealChanges;
-		}
-
-		List<IAtomicChange> changes;
-		boolean noRealChanges;
-		Replacement newText = null;
-		Replacement deletion = null;
-	}
-
-	/**
-	 * Shows JFace ErrorDialog but improved by constructing full stack trace in detail area.
-	 *
-	 * @return true if OK was pressed
-	 */
-	public static boolean errorDialogWithStackTrace(String msg, Throwable t) {
-
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-		t.printStackTrace(pw);
-
-		final String trace = sw.toString(); // stack trace as a string
-
-		// Temporary holder of child statuses
-		List<Status> childStatuses = new ArrayList<>();
-
-		// Split output by OS-independent new-line
-		for (String line : trace.split(System.getProperty("line.separator"))) {
-			// build & add status
-			childStatuses.add(new Status(IStatus.ERROR, "N4js-plugin-id", line));
-		}
-
-		MultiStatus ms = new MultiStatus("N4js-plugin-id", IStatus.ERROR,
-				childStatuses.toArray(new Status[] {}), // convert to array of statuses
-				t.getLocalizedMessage(), t);
-
-		final AtomicBoolean result = new AtomicBoolean(true);
-		Display.getDefault()
-				.syncExec(
-						() -> result.set(
-								ErrorDialog.openError(null, "Error occurred while organizing ", msg, ms) == Window.OK));
-
-		return result.get();
-	}
 }

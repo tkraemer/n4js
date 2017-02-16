@@ -54,9 +54,7 @@ public class OrganizeImportXpectMethod {
 
 	private final static Logger logger = Logger.getLogger(OrganizeImportXpectMethod.class);
 
-	// @Inject
-	// N4JSOrganizeImportsHandler organizeImportsHandler;
-
+	// TODO IDE-2520 verify with test in N4JSX, that we get correct injections
 	@Inject
 	N4JSOrganizeImportsHelper organizeImportsHelper;
 

@@ -20,7 +20,7 @@ import eu.numberfour.n4js.ui.changes.ChangeManager
 import eu.numberfour.n4js.ui.changes.IAtomicChange
 import eu.numberfour.n4js.ui.changes.ManifestChangeProvider
 import eu.numberfour.n4js.ui.organize.imports.Interaction
-import eu.numberfour.n4js.ui.organize.imports.N4JSOrganizeImportsHandler
+import eu.numberfour.n4js.ui.organize.imports.OrganizeImportsHelperAccess
 import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportRequirement
 import eu.numberfour.n4js.ui.wizard.model.AccessModifier
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference
@@ -58,9 +58,6 @@ class WizardGeneratorHelper {
 	
 	@Inject
 	private ChangeManager changeManager;
-	
-	@Inject
-	private N4JSOrganizeImportsHandler organizeImportsHandler;
 	
 	@Inject
 	private XtextDocumentProvider docProvider;
@@ -215,7 +212,7 @@ class WizardGeneratorHelper {
 	 * This method works in the background without opening the graphical editor.
 	 */
 	public def void organizeImports(IFile file, IProgressMonitor mon) throws CoreException {
-		organizeImportsHandler.organizeImportsInFile(mon, file, Interaction.takeFirst);
+		OrganizeImportsHelperAccess.organizeImportsInFile(mon, file, Interaction.takeFirst);
 	}
 	
 	/**
