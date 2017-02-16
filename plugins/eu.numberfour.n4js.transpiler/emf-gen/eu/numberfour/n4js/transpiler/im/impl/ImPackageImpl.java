@@ -224,9 +224,6 @@ public class ImPackageImpl extends EPackageImpl implements ImPackage {
 
 		// Initialize simple dependencies
 		N4JSPackage.eINSTANCE.eClass();
-		EcorePackage.eINSTANCE.eClass();
-		TypesPackage.eINSTANCE.eClass();
-		TypeRefsPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theImPackage.createPackageContents();

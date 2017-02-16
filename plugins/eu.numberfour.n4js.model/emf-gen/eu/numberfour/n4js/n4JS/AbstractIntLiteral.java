@@ -24,7 +24,7 @@ public interface AbstractIntLiteral extends NumericLiteral {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.math.BigDecimal%&gt; _value = this.getValue();\nreturn _value.intValue();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.math.BigDecimal%> _value = this.getValue();\nreturn _value.intValue();'"
 	 * @generated
 	 */
 	int toInt();
@@ -33,7 +33,7 @@ public interface AbstractIntLiteral extends NumericLiteral {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.math.BigDecimal%&gt; _value = this.getValue();\nreturn _value.longValue();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.math.BigDecimal%> _value = this.getValue();\nreturn _value.longValue();'"
 	 * @generated
 	 */
 	long toLong();
@@ -42,7 +42,7 @@ public interface AbstractIntLiteral extends NumericLiteral {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.math.BigDecimal%&gt; _value = this.getValue();\nreturn _value.toBigInteger();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.math.BigDecimal%> _value = this.getValue();\nreturn _value.toBigInteger();'"
 	 * @generated
 	 */
 	BigInteger toBigInteger();

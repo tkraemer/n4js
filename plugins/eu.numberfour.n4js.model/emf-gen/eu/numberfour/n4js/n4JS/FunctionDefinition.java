@@ -153,7 +153,7 @@ public interface FunctionDefinition extends FunctionOrFieldAccessor, TypeDefinin
 	 *  Convenience method returning the 'definedType' if it is a TFunction, otherwise <code>null</code>.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%eu.numberfour.n4js.ts.types.Type%&gt; defType = this.getDefinedType();\n&lt;%eu.numberfour.n4js.ts.types.TFunction%&gt; _xifexpression = null;\nif ((defType instanceof &lt;%eu.numberfour.n4js.ts.types.TFunction%&gt;))\n{\n\t_xifexpression = ((&lt;%eu.numberfour.n4js.ts.types.TFunction%&gt;)defType);\n}\nreturn _xifexpression;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%eu.numberfour.n4js.ts.types.Type%> defType = this.getDefinedType();\n<%eu.numberfour.n4js.ts.types.TFunction%> _xifexpression = null;\nif ((defType instanceof <%eu.numberfour.n4js.ts.types.TFunction%>))\n{\n\t_xifexpression = ((<%eu.numberfour.n4js.ts.types.TFunction%>)defType);\n}\nreturn _xifexpression;'"
 	 * @generated
 	 */
 	TFunction getDefinedFunction();

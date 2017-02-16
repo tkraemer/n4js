@@ -27,7 +27,7 @@ public interface SimpleProjectDependency extends ProjectReference {
 	 * COMPILE by default
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return &lt;%eu.numberfour.n4js.n4mf.ProjectDependencyScope%&gt;.COMPILE;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%eu.numberfour.n4js.n4mf.ProjectDependencyScope%>.COMPILE;'"
 	 * @generated
 	 */
 	ProjectDependencyScope getScope();

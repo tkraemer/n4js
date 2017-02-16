@@ -55,7 +55,7 @@ public interface BooleanLiteral extends Literal {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _isTrue = this.isTrue();\nreturn &lt;%java.lang.Boolean%&gt;.toString(_isTrue);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _isTrue = this.isTrue();\nreturn <%java.lang.Boolean%>.toString(_isTrue);'"
 	 * @generated
 	 */
 	String getValueAsString();

@@ -56,7 +56,7 @@ public interface TAnnotationTypeRefArgument extends TAnnotationArgument {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.ts.typeRefs.TypeRef%&gt; _typeRef = this.getTypeRef();\nreturn _typeRef.getTypeRefAsString();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef = this.getTypeRef();\nreturn _typeRef.getTypeRefAsString();'"
 	 * @generated
 	 */
 	String getArgAsString();

@@ -62,7 +62,7 @@ public enum ShiftOperator implements Enumerator {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #SHL
-	 * @model name="shl" literal="&lt;&lt;"
+	 * @model name="shl" literal="<<"
 	 * @generated
 	 * @ordered
 	 */
@@ -77,7 +77,7 @@ public enum ShiftOperator implements Enumerator {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #SHR
-	 * @model name="shr" literal="&gt;&gt;"
+	 * @model name="shr" literal=">>"
 	 * @generated
 	 * @ordered
 	 */
@@ -92,7 +92,7 @@ public enum ShiftOperator implements Enumerator {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #USHR
-	 * @model name="ushr" literal="&gt;&gt;&gt;"
+	 * @model name="ushr" literal=">>>"
 	 * @generated
 	 * @ordered
 	 */

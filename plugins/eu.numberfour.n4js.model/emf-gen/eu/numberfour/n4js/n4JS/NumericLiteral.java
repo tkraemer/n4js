@@ -56,7 +56,7 @@ public interface NumericLiteral extends Literal {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.math.BigDecimal%&gt; _value = this.getValue();\nboolean _tripleEquals = (_value == null);\nif (_tripleEquals)\n{\n\treturn null;\n}\n&lt;%java.math.BigDecimal%&gt; _value_1 = this.getValue();\nreturn _value_1.toString();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.math.BigDecimal%> _value = this.getValue();\nboolean _tripleEquals = (_value == null);\nif (_tripleEquals)\n{\n\treturn null;\n}\n<%java.math.BigDecimal%> _value_1 = this.getValue();\nreturn _value_1.toString();'"
 	 * @generated
 	 */
 	String getValueAsString();

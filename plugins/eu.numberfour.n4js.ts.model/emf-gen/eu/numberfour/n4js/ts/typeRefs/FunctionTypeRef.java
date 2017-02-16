@@ -36,7 +36,7 @@ public interface FunctionTypeRef extends ParameterizedTypeRef, FunctionTypeExprO
 	 * Convenience method, returns the declared this type of the referenced function type.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.ts.types.TFunction%&gt; _functionType = this.getFunctionType();\nreturn _functionType.getDeclaredThisType();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.TFunction%> _functionType = this.getFunctionType();\nreturn _functionType.getDeclaredThisType();'"
 	 * @generated
 	 */
 	TypeRef getDeclaredThisType();
@@ -48,7 +48,7 @@ public interface FunctionTypeRef extends ParameterizedTypeRef, FunctionTypeExprO
 	 * Convenience method, returns the type variables of the referenced function type.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.ts.types.TFunction%&gt; _functionType = this.getFunctionType();\nreturn _functionType.getTypeVars();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.TFunction%> _functionType = this.getFunctionType();\nreturn _functionType.getTypeVars();'"
 	 * @generated
 	 */
 	EList<TypeVariable> getTypeVars();
@@ -72,7 +72,7 @@ public interface FunctionTypeRef extends ParameterizedTypeRef, FunctionTypeExprO
 	 * Convenience method, returns the fpars of the referenced function type.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.ts.types.TFunction%&gt; _functionType = this.getFunctionType();\nreturn _functionType.getFpars();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.TFunction%> _functionType = this.getFunctionType();\nreturn _functionType.getFpars();'"
 	 * @generated
 	 */
 	EList<TFormalParameter> getFpars();
@@ -84,7 +84,7 @@ public interface FunctionTypeRef extends ParameterizedTypeRef, FunctionTypeExprO
 	 * Convenience method, returns the return type of the referenced function type.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.ts.types.TFunction%&gt; _functionType = this.getFunctionType();\nreturn _functionType.getReturnTypeRef();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.TFunction%> _functionType = this.getFunctionType();\nreturn _functionType.getReturnTypeRef();'"
 	 * @generated
 	 */
 	TypeRef getReturnTypeRef();

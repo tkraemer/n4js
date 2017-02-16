@@ -8,7 +8,6 @@
 package eu.numberfour.n4jsx.n4JSX.impl;
 
 import eu.numberfour.n4js.n4JS.N4JSPackage;
-import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4jsx.n4JSX.JSXAttribute;
 import eu.numberfour.n4jsx.n4JSX.JSXChild;
@@ -132,9 +131,6 @@ public class N4JSXPackageImpl extends EPackageImpl implements N4JSXPackage {
 
 		// Initialize simple dependencies
 		N4JSPackage.eINSTANCE.eClass();
-		TypesPackage.eINSTANCE.eClass();
-		EcorePackage.eINSTANCE.eClass();
-		TypeRefsPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theN4JSXPackage.createPackageContents();

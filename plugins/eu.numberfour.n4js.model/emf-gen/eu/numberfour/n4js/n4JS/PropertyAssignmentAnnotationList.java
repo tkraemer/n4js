@@ -31,7 +31,7 @@ public interface PropertyAssignmentAnnotationList extends AbstractAnnotationList
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%org.eclipse.emf.ecore.EObject%&gt; c = this.eContainer();\nif ((c instanceof &lt;%eu.numberfour.n4js.n4JS.PropertyAssignment%&gt;))\n{\n\treturn ((&lt;%eu.numberfour.n4js.n4JS.PropertyAssignment%&gt;)c).getDefinedMember();\n}\nreturn null;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%org.eclipse.emf.ecore.EObject%> c = this.eContainer();\nif ((c instanceof <%eu.numberfour.n4js.n4JS.PropertyAssignment%>))\n{\n\treturn ((<%eu.numberfour.n4js.n4JS.PropertyAssignment%>)c).getDefinedMember();\n}\nreturn null;'"
 	 * @generated
 	 */
 	TStructMember getDefinedMember();

@@ -27,7 +27,7 @@ public interface N4ClassDeclaration extends N4ClassDefinition, N4ClassifierDecla
 	 * Returns true if the class is declared as abstract.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%eu.numberfour.n4js.n4JS.N4Modifier%&gt;&gt; _declaredModifiers = this.getDeclaredModifiers();\nreturn _declaredModifiers.contains(&lt;%eu.numberfour.n4js.n4JS.N4Modifier%&gt;.ABSTRACT);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.n4JS.N4Modifier%>> _declaredModifiers = this.getDeclaredModifiers();\nreturn _declaredModifiers.contains(<%eu.numberfour.n4js.n4JS.N4Modifier%>.ABSTRACT);'"
 	 * @generated
 	 */
 	boolean isAbstract();

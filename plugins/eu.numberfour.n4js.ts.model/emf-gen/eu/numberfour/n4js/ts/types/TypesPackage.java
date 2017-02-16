@@ -13805,7 +13805,7 @@ public interface TypesPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Iterable Of TClassifier</em>'.
 	 * @see java.lang.Iterable
-	 * @model instanceClass="java.lang.Iterable&lt;? extends eu.numberfour.n4js.ts.types.TClassifier&gt;"
+	 * @model instanceClass="java.lang.Iterable<? extends eu.numberfour.n4js.ts.types.TClassifier>"
 	 * @generated
 	 */
 	EDataType getIterableOfTClassifier();
@@ -13838,7 +13838,7 @@ public interface TypesPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Member List</em>'.
 	 * @see java.util.List
-	 * @model instanceClass="java.util.List&lt;? extends eu.numberfour.n4js.ts.types.TMember&gt;"
+	 * @model instanceClass="java.util.List<? extends eu.numberfour.n4js.ts.types.TMember>"
 	 * @generated
 	 */
 	EDataType getMemberList();
@@ -13849,7 +13849,7 @@ public interface TypesPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>TClassifier Iterable</em>'.
 	 * @see java.lang.Iterable
-	 * @model instanceClass="java.lang.Iterable&lt;eu.numberfour.n4js.ts.types.TClassifier&gt;"
+	 * @model instanceClass="java.lang.Iterable<eu.numberfour.n4js.ts.types.TClassifier>"
 	 * @generated
 	 */
 	EDataType getTClassifierIterable();

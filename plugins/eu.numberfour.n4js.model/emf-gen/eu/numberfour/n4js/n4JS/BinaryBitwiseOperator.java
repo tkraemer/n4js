@@ -62,7 +62,7 @@ public enum BinaryBitwiseOperator implements Enumerator {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #AND
-	 * @model name="and" literal="&amp;"
+	 * @model name="and" literal="&"
 	 * @generated
 	 * @ordered
 	 */

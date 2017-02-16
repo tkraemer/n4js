@@ -63,7 +63,7 @@ public interface TGetter extends FieldAccessor, TMemberWithAccessModifier {
 	 * * Always returns GETTER
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return &lt;%eu.numberfour.n4js.ts.types.MemberType%&gt;.GETTER;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%eu.numberfour.n4js.ts.types.MemberType%>.GETTER;'"
 	 * @generated
 	 */
 	MemberType getMemberType();
@@ -77,7 +77,7 @@ public interface TGetter extends FieldAccessor, TMemberWithAccessModifier {
 	 * colon separated (return) type if declared.  Overrides TMember's method.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%java.lang.StringBuilder%&gt; strb = new &lt;%java.lang.StringBuilder%&gt;(\"get \");\n&lt;%java.lang.String%&gt; _name = this.getName();\nstrb.append(_name);\nstrb.append(\"()\");\n&lt;%eu.numberfour.n4js.ts.typeRefs.TypeRef%&gt; _declaredTypeRef = this.getDeclaredTypeRef();\nboolean _tripleNotEquals = (_declaredTypeRef != null);\nif (_tripleNotEquals)\n{\n\t&lt;%java.lang.StringBuilder%&gt; _append = strb.append(\": \");\n\t&lt;%eu.numberfour.n4js.ts.typeRefs.TypeRef%&gt; _declaredTypeRef_1 = this.getDeclaredTypeRef();\n\t&lt;%java.lang.String%&gt; _typeRefAsString = _declaredTypeRef_1.getTypeRefAsString();\n\t_append.append(_typeRefAsString);\n}\nreturn strb.toString();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%java.lang.StringBuilder%> strb = new <%java.lang.StringBuilder%>(\"get \");\n<%java.lang.String%> _name = this.getName();\nstrb.append(_name);\nstrb.append(\"()\");\n<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _declaredTypeRef = this.getDeclaredTypeRef();\nboolean _tripleNotEquals = (_declaredTypeRef != null);\nif (_tripleNotEquals)\n{\n\t<%java.lang.StringBuilder%> _append = strb.append(\": \");\n\t<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _declaredTypeRef_1 = this.getDeclaredTypeRef();\n\t<%java.lang.String%> _typeRefAsString = _declaredTypeRef_1.getTypeRefAsString();\n\t_append.append(_typeRefAsString);\n}\nreturn strb.toString();'"
 	 * @generated
 	 */
 	String getMemberAsString();

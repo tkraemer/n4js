@@ -23,7 +23,7 @@ public interface N4MethodDeclaration extends AnnotableN4MemberDeclaration, Metho
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((((this.eContainer() instanceof &lt;%eu.numberfour.n4js.n4JS.N4InterfaceDeclaration%&gt;) &amp;&amp; (this.getBody() == null)) &amp;&amp; \n\t(!&lt;%org.eclipse.xtext.xbase.lib.IterableExtensions%&gt;.&lt;&lt;%eu.numberfour.n4js.n4JS.Annotation%&gt;&gt;exists(this.getAnnotations(), new &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%eu.numberfour.n4js.n4JS.Annotation%&gt;, &lt;%java.lang.Boolean%&gt;&gt;()\n\t{\n\t\tpublic &lt;%java.lang.Boolean%&gt; apply(final &lt;%eu.numberfour.n4js.n4JS.Annotation%&gt; it)\n\t\t{\n\t\t\t&lt;%java.lang.String%&gt; _name = it.getName();\n\t\t\treturn &lt;%java.lang.Boolean%&gt;.valueOf(&lt;%com.google.common.base.Objects%&gt;.equal(_name, \"ProvidesDefaultImplementation\"));\n\t\t}\n\t}))) || this.getDeclaredModifiers().contains(&lt;%eu.numberfour.n4js.n4JS.N4Modifier%&gt;.ABSTRACT));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((((this.eContainer() instanceof <%eu.numberfour.n4js.n4JS.N4InterfaceDeclaration%>) && (this.getBody() == null)) && \n\t(!<%org.eclipse.xtext.xbase.lib.IterableExtensions%>.<<%eu.numberfour.n4js.n4JS.Annotation%>>exists(this.getAnnotations(), new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.n4JS.Annotation%>, <%java.lang.Boolean%>>()\n\t{\n\t\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.n4JS.Annotation%> it)\n\t\t{\n\t\t\t<%java.lang.String%> _name = it.getName();\n\t\t\treturn <%java.lang.Boolean%>.valueOf(<%com.google.common.base.Objects%>.equal(_name, \"ProvidesDefaultImplementation\"));\n\t\t}\n\t}))) || this.getDeclaredModifiers().contains(<%eu.numberfour.n4js.n4JS.N4Modifier%>.ABSTRACT));'"
 	 * @generated
 	 */
 	boolean isAbstract();
@@ -32,7 +32,7 @@ public interface N4MethodDeclaration extends AnnotableN4MemberDeclaration, Metho
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (&lt;%com.google.common.base.Objects%&gt;.equal(this.getName(), \"constructor\") &amp;&amp; (!this.isStatic()));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (<%com.google.common.base.Objects%>.equal(this.getName(), \"constructor\") && (!this.isStatic()));'"
 	 * @generated
 	 */
 	boolean isConstructor();
@@ -41,7 +41,7 @@ public interface N4MethodDeclaration extends AnnotableN4MemberDeclaration, Metho
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName%&gt; _declaredName = this.getDeclaredName();\nreturn (_declaredName == null);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName%> _declaredName = this.getDeclaredName();\nreturn (_declaredName == null);'"
 	 * @generated
 	 */
 	boolean isCallableConstructor();
@@ -50,7 +50,7 @@ public interface N4MethodDeclaration extends AnnotableN4MemberDeclaration, Metho
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%eu.numberfour.n4js.n4JS.N4Modifier%&gt;&gt; _declaredModifiers = this.getDeclaredModifiers();\nreturn _declaredModifiers.contains(&lt;%eu.numberfour.n4js.n4JS.N4Modifier%&gt;.STATIC);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.n4JS.N4Modifier%>> _declaredModifiers = this.getDeclaredModifiers();\nreturn _declaredModifiers.contains(<%eu.numberfour.n4js.n4JS.N4Modifier%>.STATIC);'"
 	 * @generated
 	 */
 	boolean isStatic();
@@ -64,7 +64,7 @@ public interface N4MethodDeclaration extends AnnotableN4MemberDeclaration, Metho
 	 * Generators may not be called 'constructor' either (except for computed names).
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.lang.String%&gt; _name = this.getName();\nboolean _equals = &lt;%com.google.common.base.Objects%&gt;.equal(\"prototype\", _name);\nif (_equals)\n{\n\treturn false;\n}\nboolean _and = false;\nif (!(&lt;%com.google.common.base.Objects%&gt;.equal(\"constructor\", this.getName()) &amp;&amp; this.isGenerator()))\n{\n\t_and = false;\n} else\n{\n\t&lt;%eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName%&gt; _declaredName = this.getDeclaredName();\n\t&lt;%eu.numberfour.n4js.n4JS.PropertyNameKind%&gt; _kind = null;\n\tif (_declaredName!=null)\n\t{\n\t\t_kind=_declaredName.getKind();\n\t}\n\tboolean _tripleNotEquals = (_kind != &lt;%eu.numberfour.n4js.n4JS.PropertyNameKind%&gt;.COMPUTED);\n\t_and = _tripleNotEquals;\n}\nif (_and)\n{\n\treturn false;\n}\nreturn true;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _name = this.getName();\nboolean _equals = <%com.google.common.base.Objects%>.equal(\"prototype\", _name);\nif (_equals)\n{\n\treturn false;\n}\nboolean _and = false;\nif (!(<%com.google.common.base.Objects%>.equal(\"constructor\", this.getName()) && this.isGenerator()))\n{\n\t_and = false;\n} else\n{\n\t<%eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName%> _declaredName = this.getDeclaredName();\n\t<%eu.numberfour.n4js.n4JS.PropertyNameKind%> _kind = null;\n\tif (_declaredName!=null)\n\t{\n\t\t_kind=_declaredName.getKind();\n\t}\n\tboolean _tripleNotEquals = (_kind != <%eu.numberfour.n4js.n4JS.PropertyNameKind%>.COMPUTED);\n\t_and = _tripleNotEquals;\n}\nif (_and)\n{\n\treturn false;\n}\nreturn true;'"
 	 * @generated
 	 */
 	boolean isValidName();
