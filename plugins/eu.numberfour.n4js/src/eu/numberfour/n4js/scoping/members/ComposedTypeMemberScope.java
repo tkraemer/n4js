@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
@@ -25,8 +26,11 @@ import org.eclipse.xtext.scoping.impl.AbstractScope;
 
 import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
+import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression;
+import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
+import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef;
 import eu.numberfour.n4js.ts.types.FieldAccessor;
 import eu.numberfour.n4js.ts.types.TField;
@@ -138,10 +142,6 @@ public class ComposedTypeMemberScope extends AbstractScope {
 		return description;
 	}
 
-	private IEObjectDescription createUnionMemberDescriptionWithErrors(IEObjectDescription result) {
-		return new UnionMemberDescriptionWithError(result, composedTypeRef, subScopes, writeAccess);
-	}
-
 	/**
 	 * For members of a union, pseudo instances need to be created (since the "union member" is not one of the members
 	 * of the sub-elements, but a new "merged" version). These pseudo instances are cached in the resource.
@@ -166,14 +166,14 @@ public class ComposedTypeMemberScope extends AbstractScope {
 	private TMember createComposedMember(String memberName) {
 		// check all subScopes for a member of the given name and
 		// merge the properties of the existing members into 'composedMember'
-		final ComposedMemberDescriptor composedMemberDescr = new ComposedMemberDescriptor(
-				writeAccess, EcoreUtilN4.getResource(context, composedTypeRef), ts);
+		final Resource resource = EcoreUtilN4.getResource(context, composedTypeRef);
+		final ComposedMemberDescriptor composedMemberDescr = getComposedMemberDescriptor(resource);
 		for (int idx = 0; idx < subScopes.length; idx++) {
-			IScope subScope = subScopes[idx];
-			final RuleEnvironment GwithSubstitutions = ts.createRuleEnvironmentForContext(
-					composedTypeRef.getTypeRefs().get(idx),
-					EcoreUtilN4.getResource(context, composedTypeRef));
-			TMember member = findMemberInSubScope(subScope, memberName);
+			final IScope subScope = subScopes[idx];
+			final TypeRef typeRef = composedTypeRef.getTypeRefs().get(idx);
+			final Resource res = EcoreUtilN4.getResource(context, composedTypeRef);
+			final RuleEnvironment GwithSubstitutions = ts.createRuleEnvironmentForContext(typeRef, res);
+			final TMember member = findMemberInSubScope(subScope, memberName);
 			composedMemberDescr.merge(GwithSubstitutions, member);
 		}
 		// produce result
@@ -204,6 +204,26 @@ public class ComposedTypeMemberScope extends AbstractScope {
 			// -> produce the ordinary "Cannot resolve reference ..." error by returning 'null'
 			return null;
 		}
+	}
+
+	private ComposedMemberDescriptor getComposedMemberDescriptor(final Resource resource) {
+		if (composedTypeRef instanceof UnionTypeExpression) {
+			return new UnionMemberDescriptor(writeAccess, resource, ts);
+		}
+		if (composedTypeRef instanceof IntersectionTypeExpression) {
+			return new IntersectionMemberDescriptor(writeAccess, resource, ts);
+		}
+		throw new IllegalStateException("unknown composed member type");
+	}
+
+	private IEObjectDescription createUnionMemberDescriptionWithErrors(IEObjectDescription result) {
+		if (composedTypeRef instanceof UnionTypeExpression) {
+			return new UnionMemberDescriptionWithError(result, composedTypeRef, subScopes, writeAccess);
+		}
+		if (composedTypeRef instanceof IntersectionTypeExpression) {
+			return new UnionMemberDescriptionWithError(result, composedTypeRef, subScopes, writeAccess);
+		}
+		throw new IllegalStateException("unknown composed member type");
 	}
 
 	/**

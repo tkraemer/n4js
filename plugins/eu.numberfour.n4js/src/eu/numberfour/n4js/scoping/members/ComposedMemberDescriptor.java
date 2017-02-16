@@ -42,37 +42,37 @@ import it.xsemantics.runtime.RuleEnvironment;
  * method {@link #isValid()} will tell if a valid composed member can be formed and, if so, it can be created by calling
  * {@link #create(String)}.
  */
-public class ComposedMemberDescriptor {
+abstract public class ComposedMemberDescriptor {
 
-	private final boolean writeAccess;
-	private final Resource resource;
-	private final N4JSTypeSystem ts;
+	final boolean writeAccess;
+	final Resource resource;
+	final N4JSTypeSystem ts;
 
 	// the following fields will contain the characteristics of the combined member
 	// and will be updated in the #mergeXYZ() methods below
-	private boolean empty = true;
-	private boolean oneIsMissing;
-	private MemberType kind;
-	private boolean multipleKinds;
-	private boolean readOnlyField;
-	private MemberAccessModifier accessibility = MemberAccessModifier.PUBLIC;
+	boolean empty = true;
+	boolean oneIsMissing;
+	MemberType kind;
+	boolean multipleKinds;
+	boolean readOnlyField;
+	MemberAccessModifier accessibility = MemberAccessModifier.PUBLIC;
 	/** used for type of fields and return type of getters and methods */
-	private final List<TypeRef> typeRefs = new ArrayList<>();
-	private final List<FparDescriptor> fpars = new ArrayList<>();
+	final List<TypeRef> typeRefs = new ArrayList<>();
+	final List<FparDescriptor> fpars = new ArrayList<>();
 
 	// ---
 
 	// the simplified union of the types in field 'typeRefs' (see above) is required at various points, so we cache this
-	private TypeRef cachedSimplifiedUnionOfTypeRefs;
+	private TypeRef cachedSimplifiedComposition;
 
-	private class FparDescriptor {
-		private final List<String> names = new ArrayList<>();
+	class FparDescriptor {
+		final List<String> names = new ArrayList<>();
 		@SuppressWarnings("hiding")
-		private final List<TypeRef> typeRefs = new ArrayList<>();
-		private boolean optional = true;
-		private boolean variadic = true;
+		final List<TypeRef> typeRefs = new ArrayList<>();
+		boolean optional = true;
+		boolean variadic = true;
 		// astInitializer is not merged
-		private boolean hasInitializerAssignment = true;
+		boolean hasInitializerAssignment = true;
 
 		public TFormalParameter create() {
 			final TFormalParameter fpar = TypesFactory.eINSTANCE.createTFormalParameter();
@@ -84,15 +84,26 @@ public class ComposedMemberDescriptor {
 				typeRefsToUse = new ArrayList<>(this.typeRefs);
 				typeRefsToUse.addAll(ComposedMemberDescriptor.this.typeRefs);
 			}
-			fpar.setTypeRef(ts.createSimplifiedIntersection(typeRefsToUse,
-					ComposedMemberDescriptor.this.resource));
-			if (this.optional && null != fpar.getTypeRef())
+			fpar.setTypeRef(ts.createSimplifiedIntersection(typeRefsToUse, ComposedMemberDescriptor.this.resource));
+			if (this.optional && null != fpar.getTypeRef()) {
 				fpar.getTypeRef().setUndefModifier(UndefModifier.OPTIONAL);
+			}
 			fpar.setVariadic(this.variadic);
 			fpar.setHasInitializerAssignment(this.hasInitializerAssignment);
 			return fpar;
 		}
 	}
+
+	/**
+	 * Returns a simplified composition.
+	 */
+	abstract TypeRef getSimplifiedComposition(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource);
+
+	/**
+	 * True iff all members merged via method {@link #merge(RuleEnvironment, TMember)} can be combined to a valid
+	 * composed member.
+	 */
+	abstract public boolean isValid();
 
 	/**
 	 * Constructor. The Resource and the N4JSTypeSystem will be used for type inference, etc. during merging of the
@@ -110,9 +121,10 @@ public class ComposedMemberDescriptor {
 	}
 
 	private TypeRef getSimplifiedUnionOfTypeRefs() {
-		if (cachedSimplifiedUnionOfTypeRefs == null)
-			cachedSimplifiedUnionOfTypeRefs = ts.createSimplifiedUnion(typeRefs, resource);
-		return cachedSimplifiedUnionOfTypeRefs;
+		if (cachedSimplifiedComposition == null) {
+			cachedSimplifiedComposition = getSimplifiedComposition(ts, typeRefs, resource);
+		}
+		return cachedSimplifiedComposition;
 	}
 
 	/**
@@ -215,36 +227,6 @@ public class ComposedMemberDescriptor {
 	}
 
 	/**
-	 * True iff all members merged via method {@link #merge(RuleEnvironment, TMember)} can be combined to a valid
-	 * composed member.
-	 */
-	public boolean isValid() {
-		// must be non-empty and complete
-		if (empty || oneIsMissing)
-			return false;
-		// check kind
-		// (note the tweak in #mergeKind() above, so even though we require multipleKinds===false here we allow
-		// combining fields with getters/setters in some cases)
-		if (kind == null || multipleKinds)
-			return false;
-		// disallow combination of read-only field + setter
-		if (isSetter(kind) && readOnlyField)
-			return false;
-		// check fpars
-		for (int fparIdx = 0; fparIdx < fpars.size(); fparIdx++) {
-			final FparDescriptor curr = fpars.get(fparIdx);
-			final FparDescriptor next = fparIdx + 1 < fpars.size() ? fpars.get(fparIdx + 1) : null;
-			if (curr == null
-					// optional fpars must come last:
-					|| (curr.optional && next != null && !(next.optional || next.variadic))
-					// only last fpar may be variadic:
-					|| (curr.variadic && next != null))
-				return false;
-		}
-		return true;
-	}
-
-	/**
 	 * Creates the composed members. Returns <code>null</code> if the members merged via method
 	 * {@link #merge(RuleEnvironment, TMember)} do not form a valid composed member (i.e. if method {@link #isValid()}
 	 * returns false).
@@ -297,19 +279,19 @@ public class ComposedMemberDescriptor {
 		return composedMember;
 	}
 
-	private static boolean isField(MemberType kind) {
+	static boolean isField(MemberType kind) {
 		return kind == MemberType.FIELD;
 	}
 
-	private static boolean isSetter(MemberType kind) {
+	static boolean isSetter(MemberType kind) {
 		return kind == MemberType.SETTER;
 	}
 
-	private static boolean isAccessor(MemberType kind) {
+	static boolean isAccessor(MemberType kind) {
 		return kind == MemberType.GETTER || kind == MemberType.SETTER;
 	}
 
-	private static TMember createMemberOfKind(MemberType kind) {
+	static TMember createMemberOfKind(MemberType kind) {
 		switch (kind) {
 		case FIELD:
 			return TypesFactory.eINSTANCE.createTField();

@@ -19,8 +19,15 @@ import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
 
-/** TODO doc */
-public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
+/**
+ * Helper class to encapsulate the rules for merging several members of a union type's contained types into a single,
+ * common member that can be accessed via a property access expression.
+ * <p>
+ * After creating an instance, members can be merged via method {@link #merge(RuleEnvironment, TMember)} and afterwards
+ * method {@link #isValid()} will tell if a valid composed member can be formed and, if so, it can be created by calling
+ * {@link #create(String)}.
+ */
+public class UnionMemberDescriptor extends ComposedMemberDescriptor {
 
 	/**
 	 * Constructor. The Resource and the N4JSTypeSystem will be used for type inference, etc. during merging of the
@@ -31,16 +38,16 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 	 *            intended for read-access. This is only required in the case that we have only fields but those fields
 	 *            are of different type, because then we will combine them into a getter or setter.
 	 */
-	public IntersectionMemberDescriptor(boolean writeAccess, Resource resource, N4JSTypeSystem ts) {
+	public UnionMemberDescriptor(boolean writeAccess, Resource resource, N4JSTypeSystem ts) {
 		super(writeAccess, resource, ts);
 	}
 
 	/**
-	 * Returns a simplified intersection TypeRef.
+	 * Returns a simplified union TypeRef.
 	 */
 	@Override
 	protected TypeRef getSimplifiedComposition(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
-		return pts.createSimplifiedIntersection(pTypeRefs, pTesource);
+		return pts.createSimplifiedUnion(pTypeRefs, pTesource);
 	}
 
 	/**
@@ -50,7 +57,7 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 	@Override
 	public boolean isValid() {
 		// must be non-empty and complete
-		if (empty)
+		if (empty || oneIsMissing)
 			return false;
 		// check kind
 		// (note the tweak in #mergeKind() above, so even though we require multipleKinds===false here we allow
