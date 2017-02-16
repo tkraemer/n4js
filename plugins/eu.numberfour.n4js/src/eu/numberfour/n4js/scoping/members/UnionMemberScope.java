@@ -27,7 +27,6 @@ import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
-import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef;
 import eu.numberfour.n4js.ts.types.FieldAccessor;
 import eu.numberfour.n4js.ts.types.TField;
@@ -51,7 +50,7 @@ import it.xsemantics.runtime.RuleEnvironment;
  */
 public class UnionMemberScope extends AbstractScope {
 
-	private final UnionTypeExpression unionTypeExpression;
+	private final ComposedTypeRef composedTypeRef;
 	private final IScope[] subScopes;
 	private final EObject context;
 
@@ -62,12 +61,12 @@ public class UnionMemberScope extends AbstractScope {
 	 * Creates union type scope, passed subScopes are expected to be fully configured (i.e., including required filters
 	 * etc.)
 	 */
-	public UnionMemberScope(UnionTypeExpression unionTypeExpression, EObject context, List<IScope> subScopes,
+	public UnionMemberScope(ComposedTypeRef composedTypeRef, EObject context, List<IScope> subScopes,
 			N4JSTypeSystem ts) {
 
 		super(IScope.NULLSCOPE, false);
 
-		this.unionTypeExpression = unionTypeExpression;
+		this.composedTypeRef = composedTypeRef;
 		this.subScopes = subScopes.toArray(new IScope[subScopes.size()]);
 		this.ts = ts;
 		this.context = context;
@@ -140,7 +139,7 @@ public class UnionMemberScope extends AbstractScope {
 	}
 
 	private IEObjectDescription createUnionMemberDescriptionWithErrors(IEObjectDescription result) {
-		return new UnionMemberDescriptionWithError(result, unionTypeExpression, subScopes, writeAccess);
+		return new UnionMemberDescriptionWithError(result, composedTypeRef, subScopes, writeAccess);
 	}
 
 	/**
@@ -149,7 +148,7 @@ public class UnionMemberScope extends AbstractScope {
 	 */
 	private TMember getOrCreateComposedMember(String memberName) {
 		// look up cache
-		for (TMember currM : getCacheHolder(unionTypeExpression).getCachedComposedMembers()) {
+		for (TMember currM : getCacheHolder(composedTypeRef).getCachedComposedMembers()) {
 			if (memberName.equals(currM.getName()) && hasCorrectAccess(currM, writeAccess)) {
 				return currM;
 			}
@@ -168,12 +167,12 @@ public class UnionMemberScope extends AbstractScope {
 		// check all subScopes for a member of the given name and
 		// merge the properties of the existing members into 'composedMember'
 		final ComposedMemberDescriptor composedMemberDescr = new ComposedMemberDescriptor(
-				writeAccess, EcoreUtilN4.getResource(context, unionTypeExpression), ts);
+				writeAccess, EcoreUtilN4.getResource(context, composedTypeRef), ts);
 		for (int idx = 0; idx < subScopes.length; idx++) {
 			IScope subScope = subScopes[idx];
 			final RuleEnvironment GwithSubstitutions = ts.createRuleEnvironmentForContext(
-					unionTypeExpression.getTypeRefs().get(idx),
-					EcoreUtilN4.getResource(context, unionTypeExpression));
+					composedTypeRef.getTypeRefs().get(idx),
+					EcoreUtilN4.getResource(context, composedTypeRef));
 			TMember member = findMemberInSubScope(subScope, memberName);
 			composedMemberDescr.merge(GwithSubstitutions, member);
 		}
@@ -195,7 +194,7 @@ public class UnionMemberScope extends AbstractScope {
 				result = createErrorPlaceholder(memberName);
 			}
 			// add composed member to ComposedTypeRef (without notifications to avoid cache-clear)
-			final ComposedTypeRef cacheHolder = getCacheHolder(unionTypeExpression);
+			final ComposedTypeRef cacheHolder = getCacheHolder(composedTypeRef);
 			EcoreUtilN4.doWithDeliver(false, () -> {
 				cacheHolder.getCachedComposedMembers().add(result);
 			}, cacheHolder);

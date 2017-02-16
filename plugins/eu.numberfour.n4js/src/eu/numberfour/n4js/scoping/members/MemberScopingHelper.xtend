@@ -273,7 +273,7 @@ class MemberScopingHelper {
 			return scope;
 		]
 		
-		return new IntersectionMemberScope(intersectiontypeexp, request.context, subScopes, ts);
+		return new UnionMemberScope(intersectiontypeexp, request.context, subScopes, ts);
 	}
 
 	private def dispatch IScope members(FunctionTypeRef ftExpr, MemberScopeRequest request) {
