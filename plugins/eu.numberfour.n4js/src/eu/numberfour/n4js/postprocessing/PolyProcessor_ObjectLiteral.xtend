@@ -74,7 +74,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 		// performance tweak:
 		val haveUsableExpectedType = expectedTypeRef !== null
 				&& (expectedTypeRef.useSiteStructuralTyping || expectedTypeRef.defSiteStructuralTyping); // FIXME reconsider
-		val quickMode = !haveUsableExpectedType;
+		val quickMode = !haveUsableExpectedType && !TypeUtils.isInferenceVariable(expectedTypeRef);
 
 		// for each property in the object literal:
 		// a) introduce a new inference variable representing the property's type (except for methods)
@@ -104,7 +104,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 									// add a constraint for the initializer expression (if any)
 									if (pa instanceof PropertyNameValuePair) {
 										if (pa.expression !== null) {
-											val exprTypeRef = polyProcessor.processExpr(G, pa.expression, null, infCtx, cache);
+											val exprTypeRef = polyProcessor.processExpr(G, pa.expression, TypeUtils.createTypeRef(iv), infCtx, cache);
 											infCtx.addConstraint(exprTypeRef, TypeUtils.createTypeRef(iv), Variance.CO); // exprTypeRef <: iv
 										}
 									}

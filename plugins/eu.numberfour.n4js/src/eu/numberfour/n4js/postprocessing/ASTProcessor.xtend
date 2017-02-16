@@ -17,6 +17,7 @@ import eu.numberfour.n4js.n4JS.CatchBlock
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.ForStatement
+import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
@@ -31,6 +32,7 @@ import eu.numberfour.n4js.n4JS.PropertyNameValuePair
 import eu.numberfour.n4js.n4JS.PropertySetterDeclaration
 import eu.numberfour.n4js.n4JS.SetterDeclaration
 import eu.numberfour.n4js.n4JS.VariableDeclaration
+import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.resource.N4JSPostProcessor
 import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.ts.types.TypableElement
@@ -47,8 +49,6 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import eu.numberfour.n4js.n4JS.YieldExpression
-import eu.numberfour.n4js.n4JS.FormalParameter
 
 /**
  * Main processor used during {@link N4JSPostProcessor post-processing} of N4JS resources. It controls the overall
@@ -120,7 +120,7 @@ public class ASTProcessor extends AbstractProcessor {
 			// step 1: main processing
 			val script = resource.script;
 			processSubtree(G, script, cache, 0);
-			// step 2: processing of postponed subtrees (only Blocks, so far)
+			// step 2: processing of postponed subtrees
 			var EObject eObj;
 			while ((eObj = cache.postponedSubTrees.poll) !== null) {
 				// note: we need to allow adding more postponed subtrees inside this loop!
@@ -343,8 +343,13 @@ public class ASTProcessor extends AbstractProcessor {
 	// ---------------------------------------------------------------------------------------------------------------
 
 
+	/**
+	 * This method returns the direct children of 'obj' that are to be processed, <em>in the order in which they are to
+	 * be processed</em>. By default, all direct children must be processed and the order is insignificant, so in the
+	 * default case this method simply returns {@link EObject#eContents()}. However, this method implements special
+	 * handling for some exception cases where the processing order is significant.
+	 */
 	def private List<EObject> childrenToBeProcessed(RuleEnvironment G, EObject obj) {
-		// order in return value is important!
 		return switch (obj) {
 			SetterDeclaration: {
 				// process formal parameter before body
@@ -363,6 +368,7 @@ public class ASTProcessor extends AbstractProcessor {
 				obj.eContents.bringToFront(obj.expression)
 			}
 			default: {
+				// standard case: order is insignificant (so we simply use the order provided by EMF)
 				obj.eContents
 			}
 		};
