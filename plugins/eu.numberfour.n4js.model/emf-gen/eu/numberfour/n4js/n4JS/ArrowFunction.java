@@ -81,7 +81,7 @@ public interface ArrowFunction extends FunctionExpression {
 	 * or some-value-typed. An implicit return is warranted only in the latter sub-case.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((((this.isArrowFunction() && \n\t(!this.isHasBracesAroundBody())) && (!<%com.google.common.base.Objects%>.equal(this.getBody(), null))) && \n\t(!this.getBody().getStatements().isEmpty())) && (this.getBody().getStatements().get(0) instanceof <%eu.numberfour.n4js.n4JS.ExpressionStatement%>));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((((this.isArrowFunction() &amp;&amp; \n\t(!this.isHasBracesAroundBody())) &amp;&amp; (!&lt;%com.google.common.base.Objects%&gt;.equal(this.getBody(), null))) &amp;&amp; \n\t(!this.getBody().getStatements().isEmpty())) &amp;&amp; (this.getBody().getStatements().get(0) instanceof &lt;%eu.numberfour.n4js.n4JS.ExpressionStatement%&gt;));'"
 	 * @generated
 	 */
 	boolean isSingleExprImplicitReturn();
@@ -94,7 +94,7 @@ public interface ArrowFunction extends FunctionExpression {
 	 * The lambda's implicit return expression (precondition: isSingleExprImplicitReturn).
 	 * <!-- end-model-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.n4JS.Expression%> _xifexpression = null;\nboolean _isSingleExprImplicitReturn = this.isSingleExprImplicitReturn();\nif (_isSingleExprImplicitReturn)\n{\n\t<%eu.numberfour.n4js.n4JS.Block%> _body = this.getBody();\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.n4JS.Statement%>> _statements = _body.getStatements();\n\t<%eu.numberfour.n4js.n4JS.Statement%> _get = _statements.get(0);\n\t_xifexpression = ((<%eu.numberfour.n4js.n4JS.ExpressionStatement%>) _get).getExpression();\n}\nelse\n{\n\t_xifexpression = null;\n}\nreturn _xifexpression;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.n4JS.Expression%&gt; _xifexpression = null;\nboolean _isSingleExprImplicitReturn = this.isSingleExprImplicitReturn();\nif (_isSingleExprImplicitReturn)\n{\n\t&lt;%eu.numberfour.n4js.n4JS.Block%&gt; _body = this.getBody();\n\t&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%eu.numberfour.n4js.n4JS.Statement%&gt;&gt; _statements = _body.getStatements();\n\t&lt;%eu.numberfour.n4js.n4JS.Statement%&gt; _get = _statements.get(0);\n\t_xifexpression = ((&lt;%eu.numberfour.n4js.n4JS.ExpressionStatement%&gt;) _get).getExpression();\n}\nelse\n{\n\t_xifexpression = null;\n}\nreturn _xifexpression;'"
 	 * @generated
 	 */
 	Expression implicitReturnExpr();

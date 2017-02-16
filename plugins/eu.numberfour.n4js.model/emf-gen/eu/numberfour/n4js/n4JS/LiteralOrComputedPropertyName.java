@@ -137,7 +137,7 @@ public interface LiteralOrComputedPropertyName extends EObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _elvis = null;\n<%java.lang.String%> _literalName = this.getLiteralName();\nif (_literalName != null)\n{\n\t_elvis = _literalName;\n} else\n{\n\t<%java.lang.String%> _computedName = this.getComputedName();\n\t_elvis = _computedName;\n}\nreturn _elvis;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.lang.String%&gt; _elvis = null;\n&lt;%java.lang.String%&gt; _literalName = this.getLiteralName();\nif (_literalName != null)\n{\n\t_elvis = _literalName;\n} else\n{\n\t&lt;%java.lang.String%&gt; _computedName = this.getComputedName();\n\t_elvis = _computedName;\n}\nreturn _elvis;'"
 	 * @generated
 	 */
 	String getName();

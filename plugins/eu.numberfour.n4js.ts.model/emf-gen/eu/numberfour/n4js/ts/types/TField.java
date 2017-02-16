@@ -117,7 +117,7 @@ public interface TField extends TMemberWithAccessModifier {
 	 *  Convenience method, returns true if typeRef undef modifier is optional. If type ref is not set, false is returned.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getTypeRef() != null) && (this.getTypeRef().getUndefModifier() == <%eu.numberfour.n4js.ts.types.UndefModifier%>.OPTIONAL));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getTypeRef() != null) &amp;&amp; (this.getTypeRef().getUndefModifier() == &lt;%eu.numberfour.n4js.ts.types.UndefModifier%&gt;.OPTIONAL));'"
 	 * @generated
 	 */
 	boolean isOptional();
@@ -156,7 +156,7 @@ public interface TField extends TMemberWithAccessModifier {
 	 * * Always returns FIELD
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%eu.numberfour.n4js.ts.types.MemberType%>.FIELD;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return &lt;%eu.numberfour.n4js.ts.types.MemberType%&gt;.FIELD;'"
 	 * @generated
 	 */
 	MemberType getMemberType();
@@ -170,7 +170,7 @@ public interface TField extends TMemberWithAccessModifier {
 	 * colon separated type if declared. Overrides TMember's method.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%java.lang.StringBuilder%> strb = new <%java.lang.StringBuilder%>();\n<%java.lang.String%> _name = this.getName();\nstrb.append(_name);\n<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef = this.getTypeRef();\nboolean _tripleNotEquals = (_typeRef != null);\nif (_tripleNotEquals)\n{\n\t<%java.lang.StringBuilder%> _append = strb.append(\": \");\n\t<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef_1 = this.getTypeRef();\n\t<%java.lang.String%> _typeRefAsString = _typeRef_1.getTypeRefAsString();\n\t_append.append(_typeRefAsString);\n}\nreturn strb.toString();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%java.lang.StringBuilder%&gt; strb = new &lt;%java.lang.StringBuilder%&gt;();\n&lt;%java.lang.String%&gt; _name = this.getName();\nstrb.append(_name);\n&lt;%eu.numberfour.n4js.ts.typeRefs.TypeRef%&gt; _typeRef = this.getTypeRef();\nboolean _tripleNotEquals = (_typeRef != null);\nif (_tripleNotEquals)\n{\n\t&lt;%java.lang.StringBuilder%&gt; _append = strb.append(\": \");\n\t&lt;%eu.numberfour.n4js.ts.typeRefs.TypeRef%&gt; _typeRef_1 = this.getTypeRef();\n\t&lt;%java.lang.String%&gt; _typeRefAsString = _typeRef_1.getTypeRefAsString();\n\t_append.append(_typeRefAsString);\n}\nreturn strb.toString();'"
 	 * @generated
 	 */
 	String getMemberAsString();

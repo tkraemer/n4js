@@ -52,7 +52,7 @@ public enum BinaryLogicalOperator implements Enumerator {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #AND
-	 * @model name="and" literal="&&"
+	 * @model name="and" literal="&amp;&amp;"
 	 * @generated
 	 * @ordered
 	 */

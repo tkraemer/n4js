@@ -104,7 +104,7 @@ public interface TypeRef extends TypeArgument, Versionable {
 	 * This method is called by subclasses in overridden method.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _switchResult = null;\n<%eu.numberfour.n4js.ts.types.NullModifier%> _nullModifier = this.getNullModifier();\nif (_nullModifier != null)\n{\n\tswitch (_nullModifier)\n\t{\n\t\tcase NA:\n\t\t\t_switchResult = \"\";\n\t\t\tbreak;\n\t\tcase NULLABLE:\n\t\t\t_switchResult = \"\";\n\t\t\tbreak;\n\t\tcase NOTNULL:\n\t\t\t_switchResult = \"!\";\n\t\t\tbreak;\n\t\tcase ISNULL:\n\t\t\t_switchResult = \"\";\n\t\t\tbreak;\n\t\tdefault:\n\t\t\tbreak;\n\t}\n}\n<%java.lang.String%> _switchResult_1 = null;\n<%eu.numberfour.n4js.ts.types.UndefModifier%> _undefModifier = this.getUndefModifier();\nif (_undefModifier != null)\n{\n\tswitch (_undefModifier)\n\t{\n\t\tcase NA:\n\t\t\t_switchResult_1 = \"\";\n\t\t\tbreak;\n\t\tcase MANDATORY:\n\t\t\t_switchResult_1 = \"\";\n\t\t\tbreak;\n\t\tcase OPTIONAL:\n\t\t\t_switchResult_1 = \"?\";\n\t\t\tbreak;\n\t\tcase ISUNDEFINED:\n\t\t\t_switchResult_1 = \"\";\n\t\t\tbreak;\n\t\tdefault:\n\t\t\tbreak;\n\t}\n}\nreturn (_switchResult + _switchResult_1);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.lang.String%&gt; _switchResult = null;\n&lt;%eu.numberfour.n4js.ts.types.NullModifier%&gt; _nullModifier = this.getNullModifier();\nif (_nullModifier != null)\n{\n\tswitch (_nullModifier)\n\t{\n\t\tcase NA:\n\t\t\t_switchResult = \"\";\n\t\t\tbreak;\n\t\tcase NULLABLE:\n\t\t\t_switchResult = \"\";\n\t\t\tbreak;\n\t\tcase NOTNULL:\n\t\t\t_switchResult = \"!\";\n\t\t\tbreak;\n\t\tcase ISNULL:\n\t\t\t_switchResult = \"\";\n\t\t\tbreak;\n\t\tdefault:\n\t\t\tbreak;\n\t}\n}\n&lt;%java.lang.String%&gt; _switchResult_1 = null;\n&lt;%eu.numberfour.n4js.ts.types.UndefModifier%&gt; _undefModifier = this.getUndefModifier();\nif (_undefModifier != null)\n{\n\tswitch (_undefModifier)\n\t{\n\t\tcase NA:\n\t\t\t_switchResult_1 = \"\";\n\t\t\tbreak;\n\t\tcase MANDATORY:\n\t\t\t_switchResult_1 = \"\";\n\t\t\tbreak;\n\t\tcase OPTIONAL:\n\t\t\t_switchResult_1 = \"?\";\n\t\t\tbreak;\n\t\tcase ISUNDEFINED:\n\t\t\t_switchResult_1 = \"\";\n\t\t\tbreak;\n\t\tdefault:\n\t\t\tbreak;\n\t}\n}\nreturn (_switchResult + _switchResult_1);'"
 	 * @generated
 	 */
 	String getModifiersAsString();
@@ -120,7 +120,7 @@ public interface TypeRef extends TypeArgument, Versionable {
 	 * The method is robust, if declared type is null, false is returned.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%eu.numberfour.n4js.ts.types.Type%> dtype = this.getDeclaredType();\nif ((dtype == null))\n{\n\treturn false;\n}\nreturn dtype.isFinal();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%eu.numberfour.n4js.ts.types.Type%&gt; dtype = this.getDeclaredType();\nif ((dtype == null))\n{\n\treturn false;\n}\nreturn dtype.isFinal();'"
 	 * @generated
 	 */
 	boolean isFinalByType();
@@ -225,7 +225,7 @@ public interface TypeRef extends TypeArgument, Versionable {
 	 * Convenience method to avoid type casts, does return unmodifiable empty list for all type references except parameterized type refs.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%org.eclipse.emf.ecore.xcore.lib.XcoreCollectionLiterals%>.<<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>>emptyEList();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return &lt;%org.eclipse.emf.ecore.xcore.lib.XcoreCollectionLiterals%&gt;.&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.TypeArgument%&gt;&gt;emptyEList();'"
 	 * @generated
 	 */
 	EList<TypeArgument> getTypeArgs();
@@ -234,7 +234,7 @@ public interface TypeRef extends TypeArgument, Versionable {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (<%com.google.common.base.Objects%>.equal(this.getNullModifier(), <%eu.numberfour.n4js.ts.types.NullModifier%>.ISNULL) || <%com.google.common.base.Objects%>.equal(this.getUndefModifier(), <%eu.numberfour.n4js.ts.types.UndefModifier%>.ISUNDEFINED));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (&lt;%com.google.common.base.Objects%&gt;.equal(this.getNullModifier(), &lt;%eu.numberfour.n4js.ts.types.NullModifier%&gt;.ISNULL) || &lt;%com.google.common.base.Objects%&gt;.equal(this.getUndefModifier(), &lt;%eu.numberfour.n4js.ts.types.UndefModifier%&gt;.ISUNDEFINED));'"
 	 * @generated
 	 */
 	boolean undefinedOrNull();
@@ -283,7 +283,7 @@ public interface TypeRef extends TypeArgument, Versionable {
 	 *  Convenience method, returns only true for parameterized type refs if the declared type is any
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.Type%> _declaredType = this.getDeclaredType();\nreturn (_declaredType instanceof <%eu.numberfour.n4js.ts.types.AnyType%>);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.ts.types.Type%&gt; _declaredType = this.getDeclaredType();\nreturn (_declaredType instanceof &lt;%eu.numberfour.n4js.ts.types.AnyType%&gt;);'"
 	 * @generated
 	 */
 	boolean isTopType();
@@ -295,7 +295,7 @@ public interface TypeRef extends TypeArgument, Versionable {
 	 *  Convenience method, returns only true for parameterized type refs if the declared type is undefined
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.Type%> _declaredType = this.getDeclaredType();\nreturn (_declaredType instanceof <%eu.numberfour.n4js.ts.types.UndefinedType%>);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.ts.types.Type%&gt; _declaredType = this.getDeclaredType();\nreturn (_declaredType instanceof &lt;%eu.numberfour.n4js.ts.types.UndefinedType%&gt;);'"
 	 * @generated
 	 */
 	boolean isBottomType();
@@ -308,7 +308,7 @@ public interface TypeRef extends TypeArgument, Versionable {
 	 * Returns the typing strategy, either the use or def site, usually NOMINAL.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%eu.numberfour.n4js.ts.types.TypingStrategy%>.NOMINAL;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return &lt;%eu.numberfour.n4js.ts.types.TypingStrategy%&gt;.NOMINAL;'"
 	 * @generated
 	 */
 	TypingStrategy getTypingStrategy();
@@ -322,7 +322,7 @@ public interface TypeRef extends TypeArgument, Versionable {
 	 * Overridden in {@link ParameterizedTypeRefStructural}
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%org.eclipse.emf.ecore.xcore.lib.XcoreCollectionLiterals%>.<<%eu.numberfour.n4js.ts.types.TStructMember%>>emptyEList();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return &lt;%org.eclipse.emf.ecore.xcore.lib.XcoreCollectionLiterals%&gt;.&lt;&lt;%eu.numberfour.n4js.ts.types.TStructMember%&gt;&gt;emptyEList();'"
 	 * @generated
 	 */
 	EList<TStructMember> getStructuralMembers();
@@ -360,7 +360,7 @@ public interface TypeRef extends TypeArgument, Versionable {
 	 * Override Versioned#getVersion()
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='int _xifexpression = (int) 0;\n<%eu.numberfour.n4js.ts.types.Type%> _declaredType = this.getDeclaredType();\nboolean _tripleNotEquals = (_declaredType != null);\nif (_tripleNotEquals)\n{\n\t<%eu.numberfour.n4js.ts.types.Type%> _declaredType_1 = this.getDeclaredType();\n\t_xifexpression = _declaredType_1.getVersion();\n}\nelse\n{\n\t_xifexpression = 0;\n}\nreturn _xifexpression;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='int _xifexpression = (int) 0;\n&lt;%eu.numberfour.n4js.ts.types.Type%&gt; _declaredType = this.getDeclaredType();\nboolean _tripleNotEquals = (_declaredType != null);\nif (_tripleNotEquals)\n{\n\t&lt;%eu.numberfour.n4js.ts.types.Type%&gt; _declaredType_1 = this.getDeclaredType();\n\t_xifexpression = _declaredType_1.getVersion();\n}\nelse\n{\n\t_xifexpression = 0;\n}\nreturn _xifexpression;'"
 	 * @generated
 	 */
 	int getVersion();

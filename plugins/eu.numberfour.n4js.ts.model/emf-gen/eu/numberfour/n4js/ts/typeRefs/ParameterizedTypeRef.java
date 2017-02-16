@@ -147,7 +147,7 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * Returns the actual typing strategy, that is either the defined typing strategy, or the typing strategy of the declared type.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.TypingStrategy%> _definedTypingStrategy = this.getDefinedTypingStrategy();\nboolean _tripleEquals = (_definedTypingStrategy == <%eu.numberfour.n4js.ts.types.TypingStrategy%>.DEFAULT);\nif (_tripleEquals)\n{\n\tboolean _isDefSiteStructuralTyping = this.isDefSiteStructuralTyping();\n\tif (_isDefSiteStructuralTyping)\n\t{\n\t\treturn <%eu.numberfour.n4js.ts.types.TypingStrategy%>.STRUCTURAL;\n\t}\n\telse\n\t{\n\t\treturn <%eu.numberfour.n4js.ts.types.TypingStrategy%>.NOMINAL;\n\t}\n}\nreturn this.getDefinedTypingStrategy();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.ts.types.TypingStrategy%&gt; _definedTypingStrategy = this.getDefinedTypingStrategy();\nboolean _tripleEquals = (_definedTypingStrategy == &lt;%eu.numberfour.n4js.ts.types.TypingStrategy%&gt;.DEFAULT);\nif (_tripleEquals)\n{\n\tboolean _isDefSiteStructuralTyping = this.isDefSiteStructuralTyping();\n\tif (_isDefSiteStructuralTyping)\n\t{\n\t\treturn &lt;%eu.numberfour.n4js.ts.types.TypingStrategy%&gt;.STRUCTURAL;\n\t}\n\telse\n\t{\n\t\treturn &lt;%eu.numberfour.n4js.ts.types.TypingStrategy%&gt;.NOMINAL;\n\t}\n}\nreturn this.getDefinedTypingStrategy();'"
 	 * @generated
 	 */
 	TypingStrategy getTypingStrategy();
@@ -159,7 +159,7 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 *  @see TypeArgument#containsWildcard()
 	 * <!-- end-model-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getTypeArgs().isEmpty() && (!this.getDeclaredType().isGeneric())) || <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.<<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>>exists(this.getTypeArgs(), new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.Boolean%>>()\n{\n\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.ts.typeRefs.TypeArgument%> it)\n\t{\n\t\treturn <%java.lang.Boolean%>.valueOf(it.containsWildcards());\n\t}\n}));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getTypeArgs().isEmpty() &amp;&amp; (!this.getDeclaredType().isGeneric())) || &lt;%org.eclipse.xtext.xbase.lib.IterableExtensions%&gt;.&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.TypeArgument%&gt;&gt;exists(this.getTypeArgs(), new &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.TypeArgument%&gt;, &lt;%java.lang.Boolean%&gt;&gt;()\n{\n\tpublic &lt;%java.lang.Boolean%&gt; apply(final &lt;%eu.numberfour.n4js.ts.typeRefs.TypeArgument%&gt; it)\n\t{\n\t\treturn &lt;%java.lang.Boolean%&gt;.valueOf(it.containsWildcards());\n\t}\n}));'"
 	 * @generated
 	 */
 	boolean containsWildcards();
@@ -171,7 +171,7 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * Overrides {@link TypeRef#getTypeRefAsString()}
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.Type%> _declaredType = this.getDeclaredType();\n<%java.lang.String%> _rawTypeAsString = null;\nif (_declaredType!=null)\n{\n\t_rawTypeAsString=_declaredType.getRawTypeAsString();\n}\n<%java.lang.String%> _xifexpression = null;\nint _version = this.getVersion();\nboolean _greaterThan = (_version > 0);\nif (_greaterThan)\n{\n\tint _version_1 = this.getVersion();\n\t_xifexpression = (\"#\" + <%java.lang.Integer%>.valueOf(_version_1));\n}\nelse\n{\n\t<%java.lang.String%> _xifexpression_1 = null;\n\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>> _typeArgs = this.getTypeArgs();\n\tboolean _isEmpty = _typeArgs.isEmpty();\n\tif (_isEmpty)\n\t{\n\t\t_xifexpression_1 = \"\";\n\t}\n\telse\n\t{\n\t\t<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>> _typeArgs_1 = this.getTypeArgs();\n\t\tfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.String%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.String%>>()\n\t\t{\n\t\t\tpublic <%java.lang.String%> apply(final <%eu.numberfour.n4js.ts.typeRefs.TypeArgument%> it)\n\t\t\t{\n\t\t\t\treturn it.getTypeRefAsString();\n\t\t\t}\n\t\t};\n\t\t<%org.eclipse.emf.common.util.EList%><<%java.lang.String%>> _map = <%org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions%>.<<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.String%>>map(_typeArgs_1, _function);\n\t\t<%java.lang.String%> _join = <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.join(_map, \",\");\n\t\t<%java.lang.String%> _plus = (\"<\" + _join);\n\t\t_xifexpression_1 = (_plus + \">\");\n\t}\n\t<%java.lang.String%> _plus_1 = (\"\" + _xifexpression_1);\n\t<%java.lang.String%> _modifiersAsString = this.getModifiersAsString();\n\t_xifexpression = (_plus_1 + _modifiersAsString);\n}\nreturn (_rawTypeAsString + _xifexpression);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.ts.types.Type%&gt; _declaredType = this.getDeclaredType();\n&lt;%java.lang.String%&gt; _rawTypeAsString = null;\nif (_declaredType!=null)\n{\n\t_rawTypeAsString=_declaredType.getRawTypeAsString();\n}\n&lt;%java.lang.String%&gt; _xifexpression = null;\nint _version = this.getVersion();\nboolean _greaterThan = (_version &gt; 0);\nif (_greaterThan)\n{\n\tint _version_1 = this.getVersion();\n\t_xifexpression = (\"#\" + &lt;%java.lang.Integer%&gt;.valueOf(_version_1));\n}\nelse\n{\n\t&lt;%java.lang.String%&gt; _xifexpression_1 = null;\n\t&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.TypeArgument%&gt;&gt; _typeArgs = this.getTypeArgs();\n\tboolean _isEmpty = _typeArgs.isEmpty();\n\tif (_isEmpty)\n\t{\n\t\t_xifexpression_1 = \"\";\n\t}\n\telse\n\t{\n\t\t&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.TypeArgument%&gt;&gt; _typeArgs_1 = this.getTypeArgs();\n\t\tfinal &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.TypeArgument%&gt;, &lt;%java.lang.String%&gt;&gt; _function = new &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.TypeArgument%&gt;, &lt;%java.lang.String%&gt;&gt;()\n\t\t{\n\t\t\tpublic &lt;%java.lang.String%&gt; apply(final &lt;%eu.numberfour.n4js.ts.typeRefs.TypeArgument%&gt; it)\n\t\t\t{\n\t\t\t\treturn it.getTypeRefAsString();\n\t\t\t}\n\t\t};\n\t\t&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%java.lang.String%&gt;&gt; _map = &lt;%org.eclipse.emf.ecore.xcore.lib.XcoreEListExtensions%&gt;.&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.TypeArgument%&gt;, &lt;%java.lang.String%&gt;&gt;map(_typeArgs_1, _function);\n\t\t&lt;%java.lang.String%&gt; _join = &lt;%org.eclipse.xtext.xbase.lib.IterableExtensions%&gt;.join(_map, \",\");\n\t\t&lt;%java.lang.String%&gt; _plus = (\"&lt;\" + _join);\n\t\t_xifexpression_1 = (_plus + \"&gt;\");\n\t}\n\t&lt;%java.lang.String%&gt; _plus_1 = (\"\" + _xifexpression_1);\n\t&lt;%java.lang.String%&gt; _modifiersAsString = this.getModifiersAsString();\n\t_xifexpression = (_plus_1 + _modifiersAsString);\n}\nreturn (_rawTypeAsString + _xifexpression);'"
 	 * @generated
 	 */
 	String getTypeRefAsString();
@@ -183,7 +183,7 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * Convenience method, returns true if type reference contains type arguments.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>> _typeArgs = this.getTypeArgs();\nboolean _isEmpty = _typeArgs.isEmpty();\nreturn (!_isEmpty);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.TypeArgument%&gt;&gt; _typeArgs = this.getTypeArgs();\nboolean _isEmpty = _typeArgs.isEmpty();\nreturn (!_isEmpty);'"
 	 * @generated
 	 */
 	boolean isParameterized();
@@ -195,7 +195,7 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * Delegates to {@link Type.isGeneric()}
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getDeclaredType() != null) && this.getDeclaredType().isGeneric());'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getDeclaredType() != null) &amp;&amp; this.getDeclaredType().isGeneric());'"
 	 * @generated
 	 */
 	boolean isGeneric();
@@ -207,7 +207,7 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * Overrides {@link TypeRef#isRaw()}.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isGeneric() && (this.getTypeArgs().size() < this.getDeclaredType().getTypeVars().size()));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isGeneric() &amp;&amp; (this.getTypeArgs().size() &lt; this.getDeclaredType().getTypeVars().size()));'"
 	 * @generated
 	 */
 	boolean isRaw();
@@ -219,7 +219,7 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * @see TypeArgument#containsUnboundTypeVariables()
 	 * <!-- end-model-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (((this.getDeclaredType() instanceof <%eu.numberfour.n4js.ts.types.TypeVariable%>) || ((!this.isParameterized()) && this.getDeclaredType().isGeneric())) || <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.<<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>>exists(this.getTypeArgs(), new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.ts.typeRefs.TypeArgument%>, <%java.lang.Boolean%>>()\n{\n\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.ts.typeRefs.TypeArgument%> it)\n\t{\n\t\treturn <%java.lang.Boolean%>.valueOf(it.containsUnboundTypeVariables());\n\t}\n}));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (((this.getDeclaredType() instanceof &lt;%eu.numberfour.n4js.ts.types.TypeVariable%&gt;) || ((!this.isParameterized()) &amp;&amp; this.getDeclaredType().isGeneric())) || &lt;%org.eclipse.xtext.xbase.lib.IterableExtensions%&gt;.&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.TypeArgument%&gt;&gt;exists(this.getTypeArgs(), new &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.TypeArgument%&gt;, &lt;%java.lang.Boolean%&gt;&gt;()\n{\n\tpublic &lt;%java.lang.Boolean%&gt; apply(final &lt;%eu.numberfour.n4js.ts.typeRefs.TypeArgument%&gt; it)\n\t{\n\t\treturn &lt;%java.lang.Boolean%&gt;.valueOf(it.containsUnboundTypeVariables());\n\t}\n}));'"
 	 * @generated
 	 */
 	boolean containsUnboundTypeVariables();
@@ -232,7 +232,7 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * definition site.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getDefinedTypingStrategy() != <%eu.numberfour.n4js.ts.types.TypingStrategy%>.NOMINAL) && \n\t(this.getDefinedTypingStrategy() != <%eu.numberfour.n4js.ts.types.TypingStrategy%>.DEFAULT));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getDefinedTypingStrategy() != &lt;%eu.numberfour.n4js.ts.types.TypingStrategy%&gt;.NOMINAL) &amp;&amp; \n\t(this.getDefinedTypingStrategy() != &lt;%eu.numberfour.n4js.ts.types.TypingStrategy%&gt;.DEFAULT));'"
 	 * @generated
 	 */
 	boolean isUseSiteStructuralTyping();
@@ -244,7 +244,7 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * Convenience method, returns true if typingStrategy of the declared type is STRUCTURAL or in case of Object literals.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.Type%> _declaredType = this.getDeclaredType();\nif ((_declaredType instanceof <%eu.numberfour.n4js.ts.types.TN4Classifier%>))\n{\n\t<%eu.numberfour.n4js.ts.types.Type%> _declaredType_1 = this.getDeclaredType();\n\t<%eu.numberfour.n4js.ts.types.TypingStrategy%> _typingStrategy = ((<%eu.numberfour.n4js.ts.types.TN4Classifier%>) _declaredType_1).getTypingStrategy();\n\treturn (_typingStrategy == <%eu.numberfour.n4js.ts.types.TypingStrategy%>.STRUCTURAL);\n}\n<%eu.numberfour.n4js.ts.types.Type%> _declaredType_2 = this.getDeclaredType();\nif ((_declaredType_2 instanceof <%eu.numberfour.n4js.ts.types.TStructuralType%>))\n{\n\treturn true;\n}\nreturn false;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.ts.types.Type%&gt; _declaredType = this.getDeclaredType();\nif ((_declaredType instanceof &lt;%eu.numberfour.n4js.ts.types.TN4Classifier%&gt;))\n{\n\t&lt;%eu.numberfour.n4js.ts.types.Type%&gt; _declaredType_1 = this.getDeclaredType();\n\t&lt;%eu.numberfour.n4js.ts.types.TypingStrategy%&gt; _typingStrategy = ((&lt;%eu.numberfour.n4js.ts.types.TN4Classifier%&gt;) _declaredType_1).getTypingStrategy();\n\treturn (_typingStrategy == &lt;%eu.numberfour.n4js.ts.types.TypingStrategy%&gt;.STRUCTURAL);\n}\n&lt;%eu.numberfour.n4js.ts.types.Type%&gt; _declaredType_2 = this.getDeclaredType();\nif ((_declaredType_2 instanceof &lt;%eu.numberfour.n4js.ts.types.TStructuralType%&gt;))\n{\n\treturn true;\n}\nreturn false;'"
 	 * @generated
 	 */
 	boolean isDefSiteStructuralTyping();

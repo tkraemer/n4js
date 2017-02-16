@@ -96,7 +96,7 @@ public interface StringLiteralForSTE extends StringLiteral {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _isUseExportedName = this.isUseExportedName();\nif (_isUseExportedName)\n{\n\tfinal <%eu.numberfour.n4js.transpiler.im.SymbolTableEntry%> e = this.getEntry();\n\tif ((e instanceof <%eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal%>))\n\t{\n\t\treturn ((<%eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal%>)e).exportedName();\n\t}\n}\n<%eu.numberfour.n4js.transpiler.im.SymbolTableEntry%> _entry = this.getEntry();\n<%java.lang.String%> _name = null;\nif (_entry!=null)\n{\n\t_name=_entry.getName();\n}\nreturn _name;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _isUseExportedName = this.isUseExportedName();\nif (_isUseExportedName)\n{\n\tfinal &lt;%eu.numberfour.n4js.transpiler.im.SymbolTableEntry%&gt; e = this.getEntry();\n\tif ((e instanceof &lt;%eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal%&gt;))\n\t{\n\t\treturn ((&lt;%eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal%&gt;)e).exportedName();\n\t}\n}\n&lt;%eu.numberfour.n4js.transpiler.im.SymbolTableEntry%&gt; _entry = this.getEntry();\n&lt;%java.lang.String%&gt; _name = null;\nif (_entry!=null)\n{\n\t_name=_entry.getName();\n}\nreturn _name;'"
 	 * @generated
 	 */
 	String getValueAsString();

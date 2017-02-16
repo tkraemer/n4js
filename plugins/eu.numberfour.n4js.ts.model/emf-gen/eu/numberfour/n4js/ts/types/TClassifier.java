@@ -106,7 +106,7 @@ public interface TClassifier extends ContainerType<TMember>, SyntaxRelatedTEleme
 	 * Convenience method, returns all super classes and implemented or extended interfaces as classifiers.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" dataType="eu.numberfour.n4js.ts.types.IterableOfTClassifier" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%java.util.List%><<%eu.numberfour.n4js.ts.types.TClassifier%>> result = <%org.eclipse.xtext.xbase.lib.CollectionLiterals%>.<<%eu.numberfour.n4js.ts.types.TClassifier%>>newArrayList();\nfinal <%java.lang.Object%> _superClassifierRefs = this.getSuperClassifierRefs();\nfor (final <%java.lang.Object%> superClassifierRef : ((<%java.lang.Iterable%><?>) _superClassifierRefs))\n{\n\tif ((superClassifierRef != null))\n\t{\n\t\tfinal <%eu.numberfour.n4js.ts.types.Type%> declType = ((<%eu.numberfour.n4js.ts.typeRefs.TypeRef%>) superClassifierRef).getDeclaredType();\n\t\tif ((declType instanceof <%eu.numberfour.n4js.ts.types.TClassifier%>))\n\t\t{\n\t\t\tresult.add(((<%eu.numberfour.n4js.ts.types.TClassifier%>)declType));\n\t\t}\n\t}\n}\nreturn result;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%java.util.List%&gt;&lt;&lt;%eu.numberfour.n4js.ts.types.TClassifier%&gt;&gt; result = &lt;%org.eclipse.xtext.xbase.lib.CollectionLiterals%&gt;.&lt;&lt;%eu.numberfour.n4js.ts.types.TClassifier%&gt;&gt;newArrayList();\nfinal &lt;%java.lang.Object%&gt; _superClassifierRefs = this.getSuperClassifierRefs();\nfor (final &lt;%java.lang.Object%&gt; superClassifierRef : ((&lt;%java.lang.Iterable%&gt;&lt;?&gt;) _superClassifierRefs))\n{\n\tif ((superClassifierRef != null))\n\t{\n\t\tfinal &lt;%eu.numberfour.n4js.ts.types.Type%&gt; declType = ((&lt;%eu.numberfour.n4js.ts.typeRefs.TypeRef%&gt;) superClassifierRef).getDeclaredType();\n\t\tif ((declType instanceof &lt;%eu.numberfour.n4js.ts.types.TClassifier%&gt;))\n\t\t{\n\t\t\tresult.add(((&lt;%eu.numberfour.n4js.ts.types.TClassifier%&gt;)declType));\n\t\t}\n\t}\n}\nreturn result;'"
 	 * @generated
 	 */
 	Iterable<? extends TClassifier> getSuperClassifiers();
@@ -119,7 +119,7 @@ public interface TClassifier extends ContainerType<TMember>, SyntaxRelatedTEleme
 	 * Convenience method, returns all super classes and implemented or extended interfaces as type references.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" dataType="eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefIterable" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%org.eclipse.xtext.xbase.lib.CollectionLiterals%>.<<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>>emptyList();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return &lt;%org.eclipse.xtext.xbase.lib.CollectionLiterals%&gt;.&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%&gt;&gt;emptyList();'"
 	 * @generated
 	 */
 	Iterable<ParameterizedTypeRef> getSuperClassifierRefs();
@@ -132,7 +132,7 @@ public interface TClassifier extends ContainerType<TMember>, SyntaxRelatedTEleme
 	 * Convenience method, returns all implemented (or extended) interfaces
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" dataType="eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefIterable" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%org.eclipse.xtext.xbase.lib.CollectionLiterals%>.<<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>>emptyList();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return &lt;%org.eclipse.xtext.xbase.lib.CollectionLiterals%&gt;.&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%&gt;&gt;emptyList();'"
 	 * @generated
 	 */
 	Iterable<ParameterizedTypeRef> getImplementedOrExtendedInterfaceRefs();

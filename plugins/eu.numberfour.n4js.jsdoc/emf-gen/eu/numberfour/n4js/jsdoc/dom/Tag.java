@@ -108,7 +108,7 @@ public interface Tag extends DocletElement {
 	 * Convenience method, returns first TagValue with given key or null, if no such key is found.
 	 * <!-- end-model-doc -->
 	 * @model unique="false" theKeyUnique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.jsdoc.dom.TagValue%>> _values = this.getValues();\nfinal <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.jsdoc.dom.TagValue%>, <%java.lang.Boolean%>> _function = new <%org.eclipse.xtext.xbase.lib.Functions.Function1%><<%eu.numberfour.n4js.jsdoc.dom.TagValue%>, <%java.lang.Boolean%>>()\n{\n\tpublic <%java.lang.Boolean%> apply(final <%eu.numberfour.n4js.jsdoc.dom.TagValue%> it)\n\t{\n\t\t<%java.lang.String%> _key = it.getKey();\n\t\treturn <%java.lang.Boolean%>.valueOf(<%com.google.common.base.Objects%>.equal(_key, theKey));\n\t}\n};\nreturn <%org.eclipse.xtext.xbase.lib.IterableExtensions%>.<<%eu.numberfour.n4js.jsdoc.dom.TagValue%>>findFirst(_values, _function);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%eu.numberfour.n4js.jsdoc.dom.TagValue%&gt;&gt; _values = this.getValues();\nfinal &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%eu.numberfour.n4js.jsdoc.dom.TagValue%&gt;, &lt;%java.lang.Boolean%&gt;&gt; _function = new &lt;%org.eclipse.xtext.xbase.lib.Functions.Function1%&gt;&lt;&lt;%eu.numberfour.n4js.jsdoc.dom.TagValue%&gt;, &lt;%java.lang.Boolean%&gt;&gt;()\n{\n\tpublic &lt;%java.lang.Boolean%&gt; apply(final &lt;%eu.numberfour.n4js.jsdoc.dom.TagValue%&gt; it)\n\t{\n\t\t&lt;%java.lang.String%&gt; _key = it.getKey();\n\t\treturn &lt;%java.lang.Boolean%&gt;.valueOf(&lt;%com.google.common.base.Objects%&gt;.equal(_key, theKey));\n\t}\n};\nreturn &lt;%org.eclipse.xtext.xbase.lib.IterableExtensions%&gt;.&lt;&lt;%eu.numberfour.n4js.jsdoc.dom.TagValue%&gt;&gt;findFirst(_values, _function);'"
 	 * @generated
 	 */
 	TagValue getValueByKey(String theKey);
@@ -117,7 +117,7 @@ public interface Tag extends DocletElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%eu.numberfour.n4js.jsdoc.JSDocSerializer%>.toJSDocString(this);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return &lt;%eu.numberfour.n4js.jsdoc.JSDocSerializer%&gt;.toJSDocString(this);'"
 	 * @generated
 	 */
 	String toString();

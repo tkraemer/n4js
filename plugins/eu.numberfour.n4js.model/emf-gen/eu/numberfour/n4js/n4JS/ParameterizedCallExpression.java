@@ -75,7 +75,7 @@ public interface ParameterizedCallExpression extends Expression, ParameterizedAc
 	 * Convenience method returning the receiver expression or null, if call has no receiver.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.n4JS.Expression%> _xifexpression = null;\n<%eu.numberfour.n4js.n4JS.Expression%> _target = this.getTarget();\nif ((_target instanceof <%eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression%>))\n{\n\t<%eu.numberfour.n4js.n4JS.Expression%> _target_1 = this.getTarget();\n\t_xifexpression = ((<%eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression%>) _target_1).getTarget();\n}\nelse\n{\n\t_xifexpression = null;\n}\nreturn _xifexpression;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.n4JS.Expression%&gt; _xifexpression = null;\n&lt;%eu.numberfour.n4js.n4JS.Expression%&gt; _target = this.getTarget();\nif ((_target instanceof &lt;%eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression%&gt;))\n{\n\t&lt;%eu.numberfour.n4js.n4JS.Expression%&gt; _target_1 = this.getTarget();\n\t_xifexpression = ((&lt;%eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression%&gt;) _target_1).getTarget();\n}\nelse\n{\n\t_xifexpression = null;\n}\nreturn _xifexpression;'"
 	 * @generated
 	 */
 	Expression getReceiver();

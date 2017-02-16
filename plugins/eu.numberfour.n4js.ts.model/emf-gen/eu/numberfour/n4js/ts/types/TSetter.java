@@ -60,7 +60,7 @@ public interface TSetter extends FieldAccessor, TMemberWithAccessModifier {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.TFormalParameter%> _fpar = this.getFpar();\n<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _typeRef = null;\nif (_fpar!=null)\n{\n\t_typeRef=_fpar.getTypeRef();\n}\nreturn _typeRef;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.ts.types.TFormalParameter%&gt; _fpar = this.getFpar();\n&lt;%eu.numberfour.n4js.ts.typeRefs.TypeRef%&gt; _typeRef = null;\nif (_fpar!=null)\n{\n\t_typeRef=_fpar.getTypeRef();\n}\nreturn _typeRef;'"
 	 * @generated
 	 */
 	TypeRef getDeclaredTypeRef();
@@ -90,7 +90,7 @@ public interface TSetter extends FieldAccessor, TMemberWithAccessModifier {
 	 * * Always returns SETTER
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return <%eu.numberfour.n4js.ts.types.MemberType%>.SETTER;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return &lt;%eu.numberfour.n4js.ts.types.MemberType%&gt;.SETTER;'"
 	 * @generated
 	 */
 	MemberType getMemberType();
@@ -104,7 +104,7 @@ public interface TSetter extends FieldAccessor, TMemberWithAccessModifier {
 	 * Overrides TMember's method.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _name = this.getName();\n<%java.lang.String%> _plus = (\"set \" + _name);\n<%java.lang.String%> _plus_1 = (_plus + \"(\");\n<%eu.numberfour.n4js.ts.types.TFormalParameter%> _fpar = this.getFpar();\n<%java.lang.String%> _formalParameterAsString = null;\nif (_fpar!=null)\n{\n\t_formalParameterAsString=_fpar.getFormalParameterAsString();\n}\n<%java.lang.String%> _plus_2 = (_plus_1 + _formalParameterAsString);\nreturn (_plus_2 + \")\");'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.lang.String%&gt; _name = this.getName();\n&lt;%java.lang.String%&gt; _plus = (\"set \" + _name);\n&lt;%java.lang.String%&gt; _plus_1 = (_plus + \"(\");\n&lt;%eu.numberfour.n4js.ts.types.TFormalParameter%&gt; _fpar = this.getFpar();\n&lt;%java.lang.String%&gt; _formalParameterAsString = null;\nif (_fpar!=null)\n{\n\t_formalParameterAsString=_fpar.getFormalParameterAsString();\n}\n&lt;%java.lang.String%&gt; _plus_2 = (_plus_1 + _formalParameterAsString);\nreturn (_plus_2 + \")\");'"
 	 * @generated
 	 */
 	String getMemberAsString();

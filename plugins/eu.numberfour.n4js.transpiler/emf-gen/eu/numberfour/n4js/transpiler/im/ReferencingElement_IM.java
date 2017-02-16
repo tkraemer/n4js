@@ -72,7 +72,7 @@ public interface ReferencingElement_IM extends EObject {
 	 * <code>null</code>.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%eu.numberfour.n4js.transpiler.im.SymbolTableEntry%> declaredTypeSTE = this.getRewiredTarget();\nif ((declaredTypeSTE instanceof <%eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal%>))\n{\n\treturn ((<%eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal%>)declaredTypeSTE).getOriginalTarget();\n}\nreturn null;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final &lt;%eu.numberfour.n4js.transpiler.im.SymbolTableEntry%&gt; declaredTypeSTE = this.getRewiredTarget();\nif ((declaredTypeSTE instanceof &lt;%eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal%&gt;))\n{\n\treturn ((&lt;%eu.numberfour.n4js.transpiler.im.SymbolTableEntryOriginal%&gt;)declaredTypeSTE).getOriginalTarget();\n}\nreturn null;'"
 	 * @generated
 	 */
 	IdentifiableElement getOriginalTargetOfRewiredTarget();

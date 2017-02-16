@@ -55,7 +55,7 @@ public interface FullTypeReference extends SimpleTypeReference {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getModuleName() != null) && (!this.getModuleName().isEmpty()));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getModuleName() != null) &amp;&amp; (!this.getModuleName().isEmpty()));'"
 	 * @generated
 	 */
 	boolean moduleNameSet();
@@ -64,7 +64,7 @@ public interface FullTypeReference extends SimpleTypeReference {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.StringBuilder%> strb = new <%java.lang.StringBuilder%>();\nboolean _moduleNameSet = this.moduleNameSet();\nif (_moduleNameSet)\n{\n\t<%java.lang.String%> _moduleName = this.getModuleName();\n\tstrb.append(_moduleName);\n}\nboolean _typeNameSet = this.typeNameSet();\nif (_typeNameSet)\n{\n\tint _length = strb.length();\n\tboolean _greaterThan = (_length > 0);\n\tif (_greaterThan)\n\t{\n\t\tstrb.append(\".\");\n\t}\n\t<%java.lang.String%> _typeName = this.getTypeName();\n\tstrb.append(_typeName);\n}\nreturn strb.toString();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.lang.StringBuilder%&gt; strb = new &lt;%java.lang.StringBuilder%&gt;();\nboolean _moduleNameSet = this.moduleNameSet();\nif (_moduleNameSet)\n{\n\t&lt;%java.lang.String%&gt; _moduleName = this.getModuleName();\n\tstrb.append(_moduleName);\n}\nboolean _typeNameSet = this.typeNameSet();\nif (_typeNameSet)\n{\n\tint _length = strb.length();\n\tboolean _greaterThan = (_length &gt; 0);\n\tif (_greaterThan)\n\t{\n\t\tstrb.append(\".\");\n\t}\n\t&lt;%java.lang.String%&gt; _typeName = this.getTypeName();\n\tstrb.append(_typeName);\n}\nreturn strb.toString();'"
 	 * @generated
 	 */
 	String toString();
@@ -73,7 +73,7 @@ public interface FullTypeReference extends SimpleTypeReference {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.StringBuilder%> strb = new <%java.lang.StringBuilder%>();\nboolean _moduleNameSet = this.moduleNameSet();\nif (_moduleNameSet)\n{\n\t<%java.lang.String%> _moduleName = this.getModuleName();\n\tstrb.append(_moduleName);\n}\nboolean _typeNameSet = this.typeNameSet();\nif (_typeNameSet)\n{\n\tstrb.append(\".\");\n\t<%java.lang.String%> _typeName = this.getTypeName();\n\tstrb.append(_typeName);\n}\nreturn strb.toString();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%java.lang.StringBuilder%&gt; strb = new &lt;%java.lang.StringBuilder%&gt;();\nboolean _moduleNameSet = this.moduleNameSet();\nif (_moduleNameSet)\n{\n\t&lt;%java.lang.String%&gt; _moduleName = this.getModuleName();\n\tstrb.append(_moduleName);\n}\nboolean _typeNameSet = this.typeNameSet();\nif (_typeNameSet)\n{\n\tstrb.append(\".\");\n\t&lt;%java.lang.String%&gt; _typeName = this.getTypeName();\n\tstrb.append(_typeName);\n}\nreturn strb.toString();'"
 	 * @generated
 	 */
 	String fullTypeName();

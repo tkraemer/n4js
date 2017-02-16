@@ -51,7 +51,7 @@ public interface N4EnumDeclaration extends N4TypeDeclaration {
 	 * Convenience method, returns {@link #getDefinedType()} casted to {@link TEnum}.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.Type%> _definedType = this.getDefinedType();\nreturn ((<%eu.numberfour.n4js.ts.types.TEnum%>) _definedType);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.ts.types.Type%&gt; _definedType = this.getDefinedType();\nreturn ((&lt;%eu.numberfour.n4js.ts.types.TEnum%&gt;) _definedType);'"
 	 * @generated
 	 */
 	TEnum getDefinedTypeAsEnum();

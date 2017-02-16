@@ -101,7 +101,7 @@ public interface SetterDeclaration extends FieldAccessor {
 	 * Returns the declared type of the formal parameter
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.n4JS.FormalParameter%> _fpar = this.getFpar();\n<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _declaredTypeRef = null;\nif (_fpar!=null)\n{\n\t_declaredTypeRef=_fpar.getDeclaredTypeRef();\n}\nreturn _declaredTypeRef;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.n4JS.FormalParameter%&gt; _fpar = this.getFpar();\n&lt;%eu.numberfour.n4js.ts.typeRefs.TypeRef%&gt; _declaredTypeRef = null;\nif (_fpar!=null)\n{\n\t_declaredTypeRef=_fpar.getDeclaredTypeRef();\n}\nreturn _declaredTypeRef;'"
 	 * @generated
 	 */
 	TypeRef getDeclaredTypeRef();

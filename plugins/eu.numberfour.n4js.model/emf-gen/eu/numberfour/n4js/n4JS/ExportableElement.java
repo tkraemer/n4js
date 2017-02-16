@@ -32,7 +32,7 @@ public interface ExportableElement extends EObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.ecore.EObject%> _eContainer = this.eContainer();\nreturn (_eContainer instanceof <%eu.numberfour.n4js.n4JS.ExportDeclaration%>);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%org.eclipse.emf.ecore.EObject%&gt; _eContainer = this.eContainer();\nreturn (_eContainer instanceof &lt;%eu.numberfour.n4js.n4JS.ExportDeclaration%&gt;);'"
 	 * @generated
 	 */
 	boolean isExported();
@@ -41,7 +41,7 @@ public interface ExportableElement extends EObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isExported() && ((<%eu.numberfour.n4js.n4JS.ExportDeclaration%>) this.eContainer()).isDefaultExport());'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isExported() &amp;&amp; ((&lt;%eu.numberfour.n4js.n4JS.ExportDeclaration%&gt;) this.eContainer()).isDefaultExport());'"
 	 * @generated
 	 */
 	boolean isExportedAsDefault();
@@ -50,7 +50,7 @@ public interface ExportableElement extends EObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _isExported = this.isExported();\nif (_isExported)\n{\n\t<%org.eclipse.emf.ecore.EObject%> _eContainer = this.eContainer();\n\tfinal <%eu.numberfour.n4js.n4JS.ExportDeclaration%> exportDecl = ((<%eu.numberfour.n4js.n4JS.ExportDeclaration%>) _eContainer);\n\tboolean _isDefaultExport = exportDecl.isDefaultExport();\n\tif (_isDefaultExport)\n\t{\n\t\treturn \"default\";\n\t}\n\tfinal <%eu.numberfour.n4js.n4JS.ExportableElement%> me = this;\n\t<%java.lang.String%> _switchResult = null;\n\tboolean _matched = false;\n\tif (me instanceof <%eu.numberfour.n4js.n4JS.NamedElement%>)\n\t{\n\t\t_matched=true;\n\t\t_switchResult = ((<%eu.numberfour.n4js.n4JS.NamedElement%>)me).getName();\n\t}\n\tif (!_matched)\n\t{\n\t\tif (me instanceof <%eu.numberfour.n4js.ts.types.IdentifiableElement%>)\n\t\t{\n\t\t\t_matched=true;\n\t\t\t_switchResult = ((<%eu.numberfour.n4js.ts.types.IdentifiableElement%>)me).getName();\n\t\t}\n\t}\n\treturn _switchResult;\n}\nreturn null;'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _isExported = this.isExported();\nif (_isExported)\n{\n\t&lt;%org.eclipse.emf.ecore.EObject%&gt; _eContainer = this.eContainer();\n\tfinal &lt;%eu.numberfour.n4js.n4JS.ExportDeclaration%&gt; exportDecl = ((&lt;%eu.numberfour.n4js.n4JS.ExportDeclaration%&gt;) _eContainer);\n\tboolean _isDefaultExport = exportDecl.isDefaultExport();\n\tif (_isDefaultExport)\n\t{\n\t\treturn \"default\";\n\t}\n\tfinal &lt;%eu.numberfour.n4js.n4JS.ExportableElement%&gt; me = this;\n\t&lt;%java.lang.String%&gt; _switchResult = null;\n\tboolean _matched = false;\n\tif (me instanceof &lt;%eu.numberfour.n4js.n4JS.NamedElement%&gt;)\n\t{\n\t\t_matched=true;\n\t\t_switchResult = ((&lt;%eu.numberfour.n4js.n4JS.NamedElement%&gt;)me).getName();\n\t}\n\tif (!_matched)\n\t{\n\t\tif (me instanceof &lt;%eu.numberfour.n4js.ts.types.IdentifiableElement%&gt;)\n\t\t{\n\t\t\t_matched=true;\n\t\t\t_switchResult = ((&lt;%eu.numberfour.n4js.ts.types.IdentifiableElement%&gt;)me).getName();\n\t\t}\n\t}\n\treturn _switchResult;\n}\nreturn null;'"
 	 * @generated
 	 */
 	String getExportedName();
@@ -65,7 +65,7 @@ public interface ExportableElement extends EObject {
 	 * transpiled to expressions later).
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%org.eclipse.emf.ecore.EObject%> _eContainer = this.eContainer();\nif ((_eContainer instanceof <%eu.numberfour.n4js.n4JS.ExportDeclaration%>))\n{\n\t<%org.eclipse.emf.ecore.EObject%> _eContainer_1 = this.eContainer();\n\t<%org.eclipse.emf.ecore.EObject%> _eContainer_2 = _eContainer_1.eContainer();\n\treturn (_eContainer_2 instanceof <%eu.numberfour.n4js.n4JS.Script%>);\n}\n<%org.eclipse.emf.ecore.EObject%> _eContainer_3 = this.eContainer();\nreturn (_eContainer_3 instanceof <%eu.numberfour.n4js.n4JS.Script%>);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%org.eclipse.emf.ecore.EObject%&gt; _eContainer = this.eContainer();\nif ((_eContainer instanceof &lt;%eu.numberfour.n4js.n4JS.ExportDeclaration%&gt;))\n{\n\t&lt;%org.eclipse.emf.ecore.EObject%&gt; _eContainer_1 = this.eContainer();\n\t&lt;%org.eclipse.emf.ecore.EObject%&gt; _eContainer_2 = _eContainer_1.eContainer();\n\treturn (_eContainer_2 instanceof &lt;%eu.numberfour.n4js.n4JS.Script%&gt;);\n}\n&lt;%org.eclipse.emf.ecore.EObject%&gt; _eContainer_3 = this.eContainer();\nreturn (_eContainer_3 instanceof &lt;%eu.numberfour.n4js.n4JS.Script%&gt;);'"
 	 * @generated
 	 */
 	boolean isToplevel();

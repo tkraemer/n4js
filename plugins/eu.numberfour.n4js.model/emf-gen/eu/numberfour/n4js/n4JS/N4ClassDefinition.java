@@ -114,7 +114,7 @@ public interface N4ClassDefinition extends N4ClassifierDefinition, ThisTarget {
 	 * Convenience method, returns {@link #getDefinedType()} casted to {@link TClass}.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.types.Type%> _definedType = this.getDefinedType();\nreturn ((<%eu.numberfour.n4js.ts.types.TClass%>) _definedType);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.ts.types.Type%&gt; _definedType = this.getDefinedType();\nreturn ((&lt;%eu.numberfour.n4js.ts.types.TClass%&gt;) _definedType);'"
 	 * @generated
 	 */
 	TClass getDefinedTypeAsClass();
@@ -123,7 +123,7 @@ public interface N4ClassDefinition extends N4ClassifierDefinition, ThisTarget {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" dataType="eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefIterable" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%> _superClassRef = this.getSuperClassRef();\n<%org.eclipse.emf.common.util.EList%><<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>> _implementedInterfaceRefs = this.getImplementedInterfaceRefs();\nreturn <%com.google.common.collect.Iterables%>.<<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>>concat(java.util.Collections.<<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>>unmodifiableList(org.eclipse.xtext.xbase.lib.CollectionLiterals.<<%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%>>newArrayList(_superClassRef)), _implementedInterfaceRefs);'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='&lt;%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%&gt; _superClassRef = this.getSuperClassRef();\n&lt;%org.eclipse.emf.common.util.EList%&gt;&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%&gt;&gt; _implementedInterfaceRefs = this.getImplementedInterfaceRefs();\nreturn &lt;%com.google.common.collect.Iterables%&gt;.&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%&gt;&gt;concat(java.util.Collections.&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%&gt;&gt;unmodifiableList(org.eclipse.xtext.xbase.lib.CollectionLiterals.&lt;&lt;%eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef%&gt;&gt;newArrayList(_superClassRef)), _implementedInterfaceRefs);'"
 	 * @generated
 	 */
 	Iterable<ParameterizedTypeRef> getSuperClassifierRefs();
