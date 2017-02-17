@@ -26,10 +26,8 @@ import org.eclipse.xtext.scoping.impl.AbstractScope;
 
 import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.IntersectionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
-import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef;
 import eu.numberfour.n4js.ts.types.FieldAccessor;
 import eu.numberfour.n4js.ts.types.TField;
@@ -56,7 +54,27 @@ public abstract class ComposedMemberScope extends AbstractScope {
 	final EObject context;
 
 	final N4JSTypeSystem ts;
-	private final boolean writeAccess;
+	final boolean writeAccess;
+
+	/**
+	 * Check if the elements of the subScopes cause errors. Handle these errors according to union/intersection types.
+	 */
+	abstract protected IEObjectDescription getCheckedDescription(String name, TMember member);
+
+	/**
+	 *
+	 */
+	abstract protected IEObjectDescription createComposedMemberDescriptionWithErrors(IEObjectDescription result);
+
+	/**
+	 *
+	 */
+	abstract protected ComposedMemberDescriptor getComposedMemberDescriptor(final Resource resource);
+
+	/**
+	 *
+	 */
+	abstract protected TMember createComposedMember(String memberName);
 
 	/**
 	 * Creates union type scope, passed subScopes are expected to be fully configured (i.e., including required filters
@@ -134,30 +152,6 @@ public abstract class ComposedMemberScope extends AbstractScope {
 	}
 
 	/**
-	 * Check if the elements of the subScopes cause errors. Handle these errors according to union/intersection types.
-	 */
-	private IEObjectDescription getCheckedDescription(String name, TMember member) {
-		IEObjectDescription description = EObjectDescription.create(member.getName(), member);
-
-		QualifiedName qn = QualifiedName.create(name);
-		boolean allDescrWithError = true;
-		for (IScope currSubScope : subScopes) {
-			IEObjectDescription subDescription = currSubScope.getSingleElement(qn);
-
-			boolean descrWithError = description == null || subDescription instanceof IEObjectDescriptionWithError;
-			allDescrWithError &= descrWithError;
-			if (isUnion() && descrWithError) {
-				return createComposedMemberDescriptionWithErrors(description);
-			}
-		}
-		if (isIntersection() && allDescrWithError) {
-			return createComposedMemberDescriptionWithErrors(description);
-		}
-
-		return description;
-	}
-
-	/**
 	 * For members of a union, pseudo instances need to be created (since the "union member" is not one of the members
 	 * of the sub-elements, but a new "merged" version). These pseudo instances are cached in the resource.
 	 */
@@ -171,38 +165,6 @@ public abstract class ComposedMemberScope extends AbstractScope {
 		// not found, then create
 		return createComposedMember(memberName);
 
-	}
-
-	abstract TMember createComposedMember(String memberName);
-
-	ComposedMemberDescriptor getComposedMemberDescriptor(final Resource resource) {
-		if (isUnion()) {
-			return new UnionMemberDescriptor(writeAccess, resource, ts);
-		}
-		if (isIntersection()) {
-			return new IntersectionMemberDescriptor(writeAccess, resource, ts);
-		}
-		throw new IllegalStateException("unknown composed member type");
-	}
-
-	private IEObjectDescription createComposedMemberDescriptionWithErrors(IEObjectDescription result) {
-		if (isUnion()) {
-			return new UnionMemberDescriptionWithError(result, composedTypeRef, subScopes, writeAccess);
-		}
-		if (isIntersection()) {
-			System.err.println(
-					"error: change return value in ComposedMemberScope#createUnionMemberDescriptionWithErrors");
-			return new UnionMemberDescriptionWithError(result, composedTypeRef, subScopes, writeAccess);
-		}
-		throw new IllegalStateException("unknown composed member type");
-	}
-
-	private boolean isUnion() {
-		return (composedTypeRef instanceof UnionTypeExpression);
-	}
-
-	private boolean isIntersection() {
-		return (composedTypeRef instanceof IntersectionTypeExpression);
 	}
 
 	/**

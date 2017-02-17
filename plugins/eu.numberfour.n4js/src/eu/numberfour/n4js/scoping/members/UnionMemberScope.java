@@ -14,6 +14,9 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.naming.QualifiedName;
+import org.eclipse.xtext.resource.EObjectDescription;
+import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
@@ -21,6 +24,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.utils.EcoreUtilN4;
+import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 import it.xsemantics.runtime.RuleEnvironment;
 
 /**
@@ -42,7 +46,7 @@ public class UnionMemberScope extends ComposedMemberScope {
 	 * this method creates a dummy placeholder.
 	 */
 	@Override
-	TMember createComposedMember(String memberName) {
+	protected TMember createComposedMember(String memberName) {
 		// check all subScopes for a member of the given name and
 		// merge the properties of the existing members into 'composedMember'
 		final Resource resource = EcoreUtilN4.getResource(context, composedTypeRef);
@@ -85,4 +89,33 @@ public class UnionMemberScope extends ComposedMemberScope {
 		}
 	}
 
+	/**
+	 * Check if the elements of the subScopes cause errors. Handle these errors according to union/intersection types.
+	 */
+	@Override
+	protected IEObjectDescription getCheckedDescription(String name, TMember member) {
+		IEObjectDescription description = EObjectDescription.create(member.getName(), member);
+
+		QualifiedName qn = QualifiedName.create(name);
+		for (IScope currSubScope : subScopes) {
+			IEObjectDescription subDescription = currSubScope.getSingleElement(qn);
+
+			boolean descrWithError = description == null || subDescription instanceof IEObjectDescriptionWithError;
+			if (descrWithError) {
+				return createComposedMemberDescriptionWithErrors(description);
+			}
+		}
+
+		return description;
+	}
+
+	@Override
+	protected IEObjectDescription createComposedMemberDescriptionWithErrors(IEObjectDescription result) {
+		return new UnionMemberDescriptionWithError(result, composedTypeRef, subScopes, writeAccess);
+	}
+
+	@Override
+	protected ComposedMemberDescriptor getComposedMemberDescriptor(final Resource resource) {
+		return new UnionMemberDescriptor(writeAccess, resource, ts);
+	}
 }
