@@ -10,9 +10,9 @@
  */
 package eu.numberfour.n4js.ui.organize.imports
 
-import org.eclipse.xtext.resource.IEObjectDescription
+import eu.numberfour.n4js.organize.imports.ImportProvidedElement
 import org.eclipse.xtend.lib.annotations.Data
-
+import org.eclipse.xtext.resource.IEObjectDescription
 
 /** 
  * Enhanced information, not deducible from the IEObjectDescription:

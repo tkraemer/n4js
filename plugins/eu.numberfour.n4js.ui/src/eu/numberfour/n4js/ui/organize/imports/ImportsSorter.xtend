@@ -20,7 +20,7 @@ import java.util.List
 import org.eclipse.emf.common.util.EList
 
 /**
- * 
+ * Provides methods for import declarations sorting.
  */
 class ImportsSorter {
 
@@ -58,6 +58,10 @@ class ImportsSorter {
 		}) // end sort.
 	}
 
+	/**
+	 * Sorting a List of import specifiers based on used names.
+	 * Order is: First all Named imports, then all Namespace imports.
+	 */
 	final static def sortByName(List<ImportSpecifier> list) {
 		Collections.sort(list, new Comparator<ImportSpecifier>() {
 			override compare(ImportSpecifier o1, ImportSpecifier o2) {

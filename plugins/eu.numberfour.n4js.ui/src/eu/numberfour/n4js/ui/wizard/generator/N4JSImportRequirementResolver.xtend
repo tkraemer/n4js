@@ -22,7 +22,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ui.changes.IAtomicChange
 import eu.numberfour.n4js.ui.changes.Replacement
-import eu.numberfour.n4js.ui.organize.imports.N4JSOrganizeImports
+import eu.numberfour.n4js.ui.organize.imports.ImportsRegionHelper
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference
 import java.util.ArrayList
 import java.util.Collection
@@ -48,46 +48,7 @@ class N4JSImportRequirementResolver {
 	private N4JSScopeProvider scopeProvider;
 	
 	@Inject
-	private N4JSOrganizeImports organizeImports;
-
-	/**
-	 * Represents an import requirement.
-	 */
-	public static class ImportRequirement {
-		public String typeName;
-		public String alias;
-		public String moduleSpecifier;
-
-		public URI typeUri;
-
-		new(String typeName, String alias, String moduleSpecifier, URI typeUri) {
-			this.typeName = typeName
-			this.alias = alias;
-			this.moduleSpecifier = moduleSpecifier;
-			this.typeUri = typeUri;
-		}
-	}
-
-	/**
-	 * Encapsulates import analysis results.
-	 *
-	 * These includes the import dependencies which still need to be inserted and
-	 * alias bindings which map demanded type uris to aliases in the modules scope.
-	 */
-	public static class ImportAnalysis {
-		public List<ImportRequirement> importRequirements;
-
-		/** Alias bindings map demanded type uris to existing aliases in the module scope
-		 *  May be empty
-		 */
-		public Map<URI,String> aliasBindings;
-
-		new(List<ImportRequirement> importRequirements,Map<URI,String> aliasBindings) {
-			this.importRequirements = importRequirements
-			this.aliasBindings = aliasBindings
-		}
-
-	}
+	private ImportsRegionHelper hImportsRegion;
 
 	/**
 	 * Analyzes a list of demanded import requirements and a resource in which the requirements should be available.
@@ -301,7 +262,7 @@ class N4JSImportRequirementResolver {
 	 * Returns the offset of import statements in the given resource.
 	 */
 	public def int getImportStatementOffset(XtextResource resource) {
-		organizeImports.getImportOffset(resource);
+		hImportsRegion.getImportOffset(resource);
 	}
 	
 	/**

@@ -11,14 +11,14 @@
 package eu.numberfour.n4js.ui.wizard.interfaces
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.ui.wizard.classifiers.N4JSNewClassifierWizardGenerator
+import eu.numberfour.n4js.ui.wizard.generator.ImportRequirement
 import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver
-import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportRequirement
 import eu.numberfour.n4js.ui.wizard.generator.WizardGeneratorHelper
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.common.util.URI
-import eu.numberfour.n4js.ui.wizard.classifiers.N4JSNewClassifierWizardGenerator
 
 /**
  * A file generator for {@link N4JSInterfaceWizardModel}.

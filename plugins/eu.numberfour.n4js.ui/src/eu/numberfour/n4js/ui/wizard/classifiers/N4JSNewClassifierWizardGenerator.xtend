@@ -14,11 +14,12 @@ import com.google.inject.Inject
 import eu.numberfour.n4js.projectModel.IN4JSCore
 import eu.numberfour.n4js.projectModel.IN4JSProject
 import eu.numberfour.n4js.ui.wizard.generator.ContentBlock
+import eu.numberfour.n4js.ui.wizard.generator.ImportAnalysis
+import eu.numberfour.n4js.ui.wizard.generator.ImportRequirement
 import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver
-import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportAnalysis
-import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportRequirement
 import eu.numberfour.n4js.ui.wizard.generator.WizardGeneratorHelper
 import eu.numberfour.n4js.ui.wizard.generator.WorkspaceWizardGenerator
+import eu.numberfour.n4js.ui.wizard.generator.WorkspaceWizardGeneratorException
 import java.util.List
 import java.util.Map
 import org.apache.log4j.Logger
@@ -28,7 +29,6 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.util.StringInputStream
-import eu.numberfour.n4js.ui.wizard.generator.WorkspaceWizardGeneratorException
 
 /**
  * A file generator for a {@link N4JSClassifierWizardModel}

@@ -139,7 +139,7 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 					IFile currentFile = collectedFiles.get(i);
 					subMon.setTaskName("Organize imports." + " - File (" + (i + 1) + " of " + totalWork + ")");
 					try {
-						OrganizeImportsHelperAccess.organizeImportsInFile(subMon, currentFile, Interaction.breakBuild);
+						OrganizeImportsHelperAccess.organizeImportsInFile(currentFile, Interaction.breakBuild, subMon);
 
 					} catch (CoreException | RuntimeException e) {
 						String msg = "Exception in file " + currentFile.getFullPath().toString() + ".";

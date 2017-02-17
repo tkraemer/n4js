@@ -15,7 +15,6 @@ import eu.numberfour.n4js.n4JS.ImportDeclaration
 import eu.numberfour.n4js.n4JS.N4JSFactory
 import eu.numberfour.n4js.ts.types.TypesFactory
 import org.eclipse.emf.common.notify.Adapter
-import org.eclipse.emf.common.notify.impl.AdapterImpl
 import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.naming.QualifiedName
 

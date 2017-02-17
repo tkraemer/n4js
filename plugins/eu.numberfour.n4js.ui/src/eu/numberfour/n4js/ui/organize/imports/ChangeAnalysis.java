@@ -18,15 +18,15 @@ import eu.numberfour.n4js.ui.changes.Replacement;
 /**
  * Helper value object for imports changes.
  */
-public class ChangeAnalysis {
-	// TODO IDE-2520 clarify ChangeAnalysis
-	public ChangeAnalysis(List<IAtomicChange> changes, boolean noRealChanges) {
-		this.changes = changes;
-		this.noRealChanges = noRealChanges;
-	}
+class ChangeAnalysis {
 
 	List<IAtomicChange> changes;
 	boolean noRealChanges;
 	Replacement newText = null;
 	Replacement deletion = null;
+
+	ChangeAnalysis(List<IAtomicChange> changes, boolean noRealChanges) {
+		this.changes = changes;
+		this.noRealChanges = noRealChanges;
+	}
 }

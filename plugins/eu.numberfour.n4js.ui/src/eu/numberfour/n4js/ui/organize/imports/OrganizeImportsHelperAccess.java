@@ -30,20 +30,19 @@ public class OrganizeImportsHelperAccess {
 	private static final Logger LOGGER = Logger.getLogger(OrganizeImportsHelperAccess.class);
 
 	/** Organize provided file. */
-	public static void organizeImportsInFile(SubMonitor subMon, IFile currentFile, final Interaction interaction)
+	public static void organizeImportsInFile(IFile currentFile, final Interaction interaction, SubMonitor subMon)
 			throws CoreException {
 		SubMonitor subSubMon = subMon.split(1, SubMonitor.SUPPRESS_NONE);
 		subSubMon.setTaskName(currentFile.getName());
 		N4JSOrganizeImportsHelper organizeImportsHelper = getOrganizeImports(currentFile);
-		organizeImportsHelper.doOrganizeImports(currentFile, interaction, subSubMon);
+		organizeImportsHelper.doOrganizeFile(currentFile, interaction, subSubMon);
 	}
 
-	// TODO IDE-2520 parameters order
 	/** Organize provided file. */
-	public static void organizeImportsInFile(IProgressMonitor mon, IFile currentFile, final Interaction interaction)
+	public static void organizeImportsInFile(IFile currentFile, final Interaction interaction, IProgressMonitor mon)
 			throws CoreException {
 		N4JSOrganizeImportsHelper organizeImportsHelper = getOrganizeImports(currentFile);
-		organizeImportsHelper.doOrganizeImports(currentFile, interaction, mon);
+		organizeImportsHelper.doOrganizeFile(currentFile, interaction, mon);
 	}
 
 	/** Organize provided editor. */
@@ -51,7 +50,7 @@ public class OrganizeImportsHelperAccess {
 		try {
 			IResource resource = editor.getResource();
 			N4JSOrganizeImportsHelper organizeImportsHelper = getOrganizeImports(resource);
-			organizeImportsHelper.doOrganizeImports(editor.getDocument(), interaction);
+			organizeImportsHelper.doOrganizeDocument(editor.getDocument(), interaction);
 		} catch (RuntimeException re) {
 			if (re.getCause() instanceof BreakException) {
 				LOGGER.debug("user canceled");
@@ -69,5 +68,4 @@ public class OrganizeImportsHelperAccess {
 	private static N4JSOrganizeImportsHelper getOrganizeImports(IResource iresource) {
 		return N4LanguageUtils.getServiceForContext(iresource, N4JSOrganizeImportsHelper.class).get();
 	}
-
 }

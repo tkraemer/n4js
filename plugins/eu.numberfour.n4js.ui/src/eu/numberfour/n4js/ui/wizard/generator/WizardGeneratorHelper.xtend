@@ -21,7 +21,6 @@ import eu.numberfour.n4js.ui.changes.IAtomicChange
 import eu.numberfour.n4js.ui.changes.ManifestChangeProvider
 import eu.numberfour.n4js.ui.organize.imports.Interaction
 import eu.numberfour.n4js.ui.organize.imports.OrganizeImportsHelperAccess
-import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportRequirement
 import eu.numberfour.n4js.ui.wizard.model.AccessModifier
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModel
@@ -212,7 +211,7 @@ class WizardGeneratorHelper {
 	 * This method works in the background without opening the graphical editor.
 	 */
 	public def void organizeImports(IFile file, IProgressMonitor mon) throws CoreException {
-		OrganizeImportsHelperAccess.organizeImportsInFile(mon, file, Interaction.takeFirst);
+		OrganizeImportsHelperAccess.organizeImportsInFile(file, Interaction.takeFirst, mon);
 	}
 	
 	/**

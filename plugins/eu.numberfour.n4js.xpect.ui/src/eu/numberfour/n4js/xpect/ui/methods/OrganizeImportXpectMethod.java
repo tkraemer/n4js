@@ -54,7 +54,6 @@ public class OrganizeImportXpectMethod {
 
 	private final static Logger logger = Logger.getLogger(OrganizeImportXpectMethod.class);
 
-	// TODO IDE-2520 verify with test in N4JSX, that we get correct injections
 	@Inject
 	N4JSOrganizeImportsHelper organizeImportsHelper;
 
@@ -112,7 +111,7 @@ public class OrganizeImportXpectMethod {
 
 			// Calling organize imports
 			Display.getDefault().syncExec(
-					() -> organizeImportsHelper.doOrganizeImports(xtextDoc, iaMode));
+					() -> organizeImportsHelper.organizeDocument(xtextDoc, iaMode));
 
 			if (bAmbiguityCheck) {
 				// should fail if here

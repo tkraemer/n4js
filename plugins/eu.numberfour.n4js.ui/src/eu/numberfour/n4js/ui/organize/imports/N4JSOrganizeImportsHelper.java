@@ -48,8 +48,7 @@ import eu.numberfour.n4js.ui.organize.imports.BreakException.UserCanceledBreakEx
 import eu.numberfour.n4js.utils.UtilN4;
 
 /**
- * This XtextDocumentImportsOrganizer will read provided documents (to find proper insertion points) and then will
- * modify those documents with organizes imports.
+ * This helper will analyze imports section of the provided document, and rewrite it with new computed state.
  *
  * Since many injected services depend on type of the organized document (i.e. language, e.g. N4JS) it is desired that
  * callers use {@link OrganizeImportsHelperAccess} which will take care the injection mechanisms.
@@ -59,7 +58,10 @@ public class N4JSOrganizeImportsHelper {
 	private static final Logger LOGGER = Logger.getLogger(N4JSOrganizeImportsHelper.class);
 
 	@Inject
-	private N4JSOrganizeImports organizeImports;
+	private ImportsComputer importsComputer;
+
+	@Inject
+	private ImportsRegionHelper hImportsRegion;
 
 	@Inject
 	private ChangeManager changeManager;
@@ -74,10 +76,26 @@ public class N4JSOrganizeImportsHelper {
 	private N4JSDocumentationProvider n4JSDocumentationProvider;
 
 	/**
-	 * Obtains {@link IXtextDocument} for the provided file and delegates to
-	 * {@link #doOrganizeImports(IXtextDocument, Interaction)}
+	 * Organize the imports in the N4JS document. It is unsafe to use this method without if the caller was injected
+	 * with injector for different language than needs to be used for the document. E.g. when Caller is create through
+	 * N4JS injector, but processed document is N4JSX type. It is safer for the callers to use
+	 * {@link OrganizeImportsHelperAccess} which will take care the injection mechanisms.
+	 *
+	 * @param document
+	 *            N4JS document
+	 * @throws RuntimeException
+	 *             wrapping a BreakException in case of user-abortion ({@link Interaction#queryUser}) or
+	 *             resolution-failure({@link Interaction#breakBuild} )
 	 */
-	public void doOrganizeImports(IFile file, final Interaction interaction, IProgressMonitor mon)
+	public void organizeDocument(final IXtextDocument document, final Interaction interaction) {
+		doOrganizeDocument(document, interaction);
+	}
+
+	/**
+	 * Obtains {@link IXtextDocument} for the provided file and delegates to
+	 * {@link #doOrganizeDocument(IXtextDocument, Interaction)}
+	 */
+	void doOrganizeFile(IFile file, final Interaction interaction, IProgressMonitor mon)
 			throws CoreException {
 
 		SubMonitor subMon = SubMonitor.convert(mon, "Organizing " + file.getName(), IProgressMonitor.UNKNOWN);
@@ -89,7 +107,7 @@ public class N4JSOrganizeImportsHelper {
 
 		docProvider.aboutToChange(fei);
 
-		doOrganizeImports(document, interaction);
+		doOrganizeDocument(document, interaction);
 
 		subMon.setTaskName("Saving " + file.getName());
 		docProvider.saveDocument(subMon.split(0), fei, document, true);
@@ -108,7 +126,7 @@ public class N4JSOrganizeImportsHelper {
 	 *             wrapping a BreakException in case of user-abortion ({@link Interaction#queryUser}) or
 	 *             resolution-failure({@link Interaction#breakBuild} )
 	 */
-	public void doOrganizeImports(final IXtextDocument document, final Interaction interaction) {
+	void doOrganizeDocument(final IXtextDocument document, final Interaction interaction) {
 		// trigger Linking
 		document.readOnly((XtextResource p) -> {
 			N4JSResource.postProcess(p);
@@ -154,7 +172,7 @@ public class N4JSOrganizeImportsHelper {
 	}
 
 	/**
-	 * Reads provided document and by analyzing it with {@link N4JSOrganizeImports} prepares list of changes to be made.
+	 * Reads provided document and by analyzing it with {@link ImportsComputer} prepares list of changes to be made.
 	 *
 	 * @param document
 	 *            to analyze
@@ -167,15 +185,7 @@ public class N4JSOrganizeImportsHelper {
 
 			@Override
 			public List<IChange> exec(XtextResource xtextResource) throws Exception {
-				// sysTraceUtil.traceCall();
-				// Position, length 0
-				// N4JSOrganizeImports organizeImports = getOrganizeImports(xtextResource).orElse(null);
-				if (organizeImports == null) {
-					System.out.println("CANNOT ORGANISE " + xtextResource.getURI());
-					return null;
-				}
-
-				InsertionPoint insertionPoint = organizeImports.getImportRegion(xtextResource);
+				InsertionPoint insertionPoint = hImportsRegion.getImportRegion(xtextResource);
 
 				if (insertionPoint.offset != -1) {
 					List<IChange> changes = new ArrayList<>();
@@ -183,16 +193,14 @@ public class N4JSOrganizeImportsHelper {
 						final String NL = ChangeProvider.lineDelimiter(document,
 								insertionPoint.offset);
 
-						final String organizedImportSection = organizeImports
+						final String organizedImportSection = importsComputer
 								.getOrganizedImportSection(xtextResource, NL, interaction);
-						if (organizedImportSection != null) {
-							// remove old imports
-							changes.addAll(organizeImports.getCleanupChanges(xtextResource, document));
-							// insert new imports
-							changes.addAll(prepareRealInsertion(document, xtextResource, insertionPoint, NL,
-									organizedImportSection));
-							return changes;
-						}
+						// remove old imports
+						changes.addAll(ImportsCleanupChangesUtil.getCleanupChanges(xtextResource, document));
+						// insert new imports
+						changes.addAll(prepareRealInsertion(document, xtextResource, insertionPoint, NL,
+								organizedImportSection));
+						return changes;
 					} catch (UserCanceledBreakException e) {
 						return null; // user-triggered cancellation, nothing to report.
 					} catch (BreakException e) {

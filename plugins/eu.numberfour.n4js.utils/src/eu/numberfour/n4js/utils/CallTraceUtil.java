@@ -46,8 +46,9 @@ public final class CallTraceUtil {
 		System.out.println(getStaticAndInstanceInfo());
 	}
 
+	/** Prints stacktrace up to the caller. */
 	public void printFullCallTrace() {
-		// System.out.println(getStaticAndInstanceInfo() + getStackTraceFromOffset(CALL_BASE_DEPTH));
+		System.out.println(getStaticAndInstanceInfo() + getStackTraceFromOffset(CALL_BASE_DEPTH));
 	}
 
 	/**
