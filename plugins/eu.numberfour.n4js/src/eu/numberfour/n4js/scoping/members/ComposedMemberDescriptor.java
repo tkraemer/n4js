@@ -179,13 +179,7 @@ abstract public class ComposedMemberDescriptor {
 		readOnlyField |= nextReadOnlyField;
 	}
 
-	private void mergeAccessibility(MemberAccessModifier nextAccessibility) {
-		if (nextAccessibility != null) {
-			// remember the minimum accessibility we have encountered
-			if (nextAccessibility.getValue() < accessibility.getValue())
-				accessibility = nextAccessibility;
-		}
-	}
+	protected abstract void mergeAccessibility(MemberAccessModifier nextAccessibility);
 
 	private void mergeTypeRef(TypeRef nextTypeRef) {
 		if (nextTypeRef != null) {

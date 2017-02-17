@@ -8,7 +8,7 @@ interface I1 {
 }
 interface I2 { 
 	foo: A;
-	someX(): A
+	someX(): A;
 }
 
 var i12: I1&I2;
@@ -21,5 +21,5 @@ i12.bar = null;
 
 //XPECT errors --> "Member method someX in conflict with non-method members in types of intersection: getter in I1; method in I2." at "someX"
 i12.someX = null;
- 
+
 

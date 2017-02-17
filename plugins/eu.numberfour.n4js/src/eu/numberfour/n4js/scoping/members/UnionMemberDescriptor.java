@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
+import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TGetter;
@@ -156,5 +157,14 @@ public class UnionMemberDescriptor extends ComposedMemberDescriptor {
 		setFPars(composedMember);
 
 		return composedMember;
+	}
+
+	@Override
+	protected void mergeAccessibility(MemberAccessModifier nextAccessibility) {
+		if (nextAccessibility != null) {
+			// remember the minimum accessibility we have encountered
+			if (nextAccessibility.getValue() < accessibility.getValue())
+				accessibility = nextAccessibility;
+		}
 	}
 }

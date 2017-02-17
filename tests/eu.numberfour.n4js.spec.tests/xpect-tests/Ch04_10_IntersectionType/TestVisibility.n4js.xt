@@ -1,0 +1,21 @@
+class A {
+	private s;
+	private m() {}
+}
+
+interface B {
+	s;
+	m() {}
+}
+
+interface C {
+	public s;
+	public m() {}
+}
+
+var ab: A&B;
+
+//XPECT noerrors
+ab.s = null;
+
+

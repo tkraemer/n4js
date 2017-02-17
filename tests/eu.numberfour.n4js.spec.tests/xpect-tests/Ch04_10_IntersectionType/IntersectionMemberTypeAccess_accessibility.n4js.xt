@@ -9,7 +9,7 @@
 
 // TODO: add Xpect method to check accessibility of a PropertyAccessExpression, e.g
 // X_PECT accessibility of 'ab.m' --> private
-ab.m();
+//ab.m();
 
 import {A,B,C} from "Ch04_10_IntersectionType/ABC"
 

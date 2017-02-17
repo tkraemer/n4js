@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
+import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TMember;
@@ -128,6 +129,15 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 		setFPars(composedMember);
 
 		return composedMember;
+	}
+
+	@Override
+	protected void mergeAccessibility(MemberAccessModifier nextAccessibility) {
+		if (nextAccessibility != null) {
+			// remember the maximum accessibility we have encountered
+			if (nextAccessibility.getValue() > accessibility.getValue())
+				accessibility = nextAccessibility;
+		}
 	}
 
 }
