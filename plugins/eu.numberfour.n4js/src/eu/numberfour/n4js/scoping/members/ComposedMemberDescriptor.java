@@ -97,6 +97,11 @@ abstract public class ComposedMemberDescriptor {
 	abstract TypeRef getSimplifiedComposition(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource);
 
 	/**
+	 * Merges the kind of a new member to the current kind
+	 */
+	abstract void mergeKind(MemberType nextKind);
+
+	/**
 	 * True iff all members merged via method {@link #merge(RuleEnvironment, TMember)} can be combined to a valid
 	 * composed member.
 	 */
@@ -155,8 +160,6 @@ abstract public class ComposedMemberDescriptor {
 		} else
 			oneIsMissing = true;
 	}
-
-	protected abstract void mergeKind(MemberType nextKind);
 
 	private void mergeReadOnlyField(boolean nextReadOnlyField) {
 		// remember if we have encountered at least one const field

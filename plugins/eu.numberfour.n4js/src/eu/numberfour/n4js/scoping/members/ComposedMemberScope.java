@@ -51,11 +51,11 @@ import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
  */
 public abstract class ComposedMemberScope extends AbstractScope {
 
-	protected final ComposedTypeRef composedTypeRef;
-	protected final IScope[] subScopes;
-	protected final EObject context;
+	final ComposedTypeRef composedTypeRef;
+	final IScope[] subScopes;
+	final EObject context;
 
-	protected final N4JSTypeSystem ts;
+	final N4JSTypeSystem ts;
 	private final boolean writeAccess;
 
 	/**
