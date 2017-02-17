@@ -15,7 +15,13 @@ import java.util.List;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
+import eu.numberfour.n4js.ts.types.TField;
+import eu.numberfour.n4js.ts.types.TGetter;
 import eu.numberfour.n4js.ts.types.TMember;
+import eu.numberfour.n4js.ts.types.TMemberWithAccessModifier;
+import eu.numberfour.n4js.ts.types.TMethod;
+import eu.numberfour.n4js.ts.types.TSetter;
+import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
 
@@ -72,5 +78,36 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 				return false;
 		}
 		return true;
+	}
+
+	@Override
+	public TMember create(String name) {
+		if (!isValid())
+			return null;
+
+		final TMember composedMember = createMemberOfKind(kind);
+
+		composedMember.setName(name);
+
+		if (composedMember instanceof TField)
+			((TField) composedMember).setDeclaredFinal(readOnlyField);
+
+		if (composedMember instanceof TMemberWithAccessModifier)
+			((TMemberWithAccessModifier) composedMember).setDeclaredMemberAccessModifier(accessibility);
+
+		if (composedMember instanceof TField)
+			TypeUtils.setMemberTypeRef(composedMember, typeRefs.get(0));
+		else if (composedMember instanceof TGetter || composedMember instanceof TMethod)
+			TypeUtils.setMemberTypeRef(composedMember, getSimplifiedCompositionOfTypeRefs());
+
+		if (composedMember instanceof TSetter) {
+			if (!fpars.isEmpty())
+				((TSetter) composedMember).setFpar(fpars.get(0).create());
+		} else if (composedMember instanceof TMethod) {
+			for (FparDescriptor currFparDesc : fpars)
+				((TMethod) composedMember).getFpars().add(currFparDesc.create());
+		}
+
+		return composedMember;
 	}
 }

@@ -18,14 +18,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import com.google.common.base.Joiner;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
-import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TFormalParameter;
-import eu.numberfour.n4js.ts.types.TGetter;
 import eu.numberfour.n4js.ts.types.TMember;
-import eu.numberfour.n4js.ts.types.TMemberWithAccessModifier;
 import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.TSetter;
 import eu.numberfour.n4js.ts.types.TypesFactory;
@@ -120,7 +117,7 @@ abstract public class ComposedMemberDescriptor {
 		this.resource = resource;
 	}
 
-	private TypeRef getSimplifiedCompositionOfTypeRefs() {
+	TypeRef getSimplifiedCompositionOfTypeRefs() {
 		if (cachedSimplifiedComposition == null) {
 			cachedSimplifiedComposition = getSimplifiedComposition(ts, typeRefs, resource);
 		}
@@ -231,53 +228,7 @@ abstract public class ComposedMemberDescriptor {
 	 * {@link #merge(RuleEnvironment, TMember)} do not form a valid composed member (i.e. if method {@link #isValid()}
 	 * returns false).
 	 */
-	public TMember create(String name) {
-		if (!isValid())
-			return null;
-
-		MemberType actualKind = kind;
-		// turn fields into a getter or setter (depending on read or write-access) *if* they have different types
-		if (isField(kind)) {
-			final TypeRef union = getSimplifiedCompositionOfTypeRefs();
-			// if the simplified union is a union type, the types cannot be all equal!
-			if (union != null && union instanceof UnionTypeExpression) {
-				if (writeAccess) {
-					actualKind = MemberType.SETTER;
-					final FparDescriptor fpar = new FparDescriptor();
-					fpar.names.add("arg0");
-					fpar.typeRefs.addAll(typeRefs);
-					fpars.add(fpar);
-				} else {
-					actualKind = MemberType.GETTER;
-				}
-			}
-		}
-
-		final TMember composedMember = createMemberOfKind(actualKind);
-
-		composedMember.setName(name);
-
-		if (composedMember instanceof TField)
-			((TField) composedMember).setDeclaredFinal(readOnlyField);
-
-		if (composedMember instanceof TMemberWithAccessModifier)
-			((TMemberWithAccessModifier) composedMember).setDeclaredMemberAccessModifier(accessibility);
-
-		if (composedMember instanceof TField)
-			TypeUtils.setMemberTypeRef(composedMember, typeRefs.get(0));
-		else if (composedMember instanceof TGetter || composedMember instanceof TMethod)
-			TypeUtils.setMemberTypeRef(composedMember, getSimplifiedCompositionOfTypeRefs());
-
-		if (composedMember instanceof TSetter) {
-			if (!fpars.isEmpty())
-				((TSetter) composedMember).setFpar(fpars.get(0).create());
-		} else if (composedMember instanceof TMethod) {
-			for (FparDescriptor currFparDesc : fpars)
-				((TMethod) composedMember).getFpars().add(currFparDesc.create());
-		}
-
-		return composedMember;
-	}
+	abstract public TMember create(String name);
 
 	static boolean isField(MemberType kind) {
 		return kind == MemberType.FIELD;
