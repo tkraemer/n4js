@@ -25,8 +25,10 @@ import static extension org.eclipse.xtext.nodemodel.util.NodeModelUtils.*
 class UnresolveProxyCrossRefUtil {
 
 	/** Finds unresolved cross proxies and returns tuples of reference object and used name. */
-	public static def Iterable<Pair<EObject, String>> findProxyCrossRefInfo(Script script) {
-		EcoreUtil.UnresolvedProxyCrossReferencer.find(script).values.flatten.map[it.EObject].map[it -> it.getRefName]
+	public static def Iterable<ReferenceProxyInfo> findProxyCrossRefInfo(Script script) {
+		EcoreUtil.UnresolvedProxyCrossReferencer.find(script).values.flatten.map[it.EObject].map [
+			new ReferenceProxyInfo(it, it.getRefName)
+		]
 	}
 
 	private static def String getRefName(EObject obj) {

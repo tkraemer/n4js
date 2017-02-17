@@ -33,7 +33,6 @@ import java.util.List
 import java.util.Set
 import org.eclipse.emf.common.notify.Adapter
 import org.eclipse.emf.common.notify.impl.AdapterImpl
-import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.jface.viewers.ILabelProvider
 import org.eclipse.jface.window.Window
@@ -67,6 +66,9 @@ public class ImportsComputer {
 
 	@Inject
 	private ImportsFactory importsFactory;
+
+	@Inject
+	private IReferenceFilter referenceFilter;
 
 	@Inject
 	private ImportProvidedElementLabelprovider importProvidedElementLabelprovider;
@@ -151,7 +153,7 @@ public class ImportsComputer {
 		// the following are named imports, that did not resolve. The issue lies in the Project-configuration and
 		// cannot be solved here. Candidate for quick fix.
 		// val unresolved = state.unresolved
-		val Iterable<Pair<EObject, String>> unresolved = script.findProxyCrossRefInfo.filter[ReferencesFilter.filterFunction(it)]
+		val Iterable<ReferenceProxyInfo> unresolved = script.findProxyCrossRefInfo.filter[referenceFilter.test(it)]
 
 		val resolution = LinkedHashMultimap.<String, ImportableObject>create
 		val alreadyProcessedIdRef = <String>newHashSet()
@@ -160,12 +162,12 @@ public class ImportsComputer {
 		// Some of the ParemterizedTypeRefs might come from the types computer and
 		// don't have a name in the script --> usedName might be null and the possible
 		unresolved.forEach [ proxyInfo |
-			val String usedName = proxyInfo.value
+			val String usedName = proxyInfo.name
 			// in situations like "new A()" at the position of A an IdentifierRef is unresolved.
 			// The solution is provided as a TypeRef. So TypeRef-solutions can be used in places where an IDref is desired.
 			// --> obj IdRef :  scopeIdRef & scopeTypeRef
 			// --> obj TypeRef : only TypeRef
-			if (proxyInfo.key instanceof IdentifierRef) {
+			if (proxyInfo.eobject instanceof IdentifierRef) {
 				if (alreadyProcessedIdRef.add(usedName)) {
 					resolution.addResolutionFromScope(scopeIdRef, usedName);
 				}
