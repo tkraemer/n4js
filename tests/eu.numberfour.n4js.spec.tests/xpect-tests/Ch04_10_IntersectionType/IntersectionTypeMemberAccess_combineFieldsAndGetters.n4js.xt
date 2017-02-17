@@ -1,0 +1,11 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+interface A { }
+interface I1 { foo: A; }
+interface I2 { get foo(): A  }
+
+var i12: I1&I2;
+
+//XPECT noerrors
+i12.foo = null; 
+

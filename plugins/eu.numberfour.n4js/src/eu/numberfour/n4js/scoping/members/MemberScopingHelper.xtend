@@ -259,7 +259,7 @@ class MemberScopingHelper {
 		switch (subScopes.size) { // only create union scope if really necessary, remember this optimization in test, since union{A} tests scope of A only!
 			case 0: return IScope.NULLSCOPE
 			case 1: return subScopes.get(0)
-			default: return new ComposedMemberScope(uniontypeexp, request.context, subScopes, ts)
+			default: return new UnionMemberScope(uniontypeexp, request.context, subScopes, ts)
 		}
 	}
 
@@ -273,7 +273,7 @@ class MemberScopingHelper {
 			return scope;
 		]
 		
-		return new ComposedMemberScope(intersectiontypeexp, request.context, subScopes, ts);
+		return new IntersectionMemberScope(intersectiontypeexp, request.context, subScopes, ts);
 	}
 
 	private def dispatch IScope members(FunctionTypeRef ftExpr, MemberScopeRequest request) {

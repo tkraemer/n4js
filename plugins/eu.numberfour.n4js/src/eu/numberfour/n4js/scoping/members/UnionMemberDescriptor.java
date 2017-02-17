@@ -58,6 +58,23 @@ public class UnionMemberDescriptor extends ComposedMemberDescriptor {
 		return pts.createSimplifiedUnion(pTypeRefs, pTesource);
 	}
 
+	@Override
+	protected void mergeKind(MemberType nextKind) {
+		if (nextKind != null) {
+			// if this is the first call to #mergeKind() -> initialize 'kind' variable
+			if (kind == null)
+				kind = nextKind;
+			// special tweak:
+			// combining fields and accessors will yield the same result as just having the accessors
+			if (isField(kind) && isAccessor(nextKind))
+				kind = nextKind;
+			else if (isAccessor(kind) && isField(nextKind))
+				nextKind = kind;
+			// remember if we have encountered multiple types
+			multipleKinds |= (nextKind != kind);
+		}
+	}
+
 	/**
 	 * True iff all members merged via method {@link #merge(RuleEnvironment, TMember)} can be combined to a valid
 	 * composed member.
