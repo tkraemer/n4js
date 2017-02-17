@@ -103,12 +103,14 @@ public class IntersectionMemberScope extends ComposedMemberScope {
 		for (IScope currSubScope : subScopes) {
 			IEObjectDescription subDescription = currSubScope.getSingleElement(qn);
 
-			TMember subScopeMember = (TMember) subDescription.getEObjectOrProxy();
-
-			MemberType newCMT = getCollapsedMemberType(subScopeMember);
-			if (lastCMT != null && lastCMT != newCMT)
-				return createComposedMemberDescriptionWithErrors(description);
-			lastCMT = newCMT;
+			if (subDescription != null) {
+				TMember subScopeMember = (TMember) subDescription.getEObjectOrProxy();
+				MemberType newCMT = getCollapsedMemberType(subScopeMember);
+				if (lastCMT != null && lastCMT != newCMT) {
+					return createComposedMemberDescriptionWithErrors(description);
+				}
+				lastCMT = newCMT;
+			}
 
 			boolean descrWithError = description == null || subDescription instanceof IEObjectDescriptionWithError;
 			allDescrWithError &= descrWithError;

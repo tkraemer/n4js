@@ -21,6 +21,7 @@ import com.google.common.base.Joiner;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.validation.IssueCodes;
+import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 
 /**
  * This description wraps a member of a union type that is not present in all contained types or is somehow incompatible
@@ -40,7 +41,17 @@ public class UnionMemberDescriptionWithError extends ComposedMemberDescriptionWi
 	}
 
 	@Override
-	protected boolean initDifferentMemberTypes(MapOfIndexes<String> indexesPerMemberType, final QualifiedName name,
+	protected boolean initMessageAndCode(List<String> missingFrom, MapOfIndexes<String> indexesPerMemberType,
+			QualifiedName name, boolean readOnlyField, IEObjectDescription[] descriptions,
+			MapOfIndexes<String> indexesPerCode) {
+
+		return initMissingFrom(missingFrom)
+				|| initDifferentMemberTypes(indexesPerMemberType, name, readOnlyField)
+				|| initSubMessages(descriptions, indexesPerCode)
+				|| initDefault();
+	}
+
+	private boolean initDifferentMemberTypes(MapOfIndexes<String> indexesPerMemberType, final QualifiedName name,
 			boolean readOnlyField) {
 		if (indexesPerMemberType.size() > 1) {
 			int numberOfFields = indexesPerMemberType.numberOf("field");
@@ -85,8 +96,50 @@ public class UnionMemberDescriptionWithError extends ComposedMemberDescriptionWi
 		return false;
 	}
 
-	@Override
-	protected boolean initMissingFrom(List<String> missingFrom) {
+	private boolean initSubMessages(IEObjectDescription[] descriptions, MapOfIndexes<String> indexesPerCode) {
+		// all subScopes returned same code:
+		if (indexesPerCode.size() == 1 && indexesPerCode.numberOf(indexesPerCode.firstKey()) == max) {
+			code = indexesPerCode.firstKey();
+			int index = indexesPerCode.firstIndex(code);
+			message = ((IEObjectDescriptionWithError) descriptions[index]).getMessage();
+			String scopeName = getNameForSubScope(index);
+			message.replace(scopeName, "all types");
+			return true;
+		}
+
+		if (indexesPerCode.size() > 0) {
+			StringBuilder strb = new StringBuilder();
+			for (String subCode : indexesPerCode.keySet()) {
+				int index = indexesPerCode.firstIndex(subCode);
+				String submessage = ((IEObjectDescriptionWithError) descriptions[index])
+						.getMessage();
+				String scopeName = getNameForSubScope(index);
+
+				String allScopeNames = indexesPerCode.getScopeNamesForKey(subCode);
+				String completeSubMessage;
+				if (submessage.contains(scopeName)) {
+					completeSubMessage = submessage.replace(scopeName, allScopeNames);
+				} else {
+					if (submessage.endsWith("."))
+						submessage = submessage.substring(0, submessage.length() - 1);
+					completeSubMessage = IssueCodes.getMessageForUNI_SUBMESSAGES(allScopeNames, submessage);
+				}
+				if (strb.length() > 0) {
+					strb.append(" ");
+				}
+				strb.append(completeSubMessage);
+			}
+			message = strb.toString();
+			code = IssueCodes.UNI_SUBMESSAGES;
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+	private boolean initMissingFrom(List<String> missingFrom) {
 		if (!missingFrom.isEmpty()) {
 			message = IssueCodes.getMessageForUNI_MISSING(getName().getLastSegment(),
 					Joiner.on(", ").join(missingFrom));
@@ -97,26 +150,10 @@ public class UnionMemberDescriptionWithError extends ComposedMemberDescriptionWi
 		}
 	}
 
-	@Override
-	protected boolean initDefault() {
+	private boolean initDefault() {
 		final String memberName = getName().getLastSegment();
 		message = IssueCodes.getMessageForUNI_UNCOMMON(memberName);
 		code = IssueCodes.UNI_UNCOMMON;
-		return true;
-	}
-
-	private boolean initMemberTypeConflict(MapOfIndexes<String> indexesPerMemberType) {
-		StringBuilder strb = new StringBuilder();
-		for (String memberTypeName : indexesPerMemberType.keySet()) {
-			String foundScopes = indexesPerMemberType.getScopeNamesForKey(memberTypeName);
-			if (strb.length() != 0) {
-				strb.append("; ");
-			}
-			strb.append(memberTypeName + " in " + foundScopes);
-		}
-		final String memberName = getName().getLastSegment();
-		message = IssueCodes.getMessageForINTER_MEMBER_TYPE_CONFLICT(memberName, strb);
-		code = IssueCodes.INTER_MEMBER_TYPE_CONFLICT;
 		return true;
 	}
 

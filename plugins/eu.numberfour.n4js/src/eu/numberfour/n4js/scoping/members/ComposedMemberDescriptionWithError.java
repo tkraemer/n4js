@@ -23,7 +23,6 @@ import eu.numberfour.n4js.scoping.utils.AbstractDescriptionWithError;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TField;
-import eu.numberfour.n4js.validation.IssueCodes;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 
 /**
@@ -90,6 +89,13 @@ public abstract class ComposedMemberDescriptionWithError extends AbstractDescrip
 	protected String code;
 
 	/**
+	 * @return true iff message and code was created.
+	 */
+	abstract protected boolean initMessageAndCode(List<String> missingFrom, MapOfIndexes<String> indexesPerMemberType,
+			QualifiedName name, boolean readOnlyField, IEObjectDescription[] descriptions,
+			MapOfIndexes<String> indexesPerCode);
+
+	/**
 	 * Creates a new instance of this wrapping description.
 	 *
 	 * @param delegate
@@ -144,65 +150,11 @@ public abstract class ComposedMemberDescriptionWithError extends AbstractDescrip
 				}
 			}
 
-			return //
-			initMissingFrom(missingFrom)
-					|| initDifferentMemberTypes(indexesPerMemberType, name, readOnlyField)
-					|| initSubMessages(descriptions, indexesPerCode)
-					|| initDefault();
+			return initMessageAndCode(missingFrom, indexesPerMemberType, name, readOnlyField, descriptions,
+					indexesPerCode);
 		}
 		return false;
 	}
-
-	private boolean initSubMessages(IEObjectDescription[] descriptions, MapOfIndexes<String> indexesPerCode) {
-		// all subScopes returned same code:
-		if (indexesPerCode.size() == 1 && indexesPerCode.numberOf(indexesPerCode.firstKey()) == max) {
-			code = indexesPerCode.firstKey();
-			int index = indexesPerCode.firstIndex(code);
-			message = ((IEObjectDescriptionWithError) descriptions[index]).getMessage();
-			String scopeName = getNameForSubScope(index);
-			message.replace(scopeName, "all types");
-			return true;
-		}
-
-		if (indexesPerCode.size() > 0) {
-			StringBuilder strb = new StringBuilder();
-			for (String subCode : indexesPerCode.keySet()) {
-				int index = indexesPerCode.firstIndex(subCode);
-				String submessage = ((IEObjectDescriptionWithError) descriptions[index])
-						.getMessage();
-				String scopeName = getNameForSubScope(index);
-
-				String allScopeNames = indexesPerCode.getScopeNamesForKey(subCode);
-				String completeSubMessage;
-				if (submessage.contains(scopeName)) {
-					completeSubMessage = submessage.replace(scopeName, allScopeNames);
-				} else {
-					if (submessage.endsWith("."))
-						submessage = submessage.substring(0, submessage.length() - 1);
-					completeSubMessage = IssueCodes.getMessageForUNI_SUBMESSAGES(allScopeNames, submessage);
-				}
-				if (strb.length() > 0) {
-					strb.append(" ");
-				}
-				strb.append(completeSubMessage);
-			}
-			message = strb.toString();
-			code = IssueCodes.UNI_SUBMESSAGES;
-
-			return true;
-		}
-
-		return false;
-
-	}
-
-	protected abstract boolean initDifferentMemberTypes(MapOfIndexes<String> indexesPerMemberType,
-			final QualifiedName name,
-			boolean readOnlyField);
-
-	protected abstract boolean initMissingFrom(List<String> missingFrom);
-
-	protected abstract boolean initDefault();
 
 	private String getNameForSubScope(int idx) {
 		if (idx < composedTypeRef.getTypeRefs().size()) {
