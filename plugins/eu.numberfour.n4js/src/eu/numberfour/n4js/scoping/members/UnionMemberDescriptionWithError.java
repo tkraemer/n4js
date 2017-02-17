@@ -19,7 +19,6 @@ import org.eclipse.xtext.scoping.IScope;
 import com.google.common.base.Joiner;
 
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.validation.IssueCodes;
 
 /**
@@ -111,14 +110,5 @@ public class UnionMemberDescriptionWithError extends ComposedMemberDescriptionWi
 		message = IssueCodes.getMessageForUNI_UNCOMMON(memberName);
 		code = IssueCodes.UNI_UNCOMMON;
 		return true;
-	}
-
-	private String getNameForSubScope(int idx) {
-		if (idx < composedTypeRef.getTypeRefs().size()) {
-			final TypeRef typeRef = composedTypeRef.getTypeRefs().get(idx);
-			if (typeRef != null)
-				return typeRef.getTypeRefAsString();
-		}
-		return null;
 	}
 }
