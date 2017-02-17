@@ -130,15 +130,33 @@ public class ComposedMemberScope extends AbstractScope {
 		if (isErrorPlaceholder(member)) {
 			return createComposedMemberDescriptionWithErrors(EObjectDescription.create(member.getName(), member));
 		}
+
+		IEObjectDescription description = getCheckedDescription(name, member);
+
+		return description;
+	}
+
+	/**
+	 * Check if the elements of the subScopes cause errors. Handle these errors according to union/intersection types.
+	 */
+	private IEObjectDescription getCheckedDescription(String name, TMember member) {
 		IEObjectDescription description = EObjectDescription.create(member.getName(), member);
 
 		QualifiedName qn = QualifiedName.create(name);
+		boolean allDescrWithError = true;
 		for (IScope currSubScope : subScopes) {
 			IEObjectDescription subDescription = currSubScope.getSingleElement(qn);
-			if (description == null || subDescription instanceof IEObjectDescriptionWithError) {
+
+			boolean descrWithError = description == null || subDescription instanceof IEObjectDescriptionWithError;
+			allDescrWithError &= descrWithError;
+			if (isUnion() && descrWithError) {
 				return createComposedMemberDescriptionWithErrors(description);
 			}
 		}
+		if (isIntersection() && allDescrWithError) {
+			return createComposedMemberDescriptionWithErrors(description);
+		}
+
 		return description;
 	}
 
@@ -207,25 +225,33 @@ public class ComposedMemberScope extends AbstractScope {
 	}
 
 	private ComposedMemberDescriptor getComposedMemberDescriptor(final Resource resource) {
-		if (composedTypeRef instanceof UnionTypeExpression) {
+		if (isUnion()) {
 			return new UnionMemberDescriptor(writeAccess, resource, ts);
 		}
-		if (composedTypeRef instanceof IntersectionTypeExpression) {
+		if (isIntersection()) {
 			return new IntersectionMemberDescriptor(writeAccess, resource, ts);
 		}
 		throw new IllegalStateException("unknown composed member type");
 	}
 
 	private IEObjectDescription createComposedMemberDescriptionWithErrors(IEObjectDescription result) {
-		if (composedTypeRef instanceof UnionTypeExpression) {
+		if (isUnion()) {
 			return new UnionMemberDescriptionWithError(result, composedTypeRef, subScopes, writeAccess);
 		}
-		if (composedTypeRef instanceof IntersectionTypeExpression) {
+		if (isIntersection()) {
 			System.err.println(
 					"error: change return value in ComposedMemberScope#createUnionMemberDescriptionWithErrors");
 			return new UnionMemberDescriptionWithError(result, composedTypeRef, subScopes, writeAccess);
 		}
 		throw new IllegalStateException("unknown composed member type");
+	}
+
+	private boolean isUnion() {
+		return (composedTypeRef instanceof UnionTypeExpression);
+	}
+
+	private boolean isIntersection() {
+		return (composedTypeRef instanceof IntersectionTypeExpression);
 	}
 
 	/**

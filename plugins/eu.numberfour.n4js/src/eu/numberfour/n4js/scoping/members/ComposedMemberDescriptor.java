@@ -120,7 +120,7 @@ abstract public class ComposedMemberDescriptor {
 		this.resource = resource;
 	}
 
-	private TypeRef getSimplifiedUnionOfTypeRefs() {
+	private TypeRef getSimplifiedCompositionOfTypeRefs() {
 		if (cachedSimplifiedComposition == null) {
 			cachedSimplifiedComposition = getSimplifiedComposition(ts, typeRefs, resource);
 		}
@@ -238,7 +238,7 @@ abstract public class ComposedMemberDescriptor {
 		MemberType actualKind = kind;
 		// turn fields into a getter or setter (depending on read or write-access) *if* they have different types
 		if (isField(kind)) {
-			final TypeRef union = getSimplifiedUnionOfTypeRefs();
+			final TypeRef union = getSimplifiedCompositionOfTypeRefs();
 			// if the simplified union is a union type, the types cannot be all equal!
 			if (union != null && union instanceof UnionTypeExpression) {
 				if (writeAccess) {
@@ -266,7 +266,7 @@ abstract public class ComposedMemberDescriptor {
 		if (composedMember instanceof TField)
 			TypeUtils.setMemberTypeRef(composedMember, typeRefs.get(0));
 		else if (composedMember instanceof TGetter || composedMember instanceof TMethod)
-			TypeUtils.setMemberTypeRef(composedMember, getSimplifiedUnionOfTypeRefs());
+			TypeUtils.setMemberTypeRef(composedMember, getSimplifiedCompositionOfTypeRefs());
 
 		if (composedMember instanceof TSetter) {
 			if (!fpars.isEmpty())
