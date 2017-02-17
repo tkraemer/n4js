@@ -480,7 +480,7 @@ public class N4JSOrganizeImports {
 
 		solutions.forEach [ name, importable |
 			val imp = importable.head;
-			ret.add(importsFactory.createImport(imp));
+			ret.add(importsFactory.createImport(imp, nodelessMarker));
 		]
 
 		// ignore broken names, for which imports will be added due to unresolved refs
@@ -514,7 +514,7 @@ public class N4JSOrganizeImports {
 
 		val chosenSolutions = disambiguate(forDisambiguation, interaction);
 
-		chosenSolutions.forEach[ret.add(importsFactory.createImport(it))];
+		chosenSolutions.forEach[ret.add(importsFactory.createImport(it, nodelessMarker))];
 
 		return ret;
 	}

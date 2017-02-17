@@ -26,32 +26,29 @@ class ImportsFactory {
 	private final static N4JSFactory N4JS_FACTORY = N4JSFactory::eINSTANCE;
 	private final static TypesFactory TYPES_FACTORY = TypesFactory.eINSTANCE;
 
-	/** Adapter used to mark programmatically created AST-Elements without a corresponding parse tree node. */
-	private final Adapter nodelessMarker = new AdapterImpl();
-
 	@Inject
 	private IQualifiedNameConverter qualifiedNameConverter;
 
 	/** Create import declaration for provided import object. */
-	def createImport(ImportableObject imp) {
+	def createImport(ImportableObject imp, Adapter nodelessMarker) {
 		if (imp.isExportedAsDefault)
-			createDefaultImport(imp.name, imp.eobj.qualifiedName.skipLast(1))
+			createDefaultImport(imp.name, imp.eobj.qualifiedName.skipLast(1), nodelessMarker)
 		else
-			createNamedImport(imp.name, imp.eobj.qualifiedName.skipLast(1))
+			createNamedImport(imp.name, imp.eobj.qualifiedName.skipLast(1), nodelessMarker)
 	}
 
 	/** For each name in names create a new ImportDeclaration using the Module from declaration. */
-	def createNamedImports(ImportDeclaration declaration, Iterable<String> names) {
-		names.map[createNamedImport(it, declaration.module.qualifiedName)]
+	def createNamedImports(ImportDeclaration declaration, Iterable<String> names, Adapter nodelessMarker) {
+		names.map[createNamedImport(it, declaration.module.qualifiedName, nodelessMarker)]
 	}
 
 	/** Creates a new named import of 'name' from 'module'*/
-	private def ImportDeclaration createNamedImport(String name, QualifiedName module) {
-		return createNamedImport(name, qualifiedNameConverter.toString(module))
+	private def ImportDeclaration createNamedImport(String name, QualifiedName module, Adapter nodelessMarker) {
+		return createNamedImport(name, qualifiedNameConverter.toString(module), nodelessMarker)
 	}
 
 	/** Creates a new named import of 'name' from 'moduleName'*/
-	private def ImportDeclaration createNamedImport(String name, String moduleName) {
+	private def ImportDeclaration createNamedImport(String name, String moduleName, Adapter nodelessMarker) {
 		val ret = N4JS_FACTORY.createImportDeclaration
 
 		val namedImportSpec = N4JS_FACTORY.createNamedImportSpecifier
@@ -69,12 +66,12 @@ class ImportsFactory {
 	}
 
 	/** Creates a new default import with name 'name' from 'module'*/
-	private def ImportDeclaration createDefaultImport(String name, QualifiedName module) {
-		return createDefaultImport(name, qualifiedNameConverter.toString(module))
+	private def ImportDeclaration createDefaultImport(String name, QualifiedName module, Adapter nodelessMarker) {
+		return createDefaultImport(name, qualifiedNameConverter.toString(module), nodelessMarker)
 	}
 
 	/** Creates a new default import with name 'name' from 'moduleName'*/
-	private def ImportDeclaration createDefaultImport(String name, String moduleName) {
+	private def ImportDeclaration createDefaultImport(String name, String moduleName, Adapter nodelessMarker) {
 		val ret = N4JS_FACTORY.createImportDeclaration
 
 		val defaultImportSpec = N4JS_FACTORY.createDefaultImportSpecifier
