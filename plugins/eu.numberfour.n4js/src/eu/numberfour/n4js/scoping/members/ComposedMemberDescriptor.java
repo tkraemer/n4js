@@ -108,6 +108,13 @@ abstract public class ComposedMemberDescriptor {
 	abstract public boolean isValid();
 
 	/**
+	 * Creates the composed members. Returns <code>null</code> if the members merged via method
+	 * {@link #merge(RuleEnvironment, TMember)} do not form a valid composed member (i.e. if method {@link #isValid()}
+	 * returns false).
+	 */
+	abstract public TMember create(String name);
+
+	/**
 	 * Constructor. The Resource and the N4JSTypeSystem will be used for type inference, etc. during merging of the
 	 * members.
 	 *
@@ -213,11 +220,20 @@ abstract public class ComposedMemberDescriptor {
 	}
 
 	/**
-	 * Creates the composed members. Returns <code>null</code> if the members merged via method
-	 * {@link #merge(RuleEnvironment, TMember)} do not form a valid composed member (i.e. if method {@link #isValid()}
-	 * returns false).
+	 * Sets the formal parameter in case the member is a setter or method.
 	 */
-	abstract public TMember create(String name);
+	protected void setFPars(final TMember composedMember) {
+		if (composedMember instanceof TSetter) {
+			if (!fpars.isEmpty()) {
+				TSetter tSetter = (TSetter) composedMember;
+				tSetter.setFpar(fpars.get(0).create());
+			}
+		} else if (composedMember instanceof TMethod) {
+			for (FparDescriptor currFparDesc : fpars) {
+				((TMethod) composedMember).getFpars().add(currFparDesc.create());
+			}
+		}
+	}
 
 	static boolean isField(MemberType kind) {
 		return kind == MemberType.FIELD;

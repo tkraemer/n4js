@@ -261,6 +261,21 @@ public class UnionMemberDescriptionWithError extends AbstractDescriptionWithErro
 		return true;
 	}
 
+	private boolean initMemberTypeConflict(MapOfIndexes<String> indexesPerMemberType) {
+		StringBuilder strb = new StringBuilder();
+		for (String memberTypeName : indexesPerMemberType.keySet()) {
+			String foundScopes = indexesPerMemberType.getScopeNamesForKey(memberTypeName);
+			if (strb.length() != 0) {
+				strb.append("; ");
+			}
+			strb.append(memberTypeName + " in " + foundScopes);
+		}
+		final String memberName = getName().getLastSegment();
+		message = IssueCodes.getMessageForINTER_MEMBER_TYPE_CONFLICT(memberName, strb);
+		code = IssueCodes.INTER_MEMBER_TYPE_CONFLICT;
+		return true;
+	}
+
 	private String getNameForSubScope(int idx) {
 		if (idx < composedTypeRef.getTypeRefs().size()) {
 			final TypeRef typeRef = composedTypeRef.getTypeRefs().get(idx);

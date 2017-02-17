@@ -22,7 +22,6 @@ import eu.numberfour.n4js.ts.types.TGetter;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TMemberWithAccessModifier;
 import eu.numberfour.n4js.ts.types.TMethod;
-import eu.numberfour.n4js.ts.types.TSetter;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
@@ -144,13 +143,7 @@ public class UnionMemberDescriptor extends ComposedMemberDescriptor {
 		else if (composedMember instanceof TGetter || composedMember instanceof TMethod)
 			TypeUtils.setMemberTypeRef(composedMember, getSimplifiedCompositionOfTypeRefs());
 
-		if (composedMember instanceof TSetter) {
-			if (!fpars.isEmpty())
-				((TSetter) composedMember).setFpar(fpars.get(0).create());
-		} else if (composedMember instanceof TMethod) {
-			for (FparDescriptor currFparDesc : fpars)
-				((TMethod) composedMember).getFpars().add(currFparDesc.create());
-		}
+		setFPars(composedMember);
 
 		return composedMember;
 	}
