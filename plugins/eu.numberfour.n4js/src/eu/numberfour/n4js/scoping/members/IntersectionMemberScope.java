@@ -137,7 +137,7 @@ public class IntersectionMemberScope extends ComposedMemberScope {
 
 	@Override
 	protected IEObjectDescription createComposedMemberDescriptionWithErrors(IEObjectDescription result) {
-		return new UnionMemberDescriptionWithError(result, composedTypeRef, subScopes, writeAccess);
+		return new IntersectionMemberDescriptionWithError(result, composedTypeRef, subScopes, writeAccess);
 	}
 
 	@Override

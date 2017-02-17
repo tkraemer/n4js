@@ -87,6 +87,8 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 			// special tweak:
 			// combining fields and accessors will yield the same result as just having the fields
 			if (isAccessor(kind) && isField(nextKind))
+				kind = nextKind;
+			else if (isField(kind) && isAccessor(nextKind))
 				nextKind = kind;
 			// remember if we have encountered multiple types
 			multipleKinds |= (nextKind != kind);

@@ -16,17 +16,14 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 
-import com.google.common.base.Joiner;
-
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
-import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.validation.IssueCodes;
 
 /**
  * This description wraps a member of a union type that is not present in all contained types or is somehow incompatible
  * so that it cannot be composed into a single valid composed member.
  */
-public class UnionMemberDescriptionWithError extends ComposedMemberDescriptionWithError {
+public class IntersectionMemberDescriptionWithError extends ComposedMemberDescriptionWithError {
 
 	/**
 	 * Creates a new instance of this wrapping description.
@@ -34,9 +31,19 @@ public class UnionMemberDescriptionWithError extends ComposedMemberDescriptionWi
 	 * @param delegate
 	 *            the decorated description.
 	 */
-	public UnionMemberDescriptionWithError(IEObjectDescription delegate,
+	public IntersectionMemberDescriptionWithError(IEObjectDescription delegate,
 			ComposedTypeRef composedTypeRef, IScope[] subScopes, boolean writeAccess) {
 		super(delegate, composedTypeRef, subScopes, writeAccess);
+	}
+
+	@Override
+	protected boolean initMissingFrom(List<String> missingFrom) {
+		return false;
+	}
+
+	@Override
+	protected boolean initDefault() {
+		return false;
 	}
 
 	@Override
@@ -78,54 +85,11 @@ public class UnionMemberDescriptionWithError extends ComposedMemberDescriptionWi
 				}
 				strb.append(memberTypeName + " in " + foundScopes);
 			}
-			message = IssueCodes.getMessageForUNI_MULTIPLE_KINDS(name, "union", strb.toString());
+			message = IssueCodes.getMessageForUNI_MULTIPLE_KINDS(name, "intersection", strb.toString());
 			code = IssueCodes.UNI_MULTIPLE_KINDS;
 			return true;
 		}
 		return false;
 	}
 
-	@Override
-	protected boolean initMissingFrom(List<String> missingFrom) {
-		if (!missingFrom.isEmpty()) {
-			message = IssueCodes.getMessageForUNI_MISSING(getName().getLastSegment(),
-					Joiner.on(", ").join(missingFrom));
-			code = IssueCodes.UNI_MISSING;
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	@Override
-	protected boolean initDefault() {
-		final String memberName = getName().getLastSegment();
-		message = IssueCodes.getMessageForUNI_UNCOMMON(memberName);
-		code = IssueCodes.UNI_UNCOMMON;
-		return true;
-	}
-
-	private boolean initMemberTypeConflict(MapOfIndexes<String> indexesPerMemberType) {
-		StringBuilder strb = new StringBuilder();
-		for (String memberTypeName : indexesPerMemberType.keySet()) {
-			String foundScopes = indexesPerMemberType.getScopeNamesForKey(memberTypeName);
-			if (strb.length() != 0) {
-				strb.append("; ");
-			}
-			strb.append(memberTypeName + " in " + foundScopes);
-		}
-		final String memberName = getName().getLastSegment();
-		message = IssueCodes.getMessageForINTER_MEMBER_TYPE_CONFLICT(memberName, strb);
-		code = IssueCodes.INTER_MEMBER_TYPE_CONFLICT;
-		return true;
-	}
-
-	private String getNameForSubScope(int idx) {
-		if (idx < composedTypeRef.getTypeRefs().size()) {
-			final TypeRef typeRef = composedTypeRef.getTypeRefs().get(idx);
-			if (typeRef != null)
-				return typeRef.getTypeRefAsString();
-		}
-		return null;
-	}
 }
