@@ -176,3 +176,5 @@ ts
 fallback
 api
 whitespaces
+stacktrace
+hashcode
