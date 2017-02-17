@@ -53,8 +53,18 @@ public class UnionMemberDescriptor extends ComposedMemberDescriptor {
 	 * Returns a simplified union TypeRef.
 	 */
 	@Override
-	protected TypeRef getSimplifiedComposition(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
+	protected TypeRef getCompositionForMember(N4JSTypeSystem pts, List<TypeRef> pTypeRefs,
+			Resource pTesource) {
 		return pts.createSimplifiedUnion(pTypeRefs, pTesource);
+	}
+
+	/**
+	 * Returns a simplified union TypeRef.
+	 */
+	@Override
+	protected TypeRef getCompositionForParameter(N4JSTypeSystem pts, List<TypeRef> pTypeRefs,
+			Resource pTesource) {
+		return pts.createSimplifiedIntersection(pTypeRefs, pTesource);
 	}
 
 	@Override

@@ -43,8 +43,16 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 	 * Returns a simplified intersection TypeRef.
 	 */
 	@Override
-	protected TypeRef getSimplifiedComposition(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
+	protected TypeRef getCompositionForMember(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
 		return pts.createSimplifiedIntersection(pTypeRefs, pTesource);
+	}
+
+	/**
+	 * Returns a simplified union TypeRef.
+	 */
+	@Override
+	protected TypeRef getCompositionForParameter(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
+		return pts.createSimplifiedUnion(pTypeRefs, pTesource);
 	}
 
 	/**
@@ -112,6 +120,9 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 			accModMem.setDeclaredMemberAccessModifier(accessibility);
 		}
 
+		// FIXME: the following is not correct. We need to know about the intended RW-access to create the correct
+		// typeRef:
+		// For writing: union, for reading: intersection!
 		TypeUtils.setMemberTypeRef(composedMember, getSimplifiedCompositionOfTypeRefs());
 
 		setFPars(composedMember);

@@ -81,7 +81,8 @@ abstract public class ComposedMemberDescriptor {
 				typeRefsToUse = new ArrayList<>(this.typeRefs);
 				typeRefsToUse.addAll(ComposedMemberDescriptor.this.typeRefs);
 			}
-			fpar.setTypeRef(ts.createSimplifiedIntersection(typeRefsToUse, ComposedMemberDescriptor.this.resource));
+			TypeRef paramCompTR = getCompositionForParameter(ts, typeRefsToUse, ComposedMemberDescriptor.this.resource);
+			fpar.setTypeRef(paramCompTR);
 			if (this.optional && null != fpar.getTypeRef()) {
 				fpar.getTypeRef().setUndefModifier(UndefModifier.OPTIONAL);
 			}
@@ -94,7 +95,12 @@ abstract public class ComposedMemberDescriptor {
 	/**
 	 * Returns a simplified composition.
 	 */
-	abstract TypeRef getSimplifiedComposition(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource);
+	abstract TypeRef getCompositionForMember(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource);
+
+	/**
+	 * Returns a simplified composition.
+	 */
+	abstract TypeRef getCompositionForParameter(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource);
 
 	/**
 	 * Merges the kind of a new member to the current kind
@@ -131,7 +137,7 @@ abstract public class ComposedMemberDescriptor {
 
 	TypeRef getSimplifiedCompositionOfTypeRefs() {
 		if (cachedSimplifiedComposition == null) {
-			cachedSimplifiedComposition = getSimplifiedComposition(ts, typeRefs, resource);
+			cachedSimplifiedComposition = getCompositionForMember(ts, typeRefs, resource);
 		}
 		return cachedSimplifiedComposition;
 	}
