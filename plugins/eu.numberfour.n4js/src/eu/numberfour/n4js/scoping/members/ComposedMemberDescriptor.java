@@ -159,21 +159,7 @@ abstract public class ComposedMemberDescriptor {
 			oneIsMissing = true;
 	}
 
-	private void mergeKind(MemberType nextKind) {
-		if (nextKind != null) {
-			// if this is the first call to #mergeKind() -> initialize 'kind' variable
-			if (kind == null)
-				kind = nextKind;
-			// special tweak:
-			// combining fields and accessors will yield the same result as just having the accessors
-			if (isField(kind) && isAccessor(nextKind))
-				kind = nextKind;
-			else if (isAccessor(kind) && isField(nextKind))
-				nextKind = kind;
-			// remember if we have encountered multiple types
-			multipleKinds |= (nextKind != kind);
-		}
-	}
+	protected abstract void mergeKind(MemberType nextKind);
 
 	private void mergeReadOnlyField(boolean nextReadOnlyField) {
 		// remember if we have encountered at least one const field

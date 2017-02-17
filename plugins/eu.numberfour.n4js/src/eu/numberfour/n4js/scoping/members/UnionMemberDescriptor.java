@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
+import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
@@ -48,6 +49,23 @@ public class UnionMemberDescriptor extends ComposedMemberDescriptor {
 	@Override
 	protected TypeRef getSimplifiedComposition(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
 		return pts.createSimplifiedUnion(pTypeRefs, pTesource);
+	}
+
+	@Override
+	protected void mergeKind(MemberType nextKind) {
+		if (nextKind != null) {
+			// if this is the first call to #mergeKind() -> initialize 'kind' variable
+			if (kind == null)
+				kind = nextKind;
+			// special tweak:
+			// combining fields and accessors will yield the same result as just having the accessors
+			if (isField(kind) && isAccessor(nextKind))
+				kind = nextKind;
+			else if (isAccessor(kind) && isField(nextKind))
+				nextKind = kind;
+			// remember if we have encountered multiple types
+			multipleKinds |= (nextKind != kind);
+		}
 	}
 
 	/**
