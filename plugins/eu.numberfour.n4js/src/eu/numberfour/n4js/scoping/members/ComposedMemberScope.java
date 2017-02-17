@@ -26,6 +26,7 @@ import org.eclipse.xtext.scoping.impl.AbstractScope;
 
 import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
+import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef;
@@ -36,7 +37,9 @@ import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
+import eu.numberfour.n4js.utils.EcoreUtilN4;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
+import it.xsemantics.runtime.RuleEnvironment;
 
 /**
  * Scope implementation for ComposedTypeRefs, i.e. union types and intersection types.
@@ -70,11 +73,6 @@ public abstract class ComposedMemberScope extends AbstractScope {
 	 *
 	 */
 	abstract protected ComposedMemberDescriptor getComposedMemberDescriptor(final Resource resource);
-
-	/**
-	 *
-	 */
-	abstract protected TMember createComposedMember(String memberName);
 
 	/**
 	 * Creates union type scope, passed subScopes are expected to be fully configured (i.e., including required filters
@@ -149,6 +147,54 @@ public abstract class ComposedMemberScope extends AbstractScope {
 		IEObjectDescription description = getCheckedDescription(name, member);
 
 		return description;
+	}
+
+	/**
+	 * Key method of entire scoping for composed types e.g. union/intersection types. This creates a new TMember as a
+	 * combination of all members of the given name in the type's contained types. If those members cannot be combined
+	 * into a single valid member, this method creates a dummy placeholder.
+	 */
+	protected TMember createComposedMember(String memberName) {
+		// check all subScopes for a member of the given name and
+		// merge the properties of the existing members into 'composedMember'
+		final Resource resource = EcoreUtilN4.getResource(context, composedTypeRef);
+		final ComposedMemberDescriptor composedMemberDescr = getComposedMemberDescriptor(resource);
+		for (int idx = 0; idx < subScopes.length; idx++) {
+			final IScope subScope = subScopes[idx];
+			final TypeRef typeRef = composedTypeRef.getTypeRefs().get(idx);
+			final Resource res = EcoreUtilN4.getResource(context, composedTypeRef);
+			final RuleEnvironment GwithSubstitutions = ts.createRuleEnvironmentForContext(typeRef, res);
+			final TMember member = findMemberInSubScope(subScope, memberName);
+			composedMemberDescr.merge(GwithSubstitutions, member);
+		}
+		// produce result
+		if (!composedMemberDescr.isEmpty()) {
+			// at least one of the subScopes had an element of that name
+			final TMember result;
+			if (composedMemberDescr.isValid()) {
+				// success case:
+				// 1) ALL of the subScopes have an element for that name and
+				// 2) they can be merged into a valid composed member
+				result = composedMemberDescr.create(memberName);
+			} else {
+				// some of the subScopes do not have an element for that name OR
+				// they do not form a valid composed member (e.g. they are of different kind)
+				// -> produce a specific error message explaining the incompatibility
+				// (this error placeholder will be wrapped with a UncommonMemberDescription
+				// in #getSingleLocalElementByName(QualifiedName) above)
+				result = createErrorPlaceholder(memberName);
+			}
+			// add composed member to ComposedTypeRef (without notifications to avoid cache-clear)
+			final ComposedTypeRef cacheHolder = getCacheHolder(composedTypeRef);
+			EcoreUtilN4.doWithDeliver(false, () -> {
+				cacheHolder.getCachedComposedMembers().add(result);
+			}, cacheHolder);
+			return result;
+		} else {
+			// none of the subScopes has an element of that name
+			// -> produce the ordinary "Cannot resolve reference ..." error by returning 'null'
+			return null;
+		}
 	}
 
 	/**
