@@ -23,6 +23,7 @@ import eu.numberfour.n4js.scoping.utils.AbstractDescriptionWithError;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TField;
+import eu.numberfour.n4js.validation.IssueCodes;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 
 /**
@@ -154,6 +155,49 @@ public abstract class ComposedMemberDescriptionWithError extends AbstractDescrip
 					indexesPerCode);
 		}
 		return false;
+	}
+
+	protected boolean initSubMessages(IEObjectDescription[] descriptions, MapOfIndexes<String> indexesPerCode) {
+		// all subScopes returned same code:
+		if (indexesPerCode.size() == 1 && indexesPerCode.numberOf(indexesPerCode.firstKey()) == max) {
+			code = indexesPerCode.firstKey();
+			int index = indexesPerCode.firstIndex(code);
+			message = ((IEObjectDescriptionWithError) descriptions[index]).getMessage();
+			String scopeName = getNameForSubScope(index);
+			message.replace(scopeName, "all types");
+			return true;
+		}
+
+		if (indexesPerCode.size() > 0) {
+			StringBuilder strb = new StringBuilder();
+			for (String subCode : indexesPerCode.keySet()) {
+				int index = indexesPerCode.firstIndex(subCode);
+				String submessage = ((IEObjectDescriptionWithError) descriptions[index])
+						.getMessage();
+				String scopeName = getNameForSubScope(index);
+
+				String allScopeNames = indexesPerCode.getScopeNamesForKey(subCode);
+				String completeSubMessage;
+				if (submessage.contains(scopeName)) {
+					completeSubMessage = submessage.replace(scopeName, allScopeNames);
+				} else {
+					if (submessage.endsWith("."))
+						submessage = submessage.substring(0, submessage.length() - 1);
+					completeSubMessage = IssueCodes.getMessageForUNI_SUBMESSAGES(allScopeNames, submessage);
+				}
+				if (strb.length() > 0) {
+					strb.append(" ");
+				}
+				strb.append(completeSubMessage);
+			}
+			message = strb.toString();
+			code = IssueCodes.UNI_SUBMESSAGES;
+
+			return true;
+		}
+
+		return false;
+
 	}
 
 	private String getNameForSubScope(int idx) {

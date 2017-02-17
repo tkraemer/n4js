@@ -21,7 +21,6 @@ import com.google.common.base.Joiner;
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.validation.IssueCodes;
-import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 
 /**
  * This description wraps a member of a union type that is not present in all contained types or is somehow incompatible
@@ -94,49 +93,6 @@ public class UnionMemberDescriptionWithError extends ComposedMemberDescriptionWi
 			return true;
 		}
 		return false;
-	}
-
-	private boolean initSubMessages(IEObjectDescription[] descriptions, MapOfIndexes<String> indexesPerCode) {
-		// all subScopes returned same code:
-		if (indexesPerCode.size() == 1 && indexesPerCode.numberOf(indexesPerCode.firstKey()) == max) {
-			code = indexesPerCode.firstKey();
-			int index = indexesPerCode.firstIndex(code);
-			message = ((IEObjectDescriptionWithError) descriptions[index]).getMessage();
-			String scopeName = getNameForSubScope(index);
-			message.replace(scopeName, "all types");
-			return true;
-		}
-
-		if (indexesPerCode.size() > 0) {
-			StringBuilder strb = new StringBuilder();
-			for (String subCode : indexesPerCode.keySet()) {
-				int index = indexesPerCode.firstIndex(subCode);
-				String submessage = ((IEObjectDescriptionWithError) descriptions[index])
-						.getMessage();
-				String scopeName = getNameForSubScope(index);
-
-				String allScopeNames = indexesPerCode.getScopeNamesForKey(subCode);
-				String completeSubMessage;
-				if (submessage.contains(scopeName)) {
-					completeSubMessage = submessage.replace(scopeName, allScopeNames);
-				} else {
-					if (submessage.endsWith("."))
-						submessage = submessage.substring(0, submessage.length() - 1);
-					completeSubMessage = IssueCodes.getMessageForUNI_SUBMESSAGES(allScopeNames, submessage);
-				}
-				if (strb.length() > 0) {
-					strb.append(" ");
-				}
-				strb.append(completeSubMessage);
-			}
-			message = strb.toString();
-			code = IssueCodes.UNI_SUBMESSAGES;
-
-			return true;
-		}
-
-		return false;
-
 	}
 
 	private boolean initMissingFrom(List<String> missingFrom) {

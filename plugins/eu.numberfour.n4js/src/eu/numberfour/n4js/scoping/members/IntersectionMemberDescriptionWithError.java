@@ -42,22 +42,25 @@ public class IntersectionMemberDescriptionWithError extends ComposedMemberDescri
 			QualifiedName name, boolean readOnlyField, IEObjectDescription[] descriptions,
 			MapOfIndexes<String> indexesPerCode) {
 
-		return initMemberTypeConflict(indexesPerMemberType);
+		return initMemberTypeConflict(indexesPerMemberType)
+				|| initSubMessages(descriptions, indexesPerCode);
 	}
 
 	private boolean initMemberTypeConflict(MapOfIndexes<String> indexesPerMemberType) {
-		StringBuilder strb = new StringBuilder();
-		for (String memberTypeName : indexesPerMemberType.keySet()) {
-			String foundScopes = indexesPerMemberType.getScopeNamesForKey(memberTypeName);
-			if (strb.length() != 0) {
-				strb.append("; ");
+		if (indexesPerMemberType.size() > 1) {
+			StringBuilder strb = new StringBuilder();
+			for (String memberTypeName : indexesPerMemberType.keySet()) {
+				String foundScopes = indexesPerMemberType.getScopeNamesForKey(memberTypeName);
+				if (strb.length() != 0) {
+					strb.append("; ");
+				}
+				strb.append(memberTypeName + " in " + foundScopes);
 			}
-			strb.append(memberTypeName + " in " + foundScopes);
+			final String memberName = getName().getLastSegment();
+			message = IssueCodes.getMessageForINTER_MEMBER_TYPE_CONFLICT(memberName, strb);
+			code = IssueCodes.INTER_MEMBER_TYPE_CONFLICT;
+			return true;
 		}
-		final String memberName = getName().getLastSegment();
-		message = IssueCodes.getMessageForINTER_MEMBER_TYPE_CONFLICT(memberName, strb);
-		code = IssueCodes.INTER_MEMBER_TYPE_CONFLICT;
-		return true;
+		return false;
 	}
-
 }
