@@ -151,7 +151,7 @@ public class ImportsComputer {
 		// the following are named imports, that did not resolve. The issue lies in the Project-configuration and
 		// cannot be solved here. Candidate for quick fix.
 		// val unresolved = state.unresolved
-		val Iterable<Pair<EObject, String>> unresolved = script.findProxyCrossRefInfo
+		val Iterable<Pair<EObject, String>> unresolved = script.findProxyCrossRefInfo.filter[ReferencesFilter.filterFunction(it)]
 
 		val resolution = LinkedHashMultimap.<String, ImportableObject>create
 		val alreadyProcessedIdRef = <String>newHashSet()
