@@ -82,11 +82,7 @@ i12.onlyIn2(b);
 // XPECT noerrors
 i12.onlyIn3(b);
 
-<<<<<<< Updated upstream
-// XPECT errors --> "A is not a subtype of B." at "a"
-=======
 // XPECT errors --> "A is not a subtype of B" at "a"
->>>>>>> Stashed changes
 i12.onlyIn3(a);
 
 // XPECT type of 'i12.onlyIn3(b)' --> A
