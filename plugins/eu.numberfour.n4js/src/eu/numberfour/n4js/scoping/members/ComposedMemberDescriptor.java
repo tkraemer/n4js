@@ -19,6 +19,7 @@ import com.google.common.base.Joiner;
 
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
+import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TField;
@@ -195,7 +196,7 @@ abstract public class ComposedMemberDescriptor {
 	}
 
 	private void mergeTypeRef(TypeRef nextTypeRef) {
-		if (nextTypeRef != null) {
+		if (nextTypeRef != null && !(nextTypeRef instanceof UnknownTypeRef)) {
 			// remember ALL types we have encountered (so we do not actually merge anything here)
 			typeRefs.add(TypeUtils.copyIfContained(nextTypeRef));
 		}
@@ -203,19 +204,25 @@ abstract public class ComposedMemberDescriptor {
 
 	private void mergeFpar(RuleEnvironment G, int fparIdx, TFormalParameter nextFpar) {
 		if (nextFpar != null) {
-			// make sure we have an entry in 'fpars' for a formal parameter at index 'fparIdx'
-			while (fpars.size() <= fparIdx)
+			// init: Make sure we have an entry in 'fpars' for a formal parameter at index 'fparIdx'
+			while (fpars.size() <= fparIdx) {
 				fpars.add(null);
-			if (fpars.get(fparIdx) == null)
+			}
+			if (fpars.get(fparIdx) == null) {
 				fpars.set(fparIdx, new FparDescriptor());
+			}
+
 			// merge properties of formal parameter 'nextFpar' into that entry
 			final FparDescriptor desc = fpars.get(fparIdx);
 			final String nextName = nextFpar.getName();
-			if (nextName != null && !desc.names.contains(nextName))
+			if (nextName != null && !desc.names.contains(nextName)) {
 				desc.names.add(nextName); // collect all fpar names (without duplicates)
+			}
 			if (nextFpar.getTypeRef() != null) {
 				final TypeRef nextFparTypeRef = ts.substTypeVariablesInTypeRef(G, nextFpar.getTypeRef());
-				desc.typeRefs.add(TypeUtils.copyIfContained(nextFparTypeRef)); // collect all fpar types
+				if (nextFparTypeRef != null && !(nextFparTypeRef instanceof UnknownTypeRef)) {
+					desc.typeRefs.add(TypeUtils.copyIfContained(nextFparTypeRef)); // collect all fpar types
+				}
 			}
 			desc.optional &= nextFpar.isOptional(); // remember if ALL were optional
 			desc.variadic &= nextFpar.isVariadic(); // remember if ALL were variadic
@@ -230,22 +237,6 @@ abstract public class ComposedMemberDescriptor {
 	 */
 	public boolean isEmpty() {
 		return empty;
-	}
-
-	/**
-	 * Sets the formal parameter in case the member is a setter or method.
-	 */
-	protected void setFPars(final TMember composedMember) {
-		if (composedMember instanceof TSetter) {
-			if (!fpars.isEmpty()) {
-				TSetter tSetter = (TSetter) composedMember;
-				tSetter.setFpar(fpars.get(0).create());
-			}
-		} else if (composedMember instanceof TMethod) {
-			for (FparDescriptor currFparDesc : fpars) {
-				((TMethod) composedMember).getFpars().add(currFparDesc.create());
-			}
-		}
 	}
 
 	/**
