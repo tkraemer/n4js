@@ -312,16 +312,19 @@ class ClassConstructorAssistant extends TransformationAssistant {
 		val ()=>Expression refTo_specFpar_or_undefined = if(specFpar === null ) [undefinedRef()] else [_IdentRef(specFparSTE) ];
 
 		for(implementedIfcSTE : implementedIfcSTEs) {
-			result += _ExprStmnt(_CallExpr(
-				__NSSafe_PropertyAccessExpr(implementedIfcSTE, $fieldInitSTE),
-				_ThisLiteral,
-				refTo_specFpar_or_undefined.apply(),
-				_ObjLit(
-					ownedInstanceDataFieldsSupressMixin.map[
-						_PropertyNameValuePair(it, undefinedRef())
-					]
+			// InterfaceName.$fieldInit.call(this, ...) to bind this in field initializer correctly
+			result += _ExprStmnt(				
+				_CallExpr(
+					__NSSafe_PropertyAccessExpr(implementedIfcSTE, $fieldInitSTE, steFor_call()),
+					_ThisLiteral,
+					refTo_specFpar_or_undefined.apply(),
+					_ObjLit(
+						ownedInstanceDataFieldsSupressMixin.map[
+							_PropertyNameValuePair(it, undefinedRef())
+						]
+					)
 				)
-			));
+			);
 		}
 		return result;
 	}

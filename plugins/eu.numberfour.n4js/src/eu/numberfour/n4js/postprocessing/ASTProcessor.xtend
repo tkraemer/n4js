@@ -134,7 +134,7 @@ public class ASTProcessor extends AbstractProcessor {
 			}
 			// step 1: main processing
 			processSubtree(G, script, cache, 0);
-			// step 2: processing of postponed subtrees (only Blocks, so far)
+			// step 2: processing of postponed subtrees
 			var EObject eObj;
 			while ((eObj = cache.postponedSubTrees.poll) !== null) {
 				// note: we need to allow adding more postponed subtrees inside this loop!
@@ -374,15 +374,12 @@ public class ASTProcessor extends AbstractProcessor {
 
 
 	/**
-	 * This method defines which children of the given object are to be processed *and* defines the order in which they
-	 * are to be processed. By default, all directly contained child objects are to be processed (according to EMF
-	 * terminology) and the order is irrelevant, meaning we can simply use <code>obj.eContents()</code> by default.
-	 * <p>
-	 * In other words, whenever some contents need to be ignored during processing or whenever the order of processing
-	 * between two or more siblings is relevant, a special case needs to be added to this method.
+	 * This method returns the direct children of 'obj' that are to be processed, <em>in the order in which they are to
+	 * be processed</em>. By default, all direct children must be processed and the order is insignificant, so in the
+	 * default case this method simply returns {@link EObject#eContents()}. However, this method implements special
+	 * handling for some exception cases where the processing order is significant.
 	 */
 	def private List<EObject> childrenToBeProcessed(RuleEnvironment G, EObject obj) {
-		// order in return value is important!
 		return switch (obj) {
 			SetterDeclaration: {
 				// process formal parameter before body
@@ -401,6 +398,7 @@ public class ASTProcessor extends AbstractProcessor {
 				obj.eContents.bringToFront(obj.expression)
 			}
 			default: {
+				// standard case: order is insignificant (so we simply use the order provided by EMF)
 				obj.eContents
 			}
 		};

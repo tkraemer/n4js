@@ -1,23 +1,21 @@
-ifndef::config_adoc_include_guard[]
 :config_adoc_include_guard: 1
 
 // ======================= AsciiSpec Processor Configuration =======================
 // Inline Task Macro Config
 // See https://github.numberfour.eu/NumberFour/asciispec#inline-task-macro for details.
 
-:task_def_IDEBUG-: GitHub;IDE Bugs;https://github.com/NumberFour/N4JS/issues/${TASK_ID};images/github.png;GH-${TASK_ID}
-:task_def_IDE-: Jira;IDE Backlog;https://jira.numberfour.eu/browse/IDE-${TASK_ID};images/jira.png;IDE-${TASK_ID}
-:task_def_GH-: Github;IDE Bugs;https://github.com/NumberFour/N4JS/issues/${TASK_ID};images/github.png;GH-${TASK_ID}
-:task_def_SL-: Jira;STDLIB Backlog;https://jira.numberfour.eu/browse/SL-${TASK_ID};images/jira.png;IDE-${TASK_ID}
+:task_def_IDEBUG-: GitHub;IDE Bugs;https://github.com/NumberFour/N4JS/issues/{TASK_ID};images/github.png;GH-{TASK_ID}
+:task_def_IDE-: Jira;IDE Backlog;https://jira.numberfour.eu/browse/IDE-{TASK_ID};images/jira.png;IDE-{TASK_ID}
+:task_def_GH-: Github;IDE Bugs;https://github.com/NumberFour/N4JS/issues/{TASK_ID};images/github.png;GH-{TASK_ID}
+:task_def_SL-: Jira;STDLIB Backlog;https://jira.numberfour.eu/browse/SL-{TASK_ID};images/jira.png;IDE-{TASK_ID}
 
 // =========================== Inline Cwiki Macro Config ===========================
 // See https://github.numberfour.eu/NumberFour/asciispec#inline-cwiki-macro for  details.
-:cwiki_def: https://confluence.numberfour.eu/display/${PATH};https://confluence.numberfour.eu/pages/viewpage.action?pageId=${PAGE_ID};images/jira.png;Confluence entry:${TITLE}
+:cwiki_def: https://confluence.numberfour.eu/display/{PATH};https://confluence.numberfour.eu/pages/viewpage.action?pageId={PAGE_ID};images/jira.png;Confluence entry:{TITLE}
 
 // =========================== AsciiSpec Bibliography ===========================
 // Path to Bib File (usually in same folder as index.adoc)
 :bib-file: n4jsspec.bib
-
 
 // =================== Builtin AsciiDoctor Document Attributes ================= //
 // For more info, see http://asciidoctor.org/docs/user-manual/#builtin-attributes
@@ -28,26 +26,24 @@ ifndef::config_adoc_include_guard[]
 
 // Stylesheet settings //
 :stylesdir: styles
-:stylesheet: n4-adoc.css
+:stylesheet: foundation.css
 
 // Syntax Highlighting //
-:source-highlighter: highlight.js
-:highlightjs-theme: n4jshighlighter
-:highlightjsdir: scripts
+:!source-highlighter:
 
 // General / Document layout etc. //
-:toc: right
+:toc: left
+:toclevel: 3
 :doctype: book
 
 // Numbered section titles with auto-generated anchors
+:sectnumlevels: 5
 :sectnums:
 :sectanchors:
-
-// For anchors, the spaces in section titles are replaced with value below
 :idseparator: -
 
 // Creates a clickable (and copyable) link beside section titles
-:sectlink:
+:sectlinks:
 
 // Link to css instead of embedding
 :linkcss:
@@ -55,4 +51,6 @@ ifndef::config_adoc_include_guard[]
 // Allows for UI macros, see http://asciidoctor.org/docs/user-manual/#user-interface-macros
 :experimental: true
 
-endif::[]
+// =================== Project-Specific Attributes ================= //
+
+:revnumber: 0.4

@@ -1,6 +1,6 @@
 = Mutable and Immutable Types
 ////
-Copyright (c) 2016 NumberFour AG.
+Copyright (c) 2017 NumberFour AG.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -22,13 +22,13 @@ use the same syntax as for parameterized types:
 * is a type constructor that returns the immutable version of a type T.
 * is a type constructor that returns the mutable version of a type T.
 
-The type conformance for data object types latexmath:[$S$] and
-latexmath:[$T$] is defined as follows:
+The type conformance for data object types $S$ and
+$T$ is defined as follows:
 
-1.  latexmath:[$S <: T =>
+1.  $S <: T =>
 \\ Immutable<S> <: Immutable<T>
-\\ \wedge Mutable<S> <: Mutable<T>$]
-2.  latexmath:[$Immutable<T> <: T \wedge Mutable<T> <: T$]
+\\ \wedge Mutable<S> <: Mutable<T>$
+2.  $Immutable<T> <: T \wedge Mutable<T> <: T$
 3.  To convert an immutable object into a mutable object, special
 conversion methods must be used. These methods are declared like normal
 methods, but they use the the mutable and immutable type constructors in
@@ -36,7 +36,7 @@ their declaration (for an example, see ).
 
 The operator called on a DO always returns a mutable version of the DO.
 
-For declaring methods for latexmath:[$m$] and latexmath:[$i$],
+For declaring methods for $m$ and $i$,
 additional JSDoc tags are used:
 
 * marks a method for inclusion in the mutable type family
@@ -209,24 +209,24 @@ types.
 
 We first define how to construct a from a data object type :
 
-* Copy every attribute latexmath:[$a$] declared by to a new attribute
-latexmath:[$a_i$] with latexmath:[$a_i.type := Immutable<a.type>$].
-* Copy every command method latexmath:[$m$] from the groups and defined
+* Copy every attribute $a$ declared by to a new attribute
+$a_i$ with $a_i.type := Immutable<a.type>$.
+* Copy every command method $m$ from the groups and defined
 for .
 * Copy every method marked with and rename it if an alias is defined
 with .
 * Set the super type of to .
-* For every consumed role latexmath:[$r$] of create a new role
-latexmath:[$r_i := Immutable<r.type>$] and add it to the consumed roles
+* For every consumed role $r$ of create a new role
+$r_i := Immutable<r.type>$ and add it to the consumed roles
 of .
 
 We them define how to construct a from a data object type :
 
-* Copy every attribute latexmath:[$a$] declared by to a new attribute
-latexmath:[$a_i with a_i.type := Immutable<a.type> and a_i.readOnly := false$].
+* Copy every attribute $a$ declared by to a new attribute
+$a_i with a_i.type := Immutable<a.type> and a_i.readOnly := false$.
 * Copy every method marked with and rename it if an alias is defined
 with .
 * Set the super type of to .
-* For every consumed role latexmath:[$r$] of create a new role
-latexmath:[$r_i := Mutable<r.type>$] and add it to the consumed roles of
+* For every consumed role $r$ of create a new role
+$r_i := Mutable<r.type>$ and add it to the consumed roles of
 .
