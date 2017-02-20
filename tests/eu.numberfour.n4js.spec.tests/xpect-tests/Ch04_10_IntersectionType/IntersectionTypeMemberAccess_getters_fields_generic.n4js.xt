@@ -35,10 +35,10 @@ i12.m1;
 i12.m1;
 
 // XPECT noerrors
-i12.m1 = aub;
+i12.m1 = a;
 
 
-// set m2(a:A|B)
+// set m2(a:A)
 // get m2():A&B
 
 // XPECT noerrors
@@ -48,11 +48,11 @@ i12.m2;
 i12.m2;
 
 // XPECT noerrors
-i12.m2 = aub;
+i12.m2 = b;
 
 var i13: I1<A> & I3<B>;
 
-// set m1(a:A|B)
+// set m1(a:A)
 // get m1():A&B
 
 // XPECT noerrors
@@ -62,10 +62,10 @@ i13.m1;
 i13.m1;
 
 // XPECT noerrors
-i13.m1 = aub;
+i13.m1 = a;
 
 
-// set m2(b:A|B)
+// set m2(b:A)
 // get m2():A&B
 
 // XPECT noerrors
@@ -75,7 +75,7 @@ i13.m2;
 i13.m2;
 
 // XPECT noerrors
-i13.m2 = aub;
+i13.m2 = b;
 
 
 var i23: I2<A> & I3<B>;

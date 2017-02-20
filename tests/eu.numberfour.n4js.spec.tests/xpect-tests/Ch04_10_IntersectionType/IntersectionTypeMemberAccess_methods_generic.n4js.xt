@@ -5,7 +5,7 @@ interface B {}
 
 let a:A;
 let b:B;
-let ab:A|B;
+let aub:A|B;
 
 interface I1<S,T> {
 	onlyIn1(a:S):T;
@@ -93,10 +93,10 @@ i12.diffReturnType();
 
 
 
-// diffParType1(ab:A|B)
+// diffParType1(aub:A|B)
 
 // XPECT noerrors
-i12.diffParType1(ab);
+i12.diffParType1(aub);
 
 
 
@@ -113,35 +113,36 @@ i12.diffNoOfParmsSameType(a, a);
 
 
 
-// diffNoOfParmsDiffType(ab:A|B, b:B)
+// diffNoOfParmsDiffType(aub:A|B, b:B)
 
 // XPECT noerrors
-i12.diffNoOfParmsDiffType(ab, b);
+i12.diffNoOfParmsDiffType(aub, b);
 
 // XPECT errors --> "A is not a subtype of B." at "a"
-i12.diffNoOfParmsDiffType(ab, a);
+i12.diffNoOfParmsDiffType(aub, a);
 
 
-// varArg(a:A, ab:A|B, ...a:A)
+// varArg(a:A, aub:A|B, ...a:A)
 
-// XPECT errors --> 'Incorrect number of arguments: expected 3, got 1.' at 'i12.varArg(a)'
+// XPECT errors --> "Incorrect number of arguments: expected 3, got 1." at "i12.varArg(a)" 
+
 i12.varArg(a);
 
 // XPECT noerrors
-i12.varArg(a, ab);
+i12.varArg(a, aub);
 
-// XPECT errors --> 'B is not a subtype of A' at 'b'
-i12.varArg(b, ab);
+// XPECT errors --> "B is not a subtype of A." at "b"
+i12.varArg(b, aub);
 
 // XPECT noerrors
-i12.varArg(a, ab, a);
+i12.varArg(a, aub, a);
 
-// XPECT errors --> 'B is not a subtype of A' at 'b'
-i12.varArg(a, ab, b);
+// XPECT errors --> "B is not a subtype of A." at "b"
+i12.varArg(a, aub, b);
 
 
 
-// varArgBoth(a:A, ...ab:A|B) 
+// varArgBoth(a:A, ...aub:A|B) 
 
 // XPECT noerrors
 i12.varArgBoth(a);
@@ -150,13 +151,13 @@ i12.varArgBoth(a);
 i12.varArgBoth(b);
 
 // XPECT noerrors
-i12.varArgBoth(a, ab);
+i12.varArgBoth(a, aub);
 
-// XPECT errors --> 'B is not a subtype of A' at 'b'
-i12.varArgBoth(b, ab);
+// XPECT errors --> "B is not a subtype of A." at "b"
+i12.varArgBoth(b, aub);
 
 // XPECT noerrors
-i12.varArgBoth(a, ab, ab);
+i12.varArgBoth(a, aub, aub);
 
-// XPECT errors --> 'B is not a subtype of A' at 'b'
-i12.varArgBoth(b, ab, ab);
+// XPECT errors --> "B is not a subtype of A." at "b"
+i12.varArgBoth(b, aub, aub);

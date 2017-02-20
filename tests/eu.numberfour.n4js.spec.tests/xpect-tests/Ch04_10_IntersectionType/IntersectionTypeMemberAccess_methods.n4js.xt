@@ -5,7 +5,7 @@ interface B {}
 
 let a:A;
 let b:B;
-let ab:A|B;
+let aub:A|B;
 
 interface I1 {
 	onlyIn1(a:A):B;
@@ -82,7 +82,11 @@ i12.onlyIn2(b);
 // XPECT noerrors
 i12.onlyIn3(b);
 
+<<<<<<< Updated upstream
 // XPECT errors --> "A is not a subtype of B." at "a"
+=======
+// XPECT errors --> "A is not a subtype of B" at "a"
+>>>>>>> Stashed changes
 i12.onlyIn3(a);
 
 // XPECT type of 'i12.onlyIn3(b)' --> A
@@ -114,10 +118,10 @@ i12.diffReturnType();
 
 
 
-// diffParType1(ab:A|B)
+// diffParType1(aub:A|B)
 
 // XPECT noerrors
-i12.diffParType1(ab);
+i12.diffParType1(aub);
 
 
 
@@ -134,60 +138,69 @@ i12.diffNoOfParmsSameType(a, a);
 
 
 
-// diffNoOfParmsDiffType(ab:A|B, b:B)
+// diffNoOfParmsDiffType(aub:A|B, b:B)
 
 // XPECT noerrors
-i12.diffNoOfParmsDiffType(ab, b);
+i12.diffNoOfParmsDiffType(aub, b);
 
 // XPECT errors --> "A is not a subtype of B." at "a"
+<<<<<<< Updated upstream
 i12.diffNoOfParmsDiffType(ab, a);
+=======
+i12.diffNoOfParmsDiffType(aub, a);
+>>>>>>> Stashed changes
 
 
-// varArg(a:A, ab:A|B, ...a:A)
+// varArg(a:A, aub:A|B, ...a:A)
 
+<<<<<<< Updated upstream
 // XPECT errors --> 'Incorrect number of arguments: expected 3, got 1.' at 'i12.varArg(a)'
+=======
+// XPECT errors --> "Incorrect number of arguments: expected 3, got 1." at "i12.varArg(a)" 
+>>>>>>> Stashed changes
 i12.varArg(a);
 
 // XPECT noerrors
-i12.varArg(a, ab);
+i12.varArg(a, aub);
 
 // XPECT errors --> 'B is not a subtype of A' at 'b'
-i12.varArg(b, ab);
+i12.varArg(b, aub);
 
 // XPECT noerrors
-i12.varArg(a, ab, a);
+i12.varArg(a, aub, a);
 
 // XPECT errors --> 'B is not a subtype of A' at 'b'
-i12.varArg(a, ab, b);
+i12.varArg(a, aub, b);
 
 
 
-// varArgBoth(a:A, ...ab:A|B) 
+// varArgBoth(a:A, ...aub:A|B) 
 
 // XPECT noerrors
 i12.varArgBoth(a);
+
 
 // XPECT errors --> "B is not a subtype of A." at "b"
 i12.varArgBoth(b);
 
 // XPECT noerrors
-i12.varArgBoth(a, ab);
+i12.varArgBoth(a, aub);
 
-// XPECT errors --> 'B is not a subtype of A' at 'b'
-i12.varArgBoth(b, ab);
-
-// XPECT noerrors
-i12.varArgBoth(a, ab, ab);
-
-// XPECT errors --> 'B is not a subtype of A' at 'b'
-i12.varArgBoth(b, ab, ab);
-
-
-
-// inBothInheritedAllDiffTypes(ab:A|B):A&B
+// XPECT errors --> "B is not a subtype of A." at "b"
+i12.varArgBoth(b, aub);
 
 // XPECT noerrors
-i12.inBothInheritedAllDiffTypes(ab);
+i12.varArgBoth(a, aub, aub);
 
-// XPECT type of 'i12.inBothInheritedAllDiffTypese()' --> A&B
-i12.inBothInheritedAllDiffTypes(ab);
+// XPECT errors --> "B is not a subtype of A." at "b"
+i12.varArgBoth(b, aub, aub);
+
+
+
+// inBothInheritedAllDiffTypes(aub:A|B):A&B
+
+// XPECT noerrors
+i12.inBothInheritedAllDiffTypes(aub);
+
+// XPECT type of 'i12.inBothInheritedAllDiffTypes(aub)' --> intersection{A,B}
+i12.inBothInheritedAllDiffTypes(aub);

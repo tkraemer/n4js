@@ -32,16 +32,16 @@ i12.onlyIn1;
 // XPECT type of 'i12.onlyIn1' --> A
 i12.onlyIn1;
 
-// XPECT errors --> "The accessor onlyIn1 is read-only." at 'onlyIn1'
+// XPECT errors --> "The accessor onlyIn1 is read-only in I1." at "onlyIn1"
 i12.onlyIn1 = a;
 
 // XPECT noerrors
 i12.onlyIn2;
 
-// XPECT type of 'i12.onlyIn1' --> B
+// XPECT type of 'i12.onlyIn2' --> B
 i12.onlyIn2;
 
-// XPECT errors --> "The accessor onlyIn2 is read-only." at 'onlyIn1'
+// XPECT errors --> "The accessor onlyIn2 is read-only in I2." at "onlyIn2"
 i12.onlyIn2 = b;
 
 // XPECT noerrors
