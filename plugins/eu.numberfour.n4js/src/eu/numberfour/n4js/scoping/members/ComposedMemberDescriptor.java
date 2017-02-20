@@ -30,7 +30,6 @@ import eu.numberfour.n4js.ts.types.TMemberWithAccessModifier;
 import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.TSetter;
 import eu.numberfour.n4js.ts.types.TypesFactory;
-import eu.numberfour.n4js.ts.types.UndefModifier;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
@@ -87,9 +86,6 @@ abstract public class ComposedMemberDescriptor {
 			}
 			TypeRef paramCompTR = getTypeRefComplement(ts, typeRefsToUse, ComposedMemberDescriptor.this.resource);
 			fpar.setTypeRef(paramCompTR);
-			if (this.optional && null != fpar.getTypeRef()) {
-				fpar.getTypeRef().setUndefModifier(UndefModifier.OPTIONAL);
-			}
 			fpar.setVariadic(this.variadic);
 			fpar.setHasInitializerAssignment(this.hasInitializerAssignment);
 			return fpar;
@@ -100,6 +96,12 @@ abstract public class ComposedMemberDescriptor {
 	 * Merges the kind of a new member to the current kind
 	 */
 	abstract void mergeKind(MemberType nextKind);
+
+	/**
+	 * Updates the following attributes of {@code desc} with respect to the next formal parameter in the scope:
+	 * {@code optional}, {@code variadic}, {@code hasInitializerAssignment}.
+	 */
+	abstract protected void mergeFparBooleans(TFormalParameter nextFpar, final FparDescriptor desc);
 
 	/**
 	 * True iff all members merged via method {@link #merge(RuleEnvironment, TMember)} can be combined to a valid
@@ -226,13 +228,6 @@ abstract public class ComposedMemberDescriptor {
 			}
 			mergeFparBooleans(nextFpar, desc);
 		}
-	}
-
-	private void mergeFparBooleans(TFormalParameter nextFpar, final FparDescriptor desc) {
-		desc.optional &= nextFpar.isOptional(); // remember if ALL were optional
-		desc.variadic &= nextFpar.isVariadic(); // remember if ALL were variadic
-		desc.hasInitializerAssignment &= nextFpar.isHasInitializerAssignment(); // remember if ALL had an
-																				// initializer assignment
 	}
 
 	/**

@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
+import eu.numberfour.n4js.ts.types.TFormalParameter;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
@@ -112,5 +113,12 @@ public class UnionMemberDescriptor extends ComposedMemberDescriptor {
 			if (nextAccessibility.getValue() < accessibility.getValue())
 				accessibility = nextAccessibility;
 		}
+	}
+
+	@Override
+	protected void mergeFparBooleans(TFormalParameter nextFpar, final FparDescriptor desc) {
+		desc.variadic &= nextFpar.isVariadic(); // remember if ALL were variadic
+		desc.hasInitializerAssignment &= nextFpar.isHasInitializerAssignment(); // remember if ALL had an
+																				// initializer assignment
 	}
 }
