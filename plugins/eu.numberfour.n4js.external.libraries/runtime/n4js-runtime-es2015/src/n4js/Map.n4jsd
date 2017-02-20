@@ -40,7 +40,7 @@ export external public class Map<KeyT, ValueT> extends Object implements Iterabl
     /**
      * Calls callbackFn for each key/value pai, in insertion order.
      */
-    public forEach(callbackFn: {function(ValueT, KeyT, Map<KeyT, ValueT>):void}, thisArg: Object =): void;
+    public forEach(callbackFn: {function(ValueT, KeyT, Map<KeyT, ValueT>):void}, thisArg: Object=): void;
 
     /**
      * Value associated with key.

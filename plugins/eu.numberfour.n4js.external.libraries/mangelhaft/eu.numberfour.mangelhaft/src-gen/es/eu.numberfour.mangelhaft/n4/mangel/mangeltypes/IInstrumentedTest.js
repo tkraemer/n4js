@@ -7,92 +7,92 @@
 		return {
 			setters: [],
 			execute: function() {
-				IInstrumentedTest.$fieldInit = function IInstrumentedTest_fieldInit(target, spec, mixinExclusion) {
+				IInstrumentedTest.$fieldInit = function IInstrumentedTest_fieldInit(spec, mixinExclusion) {
 					if (spec) {
-						if (!(mixinExclusion.hasOwnProperty('name') || target.hasOwnProperty('name'))) {
-							target.name = 'name' in spec ? spec.name : undefined;
+						if (!(mixinExclusion.hasOwnProperty('name') || this.hasOwnProperty('name'))) {
+							this.name = 'name' in spec ? spec.name : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('tests') || target.hasOwnProperty('tests'))) {
-							target.tests = 'tests' in spec ? spec.tests : undefined;
+						if (!(mixinExclusion.hasOwnProperty('tests') || this.hasOwnProperty('tests'))) {
+							this.tests = 'tests' in spec ? spec.tests : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('beforeAlls') || target.hasOwnProperty('beforeAlls'))) {
-							target.beforeAlls = 'beforeAlls' in spec ? spec.beforeAlls : undefined;
+						if (!(mixinExclusion.hasOwnProperty('beforeAlls') || this.hasOwnProperty('beforeAlls'))) {
+							this.beforeAlls = 'beforeAlls' in spec ? spec.beforeAlls : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('afterAlls') || target.hasOwnProperty('afterAlls'))) {
-							target.afterAlls = 'afterAlls' in spec ? spec.afterAlls : undefined;
+						if (!(mixinExclusion.hasOwnProperty('afterAlls') || this.hasOwnProperty('afterAlls'))) {
+							this.afterAlls = 'afterAlls' in spec ? spec.afterAlls : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('befores') || target.hasOwnProperty('befores'))) {
-							target.befores = 'befores' in spec ? spec.befores : undefined;
+						if (!(mixinExclusion.hasOwnProperty('befores') || this.hasOwnProperty('befores'))) {
+							this.befores = 'befores' in spec ? spec.befores : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('afters') || target.hasOwnProperty('afters'))) {
-							target.afters = 'afters' in spec ? spec.afters : undefined;
+						if (!(mixinExclusion.hasOwnProperty('afters') || this.hasOwnProperty('afters'))) {
+							this.afters = 'afters' in spec ? spec.afters : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('testObject') || target.hasOwnProperty('testObject'))) {
-							target.testObject = 'testObject' in spec ? spec.testObject : undefined;
+						if (!(mixinExclusion.hasOwnProperty('testObject') || this.hasOwnProperty('testObject'))) {
+							this.testObject = 'testObject' in spec ? spec.testObject : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('fqn') || target.hasOwnProperty('fqn'))) {
-							target.fqn = 'fqn' in spec ? spec.fqn : undefined;
+						if (!(mixinExclusion.hasOwnProperty('fqn') || this.hasOwnProperty('fqn'))) {
+							this.fqn = 'fqn' in spec ? spec.fqn : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('parent') || target.hasOwnProperty('parent'))) {
-							target.parent = 'parent' in spec ? spec.parent : null;
+						if (!(mixinExclusion.hasOwnProperty('parent') || this.hasOwnProperty('parent'))) {
+							this.parent = 'parent' in spec ? spec.parent : null;
 						}
-						if (!(mixinExclusion.hasOwnProperty('child') || target.hasOwnProperty('child'))) {
-							target.child = 'child' in spec ? spec.child : null;
+						if (!(mixinExclusion.hasOwnProperty('child') || this.hasOwnProperty('child'))) {
+							this.child = 'child' in spec ? spec.child : null;
 						}
-						if (!(mixinExclusion.hasOwnProperty('error') || target.hasOwnProperty('error'))) {
-							target.error = 'error' in spec ? spec.error : undefined;
+						if (!(mixinExclusion.hasOwnProperty('error') || this.hasOwnProperty('error'))) {
+							this.error = 'error' in spec ? spec.error : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('parameterizedName') || target.hasOwnProperty('parameterizedName'))) {
-							target.parameterizedName = 'parameterizedName' in spec ? spec.parameterizedName : undefined;
+						if (!(mixinExclusion.hasOwnProperty('parameterizedName') || this.hasOwnProperty('parameterizedName'))) {
+							this.parameterizedName = 'parameterizedName' in spec ? spec.parameterizedName : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('parameterizedTests') || target.hasOwnProperty('parameterizedTests'))) {
-							target.parameterizedTests = 'parameterizedTests' in spec ? spec.parameterizedTests : undefined;
+						if (!(mixinExclusion.hasOwnProperty('parameterizedTests') || this.hasOwnProperty('parameterizedTests'))) {
+							this.parameterizedTests = 'parameterizedTests' in spec ? spec.parameterizedTests : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('hasParameterizedTests') || target.hasOwnProperty('hasParameterizedTests'))) {
-							target.hasParameterizedTests = 'hasParameterizedTests' in spec ? spec.hasParameterizedTests : undefined;
+						if (!(mixinExclusion.hasOwnProperty('hasParameterizedTests') || this.hasOwnProperty('hasParameterizedTests'))) {
+							this.hasParameterizedTests = 'hasParameterizedTests' in spec ? spec.hasParameterizedTests : undefined;
 						}
 					} else {
-						if (!(mixinExclusion.hasOwnProperty('name') || target.hasOwnProperty('name'))) {
-							target.name = undefined;
+						if (!(mixinExclusion.hasOwnProperty('name') || this.hasOwnProperty('name'))) {
+							this.name = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('tests') || target.hasOwnProperty('tests'))) {
-							target.tests = undefined;
+						if (!(mixinExclusion.hasOwnProperty('tests') || this.hasOwnProperty('tests'))) {
+							this.tests = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('beforeAlls') || target.hasOwnProperty('beforeAlls'))) {
-							target.beforeAlls = undefined;
+						if (!(mixinExclusion.hasOwnProperty('beforeAlls') || this.hasOwnProperty('beforeAlls'))) {
+							this.beforeAlls = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('afterAlls') || target.hasOwnProperty('afterAlls'))) {
-							target.afterAlls = undefined;
+						if (!(mixinExclusion.hasOwnProperty('afterAlls') || this.hasOwnProperty('afterAlls'))) {
+							this.afterAlls = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('befores') || target.hasOwnProperty('befores'))) {
-							target.befores = undefined;
+						if (!(mixinExclusion.hasOwnProperty('befores') || this.hasOwnProperty('befores'))) {
+							this.befores = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('afters') || target.hasOwnProperty('afters'))) {
-							target.afters = undefined;
+						if (!(mixinExclusion.hasOwnProperty('afters') || this.hasOwnProperty('afters'))) {
+							this.afters = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('testObject') || target.hasOwnProperty('testObject'))) {
-							target.testObject = undefined;
+						if (!(mixinExclusion.hasOwnProperty('testObject') || this.hasOwnProperty('testObject'))) {
+							this.testObject = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('fqn') || target.hasOwnProperty('fqn'))) {
-							target.fqn = undefined;
+						if (!(mixinExclusion.hasOwnProperty('fqn') || this.hasOwnProperty('fqn'))) {
+							this.fqn = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('parent') || target.hasOwnProperty('parent'))) {
-							target.parent = null;
+						if (!(mixinExclusion.hasOwnProperty('parent') || this.hasOwnProperty('parent'))) {
+							this.parent = null;
 						}
-						if (!(mixinExclusion.hasOwnProperty('child') || target.hasOwnProperty('child'))) {
-							target.child = null;
+						if (!(mixinExclusion.hasOwnProperty('child') || this.hasOwnProperty('child'))) {
+							this.child = null;
 						}
-						if (!(mixinExclusion.hasOwnProperty('error') || target.hasOwnProperty('error'))) {
-							target.error = undefined;
+						if (!(mixinExclusion.hasOwnProperty('error') || this.hasOwnProperty('error'))) {
+							this.error = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('parameterizedName') || target.hasOwnProperty('parameterizedName'))) {
-							target.parameterizedName = undefined;
+						if (!(mixinExclusion.hasOwnProperty('parameterizedName') || this.hasOwnProperty('parameterizedName'))) {
+							this.parameterizedName = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('parameterizedTests') || target.hasOwnProperty('parameterizedTests'))) {
-							target.parameterizedTests = undefined;
+						if (!(mixinExclusion.hasOwnProperty('parameterizedTests') || this.hasOwnProperty('parameterizedTests'))) {
+							this.parameterizedTests = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('hasParameterizedTests') || target.hasOwnProperty('hasParameterizedTests'))) {
-							target.hasParameterizedTests = undefined;
+						if (!(mixinExclusion.hasOwnProperty('hasParameterizedTests') || this.hasOwnProperty('hasParameterizedTests'))) {
+							this.hasParameterizedTests = undefined;
 						}
 					}
 				};

@@ -39,7 +39,7 @@ export public class TestController {
         this.reportersVal = reporters;
     }
 
-    private async errorGroup(info: TestInfo, loadPath: string, testObject: InstrumentedTest =, originalError: any =) {
+    private async errorGroup(info: TestInfo, loadPath: string, testObject: InstrumentedTest=, originalError: any=) {
         let error = originalError ? originalError: new Error("could not load test " + loadPath)
           , that = this
           , testResult: TestResult
@@ -144,7 +144,7 @@ export public class TestController {
         let arr = (await Promise.all(instrumentedTestObjects)).filter((item) => item !== null);
         return arr as Array<InstrumentedTest>;
     }
-    public async runGroups(testInfoObject: TestInfos, numTests: number =): ResultGroups {
+    public async runGroups(testInfoObject: TestInfos, numTests: number=): ResultGroups {
         if (!testInfoObject) {
             throw new Error("TestController::runGroups called with a null testInfoObject");
         }

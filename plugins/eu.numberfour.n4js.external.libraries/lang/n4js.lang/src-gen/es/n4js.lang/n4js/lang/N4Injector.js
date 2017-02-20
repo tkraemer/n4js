@@ -70,26 +70,26 @@
 			setters: [],
 			execute: function() {
 				DI_PROP_NAME = '$di';
-				InjectedTypeMeta.$fieldInit = function InjectedTypeMeta_fieldInit(target, spec, mixinExclusion) {
+				InjectedTypeMeta.$fieldInit = function InjectedTypeMeta_fieldInit(spec, mixinExclusion) {
 					if (spec) {
-						if (!(mixinExclusion.hasOwnProperty('type') || target.hasOwnProperty('type'))) {
-							target.type = 'type' in spec ? spec.type : undefined;
+						if (!(mixinExclusion.hasOwnProperty('type') || this.hasOwnProperty('type'))) {
+							this.type = 'type' in spec ? spec.type : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('name') || target.hasOwnProperty('name'))) {
-							target.name = 'name' in spec ? spec.name : undefined;
+						if (!(mixinExclusion.hasOwnProperty('name') || this.hasOwnProperty('name'))) {
+							this.name = 'name' in spec ? spec.name : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('typeVar') || target.hasOwnProperty('typeVar'))) {
-							target.typeVar = 'typeVar' in spec ? spec.typeVar : undefined;
+						if (!(mixinExclusion.hasOwnProperty('typeVar') || this.hasOwnProperty('typeVar'))) {
+							this.typeVar = 'typeVar' in spec ? spec.typeVar : undefined;
 						}
 					} else {
-						if (!(mixinExclusion.hasOwnProperty('type') || target.hasOwnProperty('type'))) {
-							target.type = undefined;
+						if (!(mixinExclusion.hasOwnProperty('type') || this.hasOwnProperty('type'))) {
+							this.type = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('name') || target.hasOwnProperty('name'))) {
-							target.name = undefined;
+						if (!(mixinExclusion.hasOwnProperty('name') || this.hasOwnProperty('name'))) {
+							this.name = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('typeVar') || target.hasOwnProperty('typeVar'))) {
-							target.typeVar = undefined;
+						if (!(mixinExclusion.hasOwnProperty('typeVar') || this.hasOwnProperty('typeVar'))) {
+							this.typeVar = undefined;
 						}
 					}
 				};
@@ -123,32 +123,32 @@
 					});
 					return metaClass;
 				});
-				InjectedClassMeta.$fieldInit = function InjectedClassMeta_fieldInit(target, spec, mixinExclusion) {
+				InjectedClassMeta.$fieldInit = function InjectedClassMeta_fieldInit(spec, mixinExclusion) {
 					if (spec) {
-						if (!(mixinExclusion.hasOwnProperty('scope') || target.hasOwnProperty('scope'))) {
-							target.scope = 'scope' in spec ? spec.scope : undefined;
+						if (!(mixinExclusion.hasOwnProperty('scope') || this.hasOwnProperty('scope'))) {
+							this.scope = 'scope' in spec ? spec.scope : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('superType') || target.hasOwnProperty('superType'))) {
-							target.superType = 'superType' in spec ? spec.superType : undefined;
+						if (!(mixinExclusion.hasOwnProperty('superType') || this.hasOwnProperty('superType'))) {
+							this.superType = 'superType' in spec ? spec.superType : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('injectCtorParams') || target.hasOwnProperty('injectCtorParams'))) {
-							target.injectCtorParams = 'injectCtorParams' in spec ? spec.injectCtorParams : undefined;
+						if (!(mixinExclusion.hasOwnProperty('injectCtorParams') || this.hasOwnProperty('injectCtorParams'))) {
+							this.injectCtorParams = 'injectCtorParams' in spec ? spec.injectCtorParams : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('fieldsInjectedTypes') || target.hasOwnProperty('fieldsInjectedTypes'))) {
-							target.fieldsInjectedTypes = 'fieldsInjectedTypes' in spec ? spec.fieldsInjectedTypes : undefined;
+						if (!(mixinExclusion.hasOwnProperty('fieldsInjectedTypes') || this.hasOwnProperty('fieldsInjectedTypes'))) {
+							this.fieldsInjectedTypes = 'fieldsInjectedTypes' in spec ? spec.fieldsInjectedTypes : undefined;
 						}
 					} else {
-						if (!(mixinExclusion.hasOwnProperty('scope') || target.hasOwnProperty('scope'))) {
-							target.scope = undefined;
+						if (!(mixinExclusion.hasOwnProperty('scope') || this.hasOwnProperty('scope'))) {
+							this.scope = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('superType') || target.hasOwnProperty('superType'))) {
-							target.superType = undefined;
+						if (!(mixinExclusion.hasOwnProperty('superType') || this.hasOwnProperty('superType'))) {
+							this.superType = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('injectCtorParams') || target.hasOwnProperty('injectCtorParams'))) {
-							target.injectCtorParams = undefined;
+						if (!(mixinExclusion.hasOwnProperty('injectCtorParams') || this.hasOwnProperty('injectCtorParams'))) {
+							this.injectCtorParams = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('fieldsInjectedTypes') || target.hasOwnProperty('fieldsInjectedTypes'))) {
-							target.fieldsInjectedTypes = undefined;
+						if (!(mixinExclusion.hasOwnProperty('fieldsInjectedTypes') || this.hasOwnProperty('fieldsInjectedTypes'))) {
+							this.fieldsInjectedTypes = undefined;
 						}
 					}
 				};
@@ -187,20 +187,20 @@
 					});
 					return metaClass;
 				});
-				BindingInfo.$fieldInit = function BindingInfo_fieldInit(target, spec, mixinExclusion) {
+				BindingInfo.$fieldInit = function BindingInfo_fieldInit(spec, mixinExclusion) {
 					if (spec) {
-						if (!(mixinExclusion.hasOwnProperty('from') || target.hasOwnProperty('from'))) {
-							target.from = 'from' in spec ? spec.from : undefined;
+						if (!(mixinExclusion.hasOwnProperty('from') || this.hasOwnProperty('from'))) {
+							this.from = 'from' in spec ? spec.from : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('to') || target.hasOwnProperty('to'))) {
-							target.to = 'to' in spec ? spec.to : undefined;
+						if (!(mixinExclusion.hasOwnProperty('to') || this.hasOwnProperty('to'))) {
+							this.to = 'to' in spec ? spec.to : undefined;
 						}
 					} else {
-						if (!(mixinExclusion.hasOwnProperty('from') || target.hasOwnProperty('from'))) {
-							target.from = undefined;
+						if (!(mixinExclusion.hasOwnProperty('from') || this.hasOwnProperty('from'))) {
+							this.from = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('to') || target.hasOwnProperty('to'))) {
-							target.to = undefined;
+						if (!(mixinExclusion.hasOwnProperty('to') || this.hasOwnProperty('to'))) {
+							this.to = undefined;
 						}
 					}
 				};
@@ -229,26 +229,26 @@
 					});
 					return metaClass;
 				});
-				ProvideMethodInfo.$fieldInit = function ProvideMethodInfo_fieldInit(target, spec, mixinExclusion) {
+				ProvideMethodInfo.$fieldInit = function ProvideMethodInfo_fieldInit(spec, mixinExclusion) {
 					if (spec) {
-						if (!(mixinExclusion.hasOwnProperty('to') || target.hasOwnProperty('to'))) {
-							target.to = 'to' in spec ? spec.to : undefined;
+						if (!(mixinExclusion.hasOwnProperty('to') || this.hasOwnProperty('to'))) {
+							this.to = 'to' in spec ? spec.to : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('name') || target.hasOwnProperty('name'))) {
-							target.name = 'name' in spec ? spec.name : undefined;
+						if (!(mixinExclusion.hasOwnProperty('name') || this.hasOwnProperty('name'))) {
+							this.name = 'name' in spec ? spec.name : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('args') || target.hasOwnProperty('args'))) {
-							target.args = 'args' in spec ? spec.args : undefined;
+						if (!(mixinExclusion.hasOwnProperty('args') || this.hasOwnProperty('args'))) {
+							this.args = 'args' in spec ? spec.args : undefined;
 						}
 					} else {
-						if (!(mixinExclusion.hasOwnProperty('to') || target.hasOwnProperty('to'))) {
-							target.to = undefined;
+						if (!(mixinExclusion.hasOwnProperty('to') || this.hasOwnProperty('to'))) {
+							this.to = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('name') || target.hasOwnProperty('name'))) {
-							target.name = undefined;
+						if (!(mixinExclusion.hasOwnProperty('name') || this.hasOwnProperty('name'))) {
+							this.name = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('args') || target.hasOwnProperty('args'))) {
-							target.args = undefined;
+						if (!(mixinExclusion.hasOwnProperty('args') || this.hasOwnProperty('args'))) {
+							this.args = undefined;
 						}
 					}
 				};
@@ -282,23 +282,23 @@
 					});
 					return metaClass;
 				});
-				BinderMeta.$fieldInit = function BinderMeta_fieldInit(target, spec, mixinExclusion) {
+				BinderMeta.$fieldInit = function BinderMeta_fieldInit(spec, mixinExclusion) {
 					if (spec) {
-						if (!(mixinExclusion.hasOwnProperty('bindings') || target.hasOwnProperty('bindings'))) {
-							target.bindings = 'bindings' in spec ? spec.bindings : undefined;
+						if (!(mixinExclusion.hasOwnProperty('bindings') || this.hasOwnProperty('bindings'))) {
+							this.bindings = 'bindings' in spec ? spec.bindings : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('methodBindings') || target.hasOwnProperty('methodBindings'))) {
-							target.methodBindings = 'methodBindings' in spec ? spec.methodBindings : undefined;
+						if (!(mixinExclusion.hasOwnProperty('methodBindings') || this.hasOwnProperty('methodBindings'))) {
+							this.methodBindings = 'methodBindings' in spec ? spec.methodBindings : undefined;
 						}
 					} else {
-						if (!(mixinExclusion.hasOwnProperty('bindings') || target.hasOwnProperty('bindings'))) {
-							target.bindings = undefined;
+						if (!(mixinExclusion.hasOwnProperty('bindings') || this.hasOwnProperty('bindings'))) {
+							this.bindings = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('methodBindings') || target.hasOwnProperty('methodBindings'))) {
-							target.methodBindings = undefined;
+						if (!(mixinExclusion.hasOwnProperty('methodBindings') || this.hasOwnProperty('methodBindings'))) {
+							this.methodBindings = undefined;
 						}
 					}
-					InjectedClassMeta.$fieldInit(target, spec, mixinExclusion);
+					InjectedClassMeta.$fieldInit.call(this, spec, mixinExclusion);
 				};
 				BinderMeta.$methods = {};
 				$makeInterface(BinderMeta, function(instanceProto, staticProto) {
@@ -327,23 +327,23 @@
 					});
 					return metaClass;
 				});
-				DIComponentMeta.$fieldInit = function DIComponentMeta_fieldInit(target, spec, mixinExclusion) {
+				DIComponentMeta.$fieldInit = function DIComponentMeta_fieldInit(spec, mixinExclusion) {
 					if (spec) {
-						if (!(mixinExclusion.hasOwnProperty('parent') || target.hasOwnProperty('parent'))) {
-							target.parent = 'parent' in spec ? spec.parent : undefined;
+						if (!(mixinExclusion.hasOwnProperty('parent') || this.hasOwnProperty('parent'))) {
+							this.parent = 'parent' in spec ? spec.parent : undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('binders') || target.hasOwnProperty('binders'))) {
-							target.binders = 'binders' in spec ? spec.binders : undefined;
+						if (!(mixinExclusion.hasOwnProperty('binders') || this.hasOwnProperty('binders'))) {
+							this.binders = 'binders' in spec ? spec.binders : undefined;
 						}
 					} else {
-						if (!(mixinExclusion.hasOwnProperty('parent') || target.hasOwnProperty('parent'))) {
-							target.parent = undefined;
+						if (!(mixinExclusion.hasOwnProperty('parent') || this.hasOwnProperty('parent'))) {
+							this.parent = undefined;
 						}
-						if (!(mixinExclusion.hasOwnProperty('binders') || target.hasOwnProperty('binders'))) {
-							target.binders = undefined;
+						if (!(mixinExclusion.hasOwnProperty('binders') || this.hasOwnProperty('binders'))) {
+							this.binders = undefined;
 						}
 					}
-					InjectedClassMeta.$fieldInit(target, spec, mixinExclusion);
+					InjectedClassMeta.$fieldInit.call(this, spec, mixinExclusion);
 				};
 				DIComponentMeta.$methods = {};
 				$makeInterface(DIComponentMeta, function(instanceProto, staticProto) {

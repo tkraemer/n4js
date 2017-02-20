@@ -225,6 +225,7 @@ public /* @Final */ class N4Interface extends N4Classifier {
  */
 public abstract class N4Member extends N4NamedElement {
 	public owner: N4Classifier;
+	public get isStatic(): boolean
 }
 
 /**

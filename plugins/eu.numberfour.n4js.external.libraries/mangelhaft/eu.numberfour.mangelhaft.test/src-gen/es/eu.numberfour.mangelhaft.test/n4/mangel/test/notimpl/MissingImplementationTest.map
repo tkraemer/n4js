@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"MissingImplementationTest.js",
+"lineCount":46,
+"mappings":"A;;;EAUA,yE;;MAAQ,kB;EAER,oE;;;;;KAFQ,4J;;;;IAEY;;qEAEyB;OACrC,IAAI,kBAAJ,GADqC;OAFzB;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+"sources":["/sources/eu.numberfour.mangelhaft.test/n4/mangel/test/notimpl/MissingImplementationTest.n4js"],
+"names":[]
+}
