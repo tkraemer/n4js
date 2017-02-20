@@ -15,15 +15,9 @@ import java.util.List;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
-import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
-import eu.numberfour.n4js.ts.types.TField;
-import eu.numberfour.n4js.ts.types.TGetter;
 import eu.numberfour.n4js.ts.types.TMember;
-import eu.numberfour.n4js.ts.types.TMemberWithAccessModifier;
-import eu.numberfour.n4js.ts.types.TMethod;
-import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
 
@@ -50,39 +44,14 @@ public class UnionMemberDescriptor extends ComposedMemberDescriptor {
 		super(writeAccess, resource, ts);
 	}
 
-	/**
-	 * Returns a simplified union TypeRef.
-	 */
 	@Override
-	protected TypeRef getCompositionForMember(N4JSTypeSystem pts, List<TypeRef> pTypeRefs,
-			Resource pTesource) {
-		return pts.createSimplifiedUnion(pTypeRefs, pTesource);
-	}
-
-	/**
-	 * Returns a simplified union TypeRef.
-	 */
-	@Override
-	protected TypeRef getCompositionForParameter(N4JSTypeSystem pts, List<TypeRef> pTypeRefs,
-			Resource pTesource) {
-		return pts.createSimplifiedIntersection(pTypeRefs, pTesource);
+	protected TypeRef getTypeRef(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
+		return super.getSimplifiedUnion(pts, pTypeRefs, pTesource);
 	}
 
 	@Override
-	protected void mergeKind(MemberType nextKind) {
-		if (nextKind != null) {
-			// if this is the first call to #mergeKind() -> initialize 'kind' variable
-			if (kind == null)
-				kind = nextKind;
-			// special tweak:
-			// combining fields and accessors will yield the same result as just having the accessors
-			if (isField(kind) && isAccessor(nextKind))
-				kind = nextKind;
-			else if (isAccessor(kind) && isField(nextKind))
-				nextKind = kind;
-			// remember if we have encountered multiple types
-			multipleKinds |= (nextKind != kind);
-		}
+	protected TypeRef getTypeRefComplement(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
+		return super.getSimplifiedIntersection(pts, pTypeRefs, pTesource);
 	}
 
 	/**
@@ -117,46 +86,20 @@ public class UnionMemberDescriptor extends ComposedMemberDescriptor {
 	}
 
 	@Override
-	public TMember create(String name) {
-		if (!isValid())
-			return null;
-
-		MemberType actualKind = kind;
-		// turn fields into a getter or setter (depending on read or write-access) *if* they have different types
-		if (isField(kind)) {
-			final TypeRef union = getSimplifiedCompositionOfTypeRefs();
-			// if the simplified union is a union type, the types cannot be all equal!
-			if (union != null && union instanceof UnionTypeExpression) {
-				if (writeAccess) {
-					actualKind = MemberType.SETTER;
-					final FparDescriptor fpar = new FparDescriptor();
-					fpar.names.add("arg0");
-					fpar.typeRefs.addAll(typeRefs);
-					fpars.add(fpar);
-				} else {
-					actualKind = MemberType.GETTER;
-				}
-			}
+	protected void mergeKind(MemberType nextKind) {
+		if (nextKind != null) {
+			// if this is the first call to #mergeKind() -> initialize 'kind' variable
+			if (kind == null)
+				kind = nextKind;
+			// special tweak:
+			// combining fields and accessors will yield the same result as just having the accessors
+			if (isField(kind) && isAccessor(nextKind))
+				kind = nextKind;
+			else if (isAccessor(kind) && isField(nextKind))
+				nextKind = kind;
+			// remember if we have encountered multiple types
+			multipleKinds |= (nextKind != kind);
 		}
-
-		final TMember composedMember = createMemberOfKind(actualKind);
-
-		composedMember.setName(name);
-
-		if (composedMember instanceof TField)
-			((TField) composedMember).setDeclaredFinal(readOnlyField);
-
-		if (composedMember instanceof TMemberWithAccessModifier)
-			((TMemberWithAccessModifier) composedMember).setDeclaredMemberAccessModifier(accessibility);
-
-		if (composedMember instanceof TField)
-			TypeUtils.setMemberTypeRef(composedMember, typeRefs.get(0));
-		else if (composedMember instanceof TGetter || composedMember instanceof TMethod)
-			TypeUtils.setMemberTypeRef(composedMember, getSimplifiedCompositionOfTypeRefs());
-
-		setFPars(composedMember);
-
-		return composedMember;
 	}
 
 	@Override

@@ -17,12 +17,15 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 import com.google.common.base.Joiner;
 
+import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TFormalParameter;
+import eu.numberfour.n4js.ts.types.TGetter;
 import eu.numberfour.n4js.ts.types.TMember;
+import eu.numberfour.n4js.ts.types.TMemberWithAccessModifier;
 import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.TSetter;
 import eu.numberfour.n4js.ts.types.TypesFactory;
@@ -81,7 +84,7 @@ abstract public class ComposedMemberDescriptor {
 				typeRefsToUse = new ArrayList<>(this.typeRefs);
 				typeRefsToUse.addAll(ComposedMemberDescriptor.this.typeRefs);
 			}
-			TypeRef paramCompTR = getCompositionForParameter(ts, typeRefsToUse, ComposedMemberDescriptor.this.resource);
+			TypeRef paramCompTR = getTypeRefComplement(ts, typeRefsToUse, ComposedMemberDescriptor.this.resource);
 			fpar.setTypeRef(paramCompTR);
 			if (this.optional && null != fpar.getTypeRef()) {
 				fpar.getTypeRef().setUndefModifier(UndefModifier.OPTIONAL);
@@ -91,16 +94,6 @@ abstract public class ComposedMemberDescriptor {
 			return fpar;
 		}
 	}
-
-	/**
-	 * Returns a simplified composition.
-	 */
-	abstract TypeRef getCompositionForMember(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource);
-
-	/**
-	 * Returns a simplified composition.
-	 */
-	abstract TypeRef getCompositionForParameter(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource);
 
 	/**
 	 * Merges the kind of a new member to the current kind
@@ -114,11 +107,33 @@ abstract public class ComposedMemberDescriptor {
 	abstract public boolean isValid();
 
 	/**
-	 * Creates the composed members. Returns <code>null</code> if the members merged via method
-	 * {@link #merge(RuleEnvironment, TMember)} do not form a valid composed member (i.e. if method {@link #isValid()}
-	 * returns false).
+	 * Returns the member TypeRef.
 	 */
-	abstract public TMember create(String name);
+	abstract protected TypeRef getTypeRef(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource);
+
+	/**
+	 * Returns the member TypeRef.
+	 */
+	abstract protected TypeRef getTypeRefComplement(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource);
+
+	/**
+	 * Merges the accessibility of the composed member.
+	 */
+	abstract protected void mergeAccessibility(MemberAccessModifier nextAccessibility);
+
+	/**
+	 * Returns a simplified union TypeRef.
+	 */
+	protected TypeRef getSimplifiedUnion(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
+		return pts.createSimplifiedUnion(pTypeRefs, pTesource);
+	}
+
+	/**
+	 * Returns a simplified union TypeRef.
+	 */
+	protected TypeRef getSimplifiedIntersection(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
+		return pts.createSimplifiedIntersection(pTypeRefs, pTesource);
+	}
 
 	/**
 	 * Constructor. The Resource and the N4JSTypeSystem will be used for type inference, etc. during merging of the
@@ -137,7 +152,7 @@ abstract public class ComposedMemberDescriptor {
 
 	TypeRef getSimplifiedCompositionOfTypeRefs() {
 		if (cachedSimplifiedComposition == null) {
-			cachedSimplifiedComposition = getCompositionForMember(ts, typeRefs, resource);
+			cachedSimplifiedComposition = getTypeRef(ts, typeRefs, resource);
 		}
 		return cachedSimplifiedComposition;
 	}
@@ -178,8 +193,6 @@ abstract public class ComposedMemberDescriptor {
 		// remember if we have encountered at least one const field
 		readOnlyField |= nextReadOnlyField;
 	}
-
-	protected abstract void mergeAccessibility(MemberAccessModifier nextAccessibility);
 
 	private void mergeTypeRef(TypeRef nextTypeRef) {
 		if (nextTypeRef != null) {
@@ -233,6 +246,64 @@ abstract public class ComposedMemberDescriptor {
 				((TMethod) composedMember).getFpars().add(currFparDesc.create());
 			}
 		}
+	}
+
+	/**
+	 * Creates the composed members. Returns <code>null</code> if the members merged via method
+	 * {@link #merge(RuleEnvironment, TMember)} do not form a valid composed member (i.e. if method {@link #isValid()}
+	 * returns false).
+	 */
+	public TMember create(String name) {
+		if (!isValid())
+			return null;
+
+		MemberType actualKind = kind;
+		// turn fields into a getter or setter (depending on read or write-access) *if* they have different types
+		if (isField(kind)) {
+			final TypeRef compo = getSimplifiedCompositionOfTypeRefs();
+			// if the simplified union is a union type, the types cannot be all equal!
+			if (compo != null && compo instanceof ComposedTypeRef) {
+				if (writeAccess) {
+					actualKind = MemberType.SETTER;
+					final FparDescriptor fpar = new FparDescriptor();
+					fpar.names.add("arg0");
+					fpar.typeRefs.addAll(typeRefs);
+					fpars.add(fpar);
+				} else {
+					actualKind = MemberType.GETTER;
+				}
+			}
+		}
+
+		final TMember composedMember = createMemberOfKind(actualKind);
+		composedMember.setName(name);
+
+		if (composedMember instanceof TField) {
+			((TField) composedMember).setDeclaredFinal(readOnlyField);
+		}
+
+		if (composedMember instanceof TMemberWithAccessModifier) {
+			TMemberWithAccessModifier accModMem = (TMemberWithAccessModifier) composedMember;
+			accModMem.setDeclaredMemberAccessModifier(accessibility);
+		}
+
+		if (composedMember instanceof TField)
+			TypeUtils.setMemberTypeRef(composedMember, typeRefs.get(0));
+		else if (composedMember instanceof TGetter || composedMember instanceof TMethod)
+			TypeUtils.setMemberTypeRef(composedMember, getSimplifiedCompositionOfTypeRefs());
+
+		if (composedMember instanceof TSetter) {
+			if (!fpars.isEmpty()) {
+				TSetter tSetter = (TSetter) composedMember;
+				tSetter.setFpar(fpars.get(0).create());
+			}
+		} else if (composedMember instanceof TMethod) {
+			for (FparDescriptor currFparDesc : fpars) {
+				((TMethod) composedMember).getFpars().add(currFparDesc.create());
+			}
+		}
+
+		return composedMember;
 	}
 
 	static boolean isField(MemberType kind) {

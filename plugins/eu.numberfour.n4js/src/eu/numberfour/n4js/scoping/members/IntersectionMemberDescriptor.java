@@ -17,10 +17,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
-import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TMember;
-import eu.numberfour.n4js.ts.types.TMemberWithAccessModifier;
-import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
 
@@ -40,20 +37,14 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 		super(writeAccess, resource, ts);
 	}
 
-	/**
-	 * Returns a simplified intersection TypeRef.
-	 */
 	@Override
-	protected TypeRef getCompositionForMember(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
-		return pts.createSimplifiedIntersection(pTypeRefs, pTesource);
+	protected TypeRef getTypeRef(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
+		return super.getSimplifiedIntersection(pts, pTypeRefs, pTesource);
 	}
 
-	/**
-	 * Returns a simplified union TypeRef.
-	 */
 	@Override
-	protected TypeRef getCompositionForParameter(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
-		return pts.createSimplifiedUnion(pTypeRefs, pTesource);
+	protected TypeRef getTypeRefComplement(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
+		return super.getSimplifiedUnion(pts, pTypeRefs, pTesource);
 	}
 
 	/**
@@ -105,33 +96,6 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 	}
 
 	@Override
-	public TMember create(String name) {
-		if (!isValid())
-			return null;
-
-		final TMember composedMember = createMemberOfKind(kind);
-		composedMember.setName(name);
-
-		if (composedMember instanceof TField) {
-			((TField) composedMember).setDeclaredFinal(readOnlyField);
-		}
-
-		if (composedMember instanceof TMemberWithAccessModifier) {
-			TMemberWithAccessModifier accModMem = (TMemberWithAccessModifier) composedMember;
-			accModMem.setDeclaredMemberAccessModifier(accessibility);
-		}
-
-		// FIXME: the following is not correct. We need to know about the intended RW-access to create the correct
-		// typeRef:
-		// For writing: union, for reading: intersection!
-		TypeUtils.setMemberTypeRef(composedMember, getSimplifiedCompositionOfTypeRefs());
-
-		setFPars(composedMember);
-
-		return composedMember;
-	}
-
-	@Override
 	protected void mergeAccessibility(MemberAccessModifier nextAccessibility) {
 		if (nextAccessibility != null) {
 			// remember the maximum accessibility we have encountered
@@ -139,5 +103,4 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 				accessibility = nextAccessibility;
 		}
 	}
-
 }
