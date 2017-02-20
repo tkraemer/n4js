@@ -144,11 +144,7 @@ i12.diffNoOfParmsSameType(a, a);
 i12.diffNoOfParmsDiffType(aub, b);
 
 // XPECT errors --> "A is not a subtype of B." at "a"
-<<<<<<< Updated upstream
-i12.diffNoOfParmsDiffType(ab, a);
-=======
 i12.diffNoOfParmsDiffType(aub, a);
->>>>>>> Stashed changes
 
 
 // varArg(a:A, aub:A|B, ...a:A)
