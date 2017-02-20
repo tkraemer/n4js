@@ -97,6 +97,9 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 
 	@Override
 	protected void mergeAccessibility(MemberAccessModifier nextAccessibility) {
+		if (accessibility == null) {
+			accessibility = MemberAccessModifier.PRIVATE; // initialize variable
+		}
 		if (nextAccessibility != null) {
 			// remember the maximum accessibility we have encountered
 			if (nextAccessibility.getValue() > accessibility.getValue())

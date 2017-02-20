@@ -7,42 +7,51 @@
    END_SETUP 
  */
 
-// TODO: add Xpect method to check accessibility of a PropertyAccessExpression, e.g
-// X_PECT accessibility of 'ab.m' --> private
-//ab.m();
-
 import {A,B,C} from "Ch04_10_IntersectionType/ABC"
+
+interface P {
+	protected s;
+	protected m() {}
+}
 
 let ab : A&B;
 let bc : B&C;
 let ac : A&C;
 let abc : A&B&C;
+let ap : A&P;
 
 // should have project visiblity from B.s
-// XPECT noerrors
+// XPECT accessModifier at 's' --> project
 ab.s;
 
-// XPECT noerrors
+// XPECT accessModifier at 'm()' --> project
 ab.m();
 
 // should have public visiblity from C.s
-// XPECT noerrors
+// XPECT accessModifier at 's' --> public
 bc.s;
 
-// XPECT noerrors
+// XPECT accessModifier at 'm()' --> public
 bc.m();
 
 // should have public visiblity from C.s
-// XPECT noerrors
+// XPECT accessModifier at 's' --> public
 ac.s;
 
-// XPECT noerrors
+// XPECT accessModifier at 'm()' --> public
 ac.m();
 
 // should have public visiblity from C.s
-// XPECT noerrors
+// XPECT accessModifier at 's' --> public
 abc.s;
 
-// XPECT noerrors
+// XPECT accessModifier at 'm()' --> public
 abc.m();
+
+// should have project visiblity from A.s
+// XPECT accessModifier at 's' --> protected
+ap.s;
+
+// XPECT accessModifier at 'm()' --> protected
+ap.m();
 

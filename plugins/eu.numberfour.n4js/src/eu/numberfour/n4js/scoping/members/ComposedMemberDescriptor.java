@@ -56,7 +56,7 @@ abstract public class ComposedMemberDescriptor {
 	MemberType kind;
 	boolean multipleKinds;
 	boolean readOnlyField;
-	MemberAccessModifier accessibility = MemberAccessModifier.PUBLIC;
+	MemberAccessModifier accessibility;
 	/** used for type of fields and return type of getters and methods */
 	final List<TypeRef> typeRefs = new ArrayList<>();
 	final List<FparDescriptor> fpars = new ArrayList<>();
@@ -224,11 +224,15 @@ abstract public class ComposedMemberDescriptor {
 					desc.typeRefs.add(TypeUtils.copyIfContained(nextFparTypeRef)); // collect all fpar types
 				}
 			}
-			desc.optional &= nextFpar.isOptional(); // remember if ALL were optional
-			desc.variadic &= nextFpar.isVariadic(); // remember if ALL were variadic
-			desc.hasInitializerAssignment &= nextFpar.isHasInitializerAssignment(); // remember if ALL had an
-																					// initializer assignment
+			mergeFparBooleans(nextFpar, desc);
 		}
+	}
+
+	private void mergeFparBooleans(TFormalParameter nextFpar, final FparDescriptor desc) {
+		desc.optional &= nextFpar.isOptional(); // remember if ALL were optional
+		desc.variadic &= nextFpar.isVariadic(); // remember if ALL were variadic
+		desc.hasInitializerAssignment &= nextFpar.isHasInitializerAssignment(); // remember if ALL had an
+																				// initializer assignment
 	}
 
 	/**

@@ -104,6 +104,9 @@ public class UnionMemberDescriptor extends ComposedMemberDescriptor {
 
 	@Override
 	protected void mergeAccessibility(MemberAccessModifier nextAccessibility) {
+		if (accessibility == null) {
+			accessibility = MemberAccessModifier.PUBLIC; // initialize variable
+		}
 		if (nextAccessibility != null) {
 			// remember the minimum accessibility we have encountered
 			if (nextAccessibility.getValue() < accessibility.getValue())
