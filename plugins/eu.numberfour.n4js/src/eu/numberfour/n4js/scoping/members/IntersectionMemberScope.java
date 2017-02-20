@@ -60,7 +60,7 @@ public class IntersectionMemberScope extends ComposedMemberScope {
 				lastCMT = newCMT;
 			}
 
-			boolean descrWithError = description == null || subDescription instanceof IEObjectDescriptionWithError;
+			boolean descrWithError = subDescription == null || subDescription instanceof IEObjectDescriptionWithError;
 			allDescrWithError &= descrWithError;
 		}
 		if (allDescrWithError) {
