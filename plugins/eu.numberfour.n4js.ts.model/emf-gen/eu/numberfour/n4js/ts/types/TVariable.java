@@ -25,7 +25,6 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.TVariable#getTypeRef <em>Type Ref</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.TVariable#isConst <em>Const</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TVariable#isExternal <em>External</em>}</li>
  * </ul>
  *
@@ -33,7 +32,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
  * @model
  * @generated
  */
-public interface TVariable extends TExportableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement {
+public interface TVariable extends TExportableElement, TConstableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement {
 	/**
 	 * Returns the value of the '<em><b>Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -59,32 +58,6 @@ public interface TVariable extends TExportableElement, SyntaxRelatedTElement, TA
 	 * @generated
 	 */
 	void setTypeRef(TypeRef value);
-
-	/**
-	 * Returns the value of the '<em><b>Const</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Const</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Const</em>' attribute.
-	 * @see #setConst(boolean)
-	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTVariable_Const()
-	 * @model unique="false"
-	 * @generated
-	 */
-	boolean isConst();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TVariable#isConst <em>Const</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Const</em>' attribute.
-	 * @see #isConst()
-	 * @generated
-	 */
-	void setConst(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>External</b></em>' attribute.

@@ -22,7 +22,6 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.types.TField#isConst <em>Const</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TField#isHasExpression <em>Has Expression</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TField#getTypeRef <em>Type Ref</em>}</li>
  * </ul>
@@ -31,33 +30,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
  * @model
  * @generated
  */
-public interface TField extends TMemberWithAccessModifier {
-	/**
-	 * Returns the value of the '<em><b>Const</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Const</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Const</em>' attribute.
-	 * @see #setConst(boolean)
-	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTField_Const()
-	 * @model unique="false"
-	 * @generated
-	 */
-	boolean isConst();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TField#isConst <em>Const</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Const</em>' attribute.
-	 * @see #isConst()
-	 * @generated
-	 */
-	void setConst(boolean value);
-
+public interface TField extends TMemberWithAccessModifier, TConstableElement {
 	/**
 	 * Returns the value of the '<em><b>Has Expression</b></em>' attribute.
 	 * <!-- begin-user-doc -->

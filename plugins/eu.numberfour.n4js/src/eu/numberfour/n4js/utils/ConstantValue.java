@@ -83,10 +83,16 @@ public abstract class ConstantValue {
 	}
 
 	public static final class ValueSymbol extends ConstantValue {
-		private ValueSymbol(TField fieldInSymbolObjectType) {
-			super(fieldInSymbolObjectType.getName());
+		private ValueSymbol(String symbolName) {
+			super(symbolName);
 		}
 
+		/** Returns the symbol's plain name (without {@link N4JSLanguageUtils#SYMBOL_IDENTIFIER_PREFIX}). */
+		public String getSymbolName() {
+			return super.toString();
+		}
+
+		/** Returns the symbol's name prefixed by {@link N4JSLanguageUtils#SYMBOL_IDENTIFIER_PREFIX}. */
 		@Override
 		public String toString() {
 			return N4JSLanguageUtils.SYMBOL_IDENTIFIER_PREFIX + super.toString();
@@ -154,7 +160,7 @@ public abstract class ConstantValue {
 	}
 
 	public static ValueSymbol of(TField value) {
-		return value != null ? new ValueSymbol(value) : null;
+		return value != null ? new ValueSymbol(value.getName()) : null;
 	}
 
 	public static ConstantValue and(ConstantValue... values) {
@@ -237,5 +243,51 @@ public abstract class ConstantValue {
 			return of(((ValueNumber) valueLeft).getValue().remainder(((ValueNumber) valueRight).getValue()));
 		}
 		return null;
+	}
+
+	// FIXME reconsider serialization / deserialization
+	public static String serialize(ConstantValue value) {
+		if (value == null) {
+			return null;
+		} else if (value == UNDEFINED || value == NULL) {
+			return value.toString();
+		} else if (value instanceof ValueBoolean) {
+			return "?" + value;
+		} else if (value instanceof ValueString) {
+			return "\"" + value;
+		} else if (value instanceof ValueNumber) {
+			return "#" + value;
+		} else if (value instanceof ValueSymbol) {
+			return "$" + ((ValueSymbol) value).getSymbolName();
+		} else {
+			throw new UnsupportedOperationException("unknown subclass of ConstantValue: " + value);
+		}
+	}
+
+	public static ConstantValue deserialize(String str) {
+		if (str == null) {
+			return null;
+		} else if (UNDEFINED.toString().equals(str)) {
+			return UNDEFINED;
+		} else if (NULL.toString().equals(str)) {
+			return NULL;
+		} else {
+			if (str.length() > 0) {
+				final char head = str.charAt(0);
+				final String tail = str.substring(1);
+				if (head == '?' && "true".equalsIgnoreCase(tail)) {
+					return TRUE;
+				} else if (head == '?' && "false".equalsIgnoreCase(tail)) {
+					return FALSE;
+				} else if (head == '"') {
+					return of(tail);
+				} else if (head == '#') {
+					return new ValueNumber(new BigDecimal(tail));
+				} else if (head == '$') {
+					return new ValueSymbol(tail);
+				}
+			}
+			throw new UnsupportedOperationException("cannot deserialize ConstantValue from string: " + str);
+		}
 	}
 }

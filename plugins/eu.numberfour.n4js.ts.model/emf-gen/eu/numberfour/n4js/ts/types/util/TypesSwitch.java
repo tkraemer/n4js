@@ -526,6 +526,7 @@ public class TypesSwitch<T> extends Switch<T> {
 				TField tField = (TField)theEObject;
 				T result = caseTField(tField);
 				if (result == null) result = caseTMemberWithAccessModifier(tField);
+				if (result == null) result = caseTConstableElement(tField);
 				if (result == null) result = caseTMember(tField);
 				if (result == null) result = caseIdentifiableElement(tField);
 				if (result == null) result = caseTAnnotableElement(tField);
@@ -540,6 +541,7 @@ public class TypesSwitch<T> extends Switch<T> {
 				if (result == null) result = caseTField(tStructField);
 				if (result == null) result = caseTStructMember(tStructField);
 				if (result == null) result = caseTMemberWithAccessModifier(tStructField);
+				if (result == null) result = caseTConstableElement(tStructField);
 				if (result == null) result = caseTMember(tStructField);
 				if (result == null) result = caseIdentifiableElement(tStructField);
 				if (result == null) result = caseTAnnotableElement(tStructField);
@@ -646,10 +648,17 @@ public class TypesSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case TypesPackage.TCONSTABLE_ELEMENT: {
+				TConstableElement tConstableElement = (TConstableElement)theEObject;
+				T result = caseTConstableElement(tConstableElement);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case TypesPackage.TVARIABLE: {
 				TVariable tVariable = (TVariable)theEObject;
 				T result = caseTVariable(tVariable);
 				if (result == null) result = caseTExportableElement(tVariable);
+				if (result == null) result = caseTConstableElement(tVariable);
 				if (result == null) result = caseSyntaxRelatedTElement(tVariable);
 				if (result == null) result = caseTAnnotableElement(tVariable);
 				if (result == null) result = caseAccessibleTypeElement(tVariable);
@@ -1394,6 +1403,21 @@ public class TypesSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseSyntaxRelatedTElement(SyntaxRelatedTElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>TConstable Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>TConstable Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTConstableElement(TConstableElement object) {
 		return null;
 	}
 

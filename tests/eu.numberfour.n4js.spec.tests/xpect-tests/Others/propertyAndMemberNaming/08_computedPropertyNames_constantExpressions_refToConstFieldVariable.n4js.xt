@@ -1,0 +1,121 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "OtherFile.n4js" {}
+	}
+
+	END_SETUP
+*/
+
+
+import { var_otherFile } from "Others/propertyAndMemberNaming/OtherFile";
+import { Cls_OtherFile } from "Others/propertyAndMemberNaming/OtherFile";
+
+
+// important to test both with exported and with non-exported variable:
+const c1 = 'propConst';
+export const c2 = 'propConstExpored';
+
+class C {
+	const field = 'propField';
+}
+
+
+
+console.log('####### interface');
+
+interface Ifc {
+	// XPECT noerrors -->
+	[c1] = 'hello1'; // will directly refer to VariableDeclaration 'c1' in AST (because c1 is not exported)
+	// XPECT noerrors -->
+	[c2] = 'hello2'; // will refer to TVariable 'c2' in TModule (because c2 is exported)
+	// XPECT noerrors -->
+	[C.field] = 'hello3'; // will refer to TField in TModule (always like that for fields)
+	// XPECT noerrors -->
+	[var_otherFile] = 'hello4';
+	// XPECT noerrors -->
+	[Cls_OtherFile.field] = 'hello5';
+}
+class IfcImpl implements Ifc {}
+
+let impl = new IfcImpl();
+console.log(impl.propConst);
+console.log(impl.propConstExpored);
+console.log(impl.propField);
+console.log(impl.propConstExportedFromOtherFile);
+console.log(impl.propFieldFromOtherFile);
+
+
+
+console.log('####### class');
+
+class Cls {
+	// XPECT noerrors -->
+	[c1] = 'hello1';
+	// XPECT noerrors -->
+	[c2] = 'hello2';
+	// XPECT noerrors -->
+	[C.field] = 'hello3';
+	// XPECT noerrors -->
+	[var_otherFile] = 'hello4';
+	// XPECT noerrors -->
+	[Cls_OtherFile.field] = 'hello5';
+}
+
+let cls = new Cls();
+console.log(cls.propConst);
+console.log(cls.propConstExpored);
+console.log(cls.propField);
+console.log(cls.propConstExportedFromOtherFile);
+console.log(cls.propFieldFromOtherFile);
+
+
+
+console.log('####### object literal');
+
+let ol = {
+	// XPECT noerrors -->
+	[c1]: 'hello1',
+	// XPECT noerrors -->
+	[c2]: 'hello2',
+	// XPECT noerrors -->
+	[C.field]: 'hello3',
+	// XPECT noerrors -->
+	[var_otherFile]: 'hello4',
+	// XPECT noerrors -->
+	[Cls_OtherFile.field]: 'hello5'
+}
+
+console.log(ol.propConst);
+console.log(ol.propConstExpored);
+console.log(ol.propField);
+console.log(ol.propConstExportedFromOtherFile);
+console.log(ol.propFieldFromOtherFile);
+
+
+/* XPECT output ---
+<==
+stdout:
+####### interface
+hello1
+hello2
+hello3
+hello4
+hello5
+####### class
+hello1
+hello2
+hello3
+hello4
+hello5
+####### object literal
+hello1
+hello2
+hello3
+hello4
+hello5
+stderr:
+==>
+--- */
+

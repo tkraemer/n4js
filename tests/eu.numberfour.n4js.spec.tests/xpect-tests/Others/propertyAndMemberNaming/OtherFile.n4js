@@ -1,0 +1,8 @@
+
+
+export const var_otherFile = 'propConstExportedFromOtherFile';
+
+export class Cls_OtherFile {
+	const field = 'propFieldFromOtherFile';
+}
+

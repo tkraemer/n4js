@@ -15,9 +15,11 @@ import eu.numberfour.n4js.n4JS.AdditiveExpression
 import eu.numberfour.n4js.n4JS.BinaryLogicalExpression
 import eu.numberfour.n4js.n4JS.BooleanLiteral
 import eu.numberfour.n4js.n4JS.ConditionalExpression
+import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.MultiplicativeExpression
+import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.NullLiteral
 import eu.numberfour.n4js.n4JS.NumericLiteral
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
@@ -27,14 +29,22 @@ import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.n4JS.TemplateLiteral
 import eu.numberfour.n4js.n4JS.TemplateSegment
 import eu.numberfour.n4js.n4JS.UnaryExpression
+import eu.numberfour.n4js.n4JS.VariableDeclaration
+import eu.numberfour.n4js.ts.types.IdentifiableElement
+import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
+import eu.numberfour.n4js.ts.types.TConstableElement
 import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TEnumLiteral
+import eu.numberfour.n4js.ts.types.TField
+import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.utils.ConstantValue
 import eu.numberfour.n4js.utils.ConstantValue.ValueBoolean
 import eu.numberfour.n4js.utils.ConstantValue.ValueNumber
+import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
@@ -59,7 +69,25 @@ class ConstantExpressionProcessor {
 			if(N4JSLanguageUtils.isRequiredToBeConstantExpression(node)) {
 				val evalResult = computeValueIfConstantExpression(G, node);
 				cache.storeEvaluationResult(node, evalResult);
+			} else {
+				// optional cases:
+				val parent = node.eContainer;
+				if(parent instanceof ExportedVariableDeclaration) {
+					storeValueOfExpressionInTModule(G, parent.definedVariable, node);
+				} else if(parent instanceof N4FieldDeclaration) {
+					storeValueOfExpressionInTModule(G, parent.definedField, node);
+				}
 			}
+		}
+	}
+
+	def private static void storeValueOfExpressionInTModule(RuleEnvironment G, TConstableElement elem, Expression expr) {
+		if(elem!==null && elem.const) {
+			val value = computeValueIfConstantExpression(G, expr);
+			val valueStr = ConstantValue.serialize(value);
+			EcoreUtilN4.doWithDeliver(false, [
+				elem.value = valueStr;
+			], elem);
 		}
 	}
 
@@ -75,8 +103,6 @@ class ConstantExpressionProcessor {
 		return switch(expr) {
 			NullLiteral:
 				ConstantValue.NULL
-			IdentifierRef case N4JSLanguageUtils.isUndefinedLiteral(G, expr):
-				ConstantValue.UNDEFINED
 			BooleanLiteral:
 				ConstantValue.of(expr.isTrue)
 			NumericLiteral:
@@ -92,6 +118,12 @@ class ConstantExpressionProcessor {
 			default:
 				null
 		};
+	}
+	def private static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, IdentifierRef expr) {
+		if(N4JSLanguageUtils.isUndefinedLiteral(G, expr)) {
+			return ConstantValue.UNDEFINED;
+		}
+		return computeValueIfConstantFieldOrVariable(G, expr.eResource, expr.id);
 	}
 	def private static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, TemplateLiteral expr) {
 		val buff = new StringBuilder;
@@ -165,13 +197,50 @@ class ConstantExpressionProcessor {
 		return switch(prop) {
 			TEnumLiteral case propParent instanceof TEnum && AnnotationDefinition.STRING_BASED.hasAnnotation(propParent as TEnum):
 				ConstantValue.of(prop.valueOrName)
-// FIXME:
-//			TField case prop.const && prop.eResource===expr.eResource: { // only if in same resource!!! (otherwise we would have to store the initExpr's value in the TModule
-//				val initExpr = (prop.astElement as N4FieldDeclaration).expression;
-//				computeValueIfConstantExpression(G, initExpr)
-//			}
+			TField case prop.const:
+				computeValueIfConstantFieldOrVariable(G, expr.eResource, prop)
 			default:
 				null
 		};
+	}
+
+	def private static ConstantValue computeValueIfConstantFieldOrVariable(RuleEnvironment G, Resource currentResource, IdentifiableElement elem) {
+		if(elem.eResource===currentResource || hasLoadedASTElement(elem)) {
+			// 'elem' is in same resource OR is in a different resource that already has a fully-loaded AST
+			// -> compute value from the initializer expression of 'elem'
+			val astNode = if(elem instanceof SyntaxRelatedTElement) {
+				elem.astElement // NOTE: this will never trigger demand-loading of an AST, because above we ensured that
+				// we are still in 'currentResource' OR method #hasLoadedASTElement() has returned true
+			} else {
+				elem // here we simply assume that elem is already an AST node
+			};
+			if(astNode instanceof N4FieldDeclaration) {
+				if(astNode.const) {
+					return computeValueIfConstantExpression(G, astNode.expression);
+				}
+			} else if(astNode instanceof VariableDeclaration) {
+				if(astNode.const) {
+					return computeValueIfConstantExpression(G, astNode.expression);
+				}
+			}
+		} else {
+			// 'elem' is in another resource with an AST proxy
+			// -> read value from TModule to avoid demand-loading of AST
+			if(elem instanceof TConstableElement) {
+				return ConstantValue.deserialize(elem.value);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Tells if given element has an AST element in an already loaded AST (i.e. it is safe to invoke method
+	 * {@code #getASTElement()} without triggering a demand-load of the AST).
+	 */
+	def private static boolean hasLoadedASTElement(IdentifiableElement elem) {
+		val astElemNonResolved = if(elem instanceof SyntaxRelatedTElement) {
+			elem.eGet(TypesPackage.eINSTANCE.syntaxRelatedTElement_AstElement, false) as EObject
+		};
+		return astElemNonResolved!==null && !astElemNonResolved.eIsProxy;
 	}
 }

@@ -8568,13 +8568,22 @@ public interface TypesPackage extends EPackage {
 	int TFIELD__CONST = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFIELD__VALUE = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Has Expression</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TFIELD__HAS_EXPRESSION = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 1;
+	int TFIELD__HAS_EXPRESSION = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
@@ -8583,7 +8592,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFIELD__TYPE_REF = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 2;
+	int TFIELD__TYPE_REF = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>TField</em>' class.
@@ -8592,7 +8601,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFIELD_FEATURE_COUNT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 3;
+	int TFIELD_FEATURE_COUNT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -8855,6 +8864,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_FIELD__CONST = TFIELD__CONST;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_FIELD__VALUE = TFIELD__VALUE;
 
 	/**
 	 * The feature id for the '<em><b>Has Expression</b></em>' attribute.
@@ -10907,6 +10925,52 @@ public interface TypesPackage extends EPackage {
 	int TENUM_LITERAL_OPERATION_COUNT = SYNTAX_RELATED_TELEMENT_OPERATION_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TConstableElementImpl <em>TConstable Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see eu.numberfour.n4js.ts.types.impl.TConstableElementImpl
+	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTConstableElement()
+	 * @generated
+	 */
+	int TCONSTABLE_ELEMENT = 49;
+
+	/**
+	 * The feature id for the '<em><b>Const</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCONSTABLE_ELEMENT__CONST = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCONSTABLE_ELEMENT__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>TConstable Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCONSTABLE_ELEMENT_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>TConstable Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCONSTABLE_ELEMENT_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl <em>TVariable</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10914,7 +10978,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTVariable()
 	 * @generated
 	 */
-	int TVARIABLE = 49;
+	int TVARIABLE = 50;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -10935,13 +10999,31 @@ public interface TypesPackage extends EPackage {
 	int TVARIABLE__EXPORTED_NAME = TEXPORTABLE_ELEMENT__EXPORTED_NAME;
 
 	/**
+	 * The feature id for the '<em><b>Const</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TVARIABLE__CONST = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TVARIABLE__VALUE = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Ast Element</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE__AST_ELEMENT = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 0;
+	int TVARIABLE__AST_ELEMENT = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -10950,7 +11032,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE__ANNOTATIONS = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 1;
+	int TVARIABLE__ANNOTATIONS = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type Access Modifier</b></em>' attribute.
@@ -10959,7 +11041,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE__DECLARED_TYPE_ACCESS_MODIFIER = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 2;
+	int TVARIABLE__DECLARED_TYPE_ACCESS_MODIFIER = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Declared Provided By Runtime</b></em>' attribute.
@@ -10968,7 +11050,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE__DECLARED_PROVIDED_BY_RUNTIME = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 3;
+	int TVARIABLE__DECLARED_PROVIDED_BY_RUNTIME = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
@@ -10977,16 +11059,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE__TYPE_REF = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>Const</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TVARIABLE__CONST = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 5;
+	int TVARIABLE__TYPE_REF = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>External</b></em>' attribute.
@@ -10995,7 +11068,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE__EXTERNAL = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 6;
+	int TVARIABLE__EXTERNAL = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>TVariable</em>' class.
@@ -11004,7 +11077,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE_FEATURE_COUNT = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 7;
+	int TVARIABLE_FEATURE_COUNT = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -11068,7 +11141,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNullModifier()
 	 * @generated
 	 */
-	int NULL_MODIFIER = 50;
+	int NULL_MODIFIER = 51;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.UndefModifier <em>Undef Modifier</em>}' enum.
@@ -11078,7 +11151,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getUndefModifier()
 	 * @generated
 	 */
-	int UNDEF_MODIFIER = 51;
+	int UNDEF_MODIFIER = 52;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.TypingStrategy <em>Typing Strategy</em>}' enum.
@@ -11088,7 +11161,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTypingStrategy()
 	 * @generated
 	 */
-	int TYPING_STRATEGY = 52;
+	int TYPING_STRATEGY = 53;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.TypeAccessModifier <em>Type Access Modifier</em>}' enum.
@@ -11098,7 +11171,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTypeAccessModifier()
 	 * @generated
 	 */
-	int TYPE_ACCESS_MODIFIER = 53;
+	int TYPE_ACCESS_MODIFIER = 54;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.MemberAccessModifier <em>Member Access Modifier</em>}' enum.
@@ -11108,7 +11181,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberAccessModifier()
 	 * @generated
 	 */
-	int MEMBER_ACCESS_MODIFIER = 54;
+	int MEMBER_ACCESS_MODIFIER = 55;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.MemberType <em>Member Type</em>}' enum.
@@ -11118,7 +11191,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberType()
 	 * @generated
 	 */
-	int MEMBER_TYPE = 55;
+	int MEMBER_TYPE = 56;
 
 	/**
 	 * The meta object id for the '<em>Iterable Of TClassifier</em>' data type.
@@ -11128,7 +11201,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getIterableOfTClassifier()
 	 * @generated
 	 */
-	int ITERABLE_OF_TCLASSIFIER = 56;
+	int ITERABLE_OF_TCLASSIFIER = 57;
 
 	/**
 	 * The meta object id for the '<em>Variance</em>' data type.
@@ -11138,7 +11211,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getVariance()
 	 * @generated
 	 */
-	int VARIANCE = 57;
+	int VARIANCE = 58;
 
 	/**
 	 * The meta object id for the '<em>Name And Access</em>' data type.
@@ -11148,7 +11221,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNameAndAccess()
 	 * @generated
 	 */
-	int NAME_AND_ACCESS = 58;
+	int NAME_AND_ACCESS = 59;
 
 	/**
 	 * The meta object id for the '<em>Member List</em>' data type.
@@ -11158,7 +11231,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberList()
 	 * @generated
 	 */
-	int MEMBER_LIST = 59;
+	int MEMBER_LIST = 60;
 
 	/**
 	 * The meta object id for the '<em>TClassifier Iterable</em>' data type.
@@ -11168,7 +11241,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTClassifierIterable()
 	 * @generated
 	 */
-	int TCLASSIFIER_ITERABLE = 60;
+	int TCLASSIFIER_ITERABLE = 61;
 
 
 	/**
@@ -13296,17 +13369,6 @@ public interface TypesPackage extends EPackage {
 	EClass getTField();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TField#isConst <em>Const</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Const</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TField#isConst()
-	 * @see #getTField()
-	 * @generated
-	 */
-	EAttribute getTField_Const();
-
-	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TField#isHasExpression <em>Has Expression</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13687,6 +13749,38 @@ public interface TypesPackage extends EPackage {
 	EReference getSyntaxRelatedTElement_AstElement();
 
 	/**
+	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.TConstableElement <em>TConstable Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>TConstable Element</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TConstableElement
+	 * @generated
+	 */
+	EClass getTConstableElement();
+
+	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TConstableElement#isConst <em>Const</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Const</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TConstableElement#isConst()
+	 * @see #getTConstableElement()
+	 * @generated
+	 */
+	EAttribute getTConstableElement_Const();
+
+	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TConstableElement#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TConstableElement#getValue()
+	 * @see #getTConstableElement()
+	 * @generated
+	 */
+	EAttribute getTConstableElement_Value();
+
+	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.TVariable <em>TVariable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13706,17 +13800,6 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTVariable_TypeRef();
-
-	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TVariable#isConst <em>Const</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Const</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TVariable#isConst()
-	 * @see #getTVariable()
-	 * @generated
-	 */
-	EAttribute getTVariable_Const();
 
 	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TVariable#isExternal <em>External</em>}'.
@@ -15598,14 +15681,6 @@ public interface TypesPackage extends EPackage {
 		EClass TFIELD = eINSTANCE.getTField();
 
 		/**
-		 * The meta object literal for the '<em><b>Const</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TFIELD__CONST = eINSTANCE.getTField_Const();
-
-		/**
 		 * The meta object literal for the '<em><b>Has Expression</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -15920,6 +15995,32 @@ public interface TypesPackage extends EPackage {
 		EReference SYNTAX_RELATED_TELEMENT__AST_ELEMENT = eINSTANCE.getSyntaxRelatedTElement_AstElement();
 
 		/**
+		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.impl.TConstableElementImpl <em>TConstable Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see eu.numberfour.n4js.ts.types.impl.TConstableElementImpl
+		 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTConstableElement()
+		 * @generated
+		 */
+		EClass TCONSTABLE_ELEMENT = eINSTANCE.getTConstableElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Const</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TCONSTABLE_ELEMENT__CONST = eINSTANCE.getTConstableElement_Const();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TCONSTABLE_ELEMENT__VALUE = eINSTANCE.getTConstableElement_Value();
+
+		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl <em>TVariable</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -15936,14 +16037,6 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TVARIABLE__TYPE_REF = eINSTANCE.getTVariable_TypeRef();
-
-		/**
-		 * The meta object literal for the '<em><b>Const</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TVARIABLE__CONST = eINSTANCE.getTVariable_Const();
 
 		/**
 		 * The meta object literal for the '<em><b>External</b></em>' attribute feature.

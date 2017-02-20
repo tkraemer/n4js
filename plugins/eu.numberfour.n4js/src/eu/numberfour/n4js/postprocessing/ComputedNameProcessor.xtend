@@ -35,7 +35,13 @@ import org.eclipse.xtext.EcoreUtil2
 @Singleton
 class ComputedNameProcessor {
 
-	def public void computeName(RuleEnvironment G, LiteralOrComputedPropertyName nameDecl, ASTMetaInfoCache cache, int indentLevel) {
+	def public void computeName(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
+		if(node instanceof LiteralOrComputedPropertyName) {
+			computeName(G, node, cache, indentLevel);
+		}
+	}
+
+	def private void computeName(RuleEnvironment G, LiteralOrComputedPropertyName nameDecl, ASTMetaInfoCache cache, int indentLevel) {
 		if(nameDecl.hasComputedPropertyName) {
 			val name = getPropertyNameFromExpression(G, nameDecl.expression, cache);
 			if(name!==null) {

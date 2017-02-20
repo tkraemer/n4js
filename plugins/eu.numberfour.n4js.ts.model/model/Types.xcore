@@ -23,6 +23,7 @@
 package eu.numberfour.n4js.ts.types
 
 import com.google.common.collect.Iterables
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefIterable
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
@@ -32,11 +33,10 @@ import eu.numberfour.n4js.utils.EcoreUtilN4
 import java.util.Collections
 import java.util.HashMap
 import java.util.List
+import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EMap
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
-import org.eclipse.emf.common.util.EList
-import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 
 type IterableOfTClassifier wraps Iterable<? extends TClassifier>
 type Variance wraps Variance
@@ -1367,8 +1367,7 @@ class TAnonymousFormalParameter extends TFormalParameter {
 /*
  * Field of a class, optionally complemented by getter(s) and setter(s).
  */
-class TField extends TMemberWithAccessModifier {
-	boolean const
+class TField extends TMemberWithAccessModifier, TConstableElement {
 	boolean hasExpression
 	contains TypeRef typeRef
 	/* Convenience method, returns true if typeRef undef modifier is optional. If type ref is not set, false is returned. */
@@ -1534,13 +1533,29 @@ abstract class SyntaxRelatedTElement {
 }
 
 /*
+ * An element that may be declared 'const', i.e. a variable or field.
+ */
+abstract class TConstableElement {
+	
+	boolean const
+
+	/**
+	 * Iff this element (variable or field) is declared 'const' AND its initializer expression is a constant expression,
+	 * then this field gives the serialized value of the variable, as returned by
+	 * {@code ConstantValue#serialize(ConstantValue)}.
+	 * 
+	 * This field is set by {@code ConstantExpressionProcessor#evaluateConstantExpression()}.
+	 */
+	String value
+}
+
+/*
  * Used for storing information about exported variables in the Xtext index, similar
  * to Types (such as TClass, TInterface, TFunction). It references the variable declaration of the
  * export declaration (via SyntaxRelatedTElement's astElement).
  */
-class TVariable extends TExportableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement {
+class TVariable extends TExportableElement, TConstableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement {
 	contains TypeRef typeRef
-	boolean const
 	boolean external
 
 	/**
