@@ -72,9 +72,7 @@ import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.preferences.FileBasedExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.resource.AccessibleSerializer;
-import eu.numberfour.n4js.resource.TranspilableFileExtensionsProvider;
 import eu.numberfour.n4js.resource.ErrorAwareLinkingService;
-import eu.numberfour.n4js.resource.N4JSTranspilableFileExtensionsProvider;
 import eu.numberfour.n4js.resource.N4JSCache;
 import eu.numberfour.n4js.resource.N4JSDerivedStateComputer;
 import eu.numberfour.n4js.resource.N4JSDescriptionUtils;
@@ -475,7 +473,7 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 	/**
 	 * Binds a special language-independent validator checking project setups, mainly used for polyfill-clashes.
 	 */
-	@org.eclipse.xtext.service.SingletonBinding(eager = true)
+	@SingletonBinding(eager = true)
 	public Class<? extends eu.numberfour.n4js.validation.validators.N4JSProjectSetupValidator> bindN4JSProjectSetupValidator() {
 		return eu.numberfour.n4js.validation.validators.N4JSProjectSetupValidator.class;
 	}
@@ -529,6 +527,7 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 	/**
 	 * Bind JavaScriptVariantHelper
 	 */
+	@SingletonBinding
 	public Class<? extends JavaScriptVariantHelper> bindJavaScriptVariantHelper() {
 		return N4JSJavaScriptVariantHelper.class;
 	}
@@ -554,12 +553,5 @@ public class N4JSRuntimeModule extends eu.numberfour.n4js.AbstractN4JSRuntimeMod
 	 */
 	public Class<? extends XpectAwareFileExtensionCalculator> bindXpectAwareFileExtensionCalculator() {
 		return XpectAwareFileExtensionCalculator.class;
-	}
-
-	/**
-	 * Bind file extension calculator
-	 */
-	public Class<? extends TranspilableFileExtensionsProvider> bindAllowedFileExtensionsForGeneratedSourceProvider() {
-		return N4JSTranspilableFileExtensionsProvider.class;
 	}
 }

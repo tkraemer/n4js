@@ -7,19 +7,16 @@ set -e +x -v
 
 ########## Directory Locations ###########
 # output folder:
-GEN_FOLDER=generated-docs/html
+GEN_FOLDER=generated-docs/
 
 rm -rf ./$GEN_FOLDER/; mkdir -p ./$GEN_FOLDER/
 
-echo INFO: Copying resources to ./$GEN_FOLDER/
-cp -r styles images scripts ./$GEN_FOLDER/
+# Copy resources to ./$GEN_FOLDER/
+cp -r styles images scripts chapters ./$GEN_FOLDER/
 
-echo INFO: AsciiSpec Generating HTML
 
-####################### Build HTML for gh-pages #######################
-asciispec -a data-uri=true -a stylesheet=foundation.css -D $GEN_FOLDER/ N4JSSpec.adoc 
-
-echo INFO: AsciiSpec HTML conversion Done
+############## Build HTML for gh-pages #############
+asciispec -a stylesheet=foundation.min.css -a docinfodir=headers -D $GEN_FOLDER/ N4JSSpec.adoc 
 
 # running "./build.sh -p" (preview) will skip PDF and launch index.html
 if [ "${1}" == "--preview" ] || [ "${1}" == "-p" ]; then
@@ -28,14 +25,13 @@ exit 0
 fi
 
 ####### Build PDF for gh-pages download #######
-echo INFO: AsciiSpec Generating PDF
-asciispec -fop N4JSSpec.adoc
+asciispec -b docbook N4JSSpec.adoc
+fopub N4JSSpec.xml 
 mv N4JSSpec.pdf ./$GEN_FOLDER/
 
-# running "./build.sh -l" will launch N4JSSpec.html after build
-if [ "${1}" == "--launch" ] || [ "${1}" == "-l" ]; then
-open ./$GEN_FOLDER/N4JSSpec.html
-exit 0
-fi
+# Clean unwanted adoc/graffle files and delete empty subdirectories
+pushd ./$GEN_FOLDER/chapters
+	rm -rf **/*.adoc && rm -rf **/**/*.graffle &&	find . -type d -empty -print
+popd
 
 echo DONE: AsciiSpec conversion finished.

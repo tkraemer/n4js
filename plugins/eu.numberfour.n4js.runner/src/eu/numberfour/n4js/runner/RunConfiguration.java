@@ -53,6 +53,11 @@ import eu.numberfour.n4js.runner.extension.RuntimeEnvironment;
  * {@link #getImplementationId() implementationId}, and {@link #getUserSelection() userSelection}; all other values
  * defined in this base class are derived and volatile.
  * <p>
+ * Attribute {@link #additionalPath} is primary and volatile, because it is only used for run configurations that are
+ * created internally and never sent to Eclipse's run configuration framework. This is currently only by
+ * {@code doCompileAndExecute} of class {@code XpectN4JSES5TranspilerHelper} to for {@code quickfixAndRun} Xpect test
+ * method.
+ * <p>
  * A run configuration may be re-launched at a later point in time. So all values stored in a run configuration must be
  * independent of temporary folders and files!
  */
@@ -123,6 +128,20 @@ public class RunConfiguration {
 	private String execModule;
 
 	private String systemLoader;
+
+	private String additionalPath;
+
+	/**
+	 * Additional path to be added to NODE_PATH if needed
+	 */
+	public String getAdditionalPath() {
+		return additionalPath;
+	}
+
+	/** @see #getAdditionalPath() */
+	public void setAdditionalPath(String file) {
+		this.additionalPath = file;
+	}
 
 	/**
 	 * Human-readable name of the run configuration.

@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest END_SETUP */
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
 
 
 // ------------------------------------------------------------
@@ -37,6 +37,6 @@ var somethingPopable3 : ~Object with {
 // now with a generic method #reduce() with a more complex signature, instead of the non-generic, simple method #pop():
 
 var reducible2 : ~Object with {
-	<MemoT> reduce(callback: {function(previousValue: MemoT, currentValue: any, index: number, traversedObject: Object) : MemoT}, initialValue: MemoT?): MemoT
+	<MemoT> reduce(callback: {function(previousValue: MemoT, currentValue: any, index: number, traversedObject: Object) : MemoT}, initialValue: MemoT=undefined): MemoT
 	// XPECT noerrors -->
 } = [];

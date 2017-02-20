@@ -176,7 +176,11 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="n4js.target.platform"
+      defaultValue="N4JS_Neon.2"
       storageURI="scope://Workspace">
+    <choice
+        value="N4JS_Neon.2"
+        label="N4JS_Neon.2"/>
     <choice
         value="N4JS_Neon"
         label="N4JS_Neon"/>
@@ -221,9 +225,9 @@
       label="XSemantics">
     <requirement
         name="it.xsemantics.sdk.feature.group"
-        versionRange="[1.10.0,1.10.1)"/>
+        versionRange="[1.10.2,1.10.9)"/>
     <repository
-        url="https://dl.bintray.com/lorenzobettini/xsemantics/updates/1.10/"/>
+        url="https://dl.bintray.com/lorenzobettini/xsemantics/updates/1.10"/>
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"
@@ -276,7 +280,7 @@
     <requirement
         name="org.eclipse.swtbot.ide.feature.group"/>
     <repository
-        url="http://download.eclipse.org/technology/swtbot/releases/2.4.0"/>
+        url="http://download.eclipse.org/technology/swtbot/releases/2.5.0"/>
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"
@@ -295,8 +299,8 @@
         url="http://andrei.gmxhome.de/eclipse/"/>
   </setupTask>
   <setupTask
-      disabled="true"
       xsi:type="setup.p2:P2Task"
+      disabled="true"
       label="Grep Console">
     <requirement
         name="name.schedenig.eclipse.grepconsole.feature.group"/>
@@ -434,6 +438,45 @@
             url="http://download.eclipse.org/cbi/updates/license/1.0.1.v20140414-1359"/>
         <repository
             url="http://download.eclipse.org/webtools/downloads/drops/R3.8.0/R-3.8.0-20160608130753/repository"/>
+        <repository
+            url="http://download.eclipse.org/tm/updates/4.0/GA"/>
+        <repository
+            url="http://download.eclipse.org/tools/gef/updates/legacy/releases/4.0.0_gef-master_1952"/>
+      </repositoryList>
+      <repositoryList
+          name="N4JS_Neon.2">
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.6/R-4.6.2-201611241400"/>
+        <repository
+            url="http://download.eclipse.org/egit/updates-4.6"/>
+        <repository
+            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.2.13.v20150730"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/emf/updates/2.12"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.9.0"/>
+        <repository
+            url="http://download.eclipse.org/modeling/m2t/xpand/updates/releases/R201505260349"/>
+        <repository
+            url="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.10.0"/>
+        <repository
+            url="http://download.eclipse.org/technology/swtbot/releases/2.4.0"/>
+        <repository
+            url="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository"/>
+        <repository
+            url="http://cdn.rawgit.com/sandipchitale/pathtools/1.0.64/PathToolsUpdateSite"/>
+        <repository
+            url="http://boothen.github.io/Json-Eclipse-Plugin"/>
+        <repository
+            url="https://dl.bintray.com/lorenzobettini/xsemantics/updates/1.10"/>
+        <repository
+            url="https://meysholdt.github.io/eclipse_jdt_junit_runners/updatesite"/>
+        <repository
+            url="http://www.xpect-tests.org/updatesite/nightly/"/>
+        <repository
+            url="http://download.eclipse.org/cbi/updates/license/1.0.1.v20140414-1359"/>
+        <repository
+            url="http://download.eclipse.org/webtools/downloads/drops/R3.8.1/R-3.8.1-20160912100321/repository"/>
         <repository
             url="http://download.eclipse.org/tm/updates/4.0/GA"/>
         <repository

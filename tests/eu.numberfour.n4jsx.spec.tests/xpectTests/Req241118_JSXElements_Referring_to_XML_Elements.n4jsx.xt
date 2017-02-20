@@ -2,12 +2,11 @@
 
 	ResourceSet {
 		ThisFile {}
-		File "react.n4jsd" {}
+		File "reactFiles/react.n4jsd" { from = "reactFiles/react.n4jsd"}
 	}
 
 	END_SETUP
 */
-
 
 //XPECT noerrors
 var a = <div/>;

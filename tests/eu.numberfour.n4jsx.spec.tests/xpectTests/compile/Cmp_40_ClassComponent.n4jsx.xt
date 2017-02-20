@@ -1,56 +1,45 @@
 /* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
-
 	ResourceSet {
 		ThisFile {}
-		File "react.n4js" {}
+		File "../reactFiles/react.n4jsd" { from = "../reactFiles/react.n4jsd" }
+		File "../reactFiles/react.js" { from = "../reactFiles/react.js" }
+		File "../reactFiles/replacer.n4js" { from = "../reactFiles/replacer.n4js" }
 	}
-
 	END_SETUP
  */
 
 /* XPECT output ---
 <==
 stdout:
-lower component
+Lower component
  {
-  "name": "LowerComponent",
-  "props": {
-    "whatTextShouldIShow": "lcShadow"
-  },
-  "children": []
+    "type": "LowerComponent",
+    "props": {
+        "whatTextShouldIShow": "lcShadow"
+    },
+    "children": []
 }
-my component
+My component
  {
-  "name": "MyComponent",
-  "props": {
-    "aProp": "mcAPop"
-  },
-  "children": []
+    "type": "MyComponent",
+    "props": {
+        "aProp": "mcAPop"
+    },
+    "children": []
 }
 stderr:
 ==>
 --- */
 
-import * as React from "compile/react"
-
+import * as React from "reactFiles/react"
+import { replacer } from "reactFiles/replacer"
 
 class LowerComponent extends React.Component<~Object with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
-	public constructor(props: ~Object with {whatTextShouldIShow : string}) {
-	    super(props);
-	    this.state = {
-	      squares: new Array<string>(9)
-	    };
-	    if (this.state.squares.length == 1) {
-
-	    }
-  	}
-
 	@Override
 	public render() : React.Element{
 		return (<div>{this.props.whatTextShouldIShow}</div>);
 	}
 }
-
 
 class MyComponent extends
 	React.Component<~Object with {aProp: string}, String> {
@@ -64,14 +53,12 @@ class MyComponent extends
 	}
 }
 
-
 export public function logElements(): void {
 	let lc = <LowerComponent whatTextShouldIShow='lcShadow'/>
-	console.log('lower component\n', JSON.stringify(lc, null, '  '))
+	console.log('Lower component\n', JSON.stringify(lc, replacer, 4))
 	let mc = <MyComponent aProp='mcAPop'/>
-	console.log('my component\n', JSON.stringify(mc, null, '  '))
+	console.log('My component\n', JSON.stringify(mc, replacer, 4))
 };
 
 logElements()
-
 

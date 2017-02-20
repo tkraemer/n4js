@@ -15,7 +15,7 @@ g20o.next(undefined);
 
 // err
 // call next arg not allowed
-// XPECT errors --> "string is not a subtype of undefined?." at ""1""
+// XPECT errors --> "string is not a subtype of undefined." at ""1""
 g20o.next("1");
 
 // warn
@@ -43,7 +43,7 @@ g20o.return(undefined);
 
 // err
 // call return arg not allowed
-// XPECT errors --> "string is not a subtype of undefined?." at ""1""
+// XPECT errors --> "string is not a subtype of undefined." at ""1""
 g20o.return("1");
 
 // warn

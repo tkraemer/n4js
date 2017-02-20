@@ -53,7 +53,7 @@
 				$makeClass(TestController, N4Object, [], {
 					errorGroup: {
 						value: function errorGroup___n4(info, loadPath, testObject, originalError) {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let error = originalError ? originalError : new Error("could not load test " + loadPath), that = this, testResult, testResults = [], unknownTest = new TestMethodDescriptor({
 									name: "",
 									type: TestFunctionType.TEST,
@@ -101,7 +101,7 @@
 					},
 					instrument: {
 						value: function instrument___n4(info) {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let parts, ctorName, groupModule, testClasses, testClass, instrumentedTestObjects = [], moduleName;
 								;
 								parts = info.fqn.split("\.");
@@ -163,7 +163,7 @@
 					},
 					runGroups: {
 						value: function runGroups___n4(testInfoObject, numTests) {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								if (!testInfoObject) {
 									throw new Error("TestController::runGroups called with a null testInfoObject");
 								}

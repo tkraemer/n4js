@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 NumberFour AG.
+ * Copyright (c) 2017 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,18 +10,36 @@
  */
 package eu.numberfour.n4js.generator.headless;
 
+import java.util.Objects;
+import java.util.function.Predicate;
+
 import org.eclipse.xtext.validation.Issue;
 
 /**
- * Filters Xtext validation issues.
+ * Applies a given predicate and only passes the matching issues to a delegate.
  */
-public interface IssueFilter {
+public class IssueFilter implements IssueAcceptor {
+
+	private final IssueAcceptor delegate;
+
+	private final Predicate<Issue> filter;
+
 	/**
-	 * Matches the given issue against this filter.
+	 * Creates a new instance using the given predicate.
 	 *
-	 * @param issue
-	 *            the issue to match
-	 * @return <code>true</code> if the given issue matches this filter and <code>false</code> otherwise
+	 * @param delegate
+	 *            the issue acceptor to pass the matched issues to, must not be <code>null</code>
+	 * @param filter
+	 *            the predicate to use, must not be <code>null</code>
 	 */
-	public boolean matches(Issue issue);
+	public IssueFilter(IssueAcceptor delegate, Predicate<Issue> filter) {
+		this.delegate = Objects.requireNonNull(delegate);
+		this.filter = Objects.requireNonNull(filter);
+	}
+
+	@Override
+	public void accept(Issue issue) {
+		if (filter.test(issue))
+			delegate.accept(issue);
+	}
 }

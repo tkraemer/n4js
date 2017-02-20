@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js.runner;
 
-import static eu.numberfour.n4js.N4JSGlobals.JS_FILE_EXTENSION;
-import static eu.numberfour.n4js.N4JSGlobals.N4JS_FILE_EXTENSION;
 import static eu.numberfour.n4js.utils.io.FileUtils.getTempFolder;
 
 import java.io.File;
@@ -32,6 +30,8 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.fileextensions.FileExtensionType;
+import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
 import eu.numberfour.n4js.generator.common.CompilerUtils;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.runner.RunnerHelper.ApiUsage;
@@ -57,6 +57,9 @@ public class RunnerFrontEnd {
 
 	@Inject
 	private RunnerRegistry runnerRegistry;
+
+	@Inject
+	private FileExtensionsRegistry fileExtensionsRegistry;
 
 	/**
 	 * Returns true iff the runner with the given id can run the given moduleToRun. Takes same arguments as
@@ -121,6 +124,16 @@ public class RunnerFrontEnd {
 		computeDerivedValues(config);
 
 		return config;
+	}
+
+	/**
+	 * Allows for adding additional path if needed.
+	 */
+	public RunConfiguration createConfiguration(String runnerId, String implementationId, String systemLoader,
+			URI moduleToRun, String additionalPath) {
+		RunConfiguration runConfig = createConfiguration(runnerId, implementationId, systemLoader, moduleToRun);
+		runConfig.setAdditionalPath(additionalPath);
+		return runConfig;
 	}
 
 	/**
@@ -223,8 +236,7 @@ public class RunnerFrontEnd {
 		 * Testers need to pass test discovery result. Runners need to pass module/class/method selection.
 		 */
 		final URI userSelection = config.getUserSelection();
-		if (userSelection != null && (userSelection.toString().endsWith("." + N4JS_FILE_EXTENSION)
-				|| userSelection.toString().endsWith("." + JS_FILE_EXTENSION))) {
+		if (userSelection != null && (hasValidFileExtension(userSelection.toString()))) {
 			final String userSelection_targetFileName = compilerUtils.getTargetFileName(userSelection, null);
 			config.setExecutionData(RunConfiguration.EXEC_DATA_KEY__USER_SELECTION, userSelection_targetFileName);
 		} else {
@@ -240,6 +252,16 @@ public class RunnerFrontEnd {
 		// 7) delegate further computation to the specific runner implementation
 		IRunner runner = runnerRegistry.getRunner(config);
 		runner.prepareConfiguration(config);
+	}
+
+	private boolean hasValidFileExtension(String fileName) {
+		for (String fileExtension : fileExtensionsRegistry
+				.getFileExtensions(FileExtensionType.RUNNABLE_FILE_EXTENSION)) {
+			if (fileName.endsWith("." + fileExtension)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

@@ -1,80 +1,86 @@
 /* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
-
 	ResourceSet {
 		ThisFile {}
-		File "react.n4js" {}
+		File "../reactFiles/react.n4jsd" { from = "../reactFiles/react.n4jsd" }
+		File "../reactFiles/react.js" { from = "../reactFiles/react.js" }
+		File "../reactFiles/replacer.n4js" { from = "../reactFiles/replacer.n4js" }
 	}
-
 	END_SETUP
  */
-
 
 /* XPECT output ---
 <==
 stdout:
-simple short
- {
-  "name": "div",
-  "props": null,
-  "children": []
+simple self-closing
+{
+    "type": "div",
+    "props": null,
+    "children": []
 }
-simple full
- {
-  "name": "div",
-  "props": null,
-  "children": []
+simple open close
+{
+    "type": "div",
+    "props": null,
+    "children": []
 }
 nested
- {
-  "name": "div",
-  "props": {
-    "prop1": true,
-    "prop2": "hello",
-    "prop3": 42
-  },
-  "children": [
-    42,
-    {
-      "name": "a",
-      "props": null,
-      "children": [
-        42
-      ]
+{
+    "type": "div",
+    "props": {
+        "prop1": true,
+        "prop2": "hello",
+        "prop3": 42
     },
-    42,
-    {
-      "name": "p",
-      "props": null,
-      "children": []
-    }
-  ]
+    "children": [
+        42,
+        {
+            "type": "a",
+            "props": null,
+            "children": [
+                42
+            ]
+        },
+        42,
+        {
+            "type": "p",
+            "props": null,
+            "children": []
+        }
+    ]
 }
-spread
- {
-  "name": "div",
-  "props": {
-    "prop0": "0",
-    "prop3": true,
-    "prop6": true,
-    "prop1": "hi",
-    "prop2": 42,
-    "prop4": "hi",
-    "prop5": 42
-  },
-  "children": []
+spead operator
+{
+    "type": "div",
+    "props": {
+        "prop0": "0",
+        "prop3": true,
+        "prop6": true,
+        "prop1": "hi",
+        "prop2": 42,
+        "prop4": "hi",
+        "prop5": 42
+    },
+    "children": []
 }
 stderr:
 ==>
 --- */
 
+import * as React from "reactFiles/react"
+import { replacer } from "reactFiles/replacer"
 
+var zzzz: React.Element; // Avoid unused import warnings
+zzzz;
 
 export public function logElements(): void {
 	let ss = <div/>
-	console.log('simple short\n', JSON.stringify(ss, null, '  '))
+	console.log('simple self-closing');
+	console.log(JSON.stringify(ss, replacer, 4));
 	let sh = <div></div>
-	console.log('simple full\n', JSON.stringify(sh, null, '  '))
+	console.log('simple open close');
+	console.log(JSON.stringify(sh, replacer, 4));
 	let x = 42;
+	console.log('nested');
 	let nested =
 		<div prop1 prop2='hello' prop3={x}>
 			{x}<a>
@@ -82,12 +88,12 @@ export public function logElements(): void {
 			  </a>{x}
 			  <p/>
 		</div>
-	console.log('nested\n', JSON.stringify(nested, null, '  '))
+	console.log(JSON.stringify(nested, replacer, 4));
 	let propsA = { prop1: 'hi', prop2: 42 };
 	let propsB = { prop4: 'hi', prop5: 42 };
 	let sx =  <div prop0='0' {...propsA} prop3 {...propsB} prop6 />
-	console.log('spread\n', JSON.stringify(sx, null, '  '))
+	console.log('spead operator');
+	console.log(JSON.stringify(sx, replacer, 4));
 };
 
-
-logElements()
+logElements();

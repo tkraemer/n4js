@@ -12,7 +12,6 @@ package eu.numberfour.n4js.hlc;
 
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.inject.util.Modules.override;
-import static eu.numberfour.n4js.utils.git.GitUtils.getMasterBranch;
 import static eu.numberfour.n4js.utils.git.GitUtils.hardReset;
 import static eu.numberfour.n4js.utils.git.GitUtils.pull;
 
@@ -67,6 +66,8 @@ import eu.numberfour.n4js.external.TypeDefinitionGitLocationProvider;
 import eu.numberfour.n4js.external.libraries.PackageJson;
 import eu.numberfour.n4js.external.libraries.TargetPlatformFactory;
 import eu.numberfour.n4js.external.libraries.TargetPlatformModel;
+import eu.numberfour.n4js.fileextensions.FileExtensionType;
+import eu.numberfour.n4js.fileextensions.FileExtensionsRegistry;
 import eu.numberfour.n4js.generator.headless.HeadlessHelper;
 import eu.numberfour.n4js.generator.headless.N4HeadlessCompiler;
 import eu.numberfour.n4js.generator.headless.N4JSCompileException;
@@ -88,7 +89,6 @@ import eu.numberfour.n4js.tester.TesterFacade;
 import eu.numberfour.n4js.tester.TesterFrontEnd;
 import eu.numberfour.n4js.tester.TesterModule;
 import eu.numberfour.n4js.tester.extension.ITesterDescriptor;
-import eu.numberfour.n4js.tester.extension.TestFileExtensionsRegistry;
 import eu.numberfour.n4js.tester.extension.TesterRegistry;
 import eu.numberfour.n4js.tester.nodejs.NodeTester.NodeTesterDescriptorProvider;
 import eu.numberfour.n4js.ts.TypeExpressionsStandaloneSetup;
@@ -315,7 +315,14 @@ public class N4jsc {
 	private TypeDefinitionGitLocationProvider gitLocationProvider;
 
 	@Inject
-	private TestFileExtensionsRegistry testFileExtensionRegister;
+	private FileExtensionsRegistry n4jsFileExtensionsRegistry;
+
+	// TODO IDE-2493 remove duplicated singletons
+	/**
+	 * Due to issues described in {@code IDE-2493} we need to duplicate singletons that have state.
+	 */
+	@Inject
+	private FileExtensionsRegistry n4jsxFileExtensionsRegistry;
 
 	/**
 	 * Entry point to start the compiler. Parses the Parameters.
@@ -345,7 +352,7 @@ public class N4jsc {
 	 * @throws ExitCodeException
 	 *             in case of errors.
 	 */
-	void doMain(String... args) throws ExitCodeException {
+	public void doMain(String... args) throws ExitCodeException {
 		try {
 
 			CmdLineParser parser = new CmdLineParser(this);
@@ -382,11 +389,17 @@ public class N4jsc {
 			// help.
 			initInjection(refProperties());
 
-			// Wire up available runners and testers and test file extensions
+			// Wire up available runners and testers, test file extensions and runnable file extensions
 			runnerRegistry.register(nodeRunnerDescriptorProvider.get());
 			testerRegistry.register(nodeTesterDescriptorProvider.get());
-			testFileExtensionRegister.register(N4JSGlobals.N4JS_FILE_EXTENSION);
-			testFileExtensionRegister.register(N4JSXGlobals.N4JSX_FILE_EXTENSION);
+			registerTestableFiles(N4JSGlobals.N4JS_FILE_EXTENSION, N4JSXGlobals.N4JSX_FILE_EXTENSION);
+			registerRunnableFiles(N4JSGlobals.N4JS_FILE_EXTENSION, N4JSGlobals.JS_FILE_EXTENSION,
+					N4JSXGlobals.N4JSX_FILE_EXTENSION, N4JSXGlobals.JSX_FILE_EXTENSION);
+			registerTranspilableFiles(N4JSGlobals.N4JS_FILE_EXTENSION, N4JSXGlobals.N4JSX_FILE_EXTENSION,
+					N4JSGlobals.JS_FILE_EXTENSION, N4JSXGlobals.JSX_FILE_EXTENSION);
+			registerTypableFiles(N4JSGlobals.N4JSD_FILE_EXTENSION, N4JSGlobals.N4JS_FILE_EXTENSION,
+					N4JSXGlobals.N4JSX_FILE_EXTENSION, N4JSGlobals.JS_FILE_EXTENSION, N4JSXGlobals.JSX_FILE_EXTENSION);
+			registerRawFiles(N4JSGlobals.JS_FILE_EXTENSION, N4JSGlobals.JSX_FILE_EXTENSION);
 
 			if (listRunners) {
 				printAvailableRunners(System.out);
@@ -493,6 +506,56 @@ public class N4jsc {
 		}
 	}
 
+	/**
+	 * Registers files to {@link FileExtensionType#TESTABLE_FILE_EXTENSION}
+	 */
+	private void registerTestableFiles(String... extensions) {
+		for (String extension : extensions) {
+			n4jsFileExtensionsRegistry.register(extension, FileExtensionType.TESTABLE_FILE_EXTENSION);
+			n4jsxFileExtensionsRegistry.register(extension, FileExtensionType.TESTABLE_FILE_EXTENSION);
+		}
+	}
+
+	/**
+	 * Registers files to {@link FileExtensionType#RUNNABLE_FILE_EXTENSION}
+	 */
+	private void registerRunnableFiles(String... extensions) {
+		for (String extension : extensions) {
+			n4jsFileExtensionsRegistry.register(extension, FileExtensionType.RUNNABLE_FILE_EXTENSION);
+			n4jsxFileExtensionsRegistry.register(extension, FileExtensionType.RUNNABLE_FILE_EXTENSION);
+		}
+	}
+
+	/**
+	 * Registers files to {@link FileExtensionType#TRANSPILABLE_FILE_EXTENSION}
+	 */
+	private void registerTranspilableFiles(String... extensions) {
+		for (String extension : extensions) {
+			n4jsFileExtensionsRegistry.register(extension, FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+			n4jsxFileExtensionsRegistry.register(extension, FileExtensionType.TRANSPILABLE_FILE_EXTENSION);
+		}
+	}
+
+	/**
+	 * Registers files to {@link FileExtensionType#TYPABLE_FILE_EXTENSION}
+	 */
+	private void registerTypableFiles(String... extensions) {
+		for (String extension : extensions) {
+			n4jsFileExtensionsRegistry.register(extension, FileExtensionType.TYPABLE_FILE_EXTENSION);
+			n4jsxFileExtensionsRegistry.register(extension, FileExtensionType.TYPABLE_FILE_EXTENSION);
+		}
+	}
+
+	/**
+	 * Registers files to {@link FileExtensionType#RAW_FILE_EXTENSION}
+	 */
+	private void registerRawFiles(String... extensions) {
+		for (String extension : extensions) {
+			n4jsFileExtensionsRegistry.register(extension, FileExtensionType.TESTABLE_FILE_EXTENSION);
+			n4jsxFileExtensionsRegistry.register(extension, FileExtensionType.TESTABLE_FILE_EXTENSION);
+		}
+	}
+
 	private void validateBinaries() throws ExitCodeException {
 		IStatus status = nodeJsBinaryProvider.get().validate();
 		if (!status.isOK()) {
@@ -563,7 +626,7 @@ public class N4jsc {
 					.getTargetPlatformLocalGitRepositoryLocation();
 			Path localClonePath = new File(gitRepositoryLocation).toPath();
 			hardReset(gitLocationProvider.getGitLocation().getRepositoryRemoteURL(), localClonePath,
-					getMasterBranch(), true);
+					gitLocationProvider.getGitLocation().getRemoteBranch(), true);
 			pull(localClonePath);
 
 			// Convert target platform file into package JSON for now.
@@ -804,7 +867,9 @@ public class N4jsc {
 		// we have to avoid this implicit setup of N4JS, because N4JS was already initialized (another initialization
 		// would create a second injector for the language N4JS, which might lead to follow-up issues, e.g. multiple
 		// instances of singletons per language).
-		N4JSXStandaloneSetup.doSetupWithoutParentLanguages();
+		Injector n4jsxInjector = N4JSXStandaloneSetup.doSetupWithoutParentLanguages();
+		this.n4jsxFileExtensionsRegistry = n4jsxInjector.getInstance(FileExtensionsRegistry.class);
+
 	}
 
 	/**
@@ -1302,7 +1367,7 @@ public class N4jsc {
 	 * Class Wrapping the information to shutdown VM in error-case. Remember to do user-output before throwing an
 	 * instance of this class.
 	 */
-	protected static class ExitCodeException extends Exception {
+	public static class ExitCodeException extends Exception {
 
 		private int exitCode = 0;
 

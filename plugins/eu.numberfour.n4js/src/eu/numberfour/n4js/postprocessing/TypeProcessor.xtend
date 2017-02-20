@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
+import eu.numberfour.n4js.n4JS.YieldExpression
 
 /**
  * Processor for handling type inference during post-processing of an N4JS resource. Roughly corresponds to
@@ -287,6 +288,8 @@ public class TypeProcessor extends AbstractProcessor {
 					};
 				} else if (node instanceof TypeDefiningElement) {
 					return new Result(wrapTypeInTypeRef(G, node.definedType));
+				} else if (node instanceof Expression && node.eContainer instanceof YieldExpression) {
+					return askXsemanticsForType(G, null, node);
 				} else {
 					val e = new IllegalStateException(
 						"handling of a legal case of cyclic forward references missing in TypeProcessor");

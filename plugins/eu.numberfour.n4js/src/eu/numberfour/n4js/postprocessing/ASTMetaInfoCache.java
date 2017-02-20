@@ -20,11 +20,18 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.nodemodel.INode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.util.CancelIndicator;
+import org.eclipse.xtext.util.OnChangeEvictingCache.CacheAdapter;
 
-import eu.numberfour.n4js.n4JS.Block;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
+import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
@@ -44,6 +51,8 @@ import it.xsemantics.runtime.RuleEnvironment;
  * and therefore have an AST (not those that are loaded from the Xtext index / TModule).
  */
 public final class ASTMetaInfoCache {
+
+	private static Logger logger = Logger.getLogger(ASTMetaInfoCache.class);
 
 	// ################################################################################################################
 	// main content of the cache
@@ -170,7 +179,7 @@ public final class ASTMetaInfoCache {
 
 	final Set<EObject> forwardProcessedSubTrees = new LinkedHashSet<>();
 	final Set<EObject> astNodesCurrentlyBeingTyped = new LinkedHashSet<>();
-	final Queue<Block> postponedSubTrees = new LinkedList<>(); // using LinkedList as FIFO queue, here
+	final Queue<EObject> postponedSubTrees = new LinkedList<>(); // using LinkedList as FIFO queue, here
 
 	/* package */ boolean isProcessingInProgress() {
 		return isProcessingInProgress;
@@ -192,7 +201,10 @@ public final class ASTMetaInfoCache {
 	/* package */ void startProcessing(@SuppressWarnings("hiding") CancelIndicator cancelIndicator) {
 		if (isProcessingInProgress || isFullyProcessed) {
 			// this method should never be called more than once per N4JSResource
-			throw new IllegalStateException("multiple invocation of method ASTMetaInfoCache#startProcessing()");
+			logger.error("*#*#*#*#* multiple invocation of method ASTMetaInfoCache#startProcessing()\n"
+					+ dumpDebugInfo(true, true));
+			throw UtilN4.reportError(new IllegalStateException(
+					"multiple invocation of method ASTMetaInfoCache#startProcessing()"));
 		}
 		isProcessingInProgress = true;
 		this.cancelIndicator = cancelIndicator; // may be null
@@ -208,5 +220,61 @@ public final class ASTMetaInfoCache {
 		forwardProcessedSubTrees.clear();
 		astNodesCurrentlyBeingTyped.clear();
 		postponedSubTrees.clear();
+	}
+
+	/**
+	 * Compiles some debug information for this ASTMetaInfoCache.
+	 */
+	public String dumpDebugInfo(boolean showSourceCode, boolean showOtherResources) {
+		final StringBuilder sb = new StringBuilder();
+
+		final String uriStr = resource != null ? String.valueOf(resource.getURI()) : null;
+		sb.append("BEGIN ASTMetaInfoCache debug info for resource: " + uriStr + "\n");
+		sb.append("cache's isProcessingInProgress == " + isProcessingInProgress + "\n");
+		sb.append("cache's isFullyProcessed == " + isFullyProcessed + "\n");
+		sb.append("cache's hasBrokenAST == " + hasBrokenAST + "\n");
+		sb.append("cache's astNodesCurrentlyBeingTyped == " + astNodesCurrentlyBeingTyped + "\n");
+		sb.append("resource' fullyPostProcessed = " + (resource != null ? resource.isFullyProcessed()
+				: "dont know. Resource is null"));
+		sb.append("resource' isPostProcessing = "
+				+ (resource != null ? resource.isProcessing() : "dont know. Resource is null"));
+
+		if (showSourceCode) {
+			final Script script = resource != null ? resource.getScript() : null;
+			final INode scriptNode = script != null && !script.eIsProxy() ? NodeModelUtils.findActualNodeFor(script)
+					: null;
+			final String code = scriptNode != null ? scriptNode.getText() : null;
+			sb.append("source code:\n------------\n" + code + "\n------------\n");
+		}
+
+		if (showOtherResources) {
+			sb.append("Resources in containing resource set:\n");
+			final ResourceSet resSet = resource != null ? resource.getResourceSet() : null;
+			if (resSet != null) {
+				// we know: resource!=null
+				for (Resource otherRes : resSet.getResources()) {
+					if (otherRes != null) {
+						sb.append(otherRes.getURI());
+						final CacheAdapter cacheAdapter = (CacheAdapter) EcoreUtil.getAdapter(resource.eAdapters(),
+								CacheAdapter.class);
+						final ASTMetaInfoCache astCache = cacheAdapter != null
+								? cacheAdapter.get(ASTMetaInfoCache.class)
+								: null;
+						if (astCache != null) {
+							if (astCache == this) {
+								sb.append(" <=== this ASTMetaInfoCache is attached here!!!!");
+							}
+							final String nestedInfo = astCache.dumpDebugInfo(false, false);
+							final String nestedInfoIndented = ("\n" + nestedInfo).replace("\n", "\n    ");
+							sb.append(nestedInfoIndented);
+						}
+						sb.append("\n");
+					}
+				}
+			}
+			sb.append("END of list of resources in containing resource set\n");
+		}
+		sb.append("END ASTMetaInfoCache debug info for resource: " + uriStr);
+		return sb.toString();
 	}
 }

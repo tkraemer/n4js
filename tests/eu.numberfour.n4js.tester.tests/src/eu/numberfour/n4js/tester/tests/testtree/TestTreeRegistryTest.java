@@ -50,7 +50,7 @@ import eu.numberfour.n4js.tester.fsm.TestFsmRegistry;
 import eu.numberfour.n4js.tester.internal.InternalTestTreeRegistry;
 import eu.numberfour.n4js.tester.tests.InjectedModules;
 import eu.numberfour.n4js.tester.tests.JUnitGuiceClassRunner;
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Class for testing the {@link TestTreeRegistry test tree registry}.

@@ -167,7 +167,7 @@ class XX {
 class XX2 {
     @Inject
     // XPECT errors --> "Injection of parameters that are variadic or optional is not supported." at "optyys"
-    constructor(optyys : YY?) {
+    constructor(optyys : YY=undefined) {
     }
 }
 

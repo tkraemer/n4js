@@ -1,30 +1,30 @@
 /* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
-
 	ResourceSet {
 		ThisFile {}
-		File "react.n4js" {}
+		File "../reactFiles/react.n4jsd" { from = "../reactFiles/react.n4jsd" }
+		File "../reactFiles/react.js" { from = "../reactFiles/react.js" }
+		File "../reactFiles/replacer.n4js" { from = "../reactFiles/replacer.n4js" }
 	}
-
 	END_SETUP
  */
 
 /* XPECT output ---
 <==
 stdout:
-pure function element
+Pure function element
  {
-  "name": "PureFnComponent",
-  "props": {
-    "myProp": "This is my propsss"
-  },
-  "children": []
+    "type": "PureFnComponent",
+    "props": {
+        "myProp": "This is my propsss"
+    },
+    "children": []
 }
 stderr:
 ==>
 --- */
 
-
-import * as React from "compile/react"
+import * as React from "reactFiles/react"
+import { replacer } from "reactFiles/replacer"
 
 class ~Props {
 	public myProp: string;
@@ -36,6 +36,6 @@ function PureFnComponent(props: Props): React.Element {
 
 export public function logElements(): void {
 	let fc = <PureFnComponent myProp="This is my propsss"/>
-	console.log('pure function element\n', JSON.stringify(fc, null, '  '))
+	console.log('Pure function element\n', JSON.stringify(fc, replacer, 4));
 };
 logElements()

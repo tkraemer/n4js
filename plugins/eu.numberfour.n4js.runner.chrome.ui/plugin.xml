@@ -48,23 +48,12 @@ Contributors:
                     <count   
                           value= "1" >   
                     </count>   
-                    <iterate>   
-                       <or>   
-                          <test   
-                                property= "org.eclipse.debug.ui.matchesPattern"   
-                                value= "*.js" >   
-                          </test>   
-                          <test   
-                                property= "org.eclipse.debug.ui.matchesPattern"   
-                                value= "*.n4js" >   
-                          </test>   
-                       </or>
-                       <and>
+                    
+                    <iterate>
                           <test
                                 args="eu.numberfour.n4js.runner.chrome.CHROME"
                                 property="eu.numberfour.n4js.runner.ui.isSupportingRunner">
                           </test>
-                       </and>   
                     </iterate>   
                  </with>   
               </enablement>   </contextualLaunch>

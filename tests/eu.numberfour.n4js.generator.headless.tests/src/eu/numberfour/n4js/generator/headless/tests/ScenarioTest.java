@@ -410,13 +410,12 @@ public class ScenarioTest {
 			assertFalse("Should not have reached this point.", true);
 		} catch (N4JSCompileException e) {
 			String msg = e.getMessage();
-			String expected = "ERROR: cannot compile project D due to 4 errors.";
+			String expected = "Cannot compile project D due to 4 errors.";
 			assertTrue("Wrong error message: '" + msg + "' expected beginning : '" + expected + "'",
 					msg.startsWith(expected));
 		}
-		// expect source-files:
+		// expect source-files (depends on the chosen build order algorithm):
 		assertExists(root, "wsp1/A/src-gen/" + CMPLR + "/A/packA/A.js");
-		assertExists(root, "wsp1/B/src-gen/" + CMPLR + "/B/packB/B.js");
 		assertExists(root, "wsp1/C/src-gen/" + CMPLR + "/C/packC/C.js");
 	}
 

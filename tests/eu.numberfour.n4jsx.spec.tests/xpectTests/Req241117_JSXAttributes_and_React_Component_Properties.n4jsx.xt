@@ -2,13 +2,13 @@
 
 	ResourceSet {
 		ThisFile {}
-		File "react.n4jsd" {}
+		File "reactFiles/react.n4jsd" { from = "reactFiles/react.n4jsd"}
 	}
 
 	END_SETUP
 */
 
-import * as React from "react"
+import * as React from "reactFiles/react"
 
 class MyProps implements React.ComponentProps  {
 	public a: int;
@@ -24,7 +24,7 @@ function MyReactFuncComponent(props: ~MyProps): React.Element {
 	);
 }
 
-//XPECT warnings --> "Non-optional property a,x should be specified." at "MyReactFuncComponent"
+//XPECT errors --> "Non-optional property a,x should be specified." at "MyReactFuncComponent"
 <MyReactFuncComponent y="Hi"/>;
 
 //XPECT errors --> "field z is not available for structurally referenced type ~MyProps." at "z"

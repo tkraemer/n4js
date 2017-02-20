@@ -126,15 +126,27 @@ fragment TAnonymousFormalParameterList*:
  */
 TAnonymousFormalParameter:
 	variadic?='...'? (=> name=BindingIdentifier<Yield=false> ':')? typeRef=TypeRef
+	DefaultFormalParameter
 ;
 
 /**
  * Used in Types language only.
  */
 TFormalParameter:
-	variadic?='...'? name=BindingIdentifier<Yield=false> ':' typeRef=TypeRef;
+	variadic?='...'? name=BindingIdentifier<Yield=false>
+	':' typeRef=TypeRef
+	DefaultFormalParameter
+;
 
-
+/**
+ * Default initializers in FunctionTypeExpressions or TFunctions
+ * are necessary to specify optional formal parameters. Hence, their
+ * initializer expression is rather uninteresting and limited by validations
+ * to 'undefined'. The shorthand form, that is omitting the initializer, is supported.
+ */
+fragment DefaultFormalParameter*:
+	(hasInitializerAssignment?='=' astInitializer=TypeReferenceName?)?
+;
 
 UnionTypeExpressionOLD returns UnionTypeExpression:
 	{UnionTypeExpression}
@@ -146,10 +158,10 @@ IntersectionTypeExpressionOLD returns IntersectionTypeExpression:
 
 ParameterizedTypeRef returns ParameterizedTypeRef:
 	ParameterizedTypeRefNominal | ParameterizedTypeRefStructural;
-	
+
 ParameterizedTypeRefNominal returns ParameterizedTypeRef:
 	declaredType=[Type|TypeReferenceName] (=> '<' typeArgs+=TypeArgument (',' typeArgs+=TypeArgument)* '>')?;
-	
+
 ArrayTypeRef returns ParameterizedTypeRef:
 	arrayTypeLiteral?="[" typeArgs+=TypeArgument "]";
 

@@ -36,10 +36,10 @@ async function testWithFooOne(allDone : {function()}) {
 	console.log('use case #3: use Promise directly');
 	var p = @Promisify fooOne('some path');
 	p.then(
-		function(res){
+		function(res = undefined){
 			console.log('TEST FAILURE:', res);
 		},
-		function(err03){
+		function(err03 = undefined){
 			console.log('-> got expected error err03:', err03.toString());
 			
 			console.log('use case #4: pass in a callback (don\'t use promisify at all)');
@@ -72,10 +72,10 @@ async function testWithFooMany(allDone : {function()}) {
 	console.log('use case #3: use Promise directly');
 	var p = @Promisify fooMany('some path');
 	p.then(
-		function(res){
+		function(res = undefined){
 			console.log('TEST FAILURE:', res);
 		},
-		function(err13){
+		function(err13 = undefined){
 			console.log('-> got expected error err13:', err13.toString());
 			
 			console.log('use case #4: pass in a callback (don\'t use promisify at all)');
@@ -111,7 +111,7 @@ async function testWithFooNone(allDone : {function()}) {
 		function(){
 			console.log('TEST FAILURE');
 		},
-		function(err23){
+		function(err23 = undefined){
 			console.log('-> got expected error err23:', err23.toString());
 			
 			console.log('use case #4: pass in a callback (don\'t use promisify at all)');

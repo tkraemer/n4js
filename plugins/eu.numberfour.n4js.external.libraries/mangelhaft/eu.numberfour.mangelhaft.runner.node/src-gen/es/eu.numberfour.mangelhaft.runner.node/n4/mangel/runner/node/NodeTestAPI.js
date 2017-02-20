@@ -16,7 +16,7 @@
 		};
 		$n4Export('requireResolve', requireResolve);
 		createTempDir = function createTempDir() {
-			return $spawn(function*() {
+			return $spawn(function *() {
 				let prefix = lib_path.join(os.tmpdir(), "n4js-mangelhaft-");
 				return $n4promisifyFunction(lib_fs.mkdtemp, [
 					prefix
@@ -83,10 +83,10 @@
 				$makeClass(NodeTestAPI, N4Object, [], {}, {
 					exec: {
 						value: function exec___n4(options) {
-							return $spawn(function*() {
+							return $spawn(function *() {
 								let idToManifest = new Map(), prjToManifest = new Map();
 								var addManifest = function addManifest(dir) {
-									return $spawn(function*() {
+									return $spawn(function *() {
 										let manifest = (yield n4mf_parser.readManifest(lib_path.join(dir, MANIFEST_N4MF)));
 										idToManifest.set(manifest["ProjectId"], manifest);
 										prjToManifest.set(dir, manifest);

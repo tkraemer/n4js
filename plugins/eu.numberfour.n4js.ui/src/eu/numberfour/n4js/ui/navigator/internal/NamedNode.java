@@ -17,7 +17,7 @@ import java.util.Arrays;
 
 import org.eclipse.swt.graphics.Image;
 
-import eu.numberfour.n4js.utils.Arrays2;
+import eu.numberfour.n4js.utils.collections.Arrays2;
 
 /**
  * Simple named node implementation with optional, children and image. As this is a named node, the human readable label

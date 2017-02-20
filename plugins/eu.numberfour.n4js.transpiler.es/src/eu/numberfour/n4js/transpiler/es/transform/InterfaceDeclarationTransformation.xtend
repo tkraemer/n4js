@@ -89,7 +89,8 @@ class InterfaceDeclarationTransformation extends Transformation {
 		val $fieldInitSTE = steFor_$fieldInit;
 		return _ExprStmnt(_AssignmentExpr()=>[
 			lhs = _PropertyAccessExpr(ifcSTE, $fieldInitSTE);
-			rhs = _FunExpr(false, ifcDecl.name + '_fieldInit', #[ _Fpar("target"), _Fpar("spec"), _Fpar("mixinExclusion") ])=>[
+			// _fieldInit needs to be called via "call(this, ...)" to bind this correctly and avoid unnecessary rewrite of "this"
+			rhs = _FunExpr(false, ifcDecl.name + '_fieldInit', #[ _Fpar("spec"), _Fpar("mixinExclusion") ])=>[
 				body.statements += createInstanceFieldInitializations(ifcDecl);
 				body.statements += createDelegationToFieldInitOfExtendedInterfaces(ifcDecl);
 			];
@@ -98,11 +99,11 @@ class InterfaceDeclarationTransformation extends Transformation {
 
 	def private Statement[] createInstanceFieldInitializations(N4InterfaceDeclaration ifcDecl) {
 		// if(spec) {
-		//      if(!(mixinExclusion.hasOwnProperty("field") || target.hasOwnProperty("field"))) {
+		//      if(!(mixinExclusion.hasOwnProperty("field") || this.hasOwnProperty("field"))) {
 		//     	    target.field = 'field' in spec ? spec.field : 42;
 		//      }
 		// } else {
-		//     if(!(mixinExclusion.hasOwnProperty("field") || target.hasOwnProperty("field"))) {
+		//     if(!(mixinExclusion.hasOwnProperty("field") || this.hasOwnProperty("field"))) {
 		//         target.field = 42;
 		//     }
 		// }
@@ -115,7 +116,7 @@ class InterfaceDeclarationTransformation extends Transformation {
 				val fieldSTE = findSymbolTableEntryForElement(field, true);
 				// target.field = 'field' in spec ? spec.field : 42;
 				val specStmnt = _ExprStmnt(_AssignmentExpr(
-					_PropertyAccessExpr(_Snippet("target"), fieldSTE),
+					_PropertyAccessExpr(_Snippet("this"), fieldSTE),
 					_ConditionalExpr(
 						_RelationalExpr(_StringLiteralForSTE(fieldSTE), RelationalOperator.IN, _Snippet("spec")),
 						_PropertyAccessExpr(_Snippet("spec"), fieldSTE),
@@ -126,7 +127,7 @@ class InterfaceDeclarationTransformation extends Transformation {
 
 				// if(!(mixinExclusion.hasOwnProperty("field") || target.hasOwnProperty("field"))) {target.field = 42;}
 				val trueBody = _ExprStmnt(_AssignmentExpr(
-					_PropertyAccessExpr(_Snippet("target"), fieldSTE),
+					_PropertyAccessExpr(_Snippet("this"), fieldSTE),
 					{if(field.expression!==null) copy(field.expression) else undefinedRef()}
 				));
 				fieldInitsNormal += ifStmntMixinExclusionORtarget(hasOwnPropertySTE,fieldSTE,trueBody);
@@ -145,7 +146,7 @@ class InterfaceDeclarationTransformation extends Transformation {
 		return _IfStmnt(
 			_NOT(_Parenthesis(_OR(
 				_CallExpr(_PropertyAccessExpr(_Snippet("mixinExclusion"), hasOwnPropertySTE), _StringLiteralForSTE(fieldSTE)),
-				_CallExpr(_PropertyAccessExpr(_Snippet("target"), hasOwnPropertySTE), _StringLiteralForSTE(fieldSTE))
+				_CallExpr(_PropertyAccessExpr(_Snippet("this"), hasOwnPropertySTE), _StringLiteralForSTE(fieldSTE))
 			))),
 			trueBody
 		);
@@ -161,8 +162,8 @@ class InterfaceDeclarationTransformation extends Transformation {
 		];
 		for(superIfcSTE : superIfcSTEs) {
 			result += _ExprStmnt(_CallExpr(
-				__NSSafe_PropertyAccessExpr(superIfcSTE, $fieldInitSTE),
-				_Snippet("target"), _Snippet("spec"), _Snippet("mixinExclusion")
+				__NSSafe_PropertyAccessExpr(superIfcSTE, $fieldInitSTE, steFor_call()),
+				_Snippet("this"), _Snippet("spec"), _Snippet("mixinExclusion")
 			));
 		}
 		return result;

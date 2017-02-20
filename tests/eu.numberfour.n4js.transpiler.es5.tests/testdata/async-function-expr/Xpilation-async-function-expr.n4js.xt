@@ -24,10 +24,10 @@ async function abc(msgP1 : string) : string {
 	return m1;
 } 
 )("hello3").then(
-	function(s : string?) {
+	function(s : string=undefined) {
 		console.log("SUCCESS: "+s);
 	},
-	function(s : any?) {
+	function(s : any=undefined) {
 		console.log("FAILED: "+s);
 	}
 );
@@ -40,10 +40,10 @@ async function (msgP2 : string) : string {
 	return m2;
 }
 )("hello4").then(
-	function(s : string?) {
+	function(s : string=undefined) {
 		console.log("SUCCESS: "+s);
 	},
-	function(s : any?) {
+	function(s : any=undefined) {
 		console.log("FAILED: "+s);
 	}
 ); 

@@ -579,6 +579,10 @@ from {
 			val itTypeRef = G.iterableTypeRef(TypeUtils.createWildcard);
 			val isIterable = {G |- yieldValueTypeRef <: itTypeRef};
 			if (isIterable) {
+				// In case a custom iterable is given, it might return an
+				// entry like {done=true, value=...} where value can have
+				// any type and would be returned. Hence, the return type
+				// is 'any' here.
 				t = scope.anyTypeRef;
 			}
 		}
@@ -1302,7 +1306,7 @@ from {
 		true
 	} else if (rightDeclType instanceof PrimitiveType && leftDeclType===(rightDeclType as PrimitiveType).assignmentCompatible) {
 		true
-	} else if (leftDeclType instanceof TInterface && !(rightDeclType instanceof TInterface)
+	} else if (leftDeclType instanceof TInterface && !(rightDeclType instanceof TInterface) && (right.typingStrategy==TypingStrategy.NOMINAL)
 				&& !(rightDeclType===G.n4ObjectType || rightDeclType===G.objectType || rightDeclType===G.anyType)) {
 		false
 	} else {
@@ -1817,6 +1821,17 @@ from {
 //This axiom is commented out because its logic is now delegated to the method expectedExpressionTypeInContainer of {@link UnsupportedExpressionTypeHelper}
 //axiom expectedTypeNone
 //	G |- EObject o |> Expression e : (null as TypeRef) // null is the default and means 'no type expectation' (even void is allowed!)
+
+
+// TODO: IDE-2514, When the bug in the polymorphic dispatcher is solved,
+//       enable this rule in return for also removing the temporary solution
+//       in N4JSTypeValidator#checkTypeMatchesExpectedType
+//rule expectedTypeOfDefaultFormalParameter
+//	G |- FormalParameter formalParam |> Expression initializer: TypeRef T
+//from {
+//	T = formalParam.declaredTypeRef;
+//}
+
 
 rule expectedTypeOfArgument
 	G |- Argument argument |> Expression argumentExpression: TypeRef T

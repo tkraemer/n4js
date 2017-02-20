@@ -19,10 +19,10 @@ mathinclude::{find}commands.tex[]
 image::{find}images/n4jslogo.png[400,400,align="center"]
 
 [.center]
-*Version 0.4*
+*Version: {revnumber}*
 
 [.center]
-*Revision Date: 28/11/2016*
+*Last Updated: {docdate}*
 
 [.center]
 *(C) 2016 NumberFour AG*
@@ -39,6 +39,8 @@ Torsten Krämer, Ákos Kitta, Sebastian Zarnekow, Lorenzo Bettini, Jörg Reicher
 include::{find}abstract.adoc[]
 
 include::{find}chapters/00a_revisionhistory/revisionhistory.adoc[]
+
+ifdef::backend-docbook5[<<<]
 
 include::{find}chapters/00b_license/license.adoc[]
 

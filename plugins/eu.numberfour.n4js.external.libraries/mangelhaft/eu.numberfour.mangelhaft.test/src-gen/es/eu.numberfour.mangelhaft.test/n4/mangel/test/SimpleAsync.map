@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"SimpleAsync.js",
-"lineCount":256,
-"mappings":"A;;;EAUA,yC;;MAAQ,K;EAER,wC;;;;;KAFQ,mF;;;;IAEY;;wCAGI,EAHJ;;;wCAQI,EARJ;;;wCAaI,EAbJ;;;wCAmBI;OAChB,OAAO,IAAI,OAAJ,CACP,SAAS,OAAT,EAAqC,MAArC,EAA8C;QAC1C,gBAAgB,IAAhB,EACA,MAAO,WAAW;SACd,QAAQ,SAAR,EADc;SAAlB,EAEG,MAFH,CADA,EAIC,EAJD,EAD0C;QADvC,CAAP,CADgB;OAnBJ;;;uCAgCG,EAhCH;;;qCAqCC,EArCD;;;oCA0CA,EA1CA;;;mCA+CD;OACX,OAAO,IAAI,OAAJ,CAAwB,SAAS,OAAT,EAAqC,MAArC,EAA6C;QACxE,gBAAgB,IAAhB,EAAsB,MAAM,WAAW;SACnC,QAAQ,wBAAR,EADmC;SAAjB,EAEnB,MAFmB,CAAtB,EAEa,GAFb,EADwE;QAArE,CAAP,CADW;OA/CC;;;mCAwDD;OACX,MAAM,iBAAiB,CAAvB,CADW;OAxDC;;;mCA6DD;OACX,OAAO,IAAI,OAAJ,CACP,SAAS,OAAT,EAAqC,MAArC,EAA8C;QAC1C,gBAAgB,IAAhB,EACA,MAAO,WAAW;SACd,QAAQ,eAAR,EADc;SAAlB,EAEG,MAFH,CADA,EAIE,GAJF,EAD0C;QADvC,CAAP,CADW;OA7DC;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
-"sources":["/sources/eu.numberfour.mangelhaft.test/n4/mangel/test/SimpleAsync.n4js"],
-"names":[]
-}

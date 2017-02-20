@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated target-platform N4JS:N4JS_Neon" sequenceNumber="107">
+<target name="Generated target-platform N4JS:N4JS_Neon.2" sequenceNumber="109">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-      <unit id="org.eclipse.equinox.executable.feature.group" version="3.6.300.v20160525-1303"/>
-      <unit id="org.eclipse.jdt" version="3.12.0.v20160606-1100"/>
+      <unit id="org.eclipse.equinox.executable.feature.group" version="3.6.300.v20161122-1740"/>
+      <unit id="org.eclipse.jdt" version="3.12.2.v20161124-1400"/>
       <unit id="org.eclipse.jdt.junit4.runtime" version="1.1.600.v20160505-0715"/>
-      <unit id="org.eclipse.pde.ui" version="3.9.0.v20160525-1830"/>
-      <unit id="org.eclipse.platform.feature.group" version="4.6.0.v20160606-1342"/>
+      <unit id="org.eclipse.pde.ui" version="3.9.100.v20161102-0517"/>
+      <unit id="org.eclipse.platform.feature.group" version="4.6.2.v20161124-1529"/>
       <unit id="org.objectweb.asm" version="5.0.1.v201404251740"/>
-      <repository location="http://download.eclipse.org/eclipse/updates/4.6/R-4.6-201606061100"/>
+      <repository location="http://download.eclipse.org/eclipse/updates/4.6/R-4.6.2-201611241400"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-      <unit id="org.eclipse.egit.feature.group" version="4.4.0.201606070830-r"/>
+      <unit id="org.eclipse.egit.feature.group" version="4.6.0.201612231935-r"/>
       <unit id="org.kohsuke.args4j" version="2.0.21.v201301150030"/>
-      <repository location="http://download.eclipse.org/egit/updates-4.4"/>
+      <repository location="http://download.eclipse.org/egit/updates-4.6"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="org.eclipse.jetty.util.ajax" version="9.2.13.v20150730"/>
@@ -58,11 +58,11 @@
       <repository location="http://cdn.rawgit.com/sandipchitale/pathtools/1.0.64/PathToolsUpdateSite"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-      <unit id="jsonedit-feature.feature.group" version="1.0.0.final"/>
+      <unit id="jsonedit-feature.feature.group" version="1.0.1"/>
       <repository location="http://boothen.github.io/Json-Eclipse-Plugin"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-      <unit id="it.xsemantics.runtime" version="1.10.0.v20160527-0805"/>
+      <unit id="it.xsemantics.runtime" version="1.10.2.v20170211-0945"/>
       <repository location="https://dl.bintray.com/lorenzobettini/xsemantics/updates/1.10"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -79,10 +79,10 @@
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="org.eclipse.wst.common.project.facet.ui" version="1.4.600.v201505072140"/>
-      <unit id="org.eclipse.wst.html.ui" version="1.0.1100.v201603050225"/>
+      <unit id="org.eclipse.wst.html.ui" version="1.0.1101.v201608060430"/>
       <unit id="org.eclipse.wst.html.ui.infopop" version="1.0.201.v201409111852"/>
-      <unit id="org.eclipse.wst.xml_ui.feature.feature.group" version="3.8.0.v201605120129"/>
-      <repository location="http://download.eclipse.org/webtools/downloads/drops/R3.8.0/R-3.8.0-20160608130753/repository"/>
+      <unit id="org.eclipse.wst.xml_ui.feature.feature.group" version="3.8.0.v201608061842"/>
+      <repository location="http://download.eclipse.org/webtools/downloads/drops/R3.8.1/R-3.8.1-20160912100321/repository"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="org.eclipse.rse.files.ui" version="3.2.200.201502052140"/>

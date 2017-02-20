@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js.runner.ui;
 
-import java.util.List;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfigurationType;
@@ -22,27 +20,20 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.window.Window;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 
 import com.google.inject.Inject;
 
-import eu.numberfour.n4js.compare.ApiImplMapping;
 import eu.numberfour.n4js.projectModel.IN4JSCore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.runner.RunConfiguration;
 import eu.numberfour.n4js.runner.RunnerFrontEnd;
-import eu.numberfour.n4js.runner.RunnerHelper;
-import eu.numberfour.n4js.runner.RunnerHelper.ApiUsage;
 
 /**
  */
 public abstract class AbstractRunnerLaunchShortcut implements ILaunchShortcut {
-
-	/** Special return value to denote the user canceled the operation. */
-	private static final String CANCEL = new String();
 
 	/** The helper for accessing the {@link IN4JSProject} and other project related information. */
 	@Inject
@@ -52,7 +43,7 @@ public abstract class AbstractRunnerLaunchShortcut implements ILaunchShortcut {
 	@Inject
 	private RunnerFrontEnd runnerFrontEnd;
 	@Inject
-	private RunnerHelper runnerHelper;
+	private ChooseImplementationHelper chooseImplHelper;
 
 	/**
 	 */
@@ -111,8 +102,8 @@ public abstract class AbstractRunnerLaunchShortcut implements ILaunchShortcut {
 		final String path = originalFileToRun.getFullPath().toOSString();
 		final URI moduleToRun = URI.createPlatformResourceURI(path, true);
 
-		final String implementationId = chooseImplementationIfRequired(runnerId, moduleToRun);
-		if (implementationId == CANCEL)
+		final String implementationId = chooseImplHelper.chooseImplementationIfRequired(runnerId, moduleToRun);
+		if (implementationId == ChooseImplementationHelper.CANCEL)
 			return;
 
 		RunConfiguration runConfig = runnerFrontEnd.createConfiguration(runnerId, implementationId, moduleToRun);
@@ -121,27 +112,5 @@ public abstract class AbstractRunnerLaunchShortcut implements ILaunchShortcut {
 		ILaunchConfigurationType type = launchManager.getLaunchConfigurationType(getLaunchConfigTypeID());
 		DebugUITools.launch(runConfigConverter.toLaunchConfiguration(type, runConfig), mode);
 		// execution dispatched to proper delegate LaunchConfigurationDelegate
-	}
-
-	private String chooseImplementationIfRequired(String runnerId, URI moduleToRun) {
-		// first see if we need to supply an implementationId
-		// (we need one if there are API projects among the dependencies of the moduleToRun AND there exist 2 or more
-		// implementations for them)
-		final ApiUsage apiUsage = runnerHelper.getProjectExtendedDeps(runnerId, moduleToRun);
-		final ApiImplMapping apiImplMapping = apiUsage.apiImplMapping;
-
-		final List<String> availableImplIds = apiImplMapping.getAllImplIds();
-		if (apiImplMapping.isEmpty())
-			return null; // no API projects among the dependencies -> no need to bother the user
-		if (availableImplIds.isEmpty())
-			return null; // no implementations available -> error will be shown somewhere else
-		if (availableImplIds.size() == 1)
-			return availableImplIds.get(0); // exactly 1 implementation -> use that, no need to bother the user
-		// make user choose:
-		final ChooseImplementationDialog dlg = new ChooseImplementationDialog(null, apiImplMapping);
-		if (dlg.open() == Window.OK) {
-			return (String) dlg.getResult()[0];
-		}
-		return CANCEL;
 	}
 }

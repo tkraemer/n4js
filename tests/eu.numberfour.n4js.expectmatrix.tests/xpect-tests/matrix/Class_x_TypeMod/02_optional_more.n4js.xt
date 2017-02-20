@@ -8,12 +8,20 @@ class A {
 	public x : number;
 	y : number;
 
-	// IDEBUG-188 in ctor: all parameters after an optional one are optional XPECT errors --> "Optional parameters can only appear after the non-optional parameters." at "@Spec spec : ~i~this?"
-	public constructor (@Spec spec : ~i~this?, y : number, z : number) {
+	// IDEBUG-188 in ctor: all parameters after an optional one are optional
+	/* XPECT warnings ---
+	"This parameter is changed to the default parameter 'y=undefined' since it follows a default parameter." at "y : number"
+	"This parameter is changed to the default parameter 'z=undefined' since it follows a default parameter." at "z : number"
+	---*/
+	public constructor (@Spec spec : ~i~this=undefined, y : number, z : number) {
 	}
 
-	// IDEBUG-188 in method: all parameters after an optional one are optional XPECT errors --> "Optional parameters can only appear after the non-optional parameters." at "b : boolean?"
-	public f (b : boolean?, z : number, w : string) : union{string,boolean} {
+	// IDEBUG-188 in method: all parameters after an optional one are optional
+	/* XPECT warnings ---
+	   "This parameter is changed to the default parameter 'w=undefined' since it follows a default parameter." at "w : string"
+	   "This parameter is changed to the default parameter 'z=undefined' since it follows a default parameter." at "z : number"
+	 ---*/
+	 public f (b : boolean=undefined, z : number, w : string) : union{string,boolean} {
 		if (b !== undefined) {
 			return b;
 		}
@@ -24,11 +32,11 @@ class A {
 class AC {
 	public x : number;
 	y : number;
-
-	public constructor (@Spec spec : ~i~this?, y : number?, z : number?) {
+	
+	public constructor (@Spec spec : ~i~this=undefined, y : number=undefined, z : number=undefined) {
 	}
 
-	public f (b : boolean?, z : number?, w : string?) : union{string,boolean} {
+	public f (b : boolean=undefined, z : number=undefined, w : string=undefined) : union{string,boolean} {
 		if (b !== undefined) {
 			return b;
 		}
@@ -45,7 +53,7 @@ var ac0 : AC = new AC();
 // IDEBUG-188 too few arguments XPECT noerrors -->
 var a2 : AC = new AC({x: 1}, 2);
 
-// wrong type of some arguments XPECT errors --> "string is not a subtype of number?." at ""ff""
+// wrong type of some arguments XPECT errors --> "string is not a subtype of number." at ""ff""
 var a3 : AC = new AC({x: 1},2,"ff");
 
 // no arguments XPECT noerrors -->
@@ -57,7 +65,7 @@ ac0.f();
 // IDEBUG-188 not enough arguments XPECT noerrors -->
 ac0.f(true);
 
-// IDEBUG-188  argument in wrong place XPECT errors --> "int is not a subtype of boolean?." at "5"
+// IDEBUG-188  argument in wrong place XPECT errors --> "int is not a subtype of boolean." at "5"
 ac0.f(5);
 
 // good arguments XPECT noerrors -->

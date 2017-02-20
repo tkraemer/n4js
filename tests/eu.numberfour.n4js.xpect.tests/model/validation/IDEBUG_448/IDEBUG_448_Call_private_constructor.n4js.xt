@@ -1,4 +1,4 @@
-/* XPECT_SETUP eu.numberfour.n4js.tests.N4JSXpectTest 
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest 
    
    ResourceSet {
 		File "IDEBUG_448_Private.n4js" {}
