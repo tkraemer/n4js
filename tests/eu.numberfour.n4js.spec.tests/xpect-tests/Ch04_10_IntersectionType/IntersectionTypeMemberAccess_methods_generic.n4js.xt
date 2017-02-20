@@ -48,7 +48,7 @@ var i12 : I1<A,B> & I2<A,B>;
 // XPECT noerrors
 i12.onlyIn1(a);
 
-// XPECT errors --> 'B is not a subtype of A' at 'b'
+// XPECT errors --> "B is not a subtype of A." at "b"
 i12.onlyIn1(b);
 
 // XPECT type of 'i12.onlyIn1(a)' --> B
@@ -61,7 +61,7 @@ i12.onlyIn1(a);
 // XPECT noerrors
 i12.onlyIn2(b);
 
-// XPECT errors --> 'A is not a subtype of B' at 'a'
+// XPECT errors --> "A is not a subtype of B." at "a"
 i12.onlyIn2(a);
 
 // XPECT type of 'i12.onlyIn2(b)' --> A
@@ -81,14 +81,14 @@ i12.sameReturnType();
 // XPECT noerrors
 i12.sameParType1(a);
 
-// XPECT errors --> 'B is not a subtype of A' at 'b'
+// XPECT errors --> "B is not a subtype of A." at "b"
 i12.sameParType1(b);
 
 
 
 // diffReturnType():A&B
 
-// XPECT type of 'i12.diffReturnType()' --> A&B
+// XPECT type of 'i12.diffReturnType()' --> intersection{A,B}
 i12.diffReturnType();
 
 
@@ -105,10 +105,10 @@ i12.diffParType1(ab);
 // XPECT noerrors
 i12.diffNoOfParmsSameType(a, b);
 
-// XPECT errors --> 'B is not a subtype of A' at 'b'
+// XPECT errors --> "B is not a subtype of A." at "b"
 i12.diffNoOfParmsSameType(b, b);
 
-// XPECT errors --> 'A is not a subtype of B' at 'a'
+// XPECT errors --> "A is not a subtype of B." at "a"
 i12.diffNoOfParmsSameType(a, a);
 
 
@@ -118,13 +118,13 @@ i12.diffNoOfParmsSameType(a, a);
 // XPECT noerrors
 i12.diffNoOfParmsDiffType(ab, b);
 
-// XPECT errors --> 'A is not a subtype of B' at 'a'
+// XPECT errors --> "A is not a subtype of B." at "a"
 i12.diffNoOfParmsDiffType(ab, a);
 
 
 // varArg(a:A, ab:A|B, ...a:A)
 
-// XPECT errors --> 'Incorrect number of arguments: expected 3, got 1.' at 'i12.varArg(a)' 
+// XPECT errors --> 'Incorrect number of arguments: expected 3, got 1.' at 'i12.varArg(a)'
 i12.varArg(a);
 
 // XPECT noerrors
@@ -146,7 +146,7 @@ i12.varArg(a, ab, b);
 // XPECT noerrors
 i12.varArgBoth(a);
 
-// XPECT errors --> 'B is not a subtype of A' at 'b'
+// XPECT errors --> "B is not a subtype of A." at "b"
 i12.varArgBoth(b);
 
 // XPECT noerrors
