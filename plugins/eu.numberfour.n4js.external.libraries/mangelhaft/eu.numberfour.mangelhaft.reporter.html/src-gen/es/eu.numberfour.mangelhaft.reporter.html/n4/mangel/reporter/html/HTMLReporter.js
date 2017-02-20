@@ -70,7 +70,7 @@
 			}).bind(this)).filter((function(showType) {
 				return !!showType;
 			}).bind(this));
-			ITestReporter.$fieldInit(this, undefined, {
+			ITestReporter.$fieldInit.call(this, undefined, {
 				spinnerHandle: undefined,
 				spinnerChar: undefined,
 				spy: undefined,

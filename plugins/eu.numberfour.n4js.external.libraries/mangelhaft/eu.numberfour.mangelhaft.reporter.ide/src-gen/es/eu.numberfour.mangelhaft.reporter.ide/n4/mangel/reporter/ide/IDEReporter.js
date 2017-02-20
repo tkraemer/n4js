@@ -10,7 +10,7 @@
 			this.timeoutBuffer = 1000 * 30;
 			this.fetch = fetch;
 			this.spy = undefined;
-			ITestReporter.$fieldInit(this, undefined, {
+			ITestReporter.$fieldInit.call(this, undefined, {
 				endpointValue: undefined,
 				timeoutBuffer: undefined,
 				fetch: undefined,

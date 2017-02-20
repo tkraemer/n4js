@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"PreconditionNotMetTest.js",
+"lineCount":68,
+"mappings":"A;;;EAUA,yD;EACA,2E;;MADQ,M,EACA,kB;EAER,8D;;;;;KAHQ,+G;;;KACA,yJ;;;;IAEY;;sCAEE;OACd,IAAI,MAAM,IAAI,kBAAJ,CAAuB,aAAvB,CAAV,CADc;OAEd,aAAa,QAAb,EAAuB,oBAAvB,EAA6C,mCAA7C,EAFc;OAFF;;;yCAOK;OACjB,IAAI,MAAM,IAAI,kBAAJ,CAAuB,SAAvB,CAAV,CADiB;OAEjB,aAAa,WAAb,EAA0B,SAA1B,EAAqC,oBAArC,EAFiB;OAPL;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+"sources":["/sources/eu.numberfour.mangelhaft.assert.test/n4/mangel/assert/test/precondition/PreconditionNotMetTest.n4js"],
+"names":[]
+}

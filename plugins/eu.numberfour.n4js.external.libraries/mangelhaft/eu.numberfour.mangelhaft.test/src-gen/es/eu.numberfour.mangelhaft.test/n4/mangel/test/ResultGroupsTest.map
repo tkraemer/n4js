@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"ResultGroupsTest.js",
+"lineCount":359,
+"mappings":"A;;;EAWA,qD;EACA,iD;EACA,yD;EACA,6D;EACA,wD;EACA,8E;EACA,gC;;MANQ,gB,EACA,Y,EACA,M,EACA,Y,EACA,O,EACC,Q,EACD,U;EACF;;I;EAIA,sC;EAIA;;I;EAMN,6CAIiB,cAJjB;;;;GAKQ,sBAAsB,cAAtB,CALR;I;;;;;KArBQ,qH;;;KACA,yG;;;KACA,+G;;;KACA,0H;;;KACA,2G;;;KACC,6I;;;KACD,+E;;;;IACF;;;;;;;;;;;;O;;;;;;;IAIA;;;;;;;;;;;;;;;;;;;;;;;;O;;;;;;;;;;;;;IAIA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;O;;;;;;;;;;;;;;IAMc;;mCAQF;;QACV,IAAI,WAAW,cAAc,WAAd,EAA2B,mBAA3B,EAAgD,IAAI,UAAJ,EAAhD,CAAf,CADU;QAEV,IAAI,QAAiC,EAArC,CAFU;QAGV,eAAe,gBAAgB,WAAhB,CAAf,CAHU;QAIV,WAAW,IAAI,gBAAJ,QAA4B,QAA5B,gBAAoD,IAAI,QAAJ,EAApD,CAAX,EAJU;QAKV,oBAAoB,OAAM,oCAAoC,KAApC,CAAN,CAApB,CALU;QAMV,oBAAoB,oBAAoB,iBAApB,EAAuC,iBAAvC,CAApB,CANU;;OARE;;;2DAkBgB;OAC5B,mBAAmB,0BAAnB,EAA+C,CAA/C,EAD4B;OAlBhB;;;yDAsBc;OAC1B,mBAAmB,wBAAnB,EAA6C,CAA7C,EAD0B;OAtBd;;;4DA2BiB;OAC7B,mBAAmB,2BAAnB,EAAgD,CAAhD,EAD6B;OA3BjB;;;wDA+Ba;OACzB,mBAAmB,yBAAnB,EAA8C,CAA9C,EADyB;OA/Bb;;;0DAmCe;OAC3B,mBAAmB,0BAA0B,CAA1B,UAAnB,EAA0D,CAA1D,EAD2B;OAnCf;;;wDAuCa;OACzB,mBAAmB,0BAA0B,CAA1B,QAAnB,EAAwD,CAAxD,EADyB;OAvCb;;;2DA2CgB;OAC5B,mBAAmB,0BAA0B,CAA1B,WAAnB,EAA2D,CAA3D,EAD4B;OA3ChB;;;uDA+CY;OACxB,mBAAmB,0BAA0B,CAA1B,SAAnB,EAAyD,CAAzD,EADwB;OA/CZ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+"sources":["/sources/eu.numberfour.mangelhaft.test/n4/mangel/test/ResultGroupsTest.n4js"],
+"names":[]
+}
