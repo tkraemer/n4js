@@ -13,6 +13,7 @@ package eu.numberfour.n4js.organize.imports;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.eclipse.core.resources.IFile;
 
@@ -29,7 +30,7 @@ import eu.numberfour.n4js.utils.Lazy;
  * This helper is using {@link FileExtensionsRegistry}, it will work as expected only for languages registering their
  * file types to the registry (e.g. via exposed extension point).
  */
-public class ImportsLanguageFilter {
+public class FileExtensionFilter implements Predicate<IFile> {
 
 	/** Lazily initialized collection of file extensions to be used when checking file */
 	final private Lazy<Collection<String>> n4FileExtensions;
@@ -41,19 +42,20 @@ public class ImportsLanguageFilter {
 	 *            used to obtain supported languages
 	 */
 	@Inject
-	public ImportsLanguageFilter(FileExtensionsRegistry fileExtensionsRegistry) {
+	public FileExtensionFilter(FileExtensionsRegistry fileExtensionsRegistry) {
 		n4FileExtensions = Lazy.create(() -> getN4FileExtensions(fileExtensionsRegistry));
 	}
 
 	/**
 	 * Checking the file type by getting the known extensions from the FileExtensionProvider
 	 *
-	 * @param object
+	 * @param iFile
 	 *            file to judge
 	 * @return true if the file is a valid file for organize import
 	 */
-	public boolean shouldHandleFile(IFile object) {
-		String fileExtension = object.getFileExtension();
+	@Override
+	public boolean test(IFile iFile) {
+		String fileExtension = iFile.getFileExtension();
 		return fileExtension != null && n4FileExtensions.get().contains(fileExtension);
 	}
 
@@ -68,4 +70,5 @@ public class ImportsLanguageFilter {
 		n4FileExtensions.removeAll(fileExtensionsRegistry.getFileExtensions(FileExtensionType.RAW_FILE_EXTENSION));
 		return n4FileExtensions;
 	}
+
 }

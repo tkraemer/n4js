@@ -40,7 +40,8 @@ import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 
 import com.google.inject.Inject;
 
-import eu.numberfour.n4js.organize.imports.ImportsLanguageFilter;
+import eu.numberfour.n4js.organize.imports.FileContainerFilter;
+import eu.numberfour.n4js.organize.imports.FileExtensionFilter;
 
 /**
  * Handler used for two cases: Mass updates on files/folders in selection or organizing the current N4JS Editor.
@@ -50,7 +51,9 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 	private static final Logger LOGGER = Logger.getLogger(N4JSOrganizeImportsHandler.class);
 
 	@Inject
-	private ImportsLanguageFilter importsFilter;
+	private FileExtensionFilter extensionFilter;
+	@Inject
+	private FileContainerFilter containerFilter;
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -75,7 +78,7 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 			// probably called on a tree-selection in the package-manager or whatever view shows the project-structure:
 			// organize files and folders:
 			// for each selection entry collect files:
-			SelectionFilesCollector filesCollector = new SelectionFilesCollector(importsFilter::shouldHandleFile);
+			SelectionFilesCollector filesCollector = new SelectionFilesCollector(this::filter);
 			ArrayList<IFile> collectedFiles = filesCollector.collectFiles((IStructuredSelection) selection);
 
 			if (collectedFiles.isEmpty()) {
@@ -111,6 +114,11 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 
 		}
 		return null;
+	}
+
+	/** Composed check that is using several sub filters to decide if a file should be organized. */
+	private boolean filter(IFile iFile) {
+		return extensionFilter.test(iFile) && containerFilter.test(iFile);
 	}
 
 	/**
