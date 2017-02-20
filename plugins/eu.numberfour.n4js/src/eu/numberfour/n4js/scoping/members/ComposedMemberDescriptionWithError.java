@@ -80,13 +80,18 @@ public abstract class ComposedMemberDescriptionWithError extends AbstractDescrip
 
 	}
 
+	/** cached TypeRef */
 	protected final ComposedTypeRef composedTypeRef;
+	/** scopes of the underlying members */
 	protected final IScope[] subScopes;
+	/** true iff the field is written */
 	protected final boolean writeAccess;
 	/** length of scopes */
 	protected final int max;
 
+	/** error message */
 	protected String message;
+	/** error code */
 	protected String code;
 
 	/**
@@ -157,6 +162,9 @@ public abstract class ComposedMemberDescriptionWithError extends AbstractDescrip
 		return false;
 	}
 
+	/**
+	 * Combines error messages to one message.
+	 */
 	protected boolean initSubMessages(IEObjectDescription[] descriptions, MapOfIndexes<String> indexesPerCode) {
 		// all subScopes returned same code:
 		if (indexesPerCode.size() == 1 && indexesPerCode.numberOf(indexesPerCode.firstKey()) == max) {
@@ -172,8 +180,8 @@ public abstract class ComposedMemberDescriptionWithError extends AbstractDescrip
 			StringBuilder strb = new StringBuilder();
 			for (String subCode : indexesPerCode.keySet()) {
 				int index = indexesPerCode.firstIndex(subCode);
-				String submessage = ((IEObjectDescriptionWithError) descriptions[index])
-						.getMessage();
+				IEObjectDescriptionWithError descrWithError = (IEObjectDescriptionWithError) descriptions[index];
+				String submessage = descrWithError.getMessage();
 				String scopeName = getNameForSubScope(index);
 
 				String allScopeNames = indexesPerCode.getScopeNamesForKey(subCode);
@@ -181,9 +189,10 @@ public abstract class ComposedMemberDescriptionWithError extends AbstractDescrip
 				if (submessage.contains(scopeName)) {
 					completeSubMessage = submessage.replace(scopeName, allScopeNames);
 				} else {
-					if (submessage.endsWith("."))
+					if (submessage.endsWith(".")) {
 						submessage = submessage.substring(0, submessage.length() - 1);
-					completeSubMessage = IssueCodes.getMessageForUNI_SUBMESSAGES(allScopeNames, submessage);
+					}
+					completeSubMessage = IssueCodes.getMessageForCOMP_SUBMESSAGES(allScopeNames, submessage);
 				}
 				if (strb.length() > 0) {
 					strb.append(" ");
@@ -191,7 +200,7 @@ public abstract class ComposedMemberDescriptionWithError extends AbstractDescrip
 				strb.append(completeSubMessage);
 			}
 			message = strb.toString();
-			code = IssueCodes.UNI_SUBMESSAGES;
+			code = IssueCodes.COMP_SUBMESSAGES;
 
 			return true;
 		}
