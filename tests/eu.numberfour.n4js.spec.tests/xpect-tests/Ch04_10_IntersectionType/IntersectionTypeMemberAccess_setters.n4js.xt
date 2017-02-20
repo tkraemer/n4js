@@ -25,34 +25,34 @@ var i12 : I1&I2;
 // set inBothSameType(a:A)
 // set inBothDiffType(ab:A|B)
 
-// XPECT errors --> "The accessor onlyIn1 is write-only." at 'onlyIn1'
+// XPECT errors --> "The accessor onlyIn1 is write-only in I1." at "onlyIn1"
 i12.onlyIn1;
 
 // XPECT noerrors
 i12.onlyIn1 = a;
 
-// XPECT errors --> 'B is not a subtype of A' at 'b'
+// XPECT errors --> "B is not a subtype of A." at "b"
 i12.onlyIn1 = b;
 
-// XPECT errors --> "The accessor onlyIn2 is write-only." at 'onlyIn2'
+// XPECT errors --> "The accessor onlyIn2 is write-only in I2." at "onlyIn2"
 i12.onlyIn2;
 
-// XPECT errors --> 'A is not a subtype of B' at 'a'
+// XPECT errors --> "A is not a subtype of B." at "a"
 i12.onlyIn2 = a;
 
 // XPECT noerrors
 i12.onlyIn2 = b;
 
-// XPECT errors --> "The accessor inBothSameType is write-only." at 'inBothSameType'
+// XPECT errors --> "The accessor inBothSameType is write-only." at "inBothSameType"
 i12.inBothSameType;
 
 // XPECT noerrors
 i12.inBothSameType = a;
 
-// XPECT errors --> 'B is not a subtype of A' at 'b'
+// XPECT errors --> "B is not a subtype of A." at "b"
 i12.inBothSameType = b;
 
-// XPECT errors --> "The accessor inBothDiffType is write-only." at 'inBothDiffType'
+// XPECT errors --> "The accessor inBothDiffType is write-only." at "inBothDiffType"
 i12.inBothDiffType;
 
 // XPECT noerrors

@@ -38,7 +38,7 @@ i12.m1;
 // XPECT noerrors
 i12.m1 = a;
 
-// XPECT errors --> 'B is not a subtype of A' at 'b'
+// XPECT errors --> "B is not a subtype of A." at "b"
 i12.m1 = b;
 
 // XPECT noerrors
@@ -50,7 +50,7 @@ i12.m2;
 // XPECT noerrors
 i12.m1 = a;
 
-// XPECT errors --> 'B is not a subtype of A' at 'b'
+// XPECT errors --> "B is not a subtype of A." at "b"
 i12.m2 = b;
 
 
