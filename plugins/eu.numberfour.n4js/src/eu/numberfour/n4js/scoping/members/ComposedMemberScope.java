@@ -172,9 +172,7 @@ public abstract class ComposedMemberScope extends AbstractScope {
 			// at least one of the subScopes had an element of that name
 			final TMember result;
 			if (composedMemberDescr.isValid()) {
-				// success case:
-				// 1) ALL of the subScopes have an element for that name and
-				// 2) they can be merged into a valid composed member
+				// success case: The element for that name can be merged into a valid composed member
 				result = composedMemberDescr.create(memberName);
 			} else {
 				// some of the subScopes do not have an element for that name OR

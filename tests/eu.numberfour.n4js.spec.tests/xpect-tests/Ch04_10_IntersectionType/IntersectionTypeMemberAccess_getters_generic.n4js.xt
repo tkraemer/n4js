@@ -38,7 +38,7 @@ i12.onlyIn1 = a;
 // XPECT noerrors
 i12.onlyIn2;
 
-// XPECT type of 'i12.onlyIn1' --> B
+// XPECT type of 'i12.onlyIn2' --> B
 i12.onlyIn2;
 
 // XPECT errors --> "The accessor onlyIn2 is read-only." at 'onlyIn1'
@@ -51,8 +51,8 @@ i12.onlyIn2 = b;
 // XPECT noerrors
 i12.inBothDiffType;
 
-// XPECT type of 'i12.inBothDiffType' --> A&B
+// XPECT type of 'i12.inBothDiffType' --> intersection{A,B}
 i12.inBothDiffType;
 
-// XPECT errors --> "The accessor inBothDiffType is read-only." at 'inBothDiffType'
+// XPECT errors --> "The accessor inBothDiffType is read-only." at "inBothDiffType"
 i12.inBothDiffType = ab;

@@ -6,7 +6,7 @@ interface B {}
 let a:A;
 let b:B;
 
-let ab:A&B;
+let aub:A|B;
 
 interface I1 {
 	m1:A;
@@ -56,9 +56,9 @@ i12.m2 = b;
 
 
 var i13: I1&I3;
-// set m1(a:A)
+// set m1(a:A|B)
 // get m1():A&B
-// set m2(b:B)
+// set m2(a|b:B)
 // get m2():A&B
 
 // XPECT noerrors
@@ -67,11 +67,8 @@ i13.m1;
 // XPECT type of 'i13.m1' --> intersection{A,B}
 i13.m1;
 
-// XPECT errors --> "A is not a subtype of intersection{A,B}." at "a"
-i13.m1 = a;
-
-// XPECT errors --> "B is not a subtype of intersection{A,B}." at "b"
-i13.m1 = b;
+// XPECT noerrors
+i13.m1 = aub;
 
 // XPECT noerrors
 i13.m2;
@@ -79,17 +76,14 @@ i13.m2;
 // XPECT type of 'i13.m2' --> intersection{A,B}
 i13.m2;
 
-// XPECT errors --> "A is not a subtype of intersection{A,B}." at "a"
-i13.m2 = a;
-
-// XPECT errors --> "B is not a subtype of intersection{A,B}." at "b"
-i13.m2 = b;
+// XPECT noerrors
+i13.m2 = aub;
 
 
 
 var i23: I2&I3;
 // get m1():A&B
-// set m2(ab:A|B)
+// set m2(aub:A|B)
 // get m2():A&B
 
 // XPECT noerrors
@@ -108,4 +102,4 @@ i23.m2;
 i23.m2;
 
 // XPECT noerrors
-i23.m2 = ab;
+i23.m2 = aub;

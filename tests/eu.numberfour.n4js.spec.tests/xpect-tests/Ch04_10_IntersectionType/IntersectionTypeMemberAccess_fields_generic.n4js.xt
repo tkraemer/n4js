@@ -5,7 +5,7 @@ interface B {}
 
 let a:A;
 let b:B;
-let ab:A&B;
+let aub:A|B;
 
 interface I1<T> {
 	onlyIn1: T;
@@ -76,7 +76,7 @@ i13.onlyIn3 = b;
 
 
 // get inBothDiffType(): A&B
-// set inBothDiffType(ab:A|B)
+// set inBothDiffType(aub:A|B)
 
 // XPECT noerrors
 i13.inBothDiffType;
@@ -85,11 +85,11 @@ i13.inBothDiffType;
 i13.inBothDiffType;
 
 // XPECT noerrors
-i13.inBothDiffType = ab;
+i13.inBothDiffType = aub;
 
 
 // get inBothInheritedDiffType(): A&B
-// set inBothInheritedDiffType(ab:A|B)
+// set inBothInheritedDiffType(aub:A|B)
 
 // XPECT noerrors
 i13.inBothInheritedDiffType;
@@ -98,4 +98,4 @@ i13.inBothInheritedDiffType;
 i13.inBothInheritedDiffType;
 
 // XPECT noerrors
-i13.inBothInheritedDiffType = ab;
+i13.inBothInheritedDiffType = aub;
