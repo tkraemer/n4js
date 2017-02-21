@@ -31,7 +31,7 @@ import eu.numberfour.n4js.xpect.ui.methods.OutputXpectMethod;
 import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**
- * Xpect test class, also configured in fragment.xml, executes all Xpect tests found in model folder.
+ * Xpect test class, to be executed as plain JUnit test.
  */
 @XpectSuiteClasses({
 		AccessModifierAxpectMethod.class,
