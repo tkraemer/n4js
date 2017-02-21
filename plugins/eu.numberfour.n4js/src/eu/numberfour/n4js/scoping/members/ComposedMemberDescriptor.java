@@ -317,8 +317,8 @@ abstract public class ComposedMemberDescriptor {
 			fpar.names.add("arg0");
 			fpar.typeRefs.addAll(typeRefs);
 			TSetter tSetter = (TSetter) composedMember;
-			tSetter.setFpar(fpar.create());
 			fpars.add(fpar);
+			tSetter.setFpar(fpar.create());
 		} else if (composedMember instanceof TMethod) {
 			if (!fpars.isEmpty()) {
 				FparDescriptor lastFpar = fpars.get(fpars.size() - 1);
