@@ -220,9 +220,7 @@ abstract public class ComposedMemberDescriptor {
 			// mergeConst(nextMember instanceof TField ? ((TField) nextMember).isConst() : false);
 			mergeAccessibility(nextMember.getMemberAccessModifier());
 			final TypeRef nextMemberTypeRef = TypeUtils.getMemberTypeRef(nextMember);
-			if (nextMemberTypeRef != null) {
-				mergeTypeRef(ts.substTypeVariablesInTypeRef(G, nextMemberTypeRef));
-			}
+			mergeTypeRef(ts.substTypeVariablesInTypeRef(G, nextMemberTypeRef));
 			if (nextMember instanceof TSetter) {
 				mergeFpar(G, 0, ((TSetter) nextMember).getFpar());
 			} else if (nextMember instanceof TMethod) {
@@ -240,9 +238,28 @@ abstract public class ComposedMemberDescriptor {
 	}
 
 	private void mergeTypeRef(TypeRef nextTypeRef) {
-		if (nextTypeRef != null && !(nextTypeRef instanceof UnknownTypeRef)) {
-			// remember ALL types we have encountered (so we do not actually merge anything here)
-			typeRefs.add(TypeUtils.copyIfContained(nextTypeRef));
+		if (nextTypeRef == null)
+			return;
+		if (nextTypeRef instanceof UnknownTypeRef)
+			return;
+
+		// remember ALL other types we have encountered (so we do not actually merge anything here)
+		typeRefs.add(TypeUtils.copyIfContained(nextTypeRef));
+
+		cleanObsoleteVoids();
+	}
+
+	private void cleanObsoleteVoids() {
+		List<TypeRef> voids = new LinkedList<>();
+		for (TypeRef tr : typeRefs) {
+			if (TypeUtils.isVoid(tr))
+				voids.add(tr);
+		}
+		if (typeRefs.size() > voids.size()) {
+			// delete voids only, iff other types exists
+			for (TypeRef vds : voids) {
+				typeRefs.remove(vds);
+			}
 		}
 	}
 
@@ -309,7 +326,7 @@ abstract public class ComposedMemberDescriptor {
 
 		if (composedMember instanceof TField)
 			TypeUtils.setMemberTypeRef(composedMember, typeRefs.get(0));
-		else if (composedMember instanceof TGetter || composedMember instanceof TMethod)
+		else if (composedMember instanceof TGetter)
 			TypeUtils.setMemberTypeRef(composedMember, getSimplifiedCompositionOfTypeRefs());
 
 		if (composedMember instanceof TSetter) {
@@ -320,6 +337,7 @@ abstract public class ComposedMemberDescriptor {
 			fpars.add(fpar);
 			tSetter.setFpar(fpar.create());
 		} else if (composedMember instanceof TMethod) {
+			TypeUtils.setMemberTypeRef(composedMember, getSimplifiedCompositionOfTypeRefs());
 			if (!fpars.isEmpty()) {
 				boolean variFparNecessary = isExtraVariadicFParNecessary();
 				if (variFparNecessary) {
