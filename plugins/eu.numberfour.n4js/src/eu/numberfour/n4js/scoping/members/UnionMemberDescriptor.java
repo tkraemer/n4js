@@ -118,8 +118,7 @@ public class UnionMemberDescriptor extends ComposedMemberDescriptor {
 
 	@Override
 	protected void mergeFparBooleans(TFormalParameter nextFpar, final FparDescriptor desc) {
-		desc.allOptional &= nextFpar.isHasInitializerAssignment(); // remember if ALL had an
-																				// initializer assignment
+		desc.allOptional &= nextFpar.isOptional();
 	}
 
 	@Override

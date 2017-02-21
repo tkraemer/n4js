@@ -317,13 +317,12 @@ abstract public class ComposedMemberDescriptor {
 			fpar.names.add("arg0");
 			fpar.typeRefs.addAll(typeRefs);
 			TSetter tSetter = (TSetter) composedMember;
-			tSetter.setFpar(fpar.create());
 			fpars.add(fpar);
+			tSetter.setFpar(fpar.create());
 		} else if (composedMember instanceof TMethod) {
 			if (!fpars.isEmpty()) {
-				FparDescriptor lastFpar = fpars.get(fpars.size() - 1);
-				List<TypeRef> variadics = lastFpar.getAllTypeRefsVariadic();
-				if (!variadics.isEmpty() && !variadics.containsAll(lastFpar.typeRefs)) {
+				boolean variFparNecessary = isExtraVariadicFParNecessary();
+				if (variFparNecessary) {
 					final FparDescriptor varpar = new FparDescriptor();
 					varpar.names.add("vari");
 					fpars.add(varpar);
@@ -331,13 +330,31 @@ abstract public class ComposedMemberDescriptor {
 			}
 			for (FparDescriptor currFparDesc : fpars) {
 				TMethod tMethod = (TMethod) composedMember;
-				// TFormalParameter tFPar = createFormalParameter(i);
 				TFormalParameter tFPar = currFparDesc.create();
 				tMethod.getFpars().add(tFPar);
 			}
 		}
 
 		return composedMember;
+	}
+
+	private boolean isExtraVariadicFParNecessary() {
+		FparDescriptor lastFpar = fpars.get(fpars.size() - 1);
+		List<TypeRef> variadics = lastFpar.getAllTypeRefsVariadic();
+
+		// case: the last fpar is not everywhere optional, but variadics exist
+		if (!lastFpar.allOptional && !variadics.isEmpty())
+			return true;
+
+		// case: the last fpar has a different type than the variadics
+		for (TypeRef lfpTypeRef : lastFpar.typeRefs) {
+			for (TypeRef variTypeRef : variadics) {
+				if (variTypeRef.getDeclaredType() != lfpTypeRef.getDeclaredType())
+					return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

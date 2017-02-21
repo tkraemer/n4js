@@ -28,7 +28,7 @@ var u : union{Gen1<A>,Gen2<B>};
 
 // XPECT type of 'u.f' --> union{A,B}
 u.f;
-// XPECT expectedType at 'null' --> intersection{A,B}?
+// XPECT expectedType at 'null' --> intersection{A,B}
 u.f = null;
 // XPECT type of 'u.g' --> union{A,B}
 u.g;
