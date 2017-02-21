@@ -1,50 +1,50 @@
 /* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
 
-
+/*
 interface A {}
 interface B {}
 
 let a:A;
 let b:B;
-
 let aub:A|B;
 
 interface I1 {
-	m1:A;
-	get m2(): A;
+	onlyIn1: A;
+	inBothSameType: A;
+	inBothDiffType: A;
+	inBothInheritedDiffType:A
 }
 
 interface I2 {
-	get m1(): A;
-	m2: A;
+	onlyIn2: B;
+	inBothSameType: A;
+	inBothDiffType: B;
 }
 
-interface I3 {
-	get m1(): B;
-	m2: B;
+interface I3 extends I2 {
+	onlyIn3: B;
+	inBothInheritedDiffType:B
 }
 
+var i13 : I1&I3;
 
-var i13: I1&I3;
-// set m1(a:A)
-// get m1():A&B
-// set m2(b:B)
-// get m2():A&B
+// get onlyIn1(): A
+// set onlyIn1(a:A)
 
-// XPECT noerrors
-i13.m1;
-
-// XPECT type of 'i13.m1' --> intersection{A,B}
-i13.m1;
-
-// XPECT noerrors
-i13.m1 = a;
 
 // XPECT errors --> "B is not a subtype of A." at "b"
-i13.m1 = b;
+i13.onlyIn1 = b;
 
-// XPECT noerrors
-i13.m2;
 
-// XPECT type of 'i13.m2' --> B
-i13.m2;
+*/
+
+interface I1 {
+	m1: string;
+}
+
+interface I2 {
+	m1: string;
+}
+
+let i12: I1&I2;
+i12.m1

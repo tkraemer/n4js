@@ -89,16 +89,26 @@ abstract public class ComposedMemberDescriptor {
 			return false;
 		}
 
-		public TFormalParameter create() {
-			// 1: collect all types from preceding variadics
-			int idx = fpars.indexOf(this);
+		String getName() {
+			return Joiner.on("_").join(this.names);
+		}
+
+		List<TypeRef> getAllTypeRefsVariadic() {
+			return getAllTypeRefsVariadic(fpars.size() - 1);
+		}
+
+		List<TypeRef> getAllTypeRefsVariadic(int idx) {
 			List<TypeRef> variadics = new LinkedList<>();
 			for (int i = 0; i <= idx; i++) {
 				FparDescriptor fparD = fpars.get(i);
 				variadics.addAll(fparD.typeRefsVariadic);
 			}
+			return variadics;
+		}
 
-			// 3: create
+		public TFormalParameter create() {
+			int idx = fpars.indexOf(this);
+			List<TypeRef> variadics = getAllTypeRefsVariadic(idx);
 			FparDescriptor fparDescr = fpars.get(idx);
 			TFormalParameter tfp = fparDescr.createAddVariadicTypes(variadics);
 			return tfp;
@@ -106,7 +116,7 @@ abstract public class ComposedMemberDescriptor {
 
 		private TFormalParameter createAddVariadicTypes(List<TypeRef> variadics) {
 			final TFormalParameter fpar = TypesFactory.eINSTANCE.createTFormalParameter();
-			fpar.setName(Joiner.on("_").join(this.names));
+			fpar.setName(getName());
 			List<TypeRef> typeRefsToUse = this.typeRefs;
 			// if we are creating a setter, include the main typeRefs
 			// (required to include types of fields in case of a field/setter combination)
@@ -121,6 +131,7 @@ abstract public class ComposedMemberDescriptor {
 			fpar.setHasInitializerAssignment(isOptional());
 			return fpar;
 		}
+
 	}
 
 	/**
@@ -309,6 +320,15 @@ abstract public class ComposedMemberDescriptor {
 			tSetter.setFpar(fpar.create());
 			fpars.add(fpar);
 		} else if (composedMember instanceof TMethod) {
+			if (!fpars.isEmpty()) {
+				FparDescriptor lastFpar = fpars.get(fpars.size() - 1);
+				List<TypeRef> variadics = lastFpar.getAllTypeRefsVariadic();
+				if (!variadics.isEmpty() && !variadics.containsAll(lastFpar.typeRefs)) {
+					final FparDescriptor varpar = new FparDescriptor();
+					varpar.names.add("vari");
+					fpars.add(varpar);
+				}
+			}
 			for (FparDescriptor currFparDesc : fpars) {
 				TMethod tMethod = (TMethod) composedMember;
 				// TFormalParameter tFPar = createFormalParameter(i);
