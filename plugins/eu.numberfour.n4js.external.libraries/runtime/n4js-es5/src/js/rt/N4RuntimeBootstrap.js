@@ -13,7 +13,9 @@
 (function (global) {
     "use strict";
 
-    var ArraySlice = Array.prototype.slice;
+    var ArraySlice = Array.prototype.slice,
+        noop = function() {},
+        ctorWritable = typeof __REACT_HOT_LOADER__ !== "undefined";
 
     /** Call context is prototype object. */
     function mixinDefaultMethod(method) {
@@ -50,7 +52,7 @@
 
         var proto = Object.create(superCtor.prototype, instanceMethods);
         implementedInterfaces.forEach(mixinDefaultMethods, proto);
-        Object.defineProperty(proto, "constructor", { value: ctor });
+        Object.defineProperty(proto, "constructor", { value: ctor, writable: ctorWritable });
 
         var n4type = n4typeFn(proto, ctor);
         Object.defineProperty(ctor, "n4type", { value: n4type });
@@ -85,11 +87,9 @@
         Object.setPrototypeOf(enumeration, global.N4Enum);
         enumeration.prototype = Object.create(global.N4Enum.prototype, {});
         Object.defineProperty(enumeration, 'n4type', {
-            value: n4type(function () {})
+            value: n4type(noop)
         });
-        Object.defineProperty(enumeration.prototype, 'constructor', {
-            value: enumeration
-        });
+        Object.defineProperty(enumeration.prototype, "constructor", { value: enumeration, writable: ctorWritable });
 
         length = members.length;
         values = new Array(length);

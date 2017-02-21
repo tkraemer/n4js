@@ -19,7 +19,7 @@ export external interface PathObject {
 
 export external public const delimiter: string;
 export external public const sep: string;
-export external public function basename(path: string, ext: string =): string;
+export external public function basename(path: string, ext: string=): string;
 export external public function dirname(path: string): string;
 export external public function extname(path: string): string;
 export external public function format(pathObject: PathObject): string;
@@ -31,7 +31,7 @@ export external public function relative(from: string, to: string): string;
 export external public function resolve(...path: string): string; //not exact. see https://nodejs.org/api/path.html#path_path_resolve_from_to
 
 export external public const posix: ~Object with {
-    basename: {function(path: string, ext: string =):string};
+    basename: {function(path: string, ext: string=):string};
     dirname: {function(path: string): string};
     extname: {function(path: string): string};
     format: {function(pathObject: PathObject): string};
@@ -44,7 +44,7 @@ export external public const posix: ~Object with {
 };
 
 export external public const win32: ~Object with {
-    basename: {function(path: string, ext: string =):string};
+    basename: {function(path: string, ext: string=):string};
     dirname: {function(path: string): string};
     extname: {function(path: string): string};
     format: {function(pathObject: PathObject): string};

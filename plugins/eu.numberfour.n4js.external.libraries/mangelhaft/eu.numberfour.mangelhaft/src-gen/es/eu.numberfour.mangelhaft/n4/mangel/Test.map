@@ -2,7 +2,7 @@
 "version":3,
 "file":"Test.js",
 "lineCount":167,
-"mappings":"A;;;;EAWA,uBAA6B,EAA7B,EAA2C,MAA3C,EAAuE;GACnE,OAAO,WAAW;;IACd,IAAI;KACA,SAAS,IAAT,EAAe,aAAf,EADA;KAEF,OAAM,EAAN,EAAU;KACR,IAAI;MACA,YAAY,EAAZ,EAAgB,EAAhB,EADA;MAEF,OAAO,GAAP,EAAY;MACV,YAAY,GAAZ,EADU;MAHN;KAHE;IAAlB,CADmE;GAAvE,C;;EAcA,Y;;EAKA;;;;I;;EAMA,a;;EAKA;;;;I;;;;;;IAhBwB,qB;IAAA;;;;;;;;;;;;;;;;;;;O;IAKJ;;;;qCAEI;OAChB,OAAO,2BAAP,CADgB;OAFJ;;;;;;;;;;;;;;;;;;;;;;;O;;;;qDAOS,K;;;;sBAAA,K;;;;IADL,sB;IAAA;;;;;;;;;;;;;;;;;;;;;;;;O;IAKJ;;;;qCAEI;OAChB,OAAO,2BAAP,CADgB;OAFJ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+"mappings":"A;;;;EAWA,uBAA6B,EAA7B,EAA2C,MAA3C,EAAuE;GACnE,OAAO,WAAW;;IACd,IAAI;KACA,SAAS,IAAT,EAAe,aAAf,EADA;KAEF,OAAM,EAAN,EAAU;KACR,IAAI;MACA,YAAY,EAAZ,EAAgB,EAAhB,EADA;MAEF,OAAO,GAAP,EAAY;MACV,YAAY,GAAZ,EADU;MAHN;KAHE;IAAlB,CADmE;GAAvE,C;;EAcA,Y;;EAKA;;;;I;;EAMA,a;;EAKA;;;;I;;;;;;IAhBwB,qB;IAAA;;;;;;;;;;;;;;;;;;;O;IAKJ;;;;qCAEI;OAChB,OAAO,2BAAP,CADgB;OAFJ;;;;;;;;;;;;;;;;;;;;;;;O;;;;mDAOS,K;;;;oBAAA,K;;;;IADL,sB;IAAA;;;;;;;;;;;;;;;;;;;;;;;;O;IAKJ;;;;qCAEI;OAChB,OAAO,2BAAP,CADgB;OAFJ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
 "sources":["/sources/eu.numberfour.mangelhaft/n4/mangel/Test.n4js"],
 "names":[]
 }

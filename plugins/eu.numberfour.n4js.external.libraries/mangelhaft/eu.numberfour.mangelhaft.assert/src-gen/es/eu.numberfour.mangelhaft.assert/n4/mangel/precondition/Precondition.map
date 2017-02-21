@@ -2,7 +2,7 @@
 "version":3,
 "file":"Precondition.js",
 "lineCount":48,
-"mappings":"A;;;EAYA,yD;EACA,2E;;MADQ,M,EACA,kB;EACR;;I;;;;;KAFQ,+G;;;KACA,yJ;;;;IACY;;iCAEI,MAFJ,EAEiB,QAFjB,EAEgC,OAFhC,EAEmD,QAFnD,EAEuE,kBAFvE,EAEuG;OACnH,IAAI,QAAQ,IAAI,kBAAJ,CAAuB,OAAvB,CAAZ,CADmH;OAEnH,MAAM,KAAN,CAFmH;OAFvG;;;;;;;;;;;;;;;;;;;;;;",
+"mappings":"A;;;EAYA,yD;EACA,2E;;MADQ,M,EACA,kB;EACR;;I;;;;;KAFQ,+G;;;KACA,yJ;;;;IACY;;iCAEI,MAFJ,EAEiB,QAFjB,EAEgC,OAFhC,EAEkD,QAFlD,EAEqE,kBAFrE,EAEoG;OAChH,IAAI,QAAQ,IAAI,kBAAJ,CAAuB,OAAvB,CAAZ,CADgH;OAEhH,MAAM,KAAN,CAFgH;OAFpG;;;;;;;;;;;;;;;;;;;;;;",
 "sources":["/sources/eu.numberfour.mangelhaft.assert/n4/mangel/precondition/Precondition.n4js"],
 "names":[]
 }

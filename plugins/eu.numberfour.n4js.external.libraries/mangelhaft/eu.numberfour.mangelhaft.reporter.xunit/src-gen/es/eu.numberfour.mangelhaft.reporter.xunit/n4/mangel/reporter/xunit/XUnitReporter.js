@@ -34,7 +34,7 @@
 			this.output = undefined;
 			this.startTime = undefined;
 			this.resultsMap = new Map();
-			ITestReporter.$fieldInit(this, undefined, {
+			ITestReporter.$fieldInit.call(this, undefined, {
 				spy: undefined,
 				spec: undefined,
 				output: undefined,

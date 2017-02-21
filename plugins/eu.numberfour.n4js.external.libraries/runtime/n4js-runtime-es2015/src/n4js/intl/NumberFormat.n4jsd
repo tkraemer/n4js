@@ -11,7 +11,7 @@
 @@Global @@ProvidedByRuntime
 
 export external public class ~NumberFormat {
-    public constructor(locales: union{string, Array<string>} =, options: Object =);
+    public constructor(locales: union{string, Array<string>}=, options: Object=);
 }
 
 /* -*- mode: typescript;-*- */

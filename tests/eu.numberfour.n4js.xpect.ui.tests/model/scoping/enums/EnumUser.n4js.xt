@@ -22,9 +22,9 @@ import { MyEnum } from "scoping/enums/MyEnum"
 /* XPECT scopeWithPosition at 'MyEnum.|ONE' ---
 	ONE - MyEnum.n4js:2,
 	THREE - Tproxy:MyEnum.n4js#/1/@topLevelTypes.0/@literals.2, TWO - Tproxy:MyEnum.n4js#/1/@topLevelTypes.0/@literals.1,
-	findLiteralByName - builtin_n4.n4ts:320, findLiteralByValue - builtin_n4.n4ts:326, literals - builtin_n4.n4ts:314,
+	findLiteralByName - builtin_n4.n4ts:321, findLiteralByValue - builtin_n4.n4ts:327, literals - builtin_n4.n4ts:315,
 	__proto__ - builtin_js.n4ts:32, constructor - builtin_js.n4ts:128, toString - builtin_js.n4ts:134, toLocaleString - builtin_js.n4ts:141,
 	valueOf - builtin_js.n4ts:147, hasOwnProperty - builtin_js.n4ts:156, isPrototypeOf - builtin_js.n4ts:165, propertyIsEnumerable - builtin_js.n4ts:173,
-	n4type - builtin_n4.n4ts:307
+	n4type - builtin_n4.n4ts:308
 --- */
 var myEnum : MyEnum = MyEnum.ONE;
