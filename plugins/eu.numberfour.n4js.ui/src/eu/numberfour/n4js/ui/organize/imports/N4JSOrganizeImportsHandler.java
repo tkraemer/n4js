@@ -57,9 +57,6 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		// System.out.println("\n");
-		// sysTraceUtil.printFullCallTrace();
-
 		Collection<?> callingMenus = HandlerUtil.getActiveMenus(event);
 		// "#TextEditorContext" is the defined plugin.xml
 		boolean fromTextContext = (callingMenus != null && callingMenus.contains("#TextEditorContext"));
