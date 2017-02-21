@@ -164,7 +164,7 @@ public interface TFormalParameter extends IdentifiableElement, TAnnotableElement
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 *  Convenience method, returns true if typeRef undef modifier is optional or variadic.
+	 *  Convenience method, returns true iff this fpar is optional or variadic.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isVariadic() || this.isOptional());'"

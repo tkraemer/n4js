@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.scoping.members;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
@@ -69,12 +70,42 @@ abstract public class ComposedMemberDescriptor {
 		final List<String> names = new ArrayList<>();
 		@SuppressWarnings("hiding")
 		final List<TypeRef> typeRefs = new ArrayList<>();
-		boolean optional = true;
-		boolean variadic = true;
-		// astInitializer is not merged
-		boolean hasInitializerAssignment = true;
+		final List<TypeRef> typeRefsVariadic = new ArrayList<>();
+		boolean allOptional = true;
+
+		boolean isOptional() {
+			return allOptional && !isVariadic();
+		}
+
+		boolean isVariadic() {
+			int idx = fpars.indexOf(this);
+			if (idx != fpars.size() - 1) // not last? => not variadic!
+				return false;
+
+			for (int i = 0; i <= idx; i++) {
+				FparDescriptor fparD = fpars.get(i);
+				if (!fparD.typeRefsVariadic.isEmpty())
+					return true;
+			}
+			return false;
+		}
 
 		public TFormalParameter create() {
+			// 1: collect all types from preceding variadics
+			int idx = fpars.indexOf(this);
+			List<TypeRef> variadics = new LinkedList<>();
+			for (int i = 0; i <= idx; i++) {
+				FparDescriptor fparD = fpars.get(i);
+				variadics.addAll(fparD.typeRefsVariadic);
+			}
+
+			// 3: create
+			FparDescriptor fparDescr = fpars.get(idx);
+			TFormalParameter tfp = fparDescr.createAddVariadicTypes(variadics);
+			return tfp;
+		}
+
+		private TFormalParameter createAddVariadicTypes(List<TypeRef> variadics) {
 			final TFormalParameter fpar = TypesFactory.eINSTANCE.createTFormalParameter();
 			fpar.setName(Joiner.on("_").join(this.names));
 			List<TypeRef> typeRefsToUse = this.typeRefs;
@@ -84,10 +115,11 @@ abstract public class ComposedMemberDescriptor {
 				typeRefsToUse = new ArrayList<>(this.typeRefs);
 				typeRefsToUse.addAll(ComposedMemberDescriptor.this.typeRefs);
 			}
+			typeRefsToUse.addAll(variadics);
 			TypeRef paramCompTR = getTypeRefComplement(ts, typeRefsToUse, ComposedMemberDescriptor.this.resource);
 			fpar.setTypeRef(paramCompTR);
-			fpar.setVariadic(this.variadic);
-			fpar.setHasInitializerAssignment(this.hasInitializerAssignment);
+			fpar.setVariadic(isVariadic());
+			fpar.setHasInitializerAssignment(isOptional());
 			return fpar;
 		}
 	}
@@ -223,7 +255,11 @@ abstract public class ComposedMemberDescriptor {
 			if (nextFpar.getTypeRef() != null) {
 				final TypeRef nextFparTypeRef = ts.substTypeVariablesInTypeRef(G, nextFpar.getTypeRef());
 				if (nextFparTypeRef != null && !(nextFparTypeRef instanceof UnknownTypeRef)) {
-					desc.typeRefs.add(TypeUtils.copyIfContained(nextFparTypeRef)); // collect all fpar types
+					TypeRef typeRef = TypeUtils.copyIfContained(nextFparTypeRef);
+					desc.typeRefs.add(typeRef); // collect all fpar types
+					if (nextFpar.isVariadic()) {
+						desc.typeRefsVariadic.add(typeRef);
+					}
 				}
 			}
 			mergeFparBooleans(nextFpar, desc);
@@ -285,11 +321,16 @@ abstract public class ComposedMemberDescriptor {
 		if (composedMember instanceof TSetter) {
 			if (!fpars.isEmpty()) {
 				TSetter tSetter = (TSetter) composedMember;
-				tSetter.setFpar(fpars.get(0).create());
+				// TFormalParameter tFPar = createFormalParameter(0);
+				TFormalParameter tFPar = fpars.get(0).create();
+				tSetter.setFpar(tFPar);
 			}
 		} else if (composedMember instanceof TMethod) {
 			for (FparDescriptor currFparDesc : fpars) {
-				((TMethod) composedMember).getFpars().add(currFparDesc.create());
+				TMethod tMethod = (TMethod) composedMember;
+				// TFormalParameter tFPar = createFormalParameter(i);
+				TFormalParameter tFPar = currFparDesc.create();
+				tMethod.getFpars().add(tFPar);
 			}
 		}
 

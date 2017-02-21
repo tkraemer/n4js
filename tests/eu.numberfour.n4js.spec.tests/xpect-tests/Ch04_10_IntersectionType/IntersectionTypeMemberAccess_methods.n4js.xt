@@ -24,6 +24,12 @@ interface I1 {
 	varArgBoth(...a:A);
 	
 	inBothInheritedAllDiffTypes(a:A):B;
+	
+	defaultFpar(a:A=);
+	defaultFparBoth(a:A=);
+	
+	complicated1(i:int, a:A=, ...b:B);
+	complicated2(a:string=, ...b:int);
 }
 
 interface I3<S,T> {
@@ -47,6 +53,13 @@ interface I2 extends I3<A,B> {
 
 	varArg(a:A, b:B);
 	varArgBoth(a:A, ...b:B);
+	
+	defaultFpar(a:B);
+	defaultFparBoth(a:B=);
+	
+	complicated1(i:int=, ...b:B);
+	// XPECT warnings at 'n:number' --> "This parameter is changed to the default parameter 'n=undefined' since it follows a default parameter." at "n:number"
+	complicated2(a:string=, n:number, ...b:int);
 }
 
 var i12 : I1&I2;
@@ -145,14 +158,16 @@ i12.diffNoOfParmsDiffType(aub, a);
 
 // varArg(a:A, aub:A|B, ...a:A)
 
+// XPECT type of 'varArg' --> {function(union{A,B}):void}
+i12.varArg(a);
 
-// XPECT errors --> "Incorrect number of arguments: expected 3, got 1." at "i12.varArg(a)" 
+// XPECT noerrors
 i12.varArg(a);
 
 // XPECT noerrors
 i12.varArg(a, aub);
 
-// XPECT errors --> 'B is not a subtype of A' at 'b'
+// XPECT errors --> "B is not a subtype of A." at "b"
 i12.varArg(b, aub);
 
 // XPECT noerrors
@@ -167,7 +182,6 @@ i12.varArg(a, aub, b);
 
 // XPECT noerrors
 i12.varArgBoth(a);
-
 
 // XPECT errors --> "B is not a subtype of A." at "b"
 i12.varArgBoth(b);
@@ -193,3 +207,23 @@ i12.inBothInheritedAllDiffTypes(aub);
 
 // XPECT type of 'i12.inBothInheritedAllDiffTypes(aub)' --> intersection{A,B}
 i12.inBothInheritedAllDiffTypes(aub);
+
+
+
+// defaultFpar(a:A|B);
+// XPECT type of 'defaultFpar' --> {function(union{A,B}):void}
+i12.defaultFpar(a);
+
+// defaultFparBoth(a:{A|B}=);
+// XPECT type of 'defaultFparBoth' --> {function(union{A,B}=…):void}
+i12.defaultFparBoth(a);
+
+
+// complicated1(i:int, a:A|B=, ...b:B);
+// XPECT type of 'complicated1' --> {function(int,union{A,B}=…,...B):void}
+i12.complicated1(undefined, undefined, undefined);
+
+// complicated2(a:string=…, n:int|number=…, ...b:int);
+// XPECT type of 'complicated2' --> {function(string=…,union{int,number}=…,...int):void}
+i12.complicated2();
+

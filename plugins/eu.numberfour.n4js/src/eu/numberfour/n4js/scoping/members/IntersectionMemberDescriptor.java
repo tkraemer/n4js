@@ -69,13 +69,25 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 		for (int fparIdx = 0; fparIdx < fpars.size(); fparIdx++) {
 			final FparDescriptor curr = fpars.get(fparIdx);
 			final FparDescriptor next = fparIdx + 1 < fpars.size() ? fpars.get(fparIdx + 1) : null;
-			if (curr == null
-					// optional fpars must come last:
-					|| (curr.optional && next != null && !(next.optional || next.variadic))
-					// only last fpar may be variadic:
-					|| (curr.variadic && next != null))
+
+			if (!isValidFpar(curr, next))
 				return false;
 		}
+		return true;
+	}
+
+	private boolean isValidFpar(final FparDescriptor curr, final FparDescriptor next) {
+		if (curr == null)
+			return false;
+		if (curr.isVariadic() && next != null)
+			return false;
+
+		// both are not null:
+		// if (curr.variadic)
+		// return false;
+		// if (curr.isOptional() && !next.isOptional()) // not necessary: is handled by Tyoes.xcore#isOptional
+		// return false;
+
 		return true;
 	}
 
@@ -110,8 +122,8 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 
 	@Override
 	protected void mergeFparBooleans(TFormalParameter nextFpar, final FparDescriptor desc) {
-		desc.variadic |= nextFpar.isVariadic(); // remember if ANY was variadic
-		desc.hasInitializerAssignment |= nextFpar.isHasInitializerAssignment(); // remember if ANY had an
-																				// initializer assignment
+		// remember if ANY had an initializer assignment
+		desc.allOptional &= nextFpar.isOptional();
 	}
+
 }

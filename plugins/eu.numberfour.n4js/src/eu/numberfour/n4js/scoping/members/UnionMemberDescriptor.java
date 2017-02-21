@@ -78,9 +78,9 @@ public class UnionMemberDescriptor extends ComposedMemberDescriptor {
 			final FparDescriptor next = fparIdx + 1 < fpars.size() ? fpars.get(fparIdx + 1) : null;
 			if (curr == null
 					// optional fpars must come last:
-					|| (curr.optional && next != null && !(next.optional || next.variadic))
+					|| (curr.isOptional() && next != null && !next.isOptional())
 					// only last fpar may be variadic:
-					|| (curr.variadic && next != null))
+					|| (curr.isVariadic() && next != null))
 				return false;
 		}
 		return true;
@@ -117,8 +117,7 @@ public class UnionMemberDescriptor extends ComposedMemberDescriptor {
 
 	@Override
 	protected void mergeFparBooleans(TFormalParameter nextFpar, final FparDescriptor desc) {
-		desc.variadic &= nextFpar.isVariadic(); // remember if ALL were variadic
-		desc.hasInitializerAssignment &= nextFpar.isHasInitializerAssignment(); // remember if ALL had an
+		desc.allOptional &= nextFpar.isHasInitializerAssignment(); // remember if ALL had an
 																				// initializer assignment
 	}
 }
