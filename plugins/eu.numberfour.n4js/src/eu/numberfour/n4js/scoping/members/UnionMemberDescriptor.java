@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
 
+import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
@@ -119,5 +120,23 @@ public class UnionMemberDescriptor extends ComposedMemberDescriptor {
 	protected void mergeFparBooleans(TFormalParameter nextFpar, final FparDescriptor desc) {
 		desc.allOptional &= nextFpar.isHasInitializerAssignment(); // remember if ALL had an
 																				// initializer assignment
+	}
+
+	@Override
+	protected MemberType getActualKind(MemberType memberType, boolean writeAccessFlag) {
+		MemberType actualKind = memberType;
+		// turn fields into a getter or setter (depending on read or write-access) *if* they have different types
+		if (isField(memberType)) {
+			final TypeRef compo = getSimplifiedCompositionOfTypeRefs();
+			// if the simplified union is a union type, the types cannot be all equal!
+			if (compo != null && compo instanceof ComposedTypeRef) {
+				if (writeAccess) {
+					actualKind = MemberType.SETTER;
+				} else {
+					actualKind = MemberType.GETTER;
+				}
+			}
+		}
+		return actualKind;
 	}
 }

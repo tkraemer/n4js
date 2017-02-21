@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 import com.google.common.base.Joiner;
 
-import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
@@ -283,23 +282,7 @@ abstract public class ComposedMemberDescriptor {
 		if (!isValid())
 			return null;
 
-		MemberType actualKind = kind;
-		// turn fields into a getter or setter (depending on read or write-access) *if* they have different types
-		if (isField(kind)) {
-			final TypeRef compo = getSimplifiedCompositionOfTypeRefs();
-			// if the simplified union is a union type, the types cannot be all equal!
-			if (compo != null && compo instanceof ComposedTypeRef) {
-				if (writeAccess) {
-					actualKind = MemberType.SETTER;
-					final FparDescriptor fpar = new FparDescriptor();
-					fpar.names.add("arg0");
-					fpar.typeRefs.addAll(typeRefs);
-					fpars.add(fpar);
-				} else {
-					actualKind = MemberType.GETTER;
-				}
-			}
-		}
+		MemberType actualKind = getActualKind(kind, writeAccess);
 
 		final TMember composedMember = createMemberOfKind(actualKind);
 		composedMember.setName(name);
@@ -319,12 +302,12 @@ abstract public class ComposedMemberDescriptor {
 			TypeUtils.setMemberTypeRef(composedMember, getSimplifiedCompositionOfTypeRefs());
 
 		if (composedMember instanceof TSetter) {
-			if (!fpars.isEmpty()) {
-				TSetter tSetter = (TSetter) composedMember;
-				// TFormalParameter tFPar = createFormalParameter(0);
-				TFormalParameter tFPar = fpars.get(0).create();
-				tSetter.setFpar(tFPar);
-			}
+			final FparDescriptor fpar = new FparDescriptor();
+			fpar.names.add("arg0");
+			fpar.typeRefs.addAll(typeRefs);
+			TSetter tSetter = (TSetter) composedMember;
+			tSetter.setFpar(fpar.create());
+			fpars.add(fpar);
 		} else if (composedMember instanceof TMethod) {
 			for (FparDescriptor currFparDesc : fpars) {
 				TMethod tMethod = (TMethod) composedMember;
@@ -336,6 +319,12 @@ abstract public class ComposedMemberDescriptor {
 
 		return composedMember;
 	}
+
+	/**
+	 * TODO: Calculate the actual kind from the current kind based on the writeAccess.
+	 *
+	 */
+	protected abstract MemberType getActualKind(MemberType memberType, boolean writeAccessFlag);
 
 	static boolean isField(MemberType kind) {
 		return kind == MemberType.FIELD;

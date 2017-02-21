@@ -126,4 +126,17 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 		desc.allOptional &= nextFpar.isOptional();
 	}
 
+	@Override
+	protected MemberType getActualKind(MemberType memberType, boolean writeAccessFlag) {
+		MemberType actualKind = kind;
+		// turn fields into a getter or setter
+		if (isField(memberType)) {
+			if (writeAccessFlag) {
+				actualKind = MemberType.SETTER;
+			} else {
+				actualKind = MemberType.GETTER;
+			}
+		}
+		return actualKind;
+	}
 }
