@@ -158,11 +158,11 @@ i12.diffNoOfParmsDiffType(aub, a);
 
 // varArg(a:A, aub:A|B, ...a:A)
 
-// XPECT type of 'varArg' --> {function(union{A,B}):void}
-i12.varArg(a);
+// XPECT type of 'varArg' --> {function(A,union{A,B},...A):void}
+i12.varArg(a, b);
 
 // XPECT noerrors
-i12.varArg(a);
+i12.varArg(a, a);
 
 // XPECT noerrors
 i12.varArg(a, aub);
@@ -173,7 +173,7 @@ i12.varArg(b, aub);
 // XPECT noerrors
 i12.varArg(a, aub, a);
 
-// XPECT errors --> 'B is not a subtype of A' at 'b'
+// XPECT errors --> "B is not a subtype of A." at "b"
 i12.varArg(a, aub, b);
 
 
