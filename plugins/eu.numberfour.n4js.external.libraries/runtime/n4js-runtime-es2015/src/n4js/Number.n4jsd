@@ -15,7 +15,7 @@
     public const MAX_SAFE_INTEGER: number;
     public const MIN_SAFE_INTEGER: number;
 
-    public static parseInt(str: string, radix: number =): number;
+    public static parseInt(str: string, radix: number=): number;
     public static parseFloat(str: string): number;
     public static isNaN(number: number): boolean;
     public static isFinite(number: number): boolean;

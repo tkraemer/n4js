@@ -7,14 +7,14 @@
 		return {
 			setters: [],
 			execute: function() {
-				ITestReporter.$fieldInit = function ITestReporter_fieldInit(target, spec, mixinExclusion) {
+				ITestReporter.$fieldInit = function ITestReporter_fieldInit(spec, mixinExclusion) {
 					if (spec) {
-						if (!(mixinExclusion.hasOwnProperty('spy') || target.hasOwnProperty('spy'))) {
-							target.spy = 'spy' in spec ? spec.spy : undefined;
+						if (!(mixinExclusion.hasOwnProperty('spy') || this.hasOwnProperty('spy'))) {
+							this.spy = 'spy' in spec ? spec.spy : undefined;
 						}
 					} else {
-						if (!(mixinExclusion.hasOwnProperty('spy') || target.hasOwnProperty('spy'))) {
-							target.spy = undefined;
+						if (!(mixinExclusion.hasOwnProperty('spy') || this.hasOwnProperty('spy'))) {
+							this.spy = undefined;
 						}
 					}
 				};

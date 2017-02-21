@@ -17,7 +17,7 @@
 			this.buffer = [];
 			this.cliColor = new CliColor();
 			this.spy = undefined;
-			ITestReporter.$fieldInit(this, undefined, {
+			ITestReporter.$fieldInit.call(this, undefined, {
 				timeoutBuffer: undefined,
 				logger: undefined,
 				buffered: undefined,

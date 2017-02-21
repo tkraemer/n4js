@@ -20,7 +20,7 @@
 		IFIXME = {};
 		$n4Export('IFIXME', IFIXME);
 		FIXME1 = function FIXME1() {
-			IFIXME.$fieldInit(this, undefined, {
+			IFIXME.$fieldInit.call(this, undefined, {
 				logStr: undefined
 			});
 		};
@@ -28,7 +28,7 @@
 		IFIXME2 = {};
 		$n4Export('IFIXME2', IFIXME2);
 		FIXME2 = function FIXME2() {
-			IFIXME2.$fieldInit(this, undefined, {
+			IFIXME2.$fieldInit.call(this, undefined, {
 				logStr: undefined
 			});
 		};
@@ -36,7 +36,7 @@
 		return {
 			setters: [],
 			execute: function() {
-				IFIXME.$fieldInit = function IFIXME_fieldInit(target, spec, mixinExclusion) {};
+				IFIXME.$fieldInit = function IFIXME_fieldInit(spec, mixinExclusion) {};
 				IFIXME.$methods = {};
 				$makeInterface(IFIXME, function(instanceProto, staticProto) {
 					var metaClass = new N4Interface({
@@ -88,14 +88,14 @@
 					});
 					return metaClass;
 				});
-				IFIXME2.$fieldInit = function IFIXME2_fieldInit(target, spec, mixinExclusion) {
+				IFIXME2.$fieldInit = function IFIXME2_fieldInit(spec, mixinExclusion) {
 					if (spec) {
-						if (!(mixinExclusion.hasOwnProperty('party') || target.hasOwnProperty('party'))) {
-							target.party = 'party' in spec ? spec.party : false;
+						if (!(mixinExclusion.hasOwnProperty('party') || this.hasOwnProperty('party'))) {
+							this.party = 'party' in spec ? spec.party : false;
 						}
 					} else {
-						if (!(mixinExclusion.hasOwnProperty('party') || target.hasOwnProperty('party'))) {
-							target.party = false;
+						if (!(mixinExclusion.hasOwnProperty('party') || this.hasOwnProperty('party'))) {
+							this.party = false;
 						}
 					}
 				};

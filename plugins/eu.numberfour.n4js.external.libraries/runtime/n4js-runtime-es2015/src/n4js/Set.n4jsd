@@ -48,7 +48,7 @@ export external public class Set<ValueT> extends Object implements Iterable<Valu
     /**
      * Calls callbackFn for each value, in insertion order.
      */
-    public forEach(callbackFn: {function(ValueT, ValueT, Set<ValueT>):void}, thisArg: Object =): void;
+    public forEach(callbackFn: {function(ValueT, ValueT, Set<ValueT>):void}, thisArg: Object=): void;
 
     /**
      * Tests whether an element is part of this set.
