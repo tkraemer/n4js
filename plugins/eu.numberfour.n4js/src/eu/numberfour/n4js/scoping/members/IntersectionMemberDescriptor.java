@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
 
+import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
@@ -24,6 +25,8 @@ import it.xsemantics.runtime.RuleEnvironment;
 
 /** TODO doc */
 public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
+
+	private boolean allAreFields = true;
 
 	/**
 	 * Constructor. The Resource and the N4JSTypeSystem will be used for type inference, etc. during merging of the
@@ -97,6 +100,11 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 			// if this is the first call to #mergeKind() -> initialize 'kind' variable
 			if (kind == null)
 				kind = nextKind;
+
+			if (!isField(nextKind)) {
+				allAreFields = false;
+			}
+
 			// special tweak:
 			// combining fields and accessors will yield the same result as just having the fields
 			if (isAccessor(kind) && isField(nextKind))
@@ -131,12 +139,19 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 		MemberType actualKind = kind;
 		// turn fields into a getter or setter
 		if (isField(memberType)) {
-			if (writeAccessFlag) {
-				actualKind = MemberType.SETTER;
-			} else {
-				actualKind = MemberType.GETTER;
+			final TypeRef compo = getSimplifiedCompositionOfTypeRefs();
+			// If not all are fields => Convert to setter/getter
+			// Otherwise convert only iff the types are not equal
+			// if the simplified intersection is a intersection type, the types cannot be all equal!
+			if (!allAreFields || (compo != null && compo instanceof ComposedTypeRef)) {
+				if (writeAccess) {
+					actualKind = MemberType.SETTER;
+				} else {
+					actualKind = MemberType.GETTER;
+				}
 			}
 		}
 		return actualKind;
 	}
+
 }
