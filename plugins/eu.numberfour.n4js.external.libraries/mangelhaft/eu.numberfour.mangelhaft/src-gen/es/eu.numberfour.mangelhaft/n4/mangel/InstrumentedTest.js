@@ -24,7 +24,7 @@
 			this.child = null;
 			this.error = undefined;
 			this.classIgnoreAnnotation = undefined;
-			IInstrumentedTest.$fieldInit(this, undefined, {
+			IInstrumentedTest.$fieldInit.call(this, undefined, {
 				tests: undefined,
 				beforeAlls: undefined,
 				afterAlls: undefined,

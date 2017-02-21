@@ -14,6 +14,8 @@
 (function (global) {
     "use strict";
 
+    var ctorWritable = typeof __REACT_HOT_LOADER__ !== "undefined";
+
     /**
      * Similar to {@link $makeClass} without n4type meta class.
      *
@@ -36,7 +38,7 @@
         Object.defineProperties(ctor, staticMethods);
 
         var proto = Object.create(superCtor.prototype, instanceMethods);
-        Object.defineProperty(proto, "constructor", { value: ctor });
+        Object.defineProperty(proto, "constructor", { value: ctor, writable: ctorWritable });
 
         ctor.prototype = proto;
     }
@@ -399,7 +401,7 @@
         }
     }, {});
 
-    $makeN4BuiltInClass(N4StringBasedEnum, String, {
+    $makeN4BuiltInClass(N4StringBasedEnum, Object, {
         toString: {
             value: function toString() {
                 return this.value;

@@ -18,8 +18,8 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.resource.IContainer
 import org.eclipse.xtext.resource.IEObjectDescription
-import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
 import org.eclipse.xtext.resource.IResourceDescription
+import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
 
 /**
  * This class contains helper methods for working with Xtext.

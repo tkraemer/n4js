@@ -2,7 +2,7 @@
 "version":3,
 "file":"TestError.js",
 "lineCount":40,
-"mappings":"A;;;;EAUA;;;;;I;;;;;IAAoB;;iCAKQ,OALR,EAK0B;OACtC,MAAM,IAAI,SAAJ,CAAc,OAAd,CAAN,CADsC;OAL1B;;;;;;;;;;;;;;;;;;;;;;",
+"mappings":"A;;;;EAUA;;;;;I;;;;;IAAoB;;iCAKQ,OALR,EAKyB;OACrC,MAAM,IAAI,SAAJ,CAAc,OAAd,CAAN,CADqC;OALzB;;;;;;;;;;;;;;;;;;;;;;",
 "sources":["/sources/eu.numberfour.mangelhaft/n4/mangel/mangeltypes/TestError.n4js"],
 "names":[]
 }
