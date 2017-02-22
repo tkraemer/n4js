@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.scoping.members;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
@@ -18,8 +19,8 @@ import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
-import eu.numberfour.n4js.ts.types.TFormalParameter;
 import eu.numberfour.n4js.ts.types.TMember;
+import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
 
@@ -129,9 +130,18 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 	}
 
 	@Override
-	protected void mergeFparBooleans(TFormalParameter nextFpar, final FparDescriptor desc) {
-		// remember if ANY had an initializer assignment
-		desc.allOptional &= nextFpar.isOptional();
+	protected void checkAndHandleVoidTypeRefs() {
+		List<TypeRef> voids = new LinkedList<>();
+		for (TypeRef tr : typeRefs) {
+			if (TypeUtils.isVoid(tr))
+				voids.add(tr);
+		}
+		if (typeRefs.size() > voids.size()) {
+			// delete voids only, iff other types exists
+			for (TypeRef vds : voids) {
+				typeRefs.remove(vds);
+			}
+		}
 	}
 
 	@Override

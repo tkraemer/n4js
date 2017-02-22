@@ -29,7 +29,7 @@ var b1 : number = a.f1(3);
 // union{A,B}.f2(number) : union{void,number} -> all well XPECT noerrors --> 
 a.f2(3);
 
-// return type union{void,number} XPECT errors --> "union{number,void} is not a subtype of number." at "a.f2(3)"
+// return type union{void,number} XPECT errors --> "void is not a subtype of number." at "a.f2(3)"
 var b2 : number = a.f2(3);
 
 // union{A,B}.f3(number) : number -> all well XPECT noerrors --> 

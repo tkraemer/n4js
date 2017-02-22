@@ -140,12 +140,6 @@ abstract public class ComposedMemberDescriptor {
 	abstract void mergeKind(MemberType nextKind);
 
 	/**
-	 * Updates the following attributes of {@code desc} with respect to the next formal parameter in the scope:
-	 * {@code optional}, {@code variadic}, {@code hasInitializerAssignment}.
-	 */
-	abstract protected void mergeFparBooleans(TFormalParameter nextFpar, final FparDescriptor desc);
-
-	/**
 	 * True iff all members merged via method {@link #merge(RuleEnvironment, TMember)} can be combined to a valid
 	 * composed member.
 	 */
@@ -165,6 +159,11 @@ abstract public class ComposedMemberDescriptor {
 	 * Merges the accessibility of the composed member.
 	 */
 	abstract protected void mergeAccessibility(MemberAccessModifier nextAccessibility);
+
+	/**
+	 *
+	 */
+	abstract protected void checkAndHandleVoidTypeRefs();
 
 	/**
 	 * Returns a simplified union TypeRef.
@@ -246,21 +245,7 @@ abstract public class ComposedMemberDescriptor {
 		// remember ALL other types we have encountered (so we do not actually merge anything here)
 		typeRefs.add(TypeUtils.copyIfContained(nextTypeRef));
 
-		cleanObsoleteVoids();
-	}
-
-	private void cleanObsoleteVoids() {
-		List<TypeRef> voids = new LinkedList<>();
-		for (TypeRef tr : typeRefs) {
-			if (TypeUtils.isVoid(tr))
-				voids.add(tr);
-		}
-		if (typeRefs.size() > voids.size()) {
-			// delete voids only, iff other types exists
-			for (TypeRef vds : voids) {
-				typeRefs.remove(vds);
-			}
-		}
+		checkAndHandleVoidTypeRefs();
 	}
 
 	private void mergeFpar(RuleEnvironment G, int fparIdx, TFormalParameter nextFpar) {
@@ -289,7 +274,7 @@ abstract public class ComposedMemberDescriptor {
 					}
 				}
 			}
-			mergeFparBooleans(nextFpar, desc);
+			desc.allOptional &= nextFpar.isOptional();
 		}
 	}
 

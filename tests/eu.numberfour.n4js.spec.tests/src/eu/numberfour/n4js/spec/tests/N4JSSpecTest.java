@@ -41,7 +41,7 @@ import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 		OutputXpectMethod.class
 })
 @RunWith(XpectRunner.class)
-@XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "xpect-tests/Ch04_10_IntersectionType", fileExtensions = {
+@XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "xpect-tests/Ch04_10_UnionType", fileExtensions = {
 		"xt" })
 @XpectImport(SuppressIssuesSetup.class)
 public class N4JSSpecTest {

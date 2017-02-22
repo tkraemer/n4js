@@ -4,7 +4,7 @@
 // Fields //
 ////////////
 
-class A {
+interface A {
 	n : number;
 	s : string;
 	b : boolean;
@@ -18,17 +18,17 @@ interface B {
 
 var a : intersection{A,B};
 
-// IDE-385 {A,B}.n is a number XPECT noerrors -->
+// IDE-385 intersection{A,B}.n is a number XPECT noerrors -->
 var num1 : number = a.n;
 
-// IDE-385 {A,B}.s is a number XPECT noerrors -->
+// IDE-385 intersection{A,B}.s is a number XPECT noerrors -->
 var num2 : number = a.s;
 
-// IDE-385 {A,B}.s is a string XPECT noerrors -->
+// IDE-385 intersection{A,B}.s is a string XPECT noerrors -->
 var str : string = a.s;
 
-// IDE-385 A.b but no B.b XPECT noerrors -->
+// IDE-385 A.b and in B.b XPECT noerrors -->
 var boo1 : boolean = a.b;
 
-// IDE-385 B.t but no A.t XPECT noerrors -->
+// IDE-385 B.t and in A.t XPECT noerrors -->
 var boo2 : boolean = a.t;
