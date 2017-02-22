@@ -49,6 +49,9 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
+import eu.numberfour.n4js.utils.EcoreUtilN4
+import eu.numberfour.n4js.n4JS.IdentifierRef
+import eu.numberfour.n4js.n4JS.ThisLiteral
 
 /**
  * Main processor used during {@link N4JSPostProcessor post-processing} of N4JS resources. It controls the overall
@@ -167,6 +170,12 @@ public class ASTProcessor extends AbstractProcessor {
 			}
 			return;
 		}
+		if (cache.postponedSubTrees.contains(node)) {
+			// in case this happens, you can either:
+			//  * not postpone this node, or
+			//  * handle the postponed node later (not as part of a forward reference)
+			throw new IllegalStateException("eager processing of postponed subtree");
+		}
 
 		if (!cache.astNodesCurrentlyBeingTyped.add(node)) {
 			// this subtree is currently being processed
@@ -215,13 +224,58 @@ public class ASTProcessor extends AbstractProcessor {
 	}
 	
 	private def boolean isPostponedNode(EObject node) {
-		return 
-			(node instanceof Expression && node.eContainer instanceof FormalParameter)
-		||	(node instanceof Block 
+		return
+			isPostponedInitializer(node)
+		||	(node instanceof Block
 			 && (  node.eContainer instanceof FunctionExpression
 				|| node.eContainer instanceof PropertyGetterDeclaration
 				|| node.eContainer instanceof PropertySetterDeclaration
 				|| node.eContainer instanceof PropertyMethodDeclaration));
+	}
+	
+	/**
+	 * Initializers are postponed only iff:
+	 * <ul>
+	 * <li>Node is an initializer of a FormalParameter p,</li>
+	 * <li>and p is part of a Poly FunctionExpression f,</li>
+	 * <li>and p contains references to other FormalParameters of f, or f itself.</li>
+	 * </ul>
+	 */
+	private def boolean isPostponedInitializer(EObject node) {
+		var boolean referenceToFunctionsParameter = false;
+		val fpar = node.eContainer;
+		if (fpar instanceof FormalParameter) {
+			if (node instanceof Expression) {
+				if (fpar.hasInitializerAssignment) {
+					val funDef = fpar.eContainer;
+					// FunctionExpressions can be Poly
+					if (funDef instanceof FunctionExpression) {
+						// Check if the initializer refers to other fpars
+						val allFPars = funDef.fpars;
+						val allRefs = EcoreUtilN4.getAllContentsOfTypeStopAt(fpar, IdentifierRef, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY);
+						
+						for (IdentifierRef ir : allRefs) {
+							val id = ir.getId();
+							if (allFPars.contains(id)) {
+								referenceToFunctionsParameter = true;
+							}
+							if (id instanceof VariableDeclaration && (id as VariableDeclaration).expression === funDef) {
+								referenceToFunctionsParameter = true;
+							}
+						}
+					}
+					// PropertyMethodDeclaration (as part of ObjectLiterals) can be Poly
+					if (funDef instanceof PropertyMethodDeclaration) {
+						val allRefs = EcoreUtilN4.getAllContentsOfTypeStopAt(fpar, ThisLiteral, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY);
+						if (!allRefs.isEmpty()) {
+							referenceToFunctionsParameter = true;
+						}
+					}
+					// other Types? -> FunctionDefinitions or Setters are never Poly.
+				}
+			}
+		}
+		return referenceToFunctionsParameter;
 	}
 
 	/**

@@ -15,6 +15,7 @@ import eu.numberfour.n4js.ts.types.AccessibleTypeElement;
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement;
 import eu.numberfour.n4js.ts.types.TAnnotableElement;
 import eu.numberfour.n4js.ts.types.TAnnotation;
+import eu.numberfour.n4js.ts.types.TTypedElement;
 import eu.numberfour.n4js.ts.types.TVariable;
 import eu.numberfour.n4js.ts.types.TypeAccessModifier;
 import eu.numberfour.n4js.ts.types.TypesPackage;
@@ -582,6 +583,12 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 				default: return -1;
 			}
 		}
+		if (baseClass == TTypedElement.class) {
+			switch (derivedFeatureID) {
+				case TypesPackage.TVARIABLE__TYPE_REF: return TypesPackage.TTYPED_ELEMENT__TYPE_REF;
+				default: return -1;
+			}
+		}
 		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
 	}
 
@@ -611,6 +618,12 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 				default: return -1;
 			}
 		}
+		if (baseClass == TTypedElement.class) {
+			switch (baseFeatureID) {
+				case TypesPackage.TTYPED_ELEMENT__TYPE_REF: return TypesPackage.TVARIABLE__TYPE_REF;
+				default: return -1;
+			}
+		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
@@ -636,6 +649,11 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 				case TypesPackage.ACCESSIBLE_TYPE_ELEMENT___IS_PROVIDED_BY_RUNTIME: return TypesPackage.TVARIABLE___IS_PROVIDED_BY_RUNTIME;
 				case TypesPackage.ACCESSIBLE_TYPE_ELEMENT___GET_TYPE_ACCESS_MODIFIER: return TypesPackage.TVARIABLE___GET_TYPE_ACCESS_MODIFIER;
 				case TypesPackage.ACCESSIBLE_TYPE_ELEMENT___IS_EXPORTED: return TypesPackage.TVARIABLE___IS_EXPORTED;
+				default: return -1;
+			}
+		}
+		if (baseClass == TTypedElement.class) {
+			switch (baseOperationID) {
 				default: return -1;
 			}
 		}

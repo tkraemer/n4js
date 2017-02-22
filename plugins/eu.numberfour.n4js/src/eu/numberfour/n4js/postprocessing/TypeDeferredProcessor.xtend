@@ -30,6 +30,16 @@ import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EObject
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.n4JS.FormalParameter
+import eu.numberfour.n4js.n4JS.FunctionExpression
+import eu.numberfour.n4js.n4JS.TypedElement
+import eu.numberfour.n4js.ts.types.TypableElement
+import eu.numberfour.n4js.n4JS.FunctionDefinition
+import eu.numberfour.n4js.n4JS.SetterDeclaration
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.ts.typeRefs.TypeArgument
+import eu.numberfour.n4js.ts.types.TTypedElement
+import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
 
 /**
  * Processor for handling {@link DeferredTypeRef}s, <b>except</b> those related to poly expressions, which are handled
@@ -92,36 +102,61 @@ package class TypeDeferredProcessor extends AbstractProcessor {
 		// DeferredTypeRefs related to poly expressions should not be handled here (poly computer responsible for this!)
 		switch (obj) {
 			ExportedVariableDeclaration: {
-				if (obj.declaredTypeRef === null) {
-					val tVariable = obj.definedVariable;
-					if (tVariable !== null) { // note: tVariable===null happens if obj.name===null (see types builder)
-						assertTrueIfRigid(cache, "return type of TVariable in TModule should be a DeferredTypeRef",
-							tVariable.typeRef instanceof DeferredTypeRef);
-						val variableTypeRef = askXsemanticsForType(G, null, obj).value; // delegate to Xsemantics rule typeVariableDeclaration
-						val variableTypeRefSane = tsh.sanitizeTypeOfVariableFieldProperty(G, variableTypeRef);
-						EcoreUtilN4.doWithDeliver(false, [
-							tVariable.typeRef = TypeUtils.copy(variableTypeRefSane);
-						], tVariable);
-					}
-				}
+				val tVariable = obj.definedVariable;
+				setTypeRef(obj, tVariable, false, G, cache);
 			}
 			N4FieldDeclaration: {
-				if (obj.declaredTypeRef === null) {
-					val tField = obj.definedField;
-					if (tField !== null) { // note: tField===null happens if obj.name===null (see types builder)
-						assertTrueIfRigid(cache, "return type of TField in TModule should be a DeferredTypeRef",
-							tField.typeRef instanceof DeferredTypeRef);
-						val context = if (tField.eContainer instanceof ContainerType<?>) TypeUtils.createTypeRef(
-								tField.eContainer as ContainerType<?>) else null;
-						val G_withContext = ts.createRuleEnvironmentForContext(context, G.contextResource);
-						val fieldTypeRef = askXsemanticsForType(G_withContext, null, obj).value; // delegate to Xsemantics rule typeN4FieldDeclaration
-						val fieldTypeRefSubst = ts.substTypeVariables(G_withContext, fieldTypeRef).value;
-						val fieldTypeRefSane = tsh.sanitizeTypeOfVariableFieldProperty(G, fieldTypeRefSubst);
-						EcoreUtilN4.doWithDeliver(false, [
-							tField.typeRef = TypeUtils.copy(fieldTypeRefSane);
-						], tField);
+				val tField = obj.definedField;
+				setTypeRef(obj, tField, true, G, cache);
+			}
+			FormalParameter: {
+				val parent = obj.eContainer;
+				switch (parent) {
+					FunctionExpression: {
+						// do nothing since its DeferredTypes are computed in PolyProcessor_FunctionExpression
 					}
+					PropertyMethodDeclaration: {
+						// do nothing since its DeferredTypes are computed in PolyProcessor_ObjectLiteral
+					}
+					FunctionDefinition: {
+						val tFPar = obj.definedTypeElement; // tFPar can be null if we have a broken AST
+						if (tFPar?.typeRef instanceof DeferredTypeRef) {
+							setTypeRef(obj, tFPar, true, G, cache);
+						}
+					}
+					SetterDeclaration: {
+						// do nothing since setters don't have Deferred Types (and cannot have a default initializer)
+					}
+					default:
+						throw new IllegalArgumentException("Unsupported parent type of FormalParameter")
 				}
+			}
+		}
+	}
+	
+	private def <T extends TypableElement & TypedElement> void setTypeRef(T typedElem, TTypedElement tte, boolean useContext,
+		RuleEnvironment G, ASTMetaInfoCache cache
+	) {
+		if (typedElem.declaredTypeRef === null) {
+			if (tte !== null) { // note: tte===null happens if obj.name===null (see types builder)
+				assertTrueIfRigid(cache, "return type of "+ typedElem.class.name +" in TModule should be a DeferredTypeRef",
+					tte.typeRef instanceof DeferredTypeRef);
+				
+				var RuleEnvironment G2 = G;
+				if (useContext) {
+					var ParameterizedTypeRef context = null;
+					if (tte.eContainer instanceof ContainerType<?>) 
+						context = TypeUtils.createTypeRef(tte.eContainer as ContainerType<?>);
+					G2 = ts.createRuleEnvironmentForContext(context, G.contextResource);
+				}
+				var TypeArgument fieldTypeRef = askXsemanticsForType(G2, null, typedElem).value; // delegate to Xsemantics rule typeN4FieldDeclaration
+				if (useContext) {
+					fieldTypeRef = ts.substTypeVariables(G2, fieldTypeRef).value;
+				}
+				val fieldTypeRefSane = tsh.sanitizeTypeOfVariableFieldProperty(G, fieldTypeRef);
+				EcoreUtilN4.doWithDeliver(false, [
+					tte.typeRef = TypeUtils.copy(fieldTypeRefSane);
+				], tte);
 			}
 		}
 	}

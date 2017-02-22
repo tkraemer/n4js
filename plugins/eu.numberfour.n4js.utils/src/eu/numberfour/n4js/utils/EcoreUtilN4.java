@@ -10,9 +10,12 @@
  */
 package eu.numberfour.n4js.utils;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.eclipse.emf.common.util.AbstractTreeIterator;
@@ -112,6 +115,42 @@ public class EcoreUtilN4 {
 				return (Iterator<? extends EObject>) Iterators.filter(((EObject) element).eContents().iterator(), type);
 			}
 		};
+	}
+
+	/**
+	 * Returns all content of a given type, ignoring all elements which are not of the given type. The traversal stops
+	 * at the given {@code stopReferences} to avoid searching in specific subtrees. The given object itself is neither
+	 * added to the result nor is it tested against the predicate.
+	 *
+	 * @param eobj
+	 *            the root object, may be null
+	 * @return the tree iterator, may be an empty iterator but never null
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> List<T> getAllContentsOfTypeStopAt(EObject eobj, final Class<T> filterType,
+			final EReference... stopReferences) {
+
+		if (eobj == null) {
+			return Collections.EMPTY_LIST;
+		}
+
+		List<EReference> stopReferencesL = Arrays.asList(stopReferences);
+		List<T> contentList = new LinkedList<>();
+		TreeIterator<EObject> tIter = eobj.eAllContents();
+
+		while (tIter.hasNext()) {
+			EObject eObj = tIter.next();
+			EReference eRef = eObj.eContainmentFeature();
+			if (stopReferencesL != null && stopReferencesL.contains(eRef)) {
+				tIter.prune();
+			} else {
+				if (filterType.isInstance(eObj)) {
+					contentList.add((T) eObj);
+				}
+			}
+		}
+
+		return contentList;
 	}
 
 	/**
