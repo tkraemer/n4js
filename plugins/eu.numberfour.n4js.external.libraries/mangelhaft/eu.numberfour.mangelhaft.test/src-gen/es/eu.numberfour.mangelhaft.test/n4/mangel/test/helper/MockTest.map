@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"MockTest.js",
-"lineCount":267,
-"mappings":"A;;;;EAUA,kC;;;;;IAAoB;;wCAYI;OAChB,2BAA2B,CAA3B,CADgB;OAEhB,qBAAqB,YAArB,EAFgB;OAZJ;;;wCAkBI;OAChB,2BAA2B,CAA3B,CADgB;OAEhB,qBAAqB,YAArB,EAFgB;OAlBJ;;;qCAwBC;OACb,wBAAwB,CAAxB,CADa;OAEb,qBAAqB,SAArB,EAFa;OAxBD;;;qCA8BC;OACb,wBAAwB,CAAxB,CADa;OAEb,qBAAqB,SAArB,EAFa;OA9BD;;;mCAoCD;OACX,sBAAsB,CAAtB,CADW;OAEX,qBAAqB,OAArB,EAFW;OApCC;;;mCA0CD;OACX,sBAAsB,CAAtB,CADW;OAEX,qBAAqB,OAArB,EAFW;OA1CC;;;oCAgDA;OACZ,uBAAuB,CAAvB,CADY;OAEZ,qBAAqB,QAArB,EAFY;OAhDA;;;oCAsDA;OACZ,uBAAuB,CAAvB,CADY;OAEZ,qBAAqB,QAArB,EAFY;OAtDA;;;uCA4DG;OACf,uBAAuB,CAAvB,CADe;OAEf,qBAAqB,WAArB,EAFe;OA5DH;;;uCAkEG;OACf,uBAAuB,CAAvB,CADe;OAEf,qBAAqB,WAArB,EAFe;OAlEH;;;;mCAOM;OAClB,0BAA0B,uBAAuB,yBAAyB,sBAAsB,qBAAqB,CAArH,CADkB;OAElB,kBAAkB,EAAlB,CAFkB;OAPN;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;O;IAChB,0BAA+B,CAA/B,C;IACA,uBAA4B,CAA5B,C;IACA,yBAA8B,CAA9B,C;IACA,sBAA2B,CAA3B,C;IACA,qBAA0B,CAA1B,C;IACA,kBAAsC,EAAtC;",
-"sources":["/sources/eu.numberfour.mangelhaft.test/n4/mangel/test/helper/MockTest.n4js"],
-"names":[]
-}
