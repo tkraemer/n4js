@@ -1189,9 +1189,9 @@ The N4JS primitive types `pathSelector<T>`, `i18nKey` and `pathSelector<T>` are 
 Thus, they are completely interchangeable with string types:
 
 [%hardbreaks]
-$ \infer{\type{typeName&lt;T&gt;} \subtype \type{string}}{} \spc  \infer{\type{string} \subtype \type{typeName&lt;T&gt;}}{}$
+$ \infer{\type{typeName}<\type{T}> \subtype \type{string}}{} \spc  \infer{\type{string} \subtype \type{typeName}<\type{T}>}{}$
 $ \infer{\type{i18nKey} \subtype \type{string}}{} \spc \infer{\type{string} \subtype \type{i18nKey}}{} $
-$ \infer{\type{pathSelector&lt;T&gt;} \subtype \type{string}}{} \spc \infer{\type{string} \subtype \type{pathSelector&gt;T&gt;}}{}$
+$ \infer{\type{pathSelector}<\type{T}> \subtype \type{string}}{} \spc \infer{\type{string} \subtype \type{pathSelector}<\type{T}>}{}$
 
 As special literals for these N4JS types do not exist, the type has to be explicitly specified in order to enable the additional validation.
 Note that this validation cannot be applied for more complicated expressions with parts which cannot be evaluated at compile time.
