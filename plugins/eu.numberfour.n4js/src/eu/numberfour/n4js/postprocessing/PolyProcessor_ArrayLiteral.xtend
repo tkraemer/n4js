@@ -279,17 +279,17 @@ if(isValueToBeDestructured) {
 	) {
 		val resultLen = getResultLength(arrLit, expectedElemTypeRefs);
 		val isIterableN = resultLen >= 2;
-		var TypeRef typeRef = null;
 		if (solution.present) {
 			// success case
-			typeRef = resultTypeRef.applySolution(G, solution.get);
+			var typeRef = resultTypeRef.applySolution(G, solution.get);
+			cache.storeType(arrLit, typeRef);
 		} else {
 			// failure case (unsolvable constraint system)
 			val betterElemTypeRefs = arrLit.elements.map [
 				if (expression !== null) getFinalResultTypeOfNestedPolyExpression(expression) else G.anyTypeRef
 			];
-			typeRef = buildFallbackTypeForArrayLiteral(isIterableN, resultLen, betterElemTypeRefs, expectedElemTypeRefs, G);
+			var typeRef = buildFallbackTypeForArrayLiteral(isIterableN, resultLen, betterElemTypeRefs, expectedElemTypeRefs, G);
+			cache.storeType(arrLit, typeRef);
 		}
-		cache.storeType(arrLit, typeRef);
 	}
 }

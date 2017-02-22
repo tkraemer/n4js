@@ -164,8 +164,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 				val iRef = fparInitializer as IdentifierRef;
 				val fparam = iRef.getId() as FormalParameter;
 				val fparTCopy = typeRefMap.get(fparam);
-				var TypeRef tRef = null;
-				tRef = fparTCopy.typeRef;
+				val TypeRef tRef = fparTCopy.typeRef;
 				infCtx.addConstraint(TypeUtils.createTypeRef(iv), TypeUtils.copy(tRef), Variance.CONTRA);
 			} else if (!isPostponed) {
 				val context = if (fparT.eContainer instanceof ContainerType<?>)

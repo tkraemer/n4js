@@ -227,7 +227,6 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 		Optional<Map<InferenceVariable, TypeRef>> solution
 	) {
 		for (propPair : props2InfVarOrFallbackType) {
-			// we know memberInTModule is non-null, because propAssignm's without defined member were not added to prop2InfVar / prop2FallbackType
 			val memberType = getMemberType(G, solution, quickMode, propPair);
 			val memberTypeSane = tsh.sanitizeTypeOfVariableFieldProperty(G, memberType);
 			val propAssignm = propPair.key;
@@ -262,7 +261,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 		if (solution.present) {
 			if (quickMode) {
 				// success case (quick mode):
-				val fallbackType = prop2InfVarOrFallbackType.value as TypeRef; // processing prop2FallbackType, so value is a TypeRef
+				val fallbackType = prop2InfVarOrFallbackType.value as TypeRef; // value is a TypeRef
 				if (propAssignm instanceof PropertyNameValuePair) {
 					memberType = getFinalResultTypeOfNestedPolyExpression(propAssignm.expression)
 				} else {
@@ -271,7 +270,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 				
 			} else {
 				// success case (standard mode):
-				val infVar = prop2InfVarOrFallbackType.value as InferenceVariable; // processing prop2InfVar, so value is an infVar
+				val infVar = prop2InfVarOrFallbackType.value as InferenceVariable; // value is an infVar
 				val fromSolution = solution.get.get(infVar);
 				
 				if (propAssignm instanceof PropertyNameValuePair) {

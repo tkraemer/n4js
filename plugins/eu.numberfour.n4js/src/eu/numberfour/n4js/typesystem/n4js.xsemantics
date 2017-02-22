@@ -1199,12 +1199,7 @@ from {
 	else if (fpar.hasInitializerAssignment) {
 		if (fpar.initializer !== null) {
 			G |- fpar.initializer : var TypeRef E
-			G |~ E /\ E // take upper bound to get rid of ExistentialTypeRef (if any)
-			T = E
-			// TODO: use sanitizer
-			if (E.declaredType === G.undefinedType || E.declaredType === G.nullType || E.declaredType === G.voidType) {
-				T = G.anyTypeRef
-			}
+			T = typeSystemHelper.sanitizeTypeOfVariableFieldProperty(G, E);
 		} else {
 			T = G.anyTypeRef
 		}

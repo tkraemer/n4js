@@ -3558,19 +3558,11 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
           checkAssignableTo(result.getFirst(), TypeRef.class);
           E = (TypeRef) result.getFirst();
           
-          /* G |~ E /\ E */
-          Result<TypeRef> result_1 = upperBoundInternal(G, _trace_, E);
-          checkAssignableTo(result_1.getFirst(), TypeRef.class);
-          E = (TypeRef) result_1.getFirst();
-          
-          T = E;
-          if ((((E.getDeclaredType() == RuleEnvironmentExtensions.undefinedType(G)) || (E.getDeclaredType() == RuleEnvironmentExtensions.nullType(G))) || (E.getDeclaredType() == RuleEnvironmentExtensions.voidType(G)))) {
-            ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
-            T = _anyTypeRef;
-          }
+          TypeRef _sanitizeTypeOfVariableFieldProperty = this.typeSystemHelper.sanitizeTypeOfVariableFieldProperty(G, E);
+          T = _sanitizeTypeOfVariableFieldProperty;
         } else {
-          ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
-          T = _anyTypeRef_1;
+          ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
+          T = _anyTypeRef;
         }
       } else {
         boolean _enforceDynamicTypes = this.jsVariantHelper.enforceDynamicTypes(fpar);
@@ -3586,8 +3578,8 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
               T = _env;
             } catch (Exception e) {
               previousFailure = extractRuleFailedException(e);
-              ParameterizedTypeRef _anyTypeRef_2 = RuleEnvironmentExtensions.anyTypeRef(G);
-              T = _anyTypeRef_2;
+              ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
+              T = _anyTypeRef_1;
             }
           }
         }
