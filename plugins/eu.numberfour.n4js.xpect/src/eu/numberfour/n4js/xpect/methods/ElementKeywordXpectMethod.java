@@ -40,7 +40,7 @@ public class ElementKeywordXpectMethod {
 	EObjectAtOffsetHelper offsetHelper;
 
 	/**
-	 * Test the kind of an element. Examples of kind are getter, setter, field etc.
+	 * Test the element keyword of an element. Examples of element keyword are getter, setter, field etc.
 	 */
 	@ParameterParser(syntax = "('at' arg1=OFFSET)?")
 	@Xpect
@@ -54,11 +54,11 @@ public class ElementKeywordXpectMethod {
 		EObject crossReferencedElement = offsetHelper
 				.resolveCrossReferencedElementAt((XtextResource) context.eResource(), offset.getOffset());
 
-		String actual = calculateTModuleType(crossReferencedElement);
+		String actual = calculateElementKeyword(crossReferencedElement);
 		expectation.assertEquals(actual);
 	}
 
-	private String calculateTModuleType(EObject crossReferencedElement) {
+	private String calculateElementKeyword(EObject crossReferencedElement) {
 		if (crossReferencedElement == null)
 			return null;
 		return keywordProvider.keyword(crossReferencedElement);
