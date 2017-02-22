@@ -348,10 +348,8 @@ A type variable is declared in a type parameter as follows.
 [source,xtext]
 ----
 TypeVariable:
-    name=IDENTIFIER
-        ('extends' declaredUpperBounds+=ParameterizedTypeRef
-            ('&' declaredUpperBounds+=ParameterizedTypeRef)*
-        )?
+	(declaredCovariant?='out' | declaredContravariant?='in')?
+	name=IdentifierOrThis ('extends' declaredUpperBound=TypeRef)?
 ;
 ----
 
@@ -376,12 +374,11 @@ A type parameter defines a type variable, which type may be constrained with an 
 
 Properties of `TypeVariable`:
 
-
 $name$ ::
 Type variable, as type variable contains only an identifier, we use type parameter instead of type variable (and vice versa) if the correct element is clear from the context.
 
-$declaredUpperBounds$ ::
-Upper bounds of concrete type bound to the type variable, i.e. a super class.
+$declaredUpperBound$ ::
+Upper bound of the concrete type being bound to this type variable, i.e. a super class.
 
 [discrete]
 ==== Semantics [[type-variables-semantics]]
@@ -876,13 +873,12 @@ Although Object is a primitive type in cite:[ECMA11a(S8.5)], it is interpreted h
 
 Please note that primitive types are values (= no objects) so they have no properties and you cannot inherit from them.
 
+
 === Undefined Type
 task:IDE-495[]
 
-The `undefined` type cannot be declared explicitly by the user by means of a type expression.
-Every variable that has not been assigned to a value has this value and type respectively.
-This applies also to functions that have no or an empty return statement.
-Note in ECMAScript there are three undefined elements:
+As a built-in type, the type `undefined` cannot be declared explicitly by the user by means of a type expression.
+Note in ECMAScript there are three distinct use cases of `undefined`:
 
 * `undefined` as type (as used here)
 * `undefined` as value (the only value of the undefined type)
@@ -892,24 +888,6 @@ Since ECMAScript 5 it is not allowed to reassign this property but this is not e
 The type `undefined` will be inferred to false in a boolean expression.
 It is important to note that something that is not assigned to a value is `undefined` but not `null`.
 
-Although it is not possible to use `undefined` in a type expression, there are two ways of declaring an element as undefined:
-
-* For functions, the return type can be declared `void`, which is almost similar to `undefined`, see <<_void-type>>.
-* (Local) Variables can be declared as by using the annotation `@Undefined`.
-This does not only set the type to `undefined`, but also prevents users from assigning a value to this variable.
-That is, `@Undefined` basically means that the value of the variable is constantly set to `undefined`.
-
-.Undefined Annotation
-[example]
-====
-The following examples illustrate the use of the annotation:
-
-[source,n4js]
-----
-var @Undefined undef;
-undef = 1; // will issue an error!
-----
-
 The type `undefined` is a subtype of all types. That is,
 [math]
 ++++
@@ -918,7 +896,15 @@ The type `undefined` is a subtype of all types. That is,
 
 is an axiom and true for all types _T_.
 
-====
+Whenever an expression _E_ has an inferred type of `undefined`, which means it will always evaluate to
+value `undefined` at runtime, a warning is shown, unless _E_ is ...
+
+* a `void` expression
+* the direct child expression of a `void` expression,
+* the direct child expression of an expression statement,
+* the `undefined` literal (i.e. the literal representing the `undefined` value),
+* the `this` literal.
+
 
 === Null Type
 
@@ -1115,18 +1101,34 @@ If a variable is declared as type , it can be used just as every variable can be
 Since every property can be get and set, the types of properties is inferred as as well.
 This is formally expressed in <<Identifier>>.
 
+
 === Void Type
 
-The type `void` is the type returned by the ECMAScript `void` operator (see <<_unary-expression>>), which is similar to `undefined`.
-However, the type `undefined` cannot be expressed explicitly in type expressions.
-Instead, it is possible to declare the return type of a function or method as `void` in order to state that the function does not return anything.
+The type `void` is used to denote that there is no value at all, as opposed to type
+`undefined` which denotes that there is a value, but it is always undefined.
+
+The only valid use of type `void` is to declare that a function or method does not
+return anything. In particular, this means:
+
+* `void` is disallowed as type argument,
+* `void` is disallowed as upper/lower bound of type parameters and wild cards,
+* when used as return type of functions or methods, `void` may not be nested, i.e.
++
+[source,n4js]
+----
+function foo(): void {}  // ok
+function bar(): any|void {}  // error
+----
+
+In all the above disallowed cases, type `undefined` should be used instead of `void`.
+
 
 ==== Semantics [[void-type-semantics]]
 
 .Void Type
 [req,id=IDE-13,version=1]
 --
-* The type `void` may only be used to declare the return type of a function or method.
+* The type `void` may only be used as the immediate return type of a function or method.
 
 * If a function $f$ is declared to return `void`, an error is created if a return statement contains an expression:
 +
@@ -1147,8 +1149,15 @@ The following type hierarchy is defined: `void` is only a subtype of itself but 
 \inferSup{\type{void} \subtype \type{void}}
 ++++
 
-Since `void` cannot be used as the type of variables, fields, formal parameters, etc., a function or method with a return type of void cannot be used as an lvalue,
-e.g. it may not appear on the left-hand side of an assignment or in the argument list of a call expression (note the difference to plain JavaScript).
+Since `void` cannot be used as the type of variables, fields, formal parameters, etc., a
+function or method with a return type of void cannot be used on the right-hand side of
+an assignment or in the argument list of a call expression (note the difference to plain
+JavaScript).
+
+The ECMAScript `void` operator (see <<_unary-expression,Unary Expressions>>) has a type
+of `undefined`, not `void`, because it evaluates to value `undefined` and can be used
+on the right-hand side of assignments, etc.
+
 
 === Unknown Type
 
