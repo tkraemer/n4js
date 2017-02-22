@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.postprocessing
 
+import com.google.common.base.Optional
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.ObjectLiteral
@@ -21,6 +22,7 @@ import eu.numberfour.n4js.n4JS.PropertySetterDeclaration
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
+import eu.numberfour.n4js.ts.typeRefs.Versionable
 import eu.numberfour.n4js.ts.types.ContainerType
 import eu.numberfour.n4js.ts.types.FieldAccessor
 import eu.numberfour.n4js.ts.types.InferenceVariable
@@ -38,11 +40,9 @@ import eu.numberfour.n4js.typesystem.constraints.InferenceContext
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.List
+import java.util.Map
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import com.google.common.base.Optional
-import java.util.Map
-import eu.numberfour.n4js.ts.typeRefs.Versionable
 
 /**
  * {@link PolyProcessor} delegates here for processing array literals.
@@ -80,15 +80,17 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 		val quickMode = !haveUsableExpectedType && !TypeUtils.isInferenceVariable(expectedTypeRef);
 
 		val List<TStructMember> tMembers = newArrayList;
-		val List<Pair<PropertyAssignment, ? extends Versionable>> prop2Versnable = newArrayList;
-		processProperties(G, cache, infCtx, quickMode, objLit, tMembers, prop2Versnable);
-		linkGetterSetterPairs(infCtx, quickMode, tMembers);
+		// in standard mode: the following list will contain pairs from property assignments to inference variables
+		// in quick mode: the following list will contain pairs from property assignments to fallback types
+		val List<Pair<PropertyAssignment, ? extends Versionable>> props2InfVarOrFallbackType = newArrayList;
+		processProperties(G, cache, infCtx, objLit, tMembers, quickMode, props2InfVarOrFallbackType);
+		linkGetterSetterPairs(infCtx, tMembers, quickMode);
 
 		// create temporary type (i.e. may contain inference variables)
 		val resultTypeRef = TypeUtils.createParameterizedTypeRefStructural(G.objectType, TypingStrategy.STRUCTURAL, tMembers);
 		
 		// register onSolved handlers to add final types to cache (i.e. may not contain inference variables)
-		infCtx.onSolved [ solution | handleOnSolved(G, cache, infCtx, objLit, prop2Versnable, quickMode, solution) ];
+		infCtx.onSolved [ solution | handleOnSolved(G, cache, infCtx, objLit, quickMode, props2InfVarOrFallbackType, solution) ];
 
 		// return temporary type of objLit (i.e. may contain inference variables)
 		return resultTypeRef;
@@ -98,8 +100,9 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 	 * Processes all properties of an object literal.
 	 * As of now, methods are not processed.
 	 */
-	def private List<Pair<PropertyAssignment, ? extends Versionable>> processProperties(RuleEnvironment G, ASTMetaInfoCache cache, InferenceContext infCtx, boolean quickMode,
-		ObjectLiteral objLit, List<TStructMember> tMembers, List<Pair<PropertyAssignment, ? extends Versionable>> prop2Versnable
+	def private void processProperties(RuleEnvironment G, ASTMetaInfoCache cache, InferenceContext infCtx,
+		ObjectLiteral objLit, List<TStructMember> tMembers,
+		boolean quickMode, List<Pair<PropertyAssignment, ? extends Versionable>> props2InfVarOrFallbackType
 	) {
 		for (pa : objLit.propertyAssignments) {
 			if (pa !== null && pa.definedMember!==null) {
@@ -109,13 +112,13 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 					
 					if (pa.isPoly) {
 						if (!(tMember instanceof TMethod)) {
-							processNonMethodProperties(G, cache, infCtx, quickMode, tMember, pa, prop2Versnable);
+							processNonMethodProperties(G, cache, infCtx, tMember, pa,
+								quickMode, props2InfVarOrFallbackType);
 						}
 					}
 				}
 			}
 		}
-		return prop2Versnable;
 	}
 
 	/**
@@ -124,14 +127,15 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 	 *  b) add a constraint: expressionTypeRef <: iv
 	 *  c) create a TStructMember to be used in the structural result type reference
 	 */
-	def private void processNonMethodProperties(RuleEnvironment G, ASTMetaInfoCache cache, InferenceContext infCtx, boolean quickMode,
-		TStructMember tMember, PropertyAssignment propAssignm, List<Pair<PropertyAssignment, ? extends Versionable>> prop2Versnable
+	def private void processNonMethodProperties(RuleEnvironment G, ASTMetaInfoCache cache, InferenceContext infCtx,
+		TStructMember tMember, PropertyAssignment propAssignm,
+		boolean quickMode, List<Pair<PropertyAssignment, ? extends Versionable>> props2InfVarOrFallbackType
 	) {
 		val originalMemberType = tMember.typeOfMember;
-		
+
 		assertTrueIfRigid(cache, "type of " + propAssignm.eClass.name + " in TModule should be a DeferredTypeRef",
 			originalMemberType instanceof DeferredTypeRef);
-			
+
 		if (originalMemberType instanceof DeferredTypeRef) {
 			if (!quickMode) {
 				// standard mode:
@@ -147,7 +151,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 					}
 				}
 				// remember for later
-				prop2Versnable += propAssignm -> iv;
+				props2InfVarOrFallbackType += propAssignm -> iv;
 			} else {
 				// quick mode:
 				// compute a fall-back type
@@ -164,12 +168,12 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 				// set it as type in tMember
 				tMember.typeOfMember = TypeUtils.copy(fallbackType);
 				// remember for later
-				prop2Versnable += propAssignm -> fallbackType;
+				props2InfVarOrFallbackType += propAssignm -> fallbackType;
 			}
 		}
 	}
 
-	
+
 	def private TypeRef getDeclaredTypeOfOtherAccessorInPair(eu.numberfour.n4js.n4JS.FieldAccessor accAST) {
 		val otherPair = findOtherAccessorInPair(accAST.definedAccessor);
 		val otherPairAST = otherPair?.astElement as eu.numberfour.n4js.n4JS.FieldAccessor;
@@ -195,7 +199,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 	 * Add a constraint for each getter/setter pair reflecting the relation between the getter's and setter's type.
 	 * Required to make the getter obtain its implicit type from the corresponding setter, and vice versa.
 	 */
-	private def void linkGetterSetterPairs(InferenceContext infCtx, boolean quickMode, List<TStructMember> tMembers) {
+	private def void linkGetterSetterPairs(InferenceContext infCtx, List<TStructMember> tMembers, boolean quickMode) {
 		if(!quickMode) { // not in quick mode
 			for (tMember : tMembers) {
 				if (tMember instanceof TStructGetter) {
@@ -219,12 +223,12 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 	 * Writes final types to cache
 	 */
 	private def void handleOnSolved(RuleEnvironment G, ASTMetaInfoCache cache, InferenceContext infCtx, ObjectLiteral objLit,
-		List<? extends Pair<PropertyAssignment, ? extends Versionable>> prop2Versnable, boolean quickMode,
+		boolean quickMode, List<? extends Pair<PropertyAssignment, ? extends Versionable>> props2InfVarOrFallbackType,
 		Optional<Map<InferenceVariable, TypeRef>> solution
 	) {
-		for (propPair : prop2Versnable) {
+		for (propPair : props2InfVarOrFallbackType) {
 			// we know memberInTModule is non-null, because propAssignm's without defined member were not added to prop2InfVar / prop2FallbackType
-			val memberType = getMemberType(G, quickMode, solution, propPair);
+			val memberType = getMemberType(G, solution, quickMode, propPair);
 			val memberTypeSane = tsh.sanitizeTypeOfVariableFieldProperty(G, memberType);
 			val propAssignm = propPair.key;
 			val memberInTModule = propAssignm.definedMember;
@@ -250,15 +254,15 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 		}
 	}
 	
-	private def TypeRef getMemberType(RuleEnvironment G, boolean quickMode, Optional<Map<InferenceVariable, TypeRef>> solution,
-		Pair<PropertyAssignment, ? extends Versionable> propPair
+	private def TypeRef getMemberType(RuleEnvironment G, Optional<Map<InferenceVariable, TypeRef>> solution,
+		boolean quickMode, Pair<PropertyAssignment, ? extends Versionable> prop2InfVarOrFallbackType
 	) {
 		var TypeRef memberType = null;
-		val propAssignm = propPair.key;
+		val propAssignm = prop2InfVarOrFallbackType.key;
 		if (solution.present) {
 			if (quickMode) {
 				// success case (quick mode):
-				val fallbackType = propPair.value as TypeRef; // processing prop2FallbackType, so value is a TypeRef
+				val fallbackType = prop2InfVarOrFallbackType.value as TypeRef; // processing prop2FallbackType, so value is a TypeRef
 				if (propAssignm instanceof PropertyNameValuePair) {
 					memberType = getFinalResultTypeOfNestedPolyExpression(propAssignm.expression)
 				} else {
@@ -267,7 +271,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 				
 			} else {
 				// success case (standard mode):
-				val infVar = propPair.value as InferenceVariable; // processing prop2InfVar, so value is an infVar
+				val infVar = prop2InfVarOrFallbackType.value as InferenceVariable; // processing prop2InfVar, so value is an infVar
 				val fromSolution = solution.get.get(infVar);
 				
 				if (propAssignm instanceof PropertyNameValuePair) {
