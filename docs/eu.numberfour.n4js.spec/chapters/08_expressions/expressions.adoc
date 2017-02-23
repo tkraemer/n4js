@@ -1164,7 +1164,7 @@ var c = new C<string>("hello");
 Let $ne$ be a new expression, with $\tee ne.callee: C$.
 The following constraints must hold:
 
-.  [[new-expression-1]] The callee must be a constructor type: $C <: \type{constructor}\{?\}}$  or a constructable type.
+.  [[new-expression-1]] The callee must be a constructor type: $C <: \type{constructor}\{?\}$  or a constructable type.
 .  [[new-expression-2]] Let $O$ be the type argument of $C$, that is $C = constructor\{O\}$. In that case,
 ..  $O$ must not be an interface or enum: $\mu(C) \not\in \{ \type{Interface}, \type{Enum}\}$
 ..  $O$ must not contain any wildcards.
@@ -1710,7 +1710,7 @@ RelationalOperatorNoIn returns RelationalOperator:
 --
 task:IDE-345[]
 
-For a given relational expression $e$ with $e.op \in \{ \lstnfjs{<}, \lstnfjs{>}, \lstnfjs{<=}, \lstnfjs{>=} \}$ in N4JS mode,
+For a given relational expression $e$ with $e.op \in \{ <, >, <=, >= \}$ in N4JS mode,
 the following constraints must hold:
 
 * The operands must have the same type and the type must be either a number, string, or boolean:

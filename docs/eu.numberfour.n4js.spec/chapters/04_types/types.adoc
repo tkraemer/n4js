@@ -1470,11 +1470,11 @@ Due to interfaces, a variable may conform to multiple types.
 --
 For a given union type $ U= union\{ T_1, \dots ,T_n \}$, the following conditions must hold:
 
-1.  Non-empty: At least one element has to be specified:
+1.  Non-empty: At least one element has to be specified: +
 $U.typeRefs \neq \emptyset$ ($n\geq 1)$
-2.  Non-dynamic: The union type itself must not be declared dynamic:
+2.  Non-dynamic: The union type itself must not be declared dynamic: +
 $\lnot U.dynamic$
-3.  Non-optional elements:
+3.  Non-optional elements: +
 $ \forall T \in U.typeRefs \rightarrow \lnot T.opt  $
 --
 

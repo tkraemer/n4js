@@ -464,7 +464,7 @@ $    \hspace{1em} \lor\ \exists m' \in X.fields \cup X.setters:$
 $    \hspace{3em} m'.acc=\lenum{public} \land \neg m'.static \land m'.name=m.name $
 $    \hspace{3em} \land \tee m': T_m \land \tee m: T_{m'} \land T_m=T_{m'}$
 $       \infer{\lspc \tee X \subtype \tsWoFld T \lspc}{\hspace{3em} \land m'.assignability\geq m.assignability}$
-10. A type $X$ is a subtype of a structural field version of a type $\tsFld this$, if it contains all public, non-static and non-optional fields,
+10. A type $X$ is a subtype of a structural field version of a type $\tsFld{this}$, if it contains all public, non-static and non-optional fields,
 either defined via data fields or field get accessors, of the inferred type of `this`. +
 _All fields which have an initializer are handled as if they were optional._
 +
