@@ -248,7 +248,7 @@ public class ASTProcessor extends AbstractProcessor {
 			if (node instanceof Expression) {
 				if (fpar.hasInitializerAssignment) {
 					val funDef = fpar.eContainer;
-					// FunctionExpressions can be Poly
+					// IdentifierRef in Initializers can cause cyclic dependencies
 					if (funDef instanceof FunctionExpression) {
 						// Check if the initializer refers to other fpars
 						val allFPars = funDef.fpars;
@@ -264,14 +264,17 @@ public class ASTProcessor extends AbstractProcessor {
 							}
 						}
 					}
-					// PropertyMethodDeclaration (as part of ObjectLiterals) can be Poly
-					if (funDef instanceof PropertyMethodDeclaration) {
+					// ThisLiteral in Initializers can cause cyclic dependencies
+					val thisLiteralCausesCyclDep =
+						funDef instanceof PropertyMethodDeclaration
+						|| funDef instanceof FunctionExpression && funDef.eContainer instanceof PropertyNameValuePair;
+					if (thisLiteralCausesCyclDep) {
 						val allRefs = EcoreUtilN4.getAllContentsOfTypeStopAt(fpar, ThisLiteral, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY);
 						if (!allRefs.isEmpty()) {
 							referenceToFunctionsParameter = true;
 						}
 					}
-					// other Types? -> FunctionDefinitions or Setters are never Poly.
+					// other Causes or Types? Note: FunctionDefinitions or Setters are never Poly.
 				}
 			}
 		}
