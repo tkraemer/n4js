@@ -234,7 +234,7 @@ public class ASTProcessor extends AbstractProcessor {
 	}
 	
 	/**
-	 * Initializers are postponed only iff:
+	 * Initializers are postponed iff:
 	 * <ul>
 	 * <li>Node is an initializer of a FormalParameter p,</li>
 	 * <li>and p is part of a Poly FunctionExpression f,</li>
@@ -242,7 +242,7 @@ public class ASTProcessor extends AbstractProcessor {
 	 * </ul>
 	 */
 	private def boolean isPostponedInitializer(EObject node) {
-		var boolean referenceToFunctionsParameter = false;
+		var boolean isPostponedInitializer = false;
 		val fpar = node.eContainer;
 		if (fpar instanceof FormalParameter) {
 			if (node instanceof Expression) {
@@ -256,29 +256,29 @@ public class ASTProcessor extends AbstractProcessor {
 						
 						for (IdentifierRef ir : allRefs) {
 							val id = ir.getId();
-							if (allFPars.contains(id)) {
-								referenceToFunctionsParameter = true;
-							}
-							if (id instanceof VariableDeclaration && (id as VariableDeclaration).expression === funDef) {
-								referenceToFunctionsParameter = true;
+							val idRefCausesCyclDep =
+								allFPars.contains(id) // f(p, q=p) {}
+								|| id instanceof VariableDeclaration && (id as VariableDeclaration).expression === funDef; //  f(p, q=f(1)) {}
+							if (idRefCausesCyclDep) {
+								isPostponedInitializer = true;
 							}
 						}
 					}
-					// ThisLiteral in Initializers can cause cyclic dependencies
+					// In ObjectLiterals, the ThisLiteral in Initializers can cause cyclic dependencies
 					val thisLiteralCausesCyclDep =
-						funDef instanceof PropertyMethodDeclaration
-						|| funDef instanceof FunctionExpression && funDef.eContainer instanceof PropertyNameValuePair;
+						funDef instanceof PropertyMethodDeclaration // let o = { a:1, f(p=this.a) {} }
+						|| funDef instanceof FunctionExpression && funDef.eContainer instanceof PropertyNameValuePair; // let o = {a:2, f: function(p=this.a) {}}
 					if (thisLiteralCausesCyclDep) {
-						val allRefs = EcoreUtilN4.getAllContentsOfTypeStopAt(fpar, ThisLiteral, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY);
-						if (!allRefs.isEmpty()) {
-							referenceToFunctionsParameter = true;
+						val containsThisLiteral = EcoreUtilN4.containsContentsOfTypeStopAt(fpar, ThisLiteral, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY);
+						if (containsThisLiteral) {
+							isPostponedInitializer = true;
 						}
 					}
-					// other Causes or Types? Note: FunctionDefinitions or Setters are never Poly.
+					// If this check is not sufficient, we have to add more checks here. Note: Setters never have initializers.
 				}
 			}
 		}
-		return referenceToFunctionsParameter;
+		return isPostponedInitializer;
 	}
 
 	/**
