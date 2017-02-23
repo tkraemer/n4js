@@ -10,6 +10,7 @@ package eu.numberfour.n4js.ts.types.impl;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 import eu.numberfour.n4js.ts.types.TAnnotationTypeRefArgument;
+import eu.numberfour.n4js.ts.types.TTypedElement;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
 import java.lang.reflect.InvocationTargetException;
@@ -190,6 +191,38 @@ public class TAnnotationTypeRefArgumentImpl extends TAnnotationArgumentImpl impl
 				return typeRef != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == TTypedElement.class) {
+			switch (derivedFeatureID) {
+				case TypesPackage.TANNOTATION_TYPE_REF_ARGUMENT__TYPE_REF: return TypesPackage.TTYPED_ELEMENT__TYPE_REF;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == TTypedElement.class) {
+			switch (baseFeatureID) {
+				case TypesPackage.TTYPED_ELEMENT__TYPE_REF: return TypesPackage.TANNOTATION_TYPE_REF_ARGUMENT__TYPE_REF;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 	/**

@@ -7,7 +7,6 @@
  */
 package eu.numberfour.n4js.ts.types;
 
-import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,7 +23,6 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.types.TVariable#getTypeRef <em>Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TVariable#isConst <em>Const</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TVariable#isExternal <em>External</em>}</li>
  * </ul>
@@ -33,33 +31,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
  * @model
  * @generated
  */
-public interface TVariable extends TExportableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement {
-	/**
-	 * Returns the value of the '<em><b>Type Ref</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Type Ref</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Type Ref</em>' containment reference.
-	 * @see #setTypeRef(TypeRef)
-	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTVariable_TypeRef()
-	 * @model containment="true"
-	 * @generated
-	 */
-	TypeRef getTypeRef();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TVariable#getTypeRef <em>Type Ref</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Type Ref</em>' containment reference.
-	 * @see #getTypeRef()
-	 * @generated
-	 */
-	void setTypeRef(TypeRef value);
-
+public interface TVariable extends TExportableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement, TTypedElement {
 	/**
 	 * Returns the value of the '<em><b>Const</b></em>' attribute.
 	 * <!-- begin-user-doc -->
