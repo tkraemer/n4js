@@ -1,0 +1,28 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+// this as FunctionExpression of PropertyNameValuePair XPECT noerrors -->
+let o1 = {var: function(n=this){} };
+o1;
+
+// this in PropertyFunction XPECT noerrors -->
+let o2 = {f(n:Object=this) {} };
+o2;
+
+// this as ArrowFunctionExpression of PropertyNameValuePair XPECT noerrors -->
+let o3 = {var: (n=this) => {} };
+o3;
+
+
+// nested 1.1 XPECT noerrors -->
+let o4 = {var: (n= (c=this)=> {} ) => {} };
+
+// nested 1.2 XPECT noerrors -->
+let o5 = {var: (n= function(c=this) {} ) => {} };
+
+
+// nested 2.1 XPECT noerrors -->
+let o6 = {var: function(n= (c=this) => {} ) {} };
+
+// nested 2.2 XPECT noerrors -->
+let o7 = {var: function(n= function(c=this) {} ) {} };

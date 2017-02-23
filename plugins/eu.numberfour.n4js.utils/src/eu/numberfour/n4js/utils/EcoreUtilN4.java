@@ -124,10 +124,38 @@ public class EcoreUtilN4 {
 	 *
 	 * @param eobj
 	 *            the root object, may be null
+	 * @param filterType
+	 *            type to match
+	 * @param stopReferences
+	 *            excluded subtrees
 	 * @return the tree iterator, may be an empty iterator but never null
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T> List<T> getAllContentsOfTypeStopAt(EObject eobj, final Class<T> filterType,
+			final EReference... stopReferences) {
+		return getAllContentsOfTypeStopAt(false, eobj, filterType, stopReferences);
+	}
+
+	/**
+	 * Returns true if there exists an element of type {@code filterType} in the given tree starting at {@code eobj}.
+	 * The traversal stops at the given {@code stopReferences} to avoid searching in specific subtrees. The given object
+	 * itself is neither added to the result nor is it tested against the predicate.
+	 *
+	 * @param eobj
+	 *            the root object, may be null
+	 * @param filterType
+	 *            type to match
+	 * @param stopReferences
+	 *            excluded subtrees
+	 * @return the tree iterator, may be an empty iterator but never null
+	 */
+	public static <T> boolean containsContentsOfTypeStopAt(EObject eobj, final Class<T> filterType,
+			final EReference... stopReferences) {
+		List<T> firstMatch = getAllContentsOfTypeStopAt(true, eobj, filterType, stopReferences);
+		return !firstMatch.isEmpty();
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T> List<T> getAllContentsOfTypeStopAt(boolean findFirst, EObject eobj, final Class<T> filterType,
 			final EReference... stopReferences) {
 
 		if (eobj == null) {
@@ -146,6 +174,9 @@ public class EcoreUtilN4 {
 			} else {
 				if (filterType.isInstance(eObj)) {
 					contentList.add((T) eObj);
+					if (findFirst) {
+						return contentList;
+					}
 				}
 			}
 		}
