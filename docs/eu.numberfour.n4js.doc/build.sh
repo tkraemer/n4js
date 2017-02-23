@@ -40,7 +40,7 @@ do
 	HEADER_DIR=$(basename $(dirname $f))
 	echo running AsciiDoctor on $ADOC_FILE to $OUT_FOLDER
 	mkdir -p $OUT_FOLDER
-	asciispec -D $OUT_FOLDER $ADOC_FILE \
+	asciidoctor -D $OUT_FOLDER $ADOC_FILE \
 -a stylesdir=${REL_PATH}../res/styles -a stylesheet=n4js-adoc.css \
 -a highlightjsdir=${REL_PATH}../res/scripts -a highlightjs-theme=n4jshighlighter -a source-highlighter=highlightjs \
 -a docinfodir=${REL_PATH}../res/headers/$HEADER_DIR -a docinfo1=true \
@@ -49,10 +49,10 @@ done
 
 cd ./$GEN_FOLDER/
 find . -name "*.adoc" -delete && find . -name "*.graffle" -delete
-cd ..
+cd .../build-p
 
 # Adding -l flag for launching pages after build
-if [ "${1}" == "--launch" ] || [ "${1}" == "-p" ]; then
+if [ "${1}" == "--launch" ] || [ "${1}" == "-l" ]; then
 open ./$GEN_FOLDER/index.html
 exit 0
 fi
