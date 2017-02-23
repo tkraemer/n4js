@@ -49,18 +49,21 @@ public class ElementKeywordXpectMethod {
 			IEObjectCoveringRegion offset) {
 
 		EObject context = offset.getEObject();
-		// Get the cross-referenced element at the offset.
 		// Identical behavior as in hover in the IDE! See class N4JSHoverProvider
-		EObject crossReferencedElement = offsetHelper
+		// Get the cross-referenced element at the offset.
+		EObject element = offsetHelper
 				.resolveCrossReferencedElementAt((XtextResource) context.eResource(), offset.getOffset());
+		// If not a cross-reference element, use context instead
+		if (element == null)
+			element = context;
 
-		String actual = calculateElementKeyword(crossReferencedElement);
+		String actual = calculateElementKeyword(element);
 		expectation.assertEquals(actual);
 	}
 
-	private String calculateElementKeyword(EObject crossReferencedElement) {
-		if (crossReferencedElement == null)
+	private String calculateElementKeyword(EObject element) {
+		if (element == null)
 			return null;
-		return keywordProvider.keyword(crossReferencedElement);
+		return keywordProvider.keyword(element);
 	}
 }
