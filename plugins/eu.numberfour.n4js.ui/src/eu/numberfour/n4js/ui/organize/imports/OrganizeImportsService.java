@@ -21,36 +21,36 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 import eu.numberfour.n4js.utils.languages.N4LanguageUtils;
 
 /**
- * Utility for proper access to the organize imports helper. Since helper needs be injected in with injector for the
- * language of the file that it will be processing, it cannot be injected into the caller up front. Instead callers
- * should call this class that will perform lookup of the proper injector and use it to create helper on the fly.
+ * Service for organizing imports in files and editors. Since process of organizing imports is contextual to the
+ * specific language, this class will perform injector lookup based on the provided {@link IFile} or
+ * {@link XtextEditor}. Using found injector it will delegate work to {@link DocumentImportsOrganizer}.
  */
-public class OrganizeImportsHelperAccess {
+public class OrganizeImportsService {
 
-	private static final Logger LOGGER = Logger.getLogger(OrganizeImportsHelperAccess.class);
+	private static final Logger LOGGER = Logger.getLogger(OrganizeImportsService.class);
 
 	/** Organize provided file. */
 	public static void organizeImportsInFile(IFile currentFile, final Interaction interaction, SubMonitor subMon)
 			throws CoreException {
 		SubMonitor subSubMon = subMon.split(1, SubMonitor.SUPPRESS_NONE);
 		subSubMon.setTaskName(currentFile.getName());
-		N4JSOrganizeImportsHelper organizeImportsHelper = getOrganizeImports(currentFile);
-		organizeImportsHelper.doOrganizeFile(currentFile, interaction, subSubMon);
+		DocumentImportsOrganizer imortsOrganizer = getOrganizeImports(currentFile);
+		imortsOrganizer.organizeFile(currentFile, interaction, subSubMon);
 	}
 
 	/** Organize provided file. */
 	public static void organizeImportsInFile(IFile currentFile, final Interaction interaction, IProgressMonitor mon)
 			throws CoreException {
-		N4JSOrganizeImportsHelper organizeImportsHelper = getOrganizeImports(currentFile);
-		organizeImportsHelper.doOrganizeFile(currentFile, interaction, mon);
+		DocumentImportsOrganizer imortsOrganizer = getOrganizeImports(currentFile);
+		imortsOrganizer.organizeFile(currentFile, interaction, mon);
 	}
 
 	/** Organize provided editor. */
 	public static void organizeImportsInEditor(XtextEditor editor, final Interaction interaction) {
 		try {
 			IResource resource = editor.getResource();
-			N4JSOrganizeImportsHelper organizeImportsHelper = getOrganizeImports(resource);
-			organizeImportsHelper.doOrganizeDocument(editor.getDocument(), interaction);
+			DocumentImportsOrganizer imortsOrganizer = getOrganizeImports(resource);
+			imortsOrganizer.organizeDocument(editor.getDocument(), interaction);
 		} catch (RuntimeException re) {
 			if (re.getCause() instanceof BreakException) {
 				LOGGER.debug("user canceled");
@@ -61,11 +61,11 @@ public class OrganizeImportsHelperAccess {
 		}
 	}
 
-	private static N4JSOrganizeImportsHelper getOrganizeImports(IFile ifile) {
-		return N4LanguageUtils.getServiceForContext(ifile, N4JSOrganizeImportsHelper.class).get();
+	private static DocumentImportsOrganizer getOrganizeImports(IFile ifile) {
+		return N4LanguageUtils.getServiceForContext(ifile, DocumentImportsOrganizer.class).get();
 	}
 
-	private static N4JSOrganizeImportsHelper getOrganizeImports(IResource iresource) {
-		return N4LanguageUtils.getServiceForContext(iresource, N4JSOrganizeImportsHelper.class).get();
+	private static DocumentImportsOrganizer getOrganizeImports(IResource iresource) {
+		return N4LanguageUtils.getServiceForContext(iresource, DocumentImportsOrganizer.class).get();
 	}
 }

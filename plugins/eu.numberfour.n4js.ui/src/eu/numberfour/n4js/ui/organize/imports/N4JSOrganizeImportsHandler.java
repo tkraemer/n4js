@@ -13,8 +13,8 @@ package eu.numberfour.n4js.ui.organize.imports;
 import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.commands.AbstractHandler;
@@ -70,13 +70,13 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 				&& !selection.isEmpty());
 
 		if (haveActiveEditor && (fromTextContext || fromShortCut)) {
-			OrganizeImportsHelperAccess.organizeImportsInEditor(editor, Interaction.queryUser);
+			OrganizeImportsService.organizeImportsInEditor(editor, Interaction.queryUser);
 		} else if (nonEmptyStructuredSelection) {
 			// probably called on a tree-selection in the package-manager or whatever view shows the project-structure:
 			// organize files and folders:
 			// for each selection entry collect files:
 			SelectionFilesCollector filesCollector = new SelectionFilesCollector(this::filter);
-			ArrayList<IFile> collectedFiles = filesCollector.collectFiles((IStructuredSelection) selection);
+			List<IFile> collectedFiles = filesCollector.collectFiles((IStructuredSelection) selection);
 
 			if (collectedFiles.isEmpty()) {
 				return null;
@@ -127,14 +127,14 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 	 * @param collectedFiles
 	 *            files that will be processed during run
 	 */
-	private void batchOrganize(Shell shell, ArrayList<IFile> collectedFiles)
+	private void batchOrganize(Shell shell, List<IFile> collectedFiles)
 			throws InvocationTargetException, InterruptedException {
 		new ProgressMonitorDialog(shell)
 				.run(true, true, createOrganizingRunnable(collectedFiles));
 	}
 
 	/** Creates {@link IRunnableWithProgress} that will be organize imports in the provided files. */
-	private IRunnableWithProgress createOrganizingRunnable(ArrayList<IFile> collectedFiles) {
+	private IRunnableWithProgress createOrganizingRunnable(List<IFile> collectedFiles) {
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			@Override
 			public void run(IProgressMonitor mon) throws InvocationTargetException, InterruptedException {
@@ -144,7 +144,7 @@ public class N4JSOrganizeImportsHandler extends AbstractHandler {
 					IFile currentFile = collectedFiles.get(i);
 					subMon.setTaskName("Organize imports." + " - File (" + (i + 1) + " of " + totalWork + ")");
 					try {
-						OrganizeImportsHelperAccess.organizeImportsInFile(currentFile, Interaction.breakBuild, subMon);
+						OrganizeImportsService.organizeImportsInFile(currentFile, Interaction.breakBuild, subMon);
 
 					} catch (CoreException | RuntimeException e) {
 						String msg = "Exception in file " + currentFile.getFullPath().toString() + ".";

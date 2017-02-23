@@ -27,22 +27,20 @@ import static org.eclipse.xtext.nodemodel.util.NodeModelUtils.*
 import static extension eu.numberfour.n4js.ui.organize.imports.XtextResourceUtils.*
 
 /**
- * Utility for analyzing potential cleanups that can be made to the import section of the {@link XtextResource}
+ * Utility that will calculate changes to remove all imports from {@link XtextResource}.
  */
-class ImportsCleanupChangesUtil {
+class ImportsRemovalChangesComputer {
 
 	/**
-	 * Compute all cleanup changes (removal of imports)
-	 * 
-	 * 
-	 * @param xtextResource - the Resource to modify
-	 * @param document - the document connected to the xtextResource,  for textual changes.
+	 * Compute changes that will remove all imports.
+	 *
+	 * @param xtextResource the resource to modify
+	 * @param document the document connected to the xtextResource,  for textual changes.
 	 * @return list of changes to the document.
 	 */
-	public static def List<IChange> getCleanupChanges(XtextResource xtextResource,
-		IXtextDocument document) throws BadLocationException {
+	public static def List<IChange> getImportDeletionChanges(XtextResource resource, IXtextDocument document) throws BadLocationException {
 		val changes = newArrayList
-		val elements = xtextResource.getScript().scriptElements
+		val elements = resource.getScript().scriptElements
 
 //		elements.filter(ImportDeclaration).map[findActualNodeFor(it)].forEach[changes.add(document.removeNodeButKeepComments(it))]
 		for (el : elements) {

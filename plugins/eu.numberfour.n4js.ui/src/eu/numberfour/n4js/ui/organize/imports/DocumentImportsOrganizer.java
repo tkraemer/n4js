@@ -51,11 +51,11 @@ import eu.numberfour.n4js.utils.UtilN4;
  * This helper will analyze imports section of the provided document, and rewrite it with new computed state.
  *
  * Since many injected services depend on type of the organized document (i.e. language, e.g. N4JS) it is desired that
- * callers use {@link OrganizeImportsHelperAccess} which will take care the injection mechanisms.
+ * callers use {@link OrganizeImportsService} which will take care the injection mechanisms.
  */
-public class N4JSOrganizeImportsHelper {
+class DocumentImportsOrganizer {
 
-	private static final Logger LOGGER = Logger.getLogger(N4JSOrganizeImportsHelper.class);
+	private static final Logger LOGGER = Logger.getLogger(DocumentImportsOrganizer.class);
 
 	@Inject
 	private ImportsComputer importsComputer;
@@ -76,26 +76,10 @@ public class N4JSOrganizeImportsHelper {
 	private N4JSDocumentationProvider n4JSDocumentationProvider;
 
 	/**
-	 * Organize the imports in the N4JS document. It is unsafe to use this method without if the caller was injected
-	 * with injector for different language than needs to be used for the document. E.g. when Caller is create through
-	 * N4JS injector, but processed document is N4JSX type. It is safer for the callers to use
-	 * {@link OrganizeImportsHelperAccess} which will take care the injection mechanisms.
-	 *
-	 * @param document
-	 *            N4JS document
-	 * @throws RuntimeException
-	 *             wrapping a BreakException in case of user-abortion ({@link Interaction#queryUser}) or
-	 *             resolution-failure({@link Interaction#breakBuild} )
-	 */
-	public void organizeDocument(final IXtextDocument document, final Interaction interaction) {
-		doOrganizeDocument(document, interaction);
-	}
-
-	/**
 	 * Obtains {@link IXtextDocument} for the provided file and delegates to
-	 * {@link #doOrganizeDocument(IXtextDocument, Interaction)}
+	 * {@link #organizeDocument(IXtextDocument, Interaction)}
 	 */
-	void doOrganizeFile(IFile file, final Interaction interaction, IProgressMonitor mon)
+	void organizeFile(IFile file, final Interaction interaction, IProgressMonitor mon)
 			throws CoreException {
 
 		SubMonitor subMon = SubMonitor.convert(mon, "Organizing " + file.getName(), IProgressMonitor.UNKNOWN);
@@ -107,7 +91,7 @@ public class N4JSOrganizeImportsHelper {
 
 		docProvider.aboutToChange(fei);
 
-		doOrganizeDocument(document, interaction);
+		organizeDocument(document, interaction);
 
 		subMon.setTaskName("Saving " + file.getName());
 		docProvider.saveDocument(subMon.split(0), fei, document, true);
@@ -126,7 +110,7 @@ public class N4JSOrganizeImportsHelper {
 	 *             wrapping a BreakException in case of user-abortion ({@link Interaction#queryUser}) or
 	 *             resolution-failure({@link Interaction#breakBuild} )
 	 */
-	void doOrganizeDocument(final IXtextDocument document, final Interaction interaction) {
+	void organizeDocument(final IXtextDocument document, final Interaction interaction) {
 		// trigger Linking
 		document.readOnly((XtextResource p) -> {
 			N4JSResource.postProcess(p);
@@ -196,9 +180,9 @@ public class N4JSOrganizeImportsHelper {
 						final String organizedImportSection = importsComputer
 								.getOrganizedImportSection(xtextResource, NL, interaction);
 						// remove old imports
-						changes.addAll(ImportsCleanupChangesUtil.getCleanupChanges(xtextResource, document));
+						changes.addAll(ImportsRemovalChangesComputer.getImportDeletionChanges(xtextResource, document));
 						// insert new imports
-						changes.addAll(prepareRealInsertion(document, xtextResource, insertionPoint, NL,
+						changes.addAll(getImportInsertionChanges(document, xtextResource, insertionPoint, NL,
 								organizedImportSection));
 						return changes;
 					} catch (UserCanceledBreakException e) {
@@ -214,8 +198,8 @@ public class N4JSOrganizeImportsHelper {
 	}
 
 	/**
-	 * Computes the change for real insertion. If nothing is inserted (e.g. organizedImportSection is empty) then an
-	 * empty list is returned.
+	 * Computes the changes that will insert imports. If nothing is inserted (e.g. organizedImportSection is empty) then
+	 * an empty list is returned.
 	 *
 	 * This method computes the real offset based on the information given in the passed in insertion point and creates
 	 * an replacement.
@@ -232,7 +216,7 @@ public class N4JSOrganizeImportsHelper {
 	 *            text of imports
 	 * @return empty list or a single-element list with an replacement.
 	 */
-	private List<IChange> prepareRealInsertion(final IXtextDocument document, XtextResource xtextResource,
+	private List<IChange> getImportInsertionChanges(final IXtextDocument document, XtextResource xtextResource,
 			InsertionPoint insertionPoint, final String NL,
 			final String organizedImportSection) throws BadLocationException {
 		if (organizedImportSection.isEmpty()) {

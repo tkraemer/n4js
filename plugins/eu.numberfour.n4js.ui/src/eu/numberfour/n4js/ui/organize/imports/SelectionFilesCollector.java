@@ -10,8 +10,8 @@
  */
 package eu.numberfour.n4js.ui.organize.imports;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -43,7 +43,7 @@ public class SelectionFilesCollector {
 	}
 
 	/** Collects files from provided selection. */
-	public ArrayList<IFile> collectFiles(IStructuredSelection structuredSelection) {
+	public List<IFile> collectFiles(IStructuredSelection structuredSelection) {
 		collected = new HashSet<>();
 		for (Object object : structuredSelection.toList()) {
 			collectRelevantFiles(object);
