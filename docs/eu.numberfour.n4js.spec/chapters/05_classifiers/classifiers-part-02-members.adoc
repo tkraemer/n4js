@@ -143,7 +143,7 @@ They are defined similarly to methods as proposed in cite:[ECMA15a(S13.5)] excep
 === Syntax
 
 .Syntax Method Declaration
-[source,xtext]
+[source,xtext,subs=macros]
 ----
 N4MethodDeclaration <Yield>:
     => ({N4MethodDeclaration}
@@ -188,7 +188,7 @@ IdentifierName: IDENTIFIER | ReservedWord | N4Keyword;
 NumericLiteralAsString: DOUBLE | INT | OCTAL_INT | HEX_INT | SCIENTIFIC_INT;
 StringLiteralAsName: STRING;
 
-fragment AsyncNoTrailingLineBreak *: (declaredAsync?='async' NoLineTerminator)?;  // <1>
+fragment AsyncNoTrailingLineBreak *: (declaredAsync?='async' NoLineTerminator)?;  // See xref:_asynchronous-functions[Asynchronous Functions].
 
 fragment StrictFormalParameters <Yield>*:
     '(' (fpars+=FormalParameter<Yield> (',' fpars+=FormalParameter<Yield>)*)? ')'
@@ -212,7 +212,7 @@ fragment ColonSepTypeRef*:
     ':' declaredTypeRef=TypeRef
 ;
 ----
-<1> See the <<_asynchronous-functions>> section.
+
 
 [.language-n4js]
 === Properties

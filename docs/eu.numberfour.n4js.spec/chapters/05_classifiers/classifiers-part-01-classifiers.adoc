@@ -574,9 +574,9 @@ $i,j \in \{1 \dots n\}$.
 +
 NOTE: For type parameters of $J$ that are declared covariant or contravariant on definition site, different type arguments may be used.
 .  All abstract members in $I_i$, $i \in \{1, \dots, n\}$, must be accessible from `I`: +
-$\forall i \in \{1, \dots, n\} : M \in I_i.members \land M.abstract \to $
-`M` is accessible from `I` +
-(note that `M` need not be an owned member of $I_i$).
+$\forall i \in \{1, \dots, n\} : M \in I_i.members \land M.abstract \to $ `M` is accessible from `I`
+
+NOTE: `M` need not be an owned member of $I_i$.
 --
 
 .Implementing Interfaces
@@ -598,7 +598,8 @@ $I_i=I_j \Rightarrow i=j$ for any $i,j \in \{1, \dots, n\}$.
 NOTE: for type parameters of $J$ that are declared covariant or contravariant on definition site, different type arguments may be used.
 .  All abstract members in $I_i$, $i \in \{1, \dots, n\}$, must be accessible from `C`: +
 $\forall i \in \{1, \dots, n\} : M \in I_i.members \land M.abstract \to $ `M` is accessible from `C` +
-(note that `M` need not be an owned member of $I_i$).
+
+NOTE: `M` need not be an owned member of $I_i$.
 
 --
 
