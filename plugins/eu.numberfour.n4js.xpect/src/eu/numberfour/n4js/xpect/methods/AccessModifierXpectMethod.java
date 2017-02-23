@@ -37,7 +37,7 @@ import eu.numberfour.n4js.xpect.common.N4JSOffsetAdapter.IEObjectCoveringRegion;
 /**
  */
 @XpectImport(N4JSOffsetAdapter.class)
-public class AccessModifierAxpectMethod {
+public class AccessModifierXpectMethod {
 
 	/***/
 	@ParameterParser(syntax = "('at' arg1=OFFSET)?")

@@ -1,0 +1,45 @@
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
+
+//XPECT elementKeyword at 'C'--> class
+class C {
+	//XPECT elementKeyword at 'm' --> literal or computed property name
+	public m() {};
+}
+
+//XPECT elementKeyword at 'c' --> variable
+var c: C;
+
+//XPECT elementKeyword at 'f' --> function
+function f() {};
+
+interface I {
+	fld: int;
+	get g(): string;
+	set s(p:string);
+}
+
+//XPECT elementKeyword at 'string' --> primitive
+var v1: string;
+
+
+//Test cross-reference
+
+//XPECT elementKeyword at 'I' --> interface
+var i: I;
+
+//XPECT elementKeyword at 'fld' --> field
+i.fld;
+
+//XPECT elementKeyword at 'g' --> getter
+i.g;
+
+//XPECT elementKeyword at 's' --> setter
+i.s = "Hi";
+
+//XPECT elementKeyword at 'm' --> method
+c.m();
+
+
+ 
+
+

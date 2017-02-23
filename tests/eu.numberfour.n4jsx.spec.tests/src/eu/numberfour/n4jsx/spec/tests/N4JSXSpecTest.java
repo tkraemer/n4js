@@ -20,7 +20,7 @@ import org.xpect.xtext.lib.tests.LinkingTest;
 import org.xpect.xtext.lib.tests.ResourceDescriptionTest;
 import org.xpect.xtext.lib.tests.ValidationTest;
 
-import eu.numberfour.n4js.xpect.methods.AccessModifierAxpectMethod;
+import eu.numberfour.n4js.xpect.methods.AccessModifierXpectMethod;
 import eu.numberfour.n4js.xpect.methods.FindReferencesXpectMethod;
 import eu.numberfour.n4js.xpect.methods.FormatterXpectMethod;
 import eu.numberfour.n4js.xpect.methods.NoerrorsXpectMethod;
@@ -34,7 +34,7 @@ import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
  * Xpect test class, also configured in fragment.xml, executes all Xpect tests found in model folder.
  */
 @XpectSuiteClasses({
-		AccessModifierAxpectMethod.class,
+		AccessModifierXpectMethod.class,
 		LinkingTest.class,
 		ReturnXpectMethod.class,
 		TypeXpectMethod.class,

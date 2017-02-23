@@ -19,7 +19,7 @@ import org.xpect.runner.XpectTestFiles.FileRoot;
 import org.xpect.xtext.lib.tests.ResourceDescriptionTest;
 import org.xpect.xtext.lib.tests.ValidationTest;
 
-import eu.numberfour.n4js.xpect.methods.AccessModifierAxpectMethod;
+import eu.numberfour.n4js.xpect.methods.AccessModifierXpectMethod;
 import eu.numberfour.n4js.xpect.methods.LinkingXpectMethod;
 import eu.numberfour.n4js.xpect.methods.NoerrorsXpectMethod;
 import eu.numberfour.n4js.xpect.methods.ElementKeywordXpectMethod;
@@ -34,7 +34,7 @@ import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
  */
 @XpectSuiteClasses({
 		LinkingXpectMethod.class, ResourceDescriptionTest.class,
-		AccessModifierAxpectMethod.class,
+		AccessModifierXpectMethod.class,
 		TypeXpectMethod.class,
 		ValidationTest.class,
 		NoerrorsXpectMethod.class,
