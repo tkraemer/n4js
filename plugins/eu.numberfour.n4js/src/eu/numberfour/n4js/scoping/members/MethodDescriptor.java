@@ -16,6 +16,7 @@ import java.util.List;
 import eu.numberfour.n4js.scoping.members.ComposedMemberAggregate.FParAggregate;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
+import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TFormalParameter;
 import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.TypesFactory;
@@ -231,7 +232,8 @@ abstract class MethodDescriptor implements ComposedMemberDescriptorNew {
 
 		@Override
 		TypeRef getReturnTypeRefComposition() {
-			return cma.getTypeSystem().createSimplifiedIntersection(cma.getTypeRefs(), cma.getResource());
+			List<TypeRef> typeRefs = cma.getTypeRefsOfMemberType(MemberType.METHOD);
+			return cma.getTypeSystem().createSimplifiedIntersection(typeRefs, cma.getResource());
 		}
 
 		@Override
@@ -268,7 +270,8 @@ abstract class MethodDescriptor implements ComposedMemberDescriptorNew {
 
 		@Override
 		TypeRef getReturnTypeRefComposition() {
-			return cma.getTypeSystem().createSimplifiedUnion(cma.getTypeRefs(), cma.getResource());
+			List<TypeRef> typeRefs = cma.getTypeRefsOfMemberType(MemberType.METHOD);
+			return cma.getTypeSystem().createSimplifiedUnion(typeRefs, cma.getResource());
 		}
 
 		@Override

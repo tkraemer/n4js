@@ -10,8 +10,11 @@
  */
 package eu.numberfour.n4js.scoping.members;
 
+import java.util.List;
+
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
+import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TGetter;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
@@ -62,7 +65,8 @@ abstract class GetterDescriptor implements ComposedMemberDescriptorNew {
 
 		@Override
 		TypeRef getReturnTypeRefComposition() {
-			return cma.getTypeSystem().createSimplifiedIntersection(cma.getTypeRefs(), cma.getResource());
+			List<TypeRef> typeRefs = cma.getTypeRefsOfMemberType(MemberType.GETTER, MemberType.FIELD);
+			return cma.getTypeSystem().createSimplifiedIntersection(typeRefs, cma.getResource());
 		}
 	}
 
@@ -78,7 +82,8 @@ abstract class GetterDescriptor implements ComposedMemberDescriptorNew {
 
 		@Override
 		TypeRef getReturnTypeRefComposition() {
-			return cma.getTypeSystem().createSimplifiedUnion(cma.getTypeRefs(), cma.getResource());
+			List<TypeRef> typeRefs = cma.getTypeRefsOfMemberType(MemberType.GETTER, MemberType.FIELD);
+			return cma.getTypeSystem().createSimplifiedUnion(typeRefs, cma.getResource());
 		}
 	}
 

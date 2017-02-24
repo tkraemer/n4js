@@ -10,8 +10,11 @@
  */
 package eu.numberfour.n4js.scoping.members;
 
+import java.util.List;
+
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
+import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
@@ -30,6 +33,8 @@ abstract class FieldDescriptor implements ComposedMemberDescriptorNew {
 
 	abstract boolean isFinal();
 
+	abstract TypeRef getReturnTypeRef();
+
 	@Override
 	public boolean isEmpty() {
 		return false;
@@ -43,7 +48,7 @@ abstract class FieldDescriptor implements ComposedMemberDescriptorNew {
 	@Override
 	public TField create(String name) {
 		TField field = TypesFactory.eINSTANCE.createTField();
-		TypeRef typeRef = cma.getTypeRefs().get(0); // since this is a field, the typeRef is never a composed type
+		TypeRef typeRef = getReturnTypeRef();
 		TypeUtils.setMemberTypeRef(field, typeRef);
 		field.setName(name);
 		field.setDeclaredFinal(isFinal());
@@ -65,6 +70,14 @@ abstract class FieldDescriptor implements ComposedMemberDescriptorNew {
 		boolean isFinal() {
 			return cma.onlyReadOnlyFields();
 		}
+
+		@Override
+		TypeRef getReturnTypeRef() {
+			List<TypeRef> typeRefs = cma.getTypeRefsOfMemberType(MemberType.FIELD, MemberType.GETTER,
+					MemberType.SETTER);
+			TypeRef typeRef = typeRefs.get(0); // since this is a field, the typeRef is never a composed type
+			return typeRef;
+		}
 	}
 
 	static class UnionField extends FieldDescriptor {
@@ -80,6 +93,13 @@ abstract class FieldDescriptor implements ComposedMemberDescriptorNew {
 		@Override
 		boolean isFinal() {
 			return cma.hasReadOnlyField();
+		}
+
+		@Override
+		TypeRef getReturnTypeRef() {
+			List<TypeRef> typeRefs = cma.getTypeRefsOfMemberType(MemberType.FIELD);
+			TypeRef typeRef = typeRefs.get(0); // since this is a field, the typeRef is never a composed type
+			return typeRef;
 		}
 	}
 

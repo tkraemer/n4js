@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.scoping.members;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -101,6 +102,7 @@ public class ComposedMemberAggregate {
 	private boolean onlyReadOnlyFields = true;
 	private MemberAccessModifier accessibilityMin = MemberAccessModifier.PUBLIC;
 	private MemberAccessModifier accessibilityMax = MemberAccessModifier.PRIVATE;
+	private final Map<MemberType, List<TypeRef>> typeRefsMap = new HashMap<>();
 	private final List<TypeRef> typeRefs = new ArrayList<>();
 	private final List<TypeRef> typeRefsVoid = new ArrayList<>();
 	private final List<TypeRef> typeRefsNonVoid = new ArrayList<>();
@@ -275,6 +277,12 @@ public class ComposedMemberAggregate {
 			} else {
 				typeRefsNonVoid.add(typeRefCopy);
 			}
+			MemberType currMType = member.getMemberType();
+			if (!typeRefsMap.containsKey(currMType)) {
+				typeRefsMap.put(currMType, new LinkedList<>());
+			}
+			List<TypeRef> typeRefsOfMemberType = typeRefsMap.get(currMType);
+			typeRefsOfMemberType.add(typeRefCopy);
 		}
 	}
 
@@ -440,9 +448,24 @@ public class ComposedMemberAggregate {
 	}
 
 	/***/
-	public List<TypeRef> getTypeRefs() {
+	public List<TypeRef> getTypeRefsOld() {
 		initMemberAggregate();
 		return typeRefs;
+	}
+
+	/***/
+	public List<TypeRef> getTypeRefsOfMemberType(MemberType... memberTypes) {
+		initMemberAggregate();
+		if (memberTypes == null)
+			return Collections.emptyList();
+
+		List<TypeRef> resultTypeRefs = new LinkedList<>();
+		for (MemberType memberType : memberTypes) {
+			if (typeRefsMap.containsKey(memberType)) {
+				resultTypeRefs.addAll(typeRefsMap.get(memberType));
+			}
+		}
+		return resultTypeRefs;
 	}
 
 	/***/

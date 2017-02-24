@@ -10,7 +10,13 @@
  */
 package eu.numberfour.n4js.scoping.members;
 
+import static eu.numberfour.n4js.ts.types.MemberType.FIELD;
+import static eu.numberfour.n4js.ts.types.MemberType.GETTER;
+import static eu.numberfour.n4js.ts.types.MemberType.METHOD;
+import static eu.numberfour.n4js.ts.types.MemberType.SETTER;
+
 import java.util.Iterator;
+import java.util.List;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberType;
@@ -52,32 +58,32 @@ public class UnionMemberDescriptorNew implements ComposedMemberDescriptorNew {
 			return null; // inValid
 		}
 		if (cma.onlyMethodMemberTypes()) {
-			return MemberType.METHOD;
+			return METHOD;
 		}
 		// mix of all non-method memberTypes
 		if (cma.onlyGetterMemberTypes()) {
-			return MemberType.GETTER;
+			return GETTER;
 		}
 		if (cma.onlySetterMemberTypes()) {
-			return MemberType.SETTER;
+			return SETTER;
 		}
 		if (cma.onlyFieldMemberTypes()) {
 			if (allTypeRefAreEqual()) {
-				return MemberType.FIELD;
+				return FIELD;
 			} else {
 				if (cma.isWriteAccess()) {
-					return MemberType.SETTER;
+					return SETTER;
 				} else {
-					return MemberType.GETTER;
+					return GETTER;
 				}
 			}
 		}
 		// mix of all non-method memberTypes
 		if (!cma.hasGetterMemberType()) {
-			return MemberType.SETTER;
+			return SETTER;
 		}
 		if (!cma.hasSetterMemberType()) {
-			return MemberType.GETTER;
+			return GETTER;
 		}
 		return null; // inValid
 	}
@@ -105,9 +111,10 @@ public class UnionMemberDescriptorNew implements ComposedMemberDescriptorNew {
 
 	private boolean allTypeRefAreEqual() {
 		N4JSTypeSystem ts = cma.getTypeSystem();
-		TypeRef ist = ts.createSimplifiedUnion(cma.getTypeRefs(), cma.getResource());
+		List<TypeRef> allTypeRefs = cma.getTypeRefsOfMemberType(METHOD, FIELD, GETTER, SETTER);
+		TypeRef ist = ts.createSimplifiedIntersection(allTypeRefs, cma.getResource());
 
-		Iterator<TypeRef> typeRefIt = cma.getTypeRefs().iterator();
+		Iterator<TypeRef> typeRefIt = allTypeRefs.iterator();
 		while (typeRefIt.hasNext()) {
 			TypeRef firstNonNullTypeRef = typeRefIt.next();
 			if (firstNonNullTypeRef != null) {

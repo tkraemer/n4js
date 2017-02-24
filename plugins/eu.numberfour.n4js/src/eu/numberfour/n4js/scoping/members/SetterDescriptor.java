@@ -10,12 +10,14 @@
  */
 package eu.numberfour.n4js.scoping.members;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import eu.numberfour.n4js.scoping.members.ComposedMemberAggregate.FParAggregate;
 import eu.numberfour.n4js.scoping.members.MethodDescriptor.FParDescriptorCreator;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
+import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TSetter;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 
@@ -29,11 +31,14 @@ abstract class SetterDescriptor implements ComposedMemberDescriptorNew {
 	SetterDescriptor(ComposedMemberAggregate cma) {
 		this.cma = cma;
 		String name = "arg0";
+		List<TypeRef> typeRefs = new LinkedList<>();
 		List<FParAggregate> fpars = cma.getFParAggregates();
 		if (fpars != null && !fpars.isEmpty()) {
-			name = fpars.get(0).getName();
+			FParAggregate firstFpar = fpars.get(0);
+			name = firstFpar.getName();
+			typeRefs.addAll( firstFpar.getTypeRefs());
 		}
-		this.fpar = new StandaloneFPar(name, cma.getTypeRefs());
+		this.fpar = new StandaloneFPar(name, typeRefs);
 	}
 
 	abstract MemberAccessModifier getAccessability();
@@ -71,7 +76,8 @@ abstract class SetterDescriptor implements ComposedMemberDescriptorNew {
 
 		@Override
 		TypeRef getReturnTypeRefComposition() {
-			return cma.getTypeSystem().createSimplifiedUnion(cma.getTypeRefs(), cma.getResource());
+			List<TypeRef> typeRefs = cma.getTypeRefsOfMemberType(MemberType.SETTER, MemberType.FIELD);
+			return cma.getTypeSystem().createSimplifiedUnion(typeRefs, cma.getResource());
 		}
 	}
 
@@ -92,7 +98,8 @@ abstract class SetterDescriptor implements ComposedMemberDescriptorNew {
 
 		@Override
 		TypeRef getReturnTypeRefComposition() {
-			return cma.getTypeSystem().createSimplifiedIntersection(cma.getTypeRefs(), cma.getResource());
+			List<TypeRef> typeRefs = cma.getTypeRefsOfMemberType(MemberType.SETTER, MemberType.FIELD);
+			return cma.getTypeSystem().createSimplifiedIntersection(typeRefs, cma.getResource());
 		}
 
 	}
