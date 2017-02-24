@@ -1,0 +1,33 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "reactFiles/react.n4jsd" { from = "reactFiles/react.n4jsd"}
+	}
+
+	END_SETUP
+*/
+
+import * as React from "reactFiles/react";
+
+interface ~Props<ValueT> extends React.ComponentProps  {
+    public value: ValueT?;
+}
+
+class Base<ValueT>
+    extends React.PureComponent<Props<ValueT>, Object> {
+
+    @Override
+    public render(): React.Element {
+             return (<div/>);
+
+    }
+}
+
+class Concrete extends Base<Date> {
+
+}
+
+//XPECT noerrors
+<Concrete
+	value={new Date()}/>

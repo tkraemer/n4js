@@ -15,6 +15,7 @@ import eu.numberfour.n4js.N4JSGlobals
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
+import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TGetter
@@ -137,12 +138,12 @@ class ReactHelper {
 			}	
 			
 			val reactComponentProps = tComponentClassifier.typeVars.get(0);
+			// Add type variable -> type argument mappings from the current and all super types
 			tsh.addSubstitutions(G, TypeUtils.createTypeRef(tclass));
-			ts.substTypeVariablesInTypeRef(G, TypeUtils.createTypeRef(reactComponentProps));
-
-			val reactComponentPropsTypeRef = G.get(reactComponentProps);
-			if (reactComponentPropsTypeRef !== null && (reactComponentPropsTypeRef instanceof TypeRef))
-				return reactComponentPropsTypeRef as TypeRef;
+			// Substitute type variables in the 'props' and return the result
+			// Note: after substTypeVariablesInTypeRef is called, the rule environment G is unchanged so do not ask G for result as this caused bug IDE-2540
+			val reactComponentPropsTypeRef = ts.substTypeVariablesInTypeRef(G, TypeUtils.createTypeRef(reactComponentProps));
+			return reactComponentPropsTypeRef;
 
 		} else if (exprTypeRef instanceof FunctionTypeExprOrRef) {
 			// The JSX elements refers to a function, assume that the first parameter is props
