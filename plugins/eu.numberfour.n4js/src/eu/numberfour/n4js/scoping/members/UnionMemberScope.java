@@ -65,4 +65,9 @@ public class UnionMemberScope extends ComposedMemberScope {
 	protected ComposedMemberDescriptor getComposedMemberDescriptor(final Resource resource) {
 		return new UnionMemberDescriptor(writeAccess, resource, ts);
 	}
+
+	@Override
+	protected ComposedMemberDescriptorNew getComposedMemberDescriptorNew(ComposedMemberAggregate cma) {
+		return new UnionMemberDescriptorNew(cma);
+	}
 }

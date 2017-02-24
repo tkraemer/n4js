@@ -67,4 +67,9 @@ public class IntersectionMemberScope extends ComposedMemberScope {
 	protected ComposedMemberDescriptor getComposedMemberDescriptor(final Resource resource) {
 		return new IntersectionMemberDescriptor(writeAccess, resource, ts);
 	}
+
+	@Override
+	protected ComposedMemberDescriptorNew getComposedMemberDescriptorNew(ComposedMemberAggregate cma) {
+		return new IntersectionMemberDescriptorNew(cma);
+	}
 }

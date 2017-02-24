@@ -31,7 +31,6 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef;
 import eu.numberfour.n4js.ts.types.FieldAccessor;
-import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TGetter;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TypesFactory;
@@ -73,6 +72,11 @@ public abstract class ComposedMemberScope extends AbstractScope {
 	 *
 	 */
 	abstract protected ComposedMemberDescriptor getComposedMemberDescriptor(final Resource resource);
+
+	/**
+	 *
+	 */
+	abstract protected ComposedMemberDescriptorNew getComposedMemberDescriptorNew(ComposedMemberAggregate cma);
 
 	/**
 	 * Creates union type scope, passed subScopes are expected to be fully configured (i.e., including required filters
@@ -159,6 +163,8 @@ public abstract class ComposedMemberScope extends AbstractScope {
 		// merge the properties of the existing members into 'composedMember'
 		final Resource resource = EcoreUtilN4.getResource(context, composedTypeRef);
 		final ComposedMemberDescriptor composedMemberDescr = getComposedMemberDescriptor(resource);
+		ComposedMemberAggregate.init(writeAccess, resource, ts);
+
 		for (int idx = 0; idx < subScopes.length; idx++) {
 			final IScope subScope = subScopes[idx];
 			final TypeRef typeRef = composedTypeRef.getTypeRefs().get(idx);
@@ -166,14 +172,21 @@ public abstract class ComposedMemberScope extends AbstractScope {
 			final RuleEnvironment GwithSubstitutions = ts.createRuleEnvironmentForContext(typeRef, res);
 			final TMember member = findMemberInSubScope(subScope, memberName);
 			composedMemberDescr.merge(GwithSubstitutions, member);
+			ComposedMemberAggregate.addMember(member, GwithSubstitutions);
+
 		}
 		// produce result
-		if (!composedMemberDescr.isEmpty()) {
+		ComposedMemberAggregate cma = ComposedMemberAggregate.get();
+		ComposedMemberDescriptorNew cmdn = getComposedMemberDescriptorNew(cma);
+		if (!cmdn.isEmpty()) { // NEW
+			// if (!composedMemberDescr.isEmpty()) { // OLD
 			// at least one of the subScopes had an element of that name
 			final TMember result;
-			if (composedMemberDescr.isValid()) {
+			if (cmdn.isValid()) { // NEW
+				// if (composedMemberDescr.isValid()) { // OLD
 				// success case: The element for that name can be merged into a valid composed member
-				result = composedMemberDescr.create(memberName);
+				result = cmdn.create(memberName); // NEW
+				// result = composedMemberDescr.create(memberName); // OLD
 			} else {
 				// some of the subScopes do not have an element for that name OR
 				// they do not form a valid composed member (e.g. they are of different kind)
@@ -266,12 +279,14 @@ public abstract class ComposedMemberScope extends AbstractScope {
 			final EObject objOrProxy = currElem.getEObjectOrProxy();
 			if (objOrProxy != null && !objOrProxy.eIsProxy() && objOrProxy instanceof TMember) {
 				final TMember currM = (TMember) objOrProxy;
-				if (hasCorrectAccess(currM, writeAccess)
-						|| (currM instanceof TField && hasCorrectAccess(currM, !writeAccess))) {
-					return currM;
-				} else {
-					return createErrorPlaceholder(name);
-				}
+				return currM; // NEW
+				// OLD:
+				// if (hasCorrectAccess(currM, writeAccess)
+				// || (currM instanceof TField && hasCorrectAccess(currM, !writeAccess))) {
+				// return currM;
+				// } else {
+				// return createErrorPlaceholder(name);
+				// }
 			}
 		}
 		return null;

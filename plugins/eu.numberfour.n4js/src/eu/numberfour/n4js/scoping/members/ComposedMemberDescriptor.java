@@ -318,6 +318,7 @@ abstract public class ComposedMemberDescriptor {
 			final FparDescriptor fpar = new FparDescriptor();
 			fpar.names.add("arg0");
 			fpar.typeRefs.addAll(typeRefs);
+			fpar.allOptional = false;
 			TSetter tSetter = (TSetter) composedMember;
 			fpars.add(fpar);
 			tSetter.setFpar(fpar.create());
