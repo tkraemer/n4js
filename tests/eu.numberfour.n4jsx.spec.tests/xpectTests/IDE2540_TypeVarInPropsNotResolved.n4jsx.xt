@@ -31,3 +31,4 @@ class Concrete extends Base<Date> {
 //XPECT noerrors
 <Concrete
 	value={new Date()}/>
+	
