@@ -127,7 +127,7 @@ abstract class MethodDescriptor implements ComposedMemberDescriptorNew {
 
 		FParDescriptor(FParAggregate fpa) {
 			this.fpa = fpa;
-			this.index = fpas.indexOf(this);
+			this.index = cma.getFParAggregates().indexOf(fpa);
 		}
 
 		@Override
@@ -160,13 +160,19 @@ abstract class MethodDescriptor implements ComposedMemberDescriptorNew {
 			return true;
 		}
 
-		private FParDescriptor getNext() {
+		FParDescriptor getPrev() {
+			if (index <= 0)
+				return null;
+			return fpas.get(index - 1);
+		}
+
+		FParDescriptor getNext() {
 			if (fpas.size() >= index + 1)
 				return null;
 			return fpas.get(index + 1);
 		}
 
-		private boolean isLast() {
+		boolean isLast() {
 			if (index == fpas.size() - 1)
 				return true;
 			return false;
@@ -248,7 +254,16 @@ abstract class MethodDescriptor implements ComposedMemberDescriptorNew {
 
 			@Override
 			protected boolean isOptional() {
-				return !fpa.allNonOptional() && !isVariadic();
+				if (isVariadic())
+					return false;
+				if (!fpa.allNonOptional())
+					return true;
+
+				FParDescriptor prevFpar = getPrev();
+				if (prevFpar != null)
+					return prevFpar.isOptional();
+
+				return false;
 			}
 		}
 	}
@@ -286,7 +301,16 @@ abstract class MethodDescriptor implements ComposedMemberDescriptorNew {
 
 			@Override
 			protected boolean isOptional() {
-				return fpa.allOptional() && !isVariadic();
+				if (isVariadic())
+					return false;
+				if (fpa.allOptional())
+					return true;
+
+				FParDescriptor prevFpar = getPrev();
+				if (prevFpar != null)
+					return prevFpar.isOptional();
+
+				return false;
 			}
 		}
 	}

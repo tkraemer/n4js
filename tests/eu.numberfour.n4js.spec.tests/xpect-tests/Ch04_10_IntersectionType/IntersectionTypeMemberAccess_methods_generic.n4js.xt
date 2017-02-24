@@ -124,8 +124,7 @@ i12.diffNoOfParmsDiffType(aub, a);
 
 // varArg(a:A, aub:A|B, ...a:A)
 
-// XPECT errors --> "Incorrect number of arguments: expected 3, got 1." at "i12.varArg(a)" 
-
+// XPECT noerrors --> "Incorrect number of arguments: expected 3, got 1." at "i12.varArg(a)" 
 i12.varArg(a);
 
 // XPECT noerrors

@@ -158,7 +158,7 @@ i12.diffNoOfParmsDiffType(aub, a);
 
 // varArg(a:A, aub:A|B, ...a:A)
 
-// XPECT type of 'varArg' --> {function(A,union{A,B},...A):void}
+// XPECT type of 'varArg' --> {function(A=…,union{A,B}=…,...A):void}
 i12.varArg(a, b);
 
 // XPECT noerrors
@@ -211,7 +211,7 @@ i12.inBothInheritedAllDiffTypes(aub);
 
 
 // defaultFpar(a:A|B);
-// XPECT type of 'defaultFpar' --> {function(union{A,B}):void}
+// XPECT type of 'defaultFpar' --> {function(union{A,B}=…):void}
 i12.defaultFpar(a);
 
 // defaultFparBoth(a:{A|B}=);
@@ -220,7 +220,7 @@ i12.defaultFparBoth(a);
 
 
 // complicated1(i:int, a:A|B=, ...b:B);
-// XPECT type of 'complicated1' --> {function(int,union{A,B}=…,...B):void}
+// XPECT type of 'complicated1' --> {function(int=…,union{A,B}=…,...B):void}
 i12.complicated1(undefined, undefined, undefined);
 
 // complicated2(a:string=…, n:int|number=…, ...b:int);

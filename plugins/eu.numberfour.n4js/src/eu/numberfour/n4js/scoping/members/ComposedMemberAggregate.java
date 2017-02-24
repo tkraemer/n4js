@@ -120,6 +120,7 @@ public class ComposedMemberAggregate {
 		private final List<String> names = new LinkedList<>();
 		private boolean allOptional = true;
 		private boolean allNonOptional = true;
+		private boolean isOrSucceedsOptional = false;
 		private final List<TypeRef> typeRefs = new ArrayList<>();
 		private final List<TypeRef> typeRefsVariadic = new ArrayList<>();
 		private final List<TypeRef> typeRefsVariadicAccumulated = new ArrayList<>();
@@ -137,6 +138,11 @@ public class ComposedMemberAggregate {
 		/***/
 		public boolean allNonOptional() {
 			return allNonOptional;
+		}
+
+		/***/
+		public boolean isOrSucceedsOptional() {
+			return isOrSucceedsOptional;
 		}
 
 		/***/
@@ -187,13 +193,18 @@ public class ComposedMemberAggregate {
 		}
 
 		// init: fParameters
+		boolean optionalFparSeen = false;
 		List<TypeRef> currVariadicAccumulated = new LinkedList<>();
 		for (FParAggregate fpAggr : fParameters) {
 			initFParAggregate(fpAggr);
 
-			// handle typeRefsVariadicAccumulated
+			// handle: typeRefsVariadicAccumulated
 			currVariadicAccumulated.addAll(fpAggr.typeRefsVariadic);
 			fpAggr.typeRefsVariadicAccumulated.addAll(currVariadicAccumulated);
+
+			// handle: succeedsOptional
+			optionalFparSeen |= !fpAggr.allNonOptional();
+			fpAggr.isOrSucceedsOptional = optionalFparSeen;
 		}
 
 		handleIsVariadicButLastFParIsDifferent();
