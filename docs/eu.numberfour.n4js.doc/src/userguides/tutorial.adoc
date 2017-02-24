@@ -425,7 +425,7 @@ a constructor to our base entity class Task as follows:
 export abstract class Task {
   // ...
 
-  constructor(@Spec spec: ~i~this?) {  
+  constructor(@Spec spec: ~i~this=undefined) {  
   // code for initialization will be generated due to @Spec annotation  
   }  
 }  
@@ -433,10 +433,11 @@ export abstract class Task {
 ----
 
 The concept of constructors is taken from ECMAScript 2015. However, the parameter is very special
-to N4JS. We briefly describe the type expression `pass:[~i~this?]` used here. We already know `?` to be
-the optional modifier. If a parameter of a function is marked as optional, N4JS allows for
-omitting it in the call (or in case of constructors in the new expression). `this` is a known
-keyword in ECMAScript, it usually refers to the receiver of a property or, in case of classes,
+to N4JS. We briefly describe the type expression `pass:[~i~this=undefined]` used here. The part `=undefined` declares
+the default initializer of the parameter `spec` (c.f. ECMAScript 2015 cite:[ECMA11a]). Parameters which have default
+initializers are optional, hence N4JS allows for omitting them in function calls (or in case of
+constructors, in the `NewExpression`).
+`this` is a known keyword in ECMAScript, it usually refers to the receiver of a property or, in case of classes,
 method call. But here we use it as a type expression, referring to the type of the `this`
 keyword. This is usually the class in which the method or constructor is defined. That is,
 in case of Task it will be `Task`. However, we have two subclasses of `Task`. We do not
@@ -470,7 +471,7 @@ For Task we would write:
 
 [source, n4js]
 ----
-constructor(spec: ~i~this?) {
+constructor(spec: ~i~this=undefined) {
   this.id = spec.id;
   this.label = spec.label;
 }
