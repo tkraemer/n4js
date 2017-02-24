@@ -56,7 +56,8 @@
 :revnumber: 0.4
 
 // ======================= Image Resizing Variables ================= //
-// usage: image:logo.png[{small}]
+// Ifdefs below set image attributes based on backend - usage example:
+// image:logo.png[{small}]
 
 ifdef::backend-html5[]
 :full-width: width='100%'
