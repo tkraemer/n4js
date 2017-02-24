@@ -46,7 +46,7 @@ class ImportsRemovalChangesComputer {
 		for (el : elements) {
 			if (el instanceof ImportDeclaration) {
 				val nodeToRemove = findActualNodeFor(el)
-				changes.add(document.removeNodeButKeepComments(nodeToRemove))
+				changes.add(document.removeNodeButKeepComments(nodeToRemove, resource))
 			}
 		}
 
@@ -54,7 +54,7 @@ class ImportsRemovalChangesComputer {
 	}
 
 	private static def IChange removeNodeButKeepComments(IXtextDocument doc,
-		INode importNode) throws BadLocationException {
+		INode importNode, XtextResource resource) throws BadLocationException {
 		if (importNode === null)
 			return IChange.IDENTITY;
 		// INode next = node.getNextSibling();
@@ -97,6 +97,7 @@ class ImportsRemovalChangesComputer {
 				}
 			}
 		}
+		
 		val offset = importNode.getOffset()
 		return ChangeProvider.removeText(doc, offset, end - offset, true);
 	}

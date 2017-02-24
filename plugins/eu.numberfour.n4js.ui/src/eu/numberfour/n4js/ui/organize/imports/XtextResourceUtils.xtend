@@ -11,7 +11,7 @@
 package eu.numberfour.n4js.ui.organize.imports
 
 import eu.numberfour.n4js.n4JS.Script
-import org.eclipse.emf.ecore.EObject
+import eu.numberfour.n4js.resource.N4JSResource
 import org.eclipse.xtext.resource.XtextResource
 
 /**
@@ -20,17 +20,19 @@ import org.eclipse.xtext.resource.XtextResource
 class XtextResourceUtils {
 
 	/**
+	 * If resource is {@link N4JSResource) it will use its api to get script. If it is some other {@link XtextResource} then and its contents
+	 * are not empty it will return first element casted to {@link Script}.
+	 * In all other cases return null.
+	 * 
 	 * @param xtextResource
 	 *            the resource to process.
 	 * @return Script instance or null
 	 */
-	public static def Script getScript(XtextResource xtextResource) {
-		if (!xtextResource.getContents().isEmpty()) {
-			val EObject eo = xtextResource.getContents().get(0);
-			if (eo instanceof Script) {
-				return eo;
-			}
+	public static def Script getScript(XtextResource resource) {
+		switch resource {
+			N4JSResource 							: resource.script
+			case resource.getContents().isEmpty() 	: (resource.getContents().get(0) as Script)
+			default 								: null
 		}
-		return null;
 	}
 }

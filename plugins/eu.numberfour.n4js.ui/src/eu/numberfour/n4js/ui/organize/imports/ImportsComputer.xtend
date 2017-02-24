@@ -29,6 +29,7 @@ import eu.numberfour.n4js.ui.organize.imports.BreakException.UserCanceledBreakEx
 import eu.numberfour.n4js.utils.UtilN4
 import eu.numberfour.n4js.utils.collections.Multimaps3
 import java.util.ArrayList
+import java.util.HashSet
 import java.util.List
 import java.util.Set
 import org.eclipse.emf.common.notify.Adapter
@@ -51,7 +52,6 @@ import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.EXPORT_
 import static org.eclipse.xtext.nodemodel.util.NodeModelUtils.*
 
 import static extension eu.numberfour.n4js.ui.organize.imports.UnresolveProxyCrossRefUtil.*
-import java.util.HashSet
 
 /**
  * Computes imports required by the given resource. In principle removes unused imports, adds missing imports, sorts imports - all in one go.
@@ -130,10 +130,9 @@ public class ImportsComputer {
 			sb.append(text).append(lineEnding);
 		]
 
-		// remove last line feed:
+//		 remove last line feed:
 		val length = sb.length
 		if (length > lineEnding.length) {
-
 			// ret.deleteCharAt(length-1)
 			sb.delete(length - lineEnding.length, length)
 		}
@@ -305,8 +304,12 @@ public class ImportsComputer {
 
 		var boolean hiddenSeen = false;
 		var boolean openingCurlySeen = false;
+		var boolean fixedASI = false;
 
 		for (ILeafNode leaf : node.getLeafNodes()) {
+			if(UtilN4.isIgnoredSyntaxErrorNode(leaf, SEMICOLON_INSERTED)){
+				fixedASI = true
+			}
 			if (!isHiddenOrIgnoredSyntaxError(leaf, ignoredSyntaxErrorIssues)) {
 				val text = leaf.getText();
 				if (builder.length() > 0) { // do not insert space before any content.
@@ -333,6 +336,9 @@ public class ImportsComputer {
 				hiddenSeen = true;
 			}
 		}
+
+		if(fixedASI) builder.append(";");
+
 		return builder.toString();
 	}
 

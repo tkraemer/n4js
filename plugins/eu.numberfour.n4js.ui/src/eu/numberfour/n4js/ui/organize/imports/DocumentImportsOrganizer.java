@@ -180,7 +180,8 @@ class DocumentImportsOrganizer {
 						final String organizedImportSection = importsComputer
 								.getOrganizedImportSection(xtextResource, NL, interaction);
 						// remove old imports
-						changes.addAll(ImportsRemovalChangesComputer.getImportDeletionChanges(xtextResource, document));
+						changes.addAll(
+								ImportsRemovalChangesComputer2.getImportDeletionChanges(xtextResource, document));
 						// insert new imports
 						changes.addAll(getImportInsertionChanges(document, xtextResource, insertionPoint, NL,
 								organizedImportSection));
@@ -238,7 +239,7 @@ class DocumentImportsOrganizer {
 		//
 		// Three cases have to be considered:
 		// A) the begin of line is inside of an ML-comment.
-		// B) the begin of line is some ASI overlapping some real text (e.g. a ML-commen) this is not coverd in A!
+		// B) the begin of line is some ASI overlapping some real text (e.g. a ML-comment) this is not covered in A!
 		// C) the begin of line is some ordinary location.
 		//
 		if (leafNodeAtBeginOfLine.getGrammarElement() == typeExpressionsGrammarAccess
