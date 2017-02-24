@@ -12,6 +12,7 @@ package eu.numberfour.n4js.scoping.members;
 
 import java.util.List;
 
+import eu.numberfour.n4js.scoping.members.ComposedMemberAggregate.FParAggregate;
 import eu.numberfour.n4js.scoping.members.MethodDescriptor.FParDescriptorCreator;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
@@ -23,9 +24,16 @@ import eu.numberfour.n4js.ts.types.TypesFactory;
  */
 abstract class SetterDescriptor implements ComposedMemberDescriptorNew {
 	final ComposedMemberAggregate cma;
+	final StandaloneFPar fpar;
 
 	SetterDescriptor(ComposedMemberAggregate cma) {
 		this.cma = cma;
+		String name = "arg0";
+		List<FParAggregate> fpars = cma.getFParAggregates();
+		if (fpars != null && !fpars.isEmpty()) {
+			name = fpars.get(0).getName();
+		}
+		this.fpar = new StandaloneFPar(name, cma.getTypeRefs());
 	}
 
 	abstract MemberAccessModifier getAccessability();
@@ -42,7 +50,6 @@ abstract class SetterDescriptor implements ComposedMemberDescriptorNew {
 		TSetter setter = TypesFactory.eINSTANCE.createTSetter();
 		setter.setName(name);
 		setter.setDeclaredMemberAccessModifier(getAccessability());
-		StandaloneFPar fpar = new StandaloneFPar("arg0", cma.getTypeRefs());
 		setter.setFpar(fpar.create());
 		return setter;
 	}

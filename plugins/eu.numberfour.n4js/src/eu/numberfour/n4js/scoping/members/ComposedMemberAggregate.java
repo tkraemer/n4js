@@ -22,6 +22,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.xbase.lib.Pair;
 
+import com.google.common.base.Joiner;
+
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.UnknownTypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
@@ -113,7 +115,7 @@ public class ComposedMemberAggregate {
 		private final List<Pair<TFormalParameter, RuleEnvironment>> fpSiblings = new ArrayList<>();
 
 		// is set in initFParAggregate()
-		private String name;
+		private final List<String> names = new LinkedList<>();
 		private boolean allOptional = true;
 		private boolean allNonOptional = true;
 		private final List<TypeRef> typeRefs = new ArrayList<>();
@@ -122,7 +124,7 @@ public class ComposedMemberAggregate {
 
 		/***/
 		public String getName() {
-			return name;
+			return Joiner.on("_").join(names);
 		}
 
 		/***/
@@ -204,10 +206,9 @@ public class ComposedMemberAggregate {
 
 			// handle: name
 			final String nextName = tFpar.getName();
-			if (fpAggr.name == null)
-				fpAggr.name = nextName;
-			if (fpAggr.name != null && nextName != null && !fpAggr.name.equals(nextName))
-				throw new IllegalStateException("member names of composed types are supposed to be the same");
+			if (nextName != null) {
+				fpAggr.names.add(nextName);
+			}
 
 			// handle: typeRef lists
 			TypeRef typeRefSubst = ts.substTypeVariablesInTypeRef(G, tFpar.getTypeRef());
