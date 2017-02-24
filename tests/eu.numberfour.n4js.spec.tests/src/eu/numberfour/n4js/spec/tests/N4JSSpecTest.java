@@ -20,9 +20,9 @@ import org.xpect.xtext.lib.tests.ResourceDescriptionTest;
 import org.xpect.xtext.lib.tests.ValidationTest;
 
 import eu.numberfour.n4js.xpect.methods.AccessModifierXpectMethod;
+import eu.numberfour.n4js.xpect.methods.ElementKeywordXpectMethod;
 import eu.numberfour.n4js.xpect.methods.LinkingXpectMethod;
 import eu.numberfour.n4js.xpect.methods.NoerrorsXpectMethod;
-import eu.numberfour.n4js.xpect.methods.ElementKeywordXpectMethod;
 import eu.numberfour.n4js.xpect.methods.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.methods.scoping.ScopeXpectMethod;
 import eu.numberfour.n4js.xpect.ui.methods.OutputXpectMethod;
@@ -43,8 +43,7 @@ import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 		ElementKeywordXpectMethod.class
 })
 @RunWith(XpectRunner.class)
-@XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "xpect-tests", fileExtensions = {
-		"xt" })
+@XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "xpect-tests", fileExtensions = { "xt" })
 @XpectImport(SuppressIssuesSetup.class)
 public class N4JSSpecTest {
 	// nop

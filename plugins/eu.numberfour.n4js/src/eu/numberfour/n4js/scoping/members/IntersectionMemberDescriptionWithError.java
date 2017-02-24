@@ -43,7 +43,8 @@ public class IntersectionMemberDescriptionWithError extends ComposedMemberDescri
 			MapOfIndexes<String> indexesPerCode) {
 
 		return initMemberTypeConflict(indexesPerMemberType)
-				|| initSubMessages(descriptions, indexesPerCode);
+				|| initSubMessages(descriptions, indexesPerCode)
+				|| initDefault();
 	}
 
 	private boolean initMemberTypeConflict(MapOfIndexes<String> indexesPerMemberType) {
@@ -62,5 +63,12 @@ public class IntersectionMemberDescriptionWithError extends ComposedMemberDescri
 			return true;
 		}
 		return false;
+	}
+
+	private boolean initDefault() {
+		final String memberName = getName().getLastSegment();
+		message = IssueCodes.getMessageForINTER_UNCOMMON(memberName);
+		code = IssueCodes.INTER_UNCOMMON;
+		return true;
 	}
 }

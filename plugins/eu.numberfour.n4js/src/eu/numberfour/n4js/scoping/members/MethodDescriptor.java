@@ -16,7 +16,6 @@ import java.util.List;
 import eu.numberfour.n4js.scoping.members.ComposedMemberAggregate.FParAggregate;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
-import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TFormalParameter;
 import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.TypesFactory;
@@ -155,7 +154,8 @@ abstract class MethodDescriptor implements ComposedMemberDescriptorNew {
 		boolean isValid() {
 			if (fpa == null)
 				return false;
-			if (isVariadic() && getNext() != null)
+			// if (!fpa.getTypeRefsVariadic().isEmpty() && getNext() != null)
+			if (fpa.hasValidationProblem())
 				return false;
 			return true;
 		}
@@ -167,7 +167,7 @@ abstract class MethodDescriptor implements ComposedMemberDescriptorNew {
 		}
 
 		FParDescriptor getNext() {
-			if (fpas.size() >= index + 1)
+			if (index + 1 >= fpas.size())
 				return null;
 			return fpas.get(index + 1);
 		}
@@ -238,7 +238,10 @@ abstract class MethodDescriptor implements ComposedMemberDescriptorNew {
 
 		@Override
 		TypeRef getReturnTypeRefComposition() {
-			List<TypeRef> typeRefs = cma.getTypeRefsOfMemberType(MemberType.METHOD);
+			List<TypeRef> typeRefs = cma.getMethodTypeRefsNonVoid();
+			if (typeRefs.isEmpty()) {
+				typeRefs.addAll(cma.getMethodTypeRefsVoid());
+			}
 			return cma.getTypeSystem().createSimplifiedIntersection(typeRefs, cma.getResource());
 		}
 
@@ -285,7 +288,10 @@ abstract class MethodDescriptor implements ComposedMemberDescriptorNew {
 
 		@Override
 		TypeRef getReturnTypeRefComposition() {
-			List<TypeRef> typeRefs = cma.getTypeRefsOfMemberType(MemberType.METHOD);
+			List<TypeRef> typeRefs = cma.getMethodTypeRefsVoid();
+			if (typeRefs.isEmpty()) {
+				typeRefs.addAll(cma.getMethodTypeRefsNonVoid());
+			}
 			return cma.getTypeSystem().createSimplifiedUnion(typeRefs, cma.getResource());
 		}
 

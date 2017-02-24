@@ -86,7 +86,7 @@ public class ComposedMemberAggregate {
 
 	// non-finals are set in initMemberAggregate()
 	private boolean isInitialized = false;
-	private boolean isEmpty = false;
+	private boolean isEmpty = true;
 	private boolean isSiblingMissing = false;
 	private boolean hasMultipleMemberTypes = false;
 	private boolean hasFieldMemberType = false;
@@ -100,12 +100,13 @@ public class ComposedMemberAggregate {
 	private boolean onlySetterMemberTypes = true;
 	private boolean hasReadOnlyField = false;
 	private boolean onlyReadOnlyFields = true;
+	private final boolean hasValidationProblem = false;
 	private MemberAccessModifier accessibilityMin = MemberAccessModifier.PUBLIC;
 	private MemberAccessModifier accessibilityMax = MemberAccessModifier.PRIVATE;
 	private final Map<MemberType, List<TypeRef>> typeRefsMap = new HashMap<>();
 	private final List<TypeRef> typeRefs = new ArrayList<>();
-	private final List<TypeRef> typeRefsVoid = new ArrayList<>();
-	private final List<TypeRef> typeRefsNonVoid = new ArrayList<>();
+	private final List<TypeRef> methodTypeRefsVoid = new ArrayList<>();
+	private final List<TypeRef> methodTypeRefsNonVoid = new ArrayList<>();
 	private final Map<TypeRef, RuleEnvironment> typeRef2G = new HashMap<>();
 
 	private final List<FParAggregate> fParameters = new ArrayList<>();
@@ -120,7 +121,7 @@ public class ComposedMemberAggregate {
 		private final List<String> names = new LinkedList<>();
 		private boolean allOptional = true;
 		private boolean allNonOptional = true;
-		private boolean isOrSucceedsOptional = false;
+		private boolean hasValidationProblem = false;
 		private final List<TypeRef> typeRefs = new ArrayList<>();
 		private final List<TypeRef> typeRefsVariadic = new ArrayList<>();
 		private final List<TypeRef> typeRefsVariadicAccumulated = new ArrayList<>();
@@ -141,8 +142,8 @@ public class ComposedMemberAggregate {
 		}
 
 		/***/
-		public boolean isOrSucceedsOptional() {
-			return isOrSucceedsOptional;
+		public boolean hasValidationProblem() {
+			return hasValidationProblem;
 		}
 
 		/***/
@@ -174,13 +175,13 @@ public class ComposedMemberAggregate {
 		if (isInitialized)
 			return;
 
-		this.isEmpty = siblings.isEmpty();
 		this.isSiblingMissing = siblings.contains(null);
 
 		MemberType lastMType = null;
 		for (Pair<TMember, RuleEnvironment> pair : siblings) {
 			if (pair == null)
 				continue;
+			this.isEmpty = false;
 
 			TMember member = pair.getKey();
 			RuleEnvironment G = pair.getValue();
@@ -193,7 +194,6 @@ public class ComposedMemberAggregate {
 		}
 
 		// init: fParameters
-		boolean optionalFparSeen = false;
 		List<TypeRef> currVariadicAccumulated = new LinkedList<>();
 		for (FParAggregate fpAggr : fParameters) {
 			initFParAggregate(fpAggr);
@@ -201,13 +201,11 @@ public class ComposedMemberAggregate {
 			// handle: typeRefsVariadicAccumulated
 			currVariadicAccumulated.addAll(fpAggr.typeRefsVariadic);
 			fpAggr.typeRefsVariadicAccumulated.addAll(currVariadicAccumulated);
-
-			// handle: succeedsOptional
-			optionalFparSeen |= !fpAggr.allNonOptional();
-			fpAggr.isOrSucceedsOptional = optionalFparSeen;
 		}
 
 		handleIsVariadicButLastFParIsDifferent();
+
+		handleValidationProblems();
 
 		this.isInitialized = true;
 	}
@@ -219,7 +217,7 @@ public class ComposedMemberAggregate {
 
 			// handle: name
 			final String nextName = tFpar.getName();
-			if (nextName != null) {
+			if (nextName != null && !fpAggr.names.contains(nextName)) {
 				fpAggr.names.add(nextName);
 			}
 
@@ -283,10 +281,12 @@ public class ComposedMemberAggregate {
 			TypeRef typeRefCopy = TypeUtils.copyIfContained(typeRefSubst);
 			typeRefs.add(typeRefCopy);
 			typeRef2G.put(typeRefCopy, G);
-			if (TypeUtils.isVoid(typeRefCopy)) {
-				typeRefsVoid.add(typeRefCopy);
-			} else {
-				typeRefsNonVoid.add(typeRefCopy);
+			if (member.getMemberType() == MemberType.METHOD) {
+				if (TypeUtils.isVoid(typeRefCopy)) {
+					methodTypeRefsVoid.add(typeRefCopy);
+				} else {
+					methodTypeRefsNonVoid.add(typeRefCopy);
+				}
 			}
 			MemberType currMType = member.getMemberType();
 			if (!typeRefsMap.containsKey(currMType)) {
@@ -343,6 +343,27 @@ public class ComposedMemberAggregate {
 		}
 
 		isVariadicButLastFParIsDifferent = result;
+	}
+
+	private void handleValidationProblems() {
+		for (Pair<TMember, RuleEnvironment> pair : siblings) {
+			if (pair == null)
+				continue;
+
+			TMember member = pair.getKey();
+			if (member instanceof TMethod) {
+				TMethod tMethod = (TMethod) member;
+
+				for (int i = 0; i < tMethod.getFpars().size(); i++) {
+					TFormalParameter currFP = tMethod.getFpars().get(i);
+					if (currFP.isVariadic() && tMethod.getFpars().size() > i + 1) {
+						FParAggregate currFPA = fParameters.get(i);
+						currFPA.hasValidationProblem = true;
+						return;
+					}
+				}
+			}
+		}
 	}
 
 	/////////////////////////// Access Methods ///////////////////////////
@@ -459,6 +480,12 @@ public class ComposedMemberAggregate {
 	}
 
 	/***/
+	public boolean hasValidationProblem() {
+		initMemberAggregate();
+		return hasValidationProblem;
+	}
+
+	/***/
 	public List<TypeRef> getTypeRefsOld() {
 		initMemberAggregate();
 		return typeRefs;
@@ -480,15 +507,15 @@ public class ComposedMemberAggregate {
 	}
 
 	/***/
-	public List<TypeRef> getTypeRefsNonVoid() {
+	public List<TypeRef> getMethodTypeRefsNonVoid() {
 		initMemberAggregate();
-		return typeRefsVoid;
+		return methodTypeRefsNonVoid;
 	}
 
 	/***/
-	public List<TypeRef> getTypeRefsVoid() {
+	public List<TypeRef> getMethodTypeRefsVoid() {
 		initMemberAggregate();
-		return typeRefsNonVoid;
+		return methodTypeRefsVoid;
 	}
 
 	/***/
