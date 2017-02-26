@@ -46,8 +46,8 @@ public class N4JSXReferencesFilter implements IReferenceFilter {
 
 		// is reference part of JSX element
 		EObject refContainer = proxyInfo.eobject.eContainer();
-		return isLikeHTML && refContainer == null ? false
-				: refContainer instanceof JSXElementName || refContainer instanceof JSXPropertyAttribute;
+		return isLikeHTML && (refContainer == null ? false
+				: refContainer instanceof JSXElementName || refContainer instanceof JSXPropertyAttribute);
 	}
 
 }
