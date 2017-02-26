@@ -181,7 +181,8 @@ class DocumentImportsOrganizer {
 								.getOrganizedImportSection(xtextResource, NL, interaction);
 						// remove old imports
 						changes.addAll(
-								ImportsRemovalChangesComputer2.getImportDeletionChanges(xtextResource, document));
+								ImportsRemovalChangesComputer.getImportDeletionChanges(xtextResource, document));
+						// ImportsRemovalChangesComputer2.getImportDeletionChanges(xtextResource, document));
 						// insert new imports
 						changes.addAll(getImportInsertionChanges(document, xtextResource, insertionPoint, NL,
 								organizedImportSection));

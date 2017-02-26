@@ -18,7 +18,7 @@
 /* XPECT organizeImports ---
    
  | import [{ A } from "a/a1/A"|]
- | [import|] { AR } from "a/a1/A"
+ | [import|] { AR } from "a/a1/A"[|;]
    export public interface BRole extends AR {
    }
 --- */

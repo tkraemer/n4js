@@ -13,9 +13,9 @@
 */
 
 /* XPECT organizeImports ---
-
+  
 - var placeholder : string;
-  import { A } from "a/a1/A" 
+|  import { A } from "a/a1/A" [|;]
 + var placeholder : string;
   // Test for consuming classes defined in several places in same project.
   var a : A = new A();

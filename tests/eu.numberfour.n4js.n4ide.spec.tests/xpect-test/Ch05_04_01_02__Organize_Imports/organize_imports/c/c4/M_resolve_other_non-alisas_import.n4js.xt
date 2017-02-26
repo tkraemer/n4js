@@ -28,7 +28,7 @@
 --- */
 
 
-import { B as Balias } from "a/a1/A"
+import { B as Balias } from "a/a1/A";
 
 function K() {
 	var b1 : Balias;

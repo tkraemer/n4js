@@ -17,7 +17,7 @@
 (...)
 --- */
 
-import {A,B,IA,IB} from "a/a1/A"
+import {A,B,IA,IB} from "a/a1/A";
 
 
 var a : A = new A();
