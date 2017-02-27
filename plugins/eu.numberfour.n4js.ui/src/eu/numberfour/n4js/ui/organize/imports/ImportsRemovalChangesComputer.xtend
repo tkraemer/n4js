@@ -33,13 +33,12 @@ class ImportsRemovalChangesComputer {
 
 	/**
 	 * Compute changes that will remove all imports.
-	 * 
+	 *
 	 * @param resource the resource to modify
 	 * @param document the document connected to the xtextResource,  for textual changes.
 	 * @return list of changes to the document.
 	 */
-	public static def List<IChange> getImportDeletionChanges(XtextResource resource,
-		IXtextDocument document) throws BadLocationException {
+	public static def List<IChange> getImportDeletionChanges(XtextResource resource, IXtextDocument document) throws BadLocationException {
 		val changes = newArrayList
 		val elements = resource.getScript().scriptElements
 
@@ -54,15 +53,14 @@ class ImportsRemovalChangesComputer {
 		return changes
 	}
 
-	private static def IChange removeNodeButKeepComments(IXtextDocument doc,
-		INode importNode) throws BadLocationException {
+	private static def IChange removeNodeButKeepComments(IXtextDocument doc, INode importNode) throws BadLocationException {
 		if (importNode === null)
 			return IChange.IDENTITY;
 
 		val BidiTreeIterator<INode> iterator = importNode.getAsTreeIterable().iterator();
 		var end = importNode.endOffset
-		var INode endNode = null;
-		while (endNode === null && iterator.hasPrevious()) {
+		var done = false
+		while (!done && iterator.hasPrevious()) {
 			val INode prev = iterator.previous();
 			if (prev instanceof ILeafNode) {
 				if (!prev.isHidden()) {
@@ -71,31 +69,35 @@ class ImportsRemovalChangesComputer {
 						val grammarElement = prev.grammarElement
 						if (grammarElement instanceof RuleCall) {
 							if ("STRING".equals(grammarElement.rule.name)) {
-								endNode = importNode;
+								done = true
 							}
 						}
 						// but is comment or ASI
-						endNode = searchForVisiblePredecessor(iterator);
+						while (!done && iterator.hasPrevious) {
+							val sibling = iterator.previous
+							if (sibling instanceof ILeafNode) {
+								if (!sibling.isHidden) {
+									done = true
+									end = sibling.endOffset
+								}
+							}
+						}
 					}
 				} else {
-					endNode = searchForVisiblePredecessor(iterator);
+					while (!done && iterator.hasPrevious) {
+						val sibling = iterator.previous
+						if (sibling instanceof ILeafNode) {
+							if (!sibling.isHidden) {
+								done = true
+								end = sibling.endOffset
+							}
+						}
+					}
 				}
 			}
 		}
-
+		
 		val offset = importNode.getOffset()
 		return ChangeProvider.removeText(doc, offset, end - offset, true);
-	}
-
-	private static def INode searchForVisiblePredecessor(BidiTreeIterator<INode> iterator) {
-		while (iterator.hasPrevious) {
-			val sibling = iterator.previous
-			if (sibling instanceof ILeafNode) {
-				if (!sibling.isHidden) {
-					return sibling;
-				}
-			}
-		}
-		return null;
 	}
 }
