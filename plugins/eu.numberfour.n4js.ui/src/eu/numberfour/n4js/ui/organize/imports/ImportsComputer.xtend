@@ -52,6 +52,8 @@ import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.EXPORT_
 import static org.eclipse.xtext.nodemodel.util.NodeModelUtils.*
 
 import static extension eu.numberfour.n4js.ui.organize.imports.UnresolveProxyCrossRefUtil.*
+import java.util.Map
+import java.util.Collection
 
 /**
  * Computes imports required by the given resource. In principle removes unused imports, adds missing imports, sorts imports - all in one go.
@@ -187,7 +189,7 @@ public class ImportsComputer {
 		namesThatWeBroke.removeAll(solutions.keySet)
 
 		// Ask user to disambiguate things:
-		val ambiguousSolution = resolution.asMap.filter[p1, p2|p2.size > 1];
+		val Map<String, Collection<ImportableObject>> ambiguousSolution = resolution.asMap.filter[p1, p2|p2.size > 1];
 		val Multimap<String, ImportableObject> forDisambiguation = LinkedHashMultimap.create();
 		ambiguousSolution.forEach[p1, p2|forDisambiguation.putAll(p1, p2)];
 
