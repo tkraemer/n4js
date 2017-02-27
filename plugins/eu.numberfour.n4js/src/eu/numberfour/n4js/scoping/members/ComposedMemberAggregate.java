@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.scoping.members;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,12 +33,33 @@ import eu.numberfour.n4js.ts.types.TFormalParameter;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TMethod;
 import eu.numberfour.n4js.ts.types.TSetter;
+import eu.numberfour.n4js.ts.types.VoidType;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
 
 /**
+ * The purpose of the classes and methods in this file is threefold:
+ * <ol>
+ * <li>Provide methods to aggregate all sibling members on which a composed member is based upon.</li>
+ * <li>Interpret all sibling members to derive general information which is later used when creating the composed
+ * member.</li>
+ * <li>Provide the derived information using data holder objects.</li>
+ * </ol>
+ * The aggregation methods are static and the method {@link #get()} returns an aggregation object. Their life cycle is
+ * as follows:
  *
+ * <pre>
+ * Start -> init() -> addMember()* -> get() -> End.
+ *                       ^             |
+ *                       |_____________|
+ * </pre>
+ *
+ * The aggregation object returned by {@link #get()} provides several data providing methods such as
+ * {@link #getAccessabilityMax()}. Their values are computed lazily using the init methods.
+ * <p>
+ * <i> Please note that this class provides <b>general information</b> about composed types only. That is, information
+ * here should be named without referring explicitly to union or intersection members.</i>
  */
 public class ComposedMemberAggregate {
 
@@ -126,37 +146,37 @@ public class ComposedMemberAggregate {
 		private final List<TypeRef> typeRefsVariadic = new ArrayList<>();
 		private final List<TypeRef> typeRefsVariadicAccumulated = new ArrayList<>();
 
-		/***/
+		/** Returns the name of the formal parameter. */
 		public String getName() {
 			return Joiner.on("_").join(names);
 		}
 
-		/***/
+		/** Returns true iff all siblings are optional. */
 		public boolean allOptional() {
 			return allOptional;
 		}
 
-		/***/
+		/** Returns true iff all siblings are other than optional. */
 		public boolean allNonOptional() {
 			return allNonOptional;
 		}
 
-		/***/
+		/** Returns true iff one of the sibling formal parameter has a validation problem. */
 		public boolean hasValidationProblem() {
 			return hasValidationProblem;
 		}
 
-		/***/
+		/** Returns the {@link TypeRef}s of all siblings. */
 		public List<TypeRef> getTypeRefs() {
 			return typeRefs;
 		}
 
-		/***/
+		/** Returns the {@link TypeRef}s of all variadic siblings. */
 		public List<TypeRef> getTypeRefsVariadic() {
 			return typeRefsVariadic;
 		}
 
-		/***/
+		/** Returns the set of {@link #getTypeRefsVariadic()} of this formal parameter and all its predecessors. */
 		public List<TypeRef> getTypeRefsVariadicAccumulated() {
 			return typeRefsVariadicAccumulated;
 		}
@@ -368,136 +388,137 @@ public class ComposedMemberAggregate {
 
 	/////////////////////////// Access Methods ///////////////////////////
 
-	/***/
-	public boolean isWriteAccess() {
-		return isWriteAccess;
-	}
-
-	/***/
+	/** Returns a reference to {@link N4JSTypeSystem}. */
 	public N4JSTypeSystem getTypeSystem() {
 		return ts;
 	}
 
-	/***/
+	/** Returns a reference to the {@link Resource} of the composed member. */
 	public Resource getResource() {
 		return resource;
 	}
 
-	/***/
+	/** Returns true iff no sibling exits. */
 	public boolean isEmpty() {
 		initMemberAggregate();
 		return isEmpty;
 	}
 
-	/***/
+	/** Returns true iff an accessor or field has write access. */
+	public boolean isWriteAccess() {
+		return isWriteAccess;
+	}
+
+	/** Returns true iff a sibling is missing. */
 	public boolean isSiblingMissing() {
 		initMemberAggregate();
 		return isSiblingMissing;
 	}
 
-	/***/
+	/** Returns true iff the siblings are of different {@link MemberType}. */
 	public boolean hasMultipleMemberTypes() {
 		initMemberAggregate();
 		return hasMultipleMemberTypes;
 	}
 
-	/***/
+	/** Returns true iff one or more siblings are of {@link MemberType} {@code MemberType.FIELD} */
 	public boolean hasFieldMemberType() {
 		initMemberAggregate();
 		return hasFieldMemberType;
 	}
 
-	/***/
+	/** Returns true iff one or more siblings are of {@link MemberType} {@code MemberType.GETTER} */
 	public boolean hasGetterMemberType() {
 		initMemberAggregate();
 		return hasGetterMemberType;
 	}
 
-	/***/
+	/** Returns true iff one or more siblings are of {@link MemberType} {@code MemberType.SETTER} */
 	public boolean hasSetterMemberType() {
 		initMemberAggregate();
 		return hasSetterMemberType;
 	}
 
-	/***/
+	/** Returns true iff one or more siblings are of {@link MemberType} {@code MemberType.METHOD} */
 	public boolean hasMethodMemberType() {
 		initMemberAggregate();
 		return hasMethodMemberType;
 	}
 
-	/***/
+	/** Returns true iff one or more siblings are of other {@link MemberType} than {@code MemberType.METHOD} */
 	public boolean hasNonMethodMemberType() {
 		initMemberAggregate();
 		return hasNonMethodMemberType;
 	}
 
-	/***/
+	/** Returns true iff all siblings are of {@link MemberType} {@code MemberType.METHOD} */
 	public boolean onlyMethodMemberTypes() {
 		initMemberAggregate();
 		return onlyMethodMemberTypes;
 	}
 
-	/***/
+	/** Returns true iff all siblings are of {@link MemberType} {@code MemberType.FIELD} */
 	public boolean onlyFieldMemberTypes() {
 		initMemberAggregate();
 		return onlyFieldMemberTypes;
 	}
 
-	/***/
+	/** Returns true iff all siblings are of {@link MemberType} {@code MemberType.GETTER} */
 	public boolean onlyGetterMemberTypes() {
 		initMemberAggregate();
 		return onlyGetterMemberTypes;
 	}
 
-	/***/
+	/** Returns true iff all siblings are of {@link MemberType} {@code MemberType.SETTER} */
 	public boolean onlySetterMemberTypes() {
 		initMemberAggregate();
 		return onlySetterMemberTypes;
 	}
 
-	/***/
+	/** Returns true iff one or more siblings are {@link MemberType} {@code MemberType.FIELD} and readable. */
 	public boolean hasReadOnlyField() {
 		initMemberAggregate();
 		return hasReadOnlyField;
 	}
 
-	/***/
+	/** Returns true iff all siblings are {@link MemberType} {@code MemberType.FIELD} and readable. */
 	public boolean onlyReadOnlyFields() {
 		initMemberAggregate();
 		return onlyReadOnlyFields;
 	}
 
-	/***/
+	/** Returns the min accessibility of all siblings. */
 	public MemberAccessModifier getAccessabilityMin() {
 		initMemberAggregate();
 		return accessibilityMin;
 	}
 
-	/***/
+	/** Returns the max accessibility of all siblings. */
 	public MemberAccessModifier getAccessabilityMax() {
 		initMemberAggregate();
 		return accessibilityMax;
 	}
 
-	/***/
+	/** Returns true iff one of the siblings has a validation problem. */
 	public boolean hasValidationProblem() {
 		initMemberAggregate();
 		return hasValidationProblem;
 	}
 
-	/***/
-	public List<TypeRef> getTypeRefsOld() {
-		initMemberAggregate();
-		return typeRefs;
-	}
-
-	/***/
+	/**
+	 * Returns a list of all return {@link TypeRef}s of the given {@link MemberType}s. If no {@link MemberType} is
+	 * given, all {@link TypeRef}s are returned.
+	 */
 	public List<TypeRef> getTypeRefsOfMemberType(MemberType... memberTypes) {
 		initMemberAggregate();
-		if (memberTypes == null)
-			return Collections.emptyList();
-
 		List<TypeRef> resultTypeRefs = new LinkedList<>();
+		if (memberTypes == null) {
+			for (List<TypeRef> franzLiszt : typeRefsMap.values()) {
+				resultTypeRefs.addAll(franzLiszt);
+			}
+			return resultTypeRefs;
+		}
+
 		for (MemberType memberType : memberTypes) {
 			if (typeRefsMap.containsKey(memberType)) {
 				resultTypeRefs.addAll(typeRefsMap.get(memberType));
@@ -506,33 +527,43 @@ public class ComposedMemberAggregate {
 		return resultTypeRefs;
 	}
 
-	/***/
+	/**
+	 * Returns all non {@link VoidType} return {@link TypeRef}s of siblings which are of {@link MemberType}
+	 * {@code MemberType.METHOD}.
+	 */
 	public List<TypeRef> getMethodTypeRefsNonVoid() {
 		initMemberAggregate();
 		return methodTypeRefsNonVoid;
 	}
 
-	/***/
+	/**
+	 * Returns all {@link VoidType} return {@link TypeRef}s of siblings which are of {@link MemberType}
+	 * {@code MemberType.METHOD}.
+	 */
 	public List<TypeRef> getMethodTypeRefsVoid() {
 		initMemberAggregate();
 		return methodTypeRefsVoid;
 	}
 
-	/***/
+	/** Returns the {@link RuleEnvironment} of the given return {@link TypeRef}. */
 	public RuleEnvironment getRuleEnvironmentForTypeRef(TypeRef typeRef) {
 		initMemberAggregate();
 		return typeRef2G.get(typeRef);
 	}
 
-	/***/
+	/** Returns a list of all aggregates of formal parameters. */
+	public List<FParAggregate> getFParAggregates() {
+		initMemberAggregate();
+		return fParameters;
+	}
+
+	/**
+	 * Returns true iff there exist variadic formal parameters and iff the last formal parameter is non optional or is
+	 * of another type than the variadic {@link TypeRef}s.
+	 */
 	public boolean isVariadicButLastFParIsDifferent() {
 		initMemberAggregate();
 		return isVariadicButLastFParIsDifferent;
 	}
 
-	/***/
-	public List<FParAggregate> getFParAggregates() {
-		initMemberAggregate();
-		return fParameters;
-	}
 }

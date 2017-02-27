@@ -20,7 +20,10 @@ import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 
 /**
- *
+ * The abstract {@link FieldDescriptor} is the base class for the child classes {@link UnionField} and
+ * {@link IntersectionField}. It implements the method {@link #create(String)} which gets its information through
+ * abstract methods implemented in the child classes mentioned before The child classes are instantiated in
+ * {@link IntersectionMemberDescriptor} and {@link UnionMemberDescriptor} respectively.
  */
 abstract class FieldDescriptor implements ComposedMemberDescriptor {
 	final ComposedMemberAggregate cma;
@@ -56,6 +59,7 @@ abstract class FieldDescriptor implements ComposedMemberDescriptor {
 		return field;
 	}
 
+	/** Class to implement logic with regard to fields in {@code Intersection Types}. */
 	static class IntersectionField extends FieldDescriptor {
 		IntersectionField(ComposedMemberAggregate cma) {
 			super(cma);
@@ -80,6 +84,7 @@ abstract class FieldDescriptor implements ComposedMemberDescriptor {
 		}
 	}
 
+	/** Class to implement logic with regard to fields in {@code Union Types}. */
 	static class UnionField extends FieldDescriptor {
 		UnionField(ComposedMemberAggregate cma) {
 			super(cma);

@@ -36,9 +36,6 @@ public class IntersectionMemberScope extends ComposedMemberScope {
 		super(composedTypeRef, context, subScopes, ts);
 	}
 
-	/**
-	 * Check if the elements of the subScopes cause errors. Handle these errors according to union/intersection types.
-	 */
 	@Override
 	protected IEObjectDescription getCheckedDescription(String name, TMember member) {
 		IEObjectDescription description = EObjectDescription.create(member.getName(), member);
@@ -63,7 +60,7 @@ public class IntersectionMemberScope extends ComposedMemberScope {
 	}
 
 	@Override
-	protected ComposedMemberDescriptor getComposedMemberDescriptorNew(ComposedMemberAggregate cma) {
+	protected ComposedMemberDescriptor getComposedMemberDescriptor(ComposedMemberAggregate cma) {
 		return new IntersectionMemberDescriptor(cma);
 	}
 }

@@ -22,7 +22,13 @@ import eu.numberfour.n4js.ts.types.TSetter;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 
 /**
- *
+ * The abstract {@link SetterDescriptor} is the base class for the child classes {@link UnionSetter} and
+ * {@link IntersectionSetter}. It implements the method {@link #create(String)} which gets its information through
+ * abstract methods implemented in the child classes mentioned before The child classes are instantiated in
+ * {@link IntersectionMemberDescriptor} and {@link UnionMemberDescriptor} respectively.
+ * <p>
+ * This class also defines the class {@link StandaloneFPar} which is based upon the class {@link FParDescriptorCreator}
+ * and reuses its method {@link FParDescriptorCreator#create()}.
  */
 abstract class SetterDescriptor implements ComposedMemberDescriptor {
 	final ComposedMemberAggregate cma;
@@ -36,7 +42,7 @@ abstract class SetterDescriptor implements ComposedMemberDescriptor {
 		if (fpars != null && !fpars.isEmpty()) {
 			FParAggregate firstFpar = fpars.get(0);
 			name = firstFpar.getName();
-			typeRefs.addAll( firstFpar.getTypeRefs());
+			typeRefs.addAll(firstFpar.getTypeRefs());
 		}
 		this.fpar = new StandaloneFPar(name, typeRefs);
 	}
@@ -59,6 +65,7 @@ abstract class SetterDescriptor implements ComposedMemberDescriptor {
 		return setter;
 	}
 
+	/** Class to implement logic with regard to setters in {@code Intersection Types}. */
 	static class IntersectionSetter extends SetterDescriptor {
 		IntersectionSetter(ComposedMemberAggregate cma) {
 			super(cma);
@@ -81,6 +88,7 @@ abstract class SetterDescriptor implements ComposedMemberDescriptor {
 		}
 	}
 
+	/** Class to implement logic with regard to setters in {@code Union Types}. */
 	static class UnionSetter extends SetterDescriptor {
 		UnionSetter(ComposedMemberAggregate cma) {
 			super(cma);
@@ -104,6 +112,7 @@ abstract class SetterDescriptor implements ComposedMemberDescriptor {
 
 	}
 
+	/** Class to create formal parameters of setters. */
 	class StandaloneFPar extends FParDescriptorCreator {
 		final String name;
 		final List<TypeRef> typeRefs;

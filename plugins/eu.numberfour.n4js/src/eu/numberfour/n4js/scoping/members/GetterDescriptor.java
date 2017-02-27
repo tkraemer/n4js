@@ -20,7 +20,10 @@ import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 
 /**
- *
+ * The abstract {@link GetterDescriptor} is the base class for the child classes {@link UnionGetter} and
+ * {@link IntersectionGetter}. It implements the method {@link #create(String)} which gets its information through
+ * abstract methods implemented in the child classes mentioned before The child classes are instantiated in
+ * {@link IntersectionMemberDescriptor} and {@link UnionMemberDescriptor} respectively.
  */
 abstract class GetterDescriptor implements ComposedMemberDescriptor {
 	final ComposedMemberAggregate cma;
@@ -53,6 +56,7 @@ abstract class GetterDescriptor implements ComposedMemberDescriptor {
 		return getter;
 	}
 
+	/** Class to implement logic with regard to getters in {@code Intersection Types}. */
 	static class IntersectionGetter extends GetterDescriptor {
 		IntersectionGetter(ComposedMemberAggregate cma) {
 			super(cma);
@@ -70,6 +74,7 @@ abstract class GetterDescriptor implements ComposedMemberDescriptor {
 		}
 	}
 
+	/** Class to implement logic with regard to getters in {@code Union Types}. */
 	static class UnionGetter extends GetterDescriptor {
 		UnionGetter(ComposedMemberAggregate cma) {
 			super(cma);

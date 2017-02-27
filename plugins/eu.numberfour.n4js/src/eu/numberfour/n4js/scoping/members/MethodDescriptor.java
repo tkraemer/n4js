@@ -22,7 +22,14 @@ import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 
 /**
- *
+ * The abstract {@link MethodDescriptor} is the base class for the child classes {@link UnionMethod} and
+ * {@link IntersectionMethod}. It implements the method {@link #create(String)} which gets its information through
+ * abstract methods implemented in the child classes mentioned before The child classes are instantiated in
+ * {@link IntersectionMemberDescriptor} and {@link UnionMemberDescriptor} respectively.
+ * <p>
+ * Additionally, the base class {@link FParDescriptorCreator} for formal parameters including its method
+ * {@link FParDescriptorCreator#create()} is defined here. This class is used here to eventually create formal
+ * parameters of methods, and moreover it is used in {@link SetterDescriptor} to create the formal parameter of setters.
  */
 abstract class MethodDescriptor implements ComposedMemberDescriptor {
 	final ComposedMemberAggregate cma;
@@ -87,6 +94,7 @@ abstract class MethodDescriptor implements ComposedMemberDescriptor {
 		return method;
 	}
 
+	/** Base class for any formal parameter. It implements the {@link #create()} method. */
 	static abstract class FParDescriptorCreator {
 
 		abstract String getName();
@@ -120,6 +128,7 @@ abstract class MethodDescriptor implements ComposedMemberDescriptor {
 		}
 	}
 
+	/** Base class for formal parameters of composed methods. */
 	abstract class FParDescriptor extends FParDescriptorCreator {
 		final FParAggregate fpa;
 		final int index;
@@ -186,6 +195,7 @@ abstract class MethodDescriptor implements ComposedMemberDescriptor {
 		}
 	}
 
+	/** Class to instantiate an additional formal parameter which does not exist in any of the siblings. */
 	class NewLastVariadicFPar extends FParDescriptor {
 		final private String name = "vari";
 		final private List<TypeRef> typeRefs;
@@ -221,6 +231,7 @@ abstract class MethodDescriptor implements ComposedMemberDescriptor {
 		}
 	}
 
+	/** Class to implement logic with regard to methods in {@code Intersection Types}. */
 	static class IntersectionMethod extends MethodDescriptor {
 		IntersectionMethod(ComposedMemberAggregate cma) {
 			super(cma);
@@ -250,6 +261,7 @@ abstract class MethodDescriptor implements ComposedMemberDescriptor {
 			return cma.getTypeSystem().createSimplifiedUnion(typeRefsToUse, cma.getResource());
 		}
 
+		/** Class to implement logic with regard to formal parameter in {@code Intersection Type} methods. */
 		class IntersectionFPar extends FParDescriptor {
 			IntersectionFPar(FParAggregate fpa) {
 				super(fpa);
@@ -271,6 +283,7 @@ abstract class MethodDescriptor implements ComposedMemberDescriptor {
 		}
 	}
 
+	/** Class to implement logic with regard to methods in {@code Union Types}. */
 	static class UnionMethod extends MethodDescriptor {
 		UnionMethod(ComposedMemberAggregate cma) {
 			super(cma);
@@ -300,6 +313,7 @@ abstract class MethodDescriptor implements ComposedMemberDescriptor {
 			return cma.getTypeSystem().createSimplifiedIntersection(typeRefsToUse, cma.getResource());
 		}
 
+		/** Class to implement logic with regard to formal parameter in {@code Union Type} methods. */
 		class UnionFPar extends FParDescriptor {
 			UnionFPar(FParAggregate fpa) {
 				super(fpa);

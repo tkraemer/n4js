@@ -64,14 +64,14 @@ public abstract class ComposedMemberScope extends AbstractScope {
 	abstract protected IEObjectDescription getCheckedDescription(String name, TMember member);
 
 	/**
-	 *
+	 * Returns either a {@link IntersectionMemberDescriptor} or {@link UnionMemberDescriptor}.
 	 */
-	abstract protected IEObjectDescription createComposedMemberDescriptionWithErrors(IEObjectDescription result);
+	abstract protected ComposedMemberDescriptor getComposedMemberDescriptor(ComposedMemberAggregate cma);
 
 	/**
-	 *
+	 * Returns either a {@link IntersectionMemberDescriptionWithError} or {@link UnionMemberDescriptionWithError}.
 	 */
-	abstract protected ComposedMemberDescriptor getComposedMemberDescriptorNew(ComposedMemberAggregate cma);
+	abstract protected IEObjectDescription createComposedMemberDescriptionWithErrors(IEObjectDescription result);
 
 	/**
 	 * Creates union type scope, passed subScopes are expected to be fully configured (i.e., including required filters
@@ -170,7 +170,7 @@ public abstract class ComposedMemberScope extends AbstractScope {
 		}
 		// produce result
 		ComposedMemberAggregate cma = ComposedMemberAggregate.get();
-		ComposedMemberDescriptor cmdn = getComposedMemberDescriptorNew(cma);
+		ComposedMemberDescriptor cmdn = getComposedMemberDescriptor(cma);
 		if (!cmdn.isEmpty()) {
 			// at least one of the subScopes had an element of that name
 			final TMember result;

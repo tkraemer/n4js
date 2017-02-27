@@ -27,6 +27,7 @@ import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
  *
  */
 public class UnionMemberScope extends ComposedMemberScope {
+
 	/**
 	 * Constructor
 	 */
@@ -35,9 +36,6 @@ public class UnionMemberScope extends ComposedMemberScope {
 		super(composedTypeRef, context, subScopes, ts);
 	}
 
-	/**
-	 * Check if the elements of the subScopes cause errors. Handle these errors according to union/intersection types.
-	 */
 	@Override
 	protected IEObjectDescription getCheckedDescription(String name, TMember member) {
 		IEObjectDescription description = EObjectDescription.create(member.getName(), member);
@@ -61,7 +59,7 @@ public class UnionMemberScope extends ComposedMemberScope {
 	}
 
 	@Override
-	protected ComposedMemberDescriptor getComposedMemberDescriptorNew(ComposedMemberAggregate cma) {
+	protected ComposedMemberDescriptor getComposedMemberDescriptor(ComposedMemberAggregate cma) {
 		return new UnionMemberDescriptor(cma);
 	}
 }
