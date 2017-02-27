@@ -152,7 +152,7 @@ public class ImportsComputer {
 		// cannot be solved here. Candidate for quick fix.
 		val Iterable<ReferenceProxyInfo> unresolved = script.findProxyCrossRefInfo.filter[referenceFilter.test(it)]
 
-		val resolution = LinkedHashMultimap.<String, ImportableObject>create
+		val Multimap<String, ImportableObject> resolution = LinkedHashMultimap.create();
 		val alreadyProcessedIdRef = new HashSet<String>
 		val alreadyProcessedTypeRef = new HashSet<String>
 
@@ -188,7 +188,7 @@ public class ImportsComputer {
 
 		// Ask user to disambiguate things:
 		val ambiguousSolution = resolution.asMap.filter[p1, p2|p2.size > 1];
-		val forDisambiguation = LinkedHashMultimap.<String, ImportableObject>create;
+		val Multimap<String, ImportableObject> forDisambiguation = LinkedHashMultimap.create();
 		ambiguousSolution.forEach[p1, p2|forDisambiguation.putAll(p1, p2)];
 
 		// add potential solutions for still broken names
