@@ -223,7 +223,7 @@ public class ImportsComputer {
 	}
 
 	/** Filters scope by the provided name and adds mapped results to the accumulator collection. */
-	private def void addResolutionFromScope(LinkedHashMultimap<String, ImportableObject> resolution, IScope scopeTypeRef, String usedName) {
+	private def void addResolutionFromScope(Multimap<String, ImportableObject> resolution, IScope scopeTypeRef, String usedName) {
 		scopeTypeRef
 			.allElements
 			.filter[candidateFilter.apply(it)]
@@ -232,7 +232,7 @@ public class ImportsComputer {
 	}
 	
 	/** Creates {@link ImportableObject} from provided name and object description. Result is added to the collection. */
-	private def boolean add(LinkedHashMultimap<String, ImportableObject> resolution, String usedName, IEObjectDescription ieoDescription) {
+	private def boolean add(Multimap<String, ImportableObject> resolution, String usedName, IEObjectDescription ieoDescription) {
 		resolution.put(usedName, new ImportableObject(usedName, ieoDescription, ieoDescription.isDefaultExport))
 	}
 
