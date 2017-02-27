@@ -20,8 +20,6 @@ import eu.numberfour.n4js.ui.changes.ChangeManager
 import eu.numberfour.n4js.ui.changes.IAtomicChange
 import eu.numberfour.n4js.ui.changes.ManifestChangeProvider
 import eu.numberfour.n4js.ui.organize.imports.Interaction
-import eu.numberfour.n4js.ui.organize.imports.N4JSOrganizeImportsHandler
-import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportRequirement
 import eu.numberfour.n4js.ui.wizard.model.AccessModifier
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModel
@@ -47,6 +45,7 @@ import org.eclipse.xtext.ui.editor.model.IXtextDocument
 import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider
 import org.eclipse.xtext.util.Files
 import org.eclipse.xtext.util.concurrent.IUnitOfWork
+import eu.numberfour.n4js.ui.organize.imports.OrganizeImportsService
 
 /**
  * This class contains commonly used methods when writing wizard generators.
@@ -58,9 +57,6 @@ class WizardGeneratorHelper {
 	
 	@Inject
 	private ChangeManager changeManager;
-	
-	@Inject
-	private N4JSOrganizeImportsHandler organizeImportsHandler;
 	
 	@Inject
 	private XtextDocumentProvider docProvider;
@@ -215,20 +211,7 @@ class WizardGeneratorHelper {
 	 * This method works in the background without opening the graphical editor.
 	 */
 	public def void organizeImports(IFile file, IProgressMonitor mon) throws CoreException {
-
-		val FileEditorInput fei = new FileEditorInput(file);
-
-		docProvider.connect(fei); // without connecting no document will be provided
-		val IXtextDocument document = (docProvider.getDocument(fei) as IXtextDocument);
-
-		docProvider.aboutToChange(fei);
-
-		organizeImportsHandler.doOrganizeImports(document, Interaction.takeFirst);
-	
-		docProvider.saveDocument(null, fei, document, true);
-
-		docProvider.changed(fei);
-		docProvider.disconnect(fei);
+		OrganizeImportsService.organizeImportsInFile(file, Interaction.takeFirst, mon);
 	}
 	
 	/**

@@ -41,7 +41,8 @@ Require-Bundle: eu.numberfour.n4js;visibility:=reexport,
  eu.numberfour.n4js.generator.ui,
  org.eclipse.swt,
  org.eclipse.egit.core,
- org.eclipse.jgit
+ org.eclipse.jgit,
+ eu.numberfour.n4jsx.model
 Import-Package: com.ibm.icu.text,
  org.apache.log4j
 Export-Package: eu.numberfour.n4jsx.ui.contentassist,

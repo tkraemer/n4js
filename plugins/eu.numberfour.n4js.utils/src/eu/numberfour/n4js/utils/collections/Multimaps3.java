@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 NumberFour AG.
+ * Copyright (c) 2017 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,15 +8,23 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.organize.imports;
+package eu.numberfour.n4js.utils.collections;
 
 import java.util.Collection;
 
+import org.eclipse.xtext.xbase.typesystem.util.Multimaps2;
+
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 
 /**
+ *
+ *
+ * @see Multimaps
+ * @see Multimaps2
  */
-public class N4JSOrganizeImportsHelper {
+@SuppressWarnings("restriction")
+public class Multimaps3 {
 
 	/**
 	 * Turn this Multimap into a two-dimensional array the first index giving the page, second the choices of this page.
@@ -26,21 +34,21 @@ public class N4JSOrganizeImportsHelper {
 	 * @return two-dim Array of T
 	 */
 	public static <T> Object[][] createOptions(Multimap<String, T> multimap) {
-		Object[][] ret = new Object[multimap.keySet().size()][];
+		Object[][] result = new Object[multimap.keySet().size()][];
 
 		int page = 0;
 		for (String key : multimap.keySet()) {
 			Collection<T> values = multimap.get(key);
-			ret[page] = new Object[values.size()];
-			int option = 0;
-			for (T ns : values) {
-				ret[page][option] = ns;
-				option++;
+			result[page] = new Object[values.size()];
+			int valueIndex = 0;
+			for (T value : values) {
+				result[page][valueIndex] = value;
+				valueIndex++;
 			}
 			page++;
 		}
 
-		return ret;
+		return result;
 	}
 
 }

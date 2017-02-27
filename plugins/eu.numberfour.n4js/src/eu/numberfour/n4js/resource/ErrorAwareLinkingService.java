@@ -26,6 +26,7 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.IScopeProvider;
 
 import com.google.inject.Inject;
 
@@ -37,6 +38,7 @@ import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.types.TMember;
+import eu.numberfour.n4js.utils.languages.N4LanguageUtils;
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 
@@ -57,6 +59,24 @@ public class ErrorAwareLinkingService extends DefaultLinkingService {
 
 	@Inject
 	private IN4JSCore n4jsCore;
+
+	/**
+	 * Override to get scope based on the context, otherwise we might get scope for main language, while context is from
+	 * sub-language.
+	 */
+	@Override
+	protected IScope getScope(EObject context, EReference reference) {
+		IScopeProvider scopeProvider = N4LanguageUtils.getServiceForContext(context, IScopeProvider.class)
+				.orElse(super.getScopeProvider());
+		if (getScopeProvider() == null)
+			throw new IllegalStateException("scopeProvider must not be null.");
+		try {
+			registerImportedNamesAdapter(scopeProvider, context);
+			return scopeProvider.getScope(context, reference);
+		} finally {
+			unRegisterImportedNamesAdapter(scopeProvider);
+		}
+	}
 
 	@Override
 	public List<EObject> getLinkedObjects(EObject context, EReference ref, INode node) throws IllegalNodeException {
