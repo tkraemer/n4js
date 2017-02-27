@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.postprocessing
 
+import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.n4JS.AdditiveExpression
 import eu.numberfour.n4js.n4JS.BinaryLogicalExpression
 import eu.numberfour.n4js.n4JS.BooleanLiteral
@@ -32,6 +33,7 @@ import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
 import eu.numberfour.n4js.ts.types.TConstableElement
+import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.utils.ConstantValue
@@ -198,6 +200,15 @@ class ConstantExpressionProcessor {
 			val memberInSym = sym.ownedMembers.filter(TField).findFirst[static && name==propName];
 			if(memberInSym!==null) {
 				return ConstantValue.of(memberInSym);
+			}
+		}
+		if(targetElem instanceof TEnum) {
+			if(AnnotationDefinition.STRING_BASED.hasAnnotation(targetElem)) {
+				val propName = expr.propertyAsText;
+				val litInEnum = targetElem.literals.findFirst[name==propName];
+				if(litInEnum!==null) {
+					return ConstantValue.of(litInEnum.valueOrName);
+				}
 			}
 		}
 		// all other cases:

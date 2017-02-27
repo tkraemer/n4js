@@ -10,7 +10,7 @@
 
 
 import { var_otherFile } from "Others/propertyAndMemberNaming/OtherFile";
-import { Cls_OtherFile } from "Others/propertyAndMemberNaming/OtherFile";
+//import { Cls_OtherFile } from "Others/propertyAndMemberNaming/OtherFile";
 
 
 // important to test both with exported and with non-exported variable:
@@ -30,21 +30,21 @@ interface Ifc {
 	[c1] = 'hello1'; // will directly refer to VariableDeclaration 'c1' in AST (because c1 is not exported)
 	// XPECT noerrors -->
 	[c2] = 'hello2'; // will refer to TVariable 'c2' in TModule (because c2 is exported)
-	// XPECT noerrors -->
-	[C.field] = 'hello3'; // will refer to TField in TModule (always like that for fields)
+//	// X--PECT noerrors -->
+//	[C.field] = 'hello3'; // will refer to TField in TModule (always like that for fields)
 	// XPECT noerrors -->
 	[var_otherFile] = 'hello4';
-	// XPECT noerrors -->
-	[Cls_OtherFile.field] = 'hello5';
+//	// X--PECT noerrors -->
+//	[Cls_OtherFile.field] = 'hello5';
 }
 class IfcImpl implements Ifc {}
 
 let impl = new IfcImpl();
 console.log(impl.propConst);
 console.log(impl.propConstExpored);
-console.log(impl.propField);
+//console.log(impl.propField);
 console.log(impl.propConstExportedFromOtherFile);
-console.log(impl.propFieldFromOtherFile);
+//console.log(impl.propFieldFromOtherFile);
 
 
 
@@ -55,20 +55,20 @@ class Cls {
 	[c1] = 'hello1';
 	// XPECT noerrors -->
 	[c2] = 'hello2';
-	// XPECT noerrors -->
-	[C.field] = 'hello3';
+//	// X--PECT noerrors -->
+//	[C.field] = 'hello3';
 	// XPECT noerrors -->
 	[var_otherFile] = 'hello4';
-	// XPECT noerrors -->
-	[Cls_OtherFile.field] = 'hello5';
+//	// X--PECT noerrors -->
+//	[Cls_OtherFile.field] = 'hello5';
 }
 
 let cls = new Cls();
 console.log(cls.propConst);
 console.log(cls.propConstExpored);
-console.log(cls.propField);
+//console.log(cls.propField);
 console.log(cls.propConstExportedFromOtherFile);
-console.log(cls.propFieldFromOtherFile);
+//console.log(cls.propFieldFromOtherFile);
 
 
 
@@ -79,22 +79,23 @@ let ol = {
 	[c1]: 'hello1',
 	// XPECT noerrors -->
 	[c2]: 'hello2',
+//	// X--PECT noerrors -->
+//	[C.field]: 'hello3',
 	// XPECT noerrors -->
-	[C.field]: 'hello3',
-	// XPECT noerrors -->
-	[var_otherFile]: 'hello4',
-	// XPECT noerrors -->
-	[Cls_OtherFile.field]: 'hello5'
+	[var_otherFile]: 'hello4'
+//,
+//	// X--PECT noerrors -->
+//	[Cls_OtherFile.field]: 'hello5'
 }
 
 console.log(ol.propConst);
 console.log(ol.propConstExpored);
-console.log(ol.propField);
+//console.log(ol.propField);
 console.log(ol.propConstExportedFromOtherFile);
-console.log(ol.propFieldFromOtherFile);
+//console.log(ol.propFieldFromOtherFile);
 
 
-/* XPECT output ---
+/* X--PECT output ---
 <==
 stdout:
 ####### interface
@@ -115,6 +116,24 @@ hello2
 hello3
 hello4
 hello5
+stderr:
+==>
+--- */
+/* XPECT output ---
+<==
+stdout:
+####### interface
+hello1
+hello2
+hello4
+####### class
+hello1
+hello2
+hello4
+####### object literal
+hello1
+hello2
+hello4
 stderr:
 ==>
 --- */
