@@ -24,7 +24,7 @@ import eu.numberfour.n4js.ts.utils.TypeUtils;
 /**
  *
  */
-abstract class MethodDescriptor implements ComposedMemberDescriptorNew {
+abstract class MethodDescriptor implements ComposedMemberDescriptor {
 	final ComposedMemberAggregate cma;
 	final List<FParDescriptor> fpas = new LinkedList<>();
 

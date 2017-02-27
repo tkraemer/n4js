@@ -24,7 +24,7 @@ import eu.numberfour.n4js.ts.types.TypesFactory;
 /**
  *
  */
-abstract class SetterDescriptor implements ComposedMemberDescriptorNew {
+abstract class SetterDescriptor implements ComposedMemberDescriptor {
 	final ComposedMemberAggregate cma;
 	final StandaloneFPar fpar;
 

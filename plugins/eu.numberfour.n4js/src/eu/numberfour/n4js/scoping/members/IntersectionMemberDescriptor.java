@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 NumberFour AG.
+ * Copyright (c) 2017 NumberFour AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,158 +10,116 @@
  */
 package eu.numberfour.n4js.scoping.members;
 
-import java.util.LinkedList;
+import static eu.numberfour.n4js.ts.types.MemberType.FIELD;
+import static eu.numberfour.n4js.ts.types.MemberType.GETTER;
+import static eu.numberfour.n4js.ts.types.MemberType.METHOD;
+import static eu.numberfour.n4js.ts.types.MemberType.SETTER;
+
+import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.ecore.resource.Resource;
-
-import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
-import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TMember;
-import eu.numberfour.n4js.ts.utils.TypeUtils;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
 
-/** TODO doc */
-public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
+/**
+ *
+ */
+public class IntersectionMemberDescriptor implements ComposedMemberDescriptor {
+	final private ComposedMemberAggregate cma;
+	final ComposedMemberDescriptor specialMemberDescriptor;
+	final MemberType memberType;
 
-	private boolean allAreFields = true;
+	IntersectionMemberDescriptor(ComposedMemberAggregate cma) {
+		this.cma = cma;
+		this.memberType = getNewMemberType();
+		this.specialMemberDescriptor = (memberType != null) ? getSpecialMemberDescriptor() : null;
+	}
 
-	/**
-	 * Constructor. The Resource and the N4JSTypeSystem will be used for type inference, etc. during merging of the
-	 * members.
-	 *
-	 * @param writeAccess
-	 *            <code>true</code> if the composed member is intended for write-access, <code>false</code> if it is
-	 *            intended for read-access. This is only required in the case that we have only fields but those fields
-	 *            are of different type, because then we will combine them into a getter or setter.
-	 */
-	public IntersectionMemberDescriptor(boolean writeAccess, Resource resource, N4JSTypeSystem ts) {
-		super(writeAccess, resource, ts);
+	private ComposedMemberDescriptor getSpecialMemberDescriptor() {
+		switch (memberType) {
+		case METHOD:
+			return new MethodDescriptor.IntersectionMethod(cma);
+		case FIELD:
+			return new FieldDescriptor.IntersectionField(cma);
+		case GETTER:
+			return new GetterDescriptor.IntersectionGetter(cma);
+		case SETTER:
+			return new SetterDescriptor.IntersectionSetter(cma);
+		}
+		return null;
+	}
+
+	private MemberType getNewMemberType() {
+		// mix of all memberTypes
+		if (cma.hasMethodMemberType() && cma.hasNonMethodMemberType()) {
+			return null; // inValid
+		}
+		if (cma.onlyMethodMemberTypes()) {
+			return METHOD;
+		}
+		// mix of all non-method memberTypes
+		if (cma.onlyGetterMemberTypes() && !cma.isWriteAccess()) {
+			return GETTER;
+		}
+		if (cma.onlySetterMemberTypes() && cma.isWriteAccess()) {
+			return SETTER;
+		}
+		if (allTypeRefAreEqual()) {
+			return FIELD;
+		}
+		// mix of all non-method memberTypes AND different return types
+		if (cma.isWriteAccess()) {
+			if (!cma.hasGetterMemberType()) {
+				// return MemberType.FIELD;
+			}
+			return SETTER;
+		}
+		if (!cma.isWriteAccess()) {
+			if (!cma.hasSetterMemberType()) {
+				// return MemberType.FIELD;
+			}
+			return GETTER;
+		}
+		return null; // inValid
 	}
 
 	@Override
-	protected TypeRef getTypeRef(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
-		return super.getSimplifiedIntersection(pts, pTypeRefs, pTesource);
+	public boolean isEmpty() {
+		return cma.isEmpty();
 	}
 
-	@Override
-	protected TypeRef getTypeRefComplement(N4JSTypeSystem pts, List<TypeRef> pTypeRefs, Resource pTesource) {
-		return super.getSimplifiedUnion(pts, pTypeRefs, pTesource);
-	}
-
-	/**
-	 * True iff all members merged via method {@link #merge(RuleEnvironment, TMember)} can be combined to a valid
-	 * composed member.
-	 */
 	@Override
 	public boolean isValid() {
-		// must be non-empty and complete
-		if (empty)
+		if (specialMemberDescriptor == null)
 			return false;
-		// check kind
-		// (note the tweak in #mergeKind() above, so even though we require multipleKinds===false here we allow
-		// combining fields with getters/setters in some cases)
-		if (kind == null || multipleKinds)
-			return false;
-		// disallow combination of read-only field + setter
-		if (isSetter(kind) && readOnlyField)
-			return false;
-		// check fpars
-		for (int fparIdx = 0; fparIdx < fpars.size(); fparIdx++) {
-			final FparDescriptor curr = fpars.get(fparIdx);
-			final FparDescriptor next = fparIdx + 1 < fpars.size() ? fpars.get(fparIdx + 1) : null;
+		return specialMemberDescriptor.isValid();
+	}
 
-			if (!isValidFpar(curr, next))
-				return false;
+	@Override
+	public TMember create(String name) {
+		if (specialMemberDescriptor == null)
+			return null;
+		return specialMemberDescriptor.create(name);
+	}
+
+	private boolean allTypeRefAreEqual() {
+		N4JSTypeSystem ts = cma.getTypeSystem();
+		List<TypeRef> allTypeRefs = cma.getTypeRefsOfMemberType(METHOD, FIELD, GETTER, SETTER);
+		TypeRef ist = ts.createSimplifiedIntersection(allTypeRefs, cma.getResource());
+
+		Iterator<TypeRef> typeRefIt = allTypeRefs.iterator();
+		while (typeRefIt.hasNext()) {
+			TypeRef firstNonNullTypeRef = typeRefIt.next();
+			if (firstNonNullTypeRef != null) {
+				RuleEnvironment G = cma.getRuleEnvironmentForTypeRef(firstNonNullTypeRef);
+				boolean equalTypeRefs = ts.equaltypeSucceeded(G, firstNonNullTypeRef, ist);
+				return equalTypeRefs;
+			}
 		}
 		return true;
-	}
-
-	private boolean isValidFpar(final FparDescriptor curr, final FparDescriptor next) {
-		if (curr == null)
-			return false;
-		if (curr.isVariadic() && next != null)
-			return false;
-
-		// both are not null:
-		// if (curr.variadic)
-		// return false;
-		// if (curr.isOptional() && !next.isOptional()) // not necessary: is handled by Tyoes.xcore#isOptional
-		// return false;
-
-		return true;
-	}
-
-	@Override
-	protected void mergeKind(MemberType nextKind) {
-		if (nextKind != null) {
-			// if this is the first call to #mergeKind() -> initialize 'kind' variable
-			if (kind == null)
-				kind = nextKind;
-
-			if (!isField(nextKind)) {
-				allAreFields = false;
-			}
-
-			// special tweak:
-			// combining fields and accessors will yield the same result as just having the fields
-			if (isAccessor(kind) && isField(nextKind))
-				kind = nextKind;
-			else if (isField(kind) && isAccessor(nextKind))
-				nextKind = kind;
-			// remember if we have encountered multiple types
-			multipleKinds |= (nextKind != kind);
-		}
-	}
-
-	@Override
-	protected void mergeAccessibility(MemberAccessModifier nextAccessibility) {
-		if (accessibility == null) {
-			accessibility = MemberAccessModifier.PRIVATE; // initialize variable
-		}
-		if (nextAccessibility != null) {
-			// remember the maximum accessibility we have encountered
-			if (nextAccessibility.getValue() > accessibility.getValue())
-				accessibility = nextAccessibility;
-		}
-	}
-
-	@Override
-	protected void checkAndHandleVoidTypeRefs() {
-		List<TypeRef> voids = new LinkedList<>();
-		for (TypeRef tr : typeRefs) {
-			if (TypeUtils.isVoid(tr))
-				voids.add(tr);
-		}
-		if (typeRefs.size() > voids.size()) {
-			// delete voids only, iff other types exists
-			for (TypeRef vds : voids) {
-				typeRefs.remove(vds);
-			}
-		}
-	}
-
-	@Override
-	protected MemberType getActualKind(MemberType memberType, boolean writeAccessFlag) {
-		MemberType actualKind = kind;
-		// turn fields into a getter or setter
-		if (isField(memberType)) {
-			final TypeRef compo = getSimplifiedCompositionOfTypeRefs();
-			// If not all are fields => Convert to setter/getter
-			// Otherwise convert only iff the types are not equal
-			// if the simplified intersection is a intersection type, the types cannot be all equal!
-			if (!allAreFields || (compo != null && compo instanceof ComposedTypeRef)) {
-				if (writeAccess) {
-					actualKind = MemberType.SETTER;
-				} else {
-					actualKind = MemberType.GETTER;
-				}
-			}
-		}
-		return actualKind;
 	}
 
 }

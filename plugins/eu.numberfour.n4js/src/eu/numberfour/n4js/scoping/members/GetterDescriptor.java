@@ -22,7 +22,7 @@ import eu.numberfour.n4js.ts.utils.TypeUtils;
 /**
  *
  */
-abstract class GetterDescriptor implements ComposedMemberDescriptorNew {
+abstract class GetterDescriptor implements ComposedMemberDescriptor {
 	final ComposedMemberAggregate cma;
 
 	GetterDescriptor(ComposedMemberAggregate cma) {

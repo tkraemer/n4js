@@ -22,7 +22,7 @@ import eu.numberfour.n4js.ts.utils.TypeUtils;
 /**
  *
  */
-abstract class FieldDescriptor implements ComposedMemberDescriptorNew {
+abstract class FieldDescriptor implements ComposedMemberDescriptor {
 	final ComposedMemberAggregate cma;
 
 	FieldDescriptor(ComposedMemberAggregate cma) {

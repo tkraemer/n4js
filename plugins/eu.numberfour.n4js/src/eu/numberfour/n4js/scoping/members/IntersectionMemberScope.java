@@ -13,7 +13,6 @@ package eu.numberfour.n4js.scoping.members;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
@@ -64,12 +63,7 @@ public class IntersectionMemberScope extends ComposedMemberScope {
 	}
 
 	@Override
-	protected ComposedMemberDescriptor getComposedMemberDescriptor(final Resource resource) {
-		return new IntersectionMemberDescriptor(writeAccess, resource, ts);
-	}
-
-	@Override
-	protected ComposedMemberDescriptorNew getComposedMemberDescriptorNew(ComposedMemberAggregate cma) {
-		return new IntersectionMemberDescriptorNew(cma);
+	protected ComposedMemberDescriptor getComposedMemberDescriptorNew(ComposedMemberAggregate cma) {
+		return new IntersectionMemberDescriptor(cma);
 	}
 }

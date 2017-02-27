@@ -71,12 +71,7 @@ public abstract class ComposedMemberScope extends AbstractScope {
 	/**
 	 *
 	 */
-	abstract protected ComposedMemberDescriptor getComposedMemberDescriptor(final Resource resource);
-
-	/**
-	 *
-	 */
-	abstract protected ComposedMemberDescriptorNew getComposedMemberDescriptorNew(ComposedMemberAggregate cma);
+	abstract protected ComposedMemberDescriptor getComposedMemberDescriptorNew(ComposedMemberAggregate cma);
 
 	/**
 	 * Creates union type scope, passed subScopes are expected to be fully configured (i.e., including required filters
@@ -162,7 +157,6 @@ public abstract class ComposedMemberScope extends AbstractScope {
 		// check all subScopes for a member of the given name and
 		// merge the properties of the existing members into 'composedMember'
 		final Resource resource = EcoreUtilN4.getResource(context, composedTypeRef);
-		final ComposedMemberDescriptor composedMemberDescr = getComposedMemberDescriptor(resource);
 		ComposedMemberAggregate.init(writeAccess, resource, ts);
 
 		for (int idx = 0; idx < subScopes.length; idx++) {
@@ -171,22 +165,18 @@ public abstract class ComposedMemberScope extends AbstractScope {
 			final Resource res = EcoreUtilN4.getResource(context, composedTypeRef);
 			final RuleEnvironment GwithSubstitutions = ts.createRuleEnvironmentForContext(typeRef, res);
 			final TMember member = findMemberInSubScope(subScope, memberName);
-			composedMemberDescr.merge(GwithSubstitutions, member);
 			ComposedMemberAggregate.addMember(member, GwithSubstitutions);
 
 		}
 		// produce result
 		ComposedMemberAggregate cma = ComposedMemberAggregate.get();
-		ComposedMemberDescriptorNew cmdn = getComposedMemberDescriptorNew(cma);
-		if (!cmdn.isEmpty()) { // NEW
-			// if (!composedMemberDescr.isEmpty()) { // OLD
+		ComposedMemberDescriptor cmdn = getComposedMemberDescriptorNew(cma);
+		if (!cmdn.isEmpty()) {
 			// at least one of the subScopes had an element of that name
 			final TMember result;
-			if (cmdn.isValid()) { // NEW
-				// if (composedMemberDescr.isValid()) { // OLD
+			if (cmdn.isValid()) {
 				// success case: The element for that name can be merged into a valid composed member
-				result = cmdn.create(memberName); // NEW
-				// result = composedMemberDescr.create(memberName); // OLD
+				result = cmdn.create(memberName);
 			} else {
 				// some of the subScopes do not have an element for that name OR
 				// they do not form a valid composed member (e.g. they are of different kind)
@@ -279,14 +269,7 @@ public abstract class ComposedMemberScope extends AbstractScope {
 			final EObject objOrProxy = currElem.getEObjectOrProxy();
 			if (objOrProxy != null && !objOrProxy.eIsProxy() && objOrProxy instanceof TMember) {
 				final TMember currM = (TMember) objOrProxy;
-				return currM; // NEW
-				// OLD:
-				// if (hasCorrectAccess(currM, writeAccess)
-				// || (currM instanceof TField && hasCorrectAccess(currM, !writeAccess))) {
-				// return currM;
-				// } else {
-				// return createErrorPlaceholder(name);
-				// }
+				return currM;
 			}
 		}
 		return null;
