@@ -34,7 +34,7 @@ class ImportsRemovalChangesComputer {
 	/**
 	 * Compute changes that will remove all imports.
 	 *
-	 * @param xtextResource the resource to modify
+	 * @param resource the resource to modify
 	 * @param document the document connected to the xtextResource,  for textual changes.
 	 * @return list of changes to the document.
 	 */
