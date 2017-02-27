@@ -101,6 +101,7 @@ Contributors:
 		<!-- *************************************** n4jsx Tests -->
 		<module>eu.numberfour.n4jsx.lang.tests</module>
 		<module>eu.numberfour.n4jsx.spec.tests</module>
+		<module>eu.numberfour.n4jsx.xpect.ui.tests</module>
 
 	</modules>
 

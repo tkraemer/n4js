@@ -1,0 +1,35 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.xpect.ui.tests.N4JSXNotValidatingXpectPluginUITest
+	
+	Workspace {
+		Project "N4JSXXpectTests" {
+			Folder "model" {
+				Folder "linking" {
+					ThisFile {}
+					File "ClassComponent.n4jsx" {}
+					File "FunctionComponent.n4jsx" {}
+				}
+				Folder "jsxbackend" {
+					File "react.n4jsd" { from = "../../../reactFiles/react.n4jsd" }
+				}
+			}
+			File "manifest.n4mf" { from="../../../manifest_nv.n4mf" }
+		}
+	}
+	
+	END_SETUP 
+ */
+
+/* XPECT organizeImports --- 
+ + import {Cls} from "FunctionComponent";
+ + import {Func} from "ClassComponent";
+<Func myProp="My prop"/>
+var a = <Cls prop={5}/>;
+console.log("components", fc, cc);
+--- */
+
+import * as React from "jsxbackend/react"
+
+var fc = <Func myProp="My prop"/>;
+var cc = <Cls prop={5}/>;
+
+console.log("components", fc, cc);

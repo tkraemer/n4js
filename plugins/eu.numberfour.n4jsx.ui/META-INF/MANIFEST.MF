@@ -45,7 +45,8 @@ Require-Bundle: eu.numberfour.n4js;visibility:=reexport,
  eu.numberfour.n4jsx.model
 Import-Package: com.ibm.icu.text,
  org.apache.log4j
-Export-Package: eu.numberfour.n4jsx.ui.contentassist,
+Export-Package: eu.numberfour.n4jsx.ui,
+ eu.numberfour.n4jsx.ui.contentassist,
  eu.numberfour.n4jsx.ui.internal,
  eu.numberfour.n4jsx.ui.quickfix
 Bundle-Activator: eu.numberfour.n4jsx.ui.internal.N4JSXActivator
