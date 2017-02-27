@@ -16,6 +16,7 @@ import eu.numberfour.n4js.n4JS.AdditiveOperator
 import eu.numberfour.n4js.n4JS.Argument
 import eu.numberfour.n4js.n4JS.ArrayElement
 import eu.numberfour.n4js.n4JS.ArrayLiteral
+import eu.numberfour.n4js.n4JS.ArrowFunction
 import eu.numberfour.n4js.n4JS.AssignmentExpression
 import eu.numberfour.n4js.n4JS.AwaitExpression
 import eu.numberfour.n4js.n4JS.BinaryLogicalExpression
@@ -29,6 +30,7 @@ import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.IndexedAccessExpression
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
@@ -41,6 +43,7 @@ import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ParenExpression
 import eu.numberfour.n4js.n4JS.PostfixExpression
 import eu.numberfour.n4js.n4JS.PromisifyExpression
+import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.RelationalExpression
 import eu.numberfour.n4js.n4JS.RelationalOperator
 import eu.numberfour.n4js.n4JS.Script
@@ -52,6 +55,7 @@ import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions
+import eu.numberfour.n4js.postprocessing.ASTMetaInfoCacheHelper
 import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker
 import eu.numberfour.n4js.scoping.accessModifiers.VisibilityAwareCtorScope
 import eu.numberfour.n4js.scoping.members.MemberScopingHelper
@@ -102,6 +106,7 @@ import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.utils.ConstantValue.ValueInvalid
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.utils.PromisifyHelper
@@ -130,7 +135,6 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.n4JS.ArrowFunction
 
 /**
  */
@@ -153,6 +157,8 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject private PromisifyHelper promisifyHelper;
 
 	@Inject private JavaScriptVariantHelper jsVariantHelper;
+
+	@Inject private ASTMetaInfoCacheHelper astMetaInfoCacheHelper;
 
 	/**
 	 * NEEEDED
@@ -1641,6 +1647,35 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 				}
 			}
 		}
+	}
+
+	@Check
+	def void checkMandatoryConstantExpression(Expression expr) {
+		if(N4JSLanguageUtils.isRequiredToBeConstantExpression(expr)) {
+			val evalResult = astMetaInfoCacheHelper.getEvaluationResult(expr);
+			if(evalResult instanceof ValueInvalid) {
+				if(isExpressionOfComputedPropertyNameInObjectLiteral(expr)) {
+					// special case: in object literals, anything goes
+					// (but show a warning)
+					addIssue(IssueCodes.getMessageForEXP_COMPUTED_PROP_NAME_DISCOURAGED, expr,
+						IssueCodes.EXP_COMPUTED_PROP_NAME_DISCOURAGED);
+					return;
+				}
+				for(error : evalResult.errors) {
+					val astNode = error.astNode;
+					if(astNode!==null) {
+						val msgFull = getMessageForEXP_COMPILE_TIME_MANDATORY(error.message);
+						addIssue(msgFull, astNode, IssueCodes.EXP_COMPILE_TIME_MANDATORY);
+					}
+				}
+			}
+		}
+	}
+	def private boolean isExpressionOfComputedPropertyNameInObjectLiteral(Expression expr) {
+		val exprParent = expr.eContainer;
+		return exprParent instanceof LiteralOrComputedPropertyName
+			&& exprParent.eContainer instanceof PropertyAssignment
+			&& exprParent.eContainer.eContainer instanceof ObjectLiteral;
 	}
 }
 

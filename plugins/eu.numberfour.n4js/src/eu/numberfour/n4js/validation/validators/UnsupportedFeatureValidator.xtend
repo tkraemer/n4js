@@ -10,25 +10,18 @@
  */
 package eu.numberfour.n4js.validation.validators
 
-import com.google.inject.Inject
 import eu.numberfour.n4js.n4JS.Argument
 import eu.numberfour.n4js.n4JS.BindingPattern
 import eu.numberfour.n4js.n4JS.ExportDeclaration
 import eu.numberfour.n4js.n4JS.ExportableElement
-import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.ImportDeclaration
-import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName
 import eu.numberfour.n4js.n4JS.N4ClassDefinition
 import eu.numberfour.n4js.n4JS.N4ClassExpression
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.NamedElement
 import eu.numberfour.n4js.n4JS.NewTarget
-import eu.numberfour.n4js.n4JS.ObjectLiteral
-import eu.numberfour.n4js.n4JS.PropertyAssignment
-import eu.numberfour.n4js.n4JS.PropertyNameKind
 import eu.numberfour.n4js.n4JS.TaggedTemplateString
-import eu.numberfour.n4js.postprocessing.ASTMetaInfoCacheHelper
 import eu.numberfour.n4js.validation.ASTStructureValidator
 import eu.numberfour.n4js.validation.AbstractN4JSDeclarativeValidator
 import eu.numberfour.n4js.validation.IssueCodes
@@ -43,9 +36,6 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
  * These validations will be removed over time once the corresponding features are implemented.
  */
 class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
-
-	@Inject
-	private ASTMetaInfoCacheHelper astMetaInfoCacheHelper;
 
 	/**
 	 * NEEEDED
@@ -108,31 +98,6 @@ class UnsupportedFeatureValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 	private static boolean classExpressionsAreAllowed = false;
-
-
-	@Check
-	def void checkComputedPropertyName(LiteralOrComputedPropertyName decl) {
-		if(decl.kind===PropertyNameKind.COMPUTED) {
-			if(!isValidComputedPropertyName(decl)) {
-				if(decl.eContainer instanceof PropertyAssignment && decl.eContainer?.eContainer instanceof ObjectLiteral) {
-					// special case: in object literals, anything goes
-					// (but show a warning)
-					addIssue(IssueCodes.getMessageForEXP_COMPUTED_PROP_NAME_DISCOURAGED, decl.expression, IssueCodes.EXP_COMPUTED_PROP_NAME_DISCOURAGED);
-					return;
-				}
-				unsupported("computed property/member name using an expression other than a constant expression", decl.expression);
-			}
-		}
-	}
-	/**
-	 * Returns <code>true</code> iff the given name is a computed property name with a valid expression.
-	 */
-	def private boolean isValidComputedPropertyName(LiteralOrComputedPropertyName name) {
-		return name.getKind()===PropertyNameKind.COMPUTED && isValidConstantExpression(name.getExpression());
-	}
-	def private boolean isValidConstantExpression(Expression expr) {
-		return expr!==null && astMetaInfoCacheHelper.getEvaluationResult(expr)!==null; // FIXME
-	}
 
 
 	@Check

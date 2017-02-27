@@ -34,6 +34,7 @@ import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.VariableStatement
 import eu.numberfour.n4js.ts.validation.TypesKeywordProvider
+import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 
 /**
  * Helper returning the keyword of a given AST or type element, e.g., "class" for a class declaration.
@@ -99,6 +100,10 @@ class N4JSElementKeywordProvider extends TypesKeywordProvider {
 
 	def dispatch String keyword(FunctionExpression fnExp) {
 		"function expression"
+	}
+
+	def dispatch String keyword(ParameterizedCallExpression callExp) {
+		"call expression"
 	}
 
 	def dispatch String keyword(FormalParameter fparam) {

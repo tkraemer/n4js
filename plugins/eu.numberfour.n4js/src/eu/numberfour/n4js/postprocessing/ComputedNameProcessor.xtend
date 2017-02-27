@@ -92,7 +92,7 @@ class ComputedNameProcessor {
 	 */
 	def private String getPropertyNameFromExpression(RuleEnvironment G, Expression expr, ASTMetaInfoCache cache) {
 		val value = cache.getEvaluationResult(expr);
-		return value?.toString; // see API doc for why we can simply use #toString() here
+		return if(value.valid) value.toString else null; // see API doc for why we can simply use #toString() here
 	}
 
 	def private void discardTypeModelElement(EObject astNode) {

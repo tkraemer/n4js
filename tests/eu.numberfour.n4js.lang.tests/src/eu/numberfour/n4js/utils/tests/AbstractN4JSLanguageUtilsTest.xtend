@@ -21,6 +21,7 @@ import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.utils.ConstantValue
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
+import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
@@ -39,6 +40,7 @@ abstract class AbstractN4JSLanguageUtilsTest {
 
 	@Inject private extension N4JSParseHelper parseHelper;
 	@Inject private extension ValidationTestHelper;
+	@Inject private N4JSElementKeywordProvider keywordProvider;
 
 
 	def protected void assertVarianceOfPosition(CharSequence code, Variance expectedVariance) {
@@ -79,8 +81,14 @@ abstract class AbstractN4JSLanguageUtilsTest {
 		val expressionInAST = (lastStatement.expression as ParenExpression).expression;
 		assertNotNull(expressionInAST);
 		val G = script.newRuleEnvironment;
-		val computedValue = ConstantExpressionProcessor.ONLY_FOR_TESTING__computeValueIfConstantExpression(G, expressionInAST);
-		val expectedConstantValue = ConstantValue.of(expectedValue);
-		assertEquals(expectedConstantValue, computedValue);
+		val computedValue = ConstantExpressionProcessor.ONLY_FOR_TESTING__computeValueIfConstantExpression(G, expressionInAST, keywordProvider);
+		assertNotNull(computedValue);
+		if(expectedValue===null) {
+			assertFalse("expected an invalid value but got a valid one", computedValue.valid);
+		} else {
+			assertTrue("expected a valid value but got an invalid one", computedValue.valid);
+			val expectedConstantValue = ConstantValue.of(expectedValue);
+			assertEquals(expectedConstantValue, computedValue);
+		}
 	}
 }
