@@ -20,16 +20,14 @@
  */
 
 /* XPECT organizeImports --- 
- + import {Cls} from "FunctionComponent";
- + import {Func} from "ClassComponent";
-<Func myProp="My prop"/>
-var a = <Cls prop={5}/>;
-console.log("components", fc, cc);
++ import {Cls} from "linking/ClassComponent"
+| [var|;]
++ import {Func} from "linking/FunctionComponent";
+| [|var] fc = <Func myProp="My prop"/>;
+  var cc = <Cls prop={5}/>;
+  console.log(fc, cc);
 --- */
-
-import * as React from "jsxbackend/react"
 
 var fc = <Func myProp="My prop"/>;
 var cc = <Cls prop={5}/>;
-
-console.log("components", fc, cc);
+console.log(fc, cc);
