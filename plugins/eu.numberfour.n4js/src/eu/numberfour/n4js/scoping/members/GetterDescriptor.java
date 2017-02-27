@@ -25,7 +25,7 @@ import eu.numberfour.n4js.ts.utils.TypeUtils;
  * abstract methods implemented in the child classes mentioned before The child classes are instantiated in
  * {@link IntersectionMemberDescriptor} and {@link UnionMemberDescriptor} respectively.
  */
-abstract class GetterDescriptor implements ComposedMemberDescriptor {
+abstract class GetterDescriptor implements ComposedMemberCreator {
 	final ComposedMemberAggregate cma;
 
 	GetterDescriptor(ComposedMemberAggregate cma) {
@@ -35,11 +35,6 @@ abstract class GetterDescriptor implements ComposedMemberDescriptor {
 	abstract MemberAccessModifier getAccessability();
 
 	abstract TypeRef getReturnTypeRefComposition();
-
-	@Override
-	public boolean isEmpty() {
-		return false;
-	}
 
 	@Override
 	public boolean isValid() {

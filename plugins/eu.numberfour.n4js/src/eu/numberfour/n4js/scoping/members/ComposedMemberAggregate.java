@@ -41,10 +41,12 @@ import it.xsemantics.runtime.RuleEnvironment;
 /**
  * The purpose of the classes and methods in this file is threefold:
  * <ol>
- * <li>Provide methods to aggregate all sibling members on which a composed member is based upon.</li>
+ * <li>Provide methods to aggregate all existing members on which a new composed member is based upon. The existing
+ * members are also called siblings.</li>
  * <li>Interpret all sibling members to derive general information which is later used when creating the composed
  * member.</li>
- * <li>Provide the derived information using data holder objects.</li>
+ * <li>Provide the derived information using data holder objects. The information is later used to create a new composed
+ * {@link TMember} out of its existing siblings.</li>
  * </ol>
  * The aggregation methods are static and the method {@link #get()} returns an aggregation object. Their life cycle is
  * as follows:
@@ -68,7 +70,7 @@ public class ComposedMemberAggregate {
 	private static ComposedMemberAggregate currCMA;
 
 	/**
-	 *
+	 * Initializes the static methods. (Also refer to the life cycle mentioned above.)
 	 */
 	public static void init(boolean writeAccess, Resource resource, N4JSTypeSystem ts) {
 		Objects.isNull(currCMA);
@@ -76,7 +78,8 @@ public class ComposedMemberAggregate {
 	}
 
 	/**
-	 *
+	 * Adds a sibling member on which a new composed member is based upon. (Also refer to the life cycle mentioned
+	 * above.)
 	 */
 	public static void addMember(TMember member, RuleEnvironment G) {
 		Objects.nonNull(currCMA);
@@ -88,7 +91,9 @@ public class ComposedMemberAggregate {
 	}
 
 	/**
-	 *
+	 * Returns a data object that provides all aggregated information to create a new composed {@link TMember}. This
+	 * method also performs an initialization for adding members to the next data object. (Also refer to the life cycle
+	 * mentioned above.)
 	 */
 	public static ComposedMemberAggregate get() {
 		ComposedMemberAggregate lastCMA = currCMA;
@@ -132,7 +137,9 @@ public class ComposedMemberAggregate {
 	private final List<FParAggregate> fParameters = new ArrayList<>();
 	private boolean isVariadicButLastFParIsDifferent = false;
 
-	/***/
+	/**
+	 * Aggregates all necessary information for composing a new formal parameter out of its existing siblings.
+	 */
 	public static class FParAggregate {
 		// is set in initMemberAggregate()
 		private final List<Pair<TFormalParameter, RuleEnvironment>> fpSiblings = new ArrayList<>();

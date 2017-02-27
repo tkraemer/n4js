@@ -31,7 +31,7 @@ import eu.numberfour.n4js.ts.utils.TypeUtils;
  * {@link FParDescriptorCreator#create()} is defined here. This class is used here to eventually create formal
  * parameters of methods, and moreover it is used in {@link SetterDescriptor} to create the formal parameter of setters.
  */
-abstract class MethodDescriptor implements ComposedMemberDescriptor {
+abstract class MethodDescriptor implements ComposedMemberCreator {
 	final ComposedMemberAggregate cma;
 	final List<FParDescriptor> fpas = new LinkedList<>();
 
@@ -51,11 +51,6 @@ abstract class MethodDescriptor implements ComposedMemberDescriptor {
 	abstract TypeRef getReturnTypeRefComposition();
 
 	abstract TypeRef getFParTypeRefComposition(List<TypeRef> typeRefsToUse);
-
-	@Override
-	public boolean isEmpty() {
-		return false;
-	}
 
 	@Override
 	public boolean isValid() {

@@ -15,30 +15,19 @@ import static eu.numberfour.n4js.ts.types.MemberType.GETTER;
 import static eu.numberfour.n4js.ts.types.MemberType.METHOD;
 import static eu.numberfour.n4js.ts.types.MemberType.SETTER;
 
-import java.util.Iterator;
-import java.util.List;
-
-import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberType;
-import eu.numberfour.n4js.ts.types.TMember;
-import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
-import it.xsemantics.runtime.RuleEnvironment;
 
 /**
  *
  */
-public class IntersectionMemberDescriptor implements ComposedMemberDescriptor {
-	final private ComposedMemberAggregate cma;
-	final ComposedMemberDescriptor specialMemberDescriptor;
-	final MemberType memberType;
+public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 
 	IntersectionMemberDescriptor(ComposedMemberAggregate cma) {
-		this.cma = cma;
-		this.memberType = getNewMemberType();
-		this.specialMemberDescriptor = (memberType != null) ? getSpecialMemberDescriptor() : null;
+		super(cma);
 	}
 
-	private ComposedMemberDescriptor getSpecialMemberDescriptor() {
+	@Override
+	protected ComposedMemberCreator getSpecialMemberDescriptor() {
 		switch (memberType) {
 		case METHOD:
 			return new MethodDescriptor.IntersectionMethod(cma);
@@ -52,7 +41,8 @@ public class IntersectionMemberDescriptor implements ComposedMemberDescriptor {
 		return null;
 	}
 
-	private MemberType getNewMemberType() {
+	@Override
+	protected MemberType getNewMemberType() {
 		// mix of all memberTypes
 		if (cma.hasMethodMemberType() && cma.hasNonMethodMemberType()) {
 			return null; // inValid
@@ -87,39 +77,10 @@ public class IntersectionMemberDescriptor implements ComposedMemberDescriptor {
 	}
 
 	@Override
-	public boolean isEmpty() {
-		return cma.isEmpty();
-	}
-
-	@Override
 	public boolean isValid() {
 		if (specialMemberDescriptor == null)
 			return false;
 		return specialMemberDescriptor.isValid();
-	}
-
-	@Override
-	public TMember create(String name) {
-		if (specialMemberDescriptor == null)
-			return null;
-		return specialMemberDescriptor.create(name);
-	}
-
-	private boolean allTypeRefAreEqual() {
-		N4JSTypeSystem ts = cma.getTypeSystem();
-		List<TypeRef> allTypeRefs = cma.getTypeRefsOfMemberType(METHOD, FIELD, GETTER, SETTER);
-		TypeRef ist = ts.createSimplifiedIntersection(allTypeRefs, cma.getResource());
-
-		Iterator<TypeRef> typeRefIt = allTypeRefs.iterator();
-		while (typeRefIt.hasNext()) {
-			TypeRef firstNonNullTypeRef = typeRefIt.next();
-			if (firstNonNullTypeRef != null) {
-				RuleEnvironment G = cma.getRuleEnvironmentForTypeRef(firstNonNullTypeRef);
-				boolean equalTypeRefs = ts.equaltypeSucceeded(G, firstNonNullTypeRef, ist);
-				return equalTypeRefs;
-			}
-		}
-		return true;
 	}
 
 }

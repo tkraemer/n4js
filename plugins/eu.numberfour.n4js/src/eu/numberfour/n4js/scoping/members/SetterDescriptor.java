@@ -30,7 +30,7 @@ import eu.numberfour.n4js.ts.types.TypesFactory;
  * This class also defines the class {@link StandaloneFPar} which is based upon the class {@link FParDescriptorCreator}
  * and reuses its method {@link FParDescriptorCreator#create()}.
  */
-abstract class SetterDescriptor implements ComposedMemberDescriptor {
+abstract class SetterDescriptor implements ComposedMemberCreator {
 	final ComposedMemberAggregate cma;
 	final StandaloneFPar fpar;
 
@@ -50,11 +50,6 @@ abstract class SetterDescriptor implements ComposedMemberDescriptor {
 	abstract MemberAccessModifier getAccessability();
 
 	abstract TypeRef getReturnTypeRefComposition();
-
-	@Override
-	public boolean isEmpty() {
-		return false;
-	}
 
 	@Override
 	public TSetter create(String name) {
