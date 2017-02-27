@@ -35,8 +35,6 @@ public class SelectionFilesCollector {
 
 	private final Predicate<IFile> fileFilter;
 
-	private Set<IFile> collected = null;
-
 	/** Constructs collector with provided filters. */
 	public SelectionFilesCollector(Predicate<IFile> fileFilter) {
 		this.fileFilter = fileFilter;
@@ -44,49 +42,47 @@ public class SelectionFilesCollector {
 
 	/** Collects files from provided selection. */
 	public List<IFile> collectFiles(IStructuredSelection structuredSelection) {
-		collected = new HashSet<>();
+		Set<IFile> collected = new HashSet<>();
 		for (Object object : structuredSelection.toList()) {
-			collectRelevantFiles(object);
+			collectRelevantFiles(object, collected);
 		}
 
-		Set<IFile> result = collected;
-		collected = null;
-		return Lists.newArrayList(result);
+		return Lists.newArrayList(collected);
 	}
 
 	/** Dispatches based on provided element (can call itself recursively). */
-	private void collectRelevantFiles(Object element) {
+	private void collectRelevantFiles(Object element, Set<IFile> collected) {
 		// order of type check matters!
 		if (element instanceof IWorkingSet) {
-			collectIAdaptable((IWorkingSet) element);
+			collectIAdaptable((IWorkingSet) element, collected);
 		} else if (element instanceof IContainer) {
-			collectResource((IContainer) element);
+			collectResource((IContainer) element, collected);
 		} else if (element instanceof IFile) {
-			collectIFile((IFile) element);
+			collectIFile((IFile) element, collected);
 		} else {
 			LOGGER.warn("Files collector ignores " + element.getClass().getName() + ".");
 		}
 	}
 
-	private void collectIAdaptable(IWorkingSet workingSet) {
+	private void collectIAdaptable(IWorkingSet workingSet, Set<IFile> collected) {
 		IAdaptable[] adaptables = workingSet.getElements();
 		for (IAdaptable adaptable : adaptables) {
-			collectRelevantFiles(adaptable);
+			collectRelevantFiles(adaptable, collected);
 		}
 	}
 
-	private void collectResource(IContainer container) {
+	private void collectResource(IContainer container, Set<IFile> collected) {
 		try {
 			IResource[] resources = container.members(IContainer.EXCLUDE_DERIVED);
 			for (IResource resource : resources) {
-				collectRelevantFiles(resource);
+				collectRelevantFiles(resource, collected);
 			}
 		} catch (CoreException c) {
 			LOGGER.warn("Error while collecting files", c);
 		}
 	}
 
-	private void collectIFile(IFile iFile) {
+	private void collectIFile(IFile iFile, Set<IFile> collected) {
 		if (fileFilter.test(iFile))
 			collected.add(iFile);
 	}
