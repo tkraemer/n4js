@@ -1433,6 +1433,39 @@ For constraints on using the optional modifier, see <<_function-object-type>>.
 == Union and Intersection Type (Composed Types)
 
 Given two or more existing types, it is possible to compose a new type by forming either the union or intersection of the base types.
+The following example gives a small overview of common use cases of union and intersection types.
+
+.Composed types
+[example]
+--
+Let A, B, and C be defined as in the chapter beginning ($C \subtype B <: A$)
+
+The following subtyping relations with union types are to be evaluated as follows: footnote:[See Example <<ex:class-hierarchy>> for class definitions.]
+
+[source,n4js]
+----
+interface A { f : int = 1; }
+interface B { f : string = "h"; }
+
+class CA implements A {}
+class CB implements B {}
+
+var aub : A|B; // union type
+var aib : A&B; // intersection type
+
+function u() {
+	aub = (...)? new CA() : new CB();
+	val x = aub.f; // x = {1|"h"}
+	aub.f = undefined; // undefined can be assigned to both int and string types
+}
+val fu = aub.f; // typeof{aub.f} = int|string
+aub.f = undefined; // typeof{aub.f} = int&string
+val fi = aub.f; // typeof{aib.f} = int&string
+aub.f = undefined; // typeof{aib.f} = int|string
+----
+
+--
+
 The following sections define these _union_ and _intersection types_ in detail.
 
 === Union Type

@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import eu.numberfour.n4js.scoping.members.ComposedMemberAggregate.FParAggregate;
-import eu.numberfour.n4js.scoping.members.MethodDescriptor.FParDescriptorCreator;
+import eu.numberfour.n4js.scoping.members.MethodCreator.FParCreator;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
@@ -22,19 +22,19 @@ import eu.numberfour.n4js.ts.types.TSetter;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 
 /**
- * The abstract {@link SetterDescriptor} is the base class for the child classes {@link UnionSetter} and
- * {@link IntersectionSetter}. It implements the method {@link #create(String)} which gets its information through
+ * The abstract {@link SetterCreator} is the base class for the child classes {@link UnionSetterCreator} and
+ * {@link IntersectionSetterCreator}. It implements the method {@link #create(String)} which gets its information through
  * abstract methods implemented in the child classes mentioned before The child classes are instantiated in
- * {@link IntersectionMemberDescriptor} and {@link UnionMemberDescriptor} respectively.
+ * {@link IntersectionMemberCreator} and {@link UnionMemberCreator} respectively.
  * <p>
- * This class also defines the class {@link StandaloneFPar} which is based upon the class {@link FParDescriptorCreator}
- * and reuses its method {@link FParDescriptorCreator#create()}.
+ * This class also defines the class {@link StandaloneFPar} which is based upon the class {@link FParCreator}
+ * and reuses its method {@link FParCreator#create()}.
  */
-abstract class SetterDescriptor implements ComposedMemberCreator {
+abstract class SetterCreator implements MemberCreator {
 	final ComposedMemberAggregate cma;
 	final StandaloneFPar fpar;
 
-	SetterDescriptor(ComposedMemberAggregate cma) {
+	SetterCreator(ComposedMemberAggregate cma) {
 		this.cma = cma;
 		String name = "arg0";
 		List<TypeRef> typeRefs = new LinkedList<>();
@@ -61,8 +61,8 @@ abstract class SetterDescriptor implements ComposedMemberCreator {
 	}
 
 	/** Class to implement logic with regard to setters in {@code Intersection Types}. */
-	static class IntersectionSetter extends SetterDescriptor {
-		IntersectionSetter(ComposedMemberAggregate cma) {
+	static class IntersectionSetterCreator extends SetterCreator {
+		IntersectionSetterCreator(ComposedMemberAggregate cma) {
 			super(cma);
 		}
 
@@ -84,8 +84,8 @@ abstract class SetterDescriptor implements ComposedMemberCreator {
 	}
 
 	/** Class to implement logic with regard to setters in {@code Union Types}. */
-	static class UnionSetter extends SetterDescriptor {
-		UnionSetter(ComposedMemberAggregate cma) {
+	static class UnionSetterCreator extends SetterCreator {
+		UnionSetterCreator(ComposedMemberAggregate cma) {
 			super(cma);
 		}
 
@@ -108,7 +108,7 @@ abstract class SetterDescriptor implements ComposedMemberCreator {
 	}
 
 	/** Class to create formal parameters of setters. */
-	class StandaloneFPar extends FParDescriptorCreator {
+	class StandaloneFPar extends FParCreator {
 		final String name;
 		final List<TypeRef> typeRefs;
 

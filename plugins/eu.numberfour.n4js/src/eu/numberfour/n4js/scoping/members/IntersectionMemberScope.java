@@ -24,7 +24,7 @@ import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 
 /**
- *
+ * Implements methods for handling intersection members.
  */
 public class IntersectionMemberScope extends ComposedMemberScope {
 
@@ -60,7 +60,7 @@ public class IntersectionMemberScope extends ComposedMemberScope {
 	}
 
 	@Override
-	protected ComposedMemberDescriptor getComposedMemberDescriptor(ComposedMemberAggregate cma) {
-		return new IntersectionMemberDescriptor(cma);
+	protected ComposedMemberCreator getComposedMemberCreator(ComposedMemberAggregate cma) {
+		return new IntersectionMemberCreator(cma);
 	}
 }

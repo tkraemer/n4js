@@ -20,15 +20,15 @@ import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 
 /**
- * The abstract {@link GetterDescriptor} is the base class for the child classes {@link UnionGetter} and
- * {@link IntersectionGetter}. It implements the method {@link #create(String)} which gets its information through
+ * The abstract {@link GetterCreator} is the base class for the child classes {@link UnionGetterCreator} and
+ * {@link IntersectionGetterCreator}. It implements the method {@link #create(String)} which gets its information through
  * abstract methods implemented in the child classes mentioned before The child classes are instantiated in
- * {@link IntersectionMemberDescriptor} and {@link UnionMemberDescriptor} respectively.
+ * {@link IntersectionMemberCreator} and {@link UnionMemberCreator} respectively.
  */
-abstract class GetterDescriptor implements ComposedMemberCreator {
+abstract class GetterCreator implements MemberCreator {
 	final ComposedMemberAggregate cma;
 
-	GetterDescriptor(ComposedMemberAggregate cma) {
+	GetterCreator(ComposedMemberAggregate cma) {
 		this.cma = cma;
 	}
 
@@ -52,8 +52,8 @@ abstract class GetterDescriptor implements ComposedMemberCreator {
 	}
 
 	/** Class to implement logic with regard to getters in {@code Intersection Types}. */
-	static class IntersectionGetter extends GetterDescriptor {
-		IntersectionGetter(ComposedMemberAggregate cma) {
+	static class IntersectionGetterCreator extends GetterCreator {
+		IntersectionGetterCreator(ComposedMemberAggregate cma) {
 			super(cma);
 		}
 
@@ -70,8 +70,8 @@ abstract class GetterDescriptor implements ComposedMemberCreator {
 	}
 
 	/** Class to implement logic with regard to getters in {@code Union Types}. */
-	static class UnionGetter extends GetterDescriptor {
-		UnionGetter(ComposedMemberAggregate cma) {
+	static class UnionGetterCreator extends GetterCreator {
+		UnionGetterCreator(ComposedMemberAggregate cma) {
 			super(cma);
 		}
 

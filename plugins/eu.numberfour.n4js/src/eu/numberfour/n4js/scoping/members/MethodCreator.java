@@ -22,31 +22,31 @@ import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 
 /**
- * The abstract {@link MethodDescriptor} is the base class for the child classes {@link UnionMethod} and
- * {@link IntersectionMethod}. It implements the method {@link #create(String)} which gets its information through
+ * The abstract {@link MethodCreator} is the base class for the child classes {@link UnionMethodCreator} and
+ * {@link IntersectionMethodCreator}. It implements the method {@link #create(String)} which gets its information through
  * abstract methods implemented in the child classes mentioned before The child classes are instantiated in
- * {@link IntersectionMemberDescriptor} and {@link UnionMemberDescriptor} respectively.
+ * {@link IntersectionMemberCreator} and {@link UnionMemberCreator} respectively.
  * <p>
- * Additionally, the base class {@link FParDescriptorCreator} for formal parameters including its method
- * {@link FParDescriptorCreator#create()} is defined here. This class is used here to eventually create formal
- * parameters of methods, and moreover it is used in {@link SetterDescriptor} to create the formal parameter of setters.
+ * Additionally, the base class {@link FParCreator} for formal parameters including its method
+ * {@link FParCreator#create()} is defined here. This class is used here to eventually create formal
+ * parameters of methods, and moreover it is used in {@link SetterCreator} to create the formal parameter of setters.
  */
-abstract class MethodDescriptor implements ComposedMemberCreator {
+abstract class MethodCreator implements MemberCreator {
 	final ComposedMemberAggregate cma;
-	final List<FParDescriptor> fpas = new LinkedList<>();
+	final List<MethodFParCreator> fpas = new LinkedList<>();
 
-	MethodDescriptor(ComposedMemberAggregate cma) {
+	MethodCreator(ComposedMemberAggregate cma) {
 		this.cma = cma;
 		List<FParAggregate> fpars = cma.getFParAggregates();
 		for (int fparIdx = 0; fparIdx < fpars.size(); fparIdx++) {
 			final FParAggregate curr = fpars.get(fparIdx);
-			fpas.add(getFParDescriptor(curr));
+			fpas.add(getFParCreator(curr));
 		}
 	}
 
 	abstract MemberAccessModifier getAccessability();
 
-	abstract FParDescriptor getFParDescriptor(FParAggregate fpa);
+	abstract MethodFParCreator getFParCreator(FParAggregate fpa);
 
 	abstract TypeRef getReturnTypeRefComposition();
 
@@ -57,7 +57,7 @@ abstract class MethodDescriptor implements ComposedMemberCreator {
 		if (cma.isEmpty())
 			return false;
 
-		for (FParDescriptor fpa : fpas) {
+		for (MethodFParCreator fpa : fpas) {
 			if (!fpa.isValid()) {
 				return false;
 			}
@@ -78,11 +78,11 @@ abstract class MethodDescriptor implements ComposedMemberCreator {
 				List<FParAggregate> fpAggrs = cma.getFParAggregates();
 				FParAggregate lastFPAggr = fpAggrs.get(cma.getFParAggregates().size() - 1);
 				List<TypeRef> variadicTypeRefs = lastFPAggr.getTypeRefsVariadicAccumulated();
-				FParDescriptor varpar = new NewLastVariadicFPar(variadicTypeRefs);
+				MethodFParCreator varpar = new NewLastVariadicFPar(variadicTypeRefs);
 				fpas.add(varpar);
 			}
 		}
-		for (FParDescriptor currFparDesc : fpas) {
+		for (MethodFParCreator currFparDesc : fpas) {
 			TFormalParameter tFPar = currFparDesc.create();
 			method.getFpars().add(tFPar);
 		}
@@ -90,7 +90,7 @@ abstract class MethodDescriptor implements ComposedMemberCreator {
 	}
 
 	/** Base class for any formal parameter. It implements the {@link #create()} method. */
-	static abstract class FParDescriptorCreator {
+	static abstract class FParCreator {
 
 		abstract String getName();
 
@@ -124,11 +124,11 @@ abstract class MethodDescriptor implements ComposedMemberCreator {
 	}
 
 	/** Base class for formal parameters of composed methods. */
-	abstract class FParDescriptor extends FParDescriptorCreator {
+	abstract class MethodFParCreator extends FParCreator {
 		final FParAggregate fpa;
 		final int index;
 
-		FParDescriptor(FParAggregate fpa) {
+		MethodFParCreator(FParAggregate fpa) {
 			this.fpa = fpa;
 			this.index = cma.getFParAggregates().indexOf(fpa);
 		}
@@ -138,7 +138,7 @@ abstract class MethodDescriptor implements ComposedMemberCreator {
 
 		@Override
 		TypeRef getFParTypeRefComposition(List<TypeRef> typeRefsToUse) {
-			return MethodDescriptor.this.getFParTypeRefComposition(typeRefsToUse);
+			return MethodCreator.this.getFParTypeRefComposition(typeRefsToUse);
 		}
 
 		@Override
@@ -164,13 +164,13 @@ abstract class MethodDescriptor implements ComposedMemberCreator {
 			return true;
 		}
 
-		FParDescriptor getPrev() {
+		MethodFParCreator getPrev() {
 			if (index <= 0)
 				return null;
 			return fpas.get(index - 1);
 		}
 
-		FParDescriptor getNext() {
+		MethodFParCreator getNext() {
 			if (index + 1 >= fpas.size())
 				return null;
 			return fpas.get(index + 1);
@@ -191,7 +191,7 @@ abstract class MethodDescriptor implements ComposedMemberCreator {
 	}
 
 	/** Class to instantiate an additional formal parameter which does not exist in any of the siblings. */
-	class NewLastVariadicFPar extends FParDescriptor {
+	class NewLastVariadicFPar extends MethodFParCreator {
 		final private String name = "vari";
 		final private List<TypeRef> typeRefs;
 
@@ -227,8 +227,8 @@ abstract class MethodDescriptor implements ComposedMemberCreator {
 	}
 
 	/** Class to implement logic with regard to methods in {@code Intersection Types}. */
-	static class IntersectionMethod extends MethodDescriptor {
-		IntersectionMethod(ComposedMemberAggregate cma) {
+	static class IntersectionMethodCreator extends MethodCreator {
+		IntersectionMethodCreator(ComposedMemberAggregate cma) {
 			super(cma);
 		}
 
@@ -238,7 +238,7 @@ abstract class MethodDescriptor implements ComposedMemberCreator {
 		}
 
 		@Override
-		FParDescriptor getFParDescriptor(FParAggregate fpa) {
+		MethodFParCreator getFParCreator(FParAggregate fpa) {
 			return new IntersectionFPar(fpa);
 		}
 
@@ -257,7 +257,7 @@ abstract class MethodDescriptor implements ComposedMemberCreator {
 		}
 
 		/** Class to implement logic with regard to formal parameter in {@code Intersection Type} methods. */
-		class IntersectionFPar extends FParDescriptor {
+		class IntersectionFPar extends MethodFParCreator {
 			IntersectionFPar(FParAggregate fpa) {
 				super(fpa);
 			}
@@ -269,7 +269,7 @@ abstract class MethodDescriptor implements ComposedMemberCreator {
 				if (!fpa.allNonOptional())
 					return true;
 
-				FParDescriptor prevFpar = getPrev();
+				MethodFParCreator prevFpar = getPrev();
 				if (prevFpar != null)
 					return prevFpar.isOptional();
 
@@ -279,8 +279,8 @@ abstract class MethodDescriptor implements ComposedMemberCreator {
 	}
 
 	/** Class to implement logic with regard to methods in {@code Union Types}. */
-	static class UnionMethod extends MethodDescriptor {
-		UnionMethod(ComposedMemberAggregate cma) {
+	static class UnionMethodCreator extends MethodCreator {
+		UnionMethodCreator(ComposedMemberAggregate cma) {
 			super(cma);
 		}
 
@@ -290,7 +290,7 @@ abstract class MethodDescriptor implements ComposedMemberCreator {
 		}
 
 		@Override
-		FParDescriptor getFParDescriptor(FParAggregate fpa) {
+		MethodFParCreator getFParCreator(FParAggregate fpa) {
 			return new UnionFPar(fpa);
 		}
 
@@ -309,7 +309,7 @@ abstract class MethodDescriptor implements ComposedMemberCreator {
 		}
 
 		/** Class to implement logic with regard to formal parameter in {@code Union Type} methods. */
-		class UnionFPar extends FParDescriptor {
+		class UnionFPar extends MethodFParCreator {
 			UnionFPar(FParAggregate fpa) {
 				super(fpa);
 			}
@@ -321,7 +321,7 @@ abstract class MethodDescriptor implements ComposedMemberCreator {
 				if (fpa.allOptional())
 					return true;
 
-				FParDescriptor prevFpar = getPrev();
+				MethodFParCreator prevFpar = getPrev();
 				if (prevFpar != null)
 					return prevFpar.isOptional();
 

@@ -16,27 +16,32 @@ import static eu.numberfour.n4js.ts.types.MemberType.METHOD;
 import static eu.numberfour.n4js.ts.types.MemberType.SETTER;
 
 import eu.numberfour.n4js.ts.types.MemberType;
+import eu.numberfour.n4js.ts.types.TMember;
 
 /**
- *
+ * Implements the method {@link #getNewMemberType()} which selects the correct {@link MemberType} for a new composed
+ * {@link TMember}. Refer to N4JS-Spec for an overview table.
+ * <p>
+ * Implements the method {@link #getMemberCreator()} which returns a new {@link MemberCreator} for a given
+ * {@link MemberType}.
  */
-public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
+public class UnionMemberCreator extends ComposedMemberCreator {
 
-	IntersectionMemberDescriptor(ComposedMemberAggregate cma) {
+	UnionMemberCreator(ComposedMemberAggregate cma) {
 		super(cma);
 	}
 
 	@Override
-	protected ComposedMemberCreator getSpecialMemberDescriptor() {
+	protected MemberCreator getMemberCreator() {
 		switch (memberType) {
 		case METHOD:
-			return new MethodDescriptor.IntersectionMethod(cma);
+			return new MethodCreator.UnionMethodCreator(cma);
 		case FIELD:
-			return new FieldDescriptor.IntersectionField(cma);
+			return new FieldCreator.UnionFieldCreator(cma);
 		case GETTER:
-			return new GetterDescriptor.IntersectionGetter(cma);
+			return new GetterCreator.UnionGetterCreator(cma);
 		case SETTER:
-			return new SetterDescriptor.IntersectionSetter(cma);
+			return new SetterCreator.UnionSetterCreator(cma);
 		}
 		return null;
 	}
@@ -51,36 +56,45 @@ public class IntersectionMemberDescriptor extends ComposedMemberDescriptor {
 			return METHOD;
 		}
 		// mix of all non-method memberTypes
-		if (cma.onlyGetterMemberTypes() && !cma.isWriteAccess()) {
+		if (cma.onlyGetterMemberTypes()) {
 			return GETTER;
 		}
-		if (cma.onlySetterMemberTypes() && cma.isWriteAccess()) {
+		if (cma.onlySetterMemberTypes()) {
 			return SETTER;
 		}
-		if (allTypeRefAreEqual()) {
-			return FIELD;
-		}
-		// mix of all non-method memberTypes AND different return types
-		if (cma.isWriteAccess()) {
-			if (!cma.hasGetterMemberType()) {
-				// return MemberType.FIELD;
+		if (cma.onlyFieldMemberTypes()) {
+			if (allTypeRefAreEqual()) {
+				return FIELD;
+			} else {
+				if (cma.isWriteAccess()) {
+					return SETTER;
+				} else {
+					return GETTER;
+				}
 			}
+		}
+		// mix of all non-method memberTypes
+		if (!cma.hasGetterMemberType()) {
 			return SETTER;
 		}
-		if (!cma.isWriteAccess()) {
-			if (!cma.hasSetterMemberType()) {
-				// return MemberType.FIELD;
-			}
+		if (!cma.hasSetterMemberType()) {
 			return GETTER;
 		}
 		return null; // inValid
 	}
 
 	@Override
+	public boolean isEmpty() {
+		return cma.isEmpty();
+	}
+
+	@Override
 	public boolean isValid() {
-		if (specialMemberDescriptor == null)
+		if (cma.isSiblingMissing())
 			return false;
-		return specialMemberDescriptor.isValid();
+		if (specialMemberCreator == null)
+			return false;
+		return specialMemberCreator.isValid();
 	}
 
 }

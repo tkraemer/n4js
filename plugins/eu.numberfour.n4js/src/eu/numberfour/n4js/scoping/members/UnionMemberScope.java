@@ -24,7 +24,7 @@ import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
 
 /**
- *
+ * Implements methods for handling union members.
  */
 public class UnionMemberScope extends ComposedMemberScope {
 
@@ -59,7 +59,7 @@ public class UnionMemberScope extends ComposedMemberScope {
 	}
 
 	@Override
-	protected ComposedMemberDescriptor getComposedMemberDescriptor(ComposedMemberAggregate cma) {
-		return new UnionMemberDescriptor(cma);
+	protected ComposedMemberCreator getComposedMemberCreator(ComposedMemberAggregate cma) {
+		return new UnionMemberCreator(cma);
 	}
 }

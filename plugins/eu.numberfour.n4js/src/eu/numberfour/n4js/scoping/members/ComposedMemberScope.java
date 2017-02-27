@@ -64,9 +64,9 @@ public abstract class ComposedMemberScope extends AbstractScope {
 	abstract protected IEObjectDescription getCheckedDescription(String name, TMember member);
 
 	/**
-	 * Returns either a {@link IntersectionMemberDescriptor} or {@link UnionMemberDescriptor}.
+	 * Returns either a {@link IntersectionMemberCreator} or {@link UnionMemberCreator}.
 	 */
-	abstract protected ComposedMemberDescriptor getComposedMemberDescriptor(ComposedMemberAggregate cma);
+	abstract protected ComposedMemberCreator getComposedMemberCreator(ComposedMemberAggregate cma);
 
 	/**
 	 * Returns either a {@link IntersectionMemberDescriptionWithError} or {@link UnionMemberDescriptionWithError}.
@@ -170,13 +170,13 @@ public abstract class ComposedMemberScope extends AbstractScope {
 		}
 		// produce result
 		ComposedMemberAggregate cma = ComposedMemberAggregate.get();
-		ComposedMemberDescriptor cmdn = getComposedMemberDescriptor(cma);
-		if (!cmdn.isEmpty()) {
+		ComposedMemberCreator cmc = getComposedMemberCreator(cma);
+		if (!cmc.isEmpty()) {
 			// at least one of the subScopes had an element of that name
 			final TMember result;
-			if (cmdn.isValid()) {
+			if (cmc.isValid()) {
 				// success case: The element for that name can be merged into a valid composed member
-				result = cmdn.create(memberName);
+				result = cmc.create(memberName);
 			} else {
 				// some of the subScopes do not have an element for that name OR
 				// they do not form a valid composed member (e.g. they are of different kind)
