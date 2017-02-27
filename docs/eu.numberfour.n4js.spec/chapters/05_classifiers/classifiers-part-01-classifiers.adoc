@@ -270,7 +270,7 @@ Note that since overloading is forbidden, the following constraint is true footn
 
 [math]
 ++++
-\forall m_1,m_2 \in members: m_1.name=m_2.name \iff m_1=m_2 \lor accessorPair(m_1, m_2)
+\forall m_1,m_2 \in members: m_{1}.name=m_{2}.name \iff m_1=m_2 \lor accessorPair(m_1, m_2)
 ++++
 
 

@@ -18,8 +18,8 @@
     "n4js-mangelhaft": "./n4js-mangelhaft-cli.js"
   },
   "dependencies": {
-    "eu.numberfour.mangelhaft.runner.node": "*",
-    "eu.numberfour.mangelhaft.runner.ide": "*"
+    "eu.numberfour.mangelhaft.runner.node": "latest",
+    "eu.numberfour.mangelhaft.runner.ide": "latest"
   },
   "files": [
     "manifest.n4mf",

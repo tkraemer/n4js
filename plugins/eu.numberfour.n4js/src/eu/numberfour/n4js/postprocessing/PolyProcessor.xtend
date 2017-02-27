@@ -33,6 +33,7 @@ import eu.numberfour.n4js.typesystem.constraints.TypeConstraint
 import eu.numberfour.n4js.validation.JavaScriptVariantHelper
 import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EObject
+import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
 
 /**
  * The main poly processor responsible for typing poly expressions using a constraint-based approach.
@@ -74,6 +75,7 @@ package class PolyProcessor extends AbstractPolyProcessor {
 		astNode.isPoly
 		|| (astNode instanceof Argument && astNode.eContainer instanceof ParameterizedCallExpression && astNode.eContainer.isPoly)
 		|| (astNode instanceof FormalParameter && astNode.eContainer instanceof FunctionExpression && astNode.eContainer.isPoly)
+		|| (astNode instanceof FormalParameter && astNode.eContainer instanceof PropertyMethodDeclaration && astNode.eContainer.isPoly)
 		|| (astNode instanceof ArrayElement && astNode.eContainer instanceof ArrayLiteral && astNode.eContainer.isPoly)
 		|| (astNode instanceof PropertyAssignment && astNode.eContainer instanceof ObjectLiteral && astNode.eContainer.isPoly)
 		// note in previous line:

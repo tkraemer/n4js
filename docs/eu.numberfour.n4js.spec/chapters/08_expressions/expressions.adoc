@@ -778,6 +778,10 @@ The equation $isAccessor = \lnot isData$ is always true.
 --
 For a given object literal $ol$ the following constraints must hold (cf. cite:[ECMA11a(p.66)]:
 
+* the name of each property is given as an identifier, a string literal, a numeric literal, or as a computed property name with
+** a string literal, e.g. `['myProp']`,
+** a built-in symbol, for example as in `[Symbol.iterator]`, or
+** a literal of a `@StringBased` enum.
 * Object literal may not have two PropertyNameValuePairs with the same name in strict mode (cf. 4.a):
 +
 [%hardbreaks]

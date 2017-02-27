@@ -70,7 +70,7 @@ export public class IDEReporter implements ITestReporter {
      * @param endpoint endpoint prefix for ide (the base of the rest api)
      * @param timeoutBufferOverride if set overrides the default timeout added to each test as a buffer
      */
-    constructor(endpoint: string =, timeoutBufferOverride: number =) {
+    constructor(endpoint: string=, timeoutBufferOverride: number=) {
         if (endpoint) {
             this.endpoint = endpoint.replace(/\/+$/, "");
         }

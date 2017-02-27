@@ -1196,9 +1196,13 @@ from {
 //			T = fparTypeRef
 		}
 	}
-	else if(fpar?.definedTypeElement?.typeRef!==null) {
-		// undeclared type of fpar, but we have inferred a type that is stored in the TModule
-		T = fpar.definedTypeElement.typeRef;
+	else if (fpar.hasInitializerAssignment) {
+		if (fpar.initializer !== null) {
+			G |- fpar.initializer : var TypeRef E
+			T = typeSystemHelper.sanitizeTypeOfVariableFieldProperty(G, E);
+		} else {
+			T = G.anyTypeRef
+		}
 	}
 	else {
 		if (jsVariantHelper.enforceDynamicTypes(fpar)) {//  e.g. plain ECMAScript
@@ -1209,12 +1213,7 @@ from {
 			T = G.anyTypeRef
 		}
 	}
-	if (T !== null) {
-		T = if(fpar.variadic) {
-			val finalT = T
-			G.arrayType?.createTypeRef(finalT)
-		} else T
-	}
+	T = TypeUtils.wrapIfVariadic(G.getPredefinedTypes().builtInTypeScope, T, fpar);
 }
 
 axiom typeCatchVariable G |- CatchVariable catchVariable:
@@ -1823,14 +1822,20 @@ from {
 //	G |- EObject o |> Expression e : (null as TypeRef) // null is the default and means 'no type expectation' (even void is allowed!)
 
 
-// TODO: IDE-2514, When the bug in the polymorphic dispatcher is solved,
-//       enable this rule in return for also removing the temporary solution
-//       in N4JSTypeValidator#checkTypeMatchesExpectedType
-//rule expectedTypeOfDefaultFormalParameter
-//	G |- FormalParameter formalParam |> Expression initializer: TypeRef T
-//from {
-//	T = formalParam.declaredTypeRef;
-//}
+rule expectedTypeInFormalParameter
+	G |- FormalParameter formalParam |> Expression initializer: TypeRef T
+from {
+	if (formalParam.declaredTypeRef !== null) {
+		T = formalParam.declaredTypeRef;
+	} else if (formalParam.definedTypeElement?.typeRef !== null) {
+		// Other than in expectedTypeOfRightSideInVariableDeclaration,
+		// here we need to return the typeRef of the TModule, since it
+		// might have been inferred by the PolyProcessor.
+		T = formalParam.definedTypeElement.typeRef;
+	} else {
+		T = G.anyTypeRef;
+	}
+}
 
 
 rule expectedTypeOfArgument

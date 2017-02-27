@@ -8,18 +8,18 @@ var red : Color = Color.RED;
 // XPECT scopeWithPosition at 'Country.|US' --> DE - T4, US - T4, TR - T4, ...
 var us : Country = Country.US;
 /* XPECT scopeWithPosition at 'us.|value' ---
-n4type - builtin_n4.n4ts:307, name - builtin_n4.n4ts:289,
-toString - builtin_n4.n4ts:301, value - builtin_n4.n4ts:295
+n4type - builtin_n4.n4ts:308, name - builtin_n4.n4ts:290,
+toString - builtin_n4.n4ts:302, value - builtin_n4.n4ts:296
 --- */
 var s : string = us.value;
 /* XPECT scopeWithPosition at 'red.|name' ---
-n4type - builtin_n4.n4ts:307, name - builtin_n4.n4ts:289,
-toString - builtin_n4.n4ts:301, value - builtin_n4.n4ts:295
+n4type - builtin_n4.n4ts:308, name - builtin_n4.n4ts:290,
+toString - builtin_n4.n4ts:302, value - builtin_n4.n4ts:296
 --- */
 var s2 : string = red.name;
 /* XPECT scopeWithPosition at 'DE.|value' ---
-n4type - builtin_n4.n4ts:307, name - builtin_n4.n4ts:289,
-toString - builtin_n4.n4ts:301, value - builtin_n4.n4ts:295
+n4type - builtin_n4.n4ts:308, name - builtin_n4.n4ts:290,
+toString - builtin_n4.n4ts:302, value - builtin_n4.n4ts:296
 --- */
 var s3 : string = Country.DE.value
 

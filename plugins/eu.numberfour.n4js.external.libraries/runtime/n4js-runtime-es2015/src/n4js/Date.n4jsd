@@ -10,12 +10,9 @@
  */
 @@Global @@ProvidedByRuntime
 
-import {RequestInit} from "fetch/RequestInit"
-
-export public interface ~GlobalFetch {
-    public async fetch(input: union{string, Request}, init: RequestInit=): Response;
+@Final @Polyfill export external public class Date extends Date {
+    @Override
+    public toLocaleTimeString(locales: union{string, Array<string>}=, options: Object=): string;
 }
-
-export external public async function fetch(input: union{string, Request}, init: RequestInit=): Response;
 
 /* -*- mode: typescript;-*- */
