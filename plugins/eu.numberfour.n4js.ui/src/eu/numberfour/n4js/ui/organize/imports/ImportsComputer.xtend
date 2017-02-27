@@ -394,12 +394,7 @@ public class ImportsComputer {
 
 		val Object[][] openChoices = Multimaps3.createOptions(multiMapName2Candidates);
 
-		val MultiElementListSelectionDialog dialog = new MultiElementListSelectionDialog(null, labelProvider) {
-			@Override
-			override protected void handleSelectionChanged() {
-				super.handleSelectionChanged();
-			}
-		}
+		val MultiElementListSelectionDialog dialog = new MultiElementListSelectionDialog(null, labelProvider);
 
 		dialog.setTitle("Organize Imports");
 		dialog.setMessage("Choose type to import:");
