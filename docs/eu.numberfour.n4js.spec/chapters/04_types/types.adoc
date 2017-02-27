@@ -1438,9 +1438,10 @@ The following example gives a small overview of common use cases of union and in
 .Composed types
 [example]
 --
-Let A, B, and C be defined as in the chapter beginning ($C \subtype B <: A$)
-
-The following subtyping relations with union types are to be evaluated as follows: footnote:[See Example <<ex:class-hierarchy>> for class definitions.]
+This example shows how union and intersection types affect the types of their field members in case the fields have different types.
+The type of the composed field depends on the access type:
+When reading, the field type of an intersection/union also resolves to the intersection/union.
+In contrast, when writing a field, the field type of an intersection/union resolves to the union/intersection respectively.
 
 [source,n4js]
 ----
@@ -1449,14 +1450,22 @@ interface B { f : string = "h"; }
 
 class CA implements A {}
 class CB implements B {}
+class AB implements A, B {}
 
 var aub : A|B; // union type
 var aib : A&B; // intersection type
 
 function u() {
 	aub = (...)? new CA() : new CB();
-	val x = aub.f; // x = {1|"h"}
-	aub.f = undefined; // undefined can be assigned to both int and string types
+	val x = aub.f; // x = {1 | "h"}
+	aub.f = undefined; // undefined can be assigned to int and string types
+}
+function i() {
+	val a = aib as A;
+	val b = aib as B;
+	a.f = 23;
+	a.f = "text";
+	val x = aib.f; // x = {1 & "h"}
 }
 val fu = aub.f; // typeof{aub.f} = int|string
 aub.f = undefined; // typeof{aub.f} = int&string
@@ -1464,6 +1473,8 @@ val fi = aub.f; // typeof{aib.f} = int&string
 aub.f = undefined; // typeof{aib.f} = int|string
 ----
 
+Note that no instance `aib` of intersection type `A&B` can be instantiated, since the instance's class would have to define a field `f` which would have to comply to both of the interfaces `A` and `B`.
+Still the function `i()` shows in general how variables of intersection types can be casted and accessed.
 --
 
 The following sections define these _union_ and _intersection types_ in detail.
@@ -1763,6 +1774,10 @@ contain class or interface types which are a subtype of another class or interfa
 
 --
 
+
+
+
+
 === Intersection Type
 task:IDE-142[] task:IDE-385[] task:IDE-383[]
 
@@ -2004,7 +2019,7 @@ The following sections define which properties are accessible.
 
 ==== Properties of Union Type
 
-As an (unfortunately oversimplified) rule of thumb, the properties of a union type $U=T_1|T_2$ are simply the intersection of the properties $U.properties = T_{1}.properties \cap T_{2}.properties$.
+As an (oversimplified) rule of thumb, the properties of a union type $U=T_1|T_2$ are simply the intersection of the properties $U.properties = T_{1}.properties \cap T_{2}.properties$.
 It is not quite that simple, however, as the question of "equality" with regards to properties has to be answered.
 
 .Members of an Union Type
@@ -2023,6 +2038,9 @@ $\forall\ a \in U.attributes:$
 &\land a.typeRef = a_{1}.typeRef = a_{2}.typeRef
 \endalign
 ++++
+
+
+
 
 $\forall\ m \in U.methods:$
 
@@ -2073,7 +2091,25 @@ $\hspace{2em} p_{i}.var  = true $
 
 ---
 
-Remarks on union type’s members:
+The following table shows how non-method members of union types are merged.
+The resulting member type depends on whether the member is access during a read (R) or write (W) operation.
+The type of a field, of a getter or of the parameter of a setter is indicated in brackets.
+
+.Merged Members of Unions
+[cols="^h,^,^,^,^", options="header"]
+|===
+Members                 |  S=T      2+|                S≠T          2+|
+                        |  R  h|  W  h|     R          h|    W       h|
+
+Field<S>  \| Field<T>   | Field<S>  2+| Getter<S\|T>    | Setter<S&T> |
+Getter<S> \| Getter<T>  | Getter<S>  || Getter<S\|T>    | -           |
+Setter<S> \| Setter<T>  || Setter<S>  | -               | Setter<S&T> |
+Field<S>  \| Getter<T>  | Getter<S>  || Getter<S\|T>    | -           |
+Field<S>  \| Setter<T>  || Setter<S>  | -               | Setter<S&T> |
+Getter<S> \| Setter<T>  | -    |-     | -               | -           |
+|===
+
+===== Remarks on union type’s members:
 
 * Fields of the same type are merged to a composed field with the same type.
 Fields of different types are merged to a getter and setter.
@@ -2092,7 +2128,7 @@ In the third case above, types are combined independently for read- and write-ac
 
 ==== Properties of Intersection Type
 
-As an (unfortunately oversimplified) rule of thumb, the properties of an intersection type $I=T_1\&T_2$ are the union of properties $I.properties = T_{1}.properties \cup T_{2}.properties$.
+As an (oversimplified) rule of thumb, the properties of an intersection type $I=T_1\&T_2$ are the union of properties $I.properties = T_{1}.properties \cup T_{2}.properties$.
 It is not quite that simple, however, as the question of "equality” with regards to properties has to be answered.
 
 .Members of an Intersection Type
@@ -2124,6 +2160,7 @@ $\forall a \in I.attributes:$
         \end{cases}
 \endalign
 ++++
+
 
 
 <<<
@@ -2187,9 +2224,26 @@ $\hspace{2em} p_i.var  = true$
 
 --
 
+The following table shows how non-method members of intersection types are merged.
+The resulting member type depends on whether the member is access during a read (R) or write (W) operation.
+The type of a field, of a getter or of the parameter of a setter is indicated in brackets.
+
+.Merged Members of Intersections
+[cols="^h,^,^,^,^", options="header"]
+|===
+Members                 |  S=T      2+|                S≠T          2+|
+                        |  R  h|  W  h|     R          h|    W       h|
+
+Field<S>   & Field<T>   | Field<S>  2+| Getter<S&T>     | Setter<S\|T> |
+Getter<S>  & Getter<T>  | Getter<S>  || Getter<S&T>     | -            |
+Setter<S>  & Setter<T>  || Setter<S>  | -               | Setter<S\|T> |
+Field<S>   & Getter<T>  | Field<S>  2+| Getter<S&T>     | Setter<S\|T> |
+Field<S>   & Setter<T>  | Field<S>  2+| Getter<S&T>     | Setter<S\|T> |
+Getter<S>  & Setter<T>  | Field<S>  2+| Getter<S&T>     | Setter<S\|T> |
+|===
 
 
-Remarks on intersection type’s methods:
+===== Remarks on intersection type’s methods:
 
 * The name of a method’s parameter is only used for error or warning messages and cannot be referenced otherwise.
 * The return type of a method is the _intersection_ type of the return types of the merged methods.
