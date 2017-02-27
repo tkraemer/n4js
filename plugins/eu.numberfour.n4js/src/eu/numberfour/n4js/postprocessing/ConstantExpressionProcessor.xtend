@@ -10,7 +10,6 @@
  */
 package eu.numberfour.n4js.postprocessing
 
-import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.n4JS.AdditiveExpression
 import eu.numberfour.n4js.n4JS.BinaryLogicalExpression
 import eu.numberfour.n4js.n4JS.BooleanLiteral
@@ -33,8 +32,6 @@ import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
 import eu.numberfour.n4js.ts.types.TConstableElement
-import eu.numberfour.n4js.ts.types.TEnum
-import eu.numberfour.n4js.ts.types.TEnumLiteral
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.utils.ConstantValue
@@ -187,6 +184,26 @@ class ConstantExpressionProcessor {
 	}
 	def private static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, ParameterizedPropertyAccessExpression expr) {
 		// is expr an access to a built-in symbol, e.g. Symbol.iterator?
+		// NOTES:
+		// 1) we would like to simply call RuleEnvironmentExtensions#getAccessedBuiltInSymbol(), but that method would
+		//    invoke expr.getProperty() which, in turn, would trigger type inference; since we want to handle computed
+		//    property names in an up-front step and not as part of the main AST traversal, we must avoid triggering
+		//    type inference and hence cannot use RuleEnvironmentExtensions#getAccessedBuiltInSymbol().
+		// 2) the following logic must be kept aligned to RuleEnvironmentExtensions#getAccessedBuiltInSymbol()!
+		val targetExpr = expr.target;
+		val targetElem = if(targetExpr instanceof IdentifierRef) targetExpr.id;
+		val sym = G.symbolObjectType;
+		if(targetElem===sym) {
+			val propName = expr.propertyAsText;
+			val memberInSym = sym.ownedMembers.filter(TField).findFirst[static && name==propName];
+			if(memberInSym!==null) {
+				return ConstantValue.of(memberInSym);
+			}
+		}
+		// all other cases:
+		return null;
+/*
+		// is expr an access to a built-in symbol, e.g. Symbol.iterator?
 		val builtInSymbol = G.getAccessedBuiltInSymbol(expr);
 		if(builtInSymbol!==null) {
 			return ConstantValue.of(builtInSymbol);
@@ -202,6 +219,7 @@ class ConstantExpressionProcessor {
 			default:
 				null
 		};
+*/
 	}
 
 	def private static ConstantValue computeValueIfConstantFieldOrVariable(RuleEnvironment G, Resource currentResource, IdentifiableElement elem) {
