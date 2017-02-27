@@ -58,6 +58,7 @@ import eu.numberfour.n4js.ts.types.TStructMember;
 import eu.numberfour.n4js.ts.types.TStructMethod;
 import eu.numberfour.n4js.ts.types.TStructSetter;
 import eu.numberfour.n4js.ts.types.TStructuralType;
+import eu.numberfour.n4js.ts.types.TTypedElement;
 import eu.numberfour.n4js.ts.types.TVariable;
 import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.ts.types.Type;
@@ -153,6 +154,13 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * @generated
 	 */
 	private EClass tAnnotationStringArgumentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass tTypedElementEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -909,8 +917,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getTAnnotationTypeRefArgument() {
-		return tAnnotationTypeRefArgumentEClass;
+	public EClass getTTypedElement() {
+		return tTypedElementEClass;
 	}
 
 	/**
@@ -918,8 +926,17 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTAnnotationTypeRefArgument_TypeRef() {
-		return (EReference)tAnnotationTypeRefArgumentEClass.getEStructuralFeatures().get(0);
+	public EReference getTTypedElement_TypeRef() {
+		return (EReference)tTypedElementEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTAnnotationTypeRefArgument() {
+		return tAnnotationTypeRefArgumentEClass;
 	}
 
 	/**
@@ -2358,15 +2375,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTFormalParameter_TypeRef() {
-		return (EReference)tFormalParameterEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getTFormalParameter__HasASTInitializer() {
 		return tFormalParameterEClass.getEOperations().get(0);
 	}
@@ -2450,15 +2458,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 */
 	public EAttribute getTField_HasExpression() {
 		return (EAttribute)tFieldEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getTField_TypeRef() {
-		return (EReference)tFieldEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2817,17 +2816,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTVariable_TypeRef() {
-		return (EReference)tVariableEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getTVariable_External() {
-		return (EAttribute)tVariableEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)tVariableEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -3008,8 +2998,10 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEAttribute(tAnnotationStringArgumentEClass, TANNOTATION_STRING_ARGUMENT__VALUE);
 		createEOperation(tAnnotationStringArgumentEClass, TANNOTATION_STRING_ARGUMENT___GET_ARG_AS_STRING);
 
+		tTypedElementEClass = createEClass(TTYPED_ELEMENT);
+		createEReference(tTypedElementEClass, TTYPED_ELEMENT__TYPE_REF);
+
 		tAnnotationTypeRefArgumentEClass = createEClass(TANNOTATION_TYPE_REF_ARGUMENT);
-		createEReference(tAnnotationTypeRefArgumentEClass, TANNOTATION_TYPE_REF_ARGUMENT__TYPE_REF);
 		createEOperation(tAnnotationTypeRefArgumentEClass, TANNOTATION_TYPE_REF_ARGUMENT___GET_ARG_AS_STRING);
 
 		tAnnotableElementEClass = createEClass(TANNOTABLE_ELEMENT);
@@ -3198,7 +3190,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEAttribute(tFormalParameterEClass, TFORMAL_PARAMETER__VARIADIC);
 		createEAttribute(tFormalParameterEClass, TFORMAL_PARAMETER__AST_INITIALIZER);
 		createEAttribute(tFormalParameterEClass, TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT);
-		createEReference(tFormalParameterEClass, TFORMAL_PARAMETER__TYPE_REF);
 		createEOperation(tFormalParameterEClass, TFORMAL_PARAMETER___HAS_AST_INITIALIZER);
 		createEOperation(tFormalParameterEClass, TFORMAL_PARAMETER___IS_OPTIONAL);
 		createEOperation(tFormalParameterEClass, TFORMAL_PARAMETER___IS_VARIADIC_OR_OPTIONAL);
@@ -3211,7 +3202,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		tFieldEClass = createEClass(TFIELD);
 		createEAttribute(tFieldEClass, TFIELD__HAS_EXPRESSION);
-		createEReference(tFieldEClass, TFIELD__TYPE_REF);
 		createEOperation(tFieldEClass, TFIELD___IS_OPTIONAL);
 		createEOperation(tFieldEClass, TFIELD___IS_STATIC);
 		createEOperation(tFieldEClass, TFIELD___IS_READABLE);
@@ -3262,7 +3252,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEAttribute(tConstableElementEClass, TCONSTABLE_ELEMENT__VALUE);
 
 		tVariableEClass = createEClass(TVARIABLE);
-		createEReference(tVariableEClass, TVARIABLE__TYPE_REF);
 		createEAttribute(tVariableEClass, TVARIABLE__EXTERNAL);
 		createEOperation(tVariableEClass, TVARIABLE___GET_VARIABLE_AS_STRING);
 
@@ -3323,6 +3312,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		tExportableElementEClass.getESuperTypes().add(this.getIdentifiableElement());
 		tAnnotationStringArgumentEClass.getESuperTypes().add(this.getTAnnotationArgument());
 		tAnnotationTypeRefArgumentEClass.getESuperTypes().add(this.getTAnnotationArgument());
+		tAnnotationTypeRefArgumentEClass.getESuperTypes().add(this.getTTypedElement());
 		typeVariableEClass.getESuperTypes().add(this.getType());
 		inferenceVariableEClass.getESuperTypes().add(this.getTypeVariable());
 		tFunctionEClass.getESuperTypes().add(this.getDeclaredTypeWithAccessModifier());
@@ -3381,8 +3371,10 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		tFormalParameterEClass.getESuperTypes().add(this.getIdentifiableElement());
 		tFormalParameterEClass.getESuperTypes().add(this.getTAnnotableElement());
 		tFormalParameterEClass.getESuperTypes().add(this.getSyntaxRelatedTElement());
+		tFormalParameterEClass.getESuperTypes().add(this.getTTypedElement());
 		tAnonymousFormalParameterEClass.getESuperTypes().add(this.getTFormalParameter());
 		tFieldEClass.getESuperTypes().add(this.getTMemberWithAccessModifier());
+		tFieldEClass.getESuperTypes().add(this.getTTypedElement());
 		tFieldEClass.getESuperTypes().add(this.getTConstableElement());
 		tStructFieldEClass.getESuperTypes().add(this.getTField());
 		tStructFieldEClass.getESuperTypes().add(this.getTStructMember());
@@ -3404,6 +3396,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		tVariableEClass.getESuperTypes().add(this.getSyntaxRelatedTElement());
 		tVariableEClass.getESuperTypes().add(this.getTAnnotableElement());
 		tVariableEClass.getESuperTypes().add(this.getAccessibleTypeElement());
+		tVariableEClass.getESuperTypes().add(this.getTTypedElement());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(typeDefsEClass, TypeDefs.class, "TypeDefs", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3455,8 +3448,10 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		initEOperation(getTAnnotationStringArgument__GetArgAsString(), theEcorePackage.getEString(), "getArgAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
+		initEClass(tTypedElementEClass, TTypedElement.class, "TTypedElement", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTTypedElement_TypeRef(), theTypeRefsPackage.getTypeRef(), null, "typeRef", null, 0, 1, TTypedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(tAnnotationTypeRefArgumentEClass, TAnnotationTypeRefArgument.class, "TAnnotationTypeRefArgument", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTAnnotationTypeRefArgument_TypeRef(), theTypeRefsPackage.getTypeRef(), null, "typeRef", null, 0, 1, TAnnotationTypeRefArgument.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTAnnotationTypeRefArgument__GetArgAsString(), theEcorePackage.getEString(), "getArgAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -3750,7 +3745,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEAttribute(getTFormalParameter_Variadic(), theEcorePackage.getEBoolean(), "variadic", null, 0, 1, TFormalParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTFormalParameter_AstInitializer(), theEcorePackage.getEString(), "astInitializer", null, 0, 1, TFormalParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTFormalParameter_HasInitializerAssignment(), theEcorePackage.getEBoolean(), "hasInitializerAssignment", null, 0, 1, TFormalParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTFormalParameter_TypeRef(), theTypeRefsPackage.getTypeRef(), null, "typeRef", null, 0, 1, TFormalParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTFormalParameter__HasASTInitializer(), theEcorePackage.getEBoolean(), "hasASTInitializer", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -3770,7 +3764,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		initEClass(tFieldEClass, TField.class, "TField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTField_HasExpression(), theEcorePackage.getEBoolean(), "hasExpression", null, 0, 1, TField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTField_TypeRef(), theTypeRefsPackage.getTypeRef(), null, "typeRef", null, 0, 1, TField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTField__IsOptional(), theEcorePackage.getEBoolean(), "isOptional", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -3839,7 +3832,6 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEAttribute(getTConstableElement_Value(), theEcorePackage.getEString(), "value", null, 0, 1, TConstableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tVariableEClass, TVariable.class, "TVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTVariable_TypeRef(), theTypeRefsPackage.getTypeRef(), null, "typeRef", null, 0, 1, TVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTVariable_External(), theEcorePackage.getEBoolean(), "external", null, 0, 1, TVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTVariable__GetVariableAsString(), theEcorePackage.getEString(), "getVariableAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);

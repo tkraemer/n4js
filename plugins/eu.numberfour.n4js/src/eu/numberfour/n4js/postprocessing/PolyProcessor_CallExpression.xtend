@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.postprocessing
 
+import com.google.common.base.Optional
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.Expression
@@ -51,13 +52,12 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 		TypeRef expectedTypeRef, InferenceContext infCtx, ASTMetaInfoCache cache) {
 
 		val target = callExpr.target;
-		val targetTypeRef = ts.type(G, target).value; // IMPORTANT: do not use #processExpr() here (if target is a PolyExpression, it has been processed in a separate, independent inference!)
+		// IMPORTANT: do not use #processExpr() here (if target is a PolyExpression, it has been processed in a separate, independent inference!)
+		val targetTypeRef = ts.type(G, target).value;
 		if (!(targetTypeRef instanceof FunctionTypeExprOrRef))
 			return TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
-		val F = targetTypeRef as FunctionTypeExprOrRef;
-		val funcTypeVars = F.typeVars;
-
-		val isPoly = F.generic && callExpr.typeArgs.size < F.typeVars.size
+		val fteor = targetTypeRef as FunctionTypeExprOrRef;
+		val isPoly = fteor.generic && callExpr.typeArgs.size < fteor.typeVars.size
 
 		if (!isPoly) {
 			val result = ts.type(G, callExpr).value;
@@ -65,19 +65,38 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 			return result;
 		}
 
-		// create an inference variable for each type parameter of F
-		val Map<TypeVariable, InferenceVariable> typeParam2infVar = newLinkedHashMap // type parameter of F -> inference variable
-		for (typeParam : F.typeVars) {
+		// create an inference variable for each type parameter of fteor
+		val Map<TypeVariable, InferenceVariable> typeParam2infVar = newLinkedHashMap // type parameter of fteor -> inference variable
+		for (typeParam : fteor.typeVars) {
 			typeParam2infVar.put(typeParam, infCtx.newInferenceVariable);
 		}
 
+		processParameters(G, cache, infCtx, callExpr, fteor, typeParam2infVar);
+
+		// create temporary type (i.e. may contain inference variables)
+		val resultTypeRefRaw = fteor.getReturnTypeRef();
+		val resultTypeRef = resultTypeRefRaw.subst(G, typeParam2infVar);
+
+		// register onSolved handlers to add final types to cache (i.e. may not contain inference variables)
+		infCtx.onSolved [ solution | handleOnSolved(G, cache, callExpr, resultTypeRef, typeParam2infVar, solution) ];
+
+		// return temporary type of callExpr (i.e. may contain inference variables)
+		return resultTypeRef;
+	}
+	
+	/**
+	 * Processes all parameters and derives constraints from their bounds and matching types.
+	 */
+	private def void processParameters(RuleEnvironment G, ASTMetaInfoCache cache, InferenceContext infCtx,
+		ParameterizedCallExpression callExpr, FunctionTypeExprOrRef fteor, Map<TypeVariable, InferenceVariable> typeParam2infVar
+	) {
 		//
 		// (1) derive constraints from the bounds of the type parameters
 		//
-
+		val funcTypeVars = fteor.typeVars;
 		for (TypeVariable currTypeVar : funcTypeVars) {
 			// don't use currTypeVar.getDeclaredUpperBound() in next line!
-			val currUB = F.getTypeVarUpperBound(currTypeVar) ?: N4JSLanguageUtils.getTypeVariableImplicitUpperBound(G);
+			val currUB = fteor.getTypeVarUpperBound(currTypeVar) ?: N4JSLanguageUtils.getTypeVariableImplicitUpperBound(G);
 			// constraint: currTypeVar <: current upper bound
 			val leftTypeRef = TypeUtils.createTypeRef(currTypeVar);
 			val leftTypeRefSubst = leftTypeRef.subst(G, typeParam2infVar);
@@ -89,11 +108,10 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 		//
 		// (2) derive constraints from matching type of each provided argument to type of corresponding fpar
 		//
-
 		val int argsSize = callExpr.getArguments().size();
 		for (var i = 0; i < argsSize; i++) {
 			val Expression arg = callExpr.getArguments().get(i)?.expression;
-			val TFormalParameter curr_fpar = F.getFparForArgIdx(i);
+			val TFormalParameter curr_fpar = fteor.getFparForArgIdx(i);
 			if (arg !== null && curr_fpar !== null) {
 				val fparTypeRef = curr_fpar.getTypeRef();
 				val fparTypeRefSubst = fparTypeRef.subst(G, typeParam2infVar);
@@ -114,46 +132,43 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 
 		//
 		// (3) derive constraints from matching expected return type to return type of function
-		// --> not required here (will be done by caller)
 		//
-
-		// create temporary type (i.e. may contain inference variables)
-		val resultTypeRefRaw = F.getReturnTypeRef();
-		val resultTypeRef = resultTypeRefRaw.subst(G, typeParam2infVar);
-
-		// register onSolved handlers to add final types to cache (i.e. may not contain inference variables)
-		infCtx.onSolved [ solution |
-			if (solution.present) {
-				// success case:
-				cache.storeType(callExpr, resultTypeRef.applySolution(G, solution.get));
-				val inferredTypeArgs = typeParam2infVar.values.map[solution.get.get(it)].toList;
-				cache.storeInferredTypeArgs(callExpr, inferredTypeArgs);
-			} else {
-				// failure case (unsolvable constraint system)
-				// to avoid leaking inference variables, replace them by their original type parameter
-				val fakeSolution = newHashMap;
-				for (e : typeParam2infVar.entrySet) {
-					fakeSolution.put(e.value, TypeUtils.createTypeRef(e.key));
-				}
-				cache.storeType(callExpr, resultTypeRef.applySolution(G, fakeSolution));
-				cache.storeInferredTypeArgs(callExpr, #[]);
+		// --> not required here (will be done by caller)
+	}
+	
+	/**
+	 * Writes final types to cache.
+	 */
+	private def void handleOnSolved(RuleEnvironment G, ASTMetaInfoCache cache, ParameterizedCallExpression callExpr,
+		TypeRef resultTypeRef, Map<TypeVariable, InferenceVariable> typeParam2infVar, Optional<Map<InferenceVariable, TypeRef>> solution
+	) {
+		if (solution.present) {
+			// success case:
+			cache.storeType(callExpr, resultTypeRef.applySolution(G, solution.get));
+			val inferredTypeArgs = typeParam2infVar.values.map[solution.get.get(it)].toList;
+			cache.storeInferredTypeArgs(callExpr, inferredTypeArgs);
+		} else {
+			// failure case (unsolvable constraint system)
+			// to avoid leaking inference variables, replace them by their original type parameter
+			val fakeSolution = newHashMap;
+			for (e : typeParam2infVar.entrySet) {
+				fakeSolution.put(e.value, TypeUtils.createTypeRef(e.key));
 			}
-			// PolyProcessor#isResponsibleFor(TypableElement) claims responsibility of AST nodes of type 'Argument'
-			// contained in a ParameterizedCallExpression which is poly, so we are responsible for storing the types of
-			// those 'Argument' nodes in cache
-			// (note: compare this with similar handling of 'ArrayElement' nodes in PolyProcessor_ArrayLiteral)
-			for (arg : callExpr.arguments) {
-				val expr = arg?.expression;
-				if (expr!==null) {
-					val exprType = getFinalResultTypeOfNestedPolyExpression(expr);
-					if (exprType!==null) {
-						cache.storeType(arg, exprType);
-					}
+			cache.storeType(callExpr, resultTypeRef.applySolution(G, fakeSolution));
+			cache.storeInferredTypeArgs(callExpr, #[]);
+		}
+		// PolyProcessor#isResponsibleFor(TypableElement) claims responsibility of AST nodes of type 'Argument'
+		// contained in a ParameterizedCallExpression which is poly, so we are responsible for storing the types of
+		// those 'Argument' nodes in cache
+		// (note: compare this with similar handling of 'ArrayElement' nodes in PolyProcessor_ArrayLiteral)
+		for (arg : callExpr.arguments) {
+			val expr = arg?.expression;
+			if (expr!==null) {
+				val exprType = getFinalResultTypeOfNestedPolyExpression(expr);
+				if (exprType!==null) {
+					cache.storeType(arg, exprType);
 				}
 			}
-		];
-
-		// return temporary type of callExpr (i.e. may contain inference variables)
-		return resultTypeRef;
+		}
 	}
 }

@@ -120,7 +120,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getSyntaxRelatedTElement()
 	 * @generated
 	 */
-	int SYNTAX_RELATED_TELEMENT = 48;
+	int SYNTAX_RELATED_TELEMENT = 49;
 
 	/**
 	 * The feature id for the '<em><b>Ast Element</b></em>' reference.
@@ -607,6 +607,43 @@ public interface TypesPackage extends EPackage {
 	int TANNOTATION_STRING_ARGUMENT_OPERATION_COUNT = TANNOTATION_ARGUMENT_OPERATION_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.TTypedElement <em>TTyped Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see eu.numberfour.n4js.ts.types.TTypedElement
+	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTTypedElement()
+	 * @generated
+	 */
+	int TTYPED_ELEMENT = 8;
+
+	/**
+	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TTYPED_ELEMENT__TYPE_REF = 0;
+
+	/**
+	 * The number of structural features of the '<em>TTyped Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TTYPED_ELEMENT_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>TTyped Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TTYPED_ELEMENT_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TAnnotationTypeRefArgumentImpl <em>TAnnotation Type Ref Argument</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -614,7 +651,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTAnnotationTypeRefArgument()
 	 * @generated
 	 */
-	int TANNOTATION_TYPE_REF_ARGUMENT = 8;
+	int TANNOTATION_TYPE_REF_ARGUMENT = 9;
 
 	/**
 	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
@@ -660,7 +697,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTAnnotableElement()
 	 * @generated
 	 */
-	int TANNOTABLE_ELEMENT = 9;
+	int TANNOTABLE_ELEMENT = 10;
 
 	/**
 	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -697,7 +734,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getType()
 	 * @generated
 	 */
-	int TYPE = 13;
+	int TYPE = 14;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -896,7 +933,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTypeVariable()
 	 * @generated
 	 */
-	int TYPE_VARIABLE = 10;
+	int TYPE_VARIABLE = 11;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1140,7 +1177,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getInferenceVariable()
 	 * @generated
 	 */
-	int INFERENCE_VARIABLE = 11;
+	int INFERENCE_VARIABLE = 12;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1384,7 +1421,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getDeclaredTypeWithAccessModifier()
 	 * @generated
 	 */
-	int DECLARED_TYPE_WITH_ACCESS_MODIFIER = 15;
+	int DECLARED_TYPE_WITH_ACCESS_MODIFIER = 16;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1601,7 +1638,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTFunction()
 	 * @generated
 	 */
-	int TFUNCTION = 12;
+	int TFUNCTION = 13;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1926,7 +1963,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getAccessibleTypeElement()
 	 * @generated
 	 */
-	int ACCESSIBLE_TYPE_ELEMENT = 14;
+	int ACCESSIBLE_TYPE_ELEMENT = 15;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type Access Modifier</b></em>' attribute.
@@ -1999,7 +2036,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getContainerType()
 	 * @generated
 	 */
-	int CONTAINER_TYPE = 16;
+	int CONTAINER_TYPE = 17;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2270,7 +2307,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getVirtualBaseType()
 	 * @generated
 	 */
-	int VIRTUAL_BASE_TYPE = 17;
+	int VIRTUAL_BASE_TYPE = 18;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2550,7 +2587,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getModuleNamespaceVirtualType()
 	 * @generated
 	 */
-	int MODULE_NAMESPACE_VIRTUAL_TYPE = 18;
+	int MODULE_NAMESPACE_VIRTUAL_TYPE = 19;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2776,7 +2813,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getPrimitiveType()
 	 * @generated
 	 */
-	int PRIMITIVE_TYPE = 19;
+	int PRIMITIVE_TYPE = 20;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3074,7 +3111,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getBuiltInType()
 	 * @generated
 	 */
-	int BUILT_IN_TYPE = 20;
+	int BUILT_IN_TYPE = 21;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3273,7 +3310,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getAnyType()
 	 * @generated
 	 */
-	int ANY_TYPE = 21;
+	int ANY_TYPE = 22;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3472,7 +3509,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getUndefinedType()
 	 * @generated
 	 */
-	int UNDEFINED_TYPE = 22;
+	int UNDEFINED_TYPE = 23;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3671,7 +3708,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNullType()
 	 * @generated
 	 */
-	int NULL_TYPE = 23;
+	int NULL_TYPE = 24;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3870,7 +3907,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getVoidType()
 	 * @generated
 	 */
-	int VOID_TYPE = 24;
+	int VOID_TYPE = 25;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4069,7 +4106,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTStructuralType()
 	 * @generated
 	 */
-	int TSTRUCTURAL_TYPE = 25;
+	int TSTRUCTURAL_TYPE = 26;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4349,7 +4386,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTClassifier()
 	 * @generated
 	 */
-	int TCLASSIFIER = 26;
+	int TCLASSIFIER = 27;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4683,7 +4720,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTObjectPrototype()
 	 * @generated
 	 */
-	int TOBJECT_PROTOTYPE = 27;
+	int TOBJECT_PROTOTYPE = 28;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -5062,7 +5099,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getArrayLike()
 	 * @generated
 	 */
-	int ARRAY_LIKE = 28;
+	int ARRAY_LIKE = 29;
 
 	/**
 	 * The feature id for the '<em><b>Declared Element Type</b></em>' containment reference.
@@ -5108,7 +5145,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTN4Classifier()
 	 * @generated
 	 */
-	int TN4_CLASSIFIER = 29;
+	int TN4_CLASSIFIER = 30;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -5478,7 +5515,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTClass()
 	 * @generated
 	 */
-	int TCLASS = 30;
+	int TCLASS = 31;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -5938,7 +5975,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTInterface()
 	 * @generated
 	 */
-	int TINTERFACE = 31;
+	int TINTERFACE = 32;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -6326,7 +6363,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTMember()
 	 * @generated
 	 */
-	int TMEMBER = 32;
+	int TMEMBER = 33;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -6570,7 +6607,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTMemberWithAccessModifier()
 	 * @generated
 	 */
-	int TMEMBER_WITH_ACCESS_MODIFIER = 33;
+	int TMEMBER_WITH_ACCESS_MODIFIER = 34;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -6832,7 +6869,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTStructMember()
 	 * @generated
 	 */
-	int TSTRUCT_MEMBER = 34;
+	int TSTRUCT_MEMBER = 35;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -7094,7 +7131,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTMethod()
 	 * @generated
 	 */
-	int TMETHOD = 35;
+	int TMETHOD = 36;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -7626,7 +7663,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTStructMethod()
 	 * @generated
 	 */
-	int TSTRUCT_METHOD = 36;
+	int TSTRUCT_METHOD = 37;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -8176,7 +8213,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTFormalParameter()
 	 * @generated
 	 */
-	int TFORMAL_PARAMETER = 37;
+	int TFORMAL_PARAMETER = 38;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -8206,13 +8243,22 @@ public interface TypesPackage extends EPackage {
 	int TFORMAL_PARAMETER__AST_ELEMENT = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFORMAL_PARAMETER__TYPE_REF = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Variadic</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER__VARIADIC = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
+	int TFORMAL_PARAMETER__VARIADIC = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Ast Initializer</b></em>' attribute.
@@ -8221,7 +8267,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER__AST_INITIALIZER = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 3;
+	int TFORMAL_PARAMETER__AST_INITIALIZER = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Has Initializer Assignment</b></em>' attribute.
@@ -8230,16 +8276,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TFORMAL_PARAMETER__TYPE_REF = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 5;
+	int TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>TFormal Parameter</em>' class.
@@ -8321,7 +8358,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTAnonymousFormalParameter()
 	 * @generated
 	 */
-	int TANONYMOUS_FORMAL_PARAMETER = 38;
+	int TANONYMOUS_FORMAL_PARAMETER = 39;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -8351,6 +8388,15 @@ public interface TypesPackage extends EPackage {
 	int TANONYMOUS_FORMAL_PARAMETER__AST_ELEMENT = TFORMAL_PARAMETER__AST_ELEMENT;
 
 	/**
+	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TANONYMOUS_FORMAL_PARAMETER__TYPE_REF = TFORMAL_PARAMETER__TYPE_REF;
+
+	/**
 	 * The feature id for the '<em><b>Variadic</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8376,15 +8422,6 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TANONYMOUS_FORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT = TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT;
-
-	/**
-	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TANONYMOUS_FORMAL_PARAMETER__TYPE_REF = TFORMAL_PARAMETER__TYPE_REF;
 
 	/**
 	 * The number of structural features of the '<em>TAnonymous Formal Parameter</em>' class.
@@ -8484,7 +8521,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTField()
 	 * @generated
 	 */
-	int TFIELD = 39;
+	int TFIELD = 40;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -8559,13 +8596,22 @@ public interface TypesPackage extends EPackage {
 	int TFIELD__DECLARED_MEMBER_ACCESS_MODIFIER = TMEMBER_WITH_ACCESS_MODIFIER__DECLARED_MEMBER_ACCESS_MODIFIER;
 
 	/**
+	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFIELD__TYPE_REF = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Const</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TFIELD__CONST = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 0;
+	int TFIELD__CONST = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -8574,7 +8620,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFIELD__VALUE = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 1;
+	int TFIELD__VALUE = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Has Expression</b></em>' attribute.
@@ -8583,16 +8629,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFIELD__HAS_EXPRESSION = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TFIELD__TYPE_REF = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 3;
+	int TFIELD__HAS_EXPRESSION = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>TField</em>' class.
@@ -8782,7 +8819,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTStructField()
 	 * @generated
 	 */
-	int TSTRUCT_FIELD = 40;
+	int TSTRUCT_FIELD = 41;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -8857,6 +8894,15 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCT_FIELD__DECLARED_MEMBER_ACCESS_MODIFIER = TFIELD__DECLARED_MEMBER_ACCESS_MODIFIER;
 
 	/**
+	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_FIELD__TYPE_REF = TFIELD__TYPE_REF;
+
+	/**
 	 * The feature id for the '<em><b>Const</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8882,15 +8928,6 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_FIELD__HAS_EXPRESSION = TFIELD__HAS_EXPRESSION;
-
-	/**
-	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TSTRUCT_FIELD__TYPE_REF = TFIELD__TYPE_REF;
 
 	/**
 	 * The feature id for the '<em><b>Defined Member</b></em>' reference.
@@ -9098,7 +9135,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getFieldAccessor()
 	 * @generated
 	 */
-	int FIELD_ACCESSOR = 41;
+	int FIELD_ACCESSOR = 42;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -9387,7 +9424,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTGetter()
 	 * @generated
 	 */
-	int TGETTER = 42;
+	int TGETTER = 43;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -9685,7 +9722,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTStructGetter()
 	 * @generated
 	 */
-	int TSTRUCT_GETTER = 43;
+	int TSTRUCT_GETTER = 44;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -10001,7 +10038,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTSetter()
 	 * @generated
 	 */
-	int TSETTER = 44;
+	int TSETTER = 45;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -10299,7 +10336,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTStructSetter()
 	 * @generated
 	 */
-	int TSTRUCT_SETTER = 45;
+	int TSTRUCT_SETTER = 46;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -10615,7 +10652,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTEnum()
 	 * @generated
 	 */
-	int TENUM = 46;
+	int TENUM = 47;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -10859,7 +10896,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTEnumLiteral()
 	 * @generated
 	 */
-	int TENUM_LITERAL = 47;
+	int TENUM_LITERAL = 48;
 
 	/**
 	 * The feature id for the '<em><b>Ast Element</b></em>' reference.
@@ -10932,7 +10969,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTConstableElement()
 	 * @generated
 	 */
-	int TCONSTABLE_ELEMENT = 49;
+	int TCONSTABLE_ELEMENT = 50;
 
 	/**
 	 * The feature id for the '<em><b>Const</b></em>' attribute.
@@ -10978,7 +11015,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTVariable()
 	 * @generated
 	 */
-	int TVARIABLE = 50;
+	int TVARIABLE = 51;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -11141,7 +11178,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNullModifier()
 	 * @generated
 	 */
-	int NULL_MODIFIER = 51;
+	int NULL_MODIFIER = 52;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.UndefModifier <em>Undef Modifier</em>}' enum.
@@ -11151,7 +11188,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getUndefModifier()
 	 * @generated
 	 */
-	int UNDEF_MODIFIER = 52;
+	int UNDEF_MODIFIER = 53;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.TypingStrategy <em>Typing Strategy</em>}' enum.
@@ -11161,7 +11198,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTypingStrategy()
 	 * @generated
 	 */
-	int TYPING_STRATEGY = 53;
+	int TYPING_STRATEGY = 54;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.TypeAccessModifier <em>Type Access Modifier</em>}' enum.
@@ -11171,7 +11208,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTypeAccessModifier()
 	 * @generated
 	 */
-	int TYPE_ACCESS_MODIFIER = 54;
+	int TYPE_ACCESS_MODIFIER = 55;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.MemberAccessModifier <em>Member Access Modifier</em>}' enum.
@@ -11181,7 +11218,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberAccessModifier()
 	 * @generated
 	 */
-	int MEMBER_ACCESS_MODIFIER = 55;
+	int MEMBER_ACCESS_MODIFIER = 56;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.MemberType <em>Member Type</em>}' enum.
@@ -11191,7 +11228,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberType()
 	 * @generated
 	 */
-	int MEMBER_TYPE = 56;
+	int MEMBER_TYPE = 57;
 
 	/**
 	 * The meta object id for the '<em>Iterable Of TClassifier</em>' data type.
@@ -11201,7 +11238,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getIterableOfTClassifier()
 	 * @generated
 	 */
-	int ITERABLE_OF_TCLASSIFIER = 57;
+	int ITERABLE_OF_TCLASSIFIER = 58;
 
 	/**
 	 * The meta object id for the '<em>Variance</em>' data type.
@@ -11211,7 +11248,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getVariance()
 	 * @generated
 	 */
-	int VARIANCE = 58;
+	int VARIANCE = 59;
 
 	/**
 	 * The meta object id for the '<em>Name And Access</em>' data type.
@@ -11221,7 +11258,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNameAndAccess()
 	 * @generated
 	 */
-	int NAME_AND_ACCESS = 59;
+	int NAME_AND_ACCESS = 60;
 
 	/**
 	 * The meta object id for the '<em>Member List</em>' data type.
@@ -11231,7 +11268,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberList()
 	 * @generated
 	 */
-	int MEMBER_LIST = 60;
+	int MEMBER_LIST = 61;
 
 	/**
 	 * The meta object id for the '<em>TClassifier Iterable</em>' data type.
@@ -11241,7 +11278,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTClassifierIterable()
 	 * @generated
 	 */
-	int TCLASSIFIER_ITERABLE = 61;
+	int TCLASSIFIER_ITERABLE = 62;
 
 
 	/**
@@ -11605,6 +11642,27 @@ public interface TypesPackage extends EPackage {
 	EOperation getTAnnotationStringArgument__GetArgAsString();
 
 	/**
+	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.TTypedElement <em>TTyped Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>TTyped Element</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TTypedElement
+	 * @generated
+	 */
+	EClass getTTypedElement();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.types.TTypedElement#getTypeRef <em>Type Ref</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Type Ref</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TTypedElement#getTypeRef()
+	 * @see #getTTypedElement()
+	 * @generated
+	 */
+	EReference getTTypedElement_TypeRef();
+
+	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.TAnnotationTypeRefArgument <em>TAnnotation Type Ref Argument</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11613,17 +11671,6 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getTAnnotationTypeRefArgument();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.types.TAnnotationTypeRefArgument#getTypeRef <em>Type Ref</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Type Ref</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TAnnotationTypeRefArgument#getTypeRef()
-	 * @see #getTAnnotationTypeRefArgument()
-	 * @generated
-	 */
-	EReference getTAnnotationTypeRefArgument_TypeRef();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TAnnotationTypeRefArgument#getArgAsString() <em>Get Arg As String</em>}' operation.
@@ -13268,17 +13315,6 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTFormalParameter_HasInitializerAssignment();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.types.TFormalParameter#getTypeRef <em>Type Ref</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Type Ref</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TFormalParameter#getTypeRef()
-	 * @see #getTFormalParameter()
-	 * @generated
-	 */
-	EReference getTFormalParameter_TypeRef();
-
-	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TFormalParameter#hasASTInitializer() <em>Has AST Initializer</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13378,17 +13414,6 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTField_HasExpression();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.types.TField#getTypeRef <em>Type Ref</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Type Ref</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TField#getTypeRef()
-	 * @see #getTField()
-	 * @generated
-	 */
-	EReference getTField_TypeRef();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TField#isOptional() <em>Is Optional</em>}' operation.
@@ -13789,17 +13814,6 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getTVariable();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.types.TVariable#getTypeRef <em>Type Ref</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Type Ref</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TVariable#getTypeRef()
-	 * @see #getTVariable()
-	 * @generated
-	 */
-	EReference getTVariable_TypeRef();
 
 	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TVariable#isExternal <em>External</em>}'.
@@ -14249,6 +14263,24 @@ public interface TypesPackage extends EPackage {
 		EOperation TANNOTATION_STRING_ARGUMENT___GET_ARG_AS_STRING = eINSTANCE.getTAnnotationStringArgument__GetArgAsString();
 
 		/**
+		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.TTypedElement <em>TTyped Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see eu.numberfour.n4js.ts.types.TTypedElement
+		 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTTypedElement()
+		 * @generated
+		 */
+		EClass TTYPED_ELEMENT = eINSTANCE.getTTypedElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Type Ref</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TTYPED_ELEMENT__TYPE_REF = eINSTANCE.getTTypedElement_TypeRef();
+
+		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.impl.TAnnotationTypeRefArgumentImpl <em>TAnnotation Type Ref Argument</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -14257,14 +14289,6 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EClass TANNOTATION_TYPE_REF_ARGUMENT = eINSTANCE.getTAnnotationTypeRefArgument();
-
-		/**
-		 * The meta object literal for the '<em><b>Type Ref</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TANNOTATION_TYPE_REF_ARGUMENT__TYPE_REF = eINSTANCE.getTAnnotationTypeRefArgument_TypeRef();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Arg As String</b></em>' operation.
@@ -15597,14 +15621,6 @@ public interface TypesPackage extends EPackage {
 		EAttribute TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT = eINSTANCE.getTFormalParameter_HasInitializerAssignment();
 
 		/**
-		 * The meta object literal for the '<em><b>Type Ref</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TFORMAL_PARAMETER__TYPE_REF = eINSTANCE.getTFormalParameter_TypeRef();
-
-		/**
 		 * The meta object literal for the '<em><b>Has AST Initializer</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -15687,14 +15703,6 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TFIELD__HAS_EXPRESSION = eINSTANCE.getTField_HasExpression();
-
-		/**
-		 * The meta object literal for the '<em><b>Type Ref</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TFIELD__TYPE_REF = eINSTANCE.getTField_TypeRef();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Optional</b></em>' operation.
@@ -16029,14 +16037,6 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EClass TVARIABLE = eINSTANCE.getTVariable();
-
-		/**
-		 * The meta object literal for the '<em><b>Type Ref</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TVARIABLE__TYPE_REF = eINSTANCE.getTVariable_TypeRef();
 
 		/**
 		 * The meta object literal for the '<em><b>External</b></em>' attribute feature.

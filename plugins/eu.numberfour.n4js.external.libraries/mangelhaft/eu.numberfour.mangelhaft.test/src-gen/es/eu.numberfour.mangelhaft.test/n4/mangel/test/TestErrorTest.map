@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"TestErrorTest.js",
-"lineCount":109,
-"mappings":"A;;;EAUA,yD;EACA,0D;;MADQ,M,EACA,S;EAER,4C;;;;;KAHQ,+G;;;KACA,iH;;;;IAEY;;kEAEuB;OACnC,cAAc,YACV;QAAA,gBAAgB,kBAAhB,EAAA;QADU,YAAd,EAEG,IAFH,EAES,8BAFT,EADmC;OAFvB;;;0EAQ+B;OAC3C,IAAI,MAAM,cAAc,YACpB;QAAA,gBAAgB,kBAAhB,EAAA;QADoB,YAAd,CAAV,CAD2C;OAI3C,oBAAoB,GAApB,EAAyB,SAAzB,EAAoC,oCAApC,EAJ2C;OAR/B;;;oEAeyB;OACrC,IAAI,MAAM,cAAc,YACpB;QAAA,gBAAgB,kBAAhB,EAAA;QADoB,YAAd,CAAV,CADqC;OAIrC,mBAAmB,CAAK,GAAL,SAAnB,EAA+C,kBAA/C,EACM,6BADN,EAJqC;OAfzB;;;sEAuB2B;OACvC,IAAI,MAAM,cAAc,YACpB;QAAA,kBAAA;QADoB,YAAd,CAAV,CADuC;OAIvC,aAAa,CAAK,GAAL,SAAb,EAAyC,EAAzC,EACM,iCADN,EAJuC;OAvB3B;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
-"sources":["/sources/eu.numberfour.mangelhaft.test/n4/mangel/test/TestErrorTest.n4js"],
-"names":[]
-}
