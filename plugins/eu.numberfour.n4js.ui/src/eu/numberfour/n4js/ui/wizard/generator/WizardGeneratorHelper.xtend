@@ -20,7 +20,6 @@ import eu.numberfour.n4js.ui.changes.ChangeManager
 import eu.numberfour.n4js.ui.changes.IAtomicChange
 import eu.numberfour.n4js.ui.changes.ManifestChangeProvider
 import eu.numberfour.n4js.ui.organize.imports.Interaction
-import eu.numberfour.n4js.ui.organize.imports.OrganizeImportsHelperAccess
 import eu.numberfour.n4js.ui.wizard.model.AccessModifier
 import eu.numberfour.n4js.ui.wizard.model.ClassifierReference
 import eu.numberfour.n4js.ui.wizard.workspace.WorkspaceWizardModel
@@ -46,6 +45,7 @@ import org.eclipse.xtext.ui.editor.model.IXtextDocument
 import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider
 import org.eclipse.xtext.util.Files
 import org.eclipse.xtext.util.concurrent.IUnitOfWork
+import eu.numberfour.n4js.ui.organize.imports.OrganizeImportsService
 
 /**
  * This class contains commonly used methods when writing wizard generators.
@@ -211,7 +211,7 @@ class WizardGeneratorHelper {
 	 * This method works in the background without opening the graphical editor.
 	 */
 	public def void organizeImports(IFile file, IProgressMonitor mon) throws CoreException {
-		OrganizeImportsHelperAccess.organizeImportsInFile(file, Interaction.takeFirst, mon);
+		OrganizeImportsService.organizeImportsInFile(file, Interaction.takeFirst, mon);
 	}
 	
 	/**

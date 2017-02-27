@@ -15,6 +15,7 @@ import eu.numberfour.n4js.ts.types.TAnnotableElement;
 import eu.numberfour.n4js.ts.types.TAnnotation;
 import eu.numberfour.n4js.ts.types.TFormalParameter;
 import eu.numberfour.n4js.ts.types.TFunction;
+import eu.numberfour.n4js.ts.types.TTypedElement;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 
 import java.lang.reflect.InvocationTargetException;
@@ -45,10 +46,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#getAstElement <em>Ast Element</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#getTypeRef <em>Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#isVariadic <em>Variadic</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#getAstInitializer <em>Ast Initializer</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#isHasInitializerAssignment <em>Has Initializer Assignment</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFormalParameterImpl#getTypeRef <em>Type Ref</em>}</li>
  * </ul>
  *
  * @generated
@@ -73,6 +74,16 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	 * @ordered
 	 */
 	protected EObject astElement;
+
+	/**
+	 * The cached value of the '{@link #getTypeRef() <em>Type Ref</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTypeRef()
+	 * @generated
+	 * @ordered
+	 */
+	protected TypeRef typeRef;
 
 	/**
 	 * The default value of the '{@link #isVariadic() <em>Variadic</em>}' attribute.
@@ -133,16 +144,6 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	 * @ordered
 	 */
 	protected boolean hasInitializerAssignment = HAS_INITIALIZER_ASSIGNMENT_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getTypeRef() <em>Type Ref</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTypeRef()
-	 * @generated
-	 * @ordered
-	 */
-	protected TypeRef typeRef;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -218,6 +219,49 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public TypeRef getTypeRef() {
+		return typeRef;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetTypeRef(TypeRef newTypeRef, NotificationChain msgs) {
+		TypeRef oldTypeRef = typeRef;
+		typeRef = newTypeRef;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypesPackage.TFORMAL_PARAMETER__TYPE_REF, oldTypeRef, newTypeRef);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTypeRef(TypeRef newTypeRef) {
+		if (newTypeRef != typeRef) {
+			NotificationChain msgs = null;
+			if (typeRef != null)
+				msgs = ((InternalEObject)typeRef).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TypesPackage.TFORMAL_PARAMETER__TYPE_REF, null, msgs);
+			if (newTypeRef != null)
+				msgs = ((InternalEObject)newTypeRef).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TypesPackage.TFORMAL_PARAMETER__TYPE_REF, null, msgs);
+			msgs = basicSetTypeRef(newTypeRef, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFORMAL_PARAMETER__TYPE_REF, newTypeRef, newTypeRef));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isVariadic() {
 		return variadic;
 	}
@@ -274,49 +318,6 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 		hasInitializerAssignment = newHasInitializerAssignment;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT, oldHasInitializerAssignment, hasInitializerAssignment));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TypeRef getTypeRef() {
-		return typeRef;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetTypeRef(TypeRef newTypeRef, NotificationChain msgs) {
-		TypeRef oldTypeRef = typeRef;
-		typeRef = newTypeRef;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypesPackage.TFORMAL_PARAMETER__TYPE_REF, oldTypeRef, newTypeRef);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTypeRef(TypeRef newTypeRef) {
-		if (newTypeRef != typeRef) {
-			NotificationChain msgs = null;
-			if (typeRef != null)
-				msgs = ((InternalEObject)typeRef).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TypesPackage.TFORMAL_PARAMETER__TYPE_REF, null, msgs);
-			if (newTypeRef != null)
-				msgs = ((InternalEObject)newTypeRef).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TypesPackage.TFORMAL_PARAMETER__TYPE_REF, null, msgs);
-			msgs = basicSetTypeRef(newTypeRef, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFORMAL_PARAMETER__TYPE_REF, newTypeRef, newTypeRef));
 	}
 
 	/**
@@ -459,14 +460,14 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 			case TypesPackage.TFORMAL_PARAMETER__AST_ELEMENT:
 				if (resolve) return getAstElement();
 				return basicGetAstElement();
+			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
+				return getTypeRef();
 			case TypesPackage.TFORMAL_PARAMETER__VARIADIC:
 				return isVariadic();
 			case TypesPackage.TFORMAL_PARAMETER__AST_INITIALIZER:
 				return getAstInitializer();
 			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT:
 				return isHasInitializerAssignment();
-			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
-				return getTypeRef();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -487,6 +488,9 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 			case TypesPackage.TFORMAL_PARAMETER__AST_ELEMENT:
 				setAstElement((EObject)newValue);
 				return;
+			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
+				setTypeRef((TypeRef)newValue);
+				return;
 			case TypesPackage.TFORMAL_PARAMETER__VARIADIC:
 				setVariadic((Boolean)newValue);
 				return;
@@ -495,9 +499,6 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 				return;
 			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT:
 				setHasInitializerAssignment((Boolean)newValue);
-				return;
-			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
-				setTypeRef((TypeRef)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -517,6 +518,9 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 			case TypesPackage.TFORMAL_PARAMETER__AST_ELEMENT:
 				setAstElement((EObject)null);
 				return;
+			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
+				setTypeRef((TypeRef)null);
+				return;
 			case TypesPackage.TFORMAL_PARAMETER__VARIADIC:
 				setVariadic(VARIADIC_EDEFAULT);
 				return;
@@ -525,9 +529,6 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 				return;
 			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT:
 				setHasInitializerAssignment(HAS_INITIALIZER_ASSIGNMENT_EDEFAULT);
-				return;
-			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
-				setTypeRef((TypeRef)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -545,14 +546,14 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 				return annotations != null && !annotations.isEmpty();
 			case TypesPackage.TFORMAL_PARAMETER__AST_ELEMENT:
 				return astElement != null;
+			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
+				return typeRef != null;
 			case TypesPackage.TFORMAL_PARAMETER__VARIADIC:
 				return variadic != VARIADIC_EDEFAULT;
 			case TypesPackage.TFORMAL_PARAMETER__AST_INITIALIZER:
 				return AST_INITIALIZER_EDEFAULT == null ? astInitializer != null : !AST_INITIALIZER_EDEFAULT.equals(astInitializer);
 			case TypesPackage.TFORMAL_PARAMETER__HAS_INITIALIZER_ASSIGNMENT:
 				return hasInitializerAssignment != HAS_INITIALIZER_ASSIGNMENT_EDEFAULT;
-			case TypesPackage.TFORMAL_PARAMETER__TYPE_REF:
-				return typeRef != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -576,6 +577,12 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 				default: return -1;
 			}
 		}
+		if (baseClass == TTypedElement.class) {
+			switch (derivedFeatureID) {
+				case TypesPackage.TFORMAL_PARAMETER__TYPE_REF: return TypesPackage.TTYPED_ELEMENT__TYPE_REF;
+				default: return -1;
+			}
+		}
 		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
 	}
 
@@ -595,6 +602,12 @@ public class TFormalParameterImpl extends IdentifiableElementImpl implements TFo
 		if (baseClass == SyntaxRelatedTElement.class) {
 			switch (baseFeatureID) {
 				case TypesPackage.SYNTAX_RELATED_TELEMENT__AST_ELEMENT: return TypesPackage.TFORMAL_PARAMETER__AST_ELEMENT;
+				default: return -1;
+			}
+		}
+		if (baseClass == TTypedElement.class) {
+			switch (baseFeatureID) {
+				case TypesPackage.TTYPED_ELEMENT__TYPE_REF: return TypesPackage.TFORMAL_PARAMETER__TYPE_REF;
 				default: return -1;
 			}
 		}

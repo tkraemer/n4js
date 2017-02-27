@@ -246,9 +246,11 @@ class  TAnnotationStringArgument extends TAnnotationArgument {
 	}
 }
 
-class TAnnotationTypeRefArgument extends TAnnotationArgument {
+interface TTypedElement {
 	contains TypeRef typeRef
+}
 
+class TAnnotationTypeRefArgument extends TAnnotationArgument, TTypedElement {
 	op String getArgAsString() {
 		return typeRef.typeRefAsString
 	}
@@ -1259,7 +1261,7 @@ class TMethod extends TFunction, TMemberWithAccessModifier {
 class TStructMethod extends TMethod, TStructMember {
 }
 
-class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRelatedTElement {
+class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRelatedTElement, TTypedElement {
 	boolean variadic
 	/*
 	 * If and only if the TFormalParameter is used as an AST node, this property holds the initializer
@@ -1270,7 +1272,6 @@ class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRel
 	 */
 	String astInitializer
 	boolean hasInitializerAssignment
-	contains TypeRef typeRef
 
 	/* Convenience method, returns true if this fparam has an initializer. */
 	op boolean hasASTInitializer() {
@@ -1367,10 +1368,10 @@ class TAnonymousFormalParameter extends TFormalParameter {
 /*
  * Field of a class, optionally complemented by getter(s) and setter(s).
  */
-class TField extends TMemberWithAccessModifier {
+class TField extends TMemberWithAccessModifier, TTypedElement {
 	boolean const
 	boolean hasExpression
-	contains TypeRef typeRef
+
 	/* Convenience method, returns true if typeRef undef modifier is optional. If type ref is not set, false is returned. */
 	op boolean isOptional() {
 		typeRef !== null && typeRef.undefModifier === UndefModifier.OPTIONAL
@@ -1538,8 +1539,7 @@ abstract class SyntaxRelatedTElement {
  * to Types (such as TClass, TInterface, TFunction). It references the variable declaration of the
  * export declaration (via SyntaxRelatedTElement's astElement).
  */
-class TVariable extends TExportableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement {
-	contains TypeRef typeRef
+class TVariable extends TExportableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement, TTypedElement {
 	boolean const
 	boolean external
 

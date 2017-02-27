@@ -29,6 +29,7 @@ import eu.numberfour.n4js.ui.organize.imports.BreakException.UserCanceledBreakEx
 import eu.numberfour.n4js.utils.UtilN4
 import eu.numberfour.n4js.utils.collections.Multimaps3
 import java.util.ArrayList
+import java.util.HashSet
 import java.util.List
 import java.util.Set
 import org.eclipse.emf.common.notify.Adapter
@@ -51,6 +52,8 @@ import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.EXPORT_
 import static org.eclipse.xtext.nodemodel.util.NodeModelUtils.*
 
 import static extension eu.numberfour.n4js.ui.organize.imports.UnresolveProxyCrossRefUtil.*
+import java.util.Map
+import java.util.Collection
 
 /**
  * Computes imports required by the given resource. In principle removes unused imports, adds missing imports, sorts imports - all in one go.
@@ -84,13 +87,13 @@ public class ImportsComputer {
 
 
 	/**
-	 * Calculate the real content of the new import-section in the file header.
+	 * Calculate the real content of the new import section in the file header.
 	 * 
-	 * @param xtextResource
-	 *            to organize
-	 * @param lineEnding - current active line-Ending in file
-	 * @param interaction Mode how to handle ambiguous situations
-	 * @return new import section, might be an empty String.
+	 * @param xtextResource the resource to organize
+	 * @param lineEnding current active line ending in file
+	 * @param interaction mode of handling ambiguous situations
+	 * @return new import section, might be an empty string
+	 * @throws BreakException when import resolution is ambiguous and mode is {@link Interaction#breakBuild}
 	 */
 	public def String getOrganizedImportSection(XtextResource xtextResource, String lineEnding,
 		Interaction interaction) throws BreakException {
@@ -114,9 +117,8 @@ public class ImportsComputer {
 		// collect names for which we have removed imports
 		val brokenNames = reg.calcRemovedImportedNames()
 
-//		// determine things to import (unresolved imports and things we broke)
-		val additional = resolveMissingImports(script, brokenNames, interaction)
-		resultingImports += additional
+		// determine things to import (unresolved imports and things we broke)
+		resultingImports += resolveMissingImports(script, brokenNames, interaction)
 
 		// resolve all resulting.
 		resultingImports.forEach[EcoreUtil.resolveAll(it)]
@@ -130,10 +132,9 @@ public class ImportsComputer {
 			sb.append(text).append(lineEnding);
 		]
 
-		// remove last line feed:
+//		 remove last line feed:
 		val length = sb.length
 		if (length > lineEnding.length) {
-
 			// ret.deleteCharAt(length-1)
 			sb.delete(length - lineEnding.length, length)
 		}
@@ -145,22 +146,18 @@ public class ImportsComputer {
 	private def ArrayList<ImportDeclaration> resolveMissingImports(Script script, Set<String> namesThatWeBroke,
 		Interaction interaction) throws BreakException {
 
-		// val scope = scopeProvider.getScope(script, N4JSPackage.Literals.PARAMETERIZED_CALL_EXPRESSION__TARGET)
 		val scopeTypeRef = scopeProvider.getScope(script,
 			TypeRefsPackage.Literals.PARAMETERIZED_TYPE_REF__DECLARED_TYPE);
 		val scopeIdRef = scopeProvider.getScopeForContentAssist(script, N4JSPackage.Literals.IDENTIFIER_REF__ID);
 
 		// the following are named imports, that did not resolve. The issue lies in the Project-configuration and
 		// cannot be solved here. Candidate for quick fix.
-		// val unresolved = state.unresolved
 		val Iterable<ReferenceProxyInfo> unresolved = script.findProxyCrossRefInfo.filter[referenceFilter.test(it)]
 
-		val resolution = LinkedHashMultimap.<String, ImportableObject>create
-		val alreadyProcessedIdRef = <String>newHashSet()
-		val alreadyProcessedTypeRef = <String>newHashSet()
+		val Multimap<String, ImportableObject> resolution = LinkedHashMultimap.create();
+		val alreadyProcessedIdRef = new HashSet<String>
+		val alreadyProcessedTypeRef = new HashSet<String>
 
-		// Some of the ParemterizedTypeRefs might come from the types computer and
-		// don't have a name in the script --> usedName might be null and the possible
 		unresolved.forEach [ proxyInfo |
 			val String usedName = proxyInfo.name
 			// in situations like "new A()" at the position of A an IdentifierRef is unresolved.
@@ -192,8 +189,8 @@ public class ImportsComputer {
 		namesThatWeBroke.removeAll(solutions.keySet)
 
 		// Ask user to disambiguate things:
-		val ambiguousSolution = resolution.asMap.filter[p1, p2|p2.size > 1];
-		val forDisambiguation = LinkedHashMultimap.<String, ImportableObject>create;
+		val Map<String, Collection<ImportableObject>> ambiguousSolution = resolution.asMap.filter[p1, p2|p2.size > 1];
+		val Multimap<String, ImportableObject> forDisambiguation = LinkedHashMultimap.create();
 		ambiguousSolution.forEach[p1, p2|forDisambiguation.putAll(p1, p2)];
 
 		// add potential solutions for still broken names
@@ -220,12 +217,15 @@ public class ImportsComputer {
 
 	/** Filters scope by given name and maps result to importable objects. */
 	private def Iterable<ImportableObject> mapToImportableObjects(IScope scopeIdRef, String brokenName) {
-		scopeIdRef.allElements.filter[candidateFilter.apply(it)].filter[it.name.lastSegment == brokenName].
-			map[new ImportableObject(brokenName, it, false)]
+		scopeIdRef
+			.allElements
+			.filter[candidateFilter.apply(it)]
+			.filter[it.name.lastSegment == brokenName]
+			.map[new ImportableObject(brokenName, it, false)]
 	}
 
 	/** Filters scope by the provided name and adds mapped results to the accumulator collection. */
-	private def void addResolutionFromScope(LinkedHashMultimap<String, ImportableObject> resolution, IScope scopeTypeRef, String usedName) {
+	private def void addResolutionFromScope(Multimap<String, ImportableObject> resolution, IScope scopeTypeRef, String usedName) {
 		scopeTypeRef
 			.allElements
 			.filter[candidateFilter.apply(it)]
@@ -234,7 +234,7 @@ public class ImportsComputer {
 	}
 	
 	/** Creates {@link ImportableObject} from provided name and object description. Result is added to the collection. */
-	private def boolean add(LinkedHashMultimap<String, ImportableObject> resolution, String usedName, IEObjectDescription ieoDescription) {
+	private def boolean add(Multimap<String, ImportableObject> resolution, String usedName, IEObjectDescription ieoDescription) {
 		resolution.put(usedName, new ImportableObject(usedName, ieoDescription, ieoDescription.isDefaultExport))
 	}
 
@@ -265,10 +265,8 @@ public class ImportsComputer {
 			val module = declaration.module.moduleSpecifier;
 
 			if (impSpec.size === 1) {
-
 				// create own string. from single Named Adapter:
-				val namedSpec = impSpec.get(
-					0) as NamedImportSpecifier
+				val namedSpec = impSpec.get(0) as NamedImportSpecifier
 				if (namedSpec instanceof DefaultImportSpecifier) {
 					'''import «namedSpec.importedElement.name» from "«module»";'''
 
@@ -308,8 +306,12 @@ public class ImportsComputer {
 
 		var boolean hiddenSeen = false;
 		var boolean openingCurlySeen = false;
+		var boolean fixedASI = false;
 
 		for (ILeafNode leaf : node.getLeafNodes()) {
+			if(UtilN4.isIgnoredSyntaxErrorNode(leaf, SEMICOLON_INSERTED)){
+				fixedASI = true
+			}
 			if (!isHiddenOrIgnoredSyntaxError(leaf, ignoredSyntaxErrorIssues)) {
 				val text = leaf.getText();
 				if (builder.length() > 0) { // do not insert space before any content.
@@ -336,6 +338,9 @@ public class ImportsComputer {
 				hiddenSeen = true;
 			}
 		}
+
+		if(fixedASI) builder.append(";");
+
 		return builder.toString();
 	}
 
@@ -387,61 +392,29 @@ public class ImportsComputer {
 			} // follows
 		}
 
-		// ISelection sel= editor.getSelectionProvider().getSelection();
-		// ILabelProvider labelProvider= new TypeNameMatchLabelProvider(TypeNameMatchLabelProvider.SHOW_FULLYQUALIFIED);
 		val ILabelProvider labelProvider = importProvidedElementLabelprovider;
 
 		val Object[][] openChoices = Multimaps3.createOptions(multiMapName2Candidates);
 
-		val MultiElementListSelectionDialog dialog = new MultiElementListSelectionDialog(null, labelProvider) {
-			@Override
-			override protected void handleSelectionChanged() {
-				super.handleSelectionChanged();
+		val MultiElementListSelectionDialog dialog = new MultiElementListSelectionDialog(null, labelProvider);
 
-			// show choices in editor
-			// doListSelectionChanged(getCurrentPage(), ranges, editor);
-			}
-		}
-
-		// fIsQueryShowing= true;
 		dialog.setTitle("Organize Imports");
 		dialog.setMessage("Choose type to import:");
 		dialog.setElements(openChoices);
 
-		// dialog.setComparator(ORGANIZE_IMPORT_COMPARATOR);
 		if (dialog.open() == Window.OK) {
 			val Object[] res = dialog.getResult();
 
-			// result= new TypeNameMatch[res.length];
 			for (var int i = 0; i < res.length; i++) {
 				val Object[] array = res.get(i) as Object[];
 				if (array.length > 0) {
-
-					// result[i]= (TypeNameMatch) array[0];
 					result.add(array.get(0) as T)
-
-				// QualifiedTypeNameHistory.remember(result[i].getFullyQualifiedName());
 				}
 			}
 		} else {
 			throw new UserCanceledBreakException("User canceled.");
 		}
-
-		// // restore selection
-		// if (sel instanceof ITextSelection) {
-		// ITextSelection textSelection= (ITextSelection) sel;
-		// editor.selectAndReveal(textSelection.getOffset(), textSelection.getLength());
-		// }
-		// fIsQueryShowing= false;
 		return result;
 	}
-
-//	def private void doListSelectionChanged(int page /* , ISourceRange[] ranges*/ /*, JavaEditor editor */) {
-//		if (ranges != null && page >= 0 && page < ranges.length) {
-//			// ISourceRange range= ranges[page];
-//			// editor.selectAndReveal(range.getOffset(), range.getLength());
-//		}
-//	}
-//	}
-	}
+}
 	

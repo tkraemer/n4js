@@ -12,6 +12,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberType;
 import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TMember;
+import eu.numberfour.n4js.ts.types.TTypedElement;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.ts.types.UndefModifier;
 
@@ -35,14 +36,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#getTypeRef <em>Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#isConst <em>Const</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#isHasExpression <em>Has Expression</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#getTypeRef <em>Type Ref</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField {
+	/**
+	 * The cached value of the '{@link #getTypeRef() <em>Type Ref</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTypeRef()
+	 * @generated
+	 * @ordered
+	 */
+	protected TypeRef typeRef;
+
 	/**
 	 * The default value of the '{@link #isConst() <em>Const</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -84,16 +95,6 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	protected boolean hasExpression = HAS_EXPRESSION_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getTypeRef() <em>Type Ref</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTypeRef()
-	 * @generated
-	 * @ordered
-	 */
-	protected TypeRef typeRef;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -110,48 +111,6 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	@Override
 	protected EClass eStaticClass() {
 		return TypesPackage.Literals.TFIELD;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isConst() {
-		return const_;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setConst(boolean newConst) {
-		boolean oldConst = const_;
-		const_ = newConst;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFIELD__CONST, oldConst, const_));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isHasExpression() {
-		return hasExpression;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setHasExpression(boolean newHasExpression) {
-		boolean oldHasExpression = hasExpression;
-		hasExpression = newHasExpression;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFIELD__HAS_EXPRESSION, oldHasExpression, hasExpression));
 	}
 
 	/**
@@ -195,6 +154,48 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFIELD__TYPE_REF, newTypeRef, newTypeRef));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isConst() {
+		return const_;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setConst(boolean newConst) {
+		boolean oldConst = const_;
+		const_ = newConst;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFIELD__CONST, oldConst, const_));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isHasExpression() {
+		return hasExpression;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setHasExpression(boolean newHasExpression) {
+		boolean oldHasExpression = hasExpression;
+		hasExpression = newHasExpression;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFIELD__HAS_EXPRESSION, oldHasExpression, hasExpression));
 	}
 
 	/**
@@ -284,12 +285,12 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case TypesPackage.TFIELD__TYPE_REF:
+				return getTypeRef();
 			case TypesPackage.TFIELD__CONST:
 				return isConst();
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				return isHasExpression();
-			case TypesPackage.TFIELD__TYPE_REF:
-				return getTypeRef();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -302,14 +303,14 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case TypesPackage.TFIELD__TYPE_REF:
+				setTypeRef((TypeRef)newValue);
+				return;
 			case TypesPackage.TFIELD__CONST:
 				setConst((Boolean)newValue);
 				return;
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				setHasExpression((Boolean)newValue);
-				return;
-			case TypesPackage.TFIELD__TYPE_REF:
-				setTypeRef((TypeRef)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -323,14 +324,14 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case TypesPackage.TFIELD__TYPE_REF:
+				setTypeRef((TypeRef)null);
+				return;
 			case TypesPackage.TFIELD__CONST:
 				setConst(CONST_EDEFAULT);
 				return;
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				setHasExpression(HAS_EXPRESSION_EDEFAULT);
-				return;
-			case TypesPackage.TFIELD__TYPE_REF:
-				setTypeRef((TypeRef)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -344,14 +345,46 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case TypesPackage.TFIELD__TYPE_REF:
+				return typeRef != null;
 			case TypesPackage.TFIELD__CONST:
 				return const_ != CONST_EDEFAULT;
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				return hasExpression != HAS_EXPRESSION_EDEFAULT;
-			case TypesPackage.TFIELD__TYPE_REF:
-				return typeRef != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == TTypedElement.class) {
+			switch (derivedFeatureID) {
+				case TypesPackage.TFIELD__TYPE_REF: return TypesPackage.TTYPED_ELEMENT__TYPE_REF;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == TTypedElement.class) {
+			switch (baseFeatureID) {
+				case TypesPackage.TTYPED_ELEMENT__TYPE_REF: return TypesPackage.TFIELD__TYPE_REF;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 	/**
@@ -370,6 +403,11 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 				case TypesPackage.TMEMBER___GET_MEMBER_AS_STRING: return TypesPackage.TFIELD___GET_MEMBER_AS_STRING;
 				case TypesPackage.TMEMBER___IS_STATIC: return TypesPackage.TFIELD___IS_STATIC;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		if (baseClass == TTypedElement.class) {
+			switch (baseOperationID) {
+				default: return -1;
 			}
 		}
 		return super.eDerivedOperationID(baseOperationID, baseClass);

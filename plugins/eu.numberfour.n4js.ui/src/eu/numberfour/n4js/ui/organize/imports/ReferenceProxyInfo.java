@@ -16,9 +16,14 @@ import org.eclipse.emf.ecore.EObject;
  * Value object for meta information about unresolved proxy cross reference.
  */
 public class ReferenceProxyInfo {
+
 	/** Object holding proxified cross ref. */
 	public final EObject eobject;
-	/** Name used in cross ref. */
+
+	/**
+	 * Name used in cross ref. It can be null, e.g. {@code ParemterizedTypeRefs} coming from TypesComputer have no
+	 * {@code name} in the source code
+	 */
 	public final String name;
 
 	/**  */

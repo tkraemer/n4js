@@ -247,24 +247,25 @@ fA(p);      // --> error    void !<: A
 .Subtyping with function types
 [example]
 --
-If classes A, B, and C are defined as previously mentioned
-($C <: B <: A$)
-
-The following subtyping relations with function types are to be evaluated as follows:
+If classes A, B, and C are defined as previously mentioned, i.e. $C <: B <: A$, then
+the following subtyping relations with function types are to be evaluated as follows:
 
 [source,n4js]
 ----
-{function():void} <: {function():void}              -> true
-{function(A):A} <: {function(A):A}                  -> true
-{function(A):void} <: {function(B):void}            -> true
-{function():B} <: {function():A}                    -> true
-{function(A):B} <: {function(B):A}                  -> true
-{function(A):A} <: {function(B):void}               -> true (!)
-{function(A):A} <: {function(B):any}                -> true
-{function(A):A} <: {function(B)}                    -> true
-{function(A):void} <: {function(B):any}             -> false (!)
-{function(A):void} <: {function(B)}                 -> true
-{function(A):void} <: {function(B):A}               -> false
+       {function(B):B} <: {function(B):B}           -> true
+        {function():A} <: {function():B}            -> false
+        {function():C} <: {function():B}            -> true
+         {function(A)} <: {function(B)}             -> true
+         {function(C)} <: {function(B)}             -> false
+
+     {function():void} <: {function():void}         -> true
+{function():undefined} <: {function():void}         -> true
+     {function():void} <: {function():undefined}    -> true (!)
+
+        {function():B} <: {function():void}         -> true (!)
+        {function():B} <: {function():undefined}    -> false (!)
+     {function():void} <: {function():B}            -> false
+{function():undefined} <: {function():B}            -> true
 ----
 
 
@@ -310,6 +311,8 @@ The following examples demonstrate the effect of optional return types:
 {function():void} <: {function():Y?}                -> true (!)
 {function():X}    <: {function():Y?}                -> X <: Y
 {function():X?}   <: {function():Y?}                -> X <: Y
+       {function():B?} <: {function():undefined}    -> false (!)
+{function():undefined} <: {function():B?}           -> true
 ----
 
 The following examples show the effect of the `@This` annotation:
@@ -1114,14 +1117,16 @@ The warning aims at hinting about forgetting to wait for the result, while remai
 [req,id=IDE-86,version=1]
 --
 
-. `async` may be used on declared functions and methods, for function expressions, and for arrow functions.
-.  A function or method _f_ with a declared return type _R_ that is declared `async` has an actual return type of `Promise<R,?>`.
-..  The declared return type `void` is translated to the actual return type `Promise<undefined,?>`.
+.  `async` may be used on declared functions and methods as well as for function expressions and arrow functions.
 .  A function or method that is declared `async` can have no declared return type, a shorthand form of a return type or an explicitly declared return type.
 ..  The explicitly declared return type is of the form `Promise<R,E>` where _R_ is the type of all return statements in the body, and E is the type of exceptions that are thrown in the body.
-..  The shorthand form only declares the type of _R_ which implicitly translates to `Promise<R,?>` as the return type.
+..  The shorthand form only declares the type of _R_ which implicitly translates to `Promise<R,?>` as the actual return type.
 ..  In case no return type is declared, the type _R_ of `Promise<R,?>` is inferred from the body.
-. Return type inference is only performed when no return type is declared.
+.  A function or method _f_ with a declared return type _R_ that is declared `async` has an actual return type of
+..  `R` if _R_ is a subtype of `Promise<?,?>`,
+..  `Promise<undefined,?>` if _R_ is type `void`.
+..  `Promise<R,?>` in all other cases (i.e. the declared return type _R_ is being wrapped in a `Promise`).
+.  Return type inference is only performed when no return type is declared.
 ..  The return type `R` of `Promise<R,?>` is inferred either as `void` or as `any`.
 .  Given a function or method _f_ that is declared `async` with a declared return type _R_, or with a declared return type `Promise<R,?>`,
 all return statements in _f_ must have an expression of type _R_ (and not of type `Promise<R,?>`).
@@ -1134,10 +1139,10 @@ _S_, i.e. _T <: Promise<S,?>_ .
 
 --
 
-In other words, the return _R_ type of `async` methods will always be wrapped to a `Promise<R,?>` unless _R_ is `Promise` already.
+In other words, the return type _R_ of `async` functions and methods will always be wrapped to `Promise<R,?>` unless _R_ is a `Promise` already.
 As a consequence, nested ``Promise``s as a return type of a async function or method have to be stated explicitly like `Promise<Promise<R,?>,?>`.
 
-When a type `T` variable is used to define the the return type of a async function or method, it also will be wrapped.
+When a type variable `T` is used to define the the return type of an async function or method, it will always be wrapped.
 Consider the example below.
 
 .Type variables with async methods.
@@ -1146,9 +1151,9 @@ Consider the example below.
 [source,n4js]
 ----
 interface I<T> {
-	foo(): T;  // equals to foo(): Promise<T>;
+	async foo(): T;  // amounts to foo(): Promise<T,?>
 }
-function snafu(I<int> i1, I<Promise<int>> i2) {
+function snafu(i1: I<int>, i2: I<Promise<int,?>>) {
 	i1.foo();  // returns Promise<int,?>
 	i2.foo();  // returns Promise<Promise<int,?>,?>
 }
@@ -1270,9 +1275,9 @@ used with `await`, if and only if the following constraints hold:
 
 1.  Function $f$ must be annotated with `@Promisifiable`.
 2.  Using `@Promisify f()` without `await` returns a promise of type `Promise<S,F>` where
-* $S$ is `IterableN<T0,...,Tn>` if $n\geq 2$, `T` if $n=1$, and `void` if $n=0$.
-* $F$ is `E` if given, `void` otherwise.
-3.  Using `await @Promisify f()` returns a value of type `IterableN<T0,...,Tn>` if $n\geq 2$, `T` if $n=1$, and `void` if $n=0$.
+* $S$ is `IterableN<T0,...,Tn>` if $n\geq 2$, `T` if $n=1$, and `undefined` if $n=0$.
+* $F$ is `E` if given, `undefined` otherwise.
+3.  Using `await @Promisify f()` returns a value of type `IterableN<T0,...,Tn>` if $n\geq 2$, of type `T` if $n=1$, and of type `undefined` if $n=0$.
 4.  In case of using an `await`, the annotation can be omitted. +
 I.e., `await @Promisify f()` is equivalent to `await f()`.
 5.  Only call expressions using f as target can be promisified, in other

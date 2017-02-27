@@ -10,8 +10,6 @@
  */
 package eu.numberfour.n4js.ui.organize.imports;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -35,19 +33,11 @@ public class ErrorDialogWithStackTraceUtil {
 	 */
 	public static boolean showErrorDialogWithStackTrace(String msg, Throwable throwable) {
 
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-		throwable.printStackTrace(pw);
-
-		final String trace = sw.toString(); // stack trace as a string
-
 		// Temporary holder of child statuses
 		List<Status> childStatuses = new ArrayList<>();
 
-		// Split output by OS-independent new-line
-		for (String line : trace.split(System.getProperty("line.separator"))) {
-			// build & add status
-			childStatuses.add(new Status(IStatus.ERROR, "N4js-plugin-id", line));
+		for (StackTraceElement stackTraceElement : throwable.getStackTrace()) {
+			childStatuses.add(new Status(IStatus.ERROR, "N4js-plugin-id", stackTraceElement.toString()));
 		}
 
 		MultiStatus ms = new MultiStatus("N4js-plugin-id", IStatus.ERROR,
