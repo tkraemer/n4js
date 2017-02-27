@@ -57,12 +57,12 @@ class ImportsRemovalChangesComputer {
 		INode importNode, XtextResource resource) throws BadLocationException {
 		if (importNode === null)
 			return IChange.IDENTITY;
-		// INode next = node.getNextSibling();
-		val BidiTreeIterator<INode> reversed = importNode.getAsTreeIterable().iterator();
+
+		val BidiTreeIterator<INode> iterator = importNode.getAsTreeIterable().iterator();
 		var end = importNode.endOffset
 		var done = false
-		while (!done && reversed.hasPrevious()) {
-			val INode prev = reversed.previous();
+		while (!done && iterator.hasPrevious()) {
+			val INode prev = iterator.previous();
 			if (prev instanceof ILeafNode) {
 				if (!prev.isHidden()) {
 					// must be semicolon
@@ -74,8 +74,8 @@ class ImportsRemovalChangesComputer {
 							}
 						}
 						// but is comment or ASI
-						while (!done && reversed.hasPrevious) {
-							val sibling = reversed.previous
+						while (!done && iterator.hasPrevious) {
+							val sibling = iterator.previous
 							if (sibling instanceof ILeafNode) {
 								if (!sibling.isHidden) {
 									done = true
@@ -85,8 +85,8 @@ class ImportsRemovalChangesComputer {
 						}
 					}
 				} else {
-					while (!done && reversed.hasPrevious) {
-						val sibling = reversed.previous
+					while (!done && iterator.hasPrevious) {
+						val sibling = iterator.previous
 						if (sibling instanceof ILeafNode) {
 							if (!sibling.isHidden) {
 								done = true
