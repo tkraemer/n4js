@@ -21,6 +21,8 @@ import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionExpression
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor
+import eu.numberfour.n4js.n4JS.IdentifierRef
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4GetterDeclaration
@@ -32,14 +34,15 @@ import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
 import eu.numberfour.n4js.n4JS.PropertyNameValuePair
 import eu.numberfour.n4js.n4JS.PropertySetterDeclaration
 import eu.numberfour.n4js.n4JS.SetterDeclaration
+import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.resource.N4JSPostProcessor
 import eu.numberfour.n4js.resource.N4JSResource
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
+import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.utils.languages.N4LanguageUtils
 import it.xsemantics.runtime.RuleEnvironment
@@ -51,9 +54,6 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import eu.numberfour.n4js.utils.EcoreUtilN4
-import eu.numberfour.n4js.n4JS.IdentifierRef
-import eu.numberfour.n4js.n4JS.ThisLiteral
 
 /**
  * Main processor used during {@link N4JSPostProcessor post-processing} of N4JS resources. It controls the overall
@@ -127,6 +127,14 @@ public class ASTProcessor extends AbstractProcessor {
 		cache.startProcessing(cancelIndicator); // will throw exception if processing already in progress or completed
 		try {
 			val script = resource.script;
+			// step 0: process constant expressions & computed property names
+			// FIXME improve order, etc.
+			for(node : script.eAllContents.filter(Expression).toIterable) {
+				constantExpressionProcessor.evaluateConstantExpression(G, node, cache, 0);
+			}
+			for(node : script.eAllContents.filter(LiteralOrComputedPropertyName).toIterable) {
+				computedNameProcessor.computeName(G, node, cache, 0);
+			}
 			// step 1: main processing
 			processSubtree(G, script, cache, 0);
 			// step 2: processing of postponed subtrees
@@ -401,29 +409,14 @@ public class ASTProcessor extends AbstractProcessor {
 
 		typeDeferredProcessor.handleDeferredTypeRefs_postChildren(G, node, cache);
 
-		computedNameProcessor.computeName(G, node, cache, 0);
-
 		typeProcessor.typeNode(G, node, cache, indentLevel);
 
 		arrowFunctionProcessor.tweakArrowFunctions(G, node, cache);
-
-		constantExpressionProcessor.evaluateConstantExpression(G, node, cache, 0);
-
-		// references to other parts of the same AST via TypeRefs:
-		if (node instanceof ParameterizedTypeRef) { // note: Wildcard, TypeTypeRef do not need special handling, because in case they refer to a type, they will contain a nested ParameterizedTypeRef!
-			val prop = node.declaredType;
-			if (prop !== null && prop.eResource === cache.resource) { // only required if located in same resource!
-				// we're not interested in the type here, but invoking the type system will let us reuse
-				// all the logic from method TypeProcessor#getType() for handling backward/forward references
-				ts.type(G, prop);
-			}
-		}
 
 		// references to other files via import statements:
 		if (node instanceof NamedImportSpecifier) {
 			val elem = node.importedElement;
 			if(elem!==null) {
-				// 'elem' will definitely be located in another file:
 				// make sure to use the correct type system for the other file (using our type system as a fall back)
 				val tsCorrect = N4LanguageUtils.getServiceForContext(elem, N4JSTypeSystem).orElse(ts);
 				// we're not interested in the type here, but invoking the type system will let us reuse
