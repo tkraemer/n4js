@@ -37,5 +37,4 @@ Import-Package: eu.numberfour.n4jsx.n4JSX,
  org.junit.runners.model;version="4.5.0",
  org.slf4j
 Export-Package: eu.numberfour.n4jsx.tests.helper,
- eu.numberfour.n4jsx.tests.helper.parser,
- eu.numberfour.n4jsx.xpect.validation.suppression
+ eu.numberfour.n4jsx.tests.helper.parser

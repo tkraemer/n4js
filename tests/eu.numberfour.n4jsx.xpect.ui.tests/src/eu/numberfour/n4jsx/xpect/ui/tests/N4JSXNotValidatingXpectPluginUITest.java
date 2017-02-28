@@ -27,7 +27,7 @@ import eu.numberfour.n4js.xpect.ui.methods.OrganizeImportXpectMethod;
 import eu.numberfour.n4js.xpect.ui.methods.ProposalXpectMethod;
 import eu.numberfour.n4js.xpect.ui.methods.contentassist.ContentAssistXpectMethod;
 import eu.numberfour.n4js.xpect.ui.methods.quickfix.QuickFixXpectMethod;
-import eu.numberfour.n4jsx.xpect.validation.suppression.SuppressIssuesSetup;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**
  * Plugin for proposal test. This plugin turns <b>off</b> validation in xpect-tests by default since most input files

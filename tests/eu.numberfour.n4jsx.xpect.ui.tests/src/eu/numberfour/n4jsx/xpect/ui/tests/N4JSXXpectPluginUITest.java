@@ -29,7 +29,7 @@ import eu.numberfour.n4js.xpect.ui.methods.OutlineXpectMethod;
 import eu.numberfour.n4js.xpect.ui.methods.ProposalXpectMethod;
 import eu.numberfour.n4js.xpect.ui.methods.contentassist.ContentAssistXpectMethod;
 import eu.numberfour.n4js.xpect.ui.methods.quickfix.QuickFixXpectMethod;
-import eu.numberfour.n4jsx.xpect.validation.suppression.SuppressIssuesSetup;
+import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**
  * Plugin linking test
