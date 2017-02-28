@@ -53,20 +53,19 @@ do
 	mkdir -p $OUT_FOLDER
 	$ASPEC -D $OUT_FOLDER $ADOC_FILE -a stylesdir=${REL_PATH}../res/styles  -a highlightjsdir=${REL_PATH}../res/scripts \
 	-a docinfodir=${REL_PATH}../res/headers/$HEADER_DIR  
-
-
-	# If Jenkins is building, move generated docs
-	if [ "${1}" == "--jenkins" ]; then
-		cp -r generated-docs ../
-	exit 0
-
-	fi
 done
+
 
 # Delete unwanted source files.
 pushd ./$GEN_FOLDER/
 find . -name "*.adoc" -delete && find . -name "*.graffle" -delete
 popd
+
+# If Jenkins is building, move generated docs
+if [ "${1}" == "--jenkins" ]; then
+	cp -r generated-docs ../
+	exit 0
+fi
 
 # Adding -p flag for launching pages after build
 if [ "${1}" == "--preview" ] || [ "${1}" == "-p" ]; then
