@@ -51,8 +51,10 @@ do
 	echo running $ASPEC on $ADOC_FILE to $OUT_FOLDER
 
 	mkdir -p $OUT_FOLDER
-	$ASPEC -D $OUT_FOLDER $ADOC_FILE -a stylesdir=${REL_PATH}../res/styles  -a highlightjsdir=${REL_PATH}../res/scripts \
-	-a docinfodir=${REL_PATH}../res/headers/$HEADER_DIR  
+
+	$ASPEC $ATTRS  -a stylesdir=${REL_PATH}../res/styles  -a highlightjsdir=${REL_PATH}../res/scripts \
+	-a docinfodir=${REL_PATH}../res/headers/$HEADER_DI -D $OUT_FOLDER $ADOC_FILE
+
 done
 
 
