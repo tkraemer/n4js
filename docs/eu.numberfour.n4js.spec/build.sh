@@ -28,9 +28,10 @@ if [ "${1}" == "--jenkins" ]; then
 	# Copy resources to ./$GEN_FOLDER/
 	cp -r ./styles ./images ./scripts ./chapters $GEN_FOLDER/
 
-	asciispec $ATTRS -D $GEN_FOLDER $SPEC 
-	$ASPEC -b docbook -D $GEN_FOLDER $SPEC 
-	$FOP $GEN_FOLDER/N4JSSpec.xml 
+	asciispec $ATTRS -D $GEN_FOLDER $SPEC
+	 
+	asciispec -b docbook -D $GEN_FOLDER $SPEC 
+	fopub $GEN_FOLDER/N4JSSpec.xml 
 	rm $GEN_FOLDER/N4JSSpec.xml
 	exit 0
 fi
