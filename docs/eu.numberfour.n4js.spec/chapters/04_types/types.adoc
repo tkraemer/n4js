@@ -1223,13 +1223,13 @@ The object types have the same name as their corresponding primitive type, but s
 The following types, derived from certain ECMAScript predefined objects and constructs, are supported by means of built-in types as they are required by certain expressions.
 
 
-*  `Object`   cite:[ECMA11a(p111)];
-*  `Function`  cite:[ECMA11a(p117)]; representing functions and function objects <<_function-type>> but also methods (<<_methods>>)
-*  `Array`    cite:[ECMA11a(1p122)], representing array objects, see <<_array-object-type>>
-*  `String` cite:[ECMA11a(p141)]
-*  `Boolean` cite:[ECMA11a(p141)]
-*  `Number` cite:[ECMA11a(p141)]
-*  `RegExp` cite:[ECMA11a(p180)]; they can be constructed by means of special literals (cf. <<Literals>>)
+*  `Object`   cite:[ECMA11a(p.111)];
+*  `Function`  cite:[ECMA11a(p.117)]; representing functions and function objects <<_function-type>> but also methods (<<_methods>>)
+*  `Array`    cite:[ECMA11a(p.122)], representing array objects, see <<_array-object-type>>
+*  `String` cite:[ECMA11a(p.141)]
+*  `Boolean` cite:[ECMA11a(p.141)]
+*  `Number` cite:[ECMA11a(p.141)]
+*  `RegExp` cite:[ECMA11a(p.180)]; they can be constructed by means of special literals (cf. <<Literals>>)
 *  global object type
 *  `Symbol`
 *  `Promise`

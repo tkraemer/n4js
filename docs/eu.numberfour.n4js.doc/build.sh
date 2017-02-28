@@ -49,7 +49,7 @@ done
 
 cd ./$GEN_FOLDER/
 find . -name "*.adoc" -delete && find . -name "*.graffle" -delete
-cd .../build-p
+cd ..
 
 # Adding -l flag for launching pages after build
 if [ "${1}" == "--launch" ] || [ "${1}" == "-l" ]; then

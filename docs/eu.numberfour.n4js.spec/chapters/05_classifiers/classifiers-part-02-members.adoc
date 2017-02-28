@@ -1571,13 +1571,13 @@ $\mu(M)\neq\type{Method} \spc \to \mu(M') \in \types{Field, FieldAccessor} $
 [%hardbreaks]
 $\spc \mu(M)=\mu(M') \lor \mu(M)=\type{Field} $
 $\spc \hspace{2em}\to M'.abstract \land M' \not\in C.ownedMembers $
-// TODO getter does not effect setter and vice versa
+// TODO getter does not affect setter and vice versa
 .  The merge candidate’s access modifier is not less than the modifier of the other member:
 +
 [%hardbreaks]
 $\spc \mu(M)=\mu(M') \lor \mu(M)=\type{Field}$
 $\spc \hspace{2em} \to M.acc \geq M'.acc$
-// TODO - getter does no effect setter and vice versa
+// TODO - getter does not affect setter and vice versa
 .  The merge candidate’s type compatible with the other member:
 +
 [%hardbreaks]

@@ -248,7 +248,7 @@ $\hspace{2em} (\forall\ S.typeArg_i <: T.typeArg_i) \lor (\forall\ T.typeArg_i <
 7.  If `T` is a union type, then the type cast is valid if it is valid for at least one element of `T`.
 8.  If `T` is an intersection type, then the type cast is valid if it is valid for all elements of `T`.
 
-NOTE: `any` is a supertype of all other types, thus it is always possibleto cast a variable of type `any` to other (non-composed) types.
+NOTE: `any` is a supertype of all other types, thus it is always possible to cast a variable of type `any` to other (non-composed) types.
 
 --
 
