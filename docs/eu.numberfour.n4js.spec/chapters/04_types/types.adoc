@@ -162,6 +162,9 @@ Exceptions in the cases of object literals or destructuring are explained later 
 The following two listings show the very same code and type annotations are provided on
 the left hand side. For simplicity, `string` is always used as type expression.footnote:[In the N4JS IDE, type annotations are highlighted differently than ordinary code.]
 
+[cols=2,frame=none,grid=none]
+|===
+a|
 [source,n4js]
 ----
 var x: string;
@@ -184,6 +187,8 @@ class C {
 }
 ----
 
+a|
+
 [source,n4js]
 ----
 var x;
@@ -205,6 +210,7 @@ class C {
     }
 }
 ----
+|===
 
 The code on the right hand side is almost all valid ECMAScript 2015, with the exception of field declarations in the class.
 These are moved into the constructor by the N4JS transpiler.
@@ -675,12 +681,12 @@ We define type conformance for non-primitive type references as follows:
 +
 [math]
 ++++
-\infer{ T^0 < : S^0}{S^0 \in T^0.sup^* \cup T^0.interfaces^* }
+\infer{ T^0 < : S^0}{S^0 \in T^{0}.sup^* \cup T^{0}.interfaces^* }
 ++++
 * For two parameterized types $T<T_1,\dots,T_n>$ and $S<S_1,\dots,S_m>$
 +
 [%hardbreaks]
-$\infer{\hspace{10em}T \subtype S\hspace{10em}}{{T^0 \subtype S^0}
+$\infer{\hspace{10em}T \subtype S\hspace{10em}}{T^0 \subtype S^0}$
 ${(n=0 \lor m=0 \lor (n=m \rightarrow \forall i:} $
 $\hspace{2em} {T_i.upperBound \subtype S_i.upperBound} $
 $\hspace{1em} \land {T_i.lowerBound :> S_i.lowerBound}))}$
@@ -1198,9 +1204,9 @@ The N4JS primitive types `pathSelector<T>`, `i18nKey` and `pathSelector<T>` are 
 Thus, they are completely interchangeable with string types:
 
 [%hardbreaks]
-$ \infer{\type{typeName&lt;T&gt;} \subtype \type{string}}{} \spc  \infer{\type{string} \subtype \type{typeName&lt;T&gt;}}{}$
+$ \infer{\type{typeName}<\type{T}> \subtype \type{string}}{} \spc  \infer{\type{string} \subtype \type{typeName}<\type{T}>}{}$
 $ \infer{\type{i18nKey} \subtype \type{string}}{} \spc \infer{\type{string} \subtype \type{i18nKey}}{} $
-$ \infer{\type{pathSelector&lt;T&gt;} \subtype \type{string}}{} \spc \infer{\type{string} \subtype \type{pathSelector&gt;T&gt;}}{}$
+$ \infer{\type{pathSelector}<\type{T}> \subtype \type{string}}{} \spc \infer{\type{string} \subtype \type{pathSelector}<\type{T}>}{}$
 
 As special literals for these N4JS types do not exist, the type has to be explicitly specified in order to enable the additional validation.
 Note that this validation cannot be applied for more complicated expressions with parts which cannot be evaluated at compile time.
@@ -1217,13 +1223,13 @@ The object types have the same name as their corresponding primitive type, but s
 The following types, derived from certain ECMAScript predefined objects and constructs, are supported by means of built-in types as they are required by certain expressions.
 
 
-*  `Object`   cite:[ECMA11a(p111)];
-*  `Function`  cite:[ECMA11a(p117)]; representing functions and function objects <<_function-type>> but also methods (<<_methods>>)
-*  `Array`    cite:[ECMA11a(1p122)], representing array objects, see <<_array-object-type>>
-*  `String` cite:[ECMA11a(p141)]
-*  `Boolean` cite:[ECMA11a(p141)]
-*  `Number` cite:[ECMA11a(p141)]
-*  `RegExp` cite:[ECMA11a(p180)]; they can be constructed by means of special literals (cf. <<Literals>>)
+*  `Object`   cite:[ECMA11a(p.111)];
+*  `Function`  cite:[ECMA11a(p.117)]; representing functions and function objects <<_function-type>> but also methods (<<_methods>>)
+*  `Array`    cite:[ECMA11a(p.122)], representing array objects, see <<_array-object-type>>
+*  `String` cite:[ECMA11a(p.141)]
+*  `Boolean` cite:[ECMA11a(p.141)]
+*  `Number` cite:[ECMA11a(p.141)]
+*  `RegExp` cite:[ECMA11a(p.180)]; they can be constructed by means of special literals (cf. <<Literals>>)
 *  global object type
 *  `Symbol`
 *  `Promise`
@@ -1464,11 +1470,11 @@ Due to interfaces, a variable may conform to multiple types.
 --
 For a given union type $ U= union\{ T_1, \dots ,T_n \}$, the following conditions must hold:
 
-1.  Non-empty: At least one element has to be specified:
+1.  Non-empty: At least one element has to be specified: +
 $U.typeRefs \neq \emptyset$ ($n\geq 1)$
-2.  Non-dynamic: The union type itself must not be declared dynamic:
+2.  Non-dynamic: The union type itself must not be declared dynamic: +
 $\lnot U.dynamic$
-3.  Non-optional elements:
+3.  Non-optional elements: +
 $ \forall T \in U.typeRefs \rightarrow \lnot T.opt  $
 --
 
@@ -1762,8 +1768,12 @@ This virtual subclass also explains why only one single class may be contained i
 --
 For a given intersection type $I$, the following conditions must hold:
 
-1.  The intersection must contain at least one type:+
-$I.typeRefs \neq \emptyset$
+1.  The intersection must contain at least one type:
++
+[math]
+++++
+I.typeRefs \neq \emptyset
+++++
 2.  Only one class must be contained in the intersection type:
 +
 [math]
@@ -1773,8 +1783,8 @@ $I.typeRefs \neq \emptyset$
 //`
 +
 For the time being, only a warning is produced when more than one class is contained in the intersection type task:IDE-2302[].
-3.  Non-optional elements:
-+
+3. Non-optional elements:
+
 [math]
 ++++
 \forall T \in I.typeRefs \rightarrow \lnot T.opt
@@ -2220,7 +2230,7 @@ This subtype relation for the constructor type is enforced if the constructor of
 \infer{\tee C: \lstnfjs{constructor[C]}}{\mu(C) \in \{ {classifierDefinition} \} }
 ++++
 . A class cannot be called as a function in ECMAScript.
-Thus, the constructor and type type are only subtype of :
+Thus, the constructor and type type are only subtype of `Object`:
 +
 [%hardbreaks]
 $\forall T: $

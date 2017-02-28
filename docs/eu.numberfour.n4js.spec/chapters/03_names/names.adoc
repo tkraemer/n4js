@@ -635,7 +635,7 @@ But it is not allowed in the following cases:
 
 [[fig-forbidden-shadowing]]
 .Forbidden Shadowing
-image::{find}fig/shadowing.png[scaledwidth=60%,align="center"]
+image::{find}fig/shadowing.png[{half-center}]
 
 Rationale:
 

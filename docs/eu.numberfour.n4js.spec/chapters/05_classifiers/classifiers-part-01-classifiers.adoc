@@ -426,9 +426,8 @@ For a class `C` with a supertype $S=C.sup$, the following constraints must hold;
 * All abstract members in `S` must be accessible from `C`:
 +
 $\forall M \in S.members : M.abstract \Rightarrow $ +
-`M` is accessible from `C`
-+
-NOTE: `M` need not be an owned member of `S` and that this constraint applies even if `C` is abstract).
+`M` is accessible from `C`. +
+Note that `M` need not be an owned member of `S` and that this constraint applies even if `C` is abstract).
 
 All members of superclasses become members of a class.
 This is true even if the owning classes are not directly accessible to a class.
@@ -570,13 +569,11 @@ $I_i=I_j \to i=j$ for any
 $i,j \in \{1 \dots n\}$.
 .  An interface may (indirectly) extend the same interface $J$ more than once only if
 ..  $J$ is not parameterized, or
-..  in all cases $J$ is extended with the same type arguments for all invariant type parameters.
-+
-NOTE: For type parameters of $J$ that are declared covariant or contravariant on definition site, different type arguments may be used.
+..  in all cases $J$ is extended with the same type arguments for all invariant type parameters. +
+Note that for type parameters of $J$ that are declared covariant or contravariant on definition site, different type arguments may be used.
 .  All abstract members in $I_i$, $i \in \{1, \dots, n\}$, must be accessible from `I`: +
-$\forall i \in \{1, \dots, n\} : M \in I_i.members \land M.abstract \to $
-`M` is accessible from `I` +
-(note that `M` need not be an owned member of $I_i$).
+$\forall i \in \{1, \dots, n\} : M \in I_i.members \land M.abstract \to $ `M` is accessible from `I`. +
+Note that `M` need not be an owned member of $I_i$.
 --
 
 .Implementing Interfaces
@@ -593,12 +590,11 @@ by `C`, the following constraints must be true:
 $I_i=I_j \Rightarrow i=j$ for any $i,j \in \{1, \dots, n\}$.
 .  A class may (indirectly) implement the same interface $J$ more than once only if
 ..  $J$ is not parameterized, or
-..  in all cases $J$ is implemented with the same type arguments for all invariant type parameters.
-+
-NOTE: for type parameters of $J$ that are declared covariant or contravariant on definition site, different type arguments may be used.
+..  in all cases $J$ is implemented with the same type arguments for all invariant type parameters. +
+Note that for type parameters of $J$ that are declared covariant or contravariant on definition site, different type arguments may be used.
 .  All abstract members in $I_i$, $i \in \{1, \dots, n\}$, must be accessible from `C`: +
-$\forall i \in \{1, \dots, n\} : M \in I_i.members \land M.abstract \to $ `M` is accessible from `C` +
-(note that `M` need not be an owned member of $I_i$).
+$\forall i \in \{1, \dots, n\} : M \in I_i.members \land M.abstract \to $ `M` is accessible from `C`. +
+Note that `M` need not be an owned member of $I_i$.
 
 --
 
