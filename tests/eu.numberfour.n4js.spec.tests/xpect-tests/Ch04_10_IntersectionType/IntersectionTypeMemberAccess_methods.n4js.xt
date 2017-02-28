@@ -260,5 +260,5 @@ var i_err : intersection{T1err,T2err,T3err};
 
 // IDE-145 XPECT noerrors --> "Member mErr1 not present in all types of union or incompatible." at "mErr1"
 i_err.mErr1(a1,a2);
-// XPECT errors --> "Member mErr2 incompatible in types of intersection." at "mErr2"
+// XPECT errors --> "Member mErr2 is incompatible in types of intersection." at "mErr2"
 i_err.mErr2(a1,a2,a3);

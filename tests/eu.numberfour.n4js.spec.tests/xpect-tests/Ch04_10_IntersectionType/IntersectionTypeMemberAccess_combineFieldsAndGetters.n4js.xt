@@ -19,7 +19,7 @@ i12.foo = null;
 //XPECT errors --> "The accessor bar is read-only in I1." at "bar"
 i12.bar = null;
 
-//XPECT errors --> "Member method someX in conflict with non-method members in types of intersection: getter in I1; method in I2." at "someX"
+//XPECT errors --> "Member method someX is in conflict with non-method members in types of intersection: getter in I1; method in I2." at "someX"
 i12.someX = null;
 
 
