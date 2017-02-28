@@ -119,7 +119,7 @@ public abstract class ConstantValue {
 			return (Boolean) super.getValue();
 		}
 
-		public ValueBoolean negate() {
+		public ValueBoolean invert() {
 			return (ValueBoolean) of(!getValue());
 		}
 	}
@@ -198,27 +198,35 @@ public abstract class ConstantValue {
 		} else if (value instanceof ConstantValue) {
 			return (ConstantValue) value;
 		}
-		return new ValueInvalid();
+		return error();
 	}
 
 	public static ConstantValue of(Boolean value) {
-		return value != null ? (value ? TRUE : FALSE) : new ValueInvalid();
+		return value != null ? (value ? TRUE : FALSE) : error();
 	}
 
 	public static ConstantValue of(String value) {
-		return value != null ? new ValueString(value) : new ValueInvalid();
+		return value != null ? new ValueString(value) : error();
 	}
 
 	public static ConstantValue of(Number value) {
-		return value != null ? of(BigDecimal.valueOf(value.doubleValue())) : new ValueInvalid();
+		return value != null ? of(BigDecimal.valueOf(value.doubleValue())) : error();
 	}
 
 	public static ConstantValue of(BigDecimal value) {
-		return value != null ? new ValueNumber(value) : new ValueInvalid();
+		return value != null ? new ValueNumber(value) : error();
 	}
 
 	public static ConstantValue of(TField value) {
-		return value != null ? new ValueSymbol(value.getName()) : new ValueInvalid();
+		return value != null ? new ValueSymbol(value.getName()) : error();
+	}
+
+	public static ConstantValue invert(ConstantValue value, EObject astNode) {
+		final ValueInvalid error = requireValueType(value, ValueBoolean.class, "operand must be a boolean", astNode);
+		if (error != null) {
+			return error;
+		}
+		return ((ValueBoolean) value).invert();
 	}
 
 	public static ConstantValue and(ConstantValue valueLeft, ConstantValue valueRight,
@@ -246,25 +254,23 @@ public abstract class ConstantValue {
 	}
 
 	public static ConstantValue negate(ConstantValue value, EObject astNode) {
-		if (value instanceof ValueInvalid) {
-			return value;
-		} else if (value instanceof ValueBoolean) {
-			return ((ValueBoolean) value).negate();
-		} else if (value instanceof ValueNumber) {
-			return ((ValueNumber) value).negate();
-		} else {
-			return error("operand must be a boolean or a number", astNode);
+		final ValueInvalid error = requireValueType(value, ValueNumber.class, "operand must be a number", astNode);
+		if (error != null) {
+			return error;
 		}
+		return ((ValueNumber) value).negate();
 	}
 
 	public static ConstantValue add(ConstantValue valueLeft, ConstantValue valueRight, EObject astNode) {
-		if (valueLeft instanceof ValueNumber && valueRight instanceof ValueNumber) {
+		if (valueLeft==null || !valueLeft.isValid() || valueRight==null || !valueRight.isValid()) {
+			return combineErrors(
+					error(), // required to pass in error(), because valueLeft and valueRight might both be 'null'
+					valueLeft, valueRight);
+		} else if (valueLeft instanceof ValueNumber && valueRight instanceof ValueNumber) {
 			return of(((ValueNumber) valueLeft).getValue().add(((ValueNumber) valueRight).getValue()));
 		} else if (valueLeft.isValid() && valueRight.isValid()
 				&& (valueLeft instanceof ValueString || valueRight instanceof ValueString)) {
 			return of(valueLeft.toString() + valueRight.toString());
-		} else if (!valueLeft.isValid() || !valueRight.isValid()) {
-			return combineErrors(valueLeft, valueRight);
 		} else {
 			return error("one of the operands must be a string or both must be a number", astNode);
 		}
@@ -335,7 +341,10 @@ public abstract class ConstantValue {
 
 	public static ValueInvalid requireValueType(ConstantValue value, Class<? extends ValueValid> type,
 			String message, EObject astNode) {
-		if (value instanceof ValueInvalid) {
+		if (value == null) {
+			// probably due to broken AST
+			return error("missing value", astNode); // in most cases astNode will be 'null', but that won't do any harm
+		} else if (value instanceof ValueInvalid) {
 			// value is already invalid -> simply pass through
 			return (ValueInvalid) value;
 		} else if (value.getClass() != type) {

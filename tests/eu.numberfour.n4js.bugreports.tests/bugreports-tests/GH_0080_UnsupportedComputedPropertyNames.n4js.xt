@@ -4,10 +4,10 @@
 let some: any+;
 
 class C {
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "some.field"
+	// XPECT errors --> "Not a compile-time expression: only references to enum literals or built-in symbols allowed." at "some.field"
 	[some.field];
 
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "anotherField()"
+	// XPECT errors --> "Not a compile-time expression: a call expression is never a compile-time expression." at "anotherField()"
 	[anotherField()];
 }
 

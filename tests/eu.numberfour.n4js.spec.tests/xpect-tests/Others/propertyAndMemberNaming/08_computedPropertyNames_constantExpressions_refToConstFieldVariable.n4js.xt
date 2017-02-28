@@ -41,7 +41,7 @@ class IfcImpl implements Ifc {}
 
 let impl = new IfcImpl();
 console.log(impl.propConst);
-console.log(impl.propConstExpored);
+console.log(impl.propConstExported);
 //console.log(impl.propField);
 console.log(impl.propConstExportedFromOtherFile);
 //console.log(impl.propFieldFromOtherFile);
@@ -65,7 +65,7 @@ class Cls {
 
 let cls = new Cls();
 console.log(cls.propConst);
-console.log(cls.propConstExpored);
+console.log(cls.propConstExported);
 //console.log(cls.propField);
 console.log(cls.propConstExportedFromOtherFile);
 //console.log(cls.propFieldFromOtherFile);
@@ -89,7 +89,7 @@ let ol = {
 }
 
 console.log(ol.propConst);
-console.log(ol.propConstExpored);
+console.log(ol.propConstExported);
 //console.log(ol.propField);
 console.log(ol.propConstExportedFromOtherFile);
 //console.log(ol.propFieldFromOtherFile);

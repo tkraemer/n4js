@@ -70,8 +70,8 @@ class ComputedNameProcessor {
 	 * Returns the property/member name to use for the given expression or <code>null</code> if the expression is not a
 	 * valid constant expression.
 	 * <p>
-	 * IMPLEMENTATION NOTE: we can simply use #toString() on the non-null value, even if we have a ValueBoolean,
-	 * ValueNumber, or ValueSymbol.
+	 * IMPLEMENTATION NOTE: we can simply use #toString() on a valid value, even if we have a ValueBoolean, ValueNumber,
+	 * or ValueSymbol.
 	 * <p>
 	 * For booleans and numbers: they are equivalent to their corresponding string literal, as illustrated in this
 	 * snippet:
@@ -92,7 +92,11 @@ class ComputedNameProcessor {
 	 */
 	def private String getPropertyNameFromExpression(RuleEnvironment G, Expression expr, ASTMetaInfoCache cache) {
 		val value = cache.getEvaluationResult(expr);
-		return if(value.valid) value.toString else null; // see API doc for why we can simply use #toString() here
+		return if(value.valid) {
+			value.toString // see API doc for why we can simply use #toString() here
+		} else {
+			null
+		};
 	}
 
 	def private void discardTypeModelElement(EObject astNode) {

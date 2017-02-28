@@ -9,16 +9,16 @@ function foo(): string {
 
 class C {
 
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "foo()"
+	// XPECT errors --> "Not a compile-time expression: a call expression is never a compile-time expression." at "foo()"
 	get [foo()]() {return null;}
 
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "foo()"
+	// XPECT errors --> "Not a compile-time expression: a call expression is never a compile-time expression." at "foo()"
 	set [foo()](value) {}
 
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "foo()"
+	// XPECT errors --> "Not a compile-time expression: a call expression is never a compile-time expression." at "foo()"
 	[foo()]() {}
 
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than a constant expression." at "Symbol()"
+	// XPECT errors --> "Not a compile-time expression: a call expression is never a compile-time expression." at "Symbol()"
 	[Symbol()]() {}
 }
 

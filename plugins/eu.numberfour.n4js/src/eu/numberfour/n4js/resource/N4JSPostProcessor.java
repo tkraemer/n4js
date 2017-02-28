@@ -60,6 +60,7 @@ public class N4JSPostProcessor implements PostProcessor {
 		try {
 			doPerformPostProcessing(resource, cancelIndicator);
 		} catch (Throwable th) {
+			th.printStackTrace();
 			if (hasBrokenAST) {
 				// swallow exception, AST is broken due to parse error anyway
 			} else {
