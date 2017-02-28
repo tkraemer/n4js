@@ -15,7 +15,7 @@ import eu.numberfour.n4js.ts.types.TMember;
 /**
  * Interface for creating composed members.
  */
-public interface MemberCreator {
+public interface MemberFactory {
 
 	/** Returns true iff the composition of members is valid. */
 	public boolean isValid();

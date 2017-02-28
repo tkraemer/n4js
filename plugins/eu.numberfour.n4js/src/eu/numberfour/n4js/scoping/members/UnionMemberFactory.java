@@ -22,26 +22,26 @@ import eu.numberfour.n4js.ts.types.TMember;
  * Implements the method {@link #getNewMemberType()} which selects the correct {@link MemberType} for a new composed
  * {@link TMember}. Refer to N4JS-Spec for an overview table.
  * <p>
- * Implements the method {@link #getMemberCreator()} which returns a new {@link MemberCreator} for a given
+ * Implements the method {@link #getMemberFactory()} which returns a new {@link MemberFactory} for a given
  * {@link MemberType}.
  */
-public class UnionMemberCreator extends ComposedMemberCreator {
+public class UnionMemberFactory extends ComposedMemberFactory {
 
-	UnionMemberCreator(ComposedMemberAggregate cma) {
+	UnionMemberFactory(ComposedMemberInfo cma) {
 		super(cma);
 	}
 
 	@Override
-	protected MemberCreator getMemberCreator() {
+	protected MemberFactory getMemberFactory() {
 		switch (memberType) {
 		case METHOD:
-			return new MethodCreator.UnionMethodCreator(cma);
+			return new MethodFactory.UnionMethodFactory(cmi);
 		case FIELD:
-			return new FieldCreator.UnionFieldCreator(cma);
+			return new FieldFactory.UnionFieldFactory(cmi);
 		case GETTER:
-			return new GetterCreator.UnionGetterCreator(cma);
+			return new GetterFactory.UnionGetterFactory(cmi);
 		case SETTER:
-			return new SetterCreator.UnionSetterCreator(cma);
+			return new SetterFactory.UnionSetterFactory(cmi);
 		}
 		return null;
 	}
@@ -49,24 +49,24 @@ public class UnionMemberCreator extends ComposedMemberCreator {
 	@Override
 	protected MemberType getNewMemberType() {
 		// mix of all memberTypes
-		if (cma.hasMethodMemberType() && cma.hasNonMethodMemberType()) {
+		if (cmi.hasMethodMemberType() && cmi.hasNonMethodMemberType()) {
 			return null; // inValid
 		}
-		if (cma.onlyMethodMemberTypes()) {
+		if (cmi.onlyMethodMemberTypes()) {
 			return METHOD;
 		}
 		// mix of all non-method memberTypes
-		if (cma.onlyGetterMemberTypes()) {
+		if (cmi.onlyGetterMemberTypes()) {
 			return GETTER;
 		}
-		if (cma.onlySetterMemberTypes()) {
+		if (cmi.onlySetterMemberTypes()) {
 			return SETTER;
 		}
-		if (cma.onlyFieldMemberTypes()) {
+		if (cmi.onlyFieldMemberTypes()) {
 			if (allTypeRefAreEqual()) {
 				return FIELD;
 			} else {
-				if (cma.isWriteAccess()) {
+				if (cmi.isWriteAccess()) {
 					return SETTER;
 				} else {
 					return GETTER;
@@ -74,10 +74,10 @@ public class UnionMemberCreator extends ComposedMemberCreator {
 			}
 		}
 		// mix of all non-method memberTypes
-		if (!cma.hasGetterMemberType()) {
+		if (!cmi.hasGetterMemberType()) {
 			return SETTER;
 		}
-		if (!cma.hasSetterMemberType()) {
+		if (!cmi.hasSetterMemberType()) {
 			return GETTER;
 		}
 		return null; // inValid
@@ -85,16 +85,16 @@ public class UnionMemberCreator extends ComposedMemberCreator {
 
 	@Override
 	public boolean isEmpty() {
-		return cma.isEmpty();
+		return cmi.isEmpty();
 	}
 
 	@Override
 	public boolean isValid() {
-		if (cma.isSiblingMissing())
+		if (cmi.isSiblingMissing())
 			return false;
-		if (specialMemberCreator == null)
+		if (specialMemberFactory == null)
 			return false;
-		return specialMemberCreator.isValid();
+		return specialMemberFactory.isValid();
 	}
 
 }

@@ -25,38 +25,38 @@ import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
 
 /**
- * Interface for creating composed members.
+ * Abstract class for creating composed members.
  */
-abstract public class ComposedMemberCreator implements MemberCreator {
+abstract public class ComposedMemberFactory implements MemberFactory {
 	/** The data holder of aggregated siblings on which the new {@link TMember} is based upon */
-	final protected ComposedMemberAggregate cma;
-	/** The {@link MemberCreator} to create the new {@link TMember} */
-	final protected MemberCreator specialMemberCreator;
+	final protected ComposedMemberInfo cmi;
+	/** The {@link MemberFactory} to create the new {@link TMember} */
+	final protected MemberFactory specialMemberFactory;
 	/** The new {@link MemberType} */
 	final protected MemberType memberType;
 
-	ComposedMemberCreator(ComposedMemberAggregate cma) {
-		this.cma = cma;
+	ComposedMemberFactory(ComposedMemberInfo cmi) {
+		this.cmi = cmi;
 		this.memberType = getNewMemberType();
-		this.specialMemberCreator = (memberType != null) ? getMemberCreator() : null;
+		this.specialMemberFactory = (memberType != null) ? getMemberFactory() : null;
 	}
 
 	/** Returns the {@link MemberType} of the new composed {@link TMember}. */
 	abstract protected MemberType getNewMemberType();
 
-	/** Returns the {@link MemberCreator} which creates the {@link TMember}. */
-	abstract protected MemberCreator getMemberCreator();
+	/** Returns the {@link MemberFactory} which creates the {@link TMember}. */
+	abstract protected MemberFactory getMemberFactory();
 
 	/** Returns true iff there exist one or more siblings on which a new composed {@link TMember} is based upon. */
 	public boolean isEmpty() {
-		return cma.isEmpty();
+		return cmi.isEmpty();
 	}
 
 	@Override
 	public TMember create(String name) {
-		if (specialMemberCreator == null)
+		if (specialMemberFactory == null)
 			return null;
-		return specialMemberCreator.create(name);
+		return specialMemberFactory.create(name);
 	}
 
 	/**
@@ -66,16 +66,16 @@ abstract public class ComposedMemberCreator implements MemberCreator {
 	 * equal.
 	 */
 	protected boolean allTypeRefAreEqual() {
-		N4JSTypeSystem ts = cma.getTypeSystem();
-		List<TypeRef> allTypeRefs = cma.getTypeRefsOfMemberType(METHOD, FIELD, GETTER, SETTER);
-		TypeRef ist = ts.createSimplifiedIntersection(allTypeRefs, cma.getResource());
+		N4JSTypeSystem ts = cmi.getTypeSystem();
+		List<TypeRef> allTypeRefs = cmi.getTypeRefsOfMemberType(METHOD, FIELD, GETTER, SETTER);
+		TypeRef siTypeRef = ts.createSimplifiedIntersection(allTypeRefs, cmi.getResource());
 
 		Iterator<TypeRef> typeRefIt = allTypeRefs.iterator();
 		while (typeRefIt.hasNext()) {
 			TypeRef firstNonNullTypeRef = typeRefIt.next();
 			if (firstNonNullTypeRef != null) {
-				RuleEnvironment G = cma.getRuleEnvironmentForTypeRef(firstNonNullTypeRef);
-				boolean equalTypeRefs = ts.equaltypeSucceeded(G, firstNonNullTypeRef, ist);
+				RuleEnvironment G = cmi.getRuleEnvironmentForTypeRef(firstNonNullTypeRef);
+				boolean equalTypeRefs = ts.equaltypeSucceeded(G, firstNonNullTypeRef, siTypeRef);
 				return equalTypeRefs;
 			}
 		}

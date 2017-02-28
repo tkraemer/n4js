@@ -39,7 +39,11 @@ import eu.numberfour.n4js.xpect.common.N4JSOffsetAdapter.IEObjectCoveringRegion;
 @XpectImport(N4JSOffsetAdapter.class)
 public class AccessModifierXpectMethod {
 
-	/***/
+	/**
+	 * This xpect method can evaluate the accessibility of {@link TMember}s. For example, given a field of a class or a
+	 * {@link ParameterizedPropertyAccessExpression}, the xpect methods returns their explicit or implicit declared
+	 * accessibility such as {@code public} or {@code private}.
+	 */
 	@ParameterParser(syntax = "('at' arg1=OFFSET)?")
 	@Xpect
 	public void accessModifier(

@@ -60,7 +60,7 @@ public class IntersectionMemberScope extends ComposedMemberScope {
 	}
 
 	@Override
-	protected ComposedMemberCreator getComposedMemberCreator(ComposedMemberAggregate cma) {
-		return new IntersectionMemberCreator(cma);
+	protected ComposedMemberFactory getComposedMemberFactory(ComposedMemberInfo cma) {
+		return new IntersectionMemberFactory(cma);
 	}
 }

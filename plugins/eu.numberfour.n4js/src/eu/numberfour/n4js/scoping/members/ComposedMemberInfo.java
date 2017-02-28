@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -39,69 +38,21 @@ import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import it.xsemantics.runtime.RuleEnvironment;
 
 /**
- * The purpose of the classes and methods in this file is threefold:
+ * The purpose of the classes and methods in this file is twofold:
  * <ol>
- * <li>Provide methods to aggregate all existing members on which a new composed member is based upon. The existing
- * members are also called siblings.</li>
  * <li>Interpret all sibling members to derive general information which is later used when creating the composed
- * member.</li>
+ * member. Siblings are all members a new composed member is created of.</li>
  * <li>Provide the derived information using data holder objects. The information is later used to create a new composed
  * {@link TMember} out of its existing siblings.</li>
  * </ol>
- * The aggregation methods are static and the method {@link #get()} returns an aggregation object. Their life cycle is
- * as follows:
  *
- * <pre>
- * Start -> init() -> addMember()* -> get() -> End.
- *                       ^             |
- *                       |_____________|
- * </pre>
- *
- * The aggregation object returned by {@link #get()} provides several data providing methods such as
- * {@link #getAccessabilityMax()}. Their values are computed lazily using the init methods.
+ * The info object provides several data providing methods such as {@link #getAccessabilityMax()}. Their values are
+ * computed lazily using the init methods.
  * <p>
  * <i> Please note that this class provides <b>general information</b> about composed types only. That is, information
  * here should be named without referring explicitly to union or intersection members.</i>
  */
-public class ComposedMemberAggregate {
-
-	/////////////////////////// Static Part ///////////////////////////
-
-	private static ComposedMemberAggregate currCMA;
-
-	/**
-	 * Initializes the static methods. (Also refer to the life cycle mentioned above.)
-	 */
-	public static void init(boolean writeAccess, Resource resource, N4JSTypeSystem ts) {
-		Objects.isNull(currCMA);
-		currCMA = new ComposedMemberAggregate(writeAccess, resource, ts);
-	}
-
-	/**
-	 * Adds a sibling member on which a new composed member is based upon. (Also refer to the life cycle mentioned
-	 * above.)
-	 */
-	public static void addMember(TMember member, RuleEnvironment G) {
-		Objects.nonNull(currCMA);
-		Pair<TMember, RuleEnvironment> pair = null;
-		if (member != null) {
-			pair = new Pair<>(member, G);
-		}
-		currCMA.siblings.add(pair); // adds null to indicate missing members
-	}
-
-	/**
-	 * Returns a data object that provides all aggregated information to create a new composed {@link TMember}. This
-	 * method also performs an initialization for adding members to the next data object. (Also refer to the life cycle
-	 * mentioned above.)
-	 */
-	public static ComposedMemberAggregate get() {
-		ComposedMemberAggregate lastCMA = currCMA;
-		currCMA = new ComposedMemberAggregate(lastCMA.isWriteAccess, lastCMA.resource, lastCMA.ts);
-		return lastCMA;
-	}
-
-	/////////////////////////// Non-Static Part ///////////////////////////
+public class ComposedMemberInfo {
 
 	// finals get set in constructor
 	private final boolean isWriteAccess;
@@ -134,13 +85,13 @@ public class ComposedMemberAggregate {
 	private final List<TypeRef> methodTypeRefsNonVoid = new ArrayList<>();
 	private final Map<TypeRef, RuleEnvironment> typeRef2G = new HashMap<>();
 
-	private final List<FParAggregate> fParameters = new ArrayList<>();
+	private final List<ComposedFParInfo> fParameters = new ArrayList<>();
 	private boolean isVariadicButLastFParIsDifferent = false;
 
 	/**
 	 * Aggregates all necessary information for composing a new formal parameter out of its existing siblings.
 	 */
-	public static class FParAggregate {
+	public static class ComposedFParInfo {
 		// is set in initMemberAggregate()
 		private final List<Pair<TFormalParameter, RuleEnvironment>> fpSiblings = new ArrayList<>();
 
@@ -163,7 +114,7 @@ public class ComposedMemberAggregate {
 			return allOptional;
 		}
 
-		/** Returns true iff all siblings are other than optional. */
+		/** Returns true iff no siblings is optional. */
 		public boolean allNonOptional() {
 			return allNonOptional;
 		}
@@ -189,11 +140,14 @@ public class ComposedMemberAggregate {
 		}
 	}
 
-	private ComposedMemberAggregate(boolean writeAccess, Resource resource, N4JSTypeSystem ts) {
+	ComposedMemberInfo(boolean writeAccess, Resource resource, N4JSTypeSystem ts,
+			List<Pair<TMember, RuleEnvironment>> siblings) {
+
 		this.isWriteAccess = writeAccess;
 		this.resource = resource;
 		this.ts = ts;
 		this.siblings = new LinkedList<>();
+		this.siblings.addAll(siblings);
 	}
 
 	/////////////////////////// Init Methods ///////////////////////////
@@ -222,7 +176,7 @@ public class ComposedMemberAggregate {
 
 		// init: fParameters
 		List<TypeRef> currVariadicAccumulated = new LinkedList<>();
-		for (FParAggregate fpAggr : fParameters) {
+		for (ComposedFParInfo fpAggr : fParameters) {
 			initFParAggregate(fpAggr);
 
 			// handle: typeRefsVariadicAccumulated
@@ -237,7 +191,7 @@ public class ComposedMemberAggregate {
 		this.isInitialized = true;
 	}
 
-	private void initFParAggregate(FParAggregate fpAggr) {
+	private void initFParAggregate(ComposedFParInfo fpAggr) {
 		for (Pair<TFormalParameter, RuleEnvironment> fpPair : fpAggr.fpSiblings) {
 			TFormalParameter tFpar = fpPair.getKey();
 			RuleEnvironment G = fpPair.getValue();
@@ -284,13 +238,13 @@ public class ComposedMemberAggregate {
 	}
 
 	private void handleReadOnlyField(TMember member) {
-		boolean isReadOnly = false;
+		boolean isReadOnlyField = false;
 		if (member instanceof TField) {
 			TField tField = (TField) member;
-			isReadOnly = !tField.isWriteable();
+			isReadOnlyField = !tField.isWriteable();
 		}
-		hasReadOnlyField |= isReadOnly;
-		onlyReadOnlyFields &= isReadOnly && (member instanceof TField);
+		hasReadOnlyField |= isReadOnlyField;
+		onlyReadOnlyFields &= isReadOnlyField;
 	}
 
 	private void handleAccessibility(TMember member) {
@@ -339,9 +293,9 @@ public class ComposedMemberAggregate {
 			for (int i = 0; i < fpars.size(); i++) {
 				TFormalParameter fpar = fpars.get(i);
 				if (fParameters.size() <= i) {
-					fParameters.add(new FParAggregate());
+					fParameters.add(new ComposedFParInfo());
 				}
-				FParAggregate fpAggr = fParameters.get(i);
+				ComposedFParInfo fpAggr = fParameters.get(i);
 				Pair<TFormalParameter, RuleEnvironment> fpPair = new Pair<>(fpar, G);
 				fpAggr.fpSiblings.add(fpPair);
 			}
@@ -351,7 +305,7 @@ public class ComposedMemberAggregate {
 	private void handleIsVariadicButLastFParIsDifferent() {
 		boolean result = false;
 		if (!fParameters.isEmpty()) {
-			FParAggregate lastFpar = fParameters.get(fParameters.size() - 1);
+			ComposedFParInfo lastFpar = fParameters.get(fParameters.size() - 1);
 			List<TypeRef> variadics = lastFpar.getTypeRefsVariadicAccumulated();
 
 			// case: the last fpar is not everywhere optional, but variadics exist
@@ -384,7 +338,7 @@ public class ComposedMemberAggregate {
 				for (int i = 0; i < tMethod.getFpars().size(); i++) {
 					TFormalParameter currFP = tMethod.getFpars().get(i);
 					if (currFP.isVariadic() && tMethod.getFpars().size() > i + 1) {
-						FParAggregate currFPA = fParameters.get(i);
+						ComposedFParInfo currFPA = fParameters.get(i);
 						currFPA.hasValidationProblem = true;
 						return;
 					}
@@ -559,7 +513,7 @@ public class ComposedMemberAggregate {
 	}
 
 	/** Returns a list of all aggregates of formal parameters. */
-	public List<FParAggregate> getFParAggregates() {
+	public List<ComposedFParInfo> getFParAggregates() {
 		initMemberAggregate();
 		return fParameters;
 	}

@@ -13,8 +13,8 @@ package eu.numberfour.n4js.scoping.members;
 import java.util.LinkedList;
 import java.util.List;
 
-import eu.numberfour.n4js.scoping.members.ComposedMemberAggregate.FParAggregate;
-import eu.numberfour.n4js.scoping.members.MethodCreator.FParCreator;
+import eu.numberfour.n4js.scoping.members.ComposedMemberInfo.ComposedFParInfo;
+import eu.numberfour.n4js.scoping.members.MethodFactory.FParFactory;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.MemberType;
@@ -22,25 +22,25 @@ import eu.numberfour.n4js.ts.types.TSetter;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 
 /**
- * The abstract {@link SetterCreator} is the base class for the child classes {@link UnionSetterCreator} and
- * {@link IntersectionSetterCreator}. It implements the method {@link #create(String)} which gets its information through
+ * The abstract {@link SetterFactory} is the base class for the child classes {@link UnionSetterFactory} and
+ * {@link IntersectionSetterFactory}. It implements the method {@link #create(String)} which gets its information through
  * abstract methods implemented in the child classes mentioned before The child classes are instantiated in
- * {@link IntersectionMemberCreator} and {@link UnionMemberCreator} respectively.
+ * {@link IntersectionMemberFactory} and {@link UnionMemberFactory} respectively.
  * <p>
- * This class also defines the class {@link StandaloneFPar} which is based upon the class {@link FParCreator}
- * and reuses its method {@link FParCreator#create()}.
+ * This class also defines the class {@link StandaloneFPar} which is based upon the class {@link FParFactory}
+ * and reuses its method {@link FParFactory#create()}.
  */
-abstract class SetterCreator implements MemberCreator {
-	final ComposedMemberAggregate cma;
+abstract class SetterFactory implements MemberFactory {
+	final ComposedMemberInfo cma;
 	final StandaloneFPar fpar;
 
-	SetterCreator(ComposedMemberAggregate cma) {
+	SetterFactory(ComposedMemberInfo cma) {
 		this.cma = cma;
 		String name = "arg0";
 		List<TypeRef> typeRefs = new LinkedList<>();
-		List<FParAggregate> fpars = cma.getFParAggregates();
+		List<ComposedFParInfo> fpars = cma.getFParAggregates();
 		if (fpars != null && !fpars.isEmpty()) {
-			FParAggregate firstFpar = fpars.get(0);
+			ComposedFParInfo firstFpar = fpars.get(0);
 			name = firstFpar.getName();
 			typeRefs.addAll(firstFpar.getTypeRefs());
 		}
@@ -61,8 +61,8 @@ abstract class SetterCreator implements MemberCreator {
 	}
 
 	/** Class to implement logic with regard to setters in {@code Intersection Types}. */
-	static class IntersectionSetterCreator extends SetterCreator {
-		IntersectionSetterCreator(ComposedMemberAggregate cma) {
+	static class IntersectionSetterFactory extends SetterFactory {
+		IntersectionSetterFactory(ComposedMemberInfo cma) {
 			super(cma);
 		}
 
@@ -84,8 +84,8 @@ abstract class SetterCreator implements MemberCreator {
 	}
 
 	/** Class to implement logic with regard to setters in {@code Union Types}. */
-	static class UnionSetterCreator extends SetterCreator {
-		UnionSetterCreator(ComposedMemberAggregate cma) {
+	static class UnionSetterFactory extends SetterFactory {
+		UnionSetterFactory(ComposedMemberInfo cma) {
 			super(cma);
 		}
 
@@ -108,7 +108,7 @@ abstract class SetterCreator implements MemberCreator {
 	}
 
 	/** Class to create formal parameters of setters. */
-	class StandaloneFPar extends FParCreator {
+	class StandaloneFPar extends FParFactory {
 		final String name;
 		final List<TypeRef> typeRefs;
 

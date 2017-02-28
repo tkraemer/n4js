@@ -22,26 +22,26 @@ import eu.numberfour.n4js.ts.types.TMember;
  * Implements the method {@link #getNewMemberType()} which selects the correct {@link MemberType} for a new composed
  * {@link TMember}. Refer to N4JS-Spec for an overview table.
  * <p>
- * Implements the method {@link #getMemberCreator()} which returns a new {@link MemberCreator} for a given
+ * Implements the method {@link #getMemberFactory()} which returns a new {@link MemberFactory} for a given
  * {@link MemberType}.
  */
-public class IntersectionMemberCreator extends ComposedMemberCreator {
+public class IntersectionMemberFactory extends ComposedMemberFactory {
 
-	IntersectionMemberCreator(ComposedMemberAggregate cma) {
+	IntersectionMemberFactory(ComposedMemberInfo cma) {
 		super(cma);
 	}
 
 	@Override
-	protected MemberCreator getMemberCreator() {
+	protected MemberFactory getMemberFactory() {
 		switch (memberType) {
 		case METHOD:
-			return new MethodCreator.IntersectionMethodCreator(cma);
+			return new MethodFactory.IntersectionMethodFactory(cmi);
 		case FIELD:
-			return new FieldCreator.IntersectionFieldCreator(cma);
+			return new FieldFactory.IntersectionFieldFactory(cmi);
 		case GETTER:
-			return new GetterCreator.IntersectionGetterCreator(cma);
+			return new GetterFactory.IntersectionGetterFactory(cmi);
 		case SETTER:
-			return new SetterCreator.IntersectionSetterCreator(cma);
+			return new SetterFactory.IntersectionSetterFactory(cmi);
 		}
 		return null;
 	}
@@ -49,31 +49,31 @@ public class IntersectionMemberCreator extends ComposedMemberCreator {
 	@Override
 	protected MemberType getNewMemberType() {
 		// mix of all memberTypes
-		if (cma.hasMethodMemberType() && cma.hasNonMethodMemberType()) {
+		if (cmi.hasMethodMemberType() && cmi.hasNonMethodMemberType()) {
 			return null; // inValid
 		}
-		if (cma.onlyMethodMemberTypes()) {
+		if (cmi.onlyMethodMemberTypes()) {
 			return METHOD;
 		}
 		// mix of all non-method memberTypes
-		if (cma.onlyGetterMemberTypes() && !cma.isWriteAccess()) {
+		if (cmi.onlyGetterMemberTypes() && !cmi.isWriteAccess()) {
 			return GETTER;
 		}
-		if (cma.onlySetterMemberTypes() && cma.isWriteAccess()) {
+		if (cmi.onlySetterMemberTypes() && cmi.isWriteAccess()) {
 			return SETTER;
 		}
 		if (allTypeRefAreEqual()) {
 			return FIELD;
 		}
 		// mix of all non-method memberTypes AND different return types
-		if (cma.isWriteAccess()) {
-			if (!cma.hasGetterMemberType()) {
+		if (cmi.isWriteAccess()) {
+			if (!cmi.hasGetterMemberType()) {
 				// return MemberType.FIELD;
 			}
 			return SETTER;
 		}
-		if (!cma.isWriteAccess()) {
-			if (!cma.hasSetterMemberType()) {
+		if (!cmi.isWriteAccess()) {
+			if (!cmi.hasSetterMemberType()) {
 				// return MemberType.FIELD;
 			}
 			return GETTER;
@@ -83,9 +83,9 @@ public class IntersectionMemberCreator extends ComposedMemberCreator {
 
 	@Override
 	public boolean isValid() {
-		if (specialMemberCreator == null)
+		if (specialMemberFactory == null)
 			return false;
-		return specialMemberCreator.isValid();
+		return specialMemberFactory.isValid();
 	}
 
 }

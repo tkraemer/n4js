@@ -87,7 +87,7 @@ public class UnionMemberDescriptionWithError extends ComposedMemberDescriptionWi
 				}
 				strb.append(memberTypeName + " in " + foundScopes);
 			}
-			message = IssueCodes.getMessageForUNI_MULTIPLE_KINDS(name, "union", strb.toString());
+			message = IssueCodes.getMessageForUNI_MULTIPLE_KINDS(name, strb.toString());
 			code = IssueCodes.UNI_MULTIPLE_KINDS;
 			return true;
 		}

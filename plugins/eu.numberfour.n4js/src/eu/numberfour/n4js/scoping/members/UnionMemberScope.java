@@ -59,7 +59,7 @@ public class UnionMemberScope extends ComposedMemberScope {
 	}
 
 	@Override
-	protected ComposedMemberCreator getComposedMemberCreator(ComposedMemberAggregate cma) {
-		return new UnionMemberCreator(cma);
+	protected ComposedMemberFactory getComposedMemberFactory(ComposedMemberInfo cma) {
+		return new UnionMemberFactory(cma);
 	}
 }

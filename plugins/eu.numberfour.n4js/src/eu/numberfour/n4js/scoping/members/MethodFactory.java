@@ -13,7 +13,7 @@ package eu.numberfour.n4js.scoping.members;
 import java.util.LinkedList;
 import java.util.List;
 
-import eu.numberfour.n4js.scoping.members.ComposedMemberAggregate.FParAggregate;
+import eu.numberfour.n4js.scoping.members.ComposedMemberInfo.ComposedFParInfo;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.MemberAccessModifier;
 import eu.numberfour.n4js.ts.types.TFormalParameter;
@@ -22,31 +22,31 @@ import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 
 /**
- * The abstract {@link MethodCreator} is the base class for the child classes {@link UnionMethodCreator} and
- * {@link IntersectionMethodCreator}. It implements the method {@link #create(String)} which gets its information through
+ * The abstract {@link MethodFactory} is the base class for the child classes {@link UnionMethodFactory} and
+ * {@link IntersectionMethodFactory}. It implements the method {@link #create(String)} which gets its information through
  * abstract methods implemented in the child classes mentioned before The child classes are instantiated in
- * {@link IntersectionMemberCreator} and {@link UnionMemberCreator} respectively.
+ * {@link IntersectionMemberFactory} and {@link UnionMemberFactory} respectively.
  * <p>
- * Additionally, the base class {@link FParCreator} for formal parameters including its method
- * {@link FParCreator#create()} is defined here. This class is used here to eventually create formal
- * parameters of methods, and moreover it is used in {@link SetterCreator} to create the formal parameter of setters.
+ * Additionally, the base class {@link FParFactory} for formal parameters including its method
+ * {@link FParFactory#create()} is defined here. This class is used here to eventually create formal
+ * parameters of methods, and moreover it is used in {@link SetterFactory} to create the formal parameter of setters.
  */
-abstract class MethodCreator implements MemberCreator {
-	final ComposedMemberAggregate cma;
-	final List<MethodFParCreator> fpas = new LinkedList<>();
+abstract class MethodFactory implements MemberFactory {
+	final ComposedMemberInfo cma;
+	final List<MethodFParFactory> fpas = new LinkedList<>();
 
-	MethodCreator(ComposedMemberAggregate cma) {
+	MethodFactory(ComposedMemberInfo cma) {
 		this.cma = cma;
-		List<FParAggregate> fpars = cma.getFParAggregates();
+		List<ComposedFParInfo> fpars = cma.getFParAggregates();
 		for (int fparIdx = 0; fparIdx < fpars.size(); fparIdx++) {
-			final FParAggregate curr = fpars.get(fparIdx);
-			fpas.add(getFParCreator(curr));
+			final ComposedFParInfo curr = fpars.get(fparIdx);
+			fpas.add(getFParFactory(curr));
 		}
 	}
 
 	abstract MemberAccessModifier getAccessability();
 
-	abstract MethodFParCreator getFParCreator(FParAggregate fpa);
+	abstract MethodFParFactory getFParFactory(ComposedFParInfo fpa);
 
 	abstract TypeRef getReturnTypeRefComposition();
 
@@ -57,7 +57,7 @@ abstract class MethodCreator implements MemberCreator {
 		if (cma.isEmpty())
 			return false;
 
-		for (MethodFParCreator fpa : fpas) {
+		for (MethodFParFactory fpa : fpas) {
 			if (!fpa.isValid()) {
 				return false;
 			}
@@ -75,14 +75,14 @@ abstract class MethodCreator implements MemberCreator {
 		if (!fpas.isEmpty()) {
 			boolean variFparNecessary = cma.isVariadicButLastFParIsDifferent();
 			if (variFparNecessary) {
-				List<FParAggregate> fpAggrs = cma.getFParAggregates();
-				FParAggregate lastFPAggr = fpAggrs.get(cma.getFParAggregates().size() - 1);
+				List<ComposedFParInfo> fpAggrs = cma.getFParAggregates();
+				ComposedFParInfo lastFPAggr = fpAggrs.get(cma.getFParAggregates().size() - 1);
 				List<TypeRef> variadicTypeRefs = lastFPAggr.getTypeRefsVariadicAccumulated();
-				MethodFParCreator varpar = new NewLastVariadicFPar(variadicTypeRefs);
+				MethodFParFactory varpar = new NewLastVariadicFPar(variadicTypeRefs);
 				fpas.add(varpar);
 			}
 		}
-		for (MethodFParCreator currFparDesc : fpas) {
+		for (MethodFParFactory currFparDesc : fpas) {
 			TFormalParameter tFPar = currFparDesc.create();
 			method.getFpars().add(tFPar);
 		}
@@ -90,7 +90,7 @@ abstract class MethodCreator implements MemberCreator {
 	}
 
 	/** Base class for any formal parameter. It implements the {@link #create()} method. */
-	static abstract class FParCreator {
+	static abstract class FParFactory {
 
 		abstract String getName();
 
@@ -124,11 +124,11 @@ abstract class MethodCreator implements MemberCreator {
 	}
 
 	/** Base class for formal parameters of composed methods. */
-	abstract class MethodFParCreator extends FParCreator {
-		final FParAggregate fpa;
+	abstract class MethodFParFactory extends FParFactory {
+		final ComposedFParInfo fpa;
 		final int index;
 
-		MethodFParCreator(FParAggregate fpa) {
+		MethodFParFactory(ComposedFParInfo fpa) {
 			this.fpa = fpa;
 			this.index = cma.getFParAggregates().indexOf(fpa);
 		}
@@ -138,7 +138,7 @@ abstract class MethodCreator implements MemberCreator {
 
 		@Override
 		TypeRef getFParTypeRefComposition(List<TypeRef> typeRefsToUse) {
-			return MethodCreator.this.getFParTypeRefComposition(typeRefsToUse);
+			return MethodFactory.this.getFParTypeRefComposition(typeRefsToUse);
 		}
 
 		@Override
@@ -164,13 +164,13 @@ abstract class MethodCreator implements MemberCreator {
 			return true;
 		}
 
-		MethodFParCreator getPrev() {
+		MethodFParFactory getPrev() {
 			if (index <= 0)
 				return null;
 			return fpas.get(index - 1);
 		}
 
-		MethodFParCreator getNext() {
+		MethodFParFactory getNext() {
 			if (index + 1 >= fpas.size())
 				return null;
 			return fpas.get(index + 1);
@@ -191,7 +191,7 @@ abstract class MethodCreator implements MemberCreator {
 	}
 
 	/** Class to instantiate an additional formal parameter which does not exist in any of the siblings. */
-	class NewLastVariadicFPar extends MethodFParCreator {
+	class NewLastVariadicFPar extends MethodFParFactory {
 		final private String name = "vari";
 		final private List<TypeRef> typeRefs;
 
@@ -227,8 +227,8 @@ abstract class MethodCreator implements MemberCreator {
 	}
 
 	/** Class to implement logic with regard to methods in {@code Intersection Types}. */
-	static class IntersectionMethodCreator extends MethodCreator {
-		IntersectionMethodCreator(ComposedMemberAggregate cma) {
+	static class IntersectionMethodFactory extends MethodFactory {
+		IntersectionMethodFactory(ComposedMemberInfo cma) {
 			super(cma);
 		}
 
@@ -238,7 +238,7 @@ abstract class MethodCreator implements MemberCreator {
 		}
 
 		@Override
-		MethodFParCreator getFParCreator(FParAggregate fpa) {
+		MethodFParFactory getFParFactory(ComposedFParInfo fpa) {
 			return new IntersectionFPar(fpa);
 		}
 
@@ -257,8 +257,8 @@ abstract class MethodCreator implements MemberCreator {
 		}
 
 		/** Class to implement logic with regard to formal parameter in {@code Intersection Type} methods. */
-		class IntersectionFPar extends MethodFParCreator {
-			IntersectionFPar(FParAggregate fpa) {
+		class IntersectionFPar extends MethodFParFactory {
+			IntersectionFPar(ComposedFParInfo fpa) {
 				super(fpa);
 			}
 
@@ -269,7 +269,7 @@ abstract class MethodCreator implements MemberCreator {
 				if (!fpa.allNonOptional())
 					return true;
 
-				MethodFParCreator prevFpar = getPrev();
+				MethodFParFactory prevFpar = getPrev();
 				if (prevFpar != null)
 					return prevFpar.isOptional();
 
@@ -279,8 +279,8 @@ abstract class MethodCreator implements MemberCreator {
 	}
 
 	/** Class to implement logic with regard to methods in {@code Union Types}. */
-	static class UnionMethodCreator extends MethodCreator {
-		UnionMethodCreator(ComposedMemberAggregate cma) {
+	static class UnionMethodFactory extends MethodFactory {
+		UnionMethodFactory(ComposedMemberInfo cma) {
 			super(cma);
 		}
 
@@ -290,7 +290,7 @@ abstract class MethodCreator implements MemberCreator {
 		}
 
 		@Override
-		MethodFParCreator getFParCreator(FParAggregate fpa) {
+		MethodFParFactory getFParFactory(ComposedFParInfo fpa) {
 			return new UnionFPar(fpa);
 		}
 
@@ -309,8 +309,8 @@ abstract class MethodCreator implements MemberCreator {
 		}
 
 		/** Class to implement logic with regard to formal parameter in {@code Union Type} methods. */
-		class UnionFPar extends MethodFParCreator {
-			UnionFPar(FParAggregate fpa) {
+		class UnionFPar extends MethodFParFactory {
+			UnionFPar(ComposedFParInfo fpa) {
 				super(fpa);
 			}
 
@@ -321,7 +321,7 @@ abstract class MethodCreator implements MemberCreator {
 				if (fpa.allOptional())
 					return true;
 
-				MethodFParCreator prevFpar = getPrev();
+				MethodFParFactory prevFpar = getPrev();
 				if (prevFpar != null)
 					return prevFpar.isOptional();
 

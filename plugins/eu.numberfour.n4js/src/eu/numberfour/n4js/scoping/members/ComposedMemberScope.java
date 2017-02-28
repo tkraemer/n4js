@@ -64,9 +64,9 @@ public abstract class ComposedMemberScope extends AbstractScope {
 	abstract protected IEObjectDescription getCheckedDescription(String name, TMember member);
 
 	/**
-	 * Returns either a {@link IntersectionMemberCreator} or {@link UnionMemberCreator}.
+	 * Returns either a {@link IntersectionMemberFactory} or {@link UnionMemberFactory}.
 	 */
-	abstract protected ComposedMemberCreator getComposedMemberCreator(ComposedMemberAggregate cma);
+	abstract protected ComposedMemberFactory getComposedMemberFactory(ComposedMemberInfo cma);
 
 	/**
 	 * Returns either a {@link IntersectionMemberDescriptionWithError} or {@link UnionMemberDescriptionWithError}.
@@ -157,7 +157,8 @@ public abstract class ComposedMemberScope extends AbstractScope {
 		// check all subScopes for a member of the given name and
 		// merge the properties of the existing members into 'composedMember'
 		final Resource resource = EcoreUtilN4.getResource(context, composedTypeRef);
-		ComposedMemberAggregate.init(writeAccess, resource, ts);
+		ComposedMemberInfoBuilder cmiBuilder = new ComposedMemberInfoBuilder();
+		cmiBuilder.init(writeAccess, resource, ts);
 
 		for (int idx = 0; idx < subScopes.length; idx++) {
 			final IScope subScope = subScopes[idx];
@@ -165,18 +166,18 @@ public abstract class ComposedMemberScope extends AbstractScope {
 			final Resource res = EcoreUtilN4.getResource(context, composedTypeRef);
 			final RuleEnvironment GwithSubstitutions = ts.createRuleEnvironmentForContext(typeRef, res);
 			final TMember member = findMemberInSubScope(subScope, memberName);
-			ComposedMemberAggregate.addMember(member, GwithSubstitutions);
+			cmiBuilder.addMember(member, GwithSubstitutions);
 
 		}
 		// produce result
-		ComposedMemberAggregate cma = ComposedMemberAggregate.get();
-		ComposedMemberCreator cmc = getComposedMemberCreator(cma);
-		if (!cmc.isEmpty()) {
+		ComposedMemberInfo cmi = cmiBuilder.get();
+		ComposedMemberFactory cmf = getComposedMemberFactory(cmi);
+		if (!cmf.isEmpty()) {
 			// at least one of the subScopes had an element of that name
 			final TMember result;
-			if (cmc.isValid()) {
+			if (cmf.isValid()) {
 				// success case: The element for that name can be merged into a valid composed member
-				result = cmc.create(memberName);
+				result = cmf.create(memberName);
 			} else {
 				// some of the subScopes do not have an element for that name OR
 				// they do not form a valid composed member (e.g. they are of different kind)
@@ -225,10 +226,6 @@ public abstract class ComposedMemberScope extends AbstractScope {
 	protected ComposedTypeRef getCacheHolder(ComposedTypeRef ctr) {
 		while (ctr.eResource() == null && ctr.getOriginalComposedTypeRef() != null)
 			ctr = ctr.getOriginalComposedTypeRef();
-		// if (ctr.eResource() == null) {
-		// // error is necessary since EMF catches all exceptions in EcoreUtil#resolved
-		// throw new AssertionError("cacheHolder must be contained in a resource");
-		// }
 		return ctr;
 	}
 

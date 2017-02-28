@@ -20,15 +20,15 @@ import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.utils.TypeUtils;
 
 /**
- * The abstract {@link FieldCreator} is the base class for the child classes {@link UnionFieldCreator} and
- * {@link IntersectionFieldCreator}. It implements the method {@link #create(String)} which gets its information through
+ * The abstract {@link FieldFactory} is the base class for the child classes {@link UnionFieldFactory} and
+ * {@link IntersectionFieldFactory}. It implements the method {@link #create(String)} which gets its information through
  * abstract methods implemented in the child classes mentioned before The child classes are instantiated in
- * {@link IntersectionMemberCreator} and {@link UnionMemberCreator} respectively.
+ * {@link IntersectionMemberFactory} and {@link UnionMemberFactory} respectively.
  */
-abstract class FieldCreator implements MemberCreator {
-	final ComposedMemberAggregate cma;
+abstract class FieldFactory implements MemberFactory {
+	final ComposedMemberInfo cma;
 
-	FieldCreator(ComposedMemberAggregate cma) {
+	FieldFactory(ComposedMemberInfo cma) {
 		this.cma = cma;
 	}
 
@@ -55,8 +55,8 @@ abstract class FieldCreator implements MemberCreator {
 	}
 
 	/** Class to implement logic with regard to fields in {@code Intersection Types}. */
-	static class IntersectionFieldCreator extends FieldCreator {
-		IntersectionFieldCreator(ComposedMemberAggregate cma) {
+	static class IntersectionFieldFactory extends FieldFactory {
+		IntersectionFieldFactory(ComposedMemberInfo cma) {
 			super(cma);
 		}
 
@@ -80,8 +80,8 @@ abstract class FieldCreator implements MemberCreator {
 	}
 
 	/** Class to implement logic with regard to fields in {@code Union Types}. */
-	static class UnionFieldCreator extends FieldCreator {
-		UnionFieldCreator(ComposedMemberAggregate cma) {
+	static class UnionFieldFactory extends FieldFactory {
+		UnionFieldFactory(ComposedMemberInfo cma) {
 			super(cma);
 		}
 

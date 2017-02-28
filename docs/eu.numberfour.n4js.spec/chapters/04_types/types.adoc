@@ -1439,6 +1439,7 @@ The following example gives a small overview of common use cases of union and in
 [example]
 --
 This example shows how union and intersection types affect the types of their field members in case the fields have different types.
+It is for illustration purposes only.
 The type of the composed field depends on the access type:
 When reading, the field type of an intersection/union also resolves to the intersection/union.
 In contrast, when writing a field, the field type of an intersection/union resolves to the union/intersection respectively.
@@ -1450,27 +1451,30 @@ interface B { f : string = "h"; }
 
 class CA implements A {}
 class CB implements B {}
-class AB implements A, B {}
 
-var aub : A|B; // union type
-var aib : A&B; // intersection type
+let aub : A|B; // union type
+let aib : A&B; // intersection type
 
 function u() {
-	aub = (...)? new CA() : new CB();
-	val x = aub.f; // x = {1 | "h"}
-	aub.f = undefined; // undefined can be assigned to int and string types
+    aub = (catIsAlive)? new CA() : new CB(); // catIsAlive is boolean
+    let x = aub.f; // x = {1 | "h"}
+    aub.f = undefined; // undefined can be assigned to int and string types
 }
 function i() {
-	val a = aib as A;
-	val b = aib as B;
-	a.f = 23;
-	a.f = "text";
-	val x = aib.f; // x = {1 & "h"}
+    let a = aib as A;
+    let b = aib as B;
+    a.f = 23;
+    b.f = "text";
+    let x = aib.f; // x = {1 & "h"} which is impossible
 }
-val fu = aub.f; // typeof{aub.f} = int|string
-aub.f = undefined; // typeof{aub.f} = int&string
-val fi = aub.f; // typeof{aib.f} = int&string
-aub.f = undefined; // typeof{aib.f} = int|string
+// type of 'aub.f' --> int|string
+let fu = aub.f;
+// type of 'aub.f' --> int&string
+aub.f = undefined;
+// type of 'aib.f' --> int&string
+let fi = aub.f;
+// type of 'aib.f' --> int|string
+aub.f = undefined;
 ----
 
 Note that no instance `aib` of intersection type `A&B` can be instantiated, since the instance's class would have to define a field `f` which would have to comply to both of the interfaces `A` and `B`.
@@ -2020,6 +2024,7 @@ The following sections define which properties are accessible.
 ==== Properties of Union Type
 
 As an (oversimplified) rule of thumb, the properties of a union type $U=T_1|T_2$ are simply the intersection of the properties $U.properties = T_{1}.properties \cap T_{2}.properties$.
+In other words, a property 'p' in the union type is the least common denominator of all 'p' in T_{1} and T_{2}.
 It is not quite that simple, however, as the question of "equality" with regards to properties has to be answered.
 
 .Members of an Union Type
@@ -2092,21 +2097,21 @@ $\hspace{2em} p_{i}.var  = true $
 ---
 
 The following table shows how non-method members of union types are merged.
-The resulting member type depends on whether the member is access during a read (R) or write (W) operation.
+The resulting member type depends on whether the member is being accessed during a read \(R) or write (W) operation.
 The type of a field, of a getter or of the parameter of a setter is indicated in brackets.
 
 .Merged Members of Unions
 [cols="^h,^,^,^,^", options="header"]
 |===
-Members                 |  S=T      2+|                S≠T          2+|
-                        |  R  h|  W  h|     R          h|    W       h|
+| Members                2+|   S=T   2+|                S≠T
+|                        h| R  h|  W  h|     R          h|    W
 
-Field<S>  \| Field<T>   | Field<S>  2+| Getter<S\|T>    | Setter<S&T> |
-Getter<S> \| Getter<T>  | Getter<S>  || Getter<S\|T>    | -           |
-Setter<S> \| Setter<T>  || Setter<S>  | -               | Setter<S&T> |
-Field<S>  \| Getter<T>  | Getter<S>  || Getter<S\|T>    | -           |
-Field<S>  \| Setter<T>  || Setter<S>  | -               | Setter<S&T> |
-Getter<S> \| Setter<T>  | -    |-     | -               | -           |
+|Field<S>  \| Field<T>   2+| Field<S>  | Getter<S\|T>    | Setter<S&T>
+|Getter<S> \| Getter<T>  | Getter<S> |-| Getter<S\|T>    | -
+|Setter<S> \| Setter<T>  |-| Setter<S> | -               | Setter<S&T>
+|Field<S>  \| Getter<T>  | Getter<S> |-| Getter<S\|T>    | -
+|Field<S>  \| Setter<T>  |-| Setter<S> | -               | Setter<S&T>
+|Getter<S> \| Setter<T>  | -    |-     | -               | -
 |===
 
 ===== Remarks on union type’s members:
@@ -2129,6 +2134,7 @@ In the third case above, types are combined independently for read- and write-ac
 ==== Properties of Intersection Type
 
 As an (oversimplified) rule of thumb, the properties of an intersection type $I=T_1\&T_2$ are the union of properties $I.properties = T_{1}.properties \cup T_{2}.properties$.
+In other words, a property 'p' in the union type is the greates common denominator of all 'p' in T_{1} and T_{2}.
 It is not quite that simple, however, as the question of "equality” with regards to properties has to be answered.
 
 .Members of an Intersection Type
@@ -2225,21 +2231,21 @@ $\hspace{2em} p_i.var  = true$
 --
 
 The following table shows how non-method members of intersection types are merged.
-The resulting member type depends on whether the member is access during a read (R) or write (W) operation.
+The resulting member type depends on whether the member is being accessed during a read \(R) or write (W) operation.
 The type of a field, of a getter or of the parameter of a setter is indicated in brackets.
 
 .Merged Members of Intersections
 [cols="^h,^,^,^,^", options="header"]
 |===
-Members                 |  S=T      2+|                S≠T          2+|
-                        |  R  h|  W  h|     R          h|    W       h|
+| Members                2+|   S=T   2+|                S≠T
+|                        h| R  h|  W  h|     R          h|    W
 
-Field<S>   & Field<T>   | Field<S>  2+| Getter<S&T>     | Setter<S\|T> |
-Getter<S>  & Getter<T>  | Getter<S>  || Getter<S&T>     | -            |
-Setter<S>  & Setter<T>  || Setter<S>  | -               | Setter<S\|T> |
-Field<S>   & Getter<T>  | Field<S>  2+| Getter<S&T>     | Setter<S\|T> |
-Field<S>   & Setter<T>  | Field<S>  2+| Getter<S&T>     | Setter<S\|T> |
-Getter<S>  & Setter<T>  | Field<S>  2+| Getter<S&T>     | Setter<S\|T> |
+|Field<S>   & Field<T>   2+| Field<S>  | Getter<S&T>     | Setter<S\|T>
+|Getter<S>  & Getter<T>  | Getter<S> |-| Getter<S&T>     | -
+|Setter<S>  & Setter<T>  |-| Setter<S> | -               | Setter<S\|T>
+|Field<S>   & Getter<T>  2+| Field<S>  | Getter<S&T>     | Setter<S>
+|Field<S>   & Setter<T>  2+| Field<S>  | Getter<S>       | Setter<S\|T>
+|Getter<S>  & Setter<T>  2+| Field<S>  | Getter<S>       | Setter<T>
 |===
 
 
