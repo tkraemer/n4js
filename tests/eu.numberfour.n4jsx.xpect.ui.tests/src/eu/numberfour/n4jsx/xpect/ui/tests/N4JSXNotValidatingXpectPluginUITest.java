@@ -49,7 +49,7 @@ import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 })
 @XpectImport({ Config.class, VarDef.class, XpEnvironmentData.class, SuppressIssuesSetup.class })
 @RunWith(XpectRunner.class)
-@XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "model_nonvalidating", fileExtensions = "xt")
+@XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "testdata_nonvalidating", fileExtensions = "xt")
 public class N4JSXNotValidatingXpectPluginUITest {
 	//
 

@@ -49,7 +49,7 @@ import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 		OrganizeImportXpectMethod.class
 })
 @RunWith(XpectRunner.class)
-@XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "model_ui", fileExtensions = "xt")
+@XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "testdata_ui", fileExtensions = "xt")
 @XpectImport(SuppressIssuesSetup.class)
 public class N4JSXpectPluginUITest {
 	//
