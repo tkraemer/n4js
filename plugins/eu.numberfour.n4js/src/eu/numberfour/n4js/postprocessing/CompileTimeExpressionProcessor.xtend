@@ -36,8 +36,6 @@ import eu.numberfour.n4js.ts.types.TConstableElement
 import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TypesPackage
-import eu.numberfour.n4js.utils.ConstantValue
-import eu.numberfour.n4js.utils.ConstantValue.ValueBoolean
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
@@ -46,30 +44,33 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.utils.CompileTimeValue.ValueBoolean
+import eu.numberfour.n4js.utils.CompileTimeValue
 
 /**
  *
  */
-class ConstantExpressionProcessor {
+class CompileTimeExpressionProcessor {
 
 	@Inject
 	private N4JSElementKeywordProvider keywordProvider;
 
 	/**
-	 * If the given AST node is an expression that is directly required to be a constant expression (cf.
-	 * {@link N4JSLanguageUtils#isRequiredToBeConstantExpression(Expression)}, this method will evaluate the constant
-	 * expression and store the evaluation result in the given cache; otherwise, this method will do nothing.
+	 * If the given AST node is an expression that is directly required to be a compile-time expression (cf.
+	 * {@link N4JSLanguageUtils#isRequiredToBeCompileTimeExpression(Expression)}, this method will evaluate the
+	 * compile-time expression and store the evaluation result in the given cache; otherwise, this method will do
+	 * nothing.
 	 * <p>
-	 * Current cases of expressions that are required to be constant expressions (according to N4JS language
+	 * Current cases of expressions that are required to be compile-time expressions (according to N4JS language
 	 * specification):
 	 * <ul>
 	 * <li>expressions in computed property names.
 	 * </ul>
 	 */
-	def public void evaluateConstantExpression(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
+	def public void evaluateCompileTimeExpression(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
 		if(node instanceof Expression) {
-			if(N4JSLanguageUtils.isRequiredToBeConstantExpression(node)) {
-				val evalResult = computeValueIfConstantExpression(G, node, keywordProvider);
+			if(N4JSLanguageUtils.isRequiredToBeCompileTimeExpression(node)) {
+				val evalResult = computeValueIfCompileTimeExpression(G, node, keywordProvider);
 				cache.storeEvaluationResult(node, evalResult);
 			} else {
 				// optional cases:
@@ -85,55 +86,55 @@ class ConstantExpressionProcessor {
 
 	def private void storeValueOfExpressionInTModule(RuleEnvironment G, TConstableElement elem, Expression expr) {
 		if(elem!==null && elem.const) {
-			val value = computeValueIfConstantExpression(G, expr, keywordProvider);
-			val valueStr = ConstantValue.serialize(value);
+			val value = computeValueIfCompileTimeExpression(G, expr, keywordProvider);
+			val valueStr = CompileTimeValue.serialize(value);
 			EcoreUtilN4.doWithDeliver(false, [
 				elem.value = valueStr;
 			], elem);
 		}
 	}
 
-	/** Make constant expression evaluation publicly available, but <b>ONLY FOR TESTING</b>! */
-	def public static ConstantValue ONLY_FOR_TESTING__computeValueIfConstantExpression(RuleEnvironment G, Expression expr, N4JSElementKeywordProvider keywordProvider) {
-		return computeValueIfConstantExpression(G, expr, keywordProvider);
+	/** Make compile-time expression evaluation publicly available, but <b>ONLY FOR TESTING</b>! */
+	def public static CompileTimeValue ONLY_FOR_TESTING__computeValueIfCompileTimeExpression(RuleEnvironment G, Expression expr, N4JSElementKeywordProvider keywordProvider) {
+		return computeValueIfCompileTimeExpression(G, expr, keywordProvider);
 	}
 
 	/**
 	 * FIXME documentation
 	 */
-	def private static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, Expression expr, N4JSElementKeywordProvider keywordProvider) {
+	def private static dispatch CompileTimeValue computeValueIfCompileTimeExpression(RuleEnvironment G, Expression expr, N4JSElementKeywordProvider keywordProvider) {
 		return switch(expr) {
 			NullLiteral:
-				ConstantValue.NULL
+				CompileTimeValue.NULL
 			BooleanLiteral:
-				ConstantValue.of(expr.isTrue)
+				CompileTimeValue.of(expr.isTrue)
 			NumericLiteral:
-				ConstantValue.of(expr.value)
+				CompileTimeValue.of(expr.value)
 			StringLiteral:
-				ConstantValue.of(expr.value)
+				CompileTimeValue.of(expr.value)
 			TemplateSegment:
-				ConstantValue.of(expr.rawValue)
+				CompileTimeValue.of(expr.rawValue)
 			ParenExpression:
-				computeValueIfConstantExpression(G, expr.expression, keywordProvider)
+				computeValueIfCompileTimeExpression(G, expr.expression, keywordProvider)
 			default:
-				ConstantValue.error(keywordProvider.keywordWithIndefiniteArticle(expr) + " is never a compile-time expression", expr)
+				CompileTimeValue.error(keywordProvider.keywordWithIndefiniteArticle(expr) + " is never a compile-time expression", expr)
 		};
 	}
-	def private static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, IdentifierRef expr, N4JSElementKeywordProvider keywordProvider) {
+	def private static dispatch CompileTimeValue computeValueIfCompileTimeExpression(RuleEnvironment G, IdentifierRef expr, N4JSElementKeywordProvider keywordProvider) {
 		if(N4JSLanguageUtils.isUndefinedLiteral(G, expr)) {
-			return ConstantValue.UNDEFINED;
+			return CompileTimeValue.UNDEFINED;
 		}
 		val id = expr.id;
 		if(id!==null && !id.eIsProxy) {
-			return computeValueIfConstantFieldOrVariable(G, expr.eResource, id, expr, keywordProvider);
+			return computeValueIfConstFieldOrVariable(G, expr.eResource, id, expr, keywordProvider);
 		}
-		return ConstantValue.error();
+		return CompileTimeValue.error();
 	}
-	def private static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, TemplateLiteral expr, N4JSElementKeywordProvider keywordProvider) {
+	def private static dispatch CompileTimeValue computeValueIfCompileTimeExpression(RuleEnvironment G, TemplateLiteral expr, N4JSElementKeywordProvider keywordProvider) {
 		val buff = new StringBuilder;
 		val invalidValues = newArrayList;
 		for(seg : expr.segments) {
-			val segValue = computeValueIfConstantExpression(G, seg, keywordProvider);
+			val segValue = computeValueIfCompileTimeExpression(G, seg, keywordProvider);
 			if(segValue.valid) {
 				buff.append(segValue.toString);
 			} else {
@@ -141,70 +142,70 @@ class ConstantExpressionProcessor {
 			}
 		}
 		if(!invalidValues.empty) {
-			return ConstantValue.combineErrors(invalidValues);
+			return CompileTimeValue.combineErrors(invalidValues);
 		}
-		return ConstantValue.of(buff.toString);
+		return CompileTimeValue.of(buff.toString);
 	}
-	def private static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, UnaryExpression expr, N4JSElementKeywordProvider keywordProvider) {
-		val value = if(expr.expression!==null) computeValueIfConstantExpression(G, expr.expression, keywordProvider);
+	def private static dispatch CompileTimeValue computeValueIfCompileTimeExpression(RuleEnvironment G, UnaryExpression expr, N4JSElementKeywordProvider keywordProvider) {
+		val value = if(expr.expression!==null) computeValueIfCompileTimeExpression(G, expr.expression, keywordProvider);
 		return switch(expr.op) {
-			case NOT: ConstantValue.invert(value, expr.expression)
+			case NOT: CompileTimeValue.invert(value, expr.expression)
 			case POS: value
-			case NEG: ConstantValue.negate(value, expr.expression)
-			case VOID: ConstantValue.UNDEFINED
-			default: ConstantValue.error("invalid operator: " + expr.op, expr)
+			case NEG: CompileTimeValue.negate(value, expr.expression)
+			case VOID: CompileTimeValue.UNDEFINED
+			default: CompileTimeValue.error("invalid operator: " + expr.op, expr)
 		};
 	}
-	def private static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, AdditiveExpression expr, N4JSElementKeywordProvider keywordProvider) {
+	def private static dispatch CompileTimeValue computeValueIfCompileTimeExpression(RuleEnvironment G, AdditiveExpression expr, N4JSElementKeywordProvider keywordProvider) {
 		val lhs = expr.lhs;
 		val rhs = expr.rhs;
-		val leftValue = if(lhs!==null) computeValueIfConstantExpression(G, lhs, keywordProvider);
-		val rightValue = if(rhs!==null) computeValueIfConstantExpression(G, rhs, keywordProvider);
+		val leftValue = if(lhs!==null) computeValueIfCompileTimeExpression(G, lhs, keywordProvider);
+		val rightValue = if(rhs!==null) computeValueIfCompileTimeExpression(G, rhs, keywordProvider);
 		return switch(expr.op) {
-			case ADD: ConstantValue.add(leftValue, rightValue, expr)
-			case SUB: ConstantValue.subtract(leftValue, rightValue, lhs, rhs)
-			default: ConstantValue.error("invalid operator: " + expr.op, expr)
+			case ADD: CompileTimeValue.add(leftValue, rightValue, expr)
+			case SUB: CompileTimeValue.subtract(leftValue, rightValue, lhs, rhs)
+			default: CompileTimeValue.error("invalid operator: " + expr.op, expr)
 		};
 	}
-	def private static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, MultiplicativeExpression expr, N4JSElementKeywordProvider keywordProvider) {
+	def private static dispatch CompileTimeValue computeValueIfCompileTimeExpression(RuleEnvironment G, MultiplicativeExpression expr, N4JSElementKeywordProvider keywordProvider) {
 		val lhs = expr.lhs;
 		val rhs = expr.rhs;
-		val leftValue = if(lhs!==null) computeValueIfConstantExpression(G, lhs, keywordProvider);
-		val rightValue = if(rhs!==null) computeValueIfConstantExpression(G, rhs, keywordProvider);
+		val leftValue = if(lhs!==null) computeValueIfCompileTimeExpression(G, lhs, keywordProvider);
+		val rightValue = if(rhs!==null) computeValueIfCompileTimeExpression(G, rhs, keywordProvider);
 		return switch(expr.op) {
-			case TIMES: ConstantValue.multiply(leftValue, rightValue, lhs, rhs)
-			case DIV: ConstantValue.divide(leftValue, rightValue, lhs, rhs)
-			case MOD: ConstantValue.remainder(leftValue, rightValue, lhs, rhs)
-			default: ConstantValue.error("invalid operator: " + expr.op, expr)
+			case TIMES: CompileTimeValue.multiply(leftValue, rightValue, lhs, rhs)
+			case DIV: CompileTimeValue.divide(leftValue, rightValue, lhs, rhs)
+			case MOD: CompileTimeValue.remainder(leftValue, rightValue, lhs, rhs)
+			default: CompileTimeValue.error("invalid operator: " + expr.op, expr)
 		};
 	}
-	def private static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, BinaryLogicalExpression expr, N4JSElementKeywordProvider keywordProvider) {
+	def private static dispatch CompileTimeValue computeValueIfCompileTimeExpression(RuleEnvironment G, BinaryLogicalExpression expr, N4JSElementKeywordProvider keywordProvider) {
 		val lhs = expr.lhs;
 		val rhs = expr.rhs;
-		val leftValue = if(lhs!==null) computeValueIfConstantExpression(G, lhs, keywordProvider);
-		val rightValue = if(rhs!==null) computeValueIfConstantExpression(G, rhs, keywordProvider);
+		val leftValue = if(lhs!==null) computeValueIfCompileTimeExpression(G, lhs, keywordProvider);
+		val rightValue = if(rhs!==null) computeValueIfCompileTimeExpression(G, rhs, keywordProvider);
 		return switch(expr.op) {
-			case AND: ConstantValue.and(leftValue, rightValue, lhs, rhs)
-			case OR: ConstantValue.or(leftValue, rightValue, lhs, rhs)
-			default: ConstantValue.error("invalid operator: " + expr.op, expr)
+			case AND: CompileTimeValue.and(leftValue, rightValue, lhs, rhs)
+			case OR: CompileTimeValue.or(leftValue, rightValue, lhs, rhs)
+			default: CompileTimeValue.error("invalid operator: " + expr.op, expr)
 		};
 	}
-	def private static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, ConditionalExpression expr, N4JSElementKeywordProvider keywordProvider) {
+	def private static dispatch CompileTimeValue computeValueIfCompileTimeExpression(RuleEnvironment G, ConditionalExpression expr, N4JSElementKeywordProvider keywordProvider) {
 		val condition = expr.expression;
 		val trueExpr = expr.trueExpression;
 		val falseExpr = expr.falseExpression;
-		val conditionValue = if(condition!==null) computeValueIfConstantExpression(G, condition, keywordProvider);
-		val trueValue = if(trueExpr!==null) computeValueIfConstantExpression(G, trueExpr, keywordProvider);
-		val falseValue = if(falseExpr!==null) computeValueIfConstantExpression(G, falseExpr, keywordProvider);
-		val error = ConstantValue.combineErrors(
-			ConstantValue.requireValueType(conditionValue, ValueBoolean, "condition must be a boolean", expr.expression),
+		val conditionValue = if(condition!==null) computeValueIfCompileTimeExpression(G, condition, keywordProvider);
+		val trueValue = if(trueExpr!==null) computeValueIfCompileTimeExpression(G, trueExpr, keywordProvider);
+		val falseValue = if(falseExpr!==null) computeValueIfCompileTimeExpression(G, falseExpr, keywordProvider);
+		val error = CompileTimeValue.combineErrors(
+			CompileTimeValue.requireValueType(conditionValue, ValueBoolean, "condition must be a boolean", expr.expression),
 			trueValue, falseValue);
 		if(error!==null) {
 			return error;
 		}
 		return if((conditionValue as ValueBoolean).getValue()) trueValue else falseValue;
 	}
-	def private static dispatch ConstantValue computeValueIfConstantExpression(RuleEnvironment G, ParameterizedPropertyAccessExpression expr, N4JSElementKeywordProvider keywordProvider) {
+	def private static dispatch CompileTimeValue computeValueIfCompileTimeExpression(RuleEnvironment G, ParameterizedPropertyAccessExpression expr, N4JSElementKeywordProvider keywordProvider) {
 		val targetExpr = expr.target;
 		val targetElem = if(targetExpr instanceof IdentifierRef) targetExpr.id;
 		// A) is 'expr' an access to a built-in symbol, e.g. Symbol.iterator?
@@ -219,7 +220,7 @@ class ConstantExpressionProcessor {
 			val propName = expr.propertyAsText;
 			val memberInSym = sym.ownedMembers.filter(TField).findFirst[static && name==propName];
 			if(memberInSym!==null) {
-				return ConstantValue.of(memberInSym);
+				return CompileTimeValue.of(memberInSym);
 			}
 		}
 		// B) is 'expr' an access to the literal of a @StringBased enum?
@@ -228,12 +229,12 @@ class ConstantExpressionProcessor {
 				val propName = expr.propertyAsText;
 				val litInEnum = targetElem.literals.findFirst[name==propName];
 				if(litInEnum!==null) {
-					return ConstantValue.of(litInEnum.valueOrName);
+					return CompileTimeValue.of(litInEnum.valueOrName);
 				}
 			}
 		}
 		// C) all other cases:
-		return ConstantValue.error("only references to enum literals or built-in symbols allowed", expr);
+		return CompileTimeValue.error("only references to enum literals or built-in symbols allowed", expr);
 /*
 		// is expr an access to a built-in symbol, e.g. Symbol.iterator?
 		val builtInSymbol = G.getAccessedBuiltInSymbol(expr);
@@ -254,7 +255,7 @@ class ConstantExpressionProcessor {
 */
 	}
 
-	def private static ConstantValue computeValueIfConstantFieldOrVariable(RuleEnvironment G, Resource currentResource,
+	def private static CompileTimeValue computeValueIfConstFieldOrVariable(RuleEnvironment G, Resource currentResource,
 		IdentifiableElement targetElem, EObject astNodeForErrorMessage, N4JSElementKeywordProvider keywordProvider) {
 
 		val targetElemIsConst = switch(targetElem) {
@@ -263,7 +264,7 @@ class ConstantExpressionProcessor {
 			VariableDeclaration: targetElem.const
 		};
 		if(!targetElemIsConst) {
-			return ConstantValue.error(keywordProvider.keyword(targetElem) + " " + targetElem.name + " is not const", astNodeForErrorMessage);
+			return CompileTimeValue.error(keywordProvider.keyword(targetElem) + " " + targetElem.name + " is not const", astNodeForErrorMessage);
 		}
 
 		if(targetElem.eResource===currentResource || hasLoadedASTElement(targetElem)) {
@@ -280,9 +281,9 @@ class ConstantExpressionProcessor {
 				VariableDeclaration: astNodeOfTargetElem.expression
 			};
 			if(expressionOfTargetElem!==null) {
-				val valueOfTargetElem = computeValueIfConstantExpression(G, expressionOfTargetElem, keywordProvider);
+				val valueOfTargetElem = computeValueIfCompileTimeExpression(G, expressionOfTargetElem, keywordProvider);
 				if(!valueOfTargetElem.valid) {
-					return ConstantValue.error(keywordProvider.keyword(targetElem) + " " + targetElem.name
+					return CompileTimeValue.error(keywordProvider.keyword(targetElem) + " " + targetElem.name
 						+ " is const but does not have a compile-time expression as initializer", astNodeForErrorMessage);
 				}
 				return valueOfTargetElem;
@@ -291,16 +292,16 @@ class ConstantExpressionProcessor {
 			// 'targetElem' is in another resource with an AST proxy
 			// -> read value from TModule to avoid demand-loading of AST
 			if(targetElem instanceof TConstableElement) {
-				val valueOfTargetElem = ConstantValue.deserialize(targetElem.value);
+				val valueOfTargetElem = CompileTimeValue.deserialize(targetElem.value);
 				if(valueOfTargetElem===null) {
-					return ConstantValue.error(keywordProvider.keyword(targetElem) + " " + targetElem.name
+					return CompileTimeValue.error(keywordProvider.keyword(targetElem) + " " + targetElem.name
 						+ " is const but does not have a compile-time expression as initializer", astNodeForErrorMessage);
 				}
 				return valueOfTargetElem;
 			}
 		}
 
-		return ConstantValue.error("only references to const variables with a compile-time expression as initializer are allowed", astNodeForErrorMessage);
+		return CompileTimeValue.error("only references to const variables with a compile-time expression as initializer are allowed", astNodeForErrorMessage);
 	}
 
 	/**

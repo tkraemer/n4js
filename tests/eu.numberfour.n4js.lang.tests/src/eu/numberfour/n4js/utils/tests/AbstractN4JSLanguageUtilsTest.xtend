@@ -15,11 +15,9 @@ import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 import eu.numberfour.n4js.N4JSParseHelper
 import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.ParenExpression
-import eu.numberfour.n4js.postprocessing.ConstantExpressionProcessor
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.util.Variance
-import eu.numberfour.n4js.utils.ConstantValue
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
 import org.eclipse.xtext.junit4.InjectWith
@@ -30,6 +28,8 @@ import org.junit.runner.RunWith
 import static org.junit.Assert.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.postprocessing.CompileTimeExpressionProcessor
+import eu.numberfour.n4js.utils.CompileTimeValue
 
 /**
  *
@@ -66,10 +66,10 @@ abstract class AbstractN4JSLanguageUtilsTest {
 	}
 
 
-	def protected void assertValueOfConstExpr(CharSequence expression, Object expectedValue) {
-		assertValueOfConstExpr("", expression, expectedValue);
+	def protected void assertValueOfCompileTimeExpr(CharSequence expression, Object expectedValue) {
+		assertValueOfCompileTimeExpr("", expression, expectedValue);
 	}
-	def protected void assertValueOfConstExpr(CharSequence preamble, CharSequence expression, Object expectedValue) {
+	def protected void assertValueOfCompileTimeExpr(CharSequence preamble, CharSequence expression, Object expectedValue) {
 		val script = '''
 			«preamble»;
 			(«expression»);
@@ -81,14 +81,14 @@ abstract class AbstractN4JSLanguageUtilsTest {
 		val expressionInAST = (lastStatement.expression as ParenExpression).expression;
 		assertNotNull(expressionInAST);
 		val G = script.newRuleEnvironment;
-		val computedValue = ConstantExpressionProcessor.ONLY_FOR_TESTING__computeValueIfConstantExpression(G, expressionInAST, keywordProvider);
+		val computedValue = CompileTimeExpressionProcessor.ONLY_FOR_TESTING__computeValueIfCompileTimeExpression(G, expressionInAST, keywordProvider);
 		assertNotNull(computedValue);
 		if(expectedValue===null) {
 			assertFalse("expected an invalid value but got a valid one", computedValue.valid);
 		} else {
 			assertTrue("expected a valid value but got an invalid one", computedValue.valid);
-			val expectedConstantValue = ConstantValue.of(expectedValue);
-			assertEquals(expectedConstantValue, computedValue);
+			val expectedCompileTimeValue = CompileTimeValue.of(expectedValue);
+			assertEquals(expectedCompileTimeValue, computedValue);
 		}
 	}
 }

@@ -26,15 +26,15 @@ import eu.numberfour.n4js.ts.types.TField;
 
 /**
  * The value of a compile-time expression as returned by {@link ASTMetaInfoCache#getEvaluationResult(Expression)} and
- * computed by {@code ConstantExpressionProcessor#computeValueIfConstantExpression()}.
+ * computed by {@code CompileTimeExpressionProcessor#computeValueIfCompileTimeExpression()}.
  */
-public abstract class ConstantValue {
+public abstract class CompileTimeValue {
 
-	public static final ConstantValue UNDEFINED = new ValueValid("undefined") {
+	public static final CompileTimeValue UNDEFINED = new ValueValid("undefined") {
 		// no adjustments required
 	};
 
-	public static final ConstantValue NULL = new ValueValid("null") {
+	public static final CompileTimeValue NULL = new ValueValid("null") {
 		// no adjustments required
 	};
 
@@ -58,7 +58,7 @@ public abstract class ConstantValue {
 		}
 	}
 
-	public static final class ValueInvalid extends ConstantValue {
+	public static final class ValueInvalid extends CompileTimeValue {
 		private final EvalError[] errors;
 
 		public ValueInvalid(EvalError... errors) {
@@ -76,7 +76,7 @@ public abstract class ConstantValue {
 		}
 	}
 
-	public static abstract class ValueValid extends ConstantValue {
+	public static abstract class ValueValid extends CompileTimeValue {
 		private final Object value;
 
 		private ValueValid(Object value) {
@@ -186,7 +186,7 @@ public abstract class ConstantValue {
 		return new ValueInvalid(new EvalError(message, astNode));
 	}
 
-	public static ConstantValue of(Object value) {
+	public static CompileTimeValue of(Object value) {
 		if (value instanceof Boolean) {
 			return of((Boolean) value);
 		} else if (value instanceof String) {
@@ -195,33 +195,33 @@ public abstract class ConstantValue {
 			return of((Number) value);
 		} else if (value instanceof TField) {
 			return of((TField) value);
-		} else if (value instanceof ConstantValue) {
-			return (ConstantValue) value;
+		} else if (value instanceof CompileTimeValue) {
+			return (CompileTimeValue) value;
 		}
 		return error();
 	}
 
-	public static ConstantValue of(Boolean value) {
+	public static CompileTimeValue of(Boolean value) {
 		return value != null ? (value ? TRUE : FALSE) : error();
 	}
 
-	public static ConstantValue of(String value) {
+	public static CompileTimeValue of(String value) {
 		return value != null ? new ValueString(value) : error();
 	}
 
-	public static ConstantValue of(Number value) {
+	public static CompileTimeValue of(Number value) {
 		return value != null ? of(BigDecimal.valueOf(value.doubleValue())) : error();
 	}
 
-	public static ConstantValue of(BigDecimal value) {
+	public static CompileTimeValue of(BigDecimal value) {
 		return value != null ? new ValueNumber(value) : error();
 	}
 
-	public static ConstantValue of(TField value) {
+	public static CompileTimeValue of(TField value) {
 		return value != null ? new ValueSymbol(value.getName()) : error();
 	}
 
-	public static ConstantValue invert(ConstantValue value, EObject astNode) {
+	public static CompileTimeValue invert(CompileTimeValue value, EObject astNode) {
 		final ValueInvalid error = requireValueType(value, ValueBoolean.class, "operand must be a boolean", astNode);
 		if (error != null) {
 			return error;
@@ -229,7 +229,7 @@ public abstract class ConstantValue {
 		return ((ValueBoolean) value).invert();
 	}
 
-	public static ConstantValue and(ConstantValue valueLeft, ConstantValue valueRight,
+	public static CompileTimeValue and(CompileTimeValue valueLeft, CompileTimeValue valueRight,
 			EObject astNodeLeft, EObject astNodeRight) {
 		final ValueInvalid error = combineErrors(
 				requireValueType(valueLeft, ValueBoolean.class, "left operand must be a boolean", astNodeLeft),
@@ -237,11 +237,11 @@ public abstract class ConstantValue {
 		if (error != null) {
 			return error;
 		}
-		return ConstantValue.of(
+		return CompileTimeValue.of(
 				((ValueBoolean) valueLeft).getValue() && ((ValueBoolean) valueRight).getValue());
 	}
 
-	public static ConstantValue or(ConstantValue valueLeft, ConstantValue valueRight,
+	public static CompileTimeValue or(CompileTimeValue valueLeft, CompileTimeValue valueRight,
 			EObject astNodeLeft, EObject astNodeRight) {
 		final ValueInvalid error = combineErrors(
 				requireValueType(valueLeft, ValueBoolean.class, "left operand must be a boolean", astNodeLeft),
@@ -249,11 +249,11 @@ public abstract class ConstantValue {
 		if (error != null) {
 			return error;
 		}
-		return ConstantValue.of(
+		return CompileTimeValue.of(
 				((ValueBoolean) valueLeft).getValue() || ((ValueBoolean) valueRight).getValue());
 	}
 
-	public static ConstantValue negate(ConstantValue value, EObject astNode) {
+	public static CompileTimeValue negate(CompileTimeValue value, EObject astNode) {
 		final ValueInvalid error = requireValueType(value, ValueNumber.class, "operand must be a number", astNode);
 		if (error != null) {
 			return error;
@@ -261,8 +261,8 @@ public abstract class ConstantValue {
 		return ((ValueNumber) value).negate();
 	}
 
-	public static ConstantValue add(ConstantValue valueLeft, ConstantValue valueRight, EObject astNode) {
-		if (valueLeft==null || !valueLeft.isValid() || valueRight==null || !valueRight.isValid()) {
+	public static CompileTimeValue add(CompileTimeValue valueLeft, CompileTimeValue valueRight, EObject astNode) {
+		if (valueLeft == null || !valueLeft.isValid() || valueRight == null || !valueRight.isValid()) {
 			return combineErrors(
 					error(), // required to pass in error(), because valueLeft and valueRight might both be 'null'
 					valueLeft, valueRight);
@@ -276,7 +276,7 @@ public abstract class ConstantValue {
 		}
 	}
 
-	public static ConstantValue subtract(ConstantValue valueLeft, ConstantValue valueRight,
+	public static CompileTimeValue subtract(CompileTimeValue valueLeft, CompileTimeValue valueRight,
 			EObject astNodeLeft, EObject astNodeRight) {
 		final ValueInvalid error = combineErrors(
 				requireValueType(valueLeft, ValueNumber.class, "left operand must be a number", astNodeLeft),
@@ -287,7 +287,7 @@ public abstract class ConstantValue {
 		return of(((ValueNumber) valueLeft).getValue().subtract(((ValueNumber) valueRight).getValue()));
 	}
 
-	public static ConstantValue multiply(ConstantValue valueLeft, ConstantValue valueRight,
+	public static CompileTimeValue multiply(CompileTimeValue valueLeft, CompileTimeValue valueRight,
 			EObject astNodeLeft, EObject astNodeRight) {
 		final ValueInvalid error = combineErrors(
 				requireValueType(valueLeft, ValueNumber.class, "left operand must be a number", astNodeLeft),
@@ -298,7 +298,7 @@ public abstract class ConstantValue {
 		return of(((ValueNumber) valueLeft).getValue().multiply(((ValueNumber) valueRight).getValue()));
 	}
 
-	public static ConstantValue divide(ConstantValue valueLeft, ConstantValue valueRight,
+	public static CompileTimeValue divide(CompileTimeValue valueLeft, CompileTimeValue valueRight,
 			EObject astNodeLeft, EObject astNodeRight) {
 		final ValueInvalid error = combineErrors(
 				requireValueType(valueLeft, ValueNumber.class, "left operand must be a number", astNodeLeft),
@@ -307,12 +307,12 @@ public abstract class ConstantValue {
 			return error;
 		}
 		if (((ValueNumber) valueRight).isZero()) {
-			return ConstantValue.error("division by zero not allowed in compile-time expressions", astNodeRight);
+			return CompileTimeValue.error("division by zero not allowed in compile-time expressions", astNodeRight);
 		}
 		return of(((ValueNumber) valueLeft).getValue().divide(((ValueNumber) valueRight).getValue()));
 	}
 
-	public static ConstantValue remainder(ConstantValue valueLeft, ConstantValue valueRight,
+	public static CompileTimeValue remainder(CompileTimeValue valueLeft, CompileTimeValue valueRight,
 			EObject astNodeLeft, EObject astNodeRight) {
 		final ValueInvalid error = combineErrors(
 				requireValueType(valueLeft, ValueNumber.class, "left operand must be a number", astNodeLeft),
@@ -327,10 +327,10 @@ public abstract class ConstantValue {
 	 * Combines all invalid values in the given values into a single invalid value or returns <code>null</code> if the
 	 * given values did not contain an invalid value. Ignores <code>null</code> values.
 	 */
-	public static ValueInvalid combineErrors(ConstantValue... values) {
+	public static ValueInvalid combineErrors(CompileTimeValue... values) {
 		boolean foundInvalid = false;
 		final List<EvalError> errors = new LinkedList<>();
-		for (ConstantValue currValue : values) {
+		for (CompileTimeValue currValue : values) {
 			if (currValue != null && !currValue.isValid()) {
 				foundInvalid = true;
 				errors.addAll(((ValueInvalid) currValue).getErrors());
@@ -339,7 +339,7 @@ public abstract class ConstantValue {
 		return foundInvalid ? new ValueInvalid(errors.toArray(new EvalError[errors.size()])) : null;
 	}
 
-	public static ValueInvalid requireValueType(ConstantValue value, Class<? extends ValueValid> type,
+	public static ValueInvalid requireValueType(CompileTimeValue value, Class<? extends ValueValid> type,
 			String message, EObject astNode) {
 		if (value == null) {
 			// probably due to broken AST
@@ -356,7 +356,7 @@ public abstract class ConstantValue {
 	}
 
 	// FIXME reconsider serialization / deserialization
-	public static String serialize(ConstantValue value) {
+	public static String serialize(CompileTimeValue value) {
 		if (value == null || !value.isValid()) {
 			return null;
 		} else if (value == UNDEFINED || value == NULL) {
@@ -370,11 +370,11 @@ public abstract class ConstantValue {
 		} else if (value instanceof ValueSymbol) {
 			return "$" + ((ValueSymbol) value).getSymbolName();
 		} else {
-			throw new UnsupportedOperationException("unknown subclass of ConstantValue: " + value);
+			throw new UnsupportedOperationException("unknown subclass of CompileTimeValue: " + value);
 		}
 	}
 
-	public static ConstantValue deserialize(String str) {
+	public static CompileTimeValue deserialize(String str) {
 		if (str == null) {
 			return null;
 		} else if (UNDEFINED.toString().equals(str)) {
@@ -397,7 +397,7 @@ public abstract class ConstantValue {
 					return new ValueSymbol(tail);
 				}
 			}
-			throw new UnsupportedOperationException("cannot deserialize ConstantValue from string: " + str);
+			throw new UnsupportedOperationException("cannot deserialize CompileTimeValue from string: " + str);
 		}
 	}
 }

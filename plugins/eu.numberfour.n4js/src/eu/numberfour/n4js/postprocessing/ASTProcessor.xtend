@@ -90,7 +90,7 @@ public class ASTProcessor extends AbstractProcessor {
 	@Inject
 	private ArrowFunctionProcessor arrowFunctionProcessor;
 	@Inject
-	private ConstantExpressionProcessor constantExpressionProcessor;
+	private CompileTimeExpressionProcessor constantExpressionProcessor;
 
 	/**
 	 * Called from N4JSPostProcessor.
@@ -130,7 +130,7 @@ public class ASTProcessor extends AbstractProcessor {
 			// step 0: process constant expressions & computed property names
 			// FIXME improve order, etc.
 			for(node : script.eAllContents.filter(Expression).toIterable) {
-				constantExpressionProcessor.evaluateConstantExpression(G, node, cache, 0);
+				constantExpressionProcessor.evaluateCompileTimeExpression(G, node, cache, 0);
 			}
 			for(node : script.eAllContents.filter(LiteralOrComputedPropertyName).toIterable) {
 				computedNameProcessor.computeName(G, node, cache, 0);

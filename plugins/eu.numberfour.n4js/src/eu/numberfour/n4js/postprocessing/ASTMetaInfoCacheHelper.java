@@ -26,7 +26,7 @@ import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
-import eu.numberfour.n4js.utils.ConstantValue;
+import eu.numberfour.n4js.utils.CompileTimeValue;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
 
@@ -61,7 +61,7 @@ public final class ASTMetaInfoCacheHelper {
 	/**
 	 * Convenience method for {@link ASTMetaInfoCache#getEvaluationResult(Expression)}.
 	 */
-	public ConstantValue getEvaluationResult(Expression expr) {
+	public CompileTimeValue getEvaluationResult(Expression expr) {
 		return getOrCreate((N4JSResource) expr.eResource()).getEvaluationResult(expr);
 	}
 

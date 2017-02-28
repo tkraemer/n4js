@@ -678,7 +678,7 @@ class N4JSLanguageUtils {
 	 * not for expressions that are only indirectly required to be a constant expression because they are nested in
 	 * another expression which is directly or indirectly required to be a constant expression.
 	 */
-	def static boolean isRequiredToBeConstantExpression(Expression expr) {
+	def static boolean isRequiredToBeCompileTimeExpression(Expression expr) {
 		val parent = expr.eContainer;
 		if(parent instanceof LiteralOrComputedPropertyName) {
 			return parent.kind===PropertyNameKind.COMPUTED && parent.expression===expr;

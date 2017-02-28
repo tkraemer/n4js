@@ -40,7 +40,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
 import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
-import eu.numberfour.n4js.utils.ConstantValue;
+import eu.numberfour.n4js.utils.CompileTimeValue;
 import eu.numberfour.n4js.utils.UtilN4;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
@@ -65,7 +65,7 @@ public final class ASTMetaInfoCache {
 	private final boolean hasBrokenAST;
 	private final Map<TypableElement, Result<TypeRef>> actualTypes = new HashMap<>();
 	private final Map<ParameterizedCallExpression, List<TypeRef>> inferredTypeArgs = new HashMap<>();
-	private final Map<Expression, ConstantValue> evalResults = new HashMap<>();
+	private final Map<Expression, CompileTimeValue> evalResults = new HashMap<>();
 
 	private final Map<VariableDeclaration, List<EObject>> localVariableReferences = new HashMap<>();
 
@@ -150,12 +150,12 @@ public final class ASTMetaInfoCache {
 		inferredTypeArgs.put(callExpr, Collections.unmodifiableList(new ArrayList<>(typeArgs)));
 	}
 
-	public ConstantValue getEvaluationResult(Expression expr) {
+	public CompileTimeValue getEvaluationResult(Expression expr) {
 		return evalResults.get(expr); // FIXME reconsider what to return for expression that aren't required to be
 										// constant expressions!
 	}
 
-	/* package */ void storeEvaluationResult(Expression expr, ConstantValue evalResult) {
+	/* package */ void storeEvaluationResult(Expression expr, CompileTimeValue evalResult) {
 		if (!isProcessingInProgress()) {
 			throw new IllegalStateException();
 		}

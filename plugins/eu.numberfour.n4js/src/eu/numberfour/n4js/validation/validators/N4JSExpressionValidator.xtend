@@ -106,7 +106,6 @@ import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
-import eu.numberfour.n4js.utils.ConstantValue.ValueInvalid
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.utils.PromisifyHelper
@@ -135,6 +134,7 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.utils.CompileTimeValue.ValueInvalid
 
 /**
  */
@@ -1651,7 +1651,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Check
 	def void checkMandatoryConstantExpression(Expression expr) {
-		if(N4JSLanguageUtils.isRequiredToBeConstantExpression(expr)) {
+		if(N4JSLanguageUtils.isRequiredToBeCompileTimeExpression(expr)) {
 			val evalResult = astMetaInfoCacheHelper.getEvaluationResult(expr);
 			if(evalResult instanceof ValueInvalid) {
 				if(isExpressionOfComputedPropertyNameInObjectLiteral(expr)) {
@@ -1661,7 +1661,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 						IssueCodes.EXP_COMPUTED_PROP_NAME_DISCOURAGED);
 					return;
 				}
-				for(error : evalResult.errors) {
+				for(error : evalResult.getErrors) {
 					val astNode = error.astNode;
 					if(astNode!==null) {
 						val msgFull = getMessageForEXP_COMPILE_TIME_MANDATORY(error.message);
