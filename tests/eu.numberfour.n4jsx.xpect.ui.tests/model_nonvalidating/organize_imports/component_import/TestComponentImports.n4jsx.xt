@@ -19,7 +19,7 @@
 	END_SETUP 
  */
 
-/* XPECT organizeImports --- 
+/* XPECT organizeImports ---
 + import {Cls} from "linking/ClassComponent"
 | [var|;]
 + import {Func} from "linking/FunctionComponent";
@@ -28,6 +28,10 @@
   console.log(fc, cc);
 --- */
 
+
+
+// XPECT errors ---> "JSX element is expected to bind to either a function or class, but bind to type [unknown] instead." at "Func"
 var fc = <Func myProp="My prop"/>;
+// XPECT errors ---> "JSX element is expected to bind to either a function or class, but bind to type [unknown] instead." at "Cls"
 var cc = <Cls prop={5}/>;
 console.log(fc, cc);
