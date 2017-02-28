@@ -1465,16 +1465,16 @@ function i() {
     let b = aib as B;
     a.f = 23;
     b.f = "text";
-    let x = aib.f; // x = {1 & "h"} which is impossible
+    let x = aib.f; // x = {23 & "text"} which is impossible
 }
 // type of 'aub.f' --> int|string
 let fu = aub.f;
 // type of 'aub.f' --> int&string
 aub.f = undefined;
 // type of 'aib.f' --> int&string
-let fi = aub.f;
+let fi = aib.f;
 // type of 'aib.f' --> int|string
-aub.f = undefined;
+aib.f = undefined;
 ----
 
 Note that no instance `aib` of intersection type `A&B` can be instantiated, since the instance's class would have to define a field `f` which would have to comply to both of the interfaces `A` and `B`.
@@ -2106,12 +2106,12 @@ The type of a field, of a getter or of the parameter of a setter is indicated in
 | Members                2+|   S=T   2+|                S≠T
 |                        h| R  h|  W  h|     R          h|    W
 
-|Field<S>  \| Field<T>   2+| Field<S>  | Getter<S\|T>    | Setter<S&T>
-|Getter<S> \| Getter<T>  | Getter<S> |-| Getter<S\|T>    | -
-|Setter<S> \| Setter<T>  |-| Setter<S> | -               | Setter<S&T>
-|Field<S>  \| Getter<T>  | Getter<S> |-| Getter<S\|T>    | -
-|Field<S>  \| Setter<T>  |-| Setter<S> | -               | Setter<S&T>
-|Getter<S> \| Setter<T>  | -    |-     | -               | -
+|field:S  \| field:T   2+| field:S  | getter:S\|T    | setter:S&T
+|getter:S \| getter:T  | getter:S |-| getter:S\|T    | -
+|setter:S \| setter:T  |-| setter:S | -              | setter:S&T
+|field:S  \| getter:T  | getter:S |-| getter:S\|T    | -
+|field:S  \| setter:T  |-| setter:S | -              | setter:S&T
+|getter:S \| setter:T  | -    |-    | -              | -
 |===
 
 ===== Remarks on union type’s members:
@@ -2240,12 +2240,12 @@ The type of a field, of a getter or of the parameter of a setter is indicated in
 | Members                2+|   S=T   2+|                S≠T
 |                        h| R  h|  W  h|     R          h|    W
 
-|Field<S>   & Field<T>   2+| Field<S>  | Getter<S&T>     | Setter<S\|T>
-|Getter<S>  & Getter<T>  | Getter<S> |-| Getter<S&T>     | -
-|Setter<S>  & Setter<T>  |-| Setter<S> | -               | Setter<S\|T>
-|Field<S>   & Getter<T>  2+| Field<S>  | Getter<S&T>     | Setter<S>
-|Field<S>   & Setter<T>  2+| Field<S>  | Getter<S>       | Setter<S\|T>
-|Getter<S>  & Setter<T>  2+| Field<S>  | Getter<S>       | Setter<T>
+|field:S   & field:T   2+| field:S  | getter:S&T     | setter:S\|T
+|getter:S  & getter:T  | getter:S |-| getter:S&T     | -
+|setter:S  & setter:T  |-| setter:S | -               | setter:S\|T
+|field:S   & getter:T  2+| field:S  | getter:S&T     | setter:S
+|field:S   & setter:T  2+| field:S  | getter:S       | setter:S\|T
+|getter:S  & setter:T  2+| field:S  | getter:S       | setter:T
 |===
 
 
