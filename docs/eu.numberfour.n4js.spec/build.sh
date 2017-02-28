@@ -8,7 +8,7 @@ set -e +x -v
 ########## Directory Locations ###########
 # output folder:
 GEN_FOLDER=generated-docs/
-
+ATTRS="-a stylesheet=foundation.min.css -a docinfodir=headers "
 rm -rf ./$GEN_FOLDER/; mkdir -p ./$GEN_FOLDER/
 
 # Copy resources to ./$GEN_FOLDER/
@@ -16,27 +16,26 @@ cp -r styles images scripts chapters ./$GEN_FOLDER/
 
 
 ############## Build HTML for gh-pages #############
-
-# TODO remove hard-coded paths: $WORKSPACE should not be used instead rely on relative paths or parameters.
 if [ "${1}" == "--jenkins" ]; then
-	ASPEC="$WORKSPACE/asciispec/bin/asciispec"
-	FOP="$WORKSPACE/fopub/fopub"
-	GEN_FOLDER="$WORKSPACE/${LOCAL_CHECKOUT:-}docs/"
-	DOCS_DIR="$WORKSPACE/${LOCAL_CHECKOUT:-}docs/eu.numberfour.n4js.spec"
-	SPEC="$DOCS_DIR/N4JSSpec.adoc"
+	
+	# which document to convert 
+	SPEC="N4JSSpec.adoc"
+	
+	# the output directory
+	GEN_FOLDER="../generated-docs/spec"
 
 	rm -rf $GEN_FOLDER; mkdir -p $GEN_FOLDER
 	# Copy resources to ./$GEN_FOLDER/
-	cp -r $DOCS_DIR/styles $DOCS_DIR/images $DOCS_DIR/scripts $GEN_FOLDER/
+	cp -r ./styles ./images ./scripts ./chapters $GEN_FOLDER/
 
-	$ASPEC $ATTRS -D $GEN_FOLDER $SPEC 
+	asciispec $ATTRS -D $GEN_FOLDER $SPEC 
 	$ASPEC -b docbook -D $GEN_FOLDER $SPEC 
 	$FOP $GEN_FOLDER/N4JSSpec.xml 
 	rm $GEN_FOLDER/N4JSSpec.xml
 	exit 0
 fi
 
-asciispec -a stylesheet=foundation.min.css -a docinfodir=headers -D $GEN_FOLDER/ N4JSSpec.adoc 
+asciispec $ATTRS -D $GEN_FOLDER N4JSSpec.adoc 
 
 # running "./build.sh -p" (preview) will skip PDF and launch index.html
 if [ "${1}" == "--preview" ] || [ "${1}" == "-p" ]; then
