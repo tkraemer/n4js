@@ -1,0 +1,13 @@
+import * as React from "react"
+
+export function Func(props: ~React.ComponentProps with {myProp: string}): React.Element<?> {
+	return (<div>{props.myProp}</div>);
+}
+
+//class MyProps implements React.ComponentProps{}
+export class Cls extends React.Component<~Object with {prop: int}, Object> {
+	@Override
+	public render(): React.Element<~Object with {prop: int}> {
+		return <button/>
+	}
+}

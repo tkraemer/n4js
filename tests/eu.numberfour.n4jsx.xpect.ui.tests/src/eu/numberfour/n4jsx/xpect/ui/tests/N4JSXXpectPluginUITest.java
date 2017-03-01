@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.xpect.ui.tests;
+package eu.numberfour.n4jsx.xpect.ui.tests;
 
 import org.junit.runner.RunWith;
 import org.xpect.XpectImport;
@@ -20,11 +20,15 @@ import org.xpect.xtext.lib.tests.LinkingTest;
 import org.xpect.xtext.lib.tests.ResourceDescriptionTest;
 import org.xpect.xtext.lib.tests.ValidationTest;
 
-import eu.numberfour.n4js.xpect.methods.FindReferencesXpectMethod;
 import eu.numberfour.n4js.xpect.methods.NoerrorsXpectMethod;
 import eu.numberfour.n4js.xpect.methods.TypeXpectMethod;
 import eu.numberfour.n4js.xpect.methods.scoping.ScopeXpectMethod;
-import eu.numberfour.n4js.xpect.ui.methods.OutputXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.HyperlinkXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.OrganizeImportXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.OutlineXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.ProposalXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.contentassist.ContentAssistXpectMethod;
+import eu.numberfour.n4js.xpect.ui.methods.quickfix.QuickFixXpectMethod;
 import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 
 /**
@@ -37,12 +41,16 @@ import eu.numberfour.n4js.xpect.validation.suppression.SuppressIssuesSetup;
 		ScopeXpectMethod.class,
 		ResourceDescriptionTest.class,
 		ValidationTest.class,
-		OutputXpectMethod.class,
-		FindReferencesXpectMethod.class
+		OutlineXpectMethod.class,
+		QuickFixXpectMethod.class,
+		ContentAssistXpectMethod.class,
+		ProposalXpectMethod.class,
+		HyperlinkXpectMethod.class,
+		OrganizeImportXpectMethod.class
 })
 @RunWith(XpectRunner.class)
-@XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "testdata", fileExtensions = "xt")
+@XpectTestFiles(relativeTo = FileRoot.PROJECT, baseDir = "testdata_ui", fileExtensions = "xt")
 @XpectImport(SuppressIssuesSetup.class)
-public class N4JSXpectPluginTest {
+public class N4JSXXpectPluginUITest {
 	//
 }
