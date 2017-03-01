@@ -97,6 +97,7 @@ import eu.numberfour.n4js.ui.internal.EclipseBasedN4JSWorkspace;
 import eu.numberfour.n4js.ui.labeling.N4JSContentAssistLabelProvider;
 import eu.numberfour.n4js.ui.labeling.N4JSHoverProvider;
 import eu.numberfour.n4js.ui.labeling.N4JSHyperlinkLabelProvider;
+import eu.numberfour.n4js.ui.organize.imports.IReferenceFilter;
 import eu.numberfour.n4js.ui.preferences.N4JSBuilderPreferenceAccess;
 import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseCore;
 import eu.numberfour.n4js.ui.quickfix.N4JSIssue;
@@ -111,6 +112,7 @@ import eu.numberfour.n4js.utils.process.OutputStreamProvider;
 import eu.numberfour.n4jsx.ui.contentassist.ContentAssistContextFactory;
 import eu.numberfour.n4jsx.ui.contentassist.CustomN4JSXParser;
 import eu.numberfour.n4jsx.ui.editor.syntaxcoloring.ParserBasedDocumentTokenSource;
+import eu.numberfour.n4jsx.ui.organize.imports.N4JSXReferencesFilter;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -545,5 +547,10 @@ public class N4JSXUiModule extends eu.numberfour.n4jsx.ui.AbstractN4JSXUiModule 
 	/** Performance workaround, see https://github.com/NumberFour/n4js/issues/246 */
 	public Class<? extends ContentFormatter> bindContentFormatter() {
 		return FixedContentFormatter.class;
+	}
+
+	/** Languages variation point for the organize imports */
+	public Class<? extends IReferenceFilter> bindContentReferenceFilter() {
+		return N4JSXReferencesFilter.class;
 	}
 }

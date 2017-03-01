@@ -36,7 +36,7 @@ import com.google.inject.Inject;
 import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.ui.organize.imports.BreakException;
 import eu.numberfour.n4js.ui.organize.imports.Interaction;
-import eu.numberfour.n4js.ui.organize.imports.N4JSOrganizeImportsHandler;
+import eu.numberfour.n4js.ui.organize.imports.UnsafeImortsOrganizer;
 import eu.numberfour.n4js.xpect.common.EclipseGracefulUIShutdownEnabler;
 import eu.numberfour.n4js.xpect.common.XpectCommentRemovalUtil;
 import eu.numberfour.n4js.xpect.ui.methods.contentassist.N4ContentAssistProcessorTestBuilder;
@@ -54,8 +54,9 @@ public class OrganizeImportXpectMethod {
 
 	private final static Logger logger = Logger.getLogger(OrganizeImportXpectMethod.class);
 
+	// TODO IDE-2539 switch to OrganizeImportsService
 	@Inject
-	N4JSOrganizeImportsHandler organizeImportsHandler;
+	UnsafeImortsOrganizer imortsOrganizer;
 
 	@Inject
 	private N4ContentAssistProcessorTestBuilderHelper n4ContentAssistProcessorTestBuilderHelper;
@@ -111,7 +112,7 @@ public class OrganizeImportXpectMethod {
 
 			// Calling organize imports
 			Display.getDefault().syncExec(
-					() -> organizeImportsHandler.doOrganizeImports(xtextDoc, iaMode));
+					() -> imortsOrganizer.unsafeOrganizeDocument(xtextDoc, iaMode));
 
 			if (bAmbiguityCheck) {
 				// should fail if here

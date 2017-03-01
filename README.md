@@ -48,7 +48,7 @@ https://github.com/NumberFour/n4js/blob/master/releng/eu.numberfour.n4js.targetp
 
 ## Documentation
 
-- [User Guides and Tutorials](http://numberfour.github.io/n4js/documentation/): IDE Setup, writing type safe Node.js modules and exporting as npm with the N4JS IDE
+- [User Guides and Tutorials](http://numberfour.github.io/n4js/userguides): IDE Setup, writing type safe Node.js modules and exporting as npm with the N4JS IDE
 - [N4JS Language Specification (PDF)](https://goo.gl/2Lv2Te)
 - [Complete Feature Table](https://numberfour.github.io/n4js/features/)
 - [Release Notes](https://numberfour.github.io/n4js/releases/)

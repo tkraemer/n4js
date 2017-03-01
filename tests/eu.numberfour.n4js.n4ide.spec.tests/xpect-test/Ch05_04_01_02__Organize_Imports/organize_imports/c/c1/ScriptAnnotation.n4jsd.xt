@@ -18,7 +18,7 @@
 
 
 @@Global @@ProvidedByRuntime
-import { URLUtils } from "URLUtils"
+import { URLUtils } from "URLUtils";
 
 export public interface ~Location extends URLUtils {
     public assign(url : string) : void;

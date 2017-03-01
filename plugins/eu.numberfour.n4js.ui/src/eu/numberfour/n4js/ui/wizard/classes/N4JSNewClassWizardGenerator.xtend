@@ -10,15 +10,15 @@
  */
 package eu.numberfour.n4js.ui.wizard.classes
 
-import java.util.Map
-import org.eclipse.emf.common.util.URI
 import com.google.inject.Inject
+import eu.numberfour.n4js.projectModel.IN4JSProject
+import eu.numberfour.n4js.ui.wizard.classifiers.N4JSNewClassifierWizardGenerator
+import eu.numberfour.n4js.ui.wizard.generator.ImportRequirement
+import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver
 import eu.numberfour.n4js.ui.wizard.generator.WizardGeneratorHelper
 import java.util.ArrayList
-import eu.numberfour.n4js.projectModel.IN4JSProject
-import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver.ImportRequirement
-import eu.numberfour.n4js.ui.wizard.generator.N4JSImportRequirementResolver
-import eu.numberfour.n4js.ui.wizard.classifiers.N4JSNewClassifierWizardGenerator
+import java.util.Map
+import org.eclipse.emf.common.util.URI
 
 /**
  * A file generator for {@link N4JSClassWizardModel}

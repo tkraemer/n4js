@@ -14,14 +14,14 @@
      
    +   // <-- obsolete
      import { a } from "a/ExpVar" 
-   - import { x } from "a/ExpVar"  // <-- obsolete
+   | [import { x } from "a/ExpVar"|];  [// <-- obsolete|]
      var a2 = a;
      // var x2 = x;
 --- */
 
 import { a } from "a/ExpVar" 
 // XPECT warnings --> "The import of x is unused." at "x"
-import { x } from "a/ExpVar"  // <-- obsolete
+import { x } from "a/ExpVar";  // <-- obsolete
 
 
 var a2 = a;

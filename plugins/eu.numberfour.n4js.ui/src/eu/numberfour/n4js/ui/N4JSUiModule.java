@@ -107,6 +107,8 @@ import eu.numberfour.n4js.ui.internal.EclipseBasedN4JSWorkspace;
 import eu.numberfour.n4js.ui.labeling.N4JSContentAssistLabelProvider;
 import eu.numberfour.n4js.ui.labeling.N4JSHoverProvider;
 import eu.numberfour.n4js.ui.labeling.N4JSHyperlinkLabelProvider;
+import eu.numberfour.n4js.ui.organize.imports.IReferenceFilter;
+import eu.numberfour.n4js.ui.organize.imports.N4JSReferencesFilter;
 import eu.numberfour.n4js.ui.preferences.N4JSBuilderPreferenceAccess;
 import eu.numberfour.n4js.ui.projectModel.IN4JSEclipseCore;
 import eu.numberfour.n4js.ui.quickfix.N4JSIssue;
@@ -558,5 +560,10 @@ public class N4JSUiModule extends eu.numberfour.n4js.ui.AbstractN4JSUiModule {
 	/** Performance workaround, see https://github.com/NumberFour/n4js/issues/246 */
 	public Class<? extends ContentFormatter> bindContentFormatter() {
 		return FixedContentFormatter.class;
+	}
+
+	/** Languages variation point for the organize imports */
+	public Class<? extends IReferenceFilter> bindContentReferenceFilter() {
+		return N4JSReferencesFilter.class;
 	}
 }

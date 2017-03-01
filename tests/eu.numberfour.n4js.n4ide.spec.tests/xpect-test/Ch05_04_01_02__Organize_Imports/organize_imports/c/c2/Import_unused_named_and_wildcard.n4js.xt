@@ -21,7 +21,7 @@
    - import { 
    | [B, IB } from "a/a2/A"|/]
    | [/|]/var N.A a = new A(); //  'a/a1/A'
-   + import { B, IB } from "a/a2/A"
+   + import { B, IB } from "a/a2/A";
      var b : B = new B(); //  'a/a2/A'
      //var N.IA ia; //  'a/a1/A'
      var ib : IB; //  'a/a2/A'
