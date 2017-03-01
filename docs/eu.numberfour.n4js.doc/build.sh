@@ -40,7 +40,8 @@ do
 	HEADER_DIR=$(basename $(dirname $f))
 	OUT_FOLDER=./$GEN_FOLDER/$(dirname $f)
 	ASPEC=asciidoctor
-	ATTRS="-a doctype=book -a experimental=true -a stylesheet=n4js-adoc.css -a docinfo1=true -a highlightjs-theme=n4jshighlighter -a source-highlighter=highlightjs "	
+	ATTRS="-a doctype=book -a experimental=true -a stylesheet=n4js-adoc.css -a docinfo1=true -a highlightjs-theme=n4jshighlighter"
+	ATTRS2="-a linkcss=true -a source-highlighter=highlightjs "
 
 	# If Jenkins is building, then use AsciiSpec
 	if [ "${1}" == "--jenkins" ]; then
@@ -51,8 +52,8 @@ do
 	mkdir -p $OUT_FOLDER
 
 	# TODO add prism.js to headers, remove highlightjsdir below!
-	$ASPEC $ATTRS  -a stylesdir=${REL_PATH}../res/styles  -a highlightjsdir=${REL_PATH}../res/scripts \
-	-a docinfodir=${REL_PATH}../res/headers/$HEADER_DI -D $OUT_FOLDER $ADOC_FILE
+	$ASPEC $ATTRS $ATTRS2 -a stylesdir=${REL_PATH}../res/styles  -a highlightjsdir=${REL_PATH}../res/scripts \
+	-a docinfodir=${REL_PATH}../res/headers/$HEADER_DIR -D $OUT_FOLDER $ADOC_FILE
 
 done
 
