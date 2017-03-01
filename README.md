@@ -49,7 +49,7 @@ https://github.com/NumberFour/n4js/blob/master/releng/eu.numberfour.n4js.targetp
 ## Documentation
 
 - [User Guides and Tutorials](http://numberfour.github.io/n4js/userguides): IDE Setup, writing type safe Node.js modules and exporting as npm with the N4JS IDE
-- [N4JS Language Specification (PDF)](https://goo.gl/2Lv2Te)
+- [N4JS Language Specification](http://numberfour.github.io/n4js/spec/N4JSSpec.html)
 - [Complete Feature Table](https://numberfour.github.io/n4js/features/)
 - [Release Notes](https://numberfour.github.io/n4js/releases/)
 
@@ -96,7 +96,7 @@ The existence of ```local-snapshot-deploy-folder``` will trigger a profile enabl
 
 ## License
 
-Copyright (c) 2016 NumberFour AG.
+Copyright (c) 2017 NumberFour AG.
 
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
