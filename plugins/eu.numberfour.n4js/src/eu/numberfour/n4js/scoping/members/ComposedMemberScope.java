@@ -48,6 +48,9 @@ import it.xsemantics.runtime.RuleEnvironment;
  * <p>
  * Note that there cannot be static access to a union or intersection type, since a definition of a composed type
  * actually is a reference.
+ * <p>
+ * See Chapter 8.8. Scoping for Members of Composed Type (Union/Intersection) Example of the N4JS Design Document to
+ * understand the implementation with an example.
  */
 public abstract class ComposedMemberScope extends AbstractScope {
 

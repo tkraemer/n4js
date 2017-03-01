@@ -46,6 +46,11 @@ public class UnionMemberFactory extends ComposedMemberFactory {
 		return null;
 	}
 
+	/**
+	 * Retrieve the member type, i.e. method, field, setter or getter, of the composed member of the union.
+	 * <p>
+	 * See Chapter 4.10. Union and Intersection Type (Composed Types) for merge rules.
+	 */
 	@Override
 	protected MemberType getNewMemberType() {
 		// mix of all memberTypes
