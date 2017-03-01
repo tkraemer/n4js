@@ -41,7 +41,7 @@ do
 	OUT_FOLDER=./$GEN_FOLDER/$(dirname $f)
 	ASPEC=asciidoctor
 	ATTRS="-a doctype=book -a experimental=true -a stylesheet=n4js-adoc.css -a docinfo1=true -a highlightjs-theme=n4jshighlighter"
-	ATTRS2="-a linkcss=true -a source-highlighter=highlightjs "
+	ATTRS2="-a linkcss=true -a source-highlighter=highlightjs -a icons=font"
 
 	# If Jenkins is building, then use AsciiSpec
 	if [ "${1}" == "--jenkins" ]; then
@@ -52,7 +52,7 @@ do
 	mkdir -p $OUT_FOLDER
 
 	# TODO add prism.js to headers, remove highlightjsdir below!
-	$ASPEC $ATTRS $ATTRS2 -a stylesdir=${REL_PATH}../res/styles  -a highlightjsdir=${REL_PATH}../res/scripts \
+	$ASPEC $ATTRS $ATTRS2 -a stylesdir=${REL_PATH}../res/styles  -a highlightjsdir=${REL_PATH}/scripts \
 	-a docinfodir=${REL_PATH}../res/headers/$HEADER_DIR -D $OUT_FOLDER $ADOC_FILE
 
 done
@@ -60,7 +60,7 @@ done
 
 # Delete unwanted source files.
 pushd ./$GEN_FOLDER/
-find . -name "*.adoc" -delete && find . -name "*.graffle" -delete
+	find . -name "*.adoc" -delete && find . -name "*.graffle" -delete
 popd
 
 # If Jenkins is building, move generated docs
@@ -71,6 +71,6 @@ fi
 
 # Adding -p flag for launching pages after build
 if [ "${1}" == "--preview" ] || [ "${1}" == "-p" ]; then
-open ./$GEN_FOLDER/index.html
-exit 0
+	open ./$GEN_FOLDER/index.html
+	exit 0
 fi
