@@ -21,7 +21,7 @@ relpath() {
 GEN_FOLDER=generated-docs
 echo copying resources to ./$GEN_FOLDER/
 
-rm -r ./$GEN_FOLDER/; mkdir ./$GEN_FOLDER/ 
+rm -rf ./$GEN_FOLDER/; mkdir ./$GEN_FOLDER/ 
 cp -r ./res/scripts ./res/styles ./src/articles ./src/faq ./src/features ./src/images ./src/releases  ./src/userguides ./$GEN_FOLDER/
 cp ./src/index.html ./$GEN_FOLDER/index.html 
 
@@ -40,9 +40,7 @@ do
 	HEADER_DIR=$(basename $(dirname $f))
 	OUT_FOLDER=./$GEN_FOLDER/$(dirname $f)
 	ASPEC=asciidoctor
-	ATTRS="-a doctype=book -a experimental=true -a stylesheet=n4js-adoc.css -a docinfo1=true \ 
-	-a highlightjs-theme=n4jshighlighter -a source-highlighter=highlightjs "	
-
+	ATTRS="-a doctype=book -a experimental=true -a stylesheet=n4js-adoc.css -a docinfo1=true -a highlightjs-theme=n4jshighlighter -a source-highlighter=highlightjs "	
 
 	# If Jenkins is building, then use AsciiSpec
 	if [ "${1}" == "--jenkins" ]; then
@@ -52,6 +50,7 @@ do
 
 	mkdir -p $OUT_FOLDER
 
+	# TODO add prism.js to headers, remove highlightjsdir below!
 	$ASPEC $ATTRS  -a stylesdir=${REL_PATH}../res/styles  -a highlightjsdir=${REL_PATH}../res/scripts \
 	-a docinfodir=${REL_PATH}../res/headers/$HEADER_DI -D $OUT_FOLDER $ADOC_FILE
 
