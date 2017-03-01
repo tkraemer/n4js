@@ -612,7 +612,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-si
 
 .listingblock code[data-lang]:before { display: none; content: attr(data-lang); position: absolute; font-size: 0.75em; top: 0.425rem; right: 0.5rem; line-height: 1; text-transform: uppercase; color: #999; padding-right: 2rem; }
 
-.listingblock:hover code[data-lang]:before { display: block; }
+.listingblock:hover code[data-lang]:before { display: none; }
 
 .listingblock.terminal pre .command:before { content: attr(data-prompt); padding-right: 0.5em; color: #999; }
 
