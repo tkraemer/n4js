@@ -56,7 +56,7 @@ To contribute or improve N4JS help, https://help.github.com/articles/fork-a-repo
 All documentation for N4JS is written in AsciiDoc (`.adoc` format) and is deployed using a single-source toolchain described below.
 The source documentation is located in the NumberFour N4JS repository at:
 
-`https://github.numberfour.eu/NumberFour/n4js/tree/master/docs[NumberFour/n4js/docs]`
+`https://github.com/NumberFour/n4js/tree/master/docs[NumberFour/n4js/docs]`
 
 The IDE is built using https://maven.apache.org/[Apache Maven] and running `mvn verify` builds the N4JS IDE including documentation at the following directory: `n4js/docs/eu.numberfour.n4js.doc/target`.
 
