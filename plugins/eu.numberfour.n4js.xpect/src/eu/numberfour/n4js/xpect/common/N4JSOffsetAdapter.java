@@ -49,20 +49,31 @@ public class N4JSOffsetAdapter {
 	 */
 	public static interface IEObjectCoveringRegion extends IEObjectOwner {
 		// no new fields
+		/**
+		 * Return the offset of the region
+		 */
+		public int getOffset();
 	}
 
 	/***/
 	public static class EObjectCoveringRegion implements IEObjectCoveringRegion {
 		final EObject eObj;
+		int offset;
 
 		/***/
-		public EObjectCoveringRegion(EObject eObj) {
+		public EObjectCoveringRegion(EObject eObj, int offset) {
 			this.eObj = eObj;
+			this.offset = offset;
 		}
 
 		@Override
 		public EObject getEObject() {
 			return eObj;
+		}
+
+		@Override
+		public int getOffset() {
+			return offset;
 		}
 	}
 
@@ -126,7 +137,7 @@ public class N4JSOffsetAdapter {
 				}
 				node = node.getParent();
 			}
-			return new EObjectCoveringRegion(semanticObject);
+			return new EObjectCoveringRegion(semanticObject, offset);
 		}
 	}
 

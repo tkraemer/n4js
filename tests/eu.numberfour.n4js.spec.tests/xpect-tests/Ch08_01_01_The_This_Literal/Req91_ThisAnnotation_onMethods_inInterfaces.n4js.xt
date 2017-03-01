@@ -21,7 +21,7 @@ interface C {
 	}
 	// XPECT noerrors -->
 	@This(C&I) m04() {
-		// requires property access for intersection types XPECT FIXME noerrors -->
+		// requires property access for intersection types XPECT noerrors -->
 		this.mi();
 	}
 
