@@ -9,8 +9,8 @@ class C {
 //XPECT elementKeyword at 'c' --> variable
 var c: C;
 
-//XPECT elementKeyword at 'f' --> function
-function f() {};
+//XPECT elementKeyword at 'myFunc' --> function
+function myFunc() {};
 
 interface I {
 	fld: int;
