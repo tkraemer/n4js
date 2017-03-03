@@ -24,7 +24,11 @@ import com.google.inject.Inject;
 
 import eu.numberfour.n4js.postprocessing.ASTProcessor;
 import eu.numberfour.n4js.resource.PostProcessingAwareResource.PostProcessor;
+import eu.numberfour.n4js.ts.typeRefs.StructuralTypeRef;
+import eu.numberfour.n4js.ts.types.ContainerType;
+import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TModule;
+import eu.numberfour.n4js.ts.types.TStructuralType;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.typesbuilder.N4JSTypesBuilder;
@@ -58,7 +62,8 @@ public class N4JSPostProcessor implements PostProcessor {
 	public void performPostProcessing(PostProcessingAwareResource resource, CancelIndicator cancelIndicator) {
 		final boolean hasBrokenAST = !resource.getErrors().isEmpty();
 		try {
-			doPerformPostProcessing(resource, cancelIndicator);
+			// we assume this will not be called for other PostProcessingAwareResource than N4JSResource
+			postProcessN4JSResource((N4JSResource) resource, cancelIndicator);
 		} catch (Throwable th) {
 			if (hasBrokenAST) {
 				// swallow exception, AST is broken due to parse error anyway
@@ -71,20 +76,18 @@ public class N4JSPostProcessor implements PostProcessor {
 		}
 	}
 
-	private void doPerformPostProcessing(PostProcessingAwareResource resource, CancelIndicator cancelIndicator) {
-		final N4JSResource resCasted = (N4JSResource) resource;
+	private void postProcessN4JSResource(N4JSResource resource, CancelIndicator cancelIndicator) {
 		// step 1: process the AST (resolve all proxies in AST, infer type of all typable AST nodes, etc.)
-		astProcessor.processAST(resCasted, cancelIndicator);
+		astProcessor.processAST(resource, cancelIndicator);
 		// step 2: expose internal types visible from outside
 		// (i.e. if they are referenced from a type that is visible form the outside)
-		exposeReferencedInternalTypes(resCasted);
+		exposeReferencedInternalTypes(resource);
 		// step 3: resolve remaining proxies in TModule
 		// (the TModule was created programmatically, so it usually does not contain proxies; however, in case of
 		// explicitly declared types, the types builder copies type references from the AST to the corresponding
 		// TModule element *without* resolving proxies, so the TModule might contain lazy-cross-ref proxies; most of
 		// these should have been resolved during AST traversal and exposing internal types, but some can be left)
-		final TModule module = resCasted.getModule();
-		EcoreUtil.resolveAll(module);
+		EcoreUtil.resolveAll(resource.getModule());
 	}
 
 	/**
@@ -120,6 +123,13 @@ public class N4JSPostProcessor implements PostProcessor {
 						exposeType(currObj);
 				} else
 					exposeType(currTarget);
+			} else {
+				final Object currTarget = object.eGet(currRef);
+				if (currTarget instanceof StructuralTypeRef) {
+					StructuralTypeRef structuralTrg = (StructuralTypeRef) currTarget;
+					TStructuralType structuralType = structuralTrg.getStructuralType();
+					exposeType(structuralType);
+				}
 			}
 		}
 	}
@@ -131,11 +141,13 @@ public class N4JSPostProcessor implements PostProcessor {
 	private static void exposeType(Object object) {
 		if (!(object instanceof EObject) || ((EObject) object).eIsProxy())
 			return;
+
 		// object might not be a type but reside inside a type, e.g. field of a class
 		// --> so search for the root, i.e. the ancestor directly below the TModule
 		EObject root = (EObject) object;
 		while (root != null && !(root.eContainer() instanceof TModule))
 			root = root.eContainer();
+
 		if (root instanceof Type
 				&& root.eContainingFeature() == TypesPackage.eINSTANCE.getTModule_InternalTypes()) {
 			final TModule module = (TModule) root.eContainer();
@@ -143,6 +155,19 @@ public class N4JSPostProcessor implements PostProcessor {
 			EcoreUtilN4.doWithDeliver(false, () -> {
 				module.getExposedInternalTypes().add((Type) rootFinal);
 			}, module, root); // note: root already contained in resource, so suppress notifications also in root!
+
+			// follow members
+			followMembers(rootFinal);
+		}
+	}
+
+	private static void followMembers(EObject currTypes) {
+		if (currTypes instanceof ContainerType) {
+			@SuppressWarnings("unchecked")
+			ContainerType<? extends TMember> ct = (ContainerType<? extends TMember>) currTypes;
+			ct.getOwnedMembers().forEach(m -> {
+				exposeTypesReferencedBy(m);
+			});
 		}
 	}
 }

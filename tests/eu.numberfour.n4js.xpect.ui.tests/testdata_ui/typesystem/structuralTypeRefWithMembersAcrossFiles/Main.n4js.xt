@@ -13,6 +13,7 @@
 			SrcFolder {
 				Folder "i" {
 					File "Importee.n4js" {}
+					File "NestedMultiLevel.n4js" {}
 				}
 			}
 			File "manifest.n4mf" { from="./manifestImportee.n4mf" }
@@ -24,6 +25,7 @@
 
 
 import * as I from "i/Importee"
+import { exportedVar } from "i/NestedMultiLevel";
 
 var p : I.Provider;
 
@@ -46,3 +48,6 @@ p.f3.value.n;
 // XPECT hyperlinks at 'n<|>' --> n: "n" (TStructField) in "m1" (N4MethodDeclaration) in "Provider" (N4ClassDeclaration) in file Importee.n4js
 p.m1().n;
 
+
+// XPECT hyperlinks at 'prop<|>' --> prop: "prop"(PropertyNameValuePair) in "obj3"(PropertyNameValuePair) in "obj2"(PropertyNameValuePair) in "obj1"(PropertyNameValuePair) in "exportedVar"(ExportedVariableDeclaration) in file NestedMultiLevel.n4js
+exportedVar.obj1.obj2.obj3.prop;

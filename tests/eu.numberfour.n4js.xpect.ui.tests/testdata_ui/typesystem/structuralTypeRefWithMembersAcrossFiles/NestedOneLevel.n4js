@@ -1,0 +1,7 @@
+export public var exportedVar = {
+    obj1: {
+    	prop : 0
+    }
+};
+
+
