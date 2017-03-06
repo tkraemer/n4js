@@ -1,0 +1,14 @@
+export class A {
+	private s;
+	private m() {}
+}
+
+export interface B {
+	s;
+	m() {}
+}
+
+export interface C {
+	public s;
+	public m() {}
+}

@@ -1,6 +1,7 @@
 :toc: right
 :toc-title: Jump to topic:
 :commandkey: &#8984;
+:bib-file: ../../res/n4js.bib
 
 .N4JS Tutorial
 = N4JS Tutorial
@@ -1319,3 +1320,8 @@ n4js.example.tasks@0.0.1 /Users/me/prj/n4js.example.tasks
 $ ./node_modules/.bin/n4js n4js.example.tasks/launch
 HTTP server listening on http://localhost:4000/
 ----
+
+[bibliography]
+== Bibliography
+
+bibliography::[]

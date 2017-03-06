@@ -1280,9 +1280,9 @@ class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRel
 	
 	/* Convenience method, returns true if this or one of the preceding parameters have an initializer. */
 	op boolean isOptional() {
-		val EList<TFormalParameter> fpars = switch(eContainer) {
-            TFunction: (eContainer as TFunction).fpars
-            FunctionTypeExprOrRef: (eContainer as FunctionTypeExprOrRef).fpars
+		val EList<TFormalParameter> fpars = switch (eContainer) {
+            TFunction:				(eContainer as TFunction).fpars
+            FunctionTypeExprOrRef:	(eContainer as FunctionTypeExprOrRef).fpars
             default: return false
         };
 		
@@ -1294,7 +1294,8 @@ class TFormalParameter extends IdentifiableElement, TAnnotableElement, SyntaxRel
 		}
 		return false;
 	}
-	/* Convenience method, returns true if typeRef undef modifier is optional or variadic. */
+	/* Convenience method, returns true iff this fpar is optional or variadic. */
+	// FIXME: remove this method, since isOptional returns the same result
 	op boolean isVariadicOrOptional() {
 		return variadic || optional;
 	}

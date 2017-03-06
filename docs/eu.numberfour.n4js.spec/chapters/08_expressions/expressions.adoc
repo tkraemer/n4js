@@ -1043,7 +1043,7 @@ $\spc \Rightarrow \tee pae.index \subtype[number]$
 $\spc mode=\lenum{n4js} $
 $\spc \hspace{3em} \land (\tee pae.target\subtype {string} \lor \tee pae.target \subtype {String}) $
 $\spc \hspace{3em} \land pae.isIndexAccess $
-$\spc \Rightarrow \tee pae.index \subtype{number}
+$\spc \Rightarrow \tee pae.index \subtype{number} $
 5.  In N4JS mode, if the receiver is an iterable and is not dynamic, in case of index access the index expression must be a property access expression to the built-in symbol `Symbol.iterator`:
 +
 [%hardbreaks]

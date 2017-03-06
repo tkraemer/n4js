@@ -1,0 +1,32 @@
+/* XPECT_SETUP eu.numberfour.n4js.expectmatrix.tests.N4JSExpectMatrixPendingTest END_SETUP  */
+
+/////////////////////////
+// Methods: parameters //
+/////////////////////////
+
+interface A {
+	g1 (n : number) : void {}
+	g2 (n : number) : void {}
+}
+
+interface B {
+	g1 (n : number) : void {}	// same param
+	g2 (n : string) : void {}	// diff param
+}
+
+var a : intersection{A,B};
+
+// IDE-385 intersection{A,B}.g1(number) -> all well XPECT noerrors -->
+a.g1(1);
+
+// IDE-385 intersection{A,B}.g2(union{number,string}) XPECT noerrors -->
+a.g2(1);
+
+// IDE-385 intersection{A,B}.g2(union{number,string}) XPECT noerrors -->
+a.g2("a");
+
+var ns : union{number,string};
+
+// IDE-385 intersection{A,B}.g2(union{number,string}) XPECT noerrors -->
+a.g2(ns);
+

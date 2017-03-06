@@ -3,10 +3,22 @@
 .N4JS Documentation
 = N4JS Userguides
 
-.All the resources you need to begin type safe development with the N4JS IDE
+All the resources you need to begin type safe development with the N4JS IDE
 
 
 == Index
+
+---
+
+**[[language-spec]]N4JS Specification**
+
+For a complete reference of the N4JS Language, the Specification
+is available at the following location:
+
+
+* link:../spec/N4JSSpec.html[N4JS Language Specification]
+
+---
 
 **[[ide-setup]]IDE Setup & HelloWorld!**
 
@@ -42,12 +54,4 @@ New features of the N4JS IDE are introduced along the way such as *modules* , *t
 
 * <<tutorial.adoc#tutorial,In-Depth Tutorial>>: Begin using the more powerful features N4JS has to offer!
 
----
 
-**[[language-spec]]N4JS Specification**
-
-For a complete reference of the N4JS Language, the Specification
-is available to download as a pdf from the following link:
-
-
-* http://n4js.s3-website.eu-central-1.amazonaws.com/specs/N4JSSpec.pdf[N4JS Language Specification (pdf)]

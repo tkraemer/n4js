@@ -1,0 +1,46 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.xpect.ui.tests.N4JSXXpectPluginTest
+    
+	Workspace {
+		Project "N4JSXPECTTests" {
+			Folder "model" {
+				Folder "resourcedescriptions" {
+					ThisFile {}
+				}
+				Folder "jsxbackend" {
+					File "react.n4jsd" { from = "../../reactFiles/react.n4jsd" }
+				}
+			}
+			File "manifest.n4mf" { from="../../manifest.n4mf" }
+		}
+	}
+	
+   END_SETUP 
+ */
+
+
+/*
+these names are stored in the Xtext Index
+XPECT exportedObjects ---
+types::TClass: resourcedescriptions.FunctionComponentDescriptions.Props
+types::TFunction: resourcedescriptions.FunctionComponentDescriptions.NamedFnComponent
+types::TModule: resourcedescriptions.FunctionComponentDescriptions
+types::TVariable: resourcedescriptions.FunctionComponentDescriptions.AnonymusFnComponent
+--- */
+
+import * as React from "jsxbackend/react"
+
+
+class ~Props {
+	public myProp: string;
+}
+
+export public function NamedFnComponent(props: Props): React.Element {
+	return (<div>{props.myProp}</div>);
+}
+
+
+export public const AnonymusFnComponent = (props: ~Props): React.Element =>  {
+	return (
+		<div>{props.myProp}</div>
+	);
+}

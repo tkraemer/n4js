@@ -1,0 +1,57 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest 
+    ResourceSet {
+		ThisFile {}
+		File "ABC.n4js" {}
+	}
+	
+   END_SETUP 
+ */
+
+import {A,B,C} from "Ch04_10_IntersectionType/ABC"
+
+interface P {
+	protected s;
+	protected m() {}
+}
+
+let ab : A&B;
+let bc : B&C;
+let ac : A&C;
+let abc : A&B&C;
+let ap : A&P;
+
+// should have project visiblity from B.s
+// XPECT accessModifier at 's' --> project
+ab.s;
+
+// XPECT accessModifier at 'm()' --> project
+ab.m();
+
+// should have public visiblity from C.s
+// XPECT accessModifier at 's' --> public
+bc.s;
+
+// XPECT accessModifier at 'm()' --> public
+bc.m();
+
+// should have public visiblity from C.s
+// XPECT accessModifier at 's' --> public
+ac.s;
+
+// XPECT accessModifier at 'm()' --> public
+ac.m();
+
+// should have public visiblity from C.s
+// XPECT accessModifier at 's' --> public
+abc.s;
+
+// XPECT accessModifier at 'm()' --> public
+abc.m();
+
+// should have project visiblity from A.s
+// XPECT accessModifier at 's' --> protected
+ap.s;
+
+// XPECT accessModifier at 'm()' --> protected
+ap.m();
+

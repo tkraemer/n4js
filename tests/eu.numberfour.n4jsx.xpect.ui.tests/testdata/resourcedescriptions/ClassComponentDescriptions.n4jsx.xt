@@ -1,0 +1,52 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.xpect.ui.tests.N4JSXXpectPluginTest
+    
+	Workspace {
+		Project "N4JSXPECTTests" {
+			Folder "model" {
+				Folder "resourcedescriptions" {
+					ThisFile {}
+				}
+				Folder "jsxbackend" {
+					File "react.n4jsd" { from = "../../reactFiles/react.n4jsd" }
+				}
+			}
+			File "manifest.n4mf" { from="../../manifest.n4mf" }
+		}
+	}
+	
+   END_SETUP 
+ */
+
+
+ 
+/*
+these names are stored in the Xtext Index
+XPECT exportedObjects ---
+types::TClass: resourcedescriptions.ClassComponentDescriptions.LowerComponent
+types::TClass: resourcedescriptions.ClassComponentDescriptions.MyComponent
+types::TModule: resourcedescriptions.ClassComponentDescriptions
+--- */
+
+
+import * as React from "jsxbackend/react"
+
+
+export public class LowerComponent extends React.Component<~Object with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
+	@Override
+	public render() : React.Element{
+		return (<div>{this.props.whatTextShouldIShow}</div>);
+	}
+}
+
+export public class MyComponent extends
+	React.Component<~Object with {aProp: string}, String> {
+
+	@Override
+	public render() : React.Element{
+		const constText = "some text";
+		return (<LowerComponent whatTextShouldIShow="Hallo">{constText}</LowerComponent>
+		);
+	}
+}
+
+

@@ -38,6 +38,8 @@ import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.types.TMember;
+import eu.numberfour.n4js.ts.types.TStructuralType;
+import eu.numberfour.n4js.ts.types.TypesPackage;
 import eu.numberfour.n4js.utils.languages.N4LanguageUtils;
 import eu.numberfour.n4js.validation.helper.N4JSLanguageConstants;
 import eu.numberfour.n4js.xtext.scoping.IEObjectDescriptionWithError;
@@ -103,7 +105,16 @@ public class ErrorAwareLinkingService extends DefaultLinkingService {
 							&& candidate.eContainer() instanceof ComposedTypeRef
 							&& candidate.eContainmentFeature() == TypeRefsPackage.eINSTANCE
 									.getComposedTypeRef_CachedComposedMembers();
-					if (!isCaseOfCachedComposedMemberHack) {
+
+					// TODO IDE-2550 remove
+					// IDE-2546 quick patch should be removed with IDE-2550
+					final boolean isCaseOfComposedStructualMember = candidate instanceof TMember
+							&& candidate.eContainer() instanceof TStructuralType
+							&& candidate.eContainmentFeature() == TypesPackage.eINSTANCE
+									.getContainerType_OwnedMembers();
+
+					final boolean composedHack = isCaseOfCachedComposedMemberHack || isCaseOfComposedStructualMember;
+					if (!composedHack) {
 						// Error is necessary since EMF catches all exceptions in EcoreUtil#resolve
 						throw new AssertionError("Found an instance without resource and without URI");
 					}
