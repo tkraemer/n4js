@@ -163,21 +163,18 @@ export class Todo extends Task {  
 }  
 ----
 
-<1> Appointment is prefaced with a *JSDoc* annotation (a comment beginning with +/**+
-and closed with +*/+ which documents that it is a single Appointment task. JSDoc comments are
+<1> Appointment is prefaced with a *JSDoc* annotation (a comment beginning with pass:[/**] and
+closed with pass:[*/] which documents that it is a single Appointment task. JSDoc comments are
 used to provide markup annotation of your code. The content of these comments is displayed when
 you hover over a reference to that element.
-
 <2> The class Appointment is a *subclass* of Task. This is achieved by using the keyword
 +extends+ and demonstrates *inheritance*. N4JS supports single class inheritance similar
 to ECMAScript 2015 or Java. The subclass Appointment will inherit the members
 +id+ and +label+ with types from Task.
-
 <3> We add the members +time+ and +place+ with *type annotations*. The
 type annotations of the members in Appointment are more strict than before, since
 the optional modifier (denoted by the question mark) is missing. We will see the effects
 of these different modifiers later on.
-
 <4> Class Todo has a data field without type annotation but with an *initializer*. The N4JS
 type checker can infer the type of the initializer, in this case a boolean literal,
 and implicitly sets the type of the field to boolean.
@@ -188,11 +185,11 @@ As the project grows, the benefits of having individual, reusable *modules* beco
 more and more useful in that they can be imported into other modules or even other projects.
 
 
-Add an Enumeration
-^^^^^^^^^^^^^^^^^^
+=== Add an Enumeration
 
-We also want to add a priority field to the +Todo+ class. We will modify the
- +Todo+ class and add a new type +Priority+ as follows:
+
+We also want to add a priority field to the `Todo` class. We will modify the
+`Todo` class and add a new type `Priority` as follows:
 
 [source, n4js]
 .model.n4js (cntd.)
@@ -203,13 +200,14 @@ export class Todo extends Task {
   public done = false;
 }
 
-@StringBased // using string-based enum to simplify (de-)serialization
+@StringBased // <1>
 export enum Priority {
   LOW, NORMAL, HIGH
 }
 ----
+<1> Use string-based `enum` to simplify (de-)serialization
 
-Enumerations allow us to represent a fixed set of constants: +LOW+, +NORMAL+ and +HIGH+.
+Enumerations allow us to represent a fixed set of constants: `LOW`, `NORMAL` and `HIGH`.
 The reason we use an enumeration here is because we know all possible values for Priority
 at compile-time so we may limit it to these constants. N4JS provides two kinds of
 enumerations: "ordinary" and "string-based". The former
@@ -321,18 +319,18 @@ export class StorageInMemory implements Storage { // <2>
 
 <2> We use the keyword +implements+ (known from Java) to define that this class implements
 the interface. We have to provide specific implementation of the methods of the Storage
-interface by using the +@Override+ annotation to define +size+, +clear+, +getTasks+
-and +storeTasks+ (not all methods are shown here). This annotation is similar to
+interface by using the `@Override` annotation to define `size`, `clear`, `getTasks`
+and `storeTasks` (not all methods are shown here). This annotation is similar to
 the annotation used in Java. It ensures that whenever a method in the interface is
 changed, the type checker can issue a warning. This can be a lifesaver when larger
 projects are to be maintained over time or across several development teams.
 
-The above code will raise a compile error because type +Map+ is not available
+The above code will raise a compile error because type `Map` is not available
 in ECMAScript Version 5. We'll have to tell N4JS that our example is intended
 to run as ECMAScript 2015. Before doing this in the following section, let's
 first look at the other parts of the above class declaration in more detail.
 
-We use a data field +tasks+ to store all the tasks in a map. The type Map stems from
+We use a data field `tasks` to store all the tasks in a map. The type Map stems from
 ECMAScript 2015. It is a generic type similar to Array, which the observant reader may
 have already seen in the Storage interface. N4JS provides support for generic types and methods
 is similar to Java 8.
@@ -350,7 +348,7 @@ Such meta information about an N4JS project is kept in a so-called *manifest fil
 We need to open the `manifest.n4mf` file and edit a dependency. The default manifest
 files created by the New Project wizard look like the following:
 
-[source, n4js]
+[source,n4mf]
 .manifest.n4mf
 ----
 ProjectId: n4js.example.tasks
@@ -369,7 +367,7 @@ Sources {
 We need to add the following section at the end. Note that the manifest editor supports content
 assist similar to the N4JS editor.
 
-[source, n4js]
+[source,n4mf]
 ----
 RequiredRuntimeLibraries {
   n4js-runtime-es2015
@@ -448,20 +446,20 @@ create the first one? The solution comes with the `pass:[~i~]` prefix.
 As discussed in the feature sheet, N4JS supports nominal and structural typing. Structural typing
 is activated in N4JS with the tilde `pass:[~]`. Two structural types are compatible, if they provide
 the same properties, or in case of classes, public members. In the constructor, we only need to
-set the fields. In N4JS, we can use `pass:[ ~~ ]` to refer to the so-called **field structural type**. Two
+set the fields. In N4JS, we can use `pass:[~~]` to refer to the so-called **field structural type**. Two
 field structural types are compatible, if they provide the same fields - methods are
 ignored in these cases. Actually, optional fields are also ignored. This explains why we marked
 some of the fields with the optional modifier. Note that fields with an initializer are also
 treated as optional (since the initializer provides a default value). Actually, N4JS can do even
 more. There are several modifiers to further filter the properties or members to be considered:
-`pass:[~r~]` only considers getters or data fields, `pass:[ ~w~ ]` only setters and data fields. `pass:[~i~]`  is used
+`pass:[~r~]` only considers getters or data fields, `pass:[~w~]` only setters and data fields. `pass:[~i~]`  is used
 for initializer parameters: For every setter or (non-optional) data field in the type, the
 `pass:[~i~]`-type needs to provide at least a getter (or a readable data field). Optional fields
 are also treated as optional in the field structural types.
 
 For the concrete class `Todo`, the `pass:[~i~]`-type is not required to contain any property since all
 its fields are either optional or have an initializer. It contains the optional fields `id`,
-`label`, `dueDate`, `priority` and `done`. `pass:[~i~Appointment]` contains the required properties `time` and
+`label`, `dueDate`, `priority` and `done`. `pass:[~i~]Appointment` contains the required properties `time` and
 `place`, and the optional fields `id` and `label`.
 
 In most cases, we need this information in the constructor to set the fields accordingly.
@@ -478,7 +476,7 @@ constructor(spec: ~i~this=undefined) {
 In order to simplify the code, the annotation `@Spec` tells the transpiler to add exactly this
 code automatically. Even better: Since `Appointment` and `Todo` inherit the constructor, the
 transpiler will add constructor code in these classes to set the additional fields also. That
-is, with this single constructor, the `@Spec` annotation and the `pass:[~i~this]` type expression,
+is, with this single constructor, the `@Spec` annotation and the `pass:[~i~]this` type expression,
 we have solved the problem of initialization for all our entity classes with a single stroke!
 
 Using this `@Spec` constructor would then look similar to this:
@@ -625,7 +623,7 @@ collection of assert methods.
 
 After adding these changes, the manifest of the test project will look as follows:
 
-[source, n4js]
+[source,n4mf]
 .manifest.n4mf (in project n4js.example.tasks.tests)
 ----
 …
@@ -681,7 +679,6 @@ menu:
 image::images/testinnodejs.png[]
 
 This will run the test and the test view will show the result of the first test:
-
 
 image::images/firsttestresults.png[]
 
@@ -817,7 +814,7 @@ in N4JS: reflection and so-called `@Spec` constructors, respectively. Reflection
 languages and allows for retrieving information of a type and its members at runtime. It is used in
 `fromData()` as follows:
 
-[source, n4js]
+[source,n4js]
 .StorageMongoDB.n4js (cntd.)
 ----
 function toData(task: Task): ~~Task {
@@ -961,7 +958,7 @@ N4JS is as simple as adding any project dependency, as already shown for MongoDB
 manifest editor (of the tasks project) and add the following project dependency (along with the existing
 dependencies):
 
-[source,n4js]
+[source,n4mf]
 .manifest.n4mf (cntd.)
 ----
 ProjectDependencies {
