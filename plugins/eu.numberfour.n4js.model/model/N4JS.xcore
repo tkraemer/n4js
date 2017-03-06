@@ -1050,8 +1050,8 @@ class LiteralOrComputedPropertyName {
 	/* The literal name given in the source code or <code>null</code> if this is a computed property name. */
 	String literalName
 	/*
-	 * Iff this is a computed property name and the expression is one of the special cases that are statically
-	 * evaluated, then this will be set to the value of the expression, i.e. the computed name.
+	 * Iff this is a computed property name and the expression is one of the special cases that can be evaluated at
+	 * compile time, then this will be set to the value of the expression, i.e. the computed name.
 	 */
 	transient String computedName
 	/* The expression provided in the source code for computing the property name, or <code>null</code>. */

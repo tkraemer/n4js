@@ -87,8 +87,8 @@ public interface LiteralOrComputedPropertyName extends EObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Iff this is a computed property name and the expression is one of the special cases that are statically
-	 * evaluated, then this will be set to the value of the expression, i.e. the computed name.
+	 * Iff this is a computed property name and the expression is one of the special cases that can be evaluated at
+	 * compile time, then this will be set to the value of the expression, i.e. the computed name.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Computed Name</em>' attribute.
 	 * @see #setComputedName(String)

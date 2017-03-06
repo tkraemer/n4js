@@ -106,6 +106,9 @@ import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.utils.CompileTimeValue.EvalError
+import eu.numberfour.n4js.utils.CompileTimeValue.UnresolvedPropertyAccessError
+import eu.numberfour.n4js.utils.CompileTimeValue.ValueInvalid
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.utils.PromisifyHelper
@@ -134,7 +137,6 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.utils.CompileTimeValue.ValueInvalid
 
 /**
  */
@@ -1650,7 +1652,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	}
 
 	@Check
-	def void checkMandatoryConstantExpression(Expression expr) {
+	def void checkMandatoryCompileTimeExpression(Expression expr) {
 		if(N4JSLanguageUtils.isRequiredToBeCompileTimeExpression(expr)) {
 			val evalResult = astMetaInfoCacheHelper.getEvaluationResult(expr);
 			if(evalResult instanceof ValueInvalid) {
@@ -1662,11 +1664,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 					return;
 				}
 				for(error : evalResult.getErrors) {
-					val astNode = error.astNode;
-					if(astNode!==null) {
-						val msgFull = getMessageForEXP_COMPILE_TIME_MANDATORY(error.message);
-						addIssue(msgFull, astNode, IssueCodes.EXP_COMPILE_TIME_MANDATORY);
-					}
+					createIssueForEvalErrors(error);
 				}
 			}
 		}
@@ -1676,6 +1674,35 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		return exprParent instanceof LiteralOrComputedPropertyName
 			&& exprParent.eContainer instanceof PropertyAssignment
 			&& exprParent.eContainer.eContainer instanceof ObjectLiteral;
+	}
+	def private void createIssueForEvalErrors(EvalError error) {
+		val message = if(error instanceof UnresolvedPropertyAccessError) {
+			// special case: property of a ParameterizedPropertyAccessExpression was not found while
+			// evaluation the compile-time expression
+			// -> in this case, CompileTimeExpressionProcessor cannot provide a detailed error message
+			val propAccessExpr = error.astNodeCasted;
+			val prop = propAccessExpr.property;
+			if(prop===null || prop.eIsProxy) {
+				// property does not exist, which will cause the usual "Couldn't resolve ..." error
+				// -> no additional error message required, here
+				null
+			} else {
+				// at this point, still quite a few cases are left, but to distinguish between them would
+				// require additional information in the TModule, which is not worth it; so we go with
+				// a fairly generic message, here
+				"only direct access to owned fields without computed name allowed (i.e. not to inherited, consumed, or polyfilled fields)"
+			}
+		} else {
+			// standard case:
+			// -> CompileTimeExpressionProcessor provided an error message
+			error.message
+		};
+		val astNode = error.astNode;
+		val feature = error.feature;
+		if(message!==null && astNode!==null) { // feature may be null, that is ok!
+			val msgFull = getMessageForEXP_COMPILE_TIME_MANDATORY(message);
+			addIssue(msgFull, astNode, feature, IssueCodes.EXP_COMPILE_TIME_MANDATORY);
+		}
 	}
 }
 

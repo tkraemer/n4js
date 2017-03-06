@@ -35,6 +35,7 @@ import org.eclipse.xtext.EcoreUtil2
 @Singleton
 class ComputedNameProcessor {
 
+	// FIXME change to a better name
 	def public void computeName(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
 		if(node instanceof LiteralOrComputedPropertyName) {
 			computeName(G, node, cache, indentLevel);
@@ -102,7 +103,7 @@ class ComputedNameProcessor {
 	def private void discardTypeModelElement(EObject astNode) {
 		val elem = N4JSASTUtils.getCorrespondingTypeModelElement(astNode);
 		if(elem===null) {
-			throw new IllegalArgumentException("given AST node does not have a type model element to discard");
+			throw new IllegalArgumentException("given AST node does not have a corresponding type model element to discard");
 		}
 		if(elem instanceof SyntaxRelatedTElement) {
 			elem.astElement = null;

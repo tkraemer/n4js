@@ -19,8 +19,12 @@ import java.util.Objects;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.xtext.nodemodel.INode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
 import eu.numberfour.n4js.n4JS.Expression;
+import eu.numberfour.n4js.n4JS.N4JSPackage;
+import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression;
 import eu.numberfour.n4js.postprocessing.ASTMetaInfoCache;
 import eu.numberfour.n4js.ts.types.TField;
 
@@ -42,19 +46,40 @@ public abstract class CompileTimeValue {
 
 	public static final ValueBoolean FALSE = new ValueBoolean(false);
 
-	public static final class EvalError {
+	public static class EvalError {
 		public final String message;
 		public final EObject astNode;
 		public final EStructuralFeature feature;
 
-		public EvalError(String message, EObject astNode) {
-			this(message, astNode, null);
-		}
-
 		public EvalError(String message, EObject astNode, EStructuralFeature feature) {
+			Objects.requireNonNull(message);
 			this.message = message;
 			this.astNode = astNode;
 			this.feature = feature;
+		}
+
+		public String getMessageWithLocation() {
+			if (astNode == null) {
+				return message;
+			}
+			final INode node = NodeModelUtils.findActualNodeFor(astNode);
+			final String tokenText = node != null ? NodeModelUtils.getTokenText(node) : null;
+			if (tokenText == null) {
+				return message;
+			}
+			return message + " at \"" + tokenText + "\"";
+		}
+	}
+
+	public static final class UnresolvedPropertyAccessError extends EvalError {
+
+		public UnresolvedPropertyAccessError(ParameterizedPropertyAccessExpression astNode) {
+			super("*** UnresolvedPropertyAccessError ***", astNode,
+					N4JSPackage.eINSTANCE.getParameterizedPropertyAccessExpression_Property());
+		}
+
+		public ParameterizedPropertyAccessExpression getAstNodeCasted() {
+			return (ParameterizedPropertyAccessExpression) astNode;
 		}
 	}
 
@@ -66,6 +91,7 @@ public abstract class CompileTimeValue {
 			this.errors = Arrays.copyOf(errors, errors.length);
 		}
 
+		@Override
 		public List<EvalError> getErrors() {
 			return Collections.unmodifiableList(Arrays.asList(errors));
 		}
@@ -87,6 +113,11 @@ public abstract class CompileTimeValue {
 		@Override
 		public boolean isValid() {
 			return true;
+		}
+
+		@Override
+		public List<EvalError> getErrors() {
+			return Collections.emptyList();
 		}
 
 		public Object getValue() {
@@ -175,6 +206,8 @@ public abstract class CompileTimeValue {
 
 	public abstract boolean isValid();
 
+	public abstract List<EvalError> getErrors();
+
 	// ################################################################################################################
 	// STATIC UTILITY METHODS FOR HANDLING COMPILE-TIME VALUES
 
@@ -183,7 +216,17 @@ public abstract class CompileTimeValue {
 	}
 
 	public static ValueInvalid error(String message, EObject astNode) {
-		return new ValueInvalid(new EvalError(message, astNode));
+		return error(message, astNode, null);
+	}
+
+	public static ValueInvalid error(String message, EObject astNode, EStructuralFeature feature) {
+		Objects.requireNonNull(message);
+		return error(new EvalError(message, astNode, feature));
+	}
+
+	public static ValueInvalid error(EvalError error) {
+		Objects.requireNonNull(error);
+		return new ValueInvalid(error);
 	}
 
 	public static CompileTimeValue of(Object value) {
