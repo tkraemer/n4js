@@ -20,6 +20,7 @@ One way of looking at the N4JS approach is to begin with ECMAScript, add Java's 
 and rigorous type system and then to make this amalgamation as flexible as possible.
 The idea is that this fulfills the expectations of JavaScript programmers while keeping the type system sound.
 
+[.language-n4js]
 == Differences
 
 In many cases TypeScript's design prioritizes the transition from ECMAScript to TypeScript
@@ -37,9 +38,11 @@ Simply put:
 The following example illustrates the difference:
 
 [source,n4js]
+----
 function f(p: any) {
     p.foo(); // error in N4JS, no error in TypeScript
 }
+----
 
 N4JS will issue an error: `Couldn't resolve reference to IdentifiableElement 'foo'`, because in N4JS, the type `any`
 has no properties.
@@ -72,13 +75,15 @@ Another example is "this" type, introduced with TypeScript 1.8 and also availabl
 ////
 
 N4JS allows developers to use types in dynamic way, by using the `+` type modifier.
-This so-called ** dynamic type modifier** allows for accessing arbitrary properties even when they are not known to the type system. The following example shows the effect:
+This so-called *dynamic type modifier* allows for accessing arbitrary properties even when they are not known to the type system. The following example shows the effect:
 
-[source,n4js,subs="quotes"]
+[source,n4js]
+----
 function f(p: any, d: any+) {
     p.foo(); // error in N4JS
     d.foo(); // no error in N4JS, as `d` is "dynamic"
 }
+----
 
 While `any+` resembles TypeScript's behavior of `any`, it is still more restrictive: `any+` will never be used as a default, it has to be declared explicitly; and a value of type `any+` still cannot be assigned to variables of other types except `any`.
 
@@ -91,15 +96,18 @@ h| TypeScript h| `any` h| yes h| yes |  • footnote:[In TypeScript, implicit us
 
 === Type Errors Are Show-Stoppers in N4JS
 
-N4JS has two general levels of issues reported by the compiler: ** warning**  and **error**.
+N4JS has two general levels of issues reported by the compiler: *warning*  and *error*.
 Serious issues like type errors are treated as errors in N4JS and all errors will prevent the transpiler to emit any JavaScript code in order to avoid producing code that might cause exceptions at runtime.
 For TypeScript, on the other hand, it is a main concern to never impede the developer, the transpiler will thus produce JavaScript output code even in the case of compile errors.
 Given the example from the beginning
 
 [source,n4js]
+----
 var str = 'Hello';
-str = 42;  // both N4JS and TypeScript show an error here
+str = 42;  // <1>
 str.charAt(2);
+----
+<1> Both N4JS and TypeScript show an error here.
 
 The N4JS transpiler will reject the compilation of that code, while TypeScript will create a JavaScript output file
 that causes exceptions at runtime in the last line.
@@ -156,7 +164,17 @@ f((a: A) => return new C())
 
 In Typescript, the parameter types may be contra- or covariant, that is bivariant (see http://www.typescriptlang.org/docs/handbook/type-compatibility.html#function-parameter-bivariance[Handbook] and https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md#3.11.4[TypeScript Spec, Assignment Compatibility] and https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md#8.2.3[Inheritance and Overriding]).
 
-This is *unsound*, as already stated in the TypeScript handbook: "This is unsound because a caller might end up being given a function that takes a more specialized type, but invokes the function with a less specialized type." (http://www.typescriptlang.org/docs/handbook/type-compatibility.html#function-parameter-bivariance[Handbook]). In the context of function objects (as in the example with the callback parameter) this may be quite convenient. And for that very special use case, we agree with the TS handbook: "In practice, this sort of error is rare, and allowing this enables many common JavaScript patterns." However, in the context of overriding methods and generics, this leads to severe problems, which are probably not that "rare".
+This is *unsound*, as already stated in the TypeScript (http://www.typescriptlang.org/docs/handbook/type-compatibility.html#function-parameter-bivariance[Handbook]):
+
+[quote,TypeScript Handbook]
+This is unsound because a caller might end up being given a function that takes a more specialized type, but invokes the function with a less specialized type.
+
+In the context of function objects (as in the example with the callback parameter) this may be quite convenient. And for that very special use case, we agree with the TS handbook:
+
+[quote,TypeScript Handbook]
+In practice, this sort of error is rare, and allowing this enables many common JavaScript patterns.
+
+However, in the context of overriding methods and generics, this leads to severe problems, which are probably not that "rare".
 
 ==== Violated Substitution Principle
 
@@ -214,9 +232,11 @@ Take the following assignments for example:
 
 [source,java]
 ----
-la = lb; // works in TypeScript, N4JS (and Java) issue an error
-lb = la; // both TypeScript and N4JS (and Java) issue an error
+la = lb; // <1>
+lb = la; // <2>
 ----
+<1> This works in TypeScript. N4JS (and Java) issue an error
+<2> Both TypeScript and N4JS (and Java) issue an error
 
 On first glance, it looks great that TypeScript does not issue any errors here.
 Since it's not obvious why both assignments are rejected by N4JS, let's have a look at what happens next:
@@ -308,10 +328,13 @@ Instead of explicitly defining type relations via `extends` or `implements`, the
 If one type has all the properties of another type, it is considered to be a subtype.
 
 As a significant difference between the two languages, N4JS also supports **nominal types** and nominal typing **is the default**.
-Thus, structural types have to be explicitly annotated as being structural, using the +~+ or +~~+ type constructors.
+Thus, structural types have to be explicitly annotated as being structural, using the `pass:[~]` or `pass:[~~]` type constructors.
 
-//~
+[cols="1a,1a"]
+|===
+^|N4JS ^|JavaScript
 
+|
 [source,n4js]
 ----
 export public interface~Point {
@@ -337,6 +360,8 @@ p = p3d;
 p3d = p; // error
 ----
 
+|
+
 [source,javascript]
 ----
 interface Point {
@@ -361,13 +386,14 @@ var p3d: Point3D = {
 p = p3d;
 p3d = p; // error
 ----
+|===
 
 NOTE: N4JS is using different defaults for access modifiers, e.g. `public` is not the default. For that reason, the interfaces have to be marked as public (and exported).
 
 In both languages, an error will be issued on the last line:
 
-* _N4JS:_ `Point is not a structural subtype of Point3D: missing field z.`
-* _Typescript:_ `Type 'Point' is not assignable to Type 'Point3D'. Property 'z' is missing in type 'Point'.`
+N4JS:: `Point is not a structural subtype of Point3D: missing field z.`
+Typescript:: `Type 'Point' is not assignable to Type 'Point3D'. Property 'z' is missing in type 'Point'.`
 
 The difference between structural and nominal typing is described in further detail in the <<features/nominal-vs-structural-typing.html#nominal_vs_structural_typing,nominal vs. structural subtyping feature>>.
 

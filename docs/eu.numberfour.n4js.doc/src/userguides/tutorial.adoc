@@ -15,7 +15,6 @@ flexible and type-safe.
 
 *Experience with JavaScript or Java?*
 
-
 Developers who are experienced with JavaScript can easily apply their knowledge in N4JS. As N4JS is a
 typed superset of ECMAScript, it is possible to use plain ECMAScript in N4JS. Most of the important
 features from ECMAScript 2015 are supported, such as *modules* with import and export,
@@ -24,10 +23,7 @@ and objects. Developers with Java experience will be familiar with features from
 such as *nominal typing*, *interfaces* and *generic classes
 and methods*; even dependency injection and testing look similar.
 
-
-
 *Development Environment*
-
 
 N4JS has an IDE based on Eclipse. It comes with its own workspace, libraries and plugins. The
 IDE has a transpiler (i.e. a compiler that translates from one language to another) which validates
@@ -414,6 +410,7 @@ view, for example
 
 image::images/firstlaunchconsole.png[]
 
+[.language-n4js]
 == Extend Entities with Spec-Constructor
 
 When we look at the runner code, creating a new task is quite annoying: It has to be created with
@@ -864,7 +861,7 @@ By using the above two helper functions, we avoid sending our data model instanc
 driver. Note that the entire implementation is intended for illustration purposes and in a real-world
 systems many details would be handled differently, depending on the actual requirements.
 
-
+[.language-n4js]
 == Dependency Injection
 
 We now have two implementations of the interface Storage. For testing, the in-memory solution is adequate,
@@ -1013,7 +1010,7 @@ Express is a web framework that provides (among other things) HTTP helpers for w
 example, we are importing the classes `Application` and `Response` from Express and creating a home page
 that we can render some HTML to. Next we will add a method for creating new tasks:
 
-[source,n4js]
+[source,n4js,subs=macros]
 .WebUI.n4js
 ----
 public start() {
@@ -1021,7 +1018,7 @@ public start() {
 // ... code shown above ...
 
   this.app.get("/create", async (req, res) => {
-    let values = req.query as ~Object with {type: string, label: string};
+    let values = req.query as pass:[~]Object with {type: string, label: string};
     if (values && values.type === 'Todo' && values.label && values.label.length > 0) {
       await this.manager.createTodo(values.label);
     }
@@ -1029,6 +1026,7 @@ public start() {
   });
 }
 ----
+
 
 Have Express listen on port 4000 at localhost:
 
@@ -1088,6 +1086,7 @@ function redirect(res: Response, url: string) {
   res.redirect(301, url);
 }
 ----
+//`
 
 At this point, we have to launch our web server. For this purpose, we create a small launch script that
 configures the dependency injection (as shown in the section on dependency injection, above), creates an
@@ -1130,7 +1129,7 @@ If we want a method to be executed once before all tests, such as clearing a dat
 keyword `@BeforeAll`.
 
 
-[source, n4js]
+[source, n4js,subs=macros]
 ----
 import { Priority, Appointment, Todo } from "model";
 import { Storage } from "Storage";
@@ -1142,7 +1141,7 @@ import { Assert } from "n4/mangel/assert/Assert";
 */
 export public abstract class AbstractStorageTest {
 
-  /** A storage intended for testing. Created in #prepare() method. */
+  /** A storage intended for testing. Created in pass:[#]prepare() method. */
   private storage: Storage;
 
   protected abstract createStorage(): Storage;
@@ -1247,9 +1246,9 @@ export public class StorageMongoDBTest extends AbstractStorageTest {
 By importing our test module and using method overriding, we can adapt and reuse the same test module for a
 number of practical purposes, saving time and building an efficient testing system.
 
-//////////////////////////////////////////
+////
 
-
+[.language-n4js]
 == Export as npm
 
 Finally, we can export our project as an npm package to integrate it into other Node.js projects or to
