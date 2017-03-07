@@ -53,13 +53,13 @@ class C {
 	// XPECT noerrors -->
 	[2 + var_const_compileTime] = 'some value';
 
-	// XPECT errors --> "Not a compile-time expression: variable var_const_notCompileTime is const but does not have a compile-time expression as initializer." at "var_const_notCompileTime"
+	// XPECT errors --> "Not a compile-time expression: variable var_const_notCompileTime is const but does not have a compile-time expression as initializer: a call expression is never a compile-time expression at "foo()"." at "var_const_notCompileTime"
 	[3 + var_const_notCompileTime] = 'some value';
 
-	// XPECT errors --> "Not a compile-time expression: variable var_const_notCompileTime_exported is const but does not have a compile-time expression as initializer." at "var_const_notCompileTime_exported"
+	// XPECT errors --> "Not a compile-time expression: variable var_const_notCompileTime_exported is const but does not have a compile-time expression as initializer: a call expression is never a compile-time expression at "foo()"." at "var_const_notCompileTime_exported"
 	[3 + var_const_notCompileTime_exported] = 'some value';
 
-	// XPECT errors --> "Not a compile-time expression: variable var_const_notCompileTime_otherFile is const but does not have a compile-time expression as initializer." at "var_const_notCompileTime_otherFile"
+	// XPECT errors --> "Not a compile-time expression: variable var_const_notCompileTime_otherFile is const but does not have a compile-time expression as initializer: a call expression is never a compile-time expression at "foo()"." at "var_const_notCompileTime_otherFile"
 	[3 + var_const_notCompileTime_otherFile] = 'some value';
 
 	// XPECT noerrors -->

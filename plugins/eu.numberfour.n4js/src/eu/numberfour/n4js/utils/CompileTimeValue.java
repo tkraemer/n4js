@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -215,6 +216,10 @@ public abstract class CompileTimeValue {
 		return new ValueInvalid();
 	}
 
+	public static ValueInvalid error(String message) {
+		return error(message, null, null);
+	}
+
 	public static ValueInvalid error(String message, EObject astNode) {
 		return error(message, astNode, null);
 	}
@@ -224,9 +229,8 @@ public abstract class CompileTimeValue {
 		return error(new EvalError(message, astNode, feature));
 	}
 
-	public static ValueInvalid error(EvalError error) {
-		Objects.requireNonNull(error);
-		return new ValueInvalid(error);
+	public static ValueInvalid error(EvalError... errors) {
+		return new ValueInvalid(errors);
 	}
 
 	public static CompileTimeValue of(Object value) {
@@ -398,10 +402,15 @@ public abstract class CompileTimeValue {
 		return null;
 	}
 
+	private static final String INVALID_VALUE_PREFIX = "invalid\n";
+
 	// FIXME reconsider serialization / deserialization
 	public static String serialize(CompileTimeValue value) {
-		if (value == null || !value.isValid()) {
+		if (value == null) {
 			return null;
+		} else if (!value.isValid()) {
+			return INVALID_VALUE_PREFIX + value.getErrors().stream().map(err -> err.getMessageWithLocation())
+					.collect(Collectors.joining("\n"));
 		} else if (value == UNDEFINED || value == NULL) {
 			return value.toString();
 		} else if (value instanceof ValueBoolean) {
@@ -419,7 +428,14 @@ public abstract class CompileTimeValue {
 
 	public static CompileTimeValue deserialize(String str) {
 		if (str == null) {
-			return null;
+			return error();
+		} else if (str.startsWith(INVALID_VALUE_PREFIX)) {
+			final String[] errorMessages = str.substring(INVALID_VALUE_PREFIX.length()).split("\n");
+			final EvalError[] errors = new EvalError[errorMessages.length];
+			for (int i = 0; i < errorMessages.length; i++) {
+				errors[i] = new EvalError(errorMessages[i], null, null);
+			}
+			return error(errors);
 		} else if (UNDEFINED.toString().equals(str)) {
 			return UNDEFINED;
 		} else if (NULL.toString().equals(str)) {

@@ -22,6 +22,7 @@ import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.MultiplicativeExpression
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
+import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.NullLiteral
 import eu.numberfour.n4js.n4JS.NumericLiteral
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
@@ -39,6 +40,7 @@ import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.utils.CompileTimeValue
+import eu.numberfour.n4js.utils.CompileTimeValue.EvalError
 import eu.numberfour.n4js.utils.CompileTimeValue.UnresolvedPropertyAccessError
 import eu.numberfour.n4js.utils.CompileTimeValue.ValueBoolean
 import eu.numberfour.n4js.utils.EcoreUtilN4
@@ -47,6 +49,7 @@ import eu.numberfour.n4js.utils.RecursionGuard
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
 import it.xsemantics.runtime.RuleEnvironment
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 
@@ -288,8 +291,27 @@ class CompileTimeExpressionProcessor {
 		if(!targetElemIsConst) {
 			return CompileTimeValue.error(keywordProvider.keyword(targetElem) + " " + targetElem.name + " is not const", astNodeForErrorMessage);
 		}
+		
+		val valueOfTargetElem = obtainValueOfTargetElement(G, astNodeForErrorMessage.eResource, targetElem, guard);
+		if(valueOfTargetElem!==null) {
+			if(!valueOfTargetElem.valid) {
+				val baseMsg = keywordProvider.keyword(targetElem) + " " + targetElem.name
+					+ " is const but does not have a compile-time expression as initializer";
+				val msg = combineErrorMessageWithNestedErrors(baseMsg, valueOfTargetElem.errors);
+				val feature = if(astNodeForErrorMessage instanceof ParameterizedPropertyAccessExpression) {
+					N4JSPackage.eINSTANCE.parameterizedPropertyAccessExpression_Property
+				};
+				return CompileTimeValue.error(msg, astNodeForErrorMessage, feature);
+			}
+			return valueOfTargetElem;
+		}
+		return CompileTimeValue.error("only references to const variables with a compile-time expression as initializer are allowed",
+			astNodeForErrorMessage);
+	}
 
-		val currentResource = astNodeForErrorMessage.eResource;
+	def private CompileTimeValue obtainValueOfTargetElement(RuleEnvironment G, Resource currentResource,
+		IdentifiableElement targetElem, RecursionGuard<EObject> guard) {
+
 		if(targetElem.eResource===currentResource || hasLoadedASTElement(targetElem)) {
 			// 'targetElem' is in same resource OR is in a different resource that already has a fully-loaded AST
 			// -> compute value from the initializer expression of 'targetElem'
@@ -304,30 +326,16 @@ class CompileTimeExpressionProcessor {
 				VariableDeclaration: astNodeOfTargetElem.expression
 			};
 			if(expressionOfTargetElem!==null) {
-				val valueOfTargetElem = computeValueIfCompileTimeExpression(G, expressionOfTargetElem, guard);
-				if(!valueOfTargetElem.valid) {
-					val nestedErrors = valueOfTargetElem.errors.map[messageWithLocation].filterNull.toList;
-					val nestedErrorsJoined = if(!nestedErrors.empty) ":\n- " + nestedErrors.join("\n- ") else "";
-					return CompileTimeValue.error(keywordProvider.keyword(targetElem) + " " + targetElem.name
-						+ " is const but does not have a compile-time expression as initializer" + nestedErrorsJoined,
-						astNodeForErrorMessage);
-				}
-				return valueOfTargetElem;
+				return computeValueIfCompileTimeExpression(G, expressionOfTargetElem, guard);
 			}
 		} else {
 			// 'targetElem' is in another resource with an AST proxy
 			// -> read value from TModule to avoid demand-loading of AST
 			if(targetElem instanceof TConstableElement) {
-				val valueOfTargetElem = CompileTimeValue.deserialize(targetElem.value);
-				if(valueOfTargetElem===null) {
-					return CompileTimeValue.error(keywordProvider.keyword(targetElem) + " " + targetElem.name
-						+ " is const but does not have a compile-time expression as initializer", astNodeForErrorMessage);
-				}
-				return valueOfTargetElem;
+				return CompileTimeValue.deserialize(targetElem.value);
 			}
 		}
-
-		return CompileTimeValue.error("only references to const variables with a compile-time expression as initializer are allowed", astNodeForErrorMessage);
+		return null; // no value found
 	}
 
 	/**
@@ -339,5 +347,15 @@ class CompileTimeExpressionProcessor {
 			elem.eGet(TypesPackage.eINSTANCE.syntaxRelatedTElement_AstElement, false) as EObject
 		};
 		return astElemNonResolved!==null && !astElemNonResolved.eIsProxy;
+	}
+
+	def private static String combineErrorMessageWithNestedErrors(String mainMessage, EvalError... nestedErrors) {
+		if(nestedErrors.length==0) {
+			return mainMessage;
+		} else if(nestedErrors.length==1) {
+			return mainMessage + ": " + nestedErrors.get(0).messageWithLocation;
+		} else {
+			return mainMessage + ":\n- " + nestedErrors.map[messageWithLocation].join("\n- ");
+		}
 	}
 }
