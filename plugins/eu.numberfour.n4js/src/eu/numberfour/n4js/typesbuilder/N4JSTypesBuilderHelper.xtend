@@ -44,7 +44,7 @@ import org.eclipse.emf.ecore.EObject
 
 @Singleton
 package class N4JSTypesBuilderHelper {
-		
+
 	@Inject	private JavaScriptVariantHelper jsVariantHelper;
 
 	def package List<Annotation> getAllAnnotations(AnnotableElement annotableElement) {
