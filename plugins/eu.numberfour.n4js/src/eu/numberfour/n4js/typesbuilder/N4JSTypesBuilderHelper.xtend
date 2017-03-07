@@ -21,7 +21,10 @@ import eu.numberfour.n4js.n4JS.LiteralAnnotationArgument
 import eu.numberfour.n4js.n4JS.ModifierUtils
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4Modifier
+import eu.numberfour.n4js.n4JS.PropertyNameKind
+import eu.numberfour.n4js.n4JS.PropertyNameOwner
 import eu.numberfour.n4js.n4JS.TypeRefAnnotationArgument
+import eu.numberfour.n4js.postprocessing.ComputedNameProcessor
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.DeclaredTypeWithAccessModifier
@@ -30,6 +33,7 @@ import eu.numberfour.n4js.ts.types.MemberAccessModifier
 import eu.numberfour.n4js.ts.types.TAnnotableElement
 import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ts.types.TFunction
+import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TypeAccessModifier
 import eu.numberfour.n4js.ts.types.TypesFactory
 import eu.numberfour.n4js.ts.utils.TypeUtils
@@ -116,6 +120,16 @@ package class N4JSTypesBuilderHelper {
 				typeAssignment.apply(TypeUtils.copyWithProxies(typeToAssign))
 			}
 		}
+	}
+
+	/**
+	 * Initializes the name of a TMember in the TModule based the member/property declaration in the AST. In case of
+	 * computed property names, this method will keep the name in the TModule set to <code>null</code> and
+	 * {@link ComputedNameProcessor} will later change it to the actual name during post-processing.
+	 */
+	def package void setMemberName(TMember tMember, PropertyNameOwner n4MemberOrPropertyAssignment) {
+		tMember.name = n4MemberOrPropertyAssignment.name; // this will be 'null' in case of a computed property name
+		tMember.hasComputedName = n4MemberOrPropertyAssignment.declaredName?.kind === PropertyNameKind.COMPUTED;
 	}
 
 	/**

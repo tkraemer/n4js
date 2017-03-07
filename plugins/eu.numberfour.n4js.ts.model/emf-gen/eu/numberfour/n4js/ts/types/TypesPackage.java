@@ -6420,13 +6420,22 @@ public interface TypesPackage extends EPackage {
 	int TMEMBER__DECLARED_OVERRIDE = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMEMBER__HAS_COMPUTED_NAME = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>TMember</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER_FEATURE_COUNT = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 5;
+	int TMEMBER_FEATURE_COUNT = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -6662,6 +6671,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TMEMBER_WITH_ACCESS_MODIFIER__DECLARED_OVERRIDE = TMEMBER__DECLARED_OVERRIDE;
+
+	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMEMBER_WITH_ACCESS_MODIFIER__HAS_COMPUTED_NAME = TMEMBER__HAS_COMPUTED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
@@ -6924,6 +6942,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_MEMBER__DECLARED_OVERRIDE = TMEMBER__DECLARED_OVERRIDE;
+
+	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_MEMBER__HAS_COMPUTED_NAME = TMEMBER__HAS_COMPUTED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Defined Member</b></em>' reference.
@@ -7287,13 +7314,22 @@ public interface TypesPackage extends EPackage {
 	int TMETHOD__DECLARED_OVERRIDE = TFUNCTION_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMETHOD__HAS_COMPUTED_NAME = TFUNCTION_FEATURE_COUNT + 3;
+
+	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD__HAS_NO_BODY = TFUNCTION_FEATURE_COUNT + 3;
+	int TMETHOD__HAS_NO_BODY = TFUNCTION_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Declared Member Access Modifier</b></em>' attribute.
@@ -7302,7 +7338,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD__DECLARED_MEMBER_ACCESS_MODIFIER = TFUNCTION_FEATURE_COUNT + 4;
+	int TMETHOD__DECLARED_MEMBER_ACCESS_MODIFIER = TFUNCTION_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Declared Abstract</b></em>' attribute.
@@ -7311,7 +7347,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD__DECLARED_ABSTRACT = TFUNCTION_FEATURE_COUNT + 5;
+	int TMETHOD__DECLARED_ABSTRACT = TFUNCTION_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Lacks This Or Super Usage</b></em>' attribute.
@@ -7320,7 +7356,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD__LACKS_THIS_OR_SUPER_USAGE = TFUNCTION_FEATURE_COUNT + 6;
+	int TMETHOD__LACKS_THIS_OR_SUPER_USAGE = TFUNCTION_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>TMethod</em>' class.
@@ -7329,7 +7365,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD_FEATURE_COUNT = TFUNCTION_FEATURE_COUNT + 7;
+	int TMETHOD_FEATURE_COUNT = TFUNCTION_FEATURE_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -7817,6 +7853,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_METHOD__DECLARED_OVERRIDE = TMETHOD__DECLARED_OVERRIDE;
+
+	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_METHOD__HAS_COMPUTED_NAME = TMETHOD__HAS_COMPUTED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
@@ -8578,6 +8623,15 @@ public interface TypesPackage extends EPackage {
 	int TFIELD__DECLARED_OVERRIDE = TMEMBER_WITH_ACCESS_MODIFIER__DECLARED_OVERRIDE;
 
 	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFIELD__HAS_COMPUTED_NAME = TMEMBER_WITH_ACCESS_MODIFIER__HAS_COMPUTED_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8874,6 +8928,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_FIELD__DECLARED_OVERRIDE = TFIELD__DECLARED_OVERRIDE;
+
+	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_FIELD__HAS_COMPUTED_NAME = TFIELD__HAS_COMPUTED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
@@ -9192,6 +9255,15 @@ public interface TypesPackage extends EPackage {
 	int FIELD_ACCESSOR__DECLARED_OVERRIDE = TMEMBER_WITH_ACCESS_MODIFIER__DECLARED_OVERRIDE;
 
 	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD_ACCESSOR__HAS_COMPUTED_NAME = TMEMBER_WITH_ACCESS_MODIFIER__HAS_COMPUTED_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9479,6 +9551,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TGETTER__DECLARED_OVERRIDE = FIELD_ACCESSOR__DECLARED_OVERRIDE;
+
+	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGETTER__HAS_COMPUTED_NAME = FIELD_ACCESSOR__HAS_COMPUTED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
@@ -9777,6 +9858,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_GETTER__DECLARED_OVERRIDE = TGETTER__DECLARED_OVERRIDE;
+
+	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_GETTER__HAS_COMPUTED_NAME = TGETTER__HAS_COMPUTED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
@@ -10095,6 +10185,15 @@ public interface TypesPackage extends EPackage {
 	int TSETTER__DECLARED_OVERRIDE = FIELD_ACCESSOR__DECLARED_OVERRIDE;
 
 	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSETTER__HAS_COMPUTED_NAME = FIELD_ACCESSOR__HAS_COMPUTED_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10391,6 +10490,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_SETTER__DECLARED_OVERRIDE = TSETTER__DECLARED_OVERRIDE;
+
+	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_SETTER__HAS_COMPUTED_NAME = TSETTER__HAS_COMPUTED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
@@ -12917,6 +13025,17 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTMember_DeclaredOverride();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TMember#isHasComputedName <em>Has Computed Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Has Computed Name</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TMember#isHasComputedName()
+	 * @see #getTMember()
+	 * @generated
+	 */
+	EAttribute getTMember_HasComputedName();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TMember#getContainingType() <em>Get Containing Type</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15297,6 +15416,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TMEMBER__DECLARED_OVERRIDE = eINSTANCE.getTMember_DeclaredOverride();
+
+		/**
+		 * The meta object literal for the '<em><b>Has Computed Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TMEMBER__HAS_COMPUTED_NAME = eINSTANCE.getTMember_HasComputedName();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Containing Type</b></em>' operation.

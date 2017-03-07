@@ -1038,6 +1038,9 @@ abstract class TMember extends IdentifiableElement, TAnnotableElement, SyntaxRel
 	boolean declaredFinal
 	boolean declaredStatic
 	boolean declaredOverride
+
+	boolean hasComputedName
+
 	/**
 	 * Convenience method, returns the container casted to a container type or 'null'
 	 * if the container is not of type ContainerType.
@@ -1131,7 +1134,7 @@ abstract class TMember extends IdentifiableElement, TAnnotableElement, SyntaxRel
 	}
 
 	/**
-	 * Convenience method returns true, if containing type is either a dynamic or static polyfill and therefor
+	 * Convenience method returns true, if containing type is either a dynamic or static polyfill and therefore
 	 * this member has been poly-filled.
 	 */
 	op boolean isPolyfilled() {

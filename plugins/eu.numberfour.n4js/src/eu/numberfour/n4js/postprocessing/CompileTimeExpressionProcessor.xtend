@@ -243,16 +243,19 @@ class CompileTimeExpressionProcessor {
 			// IMPORTANT: don't use "targetElem.findOwnedMember(memberName, false, true)" in previous line, because
 			// #findOwnedMember() will create and cache a MemberByNameAndAccessMap, which will be incomplete if the
 			// TClassifier contains members with unresolved computed property names!
-			if(member instanceof TField) {
+			if(member instanceof TField && !(member as TField).hasComputedName) {
 				return computeValueIfConstFieldOrVariable(G, member, expr, guard);
 			} else {
-				// member not found
-				// -> there are a number of possible reasons:
-				// a) member has a computed property name which was not yet evaluated,
-				// b) member is inherited, consumed, polyfilled, etc.,
-				// c) member does not exist at all.
-				// At this point, i.e. before computed names are processed, we cannot distinguish between these cases.
-				// So we create a dummy error here that will be improved later.
+				// we get here in two cases:
+				// 1) member not found
+				//    -> there are a number of possible reasons:
+				//    a) member has a computed property name which was not yet evaluated,
+				//    b) member is inherited, consumed, polyfilled, etc.,
+				//    c) member does not exist at all.
+				//    At this point, i.e. before computed names are processed, we cannot distinguish between these
+				//    cases. So we create a dummy error here that will be improved later.
+				// 2) member was found but is has a computed property name
+				//    -> for consistency with 1.a above, we have to raise an error also in this case
 				return CompileTimeValue.error(new UnresolvedPropertyAccessError(expr));
 			}
 		}

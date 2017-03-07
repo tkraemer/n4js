@@ -12,5 +12,5 @@ export const var_const_notCompileTime_otherFile = foo(); // using a call express
 
 export class Cls_OtherFile {
 	const field = 'propFieldFromOtherFile';
+	const ['fieldWithComputedName'] = 'testField';
 }
-

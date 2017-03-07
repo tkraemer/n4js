@@ -2024,6 +2024,15 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTMember_HasComputedName() {
+		return (EAttribute)tMemberEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getTMember__GetContainingType() {
 		return tMemberEClass.getEOperations().get(0);
 	}
@@ -3146,6 +3155,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		createEAttribute(tMemberEClass, TMEMBER__DECLARED_FINAL);
 		createEAttribute(tMemberEClass, TMEMBER__DECLARED_STATIC);
 		createEAttribute(tMemberEClass, TMEMBER__DECLARED_OVERRIDE);
+		createEAttribute(tMemberEClass, TMEMBER__HAS_COMPUTED_NAME);
 		createEOperation(tMemberEClass, TMEMBER___GET_CONTAINING_TYPE);
 		createEOperation(tMemberEClass, TMEMBER___GET_MEMBER_ACCESS_MODIFIER);
 		createEOperation(tMemberEClass, TMEMBER___GET_MEMBER_TYPE);
@@ -3671,6 +3681,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEAttribute(getTMember_DeclaredFinal(), theEcorePackage.getEBoolean(), "declaredFinal", null, 0, 1, TMember.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTMember_DeclaredStatic(), theEcorePackage.getEBoolean(), "declaredStatic", null, 0, 1, TMember.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTMember_DeclaredOverride(), theEcorePackage.getEBoolean(), "declaredOverride", null, 0, 1, TMember.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTMember_HasComputedName(), theEcorePackage.getEBoolean(), "hasComputedName", null, 0, 1, TMember.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getTMember__GetContainingType(), null, "getContainingType", 0, 1, !IS_UNIQUE, IS_ORDERED);
 		g1 = createEGenericType(this.getContainerType());

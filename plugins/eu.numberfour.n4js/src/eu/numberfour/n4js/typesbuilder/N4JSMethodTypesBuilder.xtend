@@ -47,7 +47,7 @@ package class N4JSMethodTypesBuilder extends AbstractFunctionDefinitionTypesBuil
 			return null
 		}
 		val methodType = TypesFactory::eINSTANCE.createTMethod();
-		methodType.name = methodDecl.name;
+		methodType.setMemberName(methodDecl);
 		methodType.declaredAbstract = methodDecl.abstract
 		methodType.declaredStatic = methodDecl.declaredStatic
 		methodType.declaredFinal = methodDecl.declaredFinal

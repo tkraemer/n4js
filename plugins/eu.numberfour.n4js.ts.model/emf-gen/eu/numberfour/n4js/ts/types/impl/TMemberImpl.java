@@ -49,6 +49,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TMemberImpl#isDeclaredFinal <em>Declared Final</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TMemberImpl#isDeclaredStatic <em>Declared Static</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TMemberImpl#isDeclaredOverride <em>Declared Override</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TMemberImpl#isHasComputedName <em>Has Computed Name</em>}</li>
  * </ul>
  *
  * @generated
@@ -133,6 +134,26 @@ public abstract class TMemberImpl extends IdentifiableElementImpl implements TMe
 	 * @ordered
 	 */
 	protected boolean declaredOverride = DECLARED_OVERRIDE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isHasComputedName() <em>Has Computed Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isHasComputedName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean HAS_COMPUTED_NAME_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isHasComputedName() <em>Has Computed Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isHasComputedName()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean hasComputedName = HAS_COMPUTED_NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -264,6 +285,27 @@ public abstract class TMemberImpl extends IdentifiableElementImpl implements TMe
 		declaredOverride = newDeclaredOverride;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TMEMBER__DECLARED_OVERRIDE, oldDeclaredOverride, declaredOverride));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isHasComputedName() {
+		return hasComputedName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setHasComputedName(boolean newHasComputedName) {
+		boolean oldHasComputedName = hasComputedName;
+		hasComputedName = newHasComputedName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TMEMBER__HAS_COMPUTED_NAME, oldHasComputedName, hasComputedName));
 	}
 
 	/**
@@ -472,6 +514,8 @@ public abstract class TMemberImpl extends IdentifiableElementImpl implements TMe
 				return isDeclaredStatic();
 			case TypesPackage.TMEMBER__DECLARED_OVERRIDE:
 				return isDeclaredOverride();
+			case TypesPackage.TMEMBER__HAS_COMPUTED_NAME:
+				return isHasComputedName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -501,6 +545,9 @@ public abstract class TMemberImpl extends IdentifiableElementImpl implements TMe
 			case TypesPackage.TMEMBER__DECLARED_OVERRIDE:
 				setDeclaredOverride((Boolean)newValue);
 				return;
+			case TypesPackage.TMEMBER__HAS_COMPUTED_NAME:
+				setHasComputedName((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -528,6 +575,9 @@ public abstract class TMemberImpl extends IdentifiableElementImpl implements TMe
 			case TypesPackage.TMEMBER__DECLARED_OVERRIDE:
 				setDeclaredOverride(DECLARED_OVERRIDE_EDEFAULT);
 				return;
+			case TypesPackage.TMEMBER__HAS_COMPUTED_NAME:
+				setHasComputedName(HAS_COMPUTED_NAME_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -550,6 +600,8 @@ public abstract class TMemberImpl extends IdentifiableElementImpl implements TMe
 				return declaredStatic != DECLARED_STATIC_EDEFAULT;
 			case TypesPackage.TMEMBER__DECLARED_OVERRIDE:
 				return declaredOverride != DECLARED_OVERRIDE_EDEFAULT;
+			case TypesPackage.TMEMBER__HAS_COMPUTED_NAME:
+				return hasComputedName != HAS_COMPUTED_NAME_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -660,6 +712,8 @@ public abstract class TMemberImpl extends IdentifiableElementImpl implements TMe
 		result.append(declaredStatic);
 		result.append(", declaredOverride: ");
 		result.append(declaredOverride);
+		result.append(", hasComputedName: ");
+		result.append(hasComputedName);
 		result.append(')');
 		return result.toString();
 	}

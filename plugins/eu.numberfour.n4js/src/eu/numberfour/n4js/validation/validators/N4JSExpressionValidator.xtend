@@ -1677,9 +1677,11 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	}
 	def private void createIssueForEvalErrors(EvalError error) {
 		val message = if(error instanceof UnresolvedPropertyAccessError) {
-			// special case: property of a ParameterizedPropertyAccessExpression was not found while
-			// evaluation the compile-time expression
-			// -> in this case, CompileTimeExpressionProcessor cannot provide a detailed error message
+			// special case:
+			// property of a ParameterizedPropertyAccessExpression was not found while evaluating the compile-time
+			// expression (see location in CompileTimeExpressionProcessor where UnresolvedPropertyAccessError is created)
+			// -> in this case, CompileTimeExpressionProcessor could not provide a detailed error message, so we have
+			// to come up with our own message:
 			val propAccessExpr = error.astNodeCasted;
 			val prop = propAccessExpr.property;
 			if(prop===null || prop.eIsProxy) {
@@ -1687,10 +1689,10 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 				// -> no additional error message required, here
 				null
 			} else {
-				// at this point, still quite a few cases are left, but to distinguish between them would
-				// require additional information in the TModule, which is not worth it; so we go with
-				// a fairly generic message, here
-				"only direct access to owned fields without computed name allowed (i.e. not to inherited, consumed, or polyfilled fields)"
+				// at this point, still quite a few cases are left, but to distinguish between them would require
+				// additional information in the TModule, which is not worth it; so we go with a fairly generic
+				// message, here:
+				"reference must point to a directly owned field (i.e. not inherited, consumed, or polyfilled) and the field must not have a computed name"
 			}
 		} else {
 			// standard case:

@@ -32,7 +32,7 @@ package class N4JSGetterTypesBuilder extends AbstractFunctionDefinitionTypesBuil
 			return null
 		}
 		val getterType = TypesFactory::eINSTANCE.createTGetter
-		getterType.name = n4Getter.name
+		getterType.setMemberName(n4Getter);
 		getterType.declaredAbstract = n4Getter.abstract
 		getterType.declaredStatic = n4Getter.declaredStatic
 		getterType.declaredFinal = n4Getter.declaredFinal

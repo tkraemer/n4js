@@ -13,6 +13,7 @@ package eu.numberfour.n4js.typesbuilder
 import com.google.inject.Inject
 import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
+import eu.numberfour.n4js.n4JS.PropertyNameKind
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.MemberAccessModifier
 import eu.numberfour.n4js.ts.types.TClassifier
@@ -29,7 +30,8 @@ package class N4JSFieldTypesBuilder {
 			return null;
 
 		val field = TypesFactory::eINSTANCE.createTField();
-		field.name = n4Field.name;
+		field.setMemberName(n4Field);
+		field.hasComputedName = n4Field.declaredName.kind===PropertyNameKind.COMPUTED;
 		field.const = n4Field.const
 		field.declaredStatic = n4Field.declaredStatic;
 		field.declaredFinal = n4Field.declaredFinal;

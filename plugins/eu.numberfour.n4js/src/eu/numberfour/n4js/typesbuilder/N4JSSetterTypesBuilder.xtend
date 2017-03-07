@@ -33,7 +33,7 @@ package class N4JSSetterTypesBuilder {
 		val builtInTypeScope = BuiltInTypeScope.get(n4Setter.eResource.resourceSet)
 
 		val setterType = TypesFactory::eINSTANCE.createTSetter
-		setterType.name = n4Setter.name
+		setterType.setMemberName(n4Setter);
 		setterType.declaredAbstract = n4Setter.abstract
 		setterType.declaredStatic = n4Setter.declaredStatic
 		setterType.declaredFinal = n4Setter.declaredFinal
