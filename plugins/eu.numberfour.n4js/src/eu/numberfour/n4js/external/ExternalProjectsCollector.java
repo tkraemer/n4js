@@ -176,12 +176,12 @@ public class ExternalProjectsCollector {
 
 		if (Platform.isRunning()) {
 
-			final Map<String, IProject> externalPs = new HashMap<>();
-			externalProjects.forEach(p -> externalPs.put(p.getName(), p));
+			final Map<String, IProject> externalsMapping = new HashMap<>();
+			externalProjects.forEach(p -> externalsMapping.put(p.getName(), p));
 
 			asList(getWorkspace().getRoot().getProjects()).forEach(p -> {
 				getDirectExternalDependencyIds(p).forEach(eID -> {
-					IProject externalDependency = externalPs.get(eID);
+					IProject externalDependency = externalsMapping.get(eID);
 					if (externalDependency != null) {
 						mapping.put(externalDependency, p);
 					}
