@@ -475,7 +475,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 		public void widgetSelected(final SelectionEvent e) {
 			final Collection<String> installedNpmPackageNames = getInstalledNpmPackages();
 			final InputDialog dialog = new InputDialog(UIUtils.getShell(), "npm Uninstall",
-					"Specify an npm package name to remove:", null, new IInputValidator() {
+					"Specify an npm package name to uninstall:", null, new IInputValidator() {
 
 						@Override
 						public String isValid(final String newText) {
@@ -524,7 +524,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 						}
 					});
 				} catch (final InvocationTargetException | InterruptedException exc) {
-					throw new RuntimeException("Error while removing npm dependency: '" + packageName + "'.", exc);
+					throw new RuntimeException("Error while uninstalling npm dependency: '" + packageName + "'.", exc);
 				} finally {
 					if (null != illegalBinaryExcRef.get()) {
 						new IllegalBinaryStateDialog(illegalBinaryExcRef.get()).open();
@@ -532,8 +532,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 						N4JSActivator.getInstance().getLog().log(errorStatusRef.get());
 						getDisplay().asyncExec(() -> openError(
 								getShell(),
-								"npm Install Failed",
-								"Error while installing '" + packageName
+								"npm Uninstall Failed",
+								"Error while uninstalling '" + packageName
 										+ "' npm package.\nPlease check your Error Log view for the detailed npm log about the failure."));
 					}
 				}

@@ -94,15 +94,15 @@ public class NodeProcesBuilder {
 	/**
 	 * Prepares process builder for "npm uninstall" command.
 	 *
-	 * @param installPath
+	 * @param uninstallPath
 	 *            location on which npm command should be invoked
 	 * @param packageName
-	 *            package to install (might be space separated list of names)
+	 *            package to uninstall (might be space separated list of names)
 	 * @param save
-	 *            instructs npm to save installed packages in package.json (if available)
-	 * @return configured, operating system aware process builder for "npm install" command
+	 *            instructs npm to save uninstalled packages in package.json (if available)
+	 * @return configured, operating system aware process builder for "npm uninstall" command
 	 */
-	public ProcessBuilder getNpmUninstallProcessBuilder(File installPath, String packageName, boolean save) {
+	public ProcessBuilder getNpmUninstallProcessBuilder(File uninstallPath, String packageName, boolean save) {
 		Builder<String> builder = ImmutableList.<String> builder();
 		NpmBinary npmBinary = npmBinaryProvider.get();
 		String saveCommand = save ? "--save" : "";
@@ -116,7 +116,7 @@ public class NodeProcesBuilder {
 					+ saveCommand);
 		}
 
-		return create(builder.build(), npmBinary, installPath, false);
+		return create(builder.build(), npmBinary, uninstallPath, false);
 	}
 
 	/**

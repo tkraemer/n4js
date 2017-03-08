@@ -154,23 +154,23 @@ public class ExternalProjectsCollector {
 	 * on another accessible Eclipse project A and project A depends on an external project X and Y, then this method
 	 * will return with only {A->[X]} and *NOT* {A->[X,Y], B->[X,Y]}.
 	 *
-	 * @return an map of Eclipse workspace projects and their direct dependencies any external projects.
+	 * @return a map where each entry maps an external project to the workspace projects that depend on it.
 	 */
-	public Map<IProject, Collection<IProject>> collectExternalProjectsDependees() {
-		return collectExternalProjectsDependees(collectExternalProjects());
+	public Map<IProject, Collection<IProject>> collectExternalProjectDependents() {
+		return collectExternalProjectDependents(collectExternalProjects());
 	}
 
 	/**
 	 * Sugar for collecting {@link IWorkspace Eclipse workspace} projects that have any direct dependency to any
-	 * external projects. Same as {@link #collectExternalProjectsDependees()} but does not considers all the available
+	 * external projects. Same as {@link #collectExternalProjectDependents()} but does not consider all the available
 	 * projects but only those that are given as the argument.
 	 *
 	 * @param externalProjects
 	 *            the external projects that has to be considered as a possible dependency of an Eclipse workspace based
 	 *            project.
-	 * @return an map of Eclipse workspace projects and their direct dependencies any external projects.
+	 * @return a map where each entry maps an external project to the workspace projects that depend on it.
 	 */
-	public Map<IProject, Collection<IProject>> collectExternalProjectsDependees(
+	public Map<IProject, Collection<IProject>> collectExternalProjectDependents(
 			final Iterable<? extends IProject> externalProjects) {
 		final Multimap<IProject, IProject> mapping = Multimaps2.newLinkedHashListMultimap();
 
