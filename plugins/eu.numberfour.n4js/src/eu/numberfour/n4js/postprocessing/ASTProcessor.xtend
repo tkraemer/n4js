@@ -133,7 +133,7 @@ public class ASTProcessor extends AbstractProcessor {
 				constantExpressionProcessor.evaluateCompileTimeExpression(G, node, cache, 0);
 			}
 			for(node : script.eAllContents.filter(LiteralOrComputedPropertyName).toIterable) {
-				computedNameProcessor.computeName(G, node, cache, 0);
+				computedNameProcessor.processComputedPropertyName(G, node, cache, 0);
 			}
 			// step 1: main processing
 			processSubtree(G, script, cache, 0);

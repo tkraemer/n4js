@@ -43,6 +43,7 @@ import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
+import eu.numberfour.n4js.postprocessing.ASTMetaInfoCache
 import eu.numberfour.n4js.ts.conversions.ComputedPropertyNameValueConverter
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
@@ -671,12 +672,33 @@ class N4JSLanguageUtils {
 	}
 
 	/**
+	 * Tells if the given expression is evaluated during post-processing as a compile-time expression and has its
+	 * {@link CompileTimeValue value} stored in the {@link ASTMetaInfoCache}.
+	 * <p>
+	 * Note that every expression may be a compile-time expression (in fact, every number or string literal is a
+	 * compile-time expression) but being a compile-time expression only has a special effect in case of certain
+	 * expressions. This method returns <code>true</code> for these expressions.
+	 * <p>
+	 * IMPORTANT: this method will return <code>true</code> only for root expressions directly processed as
+	 * compile-time expressions, not for expressions directly or indirectly nested in such an expression.
+	 */
+	def static boolean isProcessedAsCompileTimeExpression(Expression expr) {
+		// cases of expressions that are required to be a compile-time expression:
+		if(isRequiredToBeCompileTimeExpression(expr)) {
+			return true;
+		}
+		// cases of expressions that may or may not be a compile-time expression:
+		val parent = expr.eContainer;
+		return parent instanceof ExportedVariableDeclaration
+			|| parent instanceof N4FieldDeclaration;
+	}
+
+	/**
 	 * Tells if the given expression is required to be a constant expression, according to the N4JS language
 	 * specification.
 	 * <p>
-	 * IMPORTANT: this method will return true only for root expressions directly required to be constant expressions,
-	 * not for expressions that are only indirectly required to be a constant expression because they are nested in
-	 * another expression which is directly or indirectly required to be a constant expression.
+	 * IMPORTANT: this method will return <code>true</code> only for root expressions directly required to be
+	 * compile-time expressions, not for expressions directly or indirectly nested in such an expression.
 	 */
 	def static boolean isRequiredToBeCompileTimeExpression(Expression expr) {
 		val parent = expr.eContainer;

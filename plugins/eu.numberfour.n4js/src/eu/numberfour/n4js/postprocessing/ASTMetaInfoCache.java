@@ -41,6 +41,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
 import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
 import eu.numberfour.n4js.utils.CompileTimeValue;
+import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 import eu.numberfour.n4js.utils.UtilN4;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
@@ -150,9 +151,15 @@ public final class ASTMetaInfoCache {
 		inferredTypeArgs.put(callExpr, Collections.unmodifiableList(new ArrayList<>(typeArgs)));
 	}
 
+	/**
+	 * Iff the given expression is processed as a compile-time expression, i.e. method
+	 * {@link N4JSLanguageUtils#isProcessedAsCompileTimeExpression(Expression)} returns <code>true</code>, then this
+	 * method will return the {@link CompileTimeValue compile-time value} of the given expression (which may be
+	 * {@link CompileTimeValue#isValid() invalid} in case the expression is not a valid compile-time expression);
+	 * otherwise <code>null</code> is returned.
+	 */
 	public CompileTimeValue getEvaluationResult(Expression expr) {
-		return evalResults.get(expr); // FIXME reconsider what to return for expression that aren't required to be
-										// constant expressions!
+		return evalResults.get(expr);
 	}
 
 	/* package */ void storeEvaluationResult(Expression expr, CompileTimeValue evalResult) {

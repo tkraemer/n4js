@@ -15,7 +15,7 @@ import eu.numberfour.n4js.tests.builder.AbstractBuilderParticipantTest
 import org.junit.Test
 
 /**
- * Tests some corner-cases of compile-time expression which require a PluginUI test. Most tests for compile-time
+ * Tests some corner-cases of compile-time expressions which require a PluginUI test. Most tests for compile-time
  * expressions do not require this and are thus located elsewhere.
  */
 class CompileTimeExpressionPluginUITest extends AbstractBuilderParticipantTest {

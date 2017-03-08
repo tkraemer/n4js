@@ -140,7 +140,7 @@ public interface LiteralOrComputedPropertyName extends EObject {
 	 *  Tells if this element has a name computed from an expression instead of a literal name given in the source code.
 	 * <!-- end-model-doc -->
 	 * @model unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getLiteralName() == null) && (this.getExpression() != null));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getKind() == <%eu.numberfour.n4js.n4JS.PropertyNameKind%>.COMPUTED) && (this.getExpression() != null));'"
 	 * @generated
 	 */
 	boolean hasComputedPropertyName();

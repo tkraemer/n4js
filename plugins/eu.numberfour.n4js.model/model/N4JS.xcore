@@ -1059,7 +1059,7 @@ class LiteralOrComputedPropertyName {
 
 	/* Tells if this element has a name computed from an expression instead of a literal name given in the source code. */
 	op boolean hasComputedPropertyName() {
-		return literalName===null && expression!==null;
+		return kind===PropertyNameKind.COMPUTED && expression!==null;
 	}
 
 	/*

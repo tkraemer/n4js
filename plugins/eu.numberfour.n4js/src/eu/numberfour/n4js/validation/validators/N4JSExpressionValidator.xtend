@@ -106,8 +106,8 @@ import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.utils.CompileTimeEvaluator.UnresolvedPropertyAccessError
 import eu.numberfour.n4js.utils.CompileTimeValue.EvalError
-import eu.numberfour.n4js.utils.CompileTimeValue.UnresolvedPropertyAccessError
 import eu.numberfour.n4js.utils.CompileTimeValue.ValueInvalid
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils

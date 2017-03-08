@@ -30,22 +30,29 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
 
 /**
- *
+ * Processing of {@link LiteralOrComputedPropertyName}s that have a computed property name.
+ * <p>
+ * For details, see {@link ComputedNameProcessor#processComputedPropertyName(RuleEnvironment, LiteralOrComputedPropertyName, ASTMetaInfoCache, int)}.
  */
 @Singleton
 class ComputedNameProcessor {
 
-	// FIXME change to a better name
-	def public void computeName(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
-		if(node instanceof LiteralOrComputedPropertyName) {
-			computeName(G, node, cache, indentLevel);
-		}
-	}
+	/**
+	 * If the given 'nameDecl' has a computed property name, this method will obtain its expression's compile-time value
+	 * from the cache (the evaluation of the expression happened in {@link CompileTimeExpressionProcessor}), will derive
+	 * the actual property name from that value, and store this name in 'nameDecl' (for later use) and in the
+	 * corresponding TModule element (if such a TModule element exists).
+	 * <p>
+	 * In case the compile-time value of the expression is invalid (i.e. the expression is not a valid compile-time
+	 * expression) no actual name will be stored in 'nameDecl' and the corresponding TModule element will be removed
+	 * from the TModule, entirely (if such a TModule element exists).
+	 */
+	def public void processComputedPropertyName(RuleEnvironment G, LiteralOrComputedPropertyName nameDecl,
+		ASTMetaInfoCache cache, int indentLevel) {
 
-	def private void computeName(RuleEnvironment G, LiteralOrComputedPropertyName nameDecl, ASTMetaInfoCache cache, int indentLevel) {
-		if(nameDecl.hasComputedPropertyName) {
+		if (nameDecl.hasComputedPropertyName) {
 			val name = getPropertyNameFromExpression(G, nameDecl.expression, cache);
-			if(name!==null) {
+			if (name !== null) {
 				// 1) cache the computed name in the LiteralOrComputedPropertyName AST node
 				EcoreUtilN4.doWithDeliver(false, [
 					nameDecl.computedName = name;
@@ -53,7 +60,7 @@ class ComputedNameProcessor {
 				// 2) set the computed name in the types model element
 				val owner = nameDecl.eContainer;
 				val typeElem = N4JSASTUtils.getCorrespondingTypeModelElement(owner);
-				if(typeElem instanceof IdentifiableElement) {
+				if (typeElem instanceof IdentifiableElement) {
 					EcoreUtilN4.doWithDeliver(false, [
 						typeElem.name = name;
 					], typeElem);
@@ -77,6 +84,8 @@ class ComputedNameProcessor {
 	 * For booleans and numbers: they are equivalent to their corresponding string literal, as illustrated in this
 	 * snippet:
 	 * <pre>
+	 *     // plain Javascript
+	 *
 	 *     var obj = {
 	 *         41     : 'a',
 	 *         [42]   : 'b',
@@ -93,7 +102,7 @@ class ComputedNameProcessor {
 	 */
 	def private String getPropertyNameFromExpression(RuleEnvironment G, Expression expr, ASTMetaInfoCache cache) {
 		val value = cache.getEvaluationResult(expr);
-		return if(value.valid) {
+		return if (value.valid) {
 			value.toString // see API doc for why we can simply use #toString() here
 		} else {
 			null
@@ -102,14 +111,15 @@ class ComputedNameProcessor {
 
 	def private void discardTypeModelElement(EObject astNode) {
 		val elem = N4JSASTUtils.getCorrespondingTypeModelElement(astNode);
-		if(elem===null) {
-			throw new IllegalArgumentException("given AST node does not have a corresponding type model element to discard");
+		if (elem === null) {
+			throw new IllegalArgumentException(
+				"given AST node does not have a corresponding type model element to discard");
 		}
-		if(elem instanceof SyntaxRelatedTElement) {
+		if (elem instanceof SyntaxRelatedTElement) {
 			elem.astElement = null;
 		}
 		EcoreUtilN4.doWithDeliver(false, [
-			switch(astNode) {
+			switch (astNode) {
 				TypeDefiningElement:
 					astNode.definedType = null
 				N4FieldDeclaration:

@@ -244,7 +244,7 @@ public class LiteralOrComputedPropertyNameImpl extends ProxyResolvingEObjectImpl
 	 * @generated
 	 */
 	public boolean hasComputedPropertyName() {
-		return ((this.getLiteralName() == null) && (this.getExpression() != null));
+		return ((this.getKind() == PropertyNameKind.COMPUTED) && (this.getExpression() != null));
 	}
 
 	/**
