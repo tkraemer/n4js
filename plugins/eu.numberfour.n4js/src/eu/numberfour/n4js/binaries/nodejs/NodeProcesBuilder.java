@@ -92,6 +92,34 @@ public class NodeProcesBuilder {
 	}
 
 	/**
+	 * Prepares process builder for "npm uninstall" command.
+	 *
+	 * @param installPath
+	 *            location on which npm command should be invoked
+	 * @param packageName
+	 *            package to install (might be space separated list of names)
+	 * @param save
+	 *            instructs npm to save installed packages in package.json (if available)
+	 * @return configured, operating system aware process builder for "npm install" command
+	 */
+	public ProcessBuilder getNpmUninstallProcessBuilder(File installPath, String packageName, boolean save) {
+		Builder<String> builder = ImmutableList.<String> builder();
+		NpmBinary npmBinary = npmBinaryProvider.get();
+		String saveCommand = save ? "--save" : "";
+
+		if (isWindows()) {
+			builder.add(WIN_SHELL_COMAMNDS);
+			builder.add(escapeBinaryPath(npmBinary.getBinaryAbsolutePath()), "uninstall", packageName, saveCommand);
+		} else {
+			builder.add(NIX_SHELL_COMAMNDS);
+			builder.add(escapeBinaryPath(npmBinary.getBinaryAbsolutePath()) + " uninstall " + packageName + " "
+					+ saveCommand);
+		}
+
+		return create(builder.build(), npmBinary, installPath, false);
+	}
+
+	/**
 	 * Prepares process builder for process checking version of the provided binary.
 	 *
 	 * Note this process will not use binary providers, but provided binary directly. This is due to the fact, that this

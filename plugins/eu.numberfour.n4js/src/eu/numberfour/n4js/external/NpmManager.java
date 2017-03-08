@@ -28,6 +28,7 @@ import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -99,6 +100,9 @@ public class NpmManager {
 	private ExternalLibraryWorkspace externalLibraryWorkspace;
 
 	@Inject
+	private ExternalProjectsCollector collector;
+
+	@Inject
 	private StatusHelper statusHelper;
 
 	@Inject
@@ -106,6 +110,9 @@ public class NpmManager {
 
 	@Inject
 	private Provider<NpmBinary> npmBinaryProvider;
+
+	@Inject
+	private RebuildWorkspaceProjectsScheduler scheduler;
 
 	/**
 	 * Downloads and installs npm package and registers it as N4JS project. Registering package as N4JS project might
@@ -245,6 +252,100 @@ public class NpmManager {
 			monitor.done();
 		}
 
+	}
+
+	/**
+	 * Uninstalls the given npm package in a blocking fashion. Sugar for {@link #installDependencyInBackground(String)}.
+	 *
+	 * @param packageName
+	 *            the name of the package that has to be installed via package manager.
+	 * @param monitor
+	 *            the monitor for the blocking install process.
+	 * @return a status representing the outcome of the install process.
+	 */
+	public IStatus uninstallDependency(final String packageName, IProgressMonitor monitor)
+			throws IllegalBinaryStateException {
+
+		final NpmBinary npmBinary = npmBinaryProvider.get();
+		final IStatus npmBinaryStatus = npmBinary.validate();
+		if (!npmBinaryStatus.isOK()) {
+			throw new IllegalBinaryStateException(npmBinary, npmBinaryStatus);
+		}
+
+		try {
+
+			logInfo("================================================================");
+			logInfo("Uninstalling '" + packageName + "' npm package...");
+			logInfo("================================================================");
+
+			monitor = null == monitor ? new NullProgressMonitor() : monitor;
+			monitor.beginTask("Uninstalling '" + packageName + "' npm package...", 10);
+
+			final Map<IProject, Collection<IProject>> beforeExternalsWithDependees = collector
+					.collectExternalProjectsDependees(externalLibraryWorkspace
+							.getProjects(locationProvider.getTargetPlatformNodeModulesLocation()));
+
+			monitor.worked(1); // Intentionally cheating for better user experience.
+
+			logInfo("Removing '" + packageName + "' package... [1 of 4]");
+			monitor.setTaskName("Removing '" + packageName + "' package... [1 of 4]");
+			try {
+				final File targetInstallLocation = new File(locationProvider.getTargetPlatformInstallLocation());
+				final IStatus installStatus = uninstallPackage(targetInstallLocation, packageName);
+				if (!installStatus.isOK()) {
+					logError("Error occurred while uninstalling '" + packageName + "' npm package.",
+							installStatus.getException());
+					return installStatus;
+				}
+			} catch (IOException | InterruptedException e) {
+				final IStatus status = statusHelper
+						.createError("Error occurred while installing npm package '" + packageName + "'.", e);
+				logError(status);
+				return status;
+			}
+
+			logInfo("Package '" + packageName + "' has been successfully uninstalled.");
+			monitor.worked(2);
+
+			logInfo("Update external libraries state... [2 of 4]");
+			monitor.setTaskName("Update external libraries state... [2 of 4]");
+			externalLibraryWorkspace.updateState();
+			monitor.worked(1);
+
+			logInfo("Calculating dependency changes... [3 of 4]");
+			monitor.setTaskName("Calculating dependency changes... [3 of 4]");
+
+			final Map<IProject, Collection<IProject>> afterExternalsWithDependees = collector
+					.collectExternalProjectsDependees(externalLibraryWorkspace
+							.getProjects(locationProvider.getTargetPlatformNodeModulesLocation()));
+
+			final Set<IProject> affectedEclipseProjects = new HashSet<>();
+
+			beforeExternalsWithDependees.forEach((p, deps) -> {
+				if (!afterExternalsWithDependees.containsKey(p)) {
+					Collection<IProject> collection = beforeExternalsWithDependees.get(p);
+					if (collection != null) {
+						affectedEclipseProjects.addAll(collection);
+					}
+				}
+			});
+
+			logInfo("Dependency changes have been successfully calculated.");
+			monitor.worked(2);
+
+			logInfo("Scheduling build of affected projects... [4 of 4]");
+			monitor.setTaskName("Scheduling build of projects... [4 of 4]");
+
+			scheduler.scheduleBuildIfNecessary(affectedEclipseProjects);
+
+			logInfo("Package '" + packageName + "' has been successfully uninstalled.");
+			logInfo("================================================================");
+
+			return OK_STATUS;
+
+		} finally {
+			monitor.done();
+		}
 	}
 
 	/**
@@ -457,6 +558,42 @@ public class NpmManager {
 
 		if (!per.isOK()) {
 			final Throwable cause = per.toThrowable("Error while installing npm package.");
+			if (null != cause) {
+				return statusHelper.createError(cause.getMessage(), cause);
+			} else {
+				final String processLog = per.toString();
+				return statusHelper.createError(processLog, cause);
+			}
+		} else {
+			return OK_STATUS;
+		}
+
+	}
+
+	/**
+	 * uninstalls package under given name in specified location. Updates dependencies in the package.json of that
+	 * location. If there is no package.json at that location npm errors will be logged to the error log. In that case
+	 * npm usual still installs requested dependency (if possible).
+	 *
+	 * @param installPath
+	 *            location in which package will be installed
+	 * @param packageName
+	 *            to be installed
+	 *
+	 * @throws IOException
+	 *             if IO issues in npm process
+	 * @throws InterruptedException
+	 *             if interrupted when waiting for npm process
+	 */
+	private IStatus uninstallPackage(File installPath, String packageName) throws IOException, InterruptedException {
+		if (packageName == null || packageName.trim().isEmpty()) {
+			return statusHelper.createError("Malformed npm package name: '" + packageName + "'.");
+		}
+
+		ProcessResult per = commandFactory.createUninstallPackageCommand(installPath, packageName, true).execute();
+
+		if (!per.isOK()) {
+			final Throwable cause = per.toThrowable("Error while uninstalling npm package.");
 			if (null != cause) {
 				return statusHelper.createError(cause.getMessage(), cause);
 			} else {

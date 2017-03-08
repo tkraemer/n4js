@@ -174,6 +174,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 		createButton(subComposite, "Install npm...", new InstallNpmDependencyButtonListener());
 
+		createButton(subComposite, "Uninstall npm...", new UninstallNpmDependencyButtonListener());
+
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
@@ -438,6 +440,91 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 					});
 				} catch (final InvocationTargetException | InterruptedException exc) {
 					throw new RuntimeException("Error while installing npm dependency: '" + packageName + "'.", exc);
+				} finally {
+					if (null != illegalBinaryExcRef.get()) {
+						new IllegalBinaryStateDialog(illegalBinaryExcRef.get()).open();
+					} else if (null != errorStatusRef.get()) {
+						N4JSActivator.getInstance().getLog().log(errorStatusRef.get());
+						getDisplay().asyncExec(() -> openError(
+								getShell(),
+								"npm Install Failed",
+								"Error while installing '" + packageName
+										+ "' npm package.\nPlease check your Error Log view for the detailed npm log about the failure."));
+					}
+				}
+			}
+		}
+
+		private Collection<String> getInstalledNpmPackages() {
+			final File root = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
+			return from(externalLibraryWorkspace.getProjects(root.toURI())).transform(p -> p.getName()).toSet();
+		}
+
+	}
+
+	/**
+	 * Button selection listener for opening up an {@link InputDialog input dialog}, where user can specify npm package
+	 * name that will be downloaded and installed to the external libraries.
+	 *
+	 * Note: this class is not static, so it will hold reference to all services. Make sure to dispose it.
+	 *
+	 */
+	private class UninstallNpmDependencyButtonListener extends SelectionAdapter {
+
+		@Override
+		public void widgetSelected(final SelectionEvent e) {
+			final Collection<String> installedNpmPackageNames = getInstalledNpmPackages();
+			final InputDialog dialog = new InputDialog(UIUtils.getShell(), "npm Uninstall",
+					"Specify an npm package name to remove:", null, new IInputValidator() {
+
+						@Override
+						public String isValid(final String newText) {
+
+							if (StringExtensions.isNullOrEmpty(newText)) {
+								return "The npm package name should be specified.";
+							}
+
+							for (int i = 0; i < newText.length(); i++) {
+								if (Character.isWhitespace(newText.charAt(i))) {
+									return "The npm package name must not contain any whitespaces.";
+								}
+							}
+
+							for (int i = 0; i < newText.length(); i++) {
+								if (Character.isUpperCase(newText.charAt(i))) {
+									return "The npm package name must not contain any upper case letter.";
+								}
+							}
+
+							if (!installedNpmPackageNames.contains(newText)) {
+								return "The npm package '" + newText + "' is not installed.";
+							}
+
+							return null;
+						}
+					});
+
+			dialog.open();
+			final String packageName = dialog.getValue();
+			if (!StringExtensions.isNullOrEmpty(packageName)) {
+				final AtomicReference<IStatus> errorStatusRef = new AtomicReference<>();
+				final AtomicReference<IllegalBinaryStateException> illegalBinaryExcRef = new AtomicReference<>();
+				try {
+					new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
+						try {
+							IStatus status = npmManager.uninstallDependency(packageName, monitor);
+							if (status.isOK()) {
+								updateInput(viewer, store.getLocations());
+							} else {
+								// Raise the error dialog just when this is closed.
+								errorStatusRef.set(status);
+							}
+						} catch (final IllegalBinaryStateException ibse) {
+							illegalBinaryExcRef.set(ibse);
+						}
+					});
+				} catch (final InvocationTargetException | InterruptedException exc) {
+					throw new RuntimeException("Error while removing npm dependency: '" + packageName + "'.", exc);
 				} finally {
 					if (null != illegalBinaryExcRef.get()) {
 						new IllegalBinaryStateDialog(illegalBinaryExcRef.get()).open();

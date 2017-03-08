@@ -58,6 +58,30 @@ public class BinaryCommandFactory {
 	}
 
 	/**
+	 * Creates command that will execute external node process that will command npm to uninstall given package.
+	 *
+	 * @param installPath
+	 *            path where package is supposed to be installed
+	 * @param packageName
+	 *            name of the package to install
+	 * @param saveDependnecy
+	 *            flag if installed package should be saved in packag.json of the install path
+	 */
+	public ProcessExecutionCommand createUninstallPackageCommand(File installPath,
+			String packageName, boolean saveDependnecy) {
+		return new ProcessExecutionCommand() {
+			private static final String COMMAND_NAME = "npm_uninstall";
+
+			@Override
+			public ProcessResult execute() {
+				ProcessBuilder processBuilder = nodeProccessBuilder.getNpmUninstallProcessBuilder(installPath,
+						packageName, saveDependnecy);
+				return processExecutor.createAndExecute(processBuilder, COMMAND_NAME, OutputRedirection.REDIRECT);
+			}
+		};
+	}
+
+	/**
 	 * Creates command that will execute external node process to resolve the main module.
 	 *
 	 * @param packageRoot
