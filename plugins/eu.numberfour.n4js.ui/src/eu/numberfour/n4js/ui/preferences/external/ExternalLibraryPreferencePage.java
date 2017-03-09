@@ -17,6 +17,8 @@ import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.primitives.Ints.asList;
 import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.EXTERNAL_LIBRARIES_SUPPLIER;
 import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.EXTERNAL_LIBRARY_NAMES;
+import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.N4_NPM_FOLDER_SUPPLIER;
+import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.repairNpmFolderState;
 import static eu.numberfour.n4js.external.libraries.TargetPlatformModel.TP_FILTER_EXTENSION;
 import static eu.numberfour.n4js.n4mf.ProjectType.API;
 import static eu.numberfour.n4js.ui.utils.UIUtils.getDisplay;
@@ -47,6 +49,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.PreferencePage;
@@ -96,7 +99,9 @@ import eu.numberfour.n4js.ui.binaries.IllegalBinaryStateDialog;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.ui.utils.UIUtils;
 import eu.numberfour.n4js.ui.viewer.TreeViewerBuilder;
+import eu.numberfour.n4js.utils.StatusHelper;
 import eu.numberfour.n4js.utils.collections.Arrays2;
+import eu.numberfour.n4js.utils.io.FileDeleter;
 
 /**
  * Preference page for managing external libraries.
@@ -127,6 +132,9 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 	@Inject
 	private ExternalLibrariesReloadHelper externalLibrariesReloadHelper;
+
+	@Inject
+	private StatusHelper statusHelper;
 
 	private TreeViewer viewer;
 
@@ -176,6 +184,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 		createButton(subComposite, "Install npm...", new InstallNpmDependencyButtonListener());
 
 		createButton(subComposite, "Uninstall npm...", new UninstallNpmDependencyButtonListener());
+
+		createButton(subComposite, "Purge npm", new PurgeNpmDependencyButtonListener());
 
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
@@ -558,6 +568,71 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 			return from(externalLibraryWorkspace.getProjects(root.toURI())).transform(p -> p.getName()).toSet();
 		}
 
+	}
+
+	/**
+	 * Button selection listener for opening up an {@link InputDialog input dialog}, where user can specify npm package
+	 * name that will be uninstalled from the external libraries.
+	 *
+	 * Note: this class is not static, so it will hold reference to all services. Make sure to dispose it.
+	 *
+	 */
+	private class PurgeNpmDependencyButtonListener extends SelectionAdapter {
+
+		@Override
+		public void widgetSelected(final SelectionEvent e) {
+			final boolean purgeDecision = MessageDialog.openQuestion(UIUtils.getShell(), "Purge npm packages?",
+					"Proceeding will delete all npm packages.\nNeeded packages will need to be installed again.");
+
+			if (purgeDecision) {
+
+				final AtomicReference<IStatus> errorStatusRef = new AtomicReference<>();
+				try {
+					new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
+						try {
+							// get folder
+							File npmFolder = N4_NPM_FOLDER_SUPPLIER.get();
+
+							if (npmFolder.exists()) {
+								FileDeleter.delete(npmFolder);
+							}
+
+							if (npmFolder.exists()) {
+								errorStatusRef.set(statusHelper
+										.createError("Could not verify deletion of " + npmFolder.getAbsolutePath()));
+								return;
+							}
+
+							// recreate clear folder
+							IStatus repairNpmFolderState = repairNpmFolderState();
+							errorStatusRef.set(repairNpmFolderState);
+							File newNnpmFolder = N4_NPM_FOLDER_SUPPLIER.get();
+
+							if (newNnpmFolder.exists() && newNnpmFolder.isDirectory()) {
+								// reloading non npms might be overkill here
+								// but ensures proper dependencies resolution and update
+								// of workspace projects
+								externalLibrariesReloadHelper.reloadLibraries(true, monitor);
+								updateInput(viewer, store.getLocations());
+							}
+						} catch (final IOException ioe) {
+							errorStatusRef
+									.set(statusHelper.createError("Exception during deletion of the npm folder.", ioe));
+						}
+					});
+				} catch (final InvocationTargetException | InterruptedException exc) {
+					throw new RuntimeException("Error while purging npm pakages.", exc);
+				} finally {
+					if (null != errorStatusRef.get()) {
+						N4JSActivator.getInstance().getLog().log(errorStatusRef.get());
+						getDisplay().asyncExec(() -> openError(
+								getShell(),
+								"npm purge Failed",
+								"Error while purging npm folder.\nPlease check your Error Log view for the detailed npm log about the failure."));
+					}
+				}
+			}
+		}
 	}
 
 	/**
