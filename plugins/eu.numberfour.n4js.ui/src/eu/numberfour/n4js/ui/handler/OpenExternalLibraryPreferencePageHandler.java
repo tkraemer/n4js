@@ -19,7 +19,7 @@ import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import eu.numberfour.n4js.ui.preferences.ExternalLibraryPreferencePage;
+import eu.numberfour.n4js.ui.preferences.external.ExternalLibraryPreferencePage;
 
 /**
  * Handler for opening the External Libraries preference page.

@@ -28,19 +28,18 @@ import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResourceRuleFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.xtext.util.Pair;
 
 import com.google.common.collect.ImmutableMap;
@@ -51,7 +50,6 @@ import com.google.inject.Singleton;
 import eu.numberfour.n4js.binaries.BinaryCommandFactory;
 import eu.numberfour.n4js.binaries.IllegalBinaryStateException;
 import eu.numberfour.n4js.binaries.nodejs.NpmBinary;
-import eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator;
 import eu.numberfour.n4js.external.libraries.PackageJson;
 import eu.numberfour.n4js.utils.StatusHelper;
 import eu.numberfour.n4js.utils.collections.Arrays2;
@@ -59,7 +57,6 @@ import eu.numberfour.n4js.utils.git.GitUtils;
 import eu.numberfour.n4js.utils.process.OutputRedirection;
 import eu.numberfour.n4js.utils.process.OutputStreamProvider;
 import eu.numberfour.n4js.utils.process.ProcessResult;
-import eu.numberfour.n4js.utils.resources.DelegatingWorkspace;
 import eu.numberfour.n4js.utils.resources.ExternalProject;
 
 /**
@@ -99,6 +96,9 @@ public class NpmManager {
 	private ExternalLibraryWorkspace externalLibraryWorkspace;
 
 	@Inject
+	private ExternalProjectsCollector collector;
+
+	@Inject
 	private StatusHelper statusHelper;
 
 	@Inject
@@ -107,48 +107,11 @@ public class NpmManager {
 	@Inject
 	private Provider<NpmBinary> npmBinaryProvider;
 
-	/**
-	 * Downloads and installs npm package and registers it as N4JS project. Registering package as N4JS project might
-	 * trigger build job.
-	 *
-	 * For given package name checks if {@link ExternalLibrariesActivator#N4_NPM_FOLDER_SUPPLIER internal location}
-	 * contains N4JS project for a given name. If yes, no further work is performed. If no (project structure does not
-	 * exist) npm is invoked in order to install locally given npm package. On top of installed package additional
-	 * activities are done
-	 * <ol>
-	 * <li>generating manifest file (always)
-	 * <li>adjusting folder structure (optional)
-	 * <li>downloading n4js and/or n4jsd sources (optional)
-	 * </ol>
-	 * Steps #2 and #3 are optional but are not configurable. They might or might not be performed, depending on
-	 * individual package and/or external resources.
-	 *
-	 * @param packageName
-	 *            npm package to install
-	 */
-	public void installDependencyInBackground(final String packageName) {
-		final Job job = new Job("Install '" + packageName + "' npm package") {
-
-			@Override
-			protected IStatus run(final IProgressMonitor monitor) {
-				try {
-					return installDependency(packageName, monitor);
-				} catch (IllegalBinaryStateException e) {
-					return e.getStatus();
-				}
-			}
-		};
-
-		final IResourceRuleFactory ruleFactory = new DelegatingWorkspace().getRuleFactory();
-		if (null != ruleFactory) {
-			job.setRule(ruleFactory.buildRule());
-		}
-
-		job.schedule();
-	}
+	@Inject
+	private RebuildWorkspaceProjectsScheduler scheduler;
 
 	/**
-	 * Installs the given npm package in a blocking fashion. Sugar for {@link #installDependencyInBackground(String)}.
+	 * Installs the given npm package in a blocking fashion.
 	 *
 	 * @param packageName
 	 *            the name of the package that has to be installed via package manager.
@@ -245,6 +208,102 @@ public class NpmManager {
 			monitor.done();
 		}
 
+	}
+
+	/**
+	 * Uninstalls the given npm package in a blocking fashion.
+	 *
+	 * @param packageName
+	 *            the name of the package that has to be uninstalled via package manager.
+	 * @param monitor
+	 *            the monitor for the blocking uninstall process.
+	 * @return a status representing the outcome of the uninstall process.
+	 */
+	public IStatus uninstallDependency(final String packageName, IProgressMonitor monitor)
+			throws IllegalBinaryStateException {
+
+		final NpmBinary npmBinary = npmBinaryProvider.get();
+		final IStatus npmBinaryStatus = npmBinary.validate();
+		if (!npmBinaryStatus.isOK()) {
+			throw new IllegalBinaryStateException(npmBinary, npmBinaryStatus);
+		}
+
+		try {
+
+			logInfo("================================================================");
+			logInfo("Uninstalling '" + packageName + "' npm package...");
+			logInfo("================================================================");
+
+			monitor = null == monitor ? new NullProgressMonitor() : monitor;
+			monitor.beginTask("Uninstalling '" + packageName + "' npm package...", 10);
+
+			final Map<IProject, Collection<IProject>> beforeExternalsWithDependees = collector
+					.collectExternalProjectDependents(externalLibraryWorkspace
+							.getProjects(locationProvider.getTargetPlatformNodeModulesLocation()));
+
+			monitor.worked(1); // Intentionally cheating for better user experience.
+
+			logInfo("Removing '" + packageName + "' package... [1 of 4]");
+			monitor.setTaskName("Removing '" + packageName + "' package... [1 of 4]");
+			try {
+				final File targetInstallLocation = new File(locationProvider.getTargetPlatformInstallLocation());
+				final IStatus installStatus = uninstallPackage(targetInstallLocation, packageName);
+				if (!installStatus.isOK()) {
+					logError("Error occurred while uninstalling '" + packageName + "' npm package.",
+							installStatus.getException());
+					return installStatus;
+				}
+			} catch (IOException | InterruptedException e) {
+				final IStatus status = statusHelper
+						.createError("Error occurred while installing npm package '" + packageName + "'.", e);
+				logError(status);
+				return status;
+			}
+
+			logInfo("Package '" + packageName + "' has been successfully uninstalled.");
+			monitor.worked(2);
+
+			logInfo("Update external libraries state... [2 of 4]");
+			monitor.setTaskName("Update external libraries state... [2 of 4]");
+			externalLibraryWorkspace.updateState();
+			monitor.worked(1);
+
+			logInfo("Calculating dependency changes... [3 of 4]");
+			monitor.setTaskName("Calculating dependency changes... [3 of 4]");
+
+			final Map<IProject, Collection<IProject>> afterExternalsWithDependees = collector
+					.collectExternalProjectDependents(externalLibraryWorkspace
+							.getProjects(locationProvider.getTargetPlatformNodeModulesLocation()));
+
+			final Set<IProject> affectedEclipseProjects = new HashSet<>();
+
+			beforeExternalsWithDependees.forEach((p, deps) -> {
+				if (!afterExternalsWithDependees.containsKey(p)) {
+					// external project p was uninstalled
+					Collection<IProject> collection = beforeExternalsWithDependees.get(p);
+					if (collection != null) {
+						// external project p had dependent workspace projects
+						affectedEclipseProjects.addAll(collection);
+					}
+				}
+			});
+
+			logInfo("Dependency changes have been successfully calculated.");
+			monitor.worked(2);
+
+			logInfo("Scheduling build of affected projects... [4 of 4]");
+			monitor.setTaskName("Scheduling build of projects... [4 of 4]");
+
+			scheduler.scheduleBuildIfNecessary(affectedEclipseProjects);
+
+			logInfo("Package '" + packageName + "' has been successfully uninstalled.");
+			logInfo("================================================================");
+
+			return OK_STATUS;
+
+		} finally {
+			monitor.done();
+		}
 	}
 
 	/**
@@ -457,6 +516,42 @@ public class NpmManager {
 
 		if (!per.isOK()) {
 			final Throwable cause = per.toThrowable("Error while installing npm package.");
+			if (null != cause) {
+				return statusHelper.createError(cause.getMessage(), cause);
+			} else {
+				final String processLog = per.toString();
+				return statusHelper.createError(processLog, cause);
+			}
+		} else {
+			return OK_STATUS;
+		}
+
+	}
+
+	/**
+	 * Uninstalls package under given name in specified location. Updates dependencies in the package.json of that
+	 * location. If there is no package.json at that location npm errors will be logged to the error log. In that case
+	 * npm usual still uninstalls requested dependency (if possible).
+	 *
+	 * @param uninstallPath
+	 *            location in which package will be uninstalled
+	 * @param packageName
+	 *            to be uninstalled
+	 *
+	 * @throws IOException
+	 *             if IO issues in npm process
+	 * @throws InterruptedException
+	 *             if interrupted when waiting for npm process
+	 */
+	private IStatus uninstallPackage(File uninstallPath, String packageName) throws IOException, InterruptedException {
+		if (packageName == null || packageName.trim().isEmpty()) {
+			return statusHelper.createError("Malformed npm package name: '" + packageName + "'.");
+		}
+
+		ProcessResult per = commandFactory.createUninstallPackageCommand(uninstallPath, packageName, true).execute();
+
+		if (!per.isOK()) {
+			final Throwable cause = per.toThrowable("Error while uninstalling npm package.");
 			if (null != cause) {
 				return statusHelper.createError(cause.getMessage(), cause);
 			} else {

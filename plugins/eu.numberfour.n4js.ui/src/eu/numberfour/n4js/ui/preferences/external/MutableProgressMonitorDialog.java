@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.preferences;
+package eu.numberfour.n4js.ui.preferences.external;
 
 import java.lang.reflect.InvocationTargetException;
 

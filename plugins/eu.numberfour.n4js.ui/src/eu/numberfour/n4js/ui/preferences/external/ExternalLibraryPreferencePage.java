@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.ui.preferences;
+package eu.numberfour.n4js.ui.preferences.external;
 
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.base.Strings.isNullOrEmpty;
@@ -60,6 +60,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -173,6 +174,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 		createPlaceHolderLabel(subComposite);
 
 		createButton(subComposite, "Install npm...", new InstallNpmDependencyButtonListener());
+
+		createButton(subComposite, "Uninstall npm...", new UninstallNpmDependencyButtonListener());
 
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
@@ -419,7 +422,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 			dialog.open();
 			final String packageName = dialog.getValue();
-			if (!StringExtensions.isNullOrEmpty(packageName)) {
+			if (!StringExtensions.isNullOrEmpty(packageName) && dialog.getReturnCode() == Window.OK) {
 				final AtomicReference<IStatus> errorStatusRef = new AtomicReference<>();
 				final AtomicReference<IllegalBinaryStateException> illegalBinaryExcRef = new AtomicReference<>();
 				try {
@@ -447,6 +450,103 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 								getShell(),
 								"npm Install Failed",
 								"Error while installing '" + packageName
+										+ "' npm package.\nPlease check your Error Log view for the detailed npm log about the failure."));
+					}
+				}
+			}
+		}
+
+		private Collection<String> getInstalledNpmPackages() {
+			final File root = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
+			return from(externalLibraryWorkspace.getProjects(root.toURI())).transform(p -> p.getName()).toSet();
+		}
+
+	}
+
+	/**
+	 * Button selection listener for opening up an {@link InputDialog input dialog}, where user can specify npm package
+	 * name that will be uninstalled from the external libraries.
+	 *
+	 * Note: this class is not static, so it will hold reference to all services. Make sure to dispose it.
+	 *
+	 */
+	private class UninstallNpmDependencyButtonListener extends SelectionAdapter {
+
+		@Override
+		public void widgetSelected(final SelectionEvent e) {
+			final Collection<String> installedNpmPackageNames = getInstalledNpmPackages();
+
+			String initalValue = null;
+
+			final ISelection selection = viewer.getSelection();
+			if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
+				final Object element = ((IStructuredSelection) selection).getFirstElement();
+				if (element instanceof IN4JSProject) {
+					IN4JSProject project = (IN4JSProject) element;
+					initalValue = project.getProjectId();
+				}
+			}
+
+			final InputDialog dialog = new InputDialog(UIUtils.getShell(), "npm Uninstall",
+					"Specify an npm package name to uninstall:", initalValue, new IInputValidator() {
+
+						@Override
+						public String isValid(final String newText) {
+
+							if (StringExtensions.isNullOrEmpty(newText)) {
+								return "The npm package name should be specified.";
+							}
+
+							for (int i = 0; i < newText.length(); i++) {
+								if (Character.isWhitespace(newText.charAt(i))) {
+									return "The npm package name must not contain any whitespaces.";
+								}
+							}
+
+							for (int i = 0; i < newText.length(); i++) {
+								if (Character.isUpperCase(newText.charAt(i))) {
+									return "The npm package name must not contain any upper case letter.";
+								}
+							}
+
+							if (!installedNpmPackageNames.contains(newText)) {
+								return "The npm package '" + newText + "' is not installed.";
+							}
+
+							return null;
+						}
+					});
+
+			dialog.open();
+			final String packageName = dialog.getValue();
+			if (!StringExtensions.isNullOrEmpty(packageName) && dialog.getReturnCode() == Window.OK) {
+				final AtomicReference<IStatus> errorStatusRef = new AtomicReference<>();
+				final AtomicReference<IllegalBinaryStateException> illegalBinaryExcRef = new AtomicReference<>();
+				try {
+					new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
+						try {
+							IStatus status = npmManager.uninstallDependency(packageName, monitor);
+							if (status.isOK()) {
+								updateInput(viewer, store.getLocations());
+							} else {
+								// Raise the error dialog just when this is closed.
+								errorStatusRef.set(status);
+							}
+						} catch (final IllegalBinaryStateException ibse) {
+							illegalBinaryExcRef.set(ibse);
+						}
+					});
+				} catch (final InvocationTargetException | InterruptedException exc) {
+					throw new RuntimeException("Error while uninstalling npm dependency: '" + packageName + "'.", exc);
+				} finally {
+					if (null != illegalBinaryExcRef.get()) {
+						new IllegalBinaryStateDialog(illegalBinaryExcRef.get()).open();
+					} else if (null != errorStatusRef.get()) {
+						N4JSActivator.getInstance().getLog().log(errorStatusRef.get());
+						getDisplay().asyncExec(() -> openError(
+								getShell(),
+								"npm Uninstall Failed",
+								"Error while uninstalling '" + packageName
 										+ "' npm package.\nPlease check your Error Log view for the detailed npm log about the failure."));
 					}
 				}

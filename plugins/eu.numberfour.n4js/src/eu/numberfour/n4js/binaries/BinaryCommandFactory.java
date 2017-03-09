@@ -40,18 +40,42 @@ public class BinaryCommandFactory {
 	 *            path where package is supposed to be installed
 	 * @param packageName
 	 *            name of the package to install
-	 * @param saveDependnecy
-	 *            flag if installed package should be saved in packag.json of the install path
+	 * @param saveDependency
+	 *            flag if installed package should be saved in package.json of the install path
 	 */
 	public ProcessExecutionCommand createInstallPackageCommand(File installPath,
-			String packageName, boolean saveDependnecy) {
+			String packageName, boolean saveDependency) {
 		return new ProcessExecutionCommand() {
 			private static final String COMMAND_NAME = "npm_install";
 
 			@Override
 			public ProcessResult execute() {
 				ProcessBuilder processBuilder = nodeProccessBuilder.getNpmInstallProcessBuilder(installPath,
-						packageName, saveDependnecy);
+						packageName, saveDependency);
+				return processExecutor.createAndExecute(processBuilder, COMMAND_NAME, OutputRedirection.REDIRECT);
+			}
+		};
+	}
+
+	/**
+	 * Creates command that will execute external node process that will command npm to uninstall given package.
+	 *
+	 * @param uninstallPath
+	 *            path where package is supposed to be installed
+	 * @param packageName
+	 *            name of the package to uninstall
+	 * @param saveDependency
+	 *            flag if uninstalled package should be saved in package.json of the uninstall path
+	 */
+	public ProcessExecutionCommand createUninstallPackageCommand(File uninstallPath,
+			String packageName, boolean saveDependency) {
+		return new ProcessExecutionCommand() {
+			private static final String COMMAND_NAME = "npm_uninstall";
+
+			@Override
+			public ProcessResult execute() {
+				ProcessBuilder processBuilder = nodeProccessBuilder.getNpmUninstallProcessBuilder(uninstallPath,
+						packageName, saveDependency);
 				return processExecutor.createAndExecute(processBuilder, COMMAND_NAME, OutputRedirection.REDIRECT);
 			}
 		};
