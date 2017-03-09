@@ -60,6 +60,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -421,7 +422,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 			dialog.open();
 			final String packageName = dialog.getValue();
-			if (!StringExtensions.isNullOrEmpty(packageName)) {
+			if (!StringExtensions.isNullOrEmpty(packageName) && dialog.getReturnCode() == Window.OK) {
 				final AtomicReference<IStatus> errorStatusRef = new AtomicReference<>();
 				final AtomicReference<IllegalBinaryStateException> illegalBinaryExcRef = new AtomicReference<>();
 				try {
@@ -518,7 +519,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 			dialog.open();
 			final String packageName = dialog.getValue();
-			if (!StringExtensions.isNullOrEmpty(packageName)) {
+			if (!StringExtensions.isNullOrEmpty(packageName) && dialog.getReturnCode() == Window.OK) {
 				final AtomicReference<IStatus> errorStatusRef = new AtomicReference<>();
 				final AtomicReference<IllegalBinaryStateException> illegalBinaryExcRef = new AtomicReference<>();
 				try {
