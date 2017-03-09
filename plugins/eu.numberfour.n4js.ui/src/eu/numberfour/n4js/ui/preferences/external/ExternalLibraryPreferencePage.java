@@ -474,8 +474,20 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 		@Override
 		public void widgetSelected(final SelectionEvent e) {
 			final Collection<String> installedNpmPackageNames = getInstalledNpmPackages();
+
+			String initalValue = null;
+
+			final ISelection selection = viewer.getSelection();
+			if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
+				final Object element = ((IStructuredSelection) selection).getFirstElement();
+				if (element instanceof IN4JSProject) {
+					IN4JSProject project = (IN4JSProject) element;
+					initalValue = project.getProjectId();
+				}
+			}
+
 			final InputDialog dialog = new InputDialog(UIUtils.getShell(), "npm Uninstall",
-					"Specify an npm package name to uninstall:", null, new IInputValidator() {
+					"Specify an npm package name to uninstall:", initalValue, new IInputValidator() {
 
 						@Override
 						public String isValid(final String newText) {
