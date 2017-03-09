@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.util.Map;
-import java.util.concurrent.Semaphore;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.internal.runtime.InternalPlatform;
@@ -35,7 +34,6 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProduct;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.xtext.util.Pair;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
@@ -156,51 +154,18 @@ public class ExternalLibrariesActivator implements BundleActivator {
 	 */
 	public static final Supplier<File> N4_NPM_FOLDER_SUPPLIER = memoize(() -> getOrCreateNpmFolder());
 
-	private static final class NPMConsistencyUtil {
-		private static final int MAX_AVAILABLE = 1;
-		private final Semaphore available = new Semaphore(MAX_AVAILABLE, true);
-
-		public final IStatus verifyNpmFolderState() {
-			File npmFolder = N4_NPM_FOLDER_SUPPLIER.get();
-			if (npmFolder.exists() == false || npmFolder.isDirectory() == false) {
-				try {
-					available.acquire();
-					synchronized (this) {
-						return this.repairState(npmFolder);
-					}
-				} catch (InterruptedException e) {
-					return new Status(IStatus.ERROR, PLUGIN_ID, "Errors when repairing NPM folder.", e);
-				} finally {
-					available.release();
-				}
-			}
-			return new Status(IStatus.OK, PLUGIN_ID, "NPM seem to be fine.");
-		}
-
-		private final synchronized IStatus repairState(final File npmFolder) {
-			if (npmFolder.exists() && npmFolder.isDirectory()) {
-				return new Status(IStatus.OK, PLUGIN_ID, "NPM seem to be fine.");
-			}
-			if (!npmFolder.exists()) {
-				File newNPM = getOrCreateNpmFolder();
-				if (newNPM.exists() && newNPM.isDirectory()) {
-					return new Status(IStatus.WARNING, PLUGIN_ID, "NPM folder has been recreated.");
-				}
-			}
-			return new Status(IStatus.ERROR, PLUGIN_ID, "NPM is in unrecoverable state.");
-		}
-	}
-
 	/**
-	 * Repairs (if necessary) npm folder integrity. Returned {@link IStatus#getCode()} describes result of operation.
-	 * {@link IStatus#OK} is returned when npm folder passed internal checks. {@link IStatus#WARNING} is returned when
-	 * npm folder failed internal checks, but could be recovered to passing state. {@link IStatus#ERROR} is returned
-	 * when npm folder failed internal checks, and could not be recovered to passing state.
+	 * Repairs (if necessary) npm folder integrity. In most cases that is unnecessary, but in case folder supplier by
+	 * {@link #N4_NPM_FOLDER_SUPPLIER} is broken this method will try to recreate it.
 	 *
-	 * @return state of the npm folder according to internal checks.
+	 * @return true if npm matches expected state
 	 */
-	public static final IStatus repairNpmFolderState() {
-		return new NPMConsistencyUtil().verifyNpmFolderState();
+	public static final boolean repairNpmFolderState() {
+		synchronized (N4_NPM_FOLDER_SUPPLIER) {
+			File npmFile = N4_NPM_FOLDER_SUPPLIER.get();
+			File newFile = getOrCreateNpmFolder();
+			return newFile.getAbsolutePath().equals(npmFile.getAbsolutePath());
+		}
 	}
 
 	/** Shared private bundle context. */
@@ -354,5 +319,4 @@ public class ExternalLibrariesActivator implements BundleActivator {
 
 		return targetPlatform;
 	}
-
 }

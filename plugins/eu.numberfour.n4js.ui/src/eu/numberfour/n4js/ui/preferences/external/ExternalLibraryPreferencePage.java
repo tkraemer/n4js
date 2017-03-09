@@ -571,8 +571,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	}
 
 	/**
-	 * Button selection listener for opening up an {@link InputDialog input dialog}, where user can specify npm package
-	 * name that will be uninstalled from the external libraries.
+	 * Button selection listener for opening up an {@link MessageDialog yes/no dialog}, where user can decide to purge
+	 * npm folder. Effectively this removes all npm packages from the external libraries.
 	 *
 	 * Note: this class is not static, so it will hold reference to all services. Make sure to dispose it.
 	 *
@@ -603,17 +603,16 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 								return;
 							}
 
-							// recreate clear folder
-							IStatus repairNpmFolderState = repairNpmFolderState();
-							errorStatusRef.set(repairNpmFolderState);
-							File newNnpmFolder = N4_NPM_FOLDER_SUPPLIER.get();
-
-							if (newNnpmFolder.exists() && newNnpmFolder.isDirectory()) {
+							// recreate npm folder
+							if (repairNpmFolderState()) {
 								// reloading non npms might be overkill here
 								// but ensures proper dependencies resolution and update
 								// of workspace projects
 								externalLibrariesReloadHelper.reloadLibraries(true, monitor);
 								updateInput(viewer, store.getLocations());
+							} else {
+								errorStatusRef
+										.set(statusHelper.createError("The npm folder was not recreated correctly."));
 							}
 						} catch (final IOException ioe) {
 							errorStatusRef
