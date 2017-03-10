@@ -88,6 +88,7 @@ import com.google.inject.Provider;
 import eu.numberfour.n4js.binaries.IllegalBinaryStateException;
 import eu.numberfour.n4js.external.ExternalLibrariesReloadHelper;
 import eu.numberfour.n4js.external.ExternalLibraryWorkspace;
+import eu.numberfour.n4js.external.GitCloneSupplier;
 import eu.numberfour.n4js.external.NpmManager;
 import eu.numberfour.n4js.external.TargetPlatformInstallLocationProvider;
 import eu.numberfour.n4js.external.libraries.TargetPlatformModel;
@@ -129,6 +130,9 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 	@Inject
 	private TargetPlatformInstallLocationProvider installLocationProvider;
+
+	@Inject
+	private GitCloneSupplier gitSupplier;
 
 	@Inject
 	private ExternalLibrariesReloadHelper externalLibrariesReloadHelper;
@@ -186,6 +190,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 		createButton(subComposite, "Uninstall npm...", new UninstallNpmDependencyButtonListener());
 
 		createButton(subComposite, "Purge npm", new PurgeNpmDependencyButtonListener());
+
+		createButton(subComposite, "Refresh type definitions.", new ReInitiateTypeDefinitionsButtonListener());
 
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
@@ -628,6 +634,72 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 								getShell(),
 								"npm purge Failed",
 								"Error while purging npm folder.\nPlease check your Error Log view for the detailed npm log about the failure."));
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Button selection listener for opening up an {@link MessageDialog yes/no dialog}, where user can decide to delete
+	 * type definitions and clone them again.
+	 *
+	 * Note: this class is not static, so it will hold reference to all services. Make sure to dispose it.
+	 *
+	 */
+	private class ReInitiateTypeDefinitionsButtonListener extends SelectionAdapter {
+
+		@Override
+		public void widgetSelected(final SelectionEvent e) {
+			final boolean purgeDecision = MessageDialog.openQuestion(UIUtils.getShell(),
+					"Re initiate type definitions?",
+					"Proceeding will delete local type definitions and make fresh clone of the type definitions repository.");
+
+			if (purgeDecision) {
+
+				final AtomicReference<IStatus> errorStatusRef = new AtomicReference<>();
+				try {
+					new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
+						try {
+							// get folder
+							File typeDefinitionsFolder = gitSupplier.get();
+
+							if (typeDefinitionsFolder.exists()) {
+								FileDeleter.delete(typeDefinitionsFolder);
+							}
+
+							if (typeDefinitionsFolder.exists()) {
+								errorStatusRef.set(statusHelper
+										.createError("Could not verify deletion of "
+												+ typeDefinitionsFolder.getAbsolutePath()));
+								return;
+							}
+							// recreate npm folder
+							if (gitSupplier.reClone()) {
+								// reloading non npms might be overkill here
+								// but ensures proper updating npms type definitions
+								externalLibrariesReloadHelper.reloadLibraries(true, monitor);
+								updateInput(viewer, store.getLocations());
+							} else {
+								errorStatusRef
+										.set(statusHelper.createError(
+												"The rype definitions folder was not recreated correctly."));
+							}
+						} catch (final IOException ioe) {
+							errorStatusRef
+									.set(statusHelper.createError("Exception during deletion of the type definitions.",
+											ioe));
+						}
+					});
+				} catch (final InvocationTargetException | InterruptedException exc) {
+					throw new RuntimeException("Error while purging npm pakages.", exc);
+				} finally {
+					if (null != errorStatusRef.get()) {
+						N4JSActivator.getInstance().getLog().log(errorStatusRef.get());
+						getDisplay().asyncExec(() -> openError(
+								getShell(),
+								"npm purge Failed",
+								"Error while purging type definitions folder.\nPlease check your Error Log view for the detailed log about the failure."));
 					}
 				}
 			}

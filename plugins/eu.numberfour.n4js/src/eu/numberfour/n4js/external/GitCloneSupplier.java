@@ -92,4 +92,12 @@ public class GitCloneSupplier implements Supplier<File> {
 		return getOrCreateNestedFolder(repositoryName);
 	}
 
+	public synchronized boolean reClone() {
+		File oldRepo = get();
+		this.successfullyCloned = false;
+		File newRepo = get();
+		return newRepo.getAbsolutePath().equals(oldRepo.getAbsolutePath());
+
+	}
+
 }
