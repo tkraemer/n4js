@@ -69,7 +69,7 @@ public class NodeProcesBuilder {
 	/**
 	 * Prepares process builder for "npm install" command.
 	 *
-	 * @param installPath
+	 * @param invokationPath
 	 *            location on which npm command should be invoked
 	 * @param packageName
 	 *            package to install (might be space separated list of names)
@@ -77,14 +77,14 @@ public class NodeProcesBuilder {
 	 *            instructs npm to save installed packages in package.json (if available)
 	 * @return configured, operating system aware process builder for "npm install" command
 	 */
-	public ProcessBuilder getNpmInstallProcessBuilder(File installPath, String packageName, boolean save) {
-		return simpleCall(installPath, packageName, save, NPM_COMMAND_INSTALL);
+	public ProcessBuilder getNpmInstallProcessBuilder(File invokationPath, String packageName, boolean save) {
+		return simpleCall(invokationPath, packageName, save, NPM_COMMAND_INSTALL);
 	}
 
 	/**
 	 * Prepares process builder for "npm uninstall" command.
 	 *
-	 * @param uninstallPath
+	 * @param invokationPath
 	 *            location on which npm command should be invoked
 	 * @param packageName
 	 *            package to uninstall (might be space separated list of names)
@@ -92,15 +92,38 @@ public class NodeProcesBuilder {
 	 *            instructs npm to save uninstalled packages in package.json (if available)
 	 * @return configured, operating system aware process builder for "npm uninstall" command
 	 */
-	public ProcessBuilder getNpmUninstallProcessBuilder(File uninstallPath, String packageName, boolean save) {
-		return simpleCall(uninstallPath, packageName, save, NPM_COMMAND_UNINSTALL);
+	public ProcessBuilder getNpmUninstallProcessBuilder(File invokationPath, String packageName, boolean save) {
+		return simpleCall(invokationPath, packageName, save, NPM_COMMAND_UNINSTALL);
+	}
+
+	/**
+	 * Prepares process builder for "npm cache clean" command.
+	 *
+	 * @param invokationPath
+	 *            location on which npm command should be invoked
+	 * @return configured, operating system aware process builder for "npm cache clean" command
+	 */
+	public ProcessBuilder getNpmCacheCleanProcessBuilder(File invokationPath) {
+		Builder<String> builder = ImmutableList.<String> builder();
+		NpmBinary npmBinary = npmBinaryProvider.get();
+
+		if (isWindows()) {
+			builder.add(WIN_SHELL_COMAMNDS);
+			builder.add(escapeBinaryPath(npmBinary.getBinaryAbsolutePath()), "cache", "clean");
+		} else {
+			builder.add(NIX_SHELL_COMAMNDS);
+			builder.add(
+					escapeBinaryPath(npmBinary.getBinaryAbsolutePath()) + " cache clean");
+		}
+
+		return create(builder.build(), npmBinary, invokationPath, false);
 	}
 
 	/**
 	 * Prepares process builder for simple npm commands, e.g. "npm install" or "npm uninstall". Specific command should
 	 * be passed without surrounding spaces or or quotes.
 	 *
-	 * @param uninstallPath
+	 * @param invokationPath
 	 *            location on which npm command should be invoked
 	 * @param packageName
 	 *            package passed as parameter to the command (might be space separated list of names)
@@ -110,7 +133,7 @@ public class NodeProcesBuilder {
 	 *            command to execute
 	 * @return configured, operating system aware process builder for given command
 	 */
-	private ProcessBuilder simpleCall(File uninstallPath, String packageName, boolean save, String simpleCommand) {
+	private ProcessBuilder simpleCall(File invokationPath, String packageName, boolean save, String simpleCommand) {
 		Builder<String> builder = ImmutableList.<String> builder();
 		NpmBinary npmBinary = npmBinaryProvider.get();
 		String saveCommand = save ? NPM_OPTION_SAVE : "";
@@ -125,7 +148,7 @@ public class NodeProcesBuilder {
 							+ saveCommand);
 		}
 
-		return create(builder.build(), npmBinary, uninstallPath, false);
+		return create(builder.build(), npmBinary, invokationPath, false);
 	}
 
 	/**

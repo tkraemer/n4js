@@ -36,21 +36,21 @@ public class BinaryCommandFactory {
 	/**
 	 * Creates command that will execute external node process that will command npm to install given package.
 	 *
-	 * @param installPath
+	 * @param invokationPath
 	 *            path where package is supposed to be installed
 	 * @param packageName
 	 *            name of the package to install
 	 * @param saveDependency
 	 *            flag if installed package should be saved in package.json of the install path
 	 */
-	public ProcessExecutionCommand createInstallPackageCommand(File installPath,
+	public ProcessExecutionCommand createInstallPackageCommand(File invokationPath,
 			String packageName, boolean saveDependency) {
 		return new ProcessExecutionCommand() {
 			private static final String COMMAND_NAME = "npm_install";
 
 			@Override
 			public ProcessResult execute() {
-				ProcessBuilder processBuilder = nodeProccessBuilder.getNpmInstallProcessBuilder(installPath,
+				ProcessBuilder processBuilder = nodeProccessBuilder.getNpmInstallProcessBuilder(invokationPath,
 						packageName, saveDependency);
 				return processExecutor.createAndExecute(processBuilder, COMMAND_NAME, OutputRedirection.REDIRECT);
 			}
@@ -60,22 +60,40 @@ public class BinaryCommandFactory {
 	/**
 	 * Creates command that will execute external node process that will command npm to uninstall given package.
 	 *
-	 * @param uninstallPath
+	 * @param invokationPath
 	 *            path where package is supposed to be installed
 	 * @param packageName
 	 *            name of the package to uninstall
 	 * @param saveDependency
 	 *            flag if uninstalled package should be saved in package.json of the uninstall path
 	 */
-	public ProcessExecutionCommand createUninstallPackageCommand(File uninstallPath,
+	public ProcessExecutionCommand createUninstallPackageCommand(File invokationPath,
 			String packageName, boolean saveDependency) {
 		return new ProcessExecutionCommand() {
 			private static final String COMMAND_NAME = "npm_uninstall";
 
 			@Override
 			public ProcessResult execute() {
-				ProcessBuilder processBuilder = nodeProccessBuilder.getNpmUninstallProcessBuilder(uninstallPath,
+				ProcessBuilder processBuilder = nodeProccessBuilder.getNpmUninstallProcessBuilder(invokationPath,
 						packageName, saveDependency);
+				return processExecutor.createAndExecute(processBuilder, COMMAND_NAME, OutputRedirection.REDIRECT);
+			}
+		};
+	}
+
+	/**
+	 * Creates command that will execute external node process that will clean npm cache.
+	 *
+	 * @param invokationPath
+	 *            path in which cache clean will be invoked
+	 */
+	public ProcessExecutionCommand createCacheCleanCommand(File invokationPath) {
+		return new ProcessExecutionCommand() {
+			private static final String COMMAND_NAME = "npm_cache_clean";
+
+			@Override
+			public ProcessResult execute() {
+				ProcessBuilder processBuilder = nodeProccessBuilder.getNpmCacheCleanProcessBuilder(invokationPath);
 				return processExecutor.createAndExecute(processBuilder, COMMAND_NAME, OutputRedirection.REDIRECT);
 			}
 		};
