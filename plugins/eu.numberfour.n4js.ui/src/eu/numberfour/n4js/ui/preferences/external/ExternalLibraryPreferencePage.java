@@ -46,13 +46,16 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
@@ -80,6 +83,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 import com.google.inject.Inject;
@@ -189,9 +193,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 		createButton(subComposite, "Uninstall npm...", new UninstallNpmDependencyButtonListener());
 
-		createButton(subComposite, "Purge npm", new PurgeNpmDependencyButtonListener());
-
-		createButton(subComposite, "Refresh type definitions.", new ReInitiateTypeDefinitionsButtonListener());
+		createButton(subComposite, "Run maintenance actions", new MaintenanceActionsButtonListener());
 
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
@@ -577,131 +579,164 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	}
 
 	/**
-	 * Button selection listener for opening up an {@link MessageDialog yes/no dialog}, where user can decide to purge
-	 * npm folder. Effectively this removes all npm packages from the external libraries.
-	 *
-	 * Note: this class is not static, so it will hold reference to all services. Make sure to dispose it.
-	 *
-	 */
-	private class PurgeNpmDependencyButtonListener extends SelectionAdapter {
-
-		@Override
-		public void widgetSelected(final SelectionEvent e) {
-			final boolean purgeDecision = MessageDialog.openQuestion(UIUtils.getShell(), "Purge npm packages?",
-					"Proceeding will delete all npm packages.\nNeeded packages will need to be installed again.");
-
-			if (purgeDecision) {
-
-				final AtomicReference<IStatus> errorStatusRef = new AtomicReference<>();
-				try {
-					new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
-						try {
-							// get folder
-							File npmFolder = N4_NPM_FOLDER_SUPPLIER.get();
-
-							if (npmFolder.exists()) {
-								FileDeleter.delete(npmFolder);
-							}
-
-							if (npmFolder.exists()) {
-								errorStatusRef.set(statusHelper
-										.createError("Could not verify deletion of " + npmFolder.getAbsolutePath()));
-								return;
-							}
-
-							// recreate npm folder
-							if (repairNpmFolderState()) {
-								// reloading non npms might be overkill here
-								// but ensures proper dependencies resolution and update
-								// of workspace projects
-								externalLibrariesReloadHelper.reloadLibraries(true, monitor);
-								updateInput(viewer, store.getLocations());
-							} else {
-								errorStatusRef
-										.set(statusHelper.createError("The npm folder was not recreated correctly."));
-							}
-						} catch (final IOException ioe) {
-							errorStatusRef
-									.set(statusHelper.createError("Exception during deletion of the npm folder.", ioe));
-						}
-					});
-				} catch (final InvocationTargetException | InterruptedException exc) {
-					throw new RuntimeException("Error while purging npm pakages.", exc);
-				} finally {
-					if (null != errorStatusRef.get()) {
-						N4JSActivator.getInstance().getLog().log(errorStatusRef.get());
-						getDisplay().asyncExec(() -> openError(
-								getShell(),
-								"npm purge Failed",
-								"Error while purging npm folder.\nPlease check your Error Log view for the detailed npm log about the failure."));
-					}
-				}
-			}
-		}
-	}
-
-	/**
 	 * Button selection listener for opening up an {@link MessageDialog yes/no dialog}, where user can decide to delete
 	 * type definitions and clone them again.
 	 *
 	 * Note: this class is not static, so it will hold reference to all services. Make sure to dispose it.
 	 *
 	 */
-	private class ReInitiateTypeDefinitionsButtonListener extends SelectionAdapter {
+	private class MaintenanceActionsButtonListener extends SelectionAdapter {
+		private static final String ACTION_NPM_CACHE_CLEAN = "Clean npm cache (entire cache cleaned).";
+		private static final String ACTION_NPM_PACKAGES_PURGE = "Purge npm packages (all packages will need to be reinstalled).";
+		private static final String ACTION_TYPE_DEFINITIONS_RESET = "Reset type definitions (fresh clone). ";
+
+		/** This is used just as a container for statues. */
+		private final MultiStatus multistatus = statusHelper
+				.createMultiError("utility status, see special handling in final block");
+
+		private synchronized void addStatus(IStatus status) {
+			multistatus.add(status);
+		}
+
+		private synchronized MultiStatus getStauts() {
+			return multistatus;
+		}
 
 		@Override
 		public void widgetSelected(final SelectionEvent e) {
-			final boolean purgeDecision = MessageDialog.openQuestion(UIUtils.getShell(),
-					"Re initiate type definitions?",
-					"Proceeding will delete local type definitions and make fresh clone of the type definitions repository.");
 
-			if (purgeDecision) {
+			ListSelectionDialog dialog = new ListSelectionDialog(UIUtils.getShell(),
+					new String[] { ACTION_NPM_CACHE_CLEAN, ACTION_NPM_PACKAGES_PURGE, ACTION_TYPE_DEFINITIONS_RESET },
+					ArrayContentProvider.getInstance(), new LabelProvider(),
+					"Select maintenance actions to perform.");
+			dialog.setTitle("External libraries maintenance actions.");
 
-				final AtomicReference<IStatus> errorStatusRef = new AtomicReference<>();
+			if (dialog.open() == Window.OK) {
+				boolean purgeNPM = false;
+				boolean cleanCache = false;
+				boolean reClone = false;
+				Object[] result = dialog.getResult();
+				for (int i = 0; i < result.length; i++) {
+					String dialogItem = (String) result[i];
+
+					switch (dialogItem) {
+					case ACTION_NPM_CACHE_CLEAN:
+						cleanCache = true;
+						break;
+					case ACTION_NPM_PACKAGES_PURGE:
+						purgeNPM = true;
+						break;
+					case ACTION_TYPE_DEFINITIONS_RESET:
+						reClone = true;
+						break;
+					}
+
+				}
+				final boolean decisionCleanCache = cleanCache;
+				final boolean decisionPurgeNpm = purgeNPM;
+				final boolean decisionResetTypeDefinitions = reClone;
 				try {
 					new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
-						try {
-							// get folder
-							File typeDefinitionsFolder = gitSupplier.get();
+						if (decisionCleanCache) {
+							cleanCache(monitor);
+						}
 
-							if (typeDefinitionsFolder.exists()) {
-								FileDeleter.delete(typeDefinitionsFolder);
-							}
+						if (decisionResetTypeDefinitions) {
+							resetTypeDefinitions();
+						}
 
-							if (typeDefinitionsFolder.exists()) {
-								errorStatusRef.set(statusHelper
-										.createError("Could not verify deletion of "
-												+ typeDefinitionsFolder.getAbsolutePath()));
-								return;
-							}
-							// recreate npm folder
-							if (gitSupplier.reClone()) {
-								// reloading non npms might be overkill here
-								// but ensures proper updating npms type definitions
-								externalLibrariesReloadHelper.reloadLibraries(true, monitor);
-								updateInput(viewer, store.getLocations());
-							} else {
-								errorStatusRef
-										.set(statusHelper.createError(
-												"The rype definitions folder was not recreated correctly."));
-							}
-						} catch (final IOException ioe) {
-							errorStatusRef
-									.set(statusHelper.createError("Exception during deletion of the type definitions.",
-											ioe));
+						if (decisionPurgeNpm) {
+							purgeNpms();
+
+						}
+
+						if (decisionPurgeNpm || decisionResetTypeDefinitions) {
+							externalLibrariesReloadHelper.reloadLibraries(true, monitor);
+							updateInput(viewer, store.getLocations());
 						}
 					});
 				} catch (final InvocationTargetException | InterruptedException exc) {
 					throw new RuntimeException("Error while purging npm pakages.", exc);
 				} finally {
-					if (null != errorStatusRef.get()) {
-						N4JSActivator.getInstance().getLog().log(errorStatusRef.get());
+					MultiStatus utilStatus = getStauts();
+
+					if (!Arrays2.isEmpty(utilStatus.getChildren())) {
+						// rewrite errors for better logging
+						MultiStatus createMultiError = statusHelper
+								.createMultiError("external libraries maintenance Failed");
+						IStatus[] children = utilStatus.getChildren();
+						for (int i = 0; i < children.length; i++) {
+							createMultiError.add(children[i]);
+						}
+						N4JSActivator.getInstance().getLog().log(createMultiError);
 						getDisplay().asyncExec(() -> openError(
 								getShell(),
-								"npm purge Failed",
-								"Error while purging type definitions folder.\nPlease check your Error Log view for the detailed log about the failure."));
+								"external libraries maintenance Failed",
+								"Error while performing external libraries maintenance actions.\nPlease check your Error Log view for the detailed log about the failure."));
 					}
 				}
+			}
+		}
+
+		private void cleanCache(IProgressMonitor monitor) {
+			IStatus status = npmManager.cleanCache(monitor);
+			if (!status.isOK()) {
+				addStatus(status);
+			}
+		}
+
+		private void purgeNpms() {
+			try {
+				// get folder
+				File npmFolder = N4_NPM_FOLDER_SUPPLIER.get();
+
+				if (npmFolder.exists()) {
+					FileDeleter.delete(npmFolder);
+				}
+
+				if (npmFolder.exists()) {
+					addStatus(statusHelper
+							.createError(
+									"Could not verify deletion of " + npmFolder.getAbsolutePath()));
+					return;
+				}
+
+				// recreate npm folder
+				if (!repairNpmFolderState()) {
+					addStatus(statusHelper
+							.createError("The npm folder was not recreated correctly."));
+				}
+			} catch (final IOException ioe) {
+				addStatus(statusHelper.createError("Exception during deletion of the npm folder.",
+						ioe));
+			}
+		}
+
+		private void resetTypeDefinitions() {
+			try {
+				// get folder
+				File typeDefinitionsFolder = gitSupplier.get();
+
+				if (typeDefinitionsFolder.exists()) {
+					FileDeleter.delete(typeDefinitionsFolder);
+				}
+
+				if (typeDefinitionsFolder.exists()) {
+					addStatus(statusHelper
+							.createError("Could not verify deletion of "
+									+ typeDefinitionsFolder.getAbsolutePath()));
+					return;
+				}
+				// recreate npm folder
+				if (!gitSupplier.repairTypeDefinitions()) {
+					addStatus(statusHelper.createError(
+							"The type definitions folder was not recreated correctly."));
+				}
+			} catch (final IOException ioe) {
+				addStatus(
+						statusHelper.createError(
+								"Exception during deletion of the type definitions.",
+								ioe));
 			}
 		}
 	}

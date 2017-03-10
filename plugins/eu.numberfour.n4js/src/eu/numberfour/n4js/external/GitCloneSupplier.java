@@ -92,7 +92,12 @@ public class GitCloneSupplier implements Supplier<File> {
 		return getOrCreateNestedFolder(repositoryName);
 	}
 
-	public synchronized boolean reClone() {
+	/**
+	 * Tries to clone type definitions again. If repository exists on the disk, only hard reset is performed.
+	 * 
+	 * @return true if refreshed type definitions reside in the same location as before
+	 */
+	public synchronized boolean repairTypeDefinitions() {
 		File oldRepo = get();
 		this.successfullyCloned = false;
 		File newRepo = get();

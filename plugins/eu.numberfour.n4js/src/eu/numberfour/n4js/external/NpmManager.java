@@ -358,6 +358,46 @@ public class NpmManager {
 	}
 
 	/**
+	 * Sugar for {@link #refreshInstalledNpmPackage(String, IProgressMonitor)} for all available {@code npm} packages.
+	 * Refreshes the type definitions for all installed, available {@code npm} packages in the external workspace.
+	 * Performs a {@code git pull} before the actual refresh process. Returns with an {@link IStatus status}
+	 * representing the outcome of the refresh operation.
+	 *
+	 * @param monitor
+	 *            the monitor for the progress.
+	 * @return a status representing the outcome of the operation.
+	 */
+	public IStatus cleanCache(final IProgressMonitor monitor) {
+		checkNotNull(monitor, "monitor");
+
+		final SubMonitor subMonitor = SubMonitor.convert(monitor, 1);
+		try {
+
+			subMonitor.setTaskName("Cleaning npm cache");
+
+			performGitPull(subMonitor.newChild(1, SubMonitor.SUPPRESS_ALL_LABELS));
+			final File targetInstallLocation = new File(locationProvider.getTargetPlatformInstallLocation());
+			ProcessResult per = commandFactory.createCacheCleanCommand(targetInstallLocation).execute();
+
+			if (!per.isOK()) {
+				final Throwable cause = per.toThrowable("Error while cleaning npm cache.");
+				if (null != cause) {
+					return statusHelper.createError(cause.getMessage(), cause);
+				} else {
+					final String processLog = per.toString();
+					return statusHelper.createError(processLog, cause);
+				}
+			} else {
+				return OK_STATUS;
+			}
+
+		} finally {
+			subMonitor.done();
+		}
+
+	}
+
+	/**
 	 * Refreshes the definitions (if any) for the given {@code npm} package by updating the definition file contents.
 	 * Also updates the N4 manifest content by merging all fragments (if any) into it. This method will perform a
 	 * {@code git pull} to ensure that the local repository clone is up to date. Returns with a {@link IStatus status}
