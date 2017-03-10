@@ -587,7 +587,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	 */
 	private class MaintenanceActionsButtonListener extends SelectionAdapter {
 		private static final String ACTION_NPM_CACHE_CLEAN = "Clean npm cache (entire cache cleaned).";
-		private static final String ACTION_NPM_PACKAGES_PURGE = "Purge npm packages (all packages will need to be reinstalled).";
+		private static final String ACTION_NPM_PACKAGES_DELETE = "Delete npm packages (whole npm folder gets deleted).";
 		private static final String ACTION_TYPE_DEFINITIONS_RESET = "Reset type definitions (fresh clone). ";
 
 		/** This is used just as a container for statues. */
@@ -606,14 +606,14 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 		public void widgetSelected(final SelectionEvent e) {
 
 			ListSelectionDialog dialog = new ListSelectionDialog(UIUtils.getShell(),
-					new String[] { ACTION_NPM_CACHE_CLEAN, ACTION_NPM_PACKAGES_PURGE, ACTION_TYPE_DEFINITIONS_RESET },
+					new String[] { ACTION_NPM_CACHE_CLEAN, ACTION_TYPE_DEFINITIONS_RESET, ACTION_NPM_PACKAGES_DELETE },
 					ArrayContentProvider.getInstance(), new LabelProvider(),
 					"Select maintenance actions to perform.");
 			dialog.setTitle("External libraries maintenance actions.");
 
 			if (dialog.open() == Window.OK) {
-				boolean purgeNPM = false;
 				boolean cleanCache = false;
+				boolean deleteNPM = false;
 				boolean reClone = false;
 				Object[] result = dialog.getResult();
 				for (int i = 0; i < result.length; i++) {
@@ -623,8 +623,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 					case ACTION_NPM_CACHE_CLEAN:
 						cleanCache = true;
 						break;
-					case ACTION_NPM_PACKAGES_PURGE:
-						purgeNPM = true;
+					case ACTION_NPM_PACKAGES_DELETE:
+						deleteNPM = true;
 						break;
 					case ACTION_TYPE_DEFINITIONS_RESET:
 						reClone = true;
@@ -632,11 +632,13 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 					}
 
 				}
-				final boolean decisionCleanCache = cleanCache;
-				final boolean decisionPurgeNpm = purgeNPM;
 				final boolean decisionResetTypeDefinitions = reClone;
+				final boolean decisionCleanCache = cleanCache;
+				final boolean decisionPurgeNpm = deleteNPM;
 				try {
 					new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
+						// keep the order Cache->TypeDefs->NPMs
+
 						if (decisionCleanCache) {
 							cleanCache(monitor);
 						}
@@ -646,7 +648,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 						}
 
 						if (decisionPurgeNpm) {
-							purgeNpms();
+							deleteNpms();
 
 						}
 
@@ -656,7 +658,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 						}
 					});
 				} catch (final InvocationTargetException | InterruptedException exc) {
-					throw new RuntimeException("Error while purging npm pakages.", exc);
+					throw new RuntimeException("Error while executing maintenance actions.", exc);
 				} finally {
 					MultiStatus utilStatus = getStauts();
 
@@ -685,58 +687,43 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 			}
 		}
 
-		private void purgeNpms() {
-			try {
-				// get folder
-				File npmFolder = N4_NPM_FOLDER_SUPPLIER.get();
+		private void deleteNpms() {
+			// get folder
+			File npmFolder = N4_NPM_FOLDER_SUPPLIER.get();
 
-				if (npmFolder.exists()) {
-					FileDeleter.delete(npmFolder);
-				}
+			if (npmFolder.exists()) {
+				FileDeleter.delete(npmFolder, (IOException ioe) -> addStatus(
+						statusHelper.createError("Exception during deletion of the npm folder.", ioe)));
+			}
 
-				if (npmFolder.exists()) {
-					addStatus(statusHelper
-							.createError(
-									"Could not verify deletion of " + npmFolder.getAbsolutePath()));
-					return;
-				}
-
+			if (!npmFolder.exists()) {
 				// recreate npm folder
 				if (!repairNpmFolderState()) {
 					addStatus(statusHelper
 							.createError("The npm folder was not recreated correctly."));
 				}
-			} catch (final IOException ioe) {
-				addStatus(statusHelper.createError("Exception during deletion of the npm folder.",
-						ioe));
+			} else {// should never happen
+				addStatus(statusHelper.createError("Could not verify deletion of " + npmFolder.getAbsolutePath()));
 			}
 		}
 
 		private void resetTypeDefinitions() {
-			try {
-				// get folder
-				File typeDefinitionsFolder = gitSupplier.get();
+			// get folder
+			File typeDefinitionsFolder = gitSupplier.get();
 
-				if (typeDefinitionsFolder.exists()) {
-					FileDeleter.delete(typeDefinitionsFolder);
-				}
+			if (typeDefinitionsFolder.exists()) {
+				FileDeleter.delete(typeDefinitionsFolder, (IOException ioe) -> addStatus(
+						statusHelper.createError("Exception during deletion of the type definitions.", ioe)));
+			}
 
-				if (typeDefinitionsFolder.exists()) {
-					addStatus(statusHelper
-							.createError("Could not verify deletion of "
-									+ typeDefinitionsFolder.getAbsolutePath()));
-					return;
-				}
+			if (!typeDefinitionsFolder.exists()) {
 				// recreate npm folder
 				if (!gitSupplier.repairTypeDefinitions()) {
-					addStatus(statusHelper.createError(
-							"The type definitions folder was not recreated correctly."));
+					addStatus(statusHelper.createError("The type definitions folder was not recreated correctly."));
 				}
-			} catch (final IOException ioe) {
-				addStatus(
-						statusHelper.createError(
-								"Exception during deletion of the type definitions.",
-								ioe));
+			} else { // should never happen
+				addStatus(statusHelper
+						.createError("Could not verify deletion of " + typeDefinitionsFolder.getAbsolutePath()));
 			}
 		}
 	}

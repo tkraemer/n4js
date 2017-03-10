@@ -69,7 +69,7 @@ public class NodeProcesBuilder {
 	/**
 	 * Prepares process builder for "npm install" command.
 	 *
-	 * @param invokationPath
+	 * @param invocationPath
 	 *            location on which npm command should be invoked
 	 * @param packageName
 	 *            package to install (might be space separated list of names)
@@ -77,14 +77,14 @@ public class NodeProcesBuilder {
 	 *            instructs npm to save installed packages in package.json (if available)
 	 * @return configured, operating system aware process builder for "npm install" command
 	 */
-	public ProcessBuilder getNpmInstallProcessBuilder(File invokationPath, String packageName, boolean save) {
-		return simpleCall(invokationPath, packageName, save, NPM_COMMAND_INSTALL);
+	public ProcessBuilder getNpmInstallProcessBuilder(File invocationPath, String packageName, boolean save) {
+		return simpleCall(invocationPath, packageName, save, NPM_COMMAND_INSTALL);
 	}
 
 	/**
 	 * Prepares process builder for "npm uninstall" command.
 	 *
-	 * @param invokationPath
+	 * @param invocationPath
 	 *            location on which npm command should be invoked
 	 * @param packageName
 	 *            package to uninstall (might be space separated list of names)
@@ -92,8 +92,8 @@ public class NodeProcesBuilder {
 	 *            instructs npm to save uninstalled packages in package.json (if available)
 	 * @return configured, operating system aware process builder for "npm uninstall" command
 	 */
-	public ProcessBuilder getNpmUninstallProcessBuilder(File invokationPath, String packageName, boolean save) {
-		return simpleCall(invokationPath, packageName, save, NPM_COMMAND_UNINSTALL);
+	public ProcessBuilder getNpmUninstallProcessBuilder(File invocationPath, String packageName, boolean save) {
+		return simpleCall(invocationPath, packageName, save, NPM_COMMAND_UNINSTALL);
 	}
 
 	/**
