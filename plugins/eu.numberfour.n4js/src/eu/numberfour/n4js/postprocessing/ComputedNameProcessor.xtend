@@ -90,20 +90,28 @@ class ComputedNameProcessor {
 	 * IMPLEMENTATION NOTE: we can simply use #toString() on a valid value, even if we have a ValueBoolean, ValueNumber,
 	 * or ValueSymbol.
 	 * <p>
-	 * For booleans and numbers: they are equivalent to their corresponding string literal, as illustrated in this
-	 * snippet:
+	 * For undefined, null, NaN, Infinity, booleans, and numbers: they are equivalent to their corresponding string
+	 * literal, as illustrated in this snippet:
 	 * <pre>
 	 *     // plain Javascript
 	 *
 	 *     var obj = {
-	 *         41     : 'a',
-	 *         [42]   : 'b',
-	 *         [false]: 'c'
+	 *         [undefined]: 'a',
+	 *         [null]     : 'b',
+	 *         41         : 'c',
+	 *         [42]       : 'd',
+	 *         [false]    : 'e',
+	 *         [NaN]      : 'f',
+	 *         [Infinity] : 'g'
 	 *     };
 	 *
-	 *     console.log( obj[41]    === obj['41']    ); // will print true!
-	 *     console.log( obj[42]    === obj['42']    ); // will print true!
-	 *     console.log( obj[false] === obj['false'] ); // will print true!
+	 *     console.log( obj[undefined] === obj['undefined']); // will print true!
+	 *     console.log( obj[null]      === obj['null']     ); // will print true!
+	 *     console.log( obj[41]        === obj['41']       ); // will print true!
+	 *     console.log( obj[42]        === obj['42']       ); // will print true!
+	 *     console.log( obj[false]     === obj['false']    ); // will print true!
+	 *     console.log( obj[NaN]       === obj['NaN']      ); // will print true!
+	 *     console.log( obj[Infinity]  === obj['Infinity'] ); // will print true!
 	 * </pre>
 	 * <p>
 	 * For symbols: the #toString() method in ValueSymbol prepends {@link N4JSLanguageUtils#SYMBOL_IDENTIFIER_PREFIX},

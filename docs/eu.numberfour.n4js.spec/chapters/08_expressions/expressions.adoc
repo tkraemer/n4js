@@ -778,10 +778,7 @@ The equation $isAccessor = \lnot isData$ is always true.
 --
 For a given object literal $ol$ the following constraints must hold (cf. cite:[ECMA11a(p.66)]:
 
-* the name of each property is given as an identifier, a string literal, a numeric literal, or as a computed property name with
-** a string literal, e.g. `['myProp']`,
-** a built-in symbol, for example as in `[Symbol.iterator]`, or
-** a literal of a `@StringBased` enum.
+* the name of each property is given as an identifier, a string literal, a numeric literal, or as a computed property name with a compile-time expression (see <<compile-time-expressions>>). In particular, string literals, e.g. `['myProp']`, built-in symbols, e.g. `[Symbol.iterator]`, and literals of `@StringBased` enums are all valid computed property names.
 * Object literal may not have two PropertyNameValuePairs with the same name in strict mode (cf. 4.a):
 +
 [%hardbreaks]
@@ -947,6 +944,38 @@ fragment ParameterizedPropertyAccessExpressionTail <Yield>*:
 ----
 
 Note that in cite:[ECMA11a], the `index access` is called `__bracket notation__`.
+
+
+[discrete]
+==== Direct Property Access [[property-access-direct]]
+
+We define a special case of property access, as follows:
+
+.Direct Property Access
+[def]
+--
+A property access expression is called _direct_, iff
+
+* its target is an identifier reference to a class, interface, enum, or the built-in object `Symbol`, and
+* its property name denotes an _owned_ member of the target classifier (not an inherited, consumed, or polyfilled member) or a literal if the target is an enum.
+--
+
+As a consequence, a direct property access can only refer to static members.
+
+The first requirement of the above definition rules out property access expressions that do not directly points to their target classifier or enum, as shown in the following example:
+
+[source,n4js]
+----
+class C {
+  const field = 'hello';
+}
+C.field;  // direct property access to 'field'
+let ctor = C;
+ctor.field;  // *not* a direct property access to 'field'
+----
+
+A direct property access is the only form of property access allowed in compile-time expressions, cf. <<compile-time-expressions>>.
+
 
 ==== Properties [[properties-1]]
 We define the following properties:
@@ -2512,3 +2541,54 @@ Type casts are simply removed during compilation so there will be no exceptions 
 
 An error is issued if the cast is either unnecessary or cannot succeed.
 See further details in <<_type-cast>>.
+
+
+
+[.language-n4js]
+== Compile-Time Expressions [[compile-time-expressions]]
+
+A compile-time expression is an expression that can be fully evaluated at compile time. Not all expressions introduced
+in the previous sections qualify as compile-time expressions. Some forms of expressions always qualify (e.g. a string
+literal is always a compile-time expression), some never (e.g. call expressions), and for some expressions the operands
+must be of a certain value. In any case, if an expression has operands, it is a compile-time expression only if
+all operands are compile-time expressions.
+
+.Compile-Time Expression
+[def]
+--
+The following expressions are called compile-time expressions:
+
+* `undefined` (but not `NaN` or `Infinity`).
+* the null literal.
+* all boolean, numeric, and string literals.
+* template string literals, iff all embedded expressions are compile-time expressions.
+* a parenthesis expression, iff its nested expression is a compile-time expression.
+* unary expressions in case of the following operators:
+** `!` iff the operand is a compile-time expression and evaluates to a boolean value.
+** `+` iff the operand is a compile-time expression and evaluates to a numeric value.
+** `-` iff the operand is a compile-time expression and evaluates to a numeric value.
+** `void`.
+* binary expressions in case of the following operators:
+** `+` iff both operands are compile-time expressions and
+*** both evaluate to numeric values, or
+*** at least one evaluates to a string value.
+** `-`, `*` iff both operands are compile-time expressions and evaluate to numeric values.
+** `/`, `%` iff both operands are compile-time expressions and evaluate to numeric values and the right-hand operand is non-zero (i.e. division by zero is disallowed in compile-time expression, because `NaN` is not a supported compile-time value).
+** `&&`, `||` iff both operands are compile-time expressions and evaluate to boolean values.
+* a tertiary conditional expression, iff the first operand is a compile-time expression evaluating to a boolean value B and
+** in case B is true, the second operand is a compile-time expression.
+** in case B is false, the third operand is a compile-time expression.
+* an identifier reference to a const variable, iff its initializer expression is a compile-time expression.
+* a property access expression, iff it is direct (see <<property-access-direct>>) and refers to
+*** a built-in symbol, e.g. `Symbol.iterator`,
+*** the literal of a `@StringBased` enum, or
+*** a const field, iff its initializer expression is a compile-time expression.
+
+In all other cases, the expression is not a compile-time expression.
+--
+
+Every expression in the code may be a compile-time expression, but in most places this has no particular
+effect and is simply ignored. They are of significance only in computed property names, as initializers
+of const variables and fields (as stated above) and when nested as an operand inside an expression at
+these locations.
+

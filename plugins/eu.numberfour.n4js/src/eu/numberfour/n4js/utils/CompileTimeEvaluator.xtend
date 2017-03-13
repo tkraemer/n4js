@@ -42,6 +42,7 @@ import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.utils.CompileTimeValue.EvalError
 import eu.numberfour.n4js.utils.CompileTimeValue.ValueBoolean
 import eu.numberfour.n4js.utils.CompileTimeValue.ValueInvalid
+import eu.numberfour.n4js.utils.CompileTimeValue.ValueNumber
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
 import eu.numberfour.n4js.validation.validators.N4JSExpressionValidator
 import it.xsemantics.runtime.RuleEnvironment
@@ -142,7 +143,7 @@ class CompileTimeEvaluator {
 		val value = if (expr.expression !== null) eval(G, expr.expression, guard);
 		return switch (expr.op) {
 			case NOT: CompileTimeValue.invert(value, expr.expression)
-			case POS: value
+			case POS: CompileTimeValue.requireValueType(value, ValueNumber, "operand must be a number", expr.expression) ?: value
 			case NEG: CompileTimeValue.negate(value, expr.expression)
 			case VOID: CompileTimeValue.UNDEFINED
 			default: CompileTimeValue.error("invalid operator: " + expr.op, expr)

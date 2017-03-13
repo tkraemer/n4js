@@ -533,6 +533,9 @@ public abstract class CompileTimeValue {
 		if (error != null) {
 			return error;
 		}
+		if (((ValueNumber) valueRight).isZero()) {
+			return CompileTimeValue.error("division by zero not allowed in compile-time expressions", astNodeRight);
+		}
 		return of(((ValueNumber) valueLeft).getValue().remainder(((ValueNumber) valueRight).getValue()));
 	}
 
