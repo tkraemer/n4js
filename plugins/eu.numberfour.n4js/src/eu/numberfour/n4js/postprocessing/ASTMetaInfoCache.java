@@ -66,7 +66,7 @@ public final class ASTMetaInfoCache {
 	private final boolean hasBrokenAST;
 	private final Map<TypableElement, Result<TypeRef>> actualTypes = new HashMap<>();
 	private final Map<ParameterizedCallExpression, List<TypeRef>> inferredTypeArgs = new HashMap<>();
-	private final Map<Expression, CompileTimeValue> evalResults = new HashMap<>();
+	private final Map<Expression, CompileTimeValue> compileTimeValue = new HashMap<>();
 
 	private final Map<VariableDeclaration, List<EObject>> localVariableReferences = new HashMap<>();
 
@@ -152,21 +152,23 @@ public final class ASTMetaInfoCache {
 	}
 
 	/**
-	 * Iff the given expression is processed as a compile-time expression, i.e. method
-	 * {@link N4JSLanguageUtils#isProcessedAsCompileTimeExpression(Expression)} returns <code>true</code>, then this
-	 * method will return the {@link CompileTimeValue compile-time value} of the given expression (which may be
-	 * {@link CompileTimeValue#isValid() invalid} in case the expression is not a valid compile-time expression);
-	 * otherwise <code>null</code> is returned.
+	 * Returns the {@link CompileTimeValue compile-time value} that resulted from the compile-time evaluation of the
+	 * given expression in one of the early phases of post-processing or <code>null</code> if no value was cached.
+	 * Compile-time values are cached *only* for expressions for which method
+	 * {@link N4JSLanguageUtils#isProcessedAsCompileTimeExpression(Expression)} returns <code>true</code>.
+	 * <p>
+	 * Note that the returned value may be {@link CompileTimeValue#isValid() invalid} in case the expression is not a
+	 * valid compile-time expression.
 	 */
-	public CompileTimeValue getEvaluationResult(Expression expr) {
-		return evalResults.get(expr);
+	public CompileTimeValue getCompileTimeValue(Expression expr) {
+		return compileTimeValue.get(expr);
 	}
 
-	/* package */ void storeEvaluationResult(Expression expr, CompileTimeValue evalResult) {
+	/* package */ void storeCompileTimeValue(Expression expr, CompileTimeValue evalResult) {
 		if (!isProcessingInProgress()) {
 			throw new IllegalStateException();
 		}
-		if (evalResults.put(expr, evalResult) != null) {
+		if (compileTimeValue.put(expr, evalResult) != null) {
 			throw UtilN4.reportError(new IllegalStateException(
 					"cache collision: multiple evaluation results put into cache for AST node: " + expr
 							+ " in resource: " + resource.getURI()));

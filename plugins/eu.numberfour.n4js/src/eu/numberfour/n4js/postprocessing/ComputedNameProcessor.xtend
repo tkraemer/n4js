@@ -30,7 +30,8 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
 
 /**
- * Processing of {@link LiteralOrComputedPropertyName}s that have a computed property name.
+ * Processing of {@link LiteralOrComputedPropertyName}s that have a computed property name, mainly setting property
+ * {@link LiteralOrComputedPropertyName#getComputedName() 'computedName'}.
  * <p>
  * For details, see {@link ComputedNameProcessor#processComputedPropertyName(RuleEnvironment, LiteralOrComputedPropertyName, ASTMetaInfoCache, int)}.
  */
@@ -38,10 +39,14 @@ import org.eclipse.xtext.EcoreUtil2
 class ComputedNameProcessor {
 
 	/**
-	 * If the given 'nameDecl' has a computed property name, this method will obtain its expression's compile-time value
-	 * from the cache (the evaluation of the expression happened in {@link CompileTimeExpressionProcessor}), will derive
-	 * the actual property name from that value, and store this name in 'nameDecl' (for later use) and in the
-	 * corresponding TModule element (if such a TModule element exists).
+	 * If the given 'nameDecl' has a computed property name, this method will
+	 * <ol>
+	 * <li>obtain its expression's compile-time value from the cache (the actual evaluation of the expression happened
+	 * in {@link CompileTimeExpressionProcessor}),
+	 * <li>derive the actual property name from that value (cf. {@link #getPropertyNameFromExpression(RuleEnvironment, Expression, ASTMetaInfoCache)}),
+	 * <li>store this name in 'nameDecl' (for later use), and
+	 * <li>store this name in the corresponding TModule element (if such a TModule element exists).
+	 * </ol>
 	 * <p>
 	 * In case the compile-time value of the expression is invalid (i.e. the expression is not a valid compile-time
 	 * expression) no actual name will be stored in 'nameDecl' and the corresponding TModule element will be removed
@@ -51,13 +56,14 @@ class ComputedNameProcessor {
 		ASTMetaInfoCache cache, int indentLevel) {
 
 		if (nameDecl.hasComputedPropertyName) {
+			// obtain compile-time value of expression + derive a property name from the value
 			val name = getPropertyNameFromExpression(G, nameDecl.expression, cache);
 			if (name !== null) {
-				// 1) cache the computed name in the LiteralOrComputedPropertyName AST node
+				// cache the computed name in the LiteralOrComputedPropertyName AST node
 				EcoreUtilN4.doWithDeliver(false, [
 					nameDecl.computedName = name;
 				], nameDecl);
-				// 2) set the computed name in the types model element
+				// set the computed name in the types model element
 				val owner = nameDecl.eContainer;
 				val typeElem = N4JSASTUtils.getCorrespondingTypeModelElement(owner);
 				if (typeElem instanceof IdentifiableElement) {
@@ -68,6 +74,9 @@ class ComputedNameProcessor {
 			} else {
 				// invalid name expression (i.e. not a constant expression)
 				// -> remove the types model element from the TModule
+				// (note: we have to do this for consistency with how the types builder handles elements that are
+				// unnamed (usually due to a broken AST): in those cases, the types builder does not create a TModule
+				// element)
 				val owner = nameDecl.eContainer;
 				discardTypeModelElement(owner);
 			}
@@ -101,7 +110,7 @@ class ComputedNameProcessor {
 	 * so we can simply use that.
 	 */
 	def private String getPropertyNameFromExpression(RuleEnvironment G, Expression expr, ASTMetaInfoCache cache) {
-		val value = cache.getEvaluationResult(expr);
+		val value = cache.getCompileTimeValue(expr);
 		return if (value.valid) {
 			value.toString // see API doc for why we can simply use #toString() here
 		} else {
@@ -109,6 +118,10 @@ class ComputedNameProcessor {
 		};
 	}
 
+	/**
+	 * Discards the types model element corresponding to the given AST node. Throws exception is given AST node does not
+	 * have a corresponding types model element.
+	 */
 	def private void discardTypeModelElement(EObject astNode) {
 		val elem = N4JSASTUtils.getCorrespondingTypeModelElement(astNode);
 		if (elem === null) {

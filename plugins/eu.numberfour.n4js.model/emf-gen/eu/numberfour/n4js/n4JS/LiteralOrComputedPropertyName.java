@@ -88,7 +88,8 @@ public interface LiteralOrComputedPropertyName extends EObject {
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * Iff this is a computed property name and the expression is one of the special cases that can be evaluated at
-	 * compile time, then this will be set to the value of the expression, i.e. the computed name.
+	 * compile time, then during post-processing this will be set to the value of the expression, i.e. the computed name.
+	 * @see ComputedNameProcessor
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Computed Name</em>' attribute.
 	 * @see #setComputedName(String)
@@ -151,7 +152,7 @@ public interface LiteralOrComputedPropertyName extends EObject {
 	 * <!-- begin-model-doc -->
 	 * Returns either the literal name given in the source code or the computed name.
 	 * In case of computed names, this method will return <code>null</code> if the expression is invalid (e.g.
-	 * not a constant expression) or if it has not yet been evaluated (this happens during AST traversal).
+	 * not a constant expression) or if it has not yet been evaluated (this happens during post-processing).
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _elvis = null;\n<%java.lang.String%> _literalName = this.getLiteralName();\nif (_literalName != null)\n{\n\t_elvis = _literalName;\n} else\n{\n\t<%java.lang.String%> _computedName = this.getComputedName();\n\t_elvis = _computedName;\n}\nreturn _elvis;'"

@@ -32,7 +32,7 @@ import eu.numberfour.n4js.ts.types.TObjectPrototype;
 import it.xsemantics.runtime.RuleEnvironment;
 
 /**
- * The value of a compile-time expression as returned by {@link ASTMetaInfoCache#getEvaluationResult(Expression)} and
+ * The value of a compile-time expression as returned by {@link ASTMetaInfoCache#getCompileTimeValue(Expression)} and
  * computed by {@link CompileTimeEvaluator#evaluateCompileTimeExpression(RuleEnvironment, Expression)}.
  * <p>
  * Such a compile-time value can be valid or invalid, see {@link #isValid()}, represented by the subclasses

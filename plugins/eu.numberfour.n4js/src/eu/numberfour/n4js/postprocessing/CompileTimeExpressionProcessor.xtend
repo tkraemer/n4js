@@ -45,7 +45,7 @@ class CompileTimeExpressionProcessor {
 
 		if (N4JSLanguageUtils.isProcessedAsCompileTimeExpression(astNode)) {
 			val value = compileTimeEvaluator.evaluateCompileTimeExpression(G, astNode);
-			cache.storeEvaluationResult(astNode, value);
+			cache.storeCompileTimeValue(astNode, value);
 
 			// in some cases, we have to store the compile-time value in the TModule:
 			val parent = astNode.eContainer;

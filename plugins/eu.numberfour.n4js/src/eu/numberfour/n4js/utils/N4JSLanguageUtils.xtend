@@ -173,7 +173,8 @@ class N4JSLanguageUtils {
 
 	/**
 	 * Tells if given AST node is a typable AST node, i.e. a node that has an (actual) type that can be inferred
-	 * using the type system.
+	 * using the type system. When <code>true</code> is returned, the given AST node can safely be casted to
+	 * {@link TypableElement}.
 	 * <p>
 	 * For performance reasons, this method will simply assume {@code astNode} to be an AST node (i.e. contained below
 	 * a {@link Script} element) and will not check this again.
@@ -606,6 +607,43 @@ class N4JSLanguageUtils {
 	 */
 	def private static boolean isChar(char c1, String c2) {
 		c1 == c2.charAt(0);
+	}
+
+	/**
+	 * If the given expression is a property access to one of the fields in {@code Symbol}, then this method returns the
+	 * referenced field, otherwise <code>null</code>. This method may perform proxy resolution.
+	 */
+	def public static TField getAccessedBuiltInSymbol(RuleEnvironment G, Expression expr) {
+		return getAccessedBuiltInSymbol(G, expr, true);
+	}
+
+	/**
+	 * Same as {@link #getAccessedBuiltInSymbol(RuleEnvironment, Expression)}, but proxy resolution can be disallowed.
+	 * However, if proxy resolution is disallowed, this method will only support a "direct access" to built-in symbols,
+	 * i.e. the target must be an {@link IdentifierRef} directly pointing to built-in object 'Symbol'.
+	 */
+	def public static TField getAccessedBuiltInSymbol(RuleEnvironment G, Expression expr, boolean allowProxyResolution) {
+		if (expr instanceof ParameterizedPropertyAccessExpression) {
+			val sym = G.symbolObjectType;
+			if (allowProxyResolution) {
+				// mode #1: we may resolve proxies
+				val prop = expr.property;
+				if(prop instanceof TField && prop.eContainer===sym) {
+					return prop as TField;
+				}
+			} else {
+				// mode #2: we must avoid proxy resolution
+				// (NOTE: this mode only supports direct access to built-in symbols, i.e. target must be IdentiferRef
+				// to built-in object 'Symbol')
+				val targetExpr = expr.target;
+				val targetElem = if (targetExpr instanceof IdentifierRef) targetExpr.id; // n.b.: only supports direct access
+				if (targetElem === sym) {
+					val propName = expr.propertyAsText; // do NOT use expr.property!
+					return sym.ownedMembers.filter(TField).findFirst[static && name == propName];
+				}
+			}
+		}
+		return null;
 	}
 
 	/**

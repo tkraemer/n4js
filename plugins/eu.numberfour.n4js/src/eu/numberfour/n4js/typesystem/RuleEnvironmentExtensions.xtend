@@ -13,9 +13,7 @@ package eu.numberfour.n4js.typesystem
 import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ListMultimap
-import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
-import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.scoping.builtin.GlobalObjectScope
 import eu.numberfour.n4js.scoping.builtin.VirtualBaseTypeScope
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
@@ -38,7 +36,6 @@ import eu.numberfour.n4js.ts.types.PrimitiveType
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ts.types.TEnum
-import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TN4Classifier
 import eu.numberfour.n4js.ts.types.TObjectPrototype
 import eu.numberfour.n4js.ts.types.Type
@@ -916,20 +913,6 @@ class RuleEnvironmentExtensions {
 	 */
 	public def static List<ParameterizedTypeRef> getN4ClassifiersAllImplicitSuperTypeRefs(RuleEnvironment G) {
 		return G.getPredefinedTypes().builtInTypeScope.n4ClassifiersAllImplicitSuperTypeRefs
-	}
-
-	/**
-	 * If the given expression is a property access to one of the fields in {@code Symbol},
-	 * then this method returns the referenced field, otherwise <code>null</code>.
-	 */
-	public def static TField getAccessedBuiltInSymbol(RuleEnvironment G, Expression expr) {
-		if (expr instanceof ParameterizedPropertyAccessExpression) {
-			val sym = G.symbolObjectType;
-			val prop = expr.property;
-			if(prop instanceof TField && prop.eContainer===sym)
-				return prop as TField;
-		}
-		return null;
 	}
 
 	public def static String ruleEnvAsString(RuleEnvironment G) {

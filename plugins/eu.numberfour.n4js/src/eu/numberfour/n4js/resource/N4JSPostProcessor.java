@@ -61,7 +61,6 @@ public class N4JSPostProcessor implements PostProcessor {
 			// we assume this will not be called for other PostProcessingAwareResource than N4JSResource
 			postProcessN4JSResource((N4JSResource) resource, cancelIndicator);
 		} catch (Throwable th) {
-			th.printStackTrace();
 			if (hasBrokenAST) {
 				// swallow exception, AST is broken due to parse error anyway
 			} else {

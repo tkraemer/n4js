@@ -1405,7 +1405,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return; // error otherwise or corrupt AST
 		}
 		val receiverTypeRef = ts.resolveType(G, receiverTypeRefRaw);
-		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(index);
+		val accessedBuiltInSymbol = N4JSLanguageUtils.getAccessedBuiltInSymbol(G, index);
 		val accessedStaticType = if(receiverTypeRef instanceof TypeTypeRef) tsh.getStaticType(G, receiverTypeRef);
 		val isComputedName = !(index instanceof NumericLiteral) && accessedBuiltInSymbol===null && N4JSLanguageUtils.isValidIndexExpression(G, index);
 		if (accessedBuiltInSymbol !== null
@@ -1654,7 +1654,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	@Check
 	def void checkMandatoryCompileTimeExpression(Expression expr) {
 		if(N4JSLanguageUtils.isRequiredToBeCompileTimeExpression(expr)) {
-			val evalResult = astMetaInfoCacheHelper.getEvaluationResult(expr);
+			val evalResult = astMetaInfoCacheHelper.getCompileTimeValue(expr);
 			if(evalResult instanceof ValueInvalid) {
 				if(isExpressionOfComputedPropertyNameInObjectLiteral(expr)) {
 					// special case: in object literals, anything goes

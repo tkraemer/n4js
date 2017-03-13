@@ -65,12 +65,12 @@ public interface TConstableElement extends EObject {
 	 * *
 	 * Iff this element (variable or field) is declared 'const' AND has an initializer expression, then this property
 	 * gives the serialized compile-time value of the element's initializer expression, as returned by method
-	 * {@code CompileTimeValue#serialize(ConstantValue)}; otherwise this property will be <code>null</code>.
+	 * {@code CompileTimeValue#serialize()}; otherwise this property will be <code>null</code>.
 	 * <p>
 	 * If the initializer expression is not a valid compile-time expression, this property will hold an invalid
 	 * CompileTimeValue (cf. {@code CompileTimeValue#isValid()}), which may provide error messages.
 	 * <p>
-	 * This field is set by {@code ConstantExpressionProcessor#evaluateConstantExpression()} and will be undefined
+	 * This field is set by {@code CompileTimeExpressionProcessor#evaluateCompileTimeExpression()} and will be undefined
 	 * until the first phase of post-processing has completed, see {@code CompileTimeExpressionProcessor}.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Value</em>' attribute.

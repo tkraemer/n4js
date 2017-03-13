@@ -59,10 +59,10 @@ public final class ASTMetaInfoCacheHelper {
 	}
 
 	/**
-	 * Convenience method for {@link ASTMetaInfoCache#getEvaluationResult(Expression)}.
+	 * Convenience method for {@link ASTMetaInfoCache#getCompileTimeValue(Expression)}.
 	 */
-	public CompileTimeValue getEvaluationResult(Expression expr) {
-		return getOrCreate((N4JSResource) expr.eResource()).getEvaluationResult(expr);
+	public CompileTimeValue getCompileTimeValue(Expression expr) {
+		return getOrCreate((N4JSResource) expr.eResource()).getCompileTimeValue(expr);
 	}
 
 	/**

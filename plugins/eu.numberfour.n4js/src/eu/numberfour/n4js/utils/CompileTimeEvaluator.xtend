@@ -31,6 +31,7 @@ import eu.numberfour.n4js.n4JS.TemplateSegment
 import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.postprocessing.ASTMetaInfoCacheHelper
+import eu.numberfour.n4js.postprocessing.ASTProcessor
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
 import eu.numberfour.n4js.ts.types.TClassifier
@@ -51,6 +52,17 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
 
 /**
  * Helper class to evaluate compile-time expressions.
+ * <p>
+ * <u>IMPORTANT IMPLEMENTATION NOTES:</u>
+ * <ul>
+ * <li>It is a design decision to handle compile-time evaluation and computed property names as a separate, up-front
+ * step during post-processing before the main AST traversal begins (see method
+ * {@link ASTProcessor#processAST(RuleEnvironment, Script, ASTMetaInfoCache)}).
+ * <li>To achieve this, we must <b>avoid using type information during compile-time evaluation</b>, because typing
+ * is part of main AST traversal, so typing an AST node would inevitably start the main AST traversal.
+ * <li>the only place where this limitation becomes tricky is the evaluation of property access expressions, see
+ * {@link #eval(RuleEnvironment, ParameterizedPropertyAccessExpression, RecursionGuard)}.
+ * </ul>
  */
 class CompileTimeEvaluator {
 
@@ -61,10 +73,10 @@ class CompileTimeEvaluator {
 	/**
 	 * <b>
 	 * IMPORTANT: CLIENT CODE SHOULD NOT CALL THIS METHOD!<br>
-	 * Instead, read compile-time values from the cache using method {@link ASTMetaInfoCacheHelper#getEvaluationResult(Expression)}.<br>
-	 * If the evaluation result of the expression you are interested in is not in the cache, add your use case to method
-	 * {@link N4JSLanguageUtils#isProcessedAsCompileTimeExpression(Expression)}. Only expression for which this method
-	 * returns <code>true</code> will be evaluated and cached.
+	 * Instead, read compile-time values from the cache using method {@link ASTMetaInfoCacheHelper#getCompileTimeValue(Expression)}.<br>
+	 * If the evaluation result of the expression you are interested in is not being cached, add your use case to method
+	 * {@link N4JSLanguageUtils#isProcessedAsCompileTimeExpression(Expression)}. Only expressions for which this method
+	 * returns <code>true</code> will be evaluated and cached during post-processing.
 	 * </b>
 	 * <p>
 	 * Computes and returns the value of the given expression as a {@link CompileTimeValue}. If the given expression is
@@ -79,35 +91,34 @@ class CompileTimeEvaluator {
 	// ---------------------------------------------------------------------------------------------------------------
 
 
+	// catch-all case for expression not handled by any of the more specific dispatch methods
 	def private dispatch CompileTimeValue eval(RuleEnvironment G, Expression expr, RecursionGuard<EObject> guard) {
-		return switch (expr) {
-			NullLiteral:
-				CompileTimeValue.NULL
-			BooleanLiteral:
-				CompileTimeValue.of(expr.isTrue)
-			NumericLiteral:
-				CompileTimeValue.of(expr.value)
-			StringLiteral:
-				CompileTimeValue.of(expr.value)
-			TemplateSegment:
-				CompileTimeValue.of(expr.rawValue)
-			ParenExpression:
-				eval(G, expr.expression, guard)
-			default:
-				CompileTimeValue.error(keywordProvider.keywordWithIndefiniteArticle(expr)
-					+ " is never a compile-time expression", expr)
-		};
+		return CompileTimeValue.error(keywordProvider.keywordWithIndefiniteArticle(expr)
+			+ " is never a compile-time expression", expr);
 	}
 
-	def private dispatch CompileTimeValue eval(RuleEnvironment G, IdentifierRef expr, RecursionGuard<EObject> guard) {
-		if (N4JSLanguageUtils.isUndefinedLiteral(G, expr)) {
-			return CompileTimeValue.UNDEFINED;
-		}
-		val id = expr.id;
-		if (id !== null && !id.eIsProxy) {
-			return obtainValueIfConstFieldOrVariable(G, id, expr, guard);
-		}
-		return CompileTimeValue.error();
+	def private dispatch CompileTimeValue eval(RuleEnvironment G, ParenExpression expr, RecursionGuard<EObject> guard) {
+		return eval(G, expr.expression, guard);
+	}
+
+	def private dispatch CompileTimeValue eval(RuleEnvironment G, NullLiteral expr, RecursionGuard<EObject> guard) {
+		return CompileTimeValue.NULL;
+	}
+
+	def private dispatch CompileTimeValue eval(RuleEnvironment G, BooleanLiteral expr, RecursionGuard<EObject> guard) {
+		return CompileTimeValue.of(expr.isTrue);
+	}
+
+	def private dispatch CompileTimeValue eval(RuleEnvironment G, NumericLiteral expr, RecursionGuard<EObject> guard) {
+		return CompileTimeValue.of(expr.value);
+	}
+
+	def private dispatch CompileTimeValue eval(RuleEnvironment G, StringLiteral expr, RecursionGuard<EObject> guard) {
+		return CompileTimeValue.of(expr.value);
+	}
+
+	def private dispatch CompileTimeValue eval(RuleEnvironment G, TemplateSegment expr, RecursionGuard<EObject> guard) {
+		return CompileTimeValue.of(expr.rawValue);
 	}
 
 	def private dispatch CompileTimeValue eval(RuleEnvironment G, TemplateLiteral expr, RecursionGuard<EObject> guard) {
@@ -191,40 +202,64 @@ class CompileTimeEvaluator {
 		return if ((conditionValue as ValueBoolean).getValue()) trueValue else falseValue;
 	}
 
+	def private dispatch CompileTimeValue eval(RuleEnvironment G, IdentifierRef expr, RecursionGuard<EObject> guard) {
+		if (N4JSLanguageUtils.isUndefinedLiteral(G, expr)) {
+			return CompileTimeValue.UNDEFINED;
+		}
+		val id = expr.id; // <-- triggers scoping; this is unproblematic, because the scoping of IdentifierRefs does not
+		// require type information and will thus not interfere with our goal of handling compile-time expressions and
+		// computed property names as an up-front preparatory step before main AST traversal.
+		if (id !== null && !id.eIsProxy) {
+			return obtainValueIfConstFieldOrVariable(G, id, expr, guard);
+		}
+		return CompileTimeValue.error();
+	}
+
+	/**
+	 * Handles compile-time evaluation of property access expressions.
+	 * <p>
+	 * <u>IMPORTANT IMPLEMENTATION NOTES:</u>
+	 * <ul>
+	 * <li>We must not make use of type information during compile-time evaluation (see {@link CompileTimeEvaluator}
+	 * for details why this rule exists).
+	 * <li>Since scoping of property access requires type information, we cannot use this form of scoping.
+	 * <li>Since this scoping would be triggered when invoking {@code #getProperty()} on the given property access
+	 * expression, we cannot make use of that property in this method.
+	 * <li>APPRACH: avoid using (ordinary) scoping but instead implement custom member lookup for the very limited cases
+	 * supported by compile-time expressions.
+	 * </ul>
+	 * YES, this approach introduces an unfortunate duplication of logic, but greatly simplifies other parts of the
+	 * system, i.e. (ordinary) scoping, AST traversal, type system.
+	 */
 	def private dispatch CompileTimeValue eval(RuleEnvironment G, ParameterizedPropertyAccessExpression expr, RecursionGuard<EObject> guard) {
 		val targetExpr = expr.target;
 		val targetElem = if (targetExpr instanceof IdentifierRef) targetExpr.id;
+		val propName = expr.propertyAsText; // IMPORTANT: don't invoke expr.getProperty()!!
 		val sym = G.symbolObjectType;
 		if (targetElem === sym) {
-			// A) is 'expr' an access to a built-in symbol, e.g. Symbol.iterator?
-			// NOTES:
-			// 1) we would like to simply call RuleEnvironmentExtensions#getAccessedBuiltInSymbol(), but that method would
-			//    invoke expr.getProperty() which, in turn, would trigger type inference; since we want to handle computed
-			//    property names in an up-front step and not as part of the main AST traversal, we must avoid triggering
-			//    type inference and hence cannot use RuleEnvironmentExtensions#getAccessedBuiltInSymbol().
-			// 2) the following logic must be kept aligned to RuleEnvironmentExtensions#getAccessedBuiltInSymbol()!
-			val propName = expr.propertyAsText;
-			val memberInSym = sym.ownedMembers.filter(TField).findFirst[static && name == propName];
+			// A) Is 'expr' an access to a built-in symbol, e.g. Symbol.iterator?
+			val memberInSym = N4JSLanguageUtils.getAccessedBuiltInSymbol(G, expr, false); // IMPORTANT: pass in 'false', to disallow proxy resolution (which would trigger scoping, type inference, etc.)
 			if (memberInSym !== null) {
+				// yes, it is!
 				return CompileTimeValue.of(memberInSym);
 			}
 		} else if (targetElem instanceof TEnum) {
-			// B) is 'expr' an access to the literal of a @StringBased enum?
+			// B) Is 'expr' an access to the literal of a @StringBased enum?
 			if (AnnotationDefinition.STRING_BASED.hasAnnotation(targetElem)) {
-				val propName = expr.propertyAsText;
-				val litInEnum = targetElem.literals.findFirst[name == propName];
+				val litInEnum = targetElem.literals.findFirst[name == propName]; // custom scoping logic!
 				if (litInEnum !== null) {
+					// yes, it is!
 					return CompileTimeValue.of(litInEnum.valueOrName);
 				}
 			}
 		} else if (targetElem instanceof TClassifier) {
-			// C) is 'expr' an access to a const field initialized by a compile-time expression?
-			val memberName = expr.propertyAsText;
-			val member = targetElem.ownedMembers.filterNull.findFirst[name == memberName && readable && static];
+			// C) Is 'expr' an access to a const field initialized by a compile-time expression?
+			val member = targetElem.ownedMembers.filterNull.findFirst[name == propName && readable && static]; // custom scoping logic!
 			// IMPORTANT: don't use "targetElem.findOwnedMember(memberName, false, true)" in previous line, because
 			// #findOwnedMember() will create and cache a MemberByNameAndAccessMap, which will be incomplete if the
 			// TClassifier contains members with unresolved computed property names!
 			if (member instanceof TField && !(member as TField).hasComputedName) {
+				// yes, it is!
 				return obtainValueIfConstFieldOrVariable(G, member, expr, guard);
 			} else {
 				// we get here in two cases:
@@ -237,19 +272,34 @@ class CompileTimeEvaluator {
 				// At this point, i.e. before computed names are processed, we cannot distinguish between these
 				// cases. So we create a dummy error here that will be improved later.
 				//
-				// 2) member was found but is has a computed property name
+				// 2) member was found but it has a (resolved) computed property name (since processing of computed
+				// property names for the current resource has not started yet, this happens only if the member is
+				// located in another file an its full type information, including its name, was found in the index)
 				// -> for consistency with 1.a above, we have to raise an error also in this case
 				return CompileTimeValue.error(new UnresolvedPropertyAccessError(expr));
 			}
 		}
 		// D) all other cases:
-		return CompileTimeValue.error("only references to const fields, literals of @StringBased enums, or built-in symbols allowed", expr);
+		if (targetElem !== sym && !(targetElem instanceof TClassifier || targetElem instanceof TEnum)) {
+			return CompileTimeValue.error(
+				"target of a property access must be a direct reference to a class, interface, or enum", expr,
+				N4JSPackage.eINSTANCE.parameterizedPropertyAccessExpression_Target);
+		}
+		return CompileTimeValue.error("property access must point to const fields, literals of @StringBased enums, or built-in symbols", expr);
 	}
 
 
 	// ---------------------------------------------------------------------------------------------------------------
 
 
+	/**
+	 * Iff the given element is a const field or variable with a valid compile-time expression as initializer, then this
+	 * method returns its compile-time value; otherwise, an invalid compile-time value with an appropriate error message
+	 * is returned. Never returns <code>null</code>.
+	 * <p>
+	 * This method only handles infinite recursion; main logic in
+	 * {@link #obtainValueIfConstFieldOrVariableUnguarded(RuleEnvironment, IdentifiableElement, EObject, RecursionGuard)}.
+	 */
 	def private CompileTimeValue obtainValueIfConstFieldOrVariable(RuleEnvironment G, IdentifiableElement targetElem,
 		EObject astNodeForErrorMessage, RecursionGuard<EObject> guard) {
 
@@ -278,7 +328,7 @@ class CompileTimeEvaluator {
 				astNodeForErrorMessage);
 		}
 
-		val valueOfTargetElem = obtainValueOfTargetElement(G, astNodeForErrorMessage.eResource, targetElem, guard);
+		val valueOfTargetElem = obtainCompileTimeValueOfTargetElement(G, astNodeForErrorMessage.eResource, targetElem, guard);
 		if (valueOfTargetElem !== null) {
 			if (valueOfTargetElem instanceof ValueInvalid) {
 				val baseMsg = keywordProvider.keyword(targetElem) + " " + targetElem.name +
@@ -296,7 +346,7 @@ class CompileTimeEvaluator {
 			astNodeForErrorMessage);
 	}
 
-	def private CompileTimeValue obtainValueOfTargetElement(RuleEnvironment G, Resource currentResource,
+	def private CompileTimeValue obtainCompileTimeValueOfTargetElement(RuleEnvironment G, Resource currentResource,
 		IdentifiableElement targetElem, RecursionGuard<EObject> guard) {
 
 		if (targetElem.eResource === currentResource || hasLoadedASTElement(targetElem)) {
@@ -351,9 +401,9 @@ class CompileTimeEvaluator {
 
 
 	/**
-	 * Special kind of {@link EvalError} used to denote cases in which the {@link CompileTimeEvaluator} cannot come up
-	 * with the correct error message and thus delegates finding a proper message to the validation, i.e. to class
-	 * {@link N4JSExpressionValidator}.
+	 * Special kind of {@link EvalError} used to denote a particular case in which the {@link CompileTimeEvaluator}
+	 * cannot come up with the correct error message and thus delegates finding a proper message to the validation,
+	 * i.e. to class {@link N4JSExpressionValidator}.
 	 */
 	public static final class UnresolvedPropertyAccessError extends EvalError {
 
