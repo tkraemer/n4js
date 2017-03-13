@@ -71,14 +71,12 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IWorkbench;
@@ -195,6 +193,10 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 		createButton(subComposite, "Run maintenance actions", new MaintenanceActionsButtonListener());
 
+		createButton(subComposite, "Export target platform...", new ExportButtonListener());
+
+		createButton(subComposite, "Import target platform...", new ImportButtonListener());
+
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
@@ -231,13 +233,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 	@Override
 	public void createControl(Composite parent) {
+		noDefaultAndApplyButton();
 		super.createControl(parent);
-		final Composite buttonParent = getApplyButton().getParent();
-		final Layout layout = buttonParent.getLayout();
-		if (layout instanceof GridLayout) {
-			((GridLayout) layout).numColumns = ((GridLayout) layout).numColumns + 1;
-		}
-		createButton(buttonParent, "Export target platform...", new ExportButtonListener());
 	}
 
 	@Override
@@ -390,6 +387,39 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 					}
 				} catch (final IOException e) {
 					throw new RuntimeException("Error while exporting target platform file.", e);
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * Selection listener for importing the target platform file from the UI.
+	 */
+	private class ImportButtonListener extends SelectionAdapter {
+
+		@Override
+		public void widgetSelected(final SelectionEvent ignored) {
+			final FileDialog dialog = new FileDialog(getShell(), OPEN);
+			dialog.setFilterExtensions(new String[] { TP_FILTER_EXTENSION });
+			dialog.setFileName(TargetPlatformModel.TP_FILE_NAME);
+			dialog.setText("Import N4 Target Platform");
+			final String value = dialog.open();
+			if (!isNullOrEmpty(value)) {
+
+				final File file = new File(value);
+				try {
+					if (!file.exists()) {
+						checkState(file.createNewFile(), "Error while importing target platform file.");
+					}
+					final TargetPlatformModel model = TargetPlatformModel.readValue(file.toURI());
+					model.getLocation().stream()
+							.filter(l -> l.getRepoType().equals(TargetPlatformModel.RepositoryType.npm))
+							.map(l -> l.getProjects()).forEach(p -> {
+								p.forEach((name, props) -> System.out.println(name + " :: " + props.getVersion()));
+							});
+				} catch (final IOException e) {
+					throw new RuntimeException("Error while importing target platform file.", e);
 				}
 			}
 		}
