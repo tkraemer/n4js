@@ -43,7 +43,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -412,12 +414,49 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 					if (!file.exists()) {
 						checkState(file.createNewFile(), "Error while importing target platform file.");
 					}
-					final TargetPlatformModel model = TargetPlatformModel.readValue(file.toURI());
-					model.getLocation().stream()
+					final URI n4tp = file.toURI();
+					final TargetPlatformModel model = TargetPlatformModel.readValue(n4tp);
+					final Set<String> packages = model.getLocation().stream()
 							.filter(l -> l.getRepoType().equals(TargetPlatformModel.RepositoryType.npm))
-							.map(l -> l.getProjects()).forEach(p -> {
-								p.forEach((name, props) -> System.out.println(name + " :: " + props.getVersion()));
+							.map(l -> l.getProjects())
+							.flatMap(p -> p.entrySet().stream())// TODO refactor TargetPlatformModel, e.g.
+																// class Projects extends HashMap<String,
+																// ProjectProperties>)
+							.map(e -> e.getKey()).collect(Collectors.toSet());
+
+					if (!packages.isEmpty()) {
+						final AtomicReference<IStatus> errorStatusRef = new AtomicReference<>();
+						final AtomicReference<IllegalBinaryStateException> illegalBinaryExcRef = new AtomicReference<>();
+						try {
+							new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
+								try {
+									IStatus status = npmManager.installDependencies(packages, monitor);
+									if (status.isOK()) {
+										updateInput(viewer, store.getLocations());
+									} else {
+										// Raise the error dialog just when this is closed.
+										errorStatusRef.set(status);
+									}
+								} catch (final IllegalBinaryStateException ibse) {
+									illegalBinaryExcRef.set(ibse);
+								}
 							});
+						} catch (final InvocationTargetException | InterruptedException exc) {
+							throw new RuntimeException("Error while installing npm dependency: '" + packages + "'.",
+									exc);
+						} finally {
+							if (null != illegalBinaryExcRef.get()) {
+								new IllegalBinaryStateDialog(illegalBinaryExcRef.get()).open();
+							} else if (null != errorStatusRef.get()) {
+								N4JSActivator.getInstance().getLog().log(errorStatusRef.get());
+								getDisplay().asyncExec(() -> openError(
+										getShell(),
+										"npm Install Failed",
+										"Error while installing '" + n4tp
+												+ "' npm package.\nPlease check your Error Log view for the detailed npm log about the failure."));
+							}
+						}
+					}
 				} catch (final IOException e) {
 					throw new RuntimeException("Error while importing target platform file.", e);
 				}
@@ -620,9 +659,9 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 		private static final String ACTION_NPM_PACKAGES_DELETE = "Delete npm packages (whole npm folder gets deleted).";
 		private static final String ACTION_TYPE_DEFINITIONS_RESET = "Reset type definitions (fresh clone). ";
 
-		/** This is used just as a container for statues. */
+		/** Initially pessimistic container for statues. */
 		private final MultiStatus multistatus = statusHelper
-				.createMultiError("utility status, see special handling in final block");
+				.createMultiError("Error while executing maintenance actions.");
 
 		private synchronized void addStatus(IStatus status) {
 			multistatus.add(status);
@@ -683,6 +722,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 						}
 
 						if (decisionPurgeNpm || decisionResetTypeDefinitions) {
+							externalLibraryWorkspace.updateState();
 							externalLibrariesReloadHelper.reloadLibraries(true, monitor);
 							updateInput(viewer, store.getLocations());
 						}
@@ -690,17 +730,10 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				} catch (final InvocationTargetException | InterruptedException exc) {
 					throw new RuntimeException("Error while executing maintenance actions.", exc);
 				} finally {
-					MultiStatus utilStatus = getStauts();
+					MultiStatus status = getStauts();
 
-					if (!Arrays2.isEmpty(utilStatus.getChildren())) {
-						// rewrite errors for better logging
-						MultiStatus createMultiError = statusHelper
-								.createMultiError("external libraries maintenance Failed");
-						IStatus[] children = utilStatus.getChildren();
-						for (int i = 0; i < children.length; i++) {
-							createMultiError.add(children[i]);
-						}
-						N4JSActivator.getInstance().getLog().log(createMultiError);
+					if (!Arrays2.isEmpty(status.getChildren())) {
+						N4JSActivator.getInstance().getLog().log(status);
 						getDisplay().asyncExec(() -> openError(
 								getShell(),
 								"external libraries maintenance Failed",

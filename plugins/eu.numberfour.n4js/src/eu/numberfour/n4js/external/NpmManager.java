@@ -211,6 +211,112 @@ public class NpmManager {
 	}
 
 	/**
+	 * Installs the given npm packages in a blocking fashion.
+	 *
+	 * @param packageNames
+	 *            the names of the packages that has to be installed via package manager.
+	 * @param monitor
+	 *            the monitor for the blocking install process.
+	 * @return a status representing the outcome of the install process.
+	 */
+	public IStatus installDependencies(final Collection<String> packageNames, IProgressMonitor monitor)
+			throws IllegalBinaryStateException {
+
+		final NpmBinary npmBinary = npmBinaryProvider.get();
+		final IStatus npmBinaryStatus = npmBinary.validate();
+		if (!npmBinaryStatus.isOK()) {
+			throw new IllegalBinaryStateException(npmBinary, npmBinaryStatus);
+		}
+
+		try {
+
+			logInfo("================================================================");
+			logInfo("Installing '" + packageNames + "' npm package...");
+			logInfo("================================================================");
+
+			monitor = null == monitor ? new NullProgressMonitor() : monitor;
+			monitor.beginTask("Installing '" + packageNames + "' npm package...", 10);
+
+			final Set<String> oldDependencies = from(
+					externalLibraryWorkspace.getProjects(locationProvider.getTargetPlatformNodeModulesLocation()))
+							.transform(p -> p.getName()).toSet();
+			monitor.worked(1); // Intentionally cheating for better user experience.
+
+			for (String packageName : packageNames) {
+				if (oldDependencies.contains(packageName)) {
+					continue;
+				}
+
+				logInfo("Fetching '" + packageName + "' package... [1 of 4]");
+				monitor.setTaskName("Fetching '" + packageName + "' package... [1 of 4]");
+				try {
+					final File targetInstallLocation = new File(locationProvider.getTargetPlatformInstallLocation());
+					final IStatus installStatus = installPackage(targetInstallLocation, packageName);
+					if (!installStatus.isOK()) {
+						logError("Error occurred while installing '" + packageName + "' npm package.",
+								installStatus.getException());
+						return installStatus;
+					}
+				} catch (IOException | InterruptedException e) {
+					final IStatus status = statusHelper
+							.createError("Error occurred while installing npm package '" + packageName + "'.", e);
+					logError(status);
+					return status;
+				}
+				logInfo("Package '" + packageName + "' has been successfully fetched.");
+			}
+			monitor.worked(2);
+
+			logInfo("Calculating dependency changes... [2 of 4]");
+			monitor.setTaskName("Calculating dependency changes... [2 of 4]");
+			Map<String, String> afterDependencies = locationProvider.getTargetPlatformContent().dependencies;
+			if (null == afterDependencies) {
+				afterDependencies = newHashMap();
+			}
+			final Set<String> newDependencies = afterDependencies.keySet();
+			final File nodeModulesFolder = new File(locationProvider.getTargetPlatformNodeModulesLocation());
+
+			final Collection<String> deletedDependencies = difference(oldDependencies, newDependencies);
+			final Collection<String> addedDependencies = difference(newDependencies, oldDependencies);
+			final Iterable<java.net.URI> toBeDeleted = from(deletedDependencies)
+					.transform(name -> new File(nodeModulesFolder, name).toURI());
+			logInfo("Dependency changes have been successfully calculated.");
+			monitor.worked(1);
+
+			logInfo("Adapting npm package structure to N4JS project structure... [3 of 4]");
+			monitor.setTaskName("Adapting npm package structure to N4JS project structure... [3 of 4]");
+			final Pair<IStatus, Collection<File>> result = npmPackageToProjectAdapter.adaptPackages(addedDependencies);
+			final IStatus adaptionStatus = result.getFirst();
+			if (!adaptionStatus.isOK()) {
+				logError(adaptionStatus);
+				return adaptionStatus;
+			}
+			logInfo("Package structure has been successfully adapted to N4JS project structure.");
+			monitor.worked(2);
+
+			logInfo("Registering new projects... [4 of 4]");
+			monitor.setTaskName("Registering new projects... [4 of 4]");
+			// nothing to do in the headless case. TODO inject logic instead?
+			if (Platform.isRunning()) {
+				final Iterable<java.net.URI> toBeUpdated = from(result.getSecond()).transform(file -> file.toURI());
+				final NpmProjectAdaptionResult adaptionResult = NpmProjectAdaptionResult.newOkResult(toBeUpdated,
+						toBeDeleted);
+				externalLibraryWorkspace.registerProjects(adaptionResult, monitor);
+			}
+			logInfo("Projects have been successfully registered.");
+
+			logInfo("Package '" + packageNames + "' has been successfully installed.");
+			logInfo("================================================================");
+
+			return OK_STATUS;
+
+		} finally {
+			monitor.done();
+		}
+
+	}
+
+	/**
 	 * Uninstalls the given npm package in a blocking fashion.
 	 *
 	 * @param packageName
