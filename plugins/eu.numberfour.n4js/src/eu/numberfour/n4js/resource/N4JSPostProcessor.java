@@ -58,7 +58,8 @@ public class N4JSPostProcessor implements PostProcessor {
 	public void performPostProcessing(PostProcessingAwareResource resource, CancelIndicator cancelIndicator) {
 		final boolean hasBrokenAST = !resource.getErrors().isEmpty();
 		try {
-			doPerformPostProcessing(resource, cancelIndicator);
+			// we assume this will not be called for other PostProcessingAwareResource than N4JSResource
+			postProcessN4JSResource((N4JSResource) resource, cancelIndicator);
 		} catch (Throwable th) {
 			th.printStackTrace();
 			if (hasBrokenAST) {
@@ -72,20 +73,18 @@ public class N4JSPostProcessor implements PostProcessor {
 		}
 	}
 
-	private void doPerformPostProcessing(PostProcessingAwareResource resource, CancelIndicator cancelIndicator) {
-		final N4JSResource resCasted = (N4JSResource) resource;
+	private void postProcessN4JSResource(N4JSResource resource, CancelIndicator cancelIndicator) {
 		// step 1: process the AST (resolve all proxies in AST, infer type of all typable AST nodes, etc.)
-		astProcessor.processAST(resCasted, cancelIndicator);
+		astProcessor.processAST(resource, cancelIndicator);
 		// step 2: expose internal types visible from outside
 		// (i.e. if they are referenced from a type that is visible form the outside)
-		exposeReferencedInternalTypes(resCasted);
+		exposeReferencedInternalTypes(resource);
 		// step 3: resolve remaining proxies in TModule
 		// (the TModule was created programmatically, so it usually does not contain proxies; however, in case of
 		// explicitly declared types, the types builder copies type references from the AST to the corresponding
 		// TModule element *without* resolving proxies, so the TModule might contain lazy-cross-ref proxies; most of
 		// these should have been resolved during AST traversal and exposing internal types, but some can be left)
-		final TModule module = resCasted.getModule();
-		EcoreUtil.resolveAll(module);
+		EcoreUtil.resolveAll(resource.getModule());
 	}
 
 	/**
@@ -94,8 +93,9 @@ public class N4JSPostProcessor implements PostProcessor {
 	 */
 	private static void exposeReferencedInternalTypes(N4JSResource res) {
 		final TModule module = res.getModule();
-		if (module == null)
+		if (module == null) {
 			return;
+		}
 
 		// reset, i.e. make all exposed types internal again
 		module.getInternalTypes().addAll(module.getExposedInternalTypes());
@@ -106,21 +106,24 @@ public class N4JSPostProcessor implements PostProcessor {
 		stuffToScan.addAll(module.getVariables());
 		for (EObject currRoot : stuffToScan) {
 			exposeTypesReferencedBy(currRoot);
-			final TreeIterator<EObject> i = currRoot.eAllContents();
-			while (i.hasNext())
-				exposeTypesReferencedBy(i.next());
 		}
 	}
 
-	private static void exposeTypesReferencedBy(EObject object) {
-		for (EReference currRef : object.eClass().getEAllReferences()) {
-			if (!currRef.isContainment()) {
-				final Object currTarget = object.eGet(currRef);
-				if (currTarget instanceof Collection<?>) {
-					for (Object currObj : (Collection<?>) currTarget)
-						exposeType(currObj);
-				} else
-					exposeType(currTarget);
+	private static void exposeTypesReferencedBy(EObject root) {
+		final TreeIterator<EObject> i = root.eAllContents();
+		while (i.hasNext()) {
+			final EObject object = i.next();
+			for (EReference currRef : object.eClass().getEAllReferences()) {
+				if (!currRef.isContainment()) {
+					final Object currTarget = object.eGet(currRef);
+					if (currTarget instanceof Collection<?>) {
+						for (Object currObj : (Collection<?>) currTarget) {
+							exposeType(currObj);
+						}
+					} else {
+						exposeType(currTarget);
+					}
+				}
 			}
 		}
 	}
@@ -130,20 +133,29 @@ public class N4JSPostProcessor implements PostProcessor {
 	 * to 'exposedInternalTypes'.
 	 */
 	private static void exposeType(Object object) {
-		if (!(object instanceof EObject) || ((EObject) object).eIsProxy())
+		if (!(object instanceof EObject) || ((EObject) object).eIsProxy()) {
 			return;
+		}
+
 		// object might not be a type but reside inside a type, e.g. field of a class
 		// --> so search for the root, i.e. the ancestor directly below the TModule
-		EObject root = (EObject) object;
-		while (root != null && !(root.eContainer() instanceof TModule))
-			root = root.eContainer();
+		EObject rootTMP = (EObject) object;
+		while (rootTMP != null && !(rootTMP.eContainer() instanceof TModule)) {
+			rootTMP = rootTMP.eContainer();
+		}
+		final EObject root = rootTMP; // must be final for the lambda below
+
 		if (root instanceof Type
 				&& root.eContainingFeature() == TypesPackage.eINSTANCE.getTModule_InternalTypes()) {
 			final TModule module = (TModule) root.eContainer();
-			final EObject rootFinal = root;
 			EcoreUtilN4.doWithDeliver(false, () -> {
-				module.getExposedInternalTypes().add((Type) rootFinal);
+				module.getExposedInternalTypes().add((Type) root);
 			}, module, root); // note: root already contained in resource, so suppress notifications also in root!
+
+			// everything referenced by the type we just moved to 'exposedInternalTypes' has to be exposed as well
+			// (this is required, for example, if 'root' is a structural type, see:
+			// eu.numberfour.n4js.xpect.ui.tests/testdata_ui/typesystem/structuralTypeRefWithMembersAcrossFiles/Main.n4js.xt)
+			exposeTypesReferencedBy(root);
 		}
 	}
 }

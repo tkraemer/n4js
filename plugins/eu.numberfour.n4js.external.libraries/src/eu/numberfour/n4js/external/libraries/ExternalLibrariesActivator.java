@@ -154,6 +154,20 @@ public class ExternalLibrariesActivator implements BundleActivator {
 	 */
 	public static final Supplier<File> N4_NPM_FOLDER_SUPPLIER = memoize(() -> getOrCreateNpmFolder());
 
+	/**
+	 * Repairs (if necessary) npm folder integrity. In most cases that is unnecessary, but in case folder supplier by
+	 * {@link #N4_NPM_FOLDER_SUPPLIER} is broken this method will try to recreate it.
+	 *
+	 * @return true if npm matches expected state
+	 */
+	public static final boolean repairNpmFolderState() {
+		synchronized (N4_NPM_FOLDER_SUPPLIER) {
+			File npmFile = N4_NPM_FOLDER_SUPPLIER.get();
+			File newFile = getOrCreateNpmFolder();
+			return newFile.getAbsolutePath().equals(npmFile.getAbsolutePath());
+		}
+	}
+
 	/** Shared private bundle context. */
 	private static BundleContext context;
 
@@ -305,5 +319,4 @@ public class ExternalLibrariesActivator implements BundleActivator {
 
 		return targetPlatform;
 	}
-
 }
