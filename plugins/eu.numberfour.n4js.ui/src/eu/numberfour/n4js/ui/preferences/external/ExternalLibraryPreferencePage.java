@@ -653,6 +653,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 						}
 
 						if (decisionPurgeNpm || decisionResetTypeDefinitions) {
+							externalLibraryWorkspace.updateState();
 							externalLibrariesReloadHelper.reloadLibraries(true, monitor);
 							updateInput(viewer, store.getLocations());
 						}
