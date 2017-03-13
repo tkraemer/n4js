@@ -114,8 +114,9 @@ that causes exceptions at runtime in the last line.
 
 === Parameter Contra-variance vs. Bivariance
 
-In N4JS (and not in Java), when overriding a method in a subtype, the types of the parameters may be super types, and (in N4JS and in Java) the return type may be a sub type. E.g., given the following classes
-
+In N4JS, when overriding a method in a subtype, the types of the parameters may be super types, and the return type may be a sub type.
+Compare this to Java, where the return type may also be a sub type, but the parameter types must be the same.
+Given the following classes
 
 [source,java]
 ----
