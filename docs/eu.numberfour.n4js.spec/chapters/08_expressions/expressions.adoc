@@ -1040,47 +1040,15 @@ then the receiver must be a subtype of the declared `@This` type.
 --
 task:IDE-656[] task:IDE-1734[]
 
-1.  A limited form of computed-name index-access is allowed in N4JS mode.
-In case the receiver is of dynamic type, the index can be any expression task:GH-238[].
-Otherwise, the index-access is limited in that the index must be a compile-time expression (cf. <<compile-time-expressions>>).
-Feasible targets of such accesses are the same as for dot-access.
-2.  Additionally, an index-access expression is allowed when targeting (a) one of the types Array, ArgumentType, string, String, Iterable (including their subtypes), (b) `Object` (**not** including subtypes of `Object` and not for `pass:[~Object]` and `pass:[~~Object]` ), or (c) a dynamic type.
-+
-It is not allowed to access members of enums in particular.
-That is to say, for an indexed-access expression $iae$, the following constraint must hold:
-+
-[math]
-++++
-\beginalign
-\spc\tee ia.target \subtype T, T \in \types{Array, ArgumentType, string, String, Iterable} \\
-\spc\lor\\
-\spc\tee ia.target = \type{Object}
-\endalign
-++++
-+
-3. In N4JS mode, if the receiver is an array and is not dynamic, in case of index access the index expression must be a number:
-+
-[%hardbreaks]
-$\spc mode=\lenum{n4js} \land pae.target.type=\type{Array} \land pae.isIndexAccess $
-$\spc \Rightarrow \tee pae.index \subtype[number]$
-4.  In N4JS mode, if the receiver is a subtype of types or and is not dynamic, in case of index access the index expression must be a number:  task:IDE-837[]
-+
-[%hardbreaks]
-$\spc mode=\lenum{n4js} $
-$\spc \hspace{3em} \land (\tee pae.target\subtype {string} \lor \tee pae.target \subtype {String}) $
-$\spc \hspace{3em} \land pae.isIndexAccess $
-$\spc \Rightarrow \tee pae.index \subtype{number} $
-5.  In N4JS mode, if the receiver is an iterable and is not dynamic, in case of index access the index expression must be a property access expression to the built-in symbol `Symbol.iterator`:
-+
-[%hardbreaks]
-$\spc mode=\lenum{n4js} \land pae.target.type=\type{Iterable} \land pae.isIndexAccess $
-$\spc \Rightarrow $
-$\spc \hspace{3em} \mu(pae.index)=\type{IndexedAccessExpression} $
-$\spc \hspace{3em} \land pae.index.isDotAccess $
-$\spc \hspace{3em} \land pae.index.target = \type{Symbol} $
-$\spc \hspace{3em} \land pae.index.property = "iterator" $
+An index access expression is valid iff one of the following cases applies:
 
-
+1. the receiver is of a dynamic type. In this case, the index may be any expression (need not be a compile-time expression) task:GH-238[].
+2. the receiver is of type `Object`, **not** including subtypes of `Object` and not for `pass:[~Object]` and `pass:[~~Object]`.
+3. the receiver is of type Array, ArgumentType, string, or String (including their subtypes) +
+**and** the index is numeric.
+4. the index expression is a compile-time expression +
+**and** the receiver type defines a member with a name corresponding to the compile-time value of the index expression +
+**and** the receiver is not an enum.
 --
 
 Although index access is very limited, it is still possible to use immediate instances of `Object` in terms of a map (but this applies only to index access, not the dot notation):
