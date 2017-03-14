@@ -950,22 +950,28 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cVirtualBaseKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNameBindingTypesIdentifierParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cOwnedMembersAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cOwnedMembersTMemberParserRuleCall_4_0 = (RuleCall)cOwnedMembersAssignment_4.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cIndexedKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cDeclaredElementTypeAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cDeclaredElementTypeParameterizedTypeRefNominalParserRuleCall_3_1_0 = (RuleCall)cDeclaredElementTypeAssignment_3_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cOwnedMembersAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cOwnedMembersTMemberParserRuleCall_5_0 = (RuleCall)cOwnedMembersAssignment_5.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		/// *
 		// * Virtual base type, not visible to N4JS users.
 		// * Used to define common super types, e.g. for all enumerations.
 		// * / VirtualBaseType:
 		//	{VirtualBaseType}
-		//	'virtualBase' name=BindingTypesIdentifier '{'
+		//	'virtualBase' name=BindingTypesIdentifier ('indexed' declaredElementType=ParameterizedTypeRefNominal)?
+		//	'{'
 		//	ownedMembers+=TMember*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{VirtualBaseType} 'virtualBase' name=BindingTypesIdentifier '{' ownedMembers+=TMember* '}'
+		//{VirtualBaseType} 'virtualBase' name=BindingTypesIdentifier ('indexed' declaredElementType=ParameterizedTypeRefNominal)?
+		//'{' ownedMembers+=TMember* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//{VirtualBaseType}
@@ -980,17 +986,29 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//BindingTypesIdentifier
 		public RuleCall getNameBindingTypesIdentifierParserRuleCall_2_0() { return cNameBindingTypesIdentifierParserRuleCall_2_0; }
 		
+		//('indexed' declaredElementType=ParameterizedTypeRefNominal)?
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//'indexed'
+		public Keyword getIndexedKeyword_3_0() { return cIndexedKeyword_3_0; }
+		
+		//declaredElementType=ParameterizedTypeRefNominal
+		public Assignment getDeclaredElementTypeAssignment_3_1() { return cDeclaredElementTypeAssignment_3_1; }
+		
+		//ParameterizedTypeRefNominal
+		public RuleCall getDeclaredElementTypeParameterizedTypeRefNominalParserRuleCall_3_1_0() { return cDeclaredElementTypeParameterizedTypeRefNominalParserRuleCall_3_1_0; }
+		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+		public Keyword getLeftCurlyBracketKeyword_4() { return cLeftCurlyBracketKeyword_4; }
 		
 		//ownedMembers+=TMember*
-		public Assignment getOwnedMembersAssignment_4() { return cOwnedMembersAssignment_4; }
+		public Assignment getOwnedMembersAssignment_5() { return cOwnedMembersAssignment_5; }
 		
 		//TMember
-		public RuleCall getOwnedMembersTMemberParserRuleCall_4_0() { return cOwnedMembersTMemberParserRuleCall_4_0; }
+		public RuleCall getOwnedMembersTMemberParserRuleCall_5_0() { return cOwnedMembersTMemberParserRuleCall_5_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
 	}
 	public class TClassElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.Types.TClass");
@@ -2649,7 +2667,8 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	// * Used to define common super types, e.g. for all enumerations.
 	// * / VirtualBaseType:
 	//	{VirtualBaseType}
-	//	'virtualBase' name=BindingTypesIdentifier '{'
+	//	'virtualBase' name=BindingTypesIdentifier ('indexed' declaredElementType=ParameterizedTypeRefNominal)?
+	//	'{'
 	//	ownedMembers+=TMember*
 	//	'}';
 	public VirtualBaseTypeElements getVirtualBaseTypeAccess() {

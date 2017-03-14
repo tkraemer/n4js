@@ -546,7 +546,8 @@ class Type extends TExportableElement, TAnnotableElement, eu.numberfour.n4js.ts.
 	}
 
 	/**
-	 * Returns the element type that would be returned if this was accessed by index.
+	 * Returns the element type that would be returned if this was accessed by a numeric index or <code>null</code>
+	 * if this is not an array-like type.
 	 */
 	op TypeRef getElementType() {
 		// TODO evil workaround for bug in Xcore - signature of getElementType should be getElementType(Type):TypeRef
@@ -719,7 +720,7 @@ abstract class ContainerType<MT extends TMember> extends Type {
  * enumerations all providing a getter method value. It sole purpose is to mix in the defined members here into the
  * actual types transparently inheriting from that type.
  */
-class VirtualBaseType extends ContainerType<TMember> {
+class VirtualBaseType extends ContainerType<TMember>, ArrayLike {
 	/*
 	 * Directly contained members, that is predefined members of all enums
 	 */
@@ -912,8 +913,11 @@ class TObjectPrototype extends TClassifier, DeclaredTypeWithAccessModifier, Arra
 }
 
 /**
- * 'Trait' that allows to mark a certain type as array-like. If an elementType is
- * provided, that one is assumed to be the return type of indexed access expressions.
+ * 'Trait' that allows to mark a certain type as "array like". If an elementType is
+ * provided, that one is assumed to be the return type of index access expressions with a numeric index.
+ * <p>
+ * IMPORTANT: types inheriting from this class are not always array like; they are array like only if they define
+ * property 'declaredElementType'.
  */
 abstract class ArrayLike {
 	/**

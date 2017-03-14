@@ -13,7 +13,7 @@ package eu.numberfour.n4js.ts.types;
 import eu.numberfour.n4js.ts.types.internal.FindElementTypeHelper;
 
 /**
- * Utility to identify {@link ArrayLike array like} types.
+ * Utility to identify element types of types inheriting from an {@link ArrayLike array-like} type.
  */
 public class ArrayLikes {
 

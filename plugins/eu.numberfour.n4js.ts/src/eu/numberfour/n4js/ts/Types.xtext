@@ -181,7 +181,9 @@ TObjectPrototype:
  * Used to define common super types, e.g. for all enumerations.
  */
 VirtualBaseType: {VirtualBaseType}
-	'virtualBase' name=BindingTypesIdentifier '{'
+	'virtualBase' name=BindingTypesIdentifier
+	('indexed' declaredElementType=ParameterizedTypeRefNominal)?
+	'{'
 		(ownedMembers+=TMember)*
 	'}'
 ;

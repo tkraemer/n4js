@@ -1,0 +1,26 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+class C {
+	field1 = 'hello field1';
+	field2 = 'hello field2';
+	
+	const num2 = 2;
+}
+
+let c = new C();
+
+
+console.log( c['field' + 1] );
+console.log( c['field' + C.num2] );
+
+
+/* XPECT output --- 
+<==
+stdout:
+hello field1
+hello field2
+stderr:
+==>
+--- */
+

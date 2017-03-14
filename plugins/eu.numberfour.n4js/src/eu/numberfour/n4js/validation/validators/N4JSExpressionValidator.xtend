@@ -1407,14 +1407,15 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		val receiverTypeRef = ts.resolveType(G, receiverTypeRefRaw);
 		val accessedBuiltInSymbol = N4JSLanguageUtils.getAccessedBuiltInSymbol(G, index);
 		val accessedStaticType = if(receiverTypeRef instanceof TypeTypeRef) tsh.getStaticType(G, receiverTypeRef);
-		val isComputedName = !(index instanceof NumericLiteral) && accessedBuiltInSymbol===null && N4JSLanguageUtils.isValidIndexExpression(G, index);
+		val indexValue = astMetaInfoCacheHelper.getCompileTimeValue(index);
+		val hasValidCompileTimeExpression = !(index instanceof NumericLiteral) && accessedBuiltInSymbol===null && indexValue.valid;
 		if (accessedBuiltInSymbol !== null
 			&& (receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef instanceof ThisTypeRef)) {
 			// we have something like: myObj[Symbol.iterator]
 			internalCheckIndexedAccessWithSymbol(G, indexedAccess, receiverTypeRef,
 				accessedBuiltInSymbol);
 		} else if (receiverTypeRef.declaredType instanceof TN4Classifier) { // Constraints 69.1
-			if (isComputedName) {
+			if (hasValidCompileTimeExpression) {
 				// custom error message for computed-name access
 				internalCheckComputedIndexedAccess(G, indexedAccess, receiverTypeRef)
 			} else {
@@ -1457,12 +1458,15 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			&& !(receiverTypeRef.useSiteStructuralTyping)) {
 			// allowed: index into exact-type Object instance (not subtype thereof)
 			return
-		} else if (isComputedName) {
+		} else if (hasValidCompileTimeExpression) {
 			internalCheckComputedIndexedAccess(G, indexedAccess, receiverTypeRef)
 			return
 		} else {
-			addIssue(messageForEXP_INDEXED_ACCESS_FORBIDDEN, indexedAccess,
-				EXP_INDEXED_ACCESS_FORBIDDEN);
+			if (indexValue instanceof ValueInvalid) {
+				createIssuesForEvalErrors(indexValue.errors);
+			} else {
+				addIssue(messageForEXP_INDEXED_ACCESS_FORBIDDEN, indexedAccess, EXP_INDEXED_ACCESS_FORBIDDEN);
+			}
 		}
 	}
 
@@ -1473,7 +1477,9 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	 */
 	def private void internalCheckComputedIndexedAccess(RuleEnvironment G, IndexedAccessExpression indexedAccess,
 		TypeRef receiverTypeRef) {
-		val memberName = N4JSLanguageUtils.getMemberNameForIndexExpression(G, indexedAccess.index);
+
+		val indexValue = astMetaInfoCacheHelper.getCompileTimeValue(indexedAccess.index);
+		val memberName = N4JSLanguageUtils.derivePropertyNameFromCompileTimeValue(indexValue);
 		if (ComputedPropertyNameValueConverter.SYMBOL_ITERATOR_MANGLED == memberName) {
 			// Implementation restriction: member name clashes with compiler-internal, synthetic, mangled name.
 			addIssue(getMessageForEXP_INDEXED_ACCESS_IMPL_RESTRICTION(), indexedAccess,
@@ -1653,6 +1659,11 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Check
 	def void checkMandatoryCompileTimeExpression(Expression expr) {
+		if(expr.eContainer instanceof IndexedAccessExpression) {
+			// special case: index access expressions
+			// -> this is handled in a more fine-grained manner above by method #checkIndexedAccessExpression()
+			return;
+		}
 		if(N4JSLanguageUtils.isRequiredToBeCompileTimeExpression(expr)) {
 			val evalResult = astMetaInfoCacheHelper.getCompileTimeValue(expr);
 			if(evalResult instanceof ValueInvalid) {
@@ -1663,9 +1674,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 						IssueCodes.EXP_COMPUTED_PROP_NAME_DISCOURAGED);
 					return;
 				}
-				for(error : evalResult.getErrors) {
-					createIssueForEvalErrors(error);
-				}
+				createIssuesForEvalErrors(evalResult.errors);
 			}
 		}
 	}
@@ -1675,7 +1684,12 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			&& exprParent.eContainer instanceof PropertyAssignment
 			&& exprParent.eContainer.eContainer instanceof ObjectLiteral;
 	}
-	def private void createIssueForEvalErrors(EvalError error) {
+	def private void createIssuesForEvalErrors(EvalError... errors) {
+		for(error : errors) {
+			createIssueForEvalError(error);
+		}
+	}
+	def private void createIssueForEvalError(EvalError error) {
 		val message = if(error instanceof UnresolvedPropertyAccessError) {
 			// special case:
 			// property of a ParameterizedPropertyAccessExpression was not found while evaluating the compile-time

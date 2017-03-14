@@ -27,7 +27,7 @@ var ol = {
 var s : string = ol.p1;
 // XPECT noerrors --> "indexed-access via constant computed-name ok"
 ol["p1"];
-// XPECT errors --> "Indexed access is only allowed for strings, arrays and iterables and for immediate(!) instances of Object." at "ol["p" + "1"]"
+// XPECT noerrors --> "index access via compile-time expression is ok"
 ol["p" + "1"];
 
 class A {}

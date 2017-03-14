@@ -1139,7 +1139,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     VirtualBaseType returns VirtualBaseType
 	 *
 	 * Constraint:
-	 *     (name=BindingTypesIdentifier ownedMembers+=TMember*)
+	 *     (name=BindingTypesIdentifier declaredElementType=ParameterizedTypeRefNominal? ownedMembers+=TMember*)
 	 */
 	protected void sequence_VirtualBaseType(ISerializationContext context, VirtualBaseType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -19,7 +19,7 @@ function f(): string {return ""}
 objN.vvv;
 // XPECT noerrors
 objN["vvv"];
-// XPECT errors --> "Indexed access is not allowed for class instances." at "objN[cvx]"
+// XPECT noerrors
 objN[cvx];
 
 // XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'zzz'." at "zzz"

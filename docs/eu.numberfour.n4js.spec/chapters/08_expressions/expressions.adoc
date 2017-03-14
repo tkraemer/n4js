@@ -1040,15 +1040,12 @@ then the receiver must be a subtype of the declared `@This` type.
 --
 task:IDE-656[] task:IDE-1734[]
 
-1.  A limited form of computed-name indexed-access is allowed in N4JS mode.
+1.  A limited form of computed-name index-access is allowed in N4JS mode.
 In case the receiver is of dynamic type, the index can be any expression task:GH-238[].
-Otherwise, the indexed-access is limited in that the index must be a string literal.
+Otherwise, the index-access is limited in that the index must be a compile-time expression (cf. <<compile-time-expressions>>).
 Feasible targets of such accesses are the same as for dot-access.
+2.  Additionally, an index-access expression is allowed when targeting (a) one of the types Array, ArgumentType, string, String, Iterable (including their subtypes), (b) `Object` (**not** including subtypes of `Object` and not for `pass:[~Object]` and `pass:[~~Object]` ), or (c) a dynamic type.
 +
-This notation is useful when interoperating with libraries that define members whose names contain special characters (for example, a field name starting with commercial-at).
-2.  Additionally, an indexed-access expression is allowed when targeting one of the types
-+
-or subtypes, for `Object` (not including subtypes of `Object` and not for `pass:[~Object]` and `pass:[~~Object]` ), and for dynamic types.
 It is not allowed to access members of enums in particular.
 That is to say, for an indexed-access expression $iae$, the following constraint must hold:
 +
@@ -2588,7 +2585,7 @@ In all other cases, the expression is not a compile-time expression.
 --
 
 Every expression in the code may be a compile-time expression, but in most places this has no particular
-effect and is simply ignored. They are of significance only in computed property names, as initializers
-of const variables and fields (as stated above) and when nested as an operand inside an expression at
-these locations.
+effect and is simply ignored. They are of significance only in computed property names, in index access
+expressions, as initializers of const variables and fields (as stated above) and when nested as an operand
+inside an expression at these locations.
 

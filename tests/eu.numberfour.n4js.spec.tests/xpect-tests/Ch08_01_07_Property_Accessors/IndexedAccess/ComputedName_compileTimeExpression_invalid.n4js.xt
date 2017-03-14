@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+function foo():string {
+	return "field1";
+}
+
+class C {
+	field1 = 'hello field1';
+	field2 = 'hello field2';
+}
+
+let c: C;
+
+// XPECT errors --> "Indexed access is not allowed for class instances." at "c[foo()]"
+c[foo()];
+

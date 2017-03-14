@@ -3337,6 +3337,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		EGenericType g2 = createEGenericType(this.getTMember());
 		g1.getETypeArguments().add(g2);
 		virtualBaseTypeEClass.getEGenericSuperTypes().add(g1);
+		g1 = createEGenericType(this.getArrayLike());
+		virtualBaseTypeEClass.getEGenericSuperTypes().add(g1);
 		moduleNamespaceVirtualTypeEClass.getESuperTypes().add(this.getType());
 		moduleNamespaceVirtualTypeEClass.getESuperTypes().add(this.getSyntaxRelatedTElement());
 		g1 = createEGenericType(this.getContainerType());
