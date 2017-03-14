@@ -11,6 +11,7 @@
 package eu.numberfour.n4js.validation.validators
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.n4JS.AdditiveExpression
 import eu.numberfour.n4js.n4JS.AdditiveOperator
 import eu.numberfour.n4js.n4JS.Argument
@@ -1417,6 +1418,8 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 
 		// prepare some information about the particular form of index access we have
+		val targetDeclType = targetTypeRef.declaredType;
+		val targetIsLiteralOfStringBasedEnum = targetDeclType instanceof TEnum && AnnotationDefinition.STRING_BASED.hasAnnotation(targetDeclType);
 		val accessedBuiltInSymbol = N4JSLanguageUtils.getAccessedBuiltInSymbol(G, index);
 		val accessedStaticType = if(targetTypeRef instanceof TypeTypeRef) tsh.getStaticType(G, targetTypeRef);
 		val indexIsNumeric = ts.subtypeSucceeded(G, indexTypeRef, G.numberTypeRef);
@@ -1425,12 +1428,12 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		// create issues depending on the collected information
 		if (targetTypeRef.dynamic) {
 			// allowed: indexing into dynamic receiver
-		} else if (G.objectType === targetTypeRef.declaredType && !(targetTypeRef.useSiteStructuralTyping)) {
+		} else if (G.objectType === targetDeclType && !(targetTypeRef.useSiteStructuralTyping)) {
 			// allowed: index into exact-type Object instance (not subtype thereof)
 		} else if (accessedStaticType instanceof TEnum) { // Constraints 69.2
 			// disallowed: index access into an enum
 			addIssue(messageForEXP_INDEXED_ACCESS_ENUM, indexedAccess, EXP_INDEXED_ACCESS_ENUM);
-		} else if (indexIsNumeric && targetTypeRef.isArrayLike) { // Constraints 69.3
+		} else if (indexIsNumeric && (targetTypeRef.isArrayLike || targetIsLiteralOfStringBasedEnum)) { // Constraints 69.3
 			// allowed: index into array-like with a numeric index
 		} else if (accessedBuiltInSymbol !== null) {
 			// we have something like: myObj[Symbol.iterator]
