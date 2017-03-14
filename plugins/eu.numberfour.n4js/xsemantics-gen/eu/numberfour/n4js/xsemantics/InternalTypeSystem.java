@@ -2180,7 +2180,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
   
   protected Result<TypeRef> applyRuleTypeIndexedAccessExpression(final RuleEnvironment G, final RuleApplicationTrace _trace_, final IndexedAccessExpression expr) throws RuleFailedException {
     TypeRef T = null; // output parameter
-    /* { expr.target === null || expr.index === null; T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } or { expr.target instanceof SuperLiteral T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } or { G |- expr.target : var TypeRef targetTypeRef targetTypeRef = typeSystemHelper.resolveType(G, targetTypeRef); G |- expr.index : var TypeRef indexTypeRef; val indexIsNumeric = { G |- indexTypeRef <: G.numberTypeRef }; val indexValue = astMetaInfoCacheHelper.getCompileTimeValue(expr.index); val memberName = N4JSLanguageUtils.derivePropertyNameFromCompileTimeValue(indexValue); val arrayLikeElementTypeRef = targetTypeRef.declaredType?.elementType; if (memberName!==null && memberName.startsWith(N4JSLanguageUtils.SYMBOL_IDENTIFIER_PREFIX)) { val declType = targetTypeRef.declaredType; if(declType instanceof ContainerType<?>) { val member = containerTypesHelper.fromContext(expr).findMember(declType,memberName,false,false); if(member!==null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else { T = G.anyTypeRef } } else if (indexIsNumeric && arrayLikeElementTypeRef !== null) { val declaredType = targetTypeRef.declaredType if (declaredType.generic && targetTypeRef.typeArgs.isEmpty) { T = G.anyTypeRef } else { val G2 = G.wrap typeSystemHelper.addSubstitutions(G2, targetTypeRef) G2.addThisType(targetTypeRef) G2 |- arrayLikeElementTypeRef ~> T } } else if (memberName!==null) { val staticAccess = (targetTypeRef instanceof TypeTypeRef) val checkVisibility = false val scope = memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess) val member = memberScopingHelper.findUniqueMemberForName(scope, memberName, staticAccess) if(member != null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else if (targetTypeRef.dynamic) { T = G.anyTypeRefDynamic } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else if (targetTypeRef.dynamic) { T = G.anyTypeRefDynamic } else { T = G.anyTypeRef } } */
+    /* { expr.target === null || expr.index === null; T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } or { expr.target instanceof SuperLiteral T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } or { G |- expr.target : var TypeRef targetTypeRef targetTypeRef = typeSystemHelper.resolveType(G, targetTypeRef); G |- expr.index : var TypeRef indexTypeRef; val indexIsNumeric = { G |- indexTypeRef <: G.numberTypeRef }; val indexValue = astMetaInfoCacheHelper.getCompileTimeValue(expr.index); val memberName = N4JSLanguageUtils.derivePropertyNameFromCompileTimeValue(indexValue); if (indexIsNumeric && targetTypeRef.isArrayLike) { val declaredType = targetTypeRef.declaredType if (declaredType.generic && targetTypeRef.typeArgs.isEmpty) { T = G.anyTypeRef } else { val G2 = G.wrap typeSystemHelper.addSubstitutions(G2, targetTypeRef) G2.addThisType(targetTypeRef) val elementTypeRef = targetTypeRef.declaredType?.elementType; G2 |- elementTypeRef ~> T } } else if (memberName!==null) { val staticAccess = (targetTypeRef instanceof TypeTypeRef) val checkVisibility = false val scope = memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess) val member = memberScopingHelper.findUniqueMemberForName(scope, memberName, staticAccess) if(member != null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else if (targetTypeRef.dynamic) { T = G.anyTypeRefDynamic } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else if (targetTypeRef.dynamic) { T = G.anyTypeRefDynamic } else { T = G.anyTypeRef } } */
     {
       RuleFailedException previousFailure = null;
       try {
@@ -2192,7 +2192,7 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
         T = _createUnknownTypeRef;
       } catch (Exception e) {
         previousFailure = extractRuleFailedException(e);
-        /* { expr.target instanceof SuperLiteral T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } or { G |- expr.target : var TypeRef targetTypeRef targetTypeRef = typeSystemHelper.resolveType(G, targetTypeRef); G |- expr.index : var TypeRef indexTypeRef; val indexIsNumeric = { G |- indexTypeRef <: G.numberTypeRef }; val indexValue = astMetaInfoCacheHelper.getCompileTimeValue(expr.index); val memberName = N4JSLanguageUtils.derivePropertyNameFromCompileTimeValue(indexValue); val arrayLikeElementTypeRef = targetTypeRef.declaredType?.elementType; if (memberName!==null && memberName.startsWith(N4JSLanguageUtils.SYMBOL_IDENTIFIER_PREFIX)) { val declType = targetTypeRef.declaredType; if(declType instanceof ContainerType<?>) { val member = containerTypesHelper.fromContext(expr).findMember(declType,memberName,false,false); if(member!==null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else { T = G.anyTypeRef } } else if (indexIsNumeric && arrayLikeElementTypeRef !== null) { val declaredType = targetTypeRef.declaredType if (declaredType.generic && targetTypeRef.typeArgs.isEmpty) { T = G.anyTypeRef } else { val G2 = G.wrap typeSystemHelper.addSubstitutions(G2, targetTypeRef) G2.addThisType(targetTypeRef) G2 |- arrayLikeElementTypeRef ~> T } } else if (memberName!==null) { val staticAccess = (targetTypeRef instanceof TypeTypeRef) val checkVisibility = false val scope = memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess) val member = memberScopingHelper.findUniqueMemberForName(scope, memberName, staticAccess) if(member != null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else if (targetTypeRef.dynamic) { T = G.anyTypeRefDynamic } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else if (targetTypeRef.dynamic) { T = G.anyTypeRefDynamic } else { T = G.anyTypeRef } } */
+        /* { expr.target instanceof SuperLiteral T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } or { G |- expr.target : var TypeRef targetTypeRef targetTypeRef = typeSystemHelper.resolveType(G, targetTypeRef); G |- expr.index : var TypeRef indexTypeRef; val indexIsNumeric = { G |- indexTypeRef <: G.numberTypeRef }; val indexValue = astMetaInfoCacheHelper.getCompileTimeValue(expr.index); val memberName = N4JSLanguageUtils.derivePropertyNameFromCompileTimeValue(indexValue); if (indexIsNumeric && targetTypeRef.isArrayLike) { val declaredType = targetTypeRef.declaredType if (declaredType.generic && targetTypeRef.typeArgs.isEmpty) { T = G.anyTypeRef } else { val G2 = G.wrap typeSystemHelper.addSubstitutions(G2, targetTypeRef) G2.addThisType(targetTypeRef) val elementTypeRef = targetTypeRef.declaredType?.elementType; G2 |- elementTypeRef ~> T } } else if (memberName!==null) { val staticAccess = (targetTypeRef instanceof TypeTypeRef) val checkVisibility = false val scope = memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess) val member = memberScopingHelper.findUniqueMemberForName(scope, memberName, staticAccess) if(member != null) { G |- member : var TypeRef memberTypeRef val G2 = G.wrap typeSystemHelper.addSubstitutions(G2,targetTypeRef) G2.addThisType(targetTypeRef) G2 |- memberTypeRef ~> T } else if (targetTypeRef.dynamic) { T = G.anyTypeRefDynamic } else { T = TypeRefsFactory.eINSTANCE.createUnknownTypeRef } } else if (targetTypeRef.dynamic) { T = G.anyTypeRefDynamic } else { T = G.anyTypeRef } } */
         {
           try {
             Expression _target = expr.getTarget();
@@ -2227,97 +2227,67 @@ public class InternalTypeSystem extends XsemanticsRuntimeSystem {
             Expression _index_1 = expr.getIndex();
             final CompileTimeValue indexValue = this.astMetaInfoCacheHelper.getCompileTimeValue(_index_1);
             final String memberName = N4JSLanguageUtils.derivePropertyNameFromCompileTimeValue(indexValue);
-            Type _declaredType = targetTypeRef.getDeclaredType();
-            TypeRef _elementType = null;
-            if (_declaredType!=null) {
-              _elementType=_declaredType.getElementType();
-            }
-            final TypeRef arrayLikeElementTypeRef = _elementType;
-            if (((memberName != null) && memberName.startsWith(N4JSLanguageUtils.SYMBOL_IDENTIFIER_PREFIX))) {
-              final Type declType = targetTypeRef.getDeclaredType();
-              if ((declType instanceof ContainerType<?>)) {
-                ContainerTypesHelper.MemberCollector _fromContext = this.containerTypesHelper.fromContext(expr);
-                final TMember member = _fromContext.findMember(((ContainerType<?>)declType), memberName, false, false);
-                if ((member != null)) {
-                  /* G |- member : var TypeRef memberTypeRef */
-                  TypeRef memberTypeRef = null;
-                  Result<TypeRef> result_2 = typeInternal(G, _trace_, member);
-                  checkAssignableTo(result_2.getFirst(), TypeRef.class);
-                  memberTypeRef = (TypeRef) result_2.getFirst();
-                  
-                  final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
-                  this.typeSystemHelper.addSubstitutions(G2, targetTypeRef);
-                  RuleEnvironmentExtensions.addThisType(G2, targetTypeRef);
-                  /* G2 |- memberTypeRef ~> T */
-                  Result<TypeArgument> result_3 = substTypeVariablesInternal(G2, _trace_, memberTypeRef);
-                  checkAssignableTo(result_3.getFirst(), TypeRef.class);
-                  T = (TypeRef) result_3.getFirst();
-                  
-                } else {
-                  UnknownTypeRef _createUnknownTypeRef_2 = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
-                  T = _createUnknownTypeRef_2;
-                }
-              } else {
+            if ((indexIsNumeric && targetTypeRef.isArrayLike())) {
+              final Type declaredType = targetTypeRef.getDeclaredType();
+              if ((declaredType.isGeneric() && targetTypeRef.getTypeArgs().isEmpty())) {
                 ParameterizedTypeRef _anyTypeRef = RuleEnvironmentExtensions.anyTypeRef(G);
                 T = _anyTypeRef;
+              } else {
+                final RuleEnvironment G2 = RuleEnvironmentExtensions.wrap(G);
+                this.typeSystemHelper.addSubstitutions(G2, targetTypeRef);
+                RuleEnvironmentExtensions.addThisType(G2, targetTypeRef);
+                Type _declaredType = targetTypeRef.getDeclaredType();
+                TypeRef _elementType = null;
+                if (_declaredType!=null) {
+                  _elementType=_declaredType.getElementType();
+                }
+                final TypeRef elementTypeRef = _elementType;
+                /* G2 |- elementTypeRef ~> T */
+                Result<TypeArgument> result_2 = substTypeVariablesInternal(G2, _trace_, elementTypeRef);
+                checkAssignableTo(result_2.getFirst(), TypeRef.class);
+                T = (TypeRef) result_2.getFirst();
+                
               }
             } else {
-              if ((indexIsNumeric && (arrayLikeElementTypeRef != null))) {
-                final Type declaredType = targetTypeRef.getDeclaredType();
-                if ((declaredType.isGeneric() && targetTypeRef.getTypeArgs().isEmpty())) {
-                  ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
-                  T = _anyTypeRef_1;
-                } else {
+              if ((memberName != null)) {
+                final boolean staticAccess = (targetTypeRef instanceof TypeTypeRef);
+                final boolean checkVisibility = false;
+                final IScope scope = this.memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess);
+                final TMember member = this.memberScopingHelper.findUniqueMemberForName(scope, memberName, staticAccess);
+                boolean _notEquals = (!Objects.equal(member, null));
+                if (_notEquals) {
+                  /* G |- member : var TypeRef memberTypeRef */
+                  TypeRef memberTypeRef = null;
+                  Result<TypeRef> result_3 = typeInternal(G, _trace_, member);
+                  checkAssignableTo(result_3.getFirst(), TypeRef.class);
+                  memberTypeRef = (TypeRef) result_3.getFirst();
+                  
                   final RuleEnvironment G2_1 = RuleEnvironmentExtensions.wrap(G);
                   this.typeSystemHelper.addSubstitutions(G2_1, targetTypeRef);
                   RuleEnvironmentExtensions.addThisType(G2_1, targetTypeRef);
-                  /* G2 |- arrayLikeElementTypeRef ~> T */
-                  Result<TypeArgument> result_4 = substTypeVariablesInternal(G2_1, _trace_, arrayLikeElementTypeRef);
+                  /* G2 |- memberTypeRef ~> T */
+                  Result<TypeArgument> result_4 = substTypeVariablesInternal(G2_1, _trace_, memberTypeRef);
                   checkAssignableTo(result_4.getFirst(), TypeRef.class);
                   T = (TypeRef) result_4.getFirst();
                   
+                } else {
+                  boolean _isDynamic = targetTypeRef.isDynamic();
+                  if (_isDynamic) {
+                    ParameterizedTypeRef _anyTypeRefDynamic = RuleEnvironmentExtensions.anyTypeRefDynamic(G);
+                    T = _anyTypeRefDynamic;
+                  } else {
+                    UnknownTypeRef _createUnknownTypeRef_2 = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
+                    T = _createUnknownTypeRef_2;
+                  }
                 }
               } else {
-                if ((memberName != null)) {
-                  final boolean staticAccess = (targetTypeRef instanceof TypeTypeRef);
-                  final boolean checkVisibility = false;
-                  final IScope scope = this.memberScopingHelper.createMemberScopeFor(targetTypeRef, expr, checkVisibility, staticAccess);
-                  final TMember member_1 = this.memberScopingHelper.findUniqueMemberForName(scope, memberName, staticAccess);
-                  boolean _notEquals = (!Objects.equal(member_1, null));
-                  if (_notEquals) {
-                    /* G |- member : var TypeRef memberTypeRef */
-                    TypeRef memberTypeRef_1 = null;
-                    Result<TypeRef> result_5 = typeInternal(G, _trace_, member_1);
-                    checkAssignableTo(result_5.getFirst(), TypeRef.class);
-                    memberTypeRef_1 = (TypeRef) result_5.getFirst();
-                    
-                    final RuleEnvironment G2_2 = RuleEnvironmentExtensions.wrap(G);
-                    this.typeSystemHelper.addSubstitutions(G2_2, targetTypeRef);
-                    RuleEnvironmentExtensions.addThisType(G2_2, targetTypeRef);
-                    /* G2 |- memberTypeRef ~> T */
-                    Result<TypeArgument> result_6 = substTypeVariablesInternal(G2_2, _trace_, memberTypeRef_1);
-                    checkAssignableTo(result_6.getFirst(), TypeRef.class);
-                    T = (TypeRef) result_6.getFirst();
-                    
-                  } else {
-                    boolean _isDynamic = targetTypeRef.isDynamic();
-                    if (_isDynamic) {
-                      ParameterizedTypeRef _anyTypeRefDynamic = RuleEnvironmentExtensions.anyTypeRefDynamic(G);
-                      T = _anyTypeRefDynamic;
-                    } else {
-                      UnknownTypeRef _createUnknownTypeRef_3 = TypeRefsFactory.eINSTANCE.createUnknownTypeRef();
-                      T = _createUnknownTypeRef_3;
-                    }
-                  }
+                boolean _isDynamic_1 = targetTypeRef.isDynamic();
+                if (_isDynamic_1) {
+                  ParameterizedTypeRef _anyTypeRefDynamic_1 = RuleEnvironmentExtensions.anyTypeRefDynamic(G);
+                  T = _anyTypeRefDynamic_1;
                 } else {
-                  boolean _isDynamic_1 = targetTypeRef.isDynamic();
-                  if (_isDynamic_1) {
-                    ParameterizedTypeRef _anyTypeRefDynamic_1 = RuleEnvironmentExtensions.anyTypeRefDynamic(G);
-                    T = _anyTypeRefDynamic_1;
-                  } else {
-                    ParameterizedTypeRef _anyTypeRef_2 = RuleEnvironmentExtensions.anyTypeRef(G);
-                    T = _anyTypeRef_2;
-                  }
+                  ParameterizedTypeRef _anyTypeRef_1 = RuleEnvironmentExtensions.anyTypeRef(G);
+                  T = _anyTypeRef_1;
                 }
               }
             }

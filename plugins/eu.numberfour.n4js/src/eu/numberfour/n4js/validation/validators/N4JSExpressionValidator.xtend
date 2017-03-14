@@ -107,6 +107,7 @@ import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
 import eu.numberfour.n4js.utils.CompileTimeEvaluator.UnresolvedPropertyAccessError
+import eu.numberfour.n4js.utils.CompileTimeValue
 import eu.numberfour.n4js.utils.CompileTimeValue.EvalError
 import eu.numberfour.n4js.utils.CompileTimeValue.ValueInvalid
 import eu.numberfour.n4js.utils.ContainerTypesHelper
@@ -1382,6 +1383,8 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		if (!jsVariantHelper.requireCheckIndexedAccessExpression(indexedAccess)) {
 			return
 		}
+
+		// prepare target and index
 		val target = indexedAccess.target;
 		val index = indexedAccess.index;
 		if (target===null || index===null) {
@@ -1400,44 +1403,46 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		if (target instanceof SuperLiteral) {
 			return; // avoid duplicate error messages
 		}
+
+		// prepare types of target and index
 		val G = indexedAccess.newRuleEnvironment;
-		val receiverTypeRefRaw = ts.type(G, target).value;
-		if (receiverTypeRefRaw === null || receiverTypeRefRaw instanceof UnknownTypeRef) {
-			return; // UnknownTypeRef, so we are expected to suppress all follow-up errors
+		val targetTypeRefRaw = ts.type(G, target).value;
+		if (targetTypeRefRaw === null || targetTypeRefRaw instanceof UnknownTypeRef) {
+			return; // saw an UnknownTypeRef -> so we are expected to suppress all follow-up errors
 		}
-		val receiverTypeRef = ts.resolveType(G, receiverTypeRefRaw);
+		val targetTypeRef = ts.resolveType(G, targetTypeRefRaw);
 		val indexTypeRef = ts.type(G, index).value;
 		if (indexTypeRef === null || indexTypeRef instanceof UnknownTypeRef) {
-			return; // UnknownTypeRef, so we are expected to suppress all follow-up errors
+			return; // saw an UnknownTypeRef -> so we are expected to suppress all follow-up errors
 		}
+
+		// prepare some information about the particular form of index access we have
 		val accessedBuiltInSymbol = N4JSLanguageUtils.getAccessedBuiltInSymbol(G, index);
-		val accessedStaticType = if(receiverTypeRef instanceof TypeTypeRef) tsh.getStaticType(G, receiverTypeRef);
+		val accessedStaticType = if(targetTypeRef instanceof TypeTypeRef) tsh.getStaticType(G, targetTypeRef);
 		val indexIsNumeric = ts.subtypeSucceeded(G, indexTypeRef, G.numberTypeRef);
 		val indexValue = astMetaInfoCacheHelper.getCompileTimeValue(index);
-		val hasValidCompileTimeExpression = !(index instanceof NumericLiteral) && accessedBuiltInSymbol===null && indexValue.valid;
-		if (receiverTypeRef.dynamic) {
+
+		// create issues depending on the collected information
+		if (targetTypeRef.dynamic) {
 			// allowed: indexing into dynamic receiver
-			return;
-		} else if (G.objectType === receiverTypeRef.declaredType && !(receiverTypeRef.useSiteStructuralTyping)) {
+		} else if (G.objectType === targetTypeRef.declaredType && !(targetTypeRef.useSiteStructuralTyping)) {
 			// allowed: index into exact-type Object instance (not subtype thereof)
-			return;
-		} else if (accessedBuiltInSymbol !== null
-			&& (receiverTypeRef.declaredType instanceof ContainerType<?> || receiverTypeRef instanceof ThisTypeRef)) {
-			// we have something like: myObj[Symbol.iterator]
-			internalCheckIndexedAccessWithSymbol(G, indexedAccess, receiverTypeRef, accessedBuiltInSymbol);
 		} else if (accessedStaticType instanceof TEnum) { // Constraints 69.2
+			// disallowed: index access into an enum
 			addIssue(messageForEXP_INDEXED_ACCESS_ENUM, indexedAccess, EXP_INDEXED_ACCESS_ENUM);
-		} else if (indexIsNumeric && receiverTypeRef.isArrayLike) { // Constraints 69.3
+		} else if (indexIsNumeric && targetTypeRef.isArrayLike) { // Constraints 69.3
 			// allowed: index into array-like with a numeric index
-			return;
-		} else if (hasValidCompileTimeExpression) {
-			internalCheckComputedIndexedAccess(G, indexedAccess, receiverTypeRef)
-			return;
+		} else if (accessedBuiltInSymbol !== null) {
+			// we have something like: myObj[Symbol.iterator]
+			// -> delegate to special method
+			internalCheckIndexedAccessWithSymbol(G, indexedAccess, targetTypeRef, accessedBuiltInSymbol);
 		} else {
-			if (indexValue instanceof ValueInvalid) {
-				createIssuesForEvalErrors(indexValue.errors);
+			// all other cases:
+			// treat this as an ordinary member access where the member name is given as a compile-time expression
+			if (indexValue.valid) {
+				internalCheckComputedIndexedAccess(G, indexedAccess, targetTypeRef, indexValue, indexIsNumeric)
 			} else {
-				addIssue(messageForEXP_INDEXED_ACCESS_FORBIDDEN, indexedAccess, EXP_INDEXED_ACCESS_FORBIDDEN); // FIXME reconsider this error message!!!
+				createIssuesForEvalErrors((indexValue as ValueInvalid).errors);
 			}
 		}
 	}
@@ -1448,9 +1453,8 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	 * @return true if allowed, false otherwise.
 	 */
 	def private void internalCheckComputedIndexedAccess(RuleEnvironment G, IndexedAccessExpression indexedAccess,
-		TypeRef receiverTypeRef) {
+		TypeRef receiverTypeRef, CompileTimeValue indexValue, boolean indexIsNumeric) {
 
-		val indexValue = astMetaInfoCacheHelper.getCompileTimeValue(indexedAccess.index);
 		val memberName = N4JSLanguageUtils.derivePropertyNameFromCompileTimeValue(indexValue);
 		if (ComputedPropertyNameValueConverter.SYMBOL_ITERATOR_MANGLED == memberName) {
 			// Implementation restriction: member name clashes with compiler-internal, synthetic, mangled name.
@@ -1467,8 +1471,12 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 		val scope = memberScopingHelper.createMemberScopeFor(receiverTypeRef, indexedAccess,
 			checkVisibility, staticAccess)
 		if (memberScopingHelper.isNonExistentMember(scope, memberName, staticAccess)) {
-			addIssue(getMessageForEXP_INDEXED_ACCESS_COMPUTED_NOTFOUND(memberName), indexedAccess,
-				EXP_INDEXED_ACCESS_COMPUTED_NOTFOUND);
+			if (indexIsNumeric) {
+				addIssue(messageForEXP_INDEXED_ACCESS_FORBIDDEN, indexedAccess, EXP_INDEXED_ACCESS_FORBIDDEN);
+			} else {
+				addIssue(getMessageForEXP_INDEXED_ACCESS_COMPUTED_NOTFOUND(memberName), indexedAccess,
+					EXP_INDEXED_ACCESS_COMPUTED_NOTFOUND);
+			}
 			return
 		}
 		val erroneous = memberScopingHelper.getErrorsForMember(scope, memberName, staticAccess)

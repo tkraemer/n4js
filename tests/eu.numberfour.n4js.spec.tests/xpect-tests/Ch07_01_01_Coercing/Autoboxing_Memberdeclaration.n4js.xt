@@ -78,7 +78,7 @@ a.b = "3";
 
 console.log(a);
 
-// XPECT noerrors -->"Indexed access is not allowed for class instances." at "a['b']"
+// XPECT noerrors -->
 a['b']="xx";
 console.log(a);
 console.log(typeof a.b);
