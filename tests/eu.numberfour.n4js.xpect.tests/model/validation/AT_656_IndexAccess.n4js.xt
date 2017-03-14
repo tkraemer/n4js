@@ -15,9 +15,11 @@ ar[5]="hello";
 // XPECT errors --> "int is not a subtype of string." at "42"
 ar[5]=42;
 
-// XPECT errors --> "Indexed access on Array requires numeric index: string is not a subtype of number." at ""hello""
+// XPECT noerrors -->
+ar["length"];
+// XPECT errors --> "Member hello not found." at "ar["hello"]"
 ar["hello"]="1";
-// XPECT errors --> "Indexed access on Array requires numeric index: string is not a subtype of number." at ""hello""
+// XPECT errors --> "Member hello not found." at "ar["hello"]"
 ar["hello"]=1;
 
 var ol = {
@@ -32,7 +34,7 @@ ol["p" + "1"];
 
 class A {}
 var a : A = new A();
-// XPECT errors --> "Member [hackit] not found." at "a['hackit']"
+// XPECT errors --> "Member hackit not found." at "a['hackit']"
 a['hackit'] = "said the coding monkey"
 // XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'hackit'." at "hackit"
 a.hackit = "..."

@@ -539,10 +539,12 @@ class Type extends TExportableElement, TAnnotableElement, eu.numberfour.n4js.ts.
 	}
 
 	/**
-	 * Returns true if this type knows how to obtain it's indexed accessible component type.
+	 * Tells if this type has special support for index access with a numeric index.
+	 * Provided only for readability; will return <code>true</code> if and only if {@link #getElementType()}
+	 * returns a non-<code>null</code> value.
 	 */
 	op boolean isArrayLike() {
-		return elementType !== null
+		return elementType !== null;
 	}
 
 	/**

@@ -109,7 +109,9 @@ public interface Type extends TExportableElement, TAnnotableElement, Versionable
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
-	 * Returns true if this type knows how to obtain it's indexed accessible component type.
+	 * Tells if this type has special support for index access with a numeric index.
+	 * Provided only for readability; will return <code>true</code> if and only if {@link #getElementType()}
+	 * returns a non-<code>null</code> value.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%eu.numberfour.n4js.ts.typeRefs.TypeRef%> _elementType = this.getElementType();\nreturn (_elementType != null);'"

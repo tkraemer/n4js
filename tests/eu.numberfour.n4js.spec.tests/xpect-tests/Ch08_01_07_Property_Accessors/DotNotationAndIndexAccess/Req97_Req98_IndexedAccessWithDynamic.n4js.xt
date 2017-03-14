@@ -26,7 +26,7 @@ objN[cvx];
 objN.zzz = "zzz";
 // XPECT errors --> "Couldn't resolve reference to IdentifiableElement 'zzz'." at "zzz"
 objN.zzz;
-// XPECT errors --> "Member [zzz] not found." at "objN["zzz"]" 
+// XPECT errors --> "Member zzz not found." at "objN["zzz"]" 
 objN["zzz"];
 // XPECT errors --> "Not a compile-time expression: variable zzz is not const." at "zzz"
 objN[zzz];

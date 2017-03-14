@@ -207,10 +207,17 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	 */
 	public boolean isFinalByType() {
 		final Type dtype = this.getDeclaredType();
-		if ((dtype == null)) {
-			return false;
-		}
-		return dtype.isFinal();
+		return ((dtype != null) && dtype.isFinal());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isArrayLike() {
+		final Type dtype = this.getDeclaredType();
+		return ((dtype != null) && dtype.isArrayLike());
 	}
 
 	/**
@@ -498,6 +505,8 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 				return getModifiersAsString();
 			case TypeRefsPackage.TYPE_REF___IS_FINAL_BY_TYPE:
 				return isFinalByType();
+			case TypeRefsPackage.TYPE_REF___IS_ARRAY_LIKE:
+				return isArrayLike();
 			case TypeRefsPackage.TYPE_REF___IS_DYNAMIC:
 				return isDynamic();
 			case TypeRefsPackage.TYPE_REF___IS_EXISTENTIAL:
