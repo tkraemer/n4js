@@ -12,6 +12,6 @@ class C {
 
 let c: C;
 
-// XPECT errors --> "Indexed access is not allowed for class instances." at "c[foo()]"
+// XPECT errors --> "Not a compile-time expression: a call expression is never a compile-time expression." at "foo()"
 c[foo()];
 

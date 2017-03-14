@@ -84,8 +84,8 @@ console.log(a);
 console.log(typeof a.b);
 
 
-// XPECT errors -->"Indexed access is not allowed for class instances." at "a[0]"
+// XPECT errors -->"Indexed access is only allowed for strings, arrays and iterables and for immediate(!) instances of Object." at "a[0]"
 a[0]=11;
 console.log(a);
-// XPECT errors -->"Indexed access is not allowed for class instances." at "a[0]"
+// XPECT errors -->"Indexed access is only allowed for strings, arrays and iterables and for immediate(!) instances of Object." at "a[0]"
 console.log(typeof a[0]);

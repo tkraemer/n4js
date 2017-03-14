@@ -28,9 +28,9 @@ objN.zzz = "zzz";
 objN.zzz;
 // XPECT errors --> "Member [zzz] not found." at "objN["zzz"]" 
 objN["zzz"];
-// XPECT errors --> "Indexed access is not allowed for class instances." at "objN[zzz]"
+// XPECT errors --> "Not a compile-time expression: variable zzz is not const." at "zzz"
 objN[zzz];
-// XPECT errors --> "Indexed access is not allowed for class instances." at "objN[f()]"
+// XPECT errors --> "Not a compile-time expression: a call expression is never a compile-time expression." at "f()"
 objN[f()];
 
 // dynamic

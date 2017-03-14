@@ -1414,44 +1414,20 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			// we have something like: myObj[Symbol.iterator]
 			internalCheckIndexedAccessWithSymbol(G, indexedAccess, receiverTypeRef,
 				accessedBuiltInSymbol);
-		} else if (receiverTypeRef.declaredType instanceof TN4Classifier) { // Constraints 69.1
-			if (hasValidCompileTimeExpression) {
-				// custom error message for computed-name access
-				internalCheckComputedIndexedAccess(G, indexedAccess, receiverTypeRef)
-			} else {
-				if (!receiverTypeRef.isDynamic()) {
-					addIssue(
-						getMessageForEXP_INDEXED_ACCESS_N4CLASSIFIER(receiverTypeRef.declaredType.keyword),
-						indexedAccess, EXP_INDEXED_ACCESS_N4CLASSIFIER);
-				}
-			}
-			return
 		} else if (accessedStaticType instanceof TEnum) { // Constraints 69.2
 			addIssue(messageForEXP_INDEXED_ACCESS_ENUM, indexedAccess, EXP_INDEXED_ACCESS_ENUM);
 		} else if (receiverTypeRef.dynamic) {
 			// allowed: indexing into dynamic receiver
 			return
-		} else if (#[G.arrayType, G.argumentsType].contains(receiverTypeRef.declaredType)) { // Constraints 69.3
+		} else if (receiverTypeRef.declaredType?.isArrayLike) { // Constraints 69.3
 			// allowed: index into array-like provided index is numeric
 			val foundIndexType = getInvalidIndexType(G, indexedAccess);
 			if (null !== foundIndexType) {
 				addIssue(
-					getMessageForEXP_INDEXED_ACCESS_ARRAY(receiverTypeRef.declaredType.name,
+					getMessageForEXP_INDEXED_ACCESS_ARRAY_LIKE(receiverTypeRef.declaredType.name,
 						foundIndexType),
 					index,
-					EXP_INDEXED_ACCESS_ARRAY
-				);
-			}
-		} else if (ts.subtypeSucceeded(G, receiverTypeRef, G.stringTypeRef)
-			|| ts.subtypeSucceeded(G, receiverTypeRef, G.stringObjectTypeRef)) { // Constraints 69.4, IDE-837
-			// allowed: index into string-like provided index is numeric
-			val foundIndexType = getInvalidIndexType(G, indexedAccess);
-			if (null !== foundIndexType) {
-				addIssue(
-					getMessageForEXP_INDEXED_ACCESS_STRING(receiverTypeRef.declaredType.name,
-						foundIndexType),
-					index,
-					EXP_INDEXED_ACCESS_STRING
+					EXP_INDEXED_ACCESS_ARRAY_LIKE
 				);
 			}
 		} else if (G.objectType === receiverTypeRef.declaredType
@@ -1465,7 +1441,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			if (indexValue instanceof ValueInvalid) {
 				createIssuesForEvalErrors(indexValue.errors);
 			} else {
-				addIssue(messageForEXP_INDEXED_ACCESS_FORBIDDEN, indexedAccess, EXP_INDEXED_ACCESS_FORBIDDEN);
+				addIssue(messageForEXP_INDEXED_ACCESS_FORBIDDEN, indexedAccess, EXP_INDEXED_ACCESS_FORBIDDEN); // FIXME reconsider this error message!!!
 			}
 		}
 	}
