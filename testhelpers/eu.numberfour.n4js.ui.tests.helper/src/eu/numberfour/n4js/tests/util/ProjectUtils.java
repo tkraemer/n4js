@@ -23,7 +23,9 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
@@ -52,6 +54,7 @@ import org.eclipse.xtext.ui.XtextProjectHelper;
 import org.eclipse.xtext.ui.resource.IResourceSetProvider;
 import org.junit.Assert;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 
 import eu.numberfour.n4js.n4mf.DeclaredVersion;
@@ -376,6 +379,38 @@ public class ProjectUtils {
 			Assert.assertEquals(message.toString(), count, markers.length);
 		}
 		return markers;
+	}
+
+	/**
+	 * Asserts that the given resource (usually an N4JS file) contains issues with the given messages and no other
+	 * issues. Each message given should be prefixed with the line numer where the issues occurs, e.g.:
+	 *
+	 * <pre>
+	 * line 5: Couldn't resolve reference to identifiable element 'unknown'.
+	 * </pre>
+	 *
+	 * Column information is not provided, so this method is not intended for several issues within a single line.
+	 */
+	public static void assertIssues(final IResource resource, String... expectedMessages) throws CoreException {
+		final IMarker[] markers = resource.findMarkers(MarkerTypes.ANY_VALIDATION, true, IResource.DEPTH_INFINITE);
+		final String[] actualMessages = new String[markers.length];
+		for (int i = 0; i < markers.length; i++) {
+			final IMarker m = markers[i];
+			actualMessages[i] = "line " + MarkerUtilities.getLineNumber(m) + ": " + m.getAttribute(IMarker.MESSAGE);
+		}
+		if (!Objects.equals(
+				new HashSet<>(Arrays.asList(actualMessages)),
+				new HashSet<>(Arrays.asList(expectedMessages)))) {
+			final Joiner joiner = Joiner.on("\n    ");
+			final String msg = "expected these issues:\n"
+					+ "    " + joiner.join(expectedMessages) + "\n"
+					+ "but got these:\n"
+					+ "    " + joiner.join(actualMessages);
+			System.out.println("*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*");
+			System.out.println(msg);
+			System.out.println("*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*");
+			Assert.fail(msg);
+		}
 	}
 
 	/***/

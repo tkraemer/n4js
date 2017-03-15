@@ -254,6 +254,11 @@ public abstract class AbstractBuilderParticipantTest extends AbstractBuilderTest
 		return ProjectUtils.assertMarkers(assertMessage, resource, markerType, count);
 	}
 
+	/***/
+	protected void assertIssues(final IResource resource, String... expectedMessages) throws CoreException {
+		ProjectUtils.assertIssues(resource, expectedMessages);
+	}
+
 	/**
 	 * Will only return parse errors, not validation errors!
 	 */

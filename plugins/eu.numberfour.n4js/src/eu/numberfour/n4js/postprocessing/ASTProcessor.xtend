@@ -20,6 +20,9 @@ import eu.numberfour.n4js.n4JS.ForStatement
 import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.FunctionExpression
+import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor
+import eu.numberfour.n4js.n4JS.IdentifierRef
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4GetterDeclaration
@@ -30,7 +33,9 @@ import eu.numberfour.n4js.n4JS.PropertyGetterDeclaration
 import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
 import eu.numberfour.n4js.n4JS.PropertyNameValuePair
 import eu.numberfour.n4js.n4JS.PropertySetterDeclaration
+import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.SetterDeclaration
+import eu.numberfour.n4js.n4JS.ThisLiteral
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.resource.N4JSPostProcessor
@@ -38,6 +43,7 @@ import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
+import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.utils.languages.N4LanguageUtils
 import it.xsemantics.runtime.RuleEnvironment
@@ -49,9 +55,6 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.util.CancelIndicator
 
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import eu.numberfour.n4js.utils.EcoreUtilN4
-import eu.numberfour.n4js.n4JS.IdentifierRef
-import eu.numberfour.n4js.n4JS.ThisLiteral
 
 /**
  * Main processor used during {@link N4JSPostProcessor post-processing} of N4JS resources. It controls the overall
@@ -80,15 +83,23 @@ public class ASTProcessor extends AbstractProcessor {
 	@Inject
 	private ASTMetaInfoCacheHelper astMetaInfoCacheHelper;
 	@Inject
+	private ComputedNameProcessor computedNameProcessor;
+	@Inject
 	private TypeProcessor typeProcessor;
 	@Inject
 	private TypeDeferredProcessor typeDeferredProcessor;
 	@Inject
 	private ArrowFunctionProcessor arrowFunctionProcessor;
+	@Inject
+	private CompileTimeExpressionProcessor compileTimeExpressionProcessor;
 
 	/**
-	 * Called from N4JSPostProcessor.
+	 * Entry point for processing of the entire AST of the given resource.
 	 * Will throw IllegalStateException if called more than once per N4JSResource.
+	 * <p>
+	 * This method performs some preparatory tasks (e.g., creating an instance of {@link ASTMetaInfoCache}) and ensures
+	 * consistency by tracking the 'isProcessing' state with try/finally; for actual processing, this method delegates
+	 * to method {@link #processAST(RuleEnvironment, Script, ASTMetaInfoCache)}.
 	 * 
 	 * @param resource  may not be null.
 	 * @param cancelIndicator  may be null.
@@ -102,33 +113,14 @@ public class ASTProcessor extends AbstractProcessor {
 		// interpreted as a cyclic proxy resolution by method LazyLinkingResource#getEObject(String,Triple)
 		resource.clearResolving();
 
-		val G = RuleEnvironmentExtensions.newRuleEnvironment(resource);
-		processAST(G, resource, cancelIndicator); // will throw exception if called more than once per resource
-	}
-
-	/**
-	 * Initiates processing of the entire AST in the given resource.
-	 * Will throw IllegalStateException if called more than once per N4JSResource.
-	 * 
-	 * @param resource  may not be null.
-	 * @param cancelIndicator  may be null.
-	 */
-	def private void processAST(RuleEnvironment G, N4JSResource resource, CancelIndicator cancelIndicator) {
-
 		log(0, "### processing resource: " + resource.URI);
 
 		val cache = astMetaInfoCacheHelper.getOrCreate(resource);
-		cache.startProcessing(cancelIndicator); // will throw exception if processing already in progress or completed
+		cache.startProcessing(cancelIndicator); // will throw exception if processing already in progress or completed (i.e. if called more than once per resource)
 		try {
-			// step 1: main processing
+			val G = RuleEnvironmentExtensions.newRuleEnvironment(resource);
 			val script = resource.script;
-			processSubtree(G, script, cache, 0);
-			// step 2: processing of postponed subtrees
-			var EObject eObj;
-			while ((eObj = cache.postponedSubTrees.poll) !== null) {
-				// note: we need to allow adding more postponed subtrees inside this loop!
-				processSubtree(G, eObj, cache, 0);
-			}
+			processAST(G, script, cache);
 		} finally {
 			if (cache.canceled) {
 				log(0, "CANCELED by cancelIndicator");
@@ -143,6 +135,46 @@ public class ASTProcessor extends AbstractProcessor {
 				log(4, resource.script, cache);
 			}
 			log(0, "### done: " + resource.URI);
+		}
+	}
+
+	/**
+	 * First method to actually perform processing of the AST. This method defines the various processing phases.
+	 * <p>
+	 * There exists a single "main phase" where 95% of processing happens (entry point for this main phase is method
+	 * {@link #processSubtree(RuleEnvironment, EObject, ASTMetaInfoCache, int)}), plus a number of smaller phases before
+	 * and after that where some special handling is performed.
+	 * 
+	 * @param resource  may not be null.
+	 * @param cancelIndicator  may be null.
+	 */
+	def private void processAST(RuleEnvironment G, Script script, ASTMetaInfoCache cache) {
+		// phase 0: process compile-time expressions & computed property names (order is important)
+		for(node : script.eAllContents.filter(Expression).toIterable) {
+			compileTimeExpressionProcessor.evaluateCompileTimeExpression(G, node, cache, 0);
+		}
+		for(node : script.eAllContents.filter(LiteralOrComputedPropertyName).toIterable) {
+			computedNameProcessor.processComputedPropertyName(G, node, cache, 0);
+		}
+		// phase 1: main processing
+		processSubtree(G, script, cache, 0);
+		// phase 2: processing of postponed subtrees
+		var EObject eObj;
+		while ((eObj = cache.postponedSubTrees.poll) !== null) {
+			// note: we need to allow adding more postponed subtrees inside this loop!
+			processSubtree(G, eObj, cache, 0);
+		}
+		// phase 3: processing of LocalArgumentsVariable
+		// (a LocalArgumentsVariable may be created on demand at any time, which means new AST nodes may appear
+		// while processing the AST (see {@link FunctionOrFieldAccessor#getLocalArgumentsVariable()}); to support
+		// these cases, we will now look for and process these newly created AST nodes:
+		for (potentialContainer : cache.potentialContainersOfLocalArgumentsVariable) {
+			val lav = potentialContainer._lok; // obtain the LocalArgumentsVariable without(!) triggering its on-demand creation
+			if (lav!==null) {
+				if (cache.getTypeFailSafe(lav)===null) { // only if not processed yet
+					processSubtree(G, lav, cache, 0);
+				}
+			}
 		}
 	}
 
@@ -223,7 +255,7 @@ public class ASTProcessor extends AbstractProcessor {
 		}
 	}
 	
-	private def boolean isPostponedNode(EObject node) {
+	def private boolean isPostponedNode(EObject node) {
 		return
 			isPostponedInitializer(node)
 		||	(node instanceof Block
@@ -241,7 +273,7 @@ public class ASTProcessor extends AbstractProcessor {
 	 * <li>and p contains references to other FormalParameters of f, or f itself.</li>
 	 * </ul>
 	 */
-	private def boolean isPostponedInitializer(EObject node) {
+	def private boolean isPostponedInitializer(EObject node) {
 		var boolean isPostponedInitializer = false;
 		val fpar = node.eContainer;
 		if (fpar instanceof FormalParameter) {
@@ -364,6 +396,10 @@ public class ASTProcessor extends AbstractProcessor {
 	 */
 	def private void processNode_preChildren(RuleEnvironment G, EObject node, ASTMetaInfoCache cache, int indentLevel) {
 
+		if (node instanceof FunctionOrFieldAccessor) {
+			cache.potentialContainersOfLocalArgumentsVariable.add(node); // remember for later
+		}
+
 		if (node instanceof FunctionDefinition) {
 			handleAsyncFunctionDefinition(G, node, cache);
 			handleGeneratorFunctionDefinition(G, node, cache);
@@ -381,6 +417,8 @@ public class ASTProcessor extends AbstractProcessor {
 
 		typeProcessor.typeNode(G, node, cache, indentLevel);
 
+		arrowFunctionProcessor.tweakArrowFunctions(G, node, cache);
+
 		// references to other files via import statements:
 		if (node instanceof NamedImportSpecifier) {
 			val elem = node.importedElement;
@@ -388,12 +426,10 @@ public class ASTProcessor extends AbstractProcessor {
 				// make sure to use the correct type system for the other file (using our type system as a fall back)
 				val tsCorrect = N4LanguageUtils.getServiceForContext(elem, N4JSTypeSystem).orElse(ts);
 				// we're not interested in the type here, but invoking the type system will let us reuse
-				// all the logic from method #xsemantics_type() above for handling references to other resources
+				// all the logic from method TypeProcessor#getType() for handling references to other resources
 				tsCorrect.type(G, elem);
 			}
 		}
-
-		arrowFunctionProcessor.tweakArrowFunctions(G, node, cache);
 	}
 
 

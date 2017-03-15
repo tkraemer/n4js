@@ -28,6 +28,7 @@ import com.google.common.annotations.VisibleForTesting;
 import eu.numberfour.n4js.ts.scoping.builtin.EnumerableScope;
 import eu.numberfour.n4js.ts.scoping.builtin.ExecutionEnvironmentDescriptor;
 import eu.numberfour.n4js.ts.types.TClass;
+import eu.numberfour.n4js.ts.types.TField;
 
 /**
  * This scope provides access to the built in JS global object.
@@ -66,6 +67,14 @@ public final class GlobalObjectScope extends EnumerableScope {
 	 */
 	public TClass getGlobalObject() {
 		return getEObjectOrProxy(GLOBAL_OBJECT);
+	}
+
+	/**
+	 * @return field "undefined" of the global object.
+	 */
+	public TField getFieldUndefined() {
+		final TClass globalObject = getGlobalObject();
+		return globalObject != null ? (TField) globalObject.findOwnedMember("undefined", false, false) : null;
 	}
 
 	/**

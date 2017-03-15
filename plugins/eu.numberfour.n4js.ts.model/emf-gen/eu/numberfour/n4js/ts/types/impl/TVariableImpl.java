@@ -15,6 +15,7 @@ import eu.numberfour.n4js.ts.types.AccessibleTypeElement;
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement;
 import eu.numberfour.n4js.ts.types.TAnnotableElement;
 import eu.numberfour.n4js.ts.types.TAnnotation;
+import eu.numberfour.n4js.ts.types.TConstableElement;
 import eu.numberfour.n4js.ts.types.TTypedElement;
 import eu.numberfour.n4js.ts.types.TVariable;
 import eu.numberfour.n4js.ts.types.TypeAccessModifier;
@@ -46,18 +47,59 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#isConst <em>Const</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#getValue <em>Value</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#getAstElement <em>Ast Element</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#getDeclaredTypeAccessModifier <em>Declared Type Access Modifier</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#isDeclaredProvidedByRuntime <em>Declared Provided By Runtime</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#getTypeRef <em>Type Ref</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#isConst <em>Const</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#isExternal <em>External</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class TVariableImpl extends TExportableElementImpl implements TVariable {
+	/**
+	 * The default value of the '{@link #isConst() <em>Const</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isConst()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean CONST_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isConst() <em>Const</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isConst()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean const_ = CONST_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String VALUE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected String value = VALUE_EDEFAULT;
+
 	/**
 	 * The cached value of the '{@link #getAstElement() <em>Ast Element</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -129,26 +171,6 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 	protected TypeRef typeRef;
 
 	/**
-	 * The default value of the '{@link #isConst() <em>Const</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isConst()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean CONST_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isConst() <em>Const</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isConst()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean const_ = CONST_EDEFAULT;
-
-	/**
 	 * The default value of the '{@link #isExternal() <em>External</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -185,6 +207,48 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 	@Override
 	protected EClass eStaticClass() {
 		return TypesPackage.Literals.TVARIABLE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isConst() {
+		return const_;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setConst(boolean newConst) {
+		boolean oldConst = const_;
+		const_ = newConst;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TVARIABLE__CONST, oldConst, const_));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getValue() {
+		return value;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setValue(String newValue) {
+		String oldValue = value;
+		value = newValue;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TVARIABLE__VALUE, oldValue, value));
 	}
 
 	/**
@@ -327,27 +391,6 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isConst() {
-		return const_;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setConst(boolean newConst) {
-		boolean oldConst = const_;
-		const_ = newConst;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TVARIABLE__CONST, oldConst, const_));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public boolean isExternal() {
 		return external;
 	}
@@ -444,6 +487,10 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case TypesPackage.TVARIABLE__CONST:
+				return isConst();
+			case TypesPackage.TVARIABLE__VALUE:
+				return getValue();
 			case TypesPackage.TVARIABLE__AST_ELEMENT:
 				if (resolve) return getAstElement();
 				return basicGetAstElement();
@@ -455,8 +502,6 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 				return isDeclaredProvidedByRuntime();
 			case TypesPackage.TVARIABLE__TYPE_REF:
 				return getTypeRef();
-			case TypesPackage.TVARIABLE__CONST:
-				return isConst();
 			case TypesPackage.TVARIABLE__EXTERNAL:
 				return isExternal();
 		}
@@ -472,6 +517,12 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case TypesPackage.TVARIABLE__CONST:
+				setConst((Boolean)newValue);
+				return;
+			case TypesPackage.TVARIABLE__VALUE:
+				setValue((String)newValue);
+				return;
 			case TypesPackage.TVARIABLE__AST_ELEMENT:
 				setAstElement((EObject)newValue);
 				return;
@@ -488,9 +539,6 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 			case TypesPackage.TVARIABLE__TYPE_REF:
 				setTypeRef((TypeRef)newValue);
 				return;
-			case TypesPackage.TVARIABLE__CONST:
-				setConst((Boolean)newValue);
-				return;
 			case TypesPackage.TVARIABLE__EXTERNAL:
 				setExternal((Boolean)newValue);
 				return;
@@ -506,6 +554,12 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case TypesPackage.TVARIABLE__CONST:
+				setConst(CONST_EDEFAULT);
+				return;
+			case TypesPackage.TVARIABLE__VALUE:
+				setValue(VALUE_EDEFAULT);
+				return;
 			case TypesPackage.TVARIABLE__AST_ELEMENT:
 				setAstElement((EObject)null);
 				return;
@@ -520,9 +574,6 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 				return;
 			case TypesPackage.TVARIABLE__TYPE_REF:
 				setTypeRef((TypeRef)null);
-				return;
-			case TypesPackage.TVARIABLE__CONST:
-				setConst(CONST_EDEFAULT);
 				return;
 			case TypesPackage.TVARIABLE__EXTERNAL:
 				setExternal(EXTERNAL_EDEFAULT);
@@ -539,6 +590,10 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case TypesPackage.TVARIABLE__CONST:
+				return const_ != CONST_EDEFAULT;
+			case TypesPackage.TVARIABLE__VALUE:
+				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 			case TypesPackage.TVARIABLE__AST_ELEMENT:
 				return astElement != null;
 			case TypesPackage.TVARIABLE__ANNOTATIONS:
@@ -549,8 +604,6 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 				return declaredProvidedByRuntime != DECLARED_PROVIDED_BY_RUNTIME_EDEFAULT;
 			case TypesPackage.TVARIABLE__TYPE_REF:
 				return typeRef != null;
-			case TypesPackage.TVARIABLE__CONST:
-				return const_ != CONST_EDEFAULT;
 			case TypesPackage.TVARIABLE__EXTERNAL:
 				return external != EXTERNAL_EDEFAULT;
 		}
@@ -564,6 +617,13 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 	 */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == TConstableElement.class) {
+			switch (derivedFeatureID) {
+				case TypesPackage.TVARIABLE__CONST: return TypesPackage.TCONSTABLE_ELEMENT__CONST;
+				case TypesPackage.TVARIABLE__VALUE: return TypesPackage.TCONSTABLE_ELEMENT__VALUE;
+				default: return -1;
+			}
+		}
 		if (baseClass == SyntaxRelatedTElement.class) {
 			switch (derivedFeatureID) {
 				case TypesPackage.TVARIABLE__AST_ELEMENT: return TypesPackage.SYNTAX_RELATED_TELEMENT__AST_ELEMENT;
@@ -599,6 +659,13 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 	 */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == TConstableElement.class) {
+			switch (baseFeatureID) {
+				case TypesPackage.TCONSTABLE_ELEMENT__CONST: return TypesPackage.TVARIABLE__CONST;
+				case TypesPackage.TCONSTABLE_ELEMENT__VALUE: return TypesPackage.TVARIABLE__VALUE;
+				default: return -1;
+			}
+		}
 		if (baseClass == SyntaxRelatedTElement.class) {
 			switch (baseFeatureID) {
 				case TypesPackage.SYNTAX_RELATED_TELEMENT__AST_ELEMENT: return TypesPackage.TVARIABLE__AST_ELEMENT;
@@ -634,6 +701,11 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 	 */
 	@Override
 	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == TConstableElement.class) {
+			switch (baseOperationID) {
+				default: return -1;
+			}
+		}
 		if (baseClass == SyntaxRelatedTElement.class) {
 			switch (baseOperationID) {
 				default: return -1;
@@ -688,12 +760,14 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (declaredTypeAccessModifier: ");
+		result.append(" (const: ");
+		result.append(const_);
+		result.append(", value: ");
+		result.append(value);
+		result.append(", declaredTypeAccessModifier: ");
 		result.append(declaredTypeAccessModifier);
 		result.append(", declaredProvidedByRuntime: ");
 		result.append(declaredProvidedByRuntime);
-		result.append(", const: ");
-		result.append(const_);
 		result.append(", external: ");
 		result.append(external);
 		result.append(')');

@@ -10,6 +10,7 @@
  */
 package eu.numberfour.n4js.postprocessing
 
+import com.google.common.base.Optional
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import eu.numberfour.n4js.n4JS.Expression
@@ -24,10 +25,9 @@ import eu.numberfour.n4js.ts.types.util.Variance
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.constraints.InferenceContext
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import it.xsemantics.runtime.RuleEnvironment
 import java.util.Map
-import eu.numberfour.n4js.utils.N4JSLanguageUtils
-import com.google.common.base.Optional
 
 /**
  * {@link PolyProcessor} delegates here for processing array literals.
@@ -156,6 +156,19 @@ package class PolyProcessor_CallExpression extends AbstractPolyProcessor {
 			}
 			cache.storeType(callExpr, resultTypeRef.applySolution(G, fakeSolution));
 			cache.storeInferredTypeArgs(callExpr, #[]);
+		}
+		// PolyProcessor#isResponsibleFor(TypableElement) claims responsibility of AST nodes of type 'Argument'
+		// contained in a ParameterizedCallExpression which is poly, so we are responsible for storing the types of
+		// those 'Argument' nodes in cache
+		// (note: compare this with similar handling of 'ArrayElement' nodes in PolyProcessor_ArrayLiteral)
+		for (arg : callExpr.arguments) {
+			val expr = arg?.expression;
+			if (expr!==null) {
+				val exprType = getFinalResultTypeOfNestedPolyExpression(expr);
+				if (exprType!==null) {
+					cache.storeType(arg, exprType);
+				}
+			}
 		}
 	}
 }

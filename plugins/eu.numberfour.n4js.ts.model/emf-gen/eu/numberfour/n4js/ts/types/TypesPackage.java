@@ -6420,13 +6420,22 @@ public interface TypesPackage extends EPackage {
 	int TMEMBER__DECLARED_OVERRIDE = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMEMBER__HAS_COMPUTED_NAME = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>TMember</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TMEMBER_FEATURE_COUNT = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 5;
+	int TMEMBER_FEATURE_COUNT = IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -6662,6 +6671,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TMEMBER_WITH_ACCESS_MODIFIER__DECLARED_OVERRIDE = TMEMBER__DECLARED_OVERRIDE;
+
+	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMEMBER_WITH_ACCESS_MODIFIER__HAS_COMPUTED_NAME = TMEMBER__HAS_COMPUTED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
@@ -6924,6 +6942,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_MEMBER__DECLARED_OVERRIDE = TMEMBER__DECLARED_OVERRIDE;
+
+	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_MEMBER__HAS_COMPUTED_NAME = TMEMBER__HAS_COMPUTED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Defined Member</b></em>' reference.
@@ -7287,13 +7314,22 @@ public interface TypesPackage extends EPackage {
 	int TMETHOD__DECLARED_OVERRIDE = TFUNCTION_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMETHOD__HAS_COMPUTED_NAME = TFUNCTION_FEATURE_COUNT + 3;
+
+	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD__HAS_NO_BODY = TFUNCTION_FEATURE_COUNT + 3;
+	int TMETHOD__HAS_NO_BODY = TFUNCTION_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Declared Member Access Modifier</b></em>' attribute.
@@ -7302,7 +7338,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD__DECLARED_MEMBER_ACCESS_MODIFIER = TFUNCTION_FEATURE_COUNT + 4;
+	int TMETHOD__DECLARED_MEMBER_ACCESS_MODIFIER = TFUNCTION_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Declared Abstract</b></em>' attribute.
@@ -7311,7 +7347,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD__DECLARED_ABSTRACT = TFUNCTION_FEATURE_COUNT + 5;
+	int TMETHOD__DECLARED_ABSTRACT = TFUNCTION_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Lacks This Or Super Usage</b></em>' attribute.
@@ -7320,7 +7356,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD__LACKS_THIS_OR_SUPER_USAGE = TFUNCTION_FEATURE_COUNT + 6;
+	int TMETHOD__LACKS_THIS_OR_SUPER_USAGE = TFUNCTION_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>TMethod</em>' class.
@@ -7329,7 +7365,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TMETHOD_FEATURE_COUNT = TFUNCTION_FEATURE_COUNT + 7;
+	int TMETHOD_FEATURE_COUNT = TFUNCTION_FEATURE_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -7817,6 +7853,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_METHOD__DECLARED_OVERRIDE = TMETHOD__DECLARED_OVERRIDE;
+
+	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_METHOD__HAS_COMPUTED_NAME = TMETHOD__HAS_COMPUTED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
@@ -8578,6 +8623,15 @@ public interface TypesPackage extends EPackage {
 	int TFIELD__DECLARED_OVERRIDE = TMEMBER_WITH_ACCESS_MODIFIER__DECLARED_OVERRIDE;
 
 	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFIELD__HAS_COMPUTED_NAME = TMEMBER_WITH_ACCESS_MODIFIER__HAS_COMPUTED_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8614,13 +8668,22 @@ public interface TypesPackage extends EPackage {
 	int TFIELD__CONST = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFIELD__VALUE = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Has Expression</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TFIELD__HAS_EXPRESSION = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 2;
+	int TFIELD__HAS_EXPRESSION = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>TField</em>' class.
@@ -8629,7 +8692,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFIELD_FEATURE_COUNT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 3;
+	int TFIELD_FEATURE_COUNT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -8867,6 +8930,15 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCT_FIELD__DECLARED_OVERRIDE = TFIELD__DECLARED_OVERRIDE;
 
 	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_FIELD__HAS_COMPUTED_NAME = TFIELD__HAS_COMPUTED_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8901,6 +8973,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_FIELD__CONST = TFIELD__CONST;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_FIELD__VALUE = TFIELD__VALUE;
 
 	/**
 	 * The feature id for the '<em><b>Has Expression</b></em>' attribute.
@@ -9172,6 +9253,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int FIELD_ACCESSOR__DECLARED_OVERRIDE = TMEMBER_WITH_ACCESS_MODIFIER__DECLARED_OVERRIDE;
+
+	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD_ACCESSOR__HAS_COMPUTED_NAME = TMEMBER_WITH_ACCESS_MODIFIER__HAS_COMPUTED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
@@ -9461,6 +9551,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TGETTER__DECLARED_OVERRIDE = FIELD_ACCESSOR__DECLARED_OVERRIDE;
+
+	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGETTER__HAS_COMPUTED_NAME = FIELD_ACCESSOR__HAS_COMPUTED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
@@ -9759,6 +9858,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_GETTER__DECLARED_OVERRIDE = TGETTER__DECLARED_OVERRIDE;
+
+	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_GETTER__HAS_COMPUTED_NAME = TGETTER__HAS_COMPUTED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
@@ -10077,6 +10185,15 @@ public interface TypesPackage extends EPackage {
 	int TSETTER__DECLARED_OVERRIDE = FIELD_ACCESSOR__DECLARED_OVERRIDE;
 
 	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSETTER__HAS_COMPUTED_NAME = FIELD_ACCESSOR__HAS_COMPUTED_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10373,6 +10490,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_SETTER__DECLARED_OVERRIDE = TSETTER__DECLARED_OVERRIDE;
+
+	/**
+	 * The feature id for the '<em><b>Has Computed Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_SETTER__HAS_COMPUTED_NAME = TSETTER__HAS_COMPUTED_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Has No Body</b></em>' attribute.
@@ -10944,6 +11070,52 @@ public interface TypesPackage extends EPackage {
 	int TENUM_LITERAL_OPERATION_COUNT = SYNTAX_RELATED_TELEMENT_OPERATION_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TConstableElementImpl <em>TConstable Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see eu.numberfour.n4js.ts.types.impl.TConstableElementImpl
+	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTConstableElement()
+	 * @generated
+	 */
+	int TCONSTABLE_ELEMENT = 50;
+
+	/**
+	 * The feature id for the '<em><b>Const</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCONSTABLE_ELEMENT__CONST = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCONSTABLE_ELEMENT__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>TConstable Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCONSTABLE_ELEMENT_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>TConstable Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TCONSTABLE_ELEMENT_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl <em>TVariable</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10951,7 +11123,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTVariable()
 	 * @generated
 	 */
-	int TVARIABLE = 50;
+	int TVARIABLE = 51;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -10972,13 +11144,31 @@ public interface TypesPackage extends EPackage {
 	int TVARIABLE__EXPORTED_NAME = TEXPORTABLE_ELEMENT__EXPORTED_NAME;
 
 	/**
+	 * The feature id for the '<em><b>Const</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TVARIABLE__CONST = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TVARIABLE__VALUE = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Ast Element</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE__AST_ELEMENT = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 0;
+	int TVARIABLE__AST_ELEMENT = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -10987,7 +11177,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE__ANNOTATIONS = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 1;
+	int TVARIABLE__ANNOTATIONS = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Declared Type Access Modifier</b></em>' attribute.
@@ -10996,7 +11186,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE__DECLARED_TYPE_ACCESS_MODIFIER = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 2;
+	int TVARIABLE__DECLARED_TYPE_ACCESS_MODIFIER = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Declared Provided By Runtime</b></em>' attribute.
@@ -11005,7 +11195,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE__DECLARED_PROVIDED_BY_RUNTIME = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 3;
+	int TVARIABLE__DECLARED_PROVIDED_BY_RUNTIME = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Type Ref</b></em>' containment reference.
@@ -11014,16 +11204,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE__TYPE_REF = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>Const</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TVARIABLE__CONST = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 5;
+	int TVARIABLE__TYPE_REF = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>External</b></em>' attribute.
@@ -11032,7 +11213,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE__EXTERNAL = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 6;
+	int TVARIABLE__EXTERNAL = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>TVariable</em>' class.
@@ -11041,7 +11222,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE_FEATURE_COUNT = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 7;
+	int TVARIABLE_FEATURE_COUNT = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -11105,7 +11286,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNullModifier()
 	 * @generated
 	 */
-	int NULL_MODIFIER = 51;
+	int NULL_MODIFIER = 52;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.UndefModifier <em>Undef Modifier</em>}' enum.
@@ -11115,7 +11296,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getUndefModifier()
 	 * @generated
 	 */
-	int UNDEF_MODIFIER = 52;
+	int UNDEF_MODIFIER = 53;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.TypingStrategy <em>Typing Strategy</em>}' enum.
@@ -11125,7 +11306,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTypingStrategy()
 	 * @generated
 	 */
-	int TYPING_STRATEGY = 53;
+	int TYPING_STRATEGY = 54;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.TypeAccessModifier <em>Type Access Modifier</em>}' enum.
@@ -11135,7 +11316,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTypeAccessModifier()
 	 * @generated
 	 */
-	int TYPE_ACCESS_MODIFIER = 54;
+	int TYPE_ACCESS_MODIFIER = 55;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.MemberAccessModifier <em>Member Access Modifier</em>}' enum.
@@ -11145,7 +11326,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberAccessModifier()
 	 * @generated
 	 */
-	int MEMBER_ACCESS_MODIFIER = 55;
+	int MEMBER_ACCESS_MODIFIER = 56;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.MemberType <em>Member Type</em>}' enum.
@@ -11155,7 +11336,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberType()
 	 * @generated
 	 */
-	int MEMBER_TYPE = 56;
+	int MEMBER_TYPE = 57;
 
 	/**
 	 * The meta object id for the '<em>Iterable Of TClassifier</em>' data type.
@@ -11165,7 +11346,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getIterableOfTClassifier()
 	 * @generated
 	 */
-	int ITERABLE_OF_TCLASSIFIER = 57;
+	int ITERABLE_OF_TCLASSIFIER = 58;
 
 	/**
 	 * The meta object id for the '<em>Variance</em>' data type.
@@ -11175,7 +11356,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getVariance()
 	 * @generated
 	 */
-	int VARIANCE = 58;
+	int VARIANCE = 59;
 
 	/**
 	 * The meta object id for the '<em>Name And Access</em>' data type.
@@ -11185,7 +11366,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNameAndAccess()
 	 * @generated
 	 */
-	int NAME_AND_ACCESS = 59;
+	int NAME_AND_ACCESS = 60;
 
 	/**
 	 * The meta object id for the '<em>Member List</em>' data type.
@@ -11195,7 +11376,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberList()
 	 * @generated
 	 */
-	int MEMBER_LIST = 60;
+	int MEMBER_LIST = 61;
 
 	/**
 	 * The meta object id for the '<em>TClassifier Iterable</em>' data type.
@@ -11205,7 +11386,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTClassifierIterable()
 	 * @generated
 	 */
-	int TCLASSIFIER_ITERABLE = 61;
+	int TCLASSIFIER_ITERABLE = 62;
 
 
 	/**
@@ -12844,6 +13025,17 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTMember_DeclaredOverride();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TMember#isHasComputedName <em>Has Computed Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Has Computed Name</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TMember#isHasComputedName()
+	 * @see #getTMember()
+	 * @generated
+	 */
+	EAttribute getTMember_HasComputedName();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TMember#getContainingType() <em>Get Containing Type</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13332,17 +13524,6 @@ public interface TypesPackage extends EPackage {
 	EClass getTField();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TField#isConst <em>Const</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Const</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TField#isConst()
-	 * @see #getTField()
-	 * @generated
-	 */
-	EAttribute getTField_Const();
-
-	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TField#isHasExpression <em>Has Expression</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13712,6 +13893,38 @@ public interface TypesPackage extends EPackage {
 	EReference getSyntaxRelatedTElement_AstElement();
 
 	/**
+	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.TConstableElement <em>TConstable Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>TConstable Element</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TConstableElement
+	 * @generated
+	 */
+	EClass getTConstableElement();
+
+	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TConstableElement#isConst <em>Const</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Const</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TConstableElement#isConst()
+	 * @see #getTConstableElement()
+	 * @generated
+	 */
+	EAttribute getTConstableElement_Const();
+
+	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TConstableElement#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TConstableElement#getValue()
+	 * @see #getTConstableElement()
+	 * @generated
+	 */
+	EAttribute getTConstableElement_Value();
+
+	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.TVariable <em>TVariable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13720,17 +13933,6 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getTVariable();
-
-	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TVariable#isConst <em>Const</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Const</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TVariable#isConst()
-	 * @see #getTVariable()
-	 * @generated
-	 */
-	EAttribute getTVariable_Const();
 
 	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TVariable#isExternal <em>External</em>}'.
@@ -15216,6 +15418,14 @@ public interface TypesPackage extends EPackage {
 		EAttribute TMEMBER__DECLARED_OVERRIDE = eINSTANCE.getTMember_DeclaredOverride();
 
 		/**
+		 * The meta object literal for the '<em><b>Has Computed Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TMEMBER__HAS_COMPUTED_NAME = eINSTANCE.getTMember_HasComputedName();
+
+		/**
 		 * The meta object literal for the '<em><b>Get Containing Type</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -15614,14 +15824,6 @@ public interface TypesPackage extends EPackage {
 		EClass TFIELD = eINSTANCE.getTField();
 
 		/**
-		 * The meta object literal for the '<em><b>Const</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TFIELD__CONST = eINSTANCE.getTField_Const();
-
-		/**
 		 * The meta object literal for the '<em><b>Has Expression</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -15928,6 +16130,32 @@ public interface TypesPackage extends EPackage {
 		EReference SYNTAX_RELATED_TELEMENT__AST_ELEMENT = eINSTANCE.getSyntaxRelatedTElement_AstElement();
 
 		/**
+		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.impl.TConstableElementImpl <em>TConstable Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see eu.numberfour.n4js.ts.types.impl.TConstableElementImpl
+		 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTConstableElement()
+		 * @generated
+		 */
+		EClass TCONSTABLE_ELEMENT = eINSTANCE.getTConstableElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Const</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TCONSTABLE_ELEMENT__CONST = eINSTANCE.getTConstableElement_Const();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TCONSTABLE_ELEMENT__VALUE = eINSTANCE.getTConstableElement_Value();
+
+		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl <em>TVariable</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -15936,14 +16164,6 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EClass TVARIABLE = eINSTANCE.getTVariable();
-
-		/**
-		 * The meta object literal for the '<em><b>Const</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TVARIABLE__CONST = eINSTANCE.getTVariable_Const();
 
 		/**
 		 * The meta object literal for the '<em><b>External</b></em>' attribute feature.

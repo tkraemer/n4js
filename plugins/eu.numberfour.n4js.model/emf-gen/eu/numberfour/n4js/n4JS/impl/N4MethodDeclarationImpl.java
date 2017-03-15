@@ -758,6 +758,16 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean hasComputedPropertyName() {
+		final LiteralOrComputedPropertyName declName = this.getDeclaredName();
+		return ((declName != null) && declName.hasComputedPropertyName());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isAsync() {
 		return this.isDeclaredAsync();
 	}
@@ -1218,6 +1228,7 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.N4_METHOD_DECLARATION___GET_NAME;
+				case N4JSPackage.PROPERTY_NAME_OWNER___HAS_COMPUTED_PROPERTY_NAME: return N4JSPackage.N4_METHOD_DECLARATION___HAS_COMPUTED_PROPERTY_NAME;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.N4_METHOD_DECLARATION___IS_VALID_NAME;
 				default: return -1;
 			}
@@ -1257,6 +1268,8 @@ public class N4MethodDeclarationImpl extends AnnotableN4MemberDeclarationImpl im
 				return getDefinedTypeElement();
 			case N4JSPackage.N4_METHOD_DECLARATION___GET_NAME:
 				return getName();
+			case N4JSPackage.N4_METHOD_DECLARATION___HAS_COMPUTED_PROPERTY_NAME:
+				return hasComputedPropertyName();
 			case N4JSPackage.N4_METHOD_DECLARATION___IS_ASYNC:
 				return isAsync();
 			case N4JSPackage.N4_METHOD_DECLARATION___GET_DEFINED_FUNCTION:

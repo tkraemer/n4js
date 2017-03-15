@@ -1,0 +1,16 @@
+
+
+function foo(): string {
+	return null;
+}
+
+
+export const var_otherFile = 'propConstExportedFromOtherFile';
+
+export var var_notConst_otherFile = 'propName';
+export const var_const_notCompileTime_otherFile = foo(); // using a call expression to make sure we don't have a compile-time expression!
+
+export class Cls_OtherFile {
+	const field = 'propFieldFromOtherFile';
+	const ['fieldWithComputedName'] = 'testField';
+}

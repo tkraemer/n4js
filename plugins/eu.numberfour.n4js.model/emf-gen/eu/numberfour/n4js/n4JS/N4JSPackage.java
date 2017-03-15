@@ -1908,13 +1908,22 @@ public interface N4JSPackage extends EPackage {
 	int FIELD_ACCESSOR___GET_NAME = FUNCTION_OR_FIELD_ACCESSOR_OPERATION_COUNT + 2;
 
 	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD_ACCESSOR___HAS_COMPUTED_PROPERTY_NAME = FUNCTION_OR_FIELD_ACCESSOR_OPERATION_COUNT + 3;
+
+	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_ACCESSOR___IS_VALID_NAME = FUNCTION_OR_FIELD_ACCESSOR_OPERATION_COUNT + 3;
+	int FIELD_ACCESSOR___IS_VALID_NAME = FUNCTION_OR_FIELD_ACCESSOR_OPERATION_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Get Declared Type Ref</em>' operation.
@@ -1923,7 +1932,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_ACCESSOR___GET_DECLARED_TYPE_REF = FUNCTION_OR_FIELD_ACCESSOR_OPERATION_COUNT + 4;
+	int FIELD_ACCESSOR___GET_DECLARED_TYPE_REF = FUNCTION_OR_FIELD_ACCESSOR_OPERATION_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Get Defined Accessor</em>' operation.
@@ -1932,7 +1941,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_ACCESSOR___GET_DEFINED_ACCESSOR = FUNCTION_OR_FIELD_ACCESSOR_OPERATION_COUNT + 5;
+	int FIELD_ACCESSOR___GET_DEFINED_ACCESSOR = FUNCTION_OR_FIELD_ACCESSOR_OPERATION_COUNT + 6;
 
 	/**
 	 * The number of operations of the '<em>Field Accessor</em>' class.
@@ -1941,7 +1950,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_ACCESSOR_OPERATION_COUNT = FUNCTION_OR_FIELD_ACCESSOR_OPERATION_COUNT + 6;
+	int FIELD_ACCESSOR_OPERATION_COUNT = FUNCTION_OR_FIELD_ACCESSOR_OPERATION_COUNT + 7;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.FunctionDeclarationImpl <em>Function Declaration</em>}' class.
@@ -5441,13 +5450,22 @@ public interface N4JSPackage extends EPackage {
 	int PROPERTY_ASSIGNMENT___GET_NAME = ANNOTABLE_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_ASSIGNMENT___HAS_COMPUTED_PROPERTY_NAME = ANNOTABLE_ELEMENT_OPERATION_COUNT + 3;
+
+	/**
 	 * The operation id for the '<em>Get Defined Member</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT___GET_DEFINED_MEMBER = ANNOTABLE_ELEMENT_OPERATION_COUNT + 4;
+	int PROPERTY_ASSIGNMENT___GET_DEFINED_MEMBER = ANNOTABLE_ELEMENT_OPERATION_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
@@ -5456,7 +5474,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT___IS_VALID_NAME = ANNOTABLE_ELEMENT_OPERATION_COUNT + 5;
+	int PROPERTY_ASSIGNMENT___IS_VALID_NAME = ANNOTABLE_ELEMENT_OPERATION_COUNT + 6;
 
 	/**
 	 * The number of operations of the '<em>Property Assignment</em>' class.
@@ -5465,7 +5483,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT_OPERATION_COUNT = ANNOTABLE_ELEMENT_OPERATION_COUNT + 6;
+	int PROPERTY_ASSIGNMENT_OPERATION_COUNT = ANNOTABLE_ELEMENT_OPERATION_COUNT + 7;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.PropertyNameOwnerImpl <em>Property Name Owner</em>}' class.
@@ -5505,13 +5523,22 @@ public interface N4JSPackage extends EPackage {
 	int PROPERTY_NAME_OWNER___GET_NAME = NAMED_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_NAME_OWNER___HAS_COMPUTED_PROPERTY_NAME = NAMED_ELEMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_NAME_OWNER___IS_VALID_NAME = NAMED_ELEMENT_OPERATION_COUNT + 1;
+	int PROPERTY_NAME_OWNER___IS_VALID_NAME = NAMED_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Property Name Owner</em>' class.
@@ -5520,7 +5547,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_NAME_OWNER_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 2;
+	int PROPERTY_NAME_OWNER_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.LiteralOrComputedPropertyNameImpl <em>Literal Or Computed Property Name</em>}' class.
@@ -5578,13 +5605,22 @@ public interface N4JSPackage extends EPackage {
 	int LITERAL_OR_COMPUTED_PROPERTY_NAME_FEATURE_COUNT = 4;
 
 	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LITERAL_OR_COMPUTED_PROPERTY_NAME___HAS_COMPUTED_PROPERTY_NAME = 0;
+
+	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LITERAL_OR_COMPUTED_PROPERTY_NAME___GET_NAME = 0;
+	int LITERAL_OR_COMPUTED_PROPERTY_NAME___GET_NAME = 1;
 
 	/**
 	 * The number of operations of the '<em>Literal Or Computed Property Name</em>' class.
@@ -5593,7 +5629,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LITERAL_OR_COMPUTED_PROPERTY_NAME_OPERATION_COUNT = 1;
+	int LITERAL_OR_COMPUTED_PROPERTY_NAME_OPERATION_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.AnnotablePropertyAssignmentImpl <em>Annotable Property Assignment</em>}' class.
@@ -5649,6 +5685,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int ANNOTABLE_PROPERTY_ASSIGNMENT___GET_NAME = PROPERTY_ASSIGNMENT___GET_NAME;
+
+	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANNOTABLE_PROPERTY_ASSIGNMENT___HAS_COMPUTED_PROPERTY_NAME = PROPERTY_ASSIGNMENT___HAS_COMPUTED_PROPERTY_NAME;
 
 	/**
 	 * The operation id for the '<em>Get Defined Member</em>' operation.
@@ -5751,13 +5796,22 @@ public interface N4JSPackage extends EPackage {
 	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST___GET_NAME = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 3;
 
 	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST___HAS_COMPUTED_PROPERTY_NAME = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 4;
+
+	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST___IS_VALID_NAME = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 6;
+	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST___IS_VALID_NAME = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 7;
 
 	/**
 	 * The operation id for the '<em>Get Defined Member</em>' operation.
@@ -5766,7 +5820,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST___GET_DEFINED_MEMBER = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 7;
+	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST___GET_DEFINED_MEMBER = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 8;
 
 	/**
 	 * The number of operations of the '<em>Property Assignment Annotation List</em>' class.
@@ -5775,7 +5829,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST_OPERATION_COUNT = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 8;
+	int PROPERTY_ASSIGNMENT_ANNOTATION_LIST_OPERATION_COUNT = ABSTRACT_ANNOTATION_LIST_OPERATION_COUNT + 9;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.PropertyNameValuePairImpl <em>Property Name Value Pair</em>}' class.
@@ -5867,6 +5921,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY_NAME_VALUE_PAIR___GET_NAME = ANNOTABLE_PROPERTY_ASSIGNMENT___GET_NAME;
+
+	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_NAME_VALUE_PAIR___HAS_COMPUTED_PROPERTY_NAME = ANNOTABLE_PROPERTY_ASSIGNMENT___HAS_COMPUTED_PROPERTY_NAME;
 
 	/**
 	 * The operation id for the '<em>Get Annotations</em>' operation.
@@ -6003,6 +6066,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY_NAME_VALUE_PAIR_SINGLE_NAME___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = PROPERTY_NAME_VALUE_PAIR___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
+
+	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_NAME_VALUE_PAIR_SINGLE_NAME___HAS_COMPUTED_PROPERTY_NAME = PROPERTY_NAME_VALUE_PAIR___HAS_COMPUTED_PROPERTY_NAME;
 
 	/**
 	 * The operation id for the '<em>Get Annotations</em>' operation.
@@ -6193,6 +6265,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY_METHOD_DECLARATION___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS = ANNOTABLE_PROPERTY_ASSIGNMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS;
+
+	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_METHOD_DECLARATION___HAS_COMPUTED_PROPERTY_NAME = ANNOTABLE_PROPERTY_ASSIGNMENT___HAS_COMPUTED_PROPERTY_NAME;
 
 	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
@@ -6439,6 +6520,15 @@ public interface N4JSPackage extends EPackage {
 	int GETTER_DECLARATION___GET_NAME = FIELD_ACCESSOR___GET_NAME;
 
 	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME = FIELD_ACCESSOR___HAS_COMPUTED_PROPERTY_NAME;
+
+	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6591,6 +6681,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int SETTER_DECLARATION___GET_NAME = FIELD_ACCESSOR___GET_NAME;
+
+	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME = FIELD_ACCESSOR___HAS_COMPUTED_PROPERTY_NAME;
 
 	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
@@ -6754,6 +6853,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY_GETTER_DECLARATION___GET_NAME = GETTER_DECLARATION___GET_NAME;
+
+	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_GETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME = GETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME;
 
 	/**
 	 * The operation id for the '<em>Get Declared Type Ref</em>' operation.
@@ -6935,6 +7043,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPERTY_SETTER_DECLARATION___GET_NAME = SETTER_DECLARATION___GET_NAME;
+
+	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_SETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME = SETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME;
 
 	/**
 	 * The operation id for the '<em>Get Defined Accessor</em>' operation.
@@ -11899,13 +12016,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_FIELD_DECLARATION___GET_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_FIELD_DECLARATION___HAS_COMPUTED_PROPERTY_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Get Defined Type Element</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_DECLARATION___GET_DEFINED_TYPE_ELEMENT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 2;
+	int N4_FIELD_DECLARATION___GET_DEFINED_TYPE_ELEMENT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Is Const</em>' operation.
@@ -11914,7 +12040,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_DECLARATION___IS_CONST = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 3;
+	int N4_FIELD_DECLARATION___IS_CONST = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Is Static</em>' operation.
@@ -11923,7 +12049,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_DECLARATION___IS_STATIC = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 4;
+	int N4_FIELD_DECLARATION___IS_STATIC = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Is Valid</em>' operation.
@@ -11932,7 +12058,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_DECLARATION___IS_VALID = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 5;
+	int N4_FIELD_DECLARATION___IS_VALID = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
@@ -11941,7 +12067,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_DECLARATION___IS_VALID_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 6;
+	int N4_FIELD_DECLARATION___IS_VALID_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 7;
 
 	/**
 	 * The number of operations of the '<em>N4 Field Declaration</em>' class.
@@ -11950,7 +12076,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_DECLARATION_OPERATION_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 7;
+	int N4_FIELD_DECLARATION_OPERATION_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.MethodDeclarationImpl <em>Method Declaration</em>}' class.
@@ -12143,13 +12269,22 @@ public interface N4JSPackage extends EPackage {
 	int METHOD_DECLARATION___GET_NAME = FUNCTION_DEFINITION_OPERATION_COUNT + 2;
 
 	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_DECLARATION___HAS_COMPUTED_PROPERTY_NAME = FUNCTION_DEFINITION_OPERATION_COUNT + 3;
+
+	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_DECLARATION___IS_VALID_NAME = FUNCTION_DEFINITION_OPERATION_COUNT + 3;
+	int METHOD_DECLARATION___IS_VALID_NAME = FUNCTION_DEFINITION_OPERATION_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Exists Explicit Super Call</em>' operation.
@@ -12158,7 +12293,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_DECLARATION___EXISTS_EXPLICIT_SUPER_CALL = FUNCTION_DEFINITION_OPERATION_COUNT + 4;
+	int METHOD_DECLARATION___EXISTS_EXPLICIT_SUPER_CALL = FUNCTION_DEFINITION_OPERATION_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Get Defined Type Element</em>' operation.
@@ -12167,7 +12302,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_DECLARATION___GET_DEFINED_TYPE_ELEMENT = FUNCTION_DEFINITION_OPERATION_COUNT + 5;
+	int METHOD_DECLARATION___GET_DEFINED_TYPE_ELEMENT = FUNCTION_DEFINITION_OPERATION_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Is Static</em>' operation.
@@ -12176,7 +12311,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_DECLARATION___IS_STATIC = FUNCTION_DEFINITION_OPERATION_COUNT + 6;
+	int METHOD_DECLARATION___IS_STATIC = FUNCTION_DEFINITION_OPERATION_COUNT + 7;
 
 	/**
 	 * The number of operations of the '<em>Method Declaration</em>' class.
@@ -12185,7 +12320,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_DECLARATION_OPERATION_COUNT = FUNCTION_DEFINITION_OPERATION_COUNT + 7;
+	int METHOD_DECLARATION_OPERATION_COUNT = FUNCTION_DEFINITION_OPERATION_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.N4MethodDeclarationImpl <em>N4 Method Declaration</em>}' class.
@@ -12432,13 +12567,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_METHOD_DECLARATION___GET_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 7;
 
 	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_METHOD_DECLARATION___HAS_COMPUTED_PROPERTY_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 8;
+
+	/**
 	 * The operation id for the '<em>Exists Explicit Super Call</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___EXISTS_EXPLICIT_SUPER_CALL = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 9;
+	int N4_METHOD_DECLARATION___EXISTS_EXPLICIT_SUPER_CALL = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 10;
 
 	/**
 	 * The operation id for the '<em>Get Defined Type Element</em>' operation.
@@ -12447,7 +12591,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___GET_DEFINED_TYPE_ELEMENT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 10;
+	int N4_METHOD_DECLARATION___GET_DEFINED_TYPE_ELEMENT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 11;
 
 	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
@@ -12456,7 +12600,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_ABSTRACT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 12;
+	int N4_METHOD_DECLARATION___IS_ABSTRACT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 13;
 
 	/**
 	 * The operation id for the '<em>Is Constructor</em>' operation.
@@ -12465,7 +12609,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_CONSTRUCTOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 13;
+	int N4_METHOD_DECLARATION___IS_CONSTRUCTOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 14;
 
 	/**
 	 * The operation id for the '<em>Is Callable Constructor</em>' operation.
@@ -12474,7 +12618,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_CALLABLE_CONSTRUCTOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 14;
+	int N4_METHOD_DECLARATION___IS_CALLABLE_CONSTRUCTOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 15;
 
 	/**
 	 * The operation id for the '<em>Is Static</em>' operation.
@@ -12483,7 +12627,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_STATIC = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 15;
+	int N4_METHOD_DECLARATION___IS_STATIC = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 16;
 
 	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
@@ -12492,7 +12636,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION___IS_VALID_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 16;
+	int N4_METHOD_DECLARATION___IS_VALID_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 17;
 
 	/**
 	 * The number of operations of the '<em>N4 Method Declaration</em>' class.
@@ -12501,7 +12645,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_METHOD_DECLARATION_OPERATION_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 17;
+	int N4_METHOD_DECLARATION_OPERATION_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 18;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.N4FieldAccessorImpl <em>N4 Field Accessor</em>}' class.
@@ -12694,13 +12838,22 @@ public interface N4JSPackage extends EPackage {
 	int N4_FIELD_ACCESSOR___GET_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 5;
 
 	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_FIELD_ACCESSOR___HAS_COMPUTED_PROPERTY_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 6;
+
+	/**
 	 * The operation id for the '<em>Get Declared Type Ref</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_ACCESSOR___GET_DECLARED_TYPE_REF = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 7;
+	int N4_FIELD_ACCESSOR___GET_DECLARED_TYPE_REF = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Get Defined Accessor</em>' operation.
@@ -12709,7 +12862,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_ACCESSOR___GET_DEFINED_ACCESSOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 8;
+	int N4_FIELD_ACCESSOR___GET_DEFINED_ACCESSOR = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
@@ -12718,7 +12871,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_ACCESSOR___IS_ABSTRACT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 9;
+	int N4_FIELD_ACCESSOR___IS_ABSTRACT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 10;
 
 	/**
 	 * The operation id for the '<em>Is Valid Name</em>' operation.
@@ -12727,7 +12880,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_ACCESSOR___IS_VALID_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 10;
+	int N4_FIELD_ACCESSOR___IS_VALID_NAME = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 11;
 
 	/**
 	 * The number of operations of the '<em>N4 Field Accessor</em>' class.
@@ -12736,7 +12889,7 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int N4_FIELD_ACCESSOR_OPERATION_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 11;
+	int N4_FIELD_ACCESSOR_OPERATION_COUNT = ANNOTABLE_N4_MEMBER_DECLARATION_OPERATION_COUNT + 12;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.n4JS.impl.N4GetterDeclarationImpl <em>N4 Getter Declaration</em>}' class.
@@ -12882,6 +13035,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int N4_GETTER_DECLARATION___GET_NAME = GETTER_DECLARATION___GET_NAME;
+
+	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_GETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME = GETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME;
 
 	/**
 	 * The operation id for the '<em>Get Declared Type Ref</em>' operation.
@@ -13135,6 +13297,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int N4_SETTER_DECLARATION___GET_NAME = SETTER_DECLARATION___GET_NAME;
+
+	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int N4_SETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME = SETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME;
 
 	/**
 	 * The operation id for the '<em>Get Defined Accessor</em>' operation.
@@ -13436,6 +13607,15 @@ public interface N4JSPackage extends EPackage {
 	 * @ordered
 	 */
 	int BINDING_PROPERTY_FEATURE_COUNT = PROPERTY_NAME_OWNER_FEATURE_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BINDING_PROPERTY___HAS_COMPUTED_PROPERTY_NAME = PROPERTY_NAME_OWNER___HAS_COMPUTED_PROPERTY_NAME;
 
 	/**
 	 * The operation id for the '<em>Get Name</em>' operation.
@@ -16122,6 +16302,16 @@ public interface N4JSPackage extends EPackage {
 	EOperation getPropertyNameOwner__GetName();
 
 	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.PropertyNameOwner#hasComputedPropertyName() <em>Has Computed Property Name</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Has Computed Property Name</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.PropertyNameOwner#hasComputedPropertyName()
+	 * @generated
+	 */
+	EOperation getPropertyNameOwner__HasComputedPropertyName();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.PropertyNameOwner#isValidName() <em>Is Valid Name</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16184,6 +16374,16 @@ public interface N4JSPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getLiteralOrComputedPropertyName_Expression();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName#hasComputedPropertyName() <em>Has Computed Property Name</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Has Computed Property Name</em>' operation.
+	 * @see eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName#hasComputedPropertyName()
+	 * @generated
+	 */
+	EOperation getLiteralOrComputedPropertyName__HasComputedPropertyName();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName#getName() <em>Get Name</em>}' operation.
@@ -21041,6 +21241,14 @@ public interface N4JSPackage extends EPackage {
 		EOperation PROPERTY_NAME_OWNER___GET_NAME = eINSTANCE.getPropertyNameOwner__GetName();
 
 		/**
+		 * The meta object literal for the '<em><b>Has Computed Property Name</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PROPERTY_NAME_OWNER___HAS_COMPUTED_PROPERTY_NAME = eINSTANCE.getPropertyNameOwner__HasComputedPropertyName();
+
+		/**
 		 * The meta object literal for the '<em><b>Is Valid Name</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -21089,6 +21297,14 @@ public interface N4JSPackage extends EPackage {
 		 * @generated
 		 */
 		EReference LITERAL_OR_COMPUTED_PROPERTY_NAME__EXPRESSION = eINSTANCE.getLiteralOrComputedPropertyName_Expression();
+
+		/**
+		 * The meta object literal for the '<em><b>Has Computed Property Name</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LITERAL_OR_COMPUTED_PROPERTY_NAME___HAS_COMPUTED_PROPERTY_NAME = eINSTANCE.getLiteralOrComputedPropertyName__HasComputedPropertyName();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Name</b></em>' operation.

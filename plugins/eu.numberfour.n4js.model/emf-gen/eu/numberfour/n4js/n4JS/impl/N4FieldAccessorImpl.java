@@ -334,6 +334,16 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean hasComputedPropertyName() {
+		final LiteralOrComputedPropertyName declName = this.getDeclaredName();
+		return ((declName != null) && declName.hasComputedPropertyName());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public LocalArgumentsVariable getLocalArgumentsVariable() {
 		LocalArgumentsVariable __lok = this.get_lok();
 		boolean _tripleEquals = (__lok == null);
@@ -611,6 +621,7 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.N4_FIELD_ACCESSOR___GET_NAME;
+				case N4JSPackage.PROPERTY_NAME_OWNER___HAS_COMPUTED_PROPERTY_NAME: return N4JSPackage.N4_FIELD_ACCESSOR___HAS_COMPUTED_PROPERTY_NAME;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.N4_FIELD_ACCESSOR___IS_VALID_NAME;
 				default: return -1;
 			}
@@ -643,6 +654,8 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 				return getDefinedAccessor();
 			case N4JSPackage.N4_FIELD_ACCESSOR___GET_NAME:
 				return getName();
+			case N4JSPackage.N4_FIELD_ACCESSOR___HAS_COMPUTED_PROPERTY_NAME:
+				return hasComputedPropertyName();
 			case N4JSPackage.N4_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE:
 				return getLocalArgumentsVariable();
 			case N4JSPackage.N4_FIELD_ACCESSOR___IS_ASYNC:

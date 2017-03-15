@@ -179,6 +179,16 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean hasComputedPropertyName() {
+		final LiteralOrComputedPropertyName declName = this.getDeclaredName();
+		return ((declName != null) && declName.hasComputedPropertyName());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean appliesOnlyToBlockScopedElements() {
 		return false;
 	}
@@ -339,6 +349,7 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.PROPERTY_ASSIGNMENT___GET_NAME;
+				case N4JSPackage.PROPERTY_NAME_OWNER___HAS_COMPUTED_PROPERTY_NAME: return N4JSPackage.PROPERTY_ASSIGNMENT___HAS_COMPUTED_PROPERTY_NAME;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.PROPERTY_ASSIGNMENT___IS_VALID_NAME;
 				default: return -1;
 			}
@@ -365,6 +376,8 @@ public abstract class PropertyAssignmentImpl extends AnnotableElementImpl implem
 				return isValidName();
 			case N4JSPackage.PROPERTY_ASSIGNMENT___GET_NAME:
 				return getName();
+			case N4JSPackage.PROPERTY_ASSIGNMENT___HAS_COMPUTED_PROPERTY_NAME:
+				return hasComputedPropertyName();
 			case N4JSPackage.PROPERTY_ASSIGNMENT___APPLIES_ONLY_TO_BLOCK_SCOPED_ELEMENTS:
 				return appliesOnlyToBlockScopedElements();
 		}
