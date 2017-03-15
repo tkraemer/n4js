@@ -100,8 +100,8 @@ import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 import eu.numberfour.n4js.ui.binaries.IllegalBinaryStateDialog;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
-import eu.numberfour.n4js.ui.utils.ComposedInputValidator;
-import eu.numberfour.n4js.ui.utils.FunctionalInputValidator;
+import eu.numberfour.n4js.ui.utils.InputComposedValidator;
+import eu.numberfour.n4js.ui.utils.InputFunctionalValidator;
 import eu.numberfour.n4js.ui.utils.UIUtils;
 import eu.numberfour.n4js.ui.viewer.TreeViewerBuilder;
 import eu.numberfour.n4js.utils.StatusHelper;
@@ -577,8 +577,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	 * @return validator checking if provided name can be used to install new package
 	 */
 	private IInputValidator getPackageNameToInstallValidator() {
-		return ComposedInputValidator.compose(
-				getBasicPackageValidator(), FunctionalInputValidator.from(
+		return InputComposedValidator.compose(
+				getBasicPackageValidator(), InputFunctionalValidator.from(
 						(final String name) -> !isInstalled(name) ? null
 								/* error message */
 								: "The npm package '" + name + "' is already available."));
@@ -591,8 +591,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	 * @return validator checking if provided name can be used to install new package
 	 */
 	private IInputValidator getPackageNameToUninstallValidator() {
-		return ComposedInputValidator.compose(
-				getBasicPackageValidator(), FunctionalInputValidator.from(
+		return InputComposedValidator.compose(
+				getBasicPackageValidator(), InputFunctionalValidator.from(
 						(final String name) -> isInstalled(name) ? null
 								/* error case */
 								: "The npm package '" + name + "' is not installed."));
@@ -600,7 +600,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 	// TODO refactor with NpmManager internal logic of validating package name
 	private IInputValidator getBasicPackageValidator() {
-		return FunctionalInputValidator.from(
+		return InputFunctionalValidator.from(
 				(final String name) -> {
 					if (StringExtensions.isNullOrEmpty(name))
 						return "The npm package name should be specified.";

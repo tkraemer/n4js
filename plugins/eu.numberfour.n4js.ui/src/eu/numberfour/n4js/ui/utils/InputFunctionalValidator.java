@@ -18,11 +18,11 @@ import org.eclipse.jface.dialogs.IInputValidator;
  * Implementation of the {@link IInputValidator} that uses specialized {@link Function} for actual validation. Can be
  * created with method reference.
  */
-public class FunctionalInputValidator implements IInputValidator {
+public class InputFunctionalValidator implements IInputValidator {
 
 	final Function<String, String> isValidFunction;
 
-	private FunctionalInputValidator(Function<String, String> isValidFunction) {
+	private InputFunctionalValidator(Function<String, String> isValidFunction) {
 		this.isValidFunction = isValidFunction;
 	}
 
@@ -32,7 +32,7 @@ public class FunctionalInputValidator implements IInputValidator {
 	}
 
 	/** Factory for creating validator from lambda expression or method reference. */
-	public static FunctionalInputValidator from(Function<String, String> isValidFunction) {
-		return new FunctionalInputValidator(isValidFunction);
+	public static InputFunctionalValidator from(Function<String, String> isValidFunction) {
+		return new InputFunctionalValidator(isValidFunction);
 	}
 }

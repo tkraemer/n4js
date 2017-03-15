@@ -20,11 +20,11 @@ import org.eclipse.jface.dialogs.IInputValidator;
  * (depth first). Returns eagerly, that is will return first error message encountered, and will not proceed to call
  * pending validators.
  */
-public class ComposedInputValidator implements IInputValidator {
+public class InputComposedValidator implements IInputValidator {
 
 	final Collection<IInputValidator> validators;
 
-	private ComposedInputValidator(Collection<IInputValidator> validators) {
+	private InputComposedValidator(Collection<IInputValidator> validators) {
 		this.validators = validators;
 	}
 
@@ -41,7 +41,7 @@ public class ComposedInputValidator implements IInputValidator {
 	}
 
 	/** Factory for composing multiple validators */
-	public static ComposedInputValidator compose(IInputValidator... validators) {
-		return new ComposedInputValidator(Arrays.asList(validators));
+	public static InputComposedValidator compose(IInputValidator... validators) {
+		return new InputComposedValidator(Arrays.asList(validators));
 	}
 }
