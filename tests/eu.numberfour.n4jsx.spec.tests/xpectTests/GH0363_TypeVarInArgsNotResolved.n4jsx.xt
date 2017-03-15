@@ -1,0 +1,36 @@
+/* XPECT_SETUP eu.numberfour.n4jsx.spec.tests.N4JSXSpecTest
+
+	ResourceSet {
+		ThisFile {}
+		File "reactFiles/react.n4jsd" { from = "reactFiles/react.n4jsd"}
+	}
+
+	END_SETUP
+*/
+
+import * as React from "reactFiles/react";
+
+
+interface ~Props extends React.ComponentProps  {
+	public value: Date;
+}
+
+class Concrete extends React.PureComponent<Props, Object> {
+
+	@Override
+	public render(): React.Element {
+		return (<div/>);
+	}
+}
+
+
+class Arg<T> {
+	public value: T;
+}
+
+
+let arg: Arg<Date>;
+
+// XPECT noerrors -->
+<Concrete {...arg}/>
+
