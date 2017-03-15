@@ -100,6 +100,11 @@ class CompileTimeEvaluatorTest {
 		assertValueOfCompileTimeExpr("0 / 1", 0);
 		assertValueOfCompileTimeExpr("0 / -1", 0); // TODO support for -0 in compile-time expressions
 
+		assertValueOfCompileTimeExpr("1 / 3", new BigDecimal("0.3333333333333333"));
+		assertValueOfCompileTimeExpr("(-1) / 3", new BigDecimal("-0.3333333333333333"));
+		assertValueOfCompileTimeExpr("2 / 3", new BigDecimal("0.6666666666666666"));
+		assertValueOfCompileTimeExpr("(-2) / 3", new BigDecimal("-0.6666666666666666"));
+
 		assertValueOfCompileTimeExpr("-21 / 0", INVALID); // TODO support for Infinity in compile-time expressions
 	}
 

@@ -11,6 +11,8 @@
 package eu.numberfour.n4js.compileTime;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -48,6 +50,15 @@ import it.xsemantics.runtime.RuleEnvironment;
  * {@link #multiply(CompileTimeValue, CompileTimeValue, EObject, EObject)}.
  */
 public abstract class CompileTimeValue {
+
+	/**
+	 * If a division amounts to a rational number, the result will be {@link RoundingMode#DOWN rounded down} to a
+	 * decimal with this precision.
+	 */
+	public static final int PRECISION_OF_DIVISION = 16;
+
+	private static final MathContext MATH_CONTEXT_FOR_DIVISON = new MathContext(PRECISION_OF_DIVISION,
+			RoundingMode.DOWN);
 
 	/** Representation of the Javascript value <code>undefined</code>. */
 	public static final CompileTimeValue UNDEFINED = new ValueValid<String>("undefined") {
@@ -447,7 +458,9 @@ public abstract class CompileTimeValue {
 		if (((ValueNumber) valueRight).isZero()) {
 			return CompileTimeValue.error("division by zero not allowed in compile-time expressions", astNodeRight);
 		}
-		return of(((ValueNumber) valueLeft).getValue().divide(((ValueNumber) valueRight).getValue()));
+		final BigDecimal decimalLeft = ((ValueNumber) valueLeft).getValue();
+		final BigDecimal decimalRight = ((ValueNumber) valueRight).getValue();
+		return of(decimalLeft.divide(decimalRight, MATH_CONTEXT_FOR_DIVISON));
 	}
 
 	/**
