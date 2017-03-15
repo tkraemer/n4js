@@ -13,6 +13,8 @@ package eu.numberfour.n4js.ui.workingsets.internal;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 import static eu.numberfour.n4js.ui.workingsets.WorkingSet.OTHERS_WORKING_SET_ID;
+import static org.eclipse.core.runtime.Status.CANCEL_STATUS;
+import static org.eclipse.core.runtime.Status.OK_STATUS;
 
 import java.util.Collection;
 import java.util.List;
@@ -44,15 +46,11 @@ import eu.numberfour.n4js.ui.workingsets.WorkingSetDiffBuilder;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManager;
 import eu.numberfour.n4js.ui.workingsets.WorkingSetManagerBroker;
 import eu.numberfour.n4js.utils.Diff;
-import eu.numberfour.n4js.utils.StatusHelper;
 
 /**
  * Allow dragging projects between N4JS working sets in the {@code Project Explorer}.
  */
 public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapterAssistant {
-
-	@Inject
-	private StatusHelper statusHelper;
 
 	@Inject
 	private WorkingSetManagerBroker workingSetManagerBroker;
@@ -62,7 +60,7 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 
 		// We don't currently support COPY or LINK
 		if (operation != DND.DROP_MOVE) {
-			return statusHelper.cancel();
+			return CANCEL_STATUS;
 		}
 
 		WorkingSet targetWorkingSet = null;
@@ -71,11 +69,11 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 		}
 
 		if (targetWorkingSet == null) {
-			return statusHelper.cancel();
+			return CANCEL_STATUS;
 		}
 
 		if (!LocalSelectionTransfer.getTransfer().isSupportedType(transferType)) {
-			return statusHelper.cancel();
+			return CANCEL_STATUS;
 		}
 
 		// Verify that we have at least one project not already in the target
@@ -87,7 +85,7 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 					if (project != null && !workingSetContains(targetWorkingSet, project)) {
 						WorkingSetManager manager = ((WorkingSet) target).getWorkingSetManager();
 						if (ManualAssociationAwareWorkingSetManager.class.getName().equals(manager.getId())) {
-							return statusHelper.OK();
+							return OK_STATUS;
 						}
 					}
 				}
@@ -99,12 +97,12 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 				getCommonDropAdapter().setExpandEnabled(false);
 				getCommonDropAdapter().setFeedbackEnabled(true);
 
-				return statusHelper.OK();
+				return OK_STATUS;
 			}
 
 		}
 
-		return statusHelper.cancel();
+		return CANCEL_STATUS;
 	}
 
 	@Override
@@ -126,11 +124,11 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 				if (project != null) {
 
 					if (!(target instanceof ManualAssociationWorkingSet)) {
-						return statusHelper.cancel();
+						return CANCEL_STATUS;
 					}
 
 					if (!ManualAssociationAwareWorkingSetManager.class.getName().equals(manager.getId())) {
-						return statusHelper.cancel();
+						return CANCEL_STATUS;
 					}
 
 					if (!workingSetContains(oldTarget, project)
@@ -190,7 +188,7 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 					int sourceAllIndex = indexOfById(movedWorkingSet, allItems);
 
 					if (sourceVisibleIndex == -1 || sourceAllIndex == -1) {
-						return statusHelper.cancel();
+						return CANCEL_STATUS;
 					}
 
 					final Object currentTarget = getCommonDropAdapter().getCurrentTarget();
@@ -199,7 +197,7 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 						int targetAllIndex = indexOfById((WorkingSet) currentTarget, allItems);
 
 						if (targetVisibleIndex == -1 || targetAllIndex == -1) {
-							return statusHelper.cancel();
+							return CANCEL_STATUS;
 						}
 
 						if (getCommonDropAdapter().getCurrentLocation() == ViewerDropAdapter.LOCATION_AFTER) {
@@ -218,7 +216,7 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 								allRemoved);
 
 					} else {
-						return statusHelper.cancel();
+						return CANCEL_STATUS;
 					}
 
 				}
@@ -258,7 +256,7 @@ public class N4JSProjectInWorkingSetDropAdapterAssistant extends CommonDropAdapt
 			workingSetManagerBroker.refreshNavigator();
 		}
 
-		return statusHelper.OK();
+		return OK_STATUS;
 	}
 
 	/**
