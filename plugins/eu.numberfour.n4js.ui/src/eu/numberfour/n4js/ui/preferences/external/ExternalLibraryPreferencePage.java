@@ -41,10 +41,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
+import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -416,14 +415,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 						checkState(file.createNewFile(), "Error while importing target platform file.");
 					}
 					final URI platformFileLocation = file.toURI();
-					final TargetPlatformModel model = TargetPlatformModel.readValue(platformFileLocation);
-					final Set<String> packages = model.getLocation().stream()
-							.filter(l -> l.getRepoType().equals(TargetPlatformModel.RepositoryType.npm))
-							.map(l -> l.getProjects())
-							.flatMap(p -> p.entrySet().stream())// TODO refactor TargetPlatformModel, e.g.
-																// class Projects extends HashMap<String,
-																// ProjectProperties>)
-							.map(e -> e.getKey()).collect(Collectors.toSet());
+					final Collection<String> packages = TargetPlatformModel.npmPackageNamesFrom(platformFileLocation);
 
 					if (!packages.isEmpty()) {
 						final AtomicReference<IStatus> errorStatusRef = new AtomicReference<>();
@@ -463,7 +455,6 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				}
 			}
 		}
-
 	}
 
 	/**
