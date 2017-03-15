@@ -13,10 +13,10 @@ package eu.numberfour.n4js.utils.tests
 import com.google.inject.Inject
 import eu.numberfour.n4js.N4JSInjectorProviderWithIssueSuppression
 import eu.numberfour.n4js.N4JSParseHelper
+import eu.numberfour.n4js.compileTime.CompileTimeEvaluator
+import eu.numberfour.n4js.compileTime.CompileTimeValue
 import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.ParenExpression
-import eu.numberfour.n4js.utils.CompileTimeEvaluator
-import eu.numberfour.n4js.utils.CompileTimeValue
 import java.math.BigDecimal
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
@@ -71,6 +71,9 @@ class CompileTimeEvaluatorTest {
 		assertValueOfCompileTimeExpr("'1.2' + 3.4", "1.23.4");
 		assertValueOfCompileTimeExpr("1.2 + '3.4'", "1.23.4");
 		assertValueOfCompileTimeExpr("'Hello ' + \"world\" + `!`", "Hello world!");
+		assertValueOfCompileTimeExpr("1.2 + false", INVALID);
+		assertValueOfCompileTimeExpr("null + 1.2", INVALID);
+		assertValueOfCompileTimeExpr("1.2 + undefined", INVALID);
 	}
 
 	@Test
@@ -97,7 +100,7 @@ class CompileTimeEvaluatorTest {
 		assertValueOfCompileTimeExpr("0 / 1", 0);
 		assertValueOfCompileTimeExpr("0 / -1", 0); // TODO support for -0 in compile-time expressions
 
-		assertValueOfCompileTimeExpr("-21 / 0", null); // TODO support for Infinity in compile-time expressions
+		assertValueOfCompileTimeExpr("-21 / 0", INVALID); // TODO support for Infinity in compile-time expressions
 	}
 
 	@Test
@@ -147,14 +150,17 @@ class CompileTimeEvaluatorTest {
 		val enumPlain = '''
 			enum Color { RED, GREEN: '*green*', BLUE }
 		''';
-		assertValueOfCompileTimeExpr(enumPlain, "Color.RED + Color.GREEN + Color.BLUE", null);
+		assertValueOfCompileTimeExpr(enumPlain, "Color.RED + Color.GREEN + Color.BLUE", INVALID);
 	}
 
+
+	private static final Object INVALID = new Object();
 
 	def protected void assertValueOfCompileTimeExpr(CharSequence expression, Object expectedValue) {
 		assertValueOfCompileTimeExpr("", expression, expectedValue);
 	}
 	def protected void assertValueOfCompileTimeExpr(CharSequence preamble, CharSequence expression, Object expectedValue) {
+		assertNotNull(expectedValue);
 		val script = '''
 			«preamble»;
 			(«expression»);
@@ -168,7 +174,7 @@ class CompileTimeEvaluatorTest {
 		val G = script.newRuleEnvironment;
 		val computedValue = compileTimeEvaluator.evaluateCompileTimeExpression(G, expressionInAST);
 		assertNotNull(computedValue);
-		if(expectedValue===null) {
+		if(expectedValue===INVALID) {
 			assertFalse("expected an invalid value but got a valid one", computedValue.valid);
 		} else {
 			assertTrue("expected a valid value but got an invalid one", computedValue.valid);

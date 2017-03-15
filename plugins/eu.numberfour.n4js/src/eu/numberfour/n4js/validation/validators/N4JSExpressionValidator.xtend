@@ -11,6 +11,9 @@
 package eu.numberfour.n4js.validation.validators
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.compileTime.CompileTimeEvaluationError
+import eu.numberfour.n4js.compileTime.CompileTimeEvaluator.UnresolvedPropertyAccessError
+import eu.numberfour.n4js.compileTime.CompileTimeValue.ValueInvalid
 import eu.numberfour.n4js.n4JS.AdditiveExpression
 import eu.numberfour.n4js.n4JS.AdditiveOperator
 import eu.numberfour.n4js.n4JS.Argument
@@ -106,9 +109,6 @@ import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
-import eu.numberfour.n4js.utils.CompileTimeEvaluator.UnresolvedPropertyAccessError
-import eu.numberfour.n4js.utils.CompileTimeValue.EvalError
-import eu.numberfour.n4js.utils.CompileTimeValue.ValueInvalid
 import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.utils.PromisifyHelper
@@ -1653,7 +1653,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Check
 	def void checkMandatoryCompileTimeExpression(Expression expr) {
-		if(N4JSLanguageUtils.isRequiredToBeCompileTimeExpression(expr)) {
+		if(N4JSLanguageUtils.isMandatoryCompileTimeExpression(expr)) {
 			val evalResult = astMetaInfoCacheHelper.getCompileTimeValue(expr);
 			if(evalResult instanceof ValueInvalid) {
 				if(isExpressionOfComputedPropertyNameInObjectLiteral(expr)) {
@@ -1675,7 +1675,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			&& exprParent.eContainer instanceof PropertyAssignment
 			&& exprParent.eContainer.eContainer instanceof ObjectLiteral;
 	}
-	def private void createIssueForEvalErrors(EvalError error) {
+	def private void createIssueForEvalErrors(CompileTimeEvaluationError error) {
 		val message = if(error instanceof UnresolvedPropertyAccessError) {
 			// special case:
 			// property of a ParameterizedPropertyAccessExpression was not found while evaluating the compile-time

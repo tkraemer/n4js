@@ -8,7 +8,7 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.utils;
+package eu.numberfour.n4js.compileTime;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -20,8 +20,6 @@ import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.xtext.nodemodel.INode;
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.postprocessing.ASTMetaInfoCache;
@@ -29,6 +27,7 @@ import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope;
 import eu.numberfour.n4js.ts.scoping.builtin.N4Scheme;
 import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TObjectPrototype;
+import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 import it.xsemantics.runtime.RuleEnvironment;
 
 /**
@@ -51,12 +50,12 @@ import it.xsemantics.runtime.RuleEnvironment;
 public abstract class CompileTimeValue {
 
 	/** Representation of the Javascript value <code>undefined</code>. */
-	public static final CompileTimeValue UNDEFINED = new ValueValid("undefined") {
+	public static final CompileTimeValue UNDEFINED = new ValueValid<String>("undefined") {
 		// no adjustments required
 	};
 
 	/** Representation of the Javascript value <code>null</code>. */
-	public static final CompileTimeValue NULL = new ValueValid("null") {
+	public static final CompileTimeValue NULL = new ValueValid<String>("null") {
 		// no adjustments required
 	};
 
@@ -66,68 +65,25 @@ public abstract class CompileTimeValue {
 	/** Representation of the Javascript value <code>false</code>. */
 	public static final ValueBoolean FALSE = new ValueBoolean(false);
 
-	/**
-	 * An error during evaluation of compile-time expressions.
-	 */
-	public static class EvalError {
-		/** Message for this error; never <code>null</code>. */
-		public final String message;
-		/** Optional AST node where this error occurred; may be <code>null</code>. */
-		public final EObject astNode;
-		/** Optional {@link EStructuralFeature feature} where this error occurred; may be <code>null</code>. */
-		public final EStructuralFeature feature;
-
-		/**
-		 * @param message
-		 *            message for this error; must not be <code>null</code>.
-		 * @param astNode
-		 *            optional AST node where this error occurred; may be <code>null</code>.
-		 * @param feature
-		 *            optional {@link EStructuralFeature feature} where this error occurred; may be <code>null</code>.
-		 */
-		public EvalError(String message, EObject astNode, EStructuralFeature feature) {
-			Objects.requireNonNull(message);
-			this.message = message;
-			this.astNode = astNode;
-			this.feature = feature;
-		}
-
-		/**
-		 * Returns this error's message with a suffix explaining where the error occurred if {@link #astNode} is given.
-		 * This method ignores field {@link #feature}.
-		 */
-		public String getMessageWithLocation() {
-			if (astNode == null) {
-				return message;
-			}
-			final INode node = NodeModelUtils.findActualNodeFor(astNode);
-			final String tokenText = node != null ? NodeModelUtils.getTokenText(node) : null;
-			if (tokenText == null) {
-				return message;
-			}
-			return message + " at \"" + tokenText + "\"";
-		}
-	}
-
 	/** Represents an invalid {@link CompileTimeValue}. */
 	public static final class ValueInvalid extends CompileTimeValue {
-		private final EvalError[] errors;
+		private final CompileTimeEvaluationError[] errors;
 
 		/**
 		 * @param errors
-		 *            zero or more evaluation errors, see {@link EvalError}.
+		 *            zero or more evaluation errors, see {@link CompileTimeEvaluationError}.
 		 */
-		public ValueInvalid(EvalError... errors) {
+		public ValueInvalid(CompileTimeEvaluationError... errors) {
 			Objects.requireNonNull(errors);
 			this.errors = Arrays.copyOf(errors, errors.length);
 		}
 
 		/**
-		 * This method may return one or more {@link EvalError}s with details why the evaluated expression was not a
-		 * valid compile-time expression. Providing such evaluation errors is, however, optional, so an empty list may
-		 * be returned.
+		 * This method may return one or more {@link CompileTimeEvaluationError}s with details why the evaluated
+		 * expression was not a valid compile-time expression. Providing such evaluation errors is, however, optional,
+		 * so an empty list may be returned.
 		 */
-		public List<EvalError> getErrors() {
+		public List<CompileTimeEvaluationError> getErrors() {
 			return Collections.unmodifiableList(Arrays.asList(errors));
 		}
 
@@ -138,10 +94,11 @@ public abstract class CompileTimeValue {
 	}
 
 	/** Common base class for classes representing valid {@link CompileTimeValue}s. */
-	public static abstract class ValueValid extends CompileTimeValue {
-		private final Object value;
+	public static abstract class ValueValid<T> extends CompileTimeValue {
 
-		private ValueValid(Object value) {
+		private final T value;
+
+		private ValueValid(T value) {
 			Objects.requireNonNull(value);
 			this.value = value;
 		}
@@ -155,14 +112,15 @@ public abstract class CompileTimeValue {
 		 * Returns the corresponding JVM representation of this valid compile-time value; never returns
 		 * <code>null</code>. For example, when invoked on an instance of a {@link CompileTimeValue} representing the
 		 * Javascript string <code>'example'</code>, this method will return <code>"example"</code> as a JVM string
-		 * instance. Numbers are represented as {@link BigDecimal}s.
+		 * instance. Numbers are represented as {@link BigDecimal}s. Symbols are represented as JVM strings prefixed by
+		 * {@link N4JSLanguageUtils#SYMBOL_IDENTIFIER_PREFIX}.
 		 * <p>
 		 * IMPORTANT: not all Javascript values have a corresponding JVM representation, e.g. <code>undefined</code>! In
 		 * these cases, this method will return an object that identifies the value only(!!) within the set of
 		 * compile-time values of same type (i.e. same subclass). Therefore, client code should never use the value
 		 * returned by this method without knowing beforehand which subclass of {@link ValueValid} it is dealing with.
 		 */
-		public Object getValue() {
+		public T getValue() {
 			return value;
 		}
 
@@ -173,7 +131,7 @@ public abstract class CompileTimeValue {
 
 		@Override
 		public boolean equals(Object obj) {
-			return obj != null && obj.getClass() == getClass() && value.equals(((ValueValid) obj).value);
+			return obj != null && obj.getClass() == getClass() && value.equals(((ValueValid<?>) obj).value);
 		}
 
 		@Override
@@ -183,15 +141,9 @@ public abstract class CompileTimeValue {
 	}
 
 	/** Represents a compile-time value of type boolean. */
-	public static final class ValueBoolean extends ValueValid {
+	public static final class ValueBoolean extends ValueValid<Boolean> {
 		private ValueBoolean(Boolean value) {
 			super(value);
-		}
-
-		/** Returns the native {@link Boolean} corresponding to this boolean compile-time value. */
-		@Override
-		public Boolean getValue() {
-			return (Boolean) super.getValue();
 		}
 
 		/** Returns inverted copy of this value. */
@@ -201,30 +153,18 @@ public abstract class CompileTimeValue {
 	}
 
 	/** Represents a compile-time value of type string. */
-	public static final class ValueString extends ValueValid {
+	public static final class ValueString extends ValueValid<String> {
 		private ValueString(String value) {
 			super(value);
-		}
-
-		/** Returns the native {@link String} corresponding to this compile-time value of type string. */
-		@Override
-		public String getValue() {
-			return (String) super.getValue();
 		}
 	}
 
 	/** Represents a compile-time value of type number. */
-	public static final class ValueNumber extends ValueValid {
+	public static final class ValueNumber extends ValueValid<BigDecimal> {
 		private ValueNumber(BigDecimal value) {
 			// important: need to normalize the BigDecimal here, otherwise 2.0 != 2.00
 			// (cannot use #compareTo() in an equals() method, because then hash codes would be incorrect)
 			super(value.stripTrailingZeros());
-		}
-
-		/** Returns the native {@link BigDecimal} corresponding to this compile-time value of type number. */
-		@Override
-		public BigDecimal getValue() {
-			return (BigDecimal) super.getValue();
 		}
 
 		/** Tells if this value is equal to 0. */
@@ -239,15 +179,9 @@ public abstract class CompileTimeValue {
 	}
 
 	/** Represents a compile-time value of type symbol. */
-	public static final class ValueSymbol extends ValueValid {
+	public static final class ValueSymbol extends ValueValid<String> {
 		private ValueSymbol(String symbolName) {
 			super(symbolName);
-		}
-
-		/** Returns the symbol's plain name (without {@link N4JSLanguageUtils#SYMBOL_IDENTIFIER_PREFIX}). */
-		@Override
-		public String getValue() {
-			return (String) super.getValue();
 		}
 
 		/** Returns the symbol's name prefixed by {@link N4JSLanguageUtils#SYMBOL_IDENTIFIER_PREFIX}. */
@@ -293,11 +227,11 @@ public abstract class CompileTimeValue {
 	/** Create an invalid compile-time value with the given error message for the given location in the AST. */
 	public static ValueInvalid error(String message, EObject astNode, EStructuralFeature feature) {
 		Objects.requireNonNull(message);
-		return error(new EvalError(message, astNode, feature));
+		return error(new CompileTimeEvaluationError(message, astNode, feature));
 	}
 
 	/** Create an invalid compile-time value with the given errors. */
-	public static ValueInvalid error(EvalError... errors) {
+	public static ValueInvalid error(CompileTimeEvaluationError... errors) {
 		return new ValueInvalid(errors);
 	}
 
@@ -545,8 +479,8 @@ public abstract class CompileTimeValue {
 	 * <p>
 	 * More precisely: given an array of zero or more compile-time values, this method returns ...
 	 * <ul>
-	 * <li>a single invalid value containing all {@link EvalError}s from all invalid values among the given array of
-	 * compile-time values, if that array contains at least one invalid value.
+	 * <li>a single invalid value containing all {@link CompileTimeEvaluationError}s from all invalid values among the
+	 * given array of compile-time values, if that array contains at least one invalid value.
 	 * <li><code>null</code>, in case none of the given compile-time values was invalid (including the case that no
 	 * compile-time values were given).
 	 * </ul>
@@ -556,27 +490,27 @@ public abstract class CompileTimeValue {
 	 */
 	public static ValueInvalid combineErrors(CompileTimeValue... values) {
 		boolean foundInvalid = false;
-		final List<EvalError> errors = new LinkedList<>();
+		final List<CompileTimeEvaluationError> errors = new LinkedList<>();
 		for (CompileTimeValue currValue : values) {
 			if (currValue != null && !currValue.isValid()) {
 				foundInvalid = true;
 				errors.addAll(((ValueInvalid) currValue).getErrors());
 			}
 		}
-		return foundInvalid ? new ValueInvalid(errors.toArray(new EvalError[errors.size()])) : null;
+		return foundInvalid ? new ValueInvalid(errors.toArray(new CompileTimeEvaluationError[errors.size()])) : null;
 	}
 
 	/**
-	 * Ensures that the given compile-time values if of a particular type. If the given value is valid AND is of correct
-	 * type, <code>null</code> is returned; if the given value is already invalid, it is simply passed through;
-	 * otherwise (i.e. given value is valid but of incorrect type), a new {@link ValueInvalid} is returned with the
-	 * given error message and AST node.
+	 * Ensures that the given compile-time value is of a particular type. If the given value is valid AND is of the
+	 * given expected type, <code>null</code> is returned; if the given value is already invalid, it is simply passed
+	 * through; otherwise (i.e. given value is valid but isn't of the given expected type), a new {@link ValueInvalid}
+	 * is returned with the given error message and AST node.
 	 * <p>
 	 * This method is intended to be used together with {@link #combineErrors(CompileTimeValue...)}.
 	 *
 	 * @param value
 	 *            the value to check.
-	 * @param type
+	 * @param expectedType
 	 *            the expected type.
 	 * @param message
 	 *            an error message or <code>null</code>.
@@ -586,7 +520,7 @@ public abstract class CompileTimeValue {
 	 *
 	 * @see #combineErrors(CompileTimeValue...)
 	 */
-	public static ValueInvalid requireValueType(CompileTimeValue value, Class<? extends ValueValid> type,
+	public static ValueInvalid requireValueType(CompileTimeValue value, Class<? extends ValueValid<?>> expectedType,
 			String message, EObject astNode) {
 		if (value == null) {
 			// probably due to broken AST
@@ -594,7 +528,7 @@ public abstract class CompileTimeValue {
 		} else if (value instanceof ValueInvalid) {
 			// value is already invalid -> simply pass through
 			return (ValueInvalid) value;
-		} else if (value.getClass() != type) {
+		} else if (value.getClass() != expectedType) {
 			// value is of wrong type -> create new error
 			return message != null && astNode != null ? error(message, astNode) : error();
 		}
@@ -608,9 +542,9 @@ public abstract class CompileTimeValue {
 	 * Serialize the given compile-time value into a string which can later be deserialized using method
 	 * {@link #deserialize(String)}.
 	 * <p>
-	 * It is legal to (de)serialize {@link ValueInvalid invalid values}. However, in case of {@link EvalError}s with a
-	 * defined AST node, the AST node will become part of the error message (because the code that will perform the
-	 * deserialization will, in most cases, not have access to the AST anyway).
+	 * It is legal to (de)serialize {@link ValueInvalid invalid values}. However, in case of
+	 * {@link CompileTimeEvaluationError}s with a defined AST node, the AST node will become part of the error message
+	 * (because the code that will perform the deserialization will, in most cases, not have access to the AST anyway).
 	 */
 	public static String serialize(CompileTimeValue value) {
 		if (value == null) {
@@ -645,9 +579,9 @@ public abstract class CompileTimeValue {
 			return error();
 		} else if (str.startsWith(INVALID_VALUE_PREFIX)) {
 			final String[] errorMessages = str.substring(INVALID_VALUE_PREFIX.length()).split("\n");
-			final EvalError[] errors = new EvalError[errorMessages.length];
+			final CompileTimeEvaluationError[] errors = new CompileTimeEvaluationError[errorMessages.length];
 			for (int i = 0; i < errorMessages.length; i++) {
-				errors[i] = new EvalError(errorMessages[i], null, null);
+				errors[i] = new CompileTimeEvaluationError(errorMessages[i], null, null);
 			}
 			return error(errors);
 		} else if (UNDEFINED.toString().equals(str)) {
@@ -658,15 +592,19 @@ public abstract class CompileTimeValue {
 			if (str.length() > 0) {
 				final char head = str.charAt(0);
 				final String tail = str.substring(1);
-				if (head == '?' && "true".equalsIgnoreCase(tail)) {
-					return TRUE;
-				} else if (head == '?' && "false".equalsIgnoreCase(tail)) {
-					return FALSE;
-				} else if (head == '"') {
+				switch (head) {
+				case '?':
+					if ("true".equalsIgnoreCase(tail)) {
+						return TRUE;
+					} else if ("false".equalsIgnoreCase(tail)) {
+						return FALSE;
+					}
+					break;
+				case '"':
 					return of(tail);
-				} else if (head == '#') {
+				case '#':
 					return new ValueNumber(new BigDecimal(tail));
-				} else if (head == '$') {
+				case '$':
 					return new ValueSymbol(tail);
 				}
 			}
