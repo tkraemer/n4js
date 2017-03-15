@@ -3593,8 +3593,17 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getPropertyNameOwner__IsValidName() {
+	public EOperation getPropertyNameOwner__HasComputedPropertyName() {
 		return propertyNameOwnerEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getPropertyNameOwner__IsValidName() {
+		return propertyNameOwnerEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -3647,8 +3656,17 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getLiteralOrComputedPropertyName__GetName() {
+	public EOperation getLiteralOrComputedPropertyName__HasComputedPropertyName() {
 		return literalOrComputedPropertyNameEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getLiteralOrComputedPropertyName__GetName() {
+		return literalOrComputedPropertyNameEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -6421,6 +6439,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		propertyNameOwnerEClass = createEClass(PROPERTY_NAME_OWNER);
 		createEReference(propertyNameOwnerEClass, PROPERTY_NAME_OWNER__DECLARED_NAME);
 		createEOperation(propertyNameOwnerEClass, PROPERTY_NAME_OWNER___GET_NAME);
+		createEOperation(propertyNameOwnerEClass, PROPERTY_NAME_OWNER___HAS_COMPUTED_PROPERTY_NAME);
 		createEOperation(propertyNameOwnerEClass, PROPERTY_NAME_OWNER___IS_VALID_NAME);
 
 		literalOrComputedPropertyNameEClass = createEClass(LITERAL_OR_COMPUTED_PROPERTY_NAME);
@@ -6428,6 +6447,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEAttribute(literalOrComputedPropertyNameEClass, LITERAL_OR_COMPUTED_PROPERTY_NAME__LITERAL_NAME);
 		createEAttribute(literalOrComputedPropertyNameEClass, LITERAL_OR_COMPUTED_PROPERTY_NAME__COMPUTED_NAME);
 		createEReference(literalOrComputedPropertyNameEClass, LITERAL_OR_COMPUTED_PROPERTY_NAME__EXPRESSION);
+		createEOperation(literalOrComputedPropertyNameEClass, LITERAL_OR_COMPUTED_PROPERTY_NAME___HAS_COMPUTED_PROPERTY_NAME);
 		createEOperation(literalOrComputedPropertyNameEClass, LITERAL_OR_COMPUTED_PROPERTY_NAME___GET_NAME);
 
 		annotablePropertyAssignmentEClass = createEClass(ANNOTABLE_PROPERTY_ASSIGNMENT);
@@ -7414,6 +7434,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 
 		initEOperation(getPropertyNameOwner__GetName(), theEcorePackage.getEString(), "getName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
+		initEOperation(getPropertyNameOwner__HasComputedPropertyName(), theEcorePackage.getEBoolean(), "hasComputedPropertyName", 0, 1, !IS_UNIQUE, IS_ORDERED);
+
 		initEOperation(getPropertyNameOwner__IsValidName(), theEcorePackage.getEBoolean(), "isValidName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(literalOrComputedPropertyNameEClass, LiteralOrComputedPropertyName.class, "LiteralOrComputedPropertyName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -7421,6 +7443,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		initEAttribute(getLiteralOrComputedPropertyName_LiteralName(), theEcorePackage.getEString(), "literalName", null, 0, 1, LiteralOrComputedPropertyName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getLiteralOrComputedPropertyName_ComputedName(), theEcorePackage.getEString(), "computedName", null, 0, 1, LiteralOrComputedPropertyName.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getLiteralOrComputedPropertyName_Expression(), this.getExpression(), null, "expression", null, 0, 1, LiteralOrComputedPropertyName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getLiteralOrComputedPropertyName__HasComputedPropertyName(), theEcorePackage.getEBoolean(), "hasComputedPropertyName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getLiteralOrComputedPropertyName__GetName(), theEcorePackage.getEString(), "getName", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

@@ -23,7 +23,6 @@ package eu.numberfour.n4js.ts.types;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.types.TVariable#isConst <em>Const</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TVariable#isExternal <em>External</em>}</li>
  * </ul>
  *
@@ -31,33 +30,7 @@ package eu.numberfour.n4js.ts.types;
  * @model
  * @generated
  */
-public interface TVariable extends TExportableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement, TTypedElement {
-	/**
-	 * Returns the value of the '<em><b>Const</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Const</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Const</em>' attribute.
-	 * @see #setConst(boolean)
-	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTVariable_Const()
-	 * @model unique="false"
-	 * @generated
-	 */
-	boolean isConst();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TVariable#isConst <em>Const</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Const</em>' attribute.
-	 * @see #isConst()
-	 * @generated
-	 */
-	void setConst(boolean value);
-
+public interface TVariable extends TExportableElement, TConstableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement, TTypedElement {
 	/**
 	 * Returns the value of the '<em><b>External</b></em>' attribute.
 	 * <!-- begin-user-doc -->

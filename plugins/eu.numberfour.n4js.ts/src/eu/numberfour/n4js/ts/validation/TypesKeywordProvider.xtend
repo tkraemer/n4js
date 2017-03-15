@@ -40,6 +40,13 @@ import org.eclipse.emf.ecore.EObject
 @Singleton
 class TypesKeywordProvider {
 
+	def String keywordWithIndefiniteArticle(EObject elem) {
+		val keyword = keyword(elem);
+		val firstChar = if(keyword.length>0) Character.toLowerCase(keyword.charAt(0));
+		val startsWithVowel = 'aeiou'.indexOf(firstChar)>=0;
+		return if(startsWithVowel) 'an ' + keyword else 'a ' + keyword;
+	}
+
 	def dispatch String keyword(EObject eobj) {
 		val modelName = eobj.eClass.name;
 		val strb = new StringBuilder(modelName.length+1);

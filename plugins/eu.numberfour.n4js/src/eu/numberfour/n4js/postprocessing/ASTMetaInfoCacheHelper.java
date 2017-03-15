@@ -19,6 +19,8 @@ import org.eclipse.xtext.util.OnChangeEvictingCache;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.compileTime.CompileTimeValue;
+import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
 import eu.numberfour.n4js.resource.N4JSResource;
@@ -54,6 +56,13 @@ public final class ASTMetaInfoCacheHelper {
 	 */
 	public List<TypeRef> getInferredTypeArgs(ParameterizedCallExpression callExpr) {
 		return getOrCreate((N4JSResource) callExpr.eResource()).getInferredTypeArgs(callExpr);
+	}
+
+	/**
+	 * Convenience method for {@link ASTMetaInfoCache#getCompileTimeValue(Expression)}.
+	 */
+	public CompileTimeValue getCompileTimeValue(Expression expr) {
+		return getOrCreate((N4JSResource) expr.eResource()).getCompileTimeValue(expr);
 	}
 
 	/**

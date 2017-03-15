@@ -11,11 +11,15 @@
 package eu.numberfour.n4js.validation.validators
 
 import com.google.inject.Inject
+import eu.numberfour.n4js.compileTime.CompileTimeEvaluationError
+import eu.numberfour.n4js.compileTime.CompileTimeEvaluator.UnresolvedPropertyAccessError
+import eu.numberfour.n4js.compileTime.CompileTimeValue.ValueInvalid
 import eu.numberfour.n4js.n4JS.AdditiveExpression
 import eu.numberfour.n4js.n4JS.AdditiveOperator
 import eu.numberfour.n4js.n4JS.Argument
 import eu.numberfour.n4js.n4JS.ArrayElement
 import eu.numberfour.n4js.n4JS.ArrayLiteral
+import eu.numberfour.n4js.n4JS.ArrowFunction
 import eu.numberfour.n4js.n4JS.AssignmentExpression
 import eu.numberfour.n4js.n4JS.AwaitExpression
 import eu.numberfour.n4js.n4JS.BinaryLogicalExpression
@@ -29,6 +33,7 @@ import eu.numberfour.n4js.n4JS.ExpressionStatement
 import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.IndexedAccessExpression
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4JSPackage
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
@@ -41,6 +46,7 @@ import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ParenExpression
 import eu.numberfour.n4js.n4JS.PostfixExpression
 import eu.numberfour.n4js.n4JS.PromisifyExpression
+import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.RelationalExpression
 import eu.numberfour.n4js.n4JS.RelationalOperator
 import eu.numberfour.n4js.n4JS.Script
@@ -52,6 +58,7 @@ import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
 import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.n4JS.extensions.ExpressionExtensions
+import eu.numberfour.n4js.postprocessing.ASTMetaInfoCacheHelper
 import eu.numberfour.n4js.scoping.accessModifiers.MemberVisibilityChecker
 import eu.numberfour.n4js.scoping.accessModifiers.VisibilityAwareCtorScope
 import eu.numberfour.n4js.scoping.members.MemberScopingHelper
@@ -130,7 +137,6 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.n4JS.ArrowFunction
 
 /**
  */
@@ -153,6 +159,8 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 	@Inject private PromisifyHelper promisifyHelper;
 
 	@Inject private JavaScriptVariantHelper jsVariantHelper;
+
+	@Inject private ASTMetaInfoCacheHelper astMetaInfoCacheHelper;
 
 	/**
 	 * NEEEDED
@@ -1397,7 +1405,7 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 			return; // error otherwise or corrupt AST
 		}
 		val receiverTypeRef = ts.resolveType(G, receiverTypeRefRaw);
-		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(index);
+		val accessedBuiltInSymbol = N4JSLanguageUtils.getAccessedBuiltInSymbol(G, index);
 		val accessedStaticType = if(receiverTypeRef instanceof TypeTypeRef) tsh.getStaticType(G, receiverTypeRef);
 		val isComputedName = !(index instanceof NumericLiteral) && accessedBuiltInSymbol===null && N4JSLanguageUtils.isValidIndexExpression(G, index);
 		if (accessedBuiltInSymbol !== null
@@ -1640,6 +1648,62 @@ class N4JSExpressionValidator extends AbstractN4JSDeclarativeValidator {
 					return;
 				}
 			}
+		}
+	}
+
+	@Check
+	def void checkMandatoryCompileTimeExpression(Expression expr) {
+		if(N4JSLanguageUtils.isMandatoryCompileTimeExpression(expr)) {
+			val evalResult = astMetaInfoCacheHelper.getCompileTimeValue(expr);
+			if(evalResult instanceof ValueInvalid) {
+				if(isExpressionOfComputedPropertyNameInObjectLiteral(expr)) {
+					// special case: in object literals, anything goes
+					// (but show a warning)
+					addIssue(IssueCodes.getMessageForEXP_COMPUTED_PROP_NAME_DISCOURAGED, expr,
+						IssueCodes.EXP_COMPUTED_PROP_NAME_DISCOURAGED);
+					return;
+				}
+				for(error : evalResult.getErrors) {
+					createIssueForEvalErrors(error);
+				}
+			}
+		}
+	}
+	def private boolean isExpressionOfComputedPropertyNameInObjectLiteral(Expression expr) {
+		val exprParent = expr.eContainer;
+		return exprParent instanceof LiteralOrComputedPropertyName
+			&& exprParent.eContainer instanceof PropertyAssignment
+			&& exprParent.eContainer.eContainer instanceof ObjectLiteral;
+	}
+	def private void createIssueForEvalErrors(CompileTimeEvaluationError error) {
+		val message = if(error instanceof UnresolvedPropertyAccessError) {
+			// special case:
+			// property of a ParameterizedPropertyAccessExpression was not found while evaluating the compile-time
+			// expression (see location in CompileTimeExpressionProcessor where UnresolvedPropertyAccessError is created)
+			// -> in this case, CompileTimeExpressionProcessor could not provide a detailed error message, so we have
+			// to come up with our own message:
+			val propAccessExpr = error.astNodeCasted;
+			val prop = propAccessExpr.property;
+			if(prop===null || prop.eIsProxy) {
+				// property does not exist, which will cause the usual "Couldn't resolve ..." error
+				// -> no additional error message required, here
+				null
+			} else {
+				// at this point, still quite a few cases are left, but to distinguish between them would require
+				// additional information in the TModule, which is not worth it; so we go with a fairly generic
+				// message, here:
+				"reference must point to a directly owned field (i.e. not inherited, consumed, or polyfilled) and the field must not have a computed name"
+			}
+		} else {
+			// standard case:
+			// -> CompileTimeExpressionProcessor provided an error message
+			error.message
+		};
+		val astNode = error.astNode;
+		val feature = error.feature;
+		if(message!==null && astNode!==null) { // feature may be null, that is ok!
+			val msgFull = getMessageForEXP_COMPILE_TIME_MANDATORY(message);
+			addIssue(msgFull, astNode, feature, IssueCodes.EXP_COMPILE_TIME_MANDATORY);
 		}
 	}
 }

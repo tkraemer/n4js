@@ -1983,6 +1983,15 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_GETTER_DECLARATION___GET_NAME = N4JSPackage.N4_GETTER_DECLARATION___GET_NAME;
 
 	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_GETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME = N4JSPackage.N4_GETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME;
+
+	/**
 	 * The operation id for the '<em>Get Declared Type Ref</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2270,6 +2279,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_SETTER_DECLARATION___GET_NAME = N4JSPackage.N4_SETTER_DECLARATION___GET_NAME;
+
+	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_SETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME = N4JSPackage.N4_SETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME;
 
 	/**
 	 * The operation id for the '<em>Get Defined Accessor</em>' operation.
@@ -2667,6 +2685,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_METHOD_DECLARATION___GET_NAME = N4JSPackage.N4_METHOD_DECLARATION___GET_NAME;
+
+	/**
+	 * The operation id for the '<em>Has Computed Property Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_METHOD_DECLARATION___HAS_COMPUTED_PROPERTY_NAME = N4JSPackage.N4_METHOD_DECLARATION___HAS_COMPUTED_PROPERTY_NAME;
 
 	/**
 	 * The operation id for the '<em>Exists Explicit Super Call</em>' operation.

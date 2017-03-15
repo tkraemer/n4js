@@ -7,16 +7,15 @@
 }
 
 class C {
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "E.litA"
-	[E.litA] = "not allowed";
+	// XPECT noerrors -->
+	[E.litA] = "now allowed, because it's a constant expression (since IDE-2468)";
 	// XPECT noerrors -->
 	[E.litB] = "ok";
 }
 
 let obj = {
-	// the following is allowed as of IDE-2500 (arbitrary computed property names now allowed in object literals)
-	// XPECT warnings --> "Computed property name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without custom value; this property won't be type-checked at compile time." at "E.litA"
-	[E.litA]: "not allowed",
+	// XPECT noerrors -->
+	[E.litA]: "now allowed, because it's a constant expression (since IDE-2468)",
 	// XPECT noerrors -->
 	[E.litB]: "ok"
 };

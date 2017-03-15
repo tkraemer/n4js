@@ -243,6 +243,15 @@ public class LiteralOrComputedPropertyNameImpl extends ProxyResolvingEObjectImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean hasComputedPropertyName() {
+		return ((this.getKind() == PropertyNameKind.COMPUTED) && (this.getExpression() != null));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getName() {
 		String _elvis = null;
 		String _literalName = this.getLiteralName();
@@ -365,6 +374,8 @@ public class LiteralOrComputedPropertyNameImpl extends ProxyResolvingEObjectImpl
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
+			case N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME___HAS_COMPUTED_PROPERTY_NAME:
+				return hasComputedPropertyName();
 			case N4JSPackage.LITERAL_OR_COMPUTED_PROPERTY_NAME___GET_NAME:
 				return getName();
 		}

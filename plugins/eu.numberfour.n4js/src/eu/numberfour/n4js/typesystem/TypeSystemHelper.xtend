@@ -453,8 +453,8 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		
 		return unionTRs
 	}
-	
-	
+
+
 	/**
 	 * From any expression within a generator function or method, the type TNext is returned (referring to the
 	 * actual (outer) return type, which is {@code Generator<TYield,TReturn,TNext>}).
@@ -478,7 +478,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		}
 		return TypeRefsFactory.eINSTANCE.createUnknownTypeRef;
 	}
-	
+
 	/**
 	 * Given a {@link TypeRef} to a {@code Generator<TYield,TReturn,TNext>} class, this method returns TYield, if existent.
 	 */
@@ -491,7 +491,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		}
 		return yieldTypeRef;
 	}
-	
+
 	/**
 	 * Given a {@link TypeRef} to a {@code Generator<TYield,TReturn,TNext>} class, this method returns TReturn, if existent.
 	 */
@@ -504,7 +504,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		}
 		return returnTypeRef;
 	}
-	
+
 	/**
 	 * Given a {@link TypeRef} to a {@code Generator<TYield,TReturn,TNext>} class, this method returns TNext, if existent.
 	 */
@@ -517,7 +517,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 		}
 		return nextTypeRef;
 	}
-	
+
 	/**
 	 * Given a {@link TypeRef} to an {@code Iterable<T>}, this method returns T, if existent.
 	 */

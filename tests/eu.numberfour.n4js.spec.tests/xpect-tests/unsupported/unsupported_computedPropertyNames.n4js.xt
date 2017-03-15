@@ -8,17 +8,17 @@ function foo(): string {
 
 
 class C {
-	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "foo()"
+
+	// XPECT errors --> "Not a compile-time expression: a call expression is never a compile-time expression." at "foo()"
 	get [foo()]() {return null;}
-	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "foo()"
+
+	// XPECT errors --> "Not a compile-time expression: a call expression is never a compile-time expression." at "foo()"
 	set [foo()](value) {}
-	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "foo()"
+
+	// XPECT errors --> "Not a compile-time expression: a call expression is never a compile-time expression." at "foo()"
 	[foo()]() {}
-	
-	// XPECT errors --> "Unsupported feature: computed property/member name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without a value." at "Symbol()"
+
+	// XPECT errors --> "Not a compile-time expression: a call expression is never a compile-time expression." at "Symbol()"
 	[Symbol()]() {}
 }
 
@@ -28,19 +28,19 @@ var ol = {
 
 	// NOTE: as of IDE-2500, arbitrary computed property names are allowed in object literals
 
-	// XPECT warnings --> "Computed property name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without custom value; this property won't be type-checked at compile time." at "foo()"
+	// XPECT warnings --> "Computed property name using an expression other than a compile-time expression; this property won't be type-checked at compile time." at "foo()"
 	[foo()]: "one",
-	
-	// XPECT warnings --> "Computed property name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without custom value; this property won't be type-checked at compile time." at "foo()"
+
+	// XPECT warnings --> "Computed property name using an expression other than a compile-time expression; this property won't be type-checked at compile time." at "foo()"
 	get [foo()]() {return null;},
-	
-	// XPECT warnings --> "Computed property name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without custom value; this property won't be type-checked at compile time." at "foo()"
+
+	// XPECT warnings --> "Computed property name using an expression other than a compile-time expression; this property won't be type-checked at compile time." at "foo()"
 	set [foo()](value) {},
-	
-	// XPECT warnings --> "Computed property name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without custom value; this property won't be type-checked at compile time." at "foo()"
+
+	// XPECT warnings --> "Computed property name using an expression other than a compile-time expression; this property won't be type-checked at compile time." at "foo()"
 	[foo()]() {},
-	
-	// XPECT warnings --> "Computed property name using an expression other than string literal, built-in symbol, or a @StringBased enum literal without custom value; this property won't be type-checked at compile time." at "Symbol()"
+
+	// XPECT warnings --> "Computed property name using an expression other than a compile-time expression; this property won't be type-checked at compile time." at "Symbol()"
 	[Symbol()]() {}
 }
 

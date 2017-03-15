@@ -109,10 +109,7 @@ task:IDE-550[] task:IDE-551[]
 .Member Names
 [req,id=IDE-52,version=1]
 --
-. The name of a member is given as an identifier, a string literal, a numeric literal, or as a computed property name with
-.. a string literal, e.g. `['myProp']`,
-.. a built-in symbol, for example as in `[Symbol.iterator]`, or
-.. a literal of a `@StringBased` enum.
+. The name of a member is given as an identifier, a string literal, a numeric literal, or as a computed property name with a compile-time expression (see <<compile-time-expressions>>). In particular, string literals, e.g. `['myProp']`, built-in symbols, e.g. `[Symbol.iterator]`, and literals of `@StringBased` enums are all valid computed property names.
 .  No two members may have the same name, except one is static and the
 other is non-static:
 +
@@ -123,6 +120,7 @@ other is non-static:
 \endalign
 ++++
 .  The member name must be a valid identifier name, see <<_identifier-names-and-identifiers,Identifier Grammar>>.
+
 
 --
 

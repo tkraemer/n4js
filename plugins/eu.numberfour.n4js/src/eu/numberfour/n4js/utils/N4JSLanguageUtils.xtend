@@ -12,6 +12,7 @@ package eu.numberfour.n4js.utils
 
 import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.common.unicode.CharTypes
+import eu.numberfour.n4js.compileTime.CompileTimeValue
 import eu.numberfour.n4js.conversion.IdentifierValueConverter
 import eu.numberfour.n4js.n4JS.AbstractAnnotationList
 import eu.numberfour.n4js.n4JS.AnnotableElement
@@ -20,7 +21,9 @@ import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.FormalParameter
 import eu.numberfour.n4js.n4JS.FunctionDeclaration
 import eu.numberfour.n4js.n4JS.FunctionDefinition
+import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.IndexedAccessExpression
+import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4EnumLiteral
@@ -35,11 +38,13 @@ import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.PropertyAssignmentAnnotationList
 import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
+import eu.numberfour.n4js.n4JS.PropertyNameKind
 import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
+import eu.numberfour.n4js.postprocessing.ASTMetaInfoCache
 import eu.numberfour.n4js.ts.conversions.ComputedPropertyNameValueConverter
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
@@ -147,6 +152,16 @@ class N4JSLanguageUtils {
 	}
 
 	/**
+	 * Tells if given expression denotes the value 'undefined'.
+	 */
+	def static boolean isUndefinedLiteral(RuleEnvironment G, Expression expr) {
+		if(expr instanceof IdentifierRef) {
+			return expr.id===G.globalObjectScope.fieldUndefined;
+		}
+		return false;
+	}
+
+	/**
 	 * Tells if given object is a <em>type model element</em>, i.e. is contained below a {@link TModule} element.
 	 * <p>
 	 * Note that it is not possible to tell AST nodes from type model elements only based on the object's type, because
@@ -159,7 +174,8 @@ class N4JSLanguageUtils {
 
 	/**
 	 * Tells if given AST node is a typable AST node, i.e. a node that has an (actual) type that can be inferred
-	 * using the type system.
+	 * using the type system. When <code>true</code> is returned, the given AST node can safely be casted to
+	 * {@link TypableElement}.
 	 * <p>
 	 * For performance reasons, this method will simply assume {@code astNode} to be an AST node (i.e. contained below
 	 * a {@link Script} element) and will not check this again.
@@ -595,6 +611,43 @@ class N4JSLanguageUtils {
 	}
 
 	/**
+	 * If the given expression is a property access to one of the fields in {@code Symbol}, then this method returns the
+	 * referenced field, otherwise <code>null</code>. This method may perform proxy resolution.
+	 */
+	def public static TField getAccessedBuiltInSymbol(RuleEnvironment G, Expression expr) {
+		return getAccessedBuiltInSymbol(G, expr, true);
+	}
+
+	/**
+	 * Same as {@link #getAccessedBuiltInSymbol(RuleEnvironment, Expression)}, but proxy resolution can be disallowed.
+	 * However, if proxy resolution is disallowed, this method will only support a "direct access" to built-in symbols,
+	 * i.e. the target must be an {@link IdentifierRef} directly pointing to built-in object 'Symbol'.
+	 */
+	def public static TField getAccessedBuiltInSymbol(RuleEnvironment G, Expression expr, boolean allowProxyResolution) {
+		if (expr instanceof ParameterizedPropertyAccessExpression) {
+			val sym = G.symbolObjectType;
+			if (allowProxyResolution) {
+				// mode #1: we may resolve proxies
+				val prop = expr.property;
+				if(prop instanceof TField && prop.eContainer===sym) {
+					return prop as TField;
+				}
+			} else {
+				// mode #2: we must avoid proxy resolution
+				// (NOTE: this mode only supports direct access to built-in symbols, i.e. target must be IdentiferRef
+				// to built-in object 'Symbol')
+				val targetExpr = expr.target;
+				val targetElem = if (targetExpr instanceof IdentifierRef) targetExpr.id; // n.b.: only supports direct access
+				if (targetElem === sym) {
+					val propName = expr.propertyAsText; // do NOT use expr.property!
+					return sym.ownedMembers.filter(TField).findFirst[static && name == propName];
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Tells if the given class has a covariant constructor, cf. {@link AnnotationDefinition#COVARIANT_CONSTRUCTOR}, or
 	 * the given interface requires all implementing classes to have a covariant constructor.
 	 */
@@ -655,5 +708,42 @@ class N4JSLanguageUtils {
 				}
 			};
 		}
+	}
+
+	/**
+	 * Tells if the given expression is evaluated during post-processing as a compile-time expression and has its
+	 * {@link CompileTimeValue value} stored in the {@link ASTMetaInfoCache}.
+	 * <p>
+	 * Note that every expression may be a compile-time expression (in fact, every number or string literal is a
+	 * compile-time expression) but being a compile-time expression only has a special effect in case of certain
+	 * expressions. This method returns <code>true</code> for these expressions.
+	 * <p>
+	 * IMPORTANT: this method will return <code>true</code> only for root expressions directly processed as
+	 * compile-time expressions, not for expressions directly or indirectly nested in such an expression.
+	 */
+	def static boolean isProcessedAsCompileTimeExpression(Expression expr) {
+		// cases of expressions that are required to be a compile-time expression:
+		if(isMandatoryCompileTimeExpression(expr)) {
+			return true;
+		}
+		// cases of expressions that may or may not be a compile-time expression:
+		val parent = expr.eContainer;
+		return parent instanceof ExportedVariableDeclaration
+			|| parent instanceof N4FieldDeclaration;
+	}
+
+	/**
+	 * Tells if the given expression is required to be a constant expression, according to the N4JS language
+	 * specification.
+	 * <p>
+	 * IMPORTANT: this method will return <code>true</code> only for root expressions directly required to be
+	 * compile-time expressions, not for expressions directly or indirectly nested in such an expression.
+	 */
+	def static boolean isMandatoryCompileTimeExpression(Expression expr) {
+		val parent = expr.eContainer;
+		if(parent instanceof LiteralOrComputedPropertyName) {
+			return parent.kind===PropertyNameKind.COMPUTED && parent.expression===expr;
+		}
+		return false;
 	}
 }

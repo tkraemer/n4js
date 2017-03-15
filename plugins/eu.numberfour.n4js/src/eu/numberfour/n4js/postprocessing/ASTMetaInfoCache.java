@@ -30,6 +30,9 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.OnChangeEvictingCache.CacheAdapter;
 
+import eu.numberfour.n4js.compileTime.CompileTimeValue;
+import eu.numberfour.n4js.n4JS.Expression;
+import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
 import eu.numberfour.n4js.n4JS.Script;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
@@ -38,6 +41,7 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
 import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
+import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 import eu.numberfour.n4js.utils.UtilN4;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
@@ -62,10 +66,11 @@ public final class ASTMetaInfoCache {
 	private final boolean hasBrokenAST;
 	private final Map<TypableElement, Result<TypeRef>> actualTypes = new HashMap<>();
 	private final Map<ParameterizedCallExpression, List<TypeRef>> inferredTypeArgs = new HashMap<>();
+	private final Map<Expression, CompileTimeValue> compileTimeValue = new HashMap<>();
 
 	private final Map<VariableDeclaration, List<EObject>> localVariableReferences = new HashMap<>();
 
-	ASTMetaInfoCache(N4JSResource resource, boolean hasBrokenAST) {
+	/* package */ ASTMetaInfoCache(N4JSResource resource, boolean hasBrokenAST) {
 		this.resource = resource;
 		this.hasBrokenAST = hasBrokenAST;
 	}
@@ -112,11 +117,11 @@ public final class ASTMetaInfoCache {
 		return result;
 	}
 
-	void storeType(TypableElement astNode, TypeRef actualType) {
+	/* package */ void storeType(TypableElement astNode, TypeRef actualType) {
 		storeType(astNode, new Result<>(actualType));
 	}
 
-	void storeType(TypableElement astNode, Result<TypeRef> actualType) {
+	/* package */ void storeType(TypableElement astNode, Result<TypeRef> actualType) {
 		if (!isProcessingInProgress()) {
 			throw new IllegalStateException();
 		}
@@ -139,11 +144,35 @@ public final class ASTMetaInfoCache {
 		return inferredTypeArgs.get(callExpr);
 	}
 
-	void storeInferredTypeArgs(ParameterizedCallExpression callExpr, List<TypeRef> typeArgs) {
+	/* package */ void storeInferredTypeArgs(ParameterizedCallExpression callExpr, List<TypeRef> typeArgs) {
 		if (!isProcessingInProgress()) {
 			throw new IllegalStateException();
 		}
 		inferredTypeArgs.put(callExpr, Collections.unmodifiableList(new ArrayList<>(typeArgs)));
+	}
+
+	/**
+	 * Returns the {@link CompileTimeValue compile-time value} that resulted from the compile-time evaluation of the
+	 * given expression in one of the early phases of post-processing or <code>null</code> if no value was cached.
+	 * Compile-time values are cached *only* for expressions for which method
+	 * {@link N4JSLanguageUtils#isProcessedAsCompileTimeExpression(Expression)} returns <code>true</code>.
+	 * <p>
+	 * Note that the returned value may be {@link CompileTimeValue#isValid() invalid} in case the expression is not a
+	 * valid compile-time expression.
+	 */
+	public CompileTimeValue getCompileTimeValue(Expression expr) {
+		return compileTimeValue.get(expr);
+	}
+
+	/* package */ void storeCompileTimeValue(Expression expr, CompileTimeValue evalResult) {
+		if (!isProcessingInProgress()) {
+			throw new IllegalStateException();
+		}
+		if (compileTimeValue.put(expr, evalResult) != null) {
+			throw UtilN4.reportError(new IllegalStateException(
+					"cache collision: multiple evaluation results put into cache for AST node: " + expr
+							+ " in resource: " + resource.getURI()));
+		}
 	}
 
 	/**
@@ -159,7 +188,7 @@ public final class ASTMetaInfoCache {
 		}
 	}
 
-	void storeLocalVariableReference(VariableDeclaration varDecl, EObject sourceNode) {
+	/* package */ void storeLocalVariableReference(VariableDeclaration varDecl, EObject sourceNode) {
 		if (localVariableReferences.containsKey(varDecl)) {
 			final List<EObject> references = localVariableReferences.get(varDecl);
 			references.add(sourceNode);
@@ -175,11 +204,16 @@ public final class ASTMetaInfoCache {
 
 	private boolean isProcessingInProgress = false;
 	private boolean isFullyProcessed = false;
-	CancelIndicator cancelIndicator = null;
+	/* package */ CancelIndicator cancelIndicator = null;
 
-	final Set<EObject> forwardProcessedSubTrees = new LinkedHashSet<>();
-	final Set<EObject> astNodesCurrentlyBeingTyped = new LinkedHashSet<>();
-	final Queue<EObject> postponedSubTrees = new LinkedList<>(); // using LinkedList as FIFO queue, here
+	// @formatter:off
+
+	/* package */ final Set<EObject> forwardProcessedSubTrees = new LinkedHashSet<>();
+	/* package */ final Set<EObject> astNodesCurrentlyBeingTyped = new LinkedHashSet<>();
+	/* package */ final Queue<EObject> postponedSubTrees = new LinkedList<>(); // using LinkedList as FIFO queue, here
+	/* package */ final List<FunctionOrFieldAccessor> potentialContainersOfLocalArgumentsVariable = new LinkedList<>();
+
+	// @formatter:on
 
 	/* package */ boolean isProcessingInProgress() {
 		return isProcessingInProgress;
@@ -220,6 +254,7 @@ public final class ASTMetaInfoCache {
 		forwardProcessedSubTrees.clear();
 		astNodesCurrentlyBeingTyped.clear();
 		postponedSubTrees.clear();
+		potentialContainersOfLocalArgumentsVariable.clear();
 	}
 
 	/**

@@ -409,6 +409,16 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean hasComputedPropertyName() {
+		final LiteralOrComputedPropertyName declName = this.getDeclaredName();
+		return ((declName != null) && declName.hasComputedPropertyName());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -613,6 +623,7 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 		if (baseClass == PropertyNameOwner.class) {
 			switch (baseOperationID) {
 				case N4JSPackage.PROPERTY_NAME_OWNER___GET_NAME: return N4JSPackage.N4_FIELD_DECLARATION___GET_NAME;
+				case N4JSPackage.PROPERTY_NAME_OWNER___HAS_COMPUTED_PROPERTY_NAME: return N4JSPackage.N4_FIELD_DECLARATION___HAS_COMPUTED_PROPERTY_NAME;
 				case N4JSPackage.PROPERTY_NAME_OWNER___IS_VALID_NAME: return N4JSPackage.N4_FIELD_DECLARATION___IS_VALID_NAME;
 				default: return -1;
 			}
@@ -640,6 +651,8 @@ public class N4FieldDeclarationImpl extends AnnotableN4MemberDeclarationImpl imp
 				return isValidName();
 			case N4JSPackage.N4_FIELD_DECLARATION___GET_NAME:
 				return getName();
+			case N4JSPackage.N4_FIELD_DECLARATION___HAS_COMPUTED_PROPERTY_NAME:
+				return hasComputedPropertyName();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
