@@ -41,7 +41,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
-import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
@@ -102,6 +101,8 @@ import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 import eu.numberfour.n4js.ui.binaries.IllegalBinaryStateDialog;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
+import eu.numberfour.n4js.ui.utils.ComposedInputValidator;
+import eu.numberfour.n4js.ui.utils.FunctionalInputValidator;
 import eu.numberfour.n4js.ui.utils.UIUtils;
 import eu.numberfour.n4js.ui.viewer.TreeViewerBuilder;
 import eu.numberfour.n4js.utils.StatusHelper;
@@ -414,8 +415,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 					if (!file.exists()) {
 						checkState(file.createNewFile(), "Error while importing target platform file.");
 					}
-					final URI n4tp = file.toURI();
-					final TargetPlatformModel model = TargetPlatformModel.readValue(n4tp);
+					final URI platformFileLocation = file.toURI();
+					final TargetPlatformModel model = TargetPlatformModel.readValue(platformFileLocation);
 					final Set<String> packages = model.getLocation().stream()
 							.filter(l -> l.getRepoType().equals(TargetPlatformModel.RepositoryType.npm))
 							.map(l -> l.getProjects())
@@ -451,9 +452,9 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 								N4JSActivator.getInstance().getLog().log(errorStatusRef.get());
 								getDisplay().asyncExec(() -> openError(
 										getShell(),
-										"npm Install Failed",
-										"Error while installing '" + n4tp
-												+ "' npm package.\nPlease check your Error Log view for the detailed npm log about the failure."));
+										"n4tp Install Failed",
+										"Error while installing from '" + platformFileLocation
+												+ "' target platform file.\nPlease check your Error Log view for the detailed information about the failure."));
 							}
 						}
 					}
@@ -476,36 +477,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 		@Override
 		public void widgetSelected(final SelectionEvent e) {
-			final Collection<String> installedNpmPackageNames = getInstalledNpmPackages();
 			final InputDialog dialog = new InputDialog(UIUtils.getShell(), "npm Install",
-					"Specify an npm package name to download and install:", null, new IInputValidator() {
-
-						@Override
-						public String isValid(final String newText) {
-
-							if (StringExtensions.isNullOrEmpty(newText)) {
-								return "The npm package name should be specified.";
-							}
-
-							for (int i = 0; i < newText.length(); i++) {
-								if (Character.isWhitespace(newText.charAt(i))) {
-									return "The npm package name must not contain any whitespaces.";
-								}
-							}
-
-							for (int i = 0; i < newText.length(); i++) {
-								if (Character.isUpperCase(newText.charAt(i))) {
-									return "The npm package name must not contain any upper case letter.";
-								}
-							}
-
-							if (installedNpmPackageNames.contains(newText)) {
-								return "The npm package '" + newText + "' is already available.";
-							}
-
-							return null;
-						}
-					});
+					"Specify an npm package name to download and install:", null, getPackageNameToInstallValidator());
 
 			dialog.open();
 			final String packageName = dialog.getValue();
@@ -542,12 +515,6 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				}
 			}
 		}
-
-		private Collection<String> getInstalledNpmPackages() {
-			final File root = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
-			return from(externalLibraryWorkspace.getProjects(root.toURI())).transform(p -> p.getName()).toSet();
-		}
-
 	}
 
 	/**
@@ -561,8 +528,6 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 		@Override
 		public void widgetSelected(final SelectionEvent e) {
-			final Collection<String> installedNpmPackageNames = getInstalledNpmPackages();
-
 			String initalValue = null;
 
 			final ISelection selection = viewer.getSelection();
@@ -575,34 +540,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 			}
 
 			final InputDialog dialog = new InputDialog(UIUtils.getShell(), "npm Uninstall",
-					"Specify an npm package name to uninstall:", initalValue, new IInputValidator() {
-
-						@Override
-						public String isValid(final String newText) {
-
-							if (StringExtensions.isNullOrEmpty(newText)) {
-								return "The npm package name should be specified.";
-							}
-
-							for (int i = 0; i < newText.length(); i++) {
-								if (Character.isWhitespace(newText.charAt(i))) {
-									return "The npm package name must not contain any whitespaces.";
-								}
-							}
-
-							for (int i = 0; i < newText.length(); i++) {
-								if (Character.isUpperCase(newText.charAt(i))) {
-									return "The npm package name must not contain any upper case letter.";
-								}
-							}
-
-							if (!installedNpmPackageNames.contains(newText)) {
-								return "The npm package '" + newText + "' is not installed.";
-							}
-
-							return null;
-						}
-					});
+					"Specify an npm package name to uninstall:", initalValue, getPackageNameToUninstallValidator());
 
 			dialog.open();
 			final String packageName = dialog.getValue();
@@ -639,12 +577,58 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				}
 			}
 		}
+	}
 
-		private Collection<String> getInstalledNpmPackages() {
-			final File root = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
-			return from(externalLibraryWorkspace.getProjects(root.toURI())).transform(p -> p.getName()).toSet();
-		}
+	/**
+	 * Validator that checks if given name is valid package name and can be used to install new package (i.e. there is
+	 * no installed package with the same name).
+	 *
+	 * @return validator checking if provided name can be used to install new package
+	 */
+	private IInputValidator getPackageNameToInstallValidator() {
+		return ComposedInputValidator.compose(
+				getBasicPackageValidator(), FunctionalInputValidator.from(
+						(final String name) -> !isInstalled(name) ? null
+								/* error message */
+								: "The npm package '" + name + "' is already available."));
+	}
 
+	/**
+	 * Validator that checks if given name is valid package name and can be used to uninstall new package (i.e. there is
+	 * installed package with the same name).
+	 *
+	 * @return validator checking if provided name can be used to install new package
+	 */
+	private IInputValidator getPackageNameToUninstallValidator() {
+		return ComposedInputValidator.compose(
+				getBasicPackageValidator(), FunctionalInputValidator.from(
+						(final String name) -> isInstalled(name) ? null
+								/* error case */
+								: "The npm package '" + name + "' is not installed."));
+	}
+
+	// TODO refactor with NpmManager internal logic of validating package name
+	private IInputValidator getBasicPackageValidator() {
+		return FunctionalInputValidator.from(
+				(final String name) -> {
+					if (StringExtensions.isNullOrEmpty(name))
+						return "The npm package name should be specified.";
+					for (int i = 0; i < name.length(); i++) {
+						if (Character.isWhitespace(name.charAt(i)))
+							return "The npm package name must not contain any whitespaces.";
+
+						if (Character.isUpperCase(name.charAt(i)))
+							return "The npm package name must not contain any upper case letter.";
+					}
+					return null;
+				});
+	}
+
+	private boolean isInstalled(final String packageName) {
+		final File root = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
+		return from(externalLibraryWorkspace.getProjects(root.toURI()))
+				.transform(p -> p.getName())
+				.anyMatch(name -> name.equals(packageName));
 	}
 
 	/**
@@ -659,12 +643,15 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 		private static final String ACTION_NPM_PACKAGES_DELETE = "Delete npm packages (whole npm folder gets deleted).";
 		private static final String ACTION_TYPE_DEFINITIONS_RESET = "Reset type definitions (fresh clone). ";
 
-		/** Initially pessimistic container for statues. */
 		private final MultiStatus multistatus = statusHelper
-				.createMultiError("Error while executing maintenance actions.");
+				.createMultiStatus("Status of executing maintenance actions.");
 
+		/**
+		 * Synchronized merges of the provided status into the container multi status. Merging takes care of updating
+		 * container {@link IStatus#getSeverity() severity} and {@link IStatus#getCode() code}.
+		 */
 		private synchronized void addStatus(IStatus status) {
-			multistatus.add(status);
+			multistatus.merge(status);
 		}
 
 		private synchronized MultiStatus getStauts() {
@@ -718,7 +705,6 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 						if (decisionPurgeNpm) {
 							deleteNpms();
-
 						}
 
 						if (decisionPurgeNpm || decisionResetTypeDefinitions) {
@@ -732,7 +718,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				} finally {
 					MultiStatus status = getStauts();
 
-					if (!Arrays2.isEmpty(status.getChildren())) {
+					if (!status.isOK()) {
 						N4JSActivator.getInstance().getLog().log(status);
 						getDisplay().asyncExec(() -> openError(
 								getShell(),
