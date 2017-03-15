@@ -2552,9 +2552,11 @@ in the previous sections qualify as compile-time expressions. Some forms of expr
 literal is always a compile-time expression), some never (e.g. call expressions), and for some expressions the operands
 must be of a certain value. The latter applies, for example, to divison: `5 / 0` is a valid ECMAScript expression (evaluating
 to `NaN`) but is not a compile-time expression. So it's the actual compile-time value of the divisor that makes the difference,
-here.
+here. In any case, if an expression has operands, it is a compile-time expression only if all operands are compile-time expressions.
 
-In any case, if an expression has operands, it is a compile-time expression only if all operands are compile-time expressions.
+The value a compile-time expression evaluates to at compile-time is called _compile-time value_. So, an expression has a compile-time
+value if and only if it is a compile-time expression.
+
 
 .Compile-Time Expression
 [def]
