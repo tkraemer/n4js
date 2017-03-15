@@ -8,10 +8,13 @@
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
-package eu.numberfour.n4js.utils
+package eu.numberfour.n4js.compileTime
 
 import com.google.inject.Inject
 import eu.numberfour.n4js.AnnotationDefinition
+import eu.numberfour.n4js.compileTime.CompileTimeValue.ValueBoolean
+import eu.numberfour.n4js.compileTime.CompileTimeValue.ValueInvalid
+import eu.numberfour.n4js.compileTime.CompileTimeValue.ValueNumber
 import eu.numberfour.n4js.n4JS.AdditiveExpression
 import eu.numberfour.n4js.n4JS.BinaryLogicalExpression
 import eu.numberfour.n4js.n4JS.BooleanLiteral
@@ -39,10 +42,9 @@ import eu.numberfour.n4js.ts.types.TConstableElement
 import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TypesPackage
-import eu.numberfour.n4js.utils.CompileTimeValue.EvalError
-import eu.numberfour.n4js.utils.CompileTimeValue.ValueBoolean
-import eu.numberfour.n4js.utils.CompileTimeValue.ValueInvalid
-import eu.numberfour.n4js.utils.CompileTimeValue.ValueNumber
+import eu.numberfour.n4js.utils.ContainerTypesHelper
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
+import eu.numberfour.n4js.utils.RecursionGuard
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
 import eu.numberfour.n4js.validation.validators.N4JSExpressionValidator
 import it.xsemantics.runtime.RuleEnvironment
@@ -232,7 +234,7 @@ class CompileTimeEvaluator {
 	 * <li>Since scoping of property access requires type information, we cannot use this form of scoping.
 	 * <li>Since this scoping would be triggered when invoking {@code #getProperty()} on the given property access
 	 * expression, we cannot make use of that property in this method.
-	 * <li>APPRACH: avoid using (ordinary) scoping but instead implement custom member lookup for the very limited cases
+	 * <li>APPROACH: avoid using (ordinary) scoping but instead implement custom member lookup for the very limited cases
 	 * supported by compile-time expressions.
 	 * </ul>
 	 * YES, this approach introduces an unfortunate duplication of logic, but greatly simplifies other parts of the
@@ -393,7 +395,9 @@ class CompileTimeEvaluator {
 		return astElemNonResolved !== null && !astElemNonResolved.eIsProxy;
 	}
 
-	def private static String combineErrorMessageWithNestedErrors(String mainMessage, EvalError... nestedErrors) {
+	def private static String combineErrorMessageWithNestedErrors(String mainMessage,
+		CompileTimeEvaluationError... nestedErrors) {
+
 		if (nestedErrors.length == 0) {
 			return mainMessage;
 		} else if (nestedErrors.length == 1) {
@@ -408,11 +412,11 @@ class CompileTimeEvaluator {
 
 
 	/**
-	 * Special kind of {@link EvalError} used to denote a particular case in which the {@link CompileTimeEvaluator}
-	 * cannot come up with the correct error message and thus delegates finding a proper message to the validation,
-	 * i.e. to class {@link N4JSExpressionValidator}.
+	 * Special kind of {@link CompileTimeEvaluationError} used to denote a particular case in which the
+	 * {@link CompileTimeEvaluator} cannot come up with the correct error message and thus delegates finding a proper
+	 * message to the validation, i.e. to class {@link N4JSExpressionValidator}.
 	 */
-	public static final class UnresolvedPropertyAccessError extends EvalError {
+	public static final class UnresolvedPropertyAccessError extends CompileTimeEvaluationError {
 
 		public new(ParameterizedPropertyAccessExpression astNode) {
 			super("*** UnresolvedPropertyAccessError ***", astNode,

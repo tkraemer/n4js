@@ -91,7 +91,7 @@ public class ASTProcessor extends AbstractProcessor {
 	@Inject
 	private ArrowFunctionProcessor arrowFunctionProcessor;
 	@Inject
-	private CompileTimeExpressionProcessor constantExpressionProcessor;
+	private CompileTimeExpressionProcessor compileTimeExpressionProcessor;
 
 	/**
 	 * Entry point for processing of the entire AST of the given resource.
@@ -151,7 +151,7 @@ public class ASTProcessor extends AbstractProcessor {
 	def private void processAST(RuleEnvironment G, Script script, ASTMetaInfoCache cache) {
 		// phase 0: process compile-time expressions & computed property names (order is important)
 		for(node : script.eAllContents.filter(Expression).toIterable) {
-			constantExpressionProcessor.evaluateCompileTimeExpression(G, node, cache, 0);
+			compileTimeExpressionProcessor.evaluateCompileTimeExpression(G, node, cache, 0);
 		}
 		for(node : script.eAllContents.filter(LiteralOrComputedPropertyName).toIterable) {
 			computedNameProcessor.processComputedPropertyName(G, node, cache, 0);

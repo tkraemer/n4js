@@ -19,6 +19,7 @@ import org.eclipse.xtext.util.OnChangeEvictingCache;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import eu.numberfour.n4js.compileTime.CompileTimeValue;
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
 import eu.numberfour.n4js.n4JS.VariableDeclaration;
@@ -26,7 +27,6 @@ import eu.numberfour.n4js.resource.N4JSResource;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
-import eu.numberfour.n4js.utils.CompileTimeValue;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleEnvironment;
 

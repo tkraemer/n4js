@@ -12,6 +12,7 @@ package eu.numberfour.n4js.utils
 
 import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.common.unicode.CharTypes
+import eu.numberfour.n4js.compileTime.CompileTimeValue
 import eu.numberfour.n4js.conversion.IdentifierValueConverter
 import eu.numberfour.n4js.n4JS.AbstractAnnotationList
 import eu.numberfour.n4js.n4JS.AnnotableElement
@@ -684,7 +685,7 @@ class N4JSLanguageUtils {
 	 */
 	def static boolean isProcessedAsCompileTimeExpression(Expression expr) {
 		// cases of expressions that are required to be a compile-time expression:
-		if(isRequiredToBeCompileTimeExpression(expr)) {
+		if(isMandatoryCompileTimeExpression(expr)) {
 			return true;
 		}
 		// cases of expressions that may or may not be a compile-time expression:
@@ -700,7 +701,7 @@ class N4JSLanguageUtils {
 	 * IMPORTANT: this method will return <code>true</code> only for root expressions directly required to be
 	 * compile-time expressions, not for expressions directly or indirectly nested in such an expression.
 	 */
-	def static boolean isRequiredToBeCompileTimeExpression(Expression expr) {
+	def static boolean isMandatoryCompileTimeExpression(Expression expr) {
 		val parent = expr.eContainer;
 		if(parent instanceof LiteralOrComputedPropertyName) {
 			return parent.kind===PropertyNameKind.COMPUTED && parent.expression===expr;

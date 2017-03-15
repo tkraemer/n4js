@@ -12,12 +12,12 @@ package eu.numberfour.n4js.postprocessing
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import eu.numberfour.n4js.compileTime.CompileTimeEvaluator
+import eu.numberfour.n4js.compileTime.CompileTimeValue
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.ts.types.TConstableElement
-import eu.numberfour.n4js.utils.CompileTimeEvaluator
-import eu.numberfour.n4js.utils.CompileTimeValue
 import eu.numberfour.n4js.utils.EcoreUtilN4
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import it.xsemantics.runtime.RuleEnvironment

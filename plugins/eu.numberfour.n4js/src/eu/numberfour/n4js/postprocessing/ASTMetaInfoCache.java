@@ -30,6 +30,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.OnChangeEvictingCache.CacheAdapter;
 
+import eu.numberfour.n4js.compileTime.CompileTimeValue;
 import eu.numberfour.n4js.n4JS.Expression;
 import eu.numberfour.n4js.n4JS.FunctionOrFieldAccessor;
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression;
@@ -40,7 +41,6 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory;
 import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem;
-import eu.numberfour.n4js.utils.CompileTimeValue;
 import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 import eu.numberfour.n4js.utils.UtilN4;
 import it.xsemantics.runtime.Result;
