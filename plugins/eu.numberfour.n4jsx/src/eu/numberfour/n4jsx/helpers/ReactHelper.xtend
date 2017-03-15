@@ -155,15 +155,13 @@ class ReactHelper {
 	}
 	
 	/**
-	 * Return the type of a field or return type of a getter
+	 * Return the type of a field or return type of a getter.
 	 * 
-	 * @param member MUST be either a field or getter
+	 * @param member MUST be either a field or getter (otherwise an exception is thrown).
 	 */
-	def public typeRefOfFieldOrGetter(TMember member) {
-		if (member instanceof TField) {
-			return member.typeRef;
-		} else if (member instanceof TGetter) {
-			return member.declaredTypeRef;
+	def public TypeRef typeRefOfFieldOrGetter(TMember member, TypeRef context) {
+		if (member instanceof TField || member instanceof TGetter) {
+			return ts.tau(member, context);
 		} else {
 			throw new IllegalArgumentException(member + " must be either a TField or TGetter");
 		}
