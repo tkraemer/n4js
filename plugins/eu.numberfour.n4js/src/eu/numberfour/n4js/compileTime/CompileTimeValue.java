@@ -11,6 +11,8 @@
 package eu.numberfour.n4js.compileTime;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -48,6 +50,15 @@ import it.xsemantics.runtime.RuleEnvironment;
  * {@link #multiply(CompileTimeValue, CompileTimeValue, EObject, EObject)}.
  */
 public abstract class CompileTimeValue {
+
+	/**
+	 * If a division amounts to a rational number, the result will be {@link RoundingMode#DOWN rounded down} to a
+	 * decimal with this precision.
+	 */
+	public static final int PRECISION_OF_DIVISION = 16;
+
+	private static final MathContext MATH_CONTEXT_FOR_DIVISON = new MathContext(PRECISION_OF_DIVISION,
+			RoundingMode.DOWN);
 
 	/** Representation of the Javascript value <code>undefined</code>. */
 	public static final CompileTimeValue UNDEFINED = new ValueValid<String>("undefined") {
@@ -301,9 +312,9 @@ public abstract class CompileTimeValue {
 	 *            location of the operand in the AST (for error messages) or <code>null</code> if not applicable.
 	 */
 	public static CompileTimeValue invert(CompileTimeValue value, EObject astNode) {
-		final ValueInvalid error = requireValueType(value, ValueBoolean.class, "operand must be a boolean", astNode);
-		if (error != null) {
-			return error;
+		final ValueInvalid invalid = requireValueType(value, ValueBoolean.class, "operand must be a boolean", astNode);
+		if (invalid != null) {
+			return invalid;
 		}
 		return ((ValueBoolean) value).invert();
 	}
@@ -319,11 +330,11 @@ public abstract class CompileTimeValue {
 	 */
 	public static CompileTimeValue and(CompileTimeValue valueLeft, CompileTimeValue valueRight,
 			EObject astNodeLeft, EObject astNodeRight) {
-		final ValueInvalid error = combineErrors(
+		final ValueInvalid invalid = combineErrors(
 				requireValueType(valueLeft, ValueBoolean.class, "left operand must be a boolean", astNodeLeft),
 				requireValueType(valueRight, ValueBoolean.class, "right operand must be a boolean", astNodeRight));
-		if (error != null) {
-			return error;
+		if (invalid != null) {
+			return invalid;
 		}
 		return CompileTimeValue.of(
 				((ValueBoolean) valueLeft).getValue() && ((ValueBoolean) valueRight).getValue());
@@ -340,11 +351,11 @@ public abstract class CompileTimeValue {
 	 */
 	public static CompileTimeValue or(CompileTimeValue valueLeft, CompileTimeValue valueRight,
 			EObject astNodeLeft, EObject astNodeRight) {
-		final ValueInvalid error = combineErrors(
+		final ValueInvalid invalid = combineErrors(
 				requireValueType(valueLeft, ValueBoolean.class, "left operand must be a boolean", astNodeLeft),
 				requireValueType(valueRight, ValueBoolean.class, "right operand must be a boolean", astNodeRight));
-		if (error != null) {
-			return error;
+		if (invalid != null) {
+			return invalid;
 		}
 		return CompileTimeValue.of(
 				((ValueBoolean) valueLeft).getValue() || ((ValueBoolean) valueRight).getValue());
@@ -358,9 +369,9 @@ public abstract class CompileTimeValue {
 	 *            location of the operand in the AST (for error messages) or <code>null</code> if not applicable.
 	 */
 	public static CompileTimeValue negate(CompileTimeValue value, EObject astNode) {
-		final ValueInvalid error = requireValueType(value, ValueNumber.class, "operand must be a number", astNode);
-		if (error != null) {
-			return error;
+		final ValueInvalid invalid = requireValueType(value, ValueNumber.class, "operand must be a number", astNode);
+		if (invalid != null) {
+			return invalid;
 		}
 		return ((ValueNumber) value).negate();
 	}
@@ -398,11 +409,11 @@ public abstract class CompileTimeValue {
 	 */
 	public static CompileTimeValue subtract(CompileTimeValue valueLeft, CompileTimeValue valueRight,
 			EObject astNodeLeft, EObject astNodeRight) {
-		final ValueInvalid error = combineErrors(
+		final ValueInvalid invalid = combineErrors(
 				requireValueType(valueLeft, ValueNumber.class, "left operand must be a number", astNodeLeft),
 				requireValueType(valueRight, ValueNumber.class, "right operand must be a number", astNodeRight));
-		if (error != null) {
-			return error;
+		if (invalid != null) {
+			return invalid;
 		}
 		return of(((ValueNumber) valueLeft).getValue().subtract(((ValueNumber) valueRight).getValue()));
 	}
@@ -418,11 +429,11 @@ public abstract class CompileTimeValue {
 	 */
 	public static CompileTimeValue multiply(CompileTimeValue valueLeft, CompileTimeValue valueRight,
 			EObject astNodeLeft, EObject astNodeRight) {
-		final ValueInvalid error = combineErrors(
+		final ValueInvalid invalid = combineErrors(
 				requireValueType(valueLeft, ValueNumber.class, "left operand must be a number", astNodeLeft),
 				requireValueType(valueRight, ValueNumber.class, "right operand must be a number", astNodeRight));
-		if (error != null) {
-			return error;
+		if (invalid != null) {
+			return invalid;
 		}
 		return of(((ValueNumber) valueLeft).getValue().multiply(((ValueNumber) valueRight).getValue()));
 	}
@@ -438,16 +449,18 @@ public abstract class CompileTimeValue {
 	 */
 	public static CompileTimeValue divide(CompileTimeValue valueLeft, CompileTimeValue valueRight,
 			EObject astNodeLeft, EObject astNodeRight) {
-		final ValueInvalid error = combineErrors(
+		final ValueInvalid invalid = combineErrors(
 				requireValueType(valueLeft, ValueNumber.class, "left operand must be a number", astNodeLeft),
 				requireValueType(valueRight, ValueNumber.class, "right operand must be a number", astNodeRight));
-		if (error != null) {
-			return error;
+		if (invalid != null) {
+			return invalid;
 		}
 		if (((ValueNumber) valueRight).isZero()) {
 			return CompileTimeValue.error("division by zero not allowed in compile-time expressions", astNodeRight);
 		}
-		return of(((ValueNumber) valueLeft).getValue().divide(((ValueNumber) valueRight).getValue()));
+		final BigDecimal decimalLeft = ((ValueNumber) valueLeft).getValue();
+		final BigDecimal decimalRight = ((ValueNumber) valueRight).getValue();
+		return of(decimalLeft.divide(decimalRight, MATH_CONTEXT_FOR_DIVISON));
 	}
 
 	/**
@@ -461,11 +474,11 @@ public abstract class CompileTimeValue {
 	 */
 	public static CompileTimeValue remainder(CompileTimeValue valueLeft, CompileTimeValue valueRight,
 			EObject astNodeLeft, EObject astNodeRight) {
-		final ValueInvalid error = combineErrors(
+		final ValueInvalid invalid = combineErrors(
 				requireValueType(valueLeft, ValueNumber.class, "left operand must be a number", astNodeLeft),
 				requireValueType(valueRight, ValueNumber.class, "right operand must be a number", astNodeRight));
-		if (error != null) {
-			return error;
+		if (invalid != null) {
+			return invalid;
 		}
 		if (((ValueNumber) valueRight).isZero()) {
 			return CompileTimeValue.error("division by zero not allowed in compile-time expressions", astNodeRight);
