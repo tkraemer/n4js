@@ -149,7 +149,7 @@ information about the package. The minimum information required for a package.js
 Let's say we wanted to change the version of our npm package, we can edit this in the manifest.n4mf file
 in the root of our fibonacci project:
 
-[source,n4js]
+[source,n4mf]
 .manifest.n4mf
 ----
 ProjectId: fibonacci
