@@ -111,4 +111,13 @@ public class StatusHelper {
 		return new MultiStatus(N4JS_PLUGIN_ID, ERROR, message, cause);
 	}
 
+	/**
+	 * Creates a new {@link MultiStatus multi-status} with the given message and {@link IStatus#OK} severity. The new
+	 * status will have zero child status instances and {@code null} cause. Intended as optimistic start point for multi
+	 * status operations.
+	 */
+	public MultiStatus createMultiStatus(final String message) {
+		return new MultiStatus(N4JS_PLUGIN_ID, NO_CODE, message, null);
+	}
+
 }

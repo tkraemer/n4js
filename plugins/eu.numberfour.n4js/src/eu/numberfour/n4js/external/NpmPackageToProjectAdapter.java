@@ -13,8 +13,6 @@ package eu.numberfour.n4js.external;
 import static com.google.common.collect.Sets.newHashSet;
 import static eu.numberfour.n4js.external.libraries.PackageJson.PACKAGE_JSON;
 import static eu.numberfour.n4js.n4mf.utils.N4MFConstants.N4MF_MANIFEST;
-import static java.util.Collections.emptyList;
-import static org.eclipse.core.runtime.Status.OK_STATUS;
 import static org.eclipse.xtext.util.Tuples.pair;
 
 import java.io.File;
@@ -111,7 +109,7 @@ public class NpmPackageToProjectAdapter {
 	 *
 	 * @param namesOfPackagesToAdapt
 	 *            names of the expected packages
-	 * @return folders of adapted npm packages
+	 * @return pair of overall adaptation status and folders of successfully adapted npm packages
 	 */
 	public Pair<IStatus, Collection<File>> adaptPackages(Iterable<String> namesOfPackagesToAdapt) {
 
@@ -120,8 +118,7 @@ public class NpmPackageToProjectAdapter {
 		final Collection<File> adaptedProjects = newHashSet();
 		final File[] packageRoots = nodeModulesFolder.listFiles(packageName -> names.contains(packageName.getName()));
 
-		// Initial pessimistic.
-		final MultiStatus status = statusHelper.createMultiError("Error while adapting npm packages to N4JS format.");
+		final MultiStatus status = statusHelper.createMultiStatus("Status of adapting npm packages");
 
 		final File n4jsdsFolder = getNpmsTypeDefinitionsFolder();
 
@@ -133,11 +130,11 @@ public class NpmPackageToProjectAdapter {
 				final File manifest = new File(packageRoot, N4MF_MANIFEST);
 				// looks like n4js project skip adaptation
 				if (manifest.exists() && manifest.isFile()) {
-					adaptedProjects.add(packageRoot);
 					if (!names.remove(packageRoot.getName())) {
 						throw new IOException("Unexpected error occurred while adapting '"
 								+ packageRoot.getName() + "' npm package into N4JS format.");
 					}
+					adaptedProjects.add(packageRoot);
 				} else {
 
 					if (manifest.isDirectory()) {
@@ -148,11 +145,11 @@ public class NpmPackageToProjectAdapter {
 
 					try {
 						generateManifestContent(packageRoot, packageJson, mainModule, manifest);
-						adaptedProjects.add(packageRoot);
 						if (!names.remove(packageRoot.getName())) {
 							throw new IOException("Unexpected error occurred while adapting '" + packageRoot.getName()
 									+ "' npm package into N4JS format.");
 						}
+						adaptedProjects.add(packageRoot);
 					} catch (final Exception e) {
 						try {
 							FileDeleter.delete(manifest);
@@ -170,17 +167,14 @@ public class NpmPackageToProjectAdapter {
 				}
 
 			} catch (final Exception e) {
-				status.add(statusHelper.createError("Unexpected error occurred while adapting '" + packageRoot.getName()
-						+ "' npm package into N4JS format.", e));
+				status.merge(
+						statusHelper.createError("Unexpected error occurred while adapting '" + packageRoot.getName()
+								+ "' npm package into N4JS format.", e));
 			}
 
 		}
 
-		if (Arrays2.isEmpty(status.getChildren())) {
-			return pair(OK_STATUS, adaptedProjects);
-		} else {
-			return pair(status, emptyList());
-		}
+		return pair(status, adaptedProjects);
 
 	}
 
