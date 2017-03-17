@@ -71,14 +71,12 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IWorkbench;
@@ -102,6 +100,8 @@ import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
 import eu.numberfour.n4js.ui.binaries.IllegalBinaryStateDialog;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
+import eu.numberfour.n4js.ui.utils.InputComposedValidator;
+import eu.numberfour.n4js.ui.utils.InputFunctionalValidator;
 import eu.numberfour.n4js.ui.utils.UIUtils;
 import eu.numberfour.n4js.ui.viewer.TreeViewerBuilder;
 import eu.numberfour.n4js.utils.StatusHelper;
@@ -185,8 +185,6 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 		createPlaceHolderLabel(subComposite);
 
-		createButton(subComposite, "Reload", new ReloadButtonListener());
-
 		createPlaceHolderLabel(subComposite);
 
 		createButton(subComposite, "Install npm...", new InstallNpmDependencyButtonListener());
@@ -194,6 +192,10 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 		createButton(subComposite, "Uninstall npm...", new UninstallNpmDependencyButtonListener());
 
 		createButton(subComposite, "Run maintenance actions", new MaintenanceActionsButtonListener());
+
+		createButton(subComposite, "Export target platform...", new ExportButtonListener());
+
+		createButton(subComposite, "Import target platform...", new ImportButtonListener());
 
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
@@ -231,13 +233,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 	@Override
 	public void createControl(Composite parent) {
+		noDefaultAndApplyButton();
 		super.createControl(parent);
-		final Composite buttonParent = getApplyButton().getParent();
-		final Layout layout = buttonParent.getLayout();
-		if (layout instanceof GridLayout) {
-			((GridLayout) layout).numColumns = ((GridLayout) layout).numColumns + 1;
-		}
-		createButton(buttonParent, "Export target platform...", new ExportButtonListener());
 	}
 
 	@Override
@@ -393,7 +390,80 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				}
 			}
 		}
+	}
 
+	/**
+	 * Selection listener for importing the target platform file from the UI.
+	 */
+	private class ImportButtonListener extends SelectionAdapter {
+
+		private final MultiStatus multistatus = statusHelper
+				.createMultiStatus("Status of importing target platform.");
+
+		@Override
+		public void widgetSelected(final SelectionEvent ignored) {
+			final FileDialog dialog = new FileDialog(getShell(), OPEN);
+			dialog.setFilterExtensions(new String[] { TP_FILTER_EXTENSION });
+			dialog.setFileName(TargetPlatformModel.TP_FILE_NAME);
+			dialog.setText("Import N4 Target Platform");
+			final String value = dialog.open();
+			if (!isNullOrEmpty(value)) {
+
+				final File file = new File(value);
+				try {
+					if (!file.exists()) {
+						multistatus.merge(statusHelper.createError("Error while importing target platform file."));
+						return;
+					}
+					final URI platformFileLocation = file.toURI();
+					final Collection<String> packages = TargetPlatformModel.npmPackageNamesFrom(platformFileLocation);
+
+					if (!packages.isEmpty()) {
+						final AtomicReference<IStatus> errorStatusRef = new AtomicReference<>();
+						final AtomicReference<IllegalBinaryStateException> illegalBinaryExcRef = new AtomicReference<>();
+						try {
+							new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
+								try {
+									IStatus status = npmManager.installDependencies(packages, monitor);
+									if (status.isOK()) {
+										updateInput(viewer, store.getLocations());
+									} else {
+										// Raise the error dialog just when this is closed.
+										errorStatusRef.set(status);
+									}
+								} catch (final IllegalBinaryStateException ibse) {
+									illegalBinaryExcRef.set(ibse);
+								}
+							});
+						} catch (final InvocationTargetException | InterruptedException exc) {
+							throw new RuntimeException("Error while installing npm dependency: '" + packages + "'.",
+									exc);
+						} finally {
+							if (null != errorStatusRef.get()) {
+								multistatus.merge(errorStatusRef.get());
+							}
+							if (null != illegalBinaryExcRef.get()) {
+								new IllegalBinaryStateDialog(illegalBinaryExcRef.get()).open();
+							}
+						}
+					} else {
+						MessageDialog.openInformation(UIUtils.getShell(), "Empty target platform file",
+								"Specified target platform file contains no packaged to install.");
+					}
+				} catch (final IOException e) {
+					multistatus.merge(statusHelper.createError("Error while importing target platform file.", e));
+				} finally {
+					if (!multistatus.isOK()) {
+						N4JSActivator.getInstance().getLog().log(multistatus);
+						getDisplay().asyncExec(() -> openError(
+								getShell(),
+								"n4tp Install Failed",
+								"Error while installing from '" + value
+										+ "' target platform file.\nPlease check your Error Log view for the detailed information about the failure."));
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -407,36 +477,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 		@Override
 		public void widgetSelected(final SelectionEvent e) {
-			final Collection<String> installedNpmPackageNames = getInstalledNpmPackages();
 			final InputDialog dialog = new InputDialog(UIUtils.getShell(), "npm Install",
-					"Specify an npm package name to download and install:", null, new IInputValidator() {
-
-						@Override
-						public String isValid(final String newText) {
-
-							if (StringExtensions.isNullOrEmpty(newText)) {
-								return "The npm package name should be specified.";
-							}
-
-							for (int i = 0; i < newText.length(); i++) {
-								if (Character.isWhitespace(newText.charAt(i))) {
-									return "The npm package name must not contain any whitespaces.";
-								}
-							}
-
-							for (int i = 0; i < newText.length(); i++) {
-								if (Character.isUpperCase(newText.charAt(i))) {
-									return "The npm package name must not contain any upper case letter.";
-								}
-							}
-
-							if (installedNpmPackageNames.contains(newText)) {
-								return "The npm package '" + newText + "' is already available.";
-							}
-
-							return null;
-						}
-					});
+					"Specify an npm package name to download and install:", null, getPackageNameToInstallValidator());
 
 			dialog.open();
 			final String packageName = dialog.getValue();
@@ -473,12 +515,6 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				}
 			}
 		}
-
-		private Collection<String> getInstalledNpmPackages() {
-			final File root = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
-			return from(externalLibraryWorkspace.getProjects(root.toURI())).transform(p -> p.getName()).toSet();
-		}
-
 	}
 
 	/**
@@ -492,8 +528,6 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 		@Override
 		public void widgetSelected(final SelectionEvent e) {
-			final Collection<String> installedNpmPackageNames = getInstalledNpmPackages();
-
 			String initalValue = null;
 
 			final ISelection selection = viewer.getSelection();
@@ -506,34 +540,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 			}
 
 			final InputDialog dialog = new InputDialog(UIUtils.getShell(), "npm Uninstall",
-					"Specify an npm package name to uninstall:", initalValue, new IInputValidator() {
-
-						@Override
-						public String isValid(final String newText) {
-
-							if (StringExtensions.isNullOrEmpty(newText)) {
-								return "The npm package name should be specified.";
-							}
-
-							for (int i = 0; i < newText.length(); i++) {
-								if (Character.isWhitespace(newText.charAt(i))) {
-									return "The npm package name must not contain any whitespaces.";
-								}
-							}
-
-							for (int i = 0; i < newText.length(); i++) {
-								if (Character.isUpperCase(newText.charAt(i))) {
-									return "The npm package name must not contain any upper case letter.";
-								}
-							}
-
-							if (!installedNpmPackageNames.contains(newText)) {
-								return "The npm package '" + newText + "' is not installed.";
-							}
-
-							return null;
-						}
-					});
+					"Specify an npm package name to uninstall:", initalValue, getPackageNameToUninstallValidator());
 
 			dialog.open();
 			final String packageName = dialog.getValue();
@@ -570,12 +577,58 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				}
 			}
 		}
+	}
 
-		private Collection<String> getInstalledNpmPackages() {
-			final File root = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
-			return from(externalLibraryWorkspace.getProjects(root.toURI())).transform(p -> p.getName()).toSet();
-		}
+	/**
+	 * Validator that checks if given name is valid package name and can be used to install new package (i.e. there is
+	 * no installed package with the same name).
+	 *
+	 * @return validator checking if provided name can be used to install new package
+	 */
+	private IInputValidator getPackageNameToInstallValidator() {
+		return InputComposedValidator.compose(
+				getBasicPackageValidator(), InputFunctionalValidator.from(
+						(final String name) -> !isInstalled(name) ? null
+								/* error message */
+								: "The npm package '" + name + "' is already available."));
+	}
 
+	/**
+	 * Validator that checks if given name is valid package name and can be used to uninstall new package (i.e. there is
+	 * installed package with the same name).
+	 *
+	 * @return validator checking if provided name can be used to install new package
+	 */
+	private IInputValidator getPackageNameToUninstallValidator() {
+		return InputComposedValidator.compose(
+				getBasicPackageValidator(), InputFunctionalValidator.from(
+						(final String name) -> isInstalled(name) ? null
+								/* error case */
+								: "The npm package '" + name + "' is not installed."));
+	}
+
+	// TODO refactor with NpmManager internal logic of validating package name
+	private IInputValidator getBasicPackageValidator() {
+		return InputFunctionalValidator.from(
+				(final String name) -> {
+					if (StringExtensions.isNullOrEmpty(name))
+						return "The npm package name should be specified.";
+					for (int i = 0; i < name.length(); i++) {
+						if (Character.isWhitespace(name.charAt(i)))
+							return "The npm package name must not contain any whitespaces.";
+
+						if (Character.isUpperCase(name.charAt(i)))
+							return "The npm package name must not contain any upper case letter.";
+					}
+					return null;
+				});
+	}
+
+	private boolean isInstalled(final String packageName) {
+		final File root = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
+		return from(externalLibraryWorkspace.getProjects(root.toURI()))
+				.transform(p -> p.getName())
+				.anyMatch(name -> name.equals(packageName));
 	}
 
 	/**
@@ -586,16 +639,20 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	 *
 	 */
 	private class MaintenanceActionsButtonListener extends SelectionAdapter {
+		private static final String ACTION_NPM_RELOAD = "Reload npm libraries from the disk.";
 		private static final String ACTION_NPM_CACHE_CLEAN = "Clean npm cache (entire cache cleaned).";
 		private static final String ACTION_NPM_PACKAGES_DELETE = "Delete npm packages (whole npm folder gets deleted).";
 		private static final String ACTION_TYPE_DEFINITIONS_RESET = "Reset type definitions (fresh clone). ";
 
-		/** This is used just as a container for statues. */
 		private final MultiStatus multistatus = statusHelper
-				.createMultiError("utility status, see special handling in final block");
+				.createMultiStatus("Status of executing maintenance actions.");
 
+		/**
+		 * Synchronized merges of the provided status into the container multi status. Merging takes care of updating
+		 * container {@link IStatus#getSeverity() severity} and {@link IStatus#getCode() code}.
+		 */
 		private synchronized void addStatus(IStatus status) {
-			multistatus.add(status);
+			multistatus.merge(status);
 		}
 
 		private synchronized MultiStatus getStauts() {
@@ -606,7 +663,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 		public void widgetSelected(final SelectionEvent e) {
 
 			ListSelectionDialog dialog = new ListSelectionDialog(UIUtils.getShell(),
-					new String[] { ACTION_NPM_CACHE_CLEAN, ACTION_TYPE_DEFINITIONS_RESET, ACTION_NPM_PACKAGES_DELETE },
+					new String[] { ACTION_NPM_RELOAD, ACTION_NPM_CACHE_CLEAN, ACTION_TYPE_DEFINITIONS_RESET,
+							ACTION_NPM_PACKAGES_DELETE },
 					ArrayContentProvider.getInstance(), new LabelProvider(),
 					"Select maintenance actions to perform.");
 			dialog.setTitle("External libraries maintenance actions.");
@@ -615,11 +673,15 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				boolean cleanCache = false;
 				boolean deleteNPM = false;
 				boolean reClone = false;
+				boolean reload = false;
 				Object[] result = dialog.getResult();
 				for (int i = 0; i < result.length; i++) {
 					String dialogItem = (String) result[i];
 
 					switch (dialogItem) {
+					case ACTION_NPM_RELOAD:
+						reload = true;
+						break;
 					case ACTION_NPM_CACHE_CLEAN:
 						cleanCache = true;
 						break;
@@ -635,6 +697,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				final boolean decisionResetTypeDefinitions = reClone;
 				final boolean decisionCleanCache = cleanCache;
 				final boolean decisionPurgeNpm = deleteNPM;
+				final boolean decisionReload = reload;
 				try {
 					new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
 						// keep the order Cache->TypeDefs->NPMs
@@ -649,10 +712,9 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 						if (decisionPurgeNpm) {
 							deleteNpms();
-
 						}
 
-						if (decisionPurgeNpm || decisionResetTypeDefinitions) {
+						if (decisionReload || decisionPurgeNpm || decisionResetTypeDefinitions) {
 							externalLibraryWorkspace.updateState();
 							externalLibrariesReloadHelper.reloadLibraries(true, monitor);
 							updateInput(viewer, store.getLocations());
@@ -661,17 +723,10 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				} catch (final InvocationTargetException | InterruptedException exc) {
 					throw new RuntimeException("Error while executing maintenance actions.", exc);
 				} finally {
-					MultiStatus utilStatus = getStauts();
+					MultiStatus status = getStauts();
 
-					if (!Arrays2.isEmpty(utilStatus.getChildren())) {
-						// rewrite errors for better logging
-						MultiStatus createMultiError = statusHelper
-								.createMultiError("external libraries maintenance Failed");
-						IStatus[] children = utilStatus.getChildren();
-						for (int i = 0; i < children.length; i++) {
-							createMultiError.add(children[i]);
-						}
-						N4JSActivator.getInstance().getLog().log(createMultiError);
+					if (!status.isOK()) {
+						N4JSActivator.getInstance().getLog().log(status);
 						getDisplay().asyncExec(() -> openError(
 								getShell(),
 								"external libraries maintenance Failed",
@@ -727,26 +782,6 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 						.createError("Could not verify deletion of " + typeDefinitionsFolder.getAbsolutePath()));
 			}
 		}
-	}
-
-	/**
-	 * Listener that refreshes any definition files from the local git repository and reloads the external libraries in
-	 * blocking fashion.
-	 */
-	private class ReloadButtonListener extends SelectionAdapter {
-
-		@Override
-		public void widgetSelected(final SelectionEvent e) {
-
-			try {
-				new MutableProgressMonitorDialog(getShell()).run(true, true, monitor -> {
-					externalLibrariesReloadHelper.reloadLibraries(true, monitor);
-				});
-			} catch (final InvocationTargetException | InterruptedException exc) {
-				throw new RuntimeException("Error while re-building external libraries.", exc);
-			}
-		}
-
 	}
 
 	/**

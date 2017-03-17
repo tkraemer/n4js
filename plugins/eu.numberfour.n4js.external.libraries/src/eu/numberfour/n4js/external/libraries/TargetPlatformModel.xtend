@@ -21,6 +21,10 @@ import java.net.URI
 import java.util.Collection
 import java.util.HashMap
 import org.eclipse.xtend.lib.annotations.Accessors
+import java.util.stream.Collectors
+import java.io.IOException
+import com.fasterxml.jackson.core.JsonParseException
+import com.fasterxml.jackson.databind.JsonMappingException
 
 /**
  * POJO for representing an N4 target platform file.
@@ -180,8 +184,7 @@ class TargetPlatformModel {
 	 */
 	static def TargetPlatformModel readValue(URI location) {
 		try {
-			val mapper  = new ObjectMapper(new JsonPrettyPrinterFactory());
-			return mapper.readValue(new File(location), TargetPlatformModel);
+			throwingReadValue(location)
 		} catch (Exception e) {
 			throw new RuntimeException('''Error while reading target platform content from «location».''', e);
 		}
@@ -190,5 +193,37 @@ class TargetPlatformModel {
 	static enum RepositoryType {
 		npm
 	}
+
+	private static def throwingReadValue(URI location)throws IOException, JsonParseException, JsonMappingException {
+		val mapper  = new ObjectMapper(new JsonPrettyPrinterFactory());
+		return mapper.readValue(new File(location), TargetPlatformModel);
+	}
+
+	/**
+	 * Convenience api, reads model specified by the provided location and returns collection
+	 * of npm package names in that file. Caller needs to validate if provided source is valid
+	 * (e.g. file exists, file has proper contents, etc.).
+	 *
+	 * @param location the location of the target platform file.
+	 *
+	 * @return collection of npm package names in the provided file.
+	 *
+	 * @throws IOException in case of errors reading value.
+	 */
+	static def Collection<String> npmPackageNamesFrom(URI platformFileLocation) throws IOException, JsonParseException, JsonMappingException {
+			return TargetPlatformModel
+					.throwingReadValue(platformFileLocation)
+					.getLocation()
+					.stream()
+					.filter(l | l.getRepoType().equals(TargetPlatformModel.RepositoryType.npm))
+					.map(l | l.getProjects())
+					.flatMap(p | p.entrySet().stream())// TODO refactor TargetPlatformModel, e.g.
+														// class Projects extends HashMap<String,
+														// ProjectProperties>) while it is more like
+														// class Projects extends Pair<String,
+														// ProjectProperties>, ideally class with
+														// fields [String name, ProjectProperties properties]
+					.map(e | e.getKey()).collect(Collectors.toSet());
+		}
 
 }
