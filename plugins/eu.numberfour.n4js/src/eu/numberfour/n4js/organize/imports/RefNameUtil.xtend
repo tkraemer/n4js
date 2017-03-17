@@ -35,7 +35,7 @@ class RefNameUtil {
 		if (astNode !== null) {
 			val nodeText = astNode.leafNodes.filter[!hidden].map[text].join
 			
-			if(ref.definedTypingStrategy.equals(TypingStrategy.NOMINAL) === false){
+			if(!ref.definedTypingStrategy.equals(TypingStrategy.NOMINAL)){
 				val typingLiteral = ref.definedTypingStrategy.literal
 				if(nodeText.startsWith(typingLiteral)){
 					// handle things like
