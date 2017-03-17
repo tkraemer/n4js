@@ -43,6 +43,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.resources.IProject;
@@ -631,6 +632,11 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				.anyMatch(name -> name.equals(packageName));
 	}
 
+	private Set<String> getInstalledNpms() {
+		final File root = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
+		return from(externalLibraryWorkspace.getProjects(root.toURI())).transform(p -> p.getName()).toSet();
+	}
+
 	/**
 	 * Button selection listener for opening up an {@link MessageDialog yes/no dialog}, where user can decide to delete
 	 * type definitions and clone them again.
@@ -640,6 +646,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	 */
 	private class MaintenanceActionsButtonListener extends SelectionAdapter {
 		private static final String ACTION_NPM_RELOAD = "Reload npm libraries from the disk.";
+		private static final String ACTION_NPM_REINSTALL = "Reinstall npm libraries.";
 		private static final String ACTION_NPM_CACHE_CLEAN = "Clean npm cache (entire cache cleaned).";
 		private static final String ACTION_NPM_PACKAGES_DELETE = "Delete npm packages (whole npm folder gets deleted).";
 		private static final String ACTION_TYPE_DEFINITIONS_RESET = "Reset type definitions (fresh clone). ";
@@ -663,7 +670,11 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 		public void widgetSelected(final SelectionEvent e) {
 
 			ListSelectionDialog dialog = new ListSelectionDialog(UIUtils.getShell(),
-					new String[] { ACTION_NPM_RELOAD, ACTION_NPM_CACHE_CLEAN, ACTION_TYPE_DEFINITIONS_RESET,
+					new String[] {
+							ACTION_NPM_CACHE_CLEAN,
+							ACTION_NPM_RELOAD,
+							ACTION_NPM_REINSTALL,
+							ACTION_TYPE_DEFINITIONS_RESET,
 							ACTION_NPM_PACKAGES_DELETE },
 					ArrayContentProvider.getInstance(), new LabelProvider(),
 					"Select maintenance actions to perform.");
@@ -672,7 +683,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 			if (dialog.open() == Window.OK) {
 				boolean cleanCache = false;
 				boolean deleteNPM = false;
-				boolean reClone = false;
+				boolean reinstall = false;
+				boolean reclone = false;
 				boolean reload = false;
 				Object[] result = dialog.getResult();
 				for (int i = 0; i < result.length; i++) {
@@ -682,6 +694,9 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 					case ACTION_NPM_RELOAD:
 						reload = true;
 						break;
+					case ACTION_NPM_REINSTALL:
+						reinstall = true;
+						break;
 					case ACTION_NPM_CACHE_CLEAN:
 						cleanCache = true;
 						break;
@@ -689,18 +704,26 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 						deleteNPM = true;
 						break;
 					case ACTION_TYPE_DEFINITIONS_RESET:
-						reClone = true;
+						reclone = true;
 						break;
 					}
 
 				}
-				final boolean decisionResetTypeDefinitions = reClone;
+				final boolean decisionResetTypeDefinitions = reclone;
 				final boolean decisionCleanCache = cleanCache;
+				final boolean decisionReinstall = reinstall;
 				final boolean decisionPurgeNpm = deleteNPM;
 				final boolean decisionReload = reload;
+
+				final AtomicReference<IllegalBinaryStateException> illegalBinaryExcRef = new AtomicReference<>();
 				try {
 					new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
 						// keep the order Cache->TypeDefs->NPMs
+
+						Collection<String> oldPackages = null;
+						if (decisionReinstall) {
+							oldPackages = getInstalledNpms();
+						}
 
 						if (decisionCleanCache) {
 							cleanCache(monitor);
@@ -712,9 +735,32 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 						if (decisionPurgeNpm) {
 							deleteNpms();
+							// other actions like reinstall depends on this state
+							externalLibraryWorkspace.updateState();
 						}
 
-						if (decisionReload || decisionPurgeNpm || decisionResetTypeDefinitions) {
+						if (decisionReinstall) {
+							try {
+								if (!decisionPurgeNpm) {
+									IStatus uninstallStatus = npmManager.uninstallDependencies(oldPackages, monitor);
+									if (uninstallStatus.isOK()) {
+										updateInput(viewer, store.getLocations());
+									} else {
+										addStatus(uninstallStatus);
+									}
+								}
+								IStatus installStatus = npmManager.installDependencies(oldPackages, monitor);
+								if (installStatus.isOK()) {
+									updateInput(viewer, store.getLocations());
+								} else {
+									addStatus(installStatus);
+								}
+							} catch (final IllegalBinaryStateException ibse) {
+								illegalBinaryExcRef.set(ibse);
+							}
+						}
+
+						if (decisionReload || decisionReinstall || decisionPurgeNpm || decisionResetTypeDefinitions) {
 							externalLibraryWorkspace.updateState();
 							externalLibrariesReloadHelper.reloadLibraries(true, monitor);
 							updateInput(viewer, store.getLocations());
@@ -723,8 +769,12 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				} catch (final InvocationTargetException | InterruptedException exc) {
 					throw new RuntimeException("Error while executing maintenance actions.", exc);
 				} finally {
-					MultiStatus status = getStauts();
 
+					if (null != illegalBinaryExcRef.get()) {
+						new IllegalBinaryStateDialog(illegalBinaryExcRef.get()).open();
+					}
+
+					MultiStatus status = getStauts();
 					if (!status.isOK()) {
 						N4JSActivator.getInstance().getLog().log(status);
 						getDisplay().asyncExec(() -> openError(
