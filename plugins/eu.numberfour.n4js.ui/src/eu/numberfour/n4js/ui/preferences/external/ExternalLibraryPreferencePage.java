@@ -400,6 +400,9 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	 */
 	private class ImportButtonListener extends SelectionAdapter {
 
+		private final MultiStatus multistatus = statusHelper
+				.createMultiStatus("Status of importing target platform.");
+
 		@Override
 		public void widgetSelected(final SelectionEvent ignored) {
 			final FileDialog dialog = new FileDialog(getShell(), OPEN);
@@ -412,7 +415,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				final File file = new File(value);
 				try {
 					if (!file.exists()) {
-						checkState(file.createNewFile(), "Error while importing target platform file.");
+						multistatus.merge(statusHelper.createError("Error while importing target platform file."));
+						return;
 					}
 					final URI platformFileLocation = file.toURI();
 					final Collection<String> packages = TargetPlatformModel.npmPackageNamesFrom(platformFileLocation);
@@ -438,20 +442,28 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 							throw new RuntimeException("Error while installing npm dependency: '" + packages + "'.",
 									exc);
 						} finally {
+							if (null != errorStatusRef.get()) {
+								multistatus.merge(errorStatusRef.get());
+							}
 							if (null != illegalBinaryExcRef.get()) {
 								new IllegalBinaryStateDialog(illegalBinaryExcRef.get()).open();
-							} else if (null != errorStatusRef.get()) {
-								N4JSActivator.getInstance().getLog().log(errorStatusRef.get());
-								getDisplay().asyncExec(() -> openError(
-										getShell(),
-										"n4tp Install Failed",
-										"Error while installing from '" + platformFileLocation
-												+ "' target platform file.\nPlease check your Error Log view for the detailed information about the failure."));
 							}
 						}
+					} else {
+						MessageDialog.openInformation(UIUtils.getShell(), "Empty target platform file",
+								"Specified target platform file contains no packaged to install.");
 					}
 				} catch (final IOException e) {
-					throw new RuntimeException("Error while importing target platform file.", e);
+					multistatus.merge(statusHelper.createError("Error while importing target platform file.", e));
+				} finally {
+					if (!multistatus.isOK()) {
+						N4JSActivator.getInstance().getLog().log(multistatus);
+						getDisplay().asyncExec(() -> openError(
+								getShell(),
+								"n4tp Install Failed",
+								"Error while installing from '" + value
+										+ "' target platform file.\nPlease check your Error Log view for the detailed information about the failure."));
+					}
 				}
 			}
 		}
