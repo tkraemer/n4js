@@ -185,8 +185,6 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 		createPlaceHolderLabel(subComposite);
 
-		createButton(subComposite, "Reload", new ReloadButtonListener());
-
 		createPlaceHolderLabel(subComposite);
 
 		createButton(subComposite, "Install npm...", new InstallNpmDependencyButtonListener());
@@ -392,7 +390,6 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -642,6 +639,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	 *
 	 */
 	private class MaintenanceActionsButtonListener extends SelectionAdapter {
+		private static final String ACTION_NPM_RELOAD = "Reload npm libraries from the disk.";
 		private static final String ACTION_NPM_CACHE_CLEAN = "Clean npm cache (entire cache cleaned).";
 		private static final String ACTION_NPM_PACKAGES_DELETE = "Delete npm packages (whole npm folder gets deleted).";
 		private static final String ACTION_TYPE_DEFINITIONS_RESET = "Reset type definitions (fresh clone). ";
@@ -665,7 +663,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 		public void widgetSelected(final SelectionEvent e) {
 
 			ListSelectionDialog dialog = new ListSelectionDialog(UIUtils.getShell(),
-					new String[] { ACTION_NPM_CACHE_CLEAN, ACTION_TYPE_DEFINITIONS_RESET, ACTION_NPM_PACKAGES_DELETE },
+					new String[] { ACTION_NPM_RELOAD, ACTION_NPM_CACHE_CLEAN, ACTION_TYPE_DEFINITIONS_RESET,
+							ACTION_NPM_PACKAGES_DELETE },
 					ArrayContentProvider.getInstance(), new LabelProvider(),
 					"Select maintenance actions to perform.");
 			dialog.setTitle("External libraries maintenance actions.");
@@ -674,11 +673,15 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				boolean cleanCache = false;
 				boolean deleteNPM = false;
 				boolean reClone = false;
+				boolean reload = false;
 				Object[] result = dialog.getResult();
 				for (int i = 0; i < result.length; i++) {
 					String dialogItem = (String) result[i];
 
 					switch (dialogItem) {
+					case ACTION_NPM_RELOAD:
+						reload = true;
+						break;
 					case ACTION_NPM_CACHE_CLEAN:
 						cleanCache = true;
 						break;
@@ -694,6 +697,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				final boolean decisionResetTypeDefinitions = reClone;
 				final boolean decisionCleanCache = cleanCache;
 				final boolean decisionPurgeNpm = deleteNPM;
+				final boolean decisionReload = reload;
 				try {
 					new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
 						// keep the order Cache->TypeDefs->NPMs
@@ -710,7 +714,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 							deleteNpms();
 						}
 
-						if (decisionPurgeNpm || decisionResetTypeDefinitions) {
+						if (decisionReload || decisionPurgeNpm || decisionResetTypeDefinitions) {
 							externalLibraryWorkspace.updateState();
 							externalLibrariesReloadHelper.reloadLibraries(true, monitor);
 							updateInput(viewer, store.getLocations());
@@ -778,26 +782,6 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 						.createError("Could not verify deletion of " + typeDefinitionsFolder.getAbsolutePath()));
 			}
 		}
-	}
-
-	/**
-	 * Listener that refreshes any definition files from the local git repository and reloads the external libraries in
-	 * blocking fashion.
-	 */
-	private class ReloadButtonListener extends SelectionAdapter {
-
-		@Override
-		public void widgetSelected(final SelectionEvent e) {
-
-			try {
-				new MutableProgressMonitorDialog(getShell()).run(true, true, monitor -> {
-					externalLibrariesReloadHelper.reloadLibraries(true, monitor);
-				});
-			} catch (final InvocationTargetException | InterruptedException exc) {
-				throw new RuntimeException("Error while re-building external libraries.", exc);
-			}
-		}
-
 	}
 
 	/**
