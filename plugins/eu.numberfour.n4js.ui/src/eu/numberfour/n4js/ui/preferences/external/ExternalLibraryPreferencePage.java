@@ -632,7 +632,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				.anyMatch(name -> name.equals(packageName));
 	}
 
-	private Set<String> getNpms() {
+	private Set<String> getInstalledNpms() {
 		final File root = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
 		return from(externalLibraryWorkspace.getProjects(root.toURI())).transform(p -> p.getName()).toSet();
 	}
@@ -683,8 +683,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 			if (dialog.open() == Window.OK) {
 				boolean cleanCache = false;
 				boolean deleteNPM = false;
-				boolean reInstall = false;
-				boolean reClone = false;
+				boolean reinstall = false;
+				boolean reclone = false;
 				boolean reload = false;
 				Object[] result = dialog.getResult();
 				for (int i = 0; i < result.length; i++) {
@@ -695,7 +695,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 						reload = true;
 						break;
 					case ACTION_NPM_REINSTALL:
-						reInstall = true;
+						reinstall = true;
 						break;
 					case ACTION_NPM_CACHE_CLEAN:
 						cleanCache = true;
@@ -704,14 +704,14 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 						deleteNPM = true;
 						break;
 					case ACTION_TYPE_DEFINITIONS_RESET:
-						reClone = true;
+						reclone = true;
 						break;
 					}
 
 				}
-				final boolean decisionResetTypeDefinitions = reClone;
+				final boolean decisionResetTypeDefinitions = reclone;
 				final boolean decisionCleanCache = cleanCache;
-				final boolean decisionReInstall = reInstall;
+				final boolean decisionReinstall = reinstall;
 				final boolean decisionPurgeNpm = deleteNPM;
 				final boolean decisionReload = reload;
 
@@ -721,8 +721,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 						// keep the order Cache->TypeDefs->NPMs
 
 						Collection<String> oldPackages = null;
-						if (decisionReInstall) {
-							oldPackages = getNpms();
+						if (decisionReinstall) {
+							oldPackages = getInstalledNpms();
 						}
 
 						if (decisionCleanCache) {
@@ -739,7 +739,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 							externalLibraryWorkspace.updateState();
 						}
 
-						if (decisionReInstall) {
+						if (decisionReinstall) {
 							try {
 								if (!decisionPurgeNpm) {
 									IStatus uninstallStatus = npmManager.uninstallDependencies(oldPackages, monitor);
@@ -760,7 +760,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 							}
 						}
 
-						if (decisionReload || decisionReInstall || decisionPurgeNpm || decisionResetTypeDefinitions) {
+						if (decisionReload || decisionReinstall || decisionPurgeNpm || decisionResetTypeDefinitions) {
 							externalLibraryWorkspace.updateState();
 							externalLibrariesReloadHelper.reloadLibraries(true, monitor);
 							updateInput(viewer, store.getLocations());

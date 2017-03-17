@@ -232,9 +232,9 @@ public class NpmManager {
 	/**
 	 * Uninstalls the given npm packages in a blocking fashion.
 	 *
-	 * This method tries to uninstall all packages even if uninstalling for some of them fail. In such cases it will try
-	 * log encountered errors but it will try to proceed for all remaining packages. Details about issues are in the
-	 * returned status.
+	 * This method tries to uninstall all packages even if uninstalling for some of them fails. In such cases it will
+	 * try to log encountered errors but it will try to proceed for all remaining packages. Details about issues are in
+	 * the returned status.
 	 *
 	 * @param packageNames
 	 *            the names of the packages that has to be uninstalled via package manager.
@@ -439,16 +439,16 @@ public class NpmManager {
 			subMonitor.worked(1);
 
 			// switch between install and uninstall
-			IStatus installPackageStatus = install
+			IStatus packageProcessingStatus = install
 					? install(packageName, installPath)
 					: uninstall(packageName, installPath);
 
-			if (installPackageStatus.isOK()) {
+			if (packageProcessingStatus.isOK()) {
 				logger.logInfo(
 						"Package '" + packageName + "' has been successfully " + (install ? "fetched." : "removed"));
 			} else {
-				logger.logError(installPackageStatus);
-				batchStatus.merge(installPackageStatus);
+				logger.logError(packageProcessingStatus);
+				batchStatus.merge(packageProcessingStatus);
 			}
 		});
 
