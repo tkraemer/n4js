@@ -21,16 +21,17 @@ import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.N
 import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.repairNpmFolderState;
 import static eu.numberfour.n4js.external.libraries.TargetPlatformModel.TP_FILTER_EXTENSION;
 import static eu.numberfour.n4js.n4mf.ProjectType.API;
+import static eu.numberfour.n4js.ui.preferences.external.ButtonFactoryUtil.createDisabledPushButton;
+import static eu.numberfour.n4js.ui.preferences.external.ButtonFactoryUtil.createEnabledPushButton;
+import static eu.numberfour.n4js.ui.utils.DelegatingSelectionAdapter.createSelectionListener;
 import static eu.numberfour.n4js.ui.utils.UIUtils.getDisplay;
 import static java.util.Collections.singletonList;
 import static org.eclipse.jface.dialogs.MessageDialog.openError;
 import static org.eclipse.jface.layout.GridDataFactory.fillDefaults;
 import static org.eclipse.jface.viewers.StyledString.DECORATIONS_STYLER;
-import static org.eclipse.swt.SWT.CENTER;
 import static org.eclipse.swt.SWT.END;
 import static org.eclipse.swt.SWT.FILL;
 import static org.eclipse.swt.SWT.OPEN;
-import static org.eclipse.swt.SWT.PUSH;
 import static org.eclipse.swt.SWT.SAVE;
 import static org.eclipse.swt.SWT.Selection;
 import static org.eclipse.swt.SWT.TOP;
@@ -70,7 +71,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -173,30 +173,33 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 		subComposite.setLayout(GridLayoutFactory.fillDefaults().create());
 		subComposite.setLayoutData(fillDefaults().align(END, TOP).create());
 
-		createButton(subComposite, "Add...", new AddButtonSelectionListener());
-		final Button remove = createButton(subComposite, "Remove", new RemoveButtonSelectionListener());
-		remove.setEnabled(false);
+		createEnabledPushButton(subComposite, "Add...",
+				createSelectionListener(this::handleAddButtonSelectionListener));
+
+		final Button remove = createDisabledPushButton(subComposite, "Remove",
+				createSelectionListener(this::handleRemoveButtonSelection));
 
 		createPlaceHolderLabel(subComposite);
 
-		final Button moveUp = createButton(subComposite, "Up", new MoveUpButtonSelectionListener());
-		final Button moveDown = createButton(subComposite, "Down", new MoveDownButtonSelectionListener());
-		moveUp.setEnabled(false);
-		moveDown.setEnabled(false);
+		final Button moveUp = createDisabledPushButton(subComposite, "Up",
+				createSelectionListener(this::handleMoveUpButtonSelection));
+
+		final Button moveDown = createDisabledPushButton(subComposite, "Down",
+				createSelectionListener(this::handleMoveDownButtonSelection));
 
 		createPlaceHolderLabel(subComposite);
 
 		createPlaceHolderLabel(subComposite);
 
-		createButton(subComposite, "Install npm...", new InstallNpmDependencyButtonListener());
+		createEnabledPushButton(subComposite, "Install npm...", new InstallNpmDependencyButtonListener());
 
-		createButton(subComposite, "Uninstall npm...", new UninstallNpmDependencyButtonListener());
+		createEnabledPushButton(subComposite, "Uninstall npm...", new UninstallNpmDependencyButtonListener());
 
-		createButton(subComposite, "Run maintenance actions", new MaintenanceActionsButtonListener());
+		createEnabledPushButton(subComposite, "Run maintenance actions", new MaintenanceActionsButtonListener());
 
-		createButton(subComposite, "Export target platform...", new ExportButtonListener());
+		createEnabledPushButton(subComposite, "Export target platform...", new ExportButtonListener());
 
-		createButton(subComposite, "Import target platform...", new ImportButtonListener());
+		createEnabledPushButton(subComposite, "Import target platform...", new ImportButtonListener());
 
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
@@ -270,19 +273,6 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	public boolean performOk() {
 		store.invalidate();
 		return super.performOk();
-	}
-
-	private Button createButton(final Composite parent, final String text, final SelectionListener listener) {
-		final Button button = new Button(parent, PUSH);
-		button.setLayoutData(fillDefaults().align(FILL, CENTER).create());
-		button.setText(text);
-		if (null != listener) {
-			button.addSelectionListener(listener);
-			button.addDisposeListener(e -> {
-				button.removeSelectionListener(listener);
-			});
-		}
-		return button;
 	}
 
 	/**
@@ -835,77 +825,59 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	}
 
 	/**
-	 * Selection listener for adding a new external library location.
+	 * Selection handler for adding a new external library location.
 	 */
-	private class AddButtonSelectionListener extends SelectionAdapter {
-
-		@Override
-		public void widgetSelected(final SelectionEvent e) {
-			final String directoryPath = new DirectoryDialog(viewer.getControl().getShell(), OPEN).open();
-			if (null != directoryPath) {
-				final File file = new File(directoryPath);
-				if (file.exists() && file.isDirectory()) {
-					store.add(file.toURI());
-					updateInput(viewer, store.getLocations());
-				}
+	private void handleAddButtonSelectionListener(@SuppressWarnings("unused") final SelectionEvent e) {
+		final String directoryPath = new DirectoryDialog(viewer.getControl().getShell(), OPEN).open();
+		if (null != directoryPath) {
+			final File file = new File(directoryPath);
+			if (file.exists() && file.isDirectory()) {
+				store.add(file.toURI());
+				updateInput(viewer, store.getLocations());
 			}
 		}
 	}
 
 	/**
-	 * Selection listener for adding a new external library location.
+	 * Selection handler for adding a new external library location.
 	 */
-	private class RemoveButtonSelectionListener extends SelectionAdapter {
-
-		@Override
-		public void widgetSelected(final SelectionEvent e) {
-			final ISelection selection = viewer.getSelection();
-			if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
-				final Object element = ((IStructuredSelection) selection).getFirstElement();
-				if (element instanceof URI) {
-					store.remove((URI) element);
-					updateInput(viewer, store.getLocations());
-				}
+	private void handleRemoveButtonSelection(@SuppressWarnings("unused") final SelectionEvent e) {
+		final ISelection selection = viewer.getSelection();
+		if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
+			final Object element = ((IStructuredSelection) selection).getFirstElement();
+			if (element instanceof URI) {
+				store.remove((URI) element);
+				updateInput(viewer, store.getLocations());
 			}
 		}
 	}
 
 	/**
-	 * Selection listener for moving up an external library location in the list.
+	 * Selection handler for moving up an external library location in the list.
 	 */
-	private class MoveUpButtonSelectionListener extends SelectionAdapter {
-
-		@Override
-		public void widgetSelected(final SelectionEvent e) {
-			final ISelection selection = viewer.getSelection();
-			if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
-				final Object element = ((IStructuredSelection) selection).getFirstElement();
-				if (element instanceof URI) {
-					store.moveUp((URI) element);
-					updateInput(viewer, store.getLocations());
-				}
+	private void handleMoveUpButtonSelection(@SuppressWarnings("unused") final SelectionEvent e) {
+		final ISelection selection = viewer.getSelection();
+		if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
+			final Object element = ((IStructuredSelection) selection).getFirstElement();
+			if (element instanceof URI) {
+				store.moveUp((URI) element);
+				updateInput(viewer, store.getLocations());
 			}
 		}
-
 	}
 
 	/**
-	 * Selection listener for moving down an external library location in the list.
+	 * Selection handler for moving down an external library location in the list.
 	 */
-	private class MoveDownButtonSelectionListener extends SelectionAdapter {
-
-		@Override
-		public void widgetSelected(final SelectionEvent e) {
-			final ISelection selection = viewer.getSelection();
-			if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
-				final Object element = ((IStructuredSelection) selection).getFirstElement();
-				if (element instanceof URI) {
-					store.moveDown((URI) element);
-					updateInput(viewer, store.getLocations());
-				}
+	private void handleMoveDownButtonSelection(@SuppressWarnings("unused") final SelectionEvent e) {
+		final ISelection selection = viewer.getSelection();
+		if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
+			final Object element = ((IStructuredSelection) selection).getFirstElement();
+			if (element instanceof URI) {
+				store.moveDown((URI) element);
+				updateInput(viewer, store.getLocations());
 			}
 		}
-
 	}
 
 	private static void updateInput(final TreeViewer viewer, final Object input) {
