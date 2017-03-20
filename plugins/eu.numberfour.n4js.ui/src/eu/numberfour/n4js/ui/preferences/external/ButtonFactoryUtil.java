@@ -20,10 +20,25 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- *
+ * Utility for creating JFace buttons. Essentially collection of specialized factory methods to reduce clutter in the ui
+ * code.
  */
 public class ButtonFactoryUtil {
 
+	/**
+	 * Creates button with {@link org.eclipse.swt.SWT#PUSH} style. Provided parameters control other aspects of the
+	 * button.
+	 *
+	 * @param parent
+	 *            the parent used to create the button.
+	 * @param text
+	 *            the text used to set text of the button.
+	 * @param listener
+	 *            the listener added to the button.
+	 * @param enabled
+	 *            flag controls if created button is enabled.
+	 * @return created button.
+	 */
 	public static Button createPushButton(final Composite parent, final String text, final SelectionListener listener,
 			boolean enabled) {
 		final Button button = new Button(parent, PUSH);
@@ -39,11 +54,19 @@ public class ButtonFactoryUtil {
 		return button;
 	}
 
+	/**
+	 * Delegates to {@link #createPushButton(Composite, String, SelectionListener, boolean)} with {@code enabled} set to
+	 * {@code false}.
+	 */
 	public static Button createDisabledPushButton(final Composite parent, final String text,
 			final SelectionListener listener) {
 		return createPushButton(parent, text, listener, false);
 	}
 
+	/**
+	 * Delegates to {@link #createPushButton(Composite, String, SelectionListener, boolean)} with {@code enabled} set to
+	 * {@code true}.
+	 */
 	public static Button createEnabledPushButton(final Composite parent, final String text,
 			final SelectionListener listener) {
 		return createPushButton(parent, text, listener, true);

@@ -406,6 +406,11 @@ public class NpmManager {
 
 	}
 
+	/** Simple validation if the package name is not null or empty */
+	public boolean invalidPackageName(final String packageName) {
+		return packageName == null || packageName.trim().isEmpty();
+	}
+
 	/**
 	 * Batch install / uninstall of npm packages based on provided names. Provided boolean flag switches between install
 	 * and uninstall operations. Method does not return early, it will try to process all packages, even if there are
@@ -566,10 +571,6 @@ public class NpmManager {
 		return executor.execute(
 				() -> commandFactory.createUninstallPackageCommand(uninstallPath, packageName, true),
 				"Error while uninstalling npm package.");
-	}
-
-	private boolean invalidPackageName(final String packageName) {
-		return packageName == null || packageName.trim().isEmpty();
 	}
 
 	/**

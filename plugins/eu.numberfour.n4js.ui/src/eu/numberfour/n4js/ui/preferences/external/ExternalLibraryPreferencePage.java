@@ -12,30 +12,23 @@ package eu.numberfour.n4js.ui.preferences.external;
 
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static com.google.common.base.Strings.nullToEmpty;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.primitives.Ints.asList;
 import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.EXTERNAL_LIBRARIES_SUPPLIER;
-import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.EXTERNAL_LIBRARY_NAMES;
 import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.N4_NPM_FOLDER_SUPPLIER;
 import static eu.numberfour.n4js.external.libraries.ExternalLibrariesActivator.repairNpmFolderState;
 import static eu.numberfour.n4js.external.libraries.TargetPlatformModel.TP_FILTER_EXTENSION;
-import static eu.numberfour.n4js.n4mf.ProjectType.API;
 import static eu.numberfour.n4js.ui.preferences.external.ButtonFactoryUtil.createDisabledPushButton;
 import static eu.numberfour.n4js.ui.preferences.external.ButtonFactoryUtil.createEnabledPushButton;
 import static eu.numberfour.n4js.ui.utils.DelegatingSelectionAdapter.createSelectionListener;
-import static eu.numberfour.n4js.ui.utils.UIUtils.getDisplay;
 import static java.util.Collections.singletonList;
-import static org.eclipse.jface.dialogs.MessageDialog.openError;
 import static org.eclipse.jface.layout.GridDataFactory.fillDefaults;
-import static org.eclipse.jface.viewers.StyledString.DECORATIONS_STYLER;
 import static org.eclipse.swt.SWT.END;
 import static org.eclipse.swt.SWT.FILL;
 import static org.eclipse.swt.SWT.OPEN;
 import static org.eclipse.swt.SWT.SAVE;
 import static org.eclipse.swt.SWT.Selection;
 import static org.eclipse.swt.SWT.TOP;
-import static org.eclipse.xtext.util.Strings.toFirstUpper;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,35 +36,26 @@ import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.jface.dialogs.IInputValidator;
-import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.PreferencePage;
-import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
-import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.window.Window;
-import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -82,8 +66,6 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.eclipse.ui.dialogs.ListSelectionDialog;
-import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -95,12 +77,8 @@ import eu.numberfour.n4js.external.GitCloneSupplier;
 import eu.numberfour.n4js.external.NpmManager;
 import eu.numberfour.n4js.external.TargetPlatformInstallLocationProvider;
 import eu.numberfour.n4js.external.libraries.TargetPlatformModel;
-import eu.numberfour.n4js.n4mf.ProjectType;
 import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
-import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
-import eu.numberfour.n4js.ui.binaries.IllegalBinaryStateDialog;
-import eu.numberfour.n4js.ui.internal.N4JSActivator;
 import eu.numberfour.n4js.ui.utils.InputComposedValidator;
 import eu.numberfour.n4js.ui.utils.InputFunctionalValidator;
 import eu.numberfour.n4js.ui.utils.UIUtils;
@@ -119,7 +97,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	 */
 	public static final String ID = ExternalLibraryPreferencePage.class.getName();
 
-	private static final Map<URI, String> BUILT_IN_LIBS = EXTERNAL_LIBRARIES_SUPPLIER.get();
+	static final Map<URI, String> BUILT_IN_LIBS = EXTERNAL_LIBRARIES_SUPPLIER.get();
 
 	@Inject
 	private ExternalLibraryPreferenceStore store;
@@ -191,15 +169,26 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 		createPlaceHolderLabel(subComposite);
 
-		createEnabledPushButton(subComposite, "Install npm...", new InstallNpmDependencyButtonListener());
+		createEnabledPushButton(subComposite, "Install npm...",
+				new InstallNpmDependencyButtonListener(this::intallAndUpdate,
+						() -> getPackageNameToInstallValidator(),
+						statusHelper,
+						null));
 
-		createEnabledPushButton(subComposite, "Uninstall npm...", new UninstallNpmDependencyButtonListener());
+		createEnabledPushButton(subComposite, "Uninstall npm...",
+				new UninstallNpmDependencyButtonListener(this::unintallAndUpdate,
+						() -> getPackageNameToUninstallValidator(),
+						statusHelper,
+						getSelectedNpm()));
 
-		createEnabledPushButton(subComposite, "Run maintenance actions", new MaintenanceActionsButtonListener());
+		createEnabledPushButton(subComposite, "Run maintenance actions",
+				new MaintenanceActionsButtonListener(this::runMaintananceActions));
 
-		createEnabledPushButton(subComposite, "Export target platform...", new ExportButtonListener());
+		createEnabledPushButton(subComposite, "Export target platform...",
+				createSelectionListener(this::handleExportButtonSelection));
 
-		createEnabledPushButton(subComposite, "Import target platform...", new ImportButtonListener());
+		createEnabledPushButton(subComposite, "Import target platform...",
+				new ImportButtonListener(this::intallAndUpdate, statusHelper));
 
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
@@ -242,28 +231,6 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	}
 
 	@Override
-	protected void performApply() {
-		try {
-			new ProgressMonitorDialog(getShell()).run(true, false, monitor -> {
-				final IStatus status = store.save(monitor);
-				if (!status.isOK()) {
-					setMessage(status.getMessage(), ERROR);
-				} else {
-					updateInput(viewer, store.getLocations());
-				}
-			});
-		} catch (final InvocationTargetException | InterruptedException exc) {
-			throw new RuntimeException("Error while building external libraries.", exc);
-		}
-	}
-
-	@Override
-	protected void performDefaults() {
-		store.resetDefaults();
-		setViewerInput();
-	}
-
-	@Override
 	public boolean performCancel() {
 		store.invalidate();
 		return true;
@@ -271,8 +238,26 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 	@Override
 	public boolean performOk() {
-		store.invalidate();
-		return super.performOk();
+		final MultiStatus multistatus = statusHelper
+				.createMultiStatus("Status of importing target platform.");
+		try {
+			new ProgressMonitorDialog(getShell()).run(true, false, monitor -> {
+				final IStatus status = store.save(monitor);
+				if (!status.isOK()) {
+					setMessage(status.getMessage(), ERROR);
+					multistatus.merge(status);
+				} else {
+					updateInput(viewer, store.getLocations());
+				}
+			});
+		} catch (final InvocationTargetException | InterruptedException exc) {
+			multistatus.merge(statusHelper.createError("Error while building external libraries.", exc));
+		}
+
+		if (multistatus.isOK())
+			return super.performOk();
+		else
+			return false;
 	}
 
 	/**
@@ -290,283 +275,41 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	}
 
 	/**
-	 * Simple label provider for external library locations.
+	 * Creates new dialog for target platform export,
 	 */
-	private static class BuiltInLibrariesLabelProvider extends LabelProvider implements IStyledLabelProvider {
-
-		private static final String BUILT_IN_SUFFIX = " [Built-in]";
-
-		@Override
-		public String getText(final Object element) {
-			if (element instanceof URI) {
-				final String externalLibId = BUILT_IN_LIBS.get(element);
-				if (!isNullOrEmpty(externalLibId)) {
-					return EXTERNAL_LIBRARY_NAMES.get(externalLibId) + BUILT_IN_SUFFIX;
-				}
-				return new File((URI) element).getAbsolutePath();
-			} else if (element instanceof IN4JSProject) {
-				return ((IN4JSProject) element).getProjectId();
-			}
-			return super.getText(element);
-		}
-
-		@Override
-		public Image getImage(final Object element) {
-			if (element instanceof URI) {
-				return ImageRef.LIB_PATH.asImage().orNull();
-			} else if (element instanceof IN4JSProject) {
-				return ImageRef.EXTERNAL_LIB_PROJECT.asImage().orNull();
-			}
-			return super.getImage(element);
-		}
-
-		@Override
-		public StyledString getStyledText(final Object element) {
-			StyledString string = new StyledString(nullToEmpty(getText(element)));
-			if (element instanceof URI) {
-				final String text = string.getString();
-				if (text.endsWith(BUILT_IN_SUFFIX)) {
-					string.setStyle(text.lastIndexOf(BUILT_IN_SUFFIX), BUILT_IN_SUFFIX.length(), DECORATIONS_STYLER);
-				}
-			} else if (element instanceof IN4JSProject) {
-				final ProjectType type = ((IN4JSProject) element).getProjectType();
-				final String typeLabel = getProjectTypeLabel(type);
-				string = new StyledString(string.getString() + typeLabel);
-				string.setStyle(string.getString().lastIndexOf(typeLabel), typeLabel.length(), DECORATIONS_STYLER);
-			}
-			return string;
-		}
-
-		private String getProjectTypeLabel(final ProjectType projectType) {
-			final String label;
-			if (API.equals(projectType)) {
-				label = API.getName();
-			} else {
-				label = toFirstUpper(nullToEmpty(projectType.getName()).replaceAll("_", " ").toLowerCase());
-			}
-			return " [" + label + "]";
-		}
-
-	}
-
-	/**
-	 * Selection listener for exporting the target platform file from the UI.
-	 */
-	private class ExportButtonListener extends SelectionAdapter {
-
-		@Override
-		public void widgetSelected(final SelectionEvent ignored) {
-			final FileDialog dialog = new FileDialog(getShell(), SAVE);
-			dialog.setFilterExtensions(new String[] { TP_FILTER_EXTENSION });
-			dialog.setFileName(TargetPlatformModel.TP_FILE_NAME);
-			dialog.setText("Export N4 Target Platform");
-			dialog.setOverwrite(true);
-			final String value = dialog.open();
-			if (!isNullOrEmpty(value)) {
-				final URI location = installLocationProvider.getTargetPlatformNodeModulesLocation();
-				final Iterable<IProject> projects = externalLibraryWorkspace.getProjects(location);
-				final Iterable<String> projectIds = from(projects).transform(p -> p.getName());
-				final TargetPlatformModel model = TargetPlatformModel.createFromNpmProjectIds(projectIds);
-				final File file = new File(value);
-				try {
-					if (!file.exists()) {
-						checkState(file.createNewFile(), "Error while exporting target platform file.");
-					}
-					try (final PrintWriter pw = new PrintWriter(file)) {
-						pw.write(model.toString());
-						pw.flush();
-					}
-				} catch (final IOException e) {
-					throw new RuntimeException("Error while exporting target platform file.", e);
-				}
-			}
+	private void handleExportButtonSelection(@SuppressWarnings("unused") final SelectionEvent event) {
+		final FileDialog dialog = new FileDialog(getShell(), SAVE);
+		dialog.setFilterExtensions(new String[] { TP_FILTER_EXTENSION });
+		dialog.setFileName(TargetPlatformModel.TP_FILE_NAME);
+		dialog.setText("Export N4 Target Platform");
+		dialog.setOverwrite(true);
+		final String value = dialog.open();
+		if (!isNullOrEmpty(value)) {
+			exportTargetPlatform(new File(value));
 		}
 	}
 
 	/**
-	 * Selection listener for importing the target platform file from the UI.
+	 * Based on installed npms creates {@link TargetPlatformModel} and writes it to the provided file.
+	 *
+	 * @param file
+	 *            the file to which {@link TargetPlatformModel} is written.
 	 */
-	private class ImportButtonListener extends SelectionAdapter {
-
-		private final MultiStatus multistatus = statusHelper
-				.createMultiStatus("Status of importing target platform.");
-
-		@Override
-		public void widgetSelected(final SelectionEvent ignored) {
-			final FileDialog dialog = new FileDialog(getShell(), OPEN);
-			dialog.setFilterExtensions(new String[] { TP_FILTER_EXTENSION });
-			dialog.setFileName(TargetPlatformModel.TP_FILE_NAME);
-			dialog.setText("Import N4 Target Platform");
-			final String value = dialog.open();
-			if (!isNullOrEmpty(value)) {
-
-				final File file = new File(value);
-				try {
-					if (!file.exists()) {
-						multistatus.merge(statusHelper.createError("Error while importing target platform file."));
-						return;
-					}
-					final URI platformFileLocation = file.toURI();
-					final Collection<String> packages = TargetPlatformModel.npmPackageNamesFrom(platformFileLocation);
-
-					if (!packages.isEmpty()) {
-						final AtomicReference<IStatus> errorStatusRef = new AtomicReference<>();
-						final AtomicReference<IllegalBinaryStateException> illegalBinaryExcRef = new AtomicReference<>();
-						try {
-							new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
-								try {
-									IStatus status = npmManager.installDependencies(packages, monitor);
-									if (status.isOK()) {
-										updateInput(viewer, store.getLocations());
-									} else {
-										// Raise the error dialog just when this is closed.
-										errorStatusRef.set(status);
-									}
-								} catch (final IllegalBinaryStateException ibse) {
-									illegalBinaryExcRef.set(ibse);
-								}
-							});
-						} catch (final InvocationTargetException | InterruptedException exc) {
-							throw new RuntimeException("Error while installing npm dependency: '" + packages + "'.",
-									exc);
-						} finally {
-							if (null != errorStatusRef.get()) {
-								multistatus.merge(errorStatusRef.get());
-							}
-							if (null != illegalBinaryExcRef.get()) {
-								new IllegalBinaryStateDialog(illegalBinaryExcRef.get()).open();
-							}
-						}
-					} else {
-						MessageDialog.openInformation(UIUtils.getShell(), "Empty target platform file",
-								"Specified target platform file contains no packaged to install.");
-					}
-				} catch (final IOException e) {
-					multistatus.merge(statusHelper.createError("Error while importing target platform file.", e));
-				} finally {
-					if (!multistatus.isOK()) {
-						N4JSActivator.getInstance().getLog().log(multistatus);
-						getDisplay().asyncExec(() -> openError(
-								getShell(),
-								"n4tp Install Failed",
-								"Error while installing from '" + value
-										+ "' target platform file.\nPlease check your Error Log view for the detailed information about the failure."));
-					}
-				}
+	private void exportTargetPlatform(final File file) {
+		final URI location = installLocationProvider.getTargetPlatformNodeModulesLocation();
+		final Iterable<IProject> projects = externalLibraryWorkspace.getProjects(location);
+		final Iterable<String> projectIds = from(projects).transform(p -> p.getName());
+		final TargetPlatformModel model = TargetPlatformModel.createFromNpmProjectIds(projectIds);
+		try {
+			if (!file.exists()) {
+				checkState(file.createNewFile(), "Error while exporting target platform file.");
 			}
-		}
-	}
-
-	/**
-	 * Button selection listener for opening up an {@link InputDialog input dialog}, where user can specify npm package
-	 * name that will be downloaded and installed to the external libraries.
-	 *
-	 * Note: this class is not static, so it will hold reference to all services. Make sure to dispose it.
-	 *
-	 */
-	private class InstallNpmDependencyButtonListener extends SelectionAdapter {
-
-		@Override
-		public void widgetSelected(final SelectionEvent e) {
-			final InputDialog dialog = new InputDialog(UIUtils.getShell(), "npm Install",
-					"Specify an npm package name to download and install:", null, getPackageNameToInstallValidator());
-
-			dialog.open();
-			final String packageName = dialog.getValue();
-			if (!StringExtensions.isNullOrEmpty(packageName) && dialog.getReturnCode() == Window.OK) {
-				final AtomicReference<IStatus> errorStatusRef = new AtomicReference<>();
-				final AtomicReference<IllegalBinaryStateException> illegalBinaryExcRef = new AtomicReference<>();
-				try {
-					new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
-						try {
-							IStatus status = npmManager.installDependency(packageName, monitor);
-							if (status.isOK()) {
-								updateInput(viewer, store.getLocations());
-							} else {
-								// Raise the error dialog just when this is closed.
-								errorStatusRef.set(status);
-							}
-						} catch (final IllegalBinaryStateException ibse) {
-							illegalBinaryExcRef.set(ibse);
-						}
-					});
-				} catch (final InvocationTargetException | InterruptedException exc) {
-					throw new RuntimeException("Error while installing npm dependency: '" + packageName + "'.", exc);
-				} finally {
-					if (null != illegalBinaryExcRef.get()) {
-						new IllegalBinaryStateDialog(illegalBinaryExcRef.get()).open();
-					} else if (null != errorStatusRef.get()) {
-						N4JSActivator.getInstance().getLog().log(errorStatusRef.get());
-						getDisplay().asyncExec(() -> openError(
-								getShell(),
-								"npm Install Failed",
-								"Error while installing '" + packageName
-										+ "' npm package.\nPlease check your Error Log view for the detailed npm log about the failure."));
-					}
-				}
+			try (final PrintWriter pw = new PrintWriter(file)) {
+				pw.write(model.toString());
+				pw.flush();
 			}
-		}
-	}
-
-	/**
-	 * Button selection listener for opening up an {@link InputDialog input dialog}, where user can specify npm package
-	 * name that will be uninstalled from the external libraries.
-	 *
-	 * Note: this class is not static, so it will hold reference to all services. Make sure to dispose it.
-	 *
-	 */
-	private class UninstallNpmDependencyButtonListener extends SelectionAdapter {
-
-		@Override
-		public void widgetSelected(final SelectionEvent e) {
-			String initalValue = null;
-
-			final ISelection selection = viewer.getSelection();
-			if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
-				final Object element = ((IStructuredSelection) selection).getFirstElement();
-				if (element instanceof IN4JSProject) {
-					IN4JSProject project = (IN4JSProject) element;
-					initalValue = project.getProjectId();
-				}
-			}
-
-			final InputDialog dialog = new InputDialog(UIUtils.getShell(), "npm Uninstall",
-					"Specify an npm package name to uninstall:", initalValue, getPackageNameToUninstallValidator());
-
-			dialog.open();
-			final String packageName = dialog.getValue();
-			if (!StringExtensions.isNullOrEmpty(packageName) && dialog.getReturnCode() == Window.OK) {
-				final AtomicReference<IStatus> errorStatusRef = new AtomicReference<>();
-				final AtomicReference<IllegalBinaryStateException> illegalBinaryExcRef = new AtomicReference<>();
-				try {
-					new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
-						try {
-							IStatus status = npmManager.uninstallDependency(packageName, monitor);
-							if (status.isOK()) {
-								updateInput(viewer, store.getLocations());
-							} else {
-								// Raise the error dialog just when this is closed.
-								errorStatusRef.set(status);
-							}
-						} catch (final IllegalBinaryStateException ibse) {
-							illegalBinaryExcRef.set(ibse);
-						}
-					});
-				} catch (final InvocationTargetException | InterruptedException exc) {
-					throw new RuntimeException("Error while uninstalling npm dependency: '" + packageName + "'.", exc);
-				} finally {
-					if (null != illegalBinaryExcRef.get()) {
-						new IllegalBinaryStateDialog(illegalBinaryExcRef.get()).open();
-					} else if (null != errorStatusRef.get()) {
-						N4JSActivator.getInstance().getLog().log(errorStatusRef.get());
-						getDisplay().asyncExec(() -> openError(
-								getShell(),
-								"npm Uninstall Failed",
-								"Error while uninstalling '" + packageName
-										+ "' npm package.\nPlease check your Error Log view for the detailed npm log about the failure."));
-					}
-				}
-			}
+		} catch (final IOException e) {
+			throw new RuntimeException("Error while exporting target platform file.", e);
 		}
 	}
 
@@ -579,7 +322,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	private IInputValidator getPackageNameToInstallValidator() {
 		return InputComposedValidator.compose(
 				getBasicPackageValidator(), InputFunctionalValidator.from(
-						(final String name) -> !isInstalled(name) ? null
+						(final String name) -> !isNpmWithNameInstalled(name) ? null
 								/* error message */
 								: "The npm package '" + name + "' is already available."));
 	}
@@ -593,7 +336,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	private IInputValidator getPackageNameToUninstallValidator() {
 		return InputComposedValidator.compose(
 				getBasicPackageValidator(), InputFunctionalValidator.from(
-						(final String name) -> isInstalled(name) ? null
+						(final String name) -> isNpmWithNameInstalled(name) ? null
 								/* error case */
 								: "The npm package '" + name + "' is not installed."));
 	}
@@ -602,7 +345,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	private IInputValidator getBasicPackageValidator() {
 		return InputFunctionalValidator.from(
 				(final String name) -> {
-					if (StringExtensions.isNullOrEmpty(name))
+					if (npmManager.invalidPackageName(name))
 						return "The npm package name should be specified.";
 					for (int i = 0; i < name.length(); i++) {
 						if (Character.isWhitespace(name.charAt(i)))
@@ -615,7 +358,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				});
 	}
 
-	private boolean isInstalled(final String packageName) {
+	private boolean isNpmWithNameInstalled(final String packageName) {
 		final File root = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
 		return from(externalLibraryWorkspace.getProjects(root.toURI()))
 				.transform(p -> p.getName())
@@ -628,197 +371,166 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	}
 
 	/**
-	 * Button selection listener for opening up an {@link MessageDialog yes/no dialog}, where user can decide to delete
-	 * type definitions and clone them again.
-	 *
-	 * Note: this class is not static, so it will hold reference to all services. Make sure to dispose it.
-	 *
+	 * Handler for executing maintenance action based on the provided {@link MaintenanceActionsChoice user choice}.
 	 */
-	private class MaintenanceActionsButtonListener extends SelectionAdapter {
-		private static final String ACTION_NPM_RELOAD = "Reload npm libraries from the disk.";
-		private static final String ACTION_NPM_REINSTALL = "Reinstall npm libraries.";
-		private static final String ACTION_NPM_CACHE_CLEAN = "Clean npm cache (entire cache cleaned).";
-		private static final String ACTION_NPM_PACKAGES_DELETE = "Delete npm packages (whole npm folder gets deleted).";
-		private static final String ACTION_TYPE_DEFINITIONS_RESET = "Reset type definitions (fresh clone). ";
-
-		private final MultiStatus multistatus = statusHelper
+	private MultiStatus runMaintananceActions(final MaintenanceActionsChoice userChoice, IProgressMonitor monitor) {
+		final MultiStatus multistatus = statusHelper
 				.createMultiStatus("Status of executing maintenance actions.");
 
-		/**
-		 * Synchronized merges of the provided status into the container multi status. Merging takes care of updating
-		 * container {@link IStatus#getSeverity() severity} and {@link IStatus#getCode() code}.
-		 */
-		private synchronized void addStatus(IStatus status) {
-			multistatus.merge(status);
-		}
+		// persist state for reinstall
+		Collection<String> oldPackages = new HashSet<>();
+		if (userChoice.decisionReinstall)
+			oldPackages.addAll(getInstalledNpms());
 
-		private synchronized MultiStatus getStauts() {
-			return multistatus;
-		}
+		// keep the order Cache->TypeDefs->NPMs->Reinstall->Update
+		// actions have side effects that can interact with each other
+		maintenanceCleanNpmCache(userChoice, multistatus, monitor);
+		maintenanceResetTypeDefinitions(userChoice, multistatus);
+		maintenanceDeleteNpms(userChoice, multistatus);
+		maintenanceReinstallNpms(userChoice, multistatus, monitor, oldPackages);
+		maintenanceUpateState(userChoice, multistatus, monitor);
 
-		@Override
-		public void widgetSelected(final SelectionEvent e) {
+		return multistatus;
+	}
 
-			ListSelectionDialog dialog = new ListSelectionDialog(UIUtils.getShell(),
-					new String[] {
-							ACTION_NPM_CACHE_CLEAN,
-							ACTION_NPM_RELOAD,
-							ACTION_NPM_REINSTALL,
-							ACTION_TYPE_DEFINITIONS_RESET,
-							ACTION_NPM_PACKAGES_DELETE },
-					ArrayContentProvider.getInstance(), new LabelProvider(),
-					"Select maintenance actions to perform.");
-			dialog.setTitle("External libraries maintenance actions.");
-
-			if (dialog.open() == Window.OK) {
-				boolean cleanCache = false;
-				boolean deleteNPM = false;
-				boolean reinstall = false;
-				boolean reclone = false;
-				boolean reload = false;
-				Object[] result = dialog.getResult();
-				for (int i = 0; i < result.length; i++) {
-					String dialogItem = (String) result[i];
-
-					switch (dialogItem) {
-					case ACTION_NPM_RELOAD:
-						reload = true;
-						break;
-					case ACTION_NPM_REINSTALL:
-						reinstall = true;
-						break;
-					case ACTION_NPM_CACHE_CLEAN:
-						cleanCache = true;
-						break;
-					case ACTION_NPM_PACKAGES_DELETE:
-						deleteNPM = true;
-						break;
-					case ACTION_TYPE_DEFINITIONS_RESET:
-						reclone = true;
-						break;
-					}
-
-				}
-				final boolean decisionResetTypeDefinitions = reclone;
-				final boolean decisionCleanCache = cleanCache;
-				final boolean decisionReinstall = reinstall;
-				final boolean decisionPurgeNpm = deleteNPM;
-				final boolean decisionReload = reload;
-
-				final AtomicReference<IllegalBinaryStateException> illegalBinaryExcRef = new AtomicReference<>();
-				try {
-					new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
-						// keep the order Cache->TypeDefs->NPMs
-
-						Collection<String> oldPackages = null;
-						if (decisionReinstall) {
-							oldPackages = getInstalledNpms();
-						}
-
-						if (decisionCleanCache) {
-							cleanCache(monitor);
-						}
-
-						if (decisionResetTypeDefinitions) {
-							resetTypeDefinitions();
-						}
-
-						if (decisionPurgeNpm) {
-							deleteNpms();
-							// other actions like reinstall depends on this state
-							externalLibraryWorkspace.updateState();
-						}
-
-						if (decisionReinstall) {
-							try {
-								if (!decisionPurgeNpm) {
-									IStatus uninstallStatus = npmManager.uninstallDependencies(oldPackages, monitor);
-									if (uninstallStatus.isOK()) {
-										updateInput(viewer, store.getLocations());
-									} else {
-										addStatus(uninstallStatus);
-									}
-								}
-								IStatus installStatus = npmManager.installDependencies(oldPackages, monitor);
-								if (installStatus.isOK()) {
-									updateInput(viewer, store.getLocations());
-								} else {
-									addStatus(installStatus);
-								}
-							} catch (final IllegalBinaryStateException ibse) {
-								illegalBinaryExcRef.set(ibse);
-							}
-						}
-
-						if (decisionReload || decisionReinstall || decisionPurgeNpm || decisionResetTypeDefinitions) {
-							externalLibraryWorkspace.updateState();
-							externalLibrariesReloadHelper.reloadLibraries(true, monitor);
-							updateInput(viewer, store.getLocations());
-						}
-					});
-				} catch (final InvocationTargetException | InterruptedException exc) {
-					throw new RuntimeException("Error while executing maintenance actions.", exc);
-				} finally {
-
-					if (null != illegalBinaryExcRef.get()) {
-						new IllegalBinaryStateDialog(illegalBinaryExcRef.get()).open();
-					}
-
-					MultiStatus status = getStauts();
-					if (!status.isOK()) {
-						N4JSActivator.getInstance().getLog().log(status);
-						getDisplay().asyncExec(() -> openError(
-								getShell(),
-								"external libraries maintenance Failed",
-								"Error while performing external libraries maintenance actions.\nPlease check your Error Log view for the detailed log about the failure."));
-					}
-				}
-			}
-		}
-
-		private void cleanCache(IProgressMonitor monitor) {
+	/**
+	 * Actions to be taken if npm cache clean is requested.
+	 *
+	 * @param userChoice
+	 *            options object used to decide if / how actions should be performed
+	 * @param multistatus
+	 *            the status used accumulate issues
+	 * @param monitor
+	 *            the monitor used to interact with npm manager
+	 */
+	private void maintenanceCleanNpmCache(final MaintenanceActionsChoice userChoice,
+			final MultiStatus multistatus, IProgressMonitor monitor) {
+		if (userChoice.decisionCleanCache) {
 			IStatus status = npmManager.cleanCache(monitor);
 			if (!status.isOK()) {
-				addStatus(status);
+				multistatus.merge(status);
 			}
 		}
+	}
 
-		private void deleteNpms() {
+	/**
+	 * Updates all affected state after maintenance actions have been performed. In particular updates state of the
+	 * workspace, persisted preferences state, and displayed preferences.
+	 *
+	 * @param userChoice
+	 *            options object used to decide if / how actions should be performed
+	 * @param multistatus
+	 *            the status used accumulate issues
+	 * @param monitor
+	 *            the monitor used to interact with npm manager
+	 */
+	private void maintenanceUpateState(final MaintenanceActionsChoice userChoice,
+			final MultiStatus multistatus, IProgressMonitor monitor) {
+		if (userChoice.decisionReload || userChoice.decisionReinstall || userChoice.decisionPurgeNpm
+				|| userChoice.decisionResetTypeDefinitions) {
+			externalLibraryWorkspace.updateState();
+			try {
+				externalLibrariesReloadHelper.reloadLibraries(true, monitor);
+			} catch (InvocationTargetException e) {
+				multistatus.merge(
+						statusHelper.createError("Error when reloading libraries after maintanance actions.", e));
+			}
+			updateInput(viewer, store.getLocations());
+		}
+	}
+
+	/**
+	 * Actions to be taken if reinstalling npms is requested.
+	 *
+	 * @param userChoice
+	 *            options object used to decide if / how actions should be performed
+	 * @param multistatus
+	 *            the status used accumulate issues
+	 * @param monitor
+	 *            the monitor used to interact with npm manager
+	 * @param packageNames
+	 *            names of the packages to reinstall
+	 *
+	 */
+	private void maintenanceReinstallNpms(final MaintenanceActionsChoice userChoice,
+			final MultiStatus multistatus, IProgressMonitor monitor, Collection<String> packageNames) {
+		if (userChoice.decisionReinstall) {
+
+			// unless all npms were purged, uninstall known ones
+			if (!userChoice.decisionPurgeNpm) {
+				unintallAndUpdate(packageNames, monitor);
+				IStatus uninstallStatus = unintallAndUpdate(packageNames, monitor);
+				if (!uninstallStatus.isOK())
+					multistatus.merge(uninstallStatus);
+			}
+
+			IStatus installStatus = intallAndUpdate(packageNames, monitor);
+			if (!installStatus.isOK())
+				multistatus.merge(installStatus);
+
+		}
+	}
+
+	/**
+	 * Actions to be taken if deleting npms is requested.
+	 *
+	 * @param userChoice
+	 *            options object used to decide if / how actions should be performed
+	 * @param multistatus
+	 *            the status used accumulate issues
+	 */
+	private void maintenanceDeleteNpms(final MaintenanceActionsChoice userChoice, final MultiStatus multistatus) {
+		if (userChoice.decisionPurgeNpm) {
 			// get folder
 			File npmFolder = N4_NPM_FOLDER_SUPPLIER.get();
 
 			if (npmFolder.exists()) {
-				FileDeleter.delete(npmFolder, (IOException ioe) -> addStatus(
+				FileDeleter.delete(npmFolder, (IOException ioe) -> multistatus.merge(
 						statusHelper.createError("Exception during deletion of the npm folder.", ioe)));
 			}
 
 			if (!npmFolder.exists()) {
 				// recreate npm folder
 				if (!repairNpmFolderState()) {
-					addStatus(statusHelper
+					multistatus.merge(statusHelper
 							.createError("The npm folder was not recreated correctly."));
 				}
 			} else {// should never happen
-				addStatus(statusHelper.createError("Could not verify deletion of " + npmFolder.getAbsolutePath()));
+				multistatus
+						.merge(statusHelper.createError("Could not verify deletion of " + npmFolder.getAbsolutePath()));
 			}
+			// other actions like reinstall depends on this state
+			externalLibraryWorkspace.updateState();
 		}
+	}
 
-		private void resetTypeDefinitions() {
+	/**
+	 * Actions to be taken if reseting type definitions is requested.
+	 *
+	 * @param userChoice
+	 *            options object used to decide if / how actions should be performed
+	 * @param multistatus
+	 *            the status used accumulate issues
+	 */
+	private void maintenanceResetTypeDefinitions(final MaintenanceActionsChoice userChoice,
+			final MultiStatus multistatus) {
+		if (userChoice.decisionResetTypeDefinitions) {
 			// get folder
 			File typeDefinitionsFolder = gitSupplier.get();
 
 			if (typeDefinitionsFolder.exists()) {
-				FileDeleter.delete(typeDefinitionsFolder, (IOException ioe) -> addStatus(
+				FileDeleter.delete(typeDefinitionsFolder, (IOException ioe) -> multistatus.merge(
 						statusHelper.createError("Exception during deletion of the type definitions.", ioe)));
 			}
 
 			if (!typeDefinitionsFolder.exists()) {
 				// recreate npm folder
 				if (!gitSupplier.repairTypeDefinitions()) {
-					addStatus(statusHelper.createError("The type definitions folder was not recreated correctly."));
+					multistatus.merge(
+							statusHelper.createError("The type definitions folder was not recreated correctly."));
 				}
 			} else { // should never happen
-				addStatus(statusHelper
+				multistatus.merge(statusHelper
 						.createError("Could not verify deletion of " + typeDefinitionsFolder.getAbsolutePath()));
 			}
 		}
@@ -878,6 +590,52 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				updateInput(viewer, store.getLocations());
 			}
 		}
+	}
+
+	/**
+	 * Installs npm packages with provide names, if successful updates preference page view.
+	 *
+	 * @return status of the operation.
+	 */
+	private IStatus intallAndUpdate(final Collection<String> packageNames, final IProgressMonitor monitor) {
+		try {
+			IStatus status = npmManager.installDependencies(packageNames, monitor);
+			if (status.isOK())
+				updateInput(viewer, store.getLocations());
+
+			return status;
+		} catch (final IllegalBinaryStateException ibse) {
+			return statusHelper.createError("Illegal state of the binary when installing npm packages.", ibse);
+		}
+	}
+
+	/**
+	 * Uninstalls npm packages with provide names, if successful updates preference page view.
+	 *
+	 * @return status of the operation.
+	 */
+	private IStatus unintallAndUpdate(final Collection<String> packageNames, final IProgressMonitor monitor) {
+		try {
+			IStatus status = npmManager.uninstallDependencies(packageNames, monitor);
+			if (status.isOK())
+				updateInput(viewer, store.getLocations());
+
+			return status;
+		} catch (final IllegalBinaryStateException ibse) {
+			return statusHelper.createError("Illegal state of the binary when uninstalling npm packages.", ibse);
+		}
+	}
+
+	private String getSelectedNpm() {
+		final ISelection selection = viewer.getSelection();
+		if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
+			final Object element = ((IStructuredSelection) selection).getFirstElement();
+			if (element instanceof IN4JSProject) {
+				IN4JSProject project = (IN4JSProject) element;
+				return project.getProjectId();
+			}
+		}
+		return null;
 	}
 
 	private static void updateInput(final TreeViewer viewer, final Object input) {
