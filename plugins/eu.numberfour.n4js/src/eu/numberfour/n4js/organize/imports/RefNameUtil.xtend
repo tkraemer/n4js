@@ -13,6 +13,7 @@ package eu.numberfour.n4js.organize.imports
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
+import eu.numberfour.n4js.ts.types.TypingStrategy
 
 /**
  * Utility to find actual name that was used for given reference.
@@ -32,7 +33,28 @@ class RefNameUtil {
 	def public static String findTypeName(ParameterizedTypeRef ref) {
 		val astNode = NodeModelUtils.findActualNodeFor(ref)
 		if (astNode !== null) {
-			astNode.leafNodes.filter[!hidden].map[text].join
+			var prefixLen = 0
+			var suffixLen = 0
+			val nodeText = astNode.leafNodes.filter[!hidden].map[text].join
+			
+			if(!ref.definedTypingStrategy.equals(TypingStrategy.NOMINAL)){
+				val typingLiteral = ref.definedTypingStrategy.literal
+				if(nodeText.startsWith(typingLiteral)){
+					// handle things like
+					// foo2 : ~r~  /*  ~r~ */  A
+					// nodeText does not contain whitespace or comments, so it is like 
+					// ~r~A
+					// drop typing strategy literal value and return just
+					// A
+					prefixLen = ref.definedTypingStrategy.literal.length
+				}
+			}
+			
+			if(nodeText.endsWith(ref.modifiersAsString))
+				suffixLen = ref.modifiersAsString.length
+			
+			
+			return nodeText.substring(prefixLen, nodeText.length - suffixLen)
 		} else {
 			null
 		}
