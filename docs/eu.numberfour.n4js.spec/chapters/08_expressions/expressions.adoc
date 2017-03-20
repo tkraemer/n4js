@@ -1043,11 +1043,11 @@ task:IDE-656[] task:IDE-1734[]
 An index access expression is valid iff one of the following cases applies:
 
 1. the receiver is of a dynamic type. In this case, the index may be any expression (need not be a compile-time expression) task:GH-238[].
-2. the receiver is of type `Object`, **not** including subtypes of `Object` and not for `pass:[~Object]` and `pass:[~~Object]`.
+2. the receiver is an immediate instance of `Object`, i.e. it is a subtype of `Object` and its super types but **not** of any other type including `pass:[~Object]` and `pass:[~~Object]`.
 3. the receiver is of type Array, ArgumentType, string, or String (including their subtypes) +
-**and** the index is numeric.
+**and** the index is an expression of type `number`.
 4. the index expression is a compile-time expression +
-**and** the receiver type defines a member with a name corresponding to the compile-time value of the index expression +
+**and** the receiver type defines a member with a name equal to the string representation of the index expression's compile-time value +
 **and** the receiver is not an enum.
 --
 

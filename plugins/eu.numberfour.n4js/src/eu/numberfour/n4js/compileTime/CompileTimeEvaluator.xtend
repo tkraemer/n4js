@@ -42,6 +42,7 @@ import eu.numberfour.n4js.ts.types.TConstableElement
 import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TypesPackage
+import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.utils.RecursionGuard
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
