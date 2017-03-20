@@ -17,6 +17,33 @@ class A {
 	private static() : void { }
 }
 
+// For the following cases, cf. ECM15, 11.6 Names and Keywords. The corresponding tests from the ECMAScript test
+// suite had to be disabled for computed property names, which is why we add them here. See also GH-364. 
+
+class GetterSetterPrototype {
+	// XPECT errors --> "prototype is a reserved identifier." at "['prototype']"
+    @Override public static get ['prototype'](): Object { return null;  }
+
+	// XPECT errors --> "prototype is a reserved identifier." at "['prototype']"
+    public static set ['prototype'](o: Object) {}
+}
+
+class MethodPrototype {
+	/* XPECT errors ---
+		"Cannot override static getter Object.prototype with static method MethodPrototype.prototype." at "['prototype']"
+		"prototype is a reserved identifier." at "['prototype']"
+	---  */
+	public static ['prototype']() {}
+}
+
+class GeneratorPrototype {
+	/* XPECT errors ---
+		"Cannot override static getter Object.prototype with static method GeneratorPrototype.prototype." at "['prototype']"
+		"prototype is a reserved identifier." at "['prototype']"
+	---  */
+    public static *['prototype']() {}
+}
+
 // XPECT errors --> "Function await may be confused with future reserved word." at "await"
 function await() { };
 

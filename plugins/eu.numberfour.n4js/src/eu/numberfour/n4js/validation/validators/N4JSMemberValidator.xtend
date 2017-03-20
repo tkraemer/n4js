@@ -52,6 +52,7 @@ import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.n4JS.PropertyNameOwner
 
 /**
  * Validation of rules that apply to individual members of a classifier.<p>
@@ -95,6 +96,24 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 		internalCheckNameStartsWithDollar
 		internalCheckAbstractAndFinal
 		internalCheckPrivateOrProjectWithInternalAnnotation(n4Member, it)
+	}
+
+	/*
+	 * This check was previously covered by ASTStructureValidator#validateName, but since computed property names are
+	 * only set during post processing as of IDE-2468, we now have to perform validations for computed property names
+	 * here.
+	 */
+	@Check 
+	def void checkComputedPropertyName(PropertyNameOwner owner) {
+		if (owner.hasComputedPropertyName) {
+			val name = owner.name
+			if (name !== null) {
+				if (!owner.isValidName) {
+					val message = IssueCodes.getMessageForAST_RESERVED_IDENTIFIER(name);
+					addIssue(message, owner, PROPERTY_NAME_OWNER__DECLARED_NAME, IssueCodes.AST_RESERVED_IDENTIFIER);
+				}
+			}
+		}
 	}
 
 	@Check
