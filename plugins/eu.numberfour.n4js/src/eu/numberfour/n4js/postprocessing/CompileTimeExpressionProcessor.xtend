@@ -61,7 +61,7 @@ class CompileTimeExpressionProcessor {
 		if (elem !== null && elem.const) {
 			val valueStr = CompileTimeValue.serialize(value);
 			EcoreUtilN4.doWithDeliver(false, [
-				elem.value = valueStr;
+				elem.compileTimeValue = valueStr;
 			], elem);
 		}
 	}

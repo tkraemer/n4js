@@ -2807,7 +2807,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTConstableElement_Value() {
+	public EAttribute getTConstableElement_CompileTimeValue() {
 		return (EAttribute)tConstableElementEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -3259,7 +3259,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		tConstableElementEClass = createEClass(TCONSTABLE_ELEMENT);
 		createEAttribute(tConstableElementEClass, TCONSTABLE_ELEMENT__CONST);
-		createEAttribute(tConstableElementEClass, TCONSTABLE_ELEMENT__VALUE);
+		createEAttribute(tConstableElementEClass, TCONSTABLE_ELEMENT__COMPILE_TIME_VALUE);
 
 		tVariableEClass = createEClass(TVARIABLE);
 		createEAttribute(tVariableEClass, TVARIABLE__EXTERNAL);
@@ -3842,7 +3842,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		initEClass(tConstableElementEClass, TConstableElement.class, "TConstableElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTConstableElement_Const(), theEcorePackage.getEBoolean(), "const", null, 0, 1, TConstableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTConstableElement_Value(), theEcorePackage.getEString(), "value", null, 0, 1, TConstableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTConstableElement_CompileTimeValue(), theEcorePackage.getEString(), "compileTimeValue", null, 0, 1, TConstableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tVariableEClass, TVariable.class, "TVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTVariable_External(), theEcorePackage.getEBoolean(), "external", null, 0, 1, TVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
