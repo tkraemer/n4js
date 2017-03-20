@@ -30,8 +30,8 @@ In this case, $T$ is, therefore, always a structural subtype of _pass:[~T]_.
 [.language-n4js]
 Sometimes it is convenient to refer only to the fields of a classifier, for example when the initial field values are to be provided in a variable passed to the constructor.
 In that case, the type can be modified with ``pass:[~~]`` (two tildes). This is only possible on use-site, i.e. on type references.
-Furthermore, only on the use-site, it is possible to consider only either readable or writable or fields by using the read-only ``pass:[r~]`` or write-only ``pass:[w~]`` structural field typing.
-For initialization blocks, it is even possible to use structural initializer field typing via the ``pass:[i~]`` operator.
+Furthermore, only on the use-site, it is possible to consider only either readable or writable or fields by using the read-only ``pass:[~r~]`` or write-only ``pass:[~w~]`` structural field typing.
+For initialization blocks, it is even possible to use structural initializer field typing via the ``pass:[~i~]`` operator.
 
 [.language-n4js]
 == Syntax
