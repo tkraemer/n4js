@@ -24,6 +24,7 @@ import eu.numberfour.n4js.n4JS.N4EnumDeclaration
 import eu.numberfour.n4js.n4JS.N4InterfaceDeclaration
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.VariableEnvironmentElement
+import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.IdentifiableElement
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
@@ -32,7 +33,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.util.IResourceScopeCache
 
 import static extension eu.numberfour.n4js.n4JS.N4JSASTUtils.*
-import eu.numberfour.n4js.ts.typeRefs.TypeRef
 
 /**
  * Extensions for source element, in particular for statements.
@@ -40,8 +40,6 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRef
  */
 @Singleton
 class SourceElementExtensions {
-
-	@Inject N4JSTypeSystem ts
 
 	@Inject extension IResourceScopeCache cache
 
@@ -102,14 +100,12 @@ class SourceElementExtensions {
 	 */
 	def private <T extends TypableElement, U extends IdentifiableElement> collectVisibleIdentifiableElement(T element,
 		List<? super IdentifiableElement> addHere, (T)=>U calculateType) {
+
 		if(calculateType!==null) {
-			var type = calculateType.apply(element)
-			if (type === null) {
-				ts.tau(element);
-			}
-			type = calculateType.apply(element)
-			if (type !== null)
+			val type = calculateType.apply(element)
+			if (type !== null) {
 				addHere.add(type)
+			}
 		}
 	}
 

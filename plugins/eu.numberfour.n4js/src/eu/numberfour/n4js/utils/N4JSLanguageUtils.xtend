@@ -40,7 +40,6 @@ import eu.numberfour.n4js.n4JS.PropertyAssignmentAnnotationList
 import eu.numberfour.n4js.n4JS.PropertyMethodDeclaration
 import eu.numberfour.n4js.n4JS.PropertyNameKind
 import eu.numberfour.n4js.n4JS.Script
-import eu.numberfour.n4js.n4JS.StringLiteral
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
@@ -61,7 +60,6 @@ import eu.numberfour.n4js.ts.types.MemberAccessModifier
 import eu.numberfour.n4js.ts.types.TAnnotableElement
 import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
-import eu.numberfour.n4js.ts.types.TEnumLiteral
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TMember
@@ -675,42 +673,6 @@ class N4JSLanguageUtils {
 	}
 
 	/**
-	 * Tells if the given expression is valid as an index within an {@link IndexedAccessExpression}.
-	 */
-	def static boolean isValidIndexExpression(RuleEnvironment G, Expression indexExpr) {
-		if(indexExpr instanceof NumericLiteral || indexExpr instanceof StringLiteral) {
-			return true;
-		} else if(G.getAccessedBuiltInSymbol(indexExpr)!==null) {
-			return true;
-		} else if(indexExpr instanceof ParameterizedPropertyAccessExpression) {
-			return indexExpr.property instanceof TEnumLiteral;
-		}
-		return false;
-	}
-	/**
-	 * If the given expression is a {@link #isValidIndexExpression(RuleEnvironment, Expression) valid index expression}
-	 * but is *not* numerical, then this method will return the name of the member the index access expression is
-	 * referring to. Returns <code>null</code> if the expression is invalid or numerical.
-	 */
-	def static String getMemberNameForIndexExpression(RuleEnvironment G, Expression indexExpr) {
-		val accessedBuiltInSymbol = G.getAccessedBuiltInSymbol(indexExpr);
-		if(accessedBuiltInSymbol!==null) {
-			return SYMBOL_IDENTIFIER_PREFIX + accessedBuiltInSymbol.name;
-		} else {
-			return switch(indexExpr) {
-				StringLiteral:
-					indexExpr.value
-				ParameterizedPropertyAccessExpression: {
-					val prop = indexExpr.property;
-					if(prop instanceof TEnumLiteral) {
-						prop.valueOrName
-					}
-				}
-			};
-		}
-	}
-
-	/**
 	 * Tells if the given expression is evaluated during post-processing as a compile-time expression and has its
 	 * {@link CompileTimeValue value} stored in the {@link ASTMetaInfoCache}.
 	 * <p>
@@ -733,7 +695,7 @@ class N4JSLanguageUtils {
 	}
 
 	/**
-	 * Tells if the given expression is required to be a constant expression, according to the N4JS language
+	 * Tells if the given expression is required to be a compile-time expression, according to the N4JS language
 	 * specification.
 	 * <p>
 	 * IMPORTANT: this method will return <code>true</code> only for root expressions directly required to be
@@ -743,7 +705,53 @@ class N4JSLanguageUtils {
 		val parent = expr.eContainer;
 		if(parent instanceof LiteralOrComputedPropertyName) {
 			return parent.kind===PropertyNameKind.COMPUTED && parent.expression===expr;
+		} else if(parent instanceof IndexedAccessExpression) {
+			return parent.index===expr;
 		}
 		return false;
+	}
+
+	/**
+	 * Returns the property/member name to use for the given compile-time value or <code>null</code> if the value is
+	 * invalid. This is used to derive a property/member from a compile-time expression in computed property names and
+	 * index access expressions.
+	 * <p>
+	 * IMPLEMENTATION NOTE: we can simply use #toString() on a valid value, even if we have a ValueBoolean, ValueNumber,
+	 * or ValueSymbol.
+	 * <p>
+	 * For undefined, null, NaN, Infinity, booleans, and numbers: they are equivalent to their corresponding string
+	 * literal, as illustrated in this snippet:
+	 *
+	 * <pre>
+	 *     // plain Javascript
+	 *
+	 *     var obj = {
+	 *         [undefined]: 'a',
+	 *         [null]     : 'b',
+	 *         41         : 'c',
+	 *         [42]       : 'd',
+	 *         [false]    : 'e',
+	 *         [NaN]      : 'f',
+	 *         [Infinity] : 'g'
+	 *     };
+	 *
+	 *     console.log( obj[undefined] === obj['undefined']); // will print true!
+	 *     console.log( obj[null]      === obj['null']     ); // will print true!
+	 *     console.log( obj[41]        === obj['41']       ); // will print true!
+	 *     console.log( obj[42]        === obj['42']       ); // will print true!
+	 *     console.log( obj[false]     === obj['false']    ); // will print true!
+	 *     console.log( obj[NaN]       === obj['NaN']      ); // will print true!
+	 *     console.log( obj[Infinity]  === obj['Infinity'] ); // will print true!
+	 * </pre>
+	 * <p>
+	 * For symbols: the #toString() method in ValueSymbol prepends {@link N4JSLanguageUtils#SYMBOL_IDENTIFIER_PREFIX},
+	 * so we can simply use that.
+	 */
+	def public static String derivePropertyNameFromCompileTimeValue(CompileTimeValue value) {
+		return if (value !== null && value.valid) {
+			value.toString // see API doc for why we can simply use #toString() here
+		} else {
+			null
+		}
 	}
 }

@@ -15,7 +15,7 @@ var myIterable : Iterable<?>;
 var getIterFun = myIterable[Symbol.iterator];
 
 // XPECT noerrors -->
-var iter0 = myIterable[Symbol.iterator] ();
+var iter0 = myIterable[Symbol.iterator]();
 
 
 // reading and writing an immediate instance of Object
@@ -71,7 +71,7 @@ var myObjStruct : ~Object;
 // XPECT errors --> "Access of property Symbol.iterator only allowed for instances of Iterable and immediate instances of Object." at "myN4Obj[Symbol.iterator]"
 var iter2 = myN4Obj[Symbol.iterator];
 
-// XPECT errors --> "Indexed access is only allowed for strings, arrays and iterables and for immediate(!) instances of Object." at "myAny[Symbol.iterator]"
+// XPECT errors --> "Access of property Symbol.iterator only allowed for instances of Iterable and immediate instances of Object." at "myAny[Symbol.iterator]"
 var iter3 = myAny[Symbol.iterator];
 
 // XPECT errors --> "Access of property Symbol.iterator only allowed for instances of Iterable and immediate instances of Object." at "myObjStruct[Symbol.iterator]"

@@ -18,8 +18,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <!-- begin-model-doc -->
  * *
- * 'Trait' that allows to mark a certain type as array-like. If an elementType is
- * provided, that one is assumed to be the return type of indexed access expressions.
+ * 'Trait' that allows to mark a certain type as "array like". If an elementType is
+ * provided, that one is assumed to be the return type of index access expressions with a numeric index.
+ * <p>
+ * IMPORTANT: types inheriting from this class are not always array like; they are array like only if they define
+ * property 'declaredElementType'.
  * <!-- end-model-doc -->
  *
  * <p>

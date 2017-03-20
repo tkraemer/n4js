@@ -11,7 +11,6 @@
 package eu.numberfour.n4js.postprocessing
 
 import com.google.inject.Singleton
-import eu.numberfour.n4js.n4JS.Expression
 import eu.numberfour.n4js.n4JS.LiteralOrComputedPropertyName
 import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4GetterDeclaration
@@ -56,8 +55,10 @@ class ComputedNameProcessor {
 		ASTMetaInfoCache cache, int indentLevel) {
 
 		if (nameDecl.hasComputedPropertyName) {
-			// obtain compile-time value of expression + derive a property name from the value
-			val name = getPropertyNameFromExpression(G, nameDecl.expression, cache);
+			// obtain compile-time value of expression
+			val value = cache.getCompileTimeValue(nameDecl.expression);
+			// derive a property name from the value
+			val name = N4JSLanguageUtils.derivePropertyNameFromCompileTimeValue(value);
 			if (name !== null) {
 				// cache the computed name in the LiteralOrComputedPropertyName AST node
 				EcoreUtilN4.doWithDeliver(false, [
@@ -81,49 +82,6 @@ class ComputedNameProcessor {
 				discardTypeModelElement(owner);
 			}
 		}
-	}
-
-	/**
-	 * Returns the property/member name to use for the given expression or <code>null</code> if the expression is not a
-	 * valid constant expression.
-	 * <p>
-	 * IMPLEMENTATION NOTE: we can simply use #toString() on a valid value, even if we have a ValueBoolean, ValueNumber,
-	 * or ValueSymbol.
-	 * <p>
-	 * For undefined, null, NaN, Infinity, booleans, and numbers: they are equivalent to their corresponding string
-	 * literal, as illustrated in this snippet:
-	 * <pre>
-	 *     // plain Javascript
-	 *
-	 *     var obj = {
-	 *         [undefined]: 'a',
-	 *         [null]     : 'b',
-	 *         41         : 'c',
-	 *         [42]       : 'd',
-	 *         [false]    : 'e',
-	 *         [NaN]      : 'f',
-	 *         [Infinity] : 'g'
-	 *     };
-	 *
-	 *     console.log( obj[undefined] === obj['undefined']); // will print true!
-	 *     console.log( obj[null]      === obj['null']     ); // will print true!
-	 *     console.log( obj[41]        === obj['41']       ); // will print true!
-	 *     console.log( obj[42]        === obj['42']       ); // will print true!
-	 *     console.log( obj[false]     === obj['false']    ); // will print true!
-	 *     console.log( obj[NaN]       === obj['NaN']      ); // will print true!
-	 *     console.log( obj[Infinity]  === obj['Infinity'] ); // will print true!
-	 * </pre>
-	 * <p>
-	 * For symbols: the #toString() method in ValueSymbol prepends {@link N4JSLanguageUtils#SYMBOL_IDENTIFIER_PREFIX},
-	 * so we can simply use that.
-	 */
-	def private String getPropertyNameFromExpression(RuleEnvironment G, Expression expr, ASTMetaInfoCache cache) {
-		val value = cache.getCompileTimeValue(expr);
-		return if (value.valid) {
-			value.toString // see API doc for why we can simply use #toString() here
-		} else {
-			null
-		};
 	}
 
 	/**

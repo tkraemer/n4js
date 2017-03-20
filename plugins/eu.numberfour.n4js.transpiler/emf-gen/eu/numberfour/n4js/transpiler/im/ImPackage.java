@@ -944,6 +944,15 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_IM___IS_FINAL_BY_TYPE = TypeRefsPackage.PARAMETERIZED_TYPE_REF___IS_FINAL_BY_TYPE;
 
 	/**
+	 * The operation id for the '<em>Is Array Like</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_IM___IS_ARRAY_LIKE = TypeRefsPackage.PARAMETERIZED_TYPE_REF___IS_ARRAY_LIKE;
+
+	/**
 	 * The operation id for the '<em>Is Dynamic</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1321,6 +1330,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___IS_FINAL_BY_TYPE = PARAMETERIZED_TYPE_REF_IM___IS_FINAL_BY_TYPE;
+
+	/**
+	 * The operation id for the '<em>Is Array Like</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___IS_ARRAY_LIKE = PARAMETERIZED_TYPE_REF_IM___IS_ARRAY_LIKE;
 
 	/**
 	 * The operation id for the '<em>Is Dynamic</em>' operation.

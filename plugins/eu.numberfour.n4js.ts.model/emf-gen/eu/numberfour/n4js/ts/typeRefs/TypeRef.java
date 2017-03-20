@@ -120,10 +120,22 @@ public interface TypeRef extends TypeArgument, Versionable {
 	 * The method is robust, if declared type is null, false is returned.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%eu.numberfour.n4js.ts.types.Type%> dtype = this.getDeclaredType();\nif ((dtype == null))\n{\n\treturn false;\n}\nreturn dtype.isFinal();'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%eu.numberfour.n4js.ts.types.Type%> dtype = this.getDeclaredType();\nreturn ((dtype != null) && dtype.isFinal());'"
 	 * @generated
 	 */
 	boolean isFinalByType();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Tells if this type reference has a declared type which is "array like" as defined by {@link Type#isArrayLike()}.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='final <%eu.numberfour.n4js.ts.types.Type%> dtype = this.getDeclaredType();\nreturn ((dtype != null) && dtype.isArrayLike());'"
+	 * @generated
+	 */
+	boolean isArrayLike();
 
 	/**
 	 * <!-- begin-user-doc -->

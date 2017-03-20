@@ -21,7 +21,7 @@ var c1 = {
 
 }
 
-// XPECT errors --> "Member [xyz] not found." at "c1['xyz']"
+// XPECT errors --> "Member xyz not found." at "c1['xyz']"
 var xyz = c1['xyz']
 
 // XPECT noerrors -->

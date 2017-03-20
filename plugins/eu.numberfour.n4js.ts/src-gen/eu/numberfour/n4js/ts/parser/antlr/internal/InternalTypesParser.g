@@ -1602,16 +1602,41 @@ ruleVirtualBaseType returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_3=LeftCurlyBracket
+		(
+			otherlv_3=Indexed
+			{
+				newLeafNode(otherlv_3, grammarAccess.getVirtualBaseTypeAccess().getIndexedKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getVirtualBaseTypeAccess().getDeclaredElementTypeParameterizedTypeRefNominalParserRuleCall_3_1_0());
+					}
+					lv_declaredElementType_4_0=ruleParameterizedTypeRefNominal
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getVirtualBaseTypeRule());
+						}
+						set(
+							$current,
+							"declaredElementType",
+							lv_declaredElementType_4_0,
+							"eu.numberfour.n4js.ts.TypeExpressions.ParameterizedTypeRefNominal");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)?
+		otherlv_5=LeftCurlyBracket
 		{
-			newLeafNode(otherlv_3, grammarAccess.getVirtualBaseTypeAccess().getLeftCurlyBracketKeyword_3());
+			newLeafNode(otherlv_5, grammarAccess.getVirtualBaseTypeAccess().getLeftCurlyBracketKeyword_4());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getVirtualBaseTypeAccess().getOwnedMembersTMemberParserRuleCall_4_0());
+					newCompositeNode(grammarAccess.getVirtualBaseTypeAccess().getOwnedMembersTMemberParserRuleCall_5_0());
 				}
-				lv_ownedMembers_4_0=ruleTMember
+				lv_ownedMembers_6_0=ruleTMember
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getVirtualBaseTypeRule());
@@ -1619,15 +1644,15 @@ ruleVirtualBaseType returns [EObject current=null]
 					add(
 						$current,
 						"ownedMembers",
-						lv_ownedMembers_4_0,
+						lv_ownedMembers_6_0,
 						"eu.numberfour.n4js.ts.Types.TMember");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
-		otherlv_5=RightCurlyBracket
+		otherlv_7=RightCurlyBracket
 		{
-			newLeafNode(otherlv_5, grammarAccess.getVirtualBaseTypeAccess().getRightCurlyBracketKeyword_5());
+			newLeafNode(otherlv_7, grammarAccess.getVirtualBaseTypeAccess().getRightCurlyBracketKeyword_6());
 		}
 	)
 ;
