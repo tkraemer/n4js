@@ -299,6 +299,10 @@ ruleTObjectPrototype:
 ruleVirtualBaseType:
 	'virtualBase'
 	ruleBindingTypesIdentifier
+	(
+		'indexed'
+		ruleParameterizedTypeRefNominal
+	)?
 	'{'
 	ruleTMember
 	*

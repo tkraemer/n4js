@@ -233,6 +233,7 @@ public class TypesSwitch<T> extends Switch<T> {
 				VirtualBaseType virtualBaseType = (VirtualBaseType)theEObject;
 				T result = caseVirtualBaseType(virtualBaseType);
 				if (result == null) result = caseContainerType(virtualBaseType);
+				if (result == null) result = caseArrayLike(virtualBaseType);
 				if (result == null) result = caseType(virtualBaseType);
 				if (result == null) result = caseTExportableElement(virtualBaseType);
 				if (result == null) result = caseTAnnotableElement(virtualBaseType);

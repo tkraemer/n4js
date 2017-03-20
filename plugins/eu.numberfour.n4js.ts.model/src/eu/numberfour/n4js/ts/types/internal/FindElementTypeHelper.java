@@ -11,9 +11,8 @@
 package eu.numberfour.n4js.ts.types.internal;
 
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
+import eu.numberfour.n4js.ts.types.ArrayLike;
 import eu.numberfour.n4js.ts.types.ContainerType;
-import eu.numberfour.n4js.ts.types.PrimitiveType;
-import eu.numberfour.n4js.ts.types.TObjectPrototype;
 import eu.numberfour.n4js.ts.types.util.AbstractHierachyTraverser;
 
 /**
@@ -39,13 +38,9 @@ public class FindElementTypeHelper extends AbstractHierachyTraverser<TypeRef> {
 
 	@Override
 	protected boolean process(ContainerType<?> currentType) {
-		if (currentType instanceof PrimitiveType) {
-			result = ((PrimitiveType) currentType).getDeclaredElementType();
-		}
-		else if (currentType instanceof TObjectPrototype) {
-			result = ((TObjectPrototype) currentType).getDeclaredElementType();
+		if (currentType instanceof ArrayLike) {
+			result = ((ArrayLike) currentType).getDeclaredElementType();
 		}
 		return result != null;
 	}
-
 }

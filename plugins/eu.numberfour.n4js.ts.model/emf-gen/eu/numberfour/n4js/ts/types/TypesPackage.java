@@ -2373,13 +2373,22 @@ public interface TypesPackage extends EPackage {
 	int VIRTUAL_BASE_TYPE__TYPE_VARS = CONTAINER_TYPE__TYPE_VARS;
 
 	/**
+	 * The feature id for the '<em><b>Declared Element Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIRTUAL_BASE_TYPE__DECLARED_ELEMENT_TYPE = CONTAINER_TYPE_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Declared Owned Members</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VIRTUAL_BASE_TYPE__DECLARED_OWNED_MEMBERS = CONTAINER_TYPE_FEATURE_COUNT + 0;
+	int VIRTUAL_BASE_TYPE__DECLARED_OWNED_MEMBERS = CONTAINER_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Virtual Base Type</em>' class.
@@ -2388,7 +2397,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VIRTUAL_BASE_TYPE_FEATURE_COUNT = CONTAINER_TYPE_FEATURE_COUNT + 1;
+	int VIRTUAL_BASE_TYPE_FEATURE_COUNT = CONTAINER_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -2470,15 +2479,6 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int VIRTUAL_BASE_TYPE___IS_ARRAY_LIKE = CONTAINER_TYPE___IS_ARRAY_LIKE;
-
-	/**
-	 * The operation id for the '<em>Get Element Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIRTUAL_BASE_TYPE___GET_ELEMENT_TYPE = CONTAINER_TYPE___GET_ELEMENT_TYPE;
 
 	/**
 	 * The operation id for the '<em>Get Type Access Modifier</em>' operation.
@@ -2571,13 +2571,22 @@ public interface TypesPackage extends EPackage {
 	int VIRTUAL_BASE_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS = CONTAINER_TYPE___GET_OR_CREATE_OWNED_MEMBERS_BY_NAME_AND_ACCESS;
 
 	/**
+	 * The operation id for the '<em>Get Element Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIRTUAL_BASE_TYPE___GET_ELEMENT_TYPE = CONTAINER_TYPE_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Virtual Base Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VIRTUAL_BASE_TYPE_OPERATION_COUNT = CONTAINER_TYPE_OPERATION_COUNT + 0;
+	int VIRTUAL_BASE_TYPE_OPERATION_COUNT = CONTAINER_TYPE_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.ModuleNamespaceVirtualTypeImpl <em>Module Namespace Virtual Type</em>}' class.

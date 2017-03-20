@@ -5806,9 +5806,9 @@ rule__VirtualBaseType__Group__3__Impl
 	}
 :
 (
-	{ before(grammarAccess.getVirtualBaseTypeAccess().getLeftCurlyBracketKeyword_3()); }
-	LeftCurlyBracket
-	{ after(grammarAccess.getVirtualBaseTypeAccess().getLeftCurlyBracketKeyword_3()); }
+	{ before(grammarAccess.getVirtualBaseTypeAccess().getGroup_3()); }
+	(rule__VirtualBaseType__Group_3__0)?
+	{ after(grammarAccess.getVirtualBaseTypeAccess().getGroup_3()); }
 )
 ;
 finally {
@@ -5833,9 +5833,9 @@ rule__VirtualBaseType__Group__4__Impl
 	}
 :
 (
-	{ before(grammarAccess.getVirtualBaseTypeAccess().getOwnedMembersAssignment_4()); }
-	(rule__VirtualBaseType__OwnedMembersAssignment_4)*
-	{ after(grammarAccess.getVirtualBaseTypeAccess().getOwnedMembersAssignment_4()); }
+	{ before(grammarAccess.getVirtualBaseTypeAccess().getLeftCurlyBracketKeyword_4()); }
+	LeftCurlyBracket
+	{ after(grammarAccess.getVirtualBaseTypeAccess().getLeftCurlyBracketKeyword_4()); }
 )
 ;
 finally {
@@ -5848,6 +5848,7 @@ rule__VirtualBaseType__Group__5
 	}
 :
 	rule__VirtualBaseType__Group__5__Impl
+	rule__VirtualBaseType__Group__6
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -5859,9 +5860,89 @@ rule__VirtualBaseType__Group__5__Impl
 	}
 :
 (
-	{ before(grammarAccess.getVirtualBaseTypeAccess().getRightCurlyBracketKeyword_5()); }
+	{ before(grammarAccess.getVirtualBaseTypeAccess().getOwnedMembersAssignment_5()); }
+	(rule__VirtualBaseType__OwnedMembersAssignment_5)*
+	{ after(grammarAccess.getVirtualBaseTypeAccess().getOwnedMembersAssignment_5()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__VirtualBaseType__Group__6
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__VirtualBaseType__Group__6__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__VirtualBaseType__Group__6__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getVirtualBaseTypeAccess().getRightCurlyBracketKeyword_6()); }
 	RightCurlyBracket
-	{ after(grammarAccess.getVirtualBaseTypeAccess().getRightCurlyBracketKeyword_5()); }
+	{ after(grammarAccess.getVirtualBaseTypeAccess().getRightCurlyBracketKeyword_6()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__VirtualBaseType__Group_3__0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__VirtualBaseType__Group_3__0__Impl
+	rule__VirtualBaseType__Group_3__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__VirtualBaseType__Group_3__0__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getVirtualBaseTypeAccess().getIndexedKeyword_3_0()); }
+	Indexed
+	{ after(grammarAccess.getVirtualBaseTypeAccess().getIndexedKeyword_3_0()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__VirtualBaseType__Group_3__1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__VirtualBaseType__Group_3__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__VirtualBaseType__Group_3__1__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getVirtualBaseTypeAccess().getDeclaredElementTypeAssignment_3_1()); }
+	(rule__VirtualBaseType__DeclaredElementTypeAssignment_3_1)
+	{ after(grammarAccess.getVirtualBaseTypeAccess().getDeclaredElementTypeAssignment_3_1()); }
 )
 ;
 finally {
@@ -15295,15 +15376,30 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__VirtualBaseType__OwnedMembersAssignment_4
+rule__VirtualBaseType__DeclaredElementTypeAssignment_3_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getVirtualBaseTypeAccess().getOwnedMembersTMemberParserRuleCall_4_0()); }
+		{ before(grammarAccess.getVirtualBaseTypeAccess().getDeclaredElementTypeParameterizedTypeRefNominalParserRuleCall_3_1_0()); }
+		ruleParameterizedTypeRefNominal
+		{ after(grammarAccess.getVirtualBaseTypeAccess().getDeclaredElementTypeParameterizedTypeRefNominalParserRuleCall_3_1_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__VirtualBaseType__OwnedMembersAssignment_5
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getVirtualBaseTypeAccess().getOwnedMembersTMemberParserRuleCall_5_0()); }
 		ruleTMember
-		{ after(grammarAccess.getVirtualBaseTypeAccess().getOwnedMembersTMemberParserRuleCall_4_0()); }
+		{ after(grammarAccess.getVirtualBaseTypeAccess().getOwnedMembersTMemberParserRuleCall_5_0()); }
 	)
 ;
 finally {

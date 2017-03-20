@@ -33,6 +33,8 @@ class RefNameUtil {
 	def public static String findTypeName(ParameterizedTypeRef ref) {
 		val astNode = NodeModelUtils.findActualNodeFor(ref)
 		if (astNode !== null) {
+			var prefixLen = 0
+			var suffixLen = 0
 			val nodeText = astNode.leafNodes.filter[!hidden].map[text].join
 			
 			if(!ref.definedTypingStrategy.equals(TypingStrategy.NOMINAL)){
@@ -44,10 +46,15 @@ class RefNameUtil {
 					// ~r~A
 					// drop typing strategy literal value and return just
 					// A
-					return nodeText.substring(ref.definedTypingStrategy.literal.length)
+					prefixLen = ref.definedTypingStrategy.literal.length
 				}
 			}
-			return nodeText
+			
+			if(nodeText.endsWith(ref.modifiersAsString))
+				suffixLen = ref.modifiersAsString.length
+			
+			
+			return nodeText.substring(prefixLen, nodeText.length - suffixLen)
 		} else {
 			null
 		}

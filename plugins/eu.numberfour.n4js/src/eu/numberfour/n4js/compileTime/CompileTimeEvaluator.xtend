@@ -42,6 +42,7 @@ import eu.numberfour.n4js.ts.types.TConstableElement
 import eu.numberfour.n4js.ts.types.TEnum
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TypesPackage
+import eu.numberfour.n4js.utils.ContainerTypesHelper
 import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import eu.numberfour.n4js.utils.RecursionGuard
 import eu.numberfour.n4js.validation.N4JSElementKeywordProvider
@@ -57,14 +58,20 @@ import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.
  * <p>
  * <u>IMPORTANT IMPLEMENTATION NOTES:</u>
  * <ul>
- * <li>It is a design decision to handle compile-time evaluation and computed property names as a separate, up-front
- * step during post-processing before the main AST traversal begins (see method
- * {@link ASTProcessor#processAST(RuleEnvironment, Script, ASTMetaInfoCache)}).
+ * <li>It is a design decision<sup>1</sup> to handle compile-time evaluation and computed property names as a separate,
+ * up-front phase during post-processing before the main AST traversal begins (for details about the phases of
+ * post-processing, see method {@link ASTProcessor#processAST(RuleEnvironment, Script, ASTMetaInfoCache)}).
  * <li>To achieve this, we must <b>avoid using type information during compile-time evaluation</b>, because typing
  * is part of main AST traversal, so typing an AST node would inevitably start the main AST traversal.
  * <li>the only place where this limitation becomes tricky is the evaluation of property access expressions, see
  * {@link #eval(RuleEnvironment, ParameterizedPropertyAccessExpression, RecursionGuard)}.
  * </ul>
+ * 
+ * <sup>1</sup> main rationale for this decision was to keep the handling of computed property names from complicating
+ * the scoping and main AST traversal. Without resolving computed property names beforehand, all the code in scoping,
+ * AST traversal, type system, and helper classes such as {@link ContainerTypesHelper} would have to cope with
+ * unresolved property names, i.e. {@code #getName()} on a property or member would return <code>null</code> or trigger
+ * some potentially complex computation in the background that might confuse AST traversal.
  */
 class CompileTimeEvaluator {
 
@@ -101,7 +108,7 @@ class CompileTimeEvaluator {
 
 	def private dispatch CompileTimeValue eval(RuleEnvironment G, ParenExpression expr, RecursionGuard<EObject> guard) {
 		if (expr.expression === null)
-			return CompileTimeValue.error("empty parenthesized expression", expr);
+			return CompileTimeValue.error();
 		return eval(G, expr.expression, guard);
 	}
 

@@ -31,7 +31,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface VirtualBaseType extends ContainerType<TMember> {
+public interface VirtualBaseType extends ContainerType<TMember>, ArrayLike {
 	/**
 	 * Returns the value of the '<em><b>Declared Owned Members</b></em>' containment reference list.
 	 * The list contents are of type {@link eu.numberfour.n4js.ts.types.TMember}.

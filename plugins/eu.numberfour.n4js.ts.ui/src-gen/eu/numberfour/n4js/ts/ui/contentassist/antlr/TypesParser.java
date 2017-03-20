@@ -104,6 +104,7 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTObjectPrototypeAccess().getGroup_7(), "rule__TObjectPrototype__Group_7__0");
 					put(grammarAccess.getTObjectPrototypeAccess().getGroup_11(), "rule__TObjectPrototype__Group_11__0");
 					put(grammarAccess.getVirtualBaseTypeAccess().getGroup(), "rule__VirtualBaseType__Group__0");
+					put(grammarAccess.getVirtualBaseTypeAccess().getGroup_3(), "rule__VirtualBaseType__Group_3__0");
 					put(grammarAccess.getTClassAccess().getGroup(), "rule__TClass__Group__0");
 					put(grammarAccess.getTClassAccess().getGroup_7(), "rule__TClass__Group_7__0");
 					put(grammarAccess.getTClassAccess().getGroup_7_2(), "rule__TClass__Group_7_2__0");
@@ -242,7 +243,8 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTObjectPrototypeAccess().getCallableCtorAssignment_11_0(), "rule__TObjectPrototype__CallableCtorAssignment_11_0");
 					put(grammarAccess.getTObjectPrototypeAccess().getOwnedMembersAssignment_11_1(), "rule__TObjectPrototype__OwnedMembersAssignment_11_1");
 					put(grammarAccess.getVirtualBaseTypeAccess().getNameAssignment_2(), "rule__VirtualBaseType__NameAssignment_2");
-					put(grammarAccess.getVirtualBaseTypeAccess().getOwnedMembersAssignment_4(), "rule__VirtualBaseType__OwnedMembersAssignment_4");
+					put(grammarAccess.getVirtualBaseTypeAccess().getDeclaredElementTypeAssignment_3_1(), "rule__VirtualBaseType__DeclaredElementTypeAssignment_3_1");
+					put(grammarAccess.getVirtualBaseTypeAccess().getOwnedMembersAssignment_5(), "rule__VirtualBaseType__OwnedMembersAssignment_5");
 					put(grammarAccess.getTClassAccess().getDeclaredTypeAccessModifierAssignment_0(), "rule__TClass__DeclaredTypeAccessModifierAssignment_0");
 					put(grammarAccess.getTClassAccess().getDeclaredProvidedByRuntimeAssignment_1(), "rule__TClass__DeclaredProvidedByRuntimeAssignment_1");
 					put(grammarAccess.getTClassAccess().getDeclaredAbstractAssignment_2(), "rule__TClass__DeclaredAbstractAssignment_2");

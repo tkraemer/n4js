@@ -1,0 +1,17 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+function foo():string {
+	return "field1";
+}
+
+class C {
+	field1 = 'hello field1';
+	field2 = 'hello field2';
+}
+
+let c: C;
+
+// XPECT errors --> "Not a compile-time expression: a call expression is never a compile-time expression." at "foo()"
+c[foo()];
+

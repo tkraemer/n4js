@@ -7,7 +7,9 @@ var first : string = stuff[0]; // should work
 // XPECT errors --> "string is not a subtype of number." at "stuff[1]"
 var n : number = stuff[1]; // should work
 
-// XPECT errors --> "Indexed access on string requires numeric index: string is not a subtype of number." at "'hello'"
+// XPECT noerrors -->
+stuff['length'];
+// XPECT errors --> "Member hello not found." at "stuff['hello']"
 stuff['hello'];
 
 class A{}

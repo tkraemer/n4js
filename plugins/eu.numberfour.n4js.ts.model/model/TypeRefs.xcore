@@ -103,10 +103,15 @@ abstract class TypeRef extends TypeArgument, Versionable {
 	 */
 	op boolean isFinalByType() {
 		val dtype = declaredType;
-		if (dtype === null) {
-			return false;
-		}
-		return dtype.final
+		return dtype!==null && dtype.final
+	}
+
+	/*
+	 * Tells if this type reference has a declared type which is "array like" as defined by {@link Type#isArrayLike()}.
+	 */
+	op boolean isArrayLike() {
+		val dtype = declaredType;
+		return dtype!==null && dtype.isArrayLike;
 	}
 
 	/*
