@@ -108,7 +108,7 @@ class CompileTimeEvaluator {
 
 	def private dispatch CompileTimeValue eval(RuleEnvironment G, ParenExpression expr, RecursionGuard<EObject> guard) {
 		if (expr.expression === null)
-			return CompileTimeValue.error("empty parenthesized expression", expr);
+			return CompileTimeValue.error();
 		return eval(G, expr.expression, guard);
 	}
 
