@@ -76,15 +76,32 @@ public class OsgiBinariesPreferenceStore extends BinariesPreferenceStore {
 		final Map<Binary, URI> initState = super.init();
 		final Preferences node = InstanceScope.INSTANCE.getNode(QUALIFIER);
 		for (final Binary binary : binariesProvider.getRegisteredBinaries()) {
-			final String value = node.get(binary.getId(), "");
-			if (!Strings.isNullOrEmpty(value)) {
-				final File file = new File(value);
-				if (file.isDirectory()) {
-					initState.put(binary, file.toURI());
-				}
-			}
+			recursivePreferencesRead(initState, node, binary);
 		}
 		return initState;
+	}
+
+	/**
+	 * Recursive read of the given preferences node based on the provided binary and its {@link Binary#getChildren()
+	 * children}. Information read from preference node is stored in the provided state instance (instance is mutated).
+	 *
+	 * @param state
+	 *            state instance to read to
+	 * @param node
+	 *            preferences node to read
+	 * @param binary
+	 *            the binary for which we read config
+	 */
+	private void recursivePreferencesRead(final Map<Binary, URI> state, final Preferences node,
+			final Binary binary) {
+		final String value = node.get(binary.getId(), "");
+		if (!Strings.isNullOrEmpty(value)) {
+			final File file = new File(value);
+			if (file.isDirectory()) {
+				state.put(binary, file.toURI());
+			}
+		}
+		binary.getChildren().forEach(child -> recursivePreferencesRead(state, node, child));
 	}
 
 }

@@ -80,57 +80,7 @@ public class BinariesPreferencePage extends PreferencePage implements IWorkbench
 		final Iterable<Binary> binaries = binariesProvider.getRegisteredBinaries();
 
 		for (final Binary binary : binaries) {
-			final Group binaryGroup = new Group(body, SWT.SHADOW_ETCHED_IN);
-			binaryGroup.setLayout(GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).create());
-			binaryGroup.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).align(FILL, TOP).create());
-			binaryGroup.setText(binary.getLabel());
-			final DirectoryFieldEditor editor = new DirectoryFieldEditor("", "Path:", binaryGroup);
-			final URI path = store.getPath(binary);
-			if (null != path) {
-				final File file = new File(path);
-				editor.setStringValue(file.getAbsolutePath());
-			}
-			editor.setPropertyChangeListener(event -> {
-				if (null != event) {
-					if (FieldEditor.VALUE.equals(event.getProperty())) {
-						updateStoreState(binary, event.getNewValue());
-					}
-				}
-			});
-			final Text text = editor.getTextControl(binaryGroup);
-			final ModifyListener modifyListener = new ModifyListener() {
-
-				private Timer timer;
-
-				@Override
-				public void modifyText(ModifyEvent e) {
-					if (null != timer) {
-						timer.cancel();
-						timer = null;
-					}
-					timer = new Timer("'" + binary.getLabel() + "' binary validation thread");
-					final String newValue = text.getText();
-					timer.schedule(new TimerTask() {
-
-						@Override
-						public void run() {
-							updateStoreState(binary, newValue);
-						}
-
-					}, VALIDATION_DELAY_MS);
-				}
-			};
-			text.addModifyListener(modifyListener);
-			text.addDisposeListener(e -> text.removeModifyListener(modifyListener));
-
-			final String description = binary.getDescription();
-			if (null != description) {
-				final Label descriptionLabel = new Label(binaryGroup, WRAP);
-				descriptionLabel.setText(description);
-				final GridData gridData = new GridData(FILL, TOP, true, false, 3, 1);
-				gridData.widthHint = DESCRIPTION_H_HINT;
-				descriptionLabel.setLayoutData(gridData);
-			}
+			recursiveAddBinaryGroup(body, binary);
 		}
 
 		for (final Binary binary : binaries) {
@@ -142,6 +92,73 @@ public class BinariesPreferencePage extends PreferencePage implements IWorkbench
 		}
 
 		return body;
+	}
+
+	/**
+	 * Adds group with controls for a given binary to the given parent. Recursive call, for a given binary it will
+	 * invoke itself on its {@link Binary#getChildren()}.
+	 *
+	 * @param parent
+	 *            parent to which group will be added.
+	 * @param binary
+	 *            for which group will be added.
+	 */
+	private void recursiveAddBinaryGroup(Composite parent, final Binary binary) {
+		final Group binaryGroup = new Group(parent, SWT.SHADOW_ETCHED_IN);
+		binaryGroup.setLayout(GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).create());
+		binaryGroup.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).align(FILL, TOP).create());
+		binaryGroup.setText(binary.getLabel());
+		final DirectoryFieldEditor editor = new DirectoryFieldEditor("", "Path:", binaryGroup);
+		final URI path = store.getPath(binary);
+		if (null != path) {
+			final File file = new File(path);
+			editor.setStringValue(file.getAbsolutePath());
+		}
+		editor.setPropertyChangeListener(event -> {
+			if (null != event) {
+				if (FieldEditor.VALUE.equals(event.getProperty())) {
+					updateStoreState(binary, event.getNewValue());
+				}
+			}
+		});
+		final Text text = editor.getTextControl(binaryGroup);
+		final ModifyListener modifyListener = new ModifyListener() {
+
+			private Timer timer;
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				if (null != timer) {
+					timer.cancel();
+					timer = null;
+				}
+				timer = new Timer("'" + binary.getLabel() + "' binary validation thread");
+				final String newValue = text.getText();
+				timer.schedule(new TimerTask() {
+
+					@Override
+					public void run() {
+						updateStoreState(binary, newValue);
+					}
+
+				}, VALIDATION_DELAY_MS);
+			}
+		};
+		text.addModifyListener(modifyListener);
+		text.addDisposeListener(e -> text.removeModifyListener(modifyListener));
+
+		final String description = binary.getDescription();
+		if (null != description) {
+			final Label descriptionLabel = new Label(binaryGroup, WRAP);
+			descriptionLabel.setText(description);
+			final GridData gridData = new GridData(FILL, TOP, true, false, 3, 1);
+			gridData.widthHint = DESCRIPTION_H_HINT;
+			descriptionLabel.setLayoutData(gridData);
+		}
+
+		for (Binary child : binary.getChildren()) {
+			recursiveAddBinaryGroup(parent, child);
+		}
 	}
 
 	private void updateStoreState(final Binary binary, final Object newValue) {

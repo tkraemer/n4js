@@ -10,7 +10,7 @@
  */
 package eu.numberfour.n4js.binaries.nodejs;
 
-import static java.util.Collections.singletonList;
+import static java.util.Collections.emptyList;
 
 import java.io.File;
 import java.net.URI;
@@ -27,41 +27,45 @@ import eu.numberfour.n4js.binaries.Binary;
 import eu.numberfour.n4js.utils.Version;
 
 /**
- * Representation of a {@code npm} binary.
+ * Representation of a {@code npmrc}. While not being binary itself, it exploits current design to allow user to add
+ * extra configuration to the other binaries, in particular it reconfigures calls to the {@code npm}.
+ *
+ * Note, that {@code npm} is not binary itself, but an executable (script) file added by the {@code npm} library.
  */
-public class NpmBinary implements Binary {
+public class NpmrcBinary implements Binary {
+
+	private static final String NPM_CONFIG_USERCONFIG = "NPM_CONFIG_userconfig";
+
+	/** don't access directly, use {@link #getDefaultNpmrcPath()} */
+	private String memoizedCalculatedNpmrcPath = null;
 
 	@Inject
 	private BinariesValidator validator;
 
 	@Inject
-	private Provider<NodeJsBinary> nodeJsBinaryProvider;
-
-	@Inject
-	private Provider<NpmrcBinary> npmrcBinaryProvider;
+	private Provider<NpmBinary> npmBinaryProvider;
 
 	@Inject
 	private BinariesPreferenceStore preferenceStore;
 
 	@Override
 	public String getId() {
-		return NpmBinary.class.getName();
+		return NpmrcBinary.class.getName();
 	}
 
 	@Override
 	public String getLabel() {
-		return NodeBinariesConstants.NPM_LABEL;
+		return NodeBinariesConstants.NPMRC_LABEL;
 	}
 
 	@Override
 	public Version getMinimumVersion() {
-		return NodeBinariesConstants.NPM_MIN_VERSION;
+		return Version.MISSING;
 	}
 
 	@Override
 	public String getBinaryAbsolutePath() {
-		final NodeJsBinary nodeJsBinary = nodeJsBinaryProvider.get();
-		return nodeJsBinary.getUserNodePathOrDefault() + File.separator + NodeBinariesConstants.NPM_BINARY_NAME;
+		return getUserNodePathOrDefault() + File.separator + NodeBinariesConstants.NPMRC_BINARY_NAME;
 	}
 
 	@Override
@@ -71,20 +75,22 @@ public class NpmBinary implements Binary {
 
 	@Override
 	public Binary getParent() {
-		return nodeJsBinaryProvider.get();
+		return npmBinaryProvider.get();
 	}
 
 	@Override
 	public Iterable<Binary> getChildren() {
-		return singletonList(npmrcBinaryProvider.get());
+		return emptyList();
 	}
 
 	@Override
 	public Map<String, String> updateEnvironment(final Map<String, String> environment) {
-		final Binary parent = getParent();
-		if (null != parent) {
-			parent.updateEnvironment(environment);
-		}
+		final String additionalNodePath = getUserNodePathOrDefault() + File.separator
+				+ NodeBinariesConstants.NPMRC_BINARY_NAME;
+
+		// overwrite
+		environment.put(NPM_CONFIG_USERCONFIG, additionalNodePath);
+
 		return environment;
 	}
 
@@ -102,7 +108,7 @@ public class NpmBinary implements Binary {
 				return parentStatus;
 			}
 		}
-		return validator.validate(this);
+		return validator.validateBinaryFile(this);
 	}
 
 	@Override
@@ -121,10 +127,10 @@ public class NpmBinary implements Binary {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof NpmBinary)) {
+		if (!(obj instanceof NpmrcBinary)) {
 			return false;
 		}
-		final NpmBinary other = (NpmBinary) obj;
+		final NpmrcBinary other = (NpmrcBinary) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;
@@ -135,4 +141,24 @@ public class NpmBinary implements Binary {
 		return true;
 	}
 
+	/**
+	 * (non-API)
+	 *
+	 * Returns with a pair containing the user provided or the default location of the binary and a boolean value
+	 * denoting whether the path is user provided
+	 *
+	 * @return the user configured absolute path to the binary or the default one.
+	 */
+	String getUserNodePathOrDefault() {
+		final URI userConfiguredLocation = getUserConfiguredLocation();
+		return null == userConfiguredLocation ? getDefaultNpmrcPath()
+				: new File(userConfiguredLocation).getAbsolutePath();
+	}
+
+	private String getDefaultNpmrcPath() {
+		if (memoizedCalculatedNpmrcPath == null) {
+			memoizedCalculatedNpmrcPath = System.getProperty("user.home");
+		}
+		return memoizedCalculatedNpmrcPath;
+	}
 }
