@@ -213,11 +213,11 @@ interface D21 extends I_accessorConcrete {
 	@Override public set s2(value) {}
 }
 
-// XPECT errors --> "Cannot extend interface I_accessorAbstract: cannot implement one or more non-accessible abstract members: getter I_accessorAbstract.ga1, getter I_accessorAbstract.ga2, setter I_accessorAbstract.sa1 and setter I_accessorAbstract.sa2." at "I_accessorAbstract"
+// XPECT errors --> "Cannot extend interface I_accessorAbstract: cannot implement one or more non-accessible abstract members: setter I_accessorAbstract.sa1, setter I_accessorAbstract.sa2, getter I_accessorAbstract.ga1 and getter I_accessorAbstract.ga2." at "I_accessorAbstract"
 interface D22 extends I_accessorAbstract {
 }
 
-// XPECT errors --> "Cannot extend interface I_accessorAbstract: cannot implement one or more non-accessible abstract members: getter I_accessorAbstract.ga1, getter I_accessorAbstract.ga2, setter I_accessorAbstract.sa1 and setter I_accessorAbstract.sa2." at "I_accessorAbstract"
+// XPECT errors --> "Cannot extend interface I_accessorAbstract: cannot implement one or more non-accessible abstract members: setter I_accessorAbstract.sa1, setter I_accessorAbstract.sa2, getter I_accessorAbstract.ga1 and getter I_accessorAbstract.ga2." at "I_accessorAbstract"
 interface D23 extends I_accessorAbstract {
 	// XPECT errors --> "The getter D23.ga1 cannot override or implement non-accessible getter I_accessorAbstract.ga1." at "ga1"
 	@Override public get ga1() {return null;}
