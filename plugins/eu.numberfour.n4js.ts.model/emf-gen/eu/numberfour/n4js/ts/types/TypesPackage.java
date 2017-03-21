@@ -8677,13 +8677,13 @@ public interface TypesPackage extends EPackage {
 	int TFIELD__CONST = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * The feature id for the '<em><b>Compile Time Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TFIELD__VALUE = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 2;
+	int TFIELD__COMPILE_TIME_VALUE = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Has Expression</b></em>' attribute.
@@ -8984,13 +8984,13 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCT_FIELD__CONST = TFIELD__CONST;
 
 	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * The feature id for the '<em><b>Compile Time Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TSTRUCT_FIELD__VALUE = TFIELD__VALUE;
+	int TSTRUCT_FIELD__COMPILE_TIME_VALUE = TFIELD__COMPILE_TIME_VALUE;
 
 	/**
 	 * The feature id for the '<em><b>Has Expression</b></em>' attribute.
@@ -11098,13 +11098,13 @@ public interface TypesPackage extends EPackage {
 	int TCONSTABLE_ELEMENT__CONST = 0;
 
 	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * The feature id for the '<em><b>Compile Time Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TCONSTABLE_ELEMENT__VALUE = 1;
+	int TCONSTABLE_ELEMENT__COMPILE_TIME_VALUE = 1;
 
 	/**
 	 * The number of structural features of the '<em>TConstable Element</em>' class.
@@ -11162,13 +11162,13 @@ public interface TypesPackage extends EPackage {
 	int TVARIABLE__CONST = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * The feature id for the '<em><b>Compile Time Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE__VALUE = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 1;
+	int TVARIABLE__COMPILE_TIME_VALUE = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Ast Element</b></em>' reference.
@@ -13923,15 +13923,15 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTConstableElement_Const();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TConstableElement#getValue <em>Value</em>}'.
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TConstableElement#getCompileTimeValue <em>Compile Time Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Value</em>'.
-	 * @see eu.numberfour.n4js.ts.types.TConstableElement#getValue()
+	 * @return the meta object for the attribute '<em>Compile Time Value</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TConstableElement#getCompileTimeValue()
 	 * @see #getTConstableElement()
 	 * @generated
 	 */
-	EAttribute getTConstableElement_Value();
+	EAttribute getTConstableElement_CompileTimeValue();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.types.TVariable <em>TVariable</em>}'.
@@ -16157,12 +16157,12 @@ public interface TypesPackage extends EPackage {
 		EAttribute TCONSTABLE_ELEMENT__CONST = eINSTANCE.getTConstableElement_Const();
 
 		/**
-		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Compile Time Value</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TCONSTABLE_ELEMENT__VALUE = eINSTANCE.getTConstableElement_Value();
+		EAttribute TCONSTABLE_ELEMENT__COMPILE_TIME_VALUE = eINSTANCE.getTConstableElement_CompileTimeValue();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl <em>TVariable</em>}' class.
