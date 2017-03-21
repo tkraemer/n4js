@@ -48,7 +48,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#isConst <em>Const</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#getCompileTimeValue <em>Compile Time Value</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#getAstElement <em>Ast Element</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#getDeclaredTypeAccessModifier <em>Declared Type Access Modifier</em>}</li>
@@ -81,24 +81,24 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 	protected boolean const_ = CONST_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
+	 * The default value of the '{@link #getCompileTimeValue() <em>Compile Time Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getValue()
+	 * @see #getCompileTimeValue()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String VALUE_EDEFAULT = null;
+	protected static final String COMPILE_TIME_VALUE_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
+	 * The cached value of the '{@link #getCompileTimeValue() <em>Compile Time Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getValue()
+	 * @see #getCompileTimeValue()
 	 * @generated
 	 * @ordered
 	 */
-	protected String value = VALUE_EDEFAULT;
+	protected String compileTimeValue = COMPILE_TIME_VALUE_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getAstElement() <em>Ast Element</em>}' reference.
@@ -235,8 +235,8 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getValue() {
-		return value;
+	public String getCompileTimeValue() {
+		return compileTimeValue;
 	}
 
 	/**
@@ -244,11 +244,11 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setValue(String newValue) {
-		String oldValue = value;
-		value = newValue;
+	public void setCompileTimeValue(String newCompileTimeValue) {
+		String oldCompileTimeValue = compileTimeValue;
+		compileTimeValue = newCompileTimeValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TVARIABLE__VALUE, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TVARIABLE__COMPILE_TIME_VALUE, oldCompileTimeValue, compileTimeValue));
 	}
 
 	/**
@@ -489,8 +489,8 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 		switch (featureID) {
 			case TypesPackage.TVARIABLE__CONST:
 				return isConst();
-			case TypesPackage.TVARIABLE__VALUE:
-				return getValue();
+			case TypesPackage.TVARIABLE__COMPILE_TIME_VALUE:
+				return getCompileTimeValue();
 			case TypesPackage.TVARIABLE__AST_ELEMENT:
 				if (resolve) return getAstElement();
 				return basicGetAstElement();
@@ -520,8 +520,8 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 			case TypesPackage.TVARIABLE__CONST:
 				setConst((Boolean)newValue);
 				return;
-			case TypesPackage.TVARIABLE__VALUE:
-				setValue((String)newValue);
+			case TypesPackage.TVARIABLE__COMPILE_TIME_VALUE:
+				setCompileTimeValue((String)newValue);
 				return;
 			case TypesPackage.TVARIABLE__AST_ELEMENT:
 				setAstElement((EObject)newValue);
@@ -557,8 +557,8 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 			case TypesPackage.TVARIABLE__CONST:
 				setConst(CONST_EDEFAULT);
 				return;
-			case TypesPackage.TVARIABLE__VALUE:
-				setValue(VALUE_EDEFAULT);
+			case TypesPackage.TVARIABLE__COMPILE_TIME_VALUE:
+				setCompileTimeValue(COMPILE_TIME_VALUE_EDEFAULT);
 				return;
 			case TypesPackage.TVARIABLE__AST_ELEMENT:
 				setAstElement((EObject)null);
@@ -592,8 +592,8 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 		switch (featureID) {
 			case TypesPackage.TVARIABLE__CONST:
 				return const_ != CONST_EDEFAULT;
-			case TypesPackage.TVARIABLE__VALUE:
-				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+			case TypesPackage.TVARIABLE__COMPILE_TIME_VALUE:
+				return COMPILE_TIME_VALUE_EDEFAULT == null ? compileTimeValue != null : !COMPILE_TIME_VALUE_EDEFAULT.equals(compileTimeValue);
 			case TypesPackage.TVARIABLE__AST_ELEMENT:
 				return astElement != null;
 			case TypesPackage.TVARIABLE__ANNOTATIONS:
@@ -620,7 +620,7 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 		if (baseClass == TConstableElement.class) {
 			switch (derivedFeatureID) {
 				case TypesPackage.TVARIABLE__CONST: return TypesPackage.TCONSTABLE_ELEMENT__CONST;
-				case TypesPackage.TVARIABLE__VALUE: return TypesPackage.TCONSTABLE_ELEMENT__VALUE;
+				case TypesPackage.TVARIABLE__COMPILE_TIME_VALUE: return TypesPackage.TCONSTABLE_ELEMENT__COMPILE_TIME_VALUE;
 				default: return -1;
 			}
 		}
@@ -662,7 +662,7 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 		if (baseClass == TConstableElement.class) {
 			switch (baseFeatureID) {
 				case TypesPackage.TCONSTABLE_ELEMENT__CONST: return TypesPackage.TVARIABLE__CONST;
-				case TypesPackage.TCONSTABLE_ELEMENT__VALUE: return TypesPackage.TVARIABLE__VALUE;
+				case TypesPackage.TCONSTABLE_ELEMENT__COMPILE_TIME_VALUE: return TypesPackage.TVARIABLE__COMPILE_TIME_VALUE;
 				default: return -1;
 			}
 		}
@@ -762,8 +762,8 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (const: ");
 		result.append(const_);
-		result.append(", value: ");
-		result.append(value);
+		result.append(", compileTimeValue: ");
+		result.append(compileTimeValue);
 		result.append(", declaredTypeAccessModifier: ");
 		result.append(declaredTypeAccessModifier);
 		result.append(", declaredProvidedByRuntime: ");

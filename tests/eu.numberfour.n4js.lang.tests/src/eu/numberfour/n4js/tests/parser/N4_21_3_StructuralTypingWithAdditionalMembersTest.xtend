@@ -125,7 +125,7 @@ class N4_21_3_StructuralTypingWithAdditionalMembersTest extends AbstractStructur
 
 	@Test
 	def void testUseSiteWithDifferentAdditionalMemberMethodNoParam() {
-		assertMethod("any", #["string"], "f1", setupAdditionalMember(2));
+		assertMethod("void", #["string"], "f1", setupAdditionalMember(2));
 	}
 
 	@Test
