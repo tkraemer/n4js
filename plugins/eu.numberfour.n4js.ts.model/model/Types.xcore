@@ -1551,17 +1551,15 @@ abstract class TConstableElement {
 	boolean const
 
 	/**
-	 * Iff this element (variable or field) is declared 'const' AND has an initializer expression, then this property
-	 * gives the serialized compile-time value of the element's initializer expression, as returned by method
-	 * {@code CompileTimeValue#serialize()}; otherwise this property will be <code>null</code>.
-	 * <p>
-	 * If the initializer expression is not a valid compile-time expression, this property will hold an invalid
-	 * CompileTimeValue (cf. {@code CompileTimeValue#isValid()}), which may provide error messages.
+	 * Iff this element (variable or field) is declared 'const' AND has an initializer expression AND this expression
+	 * is a valid compile-time expression, then this property gives the serialized compile-time value of the initializer
+	 * expression, as returned by method {@code CompileTimeValue#serialize()}; otherwise this property will be
+	 * <code>null</code>.
 	 * <p>
 	 * This field is set by {@code CompileTimeExpressionProcessor#evaluateCompileTimeExpression()} and will be undefined
 	 * until the first phase of post-processing has completed, see {@code CompileTimeExpressionProcessor}.
 	 */
-	String value
+	String compileTimeValue
 }
 
 /*

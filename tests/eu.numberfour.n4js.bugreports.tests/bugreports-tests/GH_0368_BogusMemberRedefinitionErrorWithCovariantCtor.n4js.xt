@@ -1,0 +1,22 @@
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
+
+
+interface Ifc {}
+
+class A<T> {
+    @CovariantConstructor
+    protected constructor(p: T) {}
+}
+
+class B extends A<Object> {}
+
+class C extends B {
+
+	public constructor(props: Object) {
+		super(props);
+	}
+}
+
+// XPECT noerrors --> "Signature of inherited constructor of class C does not conform to implemented constructor of class N4Object: {function(Object)} is not a subtype of {function()}." at "Ifc"
+class D extends C implements Ifc {}
+

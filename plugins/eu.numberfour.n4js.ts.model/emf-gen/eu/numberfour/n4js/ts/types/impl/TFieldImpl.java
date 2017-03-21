@@ -39,7 +39,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#getTypeRef <em>Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#isConst <em>Const</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#getCompileTimeValue <em>Compile Time Value</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#isHasExpression <em>Has Expression</em>}</li>
  * </ul>
  *
@@ -77,24 +77,24 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	protected boolean const_ = CONST_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
+	 * The default value of the '{@link #getCompileTimeValue() <em>Compile Time Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getValue()
+	 * @see #getCompileTimeValue()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String VALUE_EDEFAULT = null;
+	protected static final String COMPILE_TIME_VALUE_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
+	 * The cached value of the '{@link #getCompileTimeValue() <em>Compile Time Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getValue()
+	 * @see #getCompileTimeValue()
 	 * @generated
 	 * @ordered
 	 */
-	protected String value = VALUE_EDEFAULT;
+	protected String compileTimeValue = COMPILE_TIME_VALUE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isHasExpression() <em>Has Expression</em>}' attribute.
@@ -204,8 +204,8 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getValue() {
-		return value;
+	public String getCompileTimeValue() {
+		return compileTimeValue;
 	}
 
 	/**
@@ -213,11 +213,11 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setValue(String newValue) {
-		String oldValue = value;
-		value = newValue;
+	public void setCompileTimeValue(String newCompileTimeValue) {
+		String oldCompileTimeValue = compileTimeValue;
+		compileTimeValue = newCompileTimeValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFIELD__VALUE, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFIELD__COMPILE_TIME_VALUE, oldCompileTimeValue, compileTimeValue));
 	}
 
 	/**
@@ -332,8 +332,8 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 				return getTypeRef();
 			case TypesPackage.TFIELD__CONST:
 				return isConst();
-			case TypesPackage.TFIELD__VALUE:
-				return getValue();
+			case TypesPackage.TFIELD__COMPILE_TIME_VALUE:
+				return getCompileTimeValue();
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				return isHasExpression();
 		}
@@ -354,8 +354,8 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 			case TypesPackage.TFIELD__CONST:
 				setConst((Boolean)newValue);
 				return;
-			case TypesPackage.TFIELD__VALUE:
-				setValue((String)newValue);
+			case TypesPackage.TFIELD__COMPILE_TIME_VALUE:
+				setCompileTimeValue((String)newValue);
 				return;
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				setHasExpression((Boolean)newValue);
@@ -378,8 +378,8 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 			case TypesPackage.TFIELD__CONST:
 				setConst(CONST_EDEFAULT);
 				return;
-			case TypesPackage.TFIELD__VALUE:
-				setValue(VALUE_EDEFAULT);
+			case TypesPackage.TFIELD__COMPILE_TIME_VALUE:
+				setCompileTimeValue(COMPILE_TIME_VALUE_EDEFAULT);
 				return;
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				setHasExpression(HAS_EXPRESSION_EDEFAULT);
@@ -400,8 +400,8 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 				return typeRef != null;
 			case TypesPackage.TFIELD__CONST:
 				return const_ != CONST_EDEFAULT;
-			case TypesPackage.TFIELD__VALUE:
-				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+			case TypesPackage.TFIELD__COMPILE_TIME_VALUE:
+				return COMPILE_TIME_VALUE_EDEFAULT == null ? compileTimeValue != null : !COMPILE_TIME_VALUE_EDEFAULT.equals(compileTimeValue);
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				return hasExpression != HAS_EXPRESSION_EDEFAULT;
 		}
@@ -424,7 +424,7 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 		if (baseClass == TConstableElement.class) {
 			switch (derivedFeatureID) {
 				case TypesPackage.TFIELD__CONST: return TypesPackage.TCONSTABLE_ELEMENT__CONST;
-				case TypesPackage.TFIELD__VALUE: return TypesPackage.TCONSTABLE_ELEMENT__VALUE;
+				case TypesPackage.TFIELD__COMPILE_TIME_VALUE: return TypesPackage.TCONSTABLE_ELEMENT__COMPILE_TIME_VALUE;
 				default: return -1;
 			}
 		}
@@ -447,7 +447,7 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 		if (baseClass == TConstableElement.class) {
 			switch (baseFeatureID) {
 				case TypesPackage.TCONSTABLE_ELEMENT__CONST: return TypesPackage.TFIELD__CONST;
-				case TypesPackage.TCONSTABLE_ELEMENT__VALUE: return TypesPackage.TFIELD__VALUE;
+				case TypesPackage.TCONSTABLE_ELEMENT__COMPILE_TIME_VALUE: return TypesPackage.TFIELD__COMPILE_TIME_VALUE;
 				default: return -1;
 			}
 		}
@@ -521,8 +521,8 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (const: ");
 		result.append(const_);
-		result.append(", value: ");
-		result.append(value);
+		result.append(", compileTimeValue: ");
+		result.append(compileTimeValue);
 		result.append(", hasExpression: ");
 		result.append(hasExpression);
 		result.append(')');

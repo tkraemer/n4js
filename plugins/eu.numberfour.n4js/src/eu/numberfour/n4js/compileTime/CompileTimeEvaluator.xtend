@@ -380,7 +380,7 @@ class CompileTimeEvaluator {
 			// 'targetElem' is in another resource with an AST proxy
 			// -> read value from TModule to avoid demand-loading of AST
 			if (targetElem instanceof TConstableElement) {
-				return CompileTimeValue.deserialize(targetElem.value);
+				return CompileTimeValue.deserialize(targetElem.compileTimeValue);
 			}
 		}
 		return null; // no value found

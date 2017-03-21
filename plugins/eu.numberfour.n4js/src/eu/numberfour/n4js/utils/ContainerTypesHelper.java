@@ -309,14 +309,19 @@ public class ContainerTypesHelper {
 		}
 
 		/**
-		 * Returns all members of (directly) implemented interfaces. This list does not contains any duplicates. Note
-		 * that the members may not be actually consumed by the class, as they are either already defined in the super
-		 * class (in which case they do not get mixed in) or by the class itself.
+		 * Returns all members of (directly) implemented interfaces that are candidates for being consumed by an
+		 * implementing class. This list does not contain any duplicates. Note that the members may not actually be
+		 * consumed by the class, as they may either already be defined in a super class (in which case they do not get
+		 * mixed in) or by the class itself.
 		 * <p>
 		 * For classes, this returns the list of interfaces in the "implements" section, for interfaces in the "extends"
 		 * section.
+		 * <p>
+		 * Members of the implicit super type of interfaces (i.e. N4Object) are not included, because those members will
+		 * never be consumed (currently, N4Object only has a single non-static member, i.e. its constructor, so this
+		 * applies only to this one member).
 		 */
-		public MemberList<TMember> membersOfImplementedInterfaces(TClassifier classifier) {
+		public MemberList<TMember> membersOfImplementedInterfacesForConsumption(TClassifier classifier) {
 
 			Iterator<ParameterizedTypeRef> iter = classifier.getImplementedOrExtendedInterfaceRefs().iterator();
 			if (!iter.hasNext()) {
@@ -326,7 +331,7 @@ public class ContainerTypesHelper {
 			if (!iter.hasNext()) { // only one interface, simply create members of that interface directly
 				if (first.getDeclaredType() instanceof TInterface) {
 					TInterface tinterface = (TInterface) first.getDeclaredType();
-					return members(tinterface);
+					return members(tinterface, false, true);
 				}
 				return MemberList.emptyList();
 			}
@@ -335,7 +340,7 @@ public class ContainerTypesHelper {
 			for (ParameterizedTypeRef interfaceRef : classifier.getImplementedOrExtendedInterfaceRefs()) {
 				if (interfaceRef.getDeclaredType() instanceof TInterface) {
 					TInterface tinterface = (TInterface) interfaceRef.getDeclaredType();
-					memberList.addAll(members(tinterface));
+					memberList.addAll(members(tinterface, false, true));
 				}
 			}
 			return memberList;

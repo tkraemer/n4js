@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.TConstableElement#isConst <em>Const</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.TConstableElement#getValue <em>Value</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TConstableElement#getCompileTimeValue <em>Compile Time Value</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.ts.types.TypesPackage#getTConstableElement()
@@ -58,37 +58,35 @@ public interface TConstableElement extends EObject {
 	void setConst(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Value</b></em>' attribute.
+	 * Returns the value of the '<em><b>Compile Time Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * *
-	 * Iff this element (variable or field) is declared 'const' AND has an initializer expression, then this property
-	 * gives the serialized compile-time value of the element's initializer expression, as returned by method
-	 * {@code CompileTimeValue#serialize()}; otherwise this property will be <code>null</code>.
-	 * <p>
-	 * If the initializer expression is not a valid compile-time expression, this property will hold an invalid
-	 * CompileTimeValue (cf. {@code CompileTimeValue#isValid()}), which may provide error messages.
+	 * Iff this element (variable or field) is declared 'const' AND has an initializer expression AND this expression
+	 * is a valid compile-time expression, then this property gives the serialized compile-time value of the initializer
+	 * expression, as returned by method {@code CompileTimeValue#serialize()}; otherwise this property will be
+	 * <code>null</code>.
 	 * <p>
 	 * This field is set by {@code CompileTimeExpressionProcessor#evaluateCompileTimeExpression()} and will be undefined
 	 * until the first phase of post-processing has completed, see {@code CompileTimeExpressionProcessor}.
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Value</em>' attribute.
-	 * @see #setValue(String)
-	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTConstableElement_Value()
+	 * @return the value of the '<em>Compile Time Value</em>' attribute.
+	 * @see #setCompileTimeValue(String)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTConstableElement_CompileTimeValue()
 	 * @model unique="false"
 	 * @generated
 	 */
-	String getValue();
+	String getCompileTimeValue();
 
 	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TConstableElement#getValue <em>Value</em>}' attribute.
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TConstableElement#getCompileTimeValue <em>Compile Time Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Value</em>' attribute.
-	 * @see #getValue()
+	 * @param value the new value of the '<em>Compile Time Value</em>' attribute.
+	 * @see #getCompileTimeValue()
 	 * @generated
 	 */
-	void setValue(String value);
+	void setCompileTimeValue(String value);
 
 } // TConstableElement
