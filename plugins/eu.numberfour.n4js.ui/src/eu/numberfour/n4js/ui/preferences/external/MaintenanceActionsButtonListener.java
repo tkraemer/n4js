@@ -45,11 +45,11 @@ public class MaintenanceActionsButtonListener extends SelectionAdapter {
 
 	final private BiFunction<MaintenanceActionsChoice, IProgressMonitor, MultiStatus> runActions;
 
-	private static final String ACTION_NPM_RELOAD = "Reload npm libraries from the disk.";
+	private static final String ACTION_NPM_RELOAD = "Reload npm libraries from disk.";
 	private static final String ACTION_NPM_REINSTALL = "Reinstall npm libraries.";
-	private static final String ACTION_NPM_CACHE_CLEAN = "Clean npm cache (entire cache cleaned).";
-	private static final String ACTION_NPM_PACKAGES_DELETE = "Delete npm packages (whole npm folder gets deleted).";
-	private static final String ACTION_TYPE_DEFINITIONS_RESET = "Reset type definitions (fresh clone). ";
+	private static final String ACTION_NPM_CACHE_CLEAN = "Clean npm cache.";
+	private static final String ACTION_NPM_PACKAGES_DELETE = "Delete npm packages (deletes npm folder).";
+	private static final String ACTION_TYPE_DEFINITIONS_RESET = "Reset type definitions (creates fresh clone).";
 
 	MaintenanceActionsButtonListener(BiFunction<MaintenanceActionsChoice, IProgressMonitor, MultiStatus> runActions) {
 		this.runActions = runActions;

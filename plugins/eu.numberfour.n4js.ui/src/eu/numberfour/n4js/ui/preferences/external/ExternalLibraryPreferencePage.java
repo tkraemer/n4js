@@ -181,7 +181,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 						statusHelper,
 						getSelectedNpm()));
 
-		createEnabledPushButton(subComposite, "Run maintenance actions",
+		createEnabledPushButton(subComposite, "Run maintenance actions...",
 				new MaintenanceActionsButtonListener(this::runMaintananceActions));
 
 		createEnabledPushButton(subComposite, "Export target platform...",
