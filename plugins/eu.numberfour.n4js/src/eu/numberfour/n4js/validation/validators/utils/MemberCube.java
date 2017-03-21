@@ -44,7 +44,7 @@ public class MemberCube {
 					.inheritedMembers((TClass) tClassifier));
 		}
 		// interfaces must not contain constructors anyway
-		addMembers(MemberMatrix.IMPLEMENTED, memberCollector.membersOfImplementedInterfaces(tClassifier));
+		addMembers(MemberMatrix.IMPLEMENTED, memberCollector.membersOfImplementedInterfacesForConsumption(tClassifier));
 	}
 
 	private void addMembers(int source, List<TMember> members) {
