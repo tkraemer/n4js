@@ -18,7 +18,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -549,23 +548,23 @@ public abstract class CompileTimeValue {
 		return null;
 	}
 
-	private static final String INVALID_VALUE_PREFIX = "invalid\n";
-
 	/**
 	 * Serialize the given compile-time value into a string which can later be deserialized using method
 	 * {@link #deserialize(String)}.
-	 * <p>
-	 * It is legal to (de)serialize {@link ValueInvalid invalid values}. However, in case of
-	 * {@link CompileTimeEvaluationError}s with a defined AST node, the AST node will become part of the error message
-	 * (because the code that will perform the deserialization will, in most cases, not have access to the AST anyway).
+	 *
+	 * <h2>Serialization of Invalid Values</h2>
+	 *
+	 * It is legal to serialize {@link ValueInvalid invalid values}. However, they will serialize to <code>null</code>
+	 * which will later be deserialized by method {@link #deserialize(String)} to an invalid value without any error
+	 * message (in other words: when serializing invalid values, the error messages get lost). Motivation for this
+	 * behavior was that invalid values (i.e. non-compile-time values) will be very common and we do not want to bloat
+	 * the Xtext index with the error messages.
 	 */
 	public static String serialize(CompileTimeValue value) {
 		if (value == null) {
 			return null;
 		} else if (!value.isValid()) {
-			return INVALID_VALUE_PREFIX + ((ValueInvalid) value).getErrors().stream()
-					.map(err -> err.getMessageWithLocation())
-					.collect(Collectors.joining("\n"));
+			return null;
 		} else if (value == UNDEFINED || value == NULL) {
 			return value.toString();
 		} else if (value instanceof ValueBoolean) {
@@ -590,13 +589,6 @@ public abstract class CompileTimeValue {
 	public static CompileTimeValue deserialize(String str) {
 		if (str == null) {
 			return error();
-		} else if (str.startsWith(INVALID_VALUE_PREFIX)) {
-			final String[] errorMessages = str.substring(INVALID_VALUE_PREFIX.length()).split("\n");
-			final CompileTimeEvaluationError[] errors = new CompileTimeEvaluationError[errorMessages.length];
-			for (int i = 0; i < errorMessages.length; i++) {
-				errors[i] = new CompileTimeEvaluationError(errorMessages[i], null, null);
-			}
-			return error(errors);
 		} else if (UNDEFINED.toString().equals(str)) {
 			return UNDEFINED;
 		} else if (NULL.toString().equals(str)) {
