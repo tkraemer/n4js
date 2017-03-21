@@ -127,7 +127,7 @@ public class N4JSTypesFromTypeRefBuilder {
 	def private dispatch void applyDefaults(BuiltInTypeScope builtInTypeScope, TStructMethod method) {
 		method.fpars.forEach[applyDefaults(builtInTypeScope, it)];
 		if(method.returnTypeRef===null) {
-			method.returnTypeRef = builtInTypeScope.getAnyTypeRef();
+			method.returnTypeRef = builtInTypeScope.voidTypeRef
 		}
 	}
 	def private dispatch void applyDefaults(BuiltInTypeScope builtInTypeScope, TFormalParameter fpar) {
