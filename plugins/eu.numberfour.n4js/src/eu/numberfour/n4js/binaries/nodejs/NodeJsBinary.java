@@ -61,11 +61,10 @@ public class NodeJsBinary implements Binary {
 
 	@Override
 	public String getDescription() {
-		return "Node.js\u00AE configuration preference page. The root folder location of the Node.js\u00AE executable "
-				+ "can be configured here. If not given, then the '" + getDefaultNodePath()
+		return "Configuration of the folder location of the Node.js\u00AE executable "
+				+ "can be provided here. If not given, then the '" + getDefaultNodePath()
 				+ "' location will be used as the default location. The required minimum version for Node.js is '"
-				+ getMinimumVersion() + "' and the required minimum version for npm is '"
-				+ npmBinaryProvider.get().getMinimumVersion() + "'.";
+				+ getMinimumVersion() + "'.";
 	}
 
 	@Override

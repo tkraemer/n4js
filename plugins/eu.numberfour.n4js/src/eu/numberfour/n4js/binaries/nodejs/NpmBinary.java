@@ -54,6 +54,13 @@ public class NpmBinary implements Binary {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Configuration of the folder location of the npm library "
+				+ "can be provided here. If not given, then the location will be resolved by used Node.js\u00AE. The required minimum version npm is '"
+				+ NodeBinariesConstants.NPM_MIN_VERSION + "'.";
+	}
+
+	@Override
 	public Version getMinimumVersion() {
 		return NodeBinariesConstants.NPM_MIN_VERSION;
 	}

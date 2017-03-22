@@ -59,6 +59,14 @@ public class NpmrcBinary implements Binary {
 	}
 
 	@Override
+	public String getDescription() {
+		return "Configuration of the folder location of the .npmrc file "
+				+ "can be provided here. If not given, then the location will be resolved to '"
+				+ getDefaultNpmrcPath() + "'. The required minimum version npm is '"
+				+ NodeBinariesConstants.NPM_MIN_VERSION + "'.";
+	}
+
+	@Override
 	public Version getMinimumVersion() {
 		return Version.MISSING;
 	}

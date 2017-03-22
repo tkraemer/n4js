@@ -80,7 +80,10 @@ public class BinariesPreferencePage extends PreferencePage implements IWorkbench
 		final Iterable<Binary> binaries = binariesProvider.getRegisteredBinaries();
 
 		for (final Binary binary : binaries) {
-			recursiveAddBinaryGroup(body, binary);
+			final Group binaryGroup = new Group(body, SWT.SHADOW_ETCHED_IN);
+			binaryGroup.setLayout(GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(true).create());
+			binaryGroup.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).align(FILL, TOP).create());
+			recursiveAddBinaryGroup(binaryGroup, binary);
 		}
 
 		for (final Binary binary : binaries) {
