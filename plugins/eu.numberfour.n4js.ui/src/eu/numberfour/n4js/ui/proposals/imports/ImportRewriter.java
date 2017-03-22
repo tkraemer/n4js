@@ -202,13 +202,13 @@ public class ImportRewriter {
 		String importSpec = (insertionOffset != 0 ? lineDelimiter : "") + "import ";
 
 		if (!N4JSLanguageUtils.isDefaultExport(qualifiedName)) { // not an 'default' export
-			importSpec = importSpec + "{ " + qualifiedName.getLastSegment();
+			importSpec = importSpec + "{" + qualifiedName.getLastSegment();
 			if (optionalAlias != null) {
 				importSpec = importSpec + " as ";
 				aliasLocation = new AliasLocation(insertionOffset, importSpec.length(), optionalAlias);
 				importSpec = importSpec + optionalAlias;
 			}
-			importSpec = importSpec + " }";
+			importSpec = importSpec + "}";
 		} else { // import default exported element
 			if (optionalAlias == null) {
 				importSpec = importSpec + N4JSLanguageUtils.lastSegmentOrDefaultHost(qualifiedName);
