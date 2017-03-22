@@ -142,14 +142,7 @@ public class NpmrcBinary implements Binary {
 			return false;
 		}
 		final NpmrcBinary other = (NpmrcBinary) obj;
-		if (getId() == null) {
-			if (other.getId() != null) {
-				return false;
-			}
-		} else if (!getId().equals(other.getId())) {
-			return false;
-		}
-		return true;
+		return Objects.equals(getId(), other.getId());
 	}
 
 	/**

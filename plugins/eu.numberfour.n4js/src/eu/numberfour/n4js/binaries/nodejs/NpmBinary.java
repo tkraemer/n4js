@@ -135,14 +135,7 @@ public class NpmBinary implements Binary {
 			return false;
 		}
 		final NpmBinary other = (NpmBinary) obj;
-		if (getId() == null) {
-			if (other.getId() != null) {
-				return false;
-			}
-		} else if (!getId().equals(other.getId())) {
-			return false;
-		}
-		return true;
+		return Objects.equals(getId(), other.getId());
 	}
 
 }
