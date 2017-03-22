@@ -87,6 +87,10 @@ import eu.numberfour.n4js.utils.Version;
 	public static final String NPM_LABEL = "npm";
 	/** The {@code npm} binary name. */
 	public static final String NPM_BINARY_NAME = "npm";
+	/** The label for {@code npmrc}. */
+	public static final String NPMRC_LABEL = "npmrc";
+	/** The {@code npmrc} binary name. */
+	public static final String NPMRC_BINARY_NAME = ".npmrc";
 
 	private NodeBinariesConstants() {
 		// No initialization.

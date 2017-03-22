@@ -42,6 +42,7 @@ import eu.numberfour.n4js.binaries.nodejs.NodeBinaryLocatorHelper;
 import eu.numberfour.n4js.binaries.nodejs.NodeJsBinary;
 import eu.numberfour.n4js.binaries.nodejs.NodeProcesBuilder;
 import eu.numberfour.n4js.binaries.nodejs.NpmBinary;
+import eu.numberfour.n4js.binaries.nodejs.NpmrcBinary;
 import eu.numberfour.n4js.external.EclipseExternalLibraryWorkspace;
 import eu.numberfour.n4js.external.EclipseTargetPlatformInstallLocationProvider;
 import eu.numberfour.n4js.external.ExternalLibraryBuildJobProvider;
@@ -164,6 +165,7 @@ public class ContributingModule implements Module {
 		binder.bind(NodeBinaryLocatorHelper.class);
 		binder.bind(NodeJsBinary.class).in(SINGLETON);
 		binder.bind(NpmBinary.class).in(SINGLETON);
+		binder.bind(NpmrcBinary.class).in(SINGLETON);
 
 	}
 

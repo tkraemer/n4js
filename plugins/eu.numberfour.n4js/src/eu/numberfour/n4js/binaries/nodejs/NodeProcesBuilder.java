@@ -42,6 +42,9 @@ public class NodeProcesBuilder {
 	@Inject
 	private Provider<NpmBinary> npmBinaryProvider;
 
+	@Inject
+	private Provider<NpmrcBinary> npmrcBinaryProvider;
+
 	/**
 	 * Prepares process builder configured to invoke Node.js for main module resolution.
 	 *
@@ -78,7 +81,11 @@ public class NodeProcesBuilder {
 	 * @return configured, operating system aware process builder for "npm install" command
 	 */
 	public ProcessBuilder getNpmInstallProcessBuilder(File invocationPath, String packageName, boolean save) {
-		return simpleCall(invocationPath, packageName, save, NPM_COMMAND_INSTALL);
+		ProcessBuilder pb = simpleCall(invocationPath, packageName, save, NPM_COMMAND_INSTALL);
+		// for npm install we need to additionally update environment with npmrc config
+		Binary npmrc = npmrcBinaryProvider.get();
+		npmrc.updateEnvironment(pb.environment());
+		return pb;
 	}
 
 	/**
