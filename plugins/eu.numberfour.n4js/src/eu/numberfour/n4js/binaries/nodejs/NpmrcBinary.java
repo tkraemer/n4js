@@ -15,6 +15,7 @@ import static java.util.Collections.emptyList;
 import java.io.File;
 import java.net.URI;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.core.runtime.IStatus;
 
@@ -126,10 +127,7 @@ public class NpmrcBinary implements Binary {
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-		return result;
+		return Objects.hashCode(getId());
 	}
 
 	@Override
