@@ -112,6 +112,11 @@ public class NpmBinary implements Binary {
 		return validator.validate(this);
 	}
 
+	/**
+	 * Custom hashcode, used to persist settings in the map {@link BinariesPreferenceStore} internal map. Key part about
+	 * that hashCode is that it will be the same for every instance of this class, allowing to easily serialize
+	 * {@code Binary -> URI} setting even between platform runs.
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;

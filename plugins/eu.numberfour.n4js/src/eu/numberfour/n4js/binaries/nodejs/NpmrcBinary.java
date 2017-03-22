@@ -119,6 +119,11 @@ public class NpmrcBinary implements Binary {
 		return validator.validateBinaryFile(this);
 	}
 
+	/**
+	 * Custom hashcode, used to persist settings in the map {@link BinariesPreferenceStore} internal map. Key part about
+	 * that hashCode is that it will be the same for every instance of this class, allowing to easily serialize
+	 * {@code Binary -> URI} setting even between platform runs.
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -150,10 +155,7 @@ public class NpmrcBinary implements Binary {
 	}
 
 	/**
-	 * (non-API)
-	 *
-	 * Returns with a pair containing the user provided or the default location of the binary and a boolean value
-	 * denoting whether the path is user provided
+	 * Returns user provided or the default location of the binary.
 	 *
 	 * @return the user configured absolute path to the binary or the default one.
 	 */
