@@ -13,8 +13,6 @@ package eu.numberfour.n4js.ui.organize.imports;
 import com.google.common.collect.LinkedHashMultimap
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
-import eu.numberfour.n4js.formatting2.N4JSFormatterPreferenceKeys
-import eu.numberfour.n4js.formatting2.N4JSSimpleFormattingPreferenceProvider
 import eu.numberfour.n4js.n4JS.DefaultImportSpecifier
 import eu.numberfour.n4js.n4JS.IdentifierRef
 import eu.numberfour.n4js.n4JS.ImportDeclaration
@@ -26,11 +24,14 @@ import eu.numberfour.n4js.scoping.N4JSScopeProvider
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ui.contentassist.N4JSCandidateFilter
 import eu.numberfour.n4js.ui.organize.imports.BreakException.UserCanceledBreakException
+import eu.numberfour.n4js.ui.utils.ImportSpacerUserPreferenceHelper
 import eu.numberfour.n4js.utils.UtilN4
 import eu.numberfour.n4js.utils.collections.Multimaps3
 import java.util.ArrayList
+import java.util.Collection
 import java.util.HashSet
 import java.util.List
+import java.util.Map
 import java.util.Set
 import org.eclipse.emf.common.notify.Adapter
 import org.eclipse.emf.common.notify.impl.AdapterImpl
@@ -52,8 +53,6 @@ import static eu.numberfour.n4js.validation.helper.N4JSLanguageConstants.EXPORT_
 import static org.eclipse.xtext.nodemodel.util.NodeModelUtils.*
 
 import static extension eu.numberfour.n4js.ui.organize.imports.UnresolveProxyCrossRefUtil.*
-import java.util.Map
-import java.util.Collection
 
 /**
  * Computes imports required by the given resource. In principle removes unused imports, adds missing imports, sorts imports - all in one go.
@@ -75,12 +74,12 @@ public class ImportsComputer {
 
 	@Inject
 	private ImportProvidedElementLabelprovider importProvidedElementLabelprovider;
-
+	
 	/** Adapter used to mark programmatically created AST-Elements without a corresponding parse tree node. */
 	private final Adapter nodelessMarker = new AdapterImpl();
 
 	@Inject
-	private N4JSSimpleFormattingPreferenceProvider formattingPreferenceProvider
+	private ImportSpacerUserPreferenceHelper spacerPreference;
 	
 	@Inject
 	private N4JSCandidateFilter candidateFilter;
@@ -254,10 +253,7 @@ public class ImportsComputer {
 	 */
 	private def String extractPureText(ImportDeclaration declaration, XtextResource resource) {
 		// formatting decision: curly braces with whitespace
-		val prefValues = formattingPreferenceProvider.getPreferenceValues(resource)
-		val spacer = if (Boolean.valueOf(
-				prefValues.getPreference(
-					N4JSFormatterPreferenceKeys.FORMAT_SURROUND_IMPORT_LIST_WITH_SPACE) )) " " else "";
+		val spacer = spacerPreference.getSpacingPreference(resource)
 
 		if (declaration.eAdapters.contains(nodelessMarker)) {
 			// wrap importSpecifiers in new ArrayList, to support sorting (GH-48)
