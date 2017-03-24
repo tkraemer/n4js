@@ -31,11 +31,10 @@ public class ImportSpacerUserPreferenceHelper {
 	/** Compute user preference regarding space between import specifiers and curly brace. */
 	public String getSpacingPreference(Resource resource) {
 		IPreferenceValues prefValues = formattingPreferenceProvider.getPreferenceValues(resource);
-		if (Boolean.valueOf(
-				prefValues.getPreference(
-						N4JSFormatterPreferenceKeys.FORMAT_SURROUND_IMPORT_LIST_WITH_SPACE)))
-			return " ";
-		return "";
+		String spacePreference = prefValues.getPreference(
+				N4JSFormatterPreferenceKeys.FORMAT_SURROUND_IMPORT_LIST_WITH_SPACE);
+
+		return Boolean.valueOf(spacePreference) ? " " : "";
 	}
 
 }
