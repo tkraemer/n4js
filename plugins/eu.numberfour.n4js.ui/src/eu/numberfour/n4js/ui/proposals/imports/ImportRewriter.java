@@ -49,6 +49,8 @@ import eu.numberfour.n4js.n4JS.ScriptElement;
 import eu.numberfour.n4js.resource.AccessibleSerializer;
 import eu.numberfour.n4js.services.N4JSGrammarAccess;
 import eu.numberfour.n4js.ts.types.TExportableElement;
+import eu.numberfour.n4js.ui.utils.ImportSpacerUserPreferenceHelper;
+import eu.numberfour.n4js.utils.Lazy;
 import eu.numberfour.n4js.utils.N4JSLanguageUtils;
 
 /**
@@ -93,10 +95,14 @@ public class ImportRewriter {
 	@Inject
 	private AccessibleSerializer serializer;
 
+	@Inject
+	private ImportSpacerUserPreferenceHelper spacerPreference;
+
 	private final String lineDelimiter;
 	private final Script script;
 	private final Set<NameAndAlias> requestedImports;
 	private final List<ImportDeclaration> existingImports;
+	private final Lazy<String> lazySpacer;
 
 	private ImportRewriter(IDocument document, Resource resource) {
 		if (document instanceof IDocumentExtension4) {
@@ -111,6 +117,8 @@ public class ImportRewriter {
 				existingImports.add((ImportDeclaration) element);
 		}
 		this.requestedImports = Sets.newLinkedHashSet();
+		this.lazySpacer = new Lazy<>(() -> spacerPreference.getSpacingPreference(resource));
+
 	}
 
 	/**
@@ -196,19 +204,21 @@ public class ImportRewriter {
 	private AliasLocation addNewImportDeclaration(QualifiedName moduleName, QualifiedName qualifiedName,
 			String optionalAlias,
 			int insertionOffset, MultiTextEdit result) {
+
+		final String spacer = lazySpacer.get();
 		String syntacticModuleName = syntacticModuleName(moduleName);
 
 		AliasLocation aliasLocation = null;
 		String importSpec = (insertionOffset != 0 ? lineDelimiter : "") + "import ";
 
 		if (!N4JSLanguageUtils.isDefaultExport(qualifiedName)) { // not an 'default' export
-			importSpec = importSpec + "{ " + qualifiedName.getLastSegment();
+			importSpec = importSpec + "{" + spacer + qualifiedName.getLastSegment();
 			if (optionalAlias != null) {
 				importSpec = importSpec + " as ";
 				aliasLocation = new AliasLocation(insertionOffset, importSpec.length(), optionalAlias);
 				importSpec = importSpec + optionalAlias;
 			}
-			importSpec = importSpec + " }";
+			importSpec = importSpec + spacer + "}";
 		} else { // import default exported element
 			if (optionalAlias == null) {
 				importSpec = importSpec + N4JSLanguageUtils.lastSegmentOrDefaultHost(qualifiedName);
