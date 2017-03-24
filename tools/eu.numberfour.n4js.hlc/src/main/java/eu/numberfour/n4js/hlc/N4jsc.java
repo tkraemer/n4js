@@ -59,6 +59,7 @@ import eu.numberfour.n4js.binaries.BinariesPreferenceStore;
 import eu.numberfour.n4js.binaries.IllegalBinaryStateException;
 import eu.numberfour.n4js.binaries.nodejs.NodeJsBinary;
 import eu.numberfour.n4js.binaries.nodejs.NpmBinary;
+import eu.numberfour.n4js.binaries.nodejs.NpmrcBinary;
 import eu.numberfour.n4js.external.HeadlessTargetPlatformInstallLocationProvider;
 import eu.numberfour.n4js.external.NpmManager;
 import eu.numberfour.n4js.external.TargetPlatformInstallLocationProvider;
@@ -230,6 +231,11 @@ public class N4jsc {
 			+ "will be used to look for the Node.js binary. ")
 	File nodeJsBinaryRoot;
 
+	@Option(name = "--npmrcRootLocation", required = false, usage = "when configured then the nprc setting used from given path"
+			+ "will be used for installing npm packages modules. When specified then the absolute path of the folder that contains the '.npmrc' file should be "
+			+ "specified. If not set, then the default to value specified by 'user.home' property value returned by java.lang.System ")
+	File npmrcRoot;
+
 	@Option(name = "--list-runners", aliases = "-lr", usage = "show list of available runners.")
 	boolean listRunners = false;
 
@@ -307,6 +313,9 @@ public class N4jsc {
 
 	@Inject
 	private Provider<NpmBinary> npmBinaryProvider;
+
+	@Inject
+	private Provider<NpmrcBinary> npmrcBinaryProvider;
 
 	@Inject
 	private BinariesPreferenceStore binariesPreferenceStore;
@@ -492,6 +501,11 @@ public class N4jsc {
 				binariesPreferenceStore.setPath(nodeJsBinaryProvider.get(), nodeJsBinaryRoot.toURI());
 				binariesPreferenceStore.save();
 			}
+			if (npmrcRoot != null) {
+				binariesPreferenceStore.setPath(npmrcBinaryProvider.get(), npmrcRoot.toURI());
+				binariesPreferenceStore.save();
+			}
+
 			validateBinaries();
 			cloneGitRepositoryAndInstallNpmPackages();
 
