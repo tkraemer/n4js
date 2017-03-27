@@ -34,6 +34,8 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.validation.IssueCodes.*
+import eu.numberfour.n4js.ts.types.TMethod
+import eu.numberfour.n4js.validation.IssueCodes
 
 /**
  * Validate use of super keyword.
@@ -168,7 +170,23 @@ class N4JSSuperValidator extends AbstractN4JSDeclarativeValidator {
 	private def internalCheckSuperMemberAccess(SuperLiteral superLiteral, N4MemberDeclaration containingMemberDecl) {
 		holdsSuperCallInMethodOrFieldAccessor(superLiteral, containingMemberDecl) //
 		&& holdsSuperCallNotNested(superLiteral, containingMemberDecl) //
-		&& holdsSuperIsReceiverOfCall(superLiteral);
+		&& holdsSuperIsReceiverOfCall(superLiteral)
+		&& holdsSuperMethodIsConcrete(superLiteral);
+	}
+	
+	private def boolean holdsSuperMethodIsConcrete(SuperLiteral superLiteral) {
+		if (superLiteral.eContainer instanceof ParameterizedPropertyAccessExpression &&
+			(superLiteral.eContainer as ParameterizedPropertyAccessExpression).property instanceof TMethod) {
+				val method = (superLiteral.eContainer as ParameterizedPropertyAccessExpression).property as TMethod;
+				if (method.abstract) {
+					addIssue(IssueCodes.messageForCLF_CANNOT_CALL_ABSTRACT_SUPER_MEMBER, superLiteral.eContainer as ParameterizedPropertyAccessExpression,
+						N4JSPackage.Literals.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY, IssueCodes.CLF_CANNOT_CALL_ABSTRACT_SUPER_MEMBER);
+					return false;
+				} else {
+					return true;
+				}
+			}
+		return true;
 	}
 
 	/**
