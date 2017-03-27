@@ -1,0 +1,43 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+interface SuperI {
+	m0() : string
+	m1() : string {
+		return "SuperI.m1";
+	}
+}
+
+interface I1 extends SuperI {
+	m2() : string
+}
+
+interface I2 {
+	m3() : string
+}
+
+
+abstract class SuperClass implements I1, I2 {}
+
+export public class ThreeLevelsHierarchy extends SuperClass {
+	@Override
+	m0() : string {
+		// Invoking abstract super method in interface (3 levels) XPECT errors --> "Cannot call super method since it is abstract."
+		return super.m0();
+	}
+	@Override
+	m1() : string {
+		// Invoking super method with default implementation in interface (3 levels) XPECT errors --> "Cannot call super method since it is abstract."
+		return super.m1();
+	}
+	@Override
+	m2() : string {
+		// Invoking abstract super method in interface (2 levels) XPECT errors --> "Cannot call super method since it is abstract."
+		return super.m1();
+	}
+	@Override
+	m3() : string {
+		// Invoking abstract super method in interface (2 levels) XPECT errors --> "Cannot call super method since it is abstract."
+		return super.m2();
+	}
+	
+}

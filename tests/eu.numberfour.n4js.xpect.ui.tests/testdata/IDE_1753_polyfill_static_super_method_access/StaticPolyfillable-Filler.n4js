@@ -1,0 +1,6 @@
+@@StaticPolyfillModule
+
+@StaticPolyfill
+export public abstract class StaticPolyfillClass extends StaticPolyfillClass {
+	public abstract abstractMethod();
+}

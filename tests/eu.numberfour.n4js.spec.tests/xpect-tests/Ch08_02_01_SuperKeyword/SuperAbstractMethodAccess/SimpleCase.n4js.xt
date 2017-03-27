@@ -1,0 +1,13 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+abstract class SuperClass {
+	abstract m1() : string;
+}
+
+export public class SimpleCase extends SuperClass {
+	@Override
+	m1() : string {
+		// Invoking abstract super class method XPECT errors --> "Cannot call super method since it is abstract."
+		return super.m1();
+	}
+}
