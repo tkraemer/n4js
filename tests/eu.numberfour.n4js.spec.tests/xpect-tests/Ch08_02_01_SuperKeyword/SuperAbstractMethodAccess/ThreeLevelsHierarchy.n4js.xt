@@ -21,23 +21,23 @@ abstract class SuperClass implements I1, I2 {}
 export public class ThreeLevelsHierarchy extends SuperClass {
 	@Override
 	m0() : string {
-		// Invoking abstract super method in interface (3 levels) XPECT errors --> "Cannot call super method since it is abstract."
+		// Invoking abstract super method in interface (3 levels) XPECT errors --> "Cannot call super method since it is abstract." at "m0"
 		return super.m0();
 	}
 	@Override
 	m1() : string {
-		// Invoking super method with default implementation in interface (3 levels) XPECT errors --> "Cannot call super method since it is abstract."
+		// Invoking super method with default implementation in interface (3 levels) XPECT noerrors
 		return super.m1();
 	}
 	@Override
 	m2() : string {
-		// Invoking abstract super method in interface (2 levels) XPECT errors --> "Cannot call super method since it is abstract."
-		return super.m1();
+		// Invoking abstract super method in interface (2 levels) XPECT errors --> "Cannot call super method since it is abstract." at "m2"
+		return super.m2();
 	}
 	@Override
 	m3() : string {
-		// Invoking abstract super method in interface (2 levels) XPECT errors --> "Cannot call super method since it is abstract."
-		return super.m2();
+		// Invoking abstract super method in interface (2 levels) XPECT errors --> "Cannot call super method since it is abstract." at "m3"
+		return super.m3();
 	}
 	
 }

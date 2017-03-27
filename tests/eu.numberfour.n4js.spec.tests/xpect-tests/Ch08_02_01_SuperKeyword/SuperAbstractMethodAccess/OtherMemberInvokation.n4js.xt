@@ -14,22 +14,22 @@ abstract class SuperClass implements I {
 
 export public class OtherMemberInvokation extends SuperClass {
 	otherM0() {
-		// Invoke abstract consumed method in interface (2 levels) XPECT errors --> "Cannot call super method since it is abstract."
+		// Invoke consumed method with default implementation in interface (2 levels) XPECT noerrors
 		super.m0();
 	}
 	@Override
 	m1() {}
 	otherM1() {
-		// Invoke abstract consumed method in interface from other method (2 levels) XPECT errors --> "Cannot call super method since it is abstract."
+		// Invoke abstract consumed method in interface from other method (2 levels) XPECT errors --> "Cannot call super method since it is abstract." at "m1"
 		super.m1();
 	}
 	@Override
 	m2() : string {
-		// Invoke abstract super method XPECT errors --> "Cannot call super method since it is abstract."
+		// Invoke abstract super method XPECT errors --> "Cannot call super method since it is abstract." at "m2"
 		return super.m2();
 	}
 	otherM2() : string {
-		// Invoke abstract super method from different method XPECT errors --> "Cannot call super method since it is abstract."
+		// Invoke abstract super method from different method XPECT errors --> "Cannot call super method since it is abstract." at "m2"
 		return super.m2();
 	}
 	otherM3() : string {

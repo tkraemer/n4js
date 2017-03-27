@@ -7,7 +7,7 @@ abstract class SuperClass {
 export public class SimpleCase extends SuperClass {
 	@Override
 	m1() : string {
-		// Invoking abstract super class method XPECT errors --> "Cannot call super method since it is abstract."
+		// Invoking abstract super class method XPECT errors --> "Cannot call super method since it is abstract." at "m1"
 		return super.m1();
 	}
 }

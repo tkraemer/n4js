@@ -20,13 +20,13 @@
 @@StaticPolyfillAware
 
 interface I {
-	public consumedMethod()
+	public consumedMethod() {}
 }
 
 export public abstract class StaticPolyfillClass implements I {
 	public concreteMethod() { return ""; }
-	@Override
-	public consumedMethod() {}
+	
+	public abstract abstractBaseMethod();
 }
 
 export public abstract class Subclass extends StaticPolyfillClass {}
@@ -34,21 +34,24 @@ export public abstract class Subclass extends StaticPolyfillClass {}
 class A extends StaticPolyfillClass {
 	@Override
 	public abstractMethod() {
-		// Invoke abstract super method in StaticPolyfill (1 level) XPECT errors --> "Cannot call super method since it is abstract."
+		// Invoke abstract super method in StaticPolyfill (1 level) XPECT errors --> "Cannot call super method since it is abstract." at "abstractMethod"
 		super.abstractMethod();
 		
-		// Invoke consumed method from interface I XPECT errors --> "Cannot call super method since it is abstract."
+		// Invoke consumed method from interface I with implementation in polyfillable XPECT noerrors
 		super.consumedMethod();
+		
+		// Invoke abstract method that is implemented in filler XPECT noerrors
+		super.abstractBaseMethod();
 	}	
 }
 
 class B extends Subclass {
 	@Override
 	public abstractMethod() {
-		// Invoke abstract super method in StaticPolyfill (2 levels) XPECT errors --> "Cannot call super method since it is abstract."
+		// Invoke abstract super method in StaticPolyfill (2 levels) XPECT errors --> "Cannot call super method since it is abstract." at "abstractMethod"
 		super.abstractMethod();
 		
-		// Invoke consumed method from interface I (3 levels) XPECT errors --> "Cannot call super method since it is abstract."
+		// Invoke consumed method from interface I with implementation in polyfillable (3 levels) XPECT noerrors
 		super.consumedMethod();
 	}	
 }
