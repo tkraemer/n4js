@@ -35,7 +35,6 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static eu.numberfour.n4js.validation.IssueCodes.*
 import eu.numberfour.n4js.ts.types.TMethod
-import eu.numberfour.n4js.validation.IssueCodes
 
 /**
  * Validate use of super keyword.
@@ -183,9 +182,9 @@ class N4JSSuperValidator extends AbstractN4JSDeclarativeValidator {
 			(literalContainer as ParameterizedPropertyAccessExpression).property instanceof TMethod) {
 				val method = (literalContainer as ParameterizedPropertyAccessExpression).property as TMethod;
 				if (method.abstract) {
-					addIssue(IssueCodes.messageForCLF_CANNOT_CALL_ABSTRACT_SUPER_MEMBER, literalContainer,
+					addIssue(messageForCLF_CANNOT_CALL_ABSTRACT_SUPER_METHOD, literalContainer,
 						N4JSPackage.Literals.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY, 
-						IssueCodes.CLF_CANNOT_CALL_ABSTRACT_SUPER_MEMBER);
+						CLF_CANNOT_CALL_ABSTRACT_SUPER_METHOD);
 					return false;
 				}
 			}
