@@ -174,16 +174,19 @@ class N4JSSuperValidator extends AbstractN4JSDeclarativeValidator {
 		&& holdsSuperMethodIsConcrete(superLiteral);
 	}
 	
+	/**
+	 * Makes sure that super method calls are only allowed for non-abstract super methods.
+	 */
 	private def boolean holdsSuperMethodIsConcrete(SuperLiteral superLiteral) {
-		if (superLiteral.eContainer instanceof ParameterizedPropertyAccessExpression &&
-			(superLiteral.eContainer as ParameterizedPropertyAccessExpression).property instanceof TMethod) {
-				val method = (superLiteral.eContainer as ParameterizedPropertyAccessExpression).property as TMethod;
+		val literalContainer = superLiteral.eContainer;
+		if (literalContainer instanceof ParameterizedPropertyAccessExpression &&
+			(literalContainer as ParameterizedPropertyAccessExpression).property instanceof TMethod) {
+				val method = (literalContainer as ParameterizedPropertyAccessExpression).property as TMethod;
 				if (method.abstract) {
-					addIssue(IssueCodes.messageForCLF_CANNOT_CALL_ABSTRACT_SUPER_MEMBER, superLiteral.eContainer as ParameterizedPropertyAccessExpression,
-						N4JSPackage.Literals.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY, IssueCodes.CLF_CANNOT_CALL_ABSTRACT_SUPER_MEMBER);
+					addIssue(IssueCodes.messageForCLF_CANNOT_CALL_ABSTRACT_SUPER_MEMBER, literalContainer,
+						N4JSPackage.Literals.PARAMETERIZED_PROPERTY_ACCESS_EXPRESSION__PROPERTY, 
+						IssueCodes.CLF_CANNOT_CALL_ABSTRACT_SUPER_MEMBER);
 					return false;
-				} else {
-					return true;
 				}
 			}
 		return true;
