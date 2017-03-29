@@ -15,7 +15,6 @@ import eu.numberfour.n4js.N4JSGlobals
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
-import eu.numberfour.n4js.ts.types.TClass
 import eu.numberfour.n4js.ts.types.TClassifier
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TGetter
