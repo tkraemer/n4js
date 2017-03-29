@@ -323,20 +323,29 @@ class ValidatorMessageHelper {
 			val astElem = tfunction.astElement;
 			switch (astElem) {
 				FunctionDeclaration: {
-					val retType = astElem.returnTypeRef
-					strb.append(retType.typeRefAsString);
-					return true;
+					val retType = astElem.returnTypeRef;
+					if (retType !== null) {
+						strb.append(retType.typeRefAsString);
+						return true;
+					}
 				}
 				FunctionDefinition: {
 					val retType = astElem.returnTypeRef
-					strb.append(retType.typeRefAsString);
-					return true;
+					if (retType !== null) {
+						strb.append(retType.typeRefAsString);
+						return true;
+					}
 				}
 			}
+			
 			val ptr = tfunction.returnTypeRef as ParameterizedTypeRef;
 			val asyncReturnType = ptr.typeArgs.get(0);
 			if (asyncReturnType !== null) {
-				strb.append(asyncReturnType.typeRefAsString);
+				if (TypeUtils.isUndefined(asyncReturnType)) {
+					strb.append("void");
+				} else {
+					strb.append(asyncReturnType.typeRefAsString);
+				}
 				return true;
 			}
 		} else {
