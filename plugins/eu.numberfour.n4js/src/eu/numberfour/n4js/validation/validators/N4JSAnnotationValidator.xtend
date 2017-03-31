@@ -166,6 +166,8 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 					internalCheckStaticPolyfillModule(annotation)
 				case STATIC_POLYFILL.name:
 					internalCheckStaticPolyfill(annotation)
+				case N4JS.name:
+					internalCheckN4JS(annotation)
 			}
 		}
 	}
@@ -328,6 +330,21 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
+	/** 
+	 * Check N4JS annotation to be in definition file.
+	 */
+	private def internalCheckN4JS(Annotation annotation) {
+		val element = annotation.annotatedElement;
+		if (element === null) {
+			return;
+		}
+		if (!jsVariantHelper.isExternalMode(element)) {
+			addIssue(getMessageForANN_DISALLOWED_IN_NONDEFINTION_FILE(annotation.name), annotation, ANNOTATION__NAME,
+				ANN_DISALLOWED_IN_NONDEFINTION_FILE);
+			return;
+		}
+	}
+
 	/**
 	 * Constraints 120 (Provided By Runtime)
 	 */
@@ -424,7 +441,7 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 				ANNOTATION__NAME, POLY_CLASH_IN_STATIC_POLYFILL_MODULE)
 		}
 	}
-
+	
 	/**
 	 * Constraints 139 (static polyfill layout)  §139
 	 * 
