@@ -142,7 +142,8 @@ public class N4JSEclipseCore extends AbstractN4JSCore implements IN4JSEclipseCor
 		final IProject eclipseProject = contextProject.isPresent()
 				? ((IN4JSEclipseProject) contextProject.get()).getProject() : null;
 		final ResourceSet resourceSet = resourceSetProvider.get(eclipseProject);
-		// note: the value passed to #get() in previous line is not used in case of our implementation (as said by SZ in
+		// note_1: it is different than eu.numberfour.n4js.internal.N4JSRuntimeCore.createResourceSet(Optional<IN4JSProject>)
+		// note_2: the value passed to #get() in previous line is not used in case of our implementation (as said by SZ in
 		// summer 2015 and on December 10, 2015) so it is ok to pass in 'null' for now, but this will become an issue if
 		// this value will be used in the future! Therefore, client code should already pass in a valid contextProject,
 		// if possible.
