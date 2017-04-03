@@ -441,7 +441,7 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 				ANNOTATION__NAME, POLY_CLASH_IN_STATIC_POLYFILL_MODULE)
 		}
 	}
-	
+
 	/**
 	 * Constraints 139 (static polyfill layout)  §139
 	 * 
