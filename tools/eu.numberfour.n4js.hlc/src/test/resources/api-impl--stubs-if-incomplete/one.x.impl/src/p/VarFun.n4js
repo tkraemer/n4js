@@ -6,7 +6,6 @@
 //	return "x";
 //}
 
-@N4JS
 export public class A {
 		
 }
