@@ -163,14 +163,23 @@ public class TSetterImpl extends FieldAccessorImpl implements TSetter {
 	public String getMemberAsString() {
 		String _name = this.getName();
 		String _plus = ("set " + _name);
-		String _plus_1 = (_plus + "(");
+		String _xifexpression = null;
+		boolean _isOptional = this.isOptional();
+		if (_isOptional) {
+			_xifexpression = "?";
+		}
+		else {
+			_xifexpression = "";
+		}
+		String _plus_1 = (_plus + _xifexpression);
+		String _plus_2 = (_plus_1 + "(");
 		TFormalParameter _fpar = this.getFpar();
 		String _formalParameterAsString = null;
 		if (_fpar!=null) {
 			_formalParameterAsString=_fpar.getFormalParameterAsString();
 		}
-		String _plus_2 = (_plus_1 + _formalParameterAsString);
-		return (_plus_2 + ")");
+		String _plus_3 = (_plus_2 + _formalParameterAsString);
+		return (_plus_3 + ")");
 	}
 
 	/**

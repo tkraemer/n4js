@@ -1713,13 +1713,22 @@ public interface TypesPackage extends EPackage {
 	int TFUNCTION__FPARS = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Return Value Optional NEW SYNTAX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFUNCTION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 3;
+
+	/**
 	 * The feature id for the '<em><b>Return Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TFUNCTION__RETURN_TYPE_REF = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 3;
+	int TFUNCTION__RETURN_TYPE_REF = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Type Vars</b></em>' containment reference list.
@@ -1728,7 +1737,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFUNCTION__TYPE_VARS = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 4;
+	int TFUNCTION__TYPE_VARS = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Declared This Type</b></em>' containment reference.
@@ -1737,7 +1746,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFUNCTION__DECLARED_THIS_TYPE = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 5;
+	int TFUNCTION__DECLARED_THIS_TYPE = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Declared Async</b></em>' attribute.
@@ -1746,7 +1755,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFUNCTION__DECLARED_ASYNC = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 6;
+	int TFUNCTION__DECLARED_ASYNC = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Declared Generator</b></em>' attribute.
@@ -1755,7 +1764,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFUNCTION__DECLARED_GENERATOR = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 7;
+	int TFUNCTION__DECLARED_GENERATOR = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Constructor</b></em>' attribute.
@@ -1764,7 +1773,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFUNCTION__CONSTRUCTOR = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 8;
+	int TFUNCTION__CONSTRUCTOR = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 9;
 
 	/**
 	 * The number of structural features of the '<em>TFunction</em>' class.
@@ -1773,7 +1782,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFUNCTION_FEATURE_COUNT = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 9;
+	int TFUNCTION_FEATURE_COUNT = DECLARED_TYPE_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 10;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -1911,13 +1920,22 @@ public interface TypesPackage extends EPackage {
 	int TFUNCTION___IS_EXPORTED = DECLARED_TYPE_WITH_ACCESS_MODIFIER___IS_EXPORTED;
 
 	/**
+	 * The operation id for the '<em>Is Return Value Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFUNCTION___IS_RETURN_VALUE_OPTIONAL = DECLARED_TYPE_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Is Callable Constructor</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TFUNCTION___IS_CALLABLE_CONSTRUCTOR = DECLARED_TYPE_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 0;
+	int TFUNCTION___IS_CALLABLE_CONSTRUCTOR = DECLARED_TYPE_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Fpar For Arg Idx</em>' operation.
@@ -1926,7 +1944,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFUNCTION___GET_FPAR_FOR_ARG_IDX__INT = DECLARED_TYPE_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 1;
+	int TFUNCTION___GET_FPAR_FOR_ARG_IDX__INT = DECLARED_TYPE_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Function As String</em>' operation.
@@ -1935,7 +1953,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFUNCTION___GET_FUNCTION_AS_STRING = DECLARED_TYPE_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 2;
+	int TFUNCTION___GET_FUNCTION_AS_STRING = DECLARED_TYPE_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Is Final</em>' operation.
@@ -1944,7 +1962,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFUNCTION___IS_FINAL = DECLARED_TYPE_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 3;
+	int TFUNCTION___IS_FINAL = DECLARED_TYPE_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>TFunction</em>' class.
@@ -1953,7 +1971,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TFUNCTION_OPERATION_COUNT = DECLARED_TYPE_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 4;
+	int TFUNCTION_OPERATION_COUNT = DECLARED_TYPE_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.AccessibleTypeElementImpl <em>Accessible Type Element</em>}' class.
@@ -7242,6 +7260,15 @@ public interface TypesPackage extends EPackage {
 	int TMETHOD__FPARS = TFUNCTION__FPARS;
 
 	/**
+	 * The feature id for the '<em><b>Return Value Optional NEW SYNTAX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMETHOD__RETURN_VALUE_OPTIONAL_NEW_SYNTAX = TFUNCTION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX;
+
+	/**
 	 * The feature id for the '<em><b>Return Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7510,6 +7537,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TMETHOD___IS_EXPORTED = TFUNCTION___IS_EXPORTED;
+
+	/**
+	 * The operation id for the '<em>Is Return Value Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TMETHOD___IS_RETURN_VALUE_OPTIONAL = TFUNCTION___IS_RETURN_VALUE_OPTIONAL;
 
 	/**
 	 * The operation id for the '<em>Is Callable Constructor</em>' operation.
@@ -7781,6 +7817,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_METHOD__FPARS = TMETHOD__FPARS;
+
+	/**
+	 * The feature id for the '<em><b>Return Value Optional NEW SYNTAX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_METHOD__RETURN_VALUE_OPTIONAL_NEW_SYNTAX = TMETHOD__RETURN_VALUE_OPTIONAL_NEW_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Return Type Ref</b></em>' containment reference.
@@ -8060,6 +8105,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_METHOD___IS_EXPORTED = TMETHOD___IS_EXPORTED;
+
+	/**
+	 * The operation id for the '<em>Is Return Value Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_METHOD___IS_RETURN_VALUE_OPTIONAL = TMETHOD___IS_RETURN_VALUE_OPTIONAL;
 
 	/**
 	 * The operation id for the '<em>Is Callable Constructor</em>' operation.
@@ -8695,13 +8749,22 @@ public interface TypesPackage extends EPackage {
 	int TFIELD__HAS_EXPRESSION = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Optional NEW SYNTAX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TFIELD__OPTIONAL_NEW_SYNTAX = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>TField</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TFIELD_FEATURE_COUNT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 4;
+	int TFIELD_FEATURE_COUNT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -9002,6 +9065,15 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCT_FIELD__HAS_EXPRESSION = TFIELD__HAS_EXPRESSION;
 
 	/**
+	 * The feature id for the '<em><b>Optional NEW SYNTAX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_FIELD__OPTIONAL_NEW_SYNTAX = TFIELD__OPTIONAL_NEW_SYNTAX;
+
+	/**
 	 * The feature id for the '<em><b>Defined Member</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9291,13 +9363,22 @@ public interface TypesPackage extends EPackage {
 	int FIELD_ACCESSOR__DECLARED_MEMBER_ACCESS_MODIFIER = TMEMBER_WITH_ACCESS_MODIFIER__DECLARED_MEMBER_ACCESS_MODIFIER;
 
 	/**
+	 * The feature id for the '<em><b>Optional NEW SYNTAX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD_ACCESSOR__OPTIONAL_NEW_SYNTAX = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Declared Abstract</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_ACCESSOR__DECLARED_ABSTRACT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 0;
+	int FIELD_ACCESSOR__DECLARED_ABSTRACT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Declared This Type</b></em>' containment reference.
@@ -9306,7 +9387,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_ACCESSOR__DECLARED_THIS_TYPE = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 1;
+	int FIELD_ACCESSOR__DECLARED_THIS_TYPE = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Field Accessor</em>' class.
@@ -9315,7 +9396,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_ACCESSOR_FEATURE_COUNT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 2;
+	int FIELD_ACCESSOR_FEATURE_COUNT = TMEMBER_WITH_ACCESS_MODIFIER_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -9399,15 +9480,6 @@ public interface TypesPackage extends EPackage {
 	int FIELD_ACCESSOR___IS_CONSTRUCTOR = TMEMBER_WITH_ACCESS_MODIFIER___IS_CONSTRUCTOR;
 
 	/**
-	 * The operation id for the '<em>Is Optional</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIELD_ACCESSOR___IS_OPTIONAL = TMEMBER_WITH_ACCESS_MODIFIER___IS_OPTIONAL;
-
-	/**
 	 * The operation id for the '<em>Is Readable</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9480,13 +9552,22 @@ public interface TypesPackage extends EPackage {
 	int FIELD_ACCESSOR___GET_DECLARED_TYPE_REF = TMEMBER_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Is Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD_ACCESSOR___IS_OPTIONAL = TMEMBER_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_ACCESSOR___IS_ABSTRACT = TMEMBER_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 1;
+	int FIELD_ACCESSOR___IS_ABSTRACT = TMEMBER_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Field Accessor</em>' class.
@@ -9495,7 +9576,7 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_ACCESSOR_OPERATION_COUNT = TMEMBER_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 2;
+	int FIELD_ACCESSOR_OPERATION_COUNT = TMEMBER_WITH_ACCESS_MODIFIER_OPERATION_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.impl.TGetterImpl <em>TGetter</em>}' class.
@@ -9587,6 +9668,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TGETTER__DECLARED_MEMBER_ACCESS_MODIFIER = FIELD_ACCESSOR__DECLARED_MEMBER_ACCESS_MODIFIER;
+
+	/**
+	 * The feature id for the '<em><b>Optional NEW SYNTAX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGETTER__OPTIONAL_NEW_SYNTAX = FIELD_ACCESSOR__OPTIONAL_NEW_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Declared Abstract</b></em>' attribute.
@@ -9697,15 +9787,6 @@ public interface TypesPackage extends EPackage {
 	int TGETTER___IS_CONSTRUCTOR = FIELD_ACCESSOR___IS_CONSTRUCTOR;
 
 	/**
-	 * The operation id for the '<em>Is Optional</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TGETTER___IS_OPTIONAL = FIELD_ACCESSOR___IS_OPTIONAL;
-
-	/**
 	 * The operation id for the '<em>Is Readable</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9767,6 +9848,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TGETTER___GET_DECLARED_TYPE_REF = FIELD_ACCESSOR___GET_DECLARED_TYPE_REF;
+
+	/**
+	 * The operation id for the '<em>Is Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGETTER___IS_OPTIONAL = FIELD_ACCESSOR___IS_OPTIONAL;
 
 	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
@@ -9896,6 +9986,15 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCT_GETTER__DECLARED_MEMBER_ACCESS_MODIFIER = TGETTER__DECLARED_MEMBER_ACCESS_MODIFIER;
 
 	/**
+	 * The feature id for the '<em><b>Optional NEW SYNTAX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_GETTER__OPTIONAL_NEW_SYNTAX = TGETTER__OPTIONAL_NEW_SYNTAX;
+
+	/**
 	 * The feature id for the '<em><b>Declared Abstract</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10013,15 +10112,6 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCT_GETTER___IS_CONSTRUCTOR = TGETTER___IS_CONSTRUCTOR;
 
 	/**
-	 * The operation id for the '<em>Is Optional</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TSTRUCT_GETTER___IS_OPTIONAL = TGETTER___IS_OPTIONAL;
-
-	/**
 	 * The operation id for the '<em>Is Readable</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10065,6 +10155,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_GETTER___GET_DECLARED_TYPE_REF = TGETTER___GET_DECLARED_TYPE_REF;
+
+	/**
+	 * The operation id for the '<em>Is Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_GETTER___IS_OPTIONAL = TGETTER___IS_OPTIONAL;
 
 	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
@@ -10221,6 +10320,15 @@ public interface TypesPackage extends EPackage {
 	int TSETTER__DECLARED_MEMBER_ACCESS_MODIFIER = FIELD_ACCESSOR__DECLARED_MEMBER_ACCESS_MODIFIER;
 
 	/**
+	 * The feature id for the '<em><b>Optional NEW SYNTAX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSETTER__OPTIONAL_NEW_SYNTAX = FIELD_ACCESSOR__OPTIONAL_NEW_SYNTAX;
+
+	/**
 	 * The feature id for the '<em><b>Declared Abstract</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10329,15 +10437,6 @@ public interface TypesPackage extends EPackage {
 	int TSETTER___IS_CONSTRUCTOR = FIELD_ACCESSOR___IS_CONSTRUCTOR;
 
 	/**
-	 * The operation id for the '<em>Is Optional</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TSETTER___IS_OPTIONAL = FIELD_ACCESSOR___IS_OPTIONAL;
-
-	/**
 	 * The operation id for the '<em>Is Final</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10372,6 +10471,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSETTER___GET_MEMBER_ACCESS_MODIFIER = FIELD_ACCESSOR___GET_MEMBER_ACCESS_MODIFIER;
+
+	/**
+	 * The operation id for the '<em>Is Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSETTER___IS_OPTIONAL = FIELD_ACCESSOR___IS_OPTIONAL;
 
 	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
@@ -10528,6 +10636,15 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCT_SETTER__DECLARED_MEMBER_ACCESS_MODIFIER = TSETTER__DECLARED_MEMBER_ACCESS_MODIFIER;
 
 	/**
+	 * The feature id for the '<em><b>Optional NEW SYNTAX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_SETTER__OPTIONAL_NEW_SYNTAX = TSETTER__OPTIONAL_NEW_SYNTAX;
+
+	/**
 	 * The feature id for the '<em><b>Declared Abstract</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10645,15 +10762,6 @@ public interface TypesPackage extends EPackage {
 	int TSTRUCT_SETTER___IS_CONSTRUCTOR = TSETTER___IS_CONSTRUCTOR;
 
 	/**
-	 * The operation id for the '<em>Is Optional</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TSTRUCT_SETTER___IS_OPTIONAL = TSETTER___IS_OPTIONAL;
-
-	/**
 	 * The operation id for the '<em>Is Final</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10670,6 +10778,15 @@ public interface TypesPackage extends EPackage {
 	 * @ordered
 	 */
 	int TSTRUCT_SETTER___IS_POLYFILLED = TSETTER___IS_POLYFILLED;
+
+	/**
+	 * The operation id for the '<em>Is Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TSTRUCT_SETTER___IS_OPTIONAL = TSETTER___IS_OPTIONAL;
 
 	/**
 	 * The operation id for the '<em>Is Abstract</em>' operation.
@@ -11225,13 +11342,31 @@ public interface TypesPackage extends EPackage {
 	int TVARIABLE__EXTERNAL = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
+	 * The feature id for the '<em><b>Object Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TVARIABLE__OBJECT_LITERAL = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 8;
+
+	/**
+	 * The feature id for the '<em><b>New Expression</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TVARIABLE__NEW_EXPRESSION = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 9;
+
+	/**
 	 * The number of structural features of the '<em>TVariable</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TVARIABLE_FEATURE_COUNT = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 8;
+	int TVARIABLE_FEATURE_COUNT = TEXPORTABLE_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The operation id for the '<em>Get Containing Module</em>' operation.
@@ -11288,26 +11423,6 @@ public interface TypesPackage extends EPackage {
 	int TVARIABLE_OPERATION_COUNT = TEXPORTABLE_ELEMENT_OPERATION_COUNT + 4;
 
 	/**
-	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.NullModifier <em>Null Modifier</em>}' enum.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see eu.numberfour.n4js.ts.types.NullModifier
-	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNullModifier()
-	 * @generated
-	 */
-	int NULL_MODIFIER = 52;
-
-	/**
-	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.UndefModifier <em>Undef Modifier</em>}' enum.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see eu.numberfour.n4js.ts.types.UndefModifier
-	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getUndefModifier()
-	 * @generated
-	 */
-	int UNDEF_MODIFIER = 53;
-
-	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.TypingStrategy <em>Typing Strategy</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11315,7 +11430,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTypingStrategy()
 	 * @generated
 	 */
-	int TYPING_STRATEGY = 54;
+	int TYPING_STRATEGY = 52;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.TypeAccessModifier <em>Type Access Modifier</em>}' enum.
@@ -11325,7 +11440,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTypeAccessModifier()
 	 * @generated
 	 */
-	int TYPE_ACCESS_MODIFIER = 55;
+	int TYPE_ACCESS_MODIFIER = 53;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.MemberAccessModifier <em>Member Access Modifier</em>}' enum.
@@ -11335,7 +11450,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberAccessModifier()
 	 * @generated
 	 */
-	int MEMBER_ACCESS_MODIFIER = 56;
+	int MEMBER_ACCESS_MODIFIER = 54;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.types.MemberType <em>Member Type</em>}' enum.
@@ -11345,7 +11460,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberType()
 	 * @generated
 	 */
-	int MEMBER_TYPE = 57;
+	int MEMBER_TYPE = 55;
 
 	/**
 	 * The meta object id for the '<em>Iterable Of TClassifier</em>' data type.
@@ -11355,7 +11470,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getIterableOfTClassifier()
 	 * @generated
 	 */
-	int ITERABLE_OF_TCLASSIFIER = 58;
+	int ITERABLE_OF_TCLASSIFIER = 56;
 
 	/**
 	 * The meta object id for the '<em>Variance</em>' data type.
@@ -11365,7 +11480,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getVariance()
 	 * @generated
 	 */
-	int VARIANCE = 59;
+	int VARIANCE = 57;
 
 	/**
 	 * The meta object id for the '<em>Name And Access</em>' data type.
@@ -11375,7 +11490,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNameAndAccess()
 	 * @generated
 	 */
-	int NAME_AND_ACCESS = 60;
+	int NAME_AND_ACCESS = 58;
 
 	/**
 	 * The meta object id for the '<em>Member List</em>' data type.
@@ -11385,7 +11500,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getMemberList()
 	 * @generated
 	 */
-	int MEMBER_LIST = 61;
+	int MEMBER_LIST = 59;
 
 	/**
 	 * The meta object id for the '<em>TClassifier Iterable</em>' data type.
@@ -11395,7 +11510,7 @@ public interface TypesPackage extends EPackage {
 	 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getTClassifierIterable()
 	 * @generated
 	 */
-	int TCLASSIFIER_ITERABLE = 62;
+	int TCLASSIFIER_ITERABLE = 60;
 
 
 	/**
@@ -11946,6 +12061,17 @@ public interface TypesPackage extends EPackage {
 	EReference getTFunction_Fpars();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TFunction#isReturnValueOptional_NEW_SYNTAX <em>Return Value Optional NEW SYNTAX</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Return Value Optional NEW SYNTAX</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TFunction#isReturnValueOptional_NEW_SYNTAX()
+	 * @see #getTFunction()
+	 * @generated
+	 */
+	EAttribute getTFunction_ReturnValueOptional_NEW_SYNTAX();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.types.TFunction#getReturnTypeRef <em>Return Type Ref</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12010,6 +12136,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTFunction_Constructor();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TFunction#isReturnValueOptional() <em>Is Return Value Optional</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Return Value Optional</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.TFunction#isReturnValueOptional()
+	 * @generated
+	 */
+	EOperation getTFunction__IsReturnValueOptional();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TFunction#isCallableConstructor() <em>Is Callable Constructor</em>}' operation.
@@ -13544,6 +13680,17 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTField_HasExpression();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TField#isOptional_NEW_SYNTAX <em>Optional NEW SYNTAX</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Optional NEW SYNTAX</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TField#isOptional_NEW_SYNTAX()
+	 * @see #getTField()
+	 * @generated
+	 */
+	EAttribute getTField_Optional_NEW_SYNTAX();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TField#isOptional() <em>Is Optional</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13624,6 +13771,17 @@ public interface TypesPackage extends EPackage {
 	EClass getFieldAccessor();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.FieldAccessor#isOptional_NEW_SYNTAX <em>Optional NEW SYNTAX</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Optional NEW SYNTAX</em>'.
+	 * @see eu.numberfour.n4js.ts.types.FieldAccessor#isOptional_NEW_SYNTAX()
+	 * @see #getFieldAccessor()
+	 * @generated
+	 */
+	EAttribute getFieldAccessor_Optional_NEW_SYNTAX();
+
+	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.FieldAccessor#isDeclaredAbstract <em>Declared Abstract</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13654,6 +13812,16 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getFieldAccessor__GetDeclaredTypeRef();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.FieldAccessor#isOptional() <em>Is Optional</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Optional</em>' operation.
+	 * @see eu.numberfour.n4js.ts.types.FieldAccessor#isOptional()
+	 * @generated
+	 */
+	EOperation getFieldAccessor__IsOptional();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.FieldAccessor#isAbstract() <em>Is Abstract</em>}' operation.
@@ -13955,6 +14123,28 @@ public interface TypesPackage extends EPackage {
 	EAttribute getTVariable_External();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TVariable#isObjectLiteral <em>Object Literal</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Object Literal</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TVariable#isObjectLiteral()
+	 * @see #getTVariable()
+	 * @generated
+	 */
+	EAttribute getTVariable_ObjectLiteral();
+
+	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.types.TVariable#isNewExpression <em>New Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>New Expression</em>'.
+	 * @see eu.numberfour.n4js.ts.types.TVariable#isNewExpression()
+	 * @see #getTVariable()
+	 * @generated
+	 */
+	EAttribute getTVariable_NewExpression();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.types.TVariable#getVariableAsString() <em>Get Variable As String</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13963,26 +14153,6 @@ public interface TypesPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTVariable__GetVariableAsString();
-
-	/**
-	 * Returns the meta object for enum '{@link eu.numberfour.n4js.ts.types.NullModifier <em>Null Modifier</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for enum '<em>Null Modifier</em>'.
-	 * @see eu.numberfour.n4js.ts.types.NullModifier
-	 * @generated
-	 */
-	EEnum getNullModifier();
-
-	/**
-	 * Returns the meta object for enum '{@link eu.numberfour.n4js.ts.types.UndefModifier <em>Undef Modifier</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for enum '<em>Undef Modifier</em>'.
-	 * @see eu.numberfour.n4js.ts.types.UndefModifier
-	 * @generated
-	 */
-	EEnum getUndefModifier();
 
 	/**
 	 * Returns the meta object for enum '{@link eu.numberfour.n4js.ts.types.TypingStrategy <em>Typing Strategy</em>}'.
@@ -14547,6 +14717,14 @@ public interface TypesPackage extends EPackage {
 		EReference TFUNCTION__FPARS = eINSTANCE.getTFunction_Fpars();
 
 		/**
+		 * The meta object literal for the '<em><b>Return Value Optional NEW SYNTAX</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TFUNCTION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX = eINSTANCE.getTFunction_ReturnValueOptional_NEW_SYNTAX();
+
+		/**
 		 * The meta object literal for the '<em><b>Return Type Ref</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -14593,6 +14771,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TFUNCTION__CONSTRUCTOR = eINSTANCE.getTFunction_Constructor();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Return Value Optional</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TFUNCTION___IS_RETURN_VALUE_OPTIONAL = eINSTANCE.getTFunction__IsReturnValueOptional();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Callable Constructor</b></em>' operation.
@@ -15841,6 +16027,14 @@ public interface TypesPackage extends EPackage {
 		EAttribute TFIELD__HAS_EXPRESSION = eINSTANCE.getTField_HasExpression();
 
 		/**
+		 * The meta object literal for the '<em><b>Optional NEW SYNTAX</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TFIELD__OPTIONAL_NEW_SYNTAX = eINSTANCE.getTField_Optional_NEW_SYNTAX();
+
+		/**
 		 * The meta object literal for the '<em><b>Is Optional</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -15909,6 +16103,14 @@ public interface TypesPackage extends EPackage {
 		EClass FIELD_ACCESSOR = eINSTANCE.getFieldAccessor();
 
 		/**
+		 * The meta object literal for the '<em><b>Optional NEW SYNTAX</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FIELD_ACCESSOR__OPTIONAL_NEW_SYNTAX = eINSTANCE.getFieldAccessor_Optional_NEW_SYNTAX();
+
+		/**
 		 * The meta object literal for the '<em><b>Declared Abstract</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -15931,6 +16133,14 @@ public interface TypesPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation FIELD_ACCESSOR___GET_DECLARED_TYPE_REF = eINSTANCE.getFieldAccessor__GetDeclaredTypeRef();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Optional</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation FIELD_ACCESSOR___IS_OPTIONAL = eINSTANCE.getFieldAccessor__IsOptional();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Abstract</b></em>' operation.
@@ -16183,32 +16393,28 @@ public interface TypesPackage extends EPackage {
 		EAttribute TVARIABLE__EXTERNAL = eINSTANCE.getTVariable_External();
 
 		/**
+		 * The meta object literal for the '<em><b>Object Literal</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TVARIABLE__OBJECT_LITERAL = eINSTANCE.getTVariable_ObjectLiteral();
+
+		/**
+		 * The meta object literal for the '<em><b>New Expression</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TVARIABLE__NEW_EXPRESSION = eINSTANCE.getTVariable_NewExpression();
+
+		/**
 		 * The meta object literal for the '<em><b>Get Variable As String</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EOperation TVARIABLE___GET_VARIABLE_AS_STRING = eINSTANCE.getTVariable__GetVariableAsString();
-
-		/**
-		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.NullModifier <em>Null Modifier</em>}' enum.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see eu.numberfour.n4js.ts.types.NullModifier
-		 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getNullModifier()
-		 * @generated
-		 */
-		EEnum NULL_MODIFIER = eINSTANCE.getNullModifier();
-
-		/**
-		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.UndefModifier <em>Undef Modifier</em>}' enum.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see eu.numberfour.n4js.ts.types.UndefModifier
-		 * @see eu.numberfour.n4js.ts.types.impl.TypesPackageImpl#getUndefModifier()
-		 * @generated
-		 */
-		EEnum UNDEF_MODIFIER = eINSTANCE.getUndefModifier();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.types.TypingStrategy <em>Typing Strategy</em>}' enum.

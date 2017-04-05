@@ -24,7 +24,6 @@ package eu.numberfour.n4js.ts.typeRefs
 
 import eu.numberfour.n4js.ts.types.AnyType
 import eu.numberfour.n4js.ts.types.ContainerType
-import eu.numberfour.n4js.ts.types.NullModifier
 import eu.numberfour.n4js.ts.types.TFormalParameter
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TMember
@@ -34,7 +33,6 @@ import eu.numberfour.n4js.ts.types.TStructuralType
 import eu.numberfour.n4js.ts.types.Type
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypingStrategy
-import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.types.UndefinedType
 import eu.numberfour.n4js.ts.types.internal.WildcardAsStringUtils
 
@@ -76,26 +74,19 @@ abstract class Versionable {
  * Base class for all type references
  */
 abstract class TypeRef extends TypeArgument, Versionable {
-	NullModifier nullModifier
-	UndefModifier undefModifier
-	/**
-	 * Returns null and undef modifier strings similar to N4JS syntax, not all values are represented.
-	 * This method is called by subclasses in overridden method.
+
+	/* Represents the old ? after the type name for defining optional fields/return types. To be removed soon. */
+	boolean optional_OLD_SYNTAX
+
+	/*
+	 * Returns all type modifiers of the receiving type reference as a string, similar to N4JS syntax. This method is
+	 * called by subclasses in overridden method. Currently, the <code>+</code> for dynamic is the only existing type
+	 * modifier.
 	 */
 	op String getModifiersAsString() {
-		return switch (nullModifier) {
-			case NA: ""
-			case NULLABLE: ""
-			case NOTNULL: "!"
-			case ISNULL: ""
-		} + switch (undefModifier) {
-			case NA: ""
-			case MANDATORY: ""
-			case OPTIONAL: "?"
-			case ISUNDEFINED: ""
-		};
+		 return "";
 	}
-	/**
+	/*
 	 * Returns true if the type referenced is either class which is declared final, an enum or a primitive. This is needed in case of type
 	 * casts, for example.
 	 * <p>
@@ -171,12 +162,6 @@ abstract class TypeRef extends TypeArgument, Versionable {
 	op TypeArgument[] getTypeArgs() {
 		return emptyEList
 	}
-	op boolean undefinedOrNull() {
-		return nullModifier == NullModifier.ISNULL || undefModifier == UndefModifier.ISUNDEFINED;
-	}
-//	op boolean maybeUndefindOrNull() {
-//		return undefinedOrNull() || nullModifier == NullModifier.NULLABLE || undefModifier == UndefModifier.OPTIONAL;
-//	}
 	/*
 	 * Convenience method, returns the type expression, usually the type name, as a string. The
 	 * returned string representation usually reflect the N4JS syntax. Basically used for testing.
@@ -236,6 +221,23 @@ abstract class TypeRef extends TypeArgument, Versionable {
 	}
 
 	/*
+	 * Tells whether this type reference represents the type of an object literal.
+	 * Used to activate the special semantics of optional fields in certain cases.
+	 * @see TypeRef#isTypeOfNewExpressionOrFinalNominal()
+	 */
+	op boolean isTypeOfObjectLiteral() {
+		return false;
+	}
+	/*
+	 * Tells whether this type reference represents the type of a new expression or final nominal classifier.
+	 * Used to activate the special semantics of optional fields in certain cases.
+	 * @see TypeRef#isTypeOfObjectLiteral()
+	 */
+	op boolean isTypeOfNewExpressionOrFinalNominal() {
+		return false;
+	}
+
+	/*
 	 * Override Versioned#getVersion()
 	 */
 	op int getVersion() {
@@ -252,9 +254,8 @@ abstract class BaseTypeRef extends StaticBaseTypeRef {
 	 * Flag indicating that new properties can be dynamically added to the type. Default value is false.
 	 */
 	boolean dynamic = "false"
-	/**
-	 * Returns dynamic, null, undef modifier strings similar to N4JS syntax, not all values are represented.
-	 * This method is called by subclasses in overridden method.
+	/*
+	 * Override for {@link TypeRef#getModifiersAsString()}.
 	 */
 	op String getModifiersAsString() {
 		return (if (dynamic) {
@@ -481,6 +482,11 @@ class ParameterizedTypeRef extends BaseTypeRef {
 	refers Type declaredType
 	contains TypeArgument[] typeArgs
 	boolean arrayTypeLiteral = "false"
+
+	/* @see TypeRef#isTypeOfObjectLiteral() */
+	transient boolean typeOfObjectLiteral
+	/* @see TypeRef#isTypeOfNewExpressionOrFinalNominal() */
+	transient boolean typeOfNewExpressionOrFinalNominal
 
 	/*
 	 * The defined (declared or inferred) typing strategy on use site, nominal typing by default. Could be changed to structural or structural
@@ -953,6 +959,9 @@ abstract class FunctionTypeExprOrRef extends StaticBaseTypeRef {
 	 * The formal parameters as declared in the expression or of the referenced function type.
 	 */
 	op TFormalParameter[] getFpars()
+	op boolean isReturnValueOptional() {
+		return returnTypeRef!==null && returnTypeRef.optional_OLD_SYNTAX;
+	}
 	/*
 	 * The return type as declared in the expression or of the referenced function type.
 	 */
@@ -997,6 +1006,7 @@ abstract class FunctionTypeExprOrRef extends StaticBaseTypeRef {
 			} else "")
 			+ "(" + fpars.map[it.getFormalParameterAsTypesString].join(",") + ")"
 			+ (if (returnTypeRef !== null) ":" + returnTypeRef.typeRefAsString else "")
+			+ (if (returnValueOptional) "?" else "")
 			+ "}" + getModifiersAsString();
 	}
 }
@@ -1164,6 +1174,13 @@ class FunctionTypeExpression extends FunctionTypeExprOrRef {
 	 * a copy of the formal parameters of the 'declaredType' or original FunctionTypeExpression.
 	 */
 	contains TFormalParameter[] fpars
+	/*
+	 * Tells if the return value is optional.
+	 */
+	boolean returnValueOptional_NEW_SYNTAX
+	op boolean isReturnValueOptional() {
+		return returnValueOptional_NEW_SYNTAX || (returnTypeRef!==null && returnTypeRef.optional_OLD_SYNTAX);
+	}
 	/*
 	 * Return type declared in the FunctionTypeExpression in the AST or
 	 * a copy of the return type of the 'declaredType' or original FunctionTypeExpression.

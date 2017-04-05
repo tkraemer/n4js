@@ -18,7 +18,7 @@ class Test {
 			this.key = value;
 		}
 	};
-	private field2 : String?;
+	private field2? : String;
 
 	method1() : Test {
 // // XPECT errors --> "The optional modifier isn't allowed here." at "String?"

@@ -11,7 +11,7 @@
 import * as React from "reactFiles/react";
 
 interface ~Props<ValueT> extends React.ComponentProps  {
-    public value: ValueT?;
+    public value?: ValueT;
 }
 
 class Base<ValueT>
@@ -31,4 +31,4 @@ class Concrete extends Base<Date> {
 //XPECT noerrors
 <Concrete
 	value={new Date()}/>
-	
+

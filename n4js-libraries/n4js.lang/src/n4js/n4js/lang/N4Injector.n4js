@@ -18,8 +18,8 @@ const DI_PROP_NAME = '$di';
 @Internal
 export public interface InjectedTypeMeta {
     type: type{N4Object};
-    name: string?;
-    typeVar: InjectedTypeMeta?;
+    name?: string;
+    typeVar?: InjectedTypeMeta;
 }
 
 /**
@@ -30,13 +30,13 @@ export public interface InjectedTypeMeta {
 @Internal
 export public interface InjectedClassMeta {
     /** present if type is annotated with scope annotation, will contain name of the scope */
-    public scope: string?;
+    public scope?: string;
     /** present if type has super type, contains loaded type itself */
-    public superType: constructor{? extends N4Object}?;
+    public superType?: constructor{? extends N4Object};
     /** present if type has own injected constructor, can be empty (if annotated ctor has no params) */
-    public injectCtorParams: Array<InjectedTypeMeta>?;
+    public injectCtorParams?: Array<InjectedTypeMeta>;
     /** present if type has own injected fields, includes overriden fields */
-    public fieldsInjectedTypes: Array<InjectedTypeMeta>?;
+    public fieldsInjectedTypes?: Array<InjectedTypeMeta>;
 }
 
 /** exported just for testing*/
@@ -63,9 +63,9 @@ export public interface ProvideMethodInfo {
 @Internal
 export public interface BinderMeta extends InjectedClassMeta {
     /** present if binding annotations */
-    public bindings: Array<BindingInfo>?;
+    public bindings?: Array<BindingInfo>;
     /** present if provide methods */
-    public methodBindings: Array<ProvideMethodInfo>?;
+    public methodBindings?: Array<ProvideMethodInfo>;
 }
 
 /**
@@ -76,7 +76,7 @@ export public interface BinderMeta extends InjectedClassMeta {
  */
 @Internal
 export public interface DIComponentMeta extends InjectedClassMeta {
-    public parent: constructor{? extends N4Object}?;
+    public parent?: constructor{? extends N4Object};
     public binders: Array<constructor{? extends N4Object}>;
 }
 

@@ -177,22 +177,13 @@ public interface TypeRefsPackage extends EPackage {
 	int TYPE_REF = 1;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REF__NULL_MODIFIER = TYPE_ARGUMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPE_REF__UNDEF_MODIFIER = TYPE_ARGUMENT_FEATURE_COUNT + 1;
+	int TYPE_REF__OPTIONAL_OLD_SYNTAX = TYPE_ARGUMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Type Ref</em>' class.
@@ -201,7 +192,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REF_FEATURE_COUNT = TYPE_ARGUMENT_FEATURE_COUNT + 2;
+	int TYPE_REF_FEATURE_COUNT = TYPE_ARGUMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Contains Wildcards</em>' operation.
@@ -321,22 +312,13 @@ public interface TypeRefsPackage extends EPackage {
 	int TYPE_REF___GET_TYPE_ARGS = TYPE_ARGUMENT_OPERATION_COUNT + 11;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPE_REF___UNDEFINED_OR_NULL = TYPE_ARGUMENT_OPERATION_COUNT + 12;
-
-	/**
 	 * The operation id for the '<em>Get Type Ref As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REF___GET_TYPE_REF_AS_STRING = TYPE_ARGUMENT_OPERATION_COUNT + 13;
+	int TYPE_REF___GET_TYPE_REF_AS_STRING = TYPE_ARGUMENT_OPERATION_COUNT + 12;
 
 	/**
 	 * The operation id for the '<em>To String</em>' operation.
@@ -345,7 +327,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REF___TO_STRING = TYPE_ARGUMENT_OPERATION_COUNT + 14;
+	int TYPE_REF___TO_STRING = TYPE_ARGUMENT_OPERATION_COUNT + 13;
 
 	/**
 	 * The operation id for the '<em>Get Declared Type</em>' operation.
@@ -354,7 +336,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REF___GET_DECLARED_TYPE = TYPE_ARGUMENT_OPERATION_COUNT + 15;
+	int TYPE_REF___GET_DECLARED_TYPE = TYPE_ARGUMENT_OPERATION_COUNT + 14;
 
 	/**
 	 * The operation id for the '<em>Is Top Type</em>' operation.
@@ -363,7 +345,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REF___IS_TOP_TYPE = TYPE_ARGUMENT_OPERATION_COUNT + 16;
+	int TYPE_REF___IS_TOP_TYPE = TYPE_ARGUMENT_OPERATION_COUNT + 15;
 
 	/**
 	 * The operation id for the '<em>Is Bottom Type</em>' operation.
@@ -372,7 +354,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REF___IS_BOTTOM_TYPE = TYPE_ARGUMENT_OPERATION_COUNT + 17;
+	int TYPE_REF___IS_BOTTOM_TYPE = TYPE_ARGUMENT_OPERATION_COUNT + 16;
 
 	/**
 	 * The operation id for the '<em>Get Typing Strategy</em>' operation.
@@ -381,7 +363,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REF___GET_TYPING_STRATEGY = TYPE_ARGUMENT_OPERATION_COUNT + 18;
+	int TYPE_REF___GET_TYPING_STRATEGY = TYPE_ARGUMENT_OPERATION_COUNT + 17;
 
 	/**
 	 * The operation id for the '<em>Get Structural Members</em>' operation.
@@ -390,7 +372,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REF___GET_STRUCTURAL_MEMBERS = TYPE_ARGUMENT_OPERATION_COUNT + 19;
+	int TYPE_REF___GET_STRUCTURAL_MEMBERS = TYPE_ARGUMENT_OPERATION_COUNT + 18;
 
 	/**
 	 * The operation id for the '<em>Is Use Site Structural Typing</em>' operation.
@@ -399,7 +381,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REF___IS_USE_SITE_STRUCTURAL_TYPING = TYPE_ARGUMENT_OPERATION_COUNT + 20;
+	int TYPE_REF___IS_USE_SITE_STRUCTURAL_TYPING = TYPE_ARGUMENT_OPERATION_COUNT + 19;
 
 	/**
 	 * The operation id for the '<em>Is Def Site Structural Typing</em>' operation.
@@ -408,7 +390,25 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = TYPE_ARGUMENT_OPERATION_COUNT + 21;
+	int TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = TYPE_ARGUMENT_OPERATION_COUNT + 20;
+
+	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL = TYPE_ARGUMENT_OPERATION_COUNT + 21;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = TYPE_ARGUMENT_OPERATION_COUNT + 22;
 
 	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
@@ -417,7 +417,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REF___GET_VERSION = TYPE_ARGUMENT_OPERATION_COUNT + 22;
+	int TYPE_REF___GET_VERSION = TYPE_ARGUMENT_OPERATION_COUNT + 23;
 
 	/**
 	 * The number of operations of the '<em>Type Ref</em>' class.
@@ -426,7 +426,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REF_OPERATION_COUNT = TYPE_ARGUMENT_OPERATION_COUNT + 23;
+	int TYPE_REF_OPERATION_COUNT = TYPE_ARGUMENT_OPERATION_COUNT + 24;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.StaticBaseTypeRefImpl <em>Static Base Type Ref</em>}' class.
@@ -439,22 +439,13 @@ public interface TypeRefsPackage extends EPackage {
 	int STATIC_BASE_TYPE_REF = 2;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STATIC_BASE_TYPE_REF__NULL_MODIFIER = TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATIC_BASE_TYPE_REF__UNDEF_MODIFIER = TYPE_REF__UNDEF_MODIFIER;
+	int STATIC_BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX = TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The number of structural features of the '<em>Static Base Type Ref</em>' class.
@@ -583,15 +574,6 @@ public interface TypeRefsPackage extends EPackage {
 	int STATIC_BASE_TYPE_REF___GET_TYPE_ARGS = TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATIC_BASE_TYPE_REF___UNDEFINED_OR_NULL = TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>Get Type Ref As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -673,6 +655,24 @@ public interface TypeRefsPackage extends EPackage {
 	int STATIC_BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATIC_BASE_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL = TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATIC_BASE_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
+
+	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -701,22 +701,13 @@ public interface TypeRefsPackage extends EPackage {
 	int BASE_TYPE_REF = 3;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BASE_TYPE_REF__NULL_MODIFIER = STATIC_BASE_TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BASE_TYPE_REF__UNDEF_MODIFIER = STATIC_BASE_TYPE_REF__UNDEF_MODIFIER;
+	int BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX = STATIC_BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -845,15 +836,6 @@ public interface TypeRefsPackage extends EPackage {
 	int BASE_TYPE_REF___GET_TYPE_ARGS = STATIC_BASE_TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BASE_TYPE_REF___UNDEFINED_OR_NULL = STATIC_BASE_TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>Get Type Ref As String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -935,6 +917,24 @@ public interface TypeRefsPackage extends EPackage {
 	int BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = STATIC_BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BASE_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL = STATIC_BASE_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BASE_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = STATIC_BASE_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
+
+	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -972,22 +972,13 @@ public interface TypeRefsPackage extends EPackage {
 	int COMPOSED_TYPE_REF = 4;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOSED_TYPE_REF__NULL_MODIFIER = STATIC_BASE_TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPOSED_TYPE_REF__UNDEF_MODIFIER = STATIC_BASE_TYPE_REF__UNDEF_MODIFIER;
+	int COMPOSED_TYPE_REF__OPTIONAL_OLD_SYNTAX = STATIC_BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Cached Composed Members</b></em>' containment reference list.
@@ -1134,15 +1125,6 @@ public interface TypeRefsPackage extends EPackage {
 	int COMPOSED_TYPE_REF___GET_TYPE_ARGS = STATIC_BASE_TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPOSED_TYPE_REF___UNDEFINED_OR_NULL = STATIC_BASE_TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1215,6 +1197,24 @@ public interface TypeRefsPackage extends EPackage {
 	int COMPOSED_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = STATIC_BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSED_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL = STATIC_BASE_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSED_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = STATIC_BASE_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
+
+	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1261,22 +1261,13 @@ public interface TypeRefsPackage extends EPackage {
 	int UNION_TYPE_EXPRESSION = 5;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNION_TYPE_EXPRESSION__NULL_MODIFIER = COMPOSED_TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNION_TYPE_EXPRESSION__UNDEF_MODIFIER = COMPOSED_TYPE_REF__UNDEF_MODIFIER;
+	int UNION_TYPE_EXPRESSION__OPTIONAL_OLD_SYNTAX = COMPOSED_TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Cached Composed Members</b></em>' containment reference list.
@@ -1423,15 +1414,6 @@ public interface TypeRefsPackage extends EPackage {
 	int UNION_TYPE_EXPRESSION___GET_TYPE_ARGS = COMPOSED_TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNION_TYPE_EXPRESSION___UNDEFINED_OR_NULL = COMPOSED_TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1504,6 +1486,24 @@ public interface TypeRefsPackage extends EPackage {
 	int UNION_TYPE_EXPRESSION___IS_DEF_SITE_STRUCTURAL_TYPING = COMPOSED_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION_TYPE_EXPRESSION___IS_TYPE_OF_OBJECT_LITERAL = COMPOSED_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNION_TYPE_EXPRESSION___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = COMPOSED_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
+
+	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1550,22 +1550,13 @@ public interface TypeRefsPackage extends EPackage {
 	int INTERSECTION_TYPE_EXPRESSION = 6;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INTERSECTION_TYPE_EXPRESSION__NULL_MODIFIER = COMPOSED_TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INTERSECTION_TYPE_EXPRESSION__UNDEF_MODIFIER = COMPOSED_TYPE_REF__UNDEF_MODIFIER;
+	int INTERSECTION_TYPE_EXPRESSION__OPTIONAL_OLD_SYNTAX = COMPOSED_TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Cached Composed Members</b></em>' containment reference list.
@@ -1712,15 +1703,6 @@ public interface TypeRefsPackage extends EPackage {
 	int INTERSECTION_TYPE_EXPRESSION___GET_TYPE_ARGS = COMPOSED_TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INTERSECTION_TYPE_EXPRESSION___UNDEFINED_OR_NULL = COMPOSED_TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1793,6 +1775,24 @@ public interface TypeRefsPackage extends EPackage {
 	int INTERSECTION_TYPE_EXPRESSION___IS_DEF_SITE_STRUCTURAL_TYPING = COMPOSED_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERSECTION_TYPE_EXPRESSION___IS_TYPE_OF_OBJECT_LITERAL = COMPOSED_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERSECTION_TYPE_EXPRESSION___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = COMPOSED_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
+
+	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1839,22 +1839,13 @@ public interface TypeRefsPackage extends EPackage {
 	int THIS_TYPE_REF = 7;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int THIS_TYPE_REF__NULL_MODIFIER = BASE_TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int THIS_TYPE_REF__UNDEF_MODIFIER = BASE_TYPE_REF__UNDEF_MODIFIER;
+	int THIS_TYPE_REF__OPTIONAL_OLD_SYNTAX = BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -1983,15 +1974,6 @@ public interface TypeRefsPackage extends EPackage {
 	int THIS_TYPE_REF___GET_TYPE_ARGS = BASE_TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int THIS_TYPE_REF___UNDEFINED_OR_NULL = BASE_TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2035,6 +2017,24 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int THIS_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THIS_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL = BASE_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THIS_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = BASE_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
@@ -2110,22 +2110,13 @@ public interface TypeRefsPackage extends EPackage {
 	int THIS_TYPE_REF_NOMINAL = 8;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int THIS_TYPE_REF_NOMINAL__NULL_MODIFIER = THIS_TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int THIS_TYPE_REF_NOMINAL__UNDEF_MODIFIER = THIS_TYPE_REF__UNDEF_MODIFIER;
+	int THIS_TYPE_REF_NOMINAL__OPTIONAL_OLD_SYNTAX = THIS_TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -2254,15 +2245,6 @@ public interface TypeRefsPackage extends EPackage {
 	int THIS_TYPE_REF_NOMINAL___GET_TYPE_ARGS = THIS_TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int THIS_TYPE_REF_NOMINAL___UNDEFINED_OR_NULL = THIS_TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2306,6 +2288,24 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int THIS_TYPE_REF_NOMINAL___IS_DEF_SITE_STRUCTURAL_TYPING = THIS_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THIS_TYPE_REF_NOMINAL___IS_TYPE_OF_OBJECT_LITERAL = THIS_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THIS_TYPE_REF_NOMINAL___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = THIS_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
@@ -2381,22 +2381,13 @@ public interface TypeRefsPackage extends EPackage {
 	int THIS_TYPE_REF_STRUCTURAL = 9;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int THIS_TYPE_REF_STRUCTURAL__NULL_MODIFIER = THIS_TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int THIS_TYPE_REF_STRUCTURAL__UNDEF_MODIFIER = THIS_TYPE_REF__UNDEF_MODIFIER;
+	int THIS_TYPE_REF_STRUCTURAL__OPTIONAL_OLD_SYNTAX = THIS_TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -2570,15 +2561,6 @@ public interface TypeRefsPackage extends EPackage {
 	int THIS_TYPE_REF_STRUCTURAL___GET_TYPE_ARGS = THIS_TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int THIS_TYPE_REF_STRUCTURAL___UNDEFINED_OR_NULL = THIS_TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2622,6 +2604,24 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int THIS_TYPE_REF_STRUCTURAL___IS_DEF_SITE_STRUCTURAL_TYPING = THIS_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THIS_TYPE_REF_STRUCTURAL___IS_TYPE_OF_OBJECT_LITERAL = THIS_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THIS_TYPE_REF_STRUCTURAL___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = THIS_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
@@ -2715,22 +2715,13 @@ public interface TypeRefsPackage extends EPackage {
 	int BOUND_THIS_TYPE_REF = 10;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BOUND_THIS_TYPE_REF__NULL_MODIFIER = THIS_TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BOUND_THIS_TYPE_REF__UNDEF_MODIFIER = THIS_TYPE_REF__UNDEF_MODIFIER;
+	int BOUND_THIS_TYPE_REF__OPTIONAL_OLD_SYNTAX = THIS_TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -2904,15 +2895,6 @@ public interface TypeRefsPackage extends EPackage {
 	int BOUND_THIS_TYPE_REF___GET_TYPE_ARGS = THIS_TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BOUND_THIS_TYPE_REF___UNDEFINED_OR_NULL = THIS_TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2947,6 +2929,24 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int BOUND_THIS_TYPE_REF___IS_BOTTOM_TYPE = THIS_TYPE_REF___IS_BOTTOM_TYPE;
+
+	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOUND_THIS_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL = THIS_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOUND_THIS_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = THIS_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The operation id for the '<em>Get Modifiers As String</em>' operation.
@@ -3058,22 +3058,13 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF = 11;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF__NULL_MODIFIER = BASE_TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF__UNDEF_MODIFIER = BASE_TYPE_REF__UNDEF_MODIFIER;
+	int PARAMETERIZED_TYPE_REF__OPTIONAL_OLD_SYNTAX = BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -3112,13 +3103,31 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL = BASE_TYPE_REF_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Type Of Object Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF__TYPE_OF_OBJECT_LITERAL = BASE_TYPE_REF_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Type Of New Expression Or Final Nominal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF__TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = BASE_TYPE_REF_FEATURE_COUNT + 4;
+
+	/**
 	 * The feature id for the '<em><b>Defined Typing Strategy</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY = BASE_TYPE_REF_FEATURE_COUNT + 3;
+	int PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY = BASE_TYPE_REF_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>Parameterized Type Ref</em>' class.
@@ -3127,7 +3136,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_FEATURE_COUNT = BASE_TYPE_REF_FEATURE_COUNT + 4;
+	int PARAMETERIZED_TYPE_REF_FEATURE_COUNT = BASE_TYPE_REF_FEATURE_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Is Final By Type</em>' operation.
@@ -3193,15 +3202,6 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF___GET_TYPE_ARGS = BASE_TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF___UNDEFINED_OR_NULL = BASE_TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3245,6 +3245,24 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF___GET_STRUCTURAL_MEMBERS = BASE_TYPE_REF___GET_STRUCTURAL_MEMBERS;
+
+	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL = BASE_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = BASE_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
@@ -3465,22 +3483,13 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL = 13;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL__NULL_MODIFIER = PARAMETERIZED_TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL__UNDEF_MODIFIER = PARAMETERIZED_TYPE_REF__UNDEF_MODIFIER;
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL__OPTIONAL_OLD_SYNTAX = PARAMETERIZED_TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -3517,6 +3526,24 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL__ARRAY_TYPE_LITERAL = PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL;
+
+	/**
+	 * The feature id for the '<em><b>Type Of Object Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL__TYPE_OF_OBJECT_LITERAL = PARAMETERIZED_TYPE_REF__TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The feature id for the '<em><b>Type Of New Expression Or Final Nominal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL__TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = PARAMETERIZED_TYPE_REF__TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The feature id for the '<em><b>Defined Typing Strategy</b></em>' attribute.
@@ -3636,15 +3663,6 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL___GET_TYPE_ARGS = PARAMETERIZED_TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL___UNDEFINED_OR_NULL = PARAMETERIZED_TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3679,6 +3697,24 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL___IS_BOTTOM_TYPE = PARAMETERIZED_TYPE_REF___IS_BOTTOM_TYPE;
+
+	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL___IS_TYPE_OF_OBJECT_LITERAL = PARAMETERIZED_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = PARAMETERIZED_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
@@ -3826,22 +3862,13 @@ public interface TypeRefsPackage extends EPackage {
 	int EXISTENTIAL_TYPE_REF = 14;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXISTENTIAL_TYPE_REF__NULL_MODIFIER = TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXISTENTIAL_TYPE_REF__UNDEF_MODIFIER = TYPE_REF__UNDEF_MODIFIER;
+	int EXISTENTIAL_TYPE_REF__OPTIONAL_OLD_SYNTAX = TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Wildcard</b></em>' reference.
@@ -3961,15 +3988,6 @@ public interface TypeRefsPackage extends EPackage {
 	int EXISTENTIAL_TYPE_REF___GET_TYPE_ARGS = TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXISTENTIAL_TYPE_REF___UNDEFINED_OR_NULL = TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4042,6 +4060,24 @@ public interface TypeRefsPackage extends EPackage {
 	int EXISTENTIAL_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXISTENTIAL_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL = TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXISTENTIAL_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
+
+	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4106,22 +4142,13 @@ public interface TypeRefsPackage extends EPackage {
 	int UNKNOWN_TYPE_REF = 15;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNKNOWN_TYPE_REF__NULL_MODIFIER = TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNKNOWN_TYPE_REF__UNDEF_MODIFIER = TYPE_REF__UNDEF_MODIFIER;
+	int UNKNOWN_TYPE_REF__OPTIONAL_OLD_SYNTAX = TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The number of structural features of the '<em>Unknown Type Ref</em>' class.
@@ -4250,15 +4277,6 @@ public interface TypeRefsPackage extends EPackage {
 	int UNKNOWN_TYPE_REF___GET_TYPE_ARGS = TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNKNOWN_TYPE_REF___UNDEFINED_OR_NULL = TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4331,6 +4349,24 @@ public interface TypeRefsPackage extends EPackage {
 	int UNKNOWN_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNKNOWN_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL = TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNKNOWN_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
+
+	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4368,22 +4404,13 @@ public interface TypeRefsPackage extends EPackage {
 	int TYPE_TYPE_REF = 16;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_TYPE_REF__NULL_MODIFIER = BASE_TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPE_TYPE_REF__UNDEF_MODIFIER = BASE_TYPE_REF__UNDEF_MODIFIER;
+	int TYPE_TYPE_REF__OPTIONAL_OLD_SYNTAX = BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -4530,15 +4557,6 @@ public interface TypeRefsPackage extends EPackage {
 	int TYPE_TYPE_REF___GET_TYPE_ARGS = BASE_TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TYPE_TYPE_REF___UNDEFINED_OR_NULL = BASE_TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4609,6 +4627,24 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int TYPE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL = BASE_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = BASE_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
@@ -4757,22 +4793,13 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_EXPR_OR_REF = 19;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPR_OR_REF__NULL_MODIFIER = STATIC_BASE_TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FUNCTION_TYPE_EXPR_OR_REF__UNDEF_MODIFIER = STATIC_BASE_TYPE_REF__UNDEF_MODIFIER;
+	int FUNCTION_TYPE_EXPR_OR_REF__OPTIONAL_OLD_SYNTAX = STATIC_BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The number of structural features of the '<em>Function Type Expr Or Ref</em>' class.
@@ -4883,15 +4910,6 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_ARGS = STATIC_BASE_TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FUNCTION_TYPE_EXPR_OR_REF___UNDEFINED_OR_NULL = STATIC_BASE_TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4964,6 +4982,24 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_EXPR_OR_REF___IS_DEF_SITE_STRUCTURAL_TYPING = STATIC_BASE_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
 
 	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_EXPR_OR_REF___IS_TYPE_OF_OBJECT_LITERAL = STATIC_BASE_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_EXPR_OR_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = STATIC_BASE_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
+
+	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5018,13 +5054,22 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_EXPR_OR_REF___GET_FPARS = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 4;
 
 	/**
+	 * The operation id for the '<em>Is Return Value Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_EXPR_OR_REF___IS_RETURN_VALUE_OPTIONAL = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 5;
+
+	/**
 	 * The operation id for the '<em>Get Return Type Ref</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPR_OR_REF___GET_RETURN_TYPE_REF = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 5;
+	int FUNCTION_TYPE_EXPR_OR_REF___GET_RETURN_TYPE_REF = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Is Generic</em>' operation.
@@ -5033,7 +5078,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPR_OR_REF___IS_GENERIC = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 6;
+	int FUNCTION_TYPE_EXPR_OR_REF___IS_GENERIC = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 7;
 
 	/**
 	 * The operation id for the '<em>Is Raw</em>' operation.
@@ -5042,7 +5087,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPR_OR_REF___IS_RAW = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 7;
+	int FUNCTION_TYPE_EXPR_OR_REF___IS_RAW = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Get Fpar For Arg Idx</em>' operation.
@@ -5051,7 +5096,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPR_OR_REF___GET_FPAR_FOR_ARG_IDX__INT = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 8;
+	int FUNCTION_TYPE_EXPR_OR_REF___GET_FPAR_FOR_ARG_IDX__INT = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Get Type Ref As String</em>' operation.
@@ -5060,7 +5105,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_REF_AS_STRING = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 9;
+	int FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_REF_AS_STRING = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 10;
 
 	/**
 	 * The number of operations of the '<em>Function Type Expr Or Ref</em>' class.
@@ -5069,7 +5114,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPR_OR_REF_OPERATION_COUNT = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 10;
+	int FUNCTION_TYPE_EXPR_OR_REF_OPERATION_COUNT = STATIC_BASE_TYPE_REF_OPERATION_COUNT + 11;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.FunctionTypeRefImpl <em>Function Type Ref</em>}' class.
@@ -5082,22 +5127,13 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_REF = 20;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF__NULL_MODIFIER = PARAMETERIZED_TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FUNCTION_TYPE_REF__UNDEF_MODIFIER = PARAMETERIZED_TYPE_REF__UNDEF_MODIFIER;
+	int FUNCTION_TYPE_REF__OPTIONAL_OLD_SYNTAX = PARAMETERIZED_TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -5134,6 +5170,24 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int FUNCTION_TYPE_REF__ARRAY_TYPE_LITERAL = PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL;
+
+	/**
+	 * The feature id for the '<em><b>Type Of Object Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_REF__TYPE_OF_OBJECT_LITERAL = PARAMETERIZED_TYPE_REF__TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The feature id for the '<em><b>Type Of New Expression Or Final Nominal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_REF__TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = PARAMETERIZED_TYPE_REF__TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The feature id for the '<em><b>Defined Typing Strategy</b></em>' attribute.
@@ -5217,15 +5271,6 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_REF___GET_TYPE_ARGS = PARAMETERIZED_TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FUNCTION_TYPE_REF___UNDEFINED_OR_NULL = PARAMETERIZED_TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5269,6 +5314,24 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int FUNCTION_TYPE_REF___GET_STRUCTURAL_MEMBERS = PARAMETERIZED_TYPE_REF___GET_STRUCTURAL_MEMBERS;
+
+	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL = PARAMETERIZED_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = PARAMETERIZED_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
@@ -5352,13 +5415,22 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_REF___GET_FUNCTION_TYPE = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Is Return Value Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_REF___IS_RETURN_VALUE_OPTIONAL = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 5;
+
+	/**
 	 * The operation id for the '<em>Is Generic</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF___IS_GENERIC = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 6;
+	int FUNCTION_TYPE_REF___IS_GENERIC = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 7;
 
 	/**
 	 * The operation id for the '<em>Is Raw</em>' operation.
@@ -5367,7 +5439,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF___IS_RAW = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 7;
+	int FUNCTION_TYPE_REF___IS_RAW = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Get Fpar For Arg Idx</em>' operation.
@@ -5376,7 +5448,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF___GET_FPAR_FOR_ARG_IDX__INT = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 8;
+	int FUNCTION_TYPE_REF___GET_FPAR_FOR_ARG_IDX__INT = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Get Type Ref As String</em>' operation.
@@ -5385,7 +5457,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF___GET_TYPE_REF_AS_STRING = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 9;
+	int FUNCTION_TYPE_REF___GET_TYPE_REF_AS_STRING = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 10;
 
 	/**
 	 * The operation id for the '<em>Get Declared This Type</em>' operation.
@@ -5394,7 +5466,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF___GET_DECLARED_THIS_TYPE = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 10;
+	int FUNCTION_TYPE_REF___GET_DECLARED_THIS_TYPE = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 11;
 
 	/**
 	 * The operation id for the '<em>Get Type Vars</em>' operation.
@@ -5403,7 +5475,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF___GET_TYPE_VARS = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 11;
+	int FUNCTION_TYPE_REF___GET_TYPE_VARS = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 12;
 
 	/**
 	 * The operation id for the '<em>Get Type Var Upper Bound</em>' operation.
@@ -5412,7 +5484,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 12;
+	int FUNCTION_TYPE_REF___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 13;
 
 	/**
 	 * The operation id for the '<em>Get Fpars</em>' operation.
@@ -5421,7 +5493,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF___GET_FPARS = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 13;
+	int FUNCTION_TYPE_REF___GET_FPARS = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 14;
 
 	/**
 	 * The operation id for the '<em>Get Return Type Ref</em>' operation.
@@ -5430,7 +5502,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF___GET_RETURN_TYPE_REF = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 14;
+	int FUNCTION_TYPE_REF___GET_RETURN_TYPE_REF = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 15;
 
 	/**
 	 * The number of operations of the '<em>Function Type Ref</em>' class.
@@ -5439,7 +5511,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF_OPERATION_COUNT = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 15;
+	int FUNCTION_TYPE_REF_OPERATION_COUNT = PARAMETERIZED_TYPE_REF_OPERATION_COUNT + 16;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.FunctionTypeExpressionImpl <em>Function Type Expression</em>}' class.
@@ -5452,22 +5524,13 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_EXPRESSION = 21;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPRESSION__NULL_MODIFIER = FUNCTION_TYPE_EXPR_OR_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FUNCTION_TYPE_EXPRESSION__UNDEF_MODIFIER = FUNCTION_TYPE_EXPR_OR_REF__UNDEF_MODIFIER;
+	int FUNCTION_TYPE_EXPRESSION__OPTIONAL_OLD_SYNTAX = FUNCTION_TYPE_EXPR_OR_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Binding</b></em>' attribute.
@@ -5533,13 +5596,22 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_EXPRESSION__FPARS = FUNCTION_TYPE_EXPR_OR_REF_FEATURE_COUNT + 6;
 
 	/**
+	 * The feature id for the '<em><b>Return Value Optional NEW SYNTAX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX = FUNCTION_TYPE_EXPR_OR_REF_FEATURE_COUNT + 7;
+
+	/**
 	 * The feature id for the '<em><b>Return Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPRESSION__RETURN_TYPE_REF = FUNCTION_TYPE_EXPR_OR_REF_FEATURE_COUNT + 7;
+	int FUNCTION_TYPE_EXPRESSION__RETURN_TYPE_REF = FUNCTION_TYPE_EXPR_OR_REF_FEATURE_COUNT + 8;
 
 	/**
 	 * The number of structural features of the '<em>Function Type Expression</em>' class.
@@ -5548,7 +5620,7 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPRESSION_FEATURE_COUNT = FUNCTION_TYPE_EXPR_OR_REF_FEATURE_COUNT + 8;
+	int FUNCTION_TYPE_EXPRESSION_FEATURE_COUNT = FUNCTION_TYPE_EXPR_OR_REF_FEATURE_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Contains Wildcards</em>' operation.
@@ -5650,15 +5722,6 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_EXPRESSION___GET_TYPE_ARGS = FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FUNCTION_TYPE_EXPRESSION___UNDEFINED_OR_NULL = FUNCTION_TYPE_EXPR_OR_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5729,6 +5792,24 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int FUNCTION_TYPE_EXPRESSION___IS_DEF_SITE_STRUCTURAL_TYPING = FUNCTION_TYPE_EXPR_OR_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_EXPRESSION___IS_TYPE_OF_OBJECT_LITERAL = FUNCTION_TYPE_EXPR_OR_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_EXPRESSION___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = FUNCTION_TYPE_EXPR_OR_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
@@ -5830,13 +5911,22 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_EXPRESSION___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE = FUNCTION_TYPE_EXPR_OR_REF_OPERATION_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Is Return Value Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTION_TYPE_EXPRESSION___IS_RETURN_VALUE_OPTIONAL = FUNCTION_TYPE_EXPR_OR_REF_OPERATION_COUNT + 2;
+
+	/**
 	 * The number of operations of the '<em>Function Type Expression</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPRESSION_OPERATION_COUNT = FUNCTION_TYPE_EXPR_OR_REF_OPERATION_COUNT + 2;
+	int FUNCTION_TYPE_EXPRESSION_OPERATION_COUNT = FUNCTION_TYPE_EXPR_OR_REF_OPERATION_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.DeferredTypeRefImpl <em>Deferred Type Ref</em>}' class.
@@ -5849,22 +5939,13 @@ public interface TypeRefsPackage extends EPackage {
 	int DEFERRED_TYPE_REF = 22;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFERRED_TYPE_REF__NULL_MODIFIER = TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEFERRED_TYPE_REF__UNDEF_MODIFIER = TYPE_REF__UNDEF_MODIFIER;
+	int DEFERRED_TYPE_REF__OPTIONAL_OLD_SYNTAX = TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The number of structural features of the '<em>Deferred Type Ref</em>' class.
@@ -5993,15 +6074,6 @@ public interface TypeRefsPackage extends EPackage {
 	int DEFERRED_TYPE_REF___GET_TYPE_ARGS = TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEFERRED_TYPE_REF___UNDEFINED_OR_NULL = TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6072,6 +6144,24 @@ public interface TypeRefsPackage extends EPackage {
 	 * @ordered
 	 */
 	int DEFERRED_TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING;
+
+	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFERRED_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL = TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFERRED_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
@@ -6188,26 +6278,15 @@ public interface TypeRefsPackage extends EPackage {
 	EClass getTypeRef();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#getNullModifier <em>Null Modifier</em>}'.
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#isOptional_OLD_SYNTAX <em>Optional OLD SYNTAX</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Null Modifier</em>'.
-	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRef#getNullModifier()
+	 * @return the meta object for the attribute '<em>Optional OLD SYNTAX</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRef#isOptional_OLD_SYNTAX()
 	 * @see #getTypeRef()
 	 * @generated
 	 */
-	EAttribute getTypeRef_NullModifier();
-
-	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#getUndefModifier <em>Undef Modifier</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Undef Modifier</em>'.
-	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRef#getUndefModifier()
-	 * @see #getTypeRef()
-	 * @generated
-	 */
-	EAttribute getTypeRef_UndefModifier();
+	EAttribute getTypeRef_Optional_OLD_SYNTAX();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#getModifiersAsString() <em>Get Modifiers As String</em>}' operation.
@@ -6320,16 +6399,6 @@ public interface TypeRefsPackage extends EPackage {
 	EOperation getTypeRef__GetTypeArgs();
 
 	/**
-	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#undefinedOrNull() <em>Undefined Or Null</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Undefined Or Null</em>' operation.
-	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRef#undefinedOrNull()
-	 * @generated
-	 */
-	EOperation getTypeRef__UndefinedOrNull();
-
-	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#getTypeRefAsString() <em>Get Type Ref As String</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6418,6 +6487,26 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTypeRef__IsDefSiteStructuralTyping();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#isTypeOfObjectLiteral() <em>Is Type Of Object Literal</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Type Of Object Literal</em>' operation.
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRef#isTypeOfObjectLiteral()
+	 * @generated
+	 */
+	EOperation getTypeRef__IsTypeOfObjectLiteral();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#isTypeOfNewExpressionOrFinalNominal() <em>Is Type Of New Expression Or Final Nominal</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRef#isTypeOfNewExpressionOrFinalNominal()
+	 * @generated
+	 */
+	EOperation getTypeRef__IsTypeOfNewExpressionOrFinalNominal();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#getVersion() <em>Get Version</em>}' operation.
@@ -6858,6 +6947,28 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getParameterizedTypeRef_ArrayTypeLiteral();
+
+	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#isTypeOfObjectLiteral <em>Type Of Object Literal</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type Of Object Literal</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#isTypeOfObjectLiteral()
+	 * @see #getParameterizedTypeRef()
+	 * @generated
+	 */
+	EAttribute getParameterizedTypeRef_TypeOfObjectLiteral();
+
+	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#isTypeOfNewExpressionOrFinalNominal <em>Type Of New Expression Or Final Nominal</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type Of New Expression Or Final Nominal</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#isTypeOfNewExpressionOrFinalNominal()
+	 * @see #getParameterizedTypeRef()
+	 * @generated
+	 */
+	EAttribute getParameterizedTypeRef_TypeOfNewExpressionOrFinalNominal();
 
 	/**
 	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#getDefinedTypingStrategy <em>Defined Typing Strategy</em>}'.
@@ -7412,6 +7523,16 @@ public interface TypeRefsPackage extends EPackage {
 	EOperation getFunctionTypeExprOrRef__GetFpars();
 
 	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef#isReturnValueOptional() <em>Is Return Value Optional</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Return Value Optional</em>' operation.
+	 * @see eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef#isReturnValueOptional()
+	 * @generated
+	 */
+	EOperation getFunctionTypeExprOrRef__IsReturnValueOptional();
+
+	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef#getReturnTypeRef() <em>Get Return Type Ref</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7609,6 +7730,17 @@ public interface TypeRefsPackage extends EPackage {
 	EReference getFunctionTypeExpression_Fpars();
 
 	/**
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#isReturnValueOptional_NEW_SYNTAX <em>Return Value Optional NEW SYNTAX</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Return Value Optional NEW SYNTAX</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#isReturnValueOptional_NEW_SYNTAX()
+	 * @see #getFunctionTypeExpression()
+	 * @generated
+	 */
+	EAttribute getFunctionTypeExpression_ReturnValueOptional_NEW_SYNTAX();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#getReturnTypeRef <em>Return Type Ref</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7638,6 +7770,16 @@ public interface TypeRefsPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getFunctionTypeExpression__GetTypeVarUpperBound__TypeVariable();
+
+	/**
+	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#isReturnValueOptional() <em>Is Return Value Optional</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Return Value Optional</em>' operation.
+	 * @see eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#isReturnValueOptional()
+	 * @generated
+	 */
+	EOperation getFunctionTypeExpression__IsReturnValueOptional();
 
 	/**
 	 * Returns the meta object for class '{@link eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef <em>Deferred Type Ref</em>}'.
@@ -7754,20 +7896,12 @@ public interface TypeRefsPackage extends EPackage {
 		EClass TYPE_REF = eINSTANCE.getTypeRef();
 
 		/**
-		 * The meta object literal for the '<em><b>Null Modifier</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Optional OLD SYNTAX</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TYPE_REF__NULL_MODIFIER = eINSTANCE.getTypeRef_NullModifier();
-
-		/**
-		 * The meta object literal for the '<em><b>Undef Modifier</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TYPE_REF__UNDEF_MODIFIER = eINSTANCE.getTypeRef_UndefModifier();
+		EAttribute TYPE_REF__OPTIONAL_OLD_SYNTAX = eINSTANCE.getTypeRef_Optional_OLD_SYNTAX();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Modifiers As String</b></em>' operation.
@@ -7858,14 +7992,6 @@ public interface TypeRefsPackage extends EPackage {
 		EOperation TYPE_REF___GET_TYPE_ARGS = eINSTANCE.getTypeRef__GetTypeArgs();
 
 		/**
-		 * The meta object literal for the '<em><b>Undefined Or Null</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation TYPE_REF___UNDEFINED_OR_NULL = eINSTANCE.getTypeRef__UndefinedOrNull();
-
-		/**
 		 * The meta object literal for the '<em><b>Get Type Ref As String</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7936,6 +8062,22 @@ public interface TypeRefsPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING = eINSTANCE.getTypeRef__IsDefSiteStructuralTyping();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Type Of Object Literal</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL = eINSTANCE.getTypeRef__IsTypeOfObjectLiteral();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Type Of New Expression Or Final Nominal</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = eINSTANCE.getTypeRef__IsTypeOfNewExpressionOrFinalNominal();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Version</b></em>' operation.
@@ -8300,6 +8442,22 @@ public interface TypeRefsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL = eINSTANCE.getParameterizedTypeRef_ArrayTypeLiteral();
+
+		/**
+		 * The meta object literal for the '<em><b>Type Of Object Literal</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETERIZED_TYPE_REF__TYPE_OF_OBJECT_LITERAL = eINSTANCE.getParameterizedTypeRef_TypeOfObjectLiteral();
+
+		/**
+		 * The meta object literal for the '<em><b>Type Of New Expression Or Final Nominal</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETERIZED_TYPE_REF__TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = eINSTANCE.getParameterizedTypeRef_TypeOfNewExpressionOrFinalNominal();
 
 		/**
 		 * The meta object literal for the '<em><b>Defined Typing Strategy</b></em>' attribute feature.
@@ -8750,6 +8908,14 @@ public interface TypeRefsPackage extends EPackage {
 		EOperation FUNCTION_TYPE_EXPR_OR_REF___GET_FPARS = eINSTANCE.getFunctionTypeExprOrRef__GetFpars();
 
 		/**
+		 * The meta object literal for the '<em><b>Is Return Value Optional</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation FUNCTION_TYPE_EXPR_OR_REF___IS_RETURN_VALUE_OPTIONAL = eINSTANCE.getFunctionTypeExprOrRef__IsReturnValueOptional();
+
+		/**
 		 * The meta object literal for the '<em><b>Get Return Type Ref</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8906,6 +9072,14 @@ public interface TypeRefsPackage extends EPackage {
 		EReference FUNCTION_TYPE_EXPRESSION__FPARS = eINSTANCE.getFunctionTypeExpression_Fpars();
 
 		/**
+		 * The meta object literal for the '<em><b>Return Value Optional NEW SYNTAX</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX = eINSTANCE.getFunctionTypeExpression_ReturnValueOptional_NEW_SYNTAX();
+
+		/**
 		 * The meta object literal for the '<em><b>Return Type Ref</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8928,6 +9102,14 @@ public interface TypeRefsPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation FUNCTION_TYPE_EXPRESSION___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE = eINSTANCE.getFunctionTypeExpression__GetTypeVarUpperBound__TypeVariable();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Return Value Optional</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation FUNCTION_TYPE_EXPRESSION___IS_RETURN_VALUE_OPTIONAL = eINSTANCE.getFunctionTypeExpression__IsReturnValueOptional();
 
 		/**
 		 * The meta object literal for the '{@link eu.numberfour.n4js.ts.typeRefs.impl.DeferredTypeRefImpl <em>Deferred Type Ref</em>}' class.

@@ -47,48 +47,48 @@ export external public interface ~DateTimeFormatOptions {
      * The representation of the weekday. 
      * Possible values are DateTimeFormatValue.narrow, DateTimeFormatValue.short, DateTimeFormatValue.long.
      */
-    public weekday: DateTimeFormatValue?;
+    public weekday?: DateTimeFormatValue;
     
     /** 
      * The representation of the era. 
      * Possible values are DateTimeFormatValue.narrow, DateTimeFormatValue.short, DateTimeFormatValue.long.    
      */
-    public era: DateTimeFormatValue?;
+    public era?: DateTimeFormatValue;
     /** 
      * The representation of the year. 
      * Possible values are DateTimeFormatValue.numeric, DateTimeFormatValue.twoDigit.
      */
-    public year: DateTimeFormatValue?;
+    public year?: DateTimeFormatValue;
     /**
      * The representation of the month. 
      * Possible values are DateTimeFormatValue.numeric, DateTimeFormatValue.twoDigit, DateTimeFormatValue.narrow, DateTimeFormatValue.short, DateTimeFormatValue.long.
      */
-    public month: DateTimeFormatValue?;
+    public month?: DateTimeFormatValue;
     /**
      * The representation of the day. 
      * Possible values are DateTimeFormatValue.numeric, DateTimeFormatValue.twoDigit.
      */
-    public day: DateTimeFormatValue?;
+    public day?: DateTimeFormatValue;
     /**
      * The representation of the hour. 
      * Possible values are DateTimeFormatValue.numeric, DateTimeFormatValue.twoDigit.
      */    
-    public hour: DateTimeFormatValue?;
+    public hour?: DateTimeFormatValue;
     /**
      * The representation of the minute. 
      * Possible values are DateTimeFormatValue.numeric, DateTimeFormatValue.twoDigit.
      */
-    public minute: DateTimeFormatValue?;
+    public minute?: DateTimeFormatValue;
     /**
      * The representation of the second. 
      * Possible values are DateTimeFormatValue.numeric, DateTimeFormatValue.twoDigit.
      */    
-    public second: DateTimeFormatValue?;
+    public second?: DateTimeFormatValue;
     /**
      * The representation of the time zone name. 
      * Possible values are DateTimeFormatValue.short, DateTimeFormatValue.long.
      */
-    public timeZoneName: DateTimeFormatValue?;
+    public timeZoneName?: DateTimeFormatValue;
 }
 
 /* -*- mode: typescript;-*- */

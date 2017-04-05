@@ -16,15 +16,15 @@ import {RequestCredentials} from "fetch/RequestCredentials"
 import {RequestCache} from "fetch/RequestCache"
 
 export external public class ~RequestInit {
-    public method: Method?;
-    public headers: union{Headers, Array<Array<string>>, Object}?;
+    public method?: Method;
+    public headers?: union{Headers, Array<Array<string>>, Object};
 
 //    public union{Blob, /*BufferSource, */FormData, URLSearchParams, string}? body;
-    public body: string?;
+    public body?: string;
 
-    public mode: RequestMode?;
-    public credentials: RequestCredentials?;
-    public cache: RequestCache?;
+    public mode?: RequestMode;
+    public credentials?: RequestCredentials;
+    public cache?: RequestCache;
 }
 
 /* -*- mode: typescript;-*- */

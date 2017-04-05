@@ -41,12 +41,12 @@ export public class ~XUnitReportSpec {
     /**
      * jUnit/xUnit report name.
      */
-    public xunitReportName: string?;
+    public xunitReportName?: string;
     
     /**
      * jUnit/xUnit report package name.
      */
-    public xunitReportPackage: string?;
+    public xunitReportPackage?: string;
 }
 
 export public class XUnitReporter implements ITestReporter {

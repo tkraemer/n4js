@@ -250,6 +250,10 @@ public interface TMember extends IdentifiableElement, TAnnotableElement, SyntaxR
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Tells whether the entire member is optional. Applies only to data fields and field accessors (not methods).
+	 * Don't confuse this with optional return types of methods, see {@link TFunction#isReturnValueOptional()}.
+	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return false;'"
 	 * @generated

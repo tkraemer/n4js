@@ -53,6 +53,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getAstElement <em>Ast Element</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#isExternal <em>External</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getFpars <em>Fpars</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#isReturnValueOptional_NEW_SYNTAX <em>Return Value Optional NEW SYNTAX</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getReturnTypeRef <em>Return Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getTypeVars <em>Type Vars</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getDeclaredThisType <em>Declared This Type</em>}</li>
@@ -103,6 +104,26 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 	 * @ordered
 	 */
 	protected EList<TFormalParameter> fpars;
+
+	/**
+	 * The default value of the '{@link #isReturnValueOptional_NEW_SYNTAX() <em>Return Value Optional NEW SYNTAX</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isReturnValueOptional_NEW_SYNTAX()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isReturnValueOptional_NEW_SYNTAX() <em>Return Value Optional NEW SYNTAX</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isReturnValueOptional_NEW_SYNTAX()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean returnValueOptional_NEW_SYNTAX = RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getReturnTypeRef() <em>Return Type Ref</em>}' containment reference.
@@ -289,6 +310,27 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isReturnValueOptional_NEW_SYNTAX() {
+		return returnValueOptional_NEW_SYNTAX;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setReturnValueOptional_NEW_SYNTAX(boolean newReturnValueOptional_NEW_SYNTAX) {
+		boolean oldReturnValueOptional_NEW_SYNTAX = returnValueOptional_NEW_SYNTAX;
+		returnValueOptional_NEW_SYNTAX = newReturnValueOptional_NEW_SYNTAX;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFUNCTION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX, oldReturnValueOptional_NEW_SYNTAX, returnValueOptional_NEW_SYNTAX));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TypeRef getReturnTypeRef() {
 		return returnTypeRef;
 	}
@@ -450,6 +492,15 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isReturnValueOptional() {
+		return (this.isReturnValueOptional_NEW_SYNTAX() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isOptional_OLD_SYNTAX()));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isCallableConstructor() {
 		final EObject parent = this.eContainer();
 		boolean _xifexpression = false;
@@ -535,6 +586,10 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 			String _typeRefAsString = _returnTypeRef_1.getTypeRefAsString();
 			_append_5.append(_typeRefAsString);
 		}
+		boolean _isReturnValueOptional = this.isReturnValueOptional();
+		if (_isReturnValueOptional) {
+			strb.append("?");
+		}
 		return strb.toString();
 	}
 
@@ -582,6 +637,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 				return isExternal();
 			case TypesPackage.TFUNCTION__FPARS:
 				return getFpars();
+			case TypesPackage.TFUNCTION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
+				return isReturnValueOptional_NEW_SYNTAX();
 			case TypesPackage.TFUNCTION__RETURN_TYPE_REF:
 				return getReturnTypeRef();
 			case TypesPackage.TFUNCTION__TYPE_VARS:
@@ -616,6 +673,9 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 			case TypesPackage.TFUNCTION__FPARS:
 				getFpars().clear();
 				getFpars().addAll((Collection<? extends TFormalParameter>)newValue);
+				return;
+			case TypesPackage.TFUNCTION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
+				setReturnValueOptional_NEW_SYNTAX((Boolean)newValue);
 				return;
 			case TypesPackage.TFUNCTION__RETURN_TYPE_REF:
 				setReturnTypeRef((TypeRef)newValue);
@@ -657,6 +717,9 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 			case TypesPackage.TFUNCTION__FPARS:
 				getFpars().clear();
 				return;
+			case TypesPackage.TFUNCTION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
+				setReturnValueOptional_NEW_SYNTAX(RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT);
+				return;
 			case TypesPackage.TFUNCTION__RETURN_TYPE_REF:
 				setReturnTypeRef((TypeRef)null);
 				return;
@@ -693,6 +756,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 				return external != EXTERNAL_EDEFAULT;
 			case TypesPackage.TFUNCTION__FPARS:
 				return fpars != null && !fpars.isEmpty();
+			case TypesPackage.TFUNCTION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
+				return returnValueOptional_NEW_SYNTAX != RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT;
 			case TypesPackage.TFUNCTION__RETURN_TYPE_REF:
 				return returnTypeRef != null;
 			case TypesPackage.TFUNCTION__TYPE_VARS:
@@ -770,6 +835,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
+			case TypesPackage.TFUNCTION___IS_RETURN_VALUE_OPTIONAL:
+				return isReturnValueOptional();
 			case TypesPackage.TFUNCTION___IS_CALLABLE_CONSTRUCTOR:
 				return isCallableConstructor();
 			case TypesPackage.TFUNCTION___GET_FPAR_FOR_ARG_IDX__INT:
@@ -794,6 +861,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (external: ");
 		result.append(external);
+		result.append(", returnValueOptional_NEW_SYNTAX: ");
+		result.append(returnValueOptional_NEW_SYNTAX);
 		result.append(", declaredAsync: ");
 		result.append(declaredAsync);
 		result.append(", declaredGenerator: ");

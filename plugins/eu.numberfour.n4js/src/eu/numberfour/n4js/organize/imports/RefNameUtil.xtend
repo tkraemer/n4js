@@ -36,7 +36,7 @@ class RefNameUtil {
 			var prefixLen = 0
 			var suffixLen = 0
 			val nodeText = astNode.leafNodes.filter[!hidden].map[text].join
-			
+
 			if(!ref.definedTypingStrategy.equals(TypingStrategy.NOMINAL)){
 				val typingLiteral = ref.definedTypingStrategy.literal
 				if(nodeText.startsWith(typingLiteral)){
@@ -49,11 +49,12 @@ class RefNameUtil {
 					prefixLen = ref.definedTypingStrategy.literal.length
 				}
 			}
-			
-			if(nodeText.endsWith(ref.modifiersAsString))
-				suffixLen = ref.modifiersAsString.length
-			
-			
+
+			if(ref.isOptional_OLD_SYNTAX && nodeText.endsWith('?')) {
+				suffixLen = 1;
+			}
+
+
 			return nodeText.substring(prefixLen, nodeText.length - suffixLen)
 		} else {
 			null

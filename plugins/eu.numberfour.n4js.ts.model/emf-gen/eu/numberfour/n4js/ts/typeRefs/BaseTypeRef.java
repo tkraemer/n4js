@@ -55,9 +55,7 @@ public interface BaseTypeRef extends StaticBaseTypeRef {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * *
-	 * Returns dynamic, null, undef modifier strings similar to N4JS syntax, not all values are represented.
-	 * This method is called by subclasses in overridden method.
+	 * Override for {@link TypeRef#getModifiersAsString()}.
 	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='<%java.lang.String%> _xifexpression = null;\nboolean _isDynamic = this.isDynamic();\nif (_isDynamic)\n{\n\t_xifexpression = \"+\";\n}\nelse\n{\n\t_xifexpression = \"\";\n}\n<%java.lang.String%> _modifiersAsString = super.getModifiersAsString();\nreturn (_xifexpression + _modifiersAsString);'"

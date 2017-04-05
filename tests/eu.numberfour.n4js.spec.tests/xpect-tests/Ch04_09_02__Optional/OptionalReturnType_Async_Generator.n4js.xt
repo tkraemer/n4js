@@ -1,0 +1,37 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.tests.N4JSSpecTest END_SETUP */
+
+
+function * gen0(): void {
+	// XPECT noerrors -->
+	return;
+}
+function * gen1(): Generator<string,undefined,Object> {
+	// XPECT noerrors -->
+	return;
+}
+function * gen2(): Generator<string,number,Object>? {
+	// XPECT noerrors -->
+	return;
+}
+function * gen3(): number? {
+	// XPECT noerrors -->
+	return;
+}
+
+
+async function asy0(): void {
+	// XPECT noerrors -->
+	return;
+}
+async function asy1(): Promise<undefined,?> {
+	// XPECT noerrors -->
+	return;
+}
+async function asy2(): Promise<number,?>? {
+	// XPECT noerrors -->
+	return;
+}
+async function asy3(): number? {
+	// XPECT noerrors -->
+	return;
+}

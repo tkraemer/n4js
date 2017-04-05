@@ -85,28 +85,8 @@ ruleType:
 // Rule TypeRef
 ruleTypeRef:
 	ruleTypeRefWithoutModifiers
-	ruleUndefModifierToken
+	'?'
 	?
-	ruleNullModifierToken
-	?
-;
-
-// Rule NullModifierToken
-ruleNullModifierToken:
-	(
-		'notnull'
-		    |
-		'nullable'
-	)
-;
-
-// Rule UndefModifierToken
-ruleUndefModifierToken:
-	(
-		'?'
-		    |
-		'!'
-	)
 ;
 
 // Rule PrimitiveType
@@ -558,6 +538,8 @@ ruleTField:
 		    |
 		ruleTypesComputedPropertyName
 	)
+	'?'
+	?
 	':'
 	ruleTypeRef
 	';'?
@@ -592,6 +574,8 @@ ruleTGetter:
 			ruleTypesComputedPropertyName
 		)
 	)
+	'?'
+	?
 	'('
 	')'
 	':'
@@ -627,6 +611,8 @@ ruleTSetter:
 			ruleTypesComputedPropertyName
 		)
 	)
+	'?'
+	?
 	'('
 	ruleTFormalParameter
 	')'
@@ -724,12 +710,12 @@ ruleTypeRefWithModifiers:
 	(
 		ruleTypeRefWithoutModifiers
 		(
-			(ruleUndefModifierToken
+			('?'
 			)=>
-			ruleUndefModifierToken
+			'?'
 		)?
 		    |
-		ruleUndefModifierToken
+		'?'
 	)
 ;
 
@@ -1064,6 +1050,8 @@ ruleTStructMethod:
 // Rule TStructField
 ruleTStructField:
 	ruleIdentifierName
+	'?'
+	?
 	(
 		':'
 		ruleTypeRef
@@ -1079,6 +1067,8 @@ ruleTStructGetter:
 		'get'
 		ruleIdentifierName
 	)
+	'?'
+	?
 	'('
 	')'
 	(
@@ -1096,6 +1086,8 @@ ruleTStructSetter:
 		'set'
 		ruleIdentifierName
 	)
+	'?'
+	?
 	'('
 	ruleTAnonymousFormalParameter
 	')'

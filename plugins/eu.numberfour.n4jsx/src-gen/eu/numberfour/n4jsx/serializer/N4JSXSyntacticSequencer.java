@@ -23,7 +23,7 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected N4JSXGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_0_2_q;
-	protected AbstractElementAlias match_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_1_5_q;
+	protected AbstractElementAlias match_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_1_6_q;
 	protected AbstractElementAlias match_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_2_1_q;
 	protected AbstractElementAlias match_AnnotatedPropertyAssignment_SemicolonKeyword_1_3_1_q;
 	protected AbstractElementAlias match_AnnotationNoAtSign___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q;
@@ -41,7 +41,7 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_N4CallableConstructorDeclaration_SemicolonKeyword_1_q;
 	protected AbstractElementAlias match_N4GetterDeclaration_SemicolonKeyword_2_q;
 	protected AbstractElementAlias match_N4MethodDeclaration_SemicolonKeyword_1_q;
-	protected AbstractElementAlias match_N4SetterDeclaration_SemicolonKeyword_5_q;
+	protected AbstractElementAlias match_N4SetterDeclaration_SemicolonKeyword_6_q;
 	protected AbstractElementAlias match_NoLineTerminator_NO_LINE_TERMINATORTerminalRuleCall_q;
 	protected AbstractElementAlias match_ObjectLiteral_CommaKeyword_2_2_q;
 	protected AbstractElementAlias match_PrimaryTypeExpression_LeftParenthesisKeyword_3_0_a;
@@ -53,7 +53,7 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (N4JSXGrammarAccess) access;
 		match_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_0_2_q = new TokenAlias(false, true, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getSemicolonKeyword_1_0_2());
-		match_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_1_5_q = new TokenAlias(false, true, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getSemicolonKeyword_1_1_5());
+		match_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_1_6_q = new TokenAlias(false, true, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getSemicolonKeyword_1_1_6());
 		match_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_2_1_q = new TokenAlias(false, true, grammarAccess.getAnnotatedN4MemberDeclarationAccess().getSemicolonKeyword_1_2_1());
 		match_AnnotatedPropertyAssignment_SemicolonKeyword_1_3_1_q = new TokenAlias(false, true, grammarAccess.getAnnotatedPropertyAssignmentAccess().getSemicolonKeyword_1_3_1());
 		match_AnnotationNoAtSign___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAnnotationNoAtSignAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getAnnotationNoAtSignAccess().getRightParenthesisKeyword_1_2()));
@@ -71,7 +71,7 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_N4CallableConstructorDeclaration_SemicolonKeyword_1_q = new TokenAlias(false, true, grammarAccess.getN4CallableConstructorDeclarationAccess().getSemicolonKeyword_1());
 		match_N4GetterDeclaration_SemicolonKeyword_2_q = new TokenAlias(false, true, grammarAccess.getN4GetterDeclarationAccess().getSemicolonKeyword_2());
 		match_N4MethodDeclaration_SemicolonKeyword_1_q = new TokenAlias(false, true, grammarAccess.getN4MethodDeclarationAccess().getSemicolonKeyword_1());
-		match_N4SetterDeclaration_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getN4SetterDeclarationAccess().getSemicolonKeyword_5());
+		match_N4SetterDeclaration_SemicolonKeyword_6_q = new TokenAlias(false, true, grammarAccess.getN4SetterDeclarationAccess().getSemicolonKeyword_6());
 		match_NoLineTerminator_NO_LINE_TERMINATORTerminalRuleCall_q = new TokenAlias(false, true, grammarAccess.getNoLineTerminatorAccess().getNO_LINE_TERMINATORTerminalRuleCall());
 		match_ObjectLiteral_CommaKeyword_2_2_q = new TokenAlias(false, true, grammarAccess.getObjectLiteralAccess().getCommaKeyword_2_2());
 		match_PrimaryTypeExpression_LeftParenthesisKeyword_3_0_a = new TokenAlias(true, true, grammarAccess.getPrimaryTypeExpressionAccess().getLeftParenthesisKeyword_3_0());
@@ -129,8 +129,8 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
 			if (match_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_0_2_q.equals(syntax))
 				emit_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_0_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_1_5_q.equals(syntax))
-				emit_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_1_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_1_6_q.equals(syntax))
+				emit_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_1_6_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_2_1_q.equals(syntax))
 				emit_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_AnnotatedPropertyAssignment_SemicolonKeyword_1_3_1_q.equals(syntax))
@@ -165,8 +165,8 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_N4GetterDeclaration_SemicolonKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_N4MethodDeclaration_SemicolonKeyword_1_q.equals(syntax))
 				emit_N4MethodDeclaration_SemicolonKeyword_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_N4SetterDeclaration_SemicolonKeyword_5_q.equals(syntax))
-				emit_N4SetterDeclaration_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_N4SetterDeclaration_SemicolonKeyword_6_q.equals(syntax))
+				emit_N4SetterDeclaration_SemicolonKeyword_6_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_NoLineTerminator_NO_LINE_TERMINATORTerminalRuleCall_q.equals(syntax))
 				emit_NoLineTerminator_NO_LINE_TERMINATORTerminalRuleCall_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ObjectLiteral_CommaKeyword_2_2_q.equals(syntax))
@@ -190,6 +190,7 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * This ambiguous syntax occurs at:
 	 *     body=Block (ambiguity) (rule end)
 	 *     declaredName=LiteralOrComputedPropertyName '(' ')' (ambiguity) (rule end)
+	 *     declaredOptional?='?' '(' ')' (ambiguity) (rule end)
 	 *     declaredTypeRef=TypeRef (ambiguity) (rule end)
 	 */
 	protected void emit_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_0_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -204,7 +205,7 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     body=Block (ambiguity) (rule end)
 	 *     fpar=FormalParameter ')' (ambiguity) (rule end)
 	 */
-	protected void emit_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_1_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AnnotatedN4MemberDeclaration_SemicolonKeyword_1_1_6_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -402,6 +403,7 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * This ambiguous syntax occurs at:
 	 *     body=Block (ambiguity) (rule end)
 	 *     declaredName=LiteralOrComputedPropertyName '(' ')' (ambiguity) (rule end)
+	 *     declaredOptional?='?' '(' ')' (ambiguity) (rule end)
 	 *     declaredTypeRef=TypeRef (ambiguity) (rule end)
 	 */
 	protected void emit_N4GetterDeclaration_SemicolonKeyword_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -430,7 +432,7 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     body=Block (ambiguity) (rule end)
 	 *     fpar=FormalParameter ')' (ambiguity) (rule end)
 	 */
-	protected void emit_N4SetterDeclaration_SemicolonKeyword_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_N4SetterDeclaration_SemicolonKeyword_6_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -477,20 +479,20 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) (ambiguity) 'intersection' '{' typeRefs+=TypeRefWithoutModifiers
 	 *     (rule start) (ambiguity) 'this' (rule start)
 	 *     (rule start) (ambiguity) 'this' dynamic?='+'
-	 *     (rule start) (ambiguity) 'this' undefModifier=UndefModifierToken
+	 *     (rule start) (ambiguity) 'this' optional_OLD_SYNTAX?='?'
 	 *     (rule start) (ambiguity) 'type' '{' typeArg=TypeArgInTypeTypeRef
 	 *     (rule start) (ambiguity) 'union' '{' typeRefs+=TypeRefWithoutModifiers
 	 *     (rule start) (ambiguity) '{' '@' 'This' '(' declaredThisType=TypeRefFunctionTypeExpression
 	 *     (rule start) (ambiguity) '{' 'function' '(' ')' ':' returnTypeRef=TypeRef
 	 *     (rule start) (ambiguity) '{' 'function' '(' ')' '}' (rule start)
-	 *     (rule start) (ambiguity) '{' 'function' '(' ')' '}' undefModifier=UndefModifierToken
+	 *     (rule start) (ambiguity) '{' 'function' '(' ')' '}' optional_OLD_SYNTAX?='?'
 	 *     (rule start) (ambiguity) '{' 'function' '<' ownedTypeVars+=TypeVariable
 	 *     (rule start) (ambiguity) (('{' 'function' '(') | '(') fpars+=TAnonymousFormalParameter
 	 *     (rule start) (ambiguity) arrayTypeLiteral?='['
 	 *     (rule start) (ambiguity) constructorRef?='constructor'
 	 *     (rule start) (ambiguity) declaredType=[Type|TypeReferenceName]
 	 *     (rule start) (ambiguity) definedTypingStrategy=TypingStrategyUseSiteOperator
-	 *     (rule start) (ambiguity) undefModifier=UndefModifierToken
+	 *     (rule start) (ambiguity) optional_OLD_SYNTAX?='?'
 	 *     (rule start) (ambiguity) {IntersectionTypeExpression.typeRefs+=}
 	 *     (rule start) (ambiguity) {UnionTypeExpression.typeRefs+=}
 	 */
@@ -530,7 +532,7 @@ public class N4JSXSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * This ambiguous syntax occurs at:
 	 *     astStructuralMembers+=TStructMember (ambiguity) '}' (rule end)
 	 *     astStructuralMembers+=TStructMember (ambiguity) '}' dynamic?='+'
-	 *     astStructuralMembers+=TStructMember (ambiguity) '}' undefModifier=UndefModifierToken
+	 *     astStructuralMembers+=TStructMember (ambiguity) '}' optional_OLD_SYNTAX?='?'
 	 *     astStructuralMembers+=TStructMember (ambiguity) astStructuralMembers+=TStructMember
 	 */
 	protected void emit_TStructMemberList___CommaKeyword_1_1_1_or_SemicolonKeyword_1_1_0__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

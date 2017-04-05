@@ -270,52 +270,6 @@ class TAnnotableElement {
 	contains TAnnotation[] annotations
 }
 
-enum NullModifier{
-	/**
-	 * Not available: no null modifier available, actual value could be null or not, but no warnings are to be issued.
-	 * This is the default value.
-	 */
-	na=0
-	,
-	/**
-	 * Actual value could be null.
-	 */
-	nullable=1
-	,
-	/**
-	 * Actual value must no be null.
-	 */
-	notnull=2
-	,
-	/**
-	 * Actual value must is null. This value could only be inferred and never declared explicitly.
-	 */
-	isnull=3
-}
-
-enum UndefModifier {
-	/**
-	 * Not available: no undef modifier available, actual value could be undefined or not, but no warnings are to be issued.
-	 * This is the default value.
-	 */
-	na=0
-	,
-	/**
-	 * Actual value must be undefined. This is the default value.
-	 */
-	mandatory=1
-	,
-	/**
-	 * Actual value could be undefined.
-	 */
-	optional=2
-	,
-	/**
-	 * Actual value is undefined. This value could only be inferred and never declared explicitly.
-	 */
-	isundefined=3
-}
-
 /*
  * Typing strategy value for definition and use site.
  * By default, nominal typing is used. This can be changed to
@@ -384,6 +338,13 @@ class TFunction extends DeclaredTypeWithAccessModifier, SyntaxRelatedTElement {
 	 */
 	contains TFormalParameter[] fpars
 	/*
+	 * Tells if the return value is optional.
+	 */
+	boolean returnValueOptional_NEW_SYNTAX
+	op boolean isReturnValueOptional() {
+		return returnValueOptional_NEW_SYNTAX || (returnTypeRef!==null && returnTypeRef.optional_OLD_SYNTAX);
+	}
+	/*
 	 * Return type
 	 */
 	contains TypeRef returnTypeRef
@@ -403,7 +364,6 @@ class TFunction extends DeclaredTypeWithAccessModifier, SyntaxRelatedTElement {
 	 * optional generator modifier
 	 */
 	boolean declaredGenerator
-
 	/**
 	 * Whether this function is intentionally to be used as a constructor
 	 */
@@ -440,6 +400,7 @@ class TFunction extends DeclaredTypeWithAccessModifier, SyntaxRelatedTElement {
 		if (declaredGenerator) strb.append("* ");
 		strb.append(name).append("(").append(fpars.map[formalParameterAsString].join(", ")).append(")");
 		if (returnTypeRef!==null) strb.append(": ").append(returnTypeRef.typeRefAsString);
+		if (returnValueOptional) strb.append('?');
 		return strb.toString();
 	}
 
@@ -1101,6 +1062,10 @@ abstract class TMember extends IdentifiableElement, TAnnotableElement, SyntaxRel
 	op boolean isConstructor() {
 		false
 	}
+	/*
+	 * Tells whether the entire member is optional. Applies only to data fields and field accessors (not methods).
+	 * Don't confuse this with optional return types of methods, see {@link TFunction#isReturnValueOptional()}.
+	 */
 	op boolean isOptional() {
 		false
 	}
@@ -1256,6 +1221,7 @@ class TMethod extends TFunction, TMemberWithAccessModifier {
 		if (declaredAsync) strb.append("async ");
 		strb.append(name).append("(").append(fpars.map[formalParameterAsString].join(", ")).append(")");
 		if (returnTypeRef!==null) strb.append(": ").append(returnTypeRef.typeRefAsString);
+		if (returnValueOptional) strb.append('?');
 		return strb.toString();
 	}
 
@@ -1380,10 +1346,10 @@ class TAnonymousFormalParameter extends TFormalParameter {
  */
 class TField extends TMemberWithAccessModifier, TTypedElement, TConstableElement {
 	boolean hasExpression
+	boolean optional_NEW_SYNTAX
 
-	/* Convenience method, returns true if typeRef undef modifier is optional. If type ref is not set, false is returned. */
 	op boolean isOptional() {
-		typeRef !== null && typeRef.undefModifier === UndefModifier.OPTIONAL
+		return optional_NEW_SYNTAX || (typeRef!==null && typeRef.optional_OLD_SYNTAX);
 	}
 	op boolean isStatic() {
 		return declaredStatic || const;
@@ -1405,6 +1371,7 @@ class TField extends TMemberWithAccessModifier, TTypedElement, TConstableElement
 	op String getMemberAsString() {
 		val StringBuilder strb = new StringBuilder();
 		strb.append(name);
+		if (optional) strb.append("?");
 		if (typeRef!==null) strb.append(": ").append(typeRef.typeRefAsString);
 		return strb.toString();
 	}
@@ -1424,11 +1391,14 @@ class TStructField extends TField, TStructMember {
  * Base class for getter or setter, either of an ObjectLiteral or a Class
  */
 abstract class FieldAccessor extends TMemberWithAccessModifier {
+	boolean optional_NEW_SYNTAX
 	boolean declaredAbstract
 	contains TypeRef declaredThisType
 
-	op TypeRef getDeclaredTypeRef() {
-		return null;
+	op TypeRef getDeclaredTypeRef()
+
+	op boolean isOptional() {
+		return optional_NEW_SYNTAX || (declaredTypeRef!==null && declaredTypeRef.optional_OLD_SYNTAX);
 	}
 	/**
 	 * Returns true if the method is either declared abstract or it is implicitly abstract, i.e. it is declared in a role and has no body.
@@ -1443,11 +1413,11 @@ abstract class FieldAccessor extends TMemberWithAccessModifier {
  */
 class TGetter extends FieldAccessor, TMemberWithAccessModifier {
 	contains TypeRef declaredTypeRef
+
 	/** Always returns GETTER */
 	op MemberType getMemberType() {
 		return MemberType.GETTER
 	}
-
 
 	/**
 	 * Returns string representation of getter according to syntax definition, including
@@ -1456,6 +1426,7 @@ class TGetter extends FieldAccessor, TMemberWithAccessModifier {
 	op String getMemberAsString() {
 		val StringBuilder strb = new StringBuilder("get ");
 		strb.append(name);
+		if (optional) strb.append("?");
 		strb.append("()");
 		if (declaredTypeRef!==null) strb.append(": ").append(declaredTypeRef.typeRefAsString);
 		return strb.toString();
@@ -1495,7 +1466,7 @@ class TSetter extends FieldAccessor, TMemberWithAccessModifier {
 	 * Overrides TMember's method.
 	 */
 	op String getMemberAsString() {
-		return "set " + name + "(" + fpar?.formalParameterAsString + ")";
+		return "set " + name + (if (optional) "?" else "") + "(" + fpar?.formalParameterAsString + ")";
 	}
 //	op String getMemberAsHTML() {
 //		return "<u>set</u> <b>" + UtilN4.sanitizeForHTML(name) + "</b>(" + fpar?.formalParameterAsHTML + ")";
@@ -1569,6 +1540,8 @@ abstract class TConstableElement {
  */
 class TVariable extends TExportableElement, TConstableElement, SyntaxRelatedTElement, TAnnotableElement, AccessibleTypeElement, TTypedElement {
 	boolean external
+	boolean objectLiteral
+	boolean newExpression
 
 	/**
 	 * Returns string representation of variable according to syntax definition.

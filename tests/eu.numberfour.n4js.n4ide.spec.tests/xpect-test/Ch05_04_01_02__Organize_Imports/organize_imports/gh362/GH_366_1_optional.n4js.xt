@@ -15,13 +15,13 @@
 + import {A} from "
 | [class|imports/ImportData";]
 | [|class] C{
-  		a: A?;
+  		a?: A;
   }
 --- */
 
 
 class C{
 	// XPECT errors --> "Couldn't resolve reference to Type 'A'." at "A"
-	a: A?;
+	a?: A;
 }
 

@@ -660,7 +660,7 @@ import it.xsemantics.runtime.RuleEnvironment;
 				// commencing with type inference here produces better error messages.)
 				continue;
 			}
-			final TypeConstraint constraint = stc.reduceMembers(l, r, variance, infoFaked);
+			final TypeConstraint constraint = stc.reduceMembers(left, l, r, variance, infoFaked);
 			if (containsReopenedExistentialType(G2, constraint)) { // note: using G2 here, not G!
 				// by completely ignoring all constraints that contain a re-opened ExistentialTypeRef we might lose some
 				// information; but otherwise we would have to deal with this all throughout InferenceContext,

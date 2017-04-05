@@ -52,6 +52,8 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefImpl#getDeclaredType <em>Declared Type</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefImpl#getTypeArgs <em>Type Args</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefImpl#isArrayTypeLiteral <em>Array Type Literal</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefImpl#isTypeOfObjectLiteral <em>Type Of Object Literal</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefImpl#isTypeOfNewExpressionOrFinalNominal <em>Type Of New Expression Or Final Nominal</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.ParameterizedTypeRefImpl#getDefinedTypingStrategy <em>Defined Typing Strategy</em>}</li>
  * </ul>
  *
@@ -97,6 +99,46 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 	 * @ordered
 	 */
 	protected boolean arrayTypeLiteral = ARRAY_TYPE_LITERAL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isTypeOfObjectLiteral() <em>Type Of Object Literal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isTypeOfObjectLiteral()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean TYPE_OF_OBJECT_LITERAL_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isTypeOfObjectLiteral() <em>Type Of Object Literal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isTypeOfObjectLiteral()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean typeOfObjectLiteral = TYPE_OF_OBJECT_LITERAL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isTypeOfNewExpressionOrFinalNominal() <em>Type Of New Expression Or Final Nominal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isTypeOfNewExpressionOrFinalNominal()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isTypeOfNewExpressionOrFinalNominal() <em>Type Of New Expression Or Final Nominal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isTypeOfNewExpressionOrFinalNominal()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean typeOfNewExpressionOrFinalNominal = TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getDefinedTypingStrategy() <em>Defined Typing Strategy</em>}' attribute.
@@ -206,6 +248,48 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 		arrayTypeLiteral = newArrayTypeLiteral;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL, oldArrayTypeLiteral, arrayTypeLiteral));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isTypeOfObjectLiteral() {
+		return typeOfObjectLiteral;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTypeOfObjectLiteral(boolean newTypeOfObjectLiteral) {
+		boolean oldTypeOfObjectLiteral = typeOfObjectLiteral;
+		typeOfObjectLiteral = newTypeOfObjectLiteral;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_OF_OBJECT_LITERAL, oldTypeOfObjectLiteral, typeOfObjectLiteral));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isTypeOfNewExpressionOrFinalNominal() {
+		return typeOfNewExpressionOrFinalNominal;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTypeOfNewExpressionOrFinalNominal(boolean newTypeOfNewExpressionOrFinalNominal) {
+		boolean oldTypeOfNewExpressionOrFinalNominal = typeOfNewExpressionOrFinalNominal;
+		typeOfNewExpressionOrFinalNominal = newTypeOfNewExpressionOrFinalNominal;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL, oldTypeOfNewExpressionOrFinalNominal, typeOfNewExpressionOrFinalNominal));
 	}
 
 	/**
@@ -406,6 +490,10 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 				return getTypeArgs();
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL:
 				return isArrayTypeLiteral();
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_OF_OBJECT_LITERAL:
+				return isTypeOfObjectLiteral();
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL:
+				return isTypeOfNewExpressionOrFinalNominal();
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY:
 				return getDefinedTypingStrategy();
 		}
@@ -431,6 +519,12 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL:
 				setArrayTypeLiteral((Boolean)newValue);
 				return;
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_OF_OBJECT_LITERAL:
+				setTypeOfObjectLiteral((Boolean)newValue);
+				return;
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL:
+				setTypeOfNewExpressionOrFinalNominal((Boolean)newValue);
+				return;
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY:
 				setDefinedTypingStrategy((TypingStrategy)newValue);
 				return;
@@ -455,6 +549,12 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL:
 				setArrayTypeLiteral(ARRAY_TYPE_LITERAL_EDEFAULT);
 				return;
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_OF_OBJECT_LITERAL:
+				setTypeOfObjectLiteral(TYPE_OF_OBJECT_LITERAL_EDEFAULT);
+				return;
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL:
+				setTypeOfNewExpressionOrFinalNominal(TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL_EDEFAULT);
+				return;
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY:
 				setDefinedTypingStrategy(DEFINED_TYPING_STRATEGY_EDEFAULT);
 				return;
@@ -476,6 +576,10 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 				return typeArgs != null && !typeArgs.isEmpty();
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL:
 				return arrayTypeLiteral != ARRAY_TYPE_LITERAL_EDEFAULT;
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_OF_OBJECT_LITERAL:
+				return typeOfObjectLiteral != TYPE_OF_OBJECT_LITERAL_EDEFAULT;
+			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL:
+				return typeOfNewExpressionOrFinalNominal != TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL_EDEFAULT;
 			case TypeRefsPackage.PARAMETERIZED_TYPE_REF__DEFINED_TYPING_STRATEGY:
 				return definedTypingStrategy != DEFINED_TYPING_STRATEGY_EDEFAULT;
 		}
@@ -554,6 +658,10 @@ public class ParameterizedTypeRefImpl extends BaseTypeRefImpl implements Paramet
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (arrayTypeLiteral: ");
 		result.append(arrayTypeLiteral);
+		result.append(", typeOfObjectLiteral: ");
+		result.append(typeOfObjectLiteral);
+		result.append(", typeOfNewExpressionOrFinalNominal: ");
+		result.append(typeOfNewExpressionOrFinalNominal);
 		result.append(", definedTypingStrategy: ");
 		result.append(definedTypingStrategy);
 		result.append(')');

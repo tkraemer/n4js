@@ -35,6 +35,7 @@ import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.VariableStatement
 import eu.numberfour.n4js.projectModel.ProjectUtils
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.ContainerType
@@ -47,7 +48,6 @@ import eu.numberfour.n4js.ts.types.TMethod
 import eu.numberfour.n4js.ts.types.TStructField
 import eu.numberfour.n4js.ts.types.TypeAccessModifier
 import eu.numberfour.n4js.ts.types.TypingStrategy
-import eu.numberfour.n4js.ts.types.UndefModifier
 import eu.numberfour.n4js.ts.utils.TypeUtils
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.utils.ContainerTypesHelper
@@ -62,6 +62,7 @@ import org.eclipse.xtext.validation.EValidatorRegistrar
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
+import eu.numberfour.n4js.ts.types.TFormalParameter
 
 /**
  */
@@ -150,18 +151,34 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Check
 	def checkTypeRefOptionalFlag(TypeRef typeRef) {
-		if (typeRef.undefModifier == UndefModifier.OPTIONAL) {
+		if (typeRef.isOptional_OLD_SYNTAX) {
 			val parent = typeRef.eContainer;
 
-			val isLegalUseOfOptional = isFormalParameterButNotInASetter(parent) ||
-				isReturnTypeButNotOfAGetter(typeRef, parent) || parent instanceof N4FieldDeclaration ||
-				parent instanceof TAnonymousFormalParameter || parent instanceof TStructField;
+			val isLegalUseOfOptional = isReturnTypeButNotOfAGetter(typeRef, parent);
+			val isDeprecatedUseOfOptional = isFormalParameterButNotInASetter(parent) ||
+				parent instanceof N4FieldDeclaration || parent instanceof TAnonymousFormalParameter || parent instanceof TStructField;
 
-			if (!isLegalUseOfOptional) {
+			if (!isLegalUseOfOptional && !isDeprecatedUseOfOptional) {
 				val message = getMessageForEXP_OPTIONAL_INVALID_PLACE
 				val node = NodeModelUtils.findActualNodeFor(typeRef)
 				if (node !== null) {
 					addIssue(message, typeRef, node.offset, node.length, EXP_OPTIONAL_INVALID_PLACE)
+				}
+			} else if(isDeprecatedUseOfOptional) {
+
+				if(typeRef instanceof ParameterizedTypeRef) {
+					if(typeRef.declaredType===null) {
+						return; // avoid duplicate error messages
+					}
+				}
+				if(parent instanceof TFormalParameter) {
+					return; // avoid duplicate error messages
+				}
+
+				val message = messageForEXP_OPTIONAL_DEPRECATED;
+				val node = NodeModelUtils.findActualNodeFor(typeRef)
+				if (node !== null) {
+					addIssue(message, typeRef, node.offset, node.length, EXP_OPTIONAL_DEPRECATED)
 				}
 			}
 		}

@@ -51,8 +51,6 @@ External : 'external';
 
 Function : 'function';
 
-Nullable : 'nullable';
-
 Default : 'default';
 
 Extends : 'extends';
@@ -60,8 +58,6 @@ Extends : 'extends';
 Finally : 'finally';
 
 Indexed : 'indexed';
-
-Notnull : 'notnull';
 
 Private : 'private';
 
@@ -166,8 +162,6 @@ If : 'if';
 In : 'in';
 
 Of : 'of';
-
-ExclamationMark : '!';
 
 Ampersand : '&';
 

@@ -20,6 +20,7 @@ import eu.numberfour.n4js.ts.types.TypableElement;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.n4JS.PropertyNameValuePair#getDefinedField <em>Defined Field</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.n4JS.PropertyNameValuePair#isDeclaredOptional <em>Declared Optional</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.PropertyNameValuePair#getExpression <em>Expression</em>}</li>
  * </ul>
  *
@@ -53,6 +54,32 @@ public interface PropertyNameValuePair extends AnnotablePropertyAssignment, Type
 	 * @generated
 	 */
 	void setDefinedField(TStructField value);
+
+	/**
+	 * Returns the value of the '<em><b>Declared Optional</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Declared Optional</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Declared Optional</em>' attribute.
+	 * @see #setDeclaredOptional(boolean)
+	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getPropertyNameValuePair_DeclaredOptional()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isDeclaredOptional();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.n4JS.PropertyNameValuePair#isDeclaredOptional <em>Declared Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Declared Optional</em>' attribute.
+	 * @see #isDeclaredOptional()
+	 * @generated
+	 */
+	void setDeclaredOptional(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Expression</b></em>' containment reference.

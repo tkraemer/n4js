@@ -34,6 +34,7 @@ import eu.numberfour.n4js.ts.types.TEnumLiteral
 import eu.numberfour.n4js.ts.types.TExportableElement
 import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFormalParameter
+import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TInterface
 import eu.numberfour.n4js.ts.types.TMember
@@ -54,7 +55,6 @@ import java.util.Collections
 import java.util.Iterator
 import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.ecore.EObject
-import eu.numberfour.n4js.ts.types.TFunction
 
 type IteratorOfExpression wraps Iterator<Expression>
 type IteratorOfYieldExpression wraps Iterator<YieldExpression>
@@ -423,6 +423,13 @@ abstract class FunctionOrFieldAccessor extends AnnotableElement, VariableEnviron
 		return _lok;
 	}
 
+	op boolean isReturnValueDeclaredOptional() {
+		return false;
+	}
+	op boolean isReturnValueOptional() {
+		return false;
+	}
+
 	/**
 	 * Default implementation, always returns false (since accessors cannot be async), overridden in FunctionDefinition
 	 */
@@ -446,6 +453,13 @@ abstract class FunctionOrFieldAccessor extends AnnotableElement, VariableEnviron
  */
 abstract class FunctionDefinition extends FunctionOrFieldAccessor, TypeDefiningElement {
 	contains FormalParameter[] fpars
+	/*
+	 * Tells if the return value is optional.
+	 */
+	boolean returnValueDeclaredOptional
+	op boolean isReturnValueOptional() {
+		return returnValueDeclaredOptional || (returnTypeRef!==null && returnTypeRef.isOptional_OLD_SYNTAX);
+	}
 	/*
 	 * Developer-provided hint for the return type of this FunctionDefinition.
 	 * In case it's not provided, this reference remains null.
@@ -482,6 +496,9 @@ abstract class FunctionDefinition extends FunctionOrFieldAccessor, TypeDefiningE
  * Base class for getters and setter, of either object literals (PropertyG/SetterDeclaration) or classes (N4G/SetterDeclaration).
  */
 abstract class FieldAccessor extends FunctionOrFieldAccessor, TypeProvidingElement, PropertyNameOwner { // note: super-class is TypableElement
+
+	boolean declaredOptional
+
 	/*
      * The declared type of the field accessor, which is either the return type of the getter or the type of the formal parameter in case of a setter
      */
@@ -492,6 +509,10 @@ abstract class FieldAccessor extends FunctionOrFieldAccessor, TypeProvidingEleme
 	 * Returns the defined FieldAccessor in the TModule, either a TGetter or a TSetter.
 	 */
 	op eu.numberfour.n4js.ts.types.FieldAccessor getDefinedAccessor()
+
+	op boolean isOptional() {
+		return declaredOptional || (declaredTypeRef!==null && declaredTypeRef.isOptional_OLD_SYNTAX);
+	}
 }
 
 // TODO jvp: probably need operation getTypeRef(), should be similarly handled as variables
@@ -1124,6 +1145,7 @@ enum PropertyNameKind {
 
 class PropertyNameValuePair extends AnnotablePropertyAssignment, TypedElement, TypableElement {
 	refers transient TStructField definedField
+	boolean declaredOptional
 	/*
 	 * The (initial) value of the property.
 	 */
@@ -1954,6 +1976,7 @@ class N4MemberAnnotationList extends AbstractAnnotationList, N4MemberDeclaration
 
 class N4FieldDeclaration extends AnnotableN4MemberDeclaration, TypedElement, ThisArgProvider, PropertyNameOwner {
 	refers transient TField definedField
+	boolean declaredOptional
 	/*
 	 * Initializer expression.
 	 */

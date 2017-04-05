@@ -3428,6 +3428,7 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         declaredModifiers+=N4Modifier* 
 	 *         bogusTypeRef=BogusTypeRef? 
 	 *         declaredName=LiteralOrComputedPropertyName 
+	 *         declaredOptional?='?'? 
 	 *         declaredTypeRef=TypeRef? 
 	 *         expression=Expression?
 	 *     )
@@ -3448,6 +3449,7 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         declaredModifiers+=N4Modifier* 
 	 *         bogusTypeRef=BogusTypeRef? 
 	 *         declaredName=LiteralOrComputedPropertyName 
+	 *         declaredOptional?='?'? 
 	 *         declaredTypeRef=TypeRef? 
 	 *         expression=Expression?
 	 *     )
@@ -3468,6 +3470,7 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         declaredModifiers+=N4Modifier* 
 	 *         bogusTypeRef=BogusTypeRef? 
 	 *         declaredName=LiteralOrComputedPropertyName 
+	 *         declaredOptional?='?'? 
 	 *         declaredTypeRef=TypeRef? 
 	 *         body=Block?
 	 *     )
@@ -3487,6 +3490,7 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         ((annotationList=AnnotatedN4MemberDeclaration_N4GetterDeclaration_1_0_0_0_0 declaredModifiers+=N4Modifier*) | declaredModifiers+=N4Modifier+)? 
 	 *         bogusTypeRef=BogusTypeRef? 
 	 *         declaredName=LiteralOrComputedPropertyName 
+	 *         declaredOptional?='?'? 
 	 *         declaredTypeRef=TypeRef? 
 	 *         (body=Block | body=Block)?
 	 *     )
@@ -3506,6 +3510,7 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         annotationList=AnnotatedN4MemberDeclaration_N4SetterDeclaration_1_1_0_0_0 
 	 *         declaredModifiers+=N4Modifier* 
 	 *         declaredName=LiteralOrComputedPropertyName 
+	 *         declaredOptional?='?'? 
 	 *         fpar=FormalParameter 
 	 *         body=Block?
 	 *     )
@@ -3526,10 +3531,11 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *             annotationList=AnnotatedN4MemberDeclaration_N4SetterDeclaration_1_1_0_0_0 
 	 *             declaredModifiers+=N4Modifier* 
 	 *             declaredName=LiteralOrComputedPropertyName 
+	 *             declaredOptional?='?'? 
 	 *             fpar=FormalParameter 
 	 *             body=Block?
 	 *         ) | 
-	 *         (declaredModifiers+=N4Modifier* declaredName=LiteralOrComputedPropertyName fpar=FormalParameter body=Block?)
+	 *         (declaredModifiers+=N4Modifier* declaredName=LiteralOrComputedPropertyName declaredOptional?='?'? fpar=FormalParameter body=Block?)
 	 *     )
 	 */
 	protected void sequence_AnnotatedN4MemberDeclaration_N4SetterDeclaration(ISerializationContext context, N4SetterDeclaration semanticObject) {
@@ -3547,6 +3553,7 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         annotationList=AnnotatedPropertyAssignment_PropertyGetterDeclaration_1_1_0_0_0 
 	 *         bogusTypeRef=BogusTypeRef? 
 	 *         declaredName=LiteralOrComputedPropertyName 
+	 *         declaredOptional?='?'? 
 	 *         declaredTypeRef=TypeRef? 
 	 *         body=Block
 	 *     )
@@ -3566,6 +3573,7 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         annotationList=AnnotatedPropertyAssignment_PropertyGetterDeclaration_1_1_0_0_0? 
 	 *         bogusTypeRef=BogusTypeRef? 
 	 *         declaredName=LiteralOrComputedPropertyName 
+	 *         declaredOptional?='?'? 
 	 *         declaredTypeRef=TypeRef? 
 	 *         (body=Block | body=Block)
 	 *     )
@@ -3696,7 +3704,7 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *             declaredName=LiteralOrComputedPropertyName 
 	 *             expression=AssignmentExpression
 	 *         ) | 
-	 *         (declaredTypeRef=TypeRefWithModifiers? declaredName=LiteralOrComputedPropertyName expression=AssignmentExpression)
+	 *         (declaredTypeRef=TypeRefWithModifiers? declaredName=LiteralOrComputedPropertyName declaredOptional?='?'? expression=AssignmentExpression)
 	 *     )
 	 */
 	protected void sequence_AnnotatedPropertyAssignment_PropertyNameValuePair(ISerializationContext context, PropertyNameValuePair semanticObject) {
@@ -3713,27 +3721,13 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     (
 	 *         annotationList=AnnotatedPropertyAssignment_PropertySetterDeclaration_1_2_0_0_0 
 	 *         declaredName=LiteralOrComputedPropertyName 
+	 *         declaredOptional?='?'? 
 	 *         fpar=FormalParameter 
 	 *         body=Block
 	 *     )
 	 */
 	protected void sequence_AnnotatedPropertyAssignment(ISerializationContext context, PropertySetterDeclaration semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.ANNOTABLE_PROPERTY_ASSIGNMENT__ANNOTATION_LIST) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.ANNOTABLE_PROPERTY_ASSIGNMENT__ANNOTATION_LIST));
-			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME));
-			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.SETTER_DECLARATION__FPAR) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.SETTER_DECLARATION__FPAR));
-			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getAnnotatedPropertyAssignmentAccess().getPropertySetterDeclarationAnnotationListAction_1_2_0_0_0(), semanticObject.getAnnotationList());
-		feeder.accept(grammarAccess.getAnnotatedPropertyAssignmentAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_1_2_0_0_2_0(), semanticObject.getDeclaredName());
-		feeder.accept(grammarAccess.getAnnotatedPropertyAssignmentAccess().getFparFormalParameterParserRuleCall_1_2_2_0(), semanticObject.getFpar());
-		feeder.accept(grammarAccess.getAnnotatedPropertyAssignmentAccess().getBodyBlockParserRuleCall_1_2_4_0(), semanticObject.getBody());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -3747,10 +3741,11 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         (
 	 *             annotationList=AnnotatedPropertyAssignment_PropertySetterDeclaration_1_2_0_0_0 
 	 *             declaredName=LiteralOrComputedPropertyName 
+	 *             declaredOptional?='?'? 
 	 *             fpar=FormalParameter 
 	 *             body=Block
 	 *         ) | 
-	 *         (declaredName=LiteralOrComputedPropertyName fpar=FormalParameter body=Block)
+	 *         (declaredName=LiteralOrComputedPropertyName declaredOptional?='?'? fpar=FormalParameter body=Block)
 	 *     )
 	 */
 	protected void sequence_AnnotatedPropertyAssignment_PropertySetterDeclaration(ISerializationContext context, PropertySetterDeclaration semanticObject) {
@@ -7176,6 +7171,7 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         declaredModifiers+=N4Modifier* 
 	 *         bogusTypeRef=BogusTypeRef? 
 	 *         declaredName=LiteralOrComputedPropertyName 
+	 *         declaredOptional?='?'? 
 	 *         declaredTypeRef=TypeRef? 
 	 *         expression=Expression?
 	 *     )
@@ -7191,7 +7187,14 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     N4GetterDeclaration returns N4GetterDeclaration
 	 *
 	 * Constraint:
-	 *     (declaredModifiers+=N4Modifier* bogusTypeRef=BogusTypeRef? declaredName=LiteralOrComputedPropertyName declaredTypeRef=TypeRef? body=Block?)
+	 *     (
+	 *         declaredModifiers+=N4Modifier* 
+	 *         bogusTypeRef=BogusTypeRef? 
+	 *         declaredName=LiteralOrComputedPropertyName 
+	 *         declaredOptional?='?'? 
+	 *         declaredTypeRef=TypeRef? 
+	 *         body=Block?
+	 *     )
 	 */
 	protected void sequence_BogusTypeRefFragment_ColonSepTypeRef_GetterHeader_N4GetterDeclaration(ISerializationContext context, N4GetterDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -7204,7 +7207,7 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     PropertyGetterDeclaration returns PropertyGetterDeclaration
 	 *
 	 * Constraint:
-	 *     (bogusTypeRef=BogusTypeRef? declaredName=LiteralOrComputedPropertyName declaredTypeRef=TypeRef? body=Block)
+	 *     (bogusTypeRef=BogusTypeRef? declaredName=LiteralOrComputedPropertyName declaredOptional?='?'? declaredTypeRef=TypeRef? body=Block)
 	 */
 	protected void sequence_BogusTypeRefFragment_ColonSepTypeRef_GetterHeader_PropertyGetterDeclaration(ISerializationContext context, PropertyGetterDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -15699,7 +15702,7 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     N4SetterDeclaration returns N4SetterDeclaration
 	 *
 	 * Constraint:
-	 *     (declaredModifiers+=N4Modifier* declaredName=LiteralOrComputedPropertyName fpar=FormalParameter body=Block?)
+	 *     (declaredModifiers+=N4Modifier* declaredName=LiteralOrComputedPropertyName declaredOptional?='?'? fpar=FormalParameter body=Block?)
 	 */
 	protected void sequence_N4SetterDeclaration(ISerializationContext context, N4SetterDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -18527,7 +18530,7 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     PropertyNameValuePair returns PropertyNameValuePair
 	 *
 	 * Constraint:
-	 *     (declaredTypeRef=TypeRefWithModifiers? declaredName=LiteralOrComputedPropertyName expression=AssignmentExpression)
+	 *     (declaredTypeRef=TypeRefWithModifiers? declaredName=LiteralOrComputedPropertyName declaredOptional?='?'? expression=AssignmentExpression)
 	 */
 	protected void sequence_PropertyNameValuePair(ISerializationContext context, PropertyNameValuePair semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -18540,22 +18543,10 @@ public class N4JSSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     PropertySetterDeclaration returns PropertySetterDeclaration
 	 *
 	 * Constraint:
-	 *     (declaredName=LiteralOrComputedPropertyName fpar=FormalParameter body=Block)
+	 *     (declaredName=LiteralOrComputedPropertyName declaredOptional?='?'? fpar=FormalParameter body=Block)
 	 */
 	protected void sequence_PropertySetterDeclaration(ISerializationContext context, PropertySetterDeclaration semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.PROPERTY_NAME_OWNER__DECLARED_NAME));
-			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.SETTER_DECLARATION__FPAR) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.SETTER_DECLARATION__FPAR));
-			if (transientValues.isValueTransient(semanticObject, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, N4JSPackage.Literals.FUNCTION_OR_FIELD_ACCESSOR__BODY));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getPropertySetterDeclarationAccess().getDeclaredNameLiteralOrComputedPropertyNameParserRuleCall_0_0_2_0(), semanticObject.getDeclaredName());
-		feeder.accept(grammarAccess.getPropertySetterDeclarationAccess().getFparFormalParameterParserRuleCall_2_0(), semanticObject.getFpar());
-		feeder.accept(grammarAccess.getPropertySetterDeclarationAccess().getBodyBlockParserRuleCall_4_0(), semanticObject.getBody());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
