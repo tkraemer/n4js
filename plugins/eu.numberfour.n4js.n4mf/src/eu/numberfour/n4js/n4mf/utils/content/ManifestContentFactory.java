@@ -76,7 +76,7 @@ public class ManifestContentFactory {
 			mf.projectId = "StubProject_" + System.currentTimeMillis();
 
 		if (isNullOrEmpty(mf.projectType))
-			mf.projectType = ProjectType.LIBRARY.getLiteral();
+			mf.projectType = ProjectType.LIBRARY.getLiteral().toLowerCase();
 
 		if (isNullOrEmpty(mf.projectVersion))
 			mf.projectVersion = "0.0.1-SNAPSHOT";

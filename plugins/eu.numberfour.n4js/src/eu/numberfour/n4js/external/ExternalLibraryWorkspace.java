@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.URI;
 import com.google.inject.ImplementedBy;
 
 import eu.numberfour.n4js.internal.InternalN4JSWorkspace;
+import eu.numberfour.n4js.n4mf.ProjectDescription;
 
 /**
  * Representation of a workspace (with possible multiple workspace roots) that is used for storing external library
@@ -52,6 +53,16 @@ public abstract class ExternalLibraryWorkspace extends InternalN4JSWorkspace {
 	 * @return an iterable of external projects available from the given external library root location.
 	 */
 	public abstract Iterable<IProject> getProjects(java.net.URI rootLocation);
+
+	/**
+	 * Returns with all existing external project descriptions that are contained in the given external library root
+	 * location.
+	 *
+	 * @param rootLocation
+	 *            the location of the external library root.
+	 * @return an iterable of external project descriptions available from the given external library root location.
+	 */
+	public abstract Iterable<ProjectDescription> getProjectsDescriptions(java.net.URI rootLocation);
 
 	/**
 	 * Returns with the project with the given name. Or {@code null} if the project does not exist.

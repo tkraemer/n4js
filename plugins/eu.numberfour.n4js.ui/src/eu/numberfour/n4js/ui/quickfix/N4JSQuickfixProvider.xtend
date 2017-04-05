@@ -624,7 +624,7 @@ class N4JSQuickfixProvider extends AbstractN4JSQuickfixProvider {
 				val doc = context.xtextDocument;
 				val documentText = doc.get(issue.offset, issue.length);
 
-				val dependency = documentText.parseDependency;
+				val dependency = documentText.parseDependency.data;
 				val packageName = dependency.project.projectId;
 				val packageVersion = dependency.versionConstraint.npmFormat;
 

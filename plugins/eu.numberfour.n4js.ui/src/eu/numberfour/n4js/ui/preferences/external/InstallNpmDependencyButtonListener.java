@@ -11,11 +11,13 @@
 package eu.numberfour.n4js.ui.preferences.external;
 
 import static eu.numberfour.n4js.ui.utils.UIUtils.getDisplay;
+import static eu.numberfour.n4js.ui.utils.UIUtils.getShell;
 import static org.eclipse.jface.dialogs.MessageDialog.openError;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import java.util.StringJoiner;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
@@ -30,7 +32,11 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
+import eu.numberfour.n4js.n4mf.DeclaredVersion;
+import eu.numberfour.n4js.n4mf.utils.parsing.ManifestValuesParsingUtil;
+import eu.numberfour.n4js.n4mf.utils.parsing.ParseResult;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
+import eu.numberfour.n4js.ui.utils.InputFunctionalValidator;
 import eu.numberfour.n4js.ui.utils.UIUtils;
 import eu.numberfour.n4js.utils.StatusHelper;
 
@@ -43,32 +49,31 @@ import eu.numberfour.n4js.utils.StatusHelper;
  */
 public class InstallNpmDependencyButtonListener extends SelectionAdapter {
 
-	final private Supplier<IInputValidator> validator;
+	final private Supplier<IInputValidator> packageNameValidator;
 	final private StatusHelper statusHelper;
-	final private BiFunction<Collection<String>, IProgressMonitor, IStatus> installAction;
-	final private String initalValue;
+	final private BiFunction<Map<String, String>, IProgressMonitor, IStatus> installAction;
 
-	InstallNpmDependencyButtonListener(BiFunction<Collection<String>, IProgressMonitor, IStatus> installAction,
-			Supplier<IInputValidator> validator,
-			StatusHelper statusHelper, String initalValue) {
+	InstallNpmDependencyButtonListener(BiFunction<Map<String, String>, IProgressMonitor, IStatus> installAction,
+			Supplier<IInputValidator> packageNameValidator, StatusHelper statusHelper) {
 		this.installAction = installAction;
-		this.validator = validator;
+		this.packageNameValidator = packageNameValidator;
 		this.statusHelper = statusHelper;
-		this.initalValue = initalValue;
 	}
 
 	@Override
 	public void widgetSelected(final SelectionEvent e) {
 		final MultiStatus multistatus = statusHelper.createMultiStatus("Status of installing npm dependencies.");
-		final InputDialog dialog = new InputDialog(UIUtils.getShell(), "npm Install",
-				"Specify an npm package name to download and install:", initalValue, validator.get());
 
+		InstallNpmDependencyDialog dialog = new InstallNpmDependencyDialog(getShell(),
+				packageNameValidator.get(), getPackageVersionValidator());
 		dialog.open();
-		final String packageName = dialog.getValue();
+		final String packageName = dialog.getPackageName();
 		if (!StringExtensions.isNullOrEmpty(packageName) && dialog.getReturnCode() == Window.OK) {
 			try {
-				new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
-					multistatus.merge(installAction.apply(Arrays.asList(packageName), monitor));
+				final String packageVersion = dialog.getVersionConstraint();
+				new ProgressMonitorDialog(getShell()).run(true, false, monitor -> {
+					multistatus
+							.merge(installAction.apply(Collections.singletonMap(packageName, packageVersion), monitor));
 				});
 			} catch (final InvocationTargetException | InterruptedException exc) {
 				multistatus.merge(
@@ -86,4 +91,28 @@ public class InstallNpmDependencyButtonListener extends SelectionAdapter {
 			}
 		}
 	}
+
+	private IInputValidator getPackageVersionValidator() {
+		return InputFunctionalValidator.from(
+				(final String version) -> validatePackageVersion(version));
+	}
+
+	private String validatePackageVersion(final String data) {
+		String result = null;
+		ParseResult<DeclaredVersion> parseResult = ManifestValuesParsingUtil.parseVersionConstraint(data);
+		if (!parseResult.getErrors().isEmpty()) {
+			// collect just parse errors
+			StringJoiner joinedMessage = new StringJoiner("\n");
+			parseResult.getErrors().forEach((String msg) -> joinedMessage.add(msg));
+			result = joinedMessage.toString();
+		} else {
+			// even if there are no parse errors check if version instance was create correctly
+			if (parseResult.getData() == null) {
+				result = "Could not create version from string :" + data;
+			}
+		}
+
+		return result;
+	}
+
 }

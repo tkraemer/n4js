@@ -10,19 +10,27 @@
  */
 package eu.numberfour.n4js.n4mf.utils.parsing;
 
+import static java.util.logging.Level.SEVERE;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
+import org.eclipse.xtext.parser.ParseException;
 import org.eclipse.xtext.resource.IResourceFactory;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.util.LazyStringInputStream;
 
+import eu.numberfour.n4js.n4mf.DeclaredVersion;
 import eu.numberfour.n4js.n4mf.ProjectDependency;
 import eu.numberfour.n4js.n4mf.ProjectDescription;
+import eu.numberfour.n4js.n4mf.VersionConstraint;
 import eu.numberfour.n4js.n4mf.utils.N4MFConstants;
 import eu.numberfour.n4js.n4mf.utils.content.ManifestContentFactory;
 import eu.numberfour.n4js.utils.languages.N4LanguageUtils;
@@ -38,15 +46,54 @@ import eu.numberfour.n4js.utils.languages.N4LanguageUtils;
  *
  */
 public class ManifestValuesParsingUtil {
+	private final static Logger LOGGER = Logger.getLogger(ManifestValuesParsingUtil.class.getName());
 
-	/** Creates instance of {@link ProjectDependency} from provided value. */
-	public static ProjectDependency parseDependency(String projectDependency) throws Exception {
+	/**
+	 * Creates instance of {@link ProjectDependency} from provided value or null if it cannot be created.
+	 *
+	 * @throws ParseException
+	 *             when provided data has parse error
+	 */
+	public static ParseResult<ProjectDependency> parseDependency(String projectDependency) throws Exception {
 
-		String manifestContent = ManifestContentFactory.simpleContent(
+		String manifestContent = ManifestContentFactory.n4Content(
 				n4mf -> n4mf.projectDependencies = Arrays.asList(projectDependency));
 
-		ProjectDescription pd = parse(manifestContent);
-		return pd.getAllProjectDependencies().get(0);
+		ParseResult<ProjectDescription> parseResult = parse(manifestContent);
+
+		// map project description to the DeclaredVersion
+		ParseResult<ProjectDependency> result = new ParseResult<>();
+		ProjectDescription description = parseResult.data;
+		if (description != null) {
+			result.data = description.getAllProjectDependencies().get(0);
+		}
+		result.addErrors(parseResult.errors);
+		return result;
+	}
+
+	/**
+	 * Creates instance of {@link DeclaredVersion} from provided value or null if it cannot be created.
+	 */
+	public static ParseResult<DeclaredVersion> parseVersionConstraint(String declaredVersion) {
+
+		String manifestContent = ManifestContentFactory.n4Content(
+				n4mf -> n4mf.projectDependencies = Arrays.asList("_syntheticDependency " + declaredVersion));
+
+		ParseResult<ProjectDescription> parseResult = parse(manifestContent);
+
+		// map project description to the DeclaredVersion
+		ParseResult<DeclaredVersion> result = new ParseResult<>();
+		ProjectDescription description = parseResult.data;
+		if (description != null) {
+			ProjectDependency dependency = description.getAllProjectDependencies().get(0);
+			if (dependency != null) {
+				VersionConstraint versionConstraint = dependency.getVersionConstraint();
+				result.data = versionConstraint != null ? versionConstraint.getLowerVersion() : null;
+			}
+		}
+
+		result.addErrors(parseResult.errors);
+		return result;
 	}
 
 	/**
@@ -55,23 +102,32 @@ public class ManifestValuesParsingUtil {
 	 *
 	 * @param manifestContent
 	 *            text to be parsed as N4MF content
-	 * @return project description created as parsing result
-	 * @throws IOException
-	 *             when something goes wrong
+	 * @return project description created as parsing result or null it cannot be obtained
 	 *
 	 * @see <a href=
 	 *      "http://download.eclipse.org/modeling/tmf/xtext/javadoc/2.3/org/eclipse/xtext/junit4/util/ParseHelper.html">org.eclipse.xtext.junit4.util.ParseHelper<T></a>
 	 */
-	private static ProjectDescription parse(CharSequence manifestContent) throws IOException {
+	private static ParseResult<ProjectDescription> parse(CharSequence manifestContent) {
 		final URI uriToUse = getRandomURI();
 		final IResourceFactory resourceFactory = getService(IResourceFactory.class, uriToUse);
 
+		ParseResult<ProjectDescription> res = new ParseResult<>();
 		try (final InputStream textToParse = getAsStream(manifestContent);) {
 			Resource resource = resource(resourceFactory, textToParse, uriToUse);
-			final ProjectDescription root = (ProjectDescription) (resource.getContents().isEmpty() ? null
-					: resource.getContents().get(0));
-			return root;
+
+			if (!resource.getErrors().isEmpty()) {
+				List<Diagnostic> errors = resource.getErrors();
+				errors.forEach((Diagnostic d) -> res.addErrors(d.getMessage()));
+			}
+
+			res.data = resource.getContents().isEmpty()
+					? null
+					: (ProjectDescription) (resource.getContents().get(0));
+		} catch (IOException e) {
+			res.errors.add(e.getMessage());
+			LOGGER.log(SEVERE, "Cannot parse >>>\n" + manifestContent + "\n<<<", e);
 		}
+		return res;
 	}
 
 	private static URI getRandomURI() {
@@ -84,17 +140,20 @@ public class ManifestValuesParsingUtil {
 		return new LazyStringInputStream(text == null ? "" : text.toString());
 	}
 
-	/** Creates artificial resource with provided data. */
-	private static Resource resource(IResourceFactory resourceFactory, InputStream in, URI uriToUse)
-			throws IOException {
-		Resource resource = resourceFactory.createResource(uriToUse);
-		// unlike for N4JS files use simple resource set
-		XtextResourceSet resourceSet = new XtextResourceSet();
-		// there should be no collisions
-		resourceSet.getResources().add(resource);
-		// no specific load options
-		resource.load(in, null);
-		return resource;
+	/** Creates artificial resource with provided data or {@code null} if it cannot be created. */
+	private static Resource resource(IResourceFactory resourceFactory, InputStream in, URI uriToUse) {
+		try {
+			Resource resource = resourceFactory.createResource(uriToUse);
+			// unlike for N4JS files use simple resource set
+			XtextResourceSet resourceSet = new XtextResourceSet();
+			// there should be no collisions
+			resourceSet.getResources().add(resource);
+			// no specific load options
+			resource.load(in, null);
+			return resource;
+		} catch (IOException e) {
+			return null;
+		}
 	}
 
 	private static <S> S getService(Class<S> serviceType, URI uri) {

@@ -36,9 +36,8 @@ import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -77,6 +76,8 @@ import eu.numberfour.n4js.external.GitCloneSupplier;
 import eu.numberfour.n4js.external.NpmManager;
 import eu.numberfour.n4js.external.TargetPlatformInstallLocationProvider;
 import eu.numberfour.n4js.external.libraries.TargetPlatformModel;
+import eu.numberfour.n4js.external.version.VersionConstraintFormatUtil;
+import eu.numberfour.n4js.n4mf.ProjectDescription;
 import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.utils.InputComposedValidator;
@@ -172,8 +173,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 		createEnabledPushButton(subComposite, "Install npm...",
 				new InstallNpmDependencyButtonListener(this::intallAndUpdate,
 						() -> getPackageNameToInstallValidator(),
-						statusHelper,
-						null));
+						statusHelper));
 
 		createEnabledPushButton(subComposite, "Uninstall npm...",
 				new UninstallNpmDependencyButtonListener(this::unintallAndUpdate,
@@ -365,9 +365,16 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				.anyMatch(name -> name.equals(packageName));
 	}
 
-	private Set<String> getInstalledNpms() {
+	private Map<String, String> getInstalledNpms() {
 		final File root = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
-		return from(externalLibraryWorkspace.getProjects(root.toURI())).transform(p -> p.getName()).toSet();
+		final Map<String, String> versionedNpms = new HashMap<>();
+
+		from(externalLibraryWorkspace.getProjectsDescriptions((root.toURI()))).toSet()
+				.forEach((ProjectDescription pd) -> {
+					versionedNpms.put(pd.getProjectId(), VersionConstraintFormatUtil.npmFormat(pd.getProjectVersion()));
+				});
+
+		return versionedNpms;
 	}
 
 	/**
@@ -378,9 +385,9 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				.createMultiStatus("Status of executing maintenance actions.");
 
 		// persist state for reinstall
-		Collection<String> oldPackages = new HashSet<>();
+		Map<String, String> oldPackages = new HashMap<>();
 		if (userChoice.decisionReinstall)
-			oldPackages.addAll(getInstalledNpms());
+			oldPackages.putAll(getInstalledNpms());
 
 		// keep the order Cache->TypeDefs->NPMs->Reinstall->Update
 		// actions have side effects that can interact with each other
@@ -449,17 +456,16 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	 * @param monitor
 	 *            the monitor used to interact with npm manager
 	 * @param packageNames
-	 *            names of the packages to reinstall
+	 *            names of the packages and their versions to reinstall
 	 *
 	 */
 	private void maintenanceReinstallNpms(final MaintenanceActionsChoice userChoice,
-			final MultiStatus multistatus, IProgressMonitor monitor, Collection<String> packageNames) {
+			final MultiStatus multistatus, IProgressMonitor monitor, Map<String, String> packageNames) {
 		if (userChoice.decisionReinstall) {
 
 			// unless all npms were purged, uninstall known ones
 			if (!userChoice.decisionPurgeNpm) {
-				unintallAndUpdate(packageNames, monitor);
-				IStatus uninstallStatus = unintallAndUpdate(packageNames, monitor);
+				IStatus uninstallStatus = unintallAndUpdate(packageNames.keySet(), monitor);
 				if (!uninstallStatus.isOK())
 					multistatus.merge(uninstallStatus);
 			}
@@ -600,6 +606,23 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	private IStatus intallAndUpdate(final Collection<String> packageNames, final IProgressMonitor monitor) {
 		try {
 			IStatus status = npmManager.installDependencies(packageNames, monitor);
+			if (status.isOK())
+				updateInput(viewer, store.getLocations());
+
+			return status;
+		} catch (final IllegalBinaryStateException ibse) {
+			return statusHelper.createError("Illegal state of the binary when installing npm packages.", ibse);
+		}
+	}
+
+	/**
+	 * Installs npm packages with provide names, if successful updates preference page view.
+	 *
+	 * @return status of the operation.
+	 */
+	private IStatus intallAndUpdate(final Map<String, String> versionedPackages, final IProgressMonitor monitor) {
+		try {
+			IStatus status = npmManager.installDependencies(versionedPackages, monitor);
 			if (status.isOK())
 				updateInput(viewer, store.getLocations());
 
