@@ -16,6 +16,9 @@ import java.util.List;
 
 /**
  * Container for data created during parsing process.
+ *
+ * Note that result can contain instance of {@link #data} and {@link #errors} at the same time. It is up to the caller
+ * to decide how to proceed.
  */
 public final class ParseResult<T> {
 	T data = null;

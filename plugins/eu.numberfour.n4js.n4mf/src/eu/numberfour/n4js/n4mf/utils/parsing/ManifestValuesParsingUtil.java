@@ -65,7 +65,10 @@ public class ManifestValuesParsingUtil {
 		ParseResult<ProjectDependency> result = new ParseResult<>();
 		ProjectDescription description = parseResult.data;
 		if (description != null) {
-			result.data = description.getAllProjectDependencies().get(0);
+			List<ProjectDependency> deps = description.getAllProjectDependencies();
+			if (deps != null && !deps.isEmpty()) {
+				result.data = deps.get(0);
+			}
 		}
 		result.addErrors(parseResult.errors);
 		return result;
@@ -74,7 +77,7 @@ public class ManifestValuesParsingUtil {
 	/**
 	 * Creates instance of {@link DeclaredVersion} from provided value or null if it cannot be created.
 	 */
-	public static ParseResult<DeclaredVersion> parseVersionConstraint(String declaredVersion) {
+	public static ParseResult<DeclaredVersion> parseDeclaredVersion(String declaredVersion) {
 
 		String manifestContent = ManifestContentFactory.n4Content(
 				n4mf -> n4mf.projectDependencies = Arrays.asList("_syntheticDependency " + declaredVersion));
@@ -85,10 +88,13 @@ public class ManifestValuesParsingUtil {
 		ParseResult<DeclaredVersion> result = new ParseResult<>();
 		ProjectDescription description = parseResult.data;
 		if (description != null) {
-			ProjectDependency dependency = description.getAllProjectDependencies().get(0);
-			if (dependency != null) {
-				VersionConstraint versionConstraint = dependency.getVersionConstraint();
-				result.data = versionConstraint != null ? versionConstraint.getLowerVersion() : null;
+			List<ProjectDependency> deps = description.getAllProjectDependencies();
+			if (deps != null && !deps.isEmpty()) {
+				ProjectDependency dependency = deps.get(0);
+				if (dependency != null) {
+					VersionConstraint versionConstraint = dependency.getVersionConstraint();
+					result.data = versionConstraint != null ? versionConstraint.getLowerVersion() : null;
+				}
 			}
 		}
 

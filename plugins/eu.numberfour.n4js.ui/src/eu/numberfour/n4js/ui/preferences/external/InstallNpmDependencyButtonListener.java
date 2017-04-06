@@ -99,7 +99,7 @@ public class InstallNpmDependencyButtonListener extends SelectionAdapter {
 
 	private String validatePackageVersion(final String data) {
 		String result = null;
-		ParseResult<DeclaredVersion> parseResult = ManifestValuesParsingUtil.parseVersionConstraint(data);
+		ParseResult<DeclaredVersion> parseResult = ManifestValuesParsingUtil.parseDeclaredVersion(data);
 		if (!parseResult.getErrors().isEmpty()) {
 			// collect just parse errors
 			StringJoiner joinedMessage = new StringJoiner("\n");

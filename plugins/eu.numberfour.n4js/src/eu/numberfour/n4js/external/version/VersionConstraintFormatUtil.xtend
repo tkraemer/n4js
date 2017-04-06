@@ -102,8 +102,11 @@ class VersionConstraintFormatUtil {
 	 * </b></p>
 	 */
 	static def String npmRangeFormat(String lower,boolean isExclLowerBound, String upper, boolean isExclUpperBound) 
+		'''«IF lower.nonNull»«formatExistingRange(lower, isExclLowerBound, upper, isExclUpperBound)»«ENDIF»'''
+
+	private static def String formatExistingRange(String lower,boolean isExclLowerBound, String upper, boolean isExclUpperBound) 	
 		'''«IF !upper.isNullOrEmpty»«formatRange(lower, isExclLowerBound, upper, isExclUpperBound)»«ELSE»«lower.npmVersionFormat»«ENDIF»'''
-		
+
 	private static def formatRange(String lower,boolean isExclLowerBound, String upper, boolean isExclUpperBound) 
 		'''@">«IF !isExclLowerBound»=«ENDIF»«lower» <«IF !isExclUpperBound»=«ENDIF»«upper»"'''
 }
