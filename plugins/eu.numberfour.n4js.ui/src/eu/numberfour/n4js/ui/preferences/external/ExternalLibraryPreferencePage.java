@@ -39,7 +39,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
@@ -179,7 +178,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				new UninstallNpmDependencyButtonListener(this::unintallAndUpdate,
 						() -> getPackageNameToUninstallValidator(),
 						statusHelper,
-						getSelectedNpm()));
+						this::getSelectedNpm));
 
 		createEnabledPushButton(subComposite, "Run maintenance actions...",
 				new MaintenanceActionsButtonListener(this::runMaintananceActions));
@@ -296,10 +295,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	 *            the file to which {@link TargetPlatformModel} is written.
 	 */
 	private void exportTargetPlatform(final File file) {
-		final URI location = installLocationProvider.getTargetPlatformNodeModulesLocation();
-		final Iterable<IProject> projects = externalLibraryWorkspace.getProjects(location);
-		final Iterable<String> projectIds = from(projects).transform(p -> p.getName());
-		final TargetPlatformModel model = TargetPlatformModel.createFromNpmProjectIds(projectIds);
+		final Map<String, String> installerNpms = getInstalledNpms();
+		final TargetPlatformModel model = TargetPlatformModel.createFromVersionedNpmProjectIds(installerNpms);
 		try {
 			if (!file.exists()) {
 				checkState(file.createNewFile(), "Error while exporting target platform file.");
@@ -599,24 +596,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	}
 
 	/**
-	 * Installs npm packages with provide names, if successful updates preference page view.
-	 *
-	 * @return status of the operation.
-	 */
-	private IStatus intallAndUpdate(final Collection<String> packageNames, final IProgressMonitor monitor) {
-		try {
-			IStatus status = npmManager.installDependencies(packageNames, monitor);
-			if (status.isOK())
-				updateInput(viewer, store.getLocations());
-
-			return status;
-		} catch (final IllegalBinaryStateException ibse) {
-			return statusHelper.createError("Illegal state of the binary when installing npm packages.", ibse);
-		}
-	}
-
-	/**
-	 * Installs npm packages with provide names, if successful updates preference page view.
+	 * Installs npm packages with provide names and versions, if successful updates preference page view. Note that in
+	 * case package has no version it is expected that empty string is provided.
 	 *
 	 * @return status of the operation.
 	 */

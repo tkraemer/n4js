@@ -25,6 +25,8 @@ import java.util.stream.Collectors
 import java.io.IOException
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.databind.JsonMappingException
+import java.util.Set
+import java.util.Map
 
 /**
  * POJO for representing an N4 target platform file.
@@ -69,11 +71,20 @@ class TargetPlatformModel {
 
 	/**
 	 * Creates a new target platform model instance with {@link RepositoryType#npm npm} repository type
-	 * and with projects according to the iterable of project identifiers argument.
+	 * and with projects according to the set of project identifiers argument.
 	 */
-	static def createFromNpmProjectIds(Iterable<String> projectIds) {
-		return new TargetPlatformModel => [ projectIds.toSet.forEach[id | addNpmDependency(id)] ];
+	static def createFromNpmProjectIds(Set<String> projectIds) {
+		return new TargetPlatformModel => [ projectIds.forEach[id | addNpmDependency(id)] ];
 	}
+
+	/**
+	 * Creates a new target platform model instance with {@link RepositoryType#npm npm} repository type
+	 * and with projects according to the mapping of project identifiers and their version argument.
+	 */
+	static def createFromVersionedNpmProjectIds(Map<String, String> projectIdsWithVersions) {
+		return new TargetPlatformModel => [ projectIdsWithVersions.forEach[id,version | addNpmDependency(id, version)] ];
+	}
+
 
 	var Collection<Location> location;
 
@@ -226,4 +237,31 @@ class TargetPlatformModel {
 					.map(e | e.getKey()).collect(Collectors.toSet());
 		}
 
+	/**
+	 * Convenience api, reads model specified by the provided location and returns collection
+	 * of npm package names in that file. Caller needs to validate if provided source is valid
+	 * (e.g. file exists, file has proper contents, etc.).
+	 *
+	 * @param location the location of the target platform file.
+	 *
+	 * @return collection of npm package names in the provided file.
+	 *
+	 * @throws IOException in case of errors reading value.
+	 */
+	static def Map<String,String> npmVersionedPackageNamesFrom(URI platformFileLocation) throws IOException, JsonParseException, JsonMappingException {
+			return TargetPlatformModel
+					.throwingReadValue(platformFileLocation)
+					.getLocation()
+					.stream()
+					.filter(l | l.getRepoType().equals(TargetPlatformModel.RepositoryType.npm))
+					.map(l | l.getProjects())
+					.flatMap(p | p.entrySet().stream())// TODO refactor TargetPlatformModel, e.g.
+														// class Projects extends HashMap<String,
+														// ProjectProperties>) while it is more like
+														// class Projects extends Pair<String,
+														// ProjectProperties>, ideally class with
+														// fields [String name, ProjectProperties properties]
+//					.map(e | e.getKey()->e.value.getVersion?:"").collect(Collectors.toMap([p | p.key],[e | e.value.version?:""]));
+					.collect(Collectors.toMap([e | e.key],[e | e.value.version?:""]));
+		}
 }

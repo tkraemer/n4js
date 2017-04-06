@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.xtext.util.Pair;
+import org.eclipse.xtext.util.Strings;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
@@ -186,7 +187,7 @@ public class NpmManager {
 					// skip already installed
 					.filter(e -> packagesNamesToInstall.contains(e.getKey()))
 					// [name, @">=1.0.0 <2.0.0"] to [name@">=1.0.0 <2.0.0"]
-					.map(e -> e.getKey() + e.getValue())
+					.map(e -> e.getKey() + Strings.emptyIfNull(e.getValue()))
 					.collect(Collectors.toSet());
 
 			IStatus installStatus = batchInstallUninstall(monitor, packagesToInstall, true);
