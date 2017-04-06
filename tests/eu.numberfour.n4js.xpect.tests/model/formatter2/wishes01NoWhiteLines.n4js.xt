@@ -28,12 +28,12 @@ interface GooSupperLongWordWithSomeSuperHeros3 {}
 interface GooSupperLongWordWithSomeSuperHeros4 {}
 interface GooSupperLongWordWithSomeSuperHeros5 {}
 
-@N4JS @Internal
+@CovariantConstructor @Internal
 @Description('@IDEBUG(2424098, "A class with visibility @Internal public must be marked as exported.")')
 export public abstract class Shorty <ValueT extends SomethingLongHere> extends Array<int>
     implements Goo {}
 
-@N4JS @Internal
+@CovariantConstructor @Internal
 @Description('@IDEBUG(2424098, "A class with visibility @Internal public must be marked as exported.")')
 export public abstract class Shortiest <ValueT> extends Array<int> implements Goo {
     noExtraLinefeedIfWeDontWrap: any;
@@ -46,7 +46,7 @@ export public abstract class Shortiest <ValueT> extends Array<int> implements Go
  *
  * @author cb
  *\/
-@N4JS @Internal
+@CovariantConstructor @Internal
 @Description('@IDEBUG(2424098, "A class with visibility @Internal public must be marked as exported.")')
 export public abstract class GenericLongName <ValueT extends SomethingLongHere>
     extends Array<int> // comment here long comment sdfjsiofjsfo hsoh x<fgkjh <xkjh <yfkjhx<gkjl<hxkjl<yhf kl<jh< lkjh
@@ -181,12 +181,12 @@ interface GooSupperLongWordWithSomeSuperHeros3 {}
 interface GooSupperLongWordWithSomeSuperHeros4 {}
 interface GooSupperLongWordWithSomeSuperHeros5 {}
 
-@N4JS @Internal
+@CovariantConstructor @Internal
 @Description('@IDEBUG(2424098, "A class with visibility @Internal public must be marked as exported.")')
 export public abstract class Shorty<ValueT extends SomethingLongHere> extends Array<int>
     implements Goo {}
 
-@N4JS @Internal
+@CovariantConstructor @Internal
 @Description('@IDEBUG(2424098, "A class with visibility @Internal public must be marked as exported.")')
 export public abstract class Shortiest<ValueT> extends Array<int> implements Goo {
     noExtraLinefeedIfWeDontWrap: any;
@@ -199,7 +199,7 @@ export public abstract class Shortiest<ValueT> extends Array<int> implements Goo
  *
  * @author cb
  */
-@N4JS @Internal
+@CovariantConstructor @Internal
 @Description('@IDEBUG(2424098, "A class with visibility @Internal public must be marked as exported.")')
 export public abstract class GenericLongName<ValueT extends SomethingLongHere>
     extends Array<int> // comment here long comment sdfjsiofjsfo hsoh x<fgkjh <xkjh <yfkjhx<gkjl<hxkjl<yhf kl<jh< lkjh
