@@ -68,7 +68,6 @@ public class ImportButtonListener extends SelectionAdapter {
 					return;
 				}
 				final URI platformFileLocation = file.toURI();
-				// final Collection<String> packages = TargetPlatformModel.npmPackageNamesFrom(platformFileLocation);
 				final Map<String, String> packages = TargetPlatformModel
 						.npmVersionedPackageNamesFrom(platformFileLocation);
 
