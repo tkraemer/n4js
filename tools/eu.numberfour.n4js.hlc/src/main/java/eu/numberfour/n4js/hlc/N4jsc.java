@@ -644,7 +644,6 @@ public class N4jsc {
 					gitLocationProvider.getGitLocation().getRemoteBranch(), true);
 			pull(localClonePath);
 
-			TargetPlatformModel model = TargetPlatformModel.readValue(targetPlatformFile.toURI());
 			PackageJson packageJson = TargetPlatformFactory.createN4Default();
 			File packageJsonFile = new File(targetPlatformInstallLocation, PackageJson.PACKAGE_JSON);
 			try {
@@ -658,17 +657,14 @@ public class N4jsc {
 							.setTargetPlatformFileLocation(packageJsonFile.toURI());
 
 					// install dependencies if needed
-					final Map<String, String> packages = TargetPlatformModel
+					final Map<String, String> versionedPackages = TargetPlatformModel
 							.npmVersionedPackageNamesFrom(targetPlatformFile.toURI());
-					if (null != packages) {
-						packages.forEach((String name, String version) -> System.out
-								.println("31337 " + name + " :: " + version));
-						final Iterable<Entry<String, String>> packageNames = packages.entrySet();
-						for (final Entry<String, String> packageData : packageNames) {
+					if (null != versionedPackages) {
+						final Iterable<Entry<String, String>> packageData = versionedPackages.entrySet();
+						for (final Entry<String, String> name2version : packageData) {
 							try {
-								final IStatus status = npmManager.installDependency(packageData.getKey(),
-										packageData.getValue(),
-										new NullProgressMonitor());
+								final IStatus status = npmManager.installDependency(name2version.getKey(),
+										name2version.getValue(), new NullProgressMonitor());
 								if (!status.isOK()) {
 									throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR, status.getMessage(),
 											status.getException());
