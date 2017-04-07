@@ -33,7 +33,7 @@ public class TargetPlatformConfigurationsTest extends BaseN4jscExternalTest {
 
 	@Override
 	protected Map<String, String> getNpmDependencies() {
-		return singletonMap("express", "^4.13.4");
+		return singletonMap("express", "@4.13.4");
 	}
 
 	// ===== normal failures

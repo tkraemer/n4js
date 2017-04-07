@@ -34,31 +34,31 @@ public class InstallCompileRunN4jscExternalMainModuleTest extends BaseN4jscExter
 		Map<String, String> deps = new HashMap<>();
 
 		// main is "index.js"
-		deps.put("express", "^4.13.4");
+		deps.put("express", "@4.13.4");
 
 		// main is "lib", there is index.js in lib folder
-		deps.put("jade", "^1.11.0");
+		deps.put("jade", "@1.11.0");
 
 		// main is "lodash.js"
-		deps.put("lodash", "^4.6.0");
+		deps.put("lodash", "@4.6.0");
 
 		// TODO karma is commented out due to bumping up to Node.js 6.x and the below described deprecation warnings:
 		// (node) v8::ObjectTemplate::Set() with non-primitive values is deprecated
 		// (node) and will stop working in the next major release.
 		// // main is "./lib/index"
-		// deps.put("karma", "^0.13.21");
+		// deps.put("karma", "@0.13.21");
 
 		// main is "./lib/bar", but there is lib folder and lib.js file
-		deps.put("bar", "^0.1.2");
+		deps.put("bar", "@0.1.2");
 
 		// main is "./lib/index.js"
-		deps.put("pouchdb-find", "^0.10.3");
+		deps.put("pouchdb-find", "@0.10.3");
 
 		// no main
-		deps.put("body-parser", "^1.15.0");
+		deps.put("body-parser", "@1.15.0");
 
 		// broken main (defined in the package.json, but does not exist in the npm package)
-		deps.put("next", "^1.1.1");
+		deps.put("next", "@1.1.1");
 
 		return deps;
 	}
