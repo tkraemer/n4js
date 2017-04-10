@@ -325,7 +325,7 @@ public abstract class FunctionDefinitionImpl extends FunctionOrFieldAccessorImpl
 	 * @generated
 	 */
 	public boolean isReturnValueOptional() {
-		return (this.isReturnValueDeclaredOptional() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isOptional_OLD_SYNTAX()));
+		return ((((this.getDefinedFunction() != null) && this.getDefinedFunction().isReturnValueOptional()) || this.isReturnValueDeclaredOptional()) || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isOptional_OLD_SYNTAX()));
 	}
 
 	/**

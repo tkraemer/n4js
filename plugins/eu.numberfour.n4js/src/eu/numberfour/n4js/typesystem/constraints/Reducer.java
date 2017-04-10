@@ -506,9 +506,9 @@ import it.xsemantics.runtime.RuleEnvironment;
 		} else if (isVoidLeft || isVoidRight) {
 			// we have a constraint like:
 			// ⟨ {function():void} <: {function():α} ⟩ or ⟨ {function():void} = {function():α} ⟩
-			// --> we're doomed, unless the non-void return type is optional
-			final TypeRef nonVoidReturnType = isVoidLeft ? right.getReturnTypeRef() : left.getReturnTypeRef();
-			wasAdded |= addBound(TypeUtils.isOptional(nonVoidReturnType)); // n.b.: #isOptional() is null-safe
+			// --> we're doomed, unless the non-void return value is optional
+			final boolean isRetValOpt = isVoidLeft ? right.isReturnValueOptional() : left.isReturnValueOptional();
+			wasAdded |= addBound(isRetValOpt);
 		} else {
 			wasAdded |= reduce(left.getReturnTypeRef(), right.getReturnTypeRef(), variance.mult(CO));
 		}

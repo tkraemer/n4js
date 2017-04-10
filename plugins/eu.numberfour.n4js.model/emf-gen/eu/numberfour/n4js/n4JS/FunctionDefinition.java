@@ -163,7 +163,7 @@ public interface FunctionDefinition extends FunctionOrFieldAccessor, TypeDefinin
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isReturnValueDeclaredOptional() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isOptional_OLD_SYNTAX()));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((((this.getDefinedFunction() != null) && this.getDefinedFunction().isReturnValueOptional()) || this.isReturnValueDeclaredOptional()) || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isOptional_OLD_SYNTAX()));'"
 	 * @generated
 	 */
 	boolean isReturnValueOptional();

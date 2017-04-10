@@ -495,8 +495,7 @@ public final class InferenceContext {
 		for (int i = 0; i < typeRefs.length; i++) {
 			final TypeRef curr = typeRefs[i];
 			final Type currDeclType = curr != null ? curr.getDeclaredType() : null;
-			if (currDeclType != null
-					&& ((currDeclType != undefinedType && currDeclType != nullType) || TypeUtils.isOptional(curr))) {
+			if (currDeclType != null && currDeclType != undefinedType && currDeclType != nullType) {
 				return true; // wow, that bound is interesting!
 			}
 		}
