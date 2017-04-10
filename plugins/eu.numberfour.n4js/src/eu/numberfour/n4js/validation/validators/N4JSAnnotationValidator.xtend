@@ -166,6 +166,8 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 					internalCheckStaticPolyfillModule(annotation)
 				case STATIC_POLYFILL.name:
 					internalCheckStaticPolyfill(annotation)
+				case N4JS.name:
+					internalCheckN4JS(annotation)
 			}
 		}
 	}
@@ -325,6 +327,21 @@ class N4JSAnnotationValidator extends AbstractN4JSDeclarativeValidator {
 					containingType.description, containingTypeRef.typeRefAsString);
 				addIssue(msg, annotation, ANNOTATION__ARGS, ANN_THIS_NOT_SUBTYPE_OF_CONTAINING_TYPE);
 			}
+		}
+	}
+
+	/** 
+	 * Check N4JS annotation to be in definition file.
+	 */
+	private def internalCheckN4JS(Annotation annotation) {
+		val element = annotation.annotatedElement;
+		if (element === null) {
+			return;
+		}
+		if (!jsVariantHelper.isExternalMode(element)) {
+			addIssue(getMessageForANN_DISALLOWED_IN_NONDEFINTION_FILE(annotation.name), annotation, ANNOTATION__NAME,
+				ANN_DISALLOWED_IN_NONDEFINTION_FILE);
+			return;
 		}
 	}
 
