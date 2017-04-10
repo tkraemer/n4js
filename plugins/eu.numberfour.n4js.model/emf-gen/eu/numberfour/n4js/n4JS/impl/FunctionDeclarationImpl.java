@@ -622,7 +622,7 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 	 * @generated
 	 */
 	public boolean isReturnValueOptional() {
-		return ((((this.getDefinedFunction() != null) && this.getDefinedFunction().isReturnValueOptional()) || this.isReturnValueDeclaredOptional()) || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isOptional_OLD_SYNTAX()));
+		return ((((this.getDefinedFunction() != null) && this.getDefinedFunction().isReturnValueOptional()) || this.isReturnValueDeclaredOptional()) || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark()));
 	}
 
 	/**

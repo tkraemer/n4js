@@ -67358,8 +67358,8 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
     public final EObject ruleTypeRefWithModifiers() throws RecognitionException {
         EObject current = null;
 
-        Token lv_optional_OLD_SYNTAX_1_0=null;
-        Token lv_optional_OLD_SYNTAX_3_0=null;
+        Token lv_followedByQuestionMark_1_0=null;
+        Token lv_followedByQuestionMark_3_0=null;
         EObject this_TypeRefWithoutModifiers_0 = null;
 
 
@@ -67418,10 +67418,10 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                         case 1 :
                             {
                             {
-                            lv_optional_OLD_SYNTAX_1_0=(Token)match(input,QuestionMark,FOLLOW_2); if (state.failed) return current;
+                            lv_followedByQuestionMark_1_0=(Token)match(input,QuestionMark,FOLLOW_2); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
-                              						newLeafNode(lv_optional_OLD_SYNTAX_1_0, grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_0_1_0());
+                              						newLeafNode(lv_followedByQuestionMark_1_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_0_1_0());
                               					
                             }
                             if ( state.backtracking==0 ) {
@@ -67429,7 +67429,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                               						if (current==null) {
                               							current = createModelElement(grammarAccess.getTypeRefWithModifiersRule());
                               						}
-                              						setWithLastConsumed(current, "optional_OLD_SYNTAX", true, "?");
+                              						setWithLastConsumed(current, "followedByQuestionMark", true, "?");
                               					
                             }
 
@@ -67462,10 +67462,10 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                     }
                     {
                     {
-                    lv_optional_OLD_SYNTAX_3_0=(Token)match(input,QuestionMark,FOLLOW_2); if (state.failed) return current;
+                    lv_followedByQuestionMark_3_0=(Token)match(input,QuestionMark,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      						newLeafNode(lv_optional_OLD_SYNTAX_3_0, grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_1_0());
+                      						newLeafNode(lv_followedByQuestionMark_3_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_1_0());
                       					
                     }
                     if ( state.backtracking==0 ) {
@@ -67473,7 +67473,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                       						if (current==null) {
                       							current = createModelElement(grammarAccess.getTypeRefWithModifiersRule());
                       						}
-                      						setWithLastConsumed(current, "optional_OLD_SYNTAX", true, "?");
+                      						setWithLastConsumed(current, "followedByQuestionMark", true, "?");
                       					
                     }
 

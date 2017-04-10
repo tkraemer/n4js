@@ -75,8 +75,15 @@ abstract class Versionable {
  */
 abstract class TypeRef extends TypeArgument, Versionable {
 
-	/* Represents the old ? after the type name for defining optional fields/return types. To be removed soon. */
-	boolean optional_OLD_SYNTAX
+	/*
+	 * <b>SHOULD NOT BE USED, EXCEPT FOR DECLARATION OF OPTIONAL RETURN VALUES</b>
+	 * <p>
+	 * Represents the old ? after a type reference for defining optional fields / return values. At the moment, this is
+	 * used only for declaring the return value of a function optional. In the future, this might be used for
+	 * undefined/null-analysis. For example, <code>string?</code> might be syntactic sugar for
+	 * <code>string|undefined</code>.
+	 */
+	boolean followedByQuestionMark
 
 	/*
 	 * Returns all type modifiers of the receiving type reference as a string, similar to N4JS syntax. This method is
@@ -960,7 +967,7 @@ abstract class FunctionTypeExprOrRef extends StaticBaseTypeRef {
 	 */
 	op TFormalParameter[] getFpars()
 	op boolean isReturnValueOptional() {
-		return returnTypeRef!==null && returnTypeRef.optional_OLD_SYNTAX;
+		return returnTypeRef!==null && returnTypeRef.followedByQuestionMark;
 	}
 	/*
 	 * The return type as declared in the expression or of the referenced function type.
@@ -1179,7 +1186,7 @@ class FunctionTypeExpression extends FunctionTypeExprOrRef {
 	 */
 	boolean returnValueOptional_NEW_SYNTAX
 	op boolean isReturnValueOptional() {
-		return returnValueOptional_NEW_SYNTAX || (returnTypeRef!==null && returnTypeRef.optional_OLD_SYNTAX);
+		return returnValueOptional_NEW_SYNTAX || (returnTypeRef!==null && returnTypeRef.followedByQuestionMark);
 	}
 	/*
 	 * Return type declared in the FunctionTypeExpression in the AST or

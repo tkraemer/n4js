@@ -217,7 +217,7 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTAnnotationAccess().getArgsAssignment_1_1_1_1(), "rule__TAnnotation__ArgsAssignment_1_1_1_1");
 					put(grammarAccess.getTAnnotationStringArgumentAccess().getValueAssignment(), "rule__TAnnotationStringArgument__ValueAssignment");
 					put(grammarAccess.getTAnnotationTypeRefArgumentAccess().getTypeRefAssignment(), "rule__TAnnotationTypeRefArgument__TypeRefAssignment");
-					put(grammarAccess.getTypeRefAccess().getOptional_OLD_SYNTAXAssignment_1(), "rule__TypeRef__Optional_OLD_SYNTAXAssignment_1");
+					put(grammarAccess.getTypeRefAccess().getFollowedByQuestionMarkAssignment_1(), "rule__TypeRef__FollowedByQuestionMarkAssignment_1");
 					put(grammarAccess.getPrimitiveTypeAccess().getNameAssignment_1(), "rule__PrimitiveType__NameAssignment_1");
 					put(grammarAccess.getPrimitiveTypeAccess().getTypeVarsAssignment_2_1(), "rule__PrimitiveType__TypeVarsAssignment_2_1");
 					put(grammarAccess.getPrimitiveTypeAccess().getDeclaredElementTypeAssignment_3_1(), "rule__PrimitiveType__DeclaredElementTypeAssignment_3_1");
@@ -319,8 +319,8 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getUnionTypeExpressionAccess().getTypeRefsAssignment_1_1_1(), "rule__UnionTypeExpression__TypeRefsAssignment_1_1_1");
 					put(grammarAccess.getIntersectionTypeExpressionAccess().getTypeRefsAssignment_1_1_1(), "rule__IntersectionTypeExpression__TypeRefsAssignment_1_1_1");
 					put(grammarAccess.getPrimaryTypeExpressionAccess().getReturnTypeRefAssignment_0_1(), "rule__PrimaryTypeExpression__ReturnTypeRefAssignment_0_1");
-					put(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXAssignment_0_1(), "rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_0_1");
-					put(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXAssignment_1_1(), "rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_1_1");
+					put(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkAssignment_0_1(), "rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_0_1");
+					put(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkAssignment_1_1(), "rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1_1");
 					put(grammarAccess.getTypeRefWithoutModifiersAccess().getDynamicAssignment_0_1(), "rule__TypeRefWithoutModifiers__DynamicAssignment_0_1");
 					put(grammarAccess.getThisTypeRefStructuralAccess().getDefinedTypingStrategyAssignment_0(), "rule__ThisTypeRefStructural__DefinedTypingStrategyAssignment_0");
 					put(grammarAccess.getFunctionTypeExpressionOLDAccess().getDeclaredThisTypeAssignment_2_3(), "rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3");

@@ -342,7 +342,7 @@ class TFunction extends DeclaredTypeWithAccessModifier, SyntaxRelatedTElement {
 	 */
 	boolean returnValueOptional_NEW_SYNTAX
 	op boolean isReturnValueOptional() {
-		return returnValueOptional_NEW_SYNTAX || (returnTypeRef!==null && returnTypeRef.optional_OLD_SYNTAX);
+		return returnValueOptional_NEW_SYNTAX || (returnTypeRef!==null && returnTypeRef.followedByQuestionMark);
 	}
 	/*
 	 * Return type
@@ -1349,7 +1349,7 @@ class TField extends TMemberWithAccessModifier, TTypedElement, TConstableElement
 	boolean optional_NEW_SYNTAX
 
 	op boolean isOptional() {
-		return optional_NEW_SYNTAX || (typeRef!==null && typeRef.optional_OLD_SYNTAX);
+		return optional_NEW_SYNTAX;
 	}
 	op boolean isStatic() {
 		return declaredStatic || const;
@@ -1398,7 +1398,7 @@ abstract class FieldAccessor extends TMemberWithAccessModifier {
 	op TypeRef getDeclaredTypeRef()
 
 	op boolean isOptional() {
-		return optional_NEW_SYNTAX || (declaredTypeRef!==null && declaredTypeRef.optional_OLD_SYNTAX);
+		return optional_NEW_SYNTAX;
 	}
 	/**
 	 * Returns true if the method is either declared abstract or it is implicitly abstract, i.e. it is declared in a role and has no body.

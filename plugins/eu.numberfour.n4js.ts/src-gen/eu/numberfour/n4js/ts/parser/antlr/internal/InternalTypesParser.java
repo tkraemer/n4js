@@ -1379,11 +1379,11 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTypeRef"
-    // InternalTypesParser.g:447:1: ruleTypeRef returns [EObject current=null] : (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( (lv_optional_OLD_SYNTAX_1_0= QuestionMark ) )? ) ;
+    // InternalTypesParser.g:447:1: ruleTypeRef returns [EObject current=null] : (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( (lv_followedByQuestionMark_1_0= QuestionMark ) )? ) ;
     public final EObject ruleTypeRef() throws RecognitionException {
         EObject current = null;
 
-        Token lv_optional_OLD_SYNTAX_1_0=null;
+        Token lv_followedByQuestionMark_1_0=null;
         EObject this_TypeRefWithoutModifiers_0 = null;
 
 
@@ -1391,11 +1391,11 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalTypesParser.g:453:2: ( (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( (lv_optional_OLD_SYNTAX_1_0= QuestionMark ) )? ) )
-            // InternalTypesParser.g:454:2: (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( (lv_optional_OLD_SYNTAX_1_0= QuestionMark ) )? )
+            // InternalTypesParser.g:453:2: ( (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( (lv_followedByQuestionMark_1_0= QuestionMark ) )? ) )
+            // InternalTypesParser.g:454:2: (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( (lv_followedByQuestionMark_1_0= QuestionMark ) )? )
             {
-            // InternalTypesParser.g:454:2: (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( (lv_optional_OLD_SYNTAX_1_0= QuestionMark ) )? )
-            // InternalTypesParser.g:455:3: this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( (lv_optional_OLD_SYNTAX_1_0= QuestionMark ) )?
+            // InternalTypesParser.g:454:2: (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( (lv_followedByQuestionMark_1_0= QuestionMark ) )? )
+            // InternalTypesParser.g:455:3: this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( (lv_followedByQuestionMark_1_0= QuestionMark ) )?
             {
             if ( state.backtracking==0 ) {
 
@@ -1413,7 +1413,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
               			afterParserOrEnumRuleCall();
               		
             }
-            // InternalTypesParser.g:463:3: ( (lv_optional_OLD_SYNTAX_1_0= QuestionMark ) )?
+            // InternalTypesParser.g:463:3: ( (lv_followedByQuestionMark_1_0= QuestionMark ) )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -1422,15 +1422,15 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             }
             switch (alt7) {
                 case 1 :
-                    // InternalTypesParser.g:464:4: (lv_optional_OLD_SYNTAX_1_0= QuestionMark )
+                    // InternalTypesParser.g:464:4: (lv_followedByQuestionMark_1_0= QuestionMark )
                     {
-                    // InternalTypesParser.g:464:4: (lv_optional_OLD_SYNTAX_1_0= QuestionMark )
-                    // InternalTypesParser.g:465:5: lv_optional_OLD_SYNTAX_1_0= QuestionMark
+                    // InternalTypesParser.g:464:4: (lv_followedByQuestionMark_1_0= QuestionMark )
+                    // InternalTypesParser.g:465:5: lv_followedByQuestionMark_1_0= QuestionMark
                     {
-                    lv_optional_OLD_SYNTAX_1_0=(Token)match(input,QuestionMark,FOLLOW_2); if (state.failed) return current;
+                    lv_followedByQuestionMark_1_0=(Token)match(input,QuestionMark,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      					newLeafNode(lv_optional_OLD_SYNTAX_1_0, grammarAccess.getTypeRefAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_0());
+                      					newLeafNode(lv_followedByQuestionMark_1_0, grammarAccess.getTypeRefAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_0());
                       				
                     }
                     if ( state.backtracking==0 ) {
@@ -1438,7 +1438,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                       					if (current==null) {
                       						current = createModelElement(grammarAccess.getTypeRefRule());
                       					}
-                      					setWithLastConsumed(current, "optional_OLD_SYNTAX", true, "?");
+                      					setWithLastConsumed(current, "followedByQuestionMark", true, "?");
                       				
                     }
 
@@ -10164,12 +10164,12 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTypeRefWithModifiers"
-    // InternalTypesParser.g:3910:1: ruleTypeRefWithModifiers returns [EObject current=null] : ( (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( ( ( QuestionMark ) )=> (lv_optional_OLD_SYNTAX_1_0= QuestionMark ) )? ) | ( () ( (lv_optional_OLD_SYNTAX_3_0= QuestionMark ) ) ) ) ;
+    // InternalTypesParser.g:3910:1: ruleTypeRefWithModifiers returns [EObject current=null] : ( (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( ( ( QuestionMark ) )=> (lv_followedByQuestionMark_1_0= QuestionMark ) )? ) | ( () ( (lv_followedByQuestionMark_3_0= QuestionMark ) ) ) ) ;
     public final EObject ruleTypeRefWithModifiers() throws RecognitionException {
         EObject current = null;
 
-        Token lv_optional_OLD_SYNTAX_1_0=null;
-        Token lv_optional_OLD_SYNTAX_3_0=null;
+        Token lv_followedByQuestionMark_1_0=null;
+        Token lv_followedByQuestionMark_3_0=null;
         EObject this_TypeRefWithoutModifiers_0 = null;
 
 
@@ -10177,10 +10177,10 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalTypesParser.g:3916:2: ( ( (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( ( ( QuestionMark ) )=> (lv_optional_OLD_SYNTAX_1_0= QuestionMark ) )? ) | ( () ( (lv_optional_OLD_SYNTAX_3_0= QuestionMark ) ) ) ) )
-            // InternalTypesParser.g:3917:2: ( (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( ( ( QuestionMark ) )=> (lv_optional_OLD_SYNTAX_1_0= QuestionMark ) )? ) | ( () ( (lv_optional_OLD_SYNTAX_3_0= QuestionMark ) ) ) )
+            // InternalTypesParser.g:3916:2: ( ( (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( ( ( QuestionMark ) )=> (lv_followedByQuestionMark_1_0= QuestionMark ) )? ) | ( () ( (lv_followedByQuestionMark_3_0= QuestionMark ) ) ) ) )
+            // InternalTypesParser.g:3917:2: ( (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( ( ( QuestionMark ) )=> (lv_followedByQuestionMark_1_0= QuestionMark ) )? ) | ( () ( (lv_followedByQuestionMark_3_0= QuestionMark ) ) ) )
             {
-            // InternalTypesParser.g:3917:2: ( (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( ( ( QuestionMark ) )=> (lv_optional_OLD_SYNTAX_1_0= QuestionMark ) )? ) | ( () ( (lv_optional_OLD_SYNTAX_3_0= QuestionMark ) ) ) )
+            // InternalTypesParser.g:3917:2: ( (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( ( ( QuestionMark ) )=> (lv_followedByQuestionMark_1_0= QuestionMark ) )? ) | ( () ( (lv_followedByQuestionMark_3_0= QuestionMark ) ) ) )
             int alt85=2;
             int LA85_0 = input.LA(1);
 
@@ -10199,10 +10199,10 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             }
             switch (alt85) {
                 case 1 :
-                    // InternalTypesParser.g:3918:3: (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( ( ( QuestionMark ) )=> (lv_optional_OLD_SYNTAX_1_0= QuestionMark ) )? )
+                    // InternalTypesParser.g:3918:3: (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( ( ( QuestionMark ) )=> (lv_followedByQuestionMark_1_0= QuestionMark ) )? )
                     {
-                    // InternalTypesParser.g:3918:3: (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( ( ( QuestionMark ) )=> (lv_optional_OLD_SYNTAX_1_0= QuestionMark ) )? )
-                    // InternalTypesParser.g:3919:4: this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( ( ( QuestionMark ) )=> (lv_optional_OLD_SYNTAX_1_0= QuestionMark ) )?
+                    // InternalTypesParser.g:3918:3: (this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( ( ( QuestionMark ) )=> (lv_followedByQuestionMark_1_0= QuestionMark ) )? )
+                    // InternalTypesParser.g:3919:4: this_TypeRefWithoutModifiers_0= ruleTypeRefWithoutModifiers ( ( ( QuestionMark ) )=> (lv_followedByQuestionMark_1_0= QuestionMark ) )?
                     {
                     if ( state.backtracking==0 ) {
 
@@ -10220,7 +10220,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                       				afterParserOrEnumRuleCall();
                       			
                     }
-                    // InternalTypesParser.g:3927:4: ( ( ( QuestionMark ) )=> (lv_optional_OLD_SYNTAX_1_0= QuestionMark ) )?
+                    // InternalTypesParser.g:3927:4: ( ( ( QuestionMark ) )=> (lv_followedByQuestionMark_1_0= QuestionMark ) )?
                     int alt84=2;
                     int LA84_0 = input.LA(1);
 
@@ -10229,15 +10229,15 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt84) {
                         case 1 :
-                            // InternalTypesParser.g:3928:5: ( ( QuestionMark ) )=> (lv_optional_OLD_SYNTAX_1_0= QuestionMark )
+                            // InternalTypesParser.g:3928:5: ( ( QuestionMark ) )=> (lv_followedByQuestionMark_1_0= QuestionMark )
                             {
-                            // InternalTypesParser.g:3932:5: (lv_optional_OLD_SYNTAX_1_0= QuestionMark )
-                            // InternalTypesParser.g:3933:6: lv_optional_OLD_SYNTAX_1_0= QuestionMark
+                            // InternalTypesParser.g:3932:5: (lv_followedByQuestionMark_1_0= QuestionMark )
+                            // InternalTypesParser.g:3933:6: lv_followedByQuestionMark_1_0= QuestionMark
                             {
-                            lv_optional_OLD_SYNTAX_1_0=(Token)match(input,QuestionMark,FOLLOW_2); if (state.failed) return current;
+                            lv_followedByQuestionMark_1_0=(Token)match(input,QuestionMark,FOLLOW_2); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
-                              						newLeafNode(lv_optional_OLD_SYNTAX_1_0, grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_0_1_0());
+                              						newLeafNode(lv_followedByQuestionMark_1_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_0_1_0());
                               					
                             }
                             if ( state.backtracking==0 ) {
@@ -10245,7 +10245,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                               						if (current==null) {
                               							current = createModelElement(grammarAccess.getTypeRefWithModifiersRule());
                               						}
-                              						setWithLastConsumed(current, "optional_OLD_SYNTAX", true, "?");
+                              						setWithLastConsumed(current, "followedByQuestionMark", true, "?");
                               					
                             }
 
@@ -10264,10 +10264,10 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalTypesParser.g:3947:3: ( () ( (lv_optional_OLD_SYNTAX_3_0= QuestionMark ) ) )
+                    // InternalTypesParser.g:3947:3: ( () ( (lv_followedByQuestionMark_3_0= QuestionMark ) ) )
                     {
-                    // InternalTypesParser.g:3947:3: ( () ( (lv_optional_OLD_SYNTAX_3_0= QuestionMark ) ) )
-                    // InternalTypesParser.g:3948:4: () ( (lv_optional_OLD_SYNTAX_3_0= QuestionMark ) )
+                    // InternalTypesParser.g:3947:3: ( () ( (lv_followedByQuestionMark_3_0= QuestionMark ) ) )
+                    // InternalTypesParser.g:3948:4: () ( (lv_followedByQuestionMark_3_0= QuestionMark ) )
                     {
                     // InternalTypesParser.g:3948:4: ()
                     // InternalTypesParser.g:3949:5: 
@@ -10282,16 +10282,16 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalTypesParser.g:3955:4: ( (lv_optional_OLD_SYNTAX_3_0= QuestionMark ) )
-                    // InternalTypesParser.g:3956:5: (lv_optional_OLD_SYNTAX_3_0= QuestionMark )
+                    // InternalTypesParser.g:3955:4: ( (lv_followedByQuestionMark_3_0= QuestionMark ) )
+                    // InternalTypesParser.g:3956:5: (lv_followedByQuestionMark_3_0= QuestionMark )
                     {
-                    // InternalTypesParser.g:3956:5: (lv_optional_OLD_SYNTAX_3_0= QuestionMark )
-                    // InternalTypesParser.g:3957:6: lv_optional_OLD_SYNTAX_3_0= QuestionMark
+                    // InternalTypesParser.g:3956:5: (lv_followedByQuestionMark_3_0= QuestionMark )
+                    // InternalTypesParser.g:3957:6: lv_followedByQuestionMark_3_0= QuestionMark
                     {
-                    lv_optional_OLD_SYNTAX_3_0=(Token)match(input,QuestionMark,FOLLOW_2); if (state.failed) return current;
+                    lv_followedByQuestionMark_3_0=(Token)match(input,QuestionMark,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      						newLeafNode(lv_optional_OLD_SYNTAX_3_0, grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_1_0());
+                      						newLeafNode(lv_followedByQuestionMark_3_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_1_0());
                       					
                     }
                     if ( state.backtracking==0 ) {
@@ -10299,7 +10299,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                       						if (current==null) {
                       							current = createModelElement(grammarAccess.getTypeRefWithModifiersRule());
                       						}
-                      						setWithLastConsumed(current, "optional_OLD_SYNTAX", true, "?");
+                      						setWithLastConsumed(current, "followedByQuestionMark", true, "?");
                       					
                     }
 

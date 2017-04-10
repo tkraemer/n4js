@@ -288,7 +288,7 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	 * @generated
 	 */
 	public boolean isOptional() {
-		return (this.isOptional_NEW_SYNTAX() || ((this.getTypeRef() != null) && this.getTypeRef().isOptional_OLD_SYNTAX()));
+		return this.isOptional_NEW_SYNTAX();
 	}
 
 	/**

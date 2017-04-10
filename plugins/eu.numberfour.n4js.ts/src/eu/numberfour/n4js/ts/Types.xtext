@@ -91,7 +91,7 @@ Type: 	  TObjectPrototype
 ;
 
 TypeRef:
-	TypeRefWithoutModifiers optional_OLD_SYNTAX?='?'?
+	TypeRefWithoutModifiers followedByQuestionMark?='?'?
 ;
 
 PrimitiveType:

@@ -246,25 +246,24 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.Types.TypeRef");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cTypeRefWithoutModifiersParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final Assignment cOptional_OLD_SYNTAXAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cOptional_OLD_SYNTAXQuestionMarkKeyword_1_0 = (Keyword)cOptional_OLD_SYNTAXAssignment_1.eContents().get(0);
+		private final Assignment cFollowedByQuestionMarkAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cFollowedByQuestionMarkQuestionMarkKeyword_1_0 = (Keyword)cFollowedByQuestionMarkAssignment_1.eContents().get(0);
 		
 		//TypeRef:
-		//	TypeRefWithoutModifiers
-		//	optional_OLD_SYNTAX?='?'?;
+		//	TypeRefWithoutModifiers followedByQuestionMark?='?'?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//TypeRefWithoutModifiers optional_OLD_SYNTAX?='?'?
+		//TypeRefWithoutModifiers followedByQuestionMark?='?'?
 		public Group getGroup() { return cGroup; }
 		
 		//TypeRefWithoutModifiers
 		public RuleCall getTypeRefWithoutModifiersParserRuleCall_0() { return cTypeRefWithoutModifiersParserRuleCall_0; }
 		
-		//optional_OLD_SYNTAX?='?'?
-		public Assignment getOptional_OLD_SYNTAXAssignment_1() { return cOptional_OLD_SYNTAXAssignment_1; }
+		//followedByQuestionMark?='?'?
+		public Assignment getFollowedByQuestionMarkAssignment_1() { return cFollowedByQuestionMarkAssignment_1; }
 		
 		//'?'
-		public Keyword getOptional_OLD_SYNTAXQuestionMarkKeyword_1_0() { return cOptional_OLD_SYNTAXQuestionMarkKeyword_1_0; }
+		public Keyword getFollowedByQuestionMarkQuestionMarkKeyword_1_0() { return cFollowedByQuestionMarkQuestionMarkKeyword_1_0; }
 	}
 	public class PrimitiveTypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.Types.PrimitiveType");
@@ -2447,8 +2446,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TypeRef:
-	//	TypeRefWithoutModifiers
-	//	optional_OLD_SYNTAX?='?'?;
+	//	TypeRefWithoutModifiers followedByQuestionMark?='?'?;
 	public TypeRefElements getTypeRefAccess() {
 		return pTypeRef;
 	}
@@ -2830,7 +2828,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TypeRefWithModifiers StaticBaseTypeRef:
-	//	TypeRefWithoutModifiers => optional_OLD_SYNTAX?='?'? | {ParameterizedTypeRef} optional_OLD_SYNTAX?='?'
+	//	TypeRefWithoutModifiers => followedByQuestionMark?='?'? | {ParameterizedTypeRef} followedByQuestionMark?='?'
 	public TypeExpressionsGrammarAccess.TypeRefWithModifiersElements getTypeRefWithModifiersAccess() {
 		return gaTypeExpressions.getTypeRefWithModifiersAccess();
 	}

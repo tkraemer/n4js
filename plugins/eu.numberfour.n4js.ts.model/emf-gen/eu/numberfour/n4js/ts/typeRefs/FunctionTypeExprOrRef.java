@@ -91,7 +91,7 @@ public interface FunctionTypeExprOrRef extends StaticBaseTypeRef {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isOptional_OLD_SYNTAX());'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark());'"
 	 * @generated
 	 */
 	boolean isReturnValueOptional();

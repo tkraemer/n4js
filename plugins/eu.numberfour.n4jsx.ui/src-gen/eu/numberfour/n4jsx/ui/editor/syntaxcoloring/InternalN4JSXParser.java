@@ -50110,8 +50110,8 @@ public class InternalN4JSXParser extends AbstractInternalHighlightingAntlrParser
         InternalN4JSXParser.ruleTypeRefWithModifiers_return retval = new InternalN4JSXParser.ruleTypeRefWithModifiers_return();
         retval.start = input.LT(1);
 
-        Token Optional_OLD_SYNTAXQuestionMarkKeyword_0_1_0=null;
-        Token Optional_OLD_SYNTAXQuestionMarkKeyword_1_1_0=null;
+        Token FollowedByQuestionMarkQuestionMarkKeyword_0_1_0=null;
+        Token FollowedByQuestionMarkQuestionMarkKeyword_1_1_0=null;
         InternalN4JSXParser.ruleTypeRefWithoutModifiers_return TypeRefWithoutModifiersParserRuleCall_0_0 = null;
 
 
@@ -50161,10 +50161,10 @@ public class InternalN4JSXParser extends AbstractInternalHighlightingAntlrParser
                         case 1 :
                             {
                             {
-                            Optional_OLD_SYNTAXQuestionMarkKeyword_0_1_0=(Token)match(input,QuestionMark,FOLLOW_2); if (state.failed) return retval;
+                            FollowedByQuestionMarkQuestionMarkKeyword_0_1_0=(Token)match(input,QuestionMark,FOLLOW_2); if (state.failed) return retval;
                             if ( state.backtracking==0 ) {
 
-                              					announce(Optional_OLD_SYNTAXQuestionMarkKeyword_0_1_0, grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_0_1_0());
+                              					announce(FollowedByQuestionMarkQuestionMarkKeyword_0_1_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_0_1_0());
                               				
                             }
 
@@ -50187,10 +50187,10 @@ public class InternalN4JSXParser extends AbstractInternalHighlightingAntlrParser
                     {
                     {
                     {
-                    Optional_OLD_SYNTAXQuestionMarkKeyword_1_1_0=(Token)match(input,QuestionMark,FOLLOW_2); if (state.failed) return retval;
+                    FollowedByQuestionMarkQuestionMarkKeyword_1_1_0=(Token)match(input,QuestionMark,FOLLOW_2); if (state.failed) return retval;
                     if ( state.backtracking==0 ) {
 
-                      					announce(Optional_OLD_SYNTAXQuestionMarkKeyword_1_1_0, grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_1_0());
+                      					announce(FollowedByQuestionMarkQuestionMarkKeyword_1_1_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_1_0());
                       				
                     }
 

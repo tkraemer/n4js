@@ -86,7 +86,7 @@ public interface TField extends TMemberWithAccessModifier, TTypedElement, TConst
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isOptional_NEW_SYNTAX() || ((this.getTypeRef() != null) && this.getTypeRef().isOptional_OLD_SYNTAX()));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return this.isOptional_NEW_SYNTAX();'"
 	 * @generated
 	 */
 	boolean isOptional();

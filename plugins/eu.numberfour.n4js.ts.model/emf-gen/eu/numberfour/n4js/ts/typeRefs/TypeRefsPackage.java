@@ -177,13 +177,13 @@ public interface TypeRefsPackage extends EPackage {
 	int TYPE_REF = 1;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_REF__OPTIONAL_OLD_SYNTAX = TYPE_ARGUMENT_FEATURE_COUNT + 0;
+	int TYPE_REF__FOLLOWED_BY_QUESTION_MARK = TYPE_ARGUMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Type Ref</em>' class.
@@ -439,13 +439,13 @@ public interface TypeRefsPackage extends EPackage {
 	int STATIC_BASE_TYPE_REF = 2;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STATIC_BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX = TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int STATIC_BASE_TYPE_REF__FOLLOWED_BY_QUESTION_MARK = TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The number of structural features of the '<em>Static Base Type Ref</em>' class.
@@ -701,13 +701,13 @@ public interface TypeRefsPackage extends EPackage {
 	int BASE_TYPE_REF = 3;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX = STATIC_BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int BASE_TYPE_REF__FOLLOWED_BY_QUESTION_MARK = STATIC_BASE_TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -972,13 +972,13 @@ public interface TypeRefsPackage extends EPackage {
 	int COMPOSED_TYPE_REF = 4;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOSED_TYPE_REF__OPTIONAL_OLD_SYNTAX = STATIC_BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int COMPOSED_TYPE_REF__FOLLOWED_BY_QUESTION_MARK = STATIC_BASE_TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Cached Composed Members</b></em>' containment reference list.
@@ -1261,13 +1261,13 @@ public interface TypeRefsPackage extends EPackage {
 	int UNION_TYPE_EXPRESSION = 5;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNION_TYPE_EXPRESSION__OPTIONAL_OLD_SYNTAX = COMPOSED_TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int UNION_TYPE_EXPRESSION__FOLLOWED_BY_QUESTION_MARK = COMPOSED_TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Cached Composed Members</b></em>' containment reference list.
@@ -1550,13 +1550,13 @@ public interface TypeRefsPackage extends EPackage {
 	int INTERSECTION_TYPE_EXPRESSION = 6;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INTERSECTION_TYPE_EXPRESSION__OPTIONAL_OLD_SYNTAX = COMPOSED_TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int INTERSECTION_TYPE_EXPRESSION__FOLLOWED_BY_QUESTION_MARK = COMPOSED_TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Cached Composed Members</b></em>' containment reference list.
@@ -1839,13 +1839,13 @@ public interface TypeRefsPackage extends EPackage {
 	int THIS_TYPE_REF = 7;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int THIS_TYPE_REF__OPTIONAL_OLD_SYNTAX = BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int THIS_TYPE_REF__FOLLOWED_BY_QUESTION_MARK = BASE_TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -2110,13 +2110,13 @@ public interface TypeRefsPackage extends EPackage {
 	int THIS_TYPE_REF_NOMINAL = 8;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int THIS_TYPE_REF_NOMINAL__OPTIONAL_OLD_SYNTAX = THIS_TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int THIS_TYPE_REF_NOMINAL__FOLLOWED_BY_QUESTION_MARK = THIS_TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -2381,13 +2381,13 @@ public interface TypeRefsPackage extends EPackage {
 	int THIS_TYPE_REF_STRUCTURAL = 9;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int THIS_TYPE_REF_STRUCTURAL__OPTIONAL_OLD_SYNTAX = THIS_TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int THIS_TYPE_REF_STRUCTURAL__FOLLOWED_BY_QUESTION_MARK = THIS_TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -2715,13 +2715,13 @@ public interface TypeRefsPackage extends EPackage {
 	int BOUND_THIS_TYPE_REF = 10;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BOUND_THIS_TYPE_REF__OPTIONAL_OLD_SYNTAX = THIS_TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int BOUND_THIS_TYPE_REF__FOLLOWED_BY_QUESTION_MARK = THIS_TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -3058,13 +3058,13 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF = 11;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF__OPTIONAL_OLD_SYNTAX = BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int PARAMETERIZED_TYPE_REF__FOLLOWED_BY_QUESTION_MARK = BASE_TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -3483,13 +3483,13 @@ public interface TypeRefsPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL = 13;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL__OPTIONAL_OLD_SYNTAX = PARAMETERIZED_TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL__FOLLOWED_BY_QUESTION_MARK = PARAMETERIZED_TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -3862,13 +3862,13 @@ public interface TypeRefsPackage extends EPackage {
 	int EXISTENTIAL_TYPE_REF = 14;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXISTENTIAL_TYPE_REF__OPTIONAL_OLD_SYNTAX = TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int EXISTENTIAL_TYPE_REF__FOLLOWED_BY_QUESTION_MARK = TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Wildcard</b></em>' reference.
@@ -4142,13 +4142,13 @@ public interface TypeRefsPackage extends EPackage {
 	int UNKNOWN_TYPE_REF = 15;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNKNOWN_TYPE_REF__OPTIONAL_OLD_SYNTAX = TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int UNKNOWN_TYPE_REF__FOLLOWED_BY_QUESTION_MARK = TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The number of structural features of the '<em>Unknown Type Ref</em>' class.
@@ -4404,13 +4404,13 @@ public interface TypeRefsPackage extends EPackage {
 	int TYPE_TYPE_REF = 16;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_TYPE_REF__OPTIONAL_OLD_SYNTAX = BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int TYPE_TYPE_REF__FOLLOWED_BY_QUESTION_MARK = BASE_TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -4793,13 +4793,13 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_EXPR_OR_REF = 19;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPR_OR_REF__OPTIONAL_OLD_SYNTAX = STATIC_BASE_TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int FUNCTION_TYPE_EXPR_OR_REF__FOLLOWED_BY_QUESTION_MARK = STATIC_BASE_TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The number of structural features of the '<em>Function Type Expr Or Ref</em>' class.
@@ -5127,13 +5127,13 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_REF = 20;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_REF__OPTIONAL_OLD_SYNTAX = PARAMETERIZED_TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int FUNCTION_TYPE_REF__FOLLOWED_BY_QUESTION_MARK = PARAMETERIZED_TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -5524,13 +5524,13 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_EXPRESSION = 21;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPRESSION__OPTIONAL_OLD_SYNTAX = FUNCTION_TYPE_EXPR_OR_REF__OPTIONAL_OLD_SYNTAX;
+	int FUNCTION_TYPE_EXPRESSION__FOLLOWED_BY_QUESTION_MARK = FUNCTION_TYPE_EXPR_OR_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Binding</b></em>' attribute.
@@ -5939,13 +5939,13 @@ public interface TypeRefsPackage extends EPackage {
 	int DEFERRED_TYPE_REF = 22;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFERRED_TYPE_REF__OPTIONAL_OLD_SYNTAX = TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int DEFERRED_TYPE_REF__FOLLOWED_BY_QUESTION_MARK = TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The number of structural features of the '<em>Deferred Type Ref</em>' class.
@@ -6278,15 +6278,15 @@ public interface TypeRefsPackage extends EPackage {
 	EClass getTypeRef();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#isOptional_OLD_SYNTAX <em>Optional OLD SYNTAX</em>}'.
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#isFollowedByQuestionMark <em>Followed By Question Mark</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Optional OLD SYNTAX</em>'.
-	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRef#isOptional_OLD_SYNTAX()
+	 * @return the meta object for the attribute '<em>Followed By Question Mark</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRef#isFollowedByQuestionMark()
 	 * @see #getTypeRef()
 	 * @generated
 	 */
-	EAttribute getTypeRef_Optional_OLD_SYNTAX();
+	EAttribute getTypeRef_FollowedByQuestionMark();
 
 	/**
 	 * Returns the meta object for the '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#getModifiersAsString() <em>Get Modifiers As String</em>}' operation.
@@ -7896,12 +7896,12 @@ public interface TypeRefsPackage extends EPackage {
 		EClass TYPE_REF = eINSTANCE.getTypeRef();
 
 		/**
-		 * The meta object literal for the '<em><b>Optional OLD SYNTAX</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Followed By Question Mark</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TYPE_REF__OPTIONAL_OLD_SYNTAX = eINSTANCE.getTypeRef_Optional_OLD_SYNTAX();
+		EAttribute TYPE_REF__FOLLOWED_BY_QUESTION_MARK = eINSTANCE.getTypeRef_FollowedByQuestionMark();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Modifiers As String</b></em>' operation.

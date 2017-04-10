@@ -39,31 +39,31 @@ import org.eclipse.emf.ecore.xcore.lib.XcoreCollectionLiterals;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.TypeRefImpl#isOptional_OLD_SYNTAX <em>Optional OLD SYNTAX</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.TypeRefImpl#isFollowedByQuestionMark <em>Followed By Question Mark</em>}</li>
  * </ul>
  *
  * @generated
  */
 public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	/**
-	 * The default value of the '{@link #isOptional_OLD_SYNTAX() <em>Optional OLD SYNTAX</em>}' attribute.
+	 * The default value of the '{@link #isFollowedByQuestionMark() <em>Followed By Question Mark</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isOptional_OLD_SYNTAX()
+	 * @see #isFollowedByQuestionMark()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean OPTIONAL_OLD_SYNTAX_EDEFAULT = false;
+	protected static final boolean FOLLOWED_BY_QUESTION_MARK_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isOptional_OLD_SYNTAX() <em>Optional OLD SYNTAX</em>}' attribute.
+	 * The cached value of the '{@link #isFollowedByQuestionMark() <em>Followed By Question Mark</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isOptional_OLD_SYNTAX()
+	 * @see #isFollowedByQuestionMark()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean optional_OLD_SYNTAX = OPTIONAL_OLD_SYNTAX_EDEFAULT;
+	protected boolean followedByQuestionMark = FOLLOWED_BY_QUESTION_MARK_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -89,8 +89,8 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isOptional_OLD_SYNTAX() {
-		return optional_OLD_SYNTAX;
+	public boolean isFollowedByQuestionMark() {
+		return followedByQuestionMark;
 	}
 
 	/**
@@ -98,11 +98,11 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setOptional_OLD_SYNTAX(boolean newOptional_OLD_SYNTAX) {
-		boolean oldOptional_OLD_SYNTAX = optional_OLD_SYNTAX;
-		optional_OLD_SYNTAX = newOptional_OLD_SYNTAX;
+	public void setFollowedByQuestionMark(boolean newFollowedByQuestionMark) {
+		boolean oldFollowedByQuestionMark = followedByQuestionMark;
+		followedByQuestionMark = newFollowedByQuestionMark;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.TYPE_REF__OPTIONAL_OLD_SYNTAX, oldOptional_OLD_SYNTAX, optional_OLD_SYNTAX));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.TYPE_REF__FOLLOWED_BY_QUESTION_MARK, oldFollowedByQuestionMark, followedByQuestionMark));
 	}
 
 	/**
@@ -334,8 +334,8 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TypeRefsPackage.TYPE_REF__OPTIONAL_OLD_SYNTAX:
-				return isOptional_OLD_SYNTAX();
+			case TypeRefsPackage.TYPE_REF__FOLLOWED_BY_QUESTION_MARK:
+				return isFollowedByQuestionMark();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -348,8 +348,8 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TypeRefsPackage.TYPE_REF__OPTIONAL_OLD_SYNTAX:
-				setOptional_OLD_SYNTAX((Boolean)newValue);
+			case TypeRefsPackage.TYPE_REF__FOLLOWED_BY_QUESTION_MARK:
+				setFollowedByQuestionMark((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -363,8 +363,8 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TypeRefsPackage.TYPE_REF__OPTIONAL_OLD_SYNTAX:
-				setOptional_OLD_SYNTAX(OPTIONAL_OLD_SYNTAX_EDEFAULT);
+			case TypeRefsPackage.TYPE_REF__FOLLOWED_BY_QUESTION_MARK:
+				setFollowedByQuestionMark(FOLLOWED_BY_QUESTION_MARK_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -378,8 +378,8 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TypeRefsPackage.TYPE_REF__OPTIONAL_OLD_SYNTAX:
-				return optional_OLD_SYNTAX != OPTIONAL_OLD_SYNTAX_EDEFAULT;
+			case TypeRefsPackage.TYPE_REF__FOLLOWED_BY_QUESTION_MARK:
+				return followedByQuestionMark != FOLLOWED_BY_QUESTION_MARK_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}

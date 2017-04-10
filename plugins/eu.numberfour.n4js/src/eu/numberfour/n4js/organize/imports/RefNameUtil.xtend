@@ -50,7 +50,7 @@ class RefNameUtil {
 				}
 			}
 
-			if(ref.isOptional_OLD_SYNTAX && nodeText.endsWith('?')) {
+			if(ref.isFollowedByQuestionMark && nodeText.endsWith('?')) {
 				suffixLen = 1;
 			}
 

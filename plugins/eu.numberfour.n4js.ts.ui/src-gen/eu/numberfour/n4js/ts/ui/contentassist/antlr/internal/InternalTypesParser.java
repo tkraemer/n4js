@@ -13822,22 +13822,22 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeRef__Group__1__Impl"
-    // InternalTypesParser.g:3736:1: rule__TypeRef__Group__1__Impl : ( ( rule__TypeRef__Optional_OLD_SYNTAXAssignment_1 )? ) ;
+    // InternalTypesParser.g:3736:1: rule__TypeRef__Group__1__Impl : ( ( rule__TypeRef__FollowedByQuestionMarkAssignment_1 )? ) ;
     public final void rule__TypeRef__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalTypesParser.g:3740:1: ( ( ( rule__TypeRef__Optional_OLD_SYNTAXAssignment_1 )? ) )
-            // InternalTypesParser.g:3741:1: ( ( rule__TypeRef__Optional_OLD_SYNTAXAssignment_1 )? )
+            // InternalTypesParser.g:3740:1: ( ( ( rule__TypeRef__FollowedByQuestionMarkAssignment_1 )? ) )
+            // InternalTypesParser.g:3741:1: ( ( rule__TypeRef__FollowedByQuestionMarkAssignment_1 )? )
             {
-            // InternalTypesParser.g:3741:1: ( ( rule__TypeRef__Optional_OLD_SYNTAXAssignment_1 )? )
-            // InternalTypesParser.g:3742:2: ( rule__TypeRef__Optional_OLD_SYNTAXAssignment_1 )?
+            // InternalTypesParser.g:3741:1: ( ( rule__TypeRef__FollowedByQuestionMarkAssignment_1 )? )
+            // InternalTypesParser.g:3742:2: ( rule__TypeRef__FollowedByQuestionMarkAssignment_1 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeRefAccess().getOptional_OLD_SYNTAXAssignment_1()); 
+               before(grammarAccess.getTypeRefAccess().getFollowedByQuestionMarkAssignment_1()); 
             }
-            // InternalTypesParser.g:3743:2: ( rule__TypeRef__Optional_OLD_SYNTAXAssignment_1 )?
+            // InternalTypesParser.g:3743:2: ( rule__TypeRef__FollowedByQuestionMarkAssignment_1 )?
             int alt46=2;
             int LA46_0 = input.LA(1);
 
@@ -13846,10 +13846,10 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
             switch (alt46) {
                 case 1 :
-                    // InternalTypesParser.g:3743:3: rule__TypeRef__Optional_OLD_SYNTAXAssignment_1
+                    // InternalTypesParser.g:3743:3: rule__TypeRef__FollowedByQuestionMarkAssignment_1
                     {
                     pushFollow(FOLLOW_2);
-                    rule__TypeRef__Optional_OLD_SYNTAXAssignment_1();
+                    rule__TypeRef__FollowedByQuestionMarkAssignment_1();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -13860,7 +13860,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeRefAccess().getOptional_OLD_SYNTAXAssignment_1()); 
+               after(grammarAccess.getTypeRefAccess().getFollowedByQuestionMarkAssignment_1()); 
             }
 
             }
@@ -34932,22 +34932,22 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeRefWithModifiers__Group_0__1__Impl"
-    // InternalTypesParser.g:10277:1: rule__TypeRefWithModifiers__Group_0__1__Impl : ( ( rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_0_1 )? ) ;
+    // InternalTypesParser.g:10277:1: rule__TypeRefWithModifiers__Group_0__1__Impl : ( ( rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_0_1 )? ) ;
     public final void rule__TypeRefWithModifiers__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalTypesParser.g:10281:1: ( ( ( rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_0_1 )? ) )
-            // InternalTypesParser.g:10282:1: ( ( rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_0_1 )? )
+            // InternalTypesParser.g:10281:1: ( ( ( rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_0_1 )? ) )
+            // InternalTypesParser.g:10282:1: ( ( rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_0_1 )? )
             {
-            // InternalTypesParser.g:10282:1: ( ( rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_0_1 )? )
-            // InternalTypesParser.g:10283:2: ( rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_0_1 )?
+            // InternalTypesParser.g:10282:1: ( ( rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_0_1 )? )
+            // InternalTypesParser.g:10283:2: ( rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_0_1 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXAssignment_0_1()); 
+               before(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkAssignment_0_1()); 
             }
-            // InternalTypesParser.g:10284:2: ( rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_0_1 )?
+            // InternalTypesParser.g:10284:2: ( rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_0_1 )?
             int alt111=2;
             int LA111_0 = input.LA(1);
 
@@ -34956,10 +34956,10 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
             switch (alt111) {
                 case 1 :
-                    // InternalTypesParser.g:10284:3: rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_0_1
+                    // InternalTypesParser.g:10284:3: rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_0_1
                     {
                     pushFollow(FOLLOW_2);
-                    rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_0_1();
+                    rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_0_1();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -34970,7 +34970,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXAssignment_0_1()); 
+               after(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkAssignment_0_1()); 
             }
 
             }
@@ -35106,26 +35106,26 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeRefWithModifiers__Group_1__1__Impl"
-    // InternalTypesParser.g:10331:1: rule__TypeRefWithModifiers__Group_1__1__Impl : ( ( rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_1_1 ) ) ;
+    // InternalTypesParser.g:10331:1: rule__TypeRefWithModifiers__Group_1__1__Impl : ( ( rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1_1 ) ) ;
     public final void rule__TypeRefWithModifiers__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalTypesParser.g:10335:1: ( ( ( rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_1_1 ) ) )
-            // InternalTypesParser.g:10336:1: ( ( rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_1_1 ) )
+            // InternalTypesParser.g:10335:1: ( ( ( rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1_1 ) ) )
+            // InternalTypesParser.g:10336:1: ( ( rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1_1 ) )
             {
-            // InternalTypesParser.g:10336:1: ( ( rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_1_1 ) )
-            // InternalTypesParser.g:10337:2: ( rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_1_1 )
+            // InternalTypesParser.g:10336:1: ( ( rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1_1 ) )
+            // InternalTypesParser.g:10337:2: ( rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXAssignment_1_1()); 
+               before(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkAssignment_1_1()); 
             }
-            // InternalTypesParser.g:10338:2: ( rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_1_1 )
-            // InternalTypesParser.g:10338:3: rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_1_1
+            // InternalTypesParser.g:10338:2: ( rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1_1 )
+            // InternalTypesParser.g:10338:3: rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1_1
             {
             pushFollow(FOLLOW_2);
-            rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_1_1();
+            rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -35133,7 +35133,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXAssignment_1_1()); 
+               after(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkAssignment_1_1()); 
             }
 
             }
@@ -49996,9 +49996,9 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TAnnotationTypeRefArgument__TypeRefAssignment"
 
 
-    // $ANTLR start "rule__TypeRef__Optional_OLD_SYNTAXAssignment_1"
-    // InternalTypesParser.g:15027:1: rule__TypeRef__Optional_OLD_SYNTAXAssignment_1 : ( ( QuestionMark ) ) ;
-    public final void rule__TypeRef__Optional_OLD_SYNTAXAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__TypeRef__FollowedByQuestionMarkAssignment_1"
+    // InternalTypesParser.g:15027:1: rule__TypeRef__FollowedByQuestionMarkAssignment_1 : ( ( QuestionMark ) ) ;
+    public final void rule__TypeRef__FollowedByQuestionMarkAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -50010,23 +50010,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:15033:3: ( QuestionMark )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeRefAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_0()); 
+               before(grammarAccess.getTypeRefAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_0()); 
             }
             // InternalTypesParser.g:15034:3: ( QuestionMark )
             // InternalTypesParser.g:15035:4: QuestionMark
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeRefAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_0()); 
+               before(grammarAccess.getTypeRefAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_0()); 
             }
             match(input,QuestionMark,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeRefAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_0()); 
+               after(grammarAccess.getTypeRefAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_0()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeRefAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_0()); 
+               after(grammarAccess.getTypeRefAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_0()); 
             }
 
             }
@@ -50046,7 +50046,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeRef__Optional_OLD_SYNTAXAssignment_1"
+    // $ANTLR end "rule__TypeRef__FollowedByQuestionMarkAssignment_1"
 
 
     // $ANTLR start "rule__PrimitiveType__NameAssignment_1"
@@ -54761,9 +54761,9 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__PrimaryTypeExpression__ReturnTypeRefAssignment_0_1"
 
 
-    // $ANTLR start "rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_0_1"
-    // InternalTypesParser.g:16650:1: rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_0_1 : ( ( QuestionMark ) ) ;
-    public final void rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_0_1() throws RecognitionException {
+    // $ANTLR start "rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_0_1"
+    // InternalTypesParser.g:16650:1: rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_0_1 : ( ( QuestionMark ) ) ;
+    public final void rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -54775,23 +54775,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:16656:3: ( QuestionMark )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_0_1_0()); 
+               before(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_0_1_0()); 
             }
             // InternalTypesParser.g:16657:3: ( QuestionMark )
             // InternalTypesParser.g:16658:4: QuestionMark
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_0_1_0()); 
+               before(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_0_1_0()); 
             }
             match(input,QuestionMark,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_0_1_0()); 
+               after(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_0_1_0()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_0_1_0()); 
+               after(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_0_1_0()); 
             }
 
             }
@@ -54811,12 +54811,12 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_0_1"
+    // $ANTLR end "rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_0_1"
 
 
-    // $ANTLR start "rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_1_1"
-    // InternalTypesParser.g:16669:1: rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_1_1 : ( ( QuestionMark ) ) ;
-    public final void rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_1_1() throws RecognitionException {
+    // $ANTLR start "rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1_1"
+    // InternalTypesParser.g:16669:1: rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1_1 : ( ( QuestionMark ) ) ;
+    public final void rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -54828,23 +54828,23 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
             // InternalTypesParser.g:16675:3: ( QuestionMark )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_1_0()); 
+               before(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_1_0()); 
             }
             // InternalTypesParser.g:16676:3: ( QuestionMark )
             // InternalTypesParser.g:16677:4: QuestionMark
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_1_0()); 
+               before(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_1_0()); 
             }
             match(input,QuestionMark,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_1_0()); 
+               after(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_1_0()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_1_0()); 
+               after(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_1_0()); 
             }
 
             }
@@ -54864,7 +54864,7 @@ public class InternalTypesParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_1_1"
+    // $ANTLR end "rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1_1"
 
 
     // $ANTLR start "rule__TypeRefWithoutModifiers__DynamicAssignment_0_1"

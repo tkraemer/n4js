@@ -151,7 +151,7 @@ class N4JSAccessModifierValidator extends AbstractN4JSDeclarativeValidator {
 
 	@Check
 	def checkTypeRefOptionalFlag(TypeRef typeRef) {
-		if (typeRef.isOptional_OLD_SYNTAX) {
+		if (typeRef.isFollowedByQuestionMark) {
 			val parent = typeRef.eContainer;
 
 			val isLegalUseOfOptional = isReturnTypeButNotOfAGetter(typeRef, parent);

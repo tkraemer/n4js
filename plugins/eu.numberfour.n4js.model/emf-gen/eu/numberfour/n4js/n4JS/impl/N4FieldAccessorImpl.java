@@ -363,7 +363,7 @@ public abstract class N4FieldAccessorImpl extends AnnotableN4MemberDeclarationIm
 	 * @generated
 	 */
 	public boolean isOptional() {
-		return (this.isDeclaredOptional() || ((this.getDeclaredTypeRef() != null) && this.getDeclaredTypeRef().isOptional_OLD_SYNTAX()));
+		return this.isDeclaredOptional();
 	}
 
 	/**

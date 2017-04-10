@@ -998,8 +998,8 @@ public class N4JSXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getUnionTypeExpressionAccess().getTypeRefsAssignment_1_1_1(), "rule__UnionTypeExpression__TypeRefsAssignment_1_1_1");
 					put(grammarAccess.getIntersectionTypeExpressionAccess().getTypeRefsAssignment_1_1_1(), "rule__IntersectionTypeExpression__TypeRefsAssignment_1_1_1");
 					put(grammarAccess.getPrimaryTypeExpressionAccess().getReturnTypeRefAssignment_0_1(), "rule__PrimaryTypeExpression__ReturnTypeRefAssignment_0_1");
-					put(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXAssignment_0_1(), "rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_0_1");
-					put(grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXAssignment_1_1(), "rule__TypeRefWithModifiers__Optional_OLD_SYNTAXAssignment_1_1");
+					put(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkAssignment_0_1(), "rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_0_1");
+					put(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkAssignment_1_1(), "rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1_1");
 					put(grammarAccess.getTypeRefWithoutModifiersAccess().getDynamicAssignment_0_1(), "rule__TypeRefWithoutModifiers__DynamicAssignment_0_1");
 					put(grammarAccess.getThisTypeRefStructuralAccess().getDefinedTypingStrategyAssignment_0(), "rule__ThisTypeRefStructural__DefinedTypingStrategyAssignment_0");
 					put(grammarAccess.getFunctionTypeExpressionOLDAccess().getDeclaredThisTypeAssignment_2_3(), "rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3");

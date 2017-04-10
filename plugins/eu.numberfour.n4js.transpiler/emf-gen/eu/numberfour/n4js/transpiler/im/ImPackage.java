@@ -854,13 +854,13 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_IM = 10;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_IM__OPTIONAL_OLD_SYNTAX = TypeRefsPackage.PARAMETERIZED_TYPE_REF__OPTIONAL_OLD_SYNTAX;
+	int PARAMETERIZED_TYPE_REF_IM__FOLLOWED_BY_QUESTION_MARK = TypeRefsPackage.PARAMETERIZED_TYPE_REF__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -1224,13 +1224,13 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM = 11;
 
 	/**
-	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__OPTIONAL_OLD_SYNTAX = PARAMETERIZED_TYPE_REF_IM__OPTIONAL_OLD_SYNTAX;
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__FOLLOWED_BY_QUESTION_MARK = PARAMETERIZED_TYPE_REF_IM__FOLLOWED_BY_QUESTION_MARK;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.

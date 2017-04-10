@@ -213,7 +213,7 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 	 * @generated
 	 */
 	public boolean isOptional() {
-		return (this.isOptional_NEW_SYNTAX() || ((this.getDeclaredTypeRef() != null) && this.getDeclaredTypeRef().isOptional_OLD_SYNTAX()));
+		return this.isOptional_NEW_SYNTAX();
 	}
 
 	/**

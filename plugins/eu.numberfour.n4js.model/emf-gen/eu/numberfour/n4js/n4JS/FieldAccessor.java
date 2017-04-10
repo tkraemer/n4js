@@ -83,7 +83,7 @@ public interface FieldAccessor extends FunctionOrFieldAccessor, TypeProvidingEle
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isDeclaredOptional() || ((this.getDeclaredTypeRef() != null) && this.getDeclaredTypeRef().isOptional_OLD_SYNTAX()));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return this.isDeclaredOptional();'"
 	 * @generated
 	 */
 	boolean isOptional();

@@ -582,17 +582,19 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
+	// FIXME IDE-2405 remove this validation?
 	@Check
 	def void checkOptionalModifier(FormalParameter fpar) {
-		if(fpar.declaredTypeRef!==null && fpar.declaredTypeRef.isOptional_OLD_SYNTAX) {
+		if(fpar.declaredTypeRef!==null && fpar.declaredTypeRef.followedByQuestionMark) {
 			val String msg = getMessageForFUN_PARAM_OPTIONAL_WRONG_SYNTAX(fpar.name)
 			addIssue(msg, fpar, FUN_PARAM_OPTIONAL_WRONG_SYNTAX)
 		}
 	}
 
+	// FIXME IDE-2405 remove this validation?
 	@Check
 	def void checkOptionalModifierT(TFormalParameter fpar) {
-		if(fpar.typeRef!==null && fpar.typeRef.isOptional_OLD_SYNTAX) {
+		if(fpar.typeRef!==null && fpar.typeRef.followedByQuestionMark) {
 			val String msg = getMessageForFUN_PARAM_OPTIONAL_WRONG_SYNTAX(fpar.typeRef?.declaredType?.name)
 			addIssue(msg, fpar, FUN_PARAM_OPTIONAL_WRONG_SYNTAX)
 		}
@@ -661,10 +663,11 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
+	// FIXME IDE-2405 remove this validation
 	/* IDEBUG-211 checking Undefined, Variadic and missing Typenames. */
 	@Check
 	def void checkStructuralTField(TStructField tfield) {
-		if(tfield.typeRef!==null && tfield.typeRef.isOptional_OLD_SYNTAX) { // TODO IDE-2405 double check that this is still working properly // OR: obsolete anyway once legacy syntax goes away
+		if(tfield.typeRef!==null && tfield.typeRef.isFollowedByQuestionMark) { // TODO IDE-2405 double check that this is still working properly // OR: obsolete anyway once legacy syntax goes away
 			if(tfield.typeRef.isMissing ) {
 				addIssue( messageForFUN_PARAM_MISSING_TYPE_NAME_FOR_OPTIONAL, tfield.typeRef, FUN_PARAM_MISSING_TYPE_NAME_FOR_OPTIONAL )
 			}

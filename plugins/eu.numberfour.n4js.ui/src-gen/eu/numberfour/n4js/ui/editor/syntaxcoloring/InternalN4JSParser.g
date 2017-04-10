@@ -19719,9 +19719,9 @@ ruleTypeRefWithModifiers
 			)
 			)=>
 			(
-				Optional_OLD_SYNTAXQuestionMarkKeyword_0_1_0=QuestionMark
+				FollowedByQuestionMarkQuestionMarkKeyword_0_1_0=QuestionMark
 				 {
-					announce($Optional_OLD_SYNTAXQuestionMarkKeyword_0_1_0, grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_0_1_0());
+					announce($FollowedByQuestionMarkQuestionMarkKeyword_0_1_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_0_1_0());
 				}
 			)
 		)?
@@ -19730,9 +19730,9 @@ ruleTypeRefWithModifiers
 	(
 		(
 			(
-				Optional_OLD_SYNTAXQuestionMarkKeyword_1_1_0=QuestionMark
+				FollowedByQuestionMarkQuestionMarkKeyword_1_1_0=QuestionMark
 				 {
-					announce($Optional_OLD_SYNTAXQuestionMarkKeyword_1_1_0, grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_1_0());
+					announce($FollowedByQuestionMarkQuestionMarkKeyword_1_1_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_1_0());
 				}
 			)
 		)

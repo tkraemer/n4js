@@ -34775,15 +34775,15 @@ ruleTypeRefWithModifiers returns [EObject current=null]
 				)
 				)=>
 				(
-					lv_optional_OLD_SYNTAX_1_0=QuestionMark
+					lv_followedByQuestionMark_1_0=QuestionMark
 					{
-						newLeafNode(lv_optional_OLD_SYNTAX_1_0, grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_0_1_0());
+						newLeafNode(lv_followedByQuestionMark_1_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_0_1_0());
 					}
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getTypeRefWithModifiersRule());
 						}
-						setWithLastConsumed($current, "optional_OLD_SYNTAX", true, "?");
+						setWithLastConsumed($current, "followedByQuestionMark", true, "?");
 					}
 				)
 			)?
@@ -34799,15 +34799,15 @@ ruleTypeRefWithModifiers returns [EObject current=null]
 			)
 			(
 				(
-					lv_optional_OLD_SYNTAX_3_0=QuestionMark
+					lv_followedByQuestionMark_3_0=QuestionMark
 					{
-						newLeafNode(lv_optional_OLD_SYNTAX_3_0, grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_1_0());
+						newLeafNode(lv_followedByQuestionMark_3_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_1_0());
 					}
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getTypeRefWithModifiersRule());
 						}
-						setWithLastConsumed($current, "optional_OLD_SYNTAX", true, "?");
+						setWithLastConsumed($current, "followedByQuestionMark", true, "?");
 					}
 				)
 			)
