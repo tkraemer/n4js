@@ -17,7 +17,6 @@ import static org.eclipse.jface.dialogs.MessageDialog.openError;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.Map;
-import java.util.StringJoiner;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
@@ -32,11 +31,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
-import eu.numberfour.n4js.n4mf.DeclaredVersion;
-import eu.numberfour.n4js.n4mf.utils.parsing.ManifestValuesParsingUtil;
-import eu.numberfour.n4js.n4mf.utils.parsing.ParseResult;
 import eu.numberfour.n4js.ui.internal.N4JSActivator;
-import eu.numberfour.n4js.ui.utils.InputFunctionalValidator;
 import eu.numberfour.n4js.ui.utils.UIUtils;
 import eu.numberfour.n4js.utils.StatusHelper;
 
@@ -50,13 +45,16 @@ import eu.numberfour.n4js.utils.StatusHelper;
 public class InstallNpmDependencyButtonListener extends SelectionAdapter {
 
 	final private Supplier<IInputValidator> packageNameValidator;
+	final private Supplier<IInputValidator> packageVersionValidator;
 	final private StatusHelper statusHelper;
 	final private BiFunction<Map<String, String>, IProgressMonitor, IStatus> installAction;
 
 	InstallNpmDependencyButtonListener(BiFunction<Map<String, String>, IProgressMonitor, IStatus> installAction,
-			Supplier<IInputValidator> packageNameValidator, StatusHelper statusHelper) {
+			Supplier<IInputValidator> packageNameValidator, Supplier<IInputValidator> packageVersionValidator,
+			StatusHelper statusHelper) {
 		this.installAction = installAction;
 		this.packageNameValidator = packageNameValidator;
+		this.packageVersionValidator = packageVersionValidator;
 		this.statusHelper = statusHelper;
 	}
 
@@ -65,7 +63,7 @@ public class InstallNpmDependencyButtonListener extends SelectionAdapter {
 		final MultiStatus multistatus = statusHelper.createMultiStatus("Status of installing npm dependencies.");
 
 		InstallNpmDependencyDialog dialog = new InstallNpmDependencyDialog(getShell(),
-				packageNameValidator.get(), getPackageVersionValidator());
+				packageNameValidator.get(), packageVersionValidator.get());
 		dialog.open();
 		final String packageName = dialog.getPackageName();
 		if (!StringExtensions.isNullOrEmpty(packageName) && dialog.getReturnCode() == Window.OK) {
@@ -91,28 +89,4 @@ public class InstallNpmDependencyButtonListener extends SelectionAdapter {
 			}
 		}
 	}
-
-	private IInputValidator getPackageVersionValidator() {
-		return InputFunctionalValidator.from(
-				(final String version) -> validatePackageVersion(version));
-	}
-
-	private String validatePackageVersion(final String data) {
-		String result = null;
-		ParseResult<DeclaredVersion> parseResult = ManifestValuesParsingUtil.parseDeclaredVersion(data);
-		if (!parseResult.getErrors().isEmpty()) {
-			// collect just parse errors
-			StringJoiner joinedMessage = new StringJoiner("\n");
-			parseResult.getErrors().forEach((String msg) -> joinedMessage.add(msg));
-			result = joinedMessage.toString();
-		} else {
-			// even if there are no parse errors check if version instance was create correctly
-			if (parseResult.getData() == null) {
-				result = "Could not create version from string :" + data;
-			}
-		}
-
-		return result;
-	}
-
 }

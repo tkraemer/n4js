@@ -38,6 +38,7 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringJoiner;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -76,7 +77,10 @@ import eu.numberfour.n4js.external.NpmManager;
 import eu.numberfour.n4js.external.TargetPlatformInstallLocationProvider;
 import eu.numberfour.n4js.external.libraries.TargetPlatformModel;
 import eu.numberfour.n4js.external.version.VersionConstraintFormatUtil;
+import eu.numberfour.n4js.n4mf.DeclaredVersion;
 import eu.numberfour.n4js.n4mf.ProjectDescription;
+import eu.numberfour.n4js.n4mf.utils.parsing.ManifestValuesParsingUtil;
+import eu.numberfour.n4js.n4mf.utils.parsing.ParseResult;
 import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.utils.InputComposedValidator;
@@ -171,7 +175,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 		createEnabledPushButton(subComposite, "Install npm...",
 				new InstallNpmDependencyButtonListener(this::intallAndUpdate,
-						() -> getPackageNameToInstallValidator(),
+						() -> getPackageNameToInstallValidator(), () -> getPackageVersionValidator(),
 						statusHelper));
 
 		createEnabledPushButton(subComposite, "Uninstall npm...",
@@ -353,6 +357,30 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 					}
 					return null;
 				});
+	}
+
+	private IInputValidator getPackageVersionValidator() {
+		return InputFunctionalValidator.from(
+				(final String version) -> parsingVersionValidator(version));
+	}
+
+	/** version validator based on N4MF parser (and its support for version syntax). */
+	private String parsingVersionValidator(final String data) {
+		String result = null;
+		ParseResult<DeclaredVersion> parseResult = ManifestValuesParsingUtil.parseDeclaredVersion(data);
+		if (!parseResult.getErrors().isEmpty()) {
+			// collect just parse errors
+			StringJoiner joinedMessage = new StringJoiner("\n");
+			parseResult.getErrors().forEach((String msg) -> joinedMessage.add(msg));
+			result = joinedMessage.toString();
+		} else {
+			// even if there are no parse errors check if version instance was create correctly
+			if (parseResult.getData() == null) {
+				result = "Could not create version from string :" + data;
+			}
+		}
+
+		return result;
 	}
 
 	private boolean isNpmWithNameInstalled(final String packageName) {
