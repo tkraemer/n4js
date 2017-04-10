@@ -53,7 +53,6 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTSetterAccess().getAlternatives_0_0_2(), "rule__TSetter__Alternatives_0_0_2");
 					put(grammarAccess.getTSetterAccess().getAlternatives_0_0_4(), "rule__TSetter__Alternatives_0_0_4");
 					put(grammarAccess.getPrimaryTypeExpressionAccess().getAlternatives(), "rule__PrimaryTypeExpression__Alternatives");
-					put(grammarAccess.getTypeRefWithModifiersAccess().getAlternatives(), "rule__TypeRefWithModifiers__Alternatives");
 					put(grammarAccess.getTypeRefWithoutModifiersAccess().getAlternatives(), "rule__TypeRefWithoutModifiers__Alternatives");
 					put(grammarAccess.getTypeRefWithoutModifiersAccess().getAlternatives_0_0(), "rule__TypeRefWithoutModifiers__Alternatives_0_0");
 					put(grammarAccess.getTypeRefFunctionTypeExpressionAccess().getAlternatives(), "rule__TypeRefFunctionTypeExpression__Alternatives");
@@ -150,8 +149,7 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPrimaryTypeExpressionAccess().getGroup_0_0(), "rule__PrimaryTypeExpression__Group_0_0__0");
 					put(grammarAccess.getPrimaryTypeExpressionAccess().getGroup_0_0_0(), "rule__PrimaryTypeExpression__Group_0_0_0__0");
 					put(grammarAccess.getPrimaryTypeExpressionAccess().getGroup_3(), "rule__PrimaryTypeExpression__Group_3__0");
-					put(grammarAccess.getTypeRefWithModifiersAccess().getGroup_0(), "rule__TypeRefWithModifiers__Group_0__0");
-					put(grammarAccess.getTypeRefWithModifiersAccess().getGroup_1(), "rule__TypeRefWithModifiers__Group_1__0");
+					put(grammarAccess.getTypeRefWithModifiersAccess().getGroup(), "rule__TypeRefWithModifiers__Group__0");
 					put(grammarAccess.getTypeRefWithoutModifiersAccess().getGroup_0(), "rule__TypeRefWithoutModifiers__Group_0__0");
 					put(grammarAccess.getThisTypeRefNominalAccess().getGroup(), "rule__ThisTypeRefNominal__Group__0");
 					put(grammarAccess.getThisTypeRefStructuralAccess().getGroup(), "rule__ThisTypeRefStructural__Group__0");
@@ -319,8 +317,7 @@ public class TypesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getUnionTypeExpressionAccess().getTypeRefsAssignment_1_1_1(), "rule__UnionTypeExpression__TypeRefsAssignment_1_1_1");
 					put(grammarAccess.getIntersectionTypeExpressionAccess().getTypeRefsAssignment_1_1_1(), "rule__IntersectionTypeExpression__TypeRefsAssignment_1_1_1");
 					put(grammarAccess.getPrimaryTypeExpressionAccess().getReturnTypeRefAssignment_0_1(), "rule__PrimaryTypeExpression__ReturnTypeRefAssignment_0_1");
-					put(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkAssignment_0_1(), "rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_0_1");
-					put(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkAssignment_1_1(), "rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1_1");
+					put(grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkAssignment_1(), "rule__TypeRefWithModifiers__FollowedByQuestionMarkAssignment_1");
 					put(grammarAccess.getTypeRefWithoutModifiersAccess().getDynamicAssignment_0_1(), "rule__TypeRefWithoutModifiers__DynamicAssignment_0_1");
 					put(grammarAccess.getThisTypeRefStructuralAccess().getDefinedTypingStrategyAssignment_0(), "rule__ThisTypeRefStructural__DefinedTypingStrategyAssignment_0");
 					put(grammarAccess.getFunctionTypeExpressionOLDAccess().getDeclaredThisTypeAssignment_2_3(), "rule__FunctionTypeExpressionOLD__DeclaredThisTypeAssignment_2_3");

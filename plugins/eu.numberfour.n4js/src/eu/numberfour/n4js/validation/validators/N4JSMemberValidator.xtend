@@ -22,7 +22,7 @@ import eu.numberfour.n4js.n4JS.N4MemberAnnotationList
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.N4SetterDeclaration
-import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
+import eu.numberfour.n4js.n4JS.PropertyNameOwner
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRefStructural
 import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
@@ -52,7 +52,6 @@ import static eu.numberfour.n4js.n4JS.N4JSPackage.Literals.*
 import static eu.numberfour.n4js.validation.IssueCodes.*
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.n4JS.PropertyNameOwner
 
 /**
  * Validation of rules that apply to individual members of a classifier.<p>
@@ -129,7 +128,6 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 		}
 
 		holdsMinimalMemberAccessModifier(member);
-		holdsDeclaredTypeRefDoesNotReferToNull(n4Field);
 	}
 
 	@Check
@@ -440,27 +438,6 @@ class N4JSMemberValidator extends AbstractN4JSDeclarativeValidator {
 				addIssue(message, member.astElement, PROPERTY_NAME_OWNER__DECLARED_NAME,
 					IssueCodes.CLF_MINIMAL_ACCESSIBILITY_IN_INTERFACES);
 				return false;
-			}
-		}
-		return true;
-	}
-
-	/** IDEBUG-779  Type Annotations without type but just an optional modifier are not allowed.
-	 */
-	private def boolean holdsDeclaredTypeRefDoesNotReferToNull(N4FieldDeclaration n4Field) {
-		val declTypeRef = n4Field.declaredTypeRef
-		if (declTypeRef !== null) {
-			if (declTypeRef instanceof ParameterizedTypeRef) {
-				if (declTypeRef.declaredType === null) {
-					val message = IssueCodes.getMessageForCLF_FIELD_MODIFIER_WITHOUT_TYPE(n4Field.name);
-					addIssue(
-						message,
-						n4Field,
-						N4JSPackage.Literals.TYPED_ELEMENT__DECLARED_TYPE_REF,
-						IssueCodes.CLF_FIELD_MODIFIER_WITHOUT_TYPE
-					);
-					return false;
-				}
 			}
 		}
 		return true;

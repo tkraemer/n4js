@@ -3915,58 +3915,32 @@ ruleTypeRefWithModifiers returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		{
+			newCompositeNode(grammarAccess.getTypeRefWithModifiersAccess().getTypeRefWithoutModifiersParserRuleCall_0());
+		}
+		this_TypeRefWithoutModifiers_0=ruleTypeRefWithoutModifiers
+		{
+			$current = $this_TypeRefWithoutModifiers_0.current;
+			afterParserOrEnumRuleCall();
+		}
 		(
-			{
-				newCompositeNode(grammarAccess.getTypeRefWithModifiersAccess().getTypeRefWithoutModifiersParserRuleCall_0_0());
-			}
-			this_TypeRefWithoutModifiers_0=ruleTypeRefWithoutModifiers
-			{
-				$current = $this_TypeRefWithoutModifiers_0.current;
-				afterParserOrEnumRuleCall();
-			}
+			((
+				QuestionMark
+			)
+			)=>
 			(
-				((
-					QuestionMark
-				)
-				)=>
-				(
-					lv_followedByQuestionMark_1_0=QuestionMark
-					{
-						newLeafNode(lv_followedByQuestionMark_1_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_0_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTypeRefWithModifiersRule());
-						}
-						setWithLastConsumed($current, "followedByQuestionMark", true, "?");
-					}
-				)
-			)?
-		)
-		    |
-		(
-			(
+				lv_followedByQuestionMark_1_0=QuestionMark
 				{
-					$current = forceCreateModelElement(
-						grammarAccess.getTypeRefWithModifiersAccess().getParameterizedTypeRefAction_1_0(),
-						$current);
+					newLeafNode(lv_followedByQuestionMark_1_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getTypeRefWithModifiersRule());
+					}
+					setWithLastConsumed($current, "followedByQuestionMark", true, "?");
 				}
 			)
-			(
-				(
-					lv_followedByQuestionMark_3_0=QuestionMark
-					{
-						newLeafNode(lv_followedByQuestionMark_3_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTypeRefWithModifiersRule());
-						}
-						setWithLastConsumed($current, "followedByQuestionMark", true, "?");
-					}
-				)
-			)
-		)
+		)?
 	)
 ;
 

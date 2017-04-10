@@ -467,7 +467,6 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         followedByQuestionMark?='?' | 
 	 *         (
 	 *             declaredType=[Type|TypeReferenceName] 
 	 *             (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? 

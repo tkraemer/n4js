@@ -60,7 +60,7 @@ BogusTypeRef returns TypeRef:
 	TypeRefWithModifiers;
 	
 TypeRefWithModifiers returns StaticBaseTypeRef:
-	TypeRefWithoutModifiers =>followedByQuestionMark?='?'? | {ParameterizedTypeRef} followedByQuestionMark?='?';
+	TypeRefWithoutModifiers =>followedByQuestionMark?='?'?;
 
 TypeRefWithoutModifiers returns StaticBaseTypeRef:
 	  ((ParameterizedTypeRef | ThisTypeRef) => dynamic?='+'?)

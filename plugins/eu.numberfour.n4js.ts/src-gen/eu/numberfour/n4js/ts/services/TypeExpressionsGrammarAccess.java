@@ -222,46 +222,26 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class TypeRefWithModifiersElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.TypeRefWithModifiers");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final RuleCall cTypeRefWithoutModifiersParserRuleCall_0_0 = (RuleCall)cGroup_0.eContents().get(0);
-		private final Assignment cFollowedByQuestionMarkAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final Keyword cFollowedByQuestionMarkQuestionMarkKeyword_0_1_0 = (Keyword)cFollowedByQuestionMarkAssignment_0_1.eContents().get(0);
-		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Action cParameterizedTypeRefAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cFollowedByQuestionMarkAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final Keyword cFollowedByQuestionMarkQuestionMarkKeyword_1_1_0 = (Keyword)cFollowedByQuestionMarkAssignment_1_1.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cTypeRefWithoutModifiersParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Assignment cFollowedByQuestionMarkAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cFollowedByQuestionMarkQuestionMarkKeyword_1_0 = (Keyword)cFollowedByQuestionMarkAssignment_1.eContents().get(0);
 		
 		//TypeRefWithModifiers StaticBaseTypeRef:
-		//	TypeRefWithoutModifiers => followedByQuestionMark?='?'? | {ParameterizedTypeRef} followedByQuestionMark?='?'
+		//	TypeRefWithoutModifiers => followedByQuestionMark?='?'?
 		@Override public ParserRule getRule() { return rule; }
 		
-		//TypeRefWithoutModifiers => followedByQuestionMark?='?'? | {ParameterizedTypeRef} followedByQuestionMark?='?'
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
 		//TypeRefWithoutModifiers => followedByQuestionMark?='?'?
-		public Group getGroup_0() { return cGroup_0; }
+		public Group getGroup() { return cGroup; }
 		
 		//TypeRefWithoutModifiers
-		public RuleCall getTypeRefWithoutModifiersParserRuleCall_0_0() { return cTypeRefWithoutModifiersParserRuleCall_0_0; }
+		public RuleCall getTypeRefWithoutModifiersParserRuleCall_0() { return cTypeRefWithoutModifiersParserRuleCall_0; }
 		
 		//=> followedByQuestionMark?='?'?
-		public Assignment getFollowedByQuestionMarkAssignment_0_1() { return cFollowedByQuestionMarkAssignment_0_1; }
+		public Assignment getFollowedByQuestionMarkAssignment_1() { return cFollowedByQuestionMarkAssignment_1; }
 		
 		//'?'
-		public Keyword getFollowedByQuestionMarkQuestionMarkKeyword_0_1_0() { return cFollowedByQuestionMarkQuestionMarkKeyword_0_1_0; }
-		
-		//{ParameterizedTypeRef} followedByQuestionMark?='?'
-		public Group getGroup_1() { return cGroup_1; }
-		
-		//{ParameterizedTypeRef}
-		public Action getParameterizedTypeRefAction_1_0() { return cParameterizedTypeRefAction_1_0; }
-		
-		//followedByQuestionMark?='?'
-		public Assignment getFollowedByQuestionMarkAssignment_1_1() { return cFollowedByQuestionMarkAssignment_1_1; }
-		
-		//'?'
-		public Keyword getFollowedByQuestionMarkQuestionMarkKeyword_1_1_0() { return cFollowedByQuestionMarkQuestionMarkKeyword_1_1_0; }
+		public Keyword getFollowedByQuestionMarkQuestionMarkKeyword_1_0() { return cFollowedByQuestionMarkQuestionMarkKeyword_1_0; }
 	}
 	public class TypeRefWithoutModifiersElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.TypeExpressions.TypeRefWithoutModifiers");
@@ -2404,7 +2384,7 @@ public class TypeExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TypeRefWithModifiers StaticBaseTypeRef:
-	//	TypeRefWithoutModifiers => followedByQuestionMark?='?'? | {ParameterizedTypeRef} followedByQuestionMark?='?'
+	//	TypeRefWithoutModifiers => followedByQuestionMark?='?'?
 	public TypeRefWithModifiersElements getTypeRefWithModifiersAccess() {
 		return pTypeRefWithModifiers;
 	}

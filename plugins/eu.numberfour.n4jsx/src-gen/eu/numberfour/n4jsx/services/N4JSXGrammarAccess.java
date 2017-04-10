@@ -3331,7 +3331,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TypeRefWithModifiers StaticBaseTypeRef:
-	//	TypeRefWithoutModifiers => followedByQuestionMark?='?'? | {ParameterizedTypeRef} followedByQuestionMark?='?'
+	//	TypeRefWithoutModifiers => followedByQuestionMark?='?'?
 	public TypeExpressionsGrammarAccess.TypeRefWithModifiersElements getTypeRefWithModifiersAccess() {
 		return gaTypeExpressions.getTypeRefWithModifiersAccess();
 	}

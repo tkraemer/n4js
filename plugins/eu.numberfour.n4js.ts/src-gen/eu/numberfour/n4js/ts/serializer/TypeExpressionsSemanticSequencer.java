@@ -343,7 +343,6 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *
 	 * Constraint:
 	 *     (
-	 *         followedByQuestionMark?='?' | 
 	 *         (declaredType=[Type|TypeReferenceName] (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? dynamic?='+'? followedByQuestionMark?='?'?) | 
 	 *         (arrayTypeLiteral?='[' typeArgs+=TypeArgument)
 	 *     )
@@ -549,10 +548,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TypeRefWithModifiers returns ParameterizedTypeRef
 	 *
 	 * Constraint:
-	 *     (
-	 *         followedByQuestionMark?='?' | 
-	 *         (declaredType=[Type|TypeReferenceName] (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? dynamic?='+'? followedByQuestionMark?='?'?)
-	 *     )
+	 *     (declaredType=[Type|TypeReferenceName] (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? dynamic?='+'? followedByQuestionMark?='?'?)
 	 */
 	protected void sequence_ParameterizedTypeRefNominal_TypeRefWithModifiers_TypeRefWithoutModifiers(ISerializationContext context, ParameterizedTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

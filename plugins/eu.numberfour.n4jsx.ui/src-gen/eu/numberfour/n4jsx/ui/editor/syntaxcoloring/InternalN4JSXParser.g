@@ -19997,32 +19997,19 @@ ruleTypeRefWithModifiers
 @init {
 }:
 (
+	TypeRefWithoutModifiersParserRuleCall_0=ruleTypeRefWithoutModifiers{ announce($TypeRefWithoutModifiersParserRuleCall_0.start, $TypeRefWithoutModifiersParserRuleCall_0.stop, grammarAccess.getTypeRefWithModifiersAccess().getTypeRefWithoutModifiersParserRuleCall_0()); }
 	(
-		TypeRefWithoutModifiersParserRuleCall_0_0=ruleTypeRefWithoutModifiers{ announce($TypeRefWithoutModifiersParserRuleCall_0_0.start, $TypeRefWithoutModifiersParserRuleCall_0_0.stop, grammarAccess.getTypeRefWithModifiersAccess().getTypeRefWithoutModifiersParserRuleCall_0_0()); }
-		(
-			((
-				QuestionMark
-			)
-			)=>
-			(
-				FollowedByQuestionMarkQuestionMarkKeyword_0_1_0=QuestionMark
-				 {
-					announce($FollowedByQuestionMarkQuestionMarkKeyword_0_1_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_0_1_0());
-				}
-			)
-		)?
-	)
-	    |
-	(
-		(
-			(
-				FollowedByQuestionMarkQuestionMarkKeyword_1_1_0=QuestionMark
-				 {
-					announce($FollowedByQuestionMarkQuestionMarkKeyword_1_1_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_1_0());
-				}
-			)
+		((
+			QuestionMark
 		)
-	)
+		)=>
+		(
+			FollowedByQuestionMarkQuestionMarkKeyword_1_0=QuestionMark
+			 {
+				announce($FollowedByQuestionMarkQuestionMarkKeyword_1_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_0());
+			}
+		)
+	)?
 )
 ;
 

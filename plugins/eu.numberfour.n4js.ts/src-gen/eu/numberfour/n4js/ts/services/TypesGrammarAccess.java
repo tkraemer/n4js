@@ -2828,7 +2828,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TypeRefWithModifiers StaticBaseTypeRef:
-	//	TypeRefWithoutModifiers => followedByQuestionMark?='?'? | {ParameterizedTypeRef} followedByQuestionMark?='?'
+	//	TypeRefWithoutModifiers => followedByQuestionMark?='?'?
 	public TypeExpressionsGrammarAccess.TypeRefWithModifiersElements getTypeRefWithModifiersAccess() {
 		return gaTypeExpressions.getTypeRefWithModifiersAccess();
 	}
