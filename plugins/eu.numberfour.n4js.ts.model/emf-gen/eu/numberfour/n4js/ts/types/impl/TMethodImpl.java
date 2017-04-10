@@ -485,6 +485,10 @@ public class TMethodImpl extends TFunctionImpl implements TMethod {
 			String _typeRefAsString = _returnTypeRef_1.getTypeRefAsString();
 			_append_5.append(_typeRefAsString);
 		}
+		boolean _isReturnValueOptional = this.isReturnValueOptional();
+		if (_isReturnValueOptional) {
+			strb.append("?");
+		}
 		return strb.toString();
 	}
 

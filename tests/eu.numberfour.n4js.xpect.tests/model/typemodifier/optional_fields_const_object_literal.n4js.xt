@@ -1,0 +1,11 @@
+ /* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
+ 
+// const object literal
+function foo(): ~Object with {a?: int, b?: string} {
+	const value = {a : 42};
+	//XPECT noerrors
+	return value;
+}
+
+export const ol = {};
+let a: ~Object with {a?: int} = ol;

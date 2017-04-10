@@ -88,7 +88,8 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 
 		// create temporary type (i.e. may contain inference variables)
 		val resultTypeRef = TypeUtils.createParameterizedTypeRefStructural(G.objectType, TypingStrategy.STRUCTURAL, tMembers);
-		
+		resultTypeRef.typeOfObjectLiteral = true;
+
 		// register onSolved handlers to add final types to cache (i.e. may not contain inference variables)
 		infCtx.onSolved [ solution | handleOnSolved(G, cache, infCtx, objLit, quickMode, props2InfVarOrFallbackType, solution) ];
 
@@ -238,6 +239,7 @@ package class PolyProcessor_ObjectLiteral extends AbstractPolyProcessor {
 		
 		val resultFinal = TypeUtils.createParameterizedTypeRefStructural(G.objectType, TypingStrategy.STRUCTURAL,
 			objLit.definedType as TStructuralType);
+		resultFinal.typeOfObjectLiteral = true;
 		cache.storeType(objLit, resultFinal);
 		
 		for (currAss : objLit.propertyAssignments) {

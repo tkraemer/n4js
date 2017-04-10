@@ -7,8 +7,6 @@
  */
 package eu.numberfour.n4js.ts.typeRefs.impl;
 
-import com.google.common.base.Objects;
-
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeArgument;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
@@ -16,11 +14,9 @@ import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
 import eu.numberfour.n4js.ts.typeRefs.Versionable;
 
 import eu.numberfour.n4js.ts.types.AnyType;
-import eu.numberfour.n4js.ts.types.NullModifier;
 import eu.numberfour.n4js.ts.types.TStructMember;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypingStrategy;
-import eu.numberfour.n4js.ts.types.UndefModifier;
 import eu.numberfour.n4js.ts.types.UndefinedType;
 
 import java.lang.reflect.InvocationTargetException;
@@ -43,52 +39,31 @@ import org.eclipse.emf.ecore.xcore.lib.XcoreCollectionLiterals;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.TypeRefImpl#getNullModifier <em>Null Modifier</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.TypeRefImpl#getUndefModifier <em>Undef Modifier</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.TypeRefImpl#isOptional_OLD_SYNTAX <em>Optional OLD SYNTAX</em>}</li>
  * </ul>
  *
  * @generated
  */
 public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	/**
-	 * The default value of the '{@link #getNullModifier() <em>Null Modifier</em>}' attribute.
+	 * The default value of the '{@link #isOptional_OLD_SYNTAX() <em>Optional OLD SYNTAX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getNullModifier()
+	 * @see #isOptional_OLD_SYNTAX()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final NullModifier NULL_MODIFIER_EDEFAULT = NullModifier.NA;
+	protected static final boolean OPTIONAL_OLD_SYNTAX_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #getNullModifier() <em>Null Modifier</em>}' attribute.
+	 * The cached value of the '{@link #isOptional_OLD_SYNTAX() <em>Optional OLD SYNTAX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getNullModifier()
+	 * @see #isOptional_OLD_SYNTAX()
 	 * @generated
 	 * @ordered
 	 */
-	protected NullModifier nullModifier = NULL_MODIFIER_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getUndefModifier() <em>Undef Modifier</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUndefModifier()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final UndefModifier UNDEF_MODIFIER_EDEFAULT = UndefModifier.NA;
-
-	/**
-	 * The cached value of the '{@link #getUndefModifier() <em>Undef Modifier</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUndefModifier()
-	 * @generated
-	 * @ordered
-	 */
-	protected UndefModifier undefModifier = UNDEF_MODIFIER_EDEFAULT;
+	protected boolean optional_OLD_SYNTAX = OPTIONAL_OLD_SYNTAX_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -114,8 +89,8 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NullModifier getNullModifier() {
-		return nullModifier;
+	public boolean isOptional_OLD_SYNTAX() {
+		return optional_OLD_SYNTAX;
 	}
 
 	/**
@@ -123,32 +98,11 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setNullModifier(NullModifier newNullModifier) {
-		NullModifier oldNullModifier = nullModifier;
-		nullModifier = newNullModifier == null ? NULL_MODIFIER_EDEFAULT : newNullModifier;
+	public void setOptional_OLD_SYNTAX(boolean newOptional_OLD_SYNTAX) {
+		boolean oldOptional_OLD_SYNTAX = optional_OLD_SYNTAX;
+		optional_OLD_SYNTAX = newOptional_OLD_SYNTAX;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.TYPE_REF__NULL_MODIFIER, oldNullModifier, nullModifier));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public UndefModifier getUndefModifier() {
-		return undefModifier;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setUndefModifier(UndefModifier newUndefModifier) {
-		UndefModifier oldUndefModifier = undefModifier;
-		undefModifier = newUndefModifier == null ? UNDEF_MODIFIER_EDEFAULT : newUndefModifier;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.TYPE_REF__UNDEF_MODIFIER, oldUndefModifier, undefModifier));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.TYPE_REF__OPTIONAL_OLD_SYNTAX, oldOptional_OLD_SYNTAX, optional_OLD_SYNTAX));
 	}
 
 	/**
@@ -157,47 +111,7 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	 * @generated
 	 */
 	public String getModifiersAsString() {
-		String _switchResult = null;
-		NullModifier _nullModifier = this.getNullModifier();
-		if (_nullModifier != null) {
-			switch (_nullModifier) {
-				case NA:
-					_switchResult = "";
-					break;
-				case NULLABLE:
-					_switchResult = "";
-					break;
-				case NOTNULL:
-					_switchResult = "!";
-					break;
-				case ISNULL:
-					_switchResult = "";
-					break;
-				default:
-					break;
-			}
-		}
-		String _switchResult_1 = null;
-		UndefModifier _undefModifier = this.getUndefModifier();
-		if (_undefModifier != null) {
-			switch (_undefModifier) {
-				case NA:
-					_switchResult_1 = "";
-					break;
-				case MANDATORY:
-					_switchResult_1 = "";
-					break;
-				case OPTIONAL:
-					_switchResult_1 = "?";
-					break;
-				case ISUNDEFINED:
-					_switchResult_1 = "";
-					break;
-				default:
-					break;
-			}
-		}
-		return (_switchResult + _switchResult_1);
+		return "";
 	}
 
 	/**
@@ -297,15 +211,6 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean undefinedOrNull() {
-		return (Objects.equal(this.getNullModifier(), NullModifier.ISNULL) || Objects.equal(this.getUndefModifier(), UndefModifier.ISUNDEFINED));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getTypeRefAsString() {
 		return null;
 	}
@@ -389,6 +294,24 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isTypeOfObjectLiteral() {
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isTypeOfNewExpressionOrFinalNominal() {
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public int getVersion() {
 		int _xifexpression = (int) 0;
 		Type _declaredType = this.getDeclaredType();
@@ -411,10 +334,8 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TypeRefsPackage.TYPE_REF__NULL_MODIFIER:
-				return getNullModifier();
-			case TypeRefsPackage.TYPE_REF__UNDEF_MODIFIER:
-				return getUndefModifier();
+			case TypeRefsPackage.TYPE_REF__OPTIONAL_OLD_SYNTAX:
+				return isOptional_OLD_SYNTAX();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -427,11 +348,8 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TypeRefsPackage.TYPE_REF__NULL_MODIFIER:
-				setNullModifier((NullModifier)newValue);
-				return;
-			case TypeRefsPackage.TYPE_REF__UNDEF_MODIFIER:
-				setUndefModifier((UndefModifier)newValue);
+			case TypeRefsPackage.TYPE_REF__OPTIONAL_OLD_SYNTAX:
+				setOptional_OLD_SYNTAX((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -445,11 +363,8 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TypeRefsPackage.TYPE_REF__NULL_MODIFIER:
-				setNullModifier(NULL_MODIFIER_EDEFAULT);
-				return;
-			case TypeRefsPackage.TYPE_REF__UNDEF_MODIFIER:
-				setUndefModifier(UNDEF_MODIFIER_EDEFAULT);
+			case TypeRefsPackage.TYPE_REF__OPTIONAL_OLD_SYNTAX:
+				setOptional_OLD_SYNTAX(OPTIONAL_OLD_SYNTAX_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -463,10 +378,8 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TypeRefsPackage.TYPE_REF__NULL_MODIFIER:
-				return nullModifier != NULL_MODIFIER_EDEFAULT;
-			case TypeRefsPackage.TYPE_REF__UNDEF_MODIFIER:
-				return undefModifier != UNDEF_MODIFIER_EDEFAULT;
+			case TypeRefsPackage.TYPE_REF__OPTIONAL_OLD_SYNTAX:
+				return optional_OLD_SYNTAX != OPTIONAL_OLD_SYNTAX_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -523,8 +436,6 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 				return getDeclaredLowerBound();
 			case TypeRefsPackage.TYPE_REF___GET_TYPE_ARGS:
 				return getTypeArgs();
-			case TypeRefsPackage.TYPE_REF___UNDEFINED_OR_NULL:
-				return undefinedOrNull();
 			case TypeRefsPackage.TYPE_REF___GET_TYPE_REF_AS_STRING:
 				return getTypeRefAsString();
 			case TypeRefsPackage.TYPE_REF___TO_STRING:
@@ -543,6 +454,10 @@ public abstract class TypeRefImpl extends TypeArgumentImpl implements TypeRef {
 				return isUseSiteStructuralTyping();
 			case TypeRefsPackage.TYPE_REF___IS_DEF_SITE_STRUCTURAL_TYPING:
 				return isDefSiteStructuralTyping();
+			case TypeRefsPackage.TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL:
+				return isTypeOfObjectLiteral();
+			case TypeRefsPackage.TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL:
+				return isTypeOfNewExpressionOrFinalNominal();
 			case TypeRefsPackage.TYPE_REF___GET_VERSION:
 				return getVersion();
 		}

@@ -37,9 +37,10 @@ package class N4JSSetterTypesBuilder {
 		setterType.declaredAbstract = n4Setter.abstract
 		setterType.declaredStatic = n4Setter.declaredStatic
 		setterType.declaredFinal = n4Setter.declaredFinal
+		setterType.optional_NEW_SYNTAX = n4Setter.optional;
 		setterType.declaredOverride = AnnotationDefinition.OVERRIDE.hasAnnotation(n4Setter);
 
-		setterType.hasNoBody = n4Setter.body ===null&& !AnnotationDefinition.PROVIDES_DEFAULT_IMPLEMENTATION.hasAnnotation(n4Setter);
+		setterType.hasNoBody = n4Setter.body===null && !AnnotationDefinition.PROVIDES_DEFAULT_IMPLEMENTATION.hasAnnotation(n4Setter);
 
 		setterType.setMemberAccessModifier(n4Setter)
 		setterType.addFormalParameters(n4Setter, builtInTypeScope, preLinkingPhase)

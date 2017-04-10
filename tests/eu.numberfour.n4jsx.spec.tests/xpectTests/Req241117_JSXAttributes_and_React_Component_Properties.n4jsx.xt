@@ -30,7 +30,7 @@ function MyReactFuncComponent(props: ~MyProps): React.Element {
 //XPECT errors --> "field z is not available for structurally referenced type ~MyProps." at "z"
 <MyReactFuncComponent a={2} x={1} y="Hello" z="I am private property"/>
 
-function MyOtherReactFuncComponent(props: ~React.ComponentProps with {a: int, b: string?}): React.Element {
+function MyOtherReactFuncComponent(props: ~React.ComponentProps with {a: int, b?: string}): React.Element {
 	return (
 		<div>{props.a}</div>,
 		<div>{props.b}</div>

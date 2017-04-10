@@ -130,6 +130,10 @@ public class TGetterImpl extends FieldAccessorImpl implements TGetter {
 		final StringBuilder strb = new StringBuilder("get ");
 		String _name = this.getName();
 		strb.append(_name);
+		boolean _isOptional = this.isOptional();
+		if (_isOptional) {
+			strb.append("?");
+		}
 		strb.append("()");
 		TypeRef _declaredTypeRef = this.getDeclaredTypeRef();
 		boolean _tripleNotEquals = (_declaredTypeRef != null);

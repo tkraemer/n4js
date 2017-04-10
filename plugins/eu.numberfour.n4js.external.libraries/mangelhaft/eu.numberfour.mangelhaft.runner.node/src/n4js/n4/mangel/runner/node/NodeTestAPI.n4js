@@ -21,7 +21,7 @@ const MANIFEST_N4MF = "manifest.n4mf";
 
 export function requireResolve(id): string {
     let sysObj: any+ = System;
-    return sysObj["_nodeRequire"]["resolve"](id);
+    return sysObj["_nodeRequire"]["resolve"](id) as string;
 }
 
 export public async function createTempDir(): string {

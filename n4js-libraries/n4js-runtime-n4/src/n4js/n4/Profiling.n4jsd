@@ -32,7 +32,7 @@
     /**
      * Filters keys matching option profiling-match (case-insensitively).
      */
-    public keyMatches: RegExp?;
+    public keyMatches?: RegExp;
 
     /**
      * Resets the profiling map.

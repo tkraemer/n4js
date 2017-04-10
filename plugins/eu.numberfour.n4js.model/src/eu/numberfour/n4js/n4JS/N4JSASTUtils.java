@@ -22,6 +22,7 @@ import eu.numberfour.n4js.ts.types.TClass;
 import eu.numberfour.n4js.ts.types.TField;
 import eu.numberfour.n4js.ts.types.TMember;
 import eu.numberfour.n4js.ts.types.TStructMember;
+import eu.numberfour.n4js.ts.types.TypableElement;
 import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesPackage;
@@ -487,5 +488,24 @@ public abstract class N4JSASTUtils {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * If the given AST node is a {@link ParenExpression}, this method will return its first nested expression which is
+	 * not a {@code ParenExpression}; otherwise returns the given AST node.
+	 * <p>
+	 * In case of a {@code ParenExpression} without a nested expression (i.e. broken AST) this method will return this
+	 * {@code ParenExpression}. Hence, this method will return <code>null</code> only if passed in a value of
+	 * <code>null</code>.
+	 */
+	public static TypableElement ignoreParentheses(TypableElement astNode) {
+		while (astNode instanceof ParenExpression) {
+			final Expression expr = ((ParenExpression) astNode).getExpression();
+			if (expr == null) {
+				break; // avoid returning null in case of broken AST (we return the broken ParenExpression)
+			}
+			astNode = expr;
+		}
+		return astNode;
 	}
 }

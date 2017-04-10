@@ -19,6 +19,7 @@ import eu.numberfour.n4js.n4JS.FunctionDefinition
 import eu.numberfour.n4js.n4JS.ParameterizedCallExpression
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.ReturnStatement
+import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.ts.typeRefs.BoundThisTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ComposedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.ExistentialTypeRef
@@ -53,10 +54,9 @@ import java.util.Arrays
 import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.EcoreUtil2
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
-import eu.numberfour.n4js.n4JS.YieldExpression
-import org.eclipse.xtext.EcoreUtil2
 
 /**
  * Utility methods used in the XSemantics type system. Must be injected.
@@ -184,7 +184,7 @@ def StructuralTypingComputer getStructuralTypingComputer() {
 	}
 
 	def StructuralTypingResult isStructuralSubtype(RuleEnvironment G,TypeRef left, TypeRef right) {
-		return structuralTypingComputer.isStructuralSubtype(G, left, right)
+		return structuralTypingComputer.isStructuralSubtype(G, left, right);
 	}
 
 	/** @see ExpectedTypeComputer#getExpectedTypeOfReturnValueExpression(RuleEnvironment,Expression) */

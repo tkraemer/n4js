@@ -30,7 +30,7 @@ function PureFnComponent(props: Props): React.Element {
 }
 
 
-class LowerComponent extends React.Component<~Object with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
+class LowerComponent extends React.Component<~React.ComponentProps with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
 	@Override
 	public render() : React.Element{
 		// XPECT linkedFragment at 'this.props.|whatTextShouldIShow' --> /1/@exposedInternalTypes.0/@ownedMembers.0
@@ -39,7 +39,7 @@ class LowerComponent extends React.Component<~Object with {whatTextShouldIShow :
 }
 
 class MyComponent extends
-	React.Component<~Object with {aProp: string}, String> {
+	React.Component<~React.ComponentProps with {aProp: string}, String> {
 
 	@Override
 	public render() : React.Element{

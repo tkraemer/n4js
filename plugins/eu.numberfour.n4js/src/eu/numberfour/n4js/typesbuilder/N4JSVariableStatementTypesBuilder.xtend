@@ -14,6 +14,7 @@ import com.google.inject.Inject
 import eu.numberfour.n4js.AnnotationDefinition
 import eu.numberfour.n4js.n4JS.ExportedVariableDeclaration
 import eu.numberfour.n4js.n4JS.ExportedVariableStatement
+import eu.numberfour.n4js.n4JS.ObjectLiteral
 import eu.numberfour.n4js.n4JS.VariableStatement
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.TModule
@@ -21,6 +22,7 @@ import eu.numberfour.n4js.ts.types.TVariable
 import eu.numberfour.n4js.ts.types.TypeAccessModifier
 import eu.numberfour.n4js.ts.types.TypesFactory
 import eu.numberfour.n4js.ts.utils.TypeUtils
+import eu.numberfour.n4js.n4JS.NewExpression
 
 package class N4JSVariableStatementTypesBuilder {
 
@@ -42,7 +44,9 @@ package class N4JSVariableStatementTypesBuilder {
 
 		val variable = TypesFactory.eINSTANCE.createTVariable
 		variable.name = n4VariableDeclaration.name;
-		variable.const = n4VariableDeclaration.const
+		variable.const = n4VariableDeclaration.const;
+		variable.objectLiteral = n4VariableDeclaration.expression instanceof ObjectLiteral;
+		variable.newExpression = n4VariableDeclaration.expression instanceof NewExpression;
 		if (n4VariableStatement instanceof ExportedVariableStatement) {
 			variable.exportedName = n4VariableStatement.exportedName
 														?: n4VariableDeclaration.name // FIXME temporary hack to work around broken inheritance structure in n4js.xcore!!!!

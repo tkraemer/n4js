@@ -11,7 +11,7 @@
 @@Global @@ProvidedByRuntime
 
 @Polyfill export external public class Error extends Error {
-    public stack: string?;
+    public stack?: string;
 }
 
 /* -*- mode: typescript;-*- */

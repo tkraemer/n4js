@@ -91,12 +91,8 @@ Type: 	  TObjectPrototype
 ;
 
 TypeRef:
-	TypeRefWithoutModifiers
-	undefModifier=UndefModifierToken? nullModifier=NullModifierToken?
+	TypeRefWithoutModifiers optional_OLD_SYNTAX?='?'?
 ;
-
-NullModifierToken returns NullModifier: 'notnull'|'nullable';
-UndefModifierToken returns UndefModifier: '?'|'!';
 
 PrimitiveType:
 	'primitive' name=VoidOrBindingIdentifier
@@ -242,6 +238,7 @@ TField:
 	declaredMemberAccessModifier=MemberAccessModifier
  	(declaredStatic?='static' | const?='const' | declaredFinal?='final')?
 	(name=TypesIdentifier | name=TypesComputedPropertyName)
+	(optional_NEW_SYNTAX?='?')?
 	':' typeRef=TypeRef
 	';'?
 ;
@@ -252,6 +249,7 @@ TGetter: =>({TGetter}
 	'get'
   	(name=TypesIdentifier | name=TypesComputedPropertyName)
   	)
+	(optional_NEW_SYNTAX?='?')?
   	'(' ')' ':' declaredTypeRef=TypeRef
 ;
 
@@ -262,6 +260,7 @@ TSetter:
  	'set'
  	(name=TypesIdentifier | name=TypesComputedPropertyName)
  	)
+	(optional_NEW_SYNTAX?='?')?
  	'(' fpar=TFormalParameter ')'
 ;
 

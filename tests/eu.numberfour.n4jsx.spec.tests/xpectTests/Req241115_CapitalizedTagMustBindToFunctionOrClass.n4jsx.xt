@@ -10,7 +10,7 @@
 
 import * as React from "reactFiles/react"
 
-class C extends React.Component<~Object with {prop: int}, Object> {
+class C extends React.Component<~React.ComponentProps with {prop: int}, Object> {
 	@Override
 	public render(): React.Element {
 		return <button/>

@@ -467,12 +467,12 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *
 	 * Constraint:
 	 *     (
-	 *         undefModifier=UndefModifierToken | 
+	 *         optional_OLD_SYNTAX?='?' | 
 	 *         (
 	 *             declaredType=[Type|TypeReferenceName] 
 	 *             (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? 
 	 *             dynamic?='+'? 
-	 *             ((undefModifier=UndefModifierToken? nullModifier=NullModifierToken?) | undefModifier=UndefModifierToken)?
+	 *             (optional_OLD_SYNTAX?='?' | optional_OLD_SYNTAX?='?')?
 	 *         ) | 
 	 *         (arrayTypeLiteral?='[' typeArgs+=TypeArgument)
 	 *     )
@@ -512,7 +512,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *                 (
 	 *                     (fpars+=TAnonymousFormalParameter fpars+=TAnonymousFormalParameter*)? 
 	 *                     returnTypeRef=TypeRef? 
-	 *                     ((undefModifier=UndefModifierToken? nullModifier=NullModifierToken?) | undefModifier=UndefModifierToken)?
+	 *                     (optional_OLD_SYNTAX?='?' | optional_OLD_SYNTAX?='?')?
 	 *                 ) | 
 	 *                 ((fpars+=TAnonymousFormalParameter fpars+=TAnonymousFormalParameter*)? returnTypeRef=PrimaryTypeExpression)
 	 *             )
@@ -535,8 +535,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         (ownedTypeVars+=TypeVariable ownedTypeVars+=TypeVariable*)? 
 	 *         (fpars+=TAnonymousFormalParameter fpars+=TAnonymousFormalParameter*)? 
 	 *         returnTypeRef=TypeRef? 
-	 *         undefModifier=UndefModifierToken? 
-	 *         nullModifier=NullModifierToken?
+	 *         optional_OLD_SYNTAX?='?'?
 	 *     )
 	 */
 	protected void sequence_FunctionTypeExpressionOLD_TAnonymousFormalParameterList_TypeRef(ISerializationContext context, FunctionTypeExpression semanticObject) {
@@ -550,7 +549,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     TypeArgument returns IntersectionTypeExpression
 	 *
 	 * Constraint:
-	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* undefModifier=UndefModifierToken? nullModifier=NullModifierToken?)
+	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* optional_OLD_SYNTAX?='?'?)
 	 */
 	protected void sequence_IntersectionTypeExpressionOLD_TypeRef(ISerializationContext context, IntersectionTypeExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -563,11 +562,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     PrimaryTypeExpression returns IntersectionTypeExpression
 	 *
 	 * Constraint:
-	 *     (
-	 *         typeRefs+=TypeRefWithoutModifiers 
-	 *         typeRefs+=TypeRefWithoutModifiers* 
-	 *         ((undefModifier=UndefModifierToken? nullModifier=NullModifierToken?) | undefModifier=UndefModifierToken)?
-	 *     )
+	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* (optional_OLD_SYNTAX?='?' | optional_OLD_SYNTAX?='?')?)
 	 */
 	protected void sequence_IntersectionTypeExpressionOLD_TypeRef_TypeRefWithModifiers(ISerializationContext context, IntersectionTypeExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -583,11 +578,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 * Constraint:
 	 *     (
 	 *         (typeRefs+=IntersectionTypeExpression_IntersectionTypeExpression_1_0 typeRefs+=PrimaryTypeExpression+) | 
-	 *         (
-	 *             typeRefs+=TypeRefWithoutModifiers 
-	 *             typeRefs+=TypeRefWithoutModifiers* 
-	 *             ((undefModifier=UndefModifierToken? nullModifier=NullModifierToken?) | undefModifier=UndefModifierToken)?
-	 *         )
+	 *         (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* (optional_OLD_SYNTAX?='?' | optional_OLD_SYNTAX?='?')?)
 	 *     )
 	 */
 	protected void sequence_IntersectionTypeExpression_IntersectionTypeExpressionOLD_TypeRef_TypeRefWithModifiers(ISerializationContext context, IntersectionTypeExpression semanticObject) {
@@ -620,13 +611,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     TypeArgument returns ParameterizedTypeRef
 	 *
 	 * Constraint:
-	 *     (
-	 *         declaredType=[Type|TypeReferenceName] 
-	 *         (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? 
-	 *         dynamic?='+'? 
-	 *         undefModifier=UndefModifierToken? 
-	 *         nullModifier=NullModifierToken?
-	 *     )
+	 *     (declaredType=[Type|TypeReferenceName] (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? dynamic?='+'? optional_OLD_SYNTAX?='?'?)
 	 */
 	protected void sequence_ParameterizedTypeRefNominal_TypeRef_TypeRefWithoutModifiers(ISerializationContext context, ParameterizedTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -648,7 +633,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? 
 	 *         astStructuralMembers+=TStructMember* 
 	 *         dynamic?='+'? 
-	 *         ((undefModifier=UndefModifierToken? nullModifier=NullModifierToken?) | undefModifier=UndefModifierToken)?
+	 *         (optional_OLD_SYNTAX?='?' | optional_OLD_SYNTAX?='?')?
 	 *     )
 	 */
 	protected void sequence_ParameterizedTypeRefStructural_TStructMemberList_TypeRef_TypeRefWithModifiers_TypeRefWithoutModifiers(ISerializationContext context, ParameterizedTypeRefStructural semanticObject) {
@@ -668,8 +653,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         (typeArgs+=TypeArgument typeArgs+=TypeArgument*)? 
 	 *         astStructuralMembers+=TStructMember* 
 	 *         dynamic?='+'? 
-	 *         undefModifier=UndefModifierToken? 
-	 *         nullModifier=NullModifierToken?
+	 *         optional_OLD_SYNTAX?='?'?
 	 *     )
 	 */
 	protected void sequence_ParameterizedTypeRefStructural_TStructMemberList_TypeRef_TypeRefWithoutModifiers(ISerializationContext context, ParameterizedTypeRefStructural semanticObject) {
@@ -819,6 +803,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         declaredMemberAccessModifier=MemberAccessModifier 
 	 *         (declaredStatic?='static' | const?='const' | declaredFinal?='final')? 
 	 *         (name=TypesIdentifier | name=TypesComputedPropertyName) 
+	 *         optional_NEW_SYNTAX?='?'? 
 	 *         typeRef=TypeRef
 	 *     )
 	 */
@@ -857,6 +842,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         declaredMemberAccessModifier=MemberAccessModifier 
 	 *         (declaredAbstract?='abstract' | declaredStatic?='static')? 
 	 *         (name=TypesIdentifier | name=TypesComputedPropertyName) 
+	 *         optional_NEW_SYNTAX?='?'? 
 	 *         declaredTypeRef=TypeRef
 	 *     )
 	 */
@@ -941,6 +927,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         declaredMemberAccessModifier=MemberAccessModifier 
 	 *         (declaredAbstract?='abstract' | declaredStatic?='static')? 
 	 *         (name=TypesIdentifier | name=TypesComputedPropertyName) 
+	 *         optional_NEW_SYNTAX?='?'? 
 	 *         fpar=TFormalParameter
 	 *     )
 	 */
@@ -962,7 +949,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         definedTypingStrategy=TypingStrategyUseSiteOperator 
 	 *         astStructuralMembers+=TStructMember* 
 	 *         dynamic?='+'? 
-	 *         ((undefModifier=UndefModifierToken? nullModifier=NullModifierToken?) | undefModifier=UndefModifierToken)?
+	 *         (optional_OLD_SYNTAX?='?' | optional_OLD_SYNTAX?='?')?
 	 *     )
 	 */
 	protected void sequence_TStructMemberList_ThisTypeRefStructural_TypeRef_TypeRefWithModifiers_TypeRefWithoutModifiers(ISerializationContext context, ThisTypeRefStructural semanticObject) {
@@ -976,13 +963,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     TypeArgument returns ThisTypeRefStructural
 	 *
 	 * Constraint:
-	 *     (
-	 *         definedTypingStrategy=TypingStrategyUseSiteOperator 
-	 *         astStructuralMembers+=TStructMember* 
-	 *         dynamic?='+'? 
-	 *         undefModifier=UndefModifierToken? 
-	 *         nullModifier=NullModifierToken?
-	 *     )
+	 *     (definedTypingStrategy=TypingStrategyUseSiteOperator astStructuralMembers+=TStructMember* dynamic?='+'? optional_OLD_SYNTAX?='?'?)
 	 */
 	protected void sequence_TStructMemberList_ThisTypeRefStructural_TypeRef_TypeRefWithoutModifiers(ISerializationContext context, ThisTypeRefStructural semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -998,7 +979,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     PrimaryTypeExpression returns ThisTypeRefNominal
 	 *
 	 * Constraint:
-	 *     (dynamic?='+'? ((undefModifier=UndefModifierToken? nullModifier=NullModifierToken?) | undefModifier=UndefModifierToken)?)
+	 *     (dynamic?='+'? (optional_OLD_SYNTAX?='?' | optional_OLD_SYNTAX?='?')?)
 	 */
 	protected void sequence_ThisTypeRefNominal_TypeRef_TypeRefWithModifiers_TypeRefWithoutModifiers(ISerializationContext context, ThisTypeRefNominal semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1011,7 +992,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     TypeArgument returns ThisTypeRefNominal
 	 *
 	 * Constraint:
-	 *     (dynamic?='+'? undefModifier=UndefModifierToken? nullModifier=NullModifierToken?)
+	 *     (dynamic?='+'? optional_OLD_SYNTAX?='?'?)
 	 */
 	protected void sequence_ThisTypeRefNominal_TypeRef_TypeRefWithoutModifiers(ISerializationContext context, ThisTypeRefNominal semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1039,11 +1020,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     PrimaryTypeExpression returns TypeTypeRef
 	 *
 	 * Constraint:
-	 *     (
-	 *         constructorRef?='constructor'? 
-	 *         typeArg=TypeArgInTypeTypeRef 
-	 *         ((undefModifier=UndefModifierToken? nullModifier=NullModifierToken?) | undefModifier=UndefModifierToken)?
-	 *     )
+	 *     (constructorRef?='constructor'? typeArg=TypeArgInTypeTypeRef (optional_OLD_SYNTAX?='?' | optional_OLD_SYNTAX?='?')?)
 	 */
 	protected void sequence_TypeRef_TypeRefWithModifiers_TypeTypeRef(ISerializationContext context, TypeTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1058,11 +1035,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     PrimaryTypeExpression returns UnionTypeExpression
 	 *
 	 * Constraint:
-	 *     (
-	 *         typeRefs+=TypeRefWithoutModifiers 
-	 *         typeRefs+=TypeRefWithoutModifiers* 
-	 *         ((undefModifier=UndefModifierToken? nullModifier=NullModifierToken?) | undefModifier=UndefModifierToken)?
-	 *     )
+	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* (optional_OLD_SYNTAX?='?' | optional_OLD_SYNTAX?='?')?)
 	 */
 	protected void sequence_TypeRef_TypeRefWithModifiers_UnionTypeExpressionOLD(ISerializationContext context, UnionTypeExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1076,11 +1049,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 * Constraint:
 	 *     (
 	 *         (typeRefs+=UnionTypeExpression_UnionTypeExpression_1_0 typeRefs+=IntersectionTypeExpression+) | 
-	 *         (
-	 *             typeRefs+=TypeRefWithoutModifiers 
-	 *             typeRefs+=TypeRefWithoutModifiers* 
-	 *             ((undefModifier=UndefModifierToken? nullModifier=NullModifierToken?) | undefModifier=UndefModifierToken)?
-	 *         )
+	 *         (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* (optional_OLD_SYNTAX?='?' | optional_OLD_SYNTAX?='?')?)
 	 *     )
 	 */
 	protected void sequence_TypeRef_TypeRefWithModifiers_UnionTypeExpression_UnionTypeExpressionOLD(ISerializationContext context, UnionTypeExpression semanticObject) {
@@ -1094,7 +1063,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     TypeArgument returns TypeTypeRef
 	 *
 	 * Constraint:
-	 *     (constructorRef?='constructor'? typeArg=TypeArgInTypeTypeRef undefModifier=UndefModifierToken? nullModifier=NullModifierToken?)
+	 *     (constructorRef?='constructor'? typeArg=TypeArgInTypeTypeRef optional_OLD_SYNTAX?='?'?)
 	 */
 	protected void sequence_TypeRef_TypeTypeRef(ISerializationContext context, TypeTypeRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1107,7 +1076,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *     TypeArgument returns UnionTypeExpression
 	 *
 	 * Constraint:
-	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* undefModifier=UndefModifierToken? nullModifier=NullModifierToken?)
+	 *     (typeRefs+=TypeRefWithoutModifiers typeRefs+=TypeRefWithoutModifiers* optional_OLD_SYNTAX?='?'?)
 	 */
 	protected void sequence_TypeRef_UnionTypeExpressionOLD(ISerializationContext context, UnionTypeExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

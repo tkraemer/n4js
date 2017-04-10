@@ -17,9 +17,6 @@ import org.eclipse.xtext.conversion.impl.AbstractDeclarativeValueConverterServic
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import eu.numberfour.n4js.ts.types.NullModifier;
-import eu.numberfour.n4js.ts.types.UndefModifier;
-
 /**
  * Value converters for types, such as null and undef modifier converters.
  */
@@ -27,32 +24,10 @@ import eu.numberfour.n4js.ts.types.UndefModifier;
 public class TypesValueConverterService extends AbstractDeclarativeValueConverterService {
 
 	@Inject
-	private NullModifierValueConverter nullModifierValueConverter;
-
-	@Inject
-	private UndefModifierValueConverter undefModifierValueConverter;
-
-	@Inject
 	private IdentifierDelegateValueConverter identifierDelegateValueConverter;
 
 	@Inject
 	private ComputedPropertyNameValueConverter typesComputedPropertyNameValueConverter;
-
-	/**
-	 * Registers the value converter for the rule {@code NullModifierToken}.
-	 */
-	@ValueConverter(rule = "NullModifierToken")
-	public IValueConverter<NullModifier> getNullModifierTokenConverter() {
-		return nullModifierValueConverter;
-	}
-
-	/**
-	 * Registers the value converter for the rule {@code UndefModifierToken}.
-	 */
-	@ValueConverter(rule = "UndefModifierToken")
-	public IValueConverter<UndefModifier> getUndefModifierTokenConverter() {
-		return undefModifierValueConverter;
-	}
 
 	/**
 	 * Registers the value converter for the rule {@code TypesIdentifier}.

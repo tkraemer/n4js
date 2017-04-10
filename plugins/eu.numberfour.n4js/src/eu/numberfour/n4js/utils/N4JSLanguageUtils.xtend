@@ -33,7 +33,9 @@ import eu.numberfour.n4js.n4JS.N4JSASTUtils
 import eu.numberfour.n4js.n4JS.N4MemberAnnotationList
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
+import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.NumericLiteral
+import eu.numberfour.n4js.n4JS.ObjectLiteral
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
 import eu.numberfour.n4js.n4JS.PropertyAssignment
 import eu.numberfour.n4js.n4JS.PropertyAssignmentAnnotationList
@@ -43,6 +45,7 @@ import eu.numberfour.n4js.n4JS.Script
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.UnaryExpression
 import eu.numberfour.n4js.n4JS.UnaryOperator
+import eu.numberfour.n4js.n4JS.VariableDeclaration
 import eu.numberfour.n4js.postprocessing.ASTMetaInfoCache
 import eu.numberfour.n4js.ts.conversions.ComputedPropertyNameValueConverter
 import eu.numberfour.n4js.ts.scoping.builtin.BuiltInTypeScope
@@ -71,6 +74,7 @@ import eu.numberfour.n4js.ts.types.TStructMember
 import eu.numberfour.n4js.ts.types.TVariable
 import eu.numberfour.n4js.ts.types.TypableElement
 import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.ts.types.TypingStrategy
 import eu.numberfour.n4js.ts.types.util.AllSuperTypesCollector
 import eu.numberfour.n4js.ts.types.util.ExtendedClassesIterable
 import eu.numberfour.n4js.ts.types.util.Variance
@@ -753,5 +757,71 @@ class N4JSLanguageUtils {
 		} else {
 			null
 		}
+	}
+
+
+	/**
+	 * Checks whether the given expression is an object literal or references an object literal
+	 * transitively through a const variable.
+	 *
+	 * @param expr
+	 *			the expression to check.
+	 * @return true if the expression is an object literal or references an object literal
+	 * 			transitively through a const variable.
+	 */
+	def static boolean isConstTransitiveObjectLiteral(TypableElement expr) {
+		if (expr instanceof ObjectLiteral)
+			return true;
+
+		if (expr instanceof IdentifierRef) {
+			val idElem = expr.getId();
+			if (idElem instanceof VariableDeclaration) {
+				// Case 1: non-exported const, e.g. const ol = {}
+				if (idElem.isConst()) {
+					return isConstTransitiveObjectLiteral(idElem.getExpression());
+				}
+			} else if (idElem instanceof TVariable) {
+				// Case 2: exported const, e.g. exported const ol = {}
+				return idElem.objectLiteral;
+			}
+		}
+
+		return false;
+	}
+	
+	/**
+	 * Checks whether the given expression is a new expression, an expression of a final and nominal type,
+	 * or references these expressions transitively through a const variable.
+	 *
+	 * @param expr
+	 *			the expression to check.
+	 * @return true if the expression is a new expression, an expression of a final and nominal type,
+	 * 			or references these expressions transitively through a const variable.
+	 */
+	def static boolean isConstTransitiveNewExpressionOrFinalNominalClassInstance(TypableElement expr, TypeRef typeRef) {
+		if (expr instanceof NewExpression)
+			return true;
+		
+		if (typeRef !== null) {
+			val declType = typeRef.declaredType;
+			if (declType !== null && declType.isFinal && typeRef.typingStrategy == TypingStrategy.NOMINAL) {
+				return true;
+			}
+		}
+
+		if (expr instanceof IdentifierRef) {
+			val idElem = expr.getId();
+			if (idElem instanceof VariableDeclaration) {
+				// Case 1: non-exported const, e.g. const ol = new A()
+				if (idElem.isConst()) {
+					return isConstTransitiveNewExpressionOrFinalNominalClassInstance(idElem.getExpression(), typeRef);
+				}
+			} else if (idElem instanceof TVariable) {
+				// Case 2: exported const, e.g. exported const ol = new A()
+				return idElem.newExpression;
+			}
+		}
+
+		return false;
 	}
 }

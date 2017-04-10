@@ -55,6 +55,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#isDeclaredProvidedByRuntime <em>Declared Provided By Runtime</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#getTypeRef <em>Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#isExternal <em>External</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#isObjectLiteral <em>Object Literal</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TVariableImpl#isNewExpression <em>New Expression</em>}</li>
  * </ul>
  *
  * @generated
@@ -189,6 +191,46 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 	 * @ordered
 	 */
 	protected boolean external = EXTERNAL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isObjectLiteral() <em>Object Literal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isObjectLiteral()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean OBJECT_LITERAL_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isObjectLiteral() <em>Object Literal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isObjectLiteral()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean objectLiteral = OBJECT_LITERAL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isNewExpression() <em>New Expression</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isNewExpression()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean NEW_EXPRESSION_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isNewExpression() <em>New Expression</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isNewExpression()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean newExpression = NEW_EXPRESSION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -412,6 +454,48 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isObjectLiteral() {
+		return objectLiteral;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setObjectLiteral(boolean newObjectLiteral) {
+		boolean oldObjectLiteral = objectLiteral;
+		objectLiteral = newObjectLiteral;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TVARIABLE__OBJECT_LITERAL, oldObjectLiteral, objectLiteral));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isNewExpression() {
+		return newExpression;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setNewExpression(boolean newNewExpression) {
+		boolean oldNewExpression = newExpression;
+		newExpression = newNewExpression;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TVARIABLE__NEW_EXPRESSION, oldNewExpression, newExpression));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getVariableAsString() {
 		final StringBuilder strb = new StringBuilder();
 		boolean _isConst = this.isConst();
@@ -504,6 +588,10 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 				return getTypeRef();
 			case TypesPackage.TVARIABLE__EXTERNAL:
 				return isExternal();
+			case TypesPackage.TVARIABLE__OBJECT_LITERAL:
+				return isObjectLiteral();
+			case TypesPackage.TVARIABLE__NEW_EXPRESSION:
+				return isNewExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -542,6 +630,12 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 			case TypesPackage.TVARIABLE__EXTERNAL:
 				setExternal((Boolean)newValue);
 				return;
+			case TypesPackage.TVARIABLE__OBJECT_LITERAL:
+				setObjectLiteral((Boolean)newValue);
+				return;
+			case TypesPackage.TVARIABLE__NEW_EXPRESSION:
+				setNewExpression((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -578,6 +672,12 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 			case TypesPackage.TVARIABLE__EXTERNAL:
 				setExternal(EXTERNAL_EDEFAULT);
 				return;
+			case TypesPackage.TVARIABLE__OBJECT_LITERAL:
+				setObjectLiteral(OBJECT_LITERAL_EDEFAULT);
+				return;
+			case TypesPackage.TVARIABLE__NEW_EXPRESSION:
+				setNewExpression(NEW_EXPRESSION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -606,6 +706,10 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 				return typeRef != null;
 			case TypesPackage.TVARIABLE__EXTERNAL:
 				return external != EXTERNAL_EDEFAULT;
+			case TypesPackage.TVARIABLE__OBJECT_LITERAL:
+				return objectLiteral != OBJECT_LITERAL_EDEFAULT;
+			case TypesPackage.TVARIABLE__NEW_EXPRESSION:
+				return newExpression != NEW_EXPRESSION_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -770,6 +874,10 @@ public class TVariableImpl extends TExportableElementImpl implements TVariable {
 		result.append(declaredProvidedByRuntime);
 		result.append(", external: ");
 		result.append(external);
+		result.append(", objectLiteral: ");
+		result.append(objectLiteral);
+		result.append(", newExpression: ");
+		result.append(newExpression);
 		result.append(')');
 		return result.toString();
 	}

@@ -58,10 +58,10 @@ export external public class IncomingMessage implements events.IEventEmitter, st
     public rawTrailers: any;
     public setTimeout(msecs: number, callback: Function): this;
 
-    public method: string?;
-    public url: string?;
-    public statusCode: number?;
-    public statusMessage: string?;
+    public method?: string;
+    public url?: string;
+    public statusCode?: number;
+    public statusMessage?: string;
     public socket: net.Socket;
 
     @Override public readable: boolean;
@@ -77,7 +77,7 @@ export external public class IncomingMessage implements events.IEventEmitter, st
     @Override public setEncoding(encoding: string): void;
     @Override public pause(): void;
     @Override public resume(): void;
-    @Override public <T extends stream.IWritableStream> pipe(destination: T, options: ~Object with{ end: boolean?; }=): T;
+    @Override public <T extends stream.IWritableStream> pipe(destination: T, options: ~Object with{ end?: boolean; }=): T;
     @Override public <T extends stream.IWritableStream> unpipe(destination: T=): void;
     @Override public unshift(chunk: any): void;
     @Override public wrap(oldStream: stream.IReadableStream): stream.IReadableStream;
@@ -86,10 +86,10 @@ export external public class IncomingMessage implements events.IEventEmitter, st
 export external public class ClientResponse extends IncomingMessage { }
 
 interface ~AgentOptions {
-    public keepAlive: boolean?;
-    public keepAliveMsecs: number?;
-    public maxSockets: number?;
-    public maxFreeSockets: number?;
+    public keepAlive?: boolean;
+    public keepAliveMsecs?: number;
+    public maxSockets?: number;
+    public maxFreeSockets?: number;
 }
 
 export external public class Agent {

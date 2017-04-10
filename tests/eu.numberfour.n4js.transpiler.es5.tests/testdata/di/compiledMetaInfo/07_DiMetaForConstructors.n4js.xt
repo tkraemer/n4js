@@ -34,7 +34,7 @@ class E extends D{}
 //==================================================================
 interface InjectedClassMeta{
     /** present if type has own injected constructor, can be empty (if annotated ctor has no params) */
-    injectCtorParams : Array<any>?;
+    injectCtorParams? : Array<any>;
 
 }
 

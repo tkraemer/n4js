@@ -1627,13 +1627,13 @@ public providedByRuntime object Error extends Object @Global {
 	 *
 	 * @see ES 5, 15.11.4.2
 	 */
-	public name: string? /* = "Error";*/
+	public name?: string /* = "Error";*/
 	/**
 	 * The explaining error message, the initial value is the empty string.
 	 *
 	 * @see ES 5, 15.11.4.3
 	 */
-	public message: string? /* = "";*/
+	public message?: string /* = "";*/
 
 	/**
 	 * @see ES5, 15.11.4.4
@@ -1846,7 +1846,7 @@ public providedByRuntime interface ~IteratorEntry<out T> {
 	 */
 	// TODO dirty hack: to use covariant T as type of field 'value', we make the field final; but usually fields
 	// in interfaces cannot be final - only works because no validation in n4ts!
-	public final value: T?;
+	public final value?: T;
 	// this would be the alternative, but then we would lose the optionality of 'value':
 //	public get value(): T
 }

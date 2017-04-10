@@ -7,6 +7,7 @@
  */
 package eu.numberfour.n4js.ts.typeRefs.impl;
 
+import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExprOrRef;
 import eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression;
 import eu.numberfour.n4js.ts.typeRefs.TypeRef;
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage;
@@ -48,6 +49,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.FunctionTypeExpressionImpl#getUnboundTypeVars <em>Unbound Type Vars</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.FunctionTypeExpressionImpl#getUnboundTypeVarsUpperBounds <em>Unbound Type Vars Upper Bounds</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.FunctionTypeExpressionImpl#getFpars <em>Fpars</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.FunctionTypeExpressionImpl#isReturnValueOptional_NEW_SYNTAX <em>Return Value Optional NEW SYNTAX</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.FunctionTypeExpressionImpl#getReturnTypeRef <em>Return Type Ref</em>}</li>
  * </ul>
  *
@@ -133,6 +135,26 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 	 * @ordered
 	 */
 	protected EList<TFormalParameter> fpars;
+
+	/**
+	 * The default value of the '{@link #isReturnValueOptional_NEW_SYNTAX() <em>Return Value Optional NEW SYNTAX</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isReturnValueOptional_NEW_SYNTAX()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isReturnValueOptional_NEW_SYNTAX() <em>Return Value Optional NEW SYNTAX</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isReturnValueOptional_NEW_SYNTAX()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean returnValueOptional_NEW_SYNTAX = RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getReturnTypeRef() <em>Return Type Ref</em>}' containment reference.
@@ -318,6 +340,27 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isReturnValueOptional_NEW_SYNTAX() {
+		return returnValueOptional_NEW_SYNTAX;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setReturnValueOptional_NEW_SYNTAX(boolean newReturnValueOptional_NEW_SYNTAX) {
+		boolean oldReturnValueOptional_NEW_SYNTAX = returnValueOptional_NEW_SYNTAX;
+		returnValueOptional_NEW_SYNTAX = newReturnValueOptional_NEW_SYNTAX;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX, oldReturnValueOptional_NEW_SYNTAX, returnValueOptional_NEW_SYNTAX));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TypeRef getReturnTypeRef() {
 		return returnTypeRef;
 	}
@@ -409,6 +452,15 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isReturnValueOptional() {
+		return (this.isReturnValueOptional_NEW_SYNTAX() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isOptional_OLD_SYNTAX()));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -449,6 +501,8 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 				return getUnboundTypeVarsUpperBounds();
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__FPARS:
 				return getFpars();
+			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
+				return isReturnValueOptional_NEW_SYNTAX();
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_TYPE_REF:
 				return getReturnTypeRef();
 		}
@@ -489,6 +543,9 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 				getFpars().clear();
 				getFpars().addAll((Collection<? extends TFormalParameter>)newValue);
 				return;
+			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
+				setReturnValueOptional_NEW_SYNTAX((Boolean)newValue);
+				return;
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_TYPE_REF:
 				setReturnTypeRef((TypeRef)newValue);
 				return;
@@ -525,6 +582,9 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__FPARS:
 				getFpars().clear();
 				return;
+			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
+				setReturnValueOptional_NEW_SYNTAX(RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT);
+				return;
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_TYPE_REF:
 				setReturnTypeRef((TypeRef)null);
 				return;
@@ -554,10 +614,30 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 				return unboundTypeVarsUpperBounds != null && !unboundTypeVarsUpperBounds.isEmpty();
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__FPARS:
 				return fpars != null && !fpars.isEmpty();
+			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
+				return returnValueOptional_NEW_SYNTAX != RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT;
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_TYPE_REF:
 				return returnTypeRef != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == FunctionTypeExprOrRef.class) {
+			switch (baseOperationID) {
+				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VARS: return TypeRefsPackage.FUNCTION_TYPE_EXPRESSION___GET_TYPE_VARS;
+				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE: return TypeRefsPackage.FUNCTION_TYPE_EXPRESSION___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE;
+				case TypeRefsPackage.FUNCTION_TYPE_EXPR_OR_REF___IS_RETURN_VALUE_OPTIONAL: return TypeRefsPackage.FUNCTION_TYPE_EXPRESSION___IS_RETURN_VALUE_OPTIONAL;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
 	}
 
 	/**
@@ -572,6 +652,8 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 				return getTypeVars();
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE:
 				return getTypeVarUpperBound((TypeVariable)arguments.get(0));
+			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION___IS_RETURN_VALUE_OPTIONAL:
+				return isReturnValueOptional();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
@@ -588,6 +670,8 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (binding: ");
 		result.append(binding);
+		result.append(", returnValueOptional_NEW_SYNTAX: ");
+		result.append(returnValueOptional_NEW_SYNTAX);
 		result.append(')');
 		return result.toString();
 	}

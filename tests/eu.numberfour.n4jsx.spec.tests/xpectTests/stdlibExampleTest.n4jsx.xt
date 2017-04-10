@@ -21,8 +21,8 @@ function PureFnComponent(props: Props): React.Element {
 //XPECT noerrors
 var a = <PureFnComponent myProp="This is my prop"/>
 
-class LowerComponent extends React.Component<~Object with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
-	public constructor(props: ~Object with {whatTextShouldIShow : string}) {
+class LowerComponent extends React.Component<~React.ComponentProps with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
+	public constructor(props: ~React.ComponentProps with {whatTextShouldIShow : string}) {
 	    super(props);
 	    this.state = {
 	      //XPECT noerrors
@@ -42,7 +42,7 @@ class LowerComponent extends React.Component<~Object with {whatTextShouldIShow :
 }
 
 class MyComponent extends
-	React.Component<~Object with {aProp: string}, String> {
+	React.Component<~React.ComponentProps with {aProp: string}, String> {
 
 	@Override
 	public render(): React.Element {
@@ -54,7 +54,7 @@ class MyComponent extends
 }
 
 class MyHigherComponent extends
-	React.Component<~Object with {someCondition: Number}, ~Object with {aStateProp: Boolean}> {
+	React.Component<~React.ComponentProps with {someCondition: Number}, ~Object with {aStateProp: Boolean}> {
 
 	@Override
 	public render(): React.Element {

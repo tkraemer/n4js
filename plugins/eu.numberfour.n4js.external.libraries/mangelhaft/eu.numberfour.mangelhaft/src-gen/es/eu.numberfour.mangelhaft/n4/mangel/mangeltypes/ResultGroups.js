@@ -78,7 +78,7 @@
 								target.errors += result.errors;
 								target.skipped += result.skipped;
 								if (result instanceof ResultGroups) {
-									target.results = target.results.concat((result).results);
+									target.results = target.results.concat(((result)).results);
 								}
 							}
 							return target;
@@ -92,7 +92,7 @@
 					},
 					concatArray: {
 						value: function concatArray___n4(resultGroupss) {
-							return this.accumulateResults(new ResultGroups([]), resultGroupss);
+							return this.accumulateResults(new ResultGroups([]), (resultGroupss));
 						}
 					}
 				}, function(instanceProto, staticProto) {

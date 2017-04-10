@@ -13,17 +13,17 @@
 export external public class ~URL {
     public constructor(urlString: string);
 
-    public href: string?;
-    public protocol: string?;
-    public host: string?;
-    public hostname: string?;
-    public port: string?;
-    public pathname: string?;
-    public search: string?;
-    public hash: string?;
+    public href?: string;
+    public protocol?: string;
+    public host?: string;
+    public hostname?: string;
+    public port?: string;
+    public pathname?: string;
+    public search?: string;
+    public hash?: string;
 
-    public username: string?;
-    public password: string?;
+    public username?: string;
+    public password?: string;
 }
 
 /* -*- mode: typescript;-*- */

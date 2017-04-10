@@ -21,7 +21,7 @@
 import * as React from "jsxbackend/react"
 
 
-export public class LowerComponent extends React.Component<~Object with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
+export public class LowerComponent extends React.Component<~React.ComponentProps with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
 	@Override
 	public render() : React.Element{
 		return (<div>{this.props.whatTextShouldIShow}</div>);
@@ -50,7 +50,7 @@ jsxbackend.react.renderToString, null, number, pathSelector, renderToStaticMarku
 scoping.ClassComponentDescriptions.LowerComponent, scoping.ClassComponentDescriptions.MyComponent, string, symbol, typeName,
 undefined, void
 --- */
-export public class MyComponent extends React.Component<~Object with {aProp: string}, String> {
+export public class MyComponent extends React.Component<~React.ComponentProps with {aProp: string}, String> {
 
 	@Override
 	public render() : React.Element{

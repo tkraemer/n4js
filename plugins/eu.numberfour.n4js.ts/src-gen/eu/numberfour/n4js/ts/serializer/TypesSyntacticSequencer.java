@@ -27,7 +27,7 @@ public class TypesSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_FunctionTypeExpressionOLD_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftParenthesisKeyword_3_0_q_LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__;
 	protected AbstractElementAlias match_PrimaryTypeExpression_LeftParenthesisKeyword_3_0_q;
 	protected AbstractElementAlias match_TAnnotation___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q;
-	protected AbstractElementAlias match_TField_SemicolonKeyword_5_q;
+	protected AbstractElementAlias match_TField_SemicolonKeyword_6_q;
 	protected AbstractElementAlias match_TMethod_SemicolonKeyword_5_q;
 	protected AbstractElementAlias match_TStructMemberList___CommaKeyword_1_1_1_or_SemicolonKeyword_1_1_0__q;
 	
@@ -39,7 +39,7 @@ public class TypesSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_FunctionTypeExpressionOLD_PrimaryTypeExpression_LeftParenthesisKeyword_0_0_0_1_or___LeftParenthesisKeyword_3_0_q_LeftCurlyBracketKeyword_1_FunctionKeyword_3_LeftParenthesisKeyword_5__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, true, grammarAccess.getPrimaryTypeExpressionAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftCurlyBracketKeyword_1()), new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getFunctionKeyword_3()), new TokenAlias(false, false, grammarAccess.getFunctionTypeExpressionOLDAccess().getLeftParenthesisKeyword_5())), new TokenAlias(false, false, grammarAccess.getPrimaryTypeExpressionAccess().getLeftParenthesisKeyword_0_0_0_1()));
 		match_PrimaryTypeExpression_LeftParenthesisKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getPrimaryTypeExpressionAccess().getLeftParenthesisKeyword_3_0());
 		match_TAnnotation___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getTAnnotationAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getTAnnotationAccess().getRightParenthesisKeyword_1_2()));
-		match_TField_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getTFieldAccess().getSemicolonKeyword_5());
+		match_TField_SemicolonKeyword_6_q = new TokenAlias(false, true, grammarAccess.getTFieldAccess().getSemicolonKeyword_6());
 		match_TMethod_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getTMethodAccess().getSemicolonKeyword_5());
 		match_TStructMemberList___CommaKeyword_1_1_1_or_SemicolonKeyword_1_1_0__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getTStructMemberListAccess().getCommaKeyword_1_1_1()), new TokenAlias(false, false, grammarAccess.getTStructMemberListAccess().getSemicolonKeyword_1_1_0()));
 	}
@@ -66,8 +66,8 @@ public class TypesSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_PrimaryTypeExpression_LeftParenthesisKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_TAnnotation___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q.equals(syntax))
 				emit_TAnnotation___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_TField_SemicolonKeyword_5_q.equals(syntax))
-				emit_TField_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_TField_SemicolonKeyword_6_q.equals(syntax))
+				emit_TField_SemicolonKeyword_6_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_TMethod_SemicolonKeyword_5_q.equals(syntax))
 				emit_TMethod_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_TStructMemberList___CommaKeyword_1_1_1_or_SemicolonKeyword_1_1_0__q.equals(syntax))
@@ -119,15 +119,13 @@ public class TypesSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) (ambiguity) 'intersection' '{' typeRefs+=TypeRefWithoutModifiers
 	 *     (rule start) (ambiguity) 'this' (rule start)
 	 *     (rule start) (ambiguity) 'this' dynamic?='+'
-	 *     (rule start) (ambiguity) 'this' nullModifier=NullModifierToken
-	 *     (rule start) (ambiguity) 'this' undefModifier=UndefModifierToken
+	 *     (rule start) (ambiguity) 'this' optional_OLD_SYNTAX?='?'
 	 *     (rule start) (ambiguity) 'type' '{' typeArg=TypeArgInTypeTypeRef
 	 *     (rule start) (ambiguity) 'union' '{' typeRefs+=TypeRefWithoutModifiers
 	 *     (rule start) (ambiguity) '{' '@' 'This' '(' declaredThisType=TypeRefFunctionTypeExpression
 	 *     (rule start) (ambiguity) '{' 'function' '(' ')' ':' returnTypeRef=TypeRef
 	 *     (rule start) (ambiguity) '{' 'function' '(' ')' '}' (rule start)
-	 *     (rule start) (ambiguity) '{' 'function' '(' ')' '}' nullModifier=NullModifierToken
-	 *     (rule start) (ambiguity) '{' 'function' '(' ')' '}' undefModifier=UndefModifierToken
+	 *     (rule start) (ambiguity) '{' 'function' '(' ')' '}' optional_OLD_SYNTAX?='?'
 	 *     (rule start) (ambiguity) '{' 'function' '<' ownedTypeVars+=TypeVariable
 	 *     (rule start) (ambiguity) constructorRef?='constructor'
 	 *     (rule start) (ambiguity) declaredType=[Type|TypeReferenceName]
@@ -155,7 +153,7 @@ public class TypesSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * This ambiguous syntax occurs at:
 	 *     typeRef=TypeRef (ambiguity) (rule end)
 	 */
-	protected void emit_TField_SemicolonKeyword_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_TField_SemicolonKeyword_6_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -177,8 +175,7 @@ public class TypesSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * This ambiguous syntax occurs at:
 	 *     astStructuralMembers+=TStructMember (ambiguity) '}' (rule end)
 	 *     astStructuralMembers+=TStructMember (ambiguity) '}' dynamic?='+'
-	 *     astStructuralMembers+=TStructMember (ambiguity) '}' nullModifier=NullModifierToken
-	 *     astStructuralMembers+=TStructMember (ambiguity) '}' undefModifier=UndefModifierToken
+	 *     astStructuralMembers+=TStructMember (ambiguity) '}' optional_OLD_SYNTAX?='?'
 	 *     astStructuralMembers+=TStructMember (ambiguity) astStructuralMembers+=TStructMember
 	 */
 	protected void emit_TStructMemberList___CommaKeyword_1_1_1_or_SemicolonKeyword_1_1_0__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
