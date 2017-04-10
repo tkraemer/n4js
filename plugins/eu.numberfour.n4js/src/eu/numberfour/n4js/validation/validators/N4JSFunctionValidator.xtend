@@ -559,7 +559,6 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
-	// FIXME IDE-2405 remove this validation?
 	@Check
 	def void checkOptionalModifier(FormalParameter fpar) {
 		if(fpar.declaredTypeRef!==null && fpar.declaredTypeRef.followedByQuestionMark) {
@@ -568,7 +567,6 @@ class N4JSFunctionValidator extends AbstractN4JSDeclarativeValidator {
 		}
 	}
 
-	// FIXME IDE-2405 remove this validation?
 	@Check
 	def void checkOptionalModifierT(TFormalParameter fpar) {
 		if(fpar.typeRef!==null && fpar.typeRef.followedByQuestionMark) {
