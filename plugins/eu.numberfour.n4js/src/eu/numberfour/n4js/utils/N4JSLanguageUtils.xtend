@@ -778,7 +778,7 @@ class N4JSLanguageUtils {
 			if (idElem instanceof VariableDeclaration) {
 				// Case 1: non-exported const, e.g. const ol = {}
 				if (idElem.isConst()) {
-					return isConstTransitiveObjectLiteral(idElem.getExpression());
+					return idElem.expression instanceof ObjectLiteral;
 				}
 			} else if (idElem instanceof TVariable) {
 				// Case 2: exported const, e.g. exported const ol = {}
@@ -814,7 +814,7 @@ class N4JSLanguageUtils {
 			if (idElem instanceof VariableDeclaration) {
 				// Case 1: non-exported const, e.g. const ol = new A()
 				if (idElem.isConst()) {
-					return isConstTransitiveNewExpressionOrFinalNominalClassInstance(idElem.getExpression(), typeRef);
+					return idElem.expression instanceof NewExpression;
 				}
 			} else if (idElem instanceof TVariable) {
 				// Case 2: exported const, e.g. exported const ol = new A()
