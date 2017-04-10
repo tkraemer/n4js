@@ -5596,13 +5596,13 @@ public interface TypeRefsPackage extends EPackage {
 	int FUNCTION_TYPE_EXPRESSION__FPARS = FUNCTION_TYPE_EXPR_OR_REF_FEATURE_COUNT + 6;
 
 	/**
-	 * The feature id for the '<em><b>Return Value Optional NEW SYNTAX</b></em>' attribute.
+	 * The feature id for the '<em><b>Return Value Marked Optional</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX = FUNCTION_TYPE_EXPR_OR_REF_FEATURE_COUNT + 7;
+	int FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_MARKED_OPTIONAL = FUNCTION_TYPE_EXPR_OR_REF_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Return Type Ref</b></em>' containment reference.
@@ -7730,15 +7730,15 @@ public interface TypeRefsPackage extends EPackage {
 	EReference getFunctionTypeExpression_Fpars();
 
 	/**
-	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#isReturnValueOptional_NEW_SYNTAX <em>Return Value Optional NEW SYNTAX</em>}'.
+	 * Returns the meta object for the attribute '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#isReturnValueMarkedOptional <em>Return Value Marked Optional</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Return Value Optional NEW SYNTAX</em>'.
-	 * @see eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#isReturnValueOptional_NEW_SYNTAX()
+	 * @return the meta object for the attribute '<em>Return Value Marked Optional</em>'.
+	 * @see eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#isReturnValueMarkedOptional()
 	 * @see #getFunctionTypeExpression()
 	 * @generated
 	 */
-	EAttribute getFunctionTypeExpression_ReturnValueOptional_NEW_SYNTAX();
+	EAttribute getFunctionTypeExpression_ReturnValueMarkedOptional();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#getReturnTypeRef <em>Return Type Ref</em>}'.
@@ -9072,12 +9072,12 @@ public interface TypeRefsPackage extends EPackage {
 		EReference FUNCTION_TYPE_EXPRESSION__FPARS = eINSTANCE.getFunctionTypeExpression_Fpars();
 
 		/**
-		 * The meta object literal for the '<em><b>Return Value Optional NEW SYNTAX</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Return Value Marked Optional</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX = eINSTANCE.getFunctionTypeExpression_ReturnValueOptional_NEW_SYNTAX();
+		EAttribute FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_MARKED_OPTIONAL = eINSTANCE.getFunctionTypeExpression_ReturnValueMarkedOptional();
 
 		/**
 		 * The meta object literal for the '<em><b>Return Type Ref</b></em>' containment reference feature.

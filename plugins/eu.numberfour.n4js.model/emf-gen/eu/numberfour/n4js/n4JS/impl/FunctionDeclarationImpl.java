@@ -72,7 +72,6 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure0;
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FunctionDeclarationImpl#get_lok <em>lok</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FunctionDeclarationImpl#getDefinedType <em>Defined Type</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FunctionDeclarationImpl#getFpars <em>Fpars</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.FunctionDeclarationImpl#isReturnValueDeclaredOptional <em>Return Value Declared Optional</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FunctionDeclarationImpl#getReturnTypeRef <em>Return Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FunctionDeclarationImpl#isGenerator <em>Generator</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FunctionDeclarationImpl#isDeclaredAsync <em>Declared Async</em>}</li>
@@ -132,26 +131,6 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 	 * @ordered
 	 */
 	protected EList<FormalParameter> fpars;
-
-	/**
-	 * The default value of the '{@link #isReturnValueDeclaredOptional() <em>Return Value Declared Optional</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isReturnValueDeclaredOptional()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean RETURN_VALUE_DECLARED_OPTIONAL_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isReturnValueDeclaredOptional() <em>Return Value Declared Optional</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isReturnValueDeclaredOptional()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean returnValueDeclaredOptional = RETURN_VALUE_DECLARED_OPTIONAL_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getReturnTypeRef() <em>Return Type Ref</em>}' containment reference.
@@ -405,27 +384,6 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isReturnValueDeclaredOptional() {
-		return returnValueDeclaredOptional;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setReturnValueDeclaredOptional(boolean newReturnValueDeclaredOptional) {
-		boolean oldReturnValueDeclaredOptional = returnValueDeclaredOptional;
-		returnValueDeclaredOptional = newReturnValueDeclaredOptional;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.FUNCTION_DECLARATION__RETURN_VALUE_DECLARED_OPTIONAL, oldReturnValueDeclaredOptional, returnValueDeclaredOptional));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public TypeRef getReturnTypeRef() {
 		return returnTypeRef;
 	}
@@ -622,7 +580,7 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 	 * @generated
 	 */
 	public boolean isReturnValueOptional() {
-		return ((((this.getDefinedFunction() != null) && this.getDefinedFunction().isReturnValueOptional()) || this.isReturnValueDeclaredOptional()) || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark()));
+		return (((this.getDefinedFunction() != null) && this.getDefinedFunction().isReturnValueOptional()) || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark()));
 	}
 
 	/**
@@ -741,8 +699,6 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 				return basicGetDefinedType();
 			case N4JSPackage.FUNCTION_DECLARATION__FPARS:
 				return getFpars();
-			case N4JSPackage.FUNCTION_DECLARATION__RETURN_VALUE_DECLARED_OPTIONAL:
-				return isReturnValueDeclaredOptional();
 			case N4JSPackage.FUNCTION_DECLARATION__RETURN_TYPE_REF:
 				return getReturnTypeRef();
 			case N4JSPackage.FUNCTION_DECLARATION__GENERATOR:
@@ -782,9 +738,6 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 			case N4JSPackage.FUNCTION_DECLARATION__FPARS:
 				getFpars().clear();
 				getFpars().addAll((Collection<? extends FormalParameter>)newValue);
-				return;
-			case N4JSPackage.FUNCTION_DECLARATION__RETURN_VALUE_DECLARED_OPTIONAL:
-				setReturnValueDeclaredOptional((Boolean)newValue);
 				return;
 			case N4JSPackage.FUNCTION_DECLARATION__RETURN_TYPE_REF:
 				setReturnTypeRef((TypeRef)newValue);
@@ -829,9 +782,6 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 			case N4JSPackage.FUNCTION_DECLARATION__FPARS:
 				getFpars().clear();
 				return;
-			case N4JSPackage.FUNCTION_DECLARATION__RETURN_VALUE_DECLARED_OPTIONAL:
-				setReturnValueDeclaredOptional(RETURN_VALUE_DECLARED_OPTIONAL_EDEFAULT);
-				return;
 			case N4JSPackage.FUNCTION_DECLARATION__RETURN_TYPE_REF:
 				setReturnTypeRef((TypeRef)null);
 				return;
@@ -869,8 +819,6 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 				return definedType != null;
 			case N4JSPackage.FUNCTION_DECLARATION__FPARS:
 				return fpars != null && !fpars.isEmpty();
-			case N4JSPackage.FUNCTION_DECLARATION__RETURN_VALUE_DECLARED_OPTIONAL:
-				return returnValueDeclaredOptional != RETURN_VALUE_DECLARED_OPTIONAL_EDEFAULT;
 			case N4JSPackage.FUNCTION_DECLARATION__RETURN_TYPE_REF:
 				return returnTypeRef != null;
 			case N4JSPackage.FUNCTION_DECLARATION__GENERATOR:
@@ -934,7 +882,6 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 		if (baseClass == FunctionDefinition.class) {
 			switch (derivedFeatureID) {
 				case N4JSPackage.FUNCTION_DECLARATION__FPARS: return N4JSPackage.FUNCTION_DEFINITION__FPARS;
-				case N4JSPackage.FUNCTION_DECLARATION__RETURN_VALUE_DECLARED_OPTIONAL: return N4JSPackage.FUNCTION_DEFINITION__RETURN_VALUE_DECLARED_OPTIONAL;
 				case N4JSPackage.FUNCTION_DECLARATION__RETURN_TYPE_REF: return N4JSPackage.FUNCTION_DEFINITION__RETURN_TYPE_REF;
 				case N4JSPackage.FUNCTION_DECLARATION__GENERATOR: return N4JSPackage.FUNCTION_DEFINITION__GENERATOR;
 				case N4JSPackage.FUNCTION_DECLARATION__DECLARED_ASYNC: return N4JSPackage.FUNCTION_DEFINITION__DECLARED_ASYNC;
@@ -1009,7 +956,6 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 		if (baseClass == FunctionDefinition.class) {
 			switch (baseFeatureID) {
 				case N4JSPackage.FUNCTION_DEFINITION__FPARS: return N4JSPackage.FUNCTION_DECLARATION__FPARS;
-				case N4JSPackage.FUNCTION_DEFINITION__RETURN_VALUE_DECLARED_OPTIONAL: return N4JSPackage.FUNCTION_DECLARATION__RETURN_VALUE_DECLARED_OPTIONAL;
 				case N4JSPackage.FUNCTION_DEFINITION__RETURN_TYPE_REF: return N4JSPackage.FUNCTION_DECLARATION__RETURN_TYPE_REF;
 				case N4JSPackage.FUNCTION_DEFINITION__GENERATOR: return N4JSPackage.FUNCTION_DECLARATION__GENERATOR;
 				case N4JSPackage.FUNCTION_DEFINITION__DECLARED_ASYNC: return N4JSPackage.FUNCTION_DECLARATION__DECLARED_ASYNC;
@@ -1072,7 +1018,6 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 			switch (baseOperationID) {
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_NAME: return N4JSPackage.FUNCTION_DECLARATION___GET_NAME;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE: return N4JSPackage.FUNCTION_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE;
-				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_RETURN_VALUE_DECLARED_OPTIONAL: return N4JSPackage.FUNCTION_DECLARATION___IS_RETURN_VALUE_DECLARED_OPTIONAL;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_RETURN_VALUE_OPTIONAL: return N4JSPackage.FUNCTION_DECLARATION___IS_RETURN_VALUE_OPTIONAL;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC: return N4JSPackage.FUNCTION_DECLARATION___IS_ASYNC;
 				case N4JSPackage.FUNCTION_OR_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR: return N4JSPackage.FUNCTION_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR;
@@ -1161,8 +1106,6 @@ public class FunctionDeclarationImpl extends AnnotableScriptElementImpl implemen
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (declaredModifiers: ");
 		result.append(declaredModifiers);
-		result.append(", returnValueDeclaredOptional: ");
-		result.append(returnValueDeclaredOptional);
 		result.append(", generator: ");
 		result.append(generator);
 		result.append(", declaredAsync: ");

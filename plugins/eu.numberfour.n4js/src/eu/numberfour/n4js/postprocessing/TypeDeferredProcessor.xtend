@@ -66,7 +66,7 @@ package class TypeDeferredProcessor extends AbstractProcessor {
 						val implicitReturnTypeRef = TypeRefsFactory.eINSTANCE.createThisTypeRef;
 						val boundThisTypeRef = tsh.bindAndSubstituteThisTypeRef(G, obj, implicitReturnTypeRef);
 						EcoreUtilN4.doWithDeliver(false, [
-							tCtor.returnValueOptional_NEW_SYNTAX = true;
+							tCtor.returnValueMarkedOptional = true;
 							tCtor.returnTypeRef = TypeUtils.copy(boundThisTypeRef);
 						], tCtor);
 					}

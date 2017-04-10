@@ -71587,7 +71587,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
     public final EObject ruleTStructField() throws RecognitionException {
         EObject current = null;
 
-        Token lv_optional_NEW_SYNTAX_1_0=null;
+        Token lv_optional_1_0=null;
         Token otherlv_2=null;
         AntlrDatatypeRuleToken lv_name_0_0 = null;
 
@@ -71640,10 +71640,10 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                 case 1 :
                     {
                     {
-                    lv_optional_NEW_SYNTAX_1_0=(Token)match(input,QuestionMark,FOLLOW_43); if (state.failed) return current;
+                    lv_optional_1_0=(Token)match(input,QuestionMark,FOLLOW_43); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      					newLeafNode(lv_optional_NEW_SYNTAX_1_0, grammarAccess.getTStructFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+                      					newLeafNode(lv_optional_1_0, grammarAccess.getTStructFieldAccess().getOptionalQuestionMarkKeyword_1_0());
                       				
                     }
                     if ( state.backtracking==0 ) {
@@ -71651,7 +71651,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                       					if (current==null) {
                       						current = createModelElement(grammarAccess.getTStructFieldRule());
                       					}
-                      					setWithLastConsumed(current, "optional_NEW_SYNTAX", true, "?");
+                      					setWithLastConsumed(current, "optional", true, "?");
                       				
                     }
 
@@ -71772,7 +71772,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
         EObject current = null;
 
         Token otherlv_1=null;
-        Token lv_optional_NEW_SYNTAX_3_0=null;
+        Token lv_optional_3_0=null;
         Token otherlv_4=null;
         Token otherlv_5=null;
         Token otherlv_6=null;
@@ -71852,10 +71852,10 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                 case 1 :
                     {
                     {
-                    lv_optional_NEW_SYNTAX_3_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return current;
+                    lv_optional_3_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      					newLeafNode(lv_optional_NEW_SYNTAX_3_0, grammarAccess.getTStructGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+                      					newLeafNode(lv_optional_3_0, grammarAccess.getTStructGetterAccess().getOptionalQuestionMarkKeyword_1_0());
                       				
                     }
                     if ( state.backtracking==0 ) {
@@ -71863,7 +71863,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                       					if (current==null) {
                       						current = createModelElement(grammarAccess.getTStructGetterRule());
                       					}
-                      					setWithLastConsumed(current, "optional_NEW_SYNTAX", true, "?");
+                      					setWithLastConsumed(current, "optional", true, "?");
                       				
                     }
 
@@ -71997,7 +71997,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
         EObject current = null;
 
         Token otherlv_1=null;
-        Token lv_optional_NEW_SYNTAX_3_0=null;
+        Token lv_optional_3_0=null;
         Token otherlv_4=null;
         Token otherlv_6=null;
         AntlrDatatypeRuleToken lv_name_2_0 = null;
@@ -72076,10 +72076,10 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                 case 1 :
                     {
                     {
-                    lv_optional_NEW_SYNTAX_3_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return current;
+                    lv_optional_3_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      					newLeafNode(lv_optional_NEW_SYNTAX_3_0, grammarAccess.getTStructSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+                      					newLeafNode(lv_optional_3_0, grammarAccess.getTStructSetterAccess().getOptionalQuestionMarkKeyword_1_0());
                       				
                     }
                     if ( state.backtracking==0 ) {
@@ -72087,7 +72087,7 @@ public class InternalN4JSParser extends AbstractInternalAntlrParser {
                       					if (current==null) {
                       						current = createModelElement(grammarAccess.getTStructSetterRule());
                       					}
-                      					setWithLastConsumed(current, "optional_NEW_SYNTAX", true, "?");
+                      					setWithLastConsumed(current, "optional", true, "?");
                       				
                     }
 

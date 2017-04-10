@@ -2896,15 +2896,15 @@ ruleTField returns [EObject current=null]
 		)
 		(
 			(
-				lv_optional_NEW_SYNTAX_6_0=QuestionMark
+				lv_optional_6_0=QuestionMark
 				{
-					newLeafNode(lv_optional_NEW_SYNTAX_6_0, grammarAccess.getTFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_3_0());
+					newLeafNode(lv_optional_6_0, grammarAccess.getTFieldAccess().getOptionalQuestionMarkKeyword_3_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getTFieldRule());
 					}
-					setWithLastConsumed($current, "optional_NEW_SYNTAX", true, "?");
+					setWithLastConsumed($current, "optional", true, "?");
 				}
 			)
 		)?
@@ -3101,15 +3101,15 @@ ruleTGetter returns [EObject current=null]
 		)
 		(
 			(
-				lv_optional_NEW_SYNTAX_7_0=QuestionMark
+				lv_optional_7_0=QuestionMark
 				{
-					newLeafNode(lv_optional_NEW_SYNTAX_7_0, grammarAccess.getTGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+					newLeafNode(lv_optional_7_0, grammarAccess.getTGetterAccess().getOptionalQuestionMarkKeyword_1_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getTGetterRule());
 					}
-					setWithLastConsumed($current, "optional_NEW_SYNTAX", true, "?");
+					setWithLastConsumed($current, "optional", true, "?");
 				}
 			)
 		)?
@@ -3308,15 +3308,15 @@ ruleTSetter returns [EObject current=null]
 		)
 		(
 			(
-				lv_optional_NEW_SYNTAX_7_0=QuestionMark
+				lv_optional_7_0=QuestionMark
 				{
-					newLeafNode(lv_optional_NEW_SYNTAX_7_0, grammarAccess.getTSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+					newLeafNode(lv_optional_7_0, grammarAccess.getTSetterAccess().getOptionalQuestionMarkKeyword_1_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getTSetterRule());
 					}
-					setWithLastConsumed($current, "optional_NEW_SYNTAX", true, "?");
+					setWithLastConsumed($current, "optional", true, "?");
 				}
 			)
 		)?
@@ -5652,15 +5652,15 @@ ruleTStructField returns [EObject current=null]
 		)
 		(
 			(
-				lv_optional_NEW_SYNTAX_1_0=QuestionMark
+				lv_optional_1_0=QuestionMark
 				{
-					newLeafNode(lv_optional_NEW_SYNTAX_1_0, grammarAccess.getTStructFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+					newLeafNode(lv_optional_1_0, grammarAccess.getTStructFieldAccess().getOptionalQuestionMarkKeyword_1_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getTStructFieldRule());
 					}
-					setWithLastConsumed($current, "optional_NEW_SYNTAX", true, "?");
+					setWithLastConsumed($current, "optional", true, "?");
 				}
 			)
 		)?
@@ -5755,15 +5755,15 @@ ruleTStructGetter returns [EObject current=null]
 		)
 		(
 			(
-				lv_optional_NEW_SYNTAX_3_0=QuestionMark
+				lv_optional_3_0=QuestionMark
 				{
-					newLeafNode(lv_optional_NEW_SYNTAX_3_0, grammarAccess.getTStructGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+					newLeafNode(lv_optional_3_0, grammarAccess.getTStructGetterAccess().getOptionalQuestionMarkKeyword_1_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getTStructGetterRule());
 					}
-					setWithLastConsumed($current, "optional_NEW_SYNTAX", true, "?");
+					setWithLastConsumed($current, "optional", true, "?");
 				}
 			)
 		)?
@@ -5866,15 +5866,15 @@ ruleTStructSetter returns [EObject current=null]
 		)
 		(
 			(
-				lv_optional_NEW_SYNTAX_3_0=QuestionMark
+				lv_optional_3_0=QuestionMark
 				{
-					newLeafNode(lv_optional_NEW_SYNTAX_3_0, grammarAccess.getTStructSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+					newLeafNode(lv_optional_3_0, grammarAccess.getTStructSetterAccess().getOptionalQuestionMarkKeyword_1_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getTStructSetterRule());
 					}
-					setWithLastConsumed($current, "optional_NEW_SYNTAX", true, "?");
+					setWithLastConsumed($current, "optional", true, "?");
 				}
 			)
 		)?

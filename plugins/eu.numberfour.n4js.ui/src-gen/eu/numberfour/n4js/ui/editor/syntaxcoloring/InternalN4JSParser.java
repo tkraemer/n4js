@@ -52232,7 +52232,7 @@ public class InternalN4JSParser extends AbstractInternalHighlightingAntlrParser 
         InternalN4JSParser.ruleTStructField_return retval = new InternalN4JSParser.ruleTStructField_return();
         retval.start = input.LT(1);
 
-        Token Optional_NEW_SYNTAXQuestionMarkKeyword_1_0=null;
+        Token OptionalQuestionMarkKeyword_1_0=null;
         Token ColonKeyword_2_0=null;
         InternalN4JSParser.ruleIdentifierName_return NameIdentifierNameParserRuleCall_0_0 = null;
 
@@ -52271,10 +52271,10 @@ public class InternalN4JSParser extends AbstractInternalHighlightingAntlrParser 
                 case 1 :
                     {
                     {
-                    Optional_NEW_SYNTAXQuestionMarkKeyword_1_0=(Token)match(input,QuestionMark,FOLLOW_43); if (state.failed) return retval;
+                    OptionalQuestionMarkKeyword_1_0=(Token)match(input,QuestionMark,FOLLOW_43); if (state.failed) return retval;
                     if ( state.backtracking==0 ) {
 
-                      				announce(Optional_NEW_SYNTAXQuestionMarkKeyword_1_0, grammarAccess.getTStructFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+                      				announce(OptionalQuestionMarkKeyword_1_0, grammarAccess.getTStructFieldAccess().getOptionalQuestionMarkKeyword_1_0());
                       			
                     }
 
@@ -52370,7 +52370,7 @@ public class InternalN4JSParser extends AbstractInternalHighlightingAntlrParser 
         retval.start = input.LT(1);
 
         Token GetKeyword_0_0_1=null;
-        Token Optional_NEW_SYNTAXQuestionMarkKeyword_1_0=null;
+        Token OptionalQuestionMarkKeyword_1_0=null;
         Token LeftParenthesisKeyword_2=null;
         Token RightParenthesisKeyword_3=null;
         Token ColonKeyword_4_0=null;
@@ -52425,10 +52425,10 @@ public class InternalN4JSParser extends AbstractInternalHighlightingAntlrParser 
                 case 1 :
                     {
                     {
-                    Optional_NEW_SYNTAXQuestionMarkKeyword_1_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return retval;
+                    OptionalQuestionMarkKeyword_1_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return retval;
                     if ( state.backtracking==0 ) {
 
-                      				announce(Optional_NEW_SYNTAXQuestionMarkKeyword_1_0, grammarAccess.getTStructGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+                      				announce(OptionalQuestionMarkKeyword_1_0, grammarAccess.getTStructGetterAccess().getOptionalQuestionMarkKeyword_1_0());
                       			
                     }
 
@@ -52537,7 +52537,7 @@ public class InternalN4JSParser extends AbstractInternalHighlightingAntlrParser 
         retval.start = input.LT(1);
 
         Token SetKeyword_0_0_1=null;
-        Token Optional_NEW_SYNTAXQuestionMarkKeyword_1_0=null;
+        Token OptionalQuestionMarkKeyword_1_0=null;
         Token LeftParenthesisKeyword_2=null;
         Token RightParenthesisKeyword_4=null;
         InternalN4JSParser.ruleIdentifierName_return NameIdentifierNameParserRuleCall_0_0_2_0 = null;
@@ -52591,10 +52591,10 @@ public class InternalN4JSParser extends AbstractInternalHighlightingAntlrParser 
                 case 1 :
                     {
                     {
-                    Optional_NEW_SYNTAXQuestionMarkKeyword_1_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return retval;
+                    OptionalQuestionMarkKeyword_1_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return retval;
                     if ( state.backtracking==0 ) {
 
-                      				announce(Optional_NEW_SYNTAXQuestionMarkKeyword_1_0, grammarAccess.getTStructSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+                      				announce(OptionalQuestionMarkKeyword_1_0, grammarAccess.getTStructSetterAccess().getOptionalQuestionMarkKeyword_1_0());
                       			
                     }
 

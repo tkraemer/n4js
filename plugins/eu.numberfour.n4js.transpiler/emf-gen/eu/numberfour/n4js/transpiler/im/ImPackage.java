@@ -2019,15 +2019,6 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_GETTER_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE = N4JSPackage.N4_GETTER_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE;
 
 	/**
-	 * The operation id for the '<em>Is Return Value Declared Optional</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_GETTER_DECLARATION___IS_RETURN_VALUE_DECLARED_OPTIONAL = N4JSPackage.N4_GETTER_DECLARATION___IS_RETURN_VALUE_DECLARED_OPTIONAL;
-
-	/**
 	 * The operation id for the '<em>Is Return Value Optional</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2353,15 +2344,6 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_SETTER_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE = N4JSPackage.N4_SETTER_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE;
 
 	/**
-	 * The operation id for the '<em>Is Return Value Declared Optional</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_SETTER_DECLARATION___IS_RETURN_VALUE_DECLARED_OPTIONAL = N4JSPackage.N4_SETTER_DECLARATION___IS_RETURN_VALUE_DECLARED_OPTIONAL;
-
-	/**
 	 * The operation id for the '<em>Is Return Value Optional</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2606,15 +2588,6 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_METHOD_DECLARATION__FPARS = N4JSPackage.N4_METHOD_DECLARATION__FPARS;
 
 	/**
-	 * The feature id for the '<em><b>Return Value Declared Optional</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_METHOD_DECLARATION__RETURN_VALUE_DECLARED_OPTIONAL = N4JSPackage.N4_METHOD_DECLARATION__RETURN_VALUE_DECLARED_OPTIONAL;
-
-	/**
 	 * The feature id for the '<em><b>Return Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2784,15 +2757,6 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE = N4JSPackage.N4_METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE;
-
-	/**
-	 * The operation id for the '<em>Is Return Value Declared Optional</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELEGATING_METHOD_DECLARATION___IS_RETURN_VALUE_DECLARED_OPTIONAL = N4JSPackage.N4_METHOD_DECLARATION___IS_RETURN_VALUE_DECLARED_OPTIONAL;
 
 	/**
 	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.

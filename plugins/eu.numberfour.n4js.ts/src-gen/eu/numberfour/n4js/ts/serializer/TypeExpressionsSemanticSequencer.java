@@ -656,7 +656,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TStructField returns TStructField
 	 *
 	 * Constraint:
-	 *     (name=IdentifierName optional_NEW_SYNTAX?='?'? typeRef=TypeRef?)
+	 *     (name=IdentifierName optional?='?'? typeRef=TypeRef?)
 	 */
 	protected void sequence_TStructField(ISerializationContext context, TStructField semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -669,7 +669,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TStructGetter returns TStructGetter
 	 *
 	 * Constraint:
-	 *     (name=IdentifierName optional_NEW_SYNTAX?='?'? declaredTypeRef=TypeRef?)
+	 *     (name=IdentifierName optional?='?'? declaredTypeRef=TypeRef?)
 	 */
 	protected void sequence_TStructGetter(ISerializationContext context, TStructGetter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -728,7 +728,7 @@ public class TypeExpressionsSemanticSequencer extends AbstractDelegatingSemantic
 	 *     TStructSetter returns TStructSetter
 	 *
 	 * Constraint:
-	 *     (name=IdentifierName optional_NEW_SYNTAX?='?'? fpar=TAnonymousFormalParameter)
+	 *     (name=IdentifierName optional?='?'? fpar=TAnonymousFormalParameter)
 	 */
 	protected void sequence_TStructSetter(ISerializationContext context, TStructSetter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

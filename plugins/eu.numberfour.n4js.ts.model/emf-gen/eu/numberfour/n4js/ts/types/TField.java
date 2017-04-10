@@ -22,7 +22,7 @@ package eu.numberfour.n4js.ts.types;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.TField#isHasExpression <em>Has Expression</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.TField#isOptional_NEW_SYNTAX <em>Optional NEW SYNTAX</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TField#isOptional <em>Optional</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.ts.types.TypesPackage#getTField()
@@ -57,39 +57,30 @@ public interface TField extends TMemberWithAccessModifier, TTypedElement, TConst
 	void setHasExpression(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Optional NEW SYNTAX</b></em>' attribute.
+	 * Returns the value of the '<em><b>Optional</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Optional NEW SYNTAX</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Optional</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Optional NEW SYNTAX</em>' attribute.
-	 * @see #setOptional_NEW_SYNTAX(boolean)
-	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTField_Optional_NEW_SYNTAX()
+	 * @return the value of the '<em>Optional</em>' attribute.
+	 * @see #setOptional(boolean)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTField_Optional()
 	 * @model unique="false"
 	 * @generated
 	 */
-	boolean isOptional_NEW_SYNTAX();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TField#isOptional_NEW_SYNTAX <em>Optional NEW SYNTAX</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Optional NEW SYNTAX</em>' attribute.
-	 * @see #isOptional_NEW_SYNTAX()
-	 * @generated
-	 */
-	void setOptional_NEW_SYNTAX(boolean value);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return this.isOptional_NEW_SYNTAX();'"
-	 * @generated
-	 */
 	boolean isOptional();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TField#isOptional <em>Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Optional</em>' attribute.
+	 * @see #isOptional()
+	 * @generated
+	 */
+	void setOptional(boolean value);
 
 	/**
 	 * <!-- begin-user-doc -->

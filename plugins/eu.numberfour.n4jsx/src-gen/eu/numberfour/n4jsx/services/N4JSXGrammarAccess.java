@@ -3607,7 +3607,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TStructField:
-	//	name=IdentifierName optional_NEW_SYNTAX?='?'? (':' typeRef=TypeRef)?;
+	//	name=IdentifierName optional?='?'? (':' typeRef=TypeRef)?;
 	public TypeExpressionsGrammarAccess.TStructFieldElements getTStructFieldAccess() {
 		return gaTypeExpressions.getTStructFieldAccess();
 	}
@@ -3619,7 +3619,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	//TStructGetter:
 	//	=> ({TStructGetter}
 	//	'get'
-	//	name=IdentifierName) optional_NEW_SYNTAX?='?'?
+	//	name=IdentifierName) optional?='?'?
 	//	'(' ')' (':' declaredTypeRef=TypeRef)?;
 	public TypeExpressionsGrammarAccess.TStructGetterElements getTStructGetterAccess() {
 		return gaTypeExpressions.getTStructGetterAccess();
@@ -3632,7 +3632,7 @@ public class N4JSXGrammarAccess extends AbstractGrammarElementFinder {
 	//TStructSetter:
 	//	=> ({TStructSetter}
 	//	'set'
-	//	name=IdentifierName) optional_NEW_SYNTAX?='?'?
+	//	name=IdentifierName) optional?='?'?
 	//	'(' fpar=TAnonymousFormalParameter ')';
 	public TypeExpressionsGrammarAccess.TStructSetterElements getTStructSetterAccess() {
 		return gaTypeExpressions.getTStructSetterAccess();

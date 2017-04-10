@@ -8228,9 +8228,9 @@ rule__TField__Group__3__Impl
 	}
 :
 (
-	{ before(grammarAccess.getTFieldAccess().getOptional_NEW_SYNTAXAssignment_3()); }
-	(rule__TField__Optional_NEW_SYNTAXAssignment_3)?
-	{ after(grammarAccess.getTFieldAccess().getOptional_NEW_SYNTAXAssignment_3()); }
+	{ before(grammarAccess.getTFieldAccess().getOptionalAssignment_3()); }
+	(rule__TField__OptionalAssignment_3)?
+	{ after(grammarAccess.getTFieldAccess().getOptionalAssignment_3()); }
 )
 ;
 finally {
@@ -8363,9 +8363,9 @@ rule__TGetter__Group__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getTGetterAccess().getOptional_NEW_SYNTAXAssignment_1()); }
-	(rule__TGetter__Optional_NEW_SYNTAXAssignment_1)?
-	{ after(grammarAccess.getTGetterAccess().getOptional_NEW_SYNTAXAssignment_1()); }
+	{ before(grammarAccess.getTGetterAccess().getOptionalAssignment_1()); }
+	(rule__TGetter__OptionalAssignment_1)?
+	{ after(grammarAccess.getTGetterAccess().getOptionalAssignment_1()); }
 )
 ;
 finally {
@@ -8687,9 +8687,9 @@ rule__TSetter__Group__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getTSetterAccess().getOptional_NEW_SYNTAXAssignment_1()); }
-	(rule__TSetter__Optional_NEW_SYNTAXAssignment_1)?
-	{ after(grammarAccess.getTSetterAccess().getOptional_NEW_SYNTAXAssignment_1()); }
+	{ before(grammarAccess.getTSetterAccess().getOptionalAssignment_1()); }
+	(rule__TSetter__OptionalAssignment_1)?
+	{ after(grammarAccess.getTSetterAccess().getOptionalAssignment_1()); }
 )
 ;
 finally {
@@ -13446,9 +13446,9 @@ rule__TStructField__Group__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getTStructFieldAccess().getOptional_NEW_SYNTAXAssignment_1()); }
-	(rule__TStructField__Optional_NEW_SYNTAXAssignment_1)?
-	{ after(grammarAccess.getTStructFieldAccess().getOptional_NEW_SYNTAXAssignment_1()); }
+	{ before(grammarAccess.getTStructFieldAccess().getOptionalAssignment_1()); }
+	(rule__TStructField__OptionalAssignment_1)?
+	{ after(grammarAccess.getTStructFieldAccess().getOptionalAssignment_1()); }
 )
 ;
 finally {
@@ -13581,9 +13581,9 @@ rule__TStructGetter__Group__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getTStructGetterAccess().getOptional_NEW_SYNTAXAssignment_1()); }
-	(rule__TStructGetter__Optional_NEW_SYNTAXAssignment_1)?
-	{ after(grammarAccess.getTStructGetterAccess().getOptional_NEW_SYNTAXAssignment_1()); }
+	{ before(grammarAccess.getTStructGetterAccess().getOptionalAssignment_1()); }
+	(rule__TStructGetter__OptionalAssignment_1)?
+	{ after(grammarAccess.getTStructGetterAccess().getOptionalAssignment_1()); }
 )
 ;
 finally {
@@ -13878,9 +13878,9 @@ rule__TStructSetter__Group__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getTStructSetterAccess().getOptional_NEW_SYNTAXAssignment_1()); }
-	(rule__TStructSetter__Optional_NEW_SYNTAXAssignment_1)?
-	{ after(grammarAccess.getTStructSetterAccess().getOptional_NEW_SYNTAXAssignment_1()); }
+	{ before(grammarAccess.getTStructSetterAccess().getOptionalAssignment_1()); }
+	(rule__TStructSetter__OptionalAssignment_1)?
+	{ after(grammarAccess.getTStructSetterAccess().getOptionalAssignment_1()); }
 )
 ;
 finally {
@@ -16056,19 +16056,19 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TField__Optional_NEW_SYNTAXAssignment_3
+rule__TField__OptionalAssignment_3
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getTFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_3_0()); }
+		{ before(grammarAccess.getTFieldAccess().getOptionalQuestionMarkKeyword_3_0()); }
 		(
-			{ before(grammarAccess.getTFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_3_0()); }
+			{ before(grammarAccess.getTFieldAccess().getOptionalQuestionMarkKeyword_3_0()); }
 			QuestionMark
-			{ after(grammarAccess.getTFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_3_0()); }
+			{ after(grammarAccess.getTFieldAccess().getOptionalQuestionMarkKeyword_3_0()); }
 		)
-		{ after(grammarAccess.getTFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_3_0()); }
+		{ after(grammarAccess.getTFieldAccess().getOptionalQuestionMarkKeyword_3_0()); }
 	)
 ;
 finally {
@@ -16173,19 +16173,19 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TGetter__Optional_NEW_SYNTAXAssignment_1
+rule__TGetter__OptionalAssignment_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getTGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+		{ before(grammarAccess.getTGetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 		(
-			{ before(grammarAccess.getTGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+			{ before(grammarAccess.getTGetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 			QuestionMark
-			{ after(grammarAccess.getTGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+			{ after(grammarAccess.getTGetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 		)
-		{ after(grammarAccess.getTGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+		{ after(grammarAccess.getTGetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 	)
 ;
 finally {
@@ -16290,19 +16290,19 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TSetter__Optional_NEW_SYNTAXAssignment_1
+rule__TSetter__OptionalAssignment_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getTSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+		{ before(grammarAccess.getTSetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 		(
-			{ before(grammarAccess.getTSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+			{ before(grammarAccess.getTSetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 			QuestionMark
-			{ after(grammarAccess.getTSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+			{ after(grammarAccess.getTSetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 		)
-		{ after(grammarAccess.getTSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+		{ after(grammarAccess.getTSetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 	)
 ;
 finally {
@@ -17159,19 +17159,19 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TStructField__Optional_NEW_SYNTAXAssignment_1
+rule__TStructField__OptionalAssignment_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getTStructFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+		{ before(grammarAccess.getTStructFieldAccess().getOptionalQuestionMarkKeyword_1_0()); }
 		(
-			{ before(grammarAccess.getTStructFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+			{ before(grammarAccess.getTStructFieldAccess().getOptionalQuestionMarkKeyword_1_0()); }
 			QuestionMark
-			{ after(grammarAccess.getTStructFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+			{ after(grammarAccess.getTStructFieldAccess().getOptionalQuestionMarkKeyword_1_0()); }
 		)
-		{ after(grammarAccess.getTStructFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+		{ after(grammarAccess.getTStructFieldAccess().getOptionalQuestionMarkKeyword_1_0()); }
 	)
 ;
 finally {
@@ -17208,19 +17208,19 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TStructGetter__Optional_NEW_SYNTAXAssignment_1
+rule__TStructGetter__OptionalAssignment_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getTStructGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+		{ before(grammarAccess.getTStructGetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 		(
-			{ before(grammarAccess.getTStructGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+			{ before(grammarAccess.getTStructGetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 			QuestionMark
-			{ after(grammarAccess.getTStructGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+			{ after(grammarAccess.getTStructGetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 		)
-		{ after(grammarAccess.getTStructGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+		{ after(grammarAccess.getTStructGetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 	)
 ;
 finally {
@@ -17257,19 +17257,19 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TStructSetter__Optional_NEW_SYNTAXAssignment_1
+rule__TStructSetter__OptionalAssignment_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getTStructSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+		{ before(grammarAccess.getTStructSetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 		(
-			{ before(grammarAccess.getTStructSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+			{ before(grammarAccess.getTStructSetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 			QuestionMark
-			{ after(grammarAccess.getTStructSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+			{ after(grammarAccess.getTStructSetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 		)
-		{ after(grammarAccess.getTStructSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0()); }
+		{ after(grammarAccess.getTStructSetterAccess().getOptionalQuestionMarkKeyword_1_0()); }
 	)
 ;
 finally {

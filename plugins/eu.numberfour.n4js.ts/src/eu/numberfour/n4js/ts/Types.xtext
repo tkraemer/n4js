@@ -238,7 +238,7 @@ TField:
 	declaredMemberAccessModifier=MemberAccessModifier
  	(declaredStatic?='static' | const?='const' | declaredFinal?='final')?
 	(name=TypesIdentifier | name=TypesComputedPropertyName)
-	(optional_NEW_SYNTAX?='?')?
+	(optional?='?')?
 	':' typeRef=TypeRef
 	';'?
 ;
@@ -249,7 +249,7 @@ TGetter: =>({TGetter}
 	'get'
   	(name=TypesIdentifier | name=TypesComputedPropertyName)
   	)
-	(optional_NEW_SYNTAX?='?')?
+	(optional?='?')?
   	'(' ')' ':' declaredTypeRef=TypeRef
 ;
 
@@ -260,7 +260,7 @@ TSetter:
  	'set'
  	(name=TypesIdentifier | name=TypesComputedPropertyName)
  	)
-	(optional_NEW_SYNTAX?='?')?
+	(optional?='?')?
  	'(' fpar=TFormalParameter ')'
 ;
 

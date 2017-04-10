@@ -33,7 +33,7 @@ package class N4JSFieldTypesBuilder {
 		field.const = n4Field.const
 		field.declaredStatic = n4Field.declaredStatic;
 		field.declaredFinal = n4Field.declaredFinal;
-		field.optional_NEW_SYNTAX = n4Field.declaredOptional;
+		field.optional = n4Field.declaredOptional;
 		field.declaredOverride = AnnotationDefinition.OVERRIDE.hasAnnotation(n4Field);
 
 		val providesInitializer = AnnotationDefinition.PROVIDES_INITIALZER.hasAnnotation(n4Field);

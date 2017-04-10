@@ -37,7 +37,7 @@ package class N4JSGetterTypesBuilder extends AbstractFunctionDefinitionTypesBuil
 		getterType.declaredAbstract = n4Getter.abstract
 		getterType.declaredStatic = n4Getter.declaredStatic
 		getterType.declaredFinal = n4Getter.declaredFinal
-		getterType.optional_NEW_SYNTAX = n4Getter.optional;
+		getterType.optional = n4Getter.optional;
 		getterType.declaredOverride = AnnotationDefinition.OVERRIDE.hasAnnotation(n4Getter);
 
 		getterType.hasNoBody = n4Getter.body ===null&& !AnnotationDefinition.PROVIDES_DEFAULT_IMPLEMENTATION.hasAnnotation(n4Getter);

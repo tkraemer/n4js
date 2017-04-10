@@ -195,14 +195,14 @@ TStructMethod:
 
 
 TStructField:
-	name=IdentifierName (optional_NEW_SYNTAX?='?')? (':' typeRef=TypeRef)?
+	name=IdentifierName (optional?='?')? (':' typeRef=TypeRef)?
 ;
 
 TStructGetter:
 	=> ({TStructGetter}
 	'get'
 	name=IdentifierName)
-	(optional_NEW_SYNTAX?='?')?
+	(optional?='?')?
 	'(' ')' (':' declaredTypeRef=TypeRef)?
 ;
 
@@ -210,7 +210,7 @@ TStructSetter:
 	=> ({TStructSetter}
 	'set'
 	name=IdentifierName)
-	(optional_NEW_SYNTAX?='?')?
+	(optional?='?')?
 	'(' fpar=TAnonymousFormalParameter ')'
 ;
 

@@ -802,7 +802,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         declaredMemberAccessModifier=MemberAccessModifier 
 	 *         (declaredStatic?='static' | const?='const' | declaredFinal?='final')? 
 	 *         (name=TypesIdentifier | name=TypesComputedPropertyName) 
-	 *         optional_NEW_SYNTAX?='?'? 
+	 *         optional?='?'? 
 	 *         typeRef=TypeRef
 	 *     )
 	 */
@@ -841,7 +841,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         declaredMemberAccessModifier=MemberAccessModifier 
 	 *         (declaredAbstract?='abstract' | declaredStatic?='static')? 
 	 *         (name=TypesIdentifier | name=TypesComputedPropertyName) 
-	 *         optional_NEW_SYNTAX?='?'? 
+	 *         optional?='?'? 
 	 *         declaredTypeRef=TypeRef
 	 *     )
 	 */
@@ -926,7 +926,7 @@ public class TypesSemanticSequencer extends TypeExpressionsSemanticSequencer {
 	 *         declaredMemberAccessModifier=MemberAccessModifier 
 	 *         (declaredAbstract?='abstract' | declaredStatic?='static')? 
 	 *         (name=TypesIdentifier | name=TypesComputedPropertyName) 
-	 *         optional_NEW_SYNTAX?='?'? 
+	 *         optional?='?'? 
 	 *         fpar=TFormalParameter
 	 *     )
 	 */

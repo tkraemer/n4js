@@ -7417,14 +7417,14 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTField"
-    // InternalTypesParser.g:2783:1: ruleTField returns [EObject current=null] : ( ( (lv_declaredMemberAccessModifier_0_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredStatic_1_0= Static ) ) | ( (lv_const_2_0= Const ) ) | ( (lv_declaredFinal_3_0= Final ) ) )? ( ( (lv_name_4_0= ruleTypesIdentifier ) ) | ( (lv_name_5_0= ruleTypesComputedPropertyName ) ) ) ( (lv_optional_NEW_SYNTAX_6_0= QuestionMark ) )? otherlv_7= Colon ( (lv_typeRef_8_0= ruleTypeRef ) ) (otherlv_9= Semicolon )? ) ;
+    // InternalTypesParser.g:2783:1: ruleTField returns [EObject current=null] : ( ( (lv_declaredMemberAccessModifier_0_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredStatic_1_0= Static ) ) | ( (lv_const_2_0= Const ) ) | ( (lv_declaredFinal_3_0= Final ) ) )? ( ( (lv_name_4_0= ruleTypesIdentifier ) ) | ( (lv_name_5_0= ruleTypesComputedPropertyName ) ) ) ( (lv_optional_6_0= QuestionMark ) )? otherlv_7= Colon ( (lv_typeRef_8_0= ruleTypeRef ) ) (otherlv_9= Semicolon )? ) ;
     public final EObject ruleTField() throws RecognitionException {
         EObject current = null;
 
         Token lv_declaredStatic_1_0=null;
         Token lv_const_2_0=null;
         Token lv_declaredFinal_3_0=null;
-        Token lv_optional_NEW_SYNTAX_6_0=null;
+        Token lv_optional_6_0=null;
         Token otherlv_7=null;
         Token otherlv_9=null;
         Enumerator lv_declaredMemberAccessModifier_0_0 = null;
@@ -7440,11 +7440,11 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalTypesParser.g:2789:2: ( ( ( (lv_declaredMemberAccessModifier_0_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredStatic_1_0= Static ) ) | ( (lv_const_2_0= Const ) ) | ( (lv_declaredFinal_3_0= Final ) ) )? ( ( (lv_name_4_0= ruleTypesIdentifier ) ) | ( (lv_name_5_0= ruleTypesComputedPropertyName ) ) ) ( (lv_optional_NEW_SYNTAX_6_0= QuestionMark ) )? otherlv_7= Colon ( (lv_typeRef_8_0= ruleTypeRef ) ) (otherlv_9= Semicolon )? ) )
-            // InternalTypesParser.g:2790:2: ( ( (lv_declaredMemberAccessModifier_0_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredStatic_1_0= Static ) ) | ( (lv_const_2_0= Const ) ) | ( (lv_declaredFinal_3_0= Final ) ) )? ( ( (lv_name_4_0= ruleTypesIdentifier ) ) | ( (lv_name_5_0= ruleTypesComputedPropertyName ) ) ) ( (lv_optional_NEW_SYNTAX_6_0= QuestionMark ) )? otherlv_7= Colon ( (lv_typeRef_8_0= ruleTypeRef ) ) (otherlv_9= Semicolon )? )
+            // InternalTypesParser.g:2789:2: ( ( ( (lv_declaredMemberAccessModifier_0_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredStatic_1_0= Static ) ) | ( (lv_const_2_0= Const ) ) | ( (lv_declaredFinal_3_0= Final ) ) )? ( ( (lv_name_4_0= ruleTypesIdentifier ) ) | ( (lv_name_5_0= ruleTypesComputedPropertyName ) ) ) ( (lv_optional_6_0= QuestionMark ) )? otherlv_7= Colon ( (lv_typeRef_8_0= ruleTypeRef ) ) (otherlv_9= Semicolon )? ) )
+            // InternalTypesParser.g:2790:2: ( ( (lv_declaredMemberAccessModifier_0_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredStatic_1_0= Static ) ) | ( (lv_const_2_0= Const ) ) | ( (lv_declaredFinal_3_0= Final ) ) )? ( ( (lv_name_4_0= ruleTypesIdentifier ) ) | ( (lv_name_5_0= ruleTypesComputedPropertyName ) ) ) ( (lv_optional_6_0= QuestionMark ) )? otherlv_7= Colon ( (lv_typeRef_8_0= ruleTypeRef ) ) (otherlv_9= Semicolon )? )
             {
-            // InternalTypesParser.g:2790:2: ( ( (lv_declaredMemberAccessModifier_0_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredStatic_1_0= Static ) ) | ( (lv_const_2_0= Const ) ) | ( (lv_declaredFinal_3_0= Final ) ) )? ( ( (lv_name_4_0= ruleTypesIdentifier ) ) | ( (lv_name_5_0= ruleTypesComputedPropertyName ) ) ) ( (lv_optional_NEW_SYNTAX_6_0= QuestionMark ) )? otherlv_7= Colon ( (lv_typeRef_8_0= ruleTypeRef ) ) (otherlv_9= Semicolon )? )
-            // InternalTypesParser.g:2791:3: ( (lv_declaredMemberAccessModifier_0_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredStatic_1_0= Static ) ) | ( (lv_const_2_0= Const ) ) | ( (lv_declaredFinal_3_0= Final ) ) )? ( ( (lv_name_4_0= ruleTypesIdentifier ) ) | ( (lv_name_5_0= ruleTypesComputedPropertyName ) ) ) ( (lv_optional_NEW_SYNTAX_6_0= QuestionMark ) )? otherlv_7= Colon ( (lv_typeRef_8_0= ruleTypeRef ) ) (otherlv_9= Semicolon )?
+            // InternalTypesParser.g:2790:2: ( ( (lv_declaredMemberAccessModifier_0_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredStatic_1_0= Static ) ) | ( (lv_const_2_0= Const ) ) | ( (lv_declaredFinal_3_0= Final ) ) )? ( ( (lv_name_4_0= ruleTypesIdentifier ) ) | ( (lv_name_5_0= ruleTypesComputedPropertyName ) ) ) ( (lv_optional_6_0= QuestionMark ) )? otherlv_7= Colon ( (lv_typeRef_8_0= ruleTypeRef ) ) (otherlv_9= Semicolon )? )
+            // InternalTypesParser.g:2791:3: ( (lv_declaredMemberAccessModifier_0_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredStatic_1_0= Static ) ) | ( (lv_const_2_0= Const ) ) | ( (lv_declaredFinal_3_0= Final ) ) )? ( ( (lv_name_4_0= ruleTypesIdentifier ) ) | ( (lv_name_5_0= ruleTypesComputedPropertyName ) ) ) ( (lv_optional_6_0= QuestionMark ) )? otherlv_7= Colon ( (lv_typeRef_8_0= ruleTypeRef ) ) (otherlv_9= Semicolon )?
             {
             // InternalTypesParser.g:2791:3: ( (lv_declaredMemberAccessModifier_0_0= ruleMemberAccessModifier ) )
             // InternalTypesParser.g:2792:4: (lv_declaredMemberAccessModifier_0_0= ruleMemberAccessModifier )
@@ -7712,7 +7712,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalTypesParser.g:2897:3: ( (lv_optional_NEW_SYNTAX_6_0= QuestionMark ) )?
+            // InternalTypesParser.g:2897:3: ( (lv_optional_6_0= QuestionMark ) )?
             int alt66=2;
             int LA66_0 = input.LA(1);
 
@@ -7721,15 +7721,15 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             }
             switch (alt66) {
                 case 1 :
-                    // InternalTypesParser.g:2898:4: (lv_optional_NEW_SYNTAX_6_0= QuestionMark )
+                    // InternalTypesParser.g:2898:4: (lv_optional_6_0= QuestionMark )
                     {
-                    // InternalTypesParser.g:2898:4: (lv_optional_NEW_SYNTAX_6_0= QuestionMark )
-                    // InternalTypesParser.g:2899:5: lv_optional_NEW_SYNTAX_6_0= QuestionMark
+                    // InternalTypesParser.g:2898:4: (lv_optional_6_0= QuestionMark )
+                    // InternalTypesParser.g:2899:5: lv_optional_6_0= QuestionMark
                     {
-                    lv_optional_NEW_SYNTAX_6_0=(Token)match(input,QuestionMark,FOLLOW_54); if (state.failed) return current;
+                    lv_optional_6_0=(Token)match(input,QuestionMark,FOLLOW_54); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      					newLeafNode(lv_optional_NEW_SYNTAX_6_0, grammarAccess.getTFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_3_0());
+                      					newLeafNode(lv_optional_6_0, grammarAccess.getTFieldAccess().getOptionalQuestionMarkKeyword_3_0());
                       				
                     }
                     if ( state.backtracking==0 ) {
@@ -7737,7 +7737,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                       					if (current==null) {
                       						current = createModelElement(grammarAccess.getTFieldRule());
                       					}
-                      					setWithLastConsumed(current, "optional_NEW_SYNTAX", true, "?");
+                      					setWithLastConsumed(current, "optional", true, "?");
                       				
                     }
 
@@ -7878,14 +7878,14 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTGetter"
-    // InternalTypesParser.g:2951:1: ruleTGetter returns [EObject current=null] : ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Get ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Get ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_NEW_SYNTAX_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis otherlv_9= RightParenthesis otherlv_10= Colon ( (lv_declaredTypeRef_11_0= ruleTypeRef ) ) ) ;
+    // InternalTypesParser.g:2951:1: ruleTGetter returns [EObject current=null] : ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Get ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Get ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis otherlv_9= RightParenthesis otherlv_10= Colon ( (lv_declaredTypeRef_11_0= ruleTypeRef ) ) ) ;
     public final EObject ruleTGetter() throws RecognitionException {
         EObject current = null;
 
         Token lv_declaredAbstract_2_0=null;
         Token lv_declaredStatic_3_0=null;
         Token otherlv_4=null;
-        Token lv_optional_NEW_SYNTAX_7_0=null;
+        Token lv_optional_7_0=null;
         Token otherlv_8=null;
         Token otherlv_9=null;
         Token otherlv_10=null;
@@ -7902,11 +7902,11 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalTypesParser.g:2957:2: ( ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Get ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Get ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_NEW_SYNTAX_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis otherlv_9= RightParenthesis otherlv_10= Colon ( (lv_declaredTypeRef_11_0= ruleTypeRef ) ) ) )
-            // InternalTypesParser.g:2958:2: ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Get ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Get ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_NEW_SYNTAX_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis otherlv_9= RightParenthesis otherlv_10= Colon ( (lv_declaredTypeRef_11_0= ruleTypeRef ) ) )
+            // InternalTypesParser.g:2957:2: ( ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Get ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Get ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis otherlv_9= RightParenthesis otherlv_10= Colon ( (lv_declaredTypeRef_11_0= ruleTypeRef ) ) ) )
+            // InternalTypesParser.g:2958:2: ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Get ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Get ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis otherlv_9= RightParenthesis otherlv_10= Colon ( (lv_declaredTypeRef_11_0= ruleTypeRef ) ) )
             {
-            // InternalTypesParser.g:2958:2: ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Get ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Get ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_NEW_SYNTAX_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis otherlv_9= RightParenthesis otherlv_10= Colon ( (lv_declaredTypeRef_11_0= ruleTypeRef ) ) )
-            // InternalTypesParser.g:2959:3: ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Get ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Get ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_NEW_SYNTAX_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis otherlv_9= RightParenthesis otherlv_10= Colon ( (lv_declaredTypeRef_11_0= ruleTypeRef ) )
+            // InternalTypesParser.g:2958:2: ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Get ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Get ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis otherlv_9= RightParenthesis otherlv_10= Colon ( (lv_declaredTypeRef_11_0= ruleTypeRef ) ) )
+            // InternalTypesParser.g:2959:3: ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Get ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Get ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis otherlv_9= RightParenthesis otherlv_10= Colon ( (lv_declaredTypeRef_11_0= ruleTypeRef ) )
             {
             // InternalTypesParser.g:2959:3: ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Get ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Get ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) )
             // InternalTypesParser.g:2960:4: ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Get ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Get ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) )
@@ -8155,7 +8155,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalTypesParser.g:3102:3: ( (lv_optional_NEW_SYNTAX_7_0= QuestionMark ) )?
+            // InternalTypesParser.g:3102:3: ( (lv_optional_7_0= QuestionMark ) )?
             int alt70=2;
             int LA70_0 = input.LA(1);
 
@@ -8164,15 +8164,15 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             }
             switch (alt70) {
                 case 1 :
-                    // InternalTypesParser.g:3103:4: (lv_optional_NEW_SYNTAX_7_0= QuestionMark )
+                    // InternalTypesParser.g:3103:4: (lv_optional_7_0= QuestionMark )
                     {
-                    // InternalTypesParser.g:3103:4: (lv_optional_NEW_SYNTAX_7_0= QuestionMark )
-                    // InternalTypesParser.g:3104:5: lv_optional_NEW_SYNTAX_7_0= QuestionMark
+                    // InternalTypesParser.g:3103:4: (lv_optional_7_0= QuestionMark )
+                    // InternalTypesParser.g:3104:5: lv_optional_7_0= QuestionMark
                     {
-                    lv_optional_NEW_SYNTAX_7_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return current;
+                    lv_optional_7_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      					newLeafNode(lv_optional_NEW_SYNTAX_7_0, grammarAccess.getTGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+                      					newLeafNode(lv_optional_7_0, grammarAccess.getTGetterAccess().getOptionalQuestionMarkKeyword_1_0());
                       				
                     }
                     if ( state.backtracking==0 ) {
@@ -8180,7 +8180,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                       					if (current==null) {
                       						current = createModelElement(grammarAccess.getTGetterRule());
                       					}
-                      					setWithLastConsumed(current, "optional_NEW_SYNTAX", true, "?");
+                      					setWithLastConsumed(current, "optional", true, "?");
                       				
                     }
 
@@ -8310,14 +8310,14 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTSetter"
-    // InternalTypesParser.g:3158:1: ruleTSetter returns [EObject current=null] : ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Set ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Set ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_NEW_SYNTAX_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis ( (lv_fpar_9_0= ruleTFormalParameter ) ) otherlv_10= RightParenthesis ) ;
+    // InternalTypesParser.g:3158:1: ruleTSetter returns [EObject current=null] : ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Set ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Set ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis ( (lv_fpar_9_0= ruleTFormalParameter ) ) otherlv_10= RightParenthesis ) ;
     public final EObject ruleTSetter() throws RecognitionException {
         EObject current = null;
 
         Token lv_declaredAbstract_2_0=null;
         Token lv_declaredStatic_3_0=null;
         Token otherlv_4=null;
-        Token lv_optional_NEW_SYNTAX_7_0=null;
+        Token lv_optional_7_0=null;
         Token otherlv_8=null;
         Token otherlv_10=null;
         Enumerator lv_declaredMemberAccessModifier_1_0 = null;
@@ -8333,11 +8333,11 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalTypesParser.g:3164:2: ( ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Set ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Set ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_NEW_SYNTAX_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis ( (lv_fpar_9_0= ruleTFormalParameter ) ) otherlv_10= RightParenthesis ) )
-            // InternalTypesParser.g:3165:2: ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Set ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Set ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_NEW_SYNTAX_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis ( (lv_fpar_9_0= ruleTFormalParameter ) ) otherlv_10= RightParenthesis )
+            // InternalTypesParser.g:3164:2: ( ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Set ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Set ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis ( (lv_fpar_9_0= ruleTFormalParameter ) ) otherlv_10= RightParenthesis ) )
+            // InternalTypesParser.g:3165:2: ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Set ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Set ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis ( (lv_fpar_9_0= ruleTFormalParameter ) ) otherlv_10= RightParenthesis )
             {
-            // InternalTypesParser.g:3165:2: ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Set ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Set ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_NEW_SYNTAX_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis ( (lv_fpar_9_0= ruleTFormalParameter ) ) otherlv_10= RightParenthesis )
-            // InternalTypesParser.g:3166:3: ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Set ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Set ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_NEW_SYNTAX_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis ( (lv_fpar_9_0= ruleTFormalParameter ) ) otherlv_10= RightParenthesis
+            // InternalTypesParser.g:3165:2: ( ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Set ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Set ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis ( (lv_fpar_9_0= ruleTFormalParameter ) ) otherlv_10= RightParenthesis )
+            // InternalTypesParser.g:3166:3: ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Set ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Set ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) ) ( (lv_optional_7_0= QuestionMark ) )? otherlv_8= LeftParenthesis ( (lv_fpar_9_0= ruleTFormalParameter ) ) otherlv_10= RightParenthesis
             {
             // InternalTypesParser.g:3166:3: ( ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Set ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Set ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) ) )
             // InternalTypesParser.g:3167:4: ( ( () ( ( ruleMemberAccessModifier ) ) ( ( ( Abstract ) ) | ( ( Static ) ) )? Set ( ( ( ruleTypesIdentifier ) ) | ( ( ruleTypesComputedPropertyName ) ) ) ) )=> ( () ( (lv_declaredMemberAccessModifier_1_0= ruleMemberAccessModifier ) ) ( ( (lv_declaredAbstract_2_0= Abstract ) ) | ( (lv_declaredStatic_3_0= Static ) ) )? otherlv_4= Set ( ( (lv_name_5_0= ruleTypesIdentifier ) ) | ( (lv_name_6_0= ruleTypesComputedPropertyName ) ) ) )
@@ -8586,7 +8586,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalTypesParser.g:3309:3: ( (lv_optional_NEW_SYNTAX_7_0= QuestionMark ) )?
+            // InternalTypesParser.g:3309:3: ( (lv_optional_7_0= QuestionMark ) )?
             int alt73=2;
             int LA73_0 = input.LA(1);
 
@@ -8595,15 +8595,15 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             }
             switch (alt73) {
                 case 1 :
-                    // InternalTypesParser.g:3310:4: (lv_optional_NEW_SYNTAX_7_0= QuestionMark )
+                    // InternalTypesParser.g:3310:4: (lv_optional_7_0= QuestionMark )
                     {
-                    // InternalTypesParser.g:3310:4: (lv_optional_NEW_SYNTAX_7_0= QuestionMark )
-                    // InternalTypesParser.g:3311:5: lv_optional_NEW_SYNTAX_7_0= QuestionMark
+                    // InternalTypesParser.g:3310:4: (lv_optional_7_0= QuestionMark )
+                    // InternalTypesParser.g:3311:5: lv_optional_7_0= QuestionMark
                     {
-                    lv_optional_NEW_SYNTAX_7_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return current;
+                    lv_optional_7_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      					newLeafNode(lv_optional_NEW_SYNTAX_7_0, grammarAccess.getTSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+                      					newLeafNode(lv_optional_7_0, grammarAccess.getTSetterAccess().getOptionalQuestionMarkKeyword_1_0());
                       				
                     }
                     if ( state.backtracking==0 ) {
@@ -8611,7 +8611,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                       					if (current==null) {
                       						current = createModelElement(grammarAccess.getTSetterRule());
                       					}
-                      					setWithLastConsumed(current, "optional_NEW_SYNTAX", true, "?");
+                      					setWithLastConsumed(current, "optional", true, "?");
                       				
                     }
 
@@ -14926,11 +14926,11 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTStructField"
-    // InternalTypesParser.g:5626:1: ruleTStructField returns [EObject current=null] : ( ( (lv_name_0_0= ruleIdentifierName ) ) ( (lv_optional_NEW_SYNTAX_1_0= QuestionMark ) )? (otherlv_2= Colon ( (lv_typeRef_3_0= ruleTypeRef ) ) )? ) ;
+    // InternalTypesParser.g:5626:1: ruleTStructField returns [EObject current=null] : ( ( (lv_name_0_0= ruleIdentifierName ) ) ( (lv_optional_1_0= QuestionMark ) )? (otherlv_2= Colon ( (lv_typeRef_3_0= ruleTypeRef ) ) )? ) ;
     public final EObject ruleTStructField() throws RecognitionException {
         EObject current = null;
 
-        Token lv_optional_NEW_SYNTAX_1_0=null;
+        Token lv_optional_1_0=null;
         Token otherlv_2=null;
         AntlrDatatypeRuleToken lv_name_0_0 = null;
 
@@ -14941,11 +14941,11 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalTypesParser.g:5632:2: ( ( ( (lv_name_0_0= ruleIdentifierName ) ) ( (lv_optional_NEW_SYNTAX_1_0= QuestionMark ) )? (otherlv_2= Colon ( (lv_typeRef_3_0= ruleTypeRef ) ) )? ) )
-            // InternalTypesParser.g:5633:2: ( ( (lv_name_0_0= ruleIdentifierName ) ) ( (lv_optional_NEW_SYNTAX_1_0= QuestionMark ) )? (otherlv_2= Colon ( (lv_typeRef_3_0= ruleTypeRef ) ) )? )
+            // InternalTypesParser.g:5632:2: ( ( ( (lv_name_0_0= ruleIdentifierName ) ) ( (lv_optional_1_0= QuestionMark ) )? (otherlv_2= Colon ( (lv_typeRef_3_0= ruleTypeRef ) ) )? ) )
+            // InternalTypesParser.g:5633:2: ( ( (lv_name_0_0= ruleIdentifierName ) ) ( (lv_optional_1_0= QuestionMark ) )? (otherlv_2= Colon ( (lv_typeRef_3_0= ruleTypeRef ) ) )? )
             {
-            // InternalTypesParser.g:5633:2: ( ( (lv_name_0_0= ruleIdentifierName ) ) ( (lv_optional_NEW_SYNTAX_1_0= QuestionMark ) )? (otherlv_2= Colon ( (lv_typeRef_3_0= ruleTypeRef ) ) )? )
-            // InternalTypesParser.g:5634:3: ( (lv_name_0_0= ruleIdentifierName ) ) ( (lv_optional_NEW_SYNTAX_1_0= QuestionMark ) )? (otherlv_2= Colon ( (lv_typeRef_3_0= ruleTypeRef ) ) )?
+            // InternalTypesParser.g:5633:2: ( ( (lv_name_0_0= ruleIdentifierName ) ) ( (lv_optional_1_0= QuestionMark ) )? (otherlv_2= Colon ( (lv_typeRef_3_0= ruleTypeRef ) ) )? )
+            // InternalTypesParser.g:5634:3: ( (lv_name_0_0= ruleIdentifierName ) ) ( (lv_optional_1_0= QuestionMark ) )? (otherlv_2= Colon ( (lv_typeRef_3_0= ruleTypeRef ) ) )?
             {
             // InternalTypesParser.g:5634:3: ( (lv_name_0_0= ruleIdentifierName ) )
             // InternalTypesParser.g:5635:4: (lv_name_0_0= ruleIdentifierName )
@@ -14982,7 +14982,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalTypesParser.g:5653:3: ( (lv_optional_NEW_SYNTAX_1_0= QuestionMark ) )?
+            // InternalTypesParser.g:5653:3: ( (lv_optional_1_0= QuestionMark ) )?
             int alt117=2;
             int LA117_0 = input.LA(1);
 
@@ -14991,15 +14991,15 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             }
             switch (alt117) {
                 case 1 :
-                    // InternalTypesParser.g:5654:4: (lv_optional_NEW_SYNTAX_1_0= QuestionMark )
+                    // InternalTypesParser.g:5654:4: (lv_optional_1_0= QuestionMark )
                     {
-                    // InternalTypesParser.g:5654:4: (lv_optional_NEW_SYNTAX_1_0= QuestionMark )
-                    // InternalTypesParser.g:5655:5: lv_optional_NEW_SYNTAX_1_0= QuestionMark
+                    // InternalTypesParser.g:5654:4: (lv_optional_1_0= QuestionMark )
+                    // InternalTypesParser.g:5655:5: lv_optional_1_0= QuestionMark
                     {
-                    lv_optional_NEW_SYNTAX_1_0=(Token)match(input,QuestionMark,FOLLOW_91); if (state.failed) return current;
+                    lv_optional_1_0=(Token)match(input,QuestionMark,FOLLOW_91); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      					newLeafNode(lv_optional_NEW_SYNTAX_1_0, grammarAccess.getTStructFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+                      					newLeafNode(lv_optional_1_0, grammarAccess.getTStructFieldAccess().getOptionalQuestionMarkKeyword_1_0());
                       				
                     }
                     if ( state.backtracking==0 ) {
@@ -15007,7 +15007,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                       					if (current==null) {
                       						current = createModelElement(grammarAccess.getTStructFieldRule());
                       					}
-                      					setWithLastConsumed(current, "optional_NEW_SYNTAX", true, "?");
+                      					setWithLastConsumed(current, "optional", true, "?");
                       				
                     }
 
@@ -15142,12 +15142,12 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTStructGetter"
-    // InternalTypesParser.g:5703:1: ruleTStructGetter returns [EObject current=null] : ( ( ( ( () Get ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Get ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_NEW_SYNTAX_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis otherlv_5= RightParenthesis (otherlv_6= Colon ( (lv_declaredTypeRef_7_0= ruleTypeRef ) ) )? ) ;
+    // InternalTypesParser.g:5703:1: ruleTStructGetter returns [EObject current=null] : ( ( ( ( () Get ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Get ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis otherlv_5= RightParenthesis (otherlv_6= Colon ( (lv_declaredTypeRef_7_0= ruleTypeRef ) ) )? ) ;
     public final EObject ruleTStructGetter() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
-        Token lv_optional_NEW_SYNTAX_3_0=null;
+        Token lv_optional_3_0=null;
         Token otherlv_4=null;
         Token otherlv_5=null;
         Token otherlv_6=null;
@@ -15160,11 +15160,11 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalTypesParser.g:5709:2: ( ( ( ( ( () Get ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Get ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_NEW_SYNTAX_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis otherlv_5= RightParenthesis (otherlv_6= Colon ( (lv_declaredTypeRef_7_0= ruleTypeRef ) ) )? ) )
-            // InternalTypesParser.g:5710:2: ( ( ( ( () Get ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Get ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_NEW_SYNTAX_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis otherlv_5= RightParenthesis (otherlv_6= Colon ( (lv_declaredTypeRef_7_0= ruleTypeRef ) ) )? )
+            // InternalTypesParser.g:5709:2: ( ( ( ( ( () Get ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Get ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis otherlv_5= RightParenthesis (otherlv_6= Colon ( (lv_declaredTypeRef_7_0= ruleTypeRef ) ) )? ) )
+            // InternalTypesParser.g:5710:2: ( ( ( ( () Get ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Get ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis otherlv_5= RightParenthesis (otherlv_6= Colon ( (lv_declaredTypeRef_7_0= ruleTypeRef ) ) )? )
             {
-            // InternalTypesParser.g:5710:2: ( ( ( ( () Get ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Get ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_NEW_SYNTAX_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis otherlv_5= RightParenthesis (otherlv_6= Colon ( (lv_declaredTypeRef_7_0= ruleTypeRef ) ) )? )
-            // InternalTypesParser.g:5711:3: ( ( ( () Get ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Get ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_NEW_SYNTAX_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis otherlv_5= RightParenthesis (otherlv_6= Colon ( (lv_declaredTypeRef_7_0= ruleTypeRef ) ) )?
+            // InternalTypesParser.g:5710:2: ( ( ( ( () Get ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Get ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis otherlv_5= RightParenthesis (otherlv_6= Colon ( (lv_declaredTypeRef_7_0= ruleTypeRef ) ) )? )
+            // InternalTypesParser.g:5711:3: ( ( ( () Get ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Get ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis otherlv_5= RightParenthesis (otherlv_6= Colon ( (lv_declaredTypeRef_7_0= ruleTypeRef ) ) )?
             {
             // InternalTypesParser.g:5711:3: ( ( ( () Get ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Get ( (lv_name_2_0= ruleIdentifierName ) ) ) )
             // InternalTypesParser.g:5712:4: ( ( () Get ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Get ( (lv_name_2_0= ruleIdentifierName ) ) )
@@ -15232,7 +15232,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalTypesParser.g:5756:3: ( (lv_optional_NEW_SYNTAX_3_0= QuestionMark ) )?
+            // InternalTypesParser.g:5756:3: ( (lv_optional_3_0= QuestionMark ) )?
             int alt119=2;
             int LA119_0 = input.LA(1);
 
@@ -15241,15 +15241,15 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             }
             switch (alt119) {
                 case 1 :
-                    // InternalTypesParser.g:5757:4: (lv_optional_NEW_SYNTAX_3_0= QuestionMark )
+                    // InternalTypesParser.g:5757:4: (lv_optional_3_0= QuestionMark )
                     {
-                    // InternalTypesParser.g:5757:4: (lv_optional_NEW_SYNTAX_3_0= QuestionMark )
-                    // InternalTypesParser.g:5758:5: lv_optional_NEW_SYNTAX_3_0= QuestionMark
+                    // InternalTypesParser.g:5757:4: (lv_optional_3_0= QuestionMark )
+                    // InternalTypesParser.g:5758:5: lv_optional_3_0= QuestionMark
                     {
-                    lv_optional_NEW_SYNTAX_3_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return current;
+                    lv_optional_3_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      					newLeafNode(lv_optional_NEW_SYNTAX_3_0, grammarAccess.getTStructGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+                      					newLeafNode(lv_optional_3_0, grammarAccess.getTStructGetterAccess().getOptionalQuestionMarkKeyword_1_0());
                       				
                     }
                     if ( state.backtracking==0 ) {
@@ -15257,7 +15257,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                       					if (current==null) {
                       						current = createModelElement(grammarAccess.getTStructGetterRule());
                       					}
-                      					setWithLastConsumed(current, "optional_NEW_SYNTAX", true, "?");
+                      					setWithLastConsumed(current, "optional", true, "?");
                       				
                     }
 
@@ -15404,12 +15404,12 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTStructSetter"
-    // InternalTypesParser.g:5814:1: ruleTStructSetter returns [EObject current=null] : ( ( ( ( () Set ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Set ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_NEW_SYNTAX_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis ( (lv_fpar_5_0= ruleTAnonymousFormalParameter ) ) otherlv_6= RightParenthesis ) ;
+    // InternalTypesParser.g:5814:1: ruleTStructSetter returns [EObject current=null] : ( ( ( ( () Set ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Set ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis ( (lv_fpar_5_0= ruleTAnonymousFormalParameter ) ) otherlv_6= RightParenthesis ) ;
     public final EObject ruleTStructSetter() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
-        Token lv_optional_NEW_SYNTAX_3_0=null;
+        Token lv_optional_3_0=null;
         Token otherlv_4=null;
         Token otherlv_6=null;
         AntlrDatatypeRuleToken lv_name_2_0 = null;
@@ -15421,11 +15421,11 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalTypesParser.g:5820:2: ( ( ( ( ( () Set ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Set ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_NEW_SYNTAX_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis ( (lv_fpar_5_0= ruleTAnonymousFormalParameter ) ) otherlv_6= RightParenthesis ) )
-            // InternalTypesParser.g:5821:2: ( ( ( ( () Set ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Set ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_NEW_SYNTAX_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis ( (lv_fpar_5_0= ruleTAnonymousFormalParameter ) ) otherlv_6= RightParenthesis )
+            // InternalTypesParser.g:5820:2: ( ( ( ( ( () Set ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Set ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis ( (lv_fpar_5_0= ruleTAnonymousFormalParameter ) ) otherlv_6= RightParenthesis ) )
+            // InternalTypesParser.g:5821:2: ( ( ( ( () Set ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Set ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis ( (lv_fpar_5_0= ruleTAnonymousFormalParameter ) ) otherlv_6= RightParenthesis )
             {
-            // InternalTypesParser.g:5821:2: ( ( ( ( () Set ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Set ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_NEW_SYNTAX_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis ( (lv_fpar_5_0= ruleTAnonymousFormalParameter ) ) otherlv_6= RightParenthesis )
-            // InternalTypesParser.g:5822:3: ( ( ( () Set ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Set ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_NEW_SYNTAX_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis ( (lv_fpar_5_0= ruleTAnonymousFormalParameter ) ) otherlv_6= RightParenthesis
+            // InternalTypesParser.g:5821:2: ( ( ( ( () Set ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Set ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis ( (lv_fpar_5_0= ruleTAnonymousFormalParameter ) ) otherlv_6= RightParenthesis )
+            // InternalTypesParser.g:5822:3: ( ( ( () Set ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Set ( (lv_name_2_0= ruleIdentifierName ) ) ) ) ( (lv_optional_3_0= QuestionMark ) )? otherlv_4= LeftParenthesis ( (lv_fpar_5_0= ruleTAnonymousFormalParameter ) ) otherlv_6= RightParenthesis
             {
             // InternalTypesParser.g:5822:3: ( ( ( () Set ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Set ( (lv_name_2_0= ruleIdentifierName ) ) ) )
             // InternalTypesParser.g:5823:4: ( ( () Set ( ( ruleIdentifierName ) ) ) )=> ( () otherlv_1= Set ( (lv_name_2_0= ruleIdentifierName ) ) )
@@ -15493,7 +15493,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalTypesParser.g:5867:3: ( (lv_optional_NEW_SYNTAX_3_0= QuestionMark ) )?
+            // InternalTypesParser.g:5867:3: ( (lv_optional_3_0= QuestionMark ) )?
             int alt121=2;
             int LA121_0 = input.LA(1);
 
@@ -15502,15 +15502,15 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
             }
             switch (alt121) {
                 case 1 :
-                    // InternalTypesParser.g:5868:4: (lv_optional_NEW_SYNTAX_3_0= QuestionMark )
+                    // InternalTypesParser.g:5868:4: (lv_optional_3_0= QuestionMark )
                     {
-                    // InternalTypesParser.g:5868:4: (lv_optional_NEW_SYNTAX_3_0= QuestionMark )
-                    // InternalTypesParser.g:5869:5: lv_optional_NEW_SYNTAX_3_0= QuestionMark
+                    // InternalTypesParser.g:5868:4: (lv_optional_3_0= QuestionMark )
+                    // InternalTypesParser.g:5869:5: lv_optional_3_0= QuestionMark
                     {
-                    lv_optional_NEW_SYNTAX_3_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return current;
+                    lv_optional_3_0=(Token)match(input,QuestionMark,FOLLOW_53); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      					newLeafNode(lv_optional_NEW_SYNTAX_3_0, grammarAccess.getTStructSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+                      					newLeafNode(lv_optional_3_0, grammarAccess.getTStructSetterAccess().getOptionalQuestionMarkKeyword_1_0());
                       				
                     }
                     if ( state.backtracking==0 ) {
@@ -15518,7 +15518,7 @@ public class InternalTypesParser extends AbstractInternalAntlrParser {
                       					if (current==null) {
                       						current = createModelElement(grammarAccess.getTStructSetterRule());
                       					}
-                      					setWithLastConsumed(current, "optional_NEW_SYNTAX", true, "?");
+                      					setWithLastConsumed(current, "optional", true, "?");
                       				
                     }
 

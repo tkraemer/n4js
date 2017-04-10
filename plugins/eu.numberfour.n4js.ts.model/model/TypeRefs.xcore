@@ -1114,9 +1114,9 @@ class FunctionTypeExpression extends FunctionTypeExprOrRef {
 	/*
 	 * Always <code>null</code> in use case 1. In use case 2.a (not 2.b) this refers(!)
 	 * to the original TFunction for which this FunctionTypeExpression represents a binding.
-	 * For more details on use cases see API doc of {@link FunctionTypeExpression}.
 	 * In use case 3 this refers(!) to the TFunction in the type model generated from
 	 * the FunctionTypeExpression in the AST.
+	 * For more details on use cases see API doc of {@link FunctionTypeExpression}.
 	 */
 	refers TFunction declaredType
 	/*
@@ -1182,11 +1182,14 @@ class FunctionTypeExpression extends FunctionTypeExprOrRef {
 	 */
 	contains TFormalParameter[] fpars
 	/*
-	 * Tells if the return value is optional.
+	 * Explicitly marks the return value of this FunctionTypeExpression as optional. This only used for function type
+	 * expressions that are created programmatically. Those that appear in the AST will instead have a 'returnTypeRef'
+	 * with 'followedByQuestionMark' set to <code>true</code>.
+	 * This will probably become obsolete once we implement undefined/null analysis.
 	 */
-	boolean returnValueOptional_NEW_SYNTAX
+	boolean returnValueMarkedOptional
 	op boolean isReturnValueOptional() {
-		return returnValueOptional_NEW_SYNTAX || (returnTypeRef!==null && returnTypeRef.followedByQuestionMark);
+		return returnValueMarkedOptional || (returnTypeRef!==null && returnTypeRef.followedByQuestionMark);
 	}
 	/*
 	 * Return type declared in the FunctionTypeExpression in the AST or

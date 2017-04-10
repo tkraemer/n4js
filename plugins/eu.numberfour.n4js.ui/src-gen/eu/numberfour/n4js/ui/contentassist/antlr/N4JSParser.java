@@ -1005,13 +1005,13 @@ public class N4JSParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTStructMethodAccess().getNameAssignment_0_0_2(), "rule__TStructMethod__NameAssignment_0_0_2");
 					put(grammarAccess.getTStructMethodAccess().getReturnTypeRefAssignment_3_1(), "rule__TStructMethod__ReturnTypeRefAssignment_3_1");
 					put(grammarAccess.getTStructFieldAccess().getNameAssignment_0(), "rule__TStructField__NameAssignment_0");
-					put(grammarAccess.getTStructFieldAccess().getOptional_NEW_SYNTAXAssignment_1(), "rule__TStructField__Optional_NEW_SYNTAXAssignment_1");
+					put(grammarAccess.getTStructFieldAccess().getOptionalAssignment_1(), "rule__TStructField__OptionalAssignment_1");
 					put(grammarAccess.getTStructFieldAccess().getTypeRefAssignment_2_1(), "rule__TStructField__TypeRefAssignment_2_1");
 					put(grammarAccess.getTStructGetterAccess().getNameAssignment_0_0_2(), "rule__TStructGetter__NameAssignment_0_0_2");
-					put(grammarAccess.getTStructGetterAccess().getOptional_NEW_SYNTAXAssignment_1(), "rule__TStructGetter__Optional_NEW_SYNTAXAssignment_1");
+					put(grammarAccess.getTStructGetterAccess().getOptionalAssignment_1(), "rule__TStructGetter__OptionalAssignment_1");
 					put(grammarAccess.getTStructGetterAccess().getDeclaredTypeRefAssignment_4_1(), "rule__TStructGetter__DeclaredTypeRefAssignment_4_1");
 					put(grammarAccess.getTStructSetterAccess().getNameAssignment_0_0_2(), "rule__TStructSetter__NameAssignment_0_0_2");
-					put(grammarAccess.getTStructSetterAccess().getOptional_NEW_SYNTAXAssignment_1(), "rule__TStructSetter__Optional_NEW_SYNTAXAssignment_1");
+					put(grammarAccess.getTStructSetterAccess().getOptionalAssignment_1(), "rule__TStructSetter__OptionalAssignment_1");
 					put(grammarAccess.getTStructSetterAccess().getFparAssignment_3(), "rule__TStructSetter__FparAssignment_3");
 					put(grammarAccess.getTypeTypeRefAccess().getConstructorRefAssignment_1_1(), "rule__TypeTypeRef__ConstructorRefAssignment_1_1");
 					put(grammarAccess.getTypeTypeRefAccess().getTypeArgAssignment_3(), "rule__TypeTypeRef__TypeArgAssignment_3");

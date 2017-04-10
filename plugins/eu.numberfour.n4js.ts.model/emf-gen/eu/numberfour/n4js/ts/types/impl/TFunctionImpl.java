@@ -53,7 +53,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getAstElement <em>Ast Element</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#isExternal <em>External</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getFpars <em>Fpars</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#isReturnValueOptional_NEW_SYNTAX <em>Return Value Optional NEW SYNTAX</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#isReturnValueMarkedOptional <em>Return Value Marked Optional</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getReturnTypeRef <em>Return Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getTypeVars <em>Type Vars</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFunctionImpl#getDeclaredThisType <em>Declared This Type</em>}</li>
@@ -106,24 +106,24 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 	protected EList<TFormalParameter> fpars;
 
 	/**
-	 * The default value of the '{@link #isReturnValueOptional_NEW_SYNTAX() <em>Return Value Optional NEW SYNTAX</em>}' attribute.
+	 * The default value of the '{@link #isReturnValueMarkedOptional() <em>Return Value Marked Optional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isReturnValueOptional_NEW_SYNTAX()
+	 * @see #isReturnValueMarkedOptional()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT = false;
+	protected static final boolean RETURN_VALUE_MARKED_OPTIONAL_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isReturnValueOptional_NEW_SYNTAX() <em>Return Value Optional NEW SYNTAX</em>}' attribute.
+	 * The cached value of the '{@link #isReturnValueMarkedOptional() <em>Return Value Marked Optional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isReturnValueOptional_NEW_SYNTAX()
+	 * @see #isReturnValueMarkedOptional()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean returnValueOptional_NEW_SYNTAX = RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT;
+	protected boolean returnValueMarkedOptional = RETURN_VALUE_MARKED_OPTIONAL_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getReturnTypeRef() <em>Return Type Ref</em>}' containment reference.
@@ -310,8 +310,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isReturnValueOptional_NEW_SYNTAX() {
-		return returnValueOptional_NEW_SYNTAX;
+	public boolean isReturnValueMarkedOptional() {
+		return returnValueMarkedOptional;
 	}
 
 	/**
@@ -319,11 +319,11 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setReturnValueOptional_NEW_SYNTAX(boolean newReturnValueOptional_NEW_SYNTAX) {
-		boolean oldReturnValueOptional_NEW_SYNTAX = returnValueOptional_NEW_SYNTAX;
-		returnValueOptional_NEW_SYNTAX = newReturnValueOptional_NEW_SYNTAX;
+	public void setReturnValueMarkedOptional(boolean newReturnValueMarkedOptional) {
+		boolean oldReturnValueMarkedOptional = returnValueMarkedOptional;
+		returnValueMarkedOptional = newReturnValueMarkedOptional;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFUNCTION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX, oldReturnValueOptional_NEW_SYNTAX, returnValueOptional_NEW_SYNTAX));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFUNCTION__RETURN_VALUE_MARKED_OPTIONAL, oldReturnValueMarkedOptional, returnValueMarkedOptional));
 	}
 
 	/**
@@ -493,7 +493,7 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 	 * @generated
 	 */
 	public boolean isReturnValueOptional() {
-		return (this.isReturnValueOptional_NEW_SYNTAX() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark()));
+		return (this.isReturnValueMarkedOptional() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark()));
 	}
 
 	/**
@@ -637,8 +637,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 				return isExternal();
 			case TypesPackage.TFUNCTION__FPARS:
 				return getFpars();
-			case TypesPackage.TFUNCTION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
-				return isReturnValueOptional_NEW_SYNTAX();
+			case TypesPackage.TFUNCTION__RETURN_VALUE_MARKED_OPTIONAL:
+				return isReturnValueMarkedOptional();
 			case TypesPackage.TFUNCTION__RETURN_TYPE_REF:
 				return getReturnTypeRef();
 			case TypesPackage.TFUNCTION__TYPE_VARS:
@@ -674,8 +674,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 				getFpars().clear();
 				getFpars().addAll((Collection<? extends TFormalParameter>)newValue);
 				return;
-			case TypesPackage.TFUNCTION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
-				setReturnValueOptional_NEW_SYNTAX((Boolean)newValue);
+			case TypesPackage.TFUNCTION__RETURN_VALUE_MARKED_OPTIONAL:
+				setReturnValueMarkedOptional((Boolean)newValue);
 				return;
 			case TypesPackage.TFUNCTION__RETURN_TYPE_REF:
 				setReturnTypeRef((TypeRef)newValue);
@@ -717,8 +717,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 			case TypesPackage.TFUNCTION__FPARS:
 				getFpars().clear();
 				return;
-			case TypesPackage.TFUNCTION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
-				setReturnValueOptional_NEW_SYNTAX(RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT);
+			case TypesPackage.TFUNCTION__RETURN_VALUE_MARKED_OPTIONAL:
+				setReturnValueMarkedOptional(RETURN_VALUE_MARKED_OPTIONAL_EDEFAULT);
 				return;
 			case TypesPackage.TFUNCTION__RETURN_TYPE_REF:
 				setReturnTypeRef((TypeRef)null);
@@ -756,8 +756,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 				return external != EXTERNAL_EDEFAULT;
 			case TypesPackage.TFUNCTION__FPARS:
 				return fpars != null && !fpars.isEmpty();
-			case TypesPackage.TFUNCTION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
-				return returnValueOptional_NEW_SYNTAX != RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT;
+			case TypesPackage.TFUNCTION__RETURN_VALUE_MARKED_OPTIONAL:
+				return returnValueMarkedOptional != RETURN_VALUE_MARKED_OPTIONAL_EDEFAULT;
 			case TypesPackage.TFUNCTION__RETURN_TYPE_REF:
 				return returnTypeRef != null;
 			case TypesPackage.TFUNCTION__TYPE_VARS:
@@ -861,8 +861,8 @@ public class TFunctionImpl extends DeclaredTypeWithAccessModifierImpl implements
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (external: ");
 		result.append(external);
-		result.append(", returnValueOptional_NEW_SYNTAX: ");
-		result.append(returnValueOptional_NEW_SYNTAX);
+		result.append(", returnValueMarkedOptional: ");
+		result.append(returnValueMarkedOptional);
 		result.append(", declaredAsync: ");
 		result.append(declaredAsync);
 		result.append(", declaredGenerator: ");

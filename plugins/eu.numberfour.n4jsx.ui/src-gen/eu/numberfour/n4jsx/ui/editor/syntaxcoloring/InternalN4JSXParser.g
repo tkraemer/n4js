@@ -20932,9 +20932,9 @@ ruleTStructField
 	)
 	(
 		(
-			Optional_NEW_SYNTAXQuestionMarkKeyword_1_0=QuestionMark
+			OptionalQuestionMarkKeyword_1_0=QuestionMark
 			 {
-				announce($Optional_NEW_SYNTAXQuestionMarkKeyword_1_0, grammarAccess.getTStructFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+				announce($OptionalQuestionMarkKeyword_1_0, grammarAccess.getTStructFieldAccess().getOptionalQuestionMarkKeyword_1_0());
 			}
 		)
 	)?
@@ -20991,9 +20991,9 @@ ruleTStructGetter
 	)
 	(
 		(
-			Optional_NEW_SYNTAXQuestionMarkKeyword_1_0=QuestionMark
+			OptionalQuestionMarkKeyword_1_0=QuestionMark
 			 {
-				announce($Optional_NEW_SYNTAXQuestionMarkKeyword_1_0, grammarAccess.getTStructGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+				announce($OptionalQuestionMarkKeyword_1_0, grammarAccess.getTStructGetterAccess().getOptionalQuestionMarkKeyword_1_0());
 			}
 		)
 	)?
@@ -21058,9 +21058,9 @@ ruleTStructSetter
 	)
 	(
 		(
-			Optional_NEW_SYNTAXQuestionMarkKeyword_1_0=QuestionMark
+			OptionalQuestionMarkKeyword_1_0=QuestionMark
 			 {
-				announce($Optional_NEW_SYNTAXQuestionMarkKeyword_1_0, grammarAccess.getTStructSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+				announce($OptionalQuestionMarkKeyword_1_0, grammarAccess.getTStructSetterAccess().getOptionalQuestionMarkKeyword_1_0());
 			}
 		)
 	)?

@@ -81,7 +81,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 		processFormalParameters(G, cache, infCtx, funExpr, funTE, expectedTypeRef);
 		processReturnType(G, cache, infCtx, funExpr, funTE);
 
-		funTE.returnValueOptional_NEW_SYNTAX = expectedTypeRef instanceof FunctionTypeExprOrRef
+		funTE.returnValueMarkedOptional = expectedTypeRef instanceof FunctionTypeExprOrRef
 			&& (expectedTypeRef as FunctionTypeExprOrRef).returnValueOptional;
 
 		// create temporary type (i.e. may contain inference variables)
@@ -251,7 +251,7 @@ package class PolyProcessor_FunctionExpression extends AbstractPolyProcessor {
 		// update the defined function in the TModule
 		val fun = funExpr.definedType as TFunction; // types builder will have created this already
 		fun.replaceDeferredTypeRefs(resultSolved);
-		fun.returnValueOptional_NEW_SYNTAX = resultSolved.returnValueOptional;
+		fun.returnValueMarkedOptional = resultSolved.returnValueOptional;
 		// store types of fpars in cache ...
 		val len = Math.min(funExpr.fpars.size, fun.fpars.size);
 		for (var i = 0; i < len; i++) {
