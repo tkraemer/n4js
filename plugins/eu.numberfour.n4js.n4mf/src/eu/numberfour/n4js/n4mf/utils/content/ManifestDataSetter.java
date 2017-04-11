@@ -14,8 +14,14 @@ import java.util.function.Consumer;
 
 /**
  * Type declaration for lambdas used in factories / builders.
+ *
+ * Purpose of this interface is to provide type alias for <code>Consumer&lt;ManifestContentData&gt;</code>. This Type
+ * alias saves us from having type saves us from issue of "Type safety: Potential heap pollution via varargs parameter
+ * dataSetters".
+ *
+ * @see <a href= "http://docs.oracle.com/javase/specs/jls/se8/html/jls-9.html#jls-9.6.4.7">Safe Varargs</a>
  */
 @FunctionalInterface
 public interface ManifestDataSetter extends Consumer<ManifestContentData> {
-	// nothing to see here...
+	// just type alias, no changes to the body
 }
