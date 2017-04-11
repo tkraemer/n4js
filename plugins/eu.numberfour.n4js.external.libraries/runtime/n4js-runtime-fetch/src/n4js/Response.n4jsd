@@ -17,9 +17,9 @@ export external public class ~Response implements Body {
     public constructor(
             body: union{/*Blob, BufferedSource, FormData, URLSearchParams,*/ string}=,
             init: ~Object with {
-                status: number?; // defaults to 200
-                statusText: string?; // defaults to "OK"
-                headers: union{Headers, Object}?;
+                status?: number; // defaults to 200
+                statusText?: string; // defaults to "OK"
+                headers?: union{Headers, Object};
             }=
         );
 

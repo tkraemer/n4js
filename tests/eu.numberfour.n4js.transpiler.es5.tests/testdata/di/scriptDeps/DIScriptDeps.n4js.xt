@@ -60,13 +60,13 @@ function strictEqual(a : any, b : any, msg : string){
 
 interface InjectedTypeMeta{
     type : constructor{N4Object};
-    typeVar : InjectedTypeMeta?;
+    typeVar? : InjectedTypeMeta;
 }
 
 interface InjectedClassMeta{
-    superType : constructor{N4Object}?;
-    injectCtorParams : Array<InjectedTypeMeta>?;
-    fieldsInjectedTypes : Array<InjectedTypeMeta>?;
+    superType? : constructor{N4Object};
+    injectCtorParams? : Array<InjectedTypeMeta>;
+    fieldsInjectedTypes? : Array<InjectedTypeMeta>;
 }
 
 interface BindingInfo{
@@ -80,12 +80,12 @@ interface ProvideMethodInfo{
 }
 
 interface BinderMeta extends InjectedClassMeta{
-    bindings : Array<BindingInfo>?;
-    methodBindings : Array<ProvideMethodInfo>?;
+    bindings? : Array<BindingInfo>;
+    methodBindings? : Array<ProvideMethodInfo>;
 }
 
 interface DIComponentMeta extends InjectedClassMeta{
-    parent : constructor{N4Object}?;
+    parent? : constructor{N4Object};
     binders : Array<constructor{N4Object}>;
 }
 

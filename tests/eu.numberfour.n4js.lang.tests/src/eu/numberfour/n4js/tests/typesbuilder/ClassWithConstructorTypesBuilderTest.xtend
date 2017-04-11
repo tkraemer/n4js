@@ -75,6 +75,6 @@ class ClassWithConstructorTypesBuilderTest extends AbstractParserTest {
 		assertFalse(m.constructor)
 
 		N4JSResource.postProcessContainingN4JSResourceOf(classDecl);
-		assertEquals("this[C]?", ctor.returnTypeRef?.typeRefAsString);
+		assertEquals("this[C]", ctor.returnTypeRef?.typeRefAsString);
 	}
 }

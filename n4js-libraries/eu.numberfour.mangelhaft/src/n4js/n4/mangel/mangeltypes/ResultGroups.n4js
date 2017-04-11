@@ -59,7 +59,7 @@ export public class ResultGroups {
             target.errors += result.errors;
             target.skipped += result.skipped;
             if (result instanceof ResultGroups) {
-                target.results = target.results.concat((result as ResultGroups).results);
+                target.results = target.results.concat(((result as Object) as ResultGroups).results);
             }
         }
         return target;
@@ -77,6 +77,6 @@ export public class ResultGroups {
      * same as concat but takes a whole array
      */
     public static concatArray(resultGroupss: Array<ResultGroups>): ResultGroups {
-        return this.accumulateResults(new ResultGroups([]), resultGroupss);
+        return this.accumulateResults(new ResultGroups([]), (resultGroupss as Object) as Array<? extends ~~ResultGroup>);
     }
 }

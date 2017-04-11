@@ -94,7 +94,7 @@ var ai4 : ~i~A = {
 
 
 class B {
-	public os : string?;
+	public os? : string;
 }
 
 
@@ -116,7 +116,7 @@ rb = {
 
 
 // -------------   ~w~   ----------------
-// XPECT errors --> "~Object is not a structural subtype of ~w~B: os failed: writable field requires a writable field or a setter in subtype." at "{ 	 }"
+// IDE-2405 XPECT noerrors --> "~Object is not a structural subtype of ~w~B: os failed: writable field requires a writable field or a setter in subtype." at "{ 	 }"
 var wb : ~w~B = {
 	
 }
@@ -131,7 +131,7 @@ wb = {
 	os: ''
 }
 
-// XPECT errors --> "~Object with { get os(): string } is not a structural subtype of ~w~B: os failed: writable field requires a writable field or a setter in subtype." at "{ 	get os(): string { return null; } }"
+// IDE-2405 XPECT noerrors --> "~Object with { get os(): string } is not a structural subtype of ~w~B: os failed: writable field requires a writable field or a setter in subtype." at "{ 	get os(): string { return null; } }"
 wb = {
 	get os(): string { return null; }
 }

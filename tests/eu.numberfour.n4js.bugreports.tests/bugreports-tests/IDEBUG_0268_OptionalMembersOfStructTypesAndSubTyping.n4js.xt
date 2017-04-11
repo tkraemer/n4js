@@ -1,7 +1,9 @@
-var a : ~Object with { prop: string; } = { prop: "hello!" };
-var b : ~Object with { prop: string?; } = { };
+/* XPECT_SETUP eu.numberfour.n4js.bugreports.tests.N4JSBugreportTest END_SETUP  */
 
-// XPECT errors --> "~Object with { prop: string? } is not a structural subtype of ~Object with { prop: string }: missing prop failed: non-optional member requires a corresponding non-optional member in the structural subtype." at "b"
+var a : ~Object with { prop: string; } = { prop: "hello!" };
+var b : ~Object with { prop?: string; } = { };
+
+// XPECT errors --> "~Object with { prop?: string } is not a structural subtype of ~Object with { prop: string }: missing prop failed: non-optional member requires a corresponding non-optional member in the structural subtype." at "b"
 a = b;
 
 console.log(a.prop); // oops!

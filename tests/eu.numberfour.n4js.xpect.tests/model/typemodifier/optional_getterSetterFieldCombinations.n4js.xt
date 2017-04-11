@@ -1,0 +1,162 @@
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
+
+
+class CG {
+	public get f?(): string {return null;}
+}
+class CS {
+	public set f?(value:string) {}
+}
+class CGS {
+	public get f?(): string {return null;}
+	public set f?(value:string) {}
+}
+class CF {
+	public f?: string;
+}
+
+
+@Final class D0 {
+}
+@Final class DG {
+	public get f(): string {return null;}
+}
+@Final class DS {
+	public set f(value:string) {}
+}
+@Final class DGS {
+	public get f(): string {return null;}
+	public set f(value:string) {}
+}
+@Final class DF {
+	public f: string;
+}
+
+
+let cg:  ~~CG;
+let cs:  ~~CS;
+let cgs: ~~CGS;
+let cf:  ~~CF;
+
+let d0:  D0;
+let dg:  DG;
+let ds:  DS;
+let dgs: DGS;
+let df:  DF;
+
+
+// --------------------------------------------------------------------------------------------------------------------
+
+
+// XPECT noerrors -->
+cg = d0;
+// XPECT noerrors -->
+cg = new D0();
+
+// XPECT noerrors -->
+cg = dg;
+// XPECT noerrors -->
+cg = new DG();
+
+// XPECT noerrors -->
+cg = ds;
+// XPECT noerrors -->
+cg = new DS();
+
+// XPECT noerrors -->
+cg = dgs;
+// XPECT noerrors -->
+cg = new DGS();
+
+// XPECT noerrors -->
+cg = df;
+// XPECT noerrors -->
+cg = new DF();
+
+
+// --------------------------------------------------------------------------------------------------------------------
+
+
+// XPECT errors --> "D0 is not a structural subtype of ~~CS: missing setter f." at "d0"
+cs = d0;
+// XPECT errors --> "D0 is not a structural subtype of ~~CS: missing setter f." at "new D0()"
+cs = new D0();
+
+// XPECT errors --> "DG is not a structural subtype of ~~CS: missing setter f." at "dg"
+cs = dg;
+// XPECT errors --> "DG is not a structural subtype of ~~CS: missing setter f." at "new DG()"
+cs = new DG();
+
+// XPECT noerrors -->
+cs = ds;
+// XPECT noerrors -->
+cs = new DS();
+
+// XPECT noerrors -->
+cs = dgs;
+// XPECT noerrors -->
+cs = new DGS();
+
+// XPECT noerrors -->
+cs = df;
+// XPECT noerrors -->
+cs = new DF();
+
+
+// --------------------------------------------------------------------------------------------------------------------
+
+
+// XPECT errors --> "D0 is not a structural subtype of ~~CGS: missing setter f." at "d0"
+cgs = d0;
+// XPECT errors --> "D0 is not a structural subtype of ~~CGS: missing setter f." at "new D0()"
+cgs = new D0();
+
+// XPECT errors --> "DG is not a structural subtype of ~~CGS: missing setter f." at "dg"
+cgs = dg;
+// XPECT errors --> "DG is not a structural subtype of ~~CGS: missing setter f." at "new DG()"
+cgs = new DG();
+
+// XPECT noerrors -->
+cgs = ds;
+// XPECT noerrors -->
+cgs = new DS();
+
+// XPECT noerrors -->
+cgs = dgs;
+// XPECT noerrors -->
+cgs = new DGS();
+
+// XPECT noerrors -->
+cgs = df;
+// XPECT noerrors -->
+cgs = new DF();
+
+
+// --------------------------------------------------------------------------------------------------------------------
+
+
+// XPECT errors --> "D0 is not a structural subtype of ~~CF: missing field f." at "d0"
+cf = d0;
+// XPECT errors --> "D0 is not a structural subtype of ~~CF: missing field f." at "new D0()"
+cf = new D0();
+
+// XPECT errors --> "DG is not a structural subtype of ~~CF: f failed: optional writable field requires at least a setter in subtype." at "dg"
+cf = dg;
+// XPECT errors --> "DG is not a structural subtype of ~~CF: f failed: optional writable field requires at least a setter in subtype." at "new DG()"
+cf = new DG();
+
+// XPECT noerrors -->
+cf = ds;
+// XPECT noerrors -->
+cf = new DS();
+
+// XPECT noerrors -->
+cf = dgs;
+// XPECT noerrors -->
+cf = new DGS();
+
+// XPECT noerrors -->
+cf = df;
+// XPECT noerrors -->
+cf = new DF();
+

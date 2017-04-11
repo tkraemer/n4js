@@ -3,10 +3,10 @@ export external public abstract class Element {
 };
 
 export external public interface ~ComponentProps {
-    public children: Array<Element>?;
-    public ref: {function(Object /* node */): void}?;
+    public children?: Array<Element>;
+    public ref?: {function(Object /* node */): void};
     // Attention: Beware that you can't read/rely on the key property when rendering, see https://facebook.github.io/react/docs/lists-and-keys.html
-    public key: string?;
+    public key?: string;
 }
 
 export external public abstract class Component<PropsT extends ComponentProps, StateT extends Object> {

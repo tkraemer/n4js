@@ -21,8 +21,10 @@ import eu.numberfour.n4js.n4JS.NewExpression
 import eu.numberfour.n4js.n4JS.PropertyNameValuePair
 import eu.numberfour.n4js.n4JS.TypeDefiningElement
 import eu.numberfour.n4js.n4JS.VariableDeclaration
+import eu.numberfour.n4js.n4JS.YieldExpression
 import eu.numberfour.n4js.resource.N4JSResource
 import eu.numberfour.n4js.ts.typeRefs.DeferredTypeRef
+import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsFactory
 import eu.numberfour.n4js.ts.typeRefs.TypeTypeRef
@@ -34,6 +36,7 @@ import eu.numberfour.n4js.typesystem.CustomInternalTypeSystem.RuleFailedExceptio
 import eu.numberfour.n4js.typesystem.N4JSTypeSystem
 import eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions
 import eu.numberfour.n4js.typesystem.TypeSystemHelper
+import eu.numberfour.n4js.utils.N4JSLanguageUtils
 import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleApplicationTrace
 import it.xsemantics.runtime.RuleEnvironment
@@ -43,7 +46,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 
 import static extension eu.numberfour.n4js.typesystem.RuleEnvironmentExtensions.*
 import static extension eu.numberfour.n4js.utils.N4JSLanguageUtils.*
-import eu.numberfour.n4js.n4JS.YieldExpression
 
 /**
  * Processor for handling type inference during post-processing of an N4JS resource. Roughly corresponds to
@@ -135,9 +137,12 @@ public class TypeProcessor extends AbstractProcessor {
 				// -> simply ask Xsemantics
 				log(indentLevel, "asking Xsemantics ...");
 				val result = askXsemanticsForType(G, null, node);
+
+				val resultAdjusted = adjustResultForLocationInAST(G, result, N4JSASTUtils.ignoreParentheses(node));
+
 				// in this case, we are responsible for storing the type in the cache
 				// (Xsemantics does not know of the cache)
-				cache.storeType(node, result);
+				cache.storeType(node, resultAdjusted);
 			}
 		} catch (RuleFailedException e) {
 			cache.storeType(node, new Result(e));
@@ -148,6 +153,33 @@ public class TypeProcessor extends AbstractProcessor {
 		}
 
 		log(indentLevel, cache.getTypeFailSafe(node));
+	}
+
+	/**
+	 * Make sure that the value of the two location-dependent special properties <code>typeOfObjectLiteral</code> and
+	 * <code>typeOfNewExpressionOrFinalNominal</code> in {@link ParameterizedTypeRef} correctly reflect the current
+	 * location in the AST, i.e. the the location of the given <code>astNode</code>, no matter where the type reference
+	 * in the given <code>result</code> stems from.
+	 * <p>
+	 * For more details see {@link TypeRef#isTypeOfObjectLiteral()}.
+	 */
+	def private <T extends TypeRef> Result<T> adjustResultForLocationInAST(RuleEnvironment G, Result<T> result, TypableElement astNode) {
+		if (!result.failed) {
+			val typeRef = result.value;
+			if (typeRef instanceof ParameterizedTypeRef) {
+				val isTypeOfObjectLiteral = N4JSLanguageUtils.isConstTransitiveObjectLiteral(astNode);
+				val isTypeOfNewExpressionOrFinalNominal = N4JSLanguageUtils.
+					isConstTransitiveNewExpressionOrFinalNominalClassInstance(astNode, typeRef);
+				if (typeRef.typeOfObjectLiteral !== isTypeOfObjectLiteral
+					|| typeRef.typeOfNewExpressionOrFinalNominal !== isTypeOfNewExpressionOrFinalNominal) {
+					val typeRefCpy = TypeUtils.copy(typeRef);
+					typeRefCpy.typeOfObjectLiteral = isTypeOfObjectLiteral;
+					typeRefCpy.typeOfNewExpressionOrFinalNominal = isTypeOfNewExpressionOrFinalNominal;
+					return new Result(typeRefCpy);
+				}
+			}
+		}
+		return result;
 	}
 
 

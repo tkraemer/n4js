@@ -1,4 +1,4 @@
-@N4JS export public interface X {
+export public interface X {
 	
 	public providesDefault() : X { return null; }
 	

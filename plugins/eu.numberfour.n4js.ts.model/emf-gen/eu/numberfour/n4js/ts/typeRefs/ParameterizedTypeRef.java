@@ -33,6 +33,8 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#getDeclaredType <em>Declared Type</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#getTypeArgs <em>Type Args</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#isArrayTypeLiteral <em>Array Type Literal</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#isTypeOfObjectLiteral <em>Type Of Object Literal</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#isTypeOfNewExpressionOrFinalNominal <em>Type Of New Expression Or Final Nominal</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#getDefinedTypingStrategy <em>Defined Typing Strategy</em>}</li>
  * </ul>
  *
@@ -109,6 +111,56 @@ public interface ParameterizedTypeRef extends BaseTypeRef {
 	 * @generated
 	 */
 	void setArrayTypeLiteral(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Type Of Object Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  @see TypeRef#isTypeOfObjectLiteral()
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Type Of Object Literal</em>' attribute.
+	 * @see #setTypeOfObjectLiteral(boolean)
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getParameterizedTypeRef_TypeOfObjectLiteral()
+	 * @model unique="false" transient="true"
+	 * @generated
+	 */
+	boolean isTypeOfObjectLiteral();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#isTypeOfObjectLiteral <em>Type Of Object Literal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Type Of Object Literal</em>' attribute.
+	 * @see #isTypeOfObjectLiteral()
+	 * @generated
+	 */
+	void setTypeOfObjectLiteral(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Type Of New Expression Or Final Nominal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  @see TypeRef#isTypeOfNewExpressionOrFinalNominal()
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Type Of New Expression Or Final Nominal</em>' attribute.
+	 * @see #setTypeOfNewExpressionOrFinalNominal(boolean)
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getParameterizedTypeRef_TypeOfNewExpressionOrFinalNominal()
+	 * @model unique="false" transient="true"
+	 * @generated
+	 */
+	boolean isTypeOfNewExpressionOrFinalNominal();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef#isTypeOfNewExpressionOrFinalNominal <em>Type Of New Expression Or Final Nominal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Type Of New Expression Or Final Nominal</em>' attribute.
+	 * @see #isTypeOfNewExpressionOrFinalNominal()
+	 * @generated
+	 */
+	void setTypeOfNewExpressionOrFinalNominal(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Defined Typing Strategy</b></em>' attribute.

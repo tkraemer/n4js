@@ -1,0 +1,63 @@
+/* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
+class DataObject {}
+
+/* XPECT formattedLines 19 ---
+class C {
+
+	field?: string;
+	get getter?(): string {
+		return undefined;
+	}
+	set setter?(value: string) {}
+
+}
+--- */
+class
+	  	C
+{
+  field
+            			            ?
+              :
+string       ;get      
+     getter
+     
+                 ?
+(
+						
+	)
+: string {return undefined;}set
+		setter            
+	?           (
+value
+: string) {}
+
+   }
+
+
+
+// TODO fix formatting of TStructMembers
+/* XPECT formattedLines 22 ---
+let v01: ~Object with {field?: string; get getter?(): string; set setter?(value: string)};
+--- */
+let
+v01
+			:			~     Object
+with
+							{
+  field
+            			            ?
+              :
+string       ;get      
+     getter
+     
+                 ?
+(
+						
+	)
+: string               ;set
+		setter            
+	?           (
+value
+: string)       
+							}
+

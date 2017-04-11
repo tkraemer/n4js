@@ -12,7 +12,7 @@ stderr:
 
 class ~Party {
     public ["@type"] : string = "some.type";
-    public ["@typeValue"] : string? = "some.parameter";
+    public ["@typeValue"]? : string = "some.parameter";
 }
 
 var some_party : Party = {

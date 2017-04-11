@@ -182,7 +182,7 @@ function validateListener(listener: Function, fnName: string) {
     public async dispatch (params: Array<?>) {
         //this.
         if (! this.active) {
-            return;
+            return false;
         }
         let paramsArr: Array<?> = params.slice(), 
             n: number = this.bindings.length,
@@ -194,7 +194,7 @@ function validateListener(listener: Function, fnName: string) {
 
         if (! n) {
             //should come after memorize
-            return;
+            return false;
         }
 
         bindings = this.bindings.slice(); //clone array in case add/remove items during dispatch

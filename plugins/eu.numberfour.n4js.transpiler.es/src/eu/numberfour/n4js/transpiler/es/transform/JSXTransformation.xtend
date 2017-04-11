@@ -109,7 +109,7 @@ class JSXTransformation extends Transformation {
 			if(propsSpread.isEmpty) {
 				propsSimple
 			} else {
-				_CallExpr(_PropertyAccessExpr(steFor_Object,steFor_assign), #[ propsSimple ] + propsSpread)
+				_CallExpr(_PropertyAccessExpr(steFor_Object,steFor_assign), #[_ObjLit] + propsSpread + #[ propsSimple ])
 			}
 		}
 	}

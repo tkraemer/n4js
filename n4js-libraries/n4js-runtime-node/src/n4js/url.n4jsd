@@ -10,20 +10,20 @@
  */
 
 export external public class ~NodeURL {
-    public href: string?;
-    public protocol: string?;
-    public host: string?;
-    public hostname: string?;
-    public port: string?;
-    public path: string?;
-    public pathname: string?;
-    public search: string?;
-    public hash: string?;
-    public auth: string?;
-    public slashes: boolean?;
+    public href?: string;
+    public protocol?: string;
+    public host?: string;
+    public hostname?: string;
+    public port?: string;
+    public path?: string;
+    public pathname?: string;
+    public search?: string;
+    public hash?: string;
+    public auth?: string;
+    public slashes?: boolean;
 
-    public username: string?;
-    public password: string?;
+    public username?: string;
+    public password?: string;
 }
 
 export external public function parse(urlStr: string, parseQueryString: string =, slashesDenoteHost: boolean =): NodeURL;

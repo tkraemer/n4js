@@ -21,20 +21,24 @@ import eu.numberfour.n4js.n4JS.ModifierUtils
 import eu.numberfour.n4js.n4JS.N4ClassDeclaration
 import eu.numberfour.n4js.n4JS.N4ClassifierDeclaration
 import eu.numberfour.n4js.n4JS.N4FieldAccessor
+import eu.numberfour.n4js.n4JS.N4FieldDeclaration
 import eu.numberfour.n4js.n4JS.N4MemberDeclaration
 import eu.numberfour.n4js.n4JS.N4MethodDeclaration
 import eu.numberfour.n4js.n4JS.N4Modifier
 import eu.numberfour.n4js.n4JS.NamedImportSpecifier
 import eu.numberfour.n4js.n4JS.ParameterizedPropertyAccessExpression
+import eu.numberfour.n4js.n4JS.PropertyNameOwner
 import eu.numberfour.n4js.ts.typeRefs.ParameterizedTypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.types.SyntaxRelatedTElement
 import eu.numberfour.n4js.ts.types.TAnnotableElement
 import eu.numberfour.n4js.ts.types.TClassifier
+import eu.numberfour.n4js.ts.types.TField
 import eu.numberfour.n4js.ts.types.TFunction
 import eu.numberfour.n4js.ts.types.TMember
 import eu.numberfour.n4js.ts.types.TVariable
 import eu.numberfour.n4js.ts.types.Type
+import eu.numberfour.n4js.ts.types.TypesPackage
 import eu.numberfour.n4js.ui.binaries.IllegalBinaryStateDialog
 import eu.numberfour.n4js.ui.changes.IChange
 import eu.numberfour.n4js.ui.changes.SemanticChangeProvider
@@ -54,6 +58,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.dialogs.ProgressMonitorDialog
 import org.eclipse.xtext.diagnostics.Diagnostic
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.ui.editor.model.edit.IModificationContext
 import org.eclipse.xtext.ui.editor.quickfix.Fix
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
@@ -133,6 +138,29 @@ class N4JSQuickfixProvider extends AbstractN4JSQuickfixProvider {
 		});
 	}
 
+	@Fix(IssueCodes.EXP_OPTIONAL_DEPRECATED)
+	def fixOldSyntaxForOptionalFields(Issue issue, IssueResolutionAcceptor acceptor) {
+		acceptor.accept(issue, 'Change to new syntax', 'The syntax for optional fields has changed. This quick fix will change the code to the new syntax.', ImageNames.REORDER) [ context, marker, offset, length, element |
+			val offsetNameEnd = getOffsetOfNameEnd(element.eContainer);
+			return #[
+				replace(context.xtextDocument, offset + length - 1, 1, ""), // removes the ? at the old location
+				replace(context.xtextDocument, offsetNameEnd, 0, "?") // inserts a ? at the new location (behind the field or accessor name)
+			];
+		]
+	}
+	def private int getOffsetOfNameEnd(EObject parent) {
+		val nodeOfName = switch(parent) {
+			N4FieldDeclaration:
+				NodeModelUtils.findActualNodeFor((parent as PropertyNameOwner).declaredName)
+			TField:
+				NodeModelUtils.findNodesForFeature(parent, TypesPackage.eINSTANCE.identifiableElement_Name).head
+		};
+		return if(nodeOfName!==null) {
+			nodeOfName.offset + nodeOfName.length
+		} else {
+			-1
+		};
+	}
 	@Fix(IssueCodes.FUN_PARAM_OPTIONAL_WRONG_SYNTAX)
 	def fixOldSyntaxForOptionalFpars(Issue issue, IssueResolutionAcceptor acceptor) {
 		acceptor.accept(issue, 'Change to Default Parameter', 'Some enlightening description.', ImageNames.REORDER) [ context, marker, offset, length, element |

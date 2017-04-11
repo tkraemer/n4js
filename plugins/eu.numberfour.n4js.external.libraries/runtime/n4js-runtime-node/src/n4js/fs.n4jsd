@@ -153,20 +153,20 @@ export external public function read(fd: number, buffer: Buffer, offset: number,
 export external public function readSync(fd: number, buffer: Buffer, offset: number, length: number, position: int): number;
 
 @Promisifiable
-export external public function readFile(filename: string, options: ~Object with {encoding: string?; flag: string?;}, callback: {function(Error, string)}=): void;
-export external public function readFileSync(filename: string, options: ~Object with { encoding: string?; flag: string?;}): string;
+export external public function readFile(filename: string, options: ~Object with {encoding?: string; flag?: string;}, callback: {function(Error, string)}=): void;
+export external public function readFileSync(filename: string, options: ~Object with { encoding?: string; flag?: string;}): string;
 
 @Promisifiable
-export external public function writeFile(filename: string, data: any, options: ~Object with {encoding: string?; mode: union{number, string}?; flag: string?; }, callback: {function(Error): void}=): void;
-export external public function writeFileSync(filename: string, data: any, options: ~Object with {encoding: string?; mode: union{number, string}?; flag: string?; }): void;
+export external public function writeFile(filename: string, data: any, options: ~Object with {encoding?: string; mode?: union{number, string}; flag?: string; }, callback: {function(Error): void}=): void;
+export external public function writeFileSync(filename: string, data: any, options: ~Object with {encoding?: string; mode?: union{number, string}; flag?: string; }): void;
 
 @Promisifiable
-export external public function appendFile(filename: string, data: any, options: ~Object with {encoding: string?; mode: union{number, string}?; flag: string?; }, callback: {function(Error): void}=): void;
-export external public function appendFileSync(filename: string, data: any, options: ~Object with {encoding: string?; mode: union{number, string}?; flag: string?; }): void;
+export external public function appendFile(filename: string, data: any, options: ~Object with {encoding?: string; mode?: union{number, string}; flag?: string; }, callback: {function(Error): void}=): void;
+export external public function appendFileSync(filename: string, data: any, options: ~Object with {encoding?: string; mode?: union{number, string}; flag?: string; }): void;
 
-export external public function watchFile(filename: string, options: ~Object with {persistent: boolean?; listener: number?; }, listener: {function(Stats, Stats): void}): void;
+export external public function watchFile(filename: string, options: ~Object with {persistent?: boolean; listener?: number; }, listener: {function(Stats, Stats): void}): void;
 export external public function unwatchFile(filename: string, listener: {function(Stats, Stats): void}=): void;
-export external public function watch(filename: string, options: ~Object with {persistent: boolean?;}, listener: {function(string, string): any}=): FSWatcher;
+export external public function watch(filename: string, options: ~Object with {persistent?: boolean;}, listener: {function(string, string): any}=): FSWatcher;
 
 export external public function exists(path: string, callback: {function(boolean): void}=): void;
 export external public function existsSync(path: string): boolean;
@@ -180,17 +180,17 @@ export external public function access(path: string, mode: number, callback: {fu
 export external public function accessSync(path: string, mode: number=): void;
 
 export external public function createReadStream(path: string, options: ~Object with {
-    flags: string?;
-    encoding: string?;
-    fd: number?;
-    mode: number?;
-    autoClose: boolean?;
+    flags?: string;
+    encoding?: string;
+    fd?: number;
+    mode?: number;
+    autoClose?: boolean;
 }=): ReadStream;
 export external public function createWriteStream(path: string, options: ~Object with {
-    flags: string?;
-    encoding: string?;
-    fd: number?;
-    mode: number?;
+    flags?: string;
+    encoding?: string;
+    fd?: number;
+    mode?: number;
 }=): WriteStream;
 
 /* -*- mode: typescript;-*- */

@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.FieldAccessorImpl#isOptional_NEW_SYNTAX <em>Optional NEW SYNTAX</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.FieldAccessorImpl#isDeclaredAbstract <em>Declared Abstract</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.FieldAccessorImpl#getDeclaredThisType <em>Declared This Type</em>}</li>
  * </ul>
@@ -41,6 +42,26 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * @generated
  */
 public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl implements FieldAccessor {
+	/**
+	 * The default value of the '{@link #isOptional_NEW_SYNTAX() <em>Optional NEW SYNTAX</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isOptional_NEW_SYNTAX()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean OPTIONAL_NEW_SYNTAX_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isOptional_NEW_SYNTAX() <em>Optional NEW SYNTAX</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isOptional_NEW_SYNTAX()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean optional_NEW_SYNTAX = OPTIONAL_NEW_SYNTAX_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #isDeclaredAbstract() <em>Declared Abstract</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -88,6 +109,27 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 	@Override
 	protected EClass eStaticClass() {
 		return TypesPackage.Literals.FIELD_ACCESSOR;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isOptional_NEW_SYNTAX() {
+		return optional_NEW_SYNTAX;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setOptional_NEW_SYNTAX(boolean newOptional_NEW_SYNTAX) {
+		boolean oldOptional_NEW_SYNTAX = optional_NEW_SYNTAX;
+		optional_NEW_SYNTAX = newOptional_NEW_SYNTAX;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.FIELD_ACCESSOR__OPTIONAL_NEW_SYNTAX, oldOptional_NEW_SYNTAX, optional_NEW_SYNTAX));
 	}
 
 	/**
@@ -160,7 +202,18 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 	 * @generated
 	 */
 	public TypeRef getDeclaredTypeRef() {
-		return null;
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isOptional() {
+		return (this.isOptional_NEW_SYNTAX() || ((this.getDeclaredTypeRef() != null) && this.getDeclaredTypeRef().isOptional_OLD_SYNTAX()));
 	}
 
 	/**
@@ -194,6 +247,8 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case TypesPackage.FIELD_ACCESSOR__OPTIONAL_NEW_SYNTAX:
+				return isOptional_NEW_SYNTAX();
 			case TypesPackage.FIELD_ACCESSOR__DECLARED_ABSTRACT:
 				return isDeclaredAbstract();
 			case TypesPackage.FIELD_ACCESSOR__DECLARED_THIS_TYPE:
@@ -210,6 +265,9 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case TypesPackage.FIELD_ACCESSOR__OPTIONAL_NEW_SYNTAX:
+				setOptional_NEW_SYNTAX((Boolean)newValue);
+				return;
 			case TypesPackage.FIELD_ACCESSOR__DECLARED_ABSTRACT:
 				setDeclaredAbstract((Boolean)newValue);
 				return;
@@ -228,6 +286,9 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case TypesPackage.FIELD_ACCESSOR__OPTIONAL_NEW_SYNTAX:
+				setOptional_NEW_SYNTAX(OPTIONAL_NEW_SYNTAX_EDEFAULT);
+				return;
 			case TypesPackage.FIELD_ACCESSOR__DECLARED_ABSTRACT:
 				setDeclaredAbstract(DECLARED_ABSTRACT_EDEFAULT);
 				return;
@@ -246,6 +307,8 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case TypesPackage.FIELD_ACCESSOR__OPTIONAL_NEW_SYNTAX:
+				return optional_NEW_SYNTAX != OPTIONAL_NEW_SYNTAX_EDEFAULT;
 			case TypesPackage.FIELD_ACCESSOR__DECLARED_ABSTRACT:
 				return declaredAbstract != DECLARED_ABSTRACT_EDEFAULT;
 			case TypesPackage.FIELD_ACCESSOR__DECLARED_THIS_TYPE:
@@ -263,6 +326,7 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
 		if (baseClass == TMember.class) {
 			switch (baseOperationID) {
+				case TypesPackage.TMEMBER___IS_OPTIONAL: return TypesPackage.FIELD_ACCESSOR___IS_OPTIONAL;
 				case TypesPackage.TMEMBER___IS_ABSTRACT: return TypesPackage.FIELD_ACCESSOR___IS_ABSTRACT;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
@@ -280,6 +344,8 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 		switch (operationID) {
 			case TypesPackage.FIELD_ACCESSOR___GET_DECLARED_TYPE_REF:
 				return getDeclaredTypeRef();
+			case TypesPackage.FIELD_ACCESSOR___IS_OPTIONAL:
+				return isOptional();
 			case TypesPackage.FIELD_ACCESSOR___IS_ABSTRACT:
 				return isAbstract();
 		}
@@ -296,7 +362,9 @@ public abstract class FieldAccessorImpl extends TMemberWithAccessModifierImpl im
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (declaredAbstract: ");
+		result.append(" (optional_NEW_SYNTAX: ");
+		result.append(optional_NEW_SYNTAX);
+		result.append(", declaredAbstract: ");
 		result.append(declaredAbstract);
 		result.append(')');
 		return result.toString();

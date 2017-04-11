@@ -128,14 +128,14 @@
 						value: function dispatch___n4(params) {
 							return $spawn(function *() {
 								if (!this.active) {
-									return;
+									return false;
 								}
 								let paramsArr = params.slice(), n = this.bindings.length, bindings;
 								if (this.memorize) {
 									this.previousParams = paramsArr;
 								}
 								if (!n) {
-									return;
+									return false;
 								}
 								bindings = this.bindings.slice();
 								this.shouldPropagate = true;

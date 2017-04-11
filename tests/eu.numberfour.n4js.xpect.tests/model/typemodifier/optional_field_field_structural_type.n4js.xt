@@ -1,0 +1,19 @@
+ /* XPECT_SETUP eu.numberfour.n4js.xpect.tests.N4JSXpectTest END_SETUP */
+
+interface ~A {
+	public get type(): string;
+}
+
+class B {
+	public type: string;
+}
+
+
+let a: ~A;
+
+let b: ~~B;
+
+//XPECT noerrors
+a = b;
+
+

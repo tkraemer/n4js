@@ -84,7 +84,6 @@ import eu.numberfour.n4js.ts.types.Type;
 import eu.numberfour.n4js.ts.types.TypeVariable;
 import eu.numberfour.n4js.ts.types.TypesFactory;
 import eu.numberfour.n4js.ts.types.TypingStrategy;
-import eu.numberfour.n4js.ts.types.UndefModifier;
 import eu.numberfour.n4js.ts.types.UndefinedType;
 import eu.numberfour.n4js.ts.types.VoidType;
 import eu.numberfour.n4js.utils.RecursionGuard;
@@ -518,30 +517,13 @@ public class TypeUtils {
 	}
 
 	/**
-	 * Copies additional type modifiers such as undefModifier, nullModifier and dynamic. This is usually not required as
-	 * whole references are copied, but in case of type variable substitution or similar cases, this might be necessary.
+	 * Copies additional type modifiers (currently only dynamic). This is usually not required as whole references are
+	 * copied, but in case of type variable substitution or similar cases, this might be necessary.
 	 */
 	public static void copyTypeModifiers(TypeRef target, TypeRef source) {
-		target.setUndefModifier(mergeUndefModifiers(target.getUndefModifier(), source.getUndefModifier()));
-		target.setNullModifier(source.getNullModifier());
-
 		if (target instanceof BaseTypeRef) {
 			((BaseTypeRef) target).setDynamic(target.isDynamic() || source.isDynamic());
 		}
-	}
-
-	/**
-	 * Returns a combined {@link UndefModifier} for the two given type references. The order of arguments given does not
-	 * matter.
-	 * <p>
-	 * This method ignores {@link UndefModifier#MANDATORY} and {@link UndefModifier#ISUNDEFINED}, as these literals seem
-	 * to be obsolete and not used anywhere in the code. Type modifiers require an overall clean-up, see IDE-2405!
-	 */
-	public static UndefModifier mergeUndefModifiers(UndefModifier modifier1, UndefModifier modifier2) {
-		if (modifier1 == UndefModifier.OPTIONAL || modifier2 == UndefModifier.OPTIONAL) {
-			return UndefModifier.OPTIONAL;
-		}
-		return UndefModifier.NA;
 	}
 
 	/**
@@ -1183,10 +1165,10 @@ public class TypeUtils {
 	}
 
 	/**
-	 * Does the argument carry the {@link UndefModifier#OPTIONAL} modifier?
+	 * TODO IDE-2405 remove this when removing support for old syntax
 	 */
 	public static boolean isOptional(TypeRef typeRef) {
-		return (typeRef != null) && (UndefModifier.OPTIONAL == typeRef.getUndefModifier());
+		return typeRef != null && typeRef.isOptional_OLD_SYNTAX();
 	}
 
 	/**
@@ -1353,4 +1335,5 @@ public class TypeUtils {
 		}
 		return typeRef;
 	}
+
 }

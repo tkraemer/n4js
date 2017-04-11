@@ -854,22 +854,13 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_IM = 10;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_IM__NULL_MODIFIER = TypeRefsPackage.PARAMETERIZED_TYPE_REF__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_IM__UNDEF_MODIFIER = TypeRefsPackage.PARAMETERIZED_TYPE_REF__UNDEF_MODIFIER;
+	int PARAMETERIZED_TYPE_REF_IM__OPTIONAL_OLD_SYNTAX = TypeRefsPackage.PARAMETERIZED_TYPE_REF__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -906,6 +897,24 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_IM__ARRAY_TYPE_LITERAL = TypeRefsPackage.PARAMETERIZED_TYPE_REF__ARRAY_TYPE_LITERAL;
+
+	/**
+	 * The feature id for the '<em><b>Type Of Object Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_IM__TYPE_OF_OBJECT_LITERAL = TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The feature id for the '<em><b>Type Of New Expression Or Final Nominal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_IM__TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = TypeRefsPackage.PARAMETERIZED_TYPE_REF__TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The feature id for the '<em><b>Defined Typing Strategy</b></em>' attribute.
@@ -998,15 +1007,6 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_IM___GET_TYPE_ARGS = TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_IM___UNDEFINED_OR_NULL = TypeRefsPackage.PARAMETERIZED_TYPE_REF___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1041,6 +1041,24 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_IM___GET_STRUCTURAL_MEMBERS = TypeRefsPackage.PARAMETERIZED_TYPE_REF___GET_STRUCTURAL_MEMBERS;
+
+	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_IM___IS_TYPE_OF_OBJECT_LITERAL = TypeRefsPackage.PARAMETERIZED_TYPE_REF___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_IM___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = TypeRefsPackage.PARAMETERIZED_TYPE_REF___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
@@ -1206,22 +1224,13 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM = 11;
 
 	/**
-	 * The feature id for the '<em><b>Null Modifier</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__NULL_MODIFIER = PARAMETERIZED_TYPE_REF_IM__NULL_MODIFIER;
-
-	/**
-	 * The feature id for the '<em><b>Undef Modifier</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__UNDEF_MODIFIER = PARAMETERIZED_TYPE_REF_IM__UNDEF_MODIFIER;
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__OPTIONAL_OLD_SYNTAX = PARAMETERIZED_TYPE_REF_IM__OPTIONAL_OLD_SYNTAX;
 
 	/**
 	 * The feature id for the '<em><b>Dynamic</b></em>' attribute.
@@ -1258,6 +1267,24 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__ARRAY_TYPE_LITERAL = PARAMETERIZED_TYPE_REF_IM__ARRAY_TYPE_LITERAL;
+
+	/**
+	 * The feature id for the '<em><b>Type Of Object Literal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__TYPE_OF_OBJECT_LITERAL = PARAMETERIZED_TYPE_REF_IM__TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The feature id for the '<em><b>Type Of New Expression Or Final Nominal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM__TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = PARAMETERIZED_TYPE_REF_IM__TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The feature id for the '<em><b>Defined Typing Strategy</b></em>' attribute.
@@ -1386,15 +1413,6 @@ public interface ImPackage extends EPackage {
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___GET_TYPE_ARGS = PARAMETERIZED_TYPE_REF_IM___GET_TYPE_ARGS;
 
 	/**
-	 * The operation id for the '<em>Undefined Or Null</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___UNDEFINED_OR_NULL = PARAMETERIZED_TYPE_REF_IM___UNDEFINED_OR_NULL;
-
-	/**
 	 * The operation id for the '<em>To String</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1420,6 +1438,24 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___IS_BOTTOM_TYPE = PARAMETERIZED_TYPE_REF_IM___IS_BOTTOM_TYPE;
+
+	/**
+	 * The operation id for the '<em>Is Type Of Object Literal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___IS_TYPE_OF_OBJECT_LITERAL = PARAMETERIZED_TYPE_REF_IM___IS_TYPE_OF_OBJECT_LITERAL;
+
+	/**
+	 * The operation id for the '<em>Is Type Of New Expression Or Final Nominal</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERIZED_TYPE_REF_STRUCTURAL_IM___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL = PARAMETERIZED_TYPE_REF_IM___IS_TYPE_OF_NEW_EXPRESSION_OR_FINAL_NOMINAL;
 
 	/**
 	 * The operation id for the '<em>Get Version</em>' operation.
@@ -1857,6 +1893,15 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_GETTER_DECLARATION__DECLARED_NAME = N4JSPackage.N4_GETTER_DECLARATION__DECLARED_NAME;
 
 	/**
+	 * The feature id for the '<em><b>Declared Optional</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_GETTER_DECLARATION__DECLARED_OPTIONAL = N4JSPackage.N4_GETTER_DECLARATION__DECLARED_OPTIONAL;
+
+	/**
 	 * The feature id for the '<em><b>Declared Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1974,6 +2019,24 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_GETTER_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE = N4JSPackage.N4_GETTER_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE;
 
 	/**
+	 * The operation id for the '<em>Is Return Value Declared Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_GETTER_DECLARATION___IS_RETURN_VALUE_DECLARED_OPTIONAL = N4JSPackage.N4_GETTER_DECLARATION___IS_RETURN_VALUE_DECLARED_OPTIONAL;
+
+	/**
+	 * The operation id for the '<em>Is Return Value Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_GETTER_DECLARATION___IS_RETURN_VALUE_OPTIONAL = N4JSPackage.N4_GETTER_DECLARATION___IS_RETURN_VALUE_OPTIONAL;
+
+	/**
 	 * The operation id for the '<em>Is Async</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2017,6 +2080,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_GETTER_DECLARATION___GET_DECLARED_TYPE_REF = N4JSPackage.N4_GETTER_DECLARATION___GET_DECLARED_TYPE_REF;
+
+	/**
+	 * The operation id for the '<em>Is Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_GETTER_DECLARATION___IS_OPTIONAL = N4JSPackage.N4_GETTER_DECLARATION___IS_OPTIONAL;
 
 	/**
 	 * The operation id for the '<em>Get Defined Accessor</em>' operation.
@@ -2164,6 +2236,15 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_SETTER_DECLARATION__DECLARED_NAME = N4JSPackage.N4_SETTER_DECLARATION__DECLARED_NAME;
 
 	/**
+	 * The feature id for the '<em><b>Declared Optional</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_SETTER_DECLARATION__DECLARED_OPTIONAL = N4JSPackage.N4_SETTER_DECLARATION__DECLARED_OPTIONAL;
+
+	/**
 	 * The feature id for the '<em><b>Defined Setter</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2272,6 +2353,24 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_SETTER_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE = N4JSPackage.N4_SETTER_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE;
 
 	/**
+	 * The operation id for the '<em>Is Return Value Declared Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_SETTER_DECLARATION___IS_RETURN_VALUE_DECLARED_OPTIONAL = N4JSPackage.N4_SETTER_DECLARATION___IS_RETURN_VALUE_DECLARED_OPTIONAL;
+
+	/**
+	 * The operation id for the '<em>Is Return Value Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_SETTER_DECLARATION___IS_RETURN_VALUE_OPTIONAL = N4JSPackage.N4_SETTER_DECLARATION___IS_RETURN_VALUE_OPTIONAL;
+
+	/**
 	 * The operation id for the '<em>Is Async</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2306,6 +2405,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_SETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME = N4JSPackage.N4_SETTER_DECLARATION___HAS_COMPUTED_PROPERTY_NAME;
+
+	/**
+	 * The operation id for the '<em>Is Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_SETTER_DECLARATION___IS_OPTIONAL = N4JSPackage.N4_SETTER_DECLARATION___IS_OPTIONAL;
 
 	/**
 	 * The operation id for the '<em>Get Defined Accessor</em>' operation.
@@ -2498,6 +2606,15 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_METHOD_DECLARATION__FPARS = N4JSPackage.N4_METHOD_DECLARATION__FPARS;
 
 	/**
+	 * The feature id for the '<em><b>Return Value Declared Optional</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_METHOD_DECLARATION__RETURN_VALUE_DECLARED_OPTIONAL = N4JSPackage.N4_METHOD_DECLARATION__RETURN_VALUE_DECLARED_OPTIONAL;
+
+	/**
 	 * The feature id for the '<em><b>Return Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2669,6 +2786,15 @@ public interface ImPackage extends EPackage {
 	int DELEGATING_METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE = N4JSPackage.N4_METHOD_DECLARATION___GET_LOCAL_ARGUMENTS_VARIABLE;
 
 	/**
+	 * The operation id for the '<em>Is Return Value Declared Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_METHOD_DECLARATION___IS_RETURN_VALUE_DECLARED_OPTIONAL = N4JSPackage.N4_METHOD_DECLARATION___IS_RETURN_VALUE_DECLARED_OPTIONAL;
+
+	/**
 	 * The operation id for the '<em>Get Defined Function Or Accessor</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2676,6 +2802,15 @@ public interface ImPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELEGATING_METHOD_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR = N4JSPackage.N4_METHOD_DECLARATION___GET_DEFINED_FUNCTION_OR_ACCESSOR;
+
+	/**
+	 * The operation id for the '<em>Is Return Value Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELEGATING_METHOD_DECLARATION___IS_RETURN_VALUE_OPTIONAL = N4JSPackage.N4_METHOD_DECLARATION___IS_RETURN_VALUE_OPTIONAL;
 
 	/**
 	 * The operation id for the '<em>Is Async</em>' operation.

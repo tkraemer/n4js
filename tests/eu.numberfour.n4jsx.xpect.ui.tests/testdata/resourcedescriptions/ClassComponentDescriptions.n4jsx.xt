@@ -31,7 +31,7 @@ types::TModule: resourcedescriptions.ClassComponentDescriptions
 import * as React from "jsxbackend/react"
 
 
-export public class LowerComponent extends React.Component<~Object with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
+export public class LowerComponent extends React.Component<~React.ComponentProps with {whatTextShouldIShow : string}, ~Object with {squares: Array<string>}> {
 	@Override
 	public render() : React.Element{
 		return (<div>{this.props.whatTextShouldIShow}</div>);
@@ -39,7 +39,7 @@ export public class LowerComponent extends React.Component<~Object with {whatTex
 }
 
 export public class MyComponent extends
-	React.Component<~Object with {aProp: string}, String> {
+	React.Component<~React.ComponentProps with {aProp: string}, String> {
 
 	@Override
 	public render() : React.Element{

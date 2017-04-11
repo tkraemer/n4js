@@ -76,6 +76,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#getUnboundTypeVars <em>Unbound Type Vars</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#getUnboundTypeVarsUpperBounds <em>Unbound Type Vars Upper Bounds</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#getFpars <em>Fpars</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#isReturnValueOptional_NEW_SYNTAX <em>Return Value Optional NEW SYNTAX</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#getReturnTypeRef <em>Return Type Ref</em>}</li>
  * </ul>
  *
@@ -237,6 +238,31 @@ public interface FunctionTypeExpression extends FunctionTypeExprOrRef {
 	EList<TFormalParameter> getFpars();
 
 	/**
+	 * Returns the value of the '<em><b>Return Value Optional NEW SYNTAX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Tells if the return value is optional.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Return Value Optional NEW SYNTAX</em>' attribute.
+	 * @see #setReturnValueOptional_NEW_SYNTAX(boolean)
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getFunctionTypeExpression_ReturnValueOptional_NEW_SYNTAX()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isReturnValueOptional_NEW_SYNTAX();
+
+	/**
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.FunctionTypeExpression#isReturnValueOptional_NEW_SYNTAX <em>Return Value Optional NEW SYNTAX</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Return Value Optional NEW SYNTAX</em>' attribute.
+	 * @see #isReturnValueOptional_NEW_SYNTAX()
+	 * @generated
+	 */
+	void setReturnValueOptional_NEW_SYNTAX(boolean value);
+
+	/**
 	 * Returns the value of the '<em><b>Return Type Ref</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -294,5 +320,14 @@ public interface FunctionTypeExpression extends FunctionTypeExprOrRef {
 	 * @generated
 	 */
 	TypeRef getTypeVarUpperBound(TypeVariable typeVar);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isReturnValueOptional_NEW_SYNTAX() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isOptional_OLD_SYNTAX()));'"
+	 * @generated
+	 */
+	boolean isReturnValueOptional();
 
 } // FunctionTypeExpression

@@ -11,7 +11,7 @@ class D2<T> {
 
 class D2a<T> {
 	public i : number;
-	public s : T?;
+	public s? : T;
 }
 
 class D2b {

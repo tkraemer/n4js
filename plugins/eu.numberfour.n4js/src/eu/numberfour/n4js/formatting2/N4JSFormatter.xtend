@@ -92,6 +92,8 @@ import eu.numberfour.n4js.ts.typeRefs.ThisTypeRefStructural
 import eu.numberfour.n4js.ts.typeRefs.TypeRef
 import eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage
 import eu.numberfour.n4js.ts.typeRefs.UnionTypeExpression
+import eu.numberfour.n4js.ts.types.TField
+import eu.numberfour.n4js.ts.types.TGetter
 import eu.numberfour.n4js.ts.types.TStructMember
 import eu.numberfour.n4js.ts.types.TypeVariable
 import eu.numberfour.n4js.ts.types.TypesPackage
@@ -310,6 +312,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		
 		field.indentExcludingAnnotations(document);
 
+		field.configureOptionality(document);
 		field.regionFor.keyword("=").prepend[oneSpace].append[oneSpace];
 		field.expression.format;
 		field.declaredTypeRef.format;
@@ -377,9 +380,8 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		
 		// special case for accessors: get / set keywords
 		if(fDecl instanceof FieldAccessor){
-			// get or set
-			val kw = if( fDecl instanceof GetterDeclaration ) "get" else "set"; 
-			fDecl.regionFor.keyword(kw).prepend[oneSpace].append[oneSpace; newLines=0; autowrap];
+			fDecl.configureGetSetKeyword(document);
+			fDecl.configureOptionality(document);
 		}
 		
 		
@@ -1262,17 +1264,26 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	}
 	
 	def dispatch void format( TStructMember tsm, extension IFormattableDocument document) {
+		if(tsm instanceof TField) {
+			tsm.configureOptionality(document);
+		} else if(tsm instanceof eu.numberfour.n4js.ts.types.FieldAccessor) {
+			tsm.configureGetSetKeyword(document);
+			tsm.configureOptionality(document);
+
+			val parenPair = tsm.regionFor.keywordPairs("(",")").head;
+			parenPair.key.prepend[noSpace; newLines = 0].append[noSpace];
+		}
 		// get, set, method, field
 		tsm.eContents.forEach[format;];
 		// TODO format TStruct* more thoroughly 
+		// (note: added some TStructMember formatting while working on IDE-2405, but it is still incomplete!)
 	}
 	
 	
 	
-	def void configureUndefModifier( StaticBaseTypeRef sbtr,  extension IFormattableDocument document){
+	def private void configureUndefModifier( StaticBaseTypeRef sbtr,  extension IFormattableDocument document){
 		// UndefModifier "?"
-		sbtr.regionFor.feature(TypeRefsPackage.Literals.TYPE_REF__UNDEF_MODIFIER).prepend[noSpace;newLines=0;];
-		// NullModifier 
+		sbtr.regionFor.feature(TypeRefsPackage.Literals.TYPE_REF__OPTIONAL_OLD_SYNTAX).prepend[noSpace;newLines=0;];
 		// sbtr.regionFor.feature(TypeRefsPackage.Literals.TYPE_REF__NULL_MODIFIER().prepend[oneSpace;newLines=0;].append[oneSpace;newLines=0;autoWrap]		
 	}
 	
@@ -1343,8 +1354,36 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		}
 		
 	}
-	
-	
+
+
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Configure Methods
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	def private void configureGetSetKeyword(FieldAccessor fieldAccessor, extension IFormattableDocument document) {
+		val kw = if(fieldAccessor instanceof GetterDeclaration) "get" else "set"; 
+		fieldAccessor.regionFor.keyword(kw).prepend[oneSpace].append[oneSpace; newLines=0; autowrap];
+	}
+	def private void configureGetSetKeyword(eu.numberfour.n4js.ts.types.FieldAccessor tFieldAccessor, extension IFormattableDocument document) {
+		val kw = if(tFieldAccessor instanceof TGetter) "get" else "set"; 
+		tFieldAccessor.regionFor.keyword(kw).prepend[oneSpace].append[oneSpace; newLines=0; autowrap];
+	}
+
+	def private void configureOptionality(N4FieldDeclaration fieldDecl, extension IFormattableDocument document) {
+		fieldDecl.regionFor.feature(N4JSPackage.Literals.N4_FIELD_DECLARATION__DECLARED_OPTIONAL).prepend[noSpace;newLines=0;];
+	}
+	def private void configureOptionality(FieldAccessor fieldAccessor, extension IFormattableDocument document) {
+		fieldAccessor.regionFor.feature(N4JSPackage.Literals.FIELD_ACCESSOR__DECLARED_OPTIONAL).prepend[noSpace;newLines=0;];
+	}
+	def private void configureOptionality(TField tField, extension IFormattableDocument document) {
+		tField.regionFor.feature(TypesPackage.Literals.TFIELD__OPTIONAL_NEW_SYNTAX).prepend[noSpace;newLines=0;];
+	}
+	def private void configureOptionality(eu.numberfour.n4js.ts.types.FieldAccessor tFieldAccessor, extension IFormattableDocument document) {
+		tFieldAccessor.regionFor.feature(TypesPackage.Literals.FIELD_ACCESSOR__OPTIONAL_NEW_SYNTAX).prepend[noSpace;newLines=0;];
+	}
+
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Bug-workarounds
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -389,7 +389,7 @@ class Class32 {
 class Sub32 {
 	public set m(p : B) {}
 }
-// XPECT errors --> "Sub32 is not a structural subtype of ~Class32: missing getter m and 1 more." at "new Sub32()"
+// XPECT errors --> "Sub32 is not a structural subtype of ~Class32: missing getter m." at "new Sub32()"
 var v32 : ~Class32 = new Sub32();
 
 

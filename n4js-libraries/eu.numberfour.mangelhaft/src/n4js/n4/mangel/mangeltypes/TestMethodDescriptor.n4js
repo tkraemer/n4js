@@ -17,9 +17,9 @@ class TypedNvp <T, TT extends N4Enum> extends Nvp<T> {
 
 export public class TestMethodDescriptor extends TypedNvp<{function()}, TestFunctionType> {
     public timeout: number = 60 * 1000;
-    public description: string?;
-    public ignore: boolean?;
-    public fixme: boolean?;
-    public fixmeReason: string?;
-    public ignoreReason: string?;
+    public description?: string;
+    public ignore?: boolean;
+    public fixme?: boolean;
+    public fixmeReason?: string;
+    public ignoreReason?: string;
 }

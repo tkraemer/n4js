@@ -120,10 +120,6 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case TypesPackage.NULL_MODIFIER:
-				return createNullModifierFromString(eDataType, initialValue);
-			case TypesPackage.UNDEF_MODIFIER:
-				return createUndefModifierFromString(eDataType, initialValue);
 			case TypesPackage.TYPING_STRATEGY:
 				return createTypingStrategyFromString(eDataType, initialValue);
 			case TypesPackage.TYPE_ACCESS_MODIFIER:
@@ -155,10 +151,6 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case TypesPackage.NULL_MODIFIER:
-				return convertNullModifierToString(eDataType, instanceValue);
-			case TypesPackage.UNDEF_MODIFIER:
-				return convertUndefModifierToString(eDataType, instanceValue);
 			case TypesPackage.TYPING_STRATEGY:
 				return convertTypingStrategyToString(eDataType, instanceValue);
 			case TypesPackage.TYPE_ACCESS_MODIFIER:
@@ -570,46 +562,6 @@ public class TypesFactoryImpl extends EFactoryImpl implements TypesFactory {
 	public TVariable createTVariable() {
 		TVariableImpl tVariable = new TVariableImpl();
 		return tVariable;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NullModifier createNullModifierFromString(EDataType eDataType, String initialValue) {
-		NullModifier result = NullModifier.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertNullModifierToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public UndefModifier createUndefModifierFromString(EDataType eDataType, String initialValue) {
-		UndefModifier result = UndefModifier.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertUndefModifierToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**
