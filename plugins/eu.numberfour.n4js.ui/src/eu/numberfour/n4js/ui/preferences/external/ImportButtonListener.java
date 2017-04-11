@@ -20,7 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
-import java.util.Collection;
+import java.util.Map;
 import java.util.function.BiFunction;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -43,9 +43,9 @@ import eu.numberfour.n4js.utils.StatusHelper;
 public class ImportButtonListener extends SelectionAdapter {
 
 	final private StatusHelper statusHelper;
-	final private BiFunction<Collection<String>, IProgressMonitor, IStatus> installAction;
+	final private BiFunction<Map<String, String>, IProgressMonitor, IStatus> installAction;
 
-	ImportButtonListener(BiFunction<Collection<String>, IProgressMonitor, IStatus> installAction,
+	ImportButtonListener(BiFunction<Map<String, String>, IProgressMonitor, IStatus> installAction,
 			StatusHelper statusHelper) {
 		this.statusHelper = statusHelper;
 		this.installAction = installAction;
@@ -68,7 +68,8 @@ public class ImportButtonListener extends SelectionAdapter {
 					return;
 				}
 				final URI platformFileLocation = file.toURI();
-				final Collection<String> packages = TargetPlatformModel.npmPackageNamesFrom(platformFileLocation);
+				final Map<String, String> packages = TargetPlatformModel
+						.npmVersionedPackageNamesFrom(platformFileLocation);
 
 				if (!packages.isEmpty()) {
 					try {

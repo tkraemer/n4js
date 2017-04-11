@@ -30,7 +30,7 @@ public class InstallCompileRunN4jscExternalWithSingleProjectCompileTest extends 
 
 	@Override
 	protected Map<String, String> getNpmDependencies() {
-		return singletonMap("express", "^4.13.4");
+		return singletonMap("express", "@4.13.4");
 	}
 
 	/**

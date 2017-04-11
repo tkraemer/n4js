@@ -444,6 +444,7 @@ public class NpmPackageToProjectAdapter {
 			throws IOException {
 
 		String projectId = packageJSON.name;
+		String projectVersion = packageJSON.version;
 
 		if (!projectFolder.getName().equals(projectId)) {
 			LOGGER.warn("project folder and project name are different : " + projectFolder.getName() + " <> + "
@@ -451,7 +452,7 @@ public class NpmPackageToProjectAdapter {
 		}
 
 		try (FileWriter fw = new FileWriter(manifest)) {
-			fw.write(manifestContentProvider.getContent(projectId, ".", ".", mainModule));
+			fw.write(manifestContentProvider.getContent(projectId, ".", ".", mainModule, projectVersion));
 		}
 	}
 

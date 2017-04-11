@@ -68,6 +68,9 @@ import static eu.numberfour.n4js.ui.changes.ChangeProvider.*
 import static eu.numberfour.n4js.ui.quickfix.QuickfixUtil.*
 import static org.eclipse.jface.dialogs.MessageDialog.openError
 
+import static extension eu.numberfour.n4js.external.version.VersionConstraintFormatUtil.npmFormat
+import static extension eu.numberfour.n4js.n4mf.utils.parsing.ManifestValuesParsingUtil.parseDependency
+
 /**
  * N4JS quick fixes.
  *
@@ -647,13 +650,18 @@ class N4JSQuickfixProvider extends AbstractN4JSQuickfixProvider {
 		accept(issue, 'Get dependency', 'Download missing dependency from npm.', null, [ element , context |
 
 				val doc = context.xtextDocument;
-				val packageName = doc.get(issue.offset, issue.length);
+				val documentText = doc.get(issue.offset, issue.length);
+
+				val dependency = documentText.parseDependency.getAST;
+				val packageName = dependency.project.projectId;
+				val packageVersion = dependency.versionConstraint.npmFormat;
+
 				val errorStatusRef = new AtomicReference;
 				val illegalBinaryExcRef = new AtomicReference
 
 				new ProgressMonitorDialog(UIUtils.shell).run(true, false, [monitor |
 					try {
-						val status = npmManager.installDependency(packageName, monitor);
+						val status = npmManager.installDependency(packageName, packageVersion, monitor);
 						if (!status.OK) {
 							errorStatusRef.set(status);
 						}

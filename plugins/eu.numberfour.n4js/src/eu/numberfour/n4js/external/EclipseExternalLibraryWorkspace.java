@@ -362,7 +362,30 @@ public class EclipseExternalLibraryWorkspace extends ExternalLibraryWorkspace im
 		}
 
 		return unmodifiableCollection(projectsMapping.values());
+	}
 
+	@Override
+	public Iterable<ProjectDescription> getProjectsDescriptions(java.net.URI rootLocation) {
+		ensureInitialized();
+		final File rootFolder = new File(rootLocation);
+
+		final Set<ProjectDescription> projectsMapping = newHashSet();
+		final URI rootUri = URI.createFileURI(rootFolder.getAbsolutePath());
+
+		for (Entry<URI, Optional<Pair<ExternalProject, ProjectDescription>>> entry : projectCache.asMap().entrySet()) {
+			final URI projectLocation = entry.getKey();
+			if (rootUri.equals(projectLocation.trimSegments(1))) {
+				final Pair<ExternalProject, ProjectDescription> pair = entry.getValue().orNull();
+				if (null != pair && null != pair.getFirst()) {
+					final ProjectDescription description = pair.getSecond();
+					if (description != null) {
+						projectsMapping.add(description);
+					}
+				}
+			}
+		}
+
+		return unmodifiableCollection(projectsMapping);
 	}
 
 	@Override

@@ -36,11 +36,11 @@ import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringJoiner;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
@@ -77,6 +77,11 @@ import eu.numberfour.n4js.external.GitCloneSupplier;
 import eu.numberfour.n4js.external.NpmManager;
 import eu.numberfour.n4js.external.TargetPlatformInstallLocationProvider;
 import eu.numberfour.n4js.external.libraries.TargetPlatformModel;
+import eu.numberfour.n4js.external.version.VersionConstraintFormatUtil;
+import eu.numberfour.n4js.n4mf.DeclaredVersion;
+import eu.numberfour.n4js.n4mf.ProjectDescription;
+import eu.numberfour.n4js.n4mf.utils.parsing.ManifestValuesParsingUtil;
+import eu.numberfour.n4js.n4mf.utils.parsing.ParserResults;
 import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.utils.InputComposedValidator;
@@ -171,15 +176,14 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 
 		createEnabledPushButton(subComposite, "Install npm...",
 				new InstallNpmDependencyButtonListener(this::intallAndUpdate,
-						() -> getPackageNameToInstallValidator(),
-						statusHelper,
-						null));
+						() -> getPackageNameToInstallValidator(), () -> getPackageVersionValidator(),
+						statusHelper));
 
 		createEnabledPushButton(subComposite, "Uninstall npm...",
 				new UninstallNpmDependencyButtonListener(this::unintallAndUpdate,
 						() -> getPackageNameToUninstallValidator(),
 						statusHelper,
-						getSelectedNpm()));
+						this::getSelectedNpm));
 
 		createEnabledPushButton(subComposite, "Run maintenance actions...",
 				new MaintenanceActionsButtonListener(this::runMaintananceActions));
@@ -296,10 +300,8 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	 *            the file to which {@link TargetPlatformModel} is written.
 	 */
 	private void exportTargetPlatform(final File file) {
-		final URI location = installLocationProvider.getTargetPlatformNodeModulesLocation();
-		final Iterable<IProject> projects = externalLibraryWorkspace.getProjects(location);
-		final Iterable<String> projectIds = from(projects).transform(p -> p.getName());
-		final TargetPlatformModel model = TargetPlatformModel.createFromNpmProjectIds(projectIds);
+		final Map<String, String> installerNpms = getInstalledNpms();
+		final TargetPlatformModel model = TargetPlatformModel.createFromVersionedNpmProjectIds(installerNpms);
 		try {
 			if (!file.exists()) {
 				checkState(file.createNewFile(), "Error while exporting target platform file.");
@@ -358,6 +360,30 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				});
 	}
 
+	private IInputValidator getPackageVersionValidator() {
+		return InputFunctionalValidator.from(
+				(final String version) -> parsingVersionValidator(version));
+	}
+
+	/** version validator based on N4MF parser (and its support for version syntax). */
+	private String parsingVersionValidator(final String data) {
+		String result = null;
+		ParserResults<DeclaredVersion> parseResult = ManifestValuesParsingUtil.parseDeclaredVersion(data);
+		if (!parseResult.getErrors().isEmpty()) {
+			// collect just parse errors
+			StringJoiner joinedMessage = new StringJoiner("\n");
+			parseResult.getErrors().forEach((String msg) -> joinedMessage.add(msg));
+			result = joinedMessage.toString();
+		} else {
+			// even if there are no parse errors check if version instance was create correctly
+			if (parseResult.getAST() == null) {
+				result = "Could not create version from string :" + data;
+			}
+		}
+
+		return result;
+	}
+
 	private boolean isNpmWithNameInstalled(final String packageName) {
 		final File root = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
 		return from(externalLibraryWorkspace.getProjects(root.toURI()))
@@ -365,9 +391,16 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				.anyMatch(name -> name.equals(packageName));
 	}
 
-	private Set<String> getInstalledNpms() {
-		final File root = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
-		return from(externalLibraryWorkspace.getProjects(root.toURI())).transform(p -> p.getName()).toSet();
+	private Map<String, String> getInstalledNpms() {
+		final URI root = installLocationProvider.getTargetPlatformNodeModulesLocation();
+		final Set<ProjectDescription> projects = from(externalLibraryWorkspace.getProjectsDescriptions((root))).toSet();
+
+		final Map<String, String> versionedNpms = new HashMap<>();
+		projects.forEach((ProjectDescription pd) -> {
+			versionedNpms.put(pd.getProjectId(), VersionConstraintFormatUtil.npmFormat(pd.getProjectVersion()));
+		});
+
+		return versionedNpms;
 	}
 
 	/**
@@ -378,9 +411,9 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 				.createMultiStatus("Status of executing maintenance actions.");
 
 		// persist state for reinstall
-		Collection<String> oldPackages = new HashSet<>();
+		Map<String, String> oldPackages = new HashMap<>();
 		if (userChoice.decisionReinstall)
-			oldPackages.addAll(getInstalledNpms());
+			oldPackages.putAll(getInstalledNpms());
 
 		// keep the order Cache->TypeDefs->NPMs->Reinstall->Update
 		// actions have side effects that can interact with each other
@@ -449,17 +482,16 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	 * @param monitor
 	 *            the monitor used to interact with npm manager
 	 * @param packageNames
-	 *            names of the packages to reinstall
+	 *            names of the packages and their versions to reinstall
 	 *
 	 */
 	private void maintenanceReinstallNpms(final MaintenanceActionsChoice userChoice,
-			final MultiStatus multistatus, IProgressMonitor monitor, Collection<String> packageNames) {
+			final MultiStatus multistatus, IProgressMonitor monitor, Map<String, String> packageNames) {
 		if (userChoice.decisionReinstall) {
 
 			// unless all npms were purged, uninstall known ones
 			if (!userChoice.decisionPurgeNpm) {
-				unintallAndUpdate(packageNames, monitor);
-				IStatus uninstallStatus = unintallAndUpdate(packageNames, monitor);
+				IStatus uninstallStatus = unintallAndUpdate(packageNames.keySet(), monitor);
 				if (!uninstallStatus.isOK())
 					multistatus.merge(uninstallStatus);
 			}
@@ -593,13 +625,14 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	}
 
 	/**
-	 * Installs npm packages with provide names, if successful updates preference page view.
+	 * Installs npm packages with provide names and versions, if successful updates preference page view. Note that in
+	 * case package has no version it is expected that empty string is provided.
 	 *
 	 * @return status of the operation.
 	 */
-	private IStatus intallAndUpdate(final Collection<String> packageNames, final IProgressMonitor monitor) {
+	private IStatus intallAndUpdate(final Map<String, String> versionedPackages, final IProgressMonitor monitor) {
 		try {
-			IStatus status = npmManager.installDependencies(packageNames, monitor);
+			IStatus status = npmManager.installDependencies(versionedPackages, monitor);
 			if (status.isOK())
 				updateInput(viewer, store.getLocations());
 

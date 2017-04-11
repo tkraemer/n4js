@@ -28,6 +28,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
@@ -643,9 +644,7 @@ public class N4jsc {
 					gitLocationProvider.getGitLocation().getRemoteBranch(), true);
 			pull(localClonePath);
 
-			// Convert target platform file into package JSON for now.
-			TargetPlatformModel model = TargetPlatformModel.readValue(targetPlatformFile.toURI());
-			PackageJson packageJson = TargetPlatformFactory.createN4DefaultWithDependencies(model);
+			PackageJson packageJson = TargetPlatformFactory.createN4Default();
 			File packageJsonFile = new File(targetPlatformInstallLocation, PackageJson.PACKAGE_JSON);
 			try {
 				if (!packageJsonFile.exists()) {
@@ -658,13 +657,14 @@ public class N4jsc {
 							.setTargetPlatformFileLocation(packageJsonFile.toURI());
 
 					// install dependencies if needed
-					final Map<String, String> dependencies = packageJson.dependencies;
-					if (null != packageJson.dependencies) {
-						final Iterable<String> packageNames = dependencies.keySet();
-						for (final String packageName : packageNames) {
+					final Map<String, String> versionedPackages = TargetPlatformModel
+							.npmVersionedPackageNamesFrom(targetPlatformFile.toURI());
+					if (null != versionedPackages) {
+						final Iterable<Entry<String, String>> packageData = versionedPackages.entrySet();
+						for (final Entry<String, String> name2version : packageData) {
 							try {
-								final IStatus status = npmManager.installDependency(packageName,
-										new NullProgressMonitor());
+								final IStatus status = npmManager.installDependency(name2version.getKey(),
+										name2version.getValue(), new NullProgressMonitor());
 								if (!status.isOK()) {
 									throw new ExitCodeException(EXITCODE_CONFIGURATION_ERROR, status.getMessage(),
 											status.getException());
