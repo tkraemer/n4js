@@ -216,7 +216,7 @@ class StructuralTypingComputer extends TypeSystemHelperStrategy {
 									&& leftTypeRef.isTypeOfNewExpressionOrFinalNominal;
 								if(!isSpecialCaseOfDispensableGetterForOptionalField) {
 									// special error message in case only either a getter XOR setter is supplied for a field
-									val msgSpecial = if(rightMember.optional) {
+									val msgSpecial = if(leftMember instanceof TGetter && rightMember.optional) {
 										"optional writable field requires at least a setter in subtype."
 									} else {
 										"writable field requires a field or a getter/setter pair in subtype."
