@@ -38,6 +38,7 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringJoiner;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -391,13 +392,13 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	}
 
 	private Map<String, String> getInstalledNpms() {
-		final File root = new File(installLocationProvider.getTargetPlatformNodeModulesLocation());
-		final Map<String, String> versionedNpms = new HashMap<>();
+		final URI root = installLocationProvider.getTargetPlatformNodeModulesLocation();
+		final Set<ProjectDescription> projects = from(externalLibraryWorkspace.getProjectsDescriptions((root))).toSet();
 
-		from(externalLibraryWorkspace.getProjectsDescriptions((root.toURI()))).toSet()
-				.forEach((ProjectDescription pd) -> {
-					versionedNpms.put(pd.getProjectId(), VersionConstraintFormatUtil.npmFormat(pd.getProjectVersion()));
-				});
+		final Map<String, String> versionedNpms = new HashMap<>();
+		projects.forEach((ProjectDescription pd) -> {
+			versionedNpms.put(pd.getProjectId(), VersionConstraintFormatUtil.npmFormat(pd.getProjectVersion()));
+		});
 
 		return versionedNpms;
 	}
