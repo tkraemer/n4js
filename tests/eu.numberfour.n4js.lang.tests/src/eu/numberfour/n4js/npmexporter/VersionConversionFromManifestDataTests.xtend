@@ -23,7 +23,6 @@ import org.junit.runner.RunWith
 import static eu.numberfour.n4js.external.version.VersionConstraintFormatUtil.npmFormat
 import static org.junit.Assert.*
 
-import static extension eu.numberfour.n4js.n4mf.utils.parsing.ManifestValuesParsingUtil.parseDeclaredVersion
 import static extension eu.numberfour.n4js.n4mf.utils.parsing.ManifestValuesParsingUtil.parseDependency
 
 /**
@@ -71,19 +70,19 @@ class VersionConversionFromManifestDataTests {
 	@Test def parseErrorsWithMeta() {
 		#["no viable alternative at input 'sax'", "no viable alternative at input '+'",
 			"no viable alternative at input '3'", "mismatched input '+' expecting '}'"].
-			errors('''sax (1.0.0-beta+exp.sha.5114f85, 3.0.0-alpha+exp.sha.e134a85)''');
+			errors('''sax (1.0.0-betaexp.sha.5114f85, 3.0.0-alphaexp.sha.e134a85)''');
 	}
 
 ////////////////////////////////////////////////////////////////////////
 // test utils
 	private def fromDependency(CharSequence expected, CharSequence input) {
-		val dependency = input.toString.parseDependency.data;
+		val dependency = input.toString.parseDependency.getAST;
 		val packageName = dependency.project.projectId;
 		val packageVersion = npmFormat(dependency.versionConstraint)
 		assertEquals(expected.toString, packageName + packageVersion)
 	}
 
 	private def errors(List<String> expected, CharSequence input) {
-		assertEquals(String.join(",", expected), String.join(",", input.toString.parseDeclaredVersion.errors))
+		assertEquals(String.join(",", expected), String.join(",", input.toString.parseDependency.errors))
 	}
 }

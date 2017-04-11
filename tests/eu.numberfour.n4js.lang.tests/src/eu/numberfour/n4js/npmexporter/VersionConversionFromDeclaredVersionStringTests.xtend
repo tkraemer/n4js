@@ -61,13 +61,13 @@ class VersionConversionFromDeclaredVersionStringTests {
 	}
 
 	@Test def parseErrorGarbage() {
-		#["no viable alternative at input 'one.two.three'"].errors('''one.two.three''');
+		#["mismatched input 'one.two.three' expecting RULE_INT"].errors('''one.two.three''');
 	}
 
 ////////////////////////////////////////////////////////////////////////
 // test utils
 	private def from(CharSequence expected, CharSequence input) {
-		assertEquals(expected.toString, input.toString.parseDeclaredVersion.data.npmFormat)
+		assertEquals(expected.toString, input.toString.parseDeclaredVersion.getAST.npmFormat)
 	}
 
 	private def errors(List<String> expected, CharSequence input) {

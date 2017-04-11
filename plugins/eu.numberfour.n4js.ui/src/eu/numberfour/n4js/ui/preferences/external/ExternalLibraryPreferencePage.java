@@ -81,7 +81,7 @@ import eu.numberfour.n4js.external.version.VersionConstraintFormatUtil;
 import eu.numberfour.n4js.n4mf.DeclaredVersion;
 import eu.numberfour.n4js.n4mf.ProjectDescription;
 import eu.numberfour.n4js.n4mf.utils.parsing.ManifestValuesParsingUtil;
-import eu.numberfour.n4js.n4mf.utils.parsing.ParseResult;
+import eu.numberfour.n4js.n4mf.utils.parsing.ParserResults;
 import eu.numberfour.n4js.preferences.ExternalLibraryPreferenceStore;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.utils.InputComposedValidator;
@@ -368,7 +368,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 	/** version validator based on N4MF parser (and its support for version syntax). */
 	private String parsingVersionValidator(final String data) {
 		String result = null;
-		ParseResult<DeclaredVersion> parseResult = ManifestValuesParsingUtil.parseDeclaredVersion(data);
+		ParserResults<DeclaredVersion> parseResult = ManifestValuesParsingUtil.parseDeclaredVersion(data);
 		if (!parseResult.getErrors().isEmpty()) {
 			// collect just parse errors
 			StringJoiner joinedMessage = new StringJoiner("\n");
@@ -376,7 +376,7 @@ public class ExternalLibraryPreferencePage extends PreferencePage implements IWo
 			result = joinedMessage.toString();
 		} else {
 			// even if there are no parse errors check if version instance was create correctly
-			if (parseResult.getData() == null) {
+			if (parseResult.getAST() == null) {
 				result = "Could not create version from string :" + data;
 			}
 		}
