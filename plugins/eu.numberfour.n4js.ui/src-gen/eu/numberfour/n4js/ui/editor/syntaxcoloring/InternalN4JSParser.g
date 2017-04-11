@@ -19711,32 +19711,19 @@ ruleTypeRefWithModifiers
 @init {
 }:
 (
+	TypeRefWithoutModifiersParserRuleCall_0=ruleTypeRefWithoutModifiers{ announce($TypeRefWithoutModifiersParserRuleCall_0.start, $TypeRefWithoutModifiersParserRuleCall_0.stop, grammarAccess.getTypeRefWithModifiersAccess().getTypeRefWithoutModifiersParserRuleCall_0()); }
 	(
-		TypeRefWithoutModifiersParserRuleCall_0_0=ruleTypeRefWithoutModifiers{ announce($TypeRefWithoutModifiersParserRuleCall_0_0.start, $TypeRefWithoutModifiersParserRuleCall_0_0.stop, grammarAccess.getTypeRefWithModifiersAccess().getTypeRefWithoutModifiersParserRuleCall_0_0()); }
-		(
-			((
-				QuestionMark
-			)
-			)=>
-			(
-				Optional_OLD_SYNTAXQuestionMarkKeyword_0_1_0=QuestionMark
-				 {
-					announce($Optional_OLD_SYNTAXQuestionMarkKeyword_0_1_0, grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_0_1_0());
-				}
-			)
-		)?
-	)
-	    |
-	(
-		(
-			(
-				Optional_OLD_SYNTAXQuestionMarkKeyword_1_1_0=QuestionMark
-				 {
-					announce($Optional_OLD_SYNTAXQuestionMarkKeyword_1_1_0, grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_1_0());
-				}
-			)
+		((
+			QuestionMark
 		)
-	)
+		)=>
+		(
+			FollowedByQuestionMarkQuestionMarkKeyword_1_0=QuestionMark
+			 {
+				announce($FollowedByQuestionMarkQuestionMarkKeyword_1_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_0());
+			}
+		)
+	)?
 )
 ;
 
@@ -20659,9 +20646,9 @@ ruleTStructField
 	)
 	(
 		(
-			Optional_NEW_SYNTAXQuestionMarkKeyword_1_0=QuestionMark
+			OptionalQuestionMarkKeyword_1_0=QuestionMark
 			 {
-				announce($Optional_NEW_SYNTAXQuestionMarkKeyword_1_0, grammarAccess.getTStructFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+				announce($OptionalQuestionMarkKeyword_1_0, grammarAccess.getTStructFieldAccess().getOptionalQuestionMarkKeyword_1_0());
 			}
 		)
 	)?
@@ -20718,9 +20705,9 @@ ruleTStructGetter
 	)
 	(
 		(
-			Optional_NEW_SYNTAXQuestionMarkKeyword_1_0=QuestionMark
+			OptionalQuestionMarkKeyword_1_0=QuestionMark
 			 {
-				announce($Optional_NEW_SYNTAXQuestionMarkKeyword_1_0, grammarAccess.getTStructGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+				announce($OptionalQuestionMarkKeyword_1_0, grammarAccess.getTStructGetterAccess().getOptionalQuestionMarkKeyword_1_0());
 			}
 		)
 	)?
@@ -20785,9 +20772,9 @@ ruleTStructSetter
 	)
 	(
 		(
-			Optional_NEW_SYNTAXQuestionMarkKeyword_1_0=QuestionMark
+			OptionalQuestionMarkKeyword_1_0=QuestionMark
 			 {
-				announce($Optional_NEW_SYNTAXQuestionMarkKeyword_1_0, grammarAccess.getTStructSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+				announce($OptionalQuestionMarkKeyword_1_0, grammarAccess.getTStructSetterAccess().getOptionalQuestionMarkKeyword_1_0());
 			}
 		)
 	)?

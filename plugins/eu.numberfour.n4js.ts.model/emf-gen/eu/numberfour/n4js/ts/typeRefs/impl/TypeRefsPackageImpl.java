@@ -330,7 +330,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTypeRef_Optional_OLD_SYNTAX() {
+	public EAttribute getTypeRef_FollowedByQuestionMark() {
 		return (EAttribute)typeRefEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1608,7 +1608,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getFunctionTypeExpression_ReturnValueOptional_NEW_SYNTAX() {
+	public EAttribute getFunctionTypeExpression_ReturnValueMarkedOptional() {
 		return (EAttribute)functionTypeExpressionEClass.getEStructuralFeatures().get(7);
 	}
 
@@ -1734,7 +1734,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		createEOperation(versionableEClass, VERSIONABLE___GET_VERSION);
 
 		typeRefEClass = createEClass(TYPE_REF);
-		createEAttribute(typeRefEClass, TYPE_REF__OPTIONAL_OLD_SYNTAX);
+		createEAttribute(typeRefEClass, TYPE_REF__FOLLOWED_BY_QUESTION_MARK);
 		createEOperation(typeRefEClass, TYPE_REF___GET_MODIFIERS_AS_STRING);
 		createEOperation(typeRefEClass, TYPE_REF___IS_FINAL_BY_TYPE);
 		createEOperation(typeRefEClass, TYPE_REF___IS_ARRAY_LIKE);
@@ -1896,7 +1896,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		createEReference(functionTypeExpressionEClass, FUNCTION_TYPE_EXPRESSION__UNBOUND_TYPE_VARS);
 		createEReference(functionTypeExpressionEClass, FUNCTION_TYPE_EXPRESSION__UNBOUND_TYPE_VARS_UPPER_BOUNDS);
 		createEReference(functionTypeExpressionEClass, FUNCTION_TYPE_EXPRESSION__FPARS);
-		createEAttribute(functionTypeExpressionEClass, FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX);
+		createEAttribute(functionTypeExpressionEClass, FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_MARKED_OPTIONAL);
 		createEReference(functionTypeExpressionEClass, FUNCTION_TYPE_EXPRESSION__RETURN_TYPE_REF);
 		createEOperation(functionTypeExpressionEClass, FUNCTION_TYPE_EXPRESSION___GET_TYPE_VARS);
 		createEOperation(functionTypeExpressionEClass, FUNCTION_TYPE_EXPRESSION___GET_TYPE_VAR_UPPER_BOUND__TYPEVARIABLE);
@@ -1977,7 +1977,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		initEOperation(getVersionable__GetVersion(), theEcorePackage.getEInt(), "getVersion", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEClass(typeRefEClass, TypeRef.class, "TypeRef", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getTypeRef_Optional_OLD_SYNTAX(), theEcorePackage.getEBoolean(), "optional_OLD_SYNTAX", null, 0, 1, TypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTypeRef_FollowedByQuestionMark(), theEcorePackage.getEBoolean(), "followedByQuestionMark", null, 0, 1, TypeRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTypeRef__GetModifiersAsString(), theEcorePackage.getEString(), "getModifiersAsString", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -2237,7 +2237,7 @@ public class TypeRefsPackageImpl extends EPackageImpl implements TypeRefsPackage
 		initEReference(getFunctionTypeExpression_UnboundTypeVars(), theTypesPackage.getTypeVariable(), null, "unboundTypeVars", null, 0, -1, FunctionTypeExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFunctionTypeExpression_UnboundTypeVarsUpperBounds(), this.getTypeRef(), null, "unboundTypeVarsUpperBounds", null, 0, -1, FunctionTypeExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFunctionTypeExpression_Fpars(), theTypesPackage.getTFormalParameter(), null, "fpars", null, 0, -1, FunctionTypeExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getFunctionTypeExpression_ReturnValueOptional_NEW_SYNTAX(), theEcorePackage.getEBoolean(), "returnValueOptional_NEW_SYNTAX", null, 0, 1, FunctionTypeExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFunctionTypeExpression_ReturnValueMarkedOptional(), theEcorePackage.getEBoolean(), "returnValueMarkedOptional", null, 0, 1, FunctionTypeExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFunctionTypeExpression_ReturnTypeRef(), this.getTypeRef(), null, "returnTypeRef", null, 0, 1, FunctionTypeExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getFunctionTypeExpression__GetTypeVars(), theTypesPackage.getTypeVariable(), "getTypeVars", 0, -1, !IS_UNIQUE, IS_ORDERED);

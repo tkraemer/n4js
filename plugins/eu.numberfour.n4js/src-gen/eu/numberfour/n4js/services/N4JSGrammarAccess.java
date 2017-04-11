@@ -12972,7 +12972,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TypeRefWithModifiers StaticBaseTypeRef:
-	//	TypeRefWithoutModifiers => optional_OLD_SYNTAX?='?'? | {ParameterizedTypeRef} optional_OLD_SYNTAX?='?'
+	//	TypeRefWithoutModifiers => followedByQuestionMark?='?'?
 	public TypeExpressionsGrammarAccess.TypeRefWithModifiersElements getTypeRefWithModifiersAccess() {
 		return gaTypeExpressions.getTypeRefWithModifiersAccess();
 	}
@@ -13248,7 +13248,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TStructField:
-	//	name=IdentifierName optional_NEW_SYNTAX?='?'? (':' typeRef=TypeRef)?;
+	//	name=IdentifierName optional?='?'? (':' typeRef=TypeRef)?;
 	public TypeExpressionsGrammarAccess.TStructFieldElements getTStructFieldAccess() {
 		return gaTypeExpressions.getTStructFieldAccess();
 	}
@@ -13260,7 +13260,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	//TStructGetter:
 	//	=> ({TStructGetter}
 	//	'get'
-	//	name=IdentifierName) optional_NEW_SYNTAX?='?'?
+	//	name=IdentifierName) optional?='?'?
 	//	'(' ')' (':' declaredTypeRef=TypeRef)?;
 	public TypeExpressionsGrammarAccess.TStructGetterElements getTStructGetterAccess() {
 		return gaTypeExpressions.getTStructGetterAccess();
@@ -13273,7 +13273,7 @@ public class N4JSGrammarAccess extends AbstractGrammarElementFinder {
 	//TStructSetter:
 	//	=> ({TStructSetter}
 	//	'set'
-	//	name=IdentifierName) optional_NEW_SYNTAX?='?'?
+	//	name=IdentifierName) optional?='?'?
 	//	'(' fpar=TAnonymousFormalParameter ')';
 	public TypeExpressionsGrammarAccess.TStructSetterElements getTStructSetterAccess() {
 		return gaTypeExpressions.getTStructSetterAccess();

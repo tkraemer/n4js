@@ -45,7 +45,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FunctionDefinitionImpl#getDefinedType <em>Defined Type</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FunctionDefinitionImpl#getFpars <em>Fpars</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.impl.FunctionDefinitionImpl#isReturnValueDeclaredOptional <em>Return Value Declared Optional</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FunctionDefinitionImpl#getReturnTypeRef <em>Return Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FunctionDefinitionImpl#isGenerator <em>Generator</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.impl.FunctionDefinitionImpl#isDeclaredAsync <em>Declared Async</em>}</li>
@@ -73,26 +72,6 @@ public abstract class FunctionDefinitionImpl extends FunctionOrFieldAccessorImpl
 	 * @ordered
 	 */
 	protected EList<FormalParameter> fpars;
-
-	/**
-	 * The default value of the '{@link #isReturnValueDeclaredOptional() <em>Return Value Declared Optional</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isReturnValueDeclaredOptional()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean RETURN_VALUE_DECLARED_OPTIONAL_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isReturnValueDeclaredOptional() <em>Return Value Declared Optional</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isReturnValueDeclaredOptional()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean returnValueDeclaredOptional = RETURN_VALUE_DECLARED_OPTIONAL_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getReturnTypeRef() <em>Return Type Ref</em>}' containment reference.
@@ -218,27 +197,6 @@ public abstract class FunctionDefinitionImpl extends FunctionOrFieldAccessorImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isReturnValueDeclaredOptional() {
-		return returnValueDeclaredOptional;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setReturnValueDeclaredOptional(boolean newReturnValueDeclaredOptional) {
-		boolean oldReturnValueDeclaredOptional = returnValueDeclaredOptional;
-		returnValueDeclaredOptional = newReturnValueDeclaredOptional;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, N4JSPackage.FUNCTION_DEFINITION__RETURN_VALUE_DECLARED_OPTIONAL, oldReturnValueDeclaredOptional, returnValueDeclaredOptional));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public TypeRef getReturnTypeRef() {
 		return returnTypeRef;
 	}
@@ -325,7 +283,7 @@ public abstract class FunctionDefinitionImpl extends FunctionOrFieldAccessorImpl
 	 * @generated
 	 */
 	public boolean isReturnValueOptional() {
-		return (this.isReturnValueDeclaredOptional() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isOptional_OLD_SYNTAX()));
+		return (((this.getDefinedFunction() != null) && this.getDefinedFunction().isReturnValueOptional()) || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark()));
 	}
 
 	/**
@@ -380,8 +338,6 @@ public abstract class FunctionDefinitionImpl extends FunctionOrFieldAccessorImpl
 				return basicGetDefinedType();
 			case N4JSPackage.FUNCTION_DEFINITION__FPARS:
 				return getFpars();
-			case N4JSPackage.FUNCTION_DEFINITION__RETURN_VALUE_DECLARED_OPTIONAL:
-				return isReturnValueDeclaredOptional();
 			case N4JSPackage.FUNCTION_DEFINITION__RETURN_TYPE_REF:
 				return getReturnTypeRef();
 			case N4JSPackage.FUNCTION_DEFINITION__GENERATOR:
@@ -407,9 +363,6 @@ public abstract class FunctionDefinitionImpl extends FunctionOrFieldAccessorImpl
 			case N4JSPackage.FUNCTION_DEFINITION__FPARS:
 				getFpars().clear();
 				getFpars().addAll((Collection<? extends FormalParameter>)newValue);
-				return;
-			case N4JSPackage.FUNCTION_DEFINITION__RETURN_VALUE_DECLARED_OPTIONAL:
-				setReturnValueDeclaredOptional((Boolean)newValue);
 				return;
 			case N4JSPackage.FUNCTION_DEFINITION__RETURN_TYPE_REF:
 				setReturnTypeRef((TypeRef)newValue);
@@ -438,9 +391,6 @@ public abstract class FunctionDefinitionImpl extends FunctionOrFieldAccessorImpl
 			case N4JSPackage.FUNCTION_DEFINITION__FPARS:
 				getFpars().clear();
 				return;
-			case N4JSPackage.FUNCTION_DEFINITION__RETURN_VALUE_DECLARED_OPTIONAL:
-				setReturnValueDeclaredOptional(RETURN_VALUE_DECLARED_OPTIONAL_EDEFAULT);
-				return;
 			case N4JSPackage.FUNCTION_DEFINITION__RETURN_TYPE_REF:
 				setReturnTypeRef((TypeRef)null);
 				return;
@@ -466,8 +416,6 @@ public abstract class FunctionDefinitionImpl extends FunctionOrFieldAccessorImpl
 				return definedType != null;
 			case N4JSPackage.FUNCTION_DEFINITION__FPARS:
 				return fpars != null && !fpars.isEmpty();
-			case N4JSPackage.FUNCTION_DEFINITION__RETURN_VALUE_DECLARED_OPTIONAL:
-				return returnValueDeclaredOptional != RETURN_VALUE_DECLARED_OPTIONAL_EDEFAULT;
 			case N4JSPackage.FUNCTION_DEFINITION__RETURN_TYPE_REF:
 				return returnTypeRef != null;
 			case N4JSPackage.FUNCTION_DEFINITION__GENERATOR:
@@ -560,9 +508,7 @@ public abstract class FunctionDefinitionImpl extends FunctionOrFieldAccessorImpl
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (returnValueDeclaredOptional: ");
-		result.append(returnValueDeclaredOptional);
-		result.append(", generator: ");
+		result.append(" (generator: ");
 		result.append(generator);
 		result.append(", declaredAsync: ");
 		result.append(declaredAsync);

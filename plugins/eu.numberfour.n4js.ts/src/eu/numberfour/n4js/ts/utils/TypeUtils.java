@@ -1165,13 +1165,6 @@ public class TypeUtils {
 	}
 
 	/**
-	 * TODO IDE-2405 remove this when removing support for old syntax
-	 */
-	public static boolean isOptional(TypeRef typeRef) {
-		return typeRef != null && typeRef.isOptional_OLD_SYNTAX();
-	}
-
-	/**
 	 * Returns true iff the {@link TypeRef} is a promise.
 	 */
 	public static boolean isPromise(TypeRef ref, BuiltInTypeScope scope) {

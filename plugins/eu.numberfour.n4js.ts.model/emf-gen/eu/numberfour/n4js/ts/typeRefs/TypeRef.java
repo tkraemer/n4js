@@ -26,7 +26,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#isOptional_OLD_SYNTAX <em>Optional OLD SYNTAX</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#isFollowedByQuestionMark <em>Followed By Question Mark</em>}</li>
  * </ul>
  *
  * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getTypeRef()
@@ -35,29 +35,34 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface TypeRef extends TypeArgument, Versionable {
 	/**
-	 * Returns the value of the '<em><b>Optional OLD SYNTAX</b></em>' attribute.
+	 * Returns the value of the '<em><b>Followed By Question Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 *  Represents the old ? after the type name for defining optional fields/return types. To be removed soon.
+	 * <b>SHOULD NOT BE USED, EXCEPT FOR DECLARATION OF OPTIONAL RETURN VALUES</b>
+	 * <p>
+	 * Represents the old ? after a type reference for defining optional fields / return values. At the moment, this is
+	 * used only for declaring the return value of a function optional. In the future, this might be used for
+	 * undefined/null-analysis. For example, <code>string?</code> might be syntactic sugar for
+	 * <code>string|undefined</code>.
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Optional OLD SYNTAX</em>' attribute.
-	 * @see #setOptional_OLD_SYNTAX(boolean)
-	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getTypeRef_Optional_OLD_SYNTAX()
+	 * @return the value of the '<em>Followed By Question Mark</em>' attribute.
+	 * @see #setFollowedByQuestionMark(boolean)
+	 * @see eu.numberfour.n4js.ts.typeRefs.TypeRefsPackage#getTypeRef_FollowedByQuestionMark()
 	 * @model unique="false"
 	 * @generated
 	 */
-	boolean isOptional_OLD_SYNTAX();
+	boolean isFollowedByQuestionMark();
 
 	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#isOptional_OLD_SYNTAX <em>Optional OLD SYNTAX</em>}' attribute.
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.typeRefs.TypeRef#isFollowedByQuestionMark <em>Followed By Question Mark</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Optional OLD SYNTAX</em>' attribute.
-	 * @see #isOptional_OLD_SYNTAX()
+	 * @param value the new value of the '<em>Followed By Question Mark</em>' attribute.
+	 * @see #isFollowedByQuestionMark()
 	 * @generated
 	 */
-	void setOptional_OLD_SYNTAX(boolean value);
+	void setFollowedByQuestionMark(boolean value);
 
 	/**
 	 * <!-- begin-user-doc -->

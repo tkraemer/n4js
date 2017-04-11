@@ -27,7 +27,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFunction#isExternal <em>External</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFunction#getFpars <em>Fpars</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.TFunction#isReturnValueOptional_NEW_SYNTAX <em>Return Value Optional NEW SYNTAX</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.TFunction#isReturnValueMarkedOptional <em>Return Value Marked Optional</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFunction#getReturnTypeRef <em>Return Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFunction#getTypeVars <em>Type Vars</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.TFunction#getDeclaredThisType <em>Declared This Type</em>}</li>
@@ -83,29 +83,32 @@ public interface TFunction extends DeclaredTypeWithAccessModifier, SyntaxRelated
 	EList<TFormalParameter> getFpars();
 
 	/**
-	 * Returns the value of the '<em><b>Return Value Optional NEW SYNTAX</b></em>' attribute.
+	 * Returns the value of the '<em><b>Return Value Marked Optional</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Tells if the return value is optional.
+	 * Explicitly marks the return value of this TFunction as optional. This is only used for TFunctions that are
+	 * created programmatically. Those that appear in the AST (only possible in Types.xtext language) will instead have
+	 * a 'returnTypeRef' with 'followedByQuestionMark' set to <code>true</code>.
+	 * This will probably become obsolete once we implement undefined/null analysis.
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Return Value Optional NEW SYNTAX</em>' attribute.
-	 * @see #setReturnValueOptional_NEW_SYNTAX(boolean)
-	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTFunction_ReturnValueOptional_NEW_SYNTAX()
+	 * @return the value of the '<em>Return Value Marked Optional</em>' attribute.
+	 * @see #setReturnValueMarkedOptional(boolean)
+	 * @see eu.numberfour.n4js.ts.types.TypesPackage#getTFunction_ReturnValueMarkedOptional()
 	 * @model unique="false"
 	 * @generated
 	 */
-	boolean isReturnValueOptional_NEW_SYNTAX();
+	boolean isReturnValueMarkedOptional();
 
 	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TFunction#isReturnValueOptional_NEW_SYNTAX <em>Return Value Optional NEW SYNTAX</em>}' attribute.
+	 * Sets the value of the '{@link eu.numberfour.n4js.ts.types.TFunction#isReturnValueMarkedOptional <em>Return Value Marked Optional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Return Value Optional NEW SYNTAX</em>' attribute.
-	 * @see #isReturnValueOptional_NEW_SYNTAX()
+	 * @param value the new value of the '<em>Return Value Marked Optional</em>' attribute.
+	 * @see #isReturnValueMarkedOptional()
 	 * @generated
 	 */
-	void setReturnValueOptional_NEW_SYNTAX(boolean value);
+	void setReturnValueMarkedOptional(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Return Type Ref</b></em>' containment reference.
@@ -252,7 +255,7 @@ public interface TFunction extends DeclaredTypeWithAccessModifier, SyntaxRelated
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isReturnValueOptional_NEW_SYNTAX() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isOptional_OLD_SYNTAX()));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isReturnValueMarkedOptional() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark()));'"
 	 * @generated
 	 */
 	boolean isReturnValueOptional();

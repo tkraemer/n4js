@@ -2225,7 +2225,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getFunctionOrFieldAccessor__IsReturnValueDeclaredOptional() {
+	public EOperation getFunctionOrFieldAccessor__IsReturnValueOptional() {
 		return functionOrFieldAccessorEClass.getEOperations().get(2);
 	}
 
@@ -2234,7 +2234,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getFunctionOrFieldAccessor__IsReturnValueOptional() {
+	public EOperation getFunctionOrFieldAccessor__IsAsync() {
 		return functionOrFieldAccessorEClass.getEOperations().get(3);
 	}
 
@@ -2243,17 +2243,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getFunctionOrFieldAccessor__IsAsync() {
-		return functionOrFieldAccessorEClass.getEOperations().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getFunctionOrFieldAccessor__GetDefinedFunctionOrAccessor() {
-		return functionOrFieldAccessorEClass.getEOperations().get(5);
+		return functionOrFieldAccessorEClass.getEOperations().get(4);
 	}
 
 	/**
@@ -2279,17 +2270,8 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getFunctionDefinition_ReturnValueDeclaredOptional() {
-		return (EAttribute)functionDefinitionEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getFunctionDefinition_ReturnTypeRef() {
-		return (EReference)functionDefinitionEClass.getEStructuralFeatures().get(2);
+		return (EReference)functionDefinitionEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2298,7 +2280,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * @generated
 	 */
 	public EAttribute getFunctionDefinition_Generator() {
-		return (EAttribute)functionDefinitionEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)functionDefinitionEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2307,7 +2289,7 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 	 * @generated
 	 */
 	public EAttribute getFunctionDefinition_DeclaredAsync() {
-		return (EAttribute)functionDefinitionEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)functionDefinitionEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -6307,14 +6289,12 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 		createEReference(functionOrFieldAccessorEClass, FUNCTION_OR_FIELD_ACCESSOR__LOK);
 		createEOperation(functionOrFieldAccessorEClass, FUNCTION_OR_FIELD_ACCESSOR___GET_NAME);
 		createEOperation(functionOrFieldAccessorEClass, FUNCTION_OR_FIELD_ACCESSOR___GET_LOCAL_ARGUMENTS_VARIABLE);
-		createEOperation(functionOrFieldAccessorEClass, FUNCTION_OR_FIELD_ACCESSOR___IS_RETURN_VALUE_DECLARED_OPTIONAL);
 		createEOperation(functionOrFieldAccessorEClass, FUNCTION_OR_FIELD_ACCESSOR___IS_RETURN_VALUE_OPTIONAL);
 		createEOperation(functionOrFieldAccessorEClass, FUNCTION_OR_FIELD_ACCESSOR___IS_ASYNC);
 		createEOperation(functionOrFieldAccessorEClass, FUNCTION_OR_FIELD_ACCESSOR___GET_DEFINED_FUNCTION_OR_ACCESSOR);
 
 		functionDefinitionEClass = createEClass(FUNCTION_DEFINITION);
 		createEReference(functionDefinitionEClass, FUNCTION_DEFINITION__FPARS);
-		createEAttribute(functionDefinitionEClass, FUNCTION_DEFINITION__RETURN_VALUE_DECLARED_OPTIONAL);
 		createEReference(functionDefinitionEClass, FUNCTION_DEFINITION__RETURN_TYPE_REF);
 		createEAttribute(functionDefinitionEClass, FUNCTION_DEFINITION__GENERATOR);
 		createEAttribute(functionDefinitionEClass, FUNCTION_DEFINITION__DECLARED_ASYNC);
@@ -7270,8 +7250,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 
 		initEOperation(getFunctionOrFieldAccessor__GetLocalArgumentsVariable(), this.getLocalArgumentsVariable(), "getLocalArgumentsVariable", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getFunctionOrFieldAccessor__IsReturnValueDeclaredOptional(), theEcorePackage.getEBoolean(), "isReturnValueDeclaredOptional", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
 		initEOperation(getFunctionOrFieldAccessor__IsReturnValueOptional(), theEcorePackage.getEBoolean(), "isReturnValueOptional", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getFunctionOrFieldAccessor__IsAsync(), theEcorePackage.getEBoolean(), "isAsync", 0, 1, !IS_UNIQUE, IS_ORDERED);
@@ -7280,7 +7258,6 @@ public class N4JSPackageImpl extends EPackageImpl implements N4JSPackage {
 
 		initEClass(functionDefinitionEClass, FunctionDefinition.class, "FunctionDefinition", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFunctionDefinition_Fpars(), this.getFormalParameter(), null, "fpars", null, 0, -1, FunctionDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getFunctionDefinition_ReturnValueDeclaredOptional(), theEcorePackage.getEBoolean(), "returnValueDeclaredOptional", null, 0, 1, FunctionDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFunctionDefinition_ReturnTypeRef(), theTypeRefsPackage.getTypeRef(), null, "returnTypeRef", null, 0, 1, FunctionDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFunctionDefinition_Generator(), theEcorePackage.getEBoolean(), "generator", null, 0, 1, FunctionDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFunctionDefinition_DeclaredAsync(), theEcorePackage.getEBoolean(), "declaredAsync", null, 0, 1, FunctionDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

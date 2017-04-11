@@ -1283,8 +1283,7 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 	
 	def private void configureUndefModifier( StaticBaseTypeRef sbtr,  extension IFormattableDocument document){
 		// UndefModifier "?"
-		sbtr.regionFor.feature(TypeRefsPackage.Literals.TYPE_REF__OPTIONAL_OLD_SYNTAX).prepend[noSpace;newLines=0;];
-		// sbtr.regionFor.feature(TypeRefsPackage.Literals.TYPE_REF__NULL_MODIFIER().prepend[oneSpace;newLines=0;].append[oneSpace;newLines=0;autoWrap]		
+		sbtr.regionFor.feature(TypeRefsPackage.Literals.TYPE_REF__FOLLOWED_BY_QUESTION_MARK).prepend[noSpace;newLines=0;];
 	}
 	
 	def dispatch void format( ThisTypeRef ttr, extension IFormattableDocument document) {
@@ -1377,10 +1376,10 @@ class N4JSFormatter extends TypeExpressionsFormatter {
 		fieldAccessor.regionFor.feature(N4JSPackage.Literals.FIELD_ACCESSOR__DECLARED_OPTIONAL).prepend[noSpace;newLines=0;];
 	}
 	def private void configureOptionality(TField tField, extension IFormattableDocument document) {
-		tField.regionFor.feature(TypesPackage.Literals.TFIELD__OPTIONAL_NEW_SYNTAX).prepend[noSpace;newLines=0;];
+		tField.regionFor.feature(TypesPackage.Literals.TFIELD__OPTIONAL).prepend[noSpace;newLines=0;];
 	}
 	def private void configureOptionality(eu.numberfour.n4js.ts.types.FieldAccessor tFieldAccessor, extension IFormattableDocument document) {
-		tFieldAccessor.regionFor.feature(TypesPackage.Literals.FIELD_ACCESSOR__OPTIONAL_NEW_SYNTAX).prepend[noSpace;newLines=0;];
+		tFieldAccessor.regionFor.feature(TypesPackage.Literals.FIELD_ACCESSOR__OPTIONAL).prepend[noSpace;newLines=0;];
 	}
 
 

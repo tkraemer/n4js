@@ -27,10 +27,6 @@ class C {
 }
 
 
-// XPECT errors --> "Missing type name for type modifier ?." at "?"
-var st1 : ~Object with {prop: ?;}; // missing type name for type modifier! (this causes a strange follow-up error)
-
-
 // XPECT errors --->"Variadic parameters must not have a default initializer." at "...param: int="
 var st4 : ~Object with { m(...param: int=) }; // invalid combination of type modifiers: ? and ...
 

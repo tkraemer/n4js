@@ -138,7 +138,7 @@ class N4JSQuickfixProvider extends AbstractN4JSQuickfixProvider {
 		});
 	}
 
-	@Fix(IssueCodes.EXP_OPTIONAL_DEPRECATED)
+	@Fix(IssueCodes.CLF_FIELD_OPTIONAL_OLD_SYNTAX)
 	def fixOldSyntaxForOptionalFields(Issue issue, IssueResolutionAcceptor acceptor) {
 		acceptor.accept(issue, 'Change to new syntax', 'The syntax for optional fields has changed. This quick fix will change the code to the new syntax.', ImageNames.REORDER) [ context, marker, offset, length, element |
 			val offsetNameEnd = getOffsetOfNameEnd(element.eContainer);

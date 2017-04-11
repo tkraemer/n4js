@@ -34760,58 +34760,32 @@ ruleTypeRefWithModifiers returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		{
+			newCompositeNode(grammarAccess.getTypeRefWithModifiersAccess().getTypeRefWithoutModifiersParserRuleCall_0());
+		}
+		this_TypeRefWithoutModifiers_0=ruleTypeRefWithoutModifiers
+		{
+			$current = $this_TypeRefWithoutModifiers_0.current;
+			afterParserOrEnumRuleCall();
+		}
 		(
-			{
-				newCompositeNode(grammarAccess.getTypeRefWithModifiersAccess().getTypeRefWithoutModifiersParserRuleCall_0_0());
-			}
-			this_TypeRefWithoutModifiers_0=ruleTypeRefWithoutModifiers
-			{
-				$current = $this_TypeRefWithoutModifiers_0.current;
-				afterParserOrEnumRuleCall();
-			}
+			((
+				QuestionMark
+			)
+			)=>
 			(
-				((
-					QuestionMark
-				)
-				)=>
-				(
-					lv_optional_OLD_SYNTAX_1_0=QuestionMark
-					{
-						newLeafNode(lv_optional_OLD_SYNTAX_1_0, grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_0_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTypeRefWithModifiersRule());
-						}
-						setWithLastConsumed($current, "optional_OLD_SYNTAX", true, "?");
-					}
-				)
-			)?
-		)
-		    |
-		(
-			(
+				lv_followedByQuestionMark_1_0=QuestionMark
 				{
-					$current = forceCreateModelElement(
-						grammarAccess.getTypeRefWithModifiersAccess().getParameterizedTypeRefAction_1_0(),
-						$current);
+					newLeafNode(lv_followedByQuestionMark_1_0, grammarAccess.getTypeRefWithModifiersAccess().getFollowedByQuestionMarkQuestionMarkKeyword_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getTypeRefWithModifiersRule());
+					}
+					setWithLastConsumed($current, "followedByQuestionMark", true, "?");
 				}
 			)
-			(
-				(
-					lv_optional_OLD_SYNTAX_3_0=QuestionMark
-					{
-						newLeafNode(lv_optional_OLD_SYNTAX_3_0, grammarAccess.getTypeRefWithModifiersAccess().getOptional_OLD_SYNTAXQuestionMarkKeyword_1_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTypeRefWithModifiersRule());
-						}
-						setWithLastConsumed($current, "optional_OLD_SYNTAX", true, "?");
-					}
-				)
-			)
-		)
+		)?
 	)
 ;
 
@@ -36527,15 +36501,15 @@ ruleTStructField returns [EObject current=null]
 		)
 		(
 			(
-				lv_optional_NEW_SYNTAX_1_0=QuestionMark
+				lv_optional_1_0=QuestionMark
 				{
-					newLeafNode(lv_optional_NEW_SYNTAX_1_0, grammarAccess.getTStructFieldAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+					newLeafNode(lv_optional_1_0, grammarAccess.getTStructFieldAccess().getOptionalQuestionMarkKeyword_1_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getTStructFieldRule());
 					}
-					setWithLastConsumed($current, "optional_NEW_SYNTAX", true, "?");
+					setWithLastConsumed($current, "optional", true, "?");
 				}
 			)
 		)?
@@ -36630,15 +36604,15 @@ ruleTStructGetter returns [EObject current=null]
 		)
 		(
 			(
-				lv_optional_NEW_SYNTAX_3_0=QuestionMark
+				lv_optional_3_0=QuestionMark
 				{
-					newLeafNode(lv_optional_NEW_SYNTAX_3_0, grammarAccess.getTStructGetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+					newLeafNode(lv_optional_3_0, grammarAccess.getTStructGetterAccess().getOptionalQuestionMarkKeyword_1_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getTStructGetterRule());
 					}
-					setWithLastConsumed($current, "optional_NEW_SYNTAX", true, "?");
+					setWithLastConsumed($current, "optional", true, "?");
 				}
 			)
 		)?
@@ -36741,15 +36715,15 @@ ruleTStructSetter returns [EObject current=null]
 		)
 		(
 			(
-				lv_optional_NEW_SYNTAX_3_0=QuestionMark
+				lv_optional_3_0=QuestionMark
 				{
-					newLeafNode(lv_optional_NEW_SYNTAX_3_0, grammarAccess.getTStructSetterAccess().getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0());
+					newLeafNode(lv_optional_3_0, grammarAccess.getTStructSetterAccess().getOptionalQuestionMarkKeyword_1_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getTStructSetterRule());
 					}
-					setWithLastConsumed($current, "optional_NEW_SYNTAX", true, "?");
+					setWithLastConsumed($current, "optional", true, "?");
 				}
 			)
 		)?

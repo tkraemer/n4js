@@ -622,7 +622,7 @@ class JoinComputer extends TypeSystemHelperStrategy {
 			joinedFunctionTypeExpr.setReturnTypeRef(
 				TypeUtils.copyIfContained(join(G, f1.returnTypeRef, f2.returnTypeRef)));
 		}
-		joinedFunctionTypeExpr.returnValueOptional_NEW_SYNTAX = f1.returnValueOptional || f2.returnValueOptional;
+		joinedFunctionTypeExpr.returnValueMarkedOptional = f1.returnValueOptional || f2.returnValueOptional;
 
 		val maxParSize = Math.max(f1.fpars.size, f2.fpars.size);
 		var i = 0;

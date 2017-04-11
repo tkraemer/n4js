@@ -77,7 +77,7 @@ public class TypeExpressionsSyntacticSequencer extends AbstractSyntacticSequence
 	
 	/**
 	 * Ambiguous syntax:
-	 *     ('{' 'function' '(') | '('
+	 *     '(' | ('{' 'function' '(')
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) '('* (ambiguity) fpars+=TAnonymousFormalParameter
@@ -95,20 +95,19 @@ public class TypeExpressionsSyntacticSequencer extends AbstractSyntacticSequence
 	 *     (rule start) (ambiguity) 'intersection' '{' typeRefs+=TypeRefWithoutModifiers
 	 *     (rule start) (ambiguity) 'this' (rule start)
 	 *     (rule start) (ambiguity) 'this' dynamic?='+'
-	 *     (rule start) (ambiguity) 'this' optional_OLD_SYNTAX?='?'
+	 *     (rule start) (ambiguity) 'this' followedByQuestionMark?='?'
 	 *     (rule start) (ambiguity) 'type' '{' typeArg=TypeArgInTypeTypeRef
 	 *     (rule start) (ambiguity) 'union' '{' typeRefs+=TypeRefWithoutModifiers
 	 *     (rule start) (ambiguity) '{' '@' 'This' '(' declaredThisType=TypeRefFunctionTypeExpression
 	 *     (rule start) (ambiguity) '{' 'function' '(' ')' ':' returnTypeRef=TypeRef
 	 *     (rule start) (ambiguity) '{' 'function' '(' ')' '}' (rule start)
-	 *     (rule start) (ambiguity) '{' 'function' '(' ')' '}' optional_OLD_SYNTAX?='?'
+	 *     (rule start) (ambiguity) '{' 'function' '(' ')' '}' followedByQuestionMark?='?'
 	 *     (rule start) (ambiguity) '{' 'function' '<' ownedTypeVars+=TypeVariable
-	 *     (rule start) (ambiguity) (('{' 'function' '(') | '(') fpars+=TAnonymousFormalParameter
+	 *     (rule start) (ambiguity) ('(' | ('{' 'function' '(')) fpars+=TAnonymousFormalParameter
 	 *     (rule start) (ambiguity) arrayTypeLiteral?='['
 	 *     (rule start) (ambiguity) constructorRef?='constructor'
 	 *     (rule start) (ambiguity) declaredType=[Type|TypeReferenceName]
 	 *     (rule start) (ambiguity) definedTypingStrategy=TypingStrategyUseSiteOperator
-	 *     (rule start) (ambiguity) optional_OLD_SYNTAX?='?'
 	 *     (rule start) (ambiguity) {IntersectionTypeExpression.typeRefs+=}
 	 *     (rule start) (ambiguity) {UnionTypeExpression.typeRefs+=}
 	 */
@@ -135,7 +134,7 @@ public class TypeExpressionsSyntacticSequencer extends AbstractSyntacticSequence
 	 * This ambiguous syntax occurs at:
 	 *     astStructuralMembers+=TStructMember (ambiguity) '}' (rule end)
 	 *     astStructuralMembers+=TStructMember (ambiguity) '}' dynamic?='+'
-	 *     astStructuralMembers+=TStructMember (ambiguity) '}' optional_OLD_SYNTAX?='?'
+	 *     astStructuralMembers+=TStructMember (ambiguity) '}' followedByQuestionMark?='?'
 	 *     astStructuralMembers+=TStructMember (ambiguity) astStructuralMembers+=TStructMember
 	 */
 	protected void emit_TStructMemberList___CommaKeyword_1_1_1_or_SemicolonKeyword_1_1_0__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

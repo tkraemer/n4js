@@ -338,11 +338,14 @@ class TFunction extends DeclaredTypeWithAccessModifier, SyntaxRelatedTElement {
 	 */
 	contains TFormalParameter[] fpars
 	/*
-	 * Tells if the return value is optional.
+	 * Explicitly marks the return value of this TFunction as optional. This is only used for TFunctions that are
+	 * created programmatically. Those that appear in the AST (only possible in Types.xtext language) will instead have
+	 * a 'returnTypeRef' with 'followedByQuestionMark' set to <code>true</code>.
+	 * This will probably become obsolete once we implement undefined/null analysis.
 	 */
-	boolean returnValueOptional_NEW_SYNTAX
+	boolean returnValueMarkedOptional
 	op boolean isReturnValueOptional() {
-		return returnValueOptional_NEW_SYNTAX || (returnTypeRef!==null && returnTypeRef.optional_OLD_SYNTAX);
+		return returnValueMarkedOptional || (returnTypeRef!==null && returnTypeRef.followedByQuestionMark);
 	}
 	/*
 	 * Return type
@@ -1346,11 +1349,8 @@ class TAnonymousFormalParameter extends TFormalParameter {
  */
 class TField extends TMemberWithAccessModifier, TTypedElement, TConstableElement {
 	boolean hasExpression
-	boolean optional_NEW_SYNTAX
+	boolean optional
 
-	op boolean isOptional() {
-		return optional_NEW_SYNTAX || (typeRef!==null && typeRef.optional_OLD_SYNTAX);
-	}
 	op boolean isStatic() {
 		return declaredStatic || const;
 	}
@@ -1391,15 +1391,12 @@ class TStructField extends TField, TStructMember {
  * Base class for getter or setter, either of an ObjectLiteral or a Class
  */
 abstract class FieldAccessor extends TMemberWithAccessModifier {
-	boolean optional_NEW_SYNTAX
+	boolean optional
 	boolean declaredAbstract
 	contains TypeRef declaredThisType
 
 	op TypeRef getDeclaredTypeRef()
 
-	op boolean isOptional() {
-		return optional_NEW_SYNTAX || (declaredTypeRef!==null && declaredTypeRef.optional_OLD_SYNTAX);
-	}
 	/**
 	 * Returns true if the method is either declared abstract or it is implicitly abstract, i.e. it is declared in a role and has no body.
 	 */

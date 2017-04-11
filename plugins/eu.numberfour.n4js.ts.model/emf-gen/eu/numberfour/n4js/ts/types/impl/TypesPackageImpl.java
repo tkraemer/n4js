@@ -1063,7 +1063,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTFunction_ReturnValueOptional_NEW_SYNTAX() {
+	public EAttribute getTFunction_ReturnValueMarkedOptional() {
 		return (EAttribute)tFunctionEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -2476,7 +2476,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTField_Optional_NEW_SYNTAX() {
+	public EAttribute getTField_Optional() {
 		return (EAttribute)tFieldEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -2485,7 +2485,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTField__IsOptional() {
+	public EOperation getTField__IsStatic() {
 		return tFieldEClass.getEOperations().get(0);
 	}
 
@@ -2494,7 +2494,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTField__IsStatic() {
+	public EOperation getTField__IsReadable() {
 		return tFieldEClass.getEOperations().get(1);
 	}
 
@@ -2503,7 +2503,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTField__IsReadable() {
+	public EOperation getTField__IsWriteable() {
 		return tFieldEClass.getEOperations().get(2);
 	}
 
@@ -2512,7 +2512,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTField__IsWriteable() {
+	public EOperation getTField__GetMemberType() {
 		return tFieldEClass.getEOperations().get(3);
 	}
 
@@ -2521,17 +2521,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTField__GetMemberType() {
-		return tFieldEClass.getEOperations().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getTField__GetMemberAsString() {
-		return tFieldEClass.getEOperations().get(5);
+		return tFieldEClass.getEOperations().get(4);
 	}
 
 	/**
@@ -2557,7 +2548,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getFieldAccessor_Optional_NEW_SYNTAX() {
+	public EAttribute getFieldAccessor_Optional() {
 		return (EAttribute)fieldAccessorEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -2593,17 +2584,8 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getFieldAccessor__IsOptional() {
-		return fieldAccessorEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getFieldAccessor__IsAbstract() {
-		return fieldAccessorEClass.getEOperations().get(2);
+		return fieldAccessorEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -3059,7 +3041,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		tFunctionEClass = createEClass(TFUNCTION);
 		createEAttribute(tFunctionEClass, TFUNCTION__EXTERNAL);
 		createEReference(tFunctionEClass, TFUNCTION__FPARS);
-		createEAttribute(tFunctionEClass, TFUNCTION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX);
+		createEAttribute(tFunctionEClass, TFUNCTION__RETURN_VALUE_MARKED_OPTIONAL);
 		createEReference(tFunctionEClass, TFUNCTION__RETURN_TYPE_REF);
 		createEReference(tFunctionEClass, TFUNCTION__TYPE_VARS);
 		createEReference(tFunctionEClass, TFUNCTION__DECLARED_THIS_TYPE);
@@ -3243,8 +3225,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		tFieldEClass = createEClass(TFIELD);
 		createEAttribute(tFieldEClass, TFIELD__HAS_EXPRESSION);
-		createEAttribute(tFieldEClass, TFIELD__OPTIONAL_NEW_SYNTAX);
-		createEOperation(tFieldEClass, TFIELD___IS_OPTIONAL);
+		createEAttribute(tFieldEClass, TFIELD__OPTIONAL);
 		createEOperation(tFieldEClass, TFIELD___IS_STATIC);
 		createEOperation(tFieldEClass, TFIELD___IS_READABLE);
 		createEOperation(tFieldEClass, TFIELD___IS_WRITEABLE);
@@ -3254,11 +3235,10 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		tStructFieldEClass = createEClass(TSTRUCT_FIELD);
 
 		fieldAccessorEClass = createEClass(FIELD_ACCESSOR);
-		createEAttribute(fieldAccessorEClass, FIELD_ACCESSOR__OPTIONAL_NEW_SYNTAX);
+		createEAttribute(fieldAccessorEClass, FIELD_ACCESSOR__OPTIONAL);
 		createEAttribute(fieldAccessorEClass, FIELD_ACCESSOR__DECLARED_ABSTRACT);
 		createEReference(fieldAccessorEClass, FIELD_ACCESSOR__DECLARED_THIS_TYPE);
 		createEOperation(fieldAccessorEClass, FIELD_ACCESSOR___GET_DECLARED_TYPE_REF);
-		createEOperation(fieldAccessorEClass, FIELD_ACCESSOR___IS_OPTIONAL);
 		createEOperation(fieldAccessorEClass, FIELD_ACCESSOR___IS_ABSTRACT);
 
 		tGetterEClass = createEClass(TGETTER);
@@ -3523,7 +3503,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEClass(tFunctionEClass, TFunction.class, "TFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTFunction_External(), theEcorePackage.getEBoolean(), "external", null, 0, 1, TFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTFunction_Fpars(), this.getTFormalParameter(), null, "fpars", null, 0, -1, TFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTFunction_ReturnValueOptional_NEW_SYNTAX(), theEcorePackage.getEBoolean(), "returnValueOptional_NEW_SYNTAX", null, 0, 1, TFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTFunction_ReturnValueMarkedOptional(), theEcorePackage.getEBoolean(), "returnValueMarkedOptional", null, 0, 1, TFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTFunction_ReturnTypeRef(), theTypeRefsPackage.getTypeRef(), null, "returnTypeRef", null, 0, 1, TFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTFunction_TypeVars(), this.getTypeVariable(), null, "typeVars", null, 0, -1, TFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTFunction_DeclaredThisType(), theTypeRefsPackage.getTypeRef(), null, "declaredThisType", null, 0, 1, TFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3814,9 +3794,7 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 
 		initEClass(tFieldEClass, TField.class, "TField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTField_HasExpression(), theEcorePackage.getEBoolean(), "hasExpression", null, 0, 1, TField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTField_Optional_NEW_SYNTAX(), theEcorePackage.getEBoolean(), "optional_NEW_SYNTAX", null, 0, 1, TField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEOperation(getTField__IsOptional(), theEcorePackage.getEBoolean(), "isOptional", 0, 1, !IS_UNIQUE, IS_ORDERED);
+		initEAttribute(getTField_Optional(), theEcorePackage.getEBoolean(), "optional", null, 0, 1, TField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTField__IsStatic(), theEcorePackage.getEBoolean(), "isStatic", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -3831,13 +3809,11 @@ public class TypesPackageImpl extends EPackageImpl implements TypesPackage {
 		initEClass(tStructFieldEClass, TStructField.class, "TStructField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(fieldAccessorEClass, FieldAccessor.class, "FieldAccessor", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getFieldAccessor_Optional_NEW_SYNTAX(), theEcorePackage.getEBoolean(), "optional_NEW_SYNTAX", null, 0, 1, FieldAccessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFieldAccessor_Optional(), theEcorePackage.getEBoolean(), "optional", null, 0, 1, FieldAccessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFieldAccessor_DeclaredAbstract(), theEcorePackage.getEBoolean(), "declaredAbstract", null, 0, 1, FieldAccessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFieldAccessor_DeclaredThisType(), theTypeRefsPackage.getTypeRef(), null, "declaredThisType", null, 0, 1, FieldAccessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getFieldAccessor__GetDeclaredTypeRef(), theTypeRefsPackage.getTypeRef(), "getDeclaredTypeRef", 0, 1, !IS_UNIQUE, IS_ORDERED);
-
-		initEOperation(getFieldAccessor__IsOptional(), theEcorePackage.getEBoolean(), "isOptional", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getFieldAccessor__IsAbstract(), theEcorePackage.getEBoolean(), "isAbstract", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

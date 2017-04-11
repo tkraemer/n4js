@@ -183,7 +183,7 @@ public abstract class FieldAccessorImpl extends FunctionOrFieldAccessorImpl impl
 	 * @generated
 	 */
 	public boolean isOptional() {
-		return (this.isDeclaredOptional() || ((this.getDeclaredTypeRef() != null) && this.getDeclaredTypeRef().isOptional_OLD_SYNTAX()));
+		return this.isDeclaredOptional();
 	}
 
 	/**

@@ -70,6 +70,8 @@ class DerivationComputer extends TypeSystemHelperStrategy {
 			result.returnTypeRef = TypeUtils.copyIfContained(resultReturnTypeRef)
 		}
 
+		result.returnValueMarkedOptional = F.returnValueOptional;
+
 		// substitution on parameter types
 		for (fpar : F.fpars) {
 			if(fpar !== null) {

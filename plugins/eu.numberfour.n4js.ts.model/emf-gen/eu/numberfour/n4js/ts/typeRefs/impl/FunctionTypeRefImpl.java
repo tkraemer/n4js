@@ -123,7 +123,7 @@ public class FunctionTypeRefImpl extends ParameterizedTypeRefImpl implements Fun
 	 * @generated
 	 */
 	public boolean isReturnValueOptional() {
-		return ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isOptional_OLD_SYNTAX());
+		return ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark());
 	}
 
 	/**

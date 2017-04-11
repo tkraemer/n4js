@@ -40,7 +40,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#isConst <em>Const</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#getCompileTimeValue <em>Compile Time Value</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#isHasExpression <em>Has Expression</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#isOptional_NEW_SYNTAX <em>Optional NEW SYNTAX</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.types.impl.TFieldImpl#isOptional <em>Optional</em>}</li>
  * </ul>
  *
  * @generated
@@ -117,24 +117,24 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	protected boolean hasExpression = HAS_EXPRESSION_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isOptional_NEW_SYNTAX() <em>Optional NEW SYNTAX</em>}' attribute.
+	 * The default value of the '{@link #isOptional() <em>Optional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isOptional_NEW_SYNTAX()
+	 * @see #isOptional()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean OPTIONAL_NEW_SYNTAX_EDEFAULT = false;
+	protected static final boolean OPTIONAL_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isOptional_NEW_SYNTAX() <em>Optional NEW SYNTAX</em>}' attribute.
+	 * The cached value of the '{@link #isOptional() <em>Optional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isOptional_NEW_SYNTAX()
+	 * @see #isOptional()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean optional_NEW_SYNTAX = OPTIONAL_NEW_SYNTAX_EDEFAULT;
+	protected boolean optional = OPTIONAL_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -266,29 +266,20 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isOptional_NEW_SYNTAX() {
-		return optional_NEW_SYNTAX;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setOptional_NEW_SYNTAX(boolean newOptional_NEW_SYNTAX) {
-		boolean oldOptional_NEW_SYNTAX = optional_NEW_SYNTAX;
-		optional_NEW_SYNTAX = newOptional_NEW_SYNTAX;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFIELD__OPTIONAL_NEW_SYNTAX, oldOptional_NEW_SYNTAX, optional_NEW_SYNTAX));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public boolean isOptional() {
-		return (this.isOptional_NEW_SYNTAX() || ((this.getTypeRef() != null) && this.getTypeRef().isOptional_OLD_SYNTAX()));
+		return optional;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setOptional(boolean newOptional) {
+		boolean oldOptional = optional;
+		optional = newOptional;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TypesPackage.TFIELD__OPTIONAL, oldOptional, optional));
 	}
 
 	/**
@@ -381,8 +372,8 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 				return getCompileTimeValue();
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				return isHasExpression();
-			case TypesPackage.TFIELD__OPTIONAL_NEW_SYNTAX:
-				return isOptional_NEW_SYNTAX();
+			case TypesPackage.TFIELD__OPTIONAL:
+				return isOptional();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -407,8 +398,8 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				setHasExpression((Boolean)newValue);
 				return;
-			case TypesPackage.TFIELD__OPTIONAL_NEW_SYNTAX:
-				setOptional_NEW_SYNTAX((Boolean)newValue);
+			case TypesPackage.TFIELD__OPTIONAL:
+				setOptional((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -434,8 +425,8 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				setHasExpression(HAS_EXPRESSION_EDEFAULT);
 				return;
-			case TypesPackage.TFIELD__OPTIONAL_NEW_SYNTAX:
-				setOptional_NEW_SYNTAX(OPTIONAL_NEW_SYNTAX_EDEFAULT);
+			case TypesPackage.TFIELD__OPTIONAL:
+				setOptional(OPTIONAL_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -457,8 +448,8 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 				return COMPILE_TIME_VALUE_EDEFAULT == null ? compileTimeValue != null : !COMPILE_TIME_VALUE_EDEFAULT.equals(compileTimeValue);
 			case TypesPackage.TFIELD__HAS_EXPRESSION:
 				return hasExpression != HAS_EXPRESSION_EDEFAULT;
-			case TypesPackage.TFIELD__OPTIONAL_NEW_SYNTAX:
-				return optional_NEW_SYNTAX != OPTIONAL_NEW_SYNTAX_EDEFAULT;
+			case TypesPackage.TFIELD__OPTIONAL:
+				return optional != OPTIONAL_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -519,7 +510,6 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 		if (baseClass == TMember.class) {
 			switch (baseOperationID) {
 				case TypesPackage.TMEMBER___GET_MEMBER_TYPE: return TypesPackage.TFIELD___GET_MEMBER_TYPE;
-				case TypesPackage.TMEMBER___IS_OPTIONAL: return TypesPackage.TFIELD___IS_OPTIONAL;
 				case TypesPackage.TMEMBER___IS_READABLE: return TypesPackage.TFIELD___IS_READABLE;
 				case TypesPackage.TMEMBER___IS_WRITEABLE: return TypesPackage.TFIELD___IS_WRITEABLE;
 				case TypesPackage.TMEMBER___GET_MEMBER_AS_STRING: return TypesPackage.TFIELD___GET_MEMBER_AS_STRING;
@@ -548,8 +538,6 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case TypesPackage.TFIELD___IS_OPTIONAL:
-				return isOptional();
 			case TypesPackage.TFIELD___IS_STATIC:
 				return isStatic();
 			case TypesPackage.TFIELD___IS_READABLE:
@@ -580,8 +568,8 @@ public class TFieldImpl extends TMemberWithAccessModifierImpl implements TField 
 		result.append(compileTimeValue);
 		result.append(", hasExpression: ");
 		result.append(hasExpression);
-		result.append(", optional_NEW_SYNTAX: ");
-		result.append(optional_NEW_SYNTAX);
+		result.append(", optional: ");
+		result.append(optional);
 		result.append(')');
 		return result.toString();
 	}

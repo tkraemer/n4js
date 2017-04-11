@@ -246,25 +246,24 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.Types.TypeRef");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cTypeRefWithoutModifiersParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final Assignment cOptional_OLD_SYNTAXAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cOptional_OLD_SYNTAXQuestionMarkKeyword_1_0 = (Keyword)cOptional_OLD_SYNTAXAssignment_1.eContents().get(0);
+		private final Assignment cFollowedByQuestionMarkAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cFollowedByQuestionMarkQuestionMarkKeyword_1_0 = (Keyword)cFollowedByQuestionMarkAssignment_1.eContents().get(0);
 		
 		//TypeRef:
-		//	TypeRefWithoutModifiers
-		//	optional_OLD_SYNTAX?='?'?;
+		//	TypeRefWithoutModifiers followedByQuestionMark?='?'?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//TypeRefWithoutModifiers optional_OLD_SYNTAX?='?'?
+		//TypeRefWithoutModifiers followedByQuestionMark?='?'?
 		public Group getGroup() { return cGroup; }
 		
 		//TypeRefWithoutModifiers
 		public RuleCall getTypeRefWithoutModifiersParserRuleCall_0() { return cTypeRefWithoutModifiersParserRuleCall_0; }
 		
-		//optional_OLD_SYNTAX?='?'?
-		public Assignment getOptional_OLD_SYNTAXAssignment_1() { return cOptional_OLD_SYNTAXAssignment_1; }
+		//followedByQuestionMark?='?'?
+		public Assignment getFollowedByQuestionMarkAssignment_1() { return cFollowedByQuestionMarkAssignment_1; }
 		
 		//'?'
-		public Keyword getOptional_OLD_SYNTAXQuestionMarkKeyword_1_0() { return cOptional_OLD_SYNTAXQuestionMarkKeyword_1_0; }
+		public Keyword getFollowedByQuestionMarkQuestionMarkKeyword_1_0() { return cFollowedByQuestionMarkQuestionMarkKeyword_1_0; }
 	}
 	public class PrimitiveTypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "eu.numberfour.n4js.ts.Types.PrimitiveType");
@@ -1603,8 +1602,8 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameTypesIdentifierParserRuleCall_2_0_0 = (RuleCall)cNameAssignment_2_0.eContents().get(0);
 		private final Assignment cNameAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
 		private final RuleCall cNameTypesComputedPropertyNameParserRuleCall_2_1_0 = (RuleCall)cNameAssignment_2_1.eContents().get(0);
-		private final Assignment cOptional_NEW_SYNTAXAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cOptional_NEW_SYNTAXQuestionMarkKeyword_3_0 = (Keyword)cOptional_NEW_SYNTAXAssignment_3.eContents().get(0);
+		private final Assignment cOptionalAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cOptionalQuestionMarkKeyword_3_0 = (Keyword)cOptionalAssignment_3.eContents().get(0);
 		private final Keyword cColonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		private final Assignment cTypeRefAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cTypeRefTypeRefParserRuleCall_5_0 = (RuleCall)cTypeRefAssignment_5.eContents().get(0);
@@ -1612,13 +1611,13 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TField:
 		//	declaredMemberAccessModifier=MemberAccessModifier (declaredStatic?='static' | const?='const' |
-		//	declaredFinal?='final')? (name=TypesIdentifier | name=TypesComputedPropertyName) optional_NEW_SYNTAX?='?'?
+		//	declaredFinal?='final')? (name=TypesIdentifier | name=TypesComputedPropertyName) optional?='?'?
 		//	':' typeRef=TypeRef
 		//	';'?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//declaredMemberAccessModifier=MemberAccessModifier (declaredStatic?='static' | const?='const' | declaredFinal?='final')?
-		//(name=TypesIdentifier | name=TypesComputedPropertyName) optional_NEW_SYNTAX?='?'? ':' typeRef=TypeRef ';'?
+		//(name=TypesIdentifier | name=TypesComputedPropertyName) optional?='?'? ':' typeRef=TypeRef ';'?
 		public Group getGroup() { return cGroup; }
 		
 		//declaredMemberAccessModifier=MemberAccessModifier
@@ -1663,11 +1662,11 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//TypesComputedPropertyName
 		public RuleCall getNameTypesComputedPropertyNameParserRuleCall_2_1_0() { return cNameTypesComputedPropertyNameParserRuleCall_2_1_0; }
 		
-		//optional_NEW_SYNTAX?='?'?
-		public Assignment getOptional_NEW_SYNTAXAssignment_3() { return cOptional_NEW_SYNTAXAssignment_3; }
+		//optional?='?'?
+		public Assignment getOptionalAssignment_3() { return cOptionalAssignment_3; }
 		
 		//'?'
-		public Keyword getOptional_NEW_SYNTAXQuestionMarkKeyword_3_0() { return cOptional_NEW_SYNTAXQuestionMarkKeyword_3_0; }
+		public Keyword getOptionalQuestionMarkKeyword_3_0() { return cOptionalQuestionMarkKeyword_3_0; }
 		
 		//':'
 		public Keyword getColonKeyword_4() { return cColonKeyword_4; }
@@ -1700,8 +1699,8 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameTypesIdentifierParserRuleCall_0_0_4_0_0 = (RuleCall)cNameAssignment_0_0_4_0.eContents().get(0);
 		private final Assignment cNameAssignment_0_0_4_1 = (Assignment)cAlternatives_0_0_4.eContents().get(1);
 		private final RuleCall cNameTypesComputedPropertyNameParserRuleCall_0_0_4_1_0 = (RuleCall)cNameAssignment_0_0_4_1.eContents().get(0);
-		private final Assignment cOptional_NEW_SYNTAXAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cOptional_NEW_SYNTAXQuestionMarkKeyword_1_0 = (Keyword)cOptional_NEW_SYNTAXAssignment_1.eContents().get(0);
+		private final Assignment cOptionalAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cOptionalQuestionMarkKeyword_1_0 = (Keyword)cOptionalAssignment_1.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Keyword cColonKeyword_4 = (Keyword)cGroup.eContents().get(4);
@@ -1711,13 +1710,13 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//TGetter:
 		//	=> ({TGetter} declaredMemberAccessModifier=MemberAccessModifier (declaredAbstract?='abstract' |
 		//	declaredStatic?='static')?
-		//	'get' (name=TypesIdentifier | name=TypesComputedPropertyName)) optional_NEW_SYNTAX?='?'?
+		//	'get' (name=TypesIdentifier | name=TypesComputedPropertyName)) optional?='?'?
 		//	'(' ')' ':' declaredTypeRef=TypeRef;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//=> ({TGetter} declaredMemberAccessModifier=MemberAccessModifier (declaredAbstract?='abstract' |
-		//declaredStatic?='static')? 'get' (name=TypesIdentifier | name=TypesComputedPropertyName)) optional_NEW_SYNTAX?='?'? '('
-		//')' ':' declaredTypeRef=TypeRef
+		//declaredStatic?='static')? 'get' (name=TypesIdentifier | name=TypesComputedPropertyName)) optional?='?'? '(' ')' ':'
+		//declaredTypeRef=TypeRef
 		public Group getGroup() { return cGroup; }
 		
 		//=> ({TGetter} declaredMemberAccessModifier=MemberAccessModifier (declaredAbstract?='abstract' |
@@ -1770,11 +1769,11 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//TypesComputedPropertyName
 		public RuleCall getNameTypesComputedPropertyNameParserRuleCall_0_0_4_1_0() { return cNameTypesComputedPropertyNameParserRuleCall_0_0_4_1_0; }
 		
-		//optional_NEW_SYNTAX?='?'?
-		public Assignment getOptional_NEW_SYNTAXAssignment_1() { return cOptional_NEW_SYNTAXAssignment_1; }
+		//optional?='?'?
+		public Assignment getOptionalAssignment_1() { return cOptionalAssignment_1; }
 		
 		//'?'
-		public Keyword getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0() { return cOptional_NEW_SYNTAXQuestionMarkKeyword_1_0; }
+		public Keyword getOptionalQuestionMarkKeyword_1_0() { return cOptionalQuestionMarkKeyword_1_0; }
 		
 		//'('
 		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
@@ -1810,8 +1809,8 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameTypesIdentifierParserRuleCall_0_0_4_0_0 = (RuleCall)cNameAssignment_0_0_4_0.eContents().get(0);
 		private final Assignment cNameAssignment_0_0_4_1 = (Assignment)cAlternatives_0_0_4.eContents().get(1);
 		private final RuleCall cNameTypesComputedPropertyNameParserRuleCall_0_0_4_1_0 = (RuleCall)cNameAssignment_0_0_4_1.eContents().get(0);
-		private final Assignment cOptional_NEW_SYNTAXAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cOptional_NEW_SYNTAXQuestionMarkKeyword_1_0 = (Keyword)cOptional_NEW_SYNTAXAssignment_1.eContents().get(0);
+		private final Assignment cOptionalAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cOptionalQuestionMarkKeyword_1_0 = (Keyword)cOptionalAssignment_1.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cFparAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cFparTFormalParameterParserRuleCall_3_0 = (RuleCall)cFparAssignment_3.eContents().get(0);
@@ -1820,12 +1819,12 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//TSetter:
 		//	=> ({TSetter} declaredMemberAccessModifier=MemberAccessModifier (declaredAbstract?='abstract' |
 		//	declaredStatic?='static')?
-		//	'set' (name=TypesIdentifier | name=TypesComputedPropertyName)) optional_NEW_SYNTAX?='?'?
+		//	'set' (name=TypesIdentifier | name=TypesComputedPropertyName)) optional?='?'?
 		//	'(' fpar=TFormalParameter ')';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//=> ({TSetter} declaredMemberAccessModifier=MemberAccessModifier (declaredAbstract?='abstract' |
-		//declaredStatic?='static')? 'set' (name=TypesIdentifier | name=TypesComputedPropertyName)) optional_NEW_SYNTAX?='?'? '('
+		//declaredStatic?='static')? 'set' (name=TypesIdentifier | name=TypesComputedPropertyName)) optional?='?'? '('
 		//fpar=TFormalParameter ')'
 		public Group getGroup() { return cGroup; }
 		
@@ -1879,11 +1878,11 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 		//TypesComputedPropertyName
 		public RuleCall getNameTypesComputedPropertyNameParserRuleCall_0_0_4_1_0() { return cNameTypesComputedPropertyNameParserRuleCall_0_0_4_1_0; }
 		
-		//optional_NEW_SYNTAX?='?'?
-		public Assignment getOptional_NEW_SYNTAXAssignment_1() { return cOptional_NEW_SYNTAXAssignment_1; }
+		//optional?='?'?
+		public Assignment getOptionalAssignment_1() { return cOptionalAssignment_1; }
 		
 		//'?'
-		public Keyword getOptional_NEW_SYNTAXQuestionMarkKeyword_1_0() { return cOptional_NEW_SYNTAXQuestionMarkKeyword_1_0; }
+		public Keyword getOptionalQuestionMarkKeyword_1_0() { return cOptionalQuestionMarkKeyword_1_0; }
 		
 		//'('
 		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
@@ -2447,8 +2446,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TypeRef:
-	//	TypeRefWithoutModifiers
-	//	optional_OLD_SYNTAX?='?'?;
+	//	TypeRefWithoutModifiers followedByQuestionMark?='?'?;
 	public TypeRefElements getTypeRefAccess() {
 		return pTypeRef;
 	}
@@ -2711,7 +2709,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//TField:
 	//	declaredMemberAccessModifier=MemberAccessModifier (declaredStatic?='static' | const?='const' |
-	//	declaredFinal?='final')? (name=TypesIdentifier | name=TypesComputedPropertyName) optional_NEW_SYNTAX?='?'?
+	//	declaredFinal?='final')? (name=TypesIdentifier | name=TypesComputedPropertyName) optional?='?'?
 	//	':' typeRef=TypeRef
 	//	';'?;
 	public TFieldElements getTFieldAccess() {
@@ -2725,7 +2723,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//TGetter:
 	//	=> ({TGetter} declaredMemberAccessModifier=MemberAccessModifier (declaredAbstract?='abstract' |
 	//	declaredStatic?='static')?
-	//	'get' (name=TypesIdentifier | name=TypesComputedPropertyName)) optional_NEW_SYNTAX?='?'?
+	//	'get' (name=TypesIdentifier | name=TypesComputedPropertyName)) optional?='?'?
 	//	'(' ')' ':' declaredTypeRef=TypeRef;
 	public TGetterElements getTGetterAccess() {
 		return pTGetter;
@@ -2738,7 +2736,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//TSetter:
 	//	=> ({TSetter} declaredMemberAccessModifier=MemberAccessModifier (declaredAbstract?='abstract' |
 	//	declaredStatic?='static')?
-	//	'set' (name=TypesIdentifier | name=TypesComputedPropertyName)) optional_NEW_SYNTAX?='?'?
+	//	'set' (name=TypesIdentifier | name=TypesComputedPropertyName)) optional?='?'?
 	//	'(' fpar=TFormalParameter ')';
 	public TSetterElements getTSetterAccess() {
 		return pTSetter;
@@ -2830,7 +2828,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TypeRefWithModifiers StaticBaseTypeRef:
-	//	TypeRefWithoutModifiers => optional_OLD_SYNTAX?='?'? | {ParameterizedTypeRef} optional_OLD_SYNTAX?='?'
+	//	TypeRefWithoutModifiers => followedByQuestionMark?='?'?
 	public TypeExpressionsGrammarAccess.TypeRefWithModifiersElements getTypeRefWithModifiersAccess() {
 		return gaTypeExpressions.getTypeRefWithModifiersAccess();
 	}
@@ -3106,7 +3104,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TStructField:
-	//	name=IdentifierName optional_NEW_SYNTAX?='?'? (':' typeRef=super::TypeRef)?;
+	//	name=IdentifierName optional?='?'? (':' typeRef=super::TypeRef)?;
 	public TypeExpressionsGrammarAccess.TStructFieldElements getTStructFieldAccess() {
 		return gaTypeExpressions.getTStructFieldAccess();
 	}
@@ -3118,7 +3116,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//TStructGetter:
 	//	=> ({TStructGetter}
 	//	'get'
-	//	name=IdentifierName) optional_NEW_SYNTAX?='?'?
+	//	name=IdentifierName) optional?='?'?
 	//	'(' ')' (':' declaredTypeRef=super::TypeRef)?;
 	public TypeExpressionsGrammarAccess.TStructGetterElements getTStructGetterAccess() {
 		return gaTypeExpressions.getTStructGetterAccess();
@@ -3131,7 +3129,7 @@ public class TypesGrammarAccess extends AbstractGrammarElementFinder {
 	//TStructSetter:
 	//	=> ({TStructSetter}
 	//	'set'
-	//	name=IdentifierName) optional_NEW_SYNTAX?='?'?
+	//	name=IdentifierName) optional?='?'?
 	//	'(' fpar=TAnonymousFormalParameter ')';
 	public TypeExpressionsGrammarAccess.TStructSetterElements getTStructSetterAccess() {
 		return gaTypeExpressions.getTStructSetterAccess();

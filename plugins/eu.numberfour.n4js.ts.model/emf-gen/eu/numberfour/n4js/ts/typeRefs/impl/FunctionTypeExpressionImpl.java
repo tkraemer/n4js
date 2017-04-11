@@ -49,7 +49,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.FunctionTypeExpressionImpl#getUnboundTypeVars <em>Unbound Type Vars</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.FunctionTypeExpressionImpl#getUnboundTypeVarsUpperBounds <em>Unbound Type Vars Upper Bounds</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.FunctionTypeExpressionImpl#getFpars <em>Fpars</em>}</li>
- *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.FunctionTypeExpressionImpl#isReturnValueOptional_NEW_SYNTAX <em>Return Value Optional NEW SYNTAX</em>}</li>
+ *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.FunctionTypeExpressionImpl#isReturnValueMarkedOptional <em>Return Value Marked Optional</em>}</li>
  *   <li>{@link eu.numberfour.n4js.ts.typeRefs.impl.FunctionTypeExpressionImpl#getReturnTypeRef <em>Return Type Ref</em>}</li>
  * </ul>
  *
@@ -137,24 +137,24 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 	protected EList<TFormalParameter> fpars;
 
 	/**
-	 * The default value of the '{@link #isReturnValueOptional_NEW_SYNTAX() <em>Return Value Optional NEW SYNTAX</em>}' attribute.
+	 * The default value of the '{@link #isReturnValueMarkedOptional() <em>Return Value Marked Optional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isReturnValueOptional_NEW_SYNTAX()
+	 * @see #isReturnValueMarkedOptional()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT = false;
+	protected static final boolean RETURN_VALUE_MARKED_OPTIONAL_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isReturnValueOptional_NEW_SYNTAX() <em>Return Value Optional NEW SYNTAX</em>}' attribute.
+	 * The cached value of the '{@link #isReturnValueMarkedOptional() <em>Return Value Marked Optional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isReturnValueOptional_NEW_SYNTAX()
+	 * @see #isReturnValueMarkedOptional()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean returnValueOptional_NEW_SYNTAX = RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT;
+	protected boolean returnValueMarkedOptional = RETURN_VALUE_MARKED_OPTIONAL_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getReturnTypeRef() <em>Return Type Ref</em>}' containment reference.
@@ -340,8 +340,8 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isReturnValueOptional_NEW_SYNTAX() {
-		return returnValueOptional_NEW_SYNTAX;
+	public boolean isReturnValueMarkedOptional() {
+		return returnValueMarkedOptional;
 	}
 
 	/**
@@ -349,11 +349,11 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setReturnValueOptional_NEW_SYNTAX(boolean newReturnValueOptional_NEW_SYNTAX) {
-		boolean oldReturnValueOptional_NEW_SYNTAX = returnValueOptional_NEW_SYNTAX;
-		returnValueOptional_NEW_SYNTAX = newReturnValueOptional_NEW_SYNTAX;
+	public void setReturnValueMarkedOptional(boolean newReturnValueMarkedOptional) {
+		boolean oldReturnValueMarkedOptional = returnValueMarkedOptional;
+		returnValueMarkedOptional = newReturnValueMarkedOptional;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX, oldReturnValueOptional_NEW_SYNTAX, returnValueOptional_NEW_SYNTAX));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_MARKED_OPTIONAL, oldReturnValueMarkedOptional, returnValueMarkedOptional));
 	}
 
 	/**
@@ -453,7 +453,7 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 	 * @generated
 	 */
 	public boolean isReturnValueOptional() {
-		return (this.isReturnValueOptional_NEW_SYNTAX() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isOptional_OLD_SYNTAX()));
+		return (this.isReturnValueMarkedOptional() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark()));
 	}
 
 	/**
@@ -501,8 +501,8 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 				return getUnboundTypeVarsUpperBounds();
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__FPARS:
 				return getFpars();
-			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
-				return isReturnValueOptional_NEW_SYNTAX();
+			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_MARKED_OPTIONAL:
+				return isReturnValueMarkedOptional();
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_TYPE_REF:
 				return getReturnTypeRef();
 		}
@@ -543,8 +543,8 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 				getFpars().clear();
 				getFpars().addAll((Collection<? extends TFormalParameter>)newValue);
 				return;
-			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
-				setReturnValueOptional_NEW_SYNTAX((Boolean)newValue);
+			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_MARKED_OPTIONAL:
+				setReturnValueMarkedOptional((Boolean)newValue);
 				return;
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_TYPE_REF:
 				setReturnTypeRef((TypeRef)newValue);
@@ -582,8 +582,8 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__FPARS:
 				getFpars().clear();
 				return;
-			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
-				setReturnValueOptional_NEW_SYNTAX(RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT);
+			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_MARKED_OPTIONAL:
+				setReturnValueMarkedOptional(RETURN_VALUE_MARKED_OPTIONAL_EDEFAULT);
 				return;
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_TYPE_REF:
 				setReturnTypeRef((TypeRef)null);
@@ -614,8 +614,8 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 				return unboundTypeVarsUpperBounds != null && !unboundTypeVarsUpperBounds.isEmpty();
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__FPARS:
 				return fpars != null && !fpars.isEmpty();
-			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_OPTIONAL_NEW_SYNTAX:
-				return returnValueOptional_NEW_SYNTAX != RETURN_VALUE_OPTIONAL_NEW_SYNTAX_EDEFAULT;
+			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_VALUE_MARKED_OPTIONAL:
+				return returnValueMarkedOptional != RETURN_VALUE_MARKED_OPTIONAL_EDEFAULT;
 			case TypeRefsPackage.FUNCTION_TYPE_EXPRESSION__RETURN_TYPE_REF:
 				return returnTypeRef != null;
 		}
@@ -670,8 +670,8 @@ public class FunctionTypeExpressionImpl extends FunctionTypeExprOrRefImpl implem
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (binding: ");
 		result.append(binding);
-		result.append(", returnValueOptional_NEW_SYNTAX: ");
-		result.append(returnValueOptional_NEW_SYNTAX);
+		result.append(", returnValueMarkedOptional: ");
+		result.append(returnValueMarkedOptional);
 		result.append(')');
 		return result.toString();
 	}

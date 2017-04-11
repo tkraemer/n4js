@@ -28,7 +28,6 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link eu.numberfour.n4js.n4JS.FunctionDefinition#getFpars <em>Fpars</em>}</li>
- *   <li>{@link eu.numberfour.n4js.n4JS.FunctionDefinition#isReturnValueDeclaredOptional <em>Return Value Declared Optional</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.FunctionDefinition#getReturnTypeRef <em>Return Type Ref</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.FunctionDefinition#isGenerator <em>Generator</em>}</li>
  *   <li>{@link eu.numberfour.n4js.n4JS.FunctionDefinition#isDeclaredAsync <em>Declared Async</em>}</li>
@@ -54,31 +53,6 @@ public interface FunctionDefinition extends FunctionOrFieldAccessor, TypeDefinin
 	 * @generated
 	 */
 	EList<FormalParameter> getFpars();
-
-	/**
-	 * Returns the value of the '<em><b>Return Value Declared Optional</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Tells if the return value is optional.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Return Value Declared Optional</em>' attribute.
-	 * @see #setReturnValueDeclaredOptional(boolean)
-	 * @see eu.numberfour.n4js.n4JS.N4JSPackage#getFunctionDefinition_ReturnValueDeclaredOptional()
-	 * @model unique="false"
-	 * @generated
-	 */
-	boolean isReturnValueDeclaredOptional();
-
-	/**
-	 * Sets the value of the '{@link eu.numberfour.n4js.n4JS.FunctionDefinition#isReturnValueDeclaredOptional <em>Return Value Declared Optional</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Return Value Declared Optional</em>' attribute.
-	 * @see #isReturnValueDeclaredOptional()
-	 * @generated
-	 */
-	void setReturnValueDeclaredOptional(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Return Type Ref</b></em>' containment reference.
@@ -162,8 +136,11 @@ public interface FunctionDefinition extends FunctionOrFieldAccessor, TypeDefinin
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Tells if the return value is optional.
+	 * <!-- end-model-doc -->
 	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (this.isReturnValueDeclaredOptional() || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isOptional_OLD_SYNTAX()));'"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return (((this.getDefinedFunction() != null) && this.getDefinedFunction().isReturnValueOptional()) || ((this.getReturnTypeRef() != null) && this.getReturnTypeRef().isFollowedByQuestionMark()));'"
 	 * @generated
 	 */
 	boolean isReturnValueOptional();

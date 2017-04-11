@@ -8390,16 +8390,12 @@ ruleBogusTypeRef:
 
 // Rule TypeRefWithModifiers
 ruleTypeRefWithModifiers:
+	ruleTypeRefWithoutModifiers
 	(
-		ruleTypeRefWithoutModifiers
-		(
-			('?'
-			)=>
-			'?'
-		)?
-		    |
+		('?'
+		)=>
 		'?'
-	)
+	)?
 ;
 
 // Rule TypeRefWithoutModifiers
