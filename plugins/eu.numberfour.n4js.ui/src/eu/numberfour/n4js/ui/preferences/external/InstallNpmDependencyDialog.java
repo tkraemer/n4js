@@ -49,6 +49,23 @@ import eu.numberfour.n4js.ui.utils.DelegatingSelectionAdapter;
  * custom input validators.
  */
 public class InstallNpmDependencyDialog extends TitleAreaDialog {
+	private static final String EMPTY = "";
+	private static final String LN_DASH = "\n - ";
+	private static final String INCLUSIVE = "Inclusive";
+	private static final String PACKAGE_NAME = "Package name";
+	private static final String MINIMUM_VERSION_OPTIONAL = "Minimum version (optional)";
+	private static final String MAXIMUM_VERSION_OPTIONAL = "Maximum version (optional)";
+	private static final String PROPERTIES_OF_NPM_DEPENDENCY = "Properties of npm dependency.";
+	private static final String PROVIDE_PROPERTIES_OF_NPM_PACKAGE_TO_INSTALL = "Provide properties of npm package to install.";
+
+	private static final String REVIEW_ISSUES = "Please review following issues:";
+	private static final String LOWER_VERSION_ISSUES = "Lower version issues: ";
+	private static final String UPPER_VERSION_ISSUES = "Upper version issues: ";
+	private static final String NO_MINIMUM_VERSION_MAXIMUM_IS_SPECIFIED = LOWER_VERSION_ISSUES
+			+ "Cannot have no minimum version if maximum is specified.";
+	private static final String MINIMUM_VERSION_IS_MISSING = UPPER_VERSION_ISSUES
+			+ "Minimum version is missing.";
+
 	private final IInputValidator packageNameValidator;
 	private final IInputValidator packageVersionValidator;
 	private String errPackageName = null;
@@ -107,8 +124,8 @@ public class InstallNpmDependencyDialog extends TitleAreaDialog {
 	@Override
 	public void create() {
 		super.create();
-		setTitle("npm dependency properties");
-		setMessage("Provide properties of npm package to install.", IMessageProvider.INFORMATION);
+		setTitle(PROPERTIES_OF_NPM_DEPENDENCY);
+		setMessage(PROVIDE_PROPERTIES_OF_NPM_PACKAGE_TO_INSTALL, IMessageProvider.INFORMATION);
 	}
 
 	@Override
@@ -123,10 +140,10 @@ public class InstallNpmDependencyDialog extends TitleAreaDialog {
 		customDialogArea.setLayout(GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).create());
 		customDialogArea.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).align(FILL, TOP).create());
 
-		createNameArea(customDialogArea, "package name", this::handlePackageNameInput);
-		createVersionArea(customDialogArea, "minimum version", this::handleLowerVersionInput,
+		createNameArea(customDialogArea, PACKAGE_NAME, this::handlePackageNameInput);
+		createVersionArea(customDialogArea, MINIMUM_VERSION_OPTIONAL, this::handleLowerVersionInput,
 				this::setLowerExcluded);
-		createVersionArea(customDialogArea, "maximum version", this::handleUpperVersionInput,
+		createVersionArea(customDialogArea, MAXIMUM_VERSION_OPTIONAL, this::handleUpperVersionInput,
 				this::setUpperExcluded);
 
 		return customDialogArea;
@@ -185,7 +202,7 @@ public class InstallNpmDependencyDialog extends TitleAreaDialog {
 		radioArea.setLayoutData(GridDataFactory.fillDefaults().grab(false, false).align(END, TOP).create());
 
 		final Button inclusive = new Button(radioArea, CHECK);
-		inclusive.setText("Inclusive");
+		inclusive.setText(INCLUSIVE);
 		inclusive.setSelection(true);
 
 		// ignore events just get value from button
@@ -244,15 +261,15 @@ public class InstallNpmDependencyDialog extends TitleAreaDialog {
 		} else {
 			StringBuilder sb = new StringBuilder();
 			if (errPackageName != null)
-				sb.append("\n - ").append(errPackageName);
+				sb.append(LN_DASH).append(errPackageName);
 
 			if (errLowerVersion != null)
-				sb.append("\n - ").append(errLowerVersion);
+				sb.append(LN_DASH).append(errLowerVersion);
 
 			if (errUpperVersion != null)
-				sb.append("\n - ").append(errUpperVersion);
+				sb.append(LN_DASH).append(errUpperVersion);
 
-			setErrorMessage("Please review following issues:" + sb);
+			setErrorMessage(REVIEW_ISSUES + sb);
 		}
 	}
 
@@ -260,12 +277,21 @@ public class InstallNpmDependencyDialog extends TitleAreaDialog {
 		errLowerVersion = null;
 
 		// allow no value or just whitespace (which we ignore)
-		String pereprocessed = userText == null ? "" : userText.trim();
+		String pereprocessed = userText == null ? EMPTY : userText.trim();
 		// if there is actual content do real parsing
 		if (!pereprocessed.isEmpty()) {
+			if (MINIMUM_VERSION_IS_MISSING.equals(errUpperVersion)) {
+				errUpperVersion = null;
+			}
 			String validateResult = validate(pereprocessed);
 			if (validateResult != null) {
-				errLowerVersion = "Lower version issues:" + validateResult;
+				errLowerVersion = LOWER_VERSION_ISSUES + validateResult;
+			}
+		} else {
+			// if lower is missing, upper has to be missing
+			final String upper = upperVersion == null ? EMPTY : upperVersion.trim();
+			if (!upper.isEmpty()) {
+				errLowerVersion = NO_MINIMUM_VERSION_MAXIMUM_IS_SPECIFIED;
 			}
 		}
 
@@ -277,12 +303,18 @@ public class InstallNpmDependencyDialog extends TitleAreaDialog {
 		errUpperVersion = null;
 
 		// allow no value or just whitespace (which we ignore)
-		String pereprocessed = userText == null ? "" : userText.trim();
+		String pereprocessed = userText == null ? EMPTY : userText.trim();
 		// if there is actual content do real parsing
 		if (!pereprocessed.isEmpty()) {
 			String validateResult = validate(pereprocessed);
 			if (validateResult != null) {
-				errUpperVersion = "Upper version issues:" + validateResult;
+				errUpperVersion = UPPER_VERSION_ISSUES + validateResult;
+			} else {
+				// if upper version is valid check interaction with lower
+				final String lower = lowerVersion == null ? EMPTY : lowerVersion.trim();
+				if (lower.isEmpty()) {
+					errUpperVersion = MINIMUM_VERSION_IS_MISSING;
+				}
 			}
 		}
 
@@ -293,7 +325,7 @@ public class InstallNpmDependencyDialog extends TitleAreaDialog {
 	private String validate(final String data) {
 		String result = null;
 		// allow no value or just whitespace (which we ignore)
-		String pereprocessed = data == null ? "" : data.trim();
+		String pereprocessed = data == null ? EMPTY : data.trim();
 		// if there is actual content do real parsing
 		if (!pereprocessed.isEmpty()) {
 			result = packageVersionValidator.isValid(pereprocessed);
