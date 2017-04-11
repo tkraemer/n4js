@@ -14,6 +14,14 @@ class CGS {
 class CF {
 	public f?: string;
 }
+class CGSMG { // MG is for "mandatory getter"
+	public get f (): string {return null;}
+	public set f?(value:string) {}
+}
+class CGSMS { // MS is for "mandatory setter"
+	public get f?(): string {return null;}
+	public set f (value:string) {}
+}
 
 
 @Final class D0 {
@@ -48,31 +56,47 @@ let cg:  ~~CG;
 let cs:  ~~CS;
 let cgs: ~~CGS;
 let cf:  ~~CF;
+let cgsmg: ~~CGSMG;
+let cgsms: ~~CGSMS;
 
 
 // --------------------------------------------------------------------------------------------------------------------
 
 
 // XPECT noerrors -->
+cg = {};
+// XPECT noerrors -->
 cg = d0;
 // XPECT noerrors -->
 cg = new D0();
 
+
+// XPECT noerrors -->
+cg = { get f(): string {return null;} };
 // XPECT noerrors -->
 cg = dg;
 // XPECT noerrors -->
 cg = new DG();
 
+
+// XPECT noerrors -->
+cg = { set f(value: string) {} };
 // XPECT noerrors -->
 cg = ds;
 // XPECT noerrors -->
 cg = new DS();
 
+
+// XPECT noerrors -->
+cg = { get f(): string {return null;}, set f(value: string) {} };
 // XPECT noerrors -->
 cg = dgs;
 // XPECT noerrors -->
 cg = new DGS();
 
+
+// XPECT noerrors -->
+cg = { string f: null };
 // XPECT noerrors -->
 cg = df;
 // XPECT noerrors -->
@@ -82,26 +106,40 @@ cg = new DF();
 // --------------------------------------------------------------------------------------------------------------------
 
 
+// XPECT noerrors -->
+cs = {};
 // XPECT errors --> "D0 is not a structural subtype of ~~CS: missing setter f." at "d0"
 cs = d0;
 // XPECT errors --> "D0 is not a structural subtype of ~~CS: missing setter f." at "new D0()"
 cs = new D0();
 
+
+// XPECT noerrors -->
+cs = { get f(): string {return null;} };
 // XPECT errors --> "DG is not a structural subtype of ~~CS: missing setter f." at "dg"
 cs = dg;
 // XPECT errors --> "DG is not a structural subtype of ~~CS: missing setter f." at "new DG()"
 cs = new DG();
 
+
+// XPECT noerrors -->
+cs = { set f(value: string) {} };
 // XPECT noerrors -->
 cs = ds;
 // XPECT noerrors -->
 cs = new DS();
 
+
+// XPECT noerrors -->
+cs = { get f(): string {return null;}, set f(value: string) {} };
 // XPECT noerrors -->
 cs = dgs;
 // XPECT noerrors -->
 cs = new DGS();
 
+
+// XPECT noerrors -->
+cs = { string f: null };
 // XPECT noerrors -->
 cs = df;
 // XPECT noerrors -->
@@ -111,26 +149,40 @@ cs = new DF();
 // --------------------------------------------------------------------------------------------------------------------
 
 
+// XPECT noerrors -->
+cgs = {};
 // XPECT errors --> "D0 is not a structural subtype of ~~CGS: missing setter f." at "d0"
 cgs = d0;
 // XPECT errors --> "D0 is not a structural subtype of ~~CGS: missing setter f." at "new D0()"
 cgs = new D0();
 
+
+// XPECT noerrors -->
+cgs = { get f(): string {return null;} };
 // XPECT errors --> "DG is not a structural subtype of ~~CGS: missing setter f." at "dg"
 cgs = dg;
 // XPECT errors --> "DG is not a structural subtype of ~~CGS: missing setter f." at "new DG()"
 cgs = new DG();
 
+
+// XPECT noerrors -->
+cgs = { set f(value: string) {} };
 // XPECT noerrors -->
 cgs = ds;
 // XPECT noerrors -->
 cgs = new DS();
 
+
+// XPECT noerrors -->
+cgs = { get f(): string {return null;}, set f(value: string) {} };
 // XPECT noerrors -->
 cgs = dgs;
 // XPECT noerrors -->
 cgs = new DGS();
 
+
+// XPECT noerrors -->
+cgs = { string f: null };
 // XPECT noerrors -->
 cgs = df;
 // XPECT noerrors -->
@@ -140,30 +192,130 @@ cgs = new DF();
 // --------------------------------------------------------------------------------------------------------------------
 
 
+// XPECT noerrors -->
+cf = {};
 // XPECT errors --> "D0 is not a structural subtype of ~~CF: missing field f." at "d0"
 cf = d0;
 // XPECT errors --> "D0 is not a structural subtype of ~~CF: missing field f." at "new D0()"
 cf = new D0();
 
+
+// XPECT noerrors -->
+cf = { get f(): string {return null;} };
 // XPECT errors --> "DG is not a structural subtype of ~~CF: f failed: optional writable field requires at least a setter in subtype." at "dg"
 cf = dg;
 // XPECT errors --> "DG is not a structural subtype of ~~CF: f failed: optional writable field requires at least a setter in subtype." at "new DG()"
 cf = new DG();
 
+
+// XPECT noerrors -->
+cf = { set f(value: string) {} };
 // XPECT noerrors -->
 cf = ds;
 // XPECT noerrors -->
 cf = new DS();
 
+
+// XPECT noerrors -->
+cf = { get f(): string {return null;}, set f(value: string) {} };
 // XPECT noerrors -->
 cf = dgs;
 // XPECT noerrors -->
 cf = new DGS();
 
+
+// XPECT noerrors -->
+cf = { string f: null };
 // XPECT noerrors -->
 cf = df;
 // XPECT noerrors -->
 cf = new DF();
+
+
+// --------------------------------------------------------------------------------------------------------------------
+
+
+// XPECT errors --> "~Object is not a structural subtype of ~~CGSMG: missing getter f." at "{}"
+cgsmg = {};
+// XPECT errors --> "D0 is not a structural subtype of ~~CGSMG: missing getter f and 1 more." at "d0"
+cgsmg = d0;
+// XPECT errors --> "D0 is not a structural subtype of ~~CGSMG: missing getter f and 1 more." at "new D0()"
+cgsmg = new D0();
+
+
+// XPECT noerrors -->
+cgsmg = { get f(): string {return null;} };
+// XPECT errors --> "DG is not a structural subtype of ~~CGSMG: missing setter f." at "dg"
+cgsmg = dg;
+// XPECT errors --> "DG is not a structural subtype of ~~CGSMG: missing setter f." at "new DG()"
+cgsmg = new DG();
+
+
+// XPECT errors --> "~Object with { set f(value: string) } is not a structural subtype of ~~CGSMG: missing getter f." at "{ set f(value: string) {} }"
+cgsmg = { set f(value: string) {} };
+// XPECT errors --> "DS is not a structural subtype of ~~CGSMG: missing getter f." at "ds"
+cgsmg = ds;
+// XPECT errors --> "DS is not a structural subtype of ~~CGSMG: missing getter f." at "new DS()"
+cgsmg = new DS();
+
+
+// XPECT noerrors -->
+cgsmg = { get f(): string {return null;}, set f(value: string) {} };
+// XPECT noerrors -->
+cgsmg = dgs;
+// XPECT noerrors -->
+cgsmg = new DGS();
+
+
+// XPECT noerrors -->
+cgsmg = { string f: null };
+// XPECT noerrors -->
+cgsmg = df;
+// XPECT noerrors -->
+cgsmg = new DF();
+
+
+// --------------------------------------------------------------------------------------------------------------------
+
+
+// XPECT errors --> "~Object is not a structural subtype of ~~CGSMS: missing setter f." at "{}"
+cgsms = {};
+// XPECT errors --> "D0 is not a structural subtype of ~~CGSMS: missing setter f." at "d0"
+cgsms = d0;
+// XPECT errors --> "D0 is not a structural subtype of ~~CGSMS: missing setter f." at "new D0()"
+cgsms = new D0();
+
+
+// XPECT errors --> "~Object with { get f(): string } is not a structural subtype of ~~CGSMS: missing setter f." at "{ get f(): string {return null;} }"
+cgsms = { get f(): string {return null;} };
+// XPECT errors --> "DG is not a structural subtype of ~~CGSMS: missing setter f." at "dg"
+cgsms = dg;
+// XPECT errors --> "DG is not a structural subtype of ~~CGSMS: missing setter f." at "new DG()"
+cgsms = new DG();
+
+
+// XPECT noerrors -->
+cgsms = { set f(value: string) {} };
+// XPECT noerrors -->
+cgsms = ds;
+// XPECT noerrors -->
+cgsms = new DS();
+
+
+// XPECT noerrors -->
+cgsms = { get f(): string {return null;}, set f(value: string) {} };
+// XPECT noerrors -->
+cgsms = dgs;
+// XPECT noerrors -->
+cgsms = new DGS();
+
+
+// XPECT noerrors -->
+cgsms = { string f: null };
+// XPECT noerrors -->
+cgsms = df;
+// XPECT noerrors -->
+cgsms = new DF();
 
 
 // ====================================================================================================================
@@ -174,6 +326,8 @@ let rcg:  ~r~CG;
 let rcs:  ~r~CS;
 let rcgs: ~r~CGS;
 let rcf:  ~r~CF;
+let rcgsmg: ~r~CGSMG;
+let rcgsms: ~r~CGSMS;
 
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -184,20 +338,24 @@ rcg = d0;
 // XPECT noerrors -->
 rcg = new D0();
 
+
 // XPECT noerrors -->
 rcg = dg;
 // XPECT noerrors -->
 rcg = new DG();
+
 
 // XPECT noerrors -->
 rcg = ds;
 // XPECT noerrors -->
 rcg = new DS();
 
+
 // XPECT noerrors -->
 rcg = dgs;
 // XPECT noerrors -->
 rcg = new DGS();
+
 
 // XPECT noerrors -->
 rcg = df;
@@ -213,20 +371,24 @@ rcs = d0;
 // XPECT noerrors --> "setter of CS not required for ~r~CS"
 rcs = new D0();
 
+
 // XPECT noerrors --> "setter of CS not required for ~r~CS"
 rcs = dg;
 // XPECT noerrors --> "setter of CS not required for ~r~CS"
 rcs = new DG();
+
 
 // XPECT noerrors -->
 rcs = ds;
 // XPECT noerrors -->
 rcs = new DS();
 
+
 // XPECT noerrors -->
 rcs = dgs;
 // XPECT noerrors -->
 rcs = new DGS();
+
 
 // XPECT noerrors -->
 rcs = df;
@@ -242,20 +404,24 @@ rcgs = d0;
 // XPECT noerrors --> "setter of CSG not required for ~r~CSG"
 rcgs = new D0();
 
+
 // XPECT noerrors --> "setter of CSG not required for ~r~CSG"
 rcgs = dg;
 // XPECT noerrors --> "setter of CSG not required for ~r~CSG"
 rcgs = new DG();
+
 
 // XPECT noerrors -->
 rcgs = ds;
 // XPECT noerrors -->
 rcgs = new DS();
 
+
 // XPECT noerrors -->
 rcgs = dgs;
 // XPECT noerrors -->
 rcgs = new DGS();
+
 
 // XPECT noerrors -->
 rcgs = df;
@@ -271,25 +437,95 @@ rcf = d0;
 // XPECT noerrors --> "setter part of CF's field not required for ~r~CF"
 rcf = new D0();
 
+
 // XPECT noerrors --> "setter part of CF's field not required for ~r~CF"
 rcf = dg;
 // XPECT noerrors --> "setter part of CF's field not required for ~r~CF"
 rcf = new DG();
+
 
 // XPECT noerrors -->
 rcf = ds;
 // XPECT noerrors -->
 rcf = new DS();
 
+
 // XPECT noerrors -->
 rcf = dgs;
 // XPECT noerrors -->
 rcf = new DGS();
 
+
 // XPECT noerrors -->
 rcf = df;
 // XPECT noerrors -->
 rcf = new DF();
+
+
+// --------------------------------------------------------------------------------------------------------------------
+
+
+// XPECT errors --> "D0 is not a structural subtype of ~r~CGSMG: missing getter f; f failed: readable field requires a readable field or a getter in subtype." at "d0"
+rcgsmg = d0;
+// XPECT errors --> "D0 is not a structural subtype of ~r~CGSMG: missing getter f; f failed: readable field requires a readable field or a getter in subtype." at "new D0()"
+rcgsmg = new D0();
+
+
+// XPECT noerrors -->
+rcgsmg = dg;
+// XPECT noerrors -->
+rcgsmg = new DG();
+
+
+// XPECT errors --> "DS is not a structural subtype of ~r~CGSMG: missing getter f; f failed: readable field requires a readable field or a getter in subtype." at "ds"
+rcgsmg = ds;
+// XPECT errors --> "DS is not a structural subtype of ~r~CGSMG: missing getter f; f failed: readable field requires a readable field or a getter in subtype." at "new DS()"
+rcgsmg = new DS();
+
+
+// XPECT noerrors -->
+rcgsmg = dgs;
+// XPECT noerrors -->
+rcgsmg = new DGS();
+
+
+// XPECT noerrors -->
+rcgsmg = df;
+// XPECT noerrors -->
+rcgsmg = new DF();
+
+
+// --------------------------------------------------------------------------------------------------------------------
+
+
+// XPECT noerrors -->
+rcgsms = d0;
+// XPECT noerrors -->
+rcgsms = new D0();
+
+
+// XPECT noerrors -->
+rcgsms = dg;
+// XPECT noerrors -->
+rcgsms = new DG();
+
+
+// XPECT noerrors -->
+rcgsms = ds;
+// XPECT noerrors -->
+rcgsms = new DS();
+
+
+// XPECT noerrors -->
+rcgsms = dgs;
+// XPECT noerrors -->
+rcgsms = new DGS();
+
+
+// XPECT noerrors -->
+rcgsms = df;
+// XPECT noerrors -->
+rcgsms = new DF();
 
 
 // ====================================================================================================================
@@ -300,6 +536,8 @@ let wcg:  ~w~CG;
 let wcs:  ~w~CS;
 let wcgs: ~w~CGS;
 let wcf:  ~w~CF;
+let wcgsmg: ~w~CGSMG;
+let wcgsms: ~w~CGSMS;
 
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -310,20 +548,24 @@ wcg = d0;
 // XPECT noerrors -->
 wcg = new D0();
 
+
 // XPECT noerrors -->
 wcg = dg;
 // XPECT noerrors -->
 wcg = new DG();
+
 
 // XPECT noerrors -->
 wcg = ds;
 // XPECT noerrors -->
 wcg = new DS();
 
+
 // XPECT noerrors -->
 wcg = dgs;
 // XPECT noerrors -->
 wcg = new DGS();
+
 
 // XPECT noerrors -->
 wcg = df;
@@ -339,20 +581,24 @@ wcs = d0;
 // XPECT errors --> "D0 is not a structural subtype of ~w~CS: missing setter f; f failed: writable field requires a writable field or a setter in subtype." at "new D0()"
 wcs = new D0();
 
+
 // XPECT errors --> "DG is not a structural subtype of ~w~CS: missing setter f; f failed: writable field requires a writable field or a setter in subtype." at "dg"
 wcs = dg;
 // XPECT errors --> "DG is not a structural subtype of ~w~CS: missing setter f; f failed: writable field requires a writable field or a setter in subtype." at "new DG()"
 wcs = new DG();
+
 
 // XPECT noerrors -->
 wcs = ds;
 // XPECT noerrors -->
 wcs = new DS();
 
+
 // XPECT noerrors -->
 wcs = dgs;
 // XPECT noerrors -->
 wcs = new DGS();
+
 
 // XPECT noerrors -->
 wcs = df;
@@ -368,20 +614,24 @@ wcgs = d0;
 // XPECT errors --> "D0 is not a structural subtype of ~w~CGS: missing setter f; f failed: writable field requires a writable field or a setter in subtype." at "new D0()"
 wcgs = new D0();
 
+
 // XPECT errors --> "DG is not a structural subtype of ~w~CGS: missing setter f; f failed: writable field requires a writable field or a setter in subtype." at "dg"
 wcgs = dg;
 // XPECT errors --> "DG is not a structural subtype of ~w~CGS: missing setter f; f failed: writable field requires a writable field or a setter in subtype." at "new DG()"
 wcgs = new DG();
+
 
 // XPECT noerrors -->
 wcgs = ds;
 // XPECT noerrors -->
 wcgs = new DS();
 
+
 // XPECT noerrors -->
 wcgs = dgs;
 // XPECT noerrors -->
 wcgs = new DGS();
+
 
 // XPECT noerrors -->
 wcgs = df;
@@ -397,25 +647,95 @@ wcf = d0;
 // XPECT errors --> "D0 is not a structural subtype of ~w~CF: missing field f; f failed: writable field requires a writable field or a setter in subtype." at "new D0()"
 wcf = new D0();
 
+
 // XPECT errors --> "DG is not a structural subtype of ~w~CF: f failed: writable field requires a writable field or a setter in subtype." at "dg"
 wcf = dg;
 // XPECT errors --> "DG is not a structural subtype of ~w~CF: f failed: writable field requires a writable field or a setter in subtype." at "new DG()"
 wcf = new DG();
+
 
 // XPECT noerrors -->
 wcf = ds;
 // XPECT noerrors -->
 wcf = new DS();
 
+
 // XPECT noerrors -->
 wcf = dgs;
 // XPECT noerrors -->
 wcf = new DGS();
 
+
 // XPECT noerrors -->
 wcf = df;
 // XPECT noerrors -->
 wcf = new DF();
+
+
+// --------------------------------------------------------------------------------------------------------------------
+
+
+// XPECT errors --> "D0 is not a structural subtype of ~w~CGSMG: missing setter f; f failed: writable field requires a writable field or a setter in subtype." at "d0"
+wcgsmg = d0;
+// XPECT errors --> "D0 is not a structural subtype of ~w~CGSMG: missing setter f; f failed: writable field requires a writable field or a setter in subtype." at "new D0()"
+wcgsmg = new D0();
+
+
+// XPECT errors --> "DG is not a structural subtype of ~w~CGSMG: missing setter f; f failed: writable field requires a writable field or a setter in subtype." at "dg"
+wcgsmg = dg;
+// XPECT errors --> "DG is not a structural subtype of ~w~CGSMG: missing setter f; f failed: writable field requires a writable field or a setter in subtype." at "new DG()"
+wcgsmg = new DG();
+
+
+// XPECT noerrors -->
+wcgsmg = ds;
+// XPECT noerrors -->
+wcgsmg = new DS();
+
+
+// XPECT noerrors -->
+wcgsmg = dgs;
+// XPECT noerrors -->
+wcgsmg = new DGS();
+
+
+// XPECT noerrors -->
+wcgsmg = df;
+// XPECT noerrors -->
+wcgsmg = new DF();
+
+
+// --------------------------------------------------------------------------------------------------------------------
+
+
+// XPECT errors --> "D0 is not a structural subtype of ~w~CGSMS: missing setter f; f failed: writable field requires a writable field or a setter in subtype." at "d0"
+wcgsms = d0;
+// XPECT errors --> "D0 is not a structural subtype of ~w~CGSMS: missing setter f; f failed: writable field requires a writable field or a setter in subtype." at "new D0()"
+wcgsms = new D0();
+
+
+// XPECT errors --> "DG is not a structural subtype of ~w~CGSMS: missing setter f; f failed: writable field requires a writable field or a setter in subtype." at "dg"
+wcgsms = dg;
+// XPECT errors --> "DG is not a structural subtype of ~w~CGSMS: missing setter f; f failed: writable field requires a writable field or a setter in subtype." at "new DG()"
+wcgsms = new DG();
+
+
+// XPECT noerrors -->
+wcgsms = ds;
+// XPECT noerrors -->
+wcgsms = new DS();
+
+
+// XPECT noerrors -->
+wcgsms = dgs;
+// XPECT noerrors -->
+wcgsms = new DGS();
+
+
+// XPECT noerrors -->
+wcgsms = df;
+// XPECT noerrors -->
+wcgsms = new DF();
 
 
 // ====================================================================================================================
@@ -426,6 +746,8 @@ let icg:  ~i~CG;
 let ics:  ~i~CS;
 let icgs: ~i~CGS;
 let icf:  ~i~CF;
+let icgsmg: ~i~CGSMG;
+let icgsms: ~i~CGSMS;
 
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -436,20 +758,24 @@ icg = d0;
 // XPECT noerrors -->
 icg = new D0();
 
+
 // XPECT noerrors -->
 icg = dg;
 // XPECT noerrors -->
 icg = new DG();
+
 
 // XPECT noerrors -->
 icg = ds;
 // XPECT noerrors -->
 icg = new DS();
 
+
 // XPECT noerrors -->
 icg = dgs;
 // XPECT noerrors -->
 icg = new DGS();
+
 
 // XPECT noerrors -->
 icg = df;
@@ -465,20 +791,24 @@ ics = d0;
 // XPECT noerrors --> "the setter of CS is turned into a getter in ~i~CS and therefore the expected getter is optional even though we only have a weak case on LHS of subtype check"
 ics = new D0();
 
+
 // XPECT noerrors -->
 ics = dg;
 // XPECT noerrors -->
 ics = new DG();
+
 
 // XPECT noerrors --> "the setter of CS is turned into a getter in ~i~CS and therefore the expected getter is optional even though we only have a weak case on LHS of subtype check"
 ics = ds;
 // XPECT noerrors --> "the setter of CS is turned into a getter in ~i~CS and therefore the expected getter is optional even though we only have a weak case on LHS of subtype check"
 ics = new DS();
 
+
 // XPECT noerrors -->
 ics = dgs;
 // XPECT noerrors -->
 ics = new DGS();
+
 
 // XPECT noerrors -->
 ics = df;
@@ -494,20 +824,24 @@ icgs = d0;
 // XPECT noerrors --> "the setter of CGS is turned into a getter in ~i~CGS and therefore the expected getter is optional even though we only have a weak case on LHS of subtype check"
 icgs = new D0();
 
+
 // XPECT noerrors -->
 icgs = dg;
 // XPECT noerrors -->
 icgs = new DG();
+
 
 // XPECT noerrors --> "the setter of CGS is turned into a getter in ~i~CGS and therefore the expected getter is optional even though we only have a weak case on LHS of subtype check"
 icgs = ds;
 // XPECT noerrors --> "the setter of CGS is turned into a getter in ~i~CGS and therefore the expected getter is optional even though we only have a weak case on LHS of subtype check"
 icgs = new DS();
 
+
 // XPECT noerrors -->
 icgs = dgs;
 // XPECT noerrors -->
 icgs = new DGS();
+
 
 // XPECT noerrors -->
 icgs = df;
@@ -523,23 +857,93 @@ icf = d0;
 // XPECT noerrors --> "the field of CF is turned into a getter in ~i~CF and therefore the expected getter is optional even though we only have a weak case on LHS of subtype check"
 icf = new D0();
 
+
 // XPECT noerrors -->
 icf = dg;
 // XPECT noerrors -->
 icf = new DG();
+
 
 // XPECT noerrors --> "the field of CF is turned into a getter in ~i~CF and therefore the expected getter is optional even though we only have a weak case on LHS of subtype check"
 icf = ds;
 // XPECT noerrors --> "the field of CF is turned into a getter in ~i~CF and therefore the expected getter is optional even though we only have a weak case on LHS of subtype check"
 icf = new DS();
 
+
 // XPECT noerrors -->
 icf = dgs;
 // XPECT noerrors -->
 icf = new DGS();
 
+
 // XPECT noerrors -->
 icf = df;
 // XPECT noerrors -->
 icf = new DF();
+
+
+// --------------------------------------------------------------------------------------------------------------------
+
+
+// XPECT noerrors -->
+icgsmg = d0;
+// XPECT noerrors -->
+icgsmg = new D0();
+
+
+// XPECT noerrors -->
+icgsmg = dg;
+// XPECT noerrors -->
+icgsmg = new DG();
+
+
+// XPECT noerrors -->
+icgsmg = ds;
+// XPECT noerrors -->
+icgsmg = new DS();
+
+
+// XPECT noerrors -->
+icgsmg = dgs;
+// XPECT noerrors -->
+icgsmg = new DGS();
+
+
+// XPECT noerrors -->
+icgsmg = df;
+// XPECT noerrors -->
+icgsmg = new DF();
+
+
+// --------------------------------------------------------------------------------------------------------------------
+
+
+// XPECT errors --> "D0 is not a structural subtype of ~i~CGSMS: missing setter f; f failed: non-optional writable field requires a readable field or a getter in subtype." at "d0"
+icgsms = d0;
+// XPECT errors --> "D0 is not a structural subtype of ~i~CGSMS: missing setter f; f failed: non-optional writable field requires a readable field or a getter in subtype." at "new D0()"
+icgsms = new D0();
+
+
+// XPECT noerrors -->
+icgsms = dg;
+// XPECT noerrors -->
+icgsms = new DG();
+
+
+// XPECT errors --> "DS is not a structural subtype of ~i~CGSMS: missing setter f; f failed: non-optional writable field requires a readable field or a getter in subtype." at "ds"
+icgsms = ds;
+// XPECT errors --> "DS is not a structural subtype of ~i~CGSMS: missing setter f; f failed: non-optional writable field requires a readable field or a getter in subtype." at "new DS()"
+icgsms = new DS();
+
+
+// XPECT noerrors -->
+icgsms = dgs;
+// XPECT noerrors -->
+icgsms = new DGS();
+
+
+// XPECT noerrors -->
+icgsms = df;
+// XPECT noerrors -->
+icgsms = new DF();
 

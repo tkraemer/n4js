@@ -210,17 +210,19 @@ class StructuralTypingComputer extends TypeSystemHelperStrategy {
 					// for a writable field on the right-hand side, require a getter/setter pair on the left
 					if (rightMember.writeableField && leftMember instanceof FieldAccessor) {
 						if (!(leftOtherAccessor instanceof TSetter)) {
-							val isSpecialCaseOfDispensableGetterForOptionalField = leftMember instanceof TSetter
-								&& rightMember.optional
-								&& leftTypeRef.isTypeOfNewExpressionOrFinalNominal;
-							if(!isSpecialCaseOfDispensableGetterForOptionalField) {
-								// special error message in case only either a getter XOR setter is supplied for a field
-								val msgSpecial = if(rightMember.optional) {
-									"optional writable field requires at least a setter in subtype."
-								} else {
-									"writable field requires a field or a getter/setter pair in subtype."
-								};
-								info.wrongMembers.add(rightMember.name + " failed: " + msgSpecial);
+							if(!leftTypeRef.isTypeOfObjectLiteral) {
+								val isSpecialCaseOfDispensableGetterForOptionalField = leftMember instanceof TSetter
+									&& rightMember.optional
+									&& leftTypeRef.isTypeOfNewExpressionOrFinalNominal;
+								if(!isSpecialCaseOfDispensableGetterForOptionalField) {
+									// special error message in case only either a getter XOR setter is supplied for a field
+									val msgSpecial = if(rightMember.optional) {
+										"optional writable field requires at least a setter in subtype."
+									} else {
+										"writable field requires a field or a getter/setter pair in subtype."
+									};
+									info.wrongMembers.add(rightMember.name + " failed: " + msgSpecial);
+								}
 							}
 						} else {
 							// check type of setter as usual
