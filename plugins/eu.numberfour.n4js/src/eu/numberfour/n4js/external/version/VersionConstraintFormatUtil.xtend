@@ -110,3 +110,4 @@ class VersionConstraintFormatUtil {
 	private static def formatRange(String lower,boolean isExclLowerBound, String upper, boolean isExclUpperBound) 
 		'''@">«IF !isExclLowerBound»=«ENDIF»«lower» <«IF !isExclUpperBound»=«ENDIF»«upper»"'''
 }
+
