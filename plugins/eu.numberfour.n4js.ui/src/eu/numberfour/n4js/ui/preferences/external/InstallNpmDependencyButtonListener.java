@@ -11,11 +11,12 @@
 package eu.numberfour.n4js.ui.preferences.external;
 
 import static eu.numberfour.n4js.ui.utils.UIUtils.getDisplay;
+import static eu.numberfour.n4js.ui.utils.UIUtils.getShell;
 import static org.eclipse.jface.dialogs.MessageDialog.openError;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
@@ -43,32 +44,34 @@ import eu.numberfour.n4js.utils.StatusHelper;
  */
 public class InstallNpmDependencyButtonListener extends SelectionAdapter {
 
-	final private Supplier<IInputValidator> validator;
+	final private Supplier<IInputValidator> packageNameValidator;
+	final private Supplier<IInputValidator> packageVersionValidator;
 	final private StatusHelper statusHelper;
-	final private BiFunction<Collection<String>, IProgressMonitor, IStatus> installAction;
-	final private String initalValue;
+	final private BiFunction<Map<String, String>, IProgressMonitor, IStatus> installAction;
 
-	InstallNpmDependencyButtonListener(BiFunction<Collection<String>, IProgressMonitor, IStatus> installAction,
-			Supplier<IInputValidator> validator,
-			StatusHelper statusHelper, String initalValue) {
+	InstallNpmDependencyButtonListener(BiFunction<Map<String, String>, IProgressMonitor, IStatus> installAction,
+			Supplier<IInputValidator> packageNameValidator, Supplier<IInputValidator> packageVersionValidator,
+			StatusHelper statusHelper) {
 		this.installAction = installAction;
-		this.validator = validator;
+		this.packageNameValidator = packageNameValidator;
+		this.packageVersionValidator = packageVersionValidator;
 		this.statusHelper = statusHelper;
-		this.initalValue = initalValue;
 	}
 
 	@Override
 	public void widgetSelected(final SelectionEvent e) {
 		final MultiStatus multistatus = statusHelper.createMultiStatus("Status of installing npm dependencies.");
-		final InputDialog dialog = new InputDialog(UIUtils.getShell(), "npm Install",
-				"Specify an npm package name to download and install:", initalValue, validator.get());
 
+		InstallNpmDependencyDialog dialog = new InstallNpmDependencyDialog(getShell(),
+				packageNameValidator.get(), packageVersionValidator.get());
 		dialog.open();
-		final String packageName = dialog.getValue();
+		final String packageName = dialog.getPackageName();
 		if (!StringExtensions.isNullOrEmpty(packageName) && dialog.getReturnCode() == Window.OK) {
 			try {
-				new ProgressMonitorDialog(UIUtils.getShell()).run(true, false, monitor -> {
-					multistatus.merge(installAction.apply(Arrays.asList(packageName), monitor));
+				final String packageVersion = dialog.getVersionConstraint();
+				new ProgressMonitorDialog(getShell()).run(true, false, monitor -> {
+					multistatus
+							.merge(installAction.apply(Collections.singletonMap(packageName, packageVersion), monitor));
 				});
 			} catch (final InvocationTargetException | InterruptedException exc) {
 				multistatus.merge(

@@ -22,10 +22,12 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -34,6 +36,7 @@ import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.xtext.util.Pair;
+import org.eclipse.xtext.util.Strings;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
@@ -54,6 +57,8 @@ import eu.numberfour.n4js.utils.resources.ExternalProject;
  */
 @Singleton
 public class NpmManager {
+
+	private static final String NO_VERSION = "";
 
 	private static final String LINE_DOUBLE = "================================================================";
 
@@ -100,7 +105,21 @@ public class NpmManager {
 	 */
 	public IStatus installDependency(final String packageName, IProgressMonitor monitor)
 			throws IllegalBinaryStateException {
-		return installDependencies(Arrays.asList(packageName), monitor);
+		return installDependency(packageName, NO_VERSION, monitor);
+	}
+
+	/**
+	 * Installs the given npm package in a blocking fashion.
+	 *
+	 * @param packageName
+	 *            the name of the package that has to be installed via package manager.
+	 * @param monitor
+	 *            the monitor for the blocking install process.
+	 * @return a status representing the outcome of the install process.
+	 */
+	public IStatus installDependency(final String packageName, final String packageVersion, IProgressMonitor monitor)
+			throws IllegalBinaryStateException {
+		return installDependencies(Collections.singletonMap(packageName, packageVersion), monitor);
 	}
 
 	/**
@@ -110,13 +129,34 @@ public class NpmManager {
 	 * log encountered errors but it will try to proceed for all remaining packages. Details about issues are in the
 	 * returned status.
 	 *
-	 * @param packageNames
-	 *            the names of the packages that has to be installed via package manager.
+	 * @param unversionedPackages
+	 *            map of name to version data for the packages to be installed via package manager.
 	 * @param monitor
 	 *            the monitor for the blocking install process.
 	 * @return a status representing the outcome of the install process.
 	 */
-	public IStatus installDependencies(final Collection<String> packageNames, final IProgressMonitor monitor)
+	public IStatus installDependencies(final Collection<String> unversionedPackages, final IProgressMonitor monitor)
+			throws IllegalBinaryStateException {
+
+		Map<String, String> versionedPackages = unversionedPackages.stream()
+				.collect(Collectors.toMap((String name) -> name, (String name) -> NO_VERSION));
+		return installDependencies(versionedPackages, monitor);
+	}
+
+	/**
+	 * Installs the given npm packages in a blocking fashion.
+	 *
+	 * This method tries to install all packages even if installation for some of them fail. In such cases it will try
+	 * log encountered errors but it will try to proceed for all remaining packages. Details about issues are in the
+	 * returned status.
+	 *
+	 * @param versionedPackages
+	 *            map of name to version data for the packages to be installed via package manager.
+	 * @param monitor
+	 *            the monitor for the blocking install process.
+	 * @return a status representing the outcome of the install process.
+	 */
+	public IStatus installDependencies(final Map<String, String> versionedPackages, final IProgressMonitor monitor)
 			throws IllegalBinaryStateException {
 
 		final MultiStatus status = statusHelper
@@ -124,7 +164,7 @@ public class NpmManager {
 
 		checkNPM();
 
-		final Set<String> requestedPackages = new HashSet<>(packageNames);
+		final Set<String> requestedPackages = versionedPackages.keySet();
 		try {
 
 			logger.logInfo(LINE_DOUBLE);
@@ -141,8 +181,14 @@ public class NpmManager {
 			logger.logInfo(LINE_SINGLE);
 			logger.logInfo("Installing packages... [step 1 of 4]");
 			monitor.setTaskName("Installing packages... [step 1 of 4]");
-			// skip already installed
-			final Set<String> packagesToInstall = difference(requestedPackages, oldDependencies);
+			// calculate already installed to skip
+			final Set<String> packagesNamesToInstall = difference(requestedPackages, oldDependencies);
+			final Set<String> packagesToInstall = versionedPackages.entrySet().stream()
+					// skip already installed
+					.filter(e -> packagesNamesToInstall.contains(e.getKey()))
+					// [name, @">=1.0.0 <2.0.0"] to [name@">=1.0.0 <2.0.0"]
+					.map(e -> e.getKey() + Strings.emptyIfNull(e.getValue()))
+					.collect(Collectors.toSet());
 
 			IStatus installStatus = batchInstallUninstall(monitor, packagesToInstall, true);
 
@@ -316,8 +362,7 @@ public class NpmManager {
 
 			scheduler.scheduleBuildIfNecessary(affectedEclipseProjects);
 
-			logger.logInfo("Finished scheduling build of the affected projects."
-					+ "");
+			logger.logInfo("Finished scheduling build of the affected projects.");
 
 			if (status.isOK())
 				logger.logInfo("Successfully finished uninstalling  packages.");

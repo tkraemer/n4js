@@ -46,10 +46,10 @@ public class UninstallNpmDependencyButtonListener extends SelectionAdapter {
 	final private Supplier<IInputValidator> validator;
 	final private StatusHelper statusHelper;
 	final private BiFunction<Collection<String>, IProgressMonitor, IStatus> uninstallAction;
-	final private String initalValue;
+	final private Supplier<String> initalValue;
 
 	UninstallNpmDependencyButtonListener(BiFunction<Collection<String>, IProgressMonitor, IStatus> uninstallAction,
-			Supplier<IInputValidator> validator, StatusHelper statusHelper, String initalValue) {
+			Supplier<IInputValidator> validator, StatusHelper statusHelper, Supplier<String> initalValue) {
 		this.statusHelper = statusHelper;
 		this.validator = validator;
 		this.uninstallAction = uninstallAction;
@@ -61,7 +61,7 @@ public class UninstallNpmDependencyButtonListener extends SelectionAdapter {
 		final MultiStatus multistatus = statusHelper.createMultiStatus("Status of uninstalling npm dependencies.");
 
 		final InputDialog dialog = new InputDialog(UIUtils.getShell(), "npm Uninstall",
-				"Specify an npm package name to uninstall:", initalValue, validator.get());
+				"Specify an npm package name to uninstall:", initalValue.get(), validator.get());
 
 		dialog.open();
 		final String packageName = dialog.getValue();

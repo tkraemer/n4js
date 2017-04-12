@@ -24,18 +24,17 @@ import eu.numberfour.n4js.hlc.N4jsc.Type;
 import eu.numberfour.n4js.hlc.helper.N4CliHelper;
 
 /**
- * Downloads, installs, compiles and runs 'express'.
+ * Downloads, installs, compiles and runs 'express' where target platform file specifies version range.
  */
-public class InstallCompileRunN4jscExternalTest extends BaseN4jscExternalTest {
+public class TargetPlatformRangeConfigurationsTest extends BaseN4jscExternalTest {
 
 	@Override
 	protected Map<String, String> getNpmDependencies() {
-		return singletonMap("express", "@4.13.4");
+		return singletonMap("express", "@\">=4.0.0 <5.0.0\"");
 	}
 
 	/**
-	 * Test for checking the npm support in the headless case by downloading third party package, importing it and
-	 * running it with Common JS.
+	 * Test for compiling project with external dependency specified within version range.
 	 */
 	@Test
 	public void testCompileAndRunWithExternalDependencies() throws IOException, ExitCodeException {
@@ -59,5 +58,4 @@ public class InstallCompileRunN4jscExternalTest extends BaseN4jscExternalTest {
 		N4CliHelper.assertExpectedOutput(
 				"express properties: application, request, response, Route, Router, query, static", out);
 	}
-
 }

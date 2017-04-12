@@ -20,11 +20,12 @@ import static org.eclipse.xtext.util.Strings.toFirstUpper;
 import java.io.File;
 import java.net.URI;
 
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;
-import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
+import eu.numberfour.n4js.external.version.VersionConstraintFormatUtil;
 import eu.numberfour.n4js.n4mf.ProjectType;
 import eu.numberfour.n4js.projectModel.IN4JSProject;
 import eu.numberfour.n4js.ui.ImageDescriptorCache.ImageRef;
@@ -69,9 +70,13 @@ class BuiltInLibrariesLabelProvider extends LabelProvider implements IStyledLabe
 				string.setStyle(text.lastIndexOf(BUILT_IN_SUFFIX), BUILT_IN_SUFFIX.length(), DECORATIONS_STYLER);
 			}
 		} else if (element instanceof IN4JSProject) {
-			final ProjectType type = ((IN4JSProject) element).getProjectType();
+			final IN4JSProject project = ((IN4JSProject) element);
+			final ProjectType type = project.getProjectType();
+			String version = VersionConstraintFormatUtil.npmFormat(project.getVersion());
+			// for better visual representation MyProject @1.2.3 -> MyProject v1.2.3
+			version = version.replaceFirst("@", "v");
 			final String typeLabel = getProjectTypeLabel(type);
-			string = new StyledString(string.getString() + typeLabel);
+			string = new StyledString(string.getString() + " " + version + typeLabel);
 			string.setStyle(string.getString().lastIndexOf(typeLabel), typeLabel.length(), DECORATIONS_STYLER);
 		}
 		return string;

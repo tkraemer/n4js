@@ -45,6 +45,11 @@ public class NoopExternalLibraryWorkspace extends ExternalLibraryWorkspace {
 	}
 
 	@Override
+	public Iterable<ProjectDescription> getProjectsDescriptions(java.net.URI rootLocation) {
+		return emptyList();
+	}
+
+	@Override
 	public IProject getProject(final String projectName) {
 		return null;
 	}

@@ -34,4 +34,5 @@ Export-Package: eu.numberfour.n4js.n4mf,
  eu.numberfour.n4js.n4mf.serializer,
  eu.numberfour.n4js.n4mf.services,
  eu.numberfour.n4js.n4mf.utils,
+ eu.numberfour.n4js.n4mf.utils.parsing,
  eu.numberfour.n4js.n4mf.validation
