@@ -21,7 +21,7 @@ Similar to object literals, there must be no data field with the same name as a 
 described in <<_redefinition-of-members>>.
 
 [.language-n4js]
-== Syntax
+=== Syntax
 
 .Syntax N4JS member access modifier
 [source,xtext]
@@ -943,14 +943,16 @@ Data fields in N4JS are similar to these implicit fields in ECMAScript 6 except 
 ----
 N4FieldDeclaration <Yield>:
     {N4FieldDeclaration}
-    annotations+=Annotation*
     FieldDeclarationImpl<Yield>
 ;
 
 fragment FieldDeclarationImpl <Yield>*:
-    accessModifier=N4JSMemberAccessModifier?
-    (static?=’static’ | const?=’const’)?
-    LiteralPropertyName<Yield> ColonSepTypeRef? ('=' expression=Expression<In=true,Yield>)? ';'
+    (declaredModifiers+=N4Modifier)* BogusTypeRefFragment?
+    declaredName=LiteralOrComputedPropertyName<Yield>
+    (declaredOptional?='?')?
+    ColonSepTypeRef?
+    ('=' expression=Expression<In=true,Yield>)?
+    Semi
 ;
 ----
 
@@ -958,6 +960,9 @@ fragment FieldDeclarationImpl <Yield>*:
 
 Fields have the following properties which can be explicitly defined:
 
+
+`declaredOptional` ::
+Tells whether the accessor was declared optional.
 
 `typeRef` ::
 Type of the field; default value is $Any$.
@@ -1115,25 +1120,25 @@ task:IDE-8[]
 ----
 N4GetterDeclaration <Yield>:
     => ({N4GetterDeclaration}
-    annotations+=Annotation*
-    accessModifier=N4JSMemberAccessModifier?
-    (abstract?='abstract' | static?='static')?
+    (declaredModifiers+=N4Modifier)*
     GetterHeader<Yield>)
     (body=Block<Yield>)? ';'?
 ;
 
 fragment GetterHeader <Yield>*:
-    ('get' -> LiteralOrComputedPropertyName <Yield> '(' ')' ColonSepTypeRef?)
+    BogusTypeRefFragment? 'get' -> declaredName=LiteralOrComputedPropertyName<Yield>
+    (declaredOptional?='?')?
+    '(' ')'
+    ColonSepTypeRef?
 ;
 
 N4SetterDeclaration <Yield>:
     =>({N4SetterDeclaration}
-        annotations+=Annotation*
-        accessModifier=N4JSMemberAccessModifier?
-        (abstract?='abstract' | static?='static')?
+        (declaredModifiers+=N4Modifier)*
         'set'
-        ->LiteralOrComputedPropertyName <Yield>
+        ->declaredName=LiteralOrComputedPropertyName <Yield>
     )
+    (declaredOptional?='?')?
     '(' fpar=FormalParameter<Yield> ')' (body=Block<Yield>)? ';'?
 ;
 ----
@@ -1180,14 +1185,17 @@ class C {
 
 ==== Properties [[field-acessors-properties]]
 
-Derived values for field accessors:
+Properties for field accessors:
 
+`declaredOptional` ::
+Tells whether the accessor was declared optional.
 
 `readable` ::
-True for getters and false for setters.
+Derived value: true for getters and false for setters.
 
 `writable` ::
-False for getters and true for setters.
+Derived value: false for getters and true for setters.
+
 
 ==== Semantics [[field-accessors-semantics]]
 
@@ -1216,6 +1224,230 @@ the type of the setter’s parameter (the types can be completely unrelated).foo
 
 Getters and setters – like functions – define a variable execution environment and therefore provide access to the actual passed-in parameters through the implicit `arguments`
 variable inside of their bodies (c.f. <<_arguments-object>>).
+
+
+
+=== Optional Fields
+
+Data fields and field accessors of a classifier C can be declared optional, meaning that a structural subtype of C
+need not provide this field, but if it does, the field must be of correct type. However, to ensure overall type safety,
+the scope of application of this optionality is limited to a small number of specific use cases, as described in the
+following.
+
+
+==== Syntax
+
+To denote a data field or accessor as optional, a question mark is placed right after the name:
+
+.Syntax of optional fields
+[source,n4js]
+----
+class C {
+    public field?: string;
+
+    public get getter?(): number {
+        return 42;
+    }
+    public set setter?(value: number) {}
+}
+----
+
+The detailed grammar is given in the sections for data fields, cf. <<data-fields-syntax>>,
+and field accessors, cf. <<field-acessors-syntax>>.
+
+
+==== Semantics
+
+It is important to note that the optionality of a field is, by default and in most cases, ignored and
+has an effect only in certain special cases.
+
+The effect of a field being optional is defined by the following requirement.
+
+[[req:optionalFields]]
+.Optional Fields
+[req,id=IDE-240500,version=1]
+--
+
+By default, a data field, getter, or setter that is declared optional is handled in the
+exact same way as if no optionality were involved (i.e. by default, optionality is ignored).
+
+Optionality has an effect only in case of structural subtype checks $L <: R$ in which
+the left-hand side is one of the following:
+
+. an object literal.
+. a new expression.
+. an instance of a final class, i.e. the type of the value on left-hand side must be nominal and refer to a final class.
+. a reference to a const variable if its initializer expression is one of the following:
+.. an object literal.
+.. a new expression.
+.. an instance of a final class (as explained above).
+
+and then
+
+* in cases 1 and 4a an optional data field, getter, or setter of $R$ need not be present in $L$.
+* in cases 2, 3, 4b, and 4c an optional getter of $R$ need not be present in $L$ and an optional field of $R$ requires only a setter in $L$.
+
+If, according to these rules, a data field / getter / setter of $R$ need not be present in
+$L$ but a member with the same name and access is actually present in $L$, that member in $L$
+must be a data field / getter / setter of the same type / a subtype / a super type, respectively.
+In other words, if a not actually required member is present in the subtype, ordinary rules
+for member compatibility apply as if no optionality were involved (cf. general subtyping rules
+for structural types).
+
+--
+
+In other words, in object literals (cases 1 and 4a) neither optional getters, optional setters,
+nor optional data fields are required. However, in case of new expressions and instances of
+final classes (cases 2, 3, 4b, 4c) only optional getters are not required in a subtype;
+optional setters are required as normal (i.e. optionality ignored) and optional data fields
+require at least a setter.
+
+The following table summarizes the most common cases and shows how this relates to the different
+forms of structural typing.
+
+[[tab:optionalFields]]
+.Optional Fields
+[cols="3,^1,^1,^1,^1,^1,^1,3"]
+|===
+h|                           5+^| &#916;                                | Case <| Comment
+h|                              | `~` | `~~` | `\~w~` | `\~r~` | `\~i~` |       |
+h|                           3+^| may have setter  2+^| never has setter|       |
+h| `let x: &#916;C = {};`       |  ✓  |  ✓   |    ✓   |    ✓   |    ✓   |   1   | nothing mandatory
+h| `let x: &#916;C = new D0();` |     |      |        |    ✓   |    ✓   |   2   | setters mandatory
+h| `let x: &#916;C = new DG();` |     |      |        |    ✓   |    ✓   |   2   | setters mandatory
+h| `let x: &#916;C = new DS();` |  ✓  |  ✓   |    ✓   |    ✓   |    ✓   |   2   | setters mandatory
+h| `let x: &#916;C = fooD0();`  |     |      |        |        |        |  none | D0 not final
+h| `let x: &#916;C = fooSF0();` |     |      |        |        |        |  none | fooSF0() not nominal
+h| `let x: &#916;C = fooF0();`  |     |      |        |    ✓   |    ✓   |   3   | setters mandatory
+|===
+
+In the table, a "✓" means that the particular example is valid; in all other cases an error would
+be shown in N4JS source code. Here are the classes and functions used in the above table:
+
+.Classes and functions used in table
+[source,n4js]
+----
+class C {
+    public field?: string;
+}
+
+class D0 {}
+
+class DG {
+    public get field(): string { return "hello"; }
+}
+
+class DS {
+    public set field(value: string) {}
+}
+
+@Final class F0 {}
+
+function fooD0(): D0   { return new D0(); }
+function fooSF0(): ~F0 { return new F0(); }
+function fooF0(): F0   { return new F0(); }
+----
+
+It follows from the above definitions in Requirements <<req:optionalFields>> that cases 4a and 4b are not
+transitive across a chain of several `const` variables, whereas case 4c is transitive. For example:
+
+.Transitivity of the use cases of optional fields
+[source,n4js]
+----
+class C {
+	public get getter?(): string {return null;}
+}
+class D {}
+@Final class F {}
+
+let c: ~C;
+
+
+// no transitivity via several const variables in use case "object literal":
+
+const ol1 = {};
+const ol2 = ol1;
+
+// XPECT errors --> "~Object is not a structural subtype of ~C: missing getter getter." at "ol2"
+c = ol2;
+
+
+// no transitivity via several const variables in use case "new expression":
+
+const new1 = new D();
+const new2 = new1;
+
+// XPECT errors --> "D is not a structural subtype of ~C: missing getter getter." at "new2"
+c = new2;
+
+
+// BUT: we do have transitivity via several const variables in use case "final nominal type":
+
+const finalNominal1 = new F();
+const finalNominal2 = finalNominal1;
+
+// XPECT noerrors -->
+c = finalNominal1;
+// XPECT noerrors --> "transitivity applies in this case"
+c = finalNominal2;
+----
+
+
+==== Background
+
+The following example illustrates why optionality of fields has to be restricted
+to the few special cases defined above (i.e. object literals, new expressions, etc.).
+
+.Problem 1 of optional fields
+[source,n4js]
+----
+class C {
+	public field?: string = "hello";
+}
+
+class D {}
+class DD extends D {
+	public field: number = 42;
+}
+
+let c: ~C;
+let d: D;
+
+d = new DD();
+
+c = d;  // without the restrictive semantics of optional fields, this assignment would be allowed (but shows compile-time error in N4JS)
+
+console.log(c.field); // prints 42 even though the type is string
+c.field.charAt(0); // exception at runtime: c.field.charAt is not a function
+----
+
+In the last line of the above example, `c.field` is actually `42` but the type systems claims it is of type `string` and
+thus allows accessing member `charAt` of type `string` which is undefined at runtime the actual value `42`.
+
+The next example shows why cases 2 and 3 (i.e. new expressions and instances of final classes) have to be handled in
+a more restrictive manner than case 1 (i.e. object literals).
+
+.Problem 2 of optional fields
+[source,n4js]
+----
+class C {
+	public field?: string;
+}
+
+class D {}
+
+let c: ~C;
+
+c = new D(); // error: new expression but D is missing setter
+
+c.field = "hello";
+----
+
+In the previous code, if `c = new D()` were allowed, we would add a new property `field` to the instance of class
+`D` in the last line, which N4JS aims to avoid in general, unless unsafe language features such as dynamic types
+are being employed.
+
+
 
 [.language-n4js]
 == Static Members
