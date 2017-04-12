@@ -1,0 +1,23 @@
+/* XPECT_SETUP eu.numberfour.n4js.spec.examples.xpect.tests.SpecExamplesTest END_SETUP */
+
+
+class C {
+    public field?: string;
+}
+
+class D0 {}
+
+class DG {
+    public get field(): string { return "hello"; }
+}
+
+class DS {
+    public set field(value: string) {}
+}
+
+@Final class F0 {}
+
+function fooD0(): D0   { return new D0(); }
+function fooSF0(): ~F0 { return new F0(); }
+function fooF0(): F0   { return new F0(); }
+

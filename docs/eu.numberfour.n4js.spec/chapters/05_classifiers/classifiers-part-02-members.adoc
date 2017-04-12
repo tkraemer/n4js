@@ -1238,7 +1238,7 @@ the scope of application of this optionality is limited to a small number of spe
 
 To denote a data field or accessor as optional, a question mark is placed right after the name:
 
-.Optional fields
+.Syntax of optional fields
 [source,n4js]
 ----
 class C {
@@ -1320,7 +1320,7 @@ h| `let x: &#916;C = fooF0();`  |     |      |        |    ✓   |    ✓   |  3
 
 Here are the classes and functions used in the above table:
 
-.Optional fields
+.Classes and functions used in table
 [source,n4js]
 ----
 class C {
@@ -1350,7 +1350,7 @@ function fooF0(): F0   { return new F0(); }
 The following example illustrates why optionality of fields has to be restricted
 to the few special cases defined above (i.e. object literals, new expressions, etc.).
 
-.Optional fields
+.Problem 1 of optional fields
 [source,n4js]
 ----
 class C {
@@ -1379,7 +1379,7 @@ thus allows accessing member `charAt` of type `string` which is undefined at run
 The next example shows why cases 2 and 3 (i.e. new expressions and instances of final classes) have to be handled in
 a more restrictive manner than case 1 (i.e. object literals).
 
-.Optional fields
+.Problem 2 of optional fields
 [source,n4js]
 ----
 class C {
