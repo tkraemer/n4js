@@ -133,32 +133,10 @@ public class FileChecker {
 			} else {
 				if (charLast != '\n' || char2ndToLast == '\n') {
 					report.problems.add("does not end with a single empty line");
-
-					// if (content.length() > 0) {
-					// int endIndex = content.length();
-					// while (endIndex > 0 && content.charAt(endIndex - 1) == '\n') {
-					// --endIndex;
-					// }
-					// content = content.substring(0, endIndex) + '\n';
-					// try {
-					// writeFile(path, content);
-					// } catch (IOException e) {
-					// // TODO Auto-generated catch block
-					// e.printStackTrace();
-					// }
-					// }
 				}
 				if (containsTrailingWhiteSpace(content)) {
 					report.problems.add("must not contain lines with trailing white-space");
-
-					content = trimTrailingWhiteSpace(content);
-
-					try {
-						writeFile(path, content);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					// writeFile(path, trimTrailingWhiteSpace(content));
 				}
 				if (!isRegisteredAsThirdParty && !content.startsWith(COPYRIGHT_HEADER_JOINED)) {
 					report.problems.add("does not contain correct copyright header");
@@ -174,8 +152,7 @@ public class FileChecker {
 
 			if (content.contains("copyright") || content.contains("Copyright") || content.contains("COPYRIGHT")) {
 
-				final boolean isNumberFourCopyright = content.indexOf("Copyright") == content
-						.indexOf(COPYRIGHT_LINE);
+				final boolean isNumberFourCopyright = content.indexOf("Copyright") == content.indexOf(COPYRIGHT_LINE);
 
 				if (!isNumberFourCopyright && !isRegisteredAsThirdParty) {
 					report.problems.add("must not contain string \"copyright\"");
@@ -416,7 +393,11 @@ public class FileChecker {
 	}
 
 	@SuppressWarnings("unused")
-	private static void writeFile(Path path, String content) throws IOException {
-		Files.write(path, content.getBytes(StandardCharsets.UTF_8), StandardOpenOption.TRUNCATE_EXISTING);
+	private static void writeFile(Path path, String content) {
+		try {
+			Files.write(path, content.getBytes(StandardCharsets.UTF_8), StandardOpenOption.TRUNCATE_EXISTING);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
