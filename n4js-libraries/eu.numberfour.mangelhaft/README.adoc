@@ -96,13 +96,13 @@ This annotation marks the class property that will have the parameter injected a
 
 This parameterized test will test Rectangles. It will be ran 3 times with the following parameters:
 
-* length = 4 and width = 5 
-* length = 3 and width = 2 
+* length = 4 and width = 5
+* length = 3 and width = 2
 * length = 6000 and width = 8
 
 In each run, the test methods will be run in the following order:
 
-<1> *BeforeAlls* `getEnvironment()` and `loadIcons()`. Since there are 2 *BeforeAll* methods, they will be 
+<1> *BeforeAlls* `getEnvironment()` and `loadIcons()`. Since there are 2 *BeforeAll* methods, they will be
 executed in random order
 <2> *Before* `createRectangleInstanceForTest()`
 <3> *Test* `areaIsSet()`
